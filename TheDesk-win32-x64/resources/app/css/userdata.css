@@ -1,0 +1,37 @@
+/*アイコンをクリックした時とかにでてくるユーザーデータ*/
+#his-data {
+  background-repeat: no-repeat;
+  background-image: url('/img/loading.svg');
+  overflow-y: hidden;
+}
+#his-prof {
+  float: left;
+  width: 100px;
+}
+.his-float {
+  float: left;
+  width: calc(50% - 50px);
+  height: 122px;
+  overflow-y: scroll;
+  padding: 5px;
+}
+#his-data-show {
+  margin: 50px;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: calc(100% - 50px);
+  height: calc(100% - 50px);
+  margin-bottom: 0;
+  padding: 5px;
+}
+.tab-content {
+  overflow-y: scroll;
+  height: calc(100% - 240px)
+}
+.my-data-width {
+  width: 11.11%;
+}
+
+/*black theme*/
+.blacktheme #his-data-show {
+  background-color: rgba(0, 0, 0, 0.8);
+}

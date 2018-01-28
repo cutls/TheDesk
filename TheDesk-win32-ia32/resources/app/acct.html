@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<title>Account Manager - TheDesk</title>
+<link href="./css/materialize.css" type="text/css" rel="stylesheet">
+<link href="./css/master.css" type="text/css" rel="stylesheet">
+<link href="./css/auth.css" type="text/css" rel="stylesheet">
+<link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
+<link href='./css/tl.css' rel='stylesheet' type='text/css'>
+<link href='./css/userdata.css' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
+<style>.acct{display:flex; justify-content:space-around;}
+.text{overflow-x: scroll;}
+</style>
+<meta charset="utf-8">
+</head>
+<body id="mainView">
+<script type="text/javascript" src="./js/common/jquery.js"></script>
+<script type="text/javascript" src="./js/platform/first.js"></script>
+<script type="text/javascript" src="./js/common/materialize.js"></script>
+<script type="text/javascript" src="./js/ui/tips.js"></script>
+<script type="text/javascript" src="./js/common/time.js"></script>
+<script type="text/javascript" src="./js/common/modal.js"></script>
+<div id="tools">
+<div id="notice" >Account Manager</div>
+<a onclick="notfToggle()" class="setting nex"><i class="material-icons nex notf-icon">notifications</i></a>
+<a href="index.html" class="setting nex"><i class="material-icons nex">home</i></a>
+<a onclick="udg()" class="pointer"><img src="./img/loading.svg" width="24" class="my-prof"></a>
+</div>
+<div id="notf-box" class="hide"><div id="notifications">Notifications will be showed here...</div><button class="btn waves-effect orange more-hide" style="width:calc( 100% - 10px); padding:0;" onclick="notfToggle()">閉じる</button></div>
+<a href="setting.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">戻る</a><br>
+<div id="acct-list"></div>
+<div class="divider"></div>
+アカウントを追加<br>
+<div id="add">
+<input type="text" id="url" style="width:70%" placeholder="mstdn.jp">
+<button class="btn waves-effect" onclick="instance()">Login</button><br>
+<span style="font-family:Open Sans;">Supports</span>
+<div id="support"></div>
+</div>
+<div id="auth" style="display:none">
+指定されたコードを貼り付けてください。ログインウィンドウは閉じていただいて構いません。<br>
+<input type="text" id="code" placeholder="コードを入力">
+<button class="btn waves-effect" onclick="code()">認証</button><br>
+</div>
+現在ログイン中のインスタンス情報 by <a href="https://instances.social" target="_blank">instances.social API</a><br>
+<img src="./img/loading.svg" id="ins-prof" width="200"><br>
+<span id="ins-upd"></span>現在<br>
+ドメイン名:<span class="now-domain"></span><br>
+いつから:<span id="ins-add"></span><br>
+接続済みインスタンス:<span id="ins-connect"></span>個<br>
+トゥート数:<span id="ins-toot"></span>個<br>
+ユーザー数:<span id="ins-user"></span>人<br>
+コネクション:<span id="ins-per"></span>%<br>
+マストドンバージョン:<span id="ins-ver"></span><br>
+マストドンアップデート:<span id="ins-sys"></span><br>
+
+<script type="text/javascript" src="./js/login/manager.js"></script>
+<script type="text/javascript" src="./js/tl/date.js"></script>
+<script type="text/javascript" src="./js/platform/end.js"></script>

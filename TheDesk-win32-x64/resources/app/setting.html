@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<title>Settings - TheDesk</title>
+<link href="./css/materialize.css" type="text/css" rel="stylesheet">
+<link href="./css/master.css" type="text/css" rel="stylesheet">
+<link href="./css/auth.css" type="text/css" rel="stylesheet">
+<link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
+<link href='./css/tl.css' rel='stylesheet' type='text/css'>
+<link href='./css/userdata.css' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
+<meta charset="utf-8">
+</head>
+<body id="mainView">
+<script type="text/javascript" src="./js/common/jquery.js"></script>
+<script type="text/javascript" src="./js/platform/first.js"></script>
+<script type="text/javascript" src="./js/common/materialize.js"></script>
+<script type="text/javascript" src="./js/ui/tips.js"></script>
+<script type="text/javascript" src="./js/common/time.js"></script>
+<script type="text/javascript" src="./js/common/modal.js"></script>
+<div id="tools">
+<div id="notice" >Settings</div>
+<a onclick="notfToggle()" class="setting nex"><i class="material-icons nex notf-icon">notifications</i></a>
+<a href="index.html" class="setting nex"><i class="material-icons nex">home</i></a>
+<a onclick="udg()" class="pointer"><img src="./img/loading.svg" width="24" id="my-prof"></a>
+</div>
+<div id="notf-box" class="hide"><div id="notifications">Notifications will be showed here...</div><button class="btn waves-effect orange more-hide" style="width:calc( 100% - 10px); padding:0;" onclick="notfToggle()">閉じる</button></div>
+<a href="acct.html" class="btn waves-effect blue nex" style="width:100%; max-width:400px;">アカウントマネージャー</a><br>
+<h5>時間表記設定</h5>
+相対時間の例:"1分前","3日前"<br>
+絶対時間の例"23:25:21","2017年12月30日 23:59:00"<br>
+混合表示は、当日のトゥートのみ相対、それ以外は絶対で表示<br>
+<input class="with-gap" name="time" type="radio" id="relative" value="relative" />
+    <label for="relative">相対時間</label>
+<input class="with-gap" name="time" type="radio" id="absolute" value="absolute" />
+    <label for="absolute">絶対時間</label>
+<input class="with-gap" name="time" type="radio" id="double" value="double" />
+    <label for="double">両方表示</label>
+<input class="with-gap" name="time" type="radio" id="medium" value="medium" />
+    <label for="medium">混合表示</label>
+	<br>
+
+	<h5>テーマの設定</h5>
+<input class="with-gap" name="theme" type="radio" id="white" value="white" />
+    <label for="white">白</label>
+<input class="with-gap" name="theme" type="radio" id="black" value="black" />
+    <label for="black">黒</label><br>
+	
+		<h5>非表示設定の画像を隠す</h5>
+		きつめのぼかしがかかります。<br>
+<input class="with-gap" name="nsfw" type="radio" id="n_yes" value="yes" />
+    <label for="n_yes">はい</label>
+<input class="with-gap" name="nsfw" type="radio" id="n_no" value="no" />
+    <label for="n_no">いいえ</label><br>
+	
+	<h5>非表示設定のテキストを隠す</h5>
+<input class="with-gap" name="cw" type="radio" id="c_yes" value="yes" />
+    <label for="c_yes">はい</label>
+<input class="with-gap" name="cw" type="radio" id="c_no" value="no" />
+    <label for="c_no">いいえ</label><br>
+	
+	<h5>デフォルトの警告文</h5>
+<input type="text" style="width:150px" id="cw-text"><br>
+
+	<h5>デフォルトの公開設定</h5>
+<input class="with-gap" name="vis" type="radio" id="public" value="public" />
+    <label for="public">公開(Public)</label>
+<input class="with-gap" name="vis" type="radio" id="unlisted" value="unlisted" />
+    <label for="unlisted">未収載(Unlisted)</label>
+<input class="with-gap" name="vis" type="radio" id="private" value="private" />
+    <label for="private">非公開(Private)</label>
+<input class="with-gap" name="vis" type="radio" id="direct" value="direct" />
+    <label for="direct">ダイレクト(Direct)</label>
+<input class="with-gap" name="vis" type="radio" id="memory" value="memory" />
+    <label for="memory">前回の投稿設定を記憶する</label><br>
+	
+
+	<h5>デフォルトでボックスを隠す(起動時・トゥート後)</h5>
+<input class="with-gap" name="box" type="radio" id="b_yes" value="yes" />
+    <label for="b_yes">はい</label>
+<input class="with-gap" name="box" type="radio" id="b_no" value="no" />
+    <label for="b_no">いいえ</label><br>
+	
+<h5>新規通知のポップアップお知らせの表示秒数</h5>
+0に設定すると表示されません<br>
+<input type="text" style="width:50px" id="popup">秒<br>
+
+<h5>指定行数以上を折りたたむ</h5>
+5文字以下のトゥートは折りたたみません。また、折りたたみ時は改行が描画されません。<br>
+<input type="text" style="width:50px" id="sentence">行以上<br>
+
+<h5>マルチカラムの最低横幅</h5>
+画面全体の横幅÷コラム数がこの値を超えた時、横スクロールとなります。<br>
+<input type="text" style="width:50px" id="width">px以上<br>
+
+<h5>画像投稿設定</h5>
+<input class="with-gap" name="img" type="radio" id="i_url" value="url" />
+    <label for="i_url">画像を投稿し、画像のURLを最後に表示</label>
+<input class="with-gap" name="img" type="radio" id="i_no-act" value="no-act" />
+    <label for="i_no-act">画像を投稿するがURLは表示しない</label><br>
+<input class="with-gap" name="img" type="radio" id="i_inline" value="inline" disabled />
+    <label for="i_inline">現在利用できません。<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)--></label>
+	<br>
+
+	
+<button class="btn waves-effect"  style="width:100%; max-width:200px;" onclick="settings()">設定</button><br>
+<br>
+<button class="btn waves-effect red" style="width:100%; max-width:200px;" onclick="if(confirm('初期化します')){ localStorage.clear(); location.href='index.html'; }">初期化</button><br>
+
+
+<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">戻る</a><br>
+<br>
+キーボードショートカット一覧<br>
+N:新規投稿画面を開く<br>
+X:投稿パネルを開く<br>
+Ctrl+Enter:投稿<br>
+H:Home TL<br>
+L:Local TL<br>
+P:連合 TL<br>
+[スペース]+Shift:更新<br>
+<br>
+<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;">このソフトについて</button><br>
+<a href="https://desk.cutls.com" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;">公式HP</a><br>
+<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;">寄付(Enty)</a><br>
+<span style="font-family:Open Sans;">
+Copyright &copy; TheDesk on Mastodon 2018 & Cutls.com 2015 All Rights Reserved. Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License<br>
+Developer: <a onclick="udg('12336')" style="cursor:pointer" class="nex pointer">Cutls P(@Cutls@kirishima.cloud)</a><br>
+</span>
+ <!-- Modal Structure Userdata -->
+  <div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
+    <div id="his-data-content" class="modal-content" style="padding-bottom: 0;">
+	<div id="his-data-show">
+		<img src="./img/loading.svg" id="his-prof" style="">
+		<div class="his-float">
+			<span id="his-name" style="font-size:200%">Loading...</span><br>
+			@<span id="his-acct"></span>
+			<span class="gray" id="his-relation"></span><br>
+			<span class="cbadge"><span id="his-sta"></span>トゥート</span><span class="cbadge">フォロー:<span id="his-follow"></span></span>
+			<span class="cbadge">フォロワー:<span  id="his-follower"></span></span><span class="cbadge">Since:<span id="his-since"></span>
+		</div>
+		<div class="his-float">
+			<span id="his-des"></span><br>
+			
+		</div>
+		
+		  <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s4"><a  href="#his-tl">Timeline</a></li>
+        <li class="tab col s4"><a href="#his-follow-list">Follows</a></li>
+        <li class="tab col s4"><a href="#his-follower-list">Followers</a></li>
+      </ul>
+    </div>
+    <div id="his-tl" class="col s12 tab-content">A</div>
+    <div id="his-follow-list" class="col s12  tab-content">B</div>
+    <div id="his-follower-list" class="col s12  tab-content">C</div>
+  </div>
+		
+       </div>
+	  </div>
+    <div class="modal-footer">
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">フォロー</a>
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">ミュート</a>
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">ブロック</a>
+      <a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Close</a>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="./js/common/about.js"></script>
+<script type="text/javascript" src="./js/platform/end.js"></script>
+<script type="text/javascript" src="./js/login/logout.js"></script>
+<script type="text/javascript" src="./js/ui/settings.js"></script>
+<script type="text/javascript" src="./js/ui/theme.js"></script>
+<script type="text/javascript" src="./js/userdata/showOnTL.js"></script>
+<script type="text/javascript" src="./js/userdata/his-data.js"></script>
+<script type="text/javascript" src="./js/tl/notification.js"></script>
+<script type="text/javascript" src="./js/post/status.js"></script>
+<script type="text/javascript" src="./js/tl/parse.js"></script>
+<script type="text/javascript" src="./js/tl/date.js"></script>
