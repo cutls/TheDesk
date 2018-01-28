@@ -4,6 +4,9 @@
   width: 100vw;
   height: 100vh;
 }
+iframe {
+	max-width:100%;
+}
 .box {
   overflow-y: scroll;
   overflow-x: hidden;

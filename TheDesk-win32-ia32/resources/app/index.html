@@ -23,7 +23,7 @@
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script>
-var ver="Miho (ver.3)";
+var ver="Miho (ver.4)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -210,30 +210,6 @@ var tlid=0;
     </a>
   </div>
  </div>
-    <!-- Modal Structure Image-->
-  <div id="imagemodal" class="modal modal-fixed-footer" style="margin-top:-10%">
-    <div class="modal-content">
-		<div id="imagewrap">
-		<img src="" id="imgmodal">
-	</div><br>
-	</div>
-    <div class="modal-footer">
-		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-	<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">←</button>
-	<button class="btn waves-effect" onclick="zoom(2)">2x</button>
-	<button class="btn waves-effect" onclick="zoom(0.5)">0.5x</button>
-	<button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next">→</button>
-    </div>
-  </div>
-    <!-- Modal Structure Video-->
-  <div id="videomodal" class="modal modal-fixed-footer">
-    <div class="modal-content">
-		<video src="" id="video" style="width:100%;" controls >
-	</div>
-    <div class="modal-footer">
-		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-    </div>
-  </div>
       <!-- Modal Structure Tootdata-->
   <div id="tootmodal" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -268,6 +244,30 @@ var tlid=0;
 			
 		</div>
 		<div id="toot-after"></div>
+	</div>
+    <div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+      <!-- Modal Structure Image-->
+  <div id="imagemodal" class="modal modal-fixed-footer" style="margin-top:-10%">
+    <div class="modal-content">
+		<div id="imagewrap">
+		<img src="" id="imgmodal">
+	</div><br>
+	</div>
+    <div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+	<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">←</button>
+	<button class="btn waves-effect" onclick="zoom(2)">2x</button>
+	<button class="btn waves-effect" onclick="zoom(0.5)">0.5x</button>
+	<button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next">→</button>
+    </div>
+  </div>
+    <!-- Modal Structure Video-->
+  <div id="videomodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+		<video src="" id="video" style="width:100%;" controls >
 	</div>
     <div class="modal-footer">
 		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
