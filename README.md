@@ -5,7 +5,7 @@ Download:[TheDesk](https://desk.cutls.com)
 
 ## License
 
-Apache License, Version 2.0
+(TheDesk LICENSE v1)[https://github.com/cutls/TheDesk/LICENSE]
 
 ## Component/構成
 
