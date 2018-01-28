@@ -5,7 +5,7 @@ Download:[TheDesk](https://desk.cutls.com)
 
 ## License
 
-[TheDesk LICENSE v1](https://github.com/cutls/TheDesk/blob/master/LICENSE)
+[TheDesk LICENSE v1](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
 
 ## Component/構成
 
