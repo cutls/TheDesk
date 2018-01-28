@@ -25,9 +25,13 @@ function imgv(id, key) {
 		}
 		if ($("#" + id + "-image-" + (key * 1 + 1)).length == 0) {
 			$("#image-next").prop("disabled", true);
+		} else {
+			$("#image-next").prop("disabled", false);
 		}
 		if ($("#" + id + "-image-" + (key * 1 - 1)).length == 0) {
 			$("#image-prev").prop("disabled", true);
+		} else {
+			$("#image-prev").prop("disabled", false);
 		}
 		element.src = murl;
 	});
@@ -42,8 +46,9 @@ function imgCont(type) {
 	} else if (type == "prev") {
 		key = key * 1 - 1;
 	}
-	$('#imgmodal').attr('src', './img/loading.svg');
 	var murl = $("#" + id + "-image-" + key).attr("data-url");
+	if(murl){
+	$('#imgmodal').attr('src', './img/loading.svg');
 	var type = $("#" + id + "-image-" + key).attr("data-type");
 	$(document).ready(function() {
 		if (type == "image") {
@@ -75,7 +80,9 @@ function imgCont(type) {
 			$("#image-prev").prop("disabled", false);
 		}
 		element.src = murl;
+		
 	});
+	}
 }
 //ズームボタン(z:倍率)
 function zoom(z) {
