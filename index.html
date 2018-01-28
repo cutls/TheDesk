@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<title>TheDesk</title>
+<meta content="width=device-width,initial-scale=1.0" name="viewport">
+<link href="./css/materialize.css" type="text/css" rel="stylesheet">
+<link href="./css/auth.css" type="text/css" rel="stylesheet">
+<link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
+<link href='./css/tl.css' rel='stylesheet' type='text/css'>
+<link href='./css/userdata.css' rel='stylesheet' type='text/css'>
+<link href='./css/post.css' rel='stylesheet' type='text/css'>
+<link href="./css/master.css" type="text/css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
+<meta charset="utf-8">
+</head>
+<body>
+<script type="text/javascript" src="./js/common/jquery.js"></script>
+<script type="text/javascript" src="./js/platform/first.js"></script>
+<script type="text/javascript" src="./js/common/materialize.js"></script>
+<script type="text/javascript" src="./js/ui/tips.js"></script>
+<script type="text/javascript" src="./js/common/time.js"></script>
+<script type="text/javascript" src="./js/common/version.js"></script>
+<script type="text/javascript" src="./js/common/keyshortcut.js"></script>
+<script type="text/javascript" src="./js/common/modal.js"></script>
+<script>
+var ver="Miho (ver.3)";
+//betaを入れるとバージョンチェックしない
+//var ver="beta";
+var acct_id=0;
+var tlid=0;
+  verck(ver);
+ </script>
+<div id="masara">
+<!--最初にログインする-->
+ログインしたいインスタンスのアドレス<br>
+<input type="text" id="url" style="width:70%" placeholder="mstdn.jp">
+<button class="btn waves-effect" onclick="instance()">Login</button><br>
+
+<span style="font-family:Open Sans;">Supports</span>
+<div id="support">
+</div>
+<br>
+各インスタンスの独自機能もAPIの範囲内で実装させていただきます。お知らせください。<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P(@Cutls@kirishima.cloud)</a>まで。<br>
+ログイン後は設定画面から@Cutls@kirishima.cloudにコンタクトをとることができます。<br>
+<button class="btn waves-effect indigo" onclick="about()">このソフトについて</button><br>
+</div>
+<div id="auth">
+<!--PINコードで認証-->
+指定されたコードを貼り付けてください。ログインウィンドウは閉じていただいて構いません。<br>
+<input type="text" id="code" placeholder="コードを入力">
+<button class="btn waves-effect" onclick="code()">認証</button><br>
+</div>
+<div id="tl">
+<!--TL-->
+<!--ドラッグハンドラ-->
+<div id="drag"><div id="drag-content">ここにドラッグして添付(ドラッグと同時にアップロードされます)<br><button class="btn waves-effect" onclick="closedrop()">閉じる</button></div></div>
+<!--アカウント追加-->
+<div id="add-box" class="hide notf-box">
+	  <div class="input-field">
+	  アカウント選択<br>
+    <select id="add-acct-sel" class="acct-sel" style="color:black">
+		
+    </select>
+    <label></label>
+  </div><div class="input-field">
+    <select id="type-sel"  style="color:black">
+		 <option value="local">ローカル</option>
+		 <option value="home">ホーム</option>
+		 <option value="pub">連合</option>
+		 <option value="mix">統合(ローカルとホーム)</option>
+		 <option value="notf">通知</option>
+    </select>
+    <label>表示するタイムライン</label>
+  </div>
+ 	<button class="btn waves-effect blue " style="width:calc( 100% - 10px); padding:0;" onclick="addColumn()">追加</button>
+  <br><br>
+	<button class="btn waves-effect orange " style="width:calc( 100% - 10px); padding:0;" onclick="addToggle()">閉じる</button>
+</div>
+<!--検索-->
+<div id="src-box" class="hide notf-box">
+	<div class="input-field">
+          <i class="material-icons prefix">search</i>
+          <input id="src" type="text" class="validate" style="width:calc( 70% - 40px); padding:0;">
+		  <br>ハッシュタグを検索するときは#を抜いてください。<br>
+		  検索に使用するアカウント選択を<br>
+		   <div class="input-field">
+    <select id="src-acct-sel" class="acct-sel">
+		
+    </select>
+    <label></label>
+  </div>
+          <label for="src">検索</label>
+		  <button class="btn waves-effect indigo" style="width:calc( 30% - 40px); padding:0;" onclick="src()">検索</button>
+    </div>
+	<div id="search">
+	<div id="src-contents"></div>
+	<button class="btn waves-effect orange " style="width:calc( 100% - 10px); padding:0;" onclick="srcToggle()">閉じる</button>
+</div>
+</div>
+<!--TLのTL-->
+<div id="timeline-container">
+</div>
+<div id="post-box">
+<!--トゥートボックス-->
+<span class="cancel"><i class="material-icons" onclick="hide()" title="このボックスを閉じる(X)">cancel</i></span><br>
+<a onclick="addToggle()" class="setting nex"><i class="material-icons nex" title="カラム追加">add</i></a>
+<a id="clear" class="setting nex"><i class="material-icons nex" title="トゥートボックスのクリア">clear</i></a>
+<a onclick="zoomBox()" class="setting nex"><i class="material-icons nex" title="ボックスの拡大・縮小(E)">zoom_out_map</i></a>
+<a onclick="srcToggle()" class="setting nex"><i class="material-icons nex" title="検索">search</i></a>
+<a href="setting.html" class="setting nex"><i class="material-icons nex" title="設定">settings</i></a>
+<a href="acct.html"><i class="material-icons nex" title="アカウント管理">account_circle</i></a>
+<a href="index.html" class="setting nex"><i class="material-icons nex" title="スーパーリロード">refresh</i></a>
+  <div class="row" style="margin-bottom:0;">
+  <span class="sml"><span class="gray">画面内どこでもドラッグ・アンド・ドロップできます。</span><br></span>アカウント選択</span><br>
+ <div class="input-field">
+    <select id="post-acct-sel" class="acct-sel">
+		
+    </select>
+  </div>
+  <!--Markdown-->
+      <div class="row">
+	  <div class="markdown">
+	  <div class="col s12 more-show">
+	  <i class="material-icons pointer setting" onclick="tagsel('b')" title="太字(Ctrl+B)テキストボックス内を選択してから押すと囲みます。">format_bold</i>
+	  <i class="material-icons pointer setting" onclick="tagsel('i')" title="斜字(Ctrl+I)テキストボックス内を選択してから押すと囲みます。">format_italic</i>
+	  <i class="material-icons pointer setting" onclick="tagsel('u')" title="下線(Ctrl+U)テキストボックス内を選択してから押すと囲みます。">format_underlined</i>
+	  <i class="material-icons pointer setting" onclick="tagsel('s')" title="取り消し(Ctrl+S)テキストボックス内を選択してから押すと囲みます。">strikethrough_s</i>
+	  <i class="material-icons pointer setting" onclick="markdown('>','no','yes')" title="引用">format_quote</i>
+	  <i class="material-icons pointer setting" onclick="markdown('#','no','yes')" title="見出し">short_text</i>
+	  <i class="material-icons pointer setting" onclick="markdown('`','yes','no')" title="コード挿入">code</i>
+	  <i class="material-icons pointer setting" onclick="tagsel('spin')" title="回転　テキストボックス内を選択してから押すと囲みます。">autorenew</i>
+	  <i class="material-icons pointer setting" onclick="tagsel('pulse')" title="点滅　テキストボックス内を選択してから押すと囲みます。">flare</i>
+	  <i class="material-icons pointer setting" onclick="tagsel('flip=vertical')" title="上下反転　テキストボックス内を選択してから押すと囲みます。">swap_vert</i>
+	  <i class="material-icons pointer setting" onclick="tagsel('flip=horizontal')" title="左右反転　テキストボックス内を選択してから押すと囲みます。">swap_horiz</i>
+	  <span class="sml gray pointer"><a onclick="mdToggle()">Markdownエディタを隠す</a></span><br>
+	  <i class="material-icons pointer setting" onclick="tagsel('size')" title="文字サイズ変更　テキストボックス内を選択してから押すと囲みます。">format_size</i><input id="size" style="width: calc(50% - 20px); margin: 0; height: 24px;" value="12">px
+	  <i class="material-icons pointer setting" onclick="tagsel('colorhex')" title="文字色変更　テキストボックス内を選択してから押すと囲みます。">color_lens</i><input id="colorhex" style="width: calc(50% - 50px); margin: 0; height: 24px;" type="color"><br>
+	  <i class="material-icons pointer setting" onclick="markdownLink()" title="リンク挿入">link</i><input id="linkt" style="width: calc(50% - 20px); margin: 0; height: 24px;" placeholder="リンクテキスト">&nbsp;<input id="link2" style="width: calc(50% - 20px); margin: 0; height: 24px;" placeholder="リンクアドレス"><br>
+	  <i class="material-icons pointer setting" onclick="markdownImage()" title="インライン画像挿入">image</i><input id="image" style="width: calc(50% - 20px); margin: 0; height: 24px;" placeholder="代替テキスト">&nbsp;<input id="image2" style="width: calc(50% - 20px); margin: 0; height: 24px;" placeholder="画像アドレス">
+	   </div>
+	  </div>
+	  <div class="input-field col s12" id="preview-field" style="margin-top: 0;">
+	  <div id="md-preview"></div>
+	   <span class="sml gray pointer"><a onclick="previewEdit()">Edit</a></span>
+        </div>
+        <div class="input-field col s12" id="toot-field" style="margin-top: 0;">
+          <textarea id="textarea" class="materialize-textarea" style="margin-bottom:0" data-length="500"></textarea>
+          <label for="textarea">象</label>
+		  <span class="sml gray pointer more-show markdown" id="preview-btn"><a onclick="preview()">Preview</a></span>
+		  <span class="sml gray pointer more-show anti-markdown hide"><a onclick="mdToggle()">Markdownエディタを表示</a></span>
+        </div>
+		<div id="suggest"></div>
+		<br>
+<!--hidden area-->
+<input type="hidden" id="reply">
+<input type="hidden" id="media">
+<!--END hidden area-->
+		 <div class="col s12">
+<button class="btn waves-effect indigo" style="width:100%; padding:0; margin-top:20px;" onclick="post()" id="toot-post-btn">トゥート</button> </div>
+ <div class="col s12">
+<button class="btn waves-effect orange more-hide" style="width:100%; padding:0;" onclick="more()">もっと</button>
+<!--もっと-->
+<span id="preview"></span>
+<span  class="more-show sml">返信モード:<span id="rec">いいえ</span>/添付:<span id="mec">なし</span>/公開範囲:<span id="vis">public</span>/画像制限:<span id="nsc">なし</span></span><br>
+<span id="file-wrap"><input  class="more-show" type="file" name="pic" id="upfile" onchange="pimg(document.getElementById('upfile').files);" multiple></span>
+<input type="text" id="cw-text" placeholder="警告文">
+</div></div>
+ <div class="col s3">
+<button class="btn waves-effect more-show blue darken-3" style="width:100%; padding:0; margin-top:0;" id="cw" onclick="cw()" title="コンテンツワーニング(トゥートを表示する前にメッセージで隠す)(青:OFF)">CW</button>
+</div>
+ <div class="col s3">
+<button class="dropdown-button btn waves-effect more-show pink " style="width:100%; padding:0; margin-top:0;" data-activates='dropdown1'><i class="material-icons">lock</i></button>
+ <!-- 公開範囲 Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+	<li>公開範囲指定</li>
+    <li><a onclick="vis('public')">公開(Public)</a></li>
+    <li><a onclick="vis('unlisted')">未収載(Unlisted)</a></li>
+    <li><a onclick="vis('private')">非公開(Private)</a></li>
+	<li><a onclick="vis('direct')" class="disabled direct">ダイレクト(Direct)</a></li>
+  </ul>
+</div>
+ <div class="col s3">
+ <!--絵文字ピッカー-->
+ <div id="emoji" class="hide shared">
+ <span class="gray sml">インスタンスによって実装が異なります。<i><a onclick="emojiGet('true')" class="pointer">絵文字更新</a></i><br></span>
+	<div id="emoji-list" class="" style="">
+			
+	</div>
+	<div class="emoji-control center">
+		<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('before')" id="emoji-before"><i class="material-icons">navigate_before</i></button>
+		<span id="emoji-count"></span>/<span id="emoji-sum"></span>
+		<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('next')" id="emoji-next"><i class="material-icons">navigate_next</i></button>
+	</div>
+	
+</div>
+<button class="btn waves-effect more-show pink" style="width:100%; padding:0; margin-top:0;" onclick="emoji()"><i class="material-icons" title="絵文字挿入">add</i></button>
+</div>
+ <div class="col s3">
+<button class="btn waves-effect more-show blue darken-3" style="width:100%; padding:0; margin-top:0;" onclick="nsfw()" id="nsfw" title="画像に制限を付与(青:OFF)"><i class="material-icons">photo</i><i class="material-icons" id="nsi">lock_open</i></button>
+   </div>
+    <div class="col s12">
+<button class="btn waves-effect more-show orange" style="width:100%; padding:0; margin-top:0;" onclick="less()">閉じる</button>
+   </div>
+  </div>
+</div>
+<!--最小化-->
+<div class="fixed-action-btn horizontal" id="menu-btn" onclick="show()">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+  </div>
+ </div>
+    <!-- Modal Structure Image-->
+  <div id="imagemodal" class="modal modal-fixed-footer" style="margin-top:-10%">
+    <div class="modal-content">
+		<div id="imagewrap">
+		<img src="" id="imgmodal">
+	</div><br>
+	</div>
+    <div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+	<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">←</button>
+	<button class="btn waves-effect" onclick="zoom(2)">2x</button>
+	<button class="btn waves-effect" onclick="zoom(0.5)">0.5x</button>
+	<button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next">→</button>
+    </div>
+  </div>
+    <!-- Modal Structure Video-->
+  <div id="videomodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+		<video src="" id="video" style="width:100%;" controls >
+	</div>
+    <div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+      <!-- Modal Structure Tootdata-->
+  <div id="tootmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+	  <ul class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">arrow_upward</i>これよりあとのコンテクスト</div>
+      <div class="collapsible-body toot-reset" id="toot-after"></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">reply_all</i>このトゥートからのリプライ</div>
+      <div class="collapsible-body toot-reset" id="toot-reply"></div>
+    </li>
+	   <li>
+      <div class="collapsible-header active"><i class="material-icons">more_horiz</i>対象のトゥート</div>
+      <div class="collapsible-body toot-reset" id="toot-this"></div>
+    </li>
+	<li>
+      <div class="collapsible-header"><i class="material-icons">arrow_downward</i>これより前のLocal TL</div>
+      <div class="collapsible-body toot-reset" id="toot-before"></div>
+    </li>
+	<li>
+      <div class="collapsible-header"><i class="material-icons">star</i>このトゥートをお気に入りに登録した人</div>
+      <div class="collapsible-body toot-reset" id="toot-fav"></div>
+    </li>
+	<li>
+      <div class="collapsible-header"><i class="text-darken-3 fa fa-retweet"></i>このトゥートをブーストした人</div>
+      <div class="collapsible-body toot-reset" id="toot-rt"></div>
+    </li>
+  </ul>
+
+		<div id="toot-tools">
+			
+		</div>
+		<div id="toot-after"></div>
+	</div>
+    <div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <!-- Modal Structure Userdata -->
+  <div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
+    <div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
+	<div id="his-data-show">
+		<img src="./img/loading.svg" id="his-prof" style="">
+		<div class="his-float">
+			<span id="his-name" style="font-size:200%">Loading...</span><br>
+			@<span id="his-acct"></span>
+			<span class="gray" id="his-relation"></span><br>
+			<span class="cbadge"><span id="his-sta"></span>トゥート</span><span class="cbadge">フォロー:<span id="his-follow"></span></span>
+			<span class="cbadge">フォロワー:<span  id="his-follower"></span></span><span class="cbadge">Since:<span id="his-since"></span>
+		</div>
+		<div class="his-float">
+			<span id="his-des"></span><br>
+		</div>
+		
+		  <div class="row">
+    <div class="col s12"id="his-data-nav">
+      <ul class="tabs">
+        <li class="tab col s4"><a  href="#his-tl">Timeline</a></li>
+        <li class="tab col s4"><a href="#his-follow-list">Follows</a></li>
+        <li class="tab col s4"><a href="#his-follower-list">Followers</a></li>
+      </ul>
+    </div>
+    <div class="col s12" id="my-data-nav" style="display:none;">
+      <ul class="tabs">
+        <li class="tab col my-data-width"><a  href="#his-tl">Timeline</a></li>
+        <li class="tab col my-data-width"><a href="#his-follow-list">Follows</a></li>
+        <li class="tab col my-data-width"><a href="#his-follower-list">Followers</a></li>
+		<li class="tab col my-data-width"><a href="#his-fav-list">Favorites</a></li>
+		<li class="tab col my-data-width"><a href="#his-blocking-list">Blocking</a></li>
+		<li class="tab col my-data-width"><a href="#his-muting-list">Muting</a></li>
+		<li class="tab col my-data-width"><a href="#his-domain-list">Domain Blocking</a></li>
+		<li class="tab col my-data-width"><a href="#his-prof-list">Edit Profile</a></li>
+		<li class="tab col my-data-width"><a href="#his-request-list">Follow Request</a></li>
+      </ul>
+    </div>
+    <div id="his-tl" class="col s12 tab-content"> <div id="his-tl-contents" class="cont-series"></div><button class="btn waves-effect " style="width:100%; padding:0;" onclick="utl('--now','more')">もっと</button></div>
+    <div id="his-follow-list" class="col s12  tab-content"> <div id="his-follow-list-contents" class="cont-series"></div><button class="btn waves-effect " style="width:100%; padding:0;" onclick="flw('--now','more')">もっと</button></div>
+    <div id="his-follower-list" class="col s12  tab-content"><div id="his-follower-list-contents" class="cont-series"></div><button class="btn waves-effect " style="width:100%; padding:0;" onclick="fer('--now','more')">もっと</button></div>
+	<div id="his-fav-list" class="col s12  tab-content"><div id="his-fav-list-contents" class="cont-series"></div><button class="btn waves-effect" style="width:100%; padding:0;" onclick="showFav('more')">もっと</button></div>
+	<div id="his-blocking-list" class="col s12  tab-content"><div id="his-blocking-list-contents"class="cont-series" ></div><button class="btn waves-effect " style="width:100%; padding:0;" onclick="showBlo('more')">もっと</button></div>
+	<div id="his-muting-list" class="col s12  tab-content"><div id="his-muting-list-contents" class="cont-series"></div><button class="btn waves-effect " style="width:100%; padding:0;" onclick="showMut('more')">もっと</button></div>
+	<div id="his-domain-list" class="col s12  tab-content">
+		<div id="his-domain-list-contents" class="cont-series"></div>
+		<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showDom('more')">もっと</button>
+		ブロックするドメイン<br><input type="text" placeholder="example.com" id="domainblock"><button class="btn waves-effect" onclick="addDomainblock()">ブロック</button><br>
+	</div>
+	<div id="his-prof-list" class="col s12  tab-content">
+		名前<br>
+			<input type="text" placeholder="名前" id="his-name-val" width="max-width:150px;"><br>
+		自己紹介<br>
+		<div class="input-field col s12">
+			<textarea placeholder="自己紹介" id="his-des-val" class="materialize-textarea"></textarea>
+			<label for="his-des-val">自己紹介</label>
+        </div>
+		<button onclick="profedit()" class="btn waves-effect indigo">適用</button><br><br>
+		プロフィール画像変更:<span id="prof-change"><input type="file" onchange="imgChange(this,'avatar')"></span><br>
+		ヘッダー画像変更:<span id="header-change"><input type="file" onchange="imgChange(this,'header')"></span>
+		
+	</div>
+	<div id="his-request-list" class="col s12  tab-content"><div id="his-request-list-contents" class="cont-series"></div><button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">もっと</button></div>
+  </div>
+		
+       </div>
+	  </div>
+    <div class="modal-footer">
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">フォロー</a>
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">ミュート</a>
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">ブロック</a>
+      <a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Close</a>
+    </div>
+  </div>
+  <!--左下メッセージ-->
+<div id="message"></div>
+
+<script type="text/javascript" src="./js/common/about.js"></script>
+<script type="text/javascript" src="./js/tl/parse.js"></script>
+<script type="text/javascript" src="./js/ui/scroll.js"></script>
+<script type="text/javascript" src="./js/tl/tl.js"></script>
+<script type="text/javascript" src="./js/tl/card.js"></script>
+<script type="text/javascript" src="./js/tl/date.js"></script>
+<script type="text/javascript" src="./js/tl/notification.js"></script>
+<script type="text/javascript" src="./js/tl/datails.js"></script>
+<script type="text/javascript" src="./js/tl/mix.js"></script>
+<script type="text/javascript" src="./js/tl/src.js"></script>
+<script type="text/javascript" src="./js/ui/layout.js"></script>
+<script type="text/javascript" src="./js/login/login.js"></script>
+<script type="text/javascript" src="./js/ui/post-box.js"></script>
+<script type="text/javascript" src="./js/ui/img.js"></script>
+<script type="text/javascript" src="./js/ui/theme.js"></script>
+<script type="text/javascript" src="./js/post/post.js"></script>
+<script type="text/javascript" src="./js/post/reply.js"></script>
+<script type="text/javascript" src="./js/post/secure.js"></script>
+<script type="text/javascript" src="./js/post/img.js"></script>
+<script type="text/javascript" src="./js/post/status.js"></script>
+<script type="text/javascript" src="./js/post/emoji.js"></script>
+<script type="text/javascript" src="./js/post/suggest.js"></script>
+<script type="text/javascript" src="./js/post/bb-md.js"></script>
+<script type="text/javascript" src="./js/userdata/showOnTL.js"></script>
+<script type="text/javascript" src="./js/userdata/his-data.js"></script>
+<script type="text/javascript" src="./js/userdata/prof-edit.js"></script>
+<script type="text/javascript" src="./js/platform/end.js"></script>

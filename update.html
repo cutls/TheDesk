@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<title>Update - TheDesk</title>
+<link href="./css/materialize.css" type="text/css" rel="stylesheet">
+<link href="./css/master.css" type="text/css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
+<meta charset="utf-8">
+</head>
+<body>
+<script type="text/javascript" src="./js/common/jquery.js"></script>
+<script type="text/javascript" src="./js/platform/first.js"></script>
+<script type="text/javascript" src="./js/common/materialize.js"></script>
+<h5>アップデートがあります[TheDesk <span id="ver"></span>]</h5>
+<span id="det"></span><br>
+現在のバージョン<span id="now"></span><br>
+ダウンロード後はダウンロードフォルダ(ダウンロードされたフォルダとは違う可能性があります。)が開きソフトは閉じられます。<br>
+<button id="update" class="waves-effect btn" onclick="update('true')">ダウンロード</button>
+<p id="prog"></p>
+  <div class="progress">
+      <div class="determinate" style="width: 0%"></div>
+  </div><br>
+  アップデートはセキュアかつ高速なAmazon CloudFront CDNを通じて提供されます。<br>
+  <a onclick="window.close();" class="pointer">このアップデートを飛ばす</a>(次回TL表示時まで有効)<br><a onclick="quit()" class="pointer">このソフト終了</a><br>
+  <a onclick="about()" class="pointer">このソフトについて</a>
+  <script type="text/javascript" src="./js/common/about.js"></script>
+<script>
+var electron = require("electron");
+var ipc = electron.ipcRenderer;
+verck();
+    function update(sel){
+		$("#prog").text("");
+				ipc.send('download-btn', sel);
+    }
+	function quit(){
+				ipc.send('quit', 'go');
+    }
+ipc.on('prog', function (event, arg) {
+	console.log(arg);
+	$(".determinate").css('width',arg*100+"%");
+})
+ipc.on('mess', function (event, arg) {
+	$("#prog").text(arg);
+})
+function verck(){
+	var start="https://desk.cutls.com/ver.json";
+	fetch(start, {
+		method: 'GET',
+		headers: {'content-type': 'application/json'},
+    }).then(function(response) {
+       return response.json();
+    }).catch(function(error) {
+        todo(error);
+		console.error(error);
+    }).then(function(json) {
+		 console.log(json);
+			 $("#ver").text(json.desk);
+			 $("#det").text(json.detail);
+			 $("#now").text(localStorage.getItem("ver"));
+    });
+}
+</script>

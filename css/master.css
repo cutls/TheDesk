@@ -1,0 +1,177 @@
+/*共通CSS*/
+
+.btn {
+  margin: 5px;
+  text-transform: none;
+}
+.markdown {
+  display: none;
+}
+help {
+  display: none;
+  font-size: 10px;
+  color: gray;
+}
+.show-help {
+  display: inline;
+}
+option {
+  display: none;
+}
+#mainView {
+  padding: 10px;
+  padding-top: 50px;
+}
+#message {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  color: white;
+  z-index: 9999;
+}
+#imagemodal, #videomodal {
+  display: none;
+  max-width: 100vw;
+  max-height: 100vh;
+  top:0;
+  background-color: white;
+  position: fixed;
+  z-index: 9;
+}
+#imagemodal .modal-content {
+  overflow: hidden;
+}
+#imagewrap {
+  width: 100%;
+  height: 100%;
+}
+.pointer {
+  cursor: pointer;
+}
+.bbcode-pulse-loadings, .fa-pulse {
+  display: inline-block;
+  animation-duration: 3s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-name: pulse;
+}
+@keyframes pulse {
+  from, 50%, to {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+}
+code:before, .pre:before {
+  content: "Code";
+  font-size: 30px;
+  line-height: 1em;
+  font-family: monospace, monospace;
+  color: #999;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+code, pre {
+  color: white;
+  display: block;
+  border-left: 5px solid;
+  border-color: #079903;
+  padding-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  background-color: #000;
+  padding: 1em 1em 1em;
+  position: relative;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+}
+blockquote, .quote p {
+  margin: 0;
+}
+blockquote, .quote {
+  color: black;
+  background-color: #ddd;
+  padding: 1em 1em 1em;
+  position: relative;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+}
+blockquote:before, .quote:before {
+  content: "Quote";
+  font-size: 30px;
+  line-height: 1em;
+  font-family: Open Sans, cursive;
+  color: #999;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#drag {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+}
+#drag-content {
+  font-size: 200%;
+}
+
+/*black theme*/
+.blacktheme body {
+  color: white;
+  background-color: #212121;
+}
+.blacktheme #drag {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+}
+.blacktheme #imagemodal, #videomodal, #tootmodal {
+  background-color: black;
+}
+.blacktheme .collapsible-header {
+  background-color: #212121;
+}
+.blacktheme .tabs {
+  background-color: #212121;
+}
+
+/*スクロールバー*/
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.05);
+}
+::-webkit-scrollbar-track {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: #9e9e9e;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
