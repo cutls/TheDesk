@@ -23,11 +23,10 @@ function fav(id, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
-		$("#pub_" + id + " .fav_ct").text(json.favourites_count);
+		$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
 		if (!json.reblog) {
-			$("#pub_" + id + " .rt_ct").text(json.reblogs_count - 1);
 		} else {
-			$("#pub_" + id + " .rt_ct").text(json.reblog.reblogs_count);
+			$("[toot-id=" + id + "] .rt_ct").text(json.reblog.reblogs_count);
 		}
 		if ($("#pub_" + id).hasClass("faved")) {
 			$("#pub_" + id).removeClass("faved");
@@ -63,11 +62,16 @@ function rt(id, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
-		$("#pub_" + id + " .fav_ct").text(json.favourites_count);
+		$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
 		if (!json.reblog) {
-			$("#pub_" + id + " .rt_ct").text(json.reblogs_count - 1);
+			if(flag=="unreblog"){
+				var rt=json.reblogs_count - 1;
+			}else{
+				var rt=json.reblogs_count + 1;
+			}
+			$("[toot-id=" + id + "] .rt_ct").text(rt);
 		} else {
-			$("#pub_" + id + " .rt_ct").text(json.reblog.reblogs_count);
+			$("[toot-id=" + id + "] .rt_ct").text(json.reblog.reblogs_count);
 		}
 
 		if ($("#pub_" + id).hasClass("rted")) {
@@ -86,6 +90,7 @@ function follow(acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var id = $("#his-data").attr("user-id");
+	var remote = $("#his-data").attr("remote");
 	if ($("#his-data").hasClass("following")) {
 		var flag = "unfollow";
 	} else {
@@ -93,14 +98,21 @@ function follow(acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
-	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
+	if(remote=="true" && flag=="follow"){
+		var start = "https://" + domain + "/api/v1/follows";
+		var user=$("#his-acct").text();
+		var ent={"uri":user}
+	}else{
+		var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
+		var ent={}
+	}
 	fetch(start, {
 		method: 'POST',
 		headers: {
 			'content-type': 'application/json',
 			'Authorization': 'Bearer ' + at
 		},
-		body: JSON.stringify({})
+		body: JSON.stringify(ent)
 	}).then(function(response) {
 		return response.json();
 	}).catch(function(error) {

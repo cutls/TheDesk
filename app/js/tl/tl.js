@@ -3,6 +3,7 @@ function tl(type, data, acct_id, tlid) {
 	scrollevent();
 	localStorage.removeItem("morelock");
 	localStorage.removeItem("pool");
+	var domain = localStorage.getItem("domain_" + acct_id);
 	//タグの場合はカラム追加して描画
 	if (tlid == "add") {
 		console.log("add");
@@ -30,6 +31,8 @@ function tl(type, data, acct_id, tlid) {
 	}
 	if (type == "mix") {
 		//Integratedなら飛ばす
+			$("#notice_" + tlid).text("Integrated TL(" + localStorage.getItem(
+			"user_" + acct_id) + "@" + domain + ")");
 		mixtl(acct_id, tlid);
 		return;
 	} else if (type == "notf") {
@@ -41,7 +44,6 @@ function tl(type, data, acct_id, tlid) {
 	}
 	localStorage.setItem("now", type);
 	todo(cap(type) + " TL Loading...");
-	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	$("#notice_" + tlid).text(cap(type, data) + " TL(" + localStorage.getItem(
 		"user_" + acct_id) + "@" + domain + ")");
@@ -136,14 +138,14 @@ function moreload(type, tlid) {
 	var obj = JSON.parse(multi);
 	var acct_id = obj[tlid].domain;
 	if (!type) {
-		var type = localStorage.getItem("now");
+		var type = obj[tlid].type;
 	}
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
 	console.log(localStorage.getItem("morelock") + ":" + sid)
 	if (localStorage.getItem("morelock") != sid) {
 		localStorage.setItem("morelock", sid);
 		if (type == "mix") {
-			mixmore();
+			mixmore(tlid);
 			return;
 		}
 		localStorage.setItem("now", type);

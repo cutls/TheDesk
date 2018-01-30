@@ -133,25 +133,38 @@ function parseNotf(obj, popup, tlid, acct_id) {
 			}
 			var viewer = "";
 			var youtube = "";
+			var emojick = toot.emojis[0];
+		//絵文字があれば
+		var content=toot.content
+		if (emojick) {
+			Object.keys(toot.emojis).forEach(function(key5) {
+				var emoji = toot.emojis[key5];
+				var shortcode = emoji.shortcode;
+				var emoji_url = '<img src="' + emoji.url +
+					'" style="width:2em" class="emoji-img">';
+				var regExp = new RegExp(":" + shortcode + ":", "g");
+				content = content.replace(regExp, emoji_url);
+			});
+		}
 			var mediack = toot.media_attachments[0];
-			if (mediack) {
-				Object.keys(toot.media_attachments).forEach(function(key2) {
-					var media = toot.media_attachments[key2];
-					var purl = media.preview_url;
-					var url = media.url;
-					if (toot.sensitive && nsfw) {
-						var sense = "sensitive"
-					} else {
-						var sense = ""
-					}
-					viewer = viewer + '<a onclick="imgv(\'' + url + '\',\'' + toot.account
-						.acct + '\',\'' + media.type + '\')"><img src="' + purl + '" class="' +
-						sense +
-						'" width="250" style="object-fit: cover; width: 100%; height: 200px;"></a></span>';
-				});
-			} else {
-				viewer = "";
-			}
+			//メディアがあれば
+		if (mediack) {
+			var cwdt=100/toot.media_attachments.length
+			Object.keys(toot.media_attachments).forEach(function(key2) {
+				var media = toot.media_attachments[key2];
+				var purl = media.preview_url;
+				var url = media.url;
+				if (toot.sensitive && nsfw) {
+					var sense = "sensitive"
+				} else {
+					var sense = ""
+				}
+				viewer = viewer + '<a onclick="imgv(\''+id+'\',\''+key2+'\')" id="'+id+'-image-'+key2+'" data-url="'+url+'" data-type="'+media.type+'" class="img-parsed"><img src="' + purl + '" class="' + sense +
+					' toot-img pointer" style="width:'+cwdt+'%"></a></span>';
+			});
+		} else {
+			viewer = "";
+		}
 			var menck = toot.mentions[0];
 			var mentions = "";
 			if (menck) {
@@ -224,7 +237,7 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
 				toot.account.acct + locked + '</div>' +
 				'</div>' +
-				'<span class="toot ' + spoiler + '">' + toot.content +
+				'<span class="toot ' + spoiler + '">' + content +
 				'</span><span class="gray cw_text_' + toot.id + '">' + toot.spoiler_text +
 				spoiler_show + '</span>' +
 				'' + viewer + '' +
@@ -236,11 +249,11 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				acct_id +
 				')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-share"></i><help>返信</help></a></div>' +
 				'<div><a onclick="rt(\'' + toot.id + '\',' + acct_id +
-				')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
+				',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
 				if_rt + '"  id="rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 				'</span><help>ブースト</help></a></div>' +
 				'<div><a onclick="fav(\'' + toot.id + '\',' + acct_id +
-				')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
+				',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
 				if_fav + '" id="fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
 				'<help>お気に入り</help></a></span></div>' +
 				'<div class=' + if_mine + '><a onclick="del(\'' + toot.id + '\',' +

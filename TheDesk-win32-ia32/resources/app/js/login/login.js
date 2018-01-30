@@ -44,7 +44,11 @@ function login(url) {
 		localStorage.setItem("client_secret", json["client_secret"]);
 		$("#auth").show();
 		$("#masara").hide();
-		window.open(auth);
+		const {
+  			shell
+  		} = require('electron');
+
+  		shell.openExternal(auth);
 	});
 }
 

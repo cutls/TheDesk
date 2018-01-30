@@ -2,7 +2,6 @@
 function mixtl(acct_id, tlid) {
 	var type = "mix";
 	localStorage.removeItem("morelock")
-	$("#notice_" + tlid).text("Integrated TL");
 	localStorage.setItem("now", type);
 	todo("Integrated TL Loading...(Local)");
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -169,6 +168,7 @@ function mixmore(tlid) {
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
 	var start = "https://" + domain +
 		"/api/v1/timelines/public?local=true&max_id=" + sid;
+		console.log(start);
 	fetch(start, {
 		method: 'GET',
 		headers: {

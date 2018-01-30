@@ -1,3 +1,4 @@
+//Warning!!: This is edited by CutlsP. It's not raw file.
 /*!
  * Materialize v0.100.2 (http://materializecss.com)
  * Copyright 2014-2017 Materialize
@@ -1863,7 +1864,7 @@ if (Vel) {
     complete: undefined,
     dismissible: true,
     startingTop: '4%',
-    endingTop: '10%'
+    endingTop: '0%'
   };
 
   /**

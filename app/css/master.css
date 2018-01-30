@@ -1,5 +1,5 @@
 /*共通CSS*/
-
+body{overflow:hidden;}
 .btn {
   margin: 5px;
   text-transform: none;
@@ -161,7 +161,7 @@ blockquote:before, .quote:before {
 /*スクロールバー*/
 ::-webkit-scrollbar {
   width: 5px;
-  height: 10px;
+  height: 5px;
   background: rgba(0, 0, 0, 0.05);
 }
 ::-webkit-scrollbar-track {
