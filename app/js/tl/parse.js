@@ -94,6 +94,7 @@ function parse(obj, mix, acct_id) {
 		var mediack = toot.media_attachments[0];
 		//メディアがあれば
 		if (mediack) {
+			var cwdt=100/toot.media_attachments.length
 			Object.keys(toot.media_attachments).forEach(function(key2) {
 				var media = toot.media_attachments[key2];
 				var purl = media.preview_url;
@@ -103,8 +104,8 @@ function parse(obj, mix, acct_id) {
 				} else {
 					var sense = ""
 				}
-				viewer = viewer + '<a onclick="imgv(\''+id+'\',\''+key2+'\')" id="'+id+'-image-'+key2+'" data-url="'+url+'" data-type="'+media.type+'"><img src="' + purl + '" class="' + sense +
-					' toot-img" style=""></a></span>';
+				viewer = viewer + '<a onclick="imgv(\''+id+'\',\''+key2+'\')" id="'+id+'-image-'+key2+'" data-url="'+url+'" data-type="'+media.type+'" class="img-parsed"><img src="' + purl + '" class="' + sense +
+					' toot-img pointer" style="width:'+cwdt+'%"></a></span>';
 			});
 		} else {
 			viewer = "";
@@ -185,11 +186,11 @@ function parse(obj, mix, acct_id) {
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-share"></i></a></div>' +
 			'<div><a onclick="rt(\'' + toot.id + '\',' + acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
+			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
 			if_rt + '"  id="rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 			'</span></a></div>' +
 			'<div><a onclick="fav(\'' + toot.id + '\',' + acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
+			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
 			if_fav + '" id="fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
 			'</a></span></div>' +
 			'<div class=' + if_mine + '><a onclick="del(\'' + toot.id + '\',' +

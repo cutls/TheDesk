@@ -27,6 +27,12 @@ function udg(user, acct_id) {
 		} else {
 			$('#his-data').attr("user-id", user);
 			$('#his-data').attr("use-acct", acct_id);
+			if(json.username!=json.acct){
+				//Remote
+				$('#his-data').attr("remote", "true");
+			}else{
+				$('#his-data').attr("remote", "false");
+			}
 			$("#his-name").text(json.display_name);
 			$("#his-acct").text(json.acct);
 			$("#his-prof").attr("src", json.avatar);
@@ -89,6 +95,8 @@ function relations(user, acct_id) {
 			//自分がフォローしている
 			$("#his-data").addClass("following");
 			$("#his-follow-btn").text("フォロー解除");
+		}else{
+			$("#his-follow-btn").text("フォロー");
 		}
 		if (json.followed_by) {
 			//フォローされてる
@@ -97,18 +105,26 @@ function relations(user, acct_id) {
 		if (json.blocking) {
 			$("#his-data").addClass("blocking");
 			$("#his-block-btn").text("ブロック解除");
+		}else{
+			$("#his-block-btn").text("ブロック");
 		}
 		if (json.muting) {
 			$("#his-data").addClass("muting");
 			$("#his-mute-btn").text("ミュート解除");
+		}else{
+			$("#his-mute-btn").text("ミュート");
 		}
 		if (json.muting_notifications) {
 			$("#his-data").addClass("mutingNotf");
 			$("#his-notf-btn").text("通知ミュート解除");
+		}else{
+			$("#his-notf-btn").text("通知ミュート");
 		}
 		if (json.domain_blocking) {
 			$("#his-data").addClass("blockingDom");
 			$("#his-domain-btn").text("ドメインブロック解除");
+		}else{
+			$("#his-domain-btn").text("ドメインブロック");
 		}
 
 	});

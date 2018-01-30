@@ -1,6 +1,6 @@
 /*トゥートボックス向けCSS*/
 #post-box {
-  position: absolute;
+  position: fixed;
   right: 3px;
   bottom: 3px;
   background-color: white;

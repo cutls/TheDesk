@@ -54,7 +54,7 @@
 		Object.keys(obj).forEach(function(key) {
 			var acct = obj[key];
 			var html = '<div class="box" id="timeline_' + key + '_box" tlid="' + key +
-				'"><div><span id="notice_' + key + '" class="notice"></span>' +
+				'"><div class="notice-box"><span id="notice_' + key + '"></span><br>' +
 				'<a onclick="notfToggle(' + acct.domain + ',' + key +
 				')" class="setting nex" title="このアカウントの通知"><i class="material-icons nex notf-icon_' +
 				key + '">notifications</i></a>' +
@@ -62,11 +62,11 @@
 				')" class="setting nex"><i class="material-icons nex" title="このカラムを削除">remove_circle</i></a>' +
 				'<a onclick="cardToggle(' + key +
 				')" class="setting nex"><i class="material-icons nex" title="リンクの解析を切り替え(OFFで制限を回避出来る場合があります)">link</i><span id="sta-card-' +
-				key + '">On</span></a>' +
+				key + '">On</span></a><a onclick="goTop(' + key + ')" class="setting nex"><i class="material-icons nex" title="一番上へ">vertical_align_top</i></a>' +
 				'<div class="hide notf-indv-box" id="notf-box_' + key +
 				'"><div id="notifications_' + key +
-				'"></div></div></div><div id="timeline_' + key +
-				'" class="tl"></div></div>';
+				'"></div></div></div><div class="tl-box"><div id="timeline_' + key +
+				'" class="tl"></div></div></div>';
 			$("#timeline-container").append(html);
 			if (acct.data) {
 				var data = acct.data;

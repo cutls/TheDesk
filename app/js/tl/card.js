@@ -48,6 +48,17 @@ function additional(acct_id, tlid) {
 			});
 		}
 	});
+	//Markdownイメージビューワー
+	$("#timeline_" + tlid + " .toot a:not(.img-parsed):has(img)").each(function(i, elem) {
+			var ilink=$(this).attr("href");
+			var id = $(this).parents('.cvo').attr("toot-id");
+			$(this).attr("href","#");
+			$(this).attr("onclick","imgv('"+id+"','"+i+"')");
+			$(this).attr("data-type","image");
+			$(this).attr("id",id+"-image-"+i);
+			$(this).attr("data-url",ilink);
+			$(this).addClass("img-parsed");
+	});
 }
 
 //各TL上方のLink[On/Off]
