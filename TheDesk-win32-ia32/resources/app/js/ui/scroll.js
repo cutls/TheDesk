@@ -28,5 +28,5 @@ function scrollck() {
 }
 
 function goTop(id){
-	$("#timeline_"+id+"_box").scrollTop(0)
+	$("#timeline_"+id+"_box .tl-box").scrollTop(0)
 }
