@@ -118,8 +118,9 @@ function parseNotf(obj, popup, tlid, acct_id) {
 			} else if (eachobj.type == "favourite") {
 				var what = "ふぁぼしました";
 			}
-			var noticetext = eachobj.account.display_name + "(" + eachobj.account.acct +
-				")が" + what;
+			var noticetext = '<a onclick="udg(\'' + eachobj.account.id +
+				'\',\'' + acct_id + '\')" class="pointer">'+eachobj.account.display_name + "(" + eachobj.account.acct +
+				")</a>が" + what;
 			if (popup >= 0 && obj.length < 5) {
 				Materialize.toast(noticetext, popup * 1000);
 				$(".notf-icon_" + tlid).addClass("red-text");
