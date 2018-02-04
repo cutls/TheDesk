@@ -33,13 +33,14 @@ function notf(acct_id, tlid, sys) {
 		at;
 
 	console.log(start);
-	var websocket = new WebSocket(start);
-	console.log(websocket);
-	websocket.onopen = function(mess) {
+	var wsid = websocketNotf.length;
+	websocketNotf[wsid] = new WebSocket(start);
+	console.log(websocketNotf);
+	websocketNotf[wsid].onopen = function(mess) {
 		console.log("Connect Streaming API:");
 		console.log(mess);
 	}
-	websocket.onmessage = function(mess) {
+	websocketNotf[wsid].onmessage = function(mess) {
 		console.log("Receive Streaming API:");
 
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
@@ -62,7 +63,7 @@ function notf(acct_id, tlid, sys) {
 		}
 
 	}
-	websocket.onerror = function(error) {
+	websocketNotf[wsid].onerror = function(error) {
 		console.error('WebSocket Error ' + error);
 	};
 }

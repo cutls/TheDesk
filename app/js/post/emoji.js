@@ -112,3 +112,9 @@ function emojiInsert(code, del) {
 	}
 	$("#textarea").focus();
 }
+//改行挿入
+function brInsert(code) {
+	var now = $("#textarea").val();
+	$("#textarea").val(now + code);
+	$("#textarea").focus();
+}

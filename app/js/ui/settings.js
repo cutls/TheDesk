@@ -131,6 +131,8 @@ function load() {
 		var img = "no-act";
 	}
 	$("#i_" + img).prop("checked", true);
+	//並べ替え
+	sortload();
 }
 //最初に読む
 load();

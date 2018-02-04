@@ -8,16 +8,18 @@
 <link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
 <link href='./css/tl.css' rel='stylesheet' type='text/css'>
 <link href='./css/userdata.css' rel='stylesheet' type='text/css'>
+<link href='./css/sort.css' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 <meta charset="utf-8">
 </head>
-<body id="mainView">
+<body id="mainView" style="overflow-y:scroll">
 <script type="text/javascript" src="./js/common/jquery.js"></script>
 <script type="text/javascript" src="./js/platform/first.js"></script>
 <script type="text/javascript" src="./js/common/materialize.js"></script>
 <script type="text/javascript" src="./js/ui/tips.js"></script>
 <script type="text/javascript" src="./js/common/time.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
+<script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <div id="tools">
 <div id="notice" >Settings</div>
 <a onclick="notfToggle()" class="setting nex"><i class="material-icons nex notf-icon">notifications</i></a>
@@ -26,6 +28,9 @@
 </div>
 <div id="notf-box" class="hide"><div id="notifications">Notifications will be showed here...</div><button class="btn waves-effect orange more-hide" style="width:calc( 100% - 10px); padding:0;" onclick="notfToggle()">閉じる</button></div>
 <a href="acct.html" class="btn waves-effect blue nex" style="width:100%; max-width:400px;">アカウントマネージャー</a><br>
+<h5>カラム並べ替え</H5>
+<ul id="sort"></ul>
+<button onclick="sort()"  class="btn waves-effect light-blue nex" style="width:100%; max-width:200px;">並べ替え設定</button><br><br><br>
 <h5>時間表記設定</h5>
 相対時間の例:"1分前","3日前"<br>
 絶対時間の例"23:25:21","2017年12月30日 23:59:00"<br>
@@ -105,9 +110,7 @@
 	
 <button class="btn waves-effect"  style="width:100%; max-width:200px;" onclick="settings()">設定</button><br>
 <br>
-<button class="btn waves-effect red" style="width:100%; max-width:200px;" onclick="if(confirm('初期化します')){ localStorage.clear(); location.href='index.html'; }">初期化</button><br>
-
-
+<br><br>
 <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">戻る</a><br>
 <br>
 キーボードショートカット一覧<br>
@@ -119,6 +122,7 @@ L:Local TL<br>
 P:連合 TL<br>
 [スペース]+Shift:更新<br>
 <br>
+<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('初期化します')){ localStorage.clear(); location.href='index.html'; }">初期化</button><br>
 <button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;">このソフトについて</button><br>
 <a href="https://desk.cutls.com" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;">公式HP</a><br>
 <a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;">寄付(Enty)</a><br>
@@ -169,6 +173,7 @@ Developer: <a onclick="udg('12336')" style="cursor:pointer" class="nex pointer">
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
 <script type="text/javascript" src="./js/login/logout.js"></script>
+<script type="text/javascript" src="./js/ui/sort.js"></script>
 <script type="text/javascript" src="./js/ui/settings.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script type="text/javascript" src="./js/userdata/showOnTL.js"></script>

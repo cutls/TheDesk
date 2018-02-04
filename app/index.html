@@ -23,7 +23,7 @@
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script>
-var ver="Miho (ver.6)";
+var ver="Miho (ver.7)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -316,9 +316,10 @@ var tlid=0;
        </div>
 	  </div>
     <div class="modal-footer">
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">フォロー</a>
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">ミュート</a>
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">ブロック</a>
+	  <button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn" onclick="historyShow()">一つ前のユーザーデータ</button>
+	  <a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">フォロー</a>
+	  <a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">ミュート</a>
+	  <a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">ブロック</a>
       <a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Close</a>
     </div>
   </div>

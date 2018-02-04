@@ -4,6 +4,7 @@
 	var websocket = [];
 	var websocketHome = [];
 	var websocketLocal = [];
+	var websocketNotf = [];
 
 	//カラム追加ボックストグル
 	function addToggle() {
@@ -53,7 +54,7 @@
 		tlCloser();
 		Object.keys(obj).forEach(function(key) {
 			var acct = obj[key];
-			var html = '<div class="box" id="timeline_' + key + '_box" tlid="' + key +
+			var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 				'"><div class="notice-box"><span id="notice_' + key + '"></span><br>' +
 				'<a onclick="notfToggle(' + acct.domain + ',' + key +
 				')" class="setting nex" title="このアカウントの通知"><i class="material-icons nex notf-icon_' +
@@ -65,8 +66,8 @@
 				key + '">On</span></a><a onclick="goTop(' + key + ')" class="setting nex"><i class="material-icons nex" title="一番上へ">vertical_align_top</i></a>' +
 				'<div class="hide notf-indv-box" id="notf-box_' + key +
 				'"><div id="notifications_' + key +
-				'"></div></div></div><div class="tl-box"><div id="timeline_' + key +
-				'" class="tl"></div></div></div>';
+				'"></div></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+				'" class="tl" tlid="' + key + '"></div></div></div>';
 			$("#timeline-container").append(html);
 			if (acct.data) {
 				var data = acct.data;

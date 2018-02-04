@@ -1,5 +1,7 @@
 /*TL CSS(ただしBBCode pulse:master.css/spin:font-awesome*/
 #timeline-container {
+  overflow-x: scroll;
+  overflow-y: hidden;
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -8,7 +10,7 @@ iframe {
 	max-width:100%;
 }
 .box {
-  overflow-y: hidden;
+  overflow: hidden;
   min-width: 300px;
   height: 100vh;
   flex: 1;
@@ -132,7 +134,7 @@ p {
 }
 
 /*black theme*/
-.blacktheme #notf-box, .notf-box {
+.blacktheme .notf-box {
   background-color: #424242;
 }
 .blacktheme .modal-footer {
