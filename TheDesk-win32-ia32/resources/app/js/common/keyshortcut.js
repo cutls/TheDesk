@@ -10,6 +10,13 @@ $(function($) {
 				return false;
 			}
 		}
+		//Shift+Enter:Markdown
+		if (event.shiftKey) {
+			if (e.keyCode === 13) {
+				brInsert("　\n");
+				return false;
+			}
+		}
 		//Esc:消す
 		if (e.keyCode === 27) {
 			hide();

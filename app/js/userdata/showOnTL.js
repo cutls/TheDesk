@@ -1,4 +1,5 @@
 //ユーザーデータ表示
+localStorage.removeItem("history");
 function udg(user, acct_id) {
 	if (!user) {
 		user = localStorage.getItem("user-id");
@@ -19,6 +20,13 @@ function udg(user, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
+		//一つ前のユーザーデータ
+		if (!localStorage.getItem("history")){
+			$("#his-history-btn").prop("disabled",true);
+		}else{
+			$("#his-history-btn").prop("disabled",false);
+			$('#his-data').attr("history", localStorage.getItem("history"));
+		}
 		//moved設定時
 		if (json.moved) {
 			Materialize.toast(
@@ -48,6 +56,7 @@ function udg(user, acct_id) {
 			$('ul.tabs').tabs();
 			$('#his-data').css('background-size', 'cover');
 			$("#his-since").text(crat(json.created_at));
+			localStorage.setItem("history" , user);
 		}
 		//自分の時
 		if (json.acct == localStorage.getItem("user")) {
@@ -70,6 +79,12 @@ function udg(user, acct_id) {
 		}
 		todc();
 	});
+}
+//一つ前のユーザーデータ表示
+function historyShow(){
+	var acct_id=$('#his-data').attr("use-acct");
+	var user=$('#his-data').attr("history");
+	udg(user, acct_id, "true")
 }
 
 //FF関係取得
@@ -163,4 +178,6 @@ function hisclose() {
 	$("#his-data-nav").show();
 	$(".cont-series").html("");
 	$("#domainblock").val("");
+	$('#his-data').attr("history", "");
+	localStorage.removeItem("history");
 }

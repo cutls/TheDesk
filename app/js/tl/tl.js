@@ -139,6 +139,11 @@ function moreload(type, tlid) {
 	var acct_id = obj[tlid].domain;
 	if (!type) {
 		var type = obj[tlid].type;
+	}else{
+		var data;
+	}
+	if(type=="tag"){
+		var data=obj[tlid].data;
 	}
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
 	console.log(localStorage.getItem("morelock") + ":" + sid)
@@ -152,7 +157,7 @@ function moreload(type, tlid) {
 		todo(cap(type) + " TL MoreLoading");
 		var domain = localStorage.getItem("domain_" + acct_id);
 		var at = localStorage.getItem(domain + "_at");
-		var start = "https://" + domain + "/api/v1/timelines/" + com(type) +
+		var start = "https://" + domain + "/api/v1/timelines/" + com(type,data) +
 			"max_id=" + sid;
 		fetch(start, {
 			method: 'GET',
@@ -202,6 +207,14 @@ function tlCloser() {
 		if (websocketLocal[tlid]) {
 			websocketLocal[tlid].close();
 			console.log("Close Streaming API:MixLocal" + tlid);
+		}
+
+	});
+	websocketLocal = [];
+	Object.keys(websocketNotf).forEach(function(tlid) {
+		if (websocketNotf[tlid]) {
+			websocketNotf[tlid].close();
+			console.log("Close Streaming API:Notf" + tlid);
 		}
 
 	});

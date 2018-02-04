@@ -177,7 +177,8 @@ function parse(obj, mix, acct_id) {
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
 			'</span>' +
 			'' + viewer + '' +
-			'<div class="additional"></div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
+			'<div class="additional"><a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
+			',\''+id+'\')" class="add-show pointer">URL解析</a></div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
 			date(toot.created_at, datetype) + '</span>' +
 			'<span class="cbadge">via ' + via +
 			'<help class="white-text">どこから投稿したか</help></span>' + mentions + tags +
