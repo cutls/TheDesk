@@ -3,6 +3,7 @@
 function additional(acct_id, tlid) {
 	//メンション系
 	$(".mention").attr("href", "#");
+	$(".mention").addClass("parsed");
 	//トゥートサムネ
 	$("#timeline_" + tlid + " .toot a:not(.parsed)").each(function(i, elem) {
 		var domain = localStorage.getItem("domain_" + acct_id);
@@ -50,7 +51,7 @@ function additional(acct_id, tlid) {
 			$(this).attr("title",text);
 		}
 	});
-	$("#timeline_" + tlid + " .toot:not(:has(a:not(.add-show)))").each(function(i, elem) {
+	$("#timeline_" + tlid + " .toot:not(:has(a:not(.add-show,.parsed)))").each(function(i, elem) {
 		$(this).parent().find(".add-show").hide();
 	});
 	//Markdownイメージビューワー
