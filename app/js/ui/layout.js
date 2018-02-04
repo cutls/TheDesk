@@ -114,6 +114,7 @@
 		};
 		var multi = localStorage.getItem("column");
 		var obj = JSON.parse(multi);
+		localStorage.setItem("card_" + obj.length,"true");
 		obj.push(add);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("column", json);
