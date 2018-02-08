@@ -181,7 +181,7 @@ function parse(obj, mix, acct_id) {
 			',\''+id+'\')" class="add-show pointer">URL解析</a></div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
 			date(toot.created_at, datetype) + '</span>' +
 			'<span class="cbadge">via ' + via +
-			'<help class="white-text">どこから投稿したか</help></span>' + mentions + tags +
+			'</span>' + mentions + tags +
 			'<div style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; width:500px; max-width:100%; ">' +
 			'<div><a onclick="re(\'' + toot.id + '\',\'' + toot.account.acct + '\',' +
 			acct_id +

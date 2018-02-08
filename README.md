@@ -5,13 +5,13 @@ Download:[TheDesk](https://desk.cutls.com)
 
 ## License
 
-[TheDesk LICENSE v1](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
+[TheDesk LICENSE v2](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
 
 ## Component/構成
 
 app:Raw files(you can download to modify or check)  
 
-app:そのままのファイル  
+app:そのままのファイル。ダウンロード→テスト用  
 
 ## Language/言語
 

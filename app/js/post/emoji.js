@@ -107,7 +107,7 @@ function emojiInsert(code, del) {
 		emoji();
 	} else {
 		var regExp = new RegExp(del, "g");
-		var now = now.replace(now, "");
+		var now = now.replace(regExp, "");
 		$("#textarea").val(now + " " + code);
 	}
 	$("#textarea").focus();

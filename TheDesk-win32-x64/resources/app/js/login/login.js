@@ -1,10 +1,12 @@
 /*ログイン処理・認証までのJS*/
 //最初に読むやつ
+//アスタルテ判定初期化
+localStorage.removeItem("kirishima")
 function ck() {
 	var domain = localStorage.getItem("domain_0");
 	var at = localStorage.getItem(domain + "_at");
 	if (at) {
-		ckdb();
+		ckdb(0);
 		$("#tl").show();
 		parseColumn();
 		multi();
@@ -138,8 +140,12 @@ function getdata() {
 }
 
 //TheDesk独自のマストドンDBでMarkdownやBBCodeの対応、文字数制限をチェック
-function ckdb() {
+function ckdb(acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain=="kirishima.cloud"){
+		localStorage.setItem("kirishima", "true");
+		$("#ranking-btn").show();
+	}
 	var at = localStorage.getItem(domain + "_at");
 	var bbcode = domain + "_bbcode";
 	var letters = domain + "_letters";
@@ -159,12 +165,14 @@ function ckdb() {
 		console.log(json[letters]);
 		if (json[bbcode]) {
 			if (json[bbcode] == "enabled") {
-
+				localStorage.setItem("bb_" + acct_id, "true");
 			} else {
+				localStorage.removeItem("bb_" + acct_id);
 				$("[data-activates='bbcode']").addClass("disabled");
 				$("[data-activates='bbcode']").prop("disabled", true);
 			}
 		} else {
+			localStorage.removeItem("bb_" + acct_id);
 			$("[data-activates='bbcode']").addClass("disabled");
 			$("[data-activates='bbcode']").addClass("disabled", true);
 		}
@@ -172,7 +180,10 @@ function ckdb() {
 			$("#textarea").attr("data-length", json[letters]);
 		} else {}
 		if (json[domain + "_markdown"] == "enabled") {
+			localStorage.setItem("md_" + acct_id, "true");
 			$(".markdown").show();
+		}else{
+			localStorage.removeItem("bb_" + acct_id);
 		}
 
 	});

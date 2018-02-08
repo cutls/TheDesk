@@ -19,6 +19,7 @@ input.addEventListener("focus", function() {
 			} else if (acct[1]) {
 				var q = acct[1];
 			} else {
+				$("#suggest").html("");
 				return;
 			}
 			var domain = localStorage.getItem("domain_" + acct_id);
