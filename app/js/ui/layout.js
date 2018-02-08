@@ -35,6 +35,7 @@
 				localStorage.setItem("prof_" + key, acct.prof);
 				localStorage.setItem("domain_" + key, acct.domain);
 				localStorage.setItem(acct.domain + "_at", acct.at);
+				ckdb(key);
 			});
 		}
 		var col = localStorage.getItem("column");

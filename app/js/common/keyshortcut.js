@@ -22,10 +22,18 @@ $(function($) {
 			hide();
 			return false;
 		}
-		//Esc:消す
+		//F5リロード
 		if (e.keyCode === 116) {
 			location.href = "index.html";
 			return false;
+		}
+		//Ctrl+R:ランキング
+		if (event.ctrlKey) {
+			if (e.keyCode === 82) {
+				if(localStorage.getItem("kirishima")){
+					window.open("https://desk.cutls.com/labo.php");
+				}
+			}
 		}
 		//input/textareaにフォーカスなし時
 		if (!hasFocus && !hasFocus2) {

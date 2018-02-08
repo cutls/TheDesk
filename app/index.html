@@ -23,7 +23,7 @@
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script>
-var ver="Miho (ver.7)";
+var ver="Miho (ver.8)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -34,6 +34,7 @@ var tlid=0;
 <!--最初にログインする-->
 ログインしたいインスタンスのアドレス<br>
 <input type="text" id="url" style="width:70%" placeholder="mstdn.jp">
+<div id="ins-suggest"></div>
 <button class="btn waves-effect" onclick="instance()">Login</button><br>
 
 <span style="font-family:Open Sans;">Supports</span>
@@ -110,10 +111,11 @@ var tlid=0;
 <a href="setting.html" class="setting nex"><i class="material-icons nex" title="設定">settings</i></a>
 <a href="acct.html"><i class="material-icons nex" title="アカウント管理">account_circle</i></a>
 <a href="index.html" class="setting nex"><i class="material-icons nex" title="スーパーリロード">refresh</i></a>
+<a onclick="window.open('https://desk.cutls.com/labo.php');" class="setting nex" target="_blank" id="ranking-btn" style="display:none;"><i class="material-icons nex" title="アスタルテランキング">timeline</i></a>
   <div class="row" style="margin-bottom:0;">
   <span class="sml"><span class="gray">画面内どこでもドラッグ・アンド・ドロップできます。</span><br></span>アカウント選択</span><br>
  <div class="input-field">
-    <select id="post-acct-sel" class="acct-sel">
+    <select id="post-acct-sel" class="acct-sel" onchange="mdCheck()">
 		
     </select>
   </div>
@@ -362,6 +364,7 @@ var tlid=0;
 <script type="text/javascript" src="./js/tl/src.js"></script>
 <script type="text/javascript" src="./js/ui/layout.js"></script>
 <script type="text/javascript" src="./js/login/login.js"></script>
+<script type="text/javascript" src="./js/login/instance.js"></script>
 <script type="text/javascript" src="./js/ui/post-box.js"></script>
 <script type="text/javascript" src="./js/ui/img.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>

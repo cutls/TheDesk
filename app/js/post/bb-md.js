@@ -1,4 +1,20 @@
 //BBCodeとMarkdownの入力・パーサー
+//アカウント変えた時にBBとかMDとか
+function mdCheck(){
+	var acct_id = $("#post-acct-sel").val();
+	  if(!localStorage.getItem("bb_"+acct_id) && !localStorage.getItem("md_"+acct_id)){
+		 $(".markdown").addClass("hide");
+		$(".anti-markdown").addClass("hide");
+	  }else{
+		   $(".markdown").removeClass("hide");
+		$(".anti-markdown").addClass("hide");
+	  }
+	  if($(".markdown").hasClass("hide")){
+		localStorage.setItem("md","hide");
+	}else{
+		localStorage.removeItem("md");
+	}
+}
 //BOXのトグルボタン
 function mdToggle(){
 	$(".markdown").toggleClass("hide");
@@ -17,6 +33,10 @@ if(localStorage.getItem("md")=="hide"){
 }
 //タグを選んだ時に(BB版)
   function tagsel(tag){
+	  var acct_id = $("#post-acct-sel").val();
+	  if(!localStorage.getItem("bb_"+acct_id)){
+		  return false;
+	  }
 		if(tag=="large" || tag=="size" || tag=="color" || tag=="colorhex"){
 			var sub=$("#"+tag).val();
 			var sub = sub.replace( /#/g , "" ) ;
@@ -52,6 +72,10 @@ function nl2br(str) {
 }
 //テキストボックスで選択したやつをタグで囲む(BB版)
 function surroundHTML(tagS,tagE) {
+	var acct_id = $("#post-acct-sel").val();
+	  if(!localStorage.getItem("bb_"+acct_id)){
+		  return false;
+	  }
 	var target = document.getElementById("textarea");
 	var pos = getAreaRange(target);
 
@@ -75,6 +99,10 @@ function surroundHTML(tagS,tagE) {
 			$("#textarea").focus();
   }
 function surroundMD(tagS,tagE,ck,br) {
+	var acct_id = $("#post-acct-sel").val();
+	  if(!localStorage.getItem("md_"+acct_id)){
+		  return false;
+	  }
 	var target = document.getElementById("textarea");
 	var pos = getAreaRange(target);
 
@@ -113,6 +141,10 @@ function getAreaRange(obj) {
 
 //Markdownのリンク挿入
 function markdownLink(){
+	var acct_id = $("#post-acct-sel").val();
+	  if(!localStorage.getItem("md_"+acct_id)){
+		  return false;
+	  }
 	var linkIns="["+$("#linkt").val()+"]"+"("+$("#link2").val()+")";
 	if(linkIns!="[]()"){
 	$("#textarea").val($("#textarea").val()+linkIns);
@@ -123,6 +155,10 @@ function markdownLink(){
 }
 //Markdownのimg挿入
 function markdownImage(){
+	var acct_id = $("#post-acct-sel").val();
+	  if(!localStorage.getItem("md_"+acct_id)){
+		  return false;
+	  }
 	var imgIns="!["+$("#image").val()+"]"+"("+$("#image2").val()+")";
 	if(imgIns!="![]()"){
 	$("#textarea").val($("#textarea").val()+imgIns);
