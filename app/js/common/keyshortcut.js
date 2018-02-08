@@ -100,7 +100,7 @@ $(function($) {
 				}
 			}
 		}
-		//37,39
+		//イメージビューワー切り替え
 		if (e.keyCode === 37) {
 			if ($("#imagemodal").hasClass("open")) {
 				imgCont('prev');
