@@ -85,7 +85,7 @@ ipc.on('download-btn', (e, args) => {
 		saveAs: args
 	};
 	download(BrowserWindow.getFocusedWindow(),
-			'https://deskdownload.8i9.me/TheDesk-win32-x64.zip', opts)
+			'https://dl.thedesk.top/TheDesk-win32-x64.zip', opts)
 		.then(dl => {
 			mainWindow.webContents.send('comp', "ダウンロードが完了しました。");
 			app.quit();

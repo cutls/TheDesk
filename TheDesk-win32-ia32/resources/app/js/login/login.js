@@ -30,7 +30,7 @@ function login(url) {
 			scopes: 'read write follow',
 			client_name: "TheDesk(PC)",
 			redirect_uris: 'urn:ietf:wg:oauth:2.0:oob',
-			website: "https://desk.cutls.com"
+			website: "https://thedesk.top"
 		})
 	}).then(function(response) {
 		return response.json();
@@ -149,7 +149,7 @@ function ckdb(acct_id) {
 	var at = localStorage.getItem(domain + "_at");
 	var bbcode = domain + "_bbcode";
 	var letters = domain + "_letters";
-	var start = "https://desk.cutls.com/mastodon_data.json";
+	var start = "https://dl.thedesk.top/mastodon_data.json";
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -191,7 +191,7 @@ function ckdb(acct_id) {
 
 //サポートインスタンス取得
 function support() {
-	var start = "https://desk.cutls.com/mastodon_data.json";
+	var start = "https://dl.thedesk.top/mastodon_data.json";
 	fetch(start, {
 		method: 'GET',
 		headers: {

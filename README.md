@@ -1,7 +1,7 @@
 # TheDesk
 Mastodon client for Windows  
 オープンソースSNSマストドンのWindowsクライアント  
-Download:[TheDesk](https://desk.cutls.com)
+Download:[TheDesk](https://thedesk.top)
 
 ## License
 

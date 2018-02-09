@@ -1,7 +1,7 @@
 //バージョンチェッカー
 function verck(ver) {
 	localStorage.setItem("ver", ver);
-	var start = "https://desk.cutls.com/ver.json";
+	var start = "https://dl.thedesk.top/ver.json";
 	fetch(start, {
 		method: 'GET'
 	}).then(function(response) {
