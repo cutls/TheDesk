@@ -1,6 +1,6 @@
 # TheDesk LICENSE v2
 
-(C)TheDesk on Mastodon 2018 all rights reserved. Website:[https://desk.cutls.com](https://desk.cutls.com)
+(C)TheDesk on Mastodon 2018 all rights reserved. Website:[https://thedesk.top](https://thedesk.top)
 
 以下のライセンスに基づき当ソフトウェアを公開します。  
 - 以下の条件の範囲内で再頒布を認めます。
@@ -11,4 +11,4 @@
   - 改変する場合、必ずソフトウェアのタイトルの末尾が"Powered by TheDesk"であり、ユーザーの見えるところにTheDesk [使用バージョン名]を表示すること。
   - ロゴはTheDeskを想起させるものであること。ソフトの改変を行う場合はアイコンを必ず変更すること。
 - このソフトの使用、再頒布に伴う一切の責任をTheDeskは負いません。
-- [https://desk.cutls.com](https://desk.cutls.com)で公式に頒布されるソフトのみ[kirishima.cloud](https://desk.cutls.com)(アスタルテ)公認クライアントです。
+- [https://thedesk.top](https://thedesk.top)で公式に頒布されるソフトのみ[kirishima.cloud](https://kirishima.cloud)(アスタルテ)公認クライアントです。

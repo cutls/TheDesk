@@ -31,7 +31,7 @@ $(function($) {
 		if (event.ctrlKey) {
 			if (e.keyCode === 82) {
 				if(localStorage.getItem("kirishima")){
-					window.open("https://desk.cutls.com/labo.php");
+					window.open("https://thedesk.top/labo.php");
 				}
 			}
 		}
