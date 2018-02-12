@@ -10,7 +10,7 @@
 <link href='./css/userdata.css' rel='stylesheet' type='text/css'>
 <link href='./css/post.css' rel='stylesheet' type='text/css'>
 <link href="./css/master.css" type="text/css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Yanone+Kaffeesatz" rel="stylesheet">
 <meta charset="utf-8">
 </head>
 <body>
@@ -23,7 +23,7 @@
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script>
-var ver="Miho (ver.9)";
+var ver="Miho (ver.10)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -112,6 +112,19 @@ var tlid=0;
 <a href="acct.html"><i class="material-icons nex" title="アカウント管理">account_circle</i></a>
 <a href="index.html" class="setting nex"><i class="material-icons nex" title="スーパーリロード">refresh</i></a>
 <a onclick="window.open('https://thedesk.top/labo.php');" class="setting nex" target="_blank" id="ranking-btn" style="display:none;"><i class="material-icons nex" title="アスタルテランキング">timeline</i></a>
+<a onclick="Rtoggle()" class="setting nex" id="radio-btn"><i class="material-icons nex" title="Radio">play_circle_outline</i></a><span id="radio-sta" class="radio"></span>
+<div id="radio-view" class="hide radio">
+	<span class="cbadge pointer" onclick="Rplay('https://listen.moe/stream','Listen.moe')" data-name="Listen.moe">Listen.moe</span>
+	<span class="cbadge pointer" onclick="Rplay('http://itori.animenfo.com:443','AnimeNfo Radio')" data-name="AnimeNfo Radio">AnimeNfo Radio</span>
+	<span class="cbadge pointer" onclick="Rplay('http://hyades.shoutca.st:8043/stream','LoFi hip hop Radio')" data-name="LoFi hip hop Radio">LoFi hip hop Radio</span>
+	<span class="cbadge pointer" onclick="Rplay('http://89.16.185.174:8004/stream','Linn Classical')" data-name="Linn Classical">Linn Classical</span>
+	<span class="cbadge pointer" onclick="Ryourself()">Others</span>
+</div>
+<div id="radio-input" class="hide radio">
+	<input type="url" id="radio-url" placeholder="URL" style="width:100px">
+	<button class="btn waves-effect" onclick="Rinput()">Play</button>
+	<button class="btn waves-effect" onclick="Rselect()">Presets</button>
+</div>
   <div class="row" style="margin-bottom:0;">
   <span class="sml"><span class="gray">画面内どこでもドラッグ・アンド・ドロップできます。</span><br></span>アカウント選択</span><br>
  <div class="input-field">
@@ -129,7 +142,11 @@ var tlid=0;
 	  <i class="material-icons pointer setting" onclick="tagsel('s')" title="取り消し(Ctrl+S)テキストボックス内を選択してから押すと囲みます。">strikethrough_s</i>
 	  <i class="material-icons pointer setting" onclick="markdown('>','no','yes')" title="引用">format_quote</i>
 	  <i class="material-icons pointer setting" onclick="markdown('#','no','yes')" title="見出し">short_text</i>
-	  <i class="material-icons pointer setting" onclick="markdown('`','yes','no')" title="コード挿入">code</i>
+		<i class="material-icons pointer setting" onclick="markdown('`','yes','no')" title="コード挿入　テキストボックス内を選択してから押すと囲みます。">code</i>
+		<i class="material-icons pointer setting" onclick="markdown('- ','yes','yes')" title="箇条書きリスト">format_list_bulleted</i>
+		<i class="material-icons pointer setting" onclick="markdown('1. ','yes','yes')" title="番号付きリスト">format_list_numbered</i>
+		<i class="pointer setting fa fa-subscript" onclick="markdown('__','yes','no','before')" title="下付き文字　テキストボックス内を選択してから押すと囲みます。" style="font-size:24px"></i>
+		<i class="pointer setting fa fa-superscript" onclick="markdown('_','yes','no','before')" title="上付き文字　テキストボックス内を選択してから押すと囲みます。" style="font-size:24px"></i>
 	  <i class="material-icons pointer setting" onclick="tagsel('spin')" title="回転　テキストボックス内を選択してから押すと囲みます。">autorenew</i>
 	  <i class="material-icons pointer setting" onclick="tagsel('pulse')" title="点滅　テキストボックス内を選択してから押すと囲みます。">flare</i>
 	  <i class="material-icons pointer setting" onclick="tagsel('flip=vertical')" title="上下反転　テキストボックス内を選択してから押すと囲みます。">swap_vert</i>
@@ -351,7 +368,8 @@ var tlid=0;
   </div>
   <!--左下メッセージ-->
 <div id="message"></div>
-
+<!--Radio-->
+<audio src="" id="radio"></audio>
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/tl/parse.js"></script>
 <script type="text/javascript" src="./js/ui/scroll.js"></script>
@@ -368,6 +386,7 @@ var tlid=0;
 <script type="text/javascript" src="./js/ui/post-box.js"></script>
 <script type="text/javascript" src="./js/ui/img.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
+<script type="text/javascript" src="./js/ui/radio.js"></script>
 <script type="text/javascript" src="./js/post/post.js"></script>
 <script type="text/javascript" src="./js/post/reply.js"></script>
 <script type="text/javascript" src="./js/post/secure.js"></script>

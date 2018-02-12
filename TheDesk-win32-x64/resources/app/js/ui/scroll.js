@@ -17,6 +17,12 @@ function scrollck() {
 				jQuery("time.timeago").timeago();
 				localStorage.removeItem("pool_" + tlid);
 			}
+			//自動リフレッシュ
+			if( $("#timeline_" + tlid+" .cvo").length > 100 ){
+				for(var i=100;i<$("#timeline_" + tlid +" .cvo").length;i++){
+					$("#timeline_" + tlid +" .cvo").eq(i).remove();
+				}
+			}
 		}
 		//続きを読むトリガー
 		var scrt = $(this).find(".tl").height() - 1000;
@@ -28,5 +34,5 @@ function scrollck() {
 }
 
 function goTop(id){
-	$("#timeline_"+id+"_box .tl-box").scrollTop(0)
+	$("#timeline_box_"+id+"_box .tl-box").scrollTop(0)
 }

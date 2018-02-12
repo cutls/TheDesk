@@ -47,4 +47,5 @@ function cw(){
 //TLでコンテンツワーニングを表示トグル
 function cw_show(id){
 	$(".cw_hide_"+id).toggleClass("cw");
+	$(".cw-long-"+id).toggleClass("hide");
 }

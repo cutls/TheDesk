@@ -65,8 +65,8 @@ function parse(obj, mix, acct_id) {
 				2;
 			if (sent < ct && $.mb_strlen(toot.content) > 5) {
 				var content = '<span class="gray">以下全文</span><br>' + toot.content
-				var spoil = $.strip_tags($.mb_substr(toot.content, 0, 100)) +
-					'<span class="gray">自動折りたたみ</span>';
+				var spoil = '<span class="cw-long-'+toot.id+'">'+$.strip_tags($.mb_substr(toot.content, 0, 100)) +
+					'</span><span class="gray">自動折りたたみ</span>';
 				var spoiler = "cw cw_hide_" + toot.id;
 				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
 					'\')" class="nex parsed">続き…</a>';
@@ -76,6 +76,15 @@ function parse(obj, mix, acct_id) {
 				var spoiler = "";
 				var spoiler_show = "";
 			}
+		}
+		var urls = content.match(
+			/https?:\/\/([-a-zA-Z0-9@.]+)\/?([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
+		);
+		if(urls){
+			var analyze='<a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
+			',\''+id+'\')" class="add-show pointer">URL解析</a>';
+		}else{
+			var analyze='';
 		}
 		var viewer = "";
 		var youtube = "";
@@ -177,8 +186,7 @@ function parse(obj, mix, acct_id) {
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
 			'</span>' +
 			'' + viewer + '' +
-			'<div class="additional"><a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
-			',\''+id+'\')" class="add-show pointer">URL解析</a></div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
+			'<div class="additional">' + analyze + '</div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
 			date(toot.created_at, datetype) + '</span>' +
 			'<span class="cbadge">via ' + via +
 			'</span>' + mentions + tags +

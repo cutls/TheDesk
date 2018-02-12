@@ -84,11 +84,13 @@ p {
   background-color:white;
   display: inline-block;
   position: relative;
-  font-family: Open Sans;
   margin-right: 10px;
   width:100%;
   z-index:1000;
   height:60px;
+}
+.tl-title {
+  font-family: Open Sans;
 }
 #tools {
   position: fixed;
@@ -97,7 +99,7 @@ p {
   float: right;
 }
 .setting {
-  font-size: 7px;
+  font-size: 10px;
   color: gray;
   cursor: pointer;
 }

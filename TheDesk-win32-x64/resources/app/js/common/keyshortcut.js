@@ -17,6 +17,13 @@ $(function($) {
 				return false;
 			}
 		}
+		//Shift+Space:Markdownゼロ幅スペース
+		if (event.shiftKey) {
+			if (e.keyCode === 32) {
+				brInsert("​");
+				return false;
+			}
+		}
 		//Esc:消す
 		if (e.keyCode === 27) {
 			hide();

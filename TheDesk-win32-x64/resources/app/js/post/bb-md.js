@@ -94,8 +94,14 @@ function surroundHTML(tagS,tagE) {
        	target.value = beforeNode + insertNode + afterNode;
     }
 }
-  function markdown(tag,ck,br){
-			surroundMD(tag,tag,ck);
+  function markdown(tag,ck,br,space){
+			if(space=="before"){
+				tagE=tag;
+				tag=" "+tag;
+			}else{
+				tagE=tag;
+			}
+			surroundMD(tag,tagE,ck,br);
 			$("#textarea").focus();
   }
 function surroundMD(tagS,tagE,ck,br) {
@@ -204,7 +210,7 @@ function preview(){
 	var bb=bb.replace(/\[colorhex=([A-Fa-f0-9]+)\](.+)\[\/colorhex\]/g,'<span style="color:#$1">$2<\/span>');
 	//code
 	var bb=bb.replace(/`(.+)`/g,'<code>$1<\/code>');
-	//index
+	//head
 	var m;
 	m=bb.match(/^#{1,6}(.+)$/gm);
 	if(m){
@@ -214,12 +220,45 @@ function preview(){
 		var bb=bb.replace(new RegExp(m[i], ""),indexct);
 	}
 	}
+	//list(ul)
+	var li;
+	li=bb.match(/^\- (.+)$/gm);
+	if(li){
+	for(let l = 0; l < li.length; l++) {
+		var u=li[l].match(/^\- (.+)$/);
+		var listUl='<li>'+u[1]+'</li>';
+		if(l == 0){
+			listUl='<ul>'+listUl;
+		}
+		if(l==li.length-1){
+			listUl=listUl+'</ul>';
+		}
+		var bb=bb.replace(new RegExp(li[l], ""),listUl);
+	}
+	}
+	//list(ol)
+	var li;
+	li=bb.match(/^1\. (.+)$/gm);
+	if(li){
+	for(let l = 0; l < li.length; l++) {
+		var u=li[l].match(/^1\. (.+)$/);
+		var listUl='<li>'+u[1]+'</li>';
+		if(l == 0){
+			listUl='<ol>'+listUl;
+		}
+		if(l==li.length-1){
+			listUl=listUl+'</ol>';
+		}
+		var bb=bb.replace(new RegExp(li[l], ""),listUl);
+	}
+	}
 	//img
 	var bb=bb.replace(/!\[(.+)\]\((https:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)\)/g,'<img src="$2" text="$1" style="width:100%">');
 	//link
 	var bb=bb.replace(/\[(.+)\]\((https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)\)/g,'<a href="$2" target="_blank">$1<\/a>');
-	
-	$("#md-preview").html(nl2br(bb));
+	bb=nl2br(bb);
+	bb=bb.replace(new RegExp("</li><br />", "g"),"");
+	$("#md-preview").html(bb);
   }
   //Editで戻る
   function previewEdit(){
