@@ -117,9 +117,11 @@ function cardToggle(tlid) {
 	if (!card) {
 		localStorage.setItem("card_" + tlid, "true");
 		$("#sta-card-" + tlid).text("Off");
+		$("#sta-card-" + tlid).css("color",'red');
 	} else {
 		localStorage.removeItem("card_" + tlid);
 		$("#sta-card-" + tlid).text("On");
+		$("#sta-card-" + tlid).css("color",'#009688');
 	}
 }
 //各TL上方のLink[On/Off]をチェック
@@ -127,7 +129,9 @@ function cardCheck(tlid) {
 	var card = localStorage.getItem("card_" + tlid);
 	if (!card) {
 		$("#sta-card-" + tlid).text("On");
+		$("#sta-card-" + tlid).css("color",'#009688');
 	} else {
 		$("#sta-card-" + tlid).text("Off");
+		$("#sta-card-" + tlid).css("color",'red');
 	}
 }

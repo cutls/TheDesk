@@ -92,7 +92,7 @@ function emojiList(target) {
 		var emoji = obj[i];
 		if (emoji) {
 			html = html + '<a onclick="emojiInsert(\':' + emoji.shortcode +
-				':\')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
+				': \')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
 		}
 	}
 	$("#emoji-list").html(html);

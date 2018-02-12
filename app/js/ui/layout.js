@@ -56,7 +56,7 @@
 		Object.keys(obj).forEach(function(key) {
 			var acct = obj[key];
 			var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
-				'"><div class="notice-box"><span id="notice_' + key + '"></span><br>' +
+				'"><div class="notice-box"><span id="notice_' + key + '" class="tl-title"></span><br>' +
 				'<a onclick="notfToggle(' + acct.domain + ',' + key +
 				')" class="setting nex" title="このアカウントの通知"><i class="material-icons nex notf-icon_' +
 				key + '">notifications</i></a>' +

@@ -132,6 +132,9 @@ blockquote:before, .quote:before {
 #drag-content {
   font-size: 200%;
 }
+.radio{
+  font-family:'Yanone Kaffeesatz'
+}
 
 /*black theme*/
 .blacktheme body {
