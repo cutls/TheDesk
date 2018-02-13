@@ -1,9 +1,11 @@
 /*イメージビューワー*/
 //postのimg.jsとは異なります。
-function imgv(id, key) {
+function imgv(id, key, acct_id) {
 	$('#imgmodal').attr('src', './img/loading.svg');
 	var murl = $("#" + id + "-image-" + key).attr("data-url");
 	var type = $("#" + id + "-image-" + key).attr("data-type");
+	$("#imagemodal").attr("data-id",id);
+	$("#imagemodal").attr("data-acct",acct_id);
 	$(document).ready(function() {
 		if (type == "image") {
 			$('#imgmodal').attr('src', murl);
@@ -20,8 +22,28 @@ function imgv(id, key) {
 		element.onload = function() {
 			var width = element.naturalWidth;
 			var height = element.naturalHeight;
-			$("#imgmodal").attr('width', width);
-			$("#imagemodal").css('height', "calc(100vh - 20px)");
+			var windowH = $(window).height();
+			var windowW = $(window).width();
+			var aspect = width/height;
+			if(height > width){
+				//縦長
+				$("#imgmodal").css('height',windowH-60+"px");
+				var imgW = (windowH-50)/height*width;
+				$("#imgmodal").css('width',imgW+"px");
+				$("#imagewrap").css('height',windowH-50+"px");
+				$("#imagemodal").css('height',windowH+"px");
+				$("#imagewrap").css('width',imgW+50+"px");
+				$("#imagemodal").css('width',imgW+50+"px");
+			}else{
+				//横長・正方形
+				$("#imgmodal").css('width',windowW-30+"px");
+				var imgH = (windowW-50)/width*height;
+				$("#imgmodal").css('height',imgH+"px");
+				$("#imagewrap").css('width',windowW+"px");
+				$("#imagemodal").css('width',windowW+"px");
+				$("#imagewrap").css('height',imgH+60+"px");
+				$("#imagemodal").css('height',imgH+120+"px");
+			}
 		}
 		if ($("#" + id + "-image-" + (key * 1 + 1)).length == 0) {
 			$("#image-next").prop("disabled", true);
@@ -40,7 +62,6 @@ function imgv(id, key) {
 function imgCont(type) {
 	var key = $('#imagemodal').attr('data-key');
 	var id = $('#imagemodal').attr('data-id');
-
 	if (type == "next") {
 		key++;
 	} else if (type == "prev") {
@@ -65,8 +86,28 @@ function imgCont(type) {
 		element.onload = function() {
 			var width = element.naturalWidth;
 			var height = element.naturalHeight;
-			$("#imgmodal").attr('width', width);
-			$("#imagemodal").css('height', "calc(100vh - 20px)");
+			var windowH = $(window).height();
+			var windowW = $(window).width();
+			var aspect = width/height;
+			if(height > width){
+				//縦長
+				$("#imgmodal").css('height',windowH-60+"px");
+				var imgW = (windowH-50)/height*width;
+				$("#imgmodal").css('width',imgW+"px");
+				$("#imagewrap").css('height',windowH-50+"px");
+				$("#imagemodal").css('height',windowH+"px");
+				$("#imagewrap").css('width',imgW+50+"px");
+				$("#imagemodal").css('width',imgW+50+"px");
+			}else{
+				//横長・正方形
+				$("#imgmodal").css('width',windowW-30+"px");
+				var imgH = (windowW-50)/width*height;
+				$("#imgmodal").css('height',imgH+"px");
+				$("#imagewrap").css('width',windowW+"px");
+				$("#imagemodal").css('width',windowW+"px");
+				$("#imagewrap").css('height',imgH+60+"px");
+				$("#imagemodal").css('height',imgH+120+"px");
+			}
 		}
 		if ($("#" + id + "-image-" + (key * 1 + 1)).length == 0) {
 			$("#image-next").prop("disabled", true);
@@ -88,7 +129,10 @@ function imgCont(type) {
 function zoom(z) {
 	var wdth = $('#imagewrap img').width();
 	var wdth = wdth * z;
-	$('#imagewrap img').attr("width", wdth);
+	$('#imagewrap img').css("width", wdth+"px");
+	var hgt = $('#imagewrap img').height();
+	var hgt = hgt * z;
+	$('#imagewrap img').css("height", hgt+"px");
 }
 //スマホ対応ドラッグ移動システム
 (function() {
@@ -166,4 +210,10 @@ element.onmousewheel = function(e) {
 	} else {
 		zoom(0.9)
 	}
+}
+function detFromImg(){
+	var id=$("#imagemodal").attr("data-id");
+	var acct_id=$("#imagemodal").attr("data-acct");
+	$('#imagemodal').modal('close');
+	details(id,acct_id);
 }

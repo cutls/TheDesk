@@ -95,7 +95,7 @@ function parse(obj, mix, acct_id) {
 				var emoji = toot.emojis[key5];
 				var shortcode = emoji.shortcode;
 				var emoji_url = '<img src="' + emoji.url +
-					'" style="width:2em" class="emoji-img">';
+					'" style="width:1em" class="emoji-img">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
 			});
@@ -113,7 +113,7 @@ function parse(obj, mix, acct_id) {
 				} else {
 					var sense = ""
 				}
-				viewer = viewer + '<a onclick="imgv(\''+id+'\',\''+key2+'\')" id="'+id+'-image-'+key2+'" data-url="'+url+'" data-type="'+media.type+'" class="img-parsed"><img src="' + purl + '" class="' + sense +
+				viewer = viewer + '<a onclick="imgv(\''+id+'\',\''+key2+'\','+acct_id+')" id="'+id+'-image-'+key2+'" data-url="'+url+'" data-type="'+media.type+'" class="img-parsed"><img src="' + purl + '" class="' + sense +
 					' toot-img pointer" style="width:'+cwdt+'%"></a></span>';
 			});
 		} else {

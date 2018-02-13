@@ -50,7 +50,7 @@ option {
 .pointer {
   cursor: pointer;
 }
-.bbcode-pulse-loadings, .fa-pulse {
+.bbcode-pulse-loadings, .bbcode-pulse-loading, .fa-pulse {
   display: inline-block;
   animation-duration: 3s;
   animation-fill-mode: both;
