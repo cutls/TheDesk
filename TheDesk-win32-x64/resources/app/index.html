@@ -23,7 +23,7 @@
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script>
-var ver="Miho (ver.10)";
+var ver="Miho (ver.11)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -112,7 +112,7 @@ var tlid=0;
 <a href="acct.html"><i class="material-icons nex" title="アカウント管理">account_circle</i></a>
 <a href="index.html" class="setting nex"><i class="material-icons nex" title="スーパーリロード">refresh</i></a>
 <a onclick="window.open('https://thedesk.top/labo.php');" class="setting nex" target="_blank" id="ranking-btn" style="display:none;"><i class="material-icons nex" title="アスタルテランキング">timeline</i></a>
-<a onclick="Rtoggle()" class="setting nex" id="radio-btn"><i class="material-icons nex" title="Radio">play_circle_outline</i></a><span id="radio-sta" class="radio"></span>
+<a onclick="Rtoggle()" class="setting nex" id="radio-btn"><i class="material-icons nex" title="Radio(Select/Pause)">play_circle_outline</i></a><span id="radio-sta" class="radio"></span>
 <div id="radio-view" class="hide radio">
 	<span class="cbadge pointer" onclick="Rplay('https://listen.moe/stream','Listen.moe')" data-name="Listen.moe">Listen.moe</span>
 	<span class="cbadge pointer" onclick="Rplay('http://itori.animenfo.com:443','AnimeNfo Radio')" data-name="AnimeNfo Radio">AnimeNfo Radio</span>
@@ -343,7 +343,7 @@ var tlid=0;
     </div>
   </div>
        <!-- Modal Structure Image-->
-  <div id="imagemodal" class="modal modal-fixed-footer">
+  <div id="imagemodal" class="modal modal-fixed-footer" style="min-width:650px">
     <div class="modal-content">
 		<div id="imagewrap">
 		<img src="" id="imgmodal">
@@ -351,6 +351,7 @@ var tlid=0;
 	</div>
     <div class="modal-footer">
 		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+	<button class="btn waves-effect brown" onclick="detFromImg()">当該トゥート</button>
 	<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">←</button>
 	<button class="btn waves-effect" onclick="zoom(2)">2x</button>
 	<button class="btn waves-effect" onclick="zoom(0.5)">0.5x</button>

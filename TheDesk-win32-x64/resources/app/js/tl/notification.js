@@ -125,6 +125,7 @@ function parseNotf(obj, popup, tlid, acct_id) {
 			if (popup >= 0 && obj.length < 5) {
 				Materialize.toast(noticetext, popup * 1000);
 				$(".notf-icon_" + tlid).addClass("red-text");
+				notftext="";
 			}
 			if (toot.spoiler_text && cw) {
 				var spoiler = "cw cw_hide_" + toot.id;
@@ -161,7 +162,7 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				} else {
 					var sense = ""
 				}
-				viewer = viewer + '<a onclick="imgv(\''+id+'\',\''+key2+'\')" id="'+id+'-image-'+key2+'" data-url="'+url+'" data-type="'+media.type+'" class="img-parsed"><img src="' + purl + '" class="' + sense +
+				viewer = viewer + '<a onclick="imgv(\''+id+'\',\''+key2+'\','+acct_id+')" id="'+id+'-image-'+key2+'" data-url="'+url+'" data-type="'+media.type+'" class="img-parsed"><img src="' + purl + '" class="' + sense +
 					' toot-img pointer" style="width:'+cwdt+'%"></a></span>';
 			});
 		} else {

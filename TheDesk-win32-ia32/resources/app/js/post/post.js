@@ -68,6 +68,7 @@ function clear() {
 	$("#cw").removeClass("cw-avail");
 	$("#rec").text("いいえ");
 	$("#mec").text("なし");
+	$("#post-acct-sel").prop("disabled", false);
 	var vis = localStorage.getItem("vis");
 	if (!vis) {
 		$("#vis").text("public");

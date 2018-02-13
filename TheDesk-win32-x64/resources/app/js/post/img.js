@@ -109,6 +109,8 @@ function media(b64, type) {
 		}
 		todc();
 		$("#toot-post-btn").prop("disabled", false);
+		$("#post-acct-sel").prop("disabled", true);
+		Materialize.toast("ファイルアップロード後はアカウントを切り替えられません。", 1000);
 	});
 }
 
