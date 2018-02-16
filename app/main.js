@@ -3,6 +3,7 @@
 // Electronのモジュール
 const electron = require("electron");
 const fs = require("fs");
+const dialog = require('electron').dialog
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 
@@ -76,19 +77,50 @@ ipc.on('nano', function(e, x, y) {
 	return "true"
 })
 ipc.on('download-btn', (e, args) => {
+	if(args=="true"){
+		dialog.showOpenDialog({
+			properties: ['openDirectory']
+		  }, function(files) {
+			dl(files[0]);
+		  })
+	}else{
+		dl();
+	}
+	
+});
+function dl(files){
 	mainWindow.webContents.send('comp', "ダウンロードを開始します。");
 	const opts = {
+		directory:files,
 		openFolderWhenDone: true,
 		onProgress: function(e) {
 			mainWindow.webContents.send('prog', e);
 		},
-		saveAs: args
+		saveAs: false
 	};
 	download(BrowserWindow.getFocusedWindow(),
 			'https://dl.thedesk.top/TheDesk-win32-x64.zip', opts)
 		.then(dl => {
 			mainWindow.webContents.send('comp', "ダウンロードが完了しました。");
 			app.quit();
+		})
+		.catch(console.error);
+}
+ipc.on('general-dl', (e, args) => {
+	console.log(args)
+	mainWindow.webContents.send('general-dl-message', "ダウンロードを開始します。");
+	const opts = {
+		directory: app.getPath('home')+"\\Pictures\\TheDesk",
+		openFolderWhenDone: true,
+		onProgress: function(e) {
+			mainWindow.webContents.send('general-dl-prog', e);
+		},
+		saveAs: false
+	};
+	download(BrowserWindow.getFocusedWindow(),
+			args, opts)
+		.then(dl => {
+			mainWindow.webContents.send('general-dl-message', "ダウンロードが完了しました。");
 		})
 		.catch(console.error);
 });
@@ -98,8 +130,8 @@ ipc.on('quit', (e, args) => {
 ipc.on('about', (e, args) => {
 	openAboutWindow({
 		icon_path: join(__dirname, 'desk.png'),
-		copyright: 'Copyright (c) TheDesk on Mastodon 2018 & Cutls.com 2015 All Rights Reserved. CDN provided by AWS as 8i9.me belonging to Cutls.com.',
-		license: 'This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.',
+		copyright: 'Copyright (c) TheDesk on Mastodon 2018 & Cutls.com 2015 All Rights Reserved. CDN provided by AWS CloudFront.',
+		license: 'This work is licensed under TheDesk LICENSE. See also GitHub.',
 		description: 'ここに表示されているバージョンは内部バージョンで、一般的に使われている愛称とは異なります。',
 		bug_report_url: 'https://cutls.com/report',
 		css_path: join(__dirname, './css/about.css'),

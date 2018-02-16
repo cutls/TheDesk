@@ -21,12 +21,6 @@
 <script type="text/javascript" src="./js/common/time.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
-<div id="tools">
-<div id="notice" >Settings</div>
-<a onclick="notfToggle()" class="setting nex"><i class="material-icons nex notf-icon">notifications</i></a>
-<a href="index.html" class="setting nex"><i class="material-icons nex">home</i></a>
-<a onclick="udg()" class="pointer"><img src="./img/loading.svg" width="24" id="my-prof"></a>
-</div>
 <div id="notf-box" class="hide"><div id="notifications">Notifications will be showed here...</div><button class="btn waves-effect orange more-hide" style="width:calc( 100% - 10px); padding:0;" onclick="notfToggle()">閉じる</button></div>
 <a href="acct.html" class="btn waves-effect blue nex" style="width:100%; max-width:400px;">アカウントマネージャー</a><br>
 <h5>カラム並べ替え</H5>
@@ -126,8 +120,10 @@
 <li>マウスホイール:イメージビューワー時に拡大縮小</li>
 以下Markdownに対応したインスタンスのみ。<br>
 <li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線</li>
+<li>Shift+Enter:全角スペースを入れて改行</li>
+<li>Shift+Space:ゼロ幅スペース</li>
 以下アスタルテにログインしている場合のみ<br>
-<li>Ctrl+R:アスタルテ暇人ランキングを開く</li>
+<li>Ctrl+R:<a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く</li>
 <br>
 <button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('初期化します')){ localStorage.clear(); location.href='index.html'; }">初期化</button><br>
 <button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;">このソフトについて</button><br>
@@ -137,47 +133,8 @@
 
 <span style="font-family:Open Sans;">
 Copyright &copy; TheDesk on Mastodon 2018 & Cutls.com 2015 All Rights Reserved. <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE.md">TheDesk LICENSE (Latest Ver.)</a><br>
-Developer: <a onclick="udg('12336')" style="cursor:pointer" class="nex pointer">Cutls P(@Cutls@kirishima.cloud)</a><br>
+Developer: Cutls P(@Cutls@kirishima.cloud)<br>
 </span>
- <!-- Modal Structure Userdata -->
-  <div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
-    <div id="his-data-content" class="modal-content" style="padding-bottom: 0;">
-	<div id="his-data-show">
-		<img src="./img/loading.svg" id="his-prof" style="">
-		<div class="his-float">
-			<span id="his-name" style="font-size:200%">Loading...</span><br>
-			@<span id="his-acct"></span>
-			<span class="gray" id="his-relation"></span><br>
-			<span class="cbadge"><span id="his-sta"></span>トゥート</span><span class="cbadge">フォロー:<span id="his-follow"></span></span>
-			<span class="cbadge">フォロワー:<span  id="his-follower"></span></span><span class="cbadge">Since:<span id="his-since"></span>
-		</div>
-		<div class="his-float">
-			<span id="his-des"></span><br>
-			
-		</div>
-		
-		  <div class="row">
-    <div class="col s12">
-      <ul class="tabs">
-        <li class="tab col s4"><a  href="#his-tl">Timeline</a></li>
-        <li class="tab col s4"><a href="#his-follow-list">Follows</a></li>
-        <li class="tab col s4"><a href="#his-follower-list">Followers</a></li>
-      </ul>
-    </div>
-    <div id="his-tl" class="col s12 tab-content">A</div>
-    <div id="his-follow-list" class="col s12  tab-content">B</div>
-    <div id="his-follower-list" class="col s12  tab-content">C</div>
-  </div>
-		
-       </div>
-	  </div>
-    <div class="modal-footer">
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">フォロー</a>
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">ミュート</a>
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">ブロック</a>
-      <a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Close</a>
-    </div>
-  </div>
   
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
@@ -185,9 +142,4 @@ Developer: <a onclick="udg('12336')" style="cursor:pointer" class="nex pointer">
 <script type="text/javascript" src="./js/ui/sort.js"></script>
 <script type="text/javascript" src="./js/ui/settings.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
-<script type="text/javascript" src="./js/userdata/showOnTL.js"></script>
-<script type="text/javascript" src="./js/userdata/his-data.js"></script>
-<script type="text/javascript" src="./js/tl/notification.js"></script>
-<script type="text/javascript" src="./js/post/status.js"></script>
-<script type="text/javascript" src="./js/tl/parse.js"></script>
 <script type="text/javascript" src="./js/tl/date.js"></script>

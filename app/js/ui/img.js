@@ -25,24 +25,48 @@ function imgv(id, key, acct_id) {
 			var windowH = $(window).height();
 			var windowW = $(window).width();
 			var aspect = width/height;
-			if(height > width){
-				//縦長
-				$("#imgmodal").css('height',windowH-60+"px");
-				var imgW = (windowH-50)/height*width;
-				$("#imgmodal").css('width',imgW+"px");
-				$("#imagewrap").css('height',windowH-50+"px");
-				$("#imagemodal").css('height',windowH+"px");
-				$("#imagewrap").css('width',imgW+50+"px");
-				$("#imagemodal").css('width',imgW+50+"px");
+			if (aspect < 2.8 && aspect > 0.3){
+				//moderate
+				if(windowW > windowH){
+					//画面が横長(縦幅基準)
+					$("#imgmodal").css('height',windowH/1.2-70+"px");
+					var imgW = (windowH/1.2-70)/height*width;
+					$("#imgmodal").css('width',imgW+"px");
+					$("#imagewrap").css('height',windowH/1.2-60+"px");
+					$("#imagemodal").css('height',windowH/1.2+"px");
+					$("#imagewrap").css('width',imgW+50+"px");
+					$("#imagemodal").css('width',imgW+50+"px");
+				}else{
+					//画面が縦長・正方形(横幅基準)
+					$("#imgmodal").css('width',windowW/1.2-30+"px");
+					var imgH = (windowW/1.2-30)/width*height;
+					$("#imgmodal").css('height',imgH+"px");
+					$("#imagewrap").css('width',windowW/1.2+"px");
+					$("#imagemodal").css('width',windowW/1.2+"px");
+					$("#imagewrap").css('height',imgH+60+"px");
+					$("#imagemodal").css('height',imgH+120+"px");
+				}
 			}else{
-				//横長・正方形
-				$("#imgmodal").css('width',windowW-30+"px");
-				var imgH = (windowW-50)/width*height;
-				$("#imgmodal").css('height',imgH+"px");
-				$("#imagewrap").css('width',windowW+"px");
-				$("#imagemodal").css('width',windowW+"px");
-				$("#imagewrap").css('height',imgH+60+"px");
-				$("#imagemodal").css('height',imgH+120+"px");
+				//極端な画像
+				if(height > width){
+					//縦長
+					$("#imgmodal").css('height',windowH-60+"px");
+					var imgW = (windowH-50)/height*width;
+					$("#imgmodal").css('width',imgW+"px");
+					$("#imagewrap").css('height',windowH-50+"px");
+					$("#imagemodal").css('height',windowH+"px");
+					$("#imagewrap").css('width',imgW+50+"px");
+					$("#imagemodal").css('width',imgW+50+"px");
+				}else{
+					//横長・正方形
+					$("#imgmodal").css('width',windowW-30+"px");
+					var imgH = (windowW-50)/width*height;
+					$("#imgmodal").css('height',imgH+"px");
+					$("#imagewrap").css('width',windowW+"px");
+					$("#imagemodal").css('width',windowW+"px");
+					$("#imagewrap").css('height',imgH+60+"px");
+					$("#imagemodal").css('height',imgH+120+"px");
+				}
 			}
 		}
 		if ($("#" + id + "-image-" + (key * 1 + 1)).length == 0) {
@@ -89,24 +113,48 @@ function imgCont(type) {
 			var windowH = $(window).height();
 			var windowW = $(window).width();
 			var aspect = width/height;
-			if(height > width){
-				//縦長
-				$("#imgmodal").css('height',windowH-60+"px");
-				var imgW = (windowH-50)/height*width;
-				$("#imgmodal").css('width',imgW+"px");
-				$("#imagewrap").css('height',windowH-50+"px");
-				$("#imagemodal").css('height',windowH+"px");
-				$("#imagewrap").css('width',imgW+50+"px");
-				$("#imagemodal").css('width',imgW+50+"px");
+			if (aspect < 2.8 && aspect > 0.3){
+				//moderate
+				if(windowW > windowH){
+					//画面が横長(縦幅基準)
+					$("#imgmodal").css('height',windowH/1.2-70+"px");
+					var imgW = (windowH/1.2-70)/height*width;
+					$("#imgmodal").css('width',imgW+"px");
+					$("#imagewrap").css('height',windowH/1.2-60+"px");
+					$("#imagemodal").css('height',windowH/1.2+"px");
+					$("#imagewrap").css('width',imgW+50+"px");
+					$("#imagemodal").css('width',imgW+50+"px");
+				}else{
+					//画面が縦長・正方形(横幅基準)
+					$("#imgmodal").css('width',windowW/1.2-30+"px");
+					var imgH = (windowW/1.2-30)/width*height;
+					$("#imgmodal").css('height',imgH+"px");
+					$("#imagewrap").css('width',windowW/1.2+"px");
+					$("#imagemodal").css('width',windowW/1.2+"px");
+					$("#imagewrap").css('height',imgH+60+"px");
+					$("#imagemodal").css('height',imgH+120+"px");
+				}
 			}else{
-				//横長・正方形
-				$("#imgmodal").css('width',windowW-30+"px");
-				var imgH = (windowW-50)/width*height;
-				$("#imgmodal").css('height',imgH+"px");
-				$("#imagewrap").css('width',windowW+"px");
-				$("#imagemodal").css('width',windowW+"px");
-				$("#imagewrap").css('height',imgH+60+"px");
-				$("#imagemodal").css('height',imgH+120+"px");
+				//極端な画像
+				if(height > width){
+					//縦長
+					$("#imgmodal").css('height',windowH-60+"px");
+					var imgW = (windowH-50)/height*width;
+					$("#imgmodal").css('width',imgW+"px");
+					$("#imagewrap").css('height',windowH-50+"px");
+					$("#imagemodal").css('height',windowH+"px");
+					$("#imagewrap").css('width',imgW+50+"px");
+					$("#imagemodal").css('width',imgW+50+"px");
+				}else{
+					//横長・正方形
+					$("#imgmodal").css('width',windowW-30+"px");
+					var imgH = (windowW-50)/width*height;
+					$("#imgmodal").css('height',imgH+"px");
+					$("#imagewrap").css('width',windowW+"px");
+					$("#imagemodal").css('width',windowW+"px");
+					$("#imagewrap").css('height',imgH+60+"px");
+					$("#imagemodal").css('height',imgH+120+"px");
+				}
 			}
 		}
 		if ($("#" + id + "-image-" + (key * 1 + 1)).length == 0) {
@@ -216,4 +264,16 @@ function detFromImg(){
 	var acct_id=$("#imagemodal").attr("data-acct");
 	$('#imagemodal').modal('close');
 	details(id,acct_id);
+}
+function dlImg(){
+	var url=$("#imgmodal").attr("src");
+	var electron = require("electron");
+	var ipc = electron.ipcRenderer;
+	ipc.send('general-dl', url);
+	ipc.on('general-dl-prog', function (event, arg) {
+		console.log(arg);
+	})
+	ipc.on('general-dl-message', function (event, arg) {
+		console.log(arg);
+	})
 }
