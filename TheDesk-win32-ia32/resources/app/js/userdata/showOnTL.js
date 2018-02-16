@@ -2,7 +2,8 @@
 localStorage.removeItem("history");
 function udg(user, acct_id) {
 	if (!user) {
-		user = localStorage.getItem("user-id");
+		user = localStorage.getItem("user-id_"+acct_id);
+		console.log(user);
 	}
 	todo("User Data Loading...");
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -85,6 +86,13 @@ function historyShow(){
 	var acct_id=$('#his-data').attr("use-acct");
 	var user=$('#his-data').attr("history");
 	udg(user, acct_id, "true")
+}
+//選択アカウントのプロフ
+function profShow(){
+	var acct_id = $("#post-acct-sel").val();
+	var user = localStorage.getItem("user-id_"+acct_id);
+	console.log("user-id_"+acct_id+":"+user);
+	udg(user, acct_id)
 }
 
 //FF関係取得

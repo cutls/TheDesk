@@ -1,14 +1,14 @@
 {
   "name": "TheDesk",
-  "version": "11.11.0",
+  "version": "11.12.0",
   "description": "TheDesk on Mastodonはシンプルと多機能を両立したデスクトップ向けクライアントです",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Cutls P",
+  "license": "TheDesk LICENSE",
   "dependencies":{
 		"electron-dl":"1.10.0",
 		"about-window":"1.8.0"

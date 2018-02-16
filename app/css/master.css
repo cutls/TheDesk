@@ -43,6 +43,10 @@ option {
 #imagemodal .modal-content {
   overflow: hidden;
 }
+#imagemodal .modal-footer{
+  overflow-x:scroll;
+  overflow-y:hidden;
+}
 #imagewrap {
   width: 100%;
   height: 100%;

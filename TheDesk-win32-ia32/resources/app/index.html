@@ -23,7 +23,7 @@
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script>
-var ver="Miho (ver.11)";
+var ver="Miho (ver.12)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -111,13 +111,14 @@ var tlid=0;
 <a href="setting.html" class="setting nex"><i class="material-icons nex" title="設定">settings</i></a>
 <a href="acct.html"><i class="material-icons nex" title="アカウント管理">account_circle</i></a>
 <a href="index.html" class="setting nex"><i class="material-icons nex" title="スーパーリロード">refresh</i></a>
-<a onclick="window.open('https://thedesk.top/labo.php');" class="setting nex" target="_blank" id="ranking-btn" style="display:none;"><i class="material-icons nex" title="アスタルテランキング">timeline</i></a>
+<a onclick="window.open('https://astarte.thedesk.top');" class="setting nex" target="_blank" id="ranking-btn" style="display:none;"><i class="material-icons nex" title="アスタルテランキング">timeline</i></a>
 <a onclick="Rtoggle()" class="setting nex" id="radio-btn"><i class="material-icons nex" title="Radio(Select/Pause)">play_circle_outline</i></a><span id="radio-sta" class="radio"></span>
 <div id="radio-view" class="hide radio">
 	<span class="cbadge pointer" onclick="Rplay('https://listen.moe/stream','Listen.moe')" data-name="Listen.moe">Listen.moe</span>
 	<span class="cbadge pointer" onclick="Rplay('http://itori.animenfo.com:443','AnimeNfo Radio')" data-name="AnimeNfo Radio">AnimeNfo Radio</span>
 	<span class="cbadge pointer" onclick="Rplay('http://hyades.shoutca.st:8043/stream','LoFi hip hop Radio')" data-name="LoFi hip hop Radio">LoFi hip hop Radio</span>
 	<span class="cbadge pointer" onclick="Rplay('http://89.16.185.174:8004/stream','Linn Classical')" data-name="Linn Classical">Linn Classical</span>
+	<span class="cbadge pointer" onclick="Rplay('http://edge-ads-01-cr.sharp-stream.com/jazzfmmobile.aac','Jazz FM')" data-name="Jazz FM">Jazz FM</span>
 	<span class="cbadge pointer" onclick="Ryourself()">Others</span>
 </div>
 <div id="radio-input" class="hide radio">
@@ -126,7 +127,7 @@ var tlid=0;
 	<button class="btn waves-effect" onclick="Rselect()">Presets</button>
 </div>
   <div class="row" style="margin-bottom:0;">
-  <span class="sml"><span class="gray">画面内どこでもドラッグ・アンド・ドロップできます。</span><br></span>アカウント選択</span><br>
+  <span class="sml gray">画面内どこでもドラッグ・アンド・ドロップできます。</span><br>アカウント選択<!--[<a onclick="profShow()" class="pointer sml">プロフィール確認・編集</a>]</span>--><br>
  <div class="input-field">
     <select id="post-acct-sel" class="acct-sel" onchange="mdCheck()">
 		
@@ -343,19 +344,20 @@ var tlid=0;
     </div>
   </div>
        <!-- Modal Structure Image-->
-  <div id="imagemodal" class="modal modal-fixed-footer" style="min-width:650px">
+  <div id="imagemodal" class="modal modal-fixed-footer" style="min-width:550px">
     <div class="modal-content">
 		<div id="imagewrap">
 		<img src="" id="imgmodal">
 	</div><br>
 	</div>
     <div class="modal-footer">
-		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+			<a class="waves-effect white-text" onclick="zoom(2)"><i class="material-icons">zoom_in</i></a>
+			<a class="waves-effect white-text" onclick="zoom(0.5)"><i class="material-icons">zoom_out</i></a>
+	<button class="btn waves-effect purple" onclick="dlImg()"><i class="material-icons">file_download</i></button>	
 	<button class="btn waves-effect brown" onclick="detFromImg()">当該トゥート</button>
-	<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">←</button>
-	<button class="btn waves-effect" onclick="zoom(2)">2x</button>
-	<button class="btn waves-effect" onclick="zoom(0.5)">0.5x</button>
-	<button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next">→</button>
+	<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev"><i class="material-icons">keyboard_arrow_left</i></button>
+	<button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next"><i class="material-icons">keyboard_arrow_right</i></button>
+	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat"><i class="material-icons">close</i></a>
     </div>
   </div>
     <!-- Modal Structure Video-->

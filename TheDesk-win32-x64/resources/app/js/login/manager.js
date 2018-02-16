@@ -251,7 +251,12 @@ function getdata(domain, at) {
 		};
 		var multi = localStorage.getItem("multi");
 		var obj = JSON.parse(multi);
+		var target = obj.lengtth;
 		obj.push(add);
+		localStorage.setItem("name_" + target, json["display_name"]);
+		localStorage.setItem("user_" + target, json["acct"]);
+		localStorage.setItem("user-id_" + target, json["id"]);
+		localStorage.setItem("prof_" + target, json["avatar"]);
 		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
@@ -265,6 +270,7 @@ function refresh(target) {
 	var obj = JSON.parse(multi);
 	var start = "https://" + obj[target].domain +
 		"/api/v1/accounts/verify_credentials";
+		console.log(start);
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -292,6 +298,11 @@ function refresh(target) {
 			prof: json["avatar"],
 			id: json["id"]
 		};
+		localStorage.setItem("name_" + target, json["display_name"]);
+		localStorage.setItem("user_" + target, json["acct"]);
+		localStorage.setItem("user-id_" + target, json["id"]);
+		console.log("user-id_" + target+":"+json["id"])
+		localStorage.setItem("prof_" + target, json["avatar"]);
 		obj[target] = ref;
 		console.log(obj);
 		var json = JSON.stringify(obj);
