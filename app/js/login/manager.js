@@ -302,6 +302,7 @@ function refresh(target) {
 		localStorage.setItem("user_" + target, json["acct"]);
 		localStorage.setItem("user-id_" + target, json["id"]);
 		console.log("user-id_" + target+":"+json["id"])
+		console.log(localStorage.getItem("user-id_"+target));
 		localStorage.setItem("prof_" + target, json["avatar"]);
 		obj[target] = ref;
 		console.log(obj);

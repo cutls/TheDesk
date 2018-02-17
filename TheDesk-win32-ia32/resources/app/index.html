@@ -23,7 +23,7 @@
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script>
-var ver="Miho (ver.13)";
+var ver="Miho (ver.14)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -112,7 +112,7 @@ var tlid=0;
 <a onclick="zoomBox()" class="setting nex"><i class="material-icons nex mize" title="ボックスの拡大・縮小(E)">zoom_out_map</i></a>
 <a onclick="srcToggle()" class="setting nex"><i class="material-icons nex mize" title="検索">search</i></a>
 <a href="setting.html" class="setting nex"><i class="material-icons nex mize" title="設定">settings</i></a>
-<a href="acct.html"><i class="material-icons nex mize" title="アカウント管理">account_circle</i></a>
+<a onclick="profShow()"><i class="material-icons nex pointer mize" title="選択中のプロフィール表示">account_circle</i></a>
 <a href="index.html" class="setting nex mize"><i class="material-icons nex" title="スーパーリロード">refresh</i></a>
 <a onclick="window.open('https://astarte.thedesk.top');" class="setting nex mize" target="_blank" id="ranking-btn" style="display:none;"><i class="material-icons nex" title="アスタルテランキング">timeline</i></a>
 <a onclick="Rtoggle()" class="setting nex mize" id="radio-btn"><i class="material-icons nex" title="Radio(Select/Pause)">play_circle_outline</i></a><span id="radio-sta" class="radio"></span>
@@ -130,7 +130,7 @@ var tlid=0;
 	<button class="btn waves-effect" onclick="Rselect()">Presets</button>
 </div>
   <div class="row" style="margin-bottom:0;">
-  <span class="sml gray mize">画面内どこでもドラッグ・アンド・ドロップできます。</span><span class="mize"><br>アカウント選択<!--[<a onclick="profShow()" class="pointer sml">プロフィール確認・編集</a>]</span>--><br></span>
+  <span class="sml gray mize">画面内どこでもドラッグ・アンド・ドロップできます。</span><span class="mize"><br>アカウント選択</span><br></span>
  <div class="input-field mize">
     <select id="post-acct-sel" class="acct-sel" onchange="mdCheck()">
 		
@@ -227,7 +227,7 @@ var tlid=0;
 	</div>
 </div>
 <!--最小化-->
-<div class="fixed-action-btn horizontal mize" id="menu-btn" onclick="show()">
+<div class="fixed-action-btn horizontal" id="menu-btn" onclick="show()">
     <a class="btn-floating btn-large red">
       <i class="large material-icons">mode_edit</i>
     </a>

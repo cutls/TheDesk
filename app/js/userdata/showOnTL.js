@@ -60,7 +60,12 @@ function udg(user, acct_id) {
 			localStorage.setItem("history" , user);
 		}
 		//自分の時
-		if (json.acct == localStorage.getItem("user")) {
+		if (json.acct == localStorage.getItem("user_"+acct_id)) {
+			$("#his-name-val").val(json.display_name);
+			var des = json.note;
+			des = des.replace(/<br \/>/g, "\n")
+			des = $.strip_tags(des);
+			$("#his-des-val").val(des);
 			$("#his-follow-btn").hide();
 			$("#his-block-btn").hide();
 			$("#his-mute-btn").hide();
@@ -74,7 +79,6 @@ function udg(user, acct_id) {
 			showMut('', acct_id);
 			showDom('', acct_id);
 			showReq('', acct_id);
-			profeditShow(json);
 		} else {
 			relations(user, acct_id);
 		}

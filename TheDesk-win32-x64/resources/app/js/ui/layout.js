@@ -35,7 +35,7 @@
 				var acct = obj[key];
 				localStorage.setItem("name_" + key, acct.name);
 				localStorage.setItem("user_" + key, acct.user);
-				localStorage.setItem("user-id_" + key, acct.user);
+				localStorage.setItem("user-id_" + key, acct.id);
 				localStorage.setItem("prof_" + key, acct.prof);
 				localStorage.setItem("domain_" + key, acct.domain);
 				localStorage.setItem(acct.domain + "_at", acct.at);

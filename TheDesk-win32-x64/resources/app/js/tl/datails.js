@@ -156,7 +156,9 @@ function cbCopy(mode){
 	if(mode=="emb"){
 		var emb='<iframe src="'+url+'/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400"></iframe><script src="https://'+domain+'/embed.js" async="async"></script>';
 		execCopy(emb)
+		Materialize.toast("埋め込みHTMLをコピーしました", 1500);
 	}else{
 		execCopy(url)
+		Materialize.toast("トゥートURLをコピーしました", 1500);
 	}
 }

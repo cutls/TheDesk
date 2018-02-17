@@ -146,7 +146,7 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				var emoji = toot.emojis[key5];
 				var shortcode = emoji.shortcode;
 				var emoji_url = '<img src="' + emoji.url +
-					'" style="width:2em" class="emoji-img">';
+					'" style="width:1em" class="emoji-img">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
 			});
@@ -229,13 +229,13 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				'" class="cvo ' + fav_app + ' ' + rt_app +
 				'" style="padding-top:5px;" notf-id="' + eachobj.id + '">' +
 				'<span class="gray sharesta">' + noticetext +
-				'<br><span class="cbadge"><i class="fa fa-clock-o"></i>' + date(eachobj.created_at,
+				'<span class="cbadge right"><i class="fa fa-clock-o"></i>' + date(eachobj.created_at,
 					datetype) + '</span></span>' +
 				'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-end;">' +
 				'<div style="flex-basis:40px;"><a onclick="udg(\'' + toot.account.id +
 				'\',\'' + acct_id + '\');" user="' + toot.account.acct + '" class="udg">' +
 				'<img src="' + toot.account.avatar +
-				'" width="20" class="prof-img" user="' + toot.account.acct +
+				'" width="40" class="prof-img" user="' + toot.account.acct +
 				'"></a></div>' +
 				'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">' +
 				toot.account.display_name + '</div>' +

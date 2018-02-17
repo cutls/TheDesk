@@ -311,12 +311,3 @@ function showDom(more, acct_id) {
 	});
 }
 
-//プロフ編集
-function profeditShow(json) {
-	$("#his-name-val").val(json.display_name);
-	var des = json.note;
-	des = des.replace(/<br \/>/g, "\n");
-	des = des.replace("<p>", "");
-	des = des.replace("</p>", "");
-	$("#his-des-val").val(des);
-}
