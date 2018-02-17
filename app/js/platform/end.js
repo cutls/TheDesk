@@ -5,19 +5,22 @@
   	var url = $a.attr('href');
   	if (!url) {
   		var url = $a.parent().attr('href');
-  	}
-  	var urls = url.match(/https?:\/\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/);
-	//hrefがhttp/httpsならブラウザで
-  	if (urls[0]) {
-  		const {
-  			shell
-  		} = require('electron');
-
-  		shell.openExternal(url);
-  	} else {
-
-  		location.href = url;
-  	}
+	  }
+	  var urls=[];
+	  if(url){
+		urls = url.match(/https?:\/\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/);
+		//hrefがhttp/httpsならブラウザで
+		if (urls[0]) {
+			const {
+				shell
+			} = require('electron');
+  
+			shell.openExternal(url);
+		} else {
+  
+			location.href = url;
+		}
+	  }
   	return false;
   });
   

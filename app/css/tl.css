@@ -9,6 +9,18 @@
 iframe {
 	max-width:100%;
 }
+@media screen and (max-width: 600px) {
+  .mobile #timeline-container {
+    display: block;
+    overflow-x: hidden;
+  }
+  .mobile .box {
+    width: 100vw;
+  }
+  .mobile .fixed-action-btn {
+    position: absolute;
+  }
+}
 .box {
   overflow: hidden;
   min-width: 300px;

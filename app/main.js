@@ -78,17 +78,20 @@ ipc.on('nano', function(e, x, y) {
 })
 ipc.on('download-btn', (e, args) => {
 	if(args=="true"){
-		dialog.showOpenDialog({
-			properties: ['openDirectory']
-		  }, function(files) {
-			dl(files[0]);
-		  })
+		dialog.showSaveDialog(null, {
+            title: '保存',
+			properties: ['openFile', 'createDirectory'],
+			defaultPath: 'TheDesk-win32-x64.zip'
+        }, (savedFiles) => {
+            dl(savedFiles[0]);
+        });
 	}else{
 		dl();
 	}
 	
 });
 function dl(files){
+	console.log(files);
 	mainWindow.webContents.send('comp', "ダウンロードを開始します。");
 	const opts = {
 		directory:files,
