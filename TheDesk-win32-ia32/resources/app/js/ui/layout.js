@@ -12,6 +12,10 @@
 	}
 //最初、カラム変更時に発火
 	function parseColumn() {
+		var size = localStorage.getItem("size");
+		if (size) {
+			$("html").css("font-size", size + "px");
+		}
 		var multi = localStorage.getItem("multi");
 		if (!multi) {
 			var obj = [{
@@ -62,7 +66,9 @@
 				key + '">notifications</i></a>' +
 				'<a onclick="removeColumn(' + key +
 				')" class="setting nex"><i class="material-icons nex" title="このカラムを削除">remove_circle</i></a>' +
-				'<a onclick="cardToggle(' + key +
+				'<a onclick="mediaToggle(' + key +
+				')" class="setting nex"><i class="material-icons nex" title="メディアフィルター">perm_media</i><span id="sta-media-' +
+				key + '">On</span><a onclick="cardToggle(' + key +
 				')" class="setting nex"><i class="material-icons nex" title="リンクの解析を切り替え(OFFで制限を回避出来る場合があります)">link</i><span id="sta-card-' +
 				key + '">On</span></a><a onclick="goTop(' + key + ')" class="setting nex"><i class="material-icons nex" title="一番上へ">vertical_align_top</i></a>' +
 				'<div class="hide notf-indv-box" id="notf-box_' + key +
@@ -76,8 +82,9 @@
 				var data = "";
 			}
 			tl(acct.type, data, acct.domain, key);
-
+			notf(acct.domain, key);
 			cardCheck(key);
+			mediaCheck(key);
 		});
 		var width = localStorage.getItem("width");
 		if (width) {

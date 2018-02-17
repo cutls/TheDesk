@@ -15,7 +15,7 @@
   position: absolute;
   top: 3px;
   right: 3px;
-  font-size: 7px;
+  font-size: 0.5rem;
   color: gray;
   cursor: pointer;
 }
@@ -72,4 +72,22 @@
   background-color: #004d40;
   color: white;
   padding: 3px;
+}
+
+/*mini*/
+.mini-post .mize{
+  display:none !important;
+}
+.mini-post #textarea{
+  padding:0;
+}
+.mini-post #post-box{
+  width:200px;
+  min-width:100px;
+}
+.mini-post #toot-field{
+  padding:0;
+}
+.mini-post #toot-btn-field{
+  padding:0;
 }

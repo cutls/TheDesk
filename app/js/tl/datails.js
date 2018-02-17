@@ -1,6 +1,6 @@
 //トゥートの詳細
 function details(id, acct_id) {
-	$(".toot-reset").html("トゥートはありません");
+	$(".toot-reset").html("データなし");
 	var html = $("#pub_" + id).html();
 	$("#toot-this").html(html);
 	$('#tootmodal').modal('open');
@@ -21,6 +21,7 @@ function details(id, acct_id) {
 	}).then(function(json) {
 		$("#toot-this .fav_ct").text(json.favourites_count);
 		$("#toot-this .rt_ct").text(json.reblogs_count);
+		$("#tootmodal").attr("data-url",json.url);
 		if (json.in_reply_to_id) {
 			replyTL(json.in_reply_to_id, acct_id);
 		}
@@ -146,4 +147,16 @@ function rted(id, acct_id) {
 		var templete = userparse(json);
 		$("#toot-rt").html(templete);
 	});
+}
+//URL等のコピー
+function cbCopy(mode){
+	var url=$("#tootmodal").attr("data-url");
+	var urls = url.match(/https?:\/\/([-.a-zA-Z0-9]+)/);
+	var domain=urls[1];
+	if(mode=="emb"){
+		var emb='<iframe src="'+url+'/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400"></iframe><script src="https://'+domain+'/embed.js" async="async"></script>';
+		execCopy(emb)
+	}else{
+		execCopy(url)
+	}
 }

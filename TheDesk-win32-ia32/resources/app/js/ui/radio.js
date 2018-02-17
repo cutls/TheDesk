@@ -9,7 +9,6 @@ function Rtoggle(){
 }
 function Rplay(url,name){
     $("#radio").attr('src',url);
-    r.type = "audio/mpeg";
     r.load();
     r.play();
     $("#radio").addClass("play");

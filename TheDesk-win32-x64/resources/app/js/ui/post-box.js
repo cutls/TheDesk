@@ -17,6 +17,15 @@ function hide() {
 	$("#post-box").fadeOut();
 	$("#menu-btn").fadeIn();
 }
+//最小化
+function mini() {
+	$("body").toggleClass("mini-post");
+	if($("body").hasClass("mini-post")){
+		$(".mini-btn").text("expand_less");
+	}else{
+		$(".mini-btn").text("expand_more");
+	}
+}
 //最小化時に展開
 function show() {
 	$("#post-box").removeClass("hidenbox");

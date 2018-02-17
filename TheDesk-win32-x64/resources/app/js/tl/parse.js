@@ -87,6 +87,7 @@ function parse(obj, mix, acct_id) {
 			var analyze='';
 		}
 		var viewer = "";
+		var hasmedia="";
 		var youtube = "";
 		var emojick = toot.emojis[0];
 		//絵文字があれば
@@ -103,6 +104,7 @@ function parse(obj, mix, acct_id) {
 		var mediack = toot.media_attachments[0];
 		//メディアがあれば
 		if (mediack) {
+			hasmedia = "hasmedia";
 			var cwdt=100/toot.media_attachments.length
 			Object.keys(toot.media_attachments).forEach(function(key2) {
 				var media = toot.media_attachments[key2];
@@ -118,6 +120,7 @@ function parse(obj, mix, acct_id) {
 			});
 		} else {
 			viewer = "";
+			hasmedia = "nomedia";
 		}
 		var menck = toot.mentions[0];
 		var mentions = "";
@@ -164,7 +167,7 @@ function parse(obj, mix, acct_id) {
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app +
-			'" style="padding-top:5px;" toot-id="' + id + '" unixtime="' + date(obj[
+			' '+ hasmedia + '" style="padding-top:5px;" toot-id="' + id + '" unixtime="' + date(obj[
 				key].created_at, 'unix') + '">' +
 			'<span class="gray sharesta">' + notice + home + '</span>' +
 			'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-end;">' +
@@ -173,8 +176,8 @@ function parse(obj, mix, acct_id) {
 			'<img src="' + toot.account.avatar +
 			'" width="40" class="prof-img" user="' + toot.account.acct +
 			'"></a></div>' +
-			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><big>' +
-			toot.account.display_name + '</big></div>' +
+			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><span class="user">' +
+			toot.account.display_name + '</span></div>' +
 			'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
 			toot.account.acct + locked + '</div>' +
 			'</div>' +

@@ -9,8 +9,6 @@ body{overflow:hidden;}
 }
 help {
   display: none;
-  font-size: 10px;
-  color: gray;
 }
 .show-help {
   display: inline;
@@ -71,7 +69,7 @@ option {
 }
 code:before, .pre:before {
   content: "Code";
-  font-size: 30px;
+  font-size: 1.8rem;
   line-height: 1em;
   font-family: monospace, monospace;
   color: #999;
@@ -115,7 +113,7 @@ blockquote, .quote {
 }
 blockquote:before, .quote:before {
   content: "Quote";
-  font-size: 30px;
+  font-size: 1.8rem;
   line-height: 1em;
   font-family: Open Sans, cursive;
   color: #999;
@@ -134,7 +132,7 @@ blockquote:before, .quote:before {
   align-items: center;
 }
 #drag-content {
-  font-size: 200%;
+  font-size: 2rem;
 }
 .radio{
   font-family:'Yanone Kaffeesatz'

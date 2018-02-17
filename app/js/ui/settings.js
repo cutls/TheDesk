@@ -59,6 +59,11 @@ function settings() {
 	if (imgd != localStorage.getItem("img")) {
 		Materialize.toast("画像投稿後の設定を" + imgd + "に設定しました。", 3000);
 	}
+	var sized = $("#size").val();
+	if (sized != localStorage.getItem("size")) {
+		Materialize.toast("フォントサイズを" + sized + "pxに設定しました。", 3000);
+	}
+	localStorage.setItem("size", sized);
 	localStorage.setItem("img", imgd);
 }
 
@@ -131,6 +136,13 @@ function load() {
 		var img = "no-act";
 	}
 	$("#i_" + img).prop("checked", true);
+
+	var size = localStorage.getItem("size");
+	if (!size) {
+		var size = "15";
+	}
+	$("#size").val(size);
+
 	//並べ替え
 	sortload();
 }
