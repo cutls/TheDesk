@@ -122,9 +122,11 @@ function parseNotf(obj, popup, tlid, acct_id) {
 			var noticetext = '<a onclick="udg(\'' + eachobj.account.id +
 				'\',\'' + acct_id + '\')" class="pointer">'+eachobj.account.display_name + "(" + eachobj.account.acct +
 				")</a>が" + what;
-			if (popup >= 0 && obj.length < 5) {
+			var memory = localStorage.getItem("notice-mem");
+			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
 				Materialize.toast(noticetext, popup * 1000);
 				$(".notf-icon_" + tlid).addClass("red-text");
+				localStorage.setItem("notice-mem",noticetext);
 				notftext="";
 			}
 			if (toot.spoiler_text && cw) {
