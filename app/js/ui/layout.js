@@ -133,11 +133,17 @@
 		var multi = localStorage.getItem("column");
 		var obj = JSON.parse(multi);
 		//聞く
-		if (confirm("このコラムを削除します")) {
-			localStorage.removeItem("card_" + tlid);
-			obj.splice(tlid, 1);
-			var json = JSON.stringify(obj);
-			localStorage.setItem("column", json);
-			parseColumn();
-		}
+		var electron = require("electron");
+		var ipc = electron.ipcRenderer;
+		ipc.send('column-del', "");
+		ipc.on('column-del-reply', function (event, arg) {
+			console.log(arg);
+			if(arg==0){
+				localStorage.removeItem("card_" + tlid);
+				obj.splice(tlid, 1);
+				var json = JSON.stringify(obj);
+				localStorage.setItem("column", json);
+				parseColumn();
+			}
+		})
 	}

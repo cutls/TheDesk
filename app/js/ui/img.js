@@ -259,12 +259,14 @@ element.onmousewheel = function(e) {
 		zoom(0.9)
 	}
 }
+//当該トゥート
 function detFromImg(){
 	var id=$("#imagemodal").attr("data-id");
 	var acct_id=$("#imagemodal").attr("data-acct");
 	$('#imagemodal').modal('close');
 	details(id,acct_id);
 }
+//画像保存
 function dlImg(){
 	var url=$("#imgmodal").attr("src");
 	var electron = require("electron");

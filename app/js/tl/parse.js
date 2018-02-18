@@ -49,7 +49,7 @@ function parse(obj, mix, acct_id) {
 			var locked = "";
 		}
 		if (!toot.application) {
-			var via = "<i>Unknown</i>";
+			var via = '<span style="font-style: italic;">Unknown</span>';
 		} else {
 			var via = toot.application.name;
 		}
@@ -146,6 +146,18 @@ function parse(obj, mix, acct_id) {
 					',\'add\')" class="pointer">#' + tag.name + '</a> ';
 			});
 		}
+		//公開範囲を取得
+		var vis="";
+		var visen=toot.visibility;
+		if(visen=="public"){
+			var vis = '<i class="text-darken-3 material-icons gray sml pointer" title="公開(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">public</i>';
+		}else if(visen=="unlisted"){
+			var vis = '<i class="text-darken-3 material-icons blue-text pointer" title="未収載(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">lock_open</i>';
+		}else if(visen=="plivate"){
+			var vis = '<i class="text-darken-3 material-icons orange-text pointer" title="非公開(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">lock</i>';
+		}else if(visen=="direct"){
+			var vis = '<i class="text-darken-3 material-icons red-text pointer" title="ダイレクト(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">mail</i>';
+		}
 		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
 			var if_mine = "";
 		} else {
@@ -166,21 +178,64 @@ function parse(obj, mix, acct_id) {
 			var rt_app = "";
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
+		boostback + ' ' + fav_app + ' ' + rt_app +
+		' '+ hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
+			key].created_at, 'unix') + '">'+
+		'<div class="area-notice"><span class="gray sharesta">' + notice + home + '</span></div>'+
+		'<div class="area-icon"><a onclick="udg(\'' + toot.account.id +
+		'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
+		'<img src="' + toot.account.avatar +
+		'" width="40" class="prof-img" user="' + toot.account.acct +
+		'"></a></div>'+
+		'<div class="area-display_name"><span class="user">' +
+		toot.account.display_name + '</span></div>'+
+		'<div class="area-acct"><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
+		toot.account.acct + locked + '</span></div>'+
+		'<div class="area-toot"><span class="toot ' + spoiler + '">' + content + '</span><span class="' +
+		api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
+		'</span>' +
+		'' + viewer + '' +
+		'<span class="additional">' + analyze + '</span></div>'+
+		'<div class="area-date_via">'+ mentions + tags +'</div>'+
+		'<div class="area-actions" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
+		'<div class="action">'+ vis +'</div><div class="action"><a onclick="re(\'' + toot.id + '\',\'' + toot.account.acct + '\',' +
+		acct_id +
+		')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-share"></i></a></div>' +
+		'<div class="action"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
+		',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
+		if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
+		'</span></a></div>' +
+		'<div class="action"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
+		',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
+		if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
+		'</a></span></div>' +
+		'<div class="' + if_mine + ' action"><a onclick="del(\'' + toot.id + '\',' +
+		acct_id +
+		')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-trash-o"></i></a></div>' +
+		'<div class="action"><a onclick="details(\'' + toot.id + '\',' + acct_id +
+		')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
+		'<div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
+		date(toot.created_at, datetype) + '</span></div>' +
+		'<div><span class="cbadge" title="via ' + $.strip_tags(via) + '">via ' + via +
+		'</span></div></div></div>'+
+	  '</div><div class="divider"></div>';
+	  /*
+		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app +
 			' '+ hasmedia + '" style="padding-top:5px;" toot-id="' + id + '" unixtime="' + date(obj[
 				key].created_at, 'unix') + '">' +
 			'<span class="gray sharesta">' + notice + home + '</span>' +
-			'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-end;">' +
+			'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-start;">' +
 			'<div style="flex-basis:40px;"><a onclick="udg(\'' + toot.account.id +
 			'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
 			'<img src="' + toot.account.avatar +
 			'" width="40" class="prof-img" user="' + toot.account.acct +
-			'"></a></div>' +
+			'"></a></div><div>' +
 			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><span class="user">' +
 			toot.account.display_name + '</span></div>' +
 			'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
 			toot.account.acct + locked + '</div>' +
-			'</div>' +
+			'' +
 			'<div style="display:none; justify-content:space-around" class="sml gray"> <div>Follows:' +
 			toot.account.following_count + '</div><div>Followers:' + toot.account.followers_count +
 			'</div>' +
@@ -199,22 +254,22 @@ function parse(obj, mix, acct_id) {
 			')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-share"></i></a></div>' +
 			'<div><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
-			if_rt + '"  id="rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
+			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 			'</span></a></div>' +
 			'<div><a onclick="fav(\'' + toot.id + '\',' + acct_id +
 			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
-			if_fav + '" id="fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
+			if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
 			'</a></span></div>' +
 			'<div class=' + if_mine + '><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-trash-o"></i></a></div>' +
 			'<div><a onclick="details(\'' + toot.id + '\',' + acct_id +
 			')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
-			'</div>' +
+			'</div></div>' +
 			'<div class="divider"></div>' +
 			'</div>' +
 			'</div>';
-
+				*/
 	});
 	if (mix == "mix") {
 		return [templete, local]
