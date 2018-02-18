@@ -219,57 +219,6 @@ function parse(obj, mix, acct_id) {
 		'<div><span class="cbadge" title="via ' + $.strip_tags(via) + '">via ' + via +
 		'</span></div></div></div>'+
 	  '</div><div class="divider"></div>';
-	  /*
-		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
-			boostback + ' ' + fav_app + ' ' + rt_app +
-			' '+ hasmedia + '" style="padding-top:5px;" toot-id="' + id + '" unixtime="' + date(obj[
-				key].created_at, 'unix') + '">' +
-			'<span class="gray sharesta">' + notice + home + '</span>' +
-			'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-start;">' +
-			'<div style="flex-basis:40px;"><a onclick="udg(\'' + toot.account.id +
-			'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
-			'<img src="' + toot.account.avatar +
-			'" width="40" class="prof-img" user="' + toot.account.acct +
-			'"></a></div><div>' +
-			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><span class="user">' +
-			toot.account.display_name + '</span></div>' +
-			'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
-			toot.account.acct + locked + '</div>' +
-			'' +
-			'<div style="display:none; justify-content:space-around" class="sml gray"> <div>Follows:' +
-			toot.account.following_count + '</div><div>Followers:' + toot.account.followers_count +
-			'</div>' +
-			'<div>Toots:' + toot.account.statuses_count + '</div></div>' +
-			'<span class="toot ' + spoiler + '">' + content + '</span><span class="' +
-			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
-			'</span>' +
-			'' + viewer + '' +
-			'<div class="additional">' + analyze + '</div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
-			date(toot.created_at, datetype) + '</span>' +
-			'<span class="cbadge">via ' + via +
-			'</span>' + mentions + tags +
-			'<div style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; width:500px; max-width:100%; ">' +
-			'<div><a onclick="re(\'' + toot.id + '\',\'' + toot.account.acct + '\',' +
-			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-share"></i></a></div>' +
-			'<div><a onclick="rt(\'' + toot.id + '\',' + acct_id +
-			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
-			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
-			'</span></a></div>' +
-			'<div><a onclick="fav(\'' + toot.id + '\',' + acct_id +
-			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
-			if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
-			'</a></span></div>' +
-			'<div class=' + if_mine + '><a onclick="del(\'' + toot.id + '\',' +
-			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-trash-o"></i></a></div>' +
-			'<div><a onclick="details(\'' + toot.id + '\',' + acct_id +
-			')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
-			'</div></div>' +
-			'<div class="divider"></div>' +
-			'</div>' +
-			'</div>';
-				*/
 	});
 	if (mix == "mix") {
 		return [templete, local]

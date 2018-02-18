@@ -248,7 +248,9 @@ function ckdb(acct_id) {
 			$("[data-activates='bbcode']").addClass("disabled", true);
 		}
 		if (json[letters]) {
-			$("#textarea").attr("data-length", json[letters]);
+			if($("#textarea").attr("data-length")<json[letters]){
+				$("#textarea").attr("data-length", json[letters]);
+			}
 		} else {}
 		if (json[domain + "_markdown"] == "enabled") {
 			localStorage.setItem("md_" + acct_id, "true");
