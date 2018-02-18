@@ -4,6 +4,7 @@ function parse(obj, mix, acct_id) {
 	var datetype = localStorage.getItem("datetype");
 	var nsfwtype = localStorage.getItem("nsfw");
 	var sent = localStorage.getItem("sentence");
+	var gif = localStorage.getItem("gif");
 	if (!sent) {
 		var sent = 500;
 	}
@@ -20,6 +21,9 @@ function parse(obj, mix, acct_id) {
 	}
 	if (!datetype) {
 		datetype = "absolute";
+	}
+	if(!gif){
+		var gif="yes";
 	}
 	var local = [];
 	Object.keys(obj).forEach(function(key) {
@@ -150,13 +154,13 @@ function parse(obj, mix, acct_id) {
 		var vis="";
 		var visen=toot.visibility;
 		if(visen=="public"){
-			var vis = '<i class="text-darken-3 material-icons gray sml pointer" title="公開(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">public</i>';
+			var vis = '<i class="text-darken-3 material-icons gray sml" title="公開">public</i>';
 		}else if(visen=="unlisted"){
-			var vis = '<i class="text-darken-3 material-icons blue-text pointer" title="未収載(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">lock_open</i>';
+			var vis = '<i class="text-darken-3 material-icons blue-text" title="未収載">lock_open</i>';
 		}else if(visen=="plivate"){
-			var vis = '<i class="text-darken-3 material-icons orange-text pointer" title="非公開(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">lock</i>';
+			var vis = '<i class="text-darken-3 material-icons orange-text" title="非公開">lock</i>';
 		}else if(visen=="direct"){
-			var vis = '<i class="text-darken-3 material-icons red-text pointer" title="ダイレクト(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">mail</i>';
+			var vis = '<i class="text-darken-3 material-icons red-text" title="ダイレクト">mail</i>';
 		}
 		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
 			var if_mine = "";
@@ -177,6 +181,12 @@ function parse(obj, mix, acct_id) {
 			var if_rt = "";
 			var rt_app = "";
 		}
+		//アニメ再生
+		if(gif=="yes"){
+			var avatar=toot.account.avatar;
+		}else{
+			var avatar=toot.account.avatar_static;
+		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 		boostback + ' ' + fav_app + ' ' + rt_app +
 		' '+ hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
@@ -184,7 +194,7 @@ function parse(obj, mix, acct_id) {
 		'<div class="area-notice"><span class="gray sharesta">' + notice + home + '</span></div>'+
 		'<div class="area-icon"><a onclick="udg(\'' + toot.account.id +
 		'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
-		'<img src="' + toot.account.avatar +
+		'<img src="' + avatar +
 		'" width="40" class="prof-img" user="' + toot.account.acct +
 		'"></a></div>'+
 		'<div class="area-display_name"><span class="user">' +
@@ -214,11 +224,11 @@ function parse(obj, mix, acct_id) {
 		')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-trash-o"></i></a></div>' +
 		'<div class="action"><a onclick="details(\'' + toot.id + '\',' + acct_id +
 		')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
-		'<div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
+		'<div><span class="cbadge pointer" onclick="tootUriCopy(\''+toot.url+'\');" title="クリックでトゥートURLをコピー"><i class="fa fa-clock-o"></i>' +
 		date(toot.created_at, datetype) + '</span></div>' +
 		'<div><span class="cbadge" title="via ' + $.strip_tags(via) + '">via ' + via +
 		'</span></div></div></div>'+
-	  '</div><div class="divider"></div>';
+	  '<div class="divider"></div></div>';
 	});
 	if (mix == "mix") {
 		return [templete, local]
