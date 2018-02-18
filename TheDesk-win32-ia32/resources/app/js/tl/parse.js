@@ -32,11 +32,14 @@ function parse(obj, mix, acct_id) {
 		//Integratedである場合はUnix時間をキーに配列を生成しておく
 		if (mix == "mix") {
 			local[date(obj[key].created_at, 'unix')] = toot.id;
+			var divider='<div class="divider"></div>';
 		}
 		if (mix == "home") {
 			var home = "Home TLより"
+			var divider="";
 		} else {
 			var home = "";
+			var divider='<div class="divider"></div>';
 		}
 		if (toot.reblog) {
 			var notice = toot.account.display_name + "(" + toot.account.acct +
@@ -228,7 +231,7 @@ function parse(obj, mix, acct_id) {
 		date(toot.created_at, datetype) + '</span></div>' +
 		'<div><span class="cbadge" title="via ' + $.strip_tags(via) + '">via ' + via +
 		'</span></div></div></div>'+
-	  '<div class="divider"></div></div>';
+	  '</div>'+divider;
 	});
 	if (mix == "mix") {
 		return [templete, local]

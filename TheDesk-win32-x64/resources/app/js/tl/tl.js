@@ -66,13 +66,13 @@ function tl(type, data, acct_id, tlid) {
 		additional(acct_id, tlid);
 		jQuery("time.timeago").timeago();
 		todc();
-		reload(type, '', acct_id, tlid);
+		reload(type, '', acct_id, tlid, data);
 		$(window).scrollTop(0);
 	});
 }
 
 //Streaming接続
-function reload(type, cc, acct_id, tlid) {
+function reload(type, cc, acct_id, tlid, data) {
 	if (!type) {
 		var type = localStorage.getItem("now");
 	}
@@ -88,7 +88,10 @@ function reload(type, cc, acct_id, tlid) {
 	} else if (type == "local") {
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=public:local&access_token=" + at;
-	}
+	} else if (type == "tag") {
+		var start = "wss://" + domain +
+			"/api/v1/streaming/?stream=hashtag&tag=" + data +"&access_token=" + at;
+	} 
 	console.log(start);
 	var wsid = websocket.length;
 	websocket[wsid] = new WebSocket(start);

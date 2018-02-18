@@ -39,37 +39,61 @@ $("#drag").on('dragleave', function(e) {
 function pimg(files) {
 	console.log(files);
 	for (i = 0; i < files.length; i++) {
-		handleFileUpload(files[i], obj);
+		if(files[i].path.match(/(.+)\\(.+)\.(.+)$/)[3]=="bmp"){
+			var electron = require("electron");
+		  	var ipc = electron.ipcRenderer;
+			  ipc.send('bmp-image', files[i].path);
+			  todo("変換中...");
+			  
+		}else{
+			handleFileUpload(files[i], obj);
+		}
 	}
 }
-
+var electron = require("electron");
+var ipc = electron.ipcRenderer;
+ipc.on('bmp-img-comp', function (event, b64) {
+	beforeMedia(b64,"image/png");
+  });
 //ドラッグ・アンド・ドロップを終了
 function closedrop() {
 	$("#drag").css('display', 'none');
 }
 
-//ファイルプレビュー
+//ファイル読み込み
 function handleFileUpload(files, obj) {
 	var fr = new FileReader();
 	fr.onload = function(evt) {
 		var b64 = evt.target.result;
-		if (files["type"] == "image/png" || files["type"] == "image/jpeg" || files[
-				"type"] == "image/gif") {
-			var html = '<img src="' + b64 + '" style="width:50px; max-height:100px;">';
-			$('#preview').append(html);
-		} else {
-			$('#preview').append(files["name"] + "はプレビューできません");
-		}
 		$('#b64-box').val(b64);
-		var ret = media(b64, files["type"])
+		var ret = beforeMedia(b64, files["type"])
 	}
 	fr.readAsDataURL(files);
 	$("#mec").append(files["name"] + "/");
 }
 
+//順番意識
+function beforeMedia(b64,type){
+	var busy = localStorage.getItem("image");
+	if(busy=="busy"){
+		timerID = setInterval(function(){
+			var busy = localStorage.getItem("image");
+			console.log("busy... please wait."+type)
+			if(!busy){
+				clearInterval(timerID);
+                timerID = null;
+				media(b64,type);
+			}
+		 }, 20);
+	}else{
+		localStorage.removeItem("image");
+		media(b64,type);
+	}
+}
 //ファイルアップロード
 function media(b64, type) {
 	$("#toot-post-btn").prop("disabled", true);
+	localStorage.setItem("image","busy");
 	todo("Image Upload...");
 	var media = toBlob(b64, type);
 	console.log(media);
@@ -94,6 +118,12 @@ function media(b64, type) {
 	}).then(function(json) {
 		console.log(json);
 		var img = localStorage.getItem("img");
+		if (json.type=="image") {
+			var html = '<img src="' + json.preview_url + '" style="width:50px; max-height:100px;">';
+			$('#preview').append(html);
+		} else {
+			$('#preview').append("プレビューできません");
+		}
 		if (!img) {
 			var img = "no-act";
 		}
@@ -111,6 +141,7 @@ function media(b64, type) {
 		$("#toot-post-btn").prop("disabled", false);
 		$("#post-acct-sel").prop("disabled", true);
 		Materialize.toast("ファイルアップロード後はアカウントを切り替えられません。", 1000);
+		localStorage.removeItem("image");
 	});
 }
 

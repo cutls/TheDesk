@@ -86,6 +86,8 @@ function clear() {
 	$("#nsc").text("なし");
 	$("#drag").css("background-color", "#e0e0e0");
 	$("#preview").html("");
+	$("#toot-post-btn").prop("disabled", false);
+	localStorage.removeItem("image");
 	if ($("#post-box").hasClass("post-more")) {
 		$("#file-wrap").html(
 			'<input class="more-show" style="display:inline-block;" type="file" name="pic" id="upfile" onchange="pimg(document.getElementById(\'upfile\').files);" multiple>'

@@ -3,7 +3,8 @@
 // Electronのモジュール
 const electron = require("electron");
 const fs = require("fs");
-const dialog = require('electron').dialog
+const dialog = require('electron').dialog;
+var Jimp = require("jimp");
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 
@@ -177,5 +178,15 @@ const options = {
   dialog.showMessageBox(options, function(index) {
     mainWindow.webContents.send('column-del-reply', index);
   })
+});
+ipc.on('bmp-image', (e, args) => {
+	var m = args.match(/(.+)\\(.+)\.(.+)$/);
+	Jimp.read(args, function (err, lenna) {
+		if (err) throw err;
+		lenna.getBase64(Jimp.MIME_PNG, function (err, src) {
+			mainWindow.webContents.send('bmp-img-comp', src);
+	   });
+	});
+	
 });
 app.setAsDefaultProtocolClient('thedesk')

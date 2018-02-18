@@ -2,6 +2,7 @@
 //最初に読むやつ
 //アスタルテ判定初期化
 localStorage.removeItem("kirishima")
+localStorage.removeItem("image");
 function ck() {
 	var domain = localStorage.getItem("domain_0");
 	var at = localStorage.getItem(domain + "_at");
