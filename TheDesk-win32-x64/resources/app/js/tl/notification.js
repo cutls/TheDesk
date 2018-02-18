@@ -102,9 +102,37 @@ function parseNotf(obj, popup, tlid, acct_id) {
 		//トゥートである
 		if (toot) {
 			if (!toot.application) {
-				var via = "<i>Unknown</i>";
+				var via = '<span style="font-style: italic;">Unknown</span>';
 			} else {
 				var via = toot.application.name;
+			}
+			var sent = localStorage.getItem("sentence");
+				if (!sent) {
+					var sent = 500;
+				}
+			if (toot.spoiler_text && cw) {
+				var content = toot.content;
+				var spoil = toot.spoiler_text;
+				var spoiler = "cw cw_hide_" + toot.id;
+				var api_spoil = "gray";
+				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
+					'\')" class="nex parsed">見る</a>';
+			} else {
+				var ct = toot.content.split('</p>').length + toot.content.split('<br />').length -
+					2;
+				if (sent < ct && $.mb_strlen(toot.content) > 5) {
+					var content = '<span class="gray">以下全文</span><br>' + toot.content
+					var spoil = '<span class="cw-long-'+toot.id+'">'+$.strip_tags($.mb_substr(toot.content, 0, 100)) +
+						'</span><span class="gray">自動折りたたみ</span>';
+					var spoiler = "cw cw_hide_" + toot.id;
+					var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
+						'\')" class="nex parsed">続き…</a>';
+				} else {
+					var content = toot.content;
+					var spoil = toot.spoiler_text;
+					var spoiler = "";
+					var spoiler_show = "";
+				}
 			}
 			if (toot.account.locked) {
 				var locked = ' <i class="fa fa-lock red-text"></i>';
@@ -135,6 +163,15 @@ function parseNotf(obj, popup, tlid, acct_id) {
 			} else {
 				var spoiler = "";
 				var spoiler_show = "";
+			}
+			var urls = content.match(
+				/https?:\/\/([-a-zA-Z0-9@.]+)\/?([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
+			);
+			if(urls){
+				var analyze='<a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
+				',\''+id+'\')" class="add-show pointer">URL解析</a>';
+			}else{
+				var analyze='';
 			}
 			var viewer = "";
 			var youtube = "";
@@ -169,6 +206,18 @@ function parseNotf(obj, popup, tlid, acct_id) {
 			});
 		} else {
 			viewer = "";
+		}
+		//公開範囲を取得
+		var vis="";
+		var visen=toot.visibility;
+		if(visen=="public"){
+			var vis = '<i class="text-darken-3 material-icons gray sml pointer" title="公開(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">public</i>';
+		}else if(visen=="unlisted"){
+			var vis = '<i class="text-darken-3 material-icons blue-text pointer" title="未収載(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">lock_open</i>';
+		}else if(visen=="plivate"){
+			var vis = '<i class="text-darken-3 material-icons orange-text pointer" title="非公開(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">lock</i>';
+		}else if(visen=="direct"){
+			var vis = '<i class="text-darken-3 material-icons red-text pointer" title="ダイレクト(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">mail</i>';
 		}
 			var menck = toot.mentions[0];
 			var mentions = "";
@@ -225,77 +274,53 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				var if_rt = "";
 				var rt_app = "";
 			}
-			templete = templete + '<div each=' + toot.datab + ' id="pub_' + toot.id +
-				'" class="cvo ' + fav_app + ' ' + rt_app +
-				'" style="padding-top:5px;" notf-id="' + eachobj.id + '">' +
-				'<span class="gray sharesta">' + noticetext +
-				'<span class="cbadge right"><i class="fa fa-clock-o"></i>' + date(eachobj.created_at,
-					datetype) + '</span></span>' +
-				'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-end;">' +
-				'<div style="flex-basis:40px;"><a onclick="udg(\'' + toot.account.id +
-				'\',\'' + acct_id + '\');" user="' + toot.account.acct + '" class="udg">' +
+			var boostback="";
+			var hasmedia="";
+			var home=""
+			var notice = noticetext;
+				templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
+				boostback + ' ' + fav_app + ' ' + rt_app +
+				' '+ hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
+					key].created_at, 'unix') + '">'+
+				'<div class="area-notice"><span class="gray sharesta">' + noticetext + home + '</span></div>'+
+				'<div class="area-icon"><a onclick="udg(\'' + toot.account.id +
+				'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
 				'<img src="' + toot.account.avatar +
 				'" width="40" class="prof-img" user="' + toot.account.acct +
-				'"></a></div>' +
-				'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">' +
-				toot.account.display_name + '</div>' +
-				'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
-				toot.account.acct + locked + '</div>' +
-				'</div>' +
-				'<span class="toot ' + spoiler + '">' + content +
-				'</span><span class="gray cw_text_' + toot.id + '">' + toot.spoiler_text +
-				spoiler_show + '</span>' +
+				'"></a></div>'+
+				'<div class="area-display_name"><span class="user">' +
+				toot.account.display_name + '</span></div>'+
+				'<div class="area-acct"><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
+				toot.account.acct + locked + '</span><span class="cbadge right"><i class="fa fa-clock-o"></i>' + date(eachobj.created_at,
+					datetype) + '</span></div>'+
+				'<div class="area-toot"><span class="toot ' + spoiler + '">' + content + '</span><span class="' +
+				api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
+				'</span>' +
 				'' + viewer + '' +
-				'<div class="additional"></div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
-				date(toot.created_at, datetype) + '</span>' +
-				'<span class="cbadge">via ' + via + '</span>' + mentions + tags +
-				'<div style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; width:500px; max-width:100%; ">' +
-				'<div><a onclick="re(\'' + toot.id + '\',\'' + toot.account.acct + '\',' +
+				'<span class="additional">' + analyze + '</span></div>'+
+				'<div class="area-date_via">'+ mentions + tags +'</div>'+
+				'<div class="area-actions" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
+				'<div class="action">'+ vis +'</div><div class="action"><a onclick="re(\'' + toot.id + '\',\'' + toot.account.acct + '\',' +
 				acct_id +
-				')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-share"></i><help>返信</help></a></div>' +
-				'<div><a onclick="rt(\'' + toot.id + '\',' + acct_id +
+				')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-share"></i></a></div>' +
+				'<div class="action"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 				',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
-				if_rt + '"  id="rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
-				'</span><help>ブースト</help></a></div>' +
-				'<div><a onclick="fav(\'' + toot.id + '\',' + acct_id +
+				if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
+				'</span></a></div>' +
+				'<div class="action"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
 				',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
-				if_fav + '" id="fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
-				'<help>お気に入り</help></a></span></div>' +
-				'<div class=' + if_mine + '><a onclick="del(\'' + toot.id + '\',' +
+				if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
+				'</a></span></div>' +
+				'<div class="' + if_mine + ' action"><a onclick="del(\'' + toot.id + '\',' +
 				acct_id +
-				')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-trash-o"></i><help>削除</help></a></div>' +
-				'<div><a onclick="details(\'' + toot.id + '\',' + acct_id +
-				')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i><help>詳細表示</help></a></div>' +
-				'</div>' +
-				'<div class="divider"></div>' +
-				'</div>' +
-				'</div>';
-		} else if (eachobj.type == "follow") {
-			//フォロー等のユーザーデータである
-			var tooter = eachobj.account;
-			if (tooter.locked) {
-				var locked = ' <i class="fa fa-lock red-text"></i>';
-			} else {
-				var locked = "";
-			}
-			templete = templete +
-				'<div class="cvo " style="padding-top:5px;" notf-id=' + eachobj.id + '>' +
-				'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-end;">' +
-				'<div style="flex-basis:40px;"><a onclick="udg(\'' + tooter.id + '\',\'' +
-				acct_id + '\');" user="' + tooter.acct + '" class="udg">' +
-				'<img src="' + tooter.avatar + '" width="40" class="prof-img" user="' +
-				tooter.acct + '"></a></div>' +
-				'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">' +
-				tooter.display_name + '<div class="gray sharesta">にフォローされました</div></div>' +
-				'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
-				tooter.acct + locked + '</div>' +
-				'</div>' +
-				'<div style="justify-content:space-around"> <div class="cbadge">Follows:' +
-				tooter.following_count + '</div><div class="cbadge">Followers:' + tooter.followers_count +
-				'</div>' +
-				'<div class="divider"></div>' +
-				'</div>' +
-				'</div>';
+				')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-trash-o"></i></a></div>' +
+				'<div class="action"><a onclick="details(\'' + toot.id + '\',' + acct_id +
+				')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
+				'<div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
+				date(toot.created_at, datetype) + '</span></div>' +
+				'<div><span class="cbadge" title="via ' + $.strip_tags(via) + '">via ' + via +
+				'</span></div></div></div>'+
+			  '</div><div class="divider"></div>';
 			var noticetext = eachobj.account.display_name + "(" + eachobj.account.acct +
 				")がフォローしました";
 			if (popup >= 0 && obj.length < 5) {
