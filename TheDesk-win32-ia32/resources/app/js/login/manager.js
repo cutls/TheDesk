@@ -105,7 +105,7 @@ function multiDel(target) {
 
 //サポートインスタンス
 function support() {
-	var start = "https://desk.cutls.com/mastodon_data.json";
+	var start = "https://dl.thedesk.top/mastodon_data.json";
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -154,8 +154,8 @@ function login(url) {
 		body: JSON.stringify({
 			scopes: 'read write follow',
 			client_name: "TheDesk(PC)",
-			redirect_uris: 'urn:ietf:wg:oauth:2.0:oob',
-			website: "https://desk.cutls.com"
+			redirect_uris: 'thedesk://manager',
+			website: "https://thedesk.top"
 		})
 	}).then(function(response) {
 		return response.json();
@@ -163,9 +163,10 @@ function login(url) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
+		console.log(json);
 		var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 				"client_id"] + "&client_secret=" + json["client_secret"] +
-			"&response_type=code&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=read+write+follow";
+			"&response_type=code&scope=read+write+follow&redirect_uri="+json.redirect_uri;
 		localStorage.setItem("domain_tmp", url);
 		localStorage.setItem("client_id", json["client_id"]);
 		localStorage.setItem("client_secret", json["client_secret"]);
@@ -175,7 +176,10 @@ function login(url) {
   			shell
   		} = require('electron');
 
-  		shell.openExternal(auth);
+		  shell.openExternal(auth);
+		  var electron = require("electron");
+		  var ipc = electron.ipcRenderer;
+		  ipc.send('quit', 'go');
 	});
 }
 
@@ -186,8 +190,10 @@ function instance() {
 }
 
 //コード入れてAccessTokenゲット
-function code() {
-	var code = $("#code").val();
+function code(code) {
+	if(!code){
+		var code = $("#code").val();
+	}
 	var url = localStorage.getItem("domain_tmp");
 	localStorage.removeItem("domain_tmp");
 	var start = "https://" + url + "/oauth/token";

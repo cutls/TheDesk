@@ -28,12 +28,12 @@ function fav(id, acct_id) {
 		} else {
 			$("[toot-id=" + id + "] .rt_ct").text(json.reblog.reblogs_count);
 		}
-		if ($("#pub_" + id).hasClass("faved")) {
-			$("#pub_" + id).removeClass("faved");
-			$("#fav_" + id).removeClass("yellow-text");
+		if ($("[toot-id=" + id +"]").hasClass("faved")) {
+			$("[toot-id=" + id +"]").removeClass("faved");
+			$(".fav_" + id).removeClass("yellow-text");
 		} else {
-			$("#pub_" + id).addClass("faved");
-			$("#fav_" + id).addClass("yellow-text");
+			$("[toot-id=" + id +"]").addClass("faved");
+			$(".fav_" + id).addClass("yellow-text");
 		}
 	});
 }
@@ -74,12 +74,12 @@ function rt(id, acct_id) {
 			$("[toot-id=" + id + "] .rt_ct").text(json.reblog.reblogs_count);
 		}
 
-		if ($("#pub_" + id).hasClass("rted")) {
-			$("#pub_" + id).removeClass("rted");
-			$("#rt_" + id).removeClass("teal-text");
+		if ($("[toot-id=" + id +"]").hasClass("rted")) {
+			$("[toot-id=" + id +"]").removeClass("rted");
+			$(".rt_" + id).removeClass("teal-text");
 		} else {
-			$("#pub_" + id).addClass("rted");
-			$("#rt_" + id).addClass("teal-text");
+			$("[toot-id=" + id +"]").addClass("rted");
+			$(".rt_" + id).addClass("teal-text");
 		}
 	});
 }
@@ -277,4 +277,9 @@ function domainblock(add, flag, acct_id) {
 function addDomainblock() {
 	var domain = $("#domainblock").val();
 	domainblock(domain, 'POST');
+}
+//URLコピー
+function tootUriCopy(url){
+	execCopy(url);
+	Materialize.toast("トゥートURLをコピーしました", 1500);
 }

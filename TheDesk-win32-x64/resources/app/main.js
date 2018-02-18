@@ -38,8 +38,24 @@ function createWindow() {
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
 	mainWindow = new BrowserWindow(window_size);
 	electron.session.defaultSession.clearCache(() => {})
-	mainWindow.loadURL('file://' + __dirname + '/index.html');
-
+	if(process.argv){
+		if(process.argv[1]){
+			var m = process.argv[1].match(/([a-zA-Z0-9]+)\/\?[a-zA-Z-0-9]+=([a-zA-Z-0-9]+)/);
+			if(m){
+				var mode=m[1];
+				var code=m[2];
+				mainWindow.loadURL('file://' + __dirname + '/index.html?mode='+mode+'&code='+code);
+			}else{
+				//mainWindow.loadURL('file://' + __dirname + '/index.html?mode=A&code=B');
+				mainWindow.loadURL('file://' + __dirname + '/index.html');
+			}
+		}else{
+			mainWindow.loadURL('file://' + __dirname + '/index.html');
+		}
+	
+	}else{
+		mainWindow.loadURL('file://' + __dirname + '/index.html');
+	}
 	// ウィンドウが閉じられたらアプリも終了
 	mainWindow.on('closed', function() {
 		mainWindow = null;
@@ -54,7 +70,7 @@ var ipc = electron.ipcMain;
 ipc.on('update', function(e, x, y) {
 	var window = new BrowserWindow({
 		width: 600,
-		height: 350,
+		height: 400,
 		"transparent": false, // ウィンドウの背景を透過
 		"frame": false, // 枠の無いウィンドウ
 		"resizable": false
@@ -141,3 +157,15 @@ ipc.on('about', (e, args) => {
 		adjust_window_size: true
 	});
 });
+ipc.on('column-del', (e, args) => {
+const options = {
+    type: 'info',
+    title: 'カラム削除',
+    message: "カラムを削除しますか？",
+    buttons: ['はい', 'いいえ']
+  }
+  dialog.showMessageBox(options, function(index) {
+    mainWindow.webContents.send('column-del-reply', index);
+  })
+});
+app.setAsDefaultProtocolClient('thedesk')

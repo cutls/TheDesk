@@ -1,5 +1,14 @@
 //ユーザーデータ表示
 localStorage.removeItem("history");
+//コード受信
+if(location.search){
+	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=([a-zA-Z-0-9]+)/);
+	var mode=m[1];
+	var codex=m[2];
+	if(mode=="user"){
+		udg(codex,0);
+	}
+}
 function udg(user, acct_id) {
 	if (!user) {
 		user = localStorage.getItem("user-id_"+acct_id);

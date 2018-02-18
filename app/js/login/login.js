@@ -5,6 +5,18 @@ localStorage.removeItem("kirishima")
 function ck() {
 	var domain = localStorage.getItem("domain_0");
 	var at = localStorage.getItem(domain + "_at");
+	//コード受信
+	if(location.search){
+		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=([a-zA-Z-0-9]+)/);
+		var mode=m[1];
+		var codex=m[2];
+		if(mode=="manager" || mode=="login"){
+			code(codex,mode);
+		}else{
+			
+		}
+		
+	}
 	if (at) {
 		ckdb(0);
 		$("#tl").show();
@@ -17,7 +29,6 @@ function ck() {
 	}
 }
 ck();
-
 //ログインポップアップ
 function login(url) {
 	var start = "https://" + url + "/api/v1/apps";
@@ -29,7 +40,7 @@ function login(url) {
 		body: JSON.stringify({
 			scopes: 'read write follow',
 			client_name: "TheDesk(PC)",
-			redirect_uris: 'urn:ietf:wg:oauth:2.0:oob',
+			redirect_uris: 'thedesk://login',
 			website: "https://thedesk.top"
 		})
 	}).then(function(response) {
@@ -40,7 +51,7 @@ function login(url) {
 	}).then(function(json) {
 		var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 				"client_id"] + "&client_secret=" + json["client_secret"] +
-			"&response_type=code&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=read+write+follow";
+			"&response_type=code&redirect_uri=thedesk://login&scope=read+write+follow";
 		localStorage.setItem("domain_" + acct_id, url);
 		localStorage.setItem("client_id", json["client_id"]);
 		localStorage.setItem("client_secret", json["client_secret"]);
@@ -50,7 +61,10 @@ function login(url) {
   			shell
   		} = require('electron');
 
-  		shell.openExternal(auth);
+		  shell.openExternal(auth);
+		  var electron = require("electron");
+		  var ipc = electron.ipcRenderer;
+		  ipc.send('quit', 'go');
 	});
 }
 
@@ -60,10 +74,17 @@ function instance() {
 	login(url);
 }
 
+
 //コードを入れた後認証
-function code() {
-	var code = $("#code").val();
-	var url = localStorage.getItem("domain_" + acct_id);
+function code(code,mode) {
+	if(!code){
+		var code = $("#code").val();
+	}
+	if(localStorage.getItem("domain_tmp")){
+		var url = localStorage.getItem("domain_tmp");
+	}else{
+		var url = localStorage.getItem("domain_" + acct_id);
+	}
 	var start = "https://" + url + "/oauth/token";
 	var id = localStorage.getItem("client_id");
 	var secret = localStorage.getItem("client_secret");
@@ -74,7 +95,7 @@ function code() {
 		},
 		body: JSON.stringify({
 			grant_type: "authorization_code",
-			redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
+			redirect_uri: "thedesk://"+mode,
 			client_id: id,
 			client_secret: secret,
 			code: code
@@ -85,14 +106,20 @@ function code() {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
+		todo(json);
 		if (json["access_token"]) {
 			localStorage.setItem(url + "_at", json["access_token"]);
-			getdata();
+			if(mode=="manager"){
+				getdataAdv(url, json["access_token"]);
+			}else{
+				getdata();
+			}
+			
 		}
 	});
 }
 
-//名前とか@とか取得
+//ユーザーデータ取得(最初)
 function getdata() {
 	var acct_id = 0;
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -131,11 +158,55 @@ function getdata() {
 		localStorage.setItem("user_" + acct_id, json["acct"]);
 		localStorage.setItem("user-id_" + acct_id, json["id"]);
 		localStorage.setItem("prof_" + acct_id, json["avatar"]);
-		$("#my-prof").attr("src", json["avatar"]);
+		$("#masara").hide();
 		$("#auth").hide();
 		$("#tl").show();
 		parseColumn()
 		ckdb();
+	});
+}
+//ユーザーデータ取得(追加)
+function getdataAdv(domain, at) {
+	var start = "https://" + domain + "/api/v1/accounts/verify_credentials";
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		console.log(json);
+		if (json.error) {
+			console.error("Error:" + json.error);
+			Materialize.toast("エラーが発生しました。しばらく待ってから再起動してください。Error:" + json.error,
+				5000);
+			return;
+		}
+		var add = {
+			at: at,
+			name: json["display_name"],
+			domain: domain,
+			user: json["acct"],
+			prof: json["avatar"],
+			id: json["id"]
+		};
+		var multi = localStorage.getItem("multi");
+		var obj = JSON.parse(multi);
+		var target = obj.lengtth;
+		obj.push(add);
+		localStorage.setItem("name_" + target, json["display_name"]);
+		localStorage.setItem("user_" + target, json["acct"]);
+		localStorage.setItem("user-id_" + target, json["id"]);
+		localStorage.setItem("prof_" + target, json["avatar"]);
+		console.log(obj);
+		var json = JSON.stringify(obj);
+		localStorage.setItem("multi", json);
+		location.href="index.html";
 	});
 }
 
@@ -250,13 +321,4 @@ function multi() {
 		$('select').material_select('update');
 	});
 }
-//現在使用停止(Uzukiより前)
-function multiLogin(target) {
-	var multi = localStorage.getItem("multi");
-	var obj = JSON.parse(multi);
-	var acct = obj[target];
-	localStorage.setItem("domain_" + target, acct.domain);
-	localStorage.setItem(domain + "_at", acct.at);
-	localStorage.setItem("acct", target);
-	location.href = "index.html";
-}
+
