@@ -321,12 +321,16 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				'<div><span class="cbadge" title="via ' + $.strip_tags(via) + '">via ' + via +
 				'</span></div></div></div>'+
 			  '</div><div class="divider"></div>';
+		}else{
 			var noticetext = eachobj.account.display_name + "(" + eachobj.account.acct +
 				")がフォローしました";
-			if (popup >= 0 && obj.length < 5) {
-				Materialize.toast(noticetext, popup * 1000);
-				$(".notf-icon").addClass("red-text");
-			}
+				var memory = localStorage.getItem("notice-mem");
+				if (popup >= 0 && obj.length < 5 && noticetext != memory) {
+					Materialize.toast(noticetext, popup * 1000);
+					$(".notf-icon_" + tlid).addClass("red-text");
+					localStorage.setItem("notice-mem",noticetext);
+					notftext="";
+				}
 		}
 	});
 	if (!noticetext) {
