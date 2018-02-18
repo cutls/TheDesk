@@ -54,13 +54,14 @@ function mixtl(acct_id, tlid) {
 				Object.keys(locals).forEach(function(key2) {
 					if (!$("#timeline_" + tlid + " [toot-id=" + obj[0].id + "]").length &&
 						key2 < date(obj[0].created_at, 'unix')) {
-						$("#timeline_" + tlid + " .cvo").first().prepend(parse([obj[0]],
+						$("#timeline_" + tlid + " .cvo").first().before(parse([obj[0]],
 							'home', acct_id));
 					}
 					if (!$("#timeline_" + tlid + " [toot-id=" + toot.id + "]").length) {
 						if (key2 > tarunix) {
 							var local = locals[key2];
-							$("#timeline_" + tlid + " [toot-id=" + local + "]").append(parse(
+							console.log("#timeline_" + tlid + " [toot-id=" + local + "]");
+							$("#timeline_" + tlid + " [toot-id=" + local + "]").after(parse(
 								[toot], 'home', acct_id));
 							tarunix = 0;
 						}

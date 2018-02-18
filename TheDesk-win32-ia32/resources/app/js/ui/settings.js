@@ -45,6 +45,11 @@ function settings() {
 		Materialize.toast("デフォルトでボックスを隠すかを" + boxd + "に設定しました。", 3000);
 	}
 	localStorage.setItem("box", boxd);
+	var gifd = $("[name=gif]:checked").val();
+	if (gifd != localStorage.getItem("gif")) {
+		Materialize.toast("アイコンアニメーション再生を" + gifd + "に設定しました。", 3000);
+	}
+	localStorage.setItem("gif", gifd);
 	var sentd = $("#sentence").val();
 	if (sentd != localStorage.getItem("sentence")) {
 		Materialize.toast("指定行超過折りたたみを" + sentd + "行に設定しました。", 3000);
@@ -106,6 +111,12 @@ function load() {
 		var box = "no";
 	}
 	$("#b_" + box).prop("checked", true);
+
+	var gif = localStorage.getItem("gif");
+	if (!gif) {
+		var gif = "yes";
+	}
+	$("#g_" + gif).prop("checked", true);
 
 	var sent = localStorage.getItem("sentence");
 	if (!sent) {

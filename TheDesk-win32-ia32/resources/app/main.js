@@ -99,14 +99,24 @@ ipc.on('download-btn', (e, args) => {
 			properties: ['openFile', 'createDirectory'],
 			defaultPath: 'TheDesk-win32-x64.zip'
         }, (savedFiles) => {
-            dl(savedFiles[0]);
+			console.log();
+			
+			var m = savedFiles.match(/(.+)\\(.+)$/);
+			try {
+				fs.statSync(savedFiles);
+				fs.unlink(savedFiles);
+				return true
+			  } catch(err) {
+				if(err.code === 'ENOENT') return false
+			  }
+            dl(m[1],savedFiles);
         });
 	}else{
 		dl();
 	}
 	
 });
-function dl(files){
+function dl(files,fullname){
 	console.log(files);
 	mainWindow.webContents.send('comp', "ダウンロードを開始します。");
 	const opts = {
