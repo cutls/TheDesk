@@ -39,7 +39,8 @@ $("#drag").on('dragleave', function(e) {
 function pimg(files) {
 	console.log(files);
 	for (i = 0; i < files.length; i++) {
-		if(files[i].path.match(/(.+)\\(.+)\.(.+)$/)[3]=="bmp"){
+		var dot=files[i].path.match(/(.+)\\(.+)\.(.+)$/)[3];
+		if(dot=="bmp" || dot=="BMP"){
 			var electron = require("electron");
 		  	var ipc = electron.ipcRenderer;
 			  ipc.send('bmp-image', files[i].path);
@@ -140,6 +141,7 @@ function media(b64, type) {
 		todc();
 		$("#toot-post-btn").prop("disabled", false);
 		$("#post-acct-sel").prop("disabled", true);
+		$('select').material_select();
 		Materialize.toast("ファイルアップロード後はアカウントを切り替えられません。", 1000);
 		localStorage.removeItem("image");
 	});

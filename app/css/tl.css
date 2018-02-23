@@ -46,7 +46,7 @@ iframe {
   height: 100%;
   display: grid;
   grid-template-columns: 43px 2fr 1fr;
-  grid-template-areas: 'notice notice notice' 'icon display_name acct' 'icon toot toot' 'icon date_via date_via' 'actions actions actions';
+  grid-template-areas: 'notice notice notice' 'icon display_name acct' 'icon toot toot' 'icon additional additional' 'actions actions date_via';
 }
 
 .area-notice {
@@ -61,7 +61,7 @@ grid-area: icon;
 }
 
 .area-display_name {
-height:1.4em;
+height:1.5em;
 margin:2px;
 overflow:hidden;
 grid-area: display_name;
@@ -84,8 +84,13 @@ grid-area: toot;
 }
 
 .area-date_via {
-grid-area: date_via;
+  text-align:right;
+  grid-area: date_via;
 }
+
+.area-additional {
+  grid-area: additional;
+  }
 
 .area-actions {
 margin:2px;
@@ -126,7 +131,6 @@ font-size:1rem;
   vertical-align: middle;
   background-color: #777;
   border-radius: 10px;
-  width:70px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

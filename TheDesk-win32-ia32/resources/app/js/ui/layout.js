@@ -95,6 +95,9 @@
 			$("#post-box").addClass("hidenbox");
 			$("#post-box").fadeOut();
 			$("#menu-btn").fadeIn();
+		}else if (box == "hide"){
+			$("body").addClass("mini-post");
+			$(".mini-btn").text("expand_less");
 		}
 		var vis = localStorage.getItem("vis");
 		if (!vis) {

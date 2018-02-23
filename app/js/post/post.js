@@ -45,6 +45,8 @@ function post() {
 		var box = localStorage.getItem("box");
 		if (box == "yes") {
 			hide();
+		}else if (box == "hide"){
+			mini();
 		}
 		todc();
 		clear();
@@ -54,7 +56,7 @@ function post() {
 //クリア(Shift+C)
 function clear() {
 	$("#textarea").val("");
-	$("#textarea").attr("placeholder", "象");
+	$("#textarea").attr("placeholder", "");
 	$("#reply").val("");
 	$("#media").val("");
 	var cwt = localStorage.getItem("cw-text");
@@ -68,7 +70,6 @@ function clear() {
 	$("#cw").removeClass("cw-avail");
 	$("#rec").text("いいえ");
 	$("#mec").text("なし");
-	$("#post-acct-sel").prop("disabled", false);
 	var vis = localStorage.getItem("vis");
 	if (!vis) {
 		$("#vis").text("public");
@@ -87,6 +88,8 @@ function clear() {
 	$("#drag").css("background-color", "#e0e0e0");
 	$("#preview").html("");
 	$("#toot-post-btn").prop("disabled", false);
+	$("#post-acct-sel").prop("disabled", false);
+	$('select').material_select();
 	localStorage.removeItem("image");
 	if ($("#post-box").hasClass("post-more")) {
 		$("#file-wrap").html(
