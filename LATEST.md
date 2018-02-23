@@ -1,5 +1,18 @@
-[TheDesk](https://thedesk.top) :thedesk: Riina (ver.3)  
-・バグ修正(通知,レイアウトなど)
-・画像の添付の順番を正規化(ドラッグ・アンド・ドロップで複数入れた場合,意図しない順番になることがあります)
-・bmpイメージの自動変換(JimpをNode.jsで使用)　
+## For Markdown-supporting Instances
+
+[TheDesk](https://thedesk.top) :thedesk: Riina (ver.4)  
+・返信時，画像添付時の挙動修正。
+・トゥートUI変更。
+・自動折りたたみ機能の発生条件を追加。文字数でも制限をかけられます。
+・設定画面UI変更。
+・トゥートボックスをデフォルトで最小化する設定。
  :github: [cutls/TheDesk](https://github.com/cutls/TheDesk) #Desk #DeskUpdate
+
+ ## For Vanilla Instances
+
+ TheDesk Riina (ver.4)リリース！
+・返信時，画像添付時の挙動修正。
+・トゥートUI変更。
+・自動折りたたみ機能の発生条件を追加。文字数でも制限をかけられます。
+・設定画面UI変更。
+・トゥートボックスをデフォルトで最小化する設定。

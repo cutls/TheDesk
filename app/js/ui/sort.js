@@ -30,6 +30,8 @@ function cap(type, data) {
 		return "List(id:" + data + ")"
 	} else if (type == "notf") {
 		return "Notification"
+	} else if (type == "mix") {
+		return "Integrated"
 	}
 }
 

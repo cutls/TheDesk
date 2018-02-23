@@ -82,6 +82,10 @@ function parseNotf(obj, popup, tlid, acct_id) {
 	var templete = '';
 	var datetype = localStorage.getItem("datetype");
 	var nsfwtype = localStorage.getItem("nsfw");
+	var gif = localStorage.getItem("gif");
+	if (!gif) {
+		var gif = "yes";
+	}
 	if (!nsfwtype || nsfwtype == "yes") {
 		var nsfw = "ok";
 	} else {
@@ -100,6 +104,7 @@ function parseNotf(obj, popup, tlid, acct_id) {
 		var eachobj = obj[key];
 		var toot = eachobj.status;
 		//トゥートである
+		var type = eachobj.type;
 		if (toot) {
 			if (!toot.application) {
 				var via = '<span style="font-style: italic;">Unknown</span>';
@@ -107,9 +112,9 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				var via = toot.application.name;
 			}
 			var sent = localStorage.getItem("sentence");
-				if (!sent) {
-					var sent = 500;
-				}
+			if (!sent) {
+				var sent = 500;
+			}
 			if (toot.spoiler_text && cw) {
 				var content = toot.content;
 				var spoil = toot.spoiler_text;
@@ -118,11 +123,13 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
 					'\')" class="nex parsed">見る</a>';
 			} else {
-				var ct = toot.content.split('</p>').length + toot.content.split('<br />').length -
+				var ct = toot.content.split('</p>').length + toot.content.split('<br />')
+					.length -
 					2;
 				if (sent < ct && $.mb_strlen(toot.content) > 5) {
 					var content = '<span class="gray">以下全文</span><br>' + toot.content
-					var spoil = '<span class="cw-long-'+toot.id+'">'+$.strip_tags($.mb_substr(toot.content, 0, 100)) +
+					var spoil = '<span class="cw-long-' + toot.id + '">' + $.strip_tags($.mb_substr(
+							toot.content, 0, 100)) +
 						'</span><span class="gray">自動折りたたみ</span>';
 					var spoiler = "cw cw_hide_" + toot.id;
 					var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
@@ -145,17 +152,18 @@ function parseNotf(obj, popup, tlid, acct_id) {
 			} else if (eachobj.type == "reblog") {
 				var what = "ブーストしました";
 			} else if (eachobj.type == "favourite") {
-				var what = "ふぁぼしました";
+				var what = "お気に入り登録しました";
 			}
 			var noticetext = '<a onclick="udg(\'' + eachobj.account.id +
-				'\',\'' + acct_id + '\')" class="pointer">'+eachobj.account.display_name + "(" + eachobj.account.acct +
+				'\',\'' + acct_id + '\')" class="pointer">' + eachobj.account.display_name +
+				"(" + eachobj.account.acct +
 				")</a>が" + what;
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
 				Materialize.toast(noticetext, popup * 1000);
 				$(".notf-icon_" + tlid).addClass("red-text");
-				localStorage.setItem("notice-mem",noticetext);
-				notftext="";
+				localStorage.setItem("notice-mem", noticetext);
+				notftext = "";
 			}
 			if (toot.spoiler_text && cw) {
 				var spoiler = "cw cw_hide_" + toot.id;
@@ -167,58 +175,65 @@ function parseNotf(obj, popup, tlid, acct_id) {
 			var urls = content.match(
 				/https?:\/\/([-a-zA-Z0-9@.]+)\/?([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
 			);
-			if(urls){
-				var analyze='<a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
-				',\''+id+'\')" class="add-show pointer">URL解析</a>';
-			}else{
-				var analyze='';
+			if (urls) {
+				var analyze = '<a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
+					',\'' + id + '\')" class="add-show pointer">URL解析</a>';
+			} else {
+				var analyze = '';
 			}
 			var viewer = "";
 			var youtube = "";
 			var emojick = toot.emojis[0];
-		//絵文字があれば
-		var content=toot.content
-		if (emojick) {
-			Object.keys(toot.emojis).forEach(function(key5) {
-				var emoji = toot.emojis[key5];
-				var shortcode = emoji.shortcode;
-				var emoji_url = '<img src="' + emoji.url +
-					'" style="width:1em" class="emoji-img">';
-				var regExp = new RegExp(":" + shortcode + ":", "g");
-				content = content.replace(regExp, emoji_url);
-			});
-		}
+			//絵文字があれば
+			var content = toot.content
+			if (emojick) {
+				Object.keys(toot.emojis).forEach(function(key5) {
+					var emoji = toot.emojis[key5];
+					var shortcode = emoji.shortcode;
+					var emoji_url = '<img src="' + emoji.url +
+						'" style="width:1em" class="emoji-img">';
+					var regExp = new RegExp(":" + shortcode + ":", "g");
+					content = content.replace(regExp, emoji_url);
+				});
+			}
 			var mediack = toot.media_attachments[0];
 			//メディアがあれば
-		if (mediack) {
-			var cwdt=100/toot.media_attachments.length
-			Object.keys(toot.media_attachments).forEach(function(key2) {
-				var media = toot.media_attachments[key2];
-				var purl = media.preview_url;
-				var url = media.url;
-				if (toot.sensitive && nsfw) {
-					var sense = "sensitive"
-				} else {
-					var sense = ""
-				}
-				viewer = viewer + '<a onclick="imgv(\''+id+'\',\''+key2+'\','+acct_id+')" id="'+id+'-image-'+key2+'" data-url="'+url+'" data-type="'+media.type+'" class="img-parsed"><img src="' + purl + '" class="' + sense +
-					' toot-img pointer" style="width:'+cwdt+'%"></a></span>';
-			});
-		} else {
-			viewer = "";
-		}
-		//公開範囲を取得
-		var vis="";
-		var visen=toot.visibility;
-		if(visen=="public"){
-			var vis = '<i class="text-darken-3 material-icons gray sml pointer" title="公開(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">public</i>';
-		}else if(visen=="unlisted"){
-			var vis = '<i class="text-darken-3 material-icons blue-text pointer" title="未収載(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">lock_open</i>';
-		}else if(visen=="plivate"){
-			var vis = '<i class="text-darken-3 material-icons orange-text pointer" title="非公開(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">lock</i>';
-		}else if(visen=="direct"){
-			var vis = '<i class="text-darken-3 material-icons red-text pointer" title="ダイレクト(クリックでトゥートURLをコピー)" onclick="tootUriCopy(\''+toot.url+'\');">mail</i>';
-		}
+			if (mediack) {
+				var cwdt = 100 / toot.media_attachments.length
+				Object.keys(toot.media_attachments).forEach(function(key2) {
+					var media = toot.media_attachments[key2];
+					var purl = media.preview_url;
+					var url = media.url;
+					if (toot.sensitive && nsfw) {
+						var sense = "sensitive"
+					} else {
+						var sense = ""
+					}
+					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
+						acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
+						'" data-type="' + media.type + '" class="img-parsed"><img src="' +
+						purl + '" class="' + sense +
+						' toot-img pointer" style="width:' + cwdt + '%"></a></span>';
+				});
+			} else {
+				viewer = "";
+			}
+			//公開範囲を取得
+			var vis = "";
+			var visen = toot.visibility;
+			if (visen == "public") {
+				var vis =
+					'<i class="text-darken-3 material-icons gray sml" title="公開">public</i>';
+			} else if (visen == "unlisted") {
+				var vis =
+					'<i class="text-darken-3 material-icons blue-text" title="未収載">lock_open</i>';
+			} else if (visen == "plivate") {
+				var vis =
+					'<i class="text-darken-3 material-icons orange-text" title="非公開">lock</i>';
+			} else if (visen == "direct") {
+				var vis =
+					'<i class="text-darken-3 material-icons red-text" title="ダイレクト">mail</i>';
+			}
 			var menck = toot.mentions[0];
 			var mentions = "";
 			if (menck) {
@@ -274,63 +289,86 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				var if_rt = "";
 				var rt_app = "";
 			}
-			var boostback="";
-			var hasmedia="";
-			var home=""
+			var boostback = "";
+			var hasmedia = "";
+			var home = "";
+			//アニメ再生
+			if (gif == "yes") {
+				var avatar = toot.account.avatar;
+			} else {
+				var avatar = toot.account.avatar_static;
+			}
+			var divider = '<div class="divider"></div>';
 			var notice = noticetext;
-				templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
+			templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 				boostback + ' ' + fav_app + ' ' + rt_app +
-				' '+ hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
-					key].created_at, 'unix') + '">'+
-				'<div class="area-notice"><span class="gray sharesta">' + noticetext + home + '</span></div>'+
+				' ' + hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
+					key].created_at, 'unix') + '">' +
+				'<div class="area-notice"><span class="gray sharesta"><span class="cbadge"title="' + date(eachobj.created_at,
+					'absolute') + '(通知された時間)"><i class="fa fa-clock-o"></i>' + date(eachobj.created_at,
+					datetype) +
+				'</span>' + notice + home +
+				'</span></div>' +
 				'<div class="area-icon"><a onclick="udg(\'' + toot.account.id +
 				'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
-				'<img src="' + toot.account.avatar +
+				'<img src="' + avatar +
 				'" width="40" class="prof-img" user="' + toot.account.acct +
-				'"></a></div>'+
+				'"></a></div>' +
 				'<div class="area-display_name"><span class="user">' +
-				toot.account.display_name + '</span></div>'+
-				'<div class="area-acct"><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
-				toot.account.acct + locked + '</span><span class="cbadge right"><i class="fa fa-clock-o"></i>' + date(eachobj.created_at,
-					datetype) + '</span></div>'+
-				'<div class="area-toot"><span class="toot ' + spoiler + '">' + content + '</span><span class="' +
+				toot.account.display_name +
+				'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
+				toot.account.acct + locked + '</span></div>' +
+				'<div class="area-acct"><div><span class="cbadge pointer" onclick="tootUriCopy(\'' + toot.url +
+				'\');" title="' + date(toot.created_at, 'absolute') +
+				'(クリックでトゥートURLをコピー)"><i class="fa fa-clock-o"></i>' +
+				date(toot.created_at, datetype) + '</span></div></div>' +
+				'<div class="area-toot"><span class="toot ' + spoiler + '">' + content +
+				'</span><span class="' +
 				api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
 				'</span>' +
 				'' + viewer + '' +
-				'<span class="additional">' + analyze + '</span></div>'+
-				'<div class="area-date_via">'+ mentions + tags +'</div>'+
+				'</div><div class="area-additional"><span class="additional">' + analyze +
+				'</span>' +
+				'' + mentions + tags + '</div>' +
 				'<div class="area-actions" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
-				'<div class="action">'+ vis +'</div><div class="action"><a onclick="re(\'' + toot.id + '\',\'' + toot.account.acct + '\',' +
+				'<div class="action"><span class="waves-effect waves-dark btn-flat" style="padding:0">' +
+				vis + '</span></div><div class="action"><a onclick="re(\'' + toot.id +
+				'\',\'' + toot.account.acct + '\',' +
 				acct_id +
 				')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-share"></i></a></div>' +
 				'<div class="action"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
-				',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
+				',\'' + tlid +
+				'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
 				if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 				'</span></a></div>' +
 				'<div class="action"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
-				',\''+tlid+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
+				',\'' + tlid +
+				'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa text-darken-3 fa-star' +
 				if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
 				'</a></span></div>' +
-				'<div class="' + if_mine + ' action"><a onclick="del(\'' + toot.id + '\',' +
+				'<div class="' + if_mine + ' action"><a onclick="del(\'' + toot.id +
+				'\',' +
 				acct_id +
 				')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-trash-o"></i></a></div>' +
 				'<div class="action"><a onclick="details(\'' + toot.id + '\',' + acct_id +
 				')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
-				'<div><span class="cbadge"><i class="fa fa-clock-o"></i>' +
-				date(toot.created_at, datetype) + '</span></div>' +
-				'<div><span class="cbadge" title="via ' + $.strip_tags(via) + '">via ' + via +
-				'</span></div></div></div>'+
-			  '</div><div class="divider"></div>';
-		}else{
+				'</div><div class="area-date_via">' +
+				'<div><span class="cbadge" title="via ' + $.strip_tags(via) + '">via ' +
+				via +
+				'</span></div></div></div>' +
+				'</div>' + divider;
+
+		} else {
+			templete = templete + userparse([eachobj.account],"","true");
 			var noticetext = eachobj.account.display_name + "(" + eachobj.account.acct +
 				")がフォローしました";
-				var memory = localStorage.getItem("notice-mem");
-				if (popup >= 0 && obj.length < 5 && noticetext != memory) {
-					Materialize.toast(noticetext, popup * 1000);
-					$(".notf-icon_" + tlid).addClass("red-text");
-					localStorage.setItem("notice-mem",noticetext);
-					notftext="";
-				}
+			var memory = localStorage.getItem("notice-mem");
+			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
+				Materialize.toast(noticetext, popup * 1000);
+				$(".notf-icon_" + tlid).addClass("red-text");
+				localStorage.setItem("notice-mem", noticetext);
+				notftext = "";
+			}
 		}
 	});
 	if (!noticetext) {
