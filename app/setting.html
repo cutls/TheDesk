@@ -21,163 +21,186 @@
 <script type="text/javascript" src="./js/common/time.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
-<div id="notf-box" class="hide">
-	<div id="notifications">Notifications will be showed here...</div>
-	<button class="btn waves-effect orange more-hide" style="width:calc( 100% - 10px); padding:0;" onclick="notfToggle()">閉じる</button>
-</div>
-<a href="acct.html" class="btn waves-effect blue nex" style="width:100%; max-width:400px;">アカウントマネージャー</a>
+<h4>設定</h4>
+<a href="acct.html" class="btn waves-effect blue nex" style="width:100%; max-width:400px;"><i class="material-icons left">account_circle</i>アカウントマネージャー</a>
 <br>
-<h5>カラム並べ替え
-</H5>
-<ul id="sort"></ul>
-<button onclick="sort()" class="btn waves-effect light-blue nex" style="width:100%; max-width:200px;">並べ替え設定</button>
+<ul class="collapsible" data-collapsible="accordion">
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">sort</i>カラム並べ替え
+	</div>
+	<div class="collapsible-body">
+		<h5>カラム並べ替え </h5>
+		<ul id="sort"></ul>
+		<button onclick="sort()" class="btn waves-effect light-blue nex" style="width:100%; max-width:200px;"><i class="material-icons left">sort</i>並べ替え設定</button>
+	</div>
+	</li>
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">desktop_windows</i>環境設定
+	</div>
+	<div class="collapsible-body">
+		<h5>テーマの設定</h5>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
+		<label for="white">白</label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
+		<label for="black">黒</label>
+		<br>
+		<h5>新規通知のポップアップお知らせの表示秒数</h5>0に設定すると表示されません
+		<br>
+		<input type="text" style="width:50px" id="popup">秒 
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>マルチカラムの最低横幅</h5>画面全体の横幅÷コラム数がこの値を超えた時、横スクロールとなります。
+		<br>
+		<input type="text" style="width:50px" id="width">px以上 
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>フォントサイズ</h5>
+		<span style="font-size:15px">15px(絶対指定)</span>
+		<br>
+		<input type="text" style="width:50px" id="size">px 
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+	</div>
+	</li>
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">reorder</i>タイムラインの設定
+	</div>
+	<div class="collapsible-body">
+		<h5>時間表記設定</h5>相対時間の例:"1分前","3日前"
+		<br>絶対時間の例"23:25:21","2017年12月30日 23:59:00" 
+		<br>混合表示は、当日のトゥートのみ相対、それ以外は絶対で表示 
+		<br>
+		<input class="with-gap" onchange="settings()" onchange="settings()" name="time" type="radio" id="relative" value="relative" />
+		<label for="relative">相対時間</label>
+		<input class="with-gap" onchange="settings()" name="time" type="radio" id="absolute" value="absolute" />
+		<label for="absolute">絶対時間</label>
+		<input class="with-gap" onchange="settings()" name="time" type="radio" id="double" value="double" />
+		<label for="double">両方表示</label>
+		<input class="with-gap" onchange="settings()" name="time" type="radio" id="medium" value="medium" />
+		<label for="medium">混合表示</label>
+		<h5>非表示設定の画像を隠す</h5>きつめのぼかしがかかります。
+		<br>
+		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_yes" value="yes" />
+		<label for="n_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_no" value="no" />
+		<label for="n_no">いいえ</label>
+		<br>
+		<h5>非表示設定のテキストを隠す</h5>
+		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_yes" value="yes" />
+		<label for="c_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_no" value="no" />
+		<label for="c_no">いいえ</label>
+		<br>
+		<h5>アイコンのアニメーションを再生する</h5>
+		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_yes" value="yes" />
+		<label for="g_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_no" value="no" />
+		<label for="g_no">いいえ</label>
+		<br>
+		<h5>指定行数以上を折りたたむ</h5>5文字以下のトゥートは折りたたみません。また、折りたたみ時は改行が描画されません。
+		<br>
+		<input type="text" style="width:50px" id="sentence">行以上または 
+		<input type="text" style="width:50px" id="letters">文字以上 
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+	</div>
+	</li>
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">send</i>投稿設定
+	</div>
+	<div class="collapsible-body">
+		<h5>デフォルトの警告文</h5>
+		<input type="text" style="width:150px" id="cw-text">
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>デフォルトの公開設定</h5>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="public" value="public" />
+		<label for="public">公開(Public)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="unlisted" value="unlisted" />
+		<label for="unlisted">未収載(Unlisted)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="private" value="private" />
+		<label for="private">非公開(Private)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="direct" value="direct" />
+		<label for="direct">ダイレクト(Direct)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="memory" value="memory" />
+		<label for="memory">前回の投稿設定を記憶する</label>
+		<br>
+		<h5>デフォルトでのボックスの挙動(起動時・トゥート後)</h5>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="b_yes" value="yes" />
+		<label for="b_yes">隠す</label>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="b_hide" value="hide" />
+		<label for="b_hide">最小化</label>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="b_no" value="no" />
+		<label for="b_no">何もしない</label>
+		<br>
+		<h5>画像投稿設定</h5>
+		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_url" value="url" />
+		<label for="i_url">画像を投稿し、画像のURLを最後に表示</label>
+		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_no-act" value="no-act" />
+		<label for="i_no-act">画像を投稿するがURLは表示しない</label>
+		<br>
+		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_inline" value="inline" disabled />
+		<label for="i_inline">現在利用できません。 
+			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
+		</label>
+		<br>
+	</div>
+	</li>
+</ul>
 <br>
+<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>戻る</a>
 <br>
-<br>
-<h5>時間表記設定</h5>相対時間の例:"1分前","3日前"
-<br>絶対時間の例"23:25:21","2017年12月30日 23:59:00"
-<br>混合表示は、当日のトゥートのみ相対、それ以外は絶対で表示
-<br>
-<input class="with-gap" name="time" type="radio" id="relative" value="relative" />
-	<label for="relative">相対時間</label>
-<input class="with-gap" name="time" type="radio" id="absolute" value="absolute" />
-	<label for="absolute">絶対時間</label>
-<input class="with-gap" name="time" type="radio" id="double" value="double" />
-	<label for="double">両方表示</label>
-<input class="with-gap" name="time" type="radio" id="medium" value="medium" />
-	<label for="medium">混合表示</label>
-<br>
-<h5>テーマの設定</h5>
-<input class="with-gap" name="theme" type="radio" id="white" value="white" />
-	<label for="white">白</label>
-<input class="with-gap" name="theme" type="radio" id="black" value="black" />
-	<label for="black">黒</label>
-<br>
-<h5>非表示設定の画像を隠す</h5>きつめのぼかしがかかります。
-<br>
-<input class="with-gap" name="nsfw" type="radio" id="n_yes" value="yes" />
-	<label for="n_yes">はい</label>
-<input class="with-gap" name="nsfw" type="radio" id="n_no" value="no" />
-	<label for="n_no">いいえ</label>
-<br>
-<h5>非表示設定のテキストを隠す</h5>
-<input class="with-gap" name="cw" type="radio" id="c_yes" value="yes" />
-	<label for="c_yes">はい</label>
-<input class="with-gap" name="cw" type="radio" id="c_no" value="no" />
-	<label for="c_no">いいえ</label>
-<br>
-<h5>デフォルトの警告文</h5>
-<input type="text" style="width:150px" id="cw-text">
-<br>
-<h5>デフォルトの公開設定</h5>
-<input class="with-gap" name="vis" type="radio" id="public" value="public" />
-	<label for="public">公開(Public)</label>
-<input class="with-gap" name="vis" type="radio" id="unlisted" value="unlisted" />
-	<label for="unlisted">未収載(Unlisted)</label>
-<input class="with-gap" name="vis" type="radio" id="private" value="private" />
-	<label for="private">非公開(Private)</label>
-<input class="with-gap" name="vis" type="radio" id="direct" value="direct" />
-	<label for="direct">ダイレクト(Direct)</label>
-<input class="with-gap" name="vis" type="radio" id="memory" value="memory" />
-	<label for="memory">前回の投稿設定を記憶する</label>
-<br>
-<h5>デフォルトでのボックスの挙動(起動時・トゥート後)</h5>
-<input class="with-gap" name="box" type="radio" id="b_yes" value="yes" />
-	<label for="b_yes">隠す</label>
-<input class="with-gap" name="box" type="radio" id="b_hide" value="hide" />
-	<label for="b_hide">最小化</label>
-<input class="with-gap" name="box" type="radio" id="b_no" value="no" />
-	<label for="b_no">何もしない</label>
-<br>
-<h5>アイコンのアニメーションを再生する</h5>
-<input class="with-gap" name="gif" type="radio" id="g_yes" value="yes" />
-	<label for="g_yes">はい</label>
-<input class="with-gap" name="gif" type="radio" id="g_no" value="no" />
-	<label for="g_no">いいえ</label>
-<br>
-<h5>新規通知のポップアップお知らせの表示秒数</h5>0に設定すると表示されません
-<br>
-    <input type="text" style="width:50px" id="popup">秒
-<br>
-<h5>指定行数以上を折りたたむ</h5>5文字以下のトゥートは折りたたみません。また、折りたたみ時は改行が描画されません。
-<br>
-    <input type="text" style="width:50px" id="sentence">行以上または
-    <input type="text" style="width:50px" id="letters">文字以上
-<br>
-<h5>マルチカラムの最低横幅</h5>画面全体の横幅÷コラム数がこの値を超えた時、横スクロールとなります。
-<br>
-    <input type="text" style="width:50px" id="width">px以上
-<br>
-<h5>フォントサイズ</h5>
-<span style="font-size:15px">15px(絶対指定)</span>
-<br>
-    <input type="text" style="width:50px" id="size">px
-<br>
-<h5>画像投稿設定</h5>
-<input class="with-gap" name="img" type="radio" id="i_url" value="url" />
-	<label for="i_url">画像を投稿し、画像のURLを最後に表示</label>
-<input class="with-gap" name="img" type="radio" id="i_no-act" value="no-act" />
-	<label for="i_no-act">画像を投稿するがURLは表示しない</label>
-<br>
-<input class="with-gap" name="img" type="radio" id="i_inline" value="inline" disabled />
-	<label for="i_inline">現在利用できません。
-	<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
-</label>
-<br>
-<button class="btn waves-effect" style="width:100%; max-width:200px;" onclick="settings()">設定</button>
-<br>
-<br>
-<br>
-<br>
-<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">戻る</a>
-<br>
-<br>キーボードショートカット一覧
+<br>キーボードショートカット一覧 
 </li>
-<li>N:投稿パネルを開く
+<li>N:投稿パネルを開く 
 </li>
-<li>X:投稿パネルを開閉
+<li>X:投稿パネルを開閉 
 </li>
-<li>Ctrl+Enter:投稿
+<li>Ctrl+Enter:投稿 
 </li>
-<li>Esc:投稿パネルを消す
+<li>Esc:投稿パネルを消す 
 </li>
-<li>F5:スーパーリロード
+<li>F5:スーパーリロード 
 </li>
-<li>E:投稿パネルの幅を切り替え
+<li>E:投稿パネルの幅を切り替え 
 </li>
-<li>Shift+C:入力内容を消す
+<li>Shift+C:入力内容を消す 
 </li>
-<li>←/→:イメージビューワー起動時に画像切り替え
+<li>←/→:イメージビューワー起動時に画像切り替え 
 </li>
-<li>マウスホイール:イメージビューワー時に拡大縮小
+<li>マウスホイール:イメージビューワー時に拡大縮小 
 </li>以下Markdownに対応したインスタンスのみ。
 <br>
-<li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線
+<li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線 
 </li>
-<li>Shift+Enter:全角スペースを入れて改行
+<li>Shift+Enter:全角スペースを入れて改行 
 </li>
-<li>Shift+Space:ゼロ幅スペース
-</li>以下アスタルテにログインしている場合のみ
+<li>Shift+Space:ゼロ幅スペース 
+</li>以下アスタルテにログインしている場合のみ 
 <br>
-<li>Ctrl+R:
+<li>Ctrl+R: 
 <a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
 </li>
 <br>
-<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('初期化します')){ localStorage.clear(); location.href='index.html'; }">初期化</button>
+<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('初期化します')){ localStorage.clear(); location.href='index.html'; }"><i class="material-icons left">delete</i>初期化</button>
 <br>
-<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;">このソフトについて</button>
+<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i class="material-icons left">info</i>このソフトについて</button>
 <br>
-<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;">公式HP</a>
+<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">web</i>公式HP</a>
 <br>
-<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;">寄付(Enty)</a>
+<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>寄付(Enty)</a>
 <br>
-<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;">GitHub</a>
+<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
 <br>
-<a href="index.html?mode=open&code=12336" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;">Developer: Cutls@kirishima.cloud</a>
+<a href="index.html?mode=open&code=12336" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="./img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
 <br>
 <span style="font-family:Open Sans;">Copyright &copy; TheDesk on Mastodon 2018 & Cutls.com 2015 All Rights Reserved. 
 	<a href="https://github.com/cutls/TheDesk/blob/master/LICENSE.md">TheDesk LICENSE (Latest Ver.)</a>
-	<br>Developer: Cutls P(
+	<br>Developer: Cutls P( 
 	<a href="index.html?mode=open&code=12336">@Cutls@kirishima.cloud</a>)
 	<br>
 </span>

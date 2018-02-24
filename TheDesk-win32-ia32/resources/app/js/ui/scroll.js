@@ -34,5 +34,8 @@ function scrollck() {
 }
 
 function goTop(id){
-	$("#timeline_box_"+id+"_box .tl-box").scrollTop(0)
+	if ($("#timeline_box_"+id+"_box .tl-box").scrollTop() > 500){
+		$("#timeline_box_"+id+"_box .tl-box").scrollTop(500)
+	}
+	$("#timeline_box_"+id+"_box .tl-box").animate({scrollTop:0});
 }

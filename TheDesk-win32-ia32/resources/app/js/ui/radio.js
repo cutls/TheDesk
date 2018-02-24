@@ -4,6 +4,7 @@ function Rtoggle(){
         Rstop();
     }else{
         $("#radio-view").toggleClass("hide");
+        $("#radio-view").toggleClass("show");
         $("#radio-input").addClass("hide");
     }
 }

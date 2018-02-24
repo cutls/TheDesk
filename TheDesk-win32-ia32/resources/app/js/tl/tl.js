@@ -33,6 +33,7 @@ function tl(type, data, acct_id, tlid) {
 		//Integratedなら飛ばす
 			$("#notice_" + tlid).text("Integrated TL(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
+			$("#notice_icon_" + tlid).text("merge_type");
 		mixtl(acct_id, tlid);
 		return;
 	} else if (type == "notf") {
@@ -40,6 +41,7 @@ function tl(type, data, acct_id, tlid) {
 		notf(acct_id, tlid, 'direct');
 		$("#notice_" + tlid).text(cap(type, data) + " TL(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
+			$("#notice_icon_" + tlid).text("notifications");
 		return;
 	}
 	localStorage.setItem("now", type);
@@ -47,6 +49,7 @@ function tl(type, data, acct_id, tlid) {
 	var at = localStorage.getItem(domain + "_at");
 	$("#notice_" + tlid).text(cap(type, data) + " TL(" + localStorage.getItem(
 		"user_" + acct_id) + "@" + domain + ")");
+		$("#notice_icon_" + tlid).text(icon(type));
 	var start = "https://" + domain + "/api/v1/timelines/" + com(type, data);
 	console.log(start);
 	fetch(start, {
@@ -254,5 +257,21 @@ function com(type, data) {
 	}
 	if (type == "list") {
 		return "list/" + data + "?"
+	}
+}
+
+//TLのアイコン
+function icon(type) {
+	if (type == "home") {
+		return "home"
+	} else if (type == "local") {
+		return "people_outline"
+	} else if (type == "pub") {
+		return "language"
+	} else if (type == "tag") {
+		return "search"
+	}
+	if (type == "list") {
+		return "subject"
 	}
 }

@@ -148,11 +148,48 @@ p {
 .notice-box {
   top: 0;
   background-color:white;
-  display: inline-block;
   position: relative;
   margin-right: 10px;
   width:100%;
+  min-height:60px;
   z-index:1000;
+  padding:5px;
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 30px 30px;
+  grid-template-areas: 'notice notice_name notice_name notice_name notice_name notice_name' 'notice a1 a2 a3 a4 a5' 'notf-box notf-box notf-box notf-box notf-box notf-box';
+}
+
+.area-notice {
+  grid-area: notice;
+}
+
+.area-notice_name {
+  grid-area: notice_name;
+}
+
+.area-notice_acct {
+  grid-area: notice_acct;
+}
+
+.area-a1 {
+  grid-area: a1;
+}
+
+.area-a2 {
+  grid-area: a2;
+}
+
+.area-a3 {
+  grid-area: a3;
+}
+
+.area-a4 {
+  grid-area: a4;
+}
+
+.area-a5 {
+  grid-area: a5;
 }
 .tl-title {
   font-family: Open Sans;
@@ -184,11 +221,13 @@ p {
   max-height: 500px;
 }
 .notf-indv-box {
+  width:100%;
   min-height: 100px;
   max-height: 400px;
   overflow-y: scroll;
   overflow-x: hidden;
   border: thin solid gray;
+  grid-area: notf-box;
 }
 #src-contents {
   min-height: 100px;

@@ -60,6 +60,9 @@ function notf(acct_id, tlid, sys) {
 				$("#notifications_" + tlid).prepend(templete[0]);
 			}
 			jQuery("time.timeago").timeago();
+		} else if (type == "delete") {
+			$("[toot-id=" + obj + "]").hide();
+			$("[toot-id=" + obj + "]").remove();
 		}
 
 	}
@@ -71,6 +74,7 @@ function notf(acct_id, tlid, sys) {
 //通知トグルボタン
 function notfToggle(acct, tlid) {
 	$("#notf-box_" + tlid).toggleClass("hide");
+	$("#notf-box_" + tlid).toggleClass("show");
 	if (!$("#notf-box_" + tlid).hasClass("fetched")) {
 		notf(acct, tlid);
 	}
@@ -359,7 +363,7 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				'</div>' + divider;
 
 		} else {
-			templete = templete + userparse([eachobj.account],"","true");
+			templete = templete + userparse([eachobj.account],"",acct_id,"true");
 			var noticetext = eachobj.account.display_name + "(" + eachobj.account.acct +
 				")がフォローしました";
 			var memory = localStorage.getItem("notice-mem");

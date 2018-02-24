@@ -9,6 +9,8 @@
 	//カラム追加ボックストグル
 	function addToggle() {
 		$("#add-box").toggleClass("hide");
+		$("#add-box").toggleClass("show");
+		$("#add-box").toggleClass("notf-box");
 	}
 //最初、カラム変更時に発火
 	function parseColumn() {
@@ -60,20 +62,24 @@
 		Object.keys(obj).forEach(function(key) {
 			var acct = obj[key];
 			var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
-				'"><div class="notice-box"><span id="notice_' + key + '" class="tl-title"></span><br>' +
-				'<a onclick="notfToggle(' + acct.domain + ',' + key +
-				')" class="setting nex" title="このアカウントの通知"><i class="material-icons nex notf-icon_' +
-				key + '">notifications</i></a>' +
-				'<a onclick="removeColumn(' + key +
-				')" class="setting nex"><i class="material-icons nex" title="このカラムを削除">remove_circle</i></a>' +
-				'<a onclick="mediaToggle(' + key +
-				')" class="setting nex"><i class="material-icons nex" title="メディアフィルター">perm_media</i><span id="sta-media-' +
-				key + '">On</span><a onclick="cardToggle(' + key +
-				')" class="setting nex"><i class="material-icons nex" title="リンクの解析を切り替え(OFFで制限を回避出来る場合があります)">link</i><span id="sta-card-' +
-				key + '">On</span></a><a onclick="goTop(' + key + ')" class="setting nex"><i class="material-icons nex" title="一番上へ">vertical_align_top</i></a>' +
-				'<div class="hide notf-indv-box" id="notf-box_' + key +
-				'"><div id="notifications_' + key +
-				'"></div></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+				'"><div class="notice-box">'+
+				'<div class="area-notice"><i class="material-icons" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
+				'<div class="area-notice_name"><span id="notice_' + key + '"" class="tl-title"></span></div>'+
+				'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
+							  ')" class="setting nex" title="このアカウントの通知"><i class="material-icons nex notf-icon_' +
+							  key + '">notifications</i></a></div>'+
+				'<div class="area-a2"><a onclick="removeColumn(' + key +
+							  ')" class="setting nex"><i class="material-icons nex" title="このカラムを削除">remove_circle</i></a></div>'+
+				'<div class="area-a3"><a onclick="mediaToggle(' + key +
+							  ')" class="setting nex"><i class="material-icons nex" title="メディアフィルター">perm_media</i><span id="sta-media-' +
+							  key + '">On</span></div>'+
+				'<div class="area-a4"><a onclick="cardToggle(' + key +
+							  ')" class="setting nex"><i class="material-icons nex" title="リンクの解析を切り替え(OFFで制限を回避出来る場合があります)">link</i><span id="sta-card-' +
+							  key + '">On</span></a></div>'+
+				'<div class="area-a5"><a onclick="goTop(' + key + ')" class="setting nex"><i class="material-icons nex" title="一番上へ">vertical_align_top</i></a></div>'+
+			  '<div class="hide notf-indv-box" id="notf-box_' + key +
+			  '"><div id="notifications_' + key +
+			  '"></div></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
 				'" class="tl" tlid="' + key + '"></div></div></div>';
 			$("#timeline-container").append(html);
 			if (acct.data) {

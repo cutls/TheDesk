@@ -46,7 +46,8 @@ function post() {
 		if (box == "yes") {
 			hide();
 		}else if (box == "hide"){
-			mini();
+			$("body").addClass("mini-post");
+			$(".mini-btn").text("expand_less");
 		}
 		todc();
 		clear();

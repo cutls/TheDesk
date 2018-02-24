@@ -18,7 +18,6 @@ option {
 }
 #mainView {
   padding: 10px;
-  padding-top: 50px;
 }
 #message {
   display: none;
@@ -136,6 +135,27 @@ blockquote:before, .quote:before {
 }
 .radio{
   font-family:'Yanone Kaffeesatz'
+}
+
+@media only screen and (min-width: 993px){
+#toast-container {
+    top:auto;
+    right:auto;
+    bottom: 5%;
+    left: 4%;
+    max-width: 86%;
+}
+}
+.show{
+  animation: show 0.2s linear 0s;
+}
+@keyframes show{
+  from{
+      opacity: 0;
+  }
+  to{
+      opacity: 1;
+  }
 }
 
 /*black theme*/

@@ -2,6 +2,7 @@
 //検索ボックストグル
 function srcToggle() {
 	$("#src-box").toggleClass("hide");
+	$("#src-box").toggleClass("show");
 	$('ul.tabs').tabs('select_tab', 'src-sta');
 	$("#src-contents").html("");
 }
