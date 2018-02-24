@@ -263,7 +263,7 @@ function parse(obj, mix, acct_id) {
 }
 
 //オブジェクトパーサー(ユーザーデータ)
-function userparse(obj, auth, notf) {
+function userparse(obj, auth, acct_id, notf) {
 	var templete = '';
 	var datetype = localStorage.getItem("datetype");
 	Object.keys(obj).forEach(function(key) {

@@ -23,10 +23,21 @@ function fav(id, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
-		$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
+		//APIのふぁぼカウントがおかしい
+		if ($("[toot-id=" + id + "] .fav_ct").text() == json.favourites_count){
+			if(flag=="unfavourite"){
+				var fav=json.favourites_count - 1;
+			}else{
+				var fav=json.favourites_count + 1;
+				//var fav = json.favourites_count;
+			}
+		}else{
+			var fav = json.favourites_count;
+		}
+		$("[toot-id=" + id + "] .fav_ct").text(fav);
 		if (!json.reblog) {
 		} else {
-			$("[toot-id=" + id + "] .rt_ct").text(json.reblog.reblogs_count);
+			$("[toot-id=" + id + "] .rt_ct").text(fav);
 		}
 		if ($("[toot-id=" + id +"]").hasClass("faved")) {
 			$("[toot-id=" + id +"]").removeClass("faved");

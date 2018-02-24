@@ -130,7 +130,9 @@ function mixre(acct_id, tlid) {
 		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "delete") {
+			console.log("Delete");
 			$("[toot-id=" + obj + "]").hide();
+			$("[toot-id=" + obj + "]").remove();
 		} else if (type == "update") {
 			var templete = parse([obj], '', acct_id);
 			if (!$("#timeline_" + tlid + " [toot-id=" + obj.id + "]").length) {
