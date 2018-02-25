@@ -8,7 +8,7 @@ function ck() {
 	var at = localStorage.getItem(domain + "_at");
 	//コード受信
 	if(location.search){
-		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=([a-zA-Z-0-9]+)/);
+		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);
 		var mode=m[1];
 		var codex=m[2];
 		if(mode=="manager" || mode=="login"){
@@ -32,6 +32,12 @@ function ck() {
 ck();
 //ログインポップアップ
 function login(url) {
+	if($('#linux:checked').val()=="linux"){
+		var red = "urn:ietf:wg:oauth:2.0:oob"
+	}else{
+		var red = 'thedesk://login';
+	}
+	localStorage.setItem("redirect", red);
 	var start = "https://" + url + "/api/v1/apps";
 	fetch(start, {
 		method: 'POST',
@@ -41,7 +47,7 @@ function login(url) {
 		body: JSON.stringify({
 			scopes: 'read write follow',
 			client_name: "TheDesk(PC)",
-			redirect_uris: 'thedesk://login',
+			redirect_uris: red,
 			website: "https://thedesk.top"
 		})
 	}).then(function(response) {
@@ -78,6 +84,8 @@ function instance() {
 
 //コードを入れた後認証
 function code(code,mode) {
+	var red = localStorage.getItem("redirect");
+	localStorage.removeItem("redirect")
 	if(!code){
 		var code = $("#code").val();
 	}
@@ -96,7 +104,7 @@ function code(code,mode) {
 		},
 		body: JSON.stringify({
 			grant_type: "authorization_code",
-			redirect_uri: "thedesk://"+mode,
+			redirect_uri: red,
 			client_id: id,
 			client_secret: secret,
 			code: code

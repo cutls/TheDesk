@@ -21,6 +21,8 @@
   
 			location.href = url;
 		}
+	}else{
+		location.href = url;
 	}
 	  }
   	return false;

@@ -1,0 +1,13 @@
+.drag-content{
+	width:300px;
+	max-width:100%;
+	height:30px;
+	text-overflow: ellipsis;
+	cursor:move;
+	user-select: none;
+	background-color:#424242;
+	margin:5px;
+	border-radius:5px;
+	color:white;
+	padding:3px;
+}

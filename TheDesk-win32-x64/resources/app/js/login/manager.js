@@ -145,6 +145,12 @@ function login(url) {
 	if (ng) {
 		return;
 	}
+	if($('#linux:checked').val()=="linux"){
+		var red = "urn:ietf:wg:oauth:2.0:oob"
+	}else{
+		var red = 'thedesk://manager';
+	}
+	localStorage.setItem("redirect", red);
 	var start = "https://" + url + "/api/v1/apps";
 	fetch(start, {
 		method: 'POST',
@@ -154,7 +160,7 @@ function login(url) {
 		body: JSON.stringify({
 			scopes: 'read write follow',
 			client_name: "TheDesk(PC)",
-			redirect_uris: 'thedesk://manager',
+			redirect_uris: red,
 			website: "https://thedesk.top"
 		})
 	}).then(function(response) {
@@ -179,7 +185,11 @@ function login(url) {
 		  shell.openExternal(auth);
 		  var electron = require("electron");
 		  var ipc = electron.ipcRenderer;
-		  ipc.send('quit', 'go');
+		  if($('#linux:checked').val()=="linux"){
+			}else{
+				ipc.send('quit', 'go');
+			}
+		  
 	});
 }
 
@@ -191,6 +201,7 @@ function instance() {
 
 //コード入れてAccessTokenゲット
 function code(code) {
+	localStorage.removeItem("redirect")
 	if(!code){
 		var code = $("#code").val();
 	}

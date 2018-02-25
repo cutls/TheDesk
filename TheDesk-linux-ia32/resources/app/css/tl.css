@@ -1,0 +1,271 @@
+/*TL CSS(ただしBBCode pulse:master.css/spin:font-awesome*/
+#timeline-container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+iframe {
+	max-width:100%;
+}
+@media screen and (max-width: 600px) {
+  .mobile #timeline-container {
+    display: block;
+    overflow-x: hidden;
+  }
+  .mobile .box {
+    width: 100vw;
+  }
+  .mobile .fixed-action-btn {
+    position: absolute;
+  }
+}
+.box {
+  overflow: hidden;
+  min-width: 300px;
+  height: 100vh;
+  flex: 1;
+  border: thin solid gray;
+}
+.user{
+  cursor:text;
+  font-size:1.2rem;
+}
+.tl-box{ height:calc(100% - 40px); overflow-y:scroll; overflow-x:hidden }
+.additional {
+  overflow-x: scroll;
+  width: 100%;
+}
+.media-filter .nomedia{
+  display:none;
+}
+.cvo {
+  padding-left: 5px;
+  padding-right: 2px;
+  word-break: break-all;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 43px 2fr 1fr;
+  grid-template-areas: 'notice notice notice' 'icon display_name acct' 'icon toot toot' 'icon additional additional' 'actions actions date_via';
+}
+
+.area-notice {
+margin:2px;
+grid-area: notice;
+}
+
+.area-icon {
+width:40px;
+margin:2px;
+grid-area: icon;
+}
+
+.area-display_name {
+  user-select: auto;
+height:1.5em;
+margin:2px;
+overflow:hidden;
+grid-area: display_name;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
+.area-acct {
+margin:2px;
+grid-area: acct;
+overflow:hidden;
+text-align:right;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+
+.area-toot {
+  cursor:text;
+  user-select: auto;
+margin:2px;
+grid-area: toot;
+}
+
+.area-date_via {
+  text-align:right;
+  grid-area: date_via;
+}
+
+.area-additional {
+  cursor:text;
+  user-select: auto;
+  grid-area: additional;
+  }
+
+.area-actions {
+margin:2px;
+grid-area: actions;
+}
+
+.action i{
+font-size:1rem;
+}
+.gray {
+  color: gray;
+}
+.sml {
+  font-size: 0.8rem;
+}
+.toot {
+  overflow: hide;
+}
+.toot-img {
+  object-fit: cover;
+  width: 100%;
+  height: 200px;
+}
+.toot img:not(.emoji-img) {
+  max-width: 100%;
+  max-height: 300px;
+}
+.cbadge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 0.8rem;
+  margin-right: 5px;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #777;
+  border-radius: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+p {
+  margin: 0;
+  margin-bottom: 0px;
+}
+.shared {
+  background-color: #cfd8dc;
+}
+.udg {
+  cursor: pointer;
+}
+.notice-box {
+  top: 0;
+  background-color:white;
+  position: relative;
+  margin-right: 10px;
+  width:100%;
+  min-height:60px;
+  z-index:1000;
+  padding:5px;
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 30px 30px;
+  grid-template-areas: 'notice notice_name notice_name notice_name notice_name notice_name' 'notice a1 a2 a3 a4 a5' 'notf-box notf-box notf-box notf-box notf-box notf-box';
+}
+
+.area-notice {
+  grid-area: notice;
+}
+
+.area-notice_name {
+  grid-area: notice_name;
+}
+
+.area-notice_acct {
+  grid-area: notice_acct;
+}
+
+.area-a1 {
+  text-align: center;
+  grid-area: a1;
+}
+
+.area-a2 {
+  text-align: center;
+  grid-area: a2;
+}
+
+.area-a3 {
+  text-align: center;
+  grid-area: a3;
+}
+
+.area-a4 {
+  text-align: center;
+  grid-area: a4;
+}
+
+.area-a5 {
+  text-align: center;
+  grid-area: a5;
+}
+.tl-title {
+  font-family: Open Sans;
+}
+#tools {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  float: right;
+}
+.setting {
+  font-size: 0.6rem;
+  color: gray;
+  cursor: pointer;
+}
+#toot-this .details {
+  display: none;
+}
+.notf-box {
+  position: fixed;
+  right: 3px;
+  bottom: 300px;
+  background-color: white;
+  border: thin solid gray;
+  z-index: 1001;
+  width: 400px;
+  padding: 5px;
+  min-height: 100px;
+  max-height: 500px;
+}
+.notf-indv-box {
+  width:100%;
+  min-height: 100px;
+  max-height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: thin solid gray;
+  grid-area: notf-box;
+}
+#src-contents {
+  min-height: 100px;
+  max-height: 190px;
+  overflow-y: scroll;
+}
+.mention {
+  color: black;
+  cursor: text;
+}
+
+/*black theme*/
+.blacktheme .notf-box {
+  background-color: #424242;
+}
+.blacktheme .modal-footer {
+  background-color: #424242;
+}
+.blacktheme .btn-flat {
+  color: white
+}
+.blacktheme .shared {
+  background-color: #004d40;
+}
+.blacktheme .mention {
+  color: white;
+}
+.blacktheme .notice-box {
+  background-color: #333333;
+}

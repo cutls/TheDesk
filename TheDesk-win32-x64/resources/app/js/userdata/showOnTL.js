@@ -2,7 +2,7 @@
 localStorage.removeItem("history");
 //コード受信
 if(location.search){
-	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=([a-zA-Z-0-9]+)/);
+	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);
 	var mode=m[1];
 	var codex=m[2];
 	if(mode=="user"){

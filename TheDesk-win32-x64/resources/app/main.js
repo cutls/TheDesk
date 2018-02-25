@@ -47,7 +47,7 @@ function createWindow() {
 				var code=m[2];
 				mainWindow.loadURL('file://' + __dirname + '/index.html?mode='+mode+'&code='+code);
 			}else{
-				//mainWindow.loadURL('file://' + __dirname + '/index.html?mode=A&code=B');
+				//mainWindow.loadURL('file://' + __dirname + '/index.html?mode=share&code=日本語');
 				mainWindow.loadURL('file://' + __dirname + '/index.html');
 			}
 		}else{

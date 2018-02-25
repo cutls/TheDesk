@@ -43,3 +43,17 @@ function zoomBox() {
 	}
 
 }
+//コード受信
+if(location.search){
+	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);
+	var mode=m[1];
+	var codex=m[2];
+	if(mode=="share"){
+		console.log(codex);
+		$('textarea').focus();
+		$("#textarea").val(decodeURI(codex));
+		show();
+		$("body").removeClass("mini-post");
+		$(".mini-btn").text("expand_less");
+	}
+}
