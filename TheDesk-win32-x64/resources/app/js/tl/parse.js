@@ -214,7 +214,7 @@ function parse(obj, mix, acct_id) {
 			'"></a></div>' +
 			'<div class="area-display_name"><span class="user">' +
 			toot.account.display_name +
-			'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
+			'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"> @' +
 			toot.account.acct + locked + '</span></div>' +
 			'<div class="area-acct"><div><span class="cbadge pointer" onclick="tootUriCopy(\'' +
 			toot.url + '\');" title="' + date(toot.created_at, 'absolute') +
@@ -295,9 +295,9 @@ function userparse(obj, auth, acct_id, notf) {
 			acct_id + ');" user="' + toot.acct + '" class="udg">' +
 			'<img src="' + toot.avatar + '" width="40" class="prof-img" user="' + toot
 			.acct + '"></a></div>' +
-			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><big>' +
+			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"><big>' +
 			toot.display_name + '</big></div>' +
-			'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
+			'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
 			toot.acct + locked + '</div>' +
 			'</div>' + auth +
 			'<div style="justify-content:space-around"> <div class="cbadge" style="width:100px;">Follows:' +

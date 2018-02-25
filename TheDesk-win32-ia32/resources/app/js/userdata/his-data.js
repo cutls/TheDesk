@@ -71,7 +71,7 @@ function flw(user, more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json);
+		var templete = userparse(json,'',acct_id);
 		if (more) {
 			$("#his-follow-list-contents").append(templete);
 		} else {
@@ -112,7 +112,7 @@ function fer(user, more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json);
+		var templete = userparse(json,'',acct_id);
 		if (more) {
 			$("#his-follower-list-contents").append(templete);
 		} else {
@@ -149,7 +149,7 @@ function showFav(more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json);
+		var templete = parse(json, '', acct_id);
 		if (more) {
 			$("#his-fav-list-contents").append(templete);
 		} else {
@@ -185,7 +185,7 @@ function showMut(more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json);
+		var templete = userparse(json,'',acct_id);
 		if (more) {
 			$("#his-muting-list-contents").append(templete);
 		} else {
@@ -221,7 +221,7 @@ function showBlo(more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json);
+		var templete = userparse(json,'',acct_id);
 		if (more) {
 			$("#his-blocking-list-contents").append(templete);
 		} else {
@@ -257,7 +257,7 @@ function showReq(more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json, 'true');
+		var templete = userparse(json, 'true',acct_id);
 		if (more) {
 			$("#his-request-list-contents").append(templete);
 		} else {

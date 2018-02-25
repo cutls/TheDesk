@@ -145,7 +145,7 @@ function mixre(acct_id, tlid) {
 					}
 					localStorage.setItem("pool", pool);
 				} else {
-					$("#timeline_" + tlid).prepend(templete);
+					$("#timeline_" + tlid).before(templete);
 				}
 				additional(acct_id, tlid);
 				jQuery("time.timeago").timeago();
@@ -203,7 +203,7 @@ function mixmore(tlid) {
 			console.error(error);
 		}).then(function(obj) {
 			if (!$("[toot-id=" + obj[0].id + "]").length) {
-				$("#timeline_" + tlid + " .cvo").first().prepend(parse([obj[0]], 'home',
+				$("#timeline_" + tlid + " .cvo").first().before(parse([obj[0]], 'home',
 					acct_id));
 			}
 			Object.keys(obj).forEach(function(key) {
@@ -217,7 +217,7 @@ function mixmore(tlid) {
 					if (!$("[toot-id=" + toot.id + "]").length) {
 						if (key2 > tarunix) {
 							var local = locals[key2];
-							$("[toot-id=" + local + "]").append(parse([toot], 'home',
+							$("[toot-id=" + local + "]").after(parse([toot], 'home',
 								acct_id));
 							tarunix = 0;
 						}

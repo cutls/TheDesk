@@ -320,7 +320,7 @@ function parseNotf(obj, popup, tlid, acct_id) {
 				'"></a></div>' +
 				'<div class="area-display_name"><span class="user">' +
 				toot.account.display_name +
-				'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> @' +
+				'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;cursor:text;"> @' +
 				toot.account.acct + locked + '</span></div>' +
 				'<div class="area-acct"><div><span class="cbadge pointer" onclick="tootUriCopy(\'' + toot.url +
 				'\');" title="' + date(toot.created_at, 'absolute') +

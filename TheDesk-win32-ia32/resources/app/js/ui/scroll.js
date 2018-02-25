@@ -25,9 +25,10 @@ function scrollck() {
 			}
 		}
 		//続きを読むトリガー
-		var scrt = $(this).find(".tl").height() - 1000;
+		var scrt = $(this).find(".tl").height() - 1500;
 		var scr = $(this).scrollTop();
 		if (scr > scrt) {
+			console.log("続き")
 			moreload('', tlid);
 		}
 	});

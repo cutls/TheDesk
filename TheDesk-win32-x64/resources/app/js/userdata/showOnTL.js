@@ -10,6 +10,7 @@ if(location.search){
 	}
 }
 function udg(user, acct_id) {
+	reset();
 	if (!user) {
 		user = localStorage.getItem("user-id_"+acct_id);
 		console.log(user);
@@ -18,6 +19,7 @@ function udg(user, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + user;
+	console.log(start);
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -41,8 +43,9 @@ function udg(user, acct_id) {
 		if (json.moved) {
 			Materialize.toast(
 				'このアカウントは移行します<button class="btn-flat toast-action" onclick="udg(\"' +
-				json.moved + '\")">移行先を見る</button>', 4000)
+				json.moved + ','+acct_id+'\")">移行先を見る</button>', 4000)
 		} else {
+			$('#his-data').modal('open');
 			$('#his-data').attr("user-id", user);
 			$('#his-data').attr("use-acct", acct_id);
 			if(json.username!=json.acct){
@@ -51,6 +54,9 @@ function udg(user, acct_id) {
 			}else{
 				$('#his-data').attr("remote", "false");
 			}
+			utl(json.id, '', acct_id);
+			flw(json.id, '', acct_id);
+			fer(json.id, '', acct_id);
 			$("#his-name").text(json.display_name);
 			$("#his-acct").text(json.acct);
 			$("#his-prof").attr("src", json.avatar);
@@ -58,38 +64,33 @@ function udg(user, acct_id) {
 			$("#his-sta").text(json.statuses_count);
 			$("#his-follow").text(json.following_count);
 			$("#his-follower").text(json.followers_count);
-			$("#his-des").html(json.note);
-			$('#his-data').modal('open');
-			utl(json.id, '', acct_id);
-			flw(json.id, '', acct_id);
-			fer(json.id, '', acct_id);
-			$('ul.tabs').tabs();
-			$('#his-data').css('background-size', 'cover');
 			$("#his-since").text(crat(json.created_at));
+			$("#his-des").html(json.note);
+			$('#his-data').css('background-size', 'cover');
 			localStorage.setItem("history" , user);
-		}
-		//自分の時
-		if (json.acct == localStorage.getItem("user_"+acct_id)) {
-			$("#his-name-val").val(json.display_name);
-			var des = json.note;
-			des = des.replace(/<br \/>/g, "\n")
-			des = $.strip_tags(des);
-			$("#his-des-val").val(des);
-			$("#his-follow-btn").hide();
-			$("#his-block-btn").hide();
-			$("#his-mute-btn").hide();
-			$("#his-notf-btn").hide();
-			$("#his-domain-btn").hide();
-			$("#my-data-nav").show();
-			$("#his-data-nav").hide();
+			//自分の時
+			if (json.acct == localStorage.getItem("user_"+acct_id)) {
+				showFav('', acct_id);
+				showBlo('', acct_id);
+				showMut('', acct_id);
+				showDom('', acct_id);
+				showReq('', acct_id);
+				$("#his-name-val").val(json.display_name);
+				var des = json.note;
+				des = des.replace(/<br \/>/g, "\n")
+				des = $.strip_tags(des);
+				$("#his-des-val").val(des);
+				$("#his-follow-btn").hide();
+				$("#his-block-btn").hide();
+				$("#his-mute-btn").hide();
+				$("#his-notf-btn").hide();
+				$("#his-domain-btn").hide();
+				$("#my-data-nav").show();
+				$("#his-data-nav").hide();
+			} else {
+				relations(user, acct_id);
+			}
 			$('ul.tabs').tabs('select_tab', 'his-tl');
-			showFav('', acct_id);
-			showBlo('', acct_id);
-			showMut('', acct_id);
-			showDom('', acct_id);
-			showReq('', acct_id);
-		} else {
-			relations(user, acct_id);
 		}
 		todc();
 	});
@@ -169,6 +170,11 @@ function relations(user, acct_id) {
 //オールリセット
 function hisclose() {
 	$('#his-data').modal('close');
+	reset();
+	$('#his-data').attr("history", "");
+	localStorage.removeItem("history");
+}
+function reset(){
 	$("#his-name").text("Loading");
 	$("#his-acct").text("");
 	$("#his-prof").attr("src", "./img/loading.svg");
@@ -199,6 +205,4 @@ function hisclose() {
 	$("#his-data-nav").show();
 	$(".cont-series").html("");
 	$("#domainblock").val("");
-	$('#his-data').attr("history", "");
-	localStorage.removeItem("history");
 }
