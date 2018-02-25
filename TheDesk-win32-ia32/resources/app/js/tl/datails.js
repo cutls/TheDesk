@@ -158,7 +158,9 @@ function cbCopy(mode){
 		execCopy(emb)
 		Materialize.toast("埋め込みHTMLをコピーしました", 1500);
 	}else{
-		execCopy(url)
-		Materialize.toast("トゥートURLをコピーしました", 1500);
+		if(execCopy(url)){
+			Materialize.toast("トゥートURLをコピーしました", 1500);
+		}
+		
 	}
 }

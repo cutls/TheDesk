@@ -16,6 +16,7 @@ function verck(ver) {
 				todo("お使いのバージョン" + mess.desk + "は最新です。");
 				//betaならアプデチェックしない
 			} else if (ver != "beta") {
+				localStorage.removeItem("instance")
 				var electron = require("electron");
 				var ipc = electron.ipcRenderer;
 				ipc.send('update', "true");

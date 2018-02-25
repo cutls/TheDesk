@@ -221,20 +221,8 @@ function ckdb(acct_id) {
 	var at = localStorage.getItem(domain + "_at");
 	var bbcode = domain + "_bbcode";
 	var letters = domain + "_letters";
-	var start = "https://dl.thedesk.top/mastodon_data.json";
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
-		},
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		console.log(json);
-		console.log(json[letters]);
+	if(localStorage.getItem("instance")){
+		var json=JSON.parse(localStorage.getItem("instance"));
 		if (json[bbcode]) {
 			if (json[bbcode] == "enabled") {
 				localStorage.setItem("bb_" + acct_id, "true");
@@ -259,8 +247,49 @@ function ckdb(acct_id) {
 		}else{
 			localStorage.removeItem("bb_" + acct_id);
 		}
-
-	});
+	}else{
+		var start = "https://dl.thedesk.top/mastodon_data.json";
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			},
+		}).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			todo(error);
+			console.error(error);
+		}).then(function(json) {
+			console.log(json);
+			localStorage.setItem("instance", JSON.stringify(json));
+			if (json[bbcode]) {
+				if (json[bbcode] == "enabled") {
+					localStorage.setItem("bb_" + acct_id, "true");
+				} else {
+					localStorage.removeItem("bb_" + acct_id);
+					$("[data-activates='bbcode']").addClass("disabled");
+					$("[data-activates='bbcode']").prop("disabled", true);
+				}
+			} else {
+				localStorage.removeItem("bb_" + acct_id);
+				$("[data-activates='bbcode']").addClass("disabled");
+				$("[data-activates='bbcode']").addClass("disabled", true);
+			}
+			if (json[letters]) {
+				if($("#textarea").attr("data-length")<json[letters]){
+					$("#textarea").attr("data-length", json[letters]);
+				}
+			} else {}
+			if (json[domain + "_markdown"] == "enabled") {
+				localStorage.setItem("md_" + acct_id, "true");
+				$(".markdown").show();
+			}else{
+				localStorage.removeItem("bb_" + acct_id);
+			}
+	
+		});
+	}
+	
 }
 
 //サポートインスタンス取得

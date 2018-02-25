@@ -110,7 +110,8 @@ function reload(type, cc, acct_id, tlid, data) {
 		var typeA = JSON.parse(mess.data).event;
 		if (typeA == "delete") {
 			var obj = JSON.parse(mess.data).payload;
-			$("[toot-id=" + obj + "]").hide();
+			$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
+			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 		} else if (typeA == "update") {
 			var obj = JSON.parse(JSON.parse(mess.data).payload);
 			console.log(obj);

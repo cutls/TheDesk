@@ -105,10 +105,10 @@ function mixre(acct_id, tlid) {
 		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "delete") {
-			$("[toot-id=" + obj + "]").hide();
+			$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
+			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 		} else if (type == "update") {
 			var templete = parse([obj], '', acct_id);
-			if (!$("#timeline_" + tlid + " [toot-id=" + obj.id + "]").length) {
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
 					pool = templete + pool;
@@ -120,7 +120,6 @@ function mixre(acct_id, tlid) {
 				additional(acct_id, tlid);
 				jQuery("time.timeago").timeago();
 				todc();
-			}
 		}
 	}
 	websocketHome[wshid].onmessage = function(mess) {
@@ -130,23 +129,19 @@ function mixre(acct_id, tlid) {
 		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "delete") {
-			console.log("Delete");
-			$("[toot-id=" + obj + "]").hide();
-			$("[toot-id=" + obj + "]").remove();
+			$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
+			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 		} else if (type == "update") {
 			var templete = parse([obj], '', acct_id);
-			if (!$("#timeline_" + tlid + " [toot-id=" + obj.id + "]").length) {
-				if ($(window).scrollTop() > 0) {
-					var pool = localStorage.getItem("pool");
-					if (pool) {
-						pool = templete + pool;
-					} else {
-						pool = templete
-					}
-					localStorage.setItem("pool", pool);
+				if (obj.visibility != "public" || obj.account.acct != obj.account.username) {
+				var pool = localStorage.getItem("pool_" + tlid);
+				if (pool) {
+					pool = templete + pool;
 				} else {
-					$("#timeline_" + tlid).before(templete);
+					pool = templete
 				}
+				localStorage.setItem("pool_" + tlid, pool);
+				scrollck();
 				additional(acct_id, tlid);
 				jQuery("time.timeago").timeago();
 			}
