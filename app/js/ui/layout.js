@@ -62,7 +62,7 @@
 		Object.keys(obj).forEach(function(key) {
 			var acct = obj[key];
 			var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
-				'"><div class="notice-box">'+
+				'"><div class="notice-box z-depth-2">'+
 				'<div class="area-notice"><i class="material-icons" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
 				'<div class="area-notice_name"><span id="notice_' + key + '"" class="tl-title"></span></div>'+
 				'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +

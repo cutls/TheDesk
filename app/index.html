@@ -23,7 +23,7 @@
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script>
-var ver="Riina (ver.5)";
+var ver="Riina (ver.6)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -56,7 +56,7 @@ var tlid=0;
 <!--ドラッグハンドラ-->
 <div id="drag"><div id="drag-content">ここにドラッグして添付(ドラッグと同時にアップロードされます)<br><button class="btn waves-effect" onclick="closedrop()">閉じる</button></div></div>
 <!--アカウント追加-->
-<div id="add-box" class="hide">
+<div id="add-box" class="hide z-depth-4">
 	  <div class="input-field">
 	  アカウント選択<br>
     <select id="add-acct-sel" class="acct-sel" style="color:black">
@@ -78,7 +78,7 @@ var tlid=0;
 	<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="addToggle()"><i class="material-icons left">close</i>閉じる</button>
 </div>
 <!--検索-->
-<div id="src-box" class="hide notf-box">
+<div id="src-box" class="hide notf-box z-depth-4">
 	<div class="input-field">
           <i class="material-icons prefix">search</i>
           <input id="src" type="text" class="validate" style="width:calc( 70% - 40px);">
@@ -101,7 +101,7 @@ var tlid=0;
 <!--TLのTL-->
 <div id="timeline-container">
 </div>
-<div id="post-box">
+<div id="post-box" class="z-depth-3">
 <!--トゥートボックス-->
 <span class="cancel">
 	<i class="material-icons" onclick="hide()" title="このボックスを閉じる(X)">cancel</i>

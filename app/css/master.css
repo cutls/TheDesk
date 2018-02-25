@@ -1,5 +1,5 @@
 /*共通CSS*/
-body{overflow:hidden;}
+body{overflow:hidden; user-select: none; cursor:default;}
 .btn {
   margin: 5px;
   text-transform: none;
