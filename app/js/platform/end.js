@@ -10,6 +10,7 @@
 	  if(url){
 		urls = url.match(/https?:\/\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/);
 		//hrefがhttp/httpsならブラウザで
+		if(urls){
 		if (urls[0]) {
 			const {
 				shell
@@ -20,6 +21,7 @@
   
 			location.href = url;
 		}
+	}
 	  }
   	return false;
   });
