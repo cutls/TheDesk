@@ -18,7 +18,16 @@ function notf(acct_id, tlid, sys) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json, '', acct_id, tlid, -1)
+		var templete="";
+		Object.keys(json).forEach(function(key) {
+			var obj = json[key];
+			if(obj.type!="follow"){
+				templete = templete+parse([obj], '', acct_id, tlid, -1);
+			}else{
+				templete = templete+userparse([obj.account], '', acct_id, tlid, -1);
+			}
+			
+		});
 		if (sys == "direct") {
 			$("#timeline_" + tlid).html(templete);
 		} else {
@@ -51,7 +60,11 @@ function notf(acct_id, tlid, sys) {
 			if (!popup) {
 				popup = 0;
 			}
-			var templete = parse(json, '', acct_id, tlid, popup)
+			if(json.type!="follow"){
+				templete = templete+parse([json], '', acct_id, tlid, popup);
+			}else{
+				templete = templete+userparse([json], '', acct_id, tlid, popup);
+			}
 			var notices = templete[1];
 			console.log(templete);
 			if (sys == "direct") {

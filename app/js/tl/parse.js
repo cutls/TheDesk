@@ -51,7 +51,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			var notice = noticetext;
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
-				Materialize.toast(noticetext, popup * 1000);
+				Materialize.toast(toot.account.display_name+"が"+what, popup * 1000);
 				$(".notf-icon_" + tlid).addClass("red-text");
 				localStorage.setItem("notice-mem", noticetext);
 				noticetext = "";
@@ -96,7 +96,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			var spoiler = "cw cw_hide_" + toot.id;
 			var api_spoil = "gray";
 			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-				'\')" class="nex parsed">見る</a>';
+				'\')" class="nex parsed">見る</a><br>';
 		} else {
 			var ct = toot.content.split('</p>').length + toot.content.split('<br />').length -
 				2;
@@ -296,7 +296,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 }
 
 //オブジェクトパーサー(ユーザーデータ)
-function userparse(obj, auth, acct_id, notf) {
+function userparse(obj, auth, acct_id, tlid, popup) {
 	var templete = '';
 	var datetype = localStorage.getItem("datetype");
 	Object.keys(obj).forEach(function(key) {
@@ -320,6 +320,13 @@ function userparse(obj, auth, acct_id, notf) {
 		}else{
 			var notftext="";
 		}
+		var memory = localStorage.getItem("notice-mem");
+			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
+				Materialize.toast(toot.display_name+"にフォローされました", popup * 1000);
+				$(".notf-icon_" + tlid).addClass("red-text");
+				localStorage.setItem("notice-mem", noticetext);
+				noticetext = "";
+			}
 		templete = templete +
 			'<div class="" style="padding-top:5px;" user-id="' + toot.id + '">' +
 			notftext +
