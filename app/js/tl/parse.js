@@ -1,5 +1,5 @@
 //オブジェクトパーサー(トゥート)
-function parse(obj, mix, acct_id) {
+function parse(obj, mix, acct_id, tlid, popup) {
 	var templete = '';
 	var datetype = localStorage.getItem("datetype");
 	var nsfwtype = localStorage.getItem("nsfw");
@@ -8,6 +8,9 @@ function parse(obj, mix, acct_id) {
 	var gif = localStorage.getItem("gif");
 	if (!sent) {
 		var sent = 500;
+	}
+	if (!ltr) {
+		var ltr = 500;
 	}
 	if (!nsfwtype || nsfwtype == "yes") {
 		var nsfw = "ok";
@@ -29,6 +32,41 @@ function parse(obj, mix, acct_id) {
 	var local = [];
 	Object.keys(obj).forEach(function(key) {
 		var toot = obj[key];
+		if(popup){
+			if (toot.type == "mention") {
+				var what = "返信しました";
+			} else if (toot.type == "reblog") {
+				var what = "ブーストしました";
+			} else if (toot.type == "favourite") {
+				var what = "お気に入り登録しました";
+			}
+			var noticetext = '<span class="cbadge"title="' + date(toot.created_at,
+				'absolute') + '(通知された時間)"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
+				datetype) +
+			'</span><a onclick="udg(\'' + toot.account.id +
+				'\',\'' + acct_id + '\')" class="pointer">' + toot.account.display_name +
+				"(" + toot.account.acct +
+				")</a>が" + what;
+			var toot = toot.status;
+			var notice = noticetext;
+			var memory = localStorage.getItem("notice-mem");
+			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
+				Materialize.toast(noticetext, popup * 1000);
+				$(".notf-icon_" + tlid).addClass("red-text");
+				localStorage.setItem("notice-mem", noticetext);
+				noticetext = "";
+			}
+		}else{
+			if (toot.reblog) {
+				var notice = toot.account.display_name + "(" + toot.account.acct +
+					")がブースト<br>";
+				var boostback = "shared";
+				var toot = toot.reblog;
+			} else {
+				var notice = "";
+				var boostback = "";
+			}
+		}
 		var id = toot.id;
 		//Integratedである場合はUnix時間をキーに配列を生成しておく
 		if (mix == "mix") {
@@ -41,15 +79,6 @@ function parse(obj, mix, acct_id) {
 		} else {
 			var home = "";
 			var divider = '<div class="divider"></div>';
-		}
-		if (toot.reblog) {
-			var notice = toot.account.display_name + "(" + toot.account.acct +
-				")がブースト<br>";
-			var boostback = "shared";
-			var toot = toot.reblog;
-		} else {
-			var notice = "";
-			var boostback = "";
 		}
 		if (toot.account.locked) {
 			var locked = ' <i class="fa fa-lock red-text"></i>';
@@ -166,15 +195,19 @@ function parse(obj, mix, acct_id) {
 		if (visen == "public") {
 			var vis =
 				'<i class="text-darken-3 material-icons gray sml" title="公開">public</i>';
+			var can_rt = "";
 		} else if (visen == "unlisted") {
 			var vis =
 				'<i class="text-darken-3 material-icons blue-text" title="未収載">lock_open</i>';
+			var can_rt = "";
 		} else if (visen == "plivate") {
 			var vis =
 				'<i class="text-darken-3 material-icons orange-text" title="非公開">lock</i>';
+			var can_rt = "hide";
 		} else if (visen == "direct") {
 			var vis =
 				'<i class="text-darken-3 material-icons red-text" title="ダイレクト">mail</i>';
+			var can_rt = "hide";
 		}
 		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
 			var if_mine = "";
@@ -216,7 +249,7 @@ function parse(obj, mix, acct_id) {
 			toot.account.display_name +
 			'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"> @' +
 			toot.account.acct + locked + '</span></div>' +
-			'<div class="area-acct"><div><span class="cbadge pointer" onclick="tootUriCopy(\'' +
+			'<div class="area-acct"><div><span class="cbadge pointer waves-effect" onclick="tootUriCopy(\'' +
 			toot.url + '\');" title="' + date(toot.created_at, 'absolute') +
 			'(クリックでトゥートURLをコピー)"><i class="fa fa-clock-o"></i>' +
 			date(toot.created_at, datetype) + '</span></div></div>' +
@@ -229,12 +262,12 @@ function parse(obj, mix, acct_id) {
 			'</span>' +
 			'' + mentions + tags + '</div>' +
 			'<div class="area-actions" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
-			'<div class="action"><span class="waves-effect waves-dark btn-flat" style="padding:0">' +
+			'<div class="action"><span style="padding:0">' +
 			vis + '</span></div><div class="action"><a onclick="re(\'' + toot.id +
 			'\',\'' + toot.account.acct + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="fa fa-share"></i></a></div>' +
-			'<div class="action"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
+			'<div class="action '+can_rt+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 fa fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +

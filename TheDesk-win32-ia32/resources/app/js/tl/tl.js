@@ -64,7 +64,7 @@ function tl(type, data, acct_id, tlid) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json, '', acct_id);
+		var templete = parse(json, '', acct_id, tlid);
 		$("#timeline_" + tlid).html(templete);
 		additional(acct_id, tlid);
 		jQuery("time.timeago").timeago();
@@ -115,7 +115,7 @@ function reload(type, cc, acct_id, tlid, data) {
 		} else if (typeA == "update") {
 			var obj = JSON.parse(JSON.parse(mess.data).payload);
 			console.log(obj);
-			var templete = parse([obj], '', acct_id);
+			var templete = parse([obj], '', acct_id, tlid);
 			var pool = localStorage.getItem("pool_" + tlid);
 			if (pool) {
 				pool = templete + pool;
@@ -153,7 +153,6 @@ function moreload(type, tlid) {
 		var data=obj[tlid].data;
 	}
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
-	console.log(localStorage.getItem("morelock") + ":" + sid)
 	if (localStorage.getItem("morelock") != sid) {
 		localStorage.setItem("morelock", sid);
 		if (type == "mix") {
@@ -178,7 +177,7 @@ function moreload(type, tlid) {
 			todo(error);
 			console.error(error);
 		}).then(function(json) {
-			var templete = parse(json, '', acct_id);
+			var templete = parse(json, '', acct_id, tlid);
 			$("#timeline_" + tlid).append(templete);
 			additional(acct_id, tlid);
 			jQuery("time.timeago").timeago();

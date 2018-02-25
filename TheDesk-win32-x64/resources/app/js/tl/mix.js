@@ -21,7 +21,7 @@ function mixtl(acct_id, tlid) {
 		console.error(error);
 	}).then(function(json) {
 		//パースして描画
-		var templete = parse(json, 'mix', acct_id);
+		var templete = parse(json, 'mix', acct_id, tlid);
 		$("#timeline_" + tlid).html(templete[0]);
 
 		jQuery("time.timeago").timeago();
@@ -55,14 +55,14 @@ function mixtl(acct_id, tlid) {
 					if (!$("#timeline_" + tlid + " [toot-id=" + obj[0].id + "]").length &&
 						key2 < date(obj[0].created_at, 'unix')) {
 						$("#timeline_" + tlid + " .cvo").first().before(parse([obj[0]],
-							'home', acct_id)+'<div class="divider"></div>');
+							'home', acct_id, tlid)+'<div class="divider"></div>');
 					}
 					if (!$("#timeline_" + tlid + " [toot-id=" + toot.id + "]").length) {
 						if (key2 > tarunix) {
 							var local = locals[key2];
 							console.log("#timeline_" + tlid + " [toot-id=" + local + "]");
 							$("#timeline_" + tlid + " [toot-id=" + local + "]").after('<div class="divider"></div>'+parse(
-								[toot], 'home', acct_id));
+								[toot], 'home', acct_id, tlid));
 							tarunix = 0;
 						}
 
@@ -108,7 +108,7 @@ function mixre(acct_id, tlid) {
 			$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
 			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 		} else if (type == "update") {
-			var templete = parse([obj], '', acct_id);
+			var templete = parse([obj], '', acct_id, tlid);
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
 					pool = templete + pool;
@@ -132,7 +132,7 @@ function mixre(acct_id, tlid) {
 			$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
 			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 		} else if (type == "update") {
-			var templete = parse([obj], '', acct_id);
+			var templete = parse([obj], '', acct_id, tlid);
 				if (obj.visibility != "public" || obj.account.acct != obj.account.username) {
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
@@ -179,7 +179,7 @@ function mixmore(tlid) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json, 'mix', acct_id);
+		var templete = parse(json, 'mix', acct_id, tlid);
 		$("#timeline_" + tlid).append(templete[0]);
 		var locals = templete[1];
 		todo("Integrated TL MoreLoading...(Home)");
@@ -213,7 +213,7 @@ function mixmore(tlid) {
 						if (key2 > tarunix) {
 							var local = locals[key2];
 							$("[toot-id=" + local + "]").after(parse([toot], 'home',
-								acct_id));
+								acct_id, tlid));
 							tarunix = 0;
 						}
 

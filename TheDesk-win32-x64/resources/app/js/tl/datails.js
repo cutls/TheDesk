@@ -28,6 +28,10 @@ function details(id, acct_id) {
 		context(id, acct_id);
 		faved(id, acct_id);
 		rted(id, acct_id);
+		if(!$("#activator").hasClass("active")){
+			$('#det-col').collapsible('open', 2);
+		}
+		
 	});
 }
 

@@ -179,22 +179,27 @@ p {
 }
 
 .area-a1 {
+  text-align: center;
   grid-area: a1;
 }
 
 .area-a2 {
+  text-align: center;
   grid-area: a2;
 }
 
 .area-a3 {
+  text-align: center;
   grid-area: a3;
 }
 
 .area-a4 {
+  text-align: center;
   grid-area: a4;
 }
 
 .area-a5 {
+  text-align: center;
   grid-area: a5;
 }
 .tl-title {
