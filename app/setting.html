@@ -61,7 +61,6 @@
 		<br>
 		<input type="text" style="width:50px" id="size">px 
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
 	</div>
 	</li>
 	<li>
@@ -104,6 +103,11 @@
 		<br>
 		<input type="text" style="width:50px" id="sentence">行以上または 
 		<input type="text" style="width:50px" id="letters">文字以上 
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>画像の高さ</h5>
+		<br>
+		<input type="text" style="width:50px" id="img-height">px
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
 	</div>
@@ -150,6 +154,28 @@
 		<br>
 	</div>
 	</li>
+	<li>
+		<div class="collapsible-header">
+				<i class="material-icons">bookmark</i>ミュート・強調の設定
+		</div>
+		<div class="collapsible-body">
+			<h5>クライアントミュート</h5>
+			<div id="mute-cli"></div>
+			<h5>クライアント強調</h5>
+			各トゥートのクライアントをクリックすると設定できます。
+			<h5>ワードミュート</h5>
+			Enterで確定<br>
+			<div class="chips" id="wordmute" style="background-color:gray;"></div>
+			<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">設定</button>
+			<h5>ワード強調</h5>
+			Enterで確定<br>
+			<div class="chips" id="wordemp" style="background-color:gray;"></div>
+			<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">設定</button>
+			<h5>ユーザー強調</h5>
+			各ユーザーのデータ表示画面で設定できます。
+			<span class="emphasized">　強調色(テーマによって異なります。)　</span>
+		</div>
+	</li>
 </ul>
 <br>
 <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>戻る</a>
@@ -194,6 +220,9 @@
 <br>
 <a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>寄付(Enty)</a>
 <br>
+寿司を投げる<br>
+<a href="https://osushi.love/Cutls_P" target="_blank">Osushi.love</a>(スマートフォンから)<br>
+<img src="./img/osushi_qr.png"><br>
 <a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
 <br>
 <a href="index.html?mode=open&code=12336" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="./img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>

@@ -85,12 +85,21 @@ function settings() {
 	if (imgd != localStorage.getItem("img")) {
 		Materialize.toast("画像投稿後の設定を「" + imgt + "」に設定しました。", 3000);
 	}
+	localStorage.setItem("img", imgd);
+
 	var sized = $("#size").val();
 	if (sized != localStorage.getItem("size")) {
 		Materialize.toast("フォントサイズを" + sized + "pxに設定しました。", 3000);
 	}
 	localStorage.setItem("size", sized);
-	localStorage.setItem("img", imgd);
+
+	var heid = $("#img-height").val();
+	if (heid != localStorage.getItem("img-height")) {
+		Materialize.toast("画像高さを" + heid + "pxに設定しました。", 3000);
+	}
+	localStorage.setItem("img-height", heid);
+
+	
 }
 
 //読み込み時の設定ロード
@@ -180,8 +189,74 @@ function load() {
 	}
 	$("#size").val(size);
 
+	var imh = localStorage.getItem("img-height");
+	if (!imh) {
+		var imh = "200";
+	}
+	$("#img-height").val(imh);
+
 	//並べ替え
 	sortload();
 }
 //最初に読む
 load();
+climute();
+wordmute();
+wordemp();
+function climute(){
+	//クライアントミュート
+	var cli = localStorage.getItem("client_mute");
+	var obj = JSON.parse(cli);
+	if(!obj){
+		$("#mute-cli").html("ミュートしているクライアントはありません。");
+	}else{
+		if(!obj[0]){
+			$("#mute-cli").html("ミュートしているクライアントはありません。");
+			return;
+		}
+	var templete;
+	Object.keys(obj).forEach(function(key) {
+		var cli = obj[key];
+		var list = key * 1 + 1;
+		templete = '<div class="acct" id="acct_' + key + '">' + list +
+			'.' +
+			cli + '<button class="btn waves-effect red disTar" onclick="cliMuteDel(' +
+			key + ')">削除</button><br></div>';
+		$("#mute-cli").append(templete);
+	});
+}
+}
+function cliMuteDel(key){
+	var cli = localStorage.getItem("client_mute");
+	var obj = JSON.parse(cli);
+	obj.splice(key, 1);
+	var json = JSON.stringify(obj);
+	localStorage.setItem("client_mute", json);
+	mute();
+}
+
+function wordmute(){
+	var word = localStorage.getItem("word_mute");
+	var obj = JSON.parse(word);
+	$('#wordmute').material_chip({
+		data: obj,
+	  });
+}
+function wordmuteSave(){
+	var word=$('#wordmute').material_chip('data');
+	var json = JSON.stringify(word);
+	localStorage.setItem("word_mute", json);
+}
+
+function wordemp(){
+	var word = localStorage.getItem("word_emp");
+	var obj = JSON.parse(word);
+	$('#wordemp').material_chip({
+		data: obj,
+	});
+}
+function wordempSave(){
+	var word=$('#wordemp').material_chip('data');
+	var json = JSON.stringify(word);
+	localStorage.setItem("word_emp", json);
+}

@@ -63,7 +63,7 @@
 			var acct = obj[key];
 			var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 				'"><div class="notice-box z-depth-2">'+
-				'<div class="area-notice"><i class="material-icons waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')"></i></div>'+
+				'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。"></i></div>'+
 				'<div class="area-notice_name"><span id="notice_' + key + '"" class="tl-title"></span></div>'+
 				'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
 							  ')" class="setting nex" title="このアカウントの通知"><i class="material-icons waves-effect nex notf-icon_' +
@@ -119,6 +119,7 @@
 				$("#vis").text(vis);
 			}
 		}
+		favTag();
 	}
 //カラム追加
 	function addColumn() {
