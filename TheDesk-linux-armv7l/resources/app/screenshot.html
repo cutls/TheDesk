@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<title>TheDesk Screenshot</title>
+<meta content="width=device-width,initial-scale=1.0" name="viewport">
+<link href="./css/materialize.css" type="text/css" rel="stylesheet">
+<link href="./css/auth.css" type="text/css" rel="stylesheet">
+<link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
+<link href='./css/tl.css' rel='stylesheet' type='text/css'>
+<link href='./css/userdata.css' rel='stylesheet' type='text/css'>
+<link href='./css/post.css' rel='stylesheet' type='text/css'>
+<link href="./css/master.css" type="text/css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta charset="utf-8">
+</head>
+<body style="padding:5px;">
+<script type="text/javascript" src="./js/common/jquery.js"></script>
+<script type="text/javascript" src="./js/platform/first.js"></script>
+<script type="text/javascript" src="./js/common/materialize.js"></script>
+<div id="toot" class="cvo"></div>
+<script>
+    //console.log(location.search);
+    $("#toot").html(localStorage.getItem("sc-text"));
+    localStorage.removeItem("sc-text");
+    
+</script>
+<script type="text/javascript" src="./js/ui/theme.js"></script>
+<script type="text/javascript" src="./js/platform/screenshot.js"></script><br>
+<span style="position: absolute; bottom:0;">数秒お待ち下さい。完了後エクスプローラーが表示されます。</span>

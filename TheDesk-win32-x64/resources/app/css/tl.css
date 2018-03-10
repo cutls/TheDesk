@@ -28,6 +28,9 @@ iframe {
   flex: 1;
   border: thin solid gray;
 }
+.box .pin{
+  display:none;
+}
 .user{
   cursor:text;
   font-size:1.2rem;
@@ -118,7 +121,6 @@ font-size:1rem;
 .toot-img {
   object-fit: cover;
   width: 100%;
-  height: 200px;
 }
 .toot img:not(.emoji-img) {
   max-width: 100%;
@@ -148,6 +150,9 @@ p {
 .shared {
   background-color: #cfd8dc;
 }
+.emphasized {
+  background-color: #81c784;
+}
 .udg {
   cursor: pointer;
 }
@@ -164,6 +169,10 @@ p {
   grid-template-columns: 40px 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 30px 30px;
   grid-template-areas: 'notice notice_name notice_name notice_name notice_name notice_name' 'notice a1 a2 a3 a4 a5' 'notf-box notf-box notf-box notf-box notf-box notf-box';
+}
+.emp{
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 .area-notice {
@@ -268,4 +277,7 @@ p {
 }
 .blacktheme .notice-box {
   background-color: #333333;
+}
+.blacktheme .emphasized {
+  background-color: #4e342e;
 }

@@ -101,6 +101,7 @@ function reload(type, cc, acct_id, tlid, data) {
 	websocket[wsid].onopen = function(mess) {
 		console.log(tlid + ":Connect Streaming API:" + type);
 		console.log(mess);
+		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocket[wsid].onmessage = function(mess) {
 		console.log(tlid + ":Receive Streaming API:");
@@ -115,19 +116,24 @@ function reload(type, cc, acct_id, tlid, data) {
 		} else if (typeA == "update") {
 			var obj = JSON.parse(JSON.parse(mess.data).payload);
 			console.log(obj);
-			var templete = parse([obj], '', acct_id, tlid);
-			var pool = localStorage.getItem("pool_" + tlid);
-			if (pool) {
-				pool = templete + pool;
-			} else {
-				pool = templete
+			if($("#timeline_" + tlid +" [toot-id=" + obj.id + "]").length < 1){
+				var templete = parse([obj], '', acct_id, tlid);
+				var pool = localStorage.getItem("pool_" + tlid);
+				if (pool) {
+					pool = templete + pool;
+				} else {
+					pool = templete
+				}
+				localStorage.setItem("pool_" + tlid, pool);
+	
+				scrollck();
+	
+				additional(acct_id, tlid);
+				jQuery("time.timeago").timeago();
+			}else{
+				todo("二重取得発生中");
 			}
-			localStorage.setItem("pool_" + tlid, pool);
-
-			scrollck();
-
-			additional(acct_id, tlid);
-			jQuery("time.timeago").timeago();
+			
 			todc();
 		}
 		websocket[wsid].onclose = function(mess) {

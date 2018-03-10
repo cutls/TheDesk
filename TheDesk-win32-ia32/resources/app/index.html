@@ -10,7 +10,7 @@
 <link href='./css/userdata.css' rel='stylesheet' type='text/css'>
 <link href='./css/post.css' rel='stylesheet' type='text/css'>
 <link href="./css/master.css" type="text/css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Yanone+Kaffeesatz" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
 <meta charset="utf-8">
 </head>
 <body>
@@ -24,7 +24,7 @@
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script>
 	//トゥートリンク追加
-var ver="Riina (ver.8)";
+var ver="Airi (ver.1)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -38,8 +38,9 @@ var tlid=0;
 <input type="text" id="url" style="width:70%" placeholder="mstdn.jp">
 <div id="ins-suggest"></div>
 <button class="btn waves-effect" onclick="instance()">Login</button><br>
+Linuxでご使用の方はチェックを入れて下さい。<br>
 <input type="checkbox" class="filled-in" id="linux" />
-      <label for="linux">Linuxの方はチェックをいれてください。</label><br>
+      <label for="linux">コードセットアップ</label><br>
 <span style="font-family:Open Sans;">Supports</span>
 <div id="support">
 </div>
@@ -107,6 +108,7 @@ var tlid=0;
 <div id="post-box" class="z-depth-3">
 <!--トゥートボックス-->
 <span class="cancel">
+	<i class="material-icons waves-effect" onclick="nano()" title="最小のマストドン。TheDesk Nano">remove_from_queue</i>
 	<i class="material-icons waves-effect" onclick="hide()" title="このボックスを閉じる(X)">cancel</i>
 	<i class="material-icons waves-effect mini-btn" onclick="mini()" title="このボックスを最小化">expand_more</i>
 </span><br>
@@ -118,13 +120,17 @@ var tlid=0;
 <a onclick="profShow()"><i class="material-icons nex pointer mize waves-effect" title="選択中のプロフィール表示">account_circle</i></a>
 <a href="index.html" class="setting nex mize waves-effect"><i class="material-icons nex" title="スーパーリロード">refresh</i></a>
 <a onclick="window.open('https://astarte.thedesk.top');" class="setting nex mize waves-effect" target="_blank" id="ranking-btn" style="display:none;"><i class="material-icons nex" title="アスタルテランキング">timeline</i></a>
-<a onclick="Rtoggle()" class="setting nex mize waves-effect" id="radio-btn"><i class="material-icons nex" title="Radio(Select/Pause)">play_circle_outline</i></a><span id="radio-sta" class="radio"></span>
+<a onclick="Rtoggle()" class="setting nex mize waves-effect" id="radio-btn"><i class="material-icons nex" title="Radio(Select/Pause)">play_circle_outline</i></a>
+<div id="waveform"></div>
+<span id="radio-sta" class="radio"></span>
 <div id="radio-view" class="hide radio mize">
 	<span class="cbadge pointer waves-effect" onclick="Rplay('https://listen.moe/stream','Listen.moe')" data-name="Listen.moe">Listen.moe</span>
-	<span class="cbadge pointer waves-effect" onclick="Rplay('http://itori.animenfo.com:443','AnimeNfo Radio')" data-name="AnimeNfo Radio">AnimeNfo Radio</span>
+	<span class="cbadge pointer waves-effect" onclick="Rplay('http://itori.animenfo.com:443/;','AnimeNfo Radio')" data-name="AnimeNfo Radio">AnimeNfo Radio</span>
 	<span class="cbadge pointer waves-effect" onclick="Rplay('http://hyades.shoutca.st:8043/stream','LoFi hip hop Radio')" data-name="LoFi hip hop Radio">LoFi hip hop Radio</span>
 	<span class="cbadge pointer waves-effect" onclick="Rplay('http://89.16.185.174:8004/stream','Linn Classical')" data-name="Linn Classical">Linn Classical</span>
+	<span class="cbadge pointer waves-effect" onclick="Rplay('http://89.16.185.174:8000/stream','Linn Jazz')" data-name="Linn Jazz">Linn Jazz</span>
 	<span class="cbadge pointer waves-effect" onclick="Rplay('http://edge-ads-01-cr.sharp-stream.com/jazzfmmobile.aac','Jazz FM')" data-name="Jazz FM">Jazz FM</span>
+	<span class="cbadge pointer waves-effect" onclick="Rplay('http://91.121.59.45:10024/stream','canal-jazz.eu')" data-name="canal-jazz.eu">canal-jazz.eu</span>
 	<span class="cbadge pointer waves-effect" onclick="Ryourself()">Others</span>
 </div>
 <div id="radio-input" class="hide radio mize">
@@ -272,6 +278,7 @@ var tlid=0;
 		<div id="toot-after"></div>
 	</div>
     <div class="modal-footer">
+				<a href="#!" class="waves-effect waves-green btn-flat" onclick="shot()">スクリーンショット</a>
 				<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy()">URLをコピー</a>
 				<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy('emb')">埋め込む</a>
 		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
@@ -347,7 +354,8 @@ var tlid=0;
 	  <button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn" onclick="historyShow()">一つ前のユーザーデータ</button>
 	  <a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">フォロー</a>
 	  <a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">ミュート</a>
-	  <a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">ブロック</a>
+		<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">ブロック</a>
+		<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-emp-btn" onclick="empUser()">ユーザー強調</a>
       <a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Close</a>
     </div>
   </div>
@@ -376,7 +384,13 @@ var tlid=0;
     <div class="modal-footer">
 		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
     </div>
-  </div>
+	</div>
+	<!--PiP-->
+	<div id="pip" class="hide pip-bottom pip-left">
+			<i class="material-icons pip-horiz pointer" onclick="pipHoriz()">chevron_right</i>　<i class="material-icons pip-vert pointer" onclick="pipVert()">expand_less</i>
+			　<i class="material-icons pointer" onclick="endPip()">close</i>
+		<div id="pip-content"></div>
+	</div>
   <!--左下メッセージ-->
 <div id="message"></div>
 <!--Radio-->
@@ -392,12 +406,14 @@ var tlid=0;
 <script type="text/javascript" src="./js/tl/mix.js"></script>
 <script type="text/javascript" src="./js/tl/src.js"></script>
 <script type="text/javascript" src="./js/tl/filter.js"></script>
+<script type="text/javascript" src="./js/tl/tag.js"></script>
 <script type="text/javascript" src="./js/ui/layout.js"></script>
 <script type="text/javascript" src="./js/login/login.js"></script>
 <script type="text/javascript" src="./js/login/instance.js"></script>
 <script type="text/javascript" src="./js/ui/post-box.js"></script>
 <script type="text/javascript" src="./js/ui/img.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
+<script type="text/javascript" src="./js/ui/pip.js"></script>
 <script type="text/javascript" src="./js/ui/radio.js"></script>
 <script type="text/javascript" src="./js/post/post.js"></script>
 <script type="text/javascript" src="./js/post/reply.js"></script>

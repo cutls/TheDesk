@@ -60,17 +60,16 @@ function notf(acct_id, tlid, sys) {
 			if (!popup) {
 				popup = 0;
 			}
-			if(json.type!="follow"){
-				templete = templete+parse([json], '', acct_id, tlid, popup);
+			var templete="";
+			if(obj.type!="follow"){
+				templete = templete+parse([obj], '', acct_id, tlid, popup);
 			}else{
-				templete = templete+userparse([json], '', acct_id, tlid, popup);
+				templete = templete+userparse([obj], '', acct_id, tlid, popup);
 			}
-			var notices = templete[1];
-			console.log(templete);
 			if (sys == "direct") {
-				$("#timeline_" + tlid).prepend(templete[0]);
+				$("#timeline_" + tlid).prepend(templete);
 			} else {
-				$("#notifications_" + tlid).prepend(templete[0]);
+				$("#notifications_" + tlid).prepend(templete);
 			}
 			jQuery("time.timeago").timeago();
 		} else if (type == "delete") {

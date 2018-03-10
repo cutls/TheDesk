@@ -72,6 +72,13 @@
   		return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
   	});
   };
+  function escapeHTML(str) {
+	return str.replace(/&/g, '&amp;')
+			  .replace(/</g, '&lt;')
+			  .replace(/>/g, '&gt;')
+			  .replace(/"/g, '&quot;')
+			  .replace(/'/g, '&#039;');
+  }
   //コピー
   function execCopy(string){
 	var temp = $("#copy");
@@ -80,3 +87,10 @@
 	var result = document.execCommand('copy');
 	return result;
   }
+  //Nano
+  //Nano
+function nano(){
+    var electron = require("electron");
+    var ipc = electron.ipcRenderer;
+    ipc.send('nano', "");
+}

@@ -68,4 +68,5 @@ input.addEventListener("focus", function() {
 
 input.addEventListener("blur", function() {
 	window.clearInterval(timer);
+	favTag();
 }, false);

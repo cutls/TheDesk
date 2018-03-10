@@ -37,6 +37,9 @@ option {
   position: fixed;
   z-index: 9;
 }
+#imagemodal, #videomodal, #tootmodal {
+  background-color: white;
+}
 #imagemodal .modal-content {
   overflow: hidden;
 }
@@ -134,7 +137,28 @@ blockquote:before, .quote:before {
   font-size: 2rem;
 }
 .radio{
-  font-family:'Yanone Kaffeesatz'
+  font-family:'Baloo Bhai'
+}
+#pip{
+  z-index:1001;
+  width:418px;
+  background-color: white;
+  position:absolute;
+}
+.pip-bottom{
+  bottom:10px;
+}
+.pip-left{
+  left:10px;
+}
+.pip-top{
+  top:10px;
+}
+.pip-right{
+  right:10px;
+}
+#pip-content .material-icons{
+  display:none;
 }
 
 @media only screen and (min-width: 993px){
@@ -173,13 +197,16 @@ blockquote:before, .quote:before {
   justify-content: center;
   align-items: center;
 }
-.blacktheme #imagemodal, #videomodal, #tootmodal {
+.blacktheme #imagemodal,.blacktheme  #videomodal,.blacktheme  #tootmodal {
   background-color: black;
 }
 .blacktheme .collapsible-header {
   background-color: #212121;
 }
 .blacktheme .tabs {
+  background-color: #212121;
+}
+.blacktheme #pip {
   background-color: #212121;
 }
 

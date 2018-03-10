@@ -61,7 +61,6 @@
 		<br>
 		<input type="text" style="width:50px" id="size">px 
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
 	</div>
 	</li>
 	<li>
@@ -104,6 +103,11 @@
 		<br>
 		<input type="text" style="width:50px" id="sentence">行以上または 
 		<input type="text" style="width:50px" id="letters">文字以上 
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>画像の高さ</h5>
+		<br>
+		<input type="text" style="width:50px" id="img-height">px
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
 	</div>
@@ -150,6 +154,70 @@
 		<br>
 	</div>
 	</li>
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">send</i>投稿設定
+	</div>
+	<div class="collapsible-body">
+		<h5>デフォルトの警告文</h5>
+		<input type="text" style="width:150px" id="cw-text">
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>デフォルトの公開設定</h5>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="public" value="public" />
+		<label for="public">公開(Public)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="unlisted" value="unlisted" />
+		<label for="unlisted">未収載(Unlisted)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="private" value="private" />
+		<label for="private">非公開(Private)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="direct" value="direct" />
+		<label for="direct">ダイレクト(Direct)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="memory" value="memory" />
+		<label for="memory">前回の投稿設定を記憶する</label>
+		<br>
+		<h5>デフォルトでのボックスの挙動(起動時・トゥート後)</h5>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="b_yes" value="yes" />
+		<label for="b_yes">隠す</label>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="b_hide" value="hide" />
+		<label for="b_hide">最小化</label>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="b_no" value="no" />
+		<label for="b_no">何もしない</label>
+		<br>
+		<h5>画像投稿設定</h5>
+		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_url" value="url" />
+		<label for="i_url">画像を投稿し、画像のURLを最後に表示</label>
+		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_no-act" value="no-act" />
+		<label for="i_no-act">画像を投稿するがURLは表示しない</label>
+		<br>
+		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_inline" value="inline" disabled />
+		<label for="i_inline">現在利用できません。 
+			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
+		</label>
+		<br>
+	</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+				<i class="material-icons">bookmark</i>ミュート・強調の設定
+		</div>
+		<div class="collapsible-body">
+			<h5>クライアントミュート</h5>
+			<div id="mute-cli"></div>
+			<h5>クライアント強調</h5>
+			各トゥートのクライアントをクリックすると設定できます。
+			<h5>ワードミュート</h5>
+			Enterで確定<br>
+			<div class="chips" id="wordmute" style="background-color:gray;"></div>
+			<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">設定</button>
+			<h5>ワード強調</h5>
+			Enterで確定<br>
+			<div class="chips" id="wordemp" style="background-color:gray;"></div>
+			<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">設定</button>
+			<h5>ユーザー強調</h5>
+			各ユーザーのデータ表示画面で設定できます。
+			<span class="emphasized">　強調色(テーマによって異なります。)　</span>
+		</div>
+	</li>
 </ul>
 <br>
 <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>戻る</a>
@@ -194,6 +262,9 @@
 <br>
 <a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>寄付(Enty)</a>
 <br>
+寿司を投げる<br>
+<a href="https://osushi.love/Cutls_P" target="_blank">Osushi.love</a>(スマートフォンから)<br>
+<img src="./img/osushi_qr.png"><br>
 <a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
 <br>
 <a href="index.html?mode=open&code=12336" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="./img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>

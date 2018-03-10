@@ -1,7 +1,7 @@
 //トゥートの詳細
-function details(id, acct_id) {
+function details(id, acct_id, tlid) {
 	$(".toot-reset").html("データなし");
-	var html = $("#pub_" + id).html();
+	var html = $("#timeline_"+tlid+" #pub_" + id).html();
 	$("#toot-this").html(html);
 	$('#tootmodal').modal('open');
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -22,6 +22,7 @@ function details(id, acct_id) {
 		$("#toot-this .fav_ct").text(json.favourites_count);
 		$("#toot-this .rt_ct").text(json.reblogs_count);
 		$("#tootmodal").attr("data-url",json.url);
+		$("#tootmodal").attr("data-id",json.id);
 		if (json.in_reply_to_id) {
 			replyTL(json.in_reply_to_id, acct_id);
 		}
@@ -167,4 +168,15 @@ function cbCopy(mode){
 		}
 		
 	}
+}
+//魚拓
+function shot(){
+	var id=$("#tootmodal").attr("data-id");
+	var w=$("#toot-this").width();
+	var h=$("#toot-this").height()+150;
+	var text=$("#toot-this").html();
+	localStorage.setItem("sc-text",text)
+	var electron = require("electron");
+	var ipc = electron.ipcRenderer;
+	ipc.send('screen', [w,h,id]);
 }

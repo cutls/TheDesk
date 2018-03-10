@@ -235,6 +235,39 @@ function del(id, acct_id) {
 		//$("#pub_"+id).hide();
 	});
 }
+//ピン留め
+function pin(id, acct_id) {
+	if ($("#pub_" + id).hasClass("pined")) {
+		var flag = "unpin";
+	} else {
+		var flag = "pin";
+	}
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem(domain + "_at");
+	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
+	fetch(start, {
+		method: 'POST',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+		body: JSON.stringify({})
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		console.log(json);
+		if ($("[toot-id=" + id +"]").hasClass("pined")) {
+			$("[toot-id=" + id +"]").removeClass("pined");
+			$(".pin_" + id).removeClass("blue-text");
+		} else {
+			$("[toot-id=" + id +"]").addClass("pined");
+			$(".pin_" + id).addClass("blue-text");
+		}
+	});
+}
 
 //フォロリク
 function request(id, flag, acct_id) {
@@ -288,6 +321,32 @@ function domainblock(add, flag, acct_id) {
 function addDomainblock() {
 	var domain = $("#domainblock").val();
 	domainblock(domain, 'POST');
+}
+//ユーザー強調
+function empUser(){
+	var usr = localStorage.getItem("user_emp");
+	var obj = JSON.parse(usr);
+	var id=$("#his-acct").attr("fullname");
+	console.log(id);
+	if(!obj){
+		var obj=[];
+		obj.push(id);
+		Materialize.toast(id+"を強調します。設定を適用するにはF5を押して下さい。", 4000);
+	}else{
+		var can;
+		Object.keys(obj).forEach(function(key) {
+			var usT = obj[key];
+			if(usT!=id && !can){
+				can=false;
+			}else{
+				can=true;
+				obj.splice(key, 1);
+				Materialize.toast(id+"の強調を解除しました。設定を適用するにはF5を押して下さい。", 4000);
+			}
+		});
+	}
+	var json = JSON.stringify(obj);
+	localStorage.setItem("user_emp", json);
 }
 //URLコピー
 function tootUriCopy(url){

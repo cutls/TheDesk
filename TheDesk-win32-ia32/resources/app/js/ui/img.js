@@ -271,7 +271,7 @@ function dlImg(){
 	var url=$("#imgmodal").attr("src");
 	var electron = require("electron");
 	var ipc = electron.ipcRenderer;
-	ipc.send('general-dl', url);
+	ipc.send('general-dl', [url,false]);
 	ipc.on('general-dl-prog', function (event, arg) {
 		console.log(arg);
 	})

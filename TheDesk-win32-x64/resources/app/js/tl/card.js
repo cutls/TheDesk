@@ -39,8 +39,7 @@ function additional(acct_id, tlid) {
 						json.description + "</span>");
 				}
 				if (json.html) {
-					$("[toot-id=" + id + "] .additional").html(json.html);
-
+					$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons" onclick="pip('+id+')">picture_in_picture_alt</i>');
 				}
 				if (json.title) {
 					$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
@@ -100,7 +99,7 @@ function additionalIndv(tlid, acct_id, id) {
 						json.description + "</span>");
 				}
 				if (json.html) {
-					$("[toot-id=" + id + "] .additional").html(json.html);
+					$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="ながら観モード">picture_in_picture_alt</i>');
 
 				}
 				if (json.title) {

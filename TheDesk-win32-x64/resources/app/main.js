@@ -5,6 +5,9 @@ const electron = require("electron");
 const fs = require("fs");
 const dialog = require('electron').dialog;
 var Jimp = require("jimp");
+const shell = electron.shell;
+const os = require('os')
+const path = require('path')
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 
@@ -41,7 +44,7 @@ function createWindow() {
 	electron.session.defaultSession.clearCache(() => {})
 	if(process.argv){
 		if(process.argv[1]){
-			var m = process.argv[1].match(/([a-zA-Z0-9]+)\/\?[a-zA-Z-0-9]+=([a-zA-Z-0-9]+)/);
+			var m = process.argv[1].match(/([a-zA-Z0-9]+)\/\?[a-zA-Z-0-9]+=(.+)/);
 			if(m){
 				var mode=m[1];
 				var code=m[2];
@@ -80,19 +83,36 @@ ipc.on('update', function(e, x, y) {
 
 	return "true"
 })
-ipc.on('nano', function(e, x, y) {
+ipc.on('screen', function(e, args) {
 	var window = new BrowserWindow({
-		width: 300,
-		height: 100,
-		"transparent": true, // ウィンドウの背景を透過
+		width: args[0],
+		height: args[1],
+		"transparent": false, // ウィンドウの背景を透過
 		"frame": false, // 枠の無いウィンドウ
-		"resizable": false
+		"resizable": true
 	});
-	window.loadURL('file://' + __dirname + '/nano.html');
+	window.loadURL('file://' + __dirname + '/screenshot.html?id='+args[2]);
 	window.setAlwaysOnTop(true);
 	window.setPosition(0, 0);
 	return "true"
 })
+//Web魚拓
+ipc.on('shot', function(e, args) {
+	console.log(args[0]);
+	Jimp.read(Buffer.from( args[3],'base64'), function (err, lenna) {
+		if (err) throw err;
+		lenna.crop( 0, 0, args[1], args[2] ).write(app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\"+args[4]+"-toot.png");
+	});
+	shell.showItemInFolder(app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\");
+})
+ipc.on('shot-img-dl', (e, args) => {
+	Jimp.read(args[0], function (err, lenna) {
+		if (err) throw err;
+		lenna.write(app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\"+args[1]);
+	});
+	
+});
+//アプデDL
 ipc.on('download-btn', (e, args) => {
 	if(args=="true"){
 		dialog.showSaveDialog(null, {
@@ -143,10 +163,12 @@ function dl(files,fullname){
 		.catch(console.error);
 }
 ipc.on('general-dl', (e, args) => {
-	console.log(args)
+	var name="";
+	var dir=app.getPath('home')+"\\Pictures\\TheDesk";
 	mainWindow.webContents.send('general-dl-message', "ダウンロードを開始します。");
 	const opts = {
-		directory: app.getPath('home')+"\\Pictures\\TheDesk",
+		directory: dir,
+		filename:name,
 		openFolderWhenDone: true,
 		onProgress: function(e) {
 			mainWindow.webContents.send('general-dl-prog', e);
@@ -154,7 +176,7 @@ ipc.on('general-dl', (e, args) => {
 		saveAs: false
 	};
 	download(BrowserWindow.getFocusedWindow(),
-			args, opts)
+			args[0], opts)
 		.then(dl => {
 			mainWindow.webContents.send('general-dl-message', "ダウンロードが完了しました。");
 		})
@@ -195,4 +217,14 @@ ipc.on('bmp-image', (e, args) => {
 	});
 	
 });
+ipc.on('nano', function (e, x, y) {
+	var window = new BrowserWindow({width: 300, height: 200,
+	"transparent": false,    // ウィンドウの背景を透過
+		 "frame": false,     // 枠の無いウィンドウ
+		 "resizable": false });
+   window.loadURL('file://' + __dirname + '/nano.html');
+   window.setAlwaysOnTop(true);
+   window.setPosition(0, 0);
+   return "true"
+ })
 app.setAsDefaultProtocolClient('thedesk')

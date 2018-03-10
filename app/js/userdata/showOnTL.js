@@ -51,14 +51,17 @@ function udg(user, acct_id) {
 			if(json.username!=json.acct){
 				//Remote
 				$('#his-data').attr("remote", "true");
+				var fullname=json.acct;
 			}else{
 				$('#his-data').attr("remote", "false");
+				var fullname=json.acct+"@"+domain;
 			}
 			utl(json.id, '', acct_id);
 			flw(json.id, '', acct_id);
 			fer(json.id, '', acct_id);
 			$("#his-name").text(json.display_name);
 			$("#his-acct").text(json.acct);
+			$("#his-acct").attr("fullname",fullname);
 			$("#his-prof").attr("src", json.avatar);
 			$('#his-data').css('background-image', 'url(' + json.header + ')');
 			$("#his-sta").text(json.statuses_count);
@@ -85,6 +88,7 @@ function udg(user, acct_id) {
 				$("#his-mute-btn").hide();
 				$("#his-notf-btn").hide();
 				$("#his-domain-btn").hide();
+				$("#his-emp-btn").hide();
 				$("#my-data-nav").show();
 				$("#his-data-nav").hide();
 			} else {
@@ -195,6 +199,7 @@ function reset(){
 	$("#his-mute-btn").show();
 	$("#his-notf-btn").show();
 	$("#his-domain-btn").show();
+	$("#his-emp-btn").show();
 	$("#his-follow-btn").text("フォロー");
 	$("#his-mute-btn").text("ミュート");
 	$("#his-block-btn").text("ブロック");

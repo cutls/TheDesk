@@ -1,6 +1,6 @@
 # TheDesk
-Mastodon client for Windows  
-オープンソースSNSマストドンのWindowsクライアント  
+Mastodon client for Windows/Linux(Linux ver. is not supported by developer.)  
+オープンソースSNSマストドンのWindows/Linuxクライアント  
 Download:[TheDesk](https://thedesk.top)  
 Latest Info(Markdown Toot)/最新情報(マークダウン形式のトゥート): [LATEST.md](https://github.com/cutls/TheDesk/blob/master/LATEST.md)
 
@@ -33,10 +33,11 @@ Japanese
 
 ## Requirement/環境
 
-- Windows 64bit(to launch TheDesk/実行に必要)
+- Windows (to launch TheDesk/実行に必要) / Linux (x64/ia32/armv7l)
 - Electron beta.1.8.2-beta4
 - electron-dl
 - electron-about-window
+- Jimp(Node.js)
 - Ability to read unformated files!
 
 ### Why do we use Electron beta version?/Beta版の利用について

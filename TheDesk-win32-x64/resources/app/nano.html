@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="./css/tl.css" type="text/css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<title>TheDesk Nano</title>
+<style>
+body {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+#drag{
+ -webkit-app-region: drag;
+ cursor: move;
+ }
+button {
+  -webkit-app-region: no-drag;
+}
+textarea {
+  -webkit-app-region: no-drag;
+}
+	 ::-webkit-scrollbar {
+    width: 5px;
+	height:10px;
+	background: rgba(0,0,0,0.05); 
+}
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+ .area-actions{display:none !important;}
+ .area-date_via{display:none !important;}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+</style>
+</head>
+<body>
+        <script type="text/javascript" src="./js/common/jquery.js"></script>
+        <script type="text/javascript" src="./js/platform/first.js"></script>
+<div id="drag">+</div>
+<span id="timeline_nano">
+            <select id="type-sel">
+                <option value="local">Local</option>
+                <option value="home">Home</option>
+            </select>
+            <button onclick="tl()">表示</button>
+</span><br><button onclick="window.close()">終了</button><br>
+<textarea id="textarea"></textarea>
+<input type="hidden" id="reply">
+<input type="hidden" id="media">
+<select id="post-acct-sel">
+
+    </select>
+<button class="btn" onclick="post()">投稿</button>
+<script type="text/javascript" src="./js/post/post.js"></script>
+<script type="text/javascript" src="./js/post/reply.js"></script>
+<script type="text/javascript" src="./js/tl/parse.js"></script>
+<script type="text/javascript" src="./js/tl/date.js"></script>
+<script type="text/javascript" src="./js/common/time.js"></script>
+<script type="text/javascript" src="./js/platform/nano.js"></script>
+<script type="text/javascript" src="./js/platform/end.js"></script>
+<script>
+var multi = localStorage.getItem("multi");
+	if (!multi) {
+		var obj = [{
+			at: localStorage.getItem(localStorage.getItem("domain_" + acct_id) + "_at"),
+			name: localStorage.getItem("name_" + acct_id),
+			domain: localStorage.getItem("domain_" + acct_id),
+			user: localStorage.getItem("user_" + acct_id),
+			prof: localStorage.getItem("prof_" + acct_id)
+		}];
+		var json = JSON.stringify(obj);
+		localStorage.setItem("multi", json);
+	} else {
+		var obj = JSON.parse(multi);
+	}
+	var templete;
+	var last = localStorage.getItem("last-use");
+	var sel;
+	Object.keys(obj).forEach(function(key) {
+		var acct = obj[key];
+		var list = key * 1 + 1;
+		if (key == last) {
+			sel = "selected";
+		} else {
+			sel = "";
+		}
+		templete = '<option value="' + key + '" ' + sel + '>' + acct.user + '@' + acct.domain +
+			'</option>';
+		$("#post-acct-sel").append(templete);
+	});
+</script>

@@ -32,7 +32,7 @@ function ck() {
 ck();
 //ログインポップアップ
 function login(url) {
-	if($('#linux:checked').val()=="linux"){
+	if($('#linux:checked').val()=="on"){
 		var red = "urn:ietf:wg:oauth:2.0:oob"
 	}else{
 		var red = 'thedesk://login';
@@ -58,7 +58,7 @@ function login(url) {
 	}).then(function(json) {
 		var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 				"client_id"] + "&client_secret=" + json["client_secret"] +
-			"&response_type=code&redirect_uri=thedesk://login&scope=read+write+follow";
+			"&response_type=code&redirect_uri="+red+"&scope=read+write+follow";
 		localStorage.setItem("domain_" + acct_id, url);
 		localStorage.setItem("client_id", json["client_id"]);
 		localStorage.setItem("client_secret", json["client_secret"]);
@@ -69,9 +69,14 @@ function login(url) {
   		} = require('electron');
 
 		  shell.openExternal(auth);
-		  var electron = require("electron");
-		  var ipc = electron.ipcRenderer;
-		  ipc.send('quit', 'go');
+		  
+		  if($('#linux:checked').val()=="on"){
+		}else{
+			var electron = require("electron");
+			var ipc = electron.ipcRenderer;
+			ipc.send('quit', 'go');
+		}
+		  
 	});
 }
 

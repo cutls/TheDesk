@@ -27,6 +27,7 @@ function mixtl(acct_id, tlid) {
 		jQuery("time.timeago").timeago();
 		$(window).scrollTop(0);
 		var locals = templete[1];
+		var times = templete[2];
 		todo("Integrated TL Loading...(Home)");
 		//Home
 		var start = "https://" + domain + "/api/v1/timelines/home";
@@ -43,32 +44,46 @@ function mixtl(acct_id, tlid) {
 			console.error(error);
 		}).then(function(obj) {
 			//ホームのオブジェクトをUnix時間で走査
+			if (!$("[toot-id=" + obj[0].id + "]").length) {
+				$("#timeline_" + tlid + " .cvo").first().before(parse([obj[0]], 'home',
+					acct_id));
+					//delete obj[0];
+			}
+			//Localが遅すぎてHomeの全てより過去の場合
+			var unixL=date(json[0].created_at,"unix");
+			var unixH=date(obj[obj.length-1].created_at,"unix");
+			//console.log(unixH+"vs"+unixL)
+		if(unixH < unixL){
 			Object.keys(obj).forEach(function(key) {
 				var skey = obj.length - key - 1;
 				var toot = obj[skey];
 				var id = toot.id;
+				if ($("#timeline_" + tlid + " [toot-id=" + toot.id + "]").length < 1) {
+				//console.log(toot.id);
 				var tarunix = date(toot.created_at, 'unix');
 				var beforekey2;
 				var key2;
+				//console.log(locals)
 				//ホームのオブジェクトに対してLocalのオブジェクトを時間走査
-				Object.keys(locals).forEach(function(key2) {
-					if (!$("#timeline_" + tlid + " [toot-id=" + obj[0].id + "]").length &&
-						key2 < date(obj[0].created_at, 'unix')) {
-						$("#timeline_" + tlid + " .cvo").first().before(parse([obj[0]],
-							'home', acct_id, tlid)+'<div class="divider"></div>');
-					}
-					if (!$("#timeline_" + tlid + " [toot-id=" + toot.id + "]").length) {
-						if (key2 > tarunix) {
-							var local = locals[key2];
-							console.log("#timeline_" + tlid + " [toot-id=" + local + "]");
-							$("#timeline_" + tlid + " [toot-id=" + local + "]").after('<div class="divider"></div>'+parse(
-								[toot], 'home', acct_id, tlid));
-							tarunix = 0;
+				Object.keys(times).forEach(function(key2) {
+						if (times[key2] < tarunix) {
+							var local = json[key2].id;
+							//console.log($.strip_tags(toot.content));
+							html = parse(
+								[toot], 'home', acct_id, tlid);
+							$("#timeline_" + tlid + " [toot-id=" + local + "]").before(html);
+							//console.log("#timeline_" + tlid + " [toot-id=" + local + "]");
+								tarunix = 0;
 						}
 
-					}
 				});
+			}
 			});
+		}else{
+			html = parse(
+				obj, 'home', acct_id, tlid);
+			$("#timeline_" + tlid).html(html);
+		}
 			todc();
 			mixre(acct_id, tlid);
 			additional(acct_id, tlid);
@@ -94,9 +109,11 @@ function mixre(acct_id, tlid) {
 	websocketLocal[wslid] = new WebSocket(startLocal);
 	websocketHome[wshid].onopen = function(mess) {
 		console.log("Connect Streaming API(Home)");
+		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocketLocal[wslid].onopen = function(mess) {
 		console.log("Connect Streaming API(Local)");
+		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocketLocal[wslid].onmessage = function(mess) {
 		console.log("Receive Streaming API:");
@@ -164,6 +181,7 @@ function mixmore(tlid) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
+	var len = $("#timeline_" + tlid + " .cvo").length
 	var start = "https://" + domain +
 		"/api/v1/timelines/public?local=true&max_id=" + sid;
 		console.log(start);
@@ -197,9 +215,10 @@ function mixmore(tlid) {
 			todo(error);
 			console.error(error);
 		}).then(function(obj) {
-			if (!$("[toot-id=" + obj[0].id + "]").length) {
-				$("#timeline_" + tlid + " .cvo").first().before(parse([obj[0]], 'home',
-					acct_id));
+			if ($("[toot-id=" + obj[0].id + "]").length < 1) {
+				$("#timeline_" + tlid + " .cvo").eq(len).before(parse([obj[0]], 'home',
+					acct_id)+'<div class="divider"></div>');
+					//delete obj[0];
 			}
 			Object.keys(obj).forEach(function(key) {
 				var skey = obj.length - key - 1;
@@ -209,12 +228,12 @@ function mixmore(tlid) {
 				var beforekey2;
 				var key2;
 				Object.keys(locals).forEach(function(key2) {
-					if (!$("[toot-id=" + toot.id + "]").length) {
+					if ($("[toot-id=" + toot.id + "]").length <1) {
 						if (key2 > tarunix) {
 							var local = locals[key2];
-							$("[toot-id=" + local + "]").after(parse([toot], 'home',
+							$("#timeline_" + tlid + " [toot-id=" + local + "]").after(parse([toot], 'home',
 								acct_id, tlid));
-							tarunix = 0;
+							tarunix = 2147483647;
 						}
 
 					}

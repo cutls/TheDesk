@@ -99,6 +99,9 @@ function multiDel(target) {
 		obj.splice(target, 1);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
+	Object.keys(obj).forEach(function(key) {
+		refresh(key);
+	});
 		load();
 	}
 }
@@ -145,7 +148,7 @@ function login(url) {
 	if (ng) {
 		return;
 	}
-	if($('#linux:checked').val()=="linux"){
+	if($('#linux:checked').val()=="on"){
 		var red = "urn:ietf:wg:oauth:2.0:oob"
 	}else{
 		var red = 'thedesk://manager';
@@ -172,7 +175,7 @@ function login(url) {
 		console.log(json);
 		var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 				"client_id"] + "&client_secret=" + json["client_secret"] +
-			"&response_type=code&scope=read+write+follow&redirect_uri="+json.redirect_uri;
+			"&response_type=code&scope=read+write+follow&redirect_uri="+red;
 		localStorage.setItem("domain_tmp", url);
 		localStorage.setItem("client_id", json["client_id"]);
 		localStorage.setItem("client_secret", json["client_secret"]);
@@ -185,7 +188,7 @@ function login(url) {
 		  shell.openExternal(auth);
 		  var electron = require("electron");
 		  var ipc = electron.ipcRenderer;
-		  if($('#linux:checked').val()=="linux"){
+		  if($('#linux:checked').val()=="on"){
 			}else{
 				ipc.send('quit', 'go');
 			}
