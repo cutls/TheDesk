@@ -9,8 +9,8 @@
 	//カラム追加ボックストグル
 	function addToggle() {
 		$("#add-box").toggleClass("hide");
+		$("#add-box").css("top",$('#add-tgl').offset().top+"px");
 		$("#add-box").toggleClass("show");
-		$("#add-box").toggleClass("notf-box");
 	}
 //最初、カラム変更時に発火
 	function parseColumn() {
@@ -63,7 +63,7 @@
 			var acct = obj[key];
 			var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 				'"><div class="notice-box z-depth-2">'+
-				'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。"></i></div>'+
+				'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。"></i></div>'+
 				'<div class="area-notice_name"><span id="notice_' + key + '"" class="tl-title"></span></div>'+
 				'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
 							  ')" class="setting nex" title="このアカウントの通知"><i class="material-icons waves-effect nex notf-icon_' +
@@ -76,7 +76,6 @@
 				'<div class="area-a4"><a onclick="cardToggle(' + key +
 							  ')" class="setting nex"><i class="material-icons waves-effect nex" title="リンクの解析を切り替え(OFFで制限を回避出来る場合があります)">link</i><span id="sta-card-' +
 							  key + '">On</span></a></div>'+
-				'<div class="area-a5"><a onclick="goTop(' + key + ')" class="setting nex"><i class="material-icons waves-effect nex" title="一番上へ">vertical_align_top</i></a></div>'+
 			  '<div class="hide notf-indv-box" id="notf-box_' + key +
 			  '"><div id="notifications_' + key +
 			  '"></div></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +

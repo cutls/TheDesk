@@ -73,4 +73,16 @@ function sort(){
 	$("#sort").html("");
 	Materialize.toast("並べ替え完了。", 3000);
 	sortload();
+	parseColumn();
+}
+function sortToggle(){
+	$("#sort").html("");
+	if ($("#sort-box").hasClass("hide")) {
+		$("#sort-box").removeClass("hide");
+		$("#sort-box").css("top",$('#sort-tgl').offset().top+"px");
+		//並べ替え
+		sortload();
+	} else {
+		$("#sort-box").addClass("hide")
+	}
 }

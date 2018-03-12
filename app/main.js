@@ -114,11 +114,27 @@ ipc.on('shot-img-dl', (e, args) => {
 });
 //アプデDL
 ipc.on('download-btn', (e, args) => {
-	if(args=="true"){
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform=="win32"){
+		if(bit=="x64"){
+			var zip="TheDesk-win32-x64.zip";
+		}else if(bit=="ia32"){
+			var zip="TheDesk-win32-ia32.zip";
+		}
+	}else if(platform=="linux"){
+		if(bit=="x64"){
+			var zip="TheDesk-linux-x64.zip";
+		}else if(bit=="ia32"){
+			var zip="TheDesk-linux-ia32.zip";
+		}
+	}
+	var ver=args[1];
+	if(args[0]=="true"){
 		dialog.showSaveDialog(null, {
             title: '保存',
 			properties: ['openFile', 'createDirectory'],
-			defaultPath: 'TheDesk-win32-x64.zip'
+			defaultPath: zip
         }, (savedFiles) => {
 			console.log(savedFiles);
 
@@ -128,10 +144,10 @@ ipc.on('download-btn', (e, args) => {
 				fs.unlink(savedFiles);
 			  }
 			  console.log(m[1]+":"+savedFiles)
-            dl(m[1],savedFiles);
+            dl(ver,m[1],savedFiles);
         });
 	}else{
-		dl();
+		dl(ver);
 	}
 	
 });
@@ -143,8 +159,25 @@ function isExistFile(file) {
 	  if(err.code === 'ENOENT') return false
 	}
   }
-function dl(files,fullname){
+function dl(ver,files,fullname){
 	console.log(files);
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform=="win32"){
+		if(bit=="x64"){
+			var zip="TheDesk-win32-x64.zip";
+		}else if(bit=="ia32"){
+			var zip="TheDesk-win32-ia32.zip";
+		}
+	}else if(platform=="linux"){
+		if(bit=="x64"){
+			var zip="TheDesk-linux-x64.zip";
+		}else if(bit=="ia32"){
+			var zip="TheDesk-linux-ia32.zip";
+		}
+	}
+	zip=zip+"?"+ver;
+	console.log(zip);
 	mainWindow.webContents.send('comp', "ダウンロードを開始します。");
 	const opts = {
 		directory:files,
@@ -155,7 +188,7 @@ function dl(files,fullname){
 		saveAs: false
 	};
 	download(BrowserWindow.getFocusedWindow(),
-			'https://dl.thedesk.top/TheDesk-win32-x64.zip', opts)
+			'https://dl.thedesk.top/'+zip, opts)
 		.then(dl => {
 			mainWindow.webContents.send('comp', "ダウンロードが完了しました。");
 			app.quit();
@@ -186,6 +219,14 @@ ipc.on('quit', (e, args) => {
 	app.quit();
 });
 ipc.on('about', (e, args) => {
+	var ver=app.getVersion()
+	var window = new BrowserWindow({width: 300, height: 460,
+		"transparent": false,    // ウィンドウの背景を透過
+			 "frame": false,     // 枠の無いウィンドウ
+			 "resizable": false });
+	   window.loadURL('file://' + __dirname + '/about.html?ver='+ver);
+	   return "true"
+	/*
 	openAboutWindow({
 		icon_path: join(__dirname, 'desk.png'),
 		copyright: 'Copyright (c) TheDesk on Mastodon 2018 & Cutls.com 2015 All Rights Reserved. CDN provided by AWS CloudFront.',
@@ -195,7 +236,9 @@ ipc.on('about', (e, args) => {
 		css_path: join(__dirname, './css/about.css'),
 		adjust_window_size: true
 	});
+	*/
 });
+
 ipc.on('column-del', (e, args) => {
 const options = {
     type: 'info',

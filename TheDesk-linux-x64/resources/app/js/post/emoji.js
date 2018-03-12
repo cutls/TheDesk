@@ -58,6 +58,7 @@ function emojiGet(parse) {
 
 //リストの描画
 function emojiList(target) {
+	$("#now-emoji").text("カスタム絵文字");
 	var acct_id = $("#post-acct-sel").val();
 	var start = localStorage.getItem("emojiseek");
 	if (target == "next") {

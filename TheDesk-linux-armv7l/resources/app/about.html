@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<title>TheDesk</title>
+<meta content="width=device-width,initial-scale=1.0" name="viewport">
+<link href="./css/materialize.css" type="text/css" rel="stylesheet">
+<link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
+<link href="./css/master.css" type="text/css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
+<meta charset="utf-8">
+<style>
+body{
+    font-family:'Open Sans';
+    -webkit-app-region: drag;
+    cursor: move;
+}
+a,button{
+    -webkit-app-region: no-drag;
+}
+.container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: 'name1 data1' 'name2 data2' 'name3 data3' 'name4 data4' 'name5 data5';
+    text-align:left;
+    margin:5px;
+}
+
+.area-name1 {
+    grid-area: name1;
+}
+
+.area-data1 {
+    grid-area: data1;
+}
+
+.area-name2 {
+    grid-area: name2;
+}
+
+.area-data2 {
+    grid-area: data2;
+}
+
+.area-name3 {
+    grid-area: name3;
+}
+
+.area-data3 {
+    grid-area: data3;
+}
+
+.area-name4 {
+    grid-area: name4;
+}
+
+.area-data4 {
+    grid-area: data4;
+}
+
+.area-name5 {
+    grid-area: name5;
+}
+
+.area-data5 {
+    grid-area: data5;
+}
+</style>
+</head>
+<body class="center">
+<script type="text/javascript" src="./js/common/jquery.js"></script>
+<script type="text/javascript" src="./js/platform/first.js"></script>
+<script type="text/javascript" src="./js/common/materialize.js"></script>
+<img src="./img/desk.png" style="max-width:70%;">
+<h5>TheDesk</h5>
+<div class='container'>
+    <div class='area-name1'>バージョン</div>
+    <div class='area-data1' id="now"></div>
+    <div class='area-name2'>Internal version</div>
+    <div class='area-data2' id="ver"></div>
+    <div class='area-name3'>Chromium</div>
+    <div class='area-data3' id="chrome"></div>
+    <div class='area-name4'>Electron</div>
+    <div class='area-data4' id="electron"></div>
+    <div class='area-name5'>Node.js</div>
+    <div class='area-data5' id="node"></div>
+  </div>
+  <div class="cp">Copyright &copy; TheDesk 2018 All rights reserved.<br><a href="https://thedesk.top" target="_blank">Web site</a></div>
+<button onclick="window.close()" class="btn waves-effect indigo" style="width:calc(100% - 10px);"><i class="material-icons left">close</i>Close</button>
+<script type="text/javascript" src="./js/ui/theme.js"></script>
+<script>
+    $("#now").text(localStorage.getItem("ver"));
+    var electron = require("electron");
+    var remote=electron.remote;
+    //JSON.parse(fs.readFileSync(info_path, 'utf8'));
+    console.log(process.versions);
+    $("#node").text(process.version);
+    $("#chrome").text(process.versions.chrome);
+    $("#electron").text(process.versions.electron);
+    if(location.search){
+        var m = location.search.match(/\?ver=([a-zA-Z-0-9.]+)/);
+        var ver=m[1];
+        $("#ver").text(ver);
+    }
+    
+</script>
+<script type="text/javascript" src="./js/platform/end.js"></script>

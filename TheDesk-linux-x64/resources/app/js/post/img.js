@@ -39,7 +39,7 @@ $("#drag").on('dragleave', function(e) {
 function pimg(files) {
 	console.log(files);
 	for (i = 0; i < files.length; i++) {
-		var dot=files[i].path.match(/(.+)\\(.+)\.(.+)$/)[3];
+		var dot=files[i].path.match(/\.(.+)$/)[1];
 		if(dot=="bmp" || dot=="BMP"){
 			var electron = require("electron");
 		  	var ipc = electron.ipcRenderer;

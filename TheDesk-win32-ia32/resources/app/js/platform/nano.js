@@ -132,3 +132,17 @@ function icon(type) {
 }
 function todo(){}
 function todc(){}
+$(function($) {
+	//キーボードショートカット
+	$(window).keydown(function(e) {
+		var hasFocus = $('input').is(':focus');
+		var hasFocus2 = $('textarea').is(':focus');
+		//Ctrl+Enter:投稿
+		if (event.ctrlKey) {
+			if (e.keyCode === 13) {
+				post();
+				return false;
+			}
+		}
+	});
+});

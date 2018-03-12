@@ -22,7 +22,7 @@
   </div><br>
   アップデートはセキュアかつ高速なAmazon CloudFront CDNを通じて提供されます。<br>
   アップデート内容の詳細は<a href="https://github.com/cutls/TheDesk/blob/master/LATEST.md">GitHub</a>をご覧ください。<br><br>
-  <a onclick="window.close();" class="pointer">このアップデートを飛ばす</a>(次回TL表示時まで有効)<br><a onclick="quit()" class="pointer">このソフト終了</a><br>
+  <a onclick="window.close();" class="pointer">このアップデートを飛ばす</a>(次回TL表示時まで有効)<br><a onclick="quit()" class="pointer">このソフトを終了</a><br>
   <a onclick="about()" class="pointer">このソフトについて</a>
   <script type="text/javascript" src="./js/common/about.js"></script>
   <script type="text/javascript" src="./js/platform/end.js"></script>
@@ -32,7 +32,7 @@ var ipc = electron.ipcRenderer;
 verck();
     function update(sel){
 		$("#prog").text("");
-				ipc.send('download-btn', sel);
+				ipc.send('download-btn', [sel,enc(localStorage.getItem("next-ver"))]);
     }
 	function quit(){
 				ipc.send('quit', 'go');
@@ -56,9 +56,18 @@ function verck(){
 		console.error(error);
     }).then(function(json) {
 		 console.log(json);
-			 $("#ver").text(json.desk);
+             $("#ver").text(json.desk);
+             localStorage.setItem("next-ver",json.desk);
 			 $("#det").text(json.detail);
 			 $("#now").text(localStorage.getItem("ver"));
     });
+}
+function enc(ver){
+    var ver = ver.replace( /\s/g , "" );
+    var ver = ver.replace( /\(/g , "-" );
+    var ver = ver.replace( /\)/g , "" );
+    var ver = ver.replace( /\[/g , "_" );
+    var ver = ver.replace( /\]/g , "" );
+    return ver;
 }
 </script>

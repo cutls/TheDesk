@@ -10,6 +10,7 @@
 <link href='./css/userdata.css' rel='stylesheet' type='text/css'>
 <link href='./css/post.css' rel='stylesheet' type='text/css'>
 <link href="./css/master.css" type="text/css" rel="stylesheet">
+<link href='./css/sort.css' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
 <meta charset="utf-8">
 </head>
@@ -22,9 +23,10 @@
 <script type="text/javascript" src="./js/common/version.js"></script>
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
+<script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//トゥートリンク追加
-var ver="Airi (ver.1)";
+var ver="Airi (ver.2)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -59,8 +61,8 @@ Linuxでご使用の方はチェックを入れて下さい。<br>
 <!--TL-->
 <!--ドラッグハンドラ-->
 <div id="drag"><div id="drag-content">ここにドラッグして添付(ドラッグと同時にアップロードされます)<br><button class="btn waves-effect" onclick="closedrop()">閉じる</button></div></div>
-<!--アカウント追加-->
-<div id="add-box" class="hide z-depth-4">
+<!--カラム追加-->
+<div id="add-box" class="hide z-depth-4 notf-box">
 	  <div class="input-field">
 	  アカウント選択<br>
     <select id="add-acct-sel" class="acct-sel" style="color:black">
@@ -102,24 +104,65 @@ Linuxでご使用の方はチェックを入れて下さい。<br>
 	<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="srcToggle()"><i class="material-icons left">close</i>閉じる</button>
 </div>
 </div>
+<!--並べ替え-->
+<div id="sort-box" class="hide notf-box z-depth-4">
+		<ul id="sort"></ul>
+		<button onclick="sort()" class="btn waves-effect light-blue nex" style="width:100%; max-width:200px;"><i class="material-icons left">sort</i>並べ替え設定</button>
+		<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="sortToggle()"><i class="material-icons left">close</i>閉じる</button>
+	</div>
 <!--TLのTL-->
 <div id="timeline-container">
+</div>
+<!--サイドバー-->
+<div id="sidebar">
+	<div id="sidebar-top">
+		<div class="big-menu" id="add-tgl">
+			<a onclick="addToggle()" class="nex waves-effect"><i class="material-icons nex mize" title="カラム追加">add</i></a>
+			<br><span class="side-label">カラム追加</span>
+		</div>
+		<div class="big-menu" id="src-tgl">
+			<a onclick="srcToggle()" class="nex waves-effect"><i class="material-icons nex mize" title="検索">search</i></a>
+			<br><span class="side-label">検索</span>
+		</div>
+		<div class="big-menu" id="sort-tgl">
+				<a onclick="sortToggle()" class="nex waves-effect"><i class="material-icons nex mize" title="並べ替え">sort</i></a>
+				<br><span class="side-label">並べ替え</span>
+			</div>
+		<div id="side-dead"></div>
+		<div class="small-menu">
+			<a href="setting.html" class="nex waves-effect"><i class="material-icons nex mize" title="設定">settings</i><span class="side-label">設定</span></a>
+		</div>
+		<div class="small-menu">
+			<a href="index.html" class="nex mize waves-effect"><i class="material-icons nex" title="スーパーリロード">refresh</i><span class="side-label">再読込</span></a>
+		</div>
+		<div class="small-menu">
+			<a onclick="window.open('https://astarte.thedesk.top');" class="setting nex mize waves-effect" target="_blank" id="ranking-btn" style="display:none;">
+				<i class="material-icons nex" title="アスタルテランキング">timeline</i><span class="side-label">暇ラン</span>
+			</a>
+		</div>
+		<div class="small-menu">
+				<a onclick="nano()" class="nex waves-effect"><i class="material-icons" title="最小のマストドン。TheDesk Nano">remove_from_queue</i><span class="side-label">Nano</span></a>
+	</div>
+	</div>
+	<div id="sidebar-btm">
+		<!--最小化-->
+		<div id="menu-btn" onclick="show()">
+    	<a class="waves-effect">
+				<i class="large material-icons">mode_edit</i>
+				<br><span class="side-label">投稿</span>
+    	</a>
+  	</div>
+ </div>
+	</div>
 </div>
 <div id="post-box" class="z-depth-3">
 <!--トゥートボックス-->
 <span class="cancel">
-	<i class="material-icons waves-effect" onclick="nano()" title="最小のマストドン。TheDesk Nano">remove_from_queue</i>
 	<i class="material-icons waves-effect" onclick="hide()" title="このボックスを閉じる(X)">cancel</i>
 	<i class="material-icons waves-effect mini-btn" onclick="mini()" title="このボックスを最小化">expand_more</i>
 </span><br>
-<a onclick="addToggle()" class="setting nex waves-effect"><i class="material-icons nex mize" title="カラム追加">add</i></a>
 <a id="clear" class="setting nex waves-effect"><i class="material-icons nex mize" title="トゥートボックスのクリア">clear</i></a>
 <a onclick="zoomBox()" class="setting nex waves-effect"><i class="material-icons nex mize" title="ボックスの拡大・縮小(E)">zoom_out_map</i></a>
-<a onclick="srcToggle()" class="setting nex waves-effect"><i class="material-icons nex mize" title="検索">search</i></a>
-<a href="setting.html" class="setting nex waves-effect"><i class="material-icons nex mize" title="設定">settings</i></a>
-<a onclick="profShow()"><i class="material-icons nex pointer mize waves-effect" title="選択中のプロフィール表示">account_circle</i></a>
-<a href="index.html" class="setting nex mize waves-effect"><i class="material-icons nex" title="スーパーリロード">refresh</i></a>
-<a onclick="window.open('https://astarte.thedesk.top');" class="setting nex mize waves-effect" target="_blank" id="ranking-btn" style="display:none;"><i class="material-icons nex" title="アスタルテランキング">timeline</i></a>
 <a onclick="Rtoggle()" class="setting nex mize waves-effect" id="radio-btn"><i class="material-icons nex" title="Radio(Select/Pause)">play_circle_outline</i></a>
 <div id="waveform"></div>
 <span id="radio-sta" class="radio"></span>
@@ -140,11 +183,12 @@ Linuxでご使用の方はチェックを入れて下さい。<br>
 </div>
   <div class="row" style="margin-bottom:0;">
   <span class="sml gray mize">画面内どこでもドラッグ・アンド・ドロップできます。</span><span class="mize"><br>アカウント選択</span><br></span>
- <div class="input-field mize">
+ <div class="input-field mize" style="float:left; width:calc(100% - 24px)">
     <select id="post-acct-sel" class="acct-sel" onchange="mdCheck()">
 		
-    </select>
-  </div>
+		</select>
+	</div>
+	<div class="mize" style="float:left;"><a onclick="profShow()" style="vertical-align:-1.5rem;"><i class="material-icons nex pointer mize waves-effect" title="選択中のプロフィール表示">account_circle</i></a></div>
   <!--Markdown-->
       <div class="row" style="margin-bottom:0">
 	  <div class="markdown mize">
@@ -223,7 +267,18 @@ Linuxでご使用の方はチェックを入れて下さい。<br>
 		<span id="emoji-count"></span>/<span id="emoji-sum"></span>
 		<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('next')" id="emoji-next"><i class="material-icons">navigate_next</i></button>
 	</div>
-	
+<div id="default-emoji">
+	<span id="now-emoji"></span>一覧を表示中<br>
+	<a onclick="customEmoji()" class="pointer waves-effect" title="カスタム絵文字"><i class="material-icons">add</i></a>
+	<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="ひと"><i class="material-icons">people</i></a>
+	<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="自然"><i class="material-icons">local_florist</i></a>
+	<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="食べ物"><i class="material-icons">restaurant</i></a>
+	<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="活動"><i class="material-icons">directions_run</i></a>
+	<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="場所"><i class="material-icons">directions_car</i></a>
+	<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="もの"><i class="material-icons">attach_file</i></a>
+	<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="記号"><i class="material-icons">gesture</i></a>
+	<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="国旗"><i class="material-icons">flag</i></a>
+</div>
 </div>
 <button class="btn waves-effect more-show pink" style="width:100%; padding:0; margin-top:0;" onclick="emoji()"><i class="material-icons" title="絵文字挿入">add</i></button>
 </div>
@@ -235,13 +290,6 @@ Linuxでご使用の方はチェックを入れて下さい。<br>
    </div>
 	</div>
 </div>
-<!--最小化-->
-<div class="fixed-action-btn horizontal" id="menu-btn" onclick="show()">
-    <a class="btn-floating btn-large red waves-effect">
-      <i class="large material-icons">mode_edit</i>
-    </a>
-  </div>
- </div>
       <!-- Modal Structure Tootdata-->
   <div id="tootmodal" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -415,6 +463,7 @@ Linuxでご使用の方はチェックを入れて下さい。<br>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script type="text/javascript" src="./js/ui/pip.js"></script>
 <script type="text/javascript" src="./js/ui/radio.js"></script>
+<script type="text/javascript" src="./js/ui/sort.js"></script>
 <script type="text/javascript" src="./js/post/post.js"></script>
 <script type="text/javascript" src="./js/post/reply.js"></script>
 <script type="text/javascript" src="./js/post/secure.js"></script>
@@ -427,3 +476,13 @@ Linuxでご使用の方はチェックを入れて下さい。<br>
 <script type="text/javascript" src="./js/userdata/his-data.js"></script>
 <script type="text/javascript" src="./js/userdata/prof-edit.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
+<!--大量のデフォルト絵文字-->
+<script type="text/javascript" src="./js/emoji/activity.js"></script>
+<script type="text/javascript" src="./js/emoji/flag.js"></script>
+<script type="text/javascript" src="./js/emoji/food.js"></script>
+<script type="text/javascript" src="./js/emoji/nature.js"></script>
+<script type="text/javascript" src="./js/emoji/object.js"></script>
+<script type="text/javascript" src="./js/emoji/people.js"></script>
+<script type="text/javascript" src="./js/emoji/place.js"></script>
+<script type="text/javascript" src="./js/emoji/symbol.js"></script>
+<script type="text/javascript" src="./js/emoji/default-emoji.js"></script>

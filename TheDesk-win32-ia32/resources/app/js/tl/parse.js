@@ -119,7 +119,6 @@ function parse(obj, mix, acct_id, tlid, popup) {
 					var fullname=toot.account.acct+"@"+domain;
 				}
 				if(useremp){
-					console.log(useremp);
 					Object.keys(useremp).forEach(function(key10) {
 					var user = useremp[key10];
 					if(user==fullname){
@@ -204,7 +203,11 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		var viewer = "";
 		var hasmedia = "";
 		var youtube = "";
-		var emojick = toot.emojis[0];
+		if(toot.emojis){
+			var emojick = toot.emojis[0];
+		}else{
+			var emojick=false;
+		}
 		//絵文字があれば
 		if (emojick) {
 			Object.keys(toot.emojis).forEach(function(key5) {
@@ -424,7 +427,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 		} else {
 			var auth = "";
 		}
-		if(notf){
+		if(popup > 0){
 			var notftext='<span class="cbadge"title="' + date(toot.created_at,
 				'absolute') + '(通知された時間)"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
 				datetype) +
