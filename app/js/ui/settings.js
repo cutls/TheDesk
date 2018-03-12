@@ -194,9 +194,6 @@ function load() {
 		var imh = "200";
 	}
 	$("#img-height").val(imh);
-
-	//並べ替え
-	sortload();
 }
 //最初に読む
 load();
