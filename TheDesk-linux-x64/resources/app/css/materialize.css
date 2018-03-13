@@ -2,6 +2,7 @@
  * Materialize v0.100.2 (http://materializecss.com)
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
+ * Modified by Cutls P(Airi (ver.3)-2018/03/14)
  */
 .materialize-red {
   background-color: #e51c23 !important;
@@ -4993,7 +4994,7 @@ small {
   }
 }
 
-.tabs {
+.custom-tabs {
   position: relative;
   overflow-x: auto;
   overflow-y: hidden;
@@ -5004,40 +5005,40 @@ small {
   white-space: nowrap;
 }
 
-.tabs.tabs-transparent {
+.custom-tabs.tabs-transparent {
   background-color: transparent;
 }
 
-.tabs.tabs-transparent .tab a,
-.tabs.tabs-transparent .tab.disabled a,
-.tabs.tabs-transparent .tab.disabled a:hover {
+.custom-tabs.tabs-transparent .custom-tab a,
+.custom-tabs.tabs-transparent .custom-tab.disabled a,
+.custom-tabs.tabs-transparent .custom-tab.disabled a:hover {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.tabs.tabs-transparent .tab a:hover,
-.tabs.tabs-transparent .tab a.active {
+.custom-tabs.tabs-transparent .custom-tab a:hover,
+.custom-tabs.tabs-transparent .custom-tab a.active {
   color: #fff;
 }
 
-.tabs.tabs-transparent .indicator {
+.custom-tabs.tabs-transparent .indicator {
   background-color: #fff;
 }
 
-.tabs.tabs-fixed-width {
+.custom-tabs.tabs-fixed-width {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
-.tabs.tabs-fixed-width .tab {
+.custom-tabs.tabs-fixed-width .tab {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
 
-.tabs .tab {
+.custom-tabs .custom-tab {
   display: inline-block;
   text-align: center;
   line-height: 48px;
@@ -5047,7 +5048,7 @@ small {
   text-transform: uppercase;
 }
 
-.tabs .tab a {
+.custom-tabs .custom-tab a {
   color: rgba(238, 110, 115, 0.7);
   display: block;
   width: 100%;
@@ -5060,18 +5061,19 @@ small {
   transition: color .28s ease;
 }
 
-.tabs .tab a:hover, .tabs .tab a.active {
-  background-color: transparent;
+.custom-tabs .custom-tab a:hover, .custom-tabs .custom-tab a.active {
+  background-color: rgba(0, 0, 0, 0.5);
   color: #ee6e73;
+  cursor:pointer;
 }
 
-.tabs .tab.disabled a,
-.tabs .tab.disabled a:hover {
+.custom-tabs .custom-tab.disabled a,
+.custom-tabs .custom-tab.disabled a:hover {
   color: rgba(238, 110, 115, 0.7);
   cursor: default;
 }
 
-.tabs .indicator {
+.custom-tabs .indicator {
   position: absolute;
   bottom: 0;
   height: 2px;
@@ -5080,19 +5082,19 @@ small {
 }
 
 @media only screen and (max-width: 992px) {
-  .tabs {
+  .custom-tabs {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
   }
-  .tabs .tab {
+  .custom-tabs .custom-tab {
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
   }
-  .tabs .tab a {
+  .custom-tabs .custom-tab a {
     padding: 0 12px;
   }
 }
@@ -8309,10 +8311,19 @@ input[type=range]:focus::-ms-fill-upper {
   visibility: visible;
   -webkit-animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
           animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-  -webkit-transition: opacity .3s, visibility 0s 1s, -webkit-transform .3s;
-  transition: opacity .3s, visibility 0s 1s, -webkit-transform .3s;
-  transition: opacity .3s, transform .3s, visibility 0s 1s;
-  transition: opacity .3s, transform .3s, visibility 0s 1s, -webkit-transform .3s;
+  -webkit-transition: opacity .3s,
+ visibility 0s 1s,
+ -webkit-transform .3s;
+  transition: opacity .3s,
+ visibility 0s 1s,
+ -webkit-transform .3s;
+  transition: opacity .3s,
+ transform .3s,
+ visibility 0s 1s;
+  transition: opacity .3s,
+ transform .3s,
+ visibility 0s 1s,
+ -webkit-transform .3s;
 }
 
 .tap-target {
@@ -8365,10 +8376,19 @@ input[type=range]:focus::-ms-fill-upper {
 
 .tap-target-wave::after {
   visibility: hidden;
-  -webkit-transition: opacity .3s, visibility 0s, -webkit-transform .3s;
-  transition: opacity .3s, visibility 0s, -webkit-transform .3s;
-  transition: opacity .3s, transform .3s, visibility 0s;
-  transition: opacity .3s, transform .3s, visibility 0s, -webkit-transform .3s;
+  -webkit-transition: opacity .3s,
+ visibility 0s,
+ -webkit-transform .3s;
+  transition: opacity .3s,
+ visibility 0s,
+ -webkit-transform .3s;
+  transition: opacity .3s,
+ transform .3s,
+ visibility 0s;
+  transition: opacity .3s,
+ transform .3s,
+ visibility 0s,
+ -webkit-transform .3s;
   z-index: -1;
 }
 

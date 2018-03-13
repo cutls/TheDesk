@@ -16,13 +16,13 @@
   flex-wrap:wrap;
 }
 #sidebar-top{
-  height:calc(100vh - 7em);
+  height:70vh;
   display:flex;
   flex-wrap:wrap;
   align-content:center;
 }
 #sidebar-btm{
-  height:7em;
+  height:9em;
   display:flex;
   flex-wrap:wrap;
   align-content:flex-end;
@@ -191,6 +191,9 @@ font-size:1rem;
 p {
   margin: 0;
   margin-bottom: 0px;
+}
+p:not(:last-child){
+  margin-bottom: 10px;
 }
 .shared {
   background-color: #cfd8dc;

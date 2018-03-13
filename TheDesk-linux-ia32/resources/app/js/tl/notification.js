@@ -28,10 +28,11 @@ function notf(acct_id, tlid, sys) {
 			}
 			
 		});
+		
 		if (sys == "direct") {
 			$("#timeline_" + tlid).html(templete);
 		} else {
-			$("#notifications_" + tlid).html(templete);
+			$("div[data-notf=" + acct_id +"]").html(templete);
 		}
 
 		jQuery("time.timeago").timeago();
@@ -46,11 +47,12 @@ function notf(acct_id, tlid, sys) {
 	websocketNotf[wsid] = new WebSocket(start);
 	console.log(websocketNotf);
 	websocketNotf[wsid].onopen = function(mess) {
-		console.log("Connect Streaming API:");
+		console.log("Connect Streaming API(Notf):");
 		console.log(mess);
+		$("i[data-notf=" + acct_id +"]").removeClass("red-text");
 	}
 	websocketNotf[wsid].onmessage = function(mess) {
-		console.log("Receive Streaming API:");
+		console.log("Receive Streaming API(Notf):"+acct_id);
 
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
 		console.log(obj);
@@ -66,11 +68,7 @@ function notf(acct_id, tlid, sys) {
 			}else{
 				templete = templete+userparse([obj], '', acct_id, tlid, popup);
 			}
-			if (sys == "direct") {
-				$("#timeline_" + tlid).prepend(templete);
-			} else {
-				$("#notifications_" + tlid).prepend(templete);
-			}
+			$("div[data-notf=" + acct_id +"]").prepend(templete);
 			jQuery("time.timeago").timeago();
 		} else if (type == "delete") {
 			$("[toot-id=" + obj + "]").hide();
@@ -90,5 +88,5 @@ function notfToggle(acct, tlid) {
 	if (!$("#notf-box_" + tlid).hasClass("fetched")) {
 		notf(acct, tlid);
 	}
-	$(".notf-icon_" + tlid).removeClass("red-text");
+	$(".notf-icon_" + acct).removeClass("red-text");
 }

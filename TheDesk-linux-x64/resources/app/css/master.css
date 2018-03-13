@@ -181,6 +181,9 @@ blockquote:before, .quote:before {
       opacity: 1;
   }
 }
+.modal-overlay{
+  z-index:999 !important;
+}
 
 /*black theme*/
 .blacktheme body {

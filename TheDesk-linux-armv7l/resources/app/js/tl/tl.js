@@ -22,6 +22,7 @@ function tl(type, data, acct_id, tlid) {
 		parseColumn();
 		return;
 	}
+	
 	if (!type) {
 		var type = localStorage.getItem("now");
 		if (!type) {
@@ -38,7 +39,7 @@ function tl(type, data, acct_id, tlid) {
 		return;
 	} else if (type == "notf") {
 		//通知なら飛ばす
-		notf(acct_id, tlid, 'direct');
+		//notf(acct_id, tlid, 'direct');
 		$("#notice_" + tlid).text(cap(type, data) + " TL(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
 			$("#notice_icon_" + tlid).text("notifications");
@@ -50,7 +51,14 @@ function tl(type, data, acct_id, tlid) {
 	$("#notice_" + tlid).text(cap(type, data) + " TL(" + localStorage.getItem(
 		"user_" + acct_id) + "@" + domain + ")");
 		$("#notice_icon_" + tlid).text(icon(type));
-	var start = "https://" + domain + "/api/v1/timelines/" + com(type, data);
+	var url=com(type, data);
+		if(type=="tag"){
+			var tag = localStorage.getItem("tag-range");
+			if(tag=="local"){
+				url=url+"local=true";
+			}
+		}
+	var start = "https://" + domain + "/api/v1/timelines/" + url;
 	console.log(start);
 	fetch(start, {
 		method: 'GET',
@@ -92,6 +100,12 @@ function reload(type, cc, acct_id, tlid, data) {
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=public:local&access_token=" + at;
 	} else if (type == "tag") {
+		if(type=="tag"){
+			var tag = localStorage.getItem("tag-range");
+			if(tag=="local"){
+				data=data+"&local=true";
+			}
+		}
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=hashtag&tag=" + data +"&access_token=" + at;
 	} 
@@ -157,6 +171,10 @@ function moreload(type, tlid) {
 	}
 	if(type=="tag"){
 		var data=obj[tlid].data;
+		var tag = localStorage.getItem("tag-range");
+		if(tag=="local"){
+			data=data+"&local=true";
+		}
 	}
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
 	if (localStorage.getItem("morelock") != sid) {

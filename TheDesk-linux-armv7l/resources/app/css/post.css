@@ -77,7 +77,10 @@
   color: white;
   padding: 3px;
 }
-
+.character-counter{
+  position: relative;
+  top: -25px;
+}
 
 /*mini*/
 .mini-post .mize{

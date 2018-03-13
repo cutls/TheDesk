@@ -99,7 +99,12 @@ function settings() {
 	}
 	localStorage.setItem("img-height", heid);
 
-	
+	var tagd = $("[name=tag]:checked").val();
+	var tagt = $("[for=t_"+tagd+"]").text();
+	if (tagd != localStorage.getItem("tag-range")) {
+		Materialize.toast("タグの取得範囲を「" + tagt + "」に設定しました。", 3000);
+	}
+	localStorage.setItem("tag-range", tagd);
 }
 
 //読み込み時の設定ロード
@@ -194,6 +199,12 @@ function load() {
 		var imh = "200";
 	}
 	$("#img-height").val(imh);
+
+	var tag = localStorage.getItem("tag-range");
+	if (!tag) {
+		var tag = "all";
+	}
+	$("#t_" + tag).prop("checked", true);
 }
 //最初に読む
 load();

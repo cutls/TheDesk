@@ -49,9 +49,9 @@ function favTag(){
             '<a onclick="tagRemove(\'' + key + '\')" class="pointer" title="#' + tag + 'をよく使うタグから削除">Unpin</a></span> ';
     });
     if(obj.length>0){
-        $("#suggest").html("My Tags:" + tags);
+        $("#suggest").append("My Tags:" + tags);
     }else{
-        $("#suggest").html("");
+        $("#suggest").append("");
     }
 }
 function tagTL(a,b,c,d){

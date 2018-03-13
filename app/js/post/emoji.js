@@ -6,6 +6,8 @@ $("#emoji-next").addClass("disabled");
 //絵文字ボタンのトグル
 function emoji() {
 	var acct_id = $("#post-acct-sel").val();
+	var selin = $("#textarea").prop('selectionStart');
+	localStorage.setItem("cursor", selin);
 	if ($("#emoji").hasClass("hide")) {
 		$("#emoji").removeClass("hide")
 		if (!localStorage.getItem("emoji_" + acct_id)) {
@@ -102,9 +104,18 @@ function emojiList(target) {
 //絵文字など様々なものをテキストボックスに挿入
 function emojiInsert(code, del) {
 	var now = $("#textarea").val();
-
+	var selin = localStorage.getItem("cursor");
+	console.log(selin);
+	var now = $("#textarea").val();
+	if(selin>0){
+		var before   = now.substr(0, selin);
+		var after    = now.substr(selin, now.length);
+		newt = before + " "+ code+" " + after;
+	}else{
+		newt = code+" ";
+	}
 	if (!del) {
-		$("#textarea").val(now + " " + code);
+		$("#textarea").val(newt);
 		emoji();
 	} else {
 		var regExp = new RegExp(del, "g");

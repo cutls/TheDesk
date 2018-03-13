@@ -96,8 +96,9 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			var notice = noticetext;
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
-				Materialize.toast(toot.account.display_name+"が"+what, popup * 1000);
-				$(".notf-icon_" + tlid).addClass("red-text");
+				var domain = localStorage.getItem("domain_" + acct_id);
+				Materialize.toast("["+domain+"より]"+toot.account.display_name+"が"+what, popup * 1000);
+				$(".notf-icon_" + acct_id).addClass("red-text");
 				localStorage.setItem("notice-mem", noticetext);
 				noticetext = "";
 			}
@@ -217,6 +218,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 					'" style="width:1em" class="emoji-img">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
+				spoil = toot.spoiler_text.replace(regExp, emoji_url);
 			});
 		}
 		var mediack = toot.media_attachments[0];
@@ -377,8 +379,8 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			'<div class="action"><span style="padding:0">' +
 			vis + '</span></div><div class="action"><a onclick="re(\'' + toot.id +
 			'\',\'' + toot.account.acct + '\',' +
-			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートに返信"><i class="fa fa-share"></i></a></div>' +
+			acct_id + ',\''+visen+
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートに返信"><i class="fa fa-share"></i></a></div>' +
 			'<div class="action '+can_rt+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをブースト"><i class="text-darken-3 fa fa-retweet ' +

@@ -19,11 +19,45 @@ function nsfw(){
 //投稿公開範囲
 function vis(set){
 	$("#vis").text(set);
+	$("#vis-icon").removeClass("red");
+	$("#vis-icon").removeClass("orange");
+	$("#vis-icon").removeClass("blue");
+	$("#vis-icon").removeClass("purple");
+	if(set=="public"){
+		$("#vis-icon i").text("public");
+		$("#vis-icon").addClass("purple");
+	}else if(set=="unlisted"){
+		$("#vis-icon i").text("lock_open");
+		$("#vis-icon").addClass("blue");
+	}else  if(set=="private"){
+		$("#vis-icon i").text("lock");
+		$("#vis-icon").addClass("orange");
+	}else  if(set=="direct"){
+		$("#vis-icon i").text("mail");
+		$("#vis-icon").addClass("red");
+	}
 	var vis=localStorage.getItem("vis");
 		if(vis=="memory"){
 			localStorage.setItem("vis-memory",set);
 		}
 }
+function loadVis(){
+		var vist = localStorage.getItem("vis");
+		if (!vist) {
+			vis("public");
+		} else {
+			if (vist == "memory") {
+				var memory = localStorage.getItem("vis-memory");
+				if (!memory) {
+					memory = "public";
+				}
+				vis(memory);
+			} else {
+				vis(vist);
+			}
+	}
+}
+loadVis();
 
 //コンテンツワーニング
 function cw(){

@@ -18,6 +18,7 @@ function post() {
 	var vis = $("#vis").text();
 	if ($("#cw").hasClass("cw-avail")) {
 		var spo = $("#cw-text").val();
+		cw();
 	} else {
 		var spo = "";
 	}

@@ -89,12 +89,11 @@ function udg(user, acct_id) {
 				$("#his-notf-btn").hide();
 				$("#his-domain-btn").hide();
 				$("#his-emp-btn").hide();
-				$("#my-data-nav").show();
-				$("#his-data-nav").hide();
+				$(".only-my-data").show();
 			} else {
 				relations(user, acct_id);
+				$(".only-my-data").hide();
 			}
-			$('ul.tabs').tabs('select_tab', 'his-tl');
 		}
 		todc();
 	});
@@ -179,6 +178,8 @@ function hisclose() {
 	localStorage.removeItem("history");
 }
 function reset(){
+	$(".tab-content:eq(0)").show();
+	$(".tab-content:gt(0)").hide();
 	$("#his-name").text("Loading");
 	$("#his-acct").text("");
 	$("#his-prof").attr("src", "./img/loading.svg");
@@ -206,8 +207,13 @@ function reset(){
 	$("#his-notf-btn").text("通知ミュート");
 	$("#his-domain-btn").text("ドメインブロック");
 	$("#his-relation").text("");
-	$("#my-data-nav").hide();
-	$("#his-data-nav").show();
 	$(".cont-series").html("");
 	$("#domainblock").val("");
 }
+$('#my-data-nav .custom-tab').on('click',function(){
+	var target=$(this).find("a").attr("go");
+	$("#my-data-nav .custom-tab").removeClass("active-back");
+	$(this).addClass("active-back");
+	$(target).show();
+	$(".tab-content:not("+target+")").hide();
+});
