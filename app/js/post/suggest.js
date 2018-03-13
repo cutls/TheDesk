@@ -16,7 +16,7 @@ input.addEventListener("focus", function() {
 			var acct = new_val.match(/@(\S{3,})/);
 			if (tag && tag[1]) {
 				var q = tag[1];
-			} else if (acct[1]) {
+			} else if (acct && acct[1]) {
 				var q = acct[1];
 			} else {
 				$("#suggest").html("");
@@ -43,7 +43,7 @@ input.addEventListener("focus", function() {
 						var tags = "";
 						Object.keys(json.hashtags).forEach(function(key4) {
 							var tag = json.hashtags[key4];
-							tags = tags + '<a onclick="emojiInsert(\'#' + tag + '\',\'#' + q +
+							tags = tags + '<a onclick="tagInsert(\'#' + tag + '\',\'#' + q +
 								'\')" class="pointer">#' + tag + '</a>  ';
 						});
 						$("#suggest").html("Tags:" + tags);
@@ -51,7 +51,7 @@ input.addEventListener("focus", function() {
 						var accts = "";
 						Object.keys(json.accounts).forEach(function(key3) {
 							var acct = json.accounts[key3];
-							accts = accts + '<a onclick="emojiInsert(\'@' + acct.acct +
+							accts = accts + '<a onclick="tagInsert(\'@' + acct.acct +
 								'\',\'@' + q + '\')" class="pointer">@' + acct.acct + '</a>  ';
 						});
 						$("#suggest").html("@:" + accts);
@@ -70,3 +70,23 @@ input.addEventListener("blur", function() {
 	window.clearInterval(timer);
 	favTag();
 }, false);
+function tagInsert(code, del) {
+	var now = $("#textarea").val();
+	var selin = $("#textarea").prop('selectionStart');
+	if (!del) {
+	} else {
+		var regExp = new RegExp(del, "g");
+		var now = now.replace(regExp, "");
+		selin=selin-del.length;
+	}
+	if(selin>0){
+		var before   = now.substr(0, selin);
+		var after    = now.substr(selin, now.length);
+		newt = before + " "+ code+" " + after;
+	}else{
+		newt = code+" "+now;
+	}
+	$("#textarea").val(newt);
+	$("#textarea").focus();
+	$("#suggest").html("");
+}

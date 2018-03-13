@@ -18,6 +18,7 @@
 		if (size) {
 			$("html").css("font-size", size + "px");
 		}
+		tlCloser();
 		var multi = localStorage.getItem("multi");
 		if (!multi) {
 			var obj = [{
@@ -41,6 +42,7 @@
 				localStorage.setItem("prof_" + key, acct.prof);
 				localStorage.setItem("domain_" + key, acct.domain);
 				localStorage.setItem(acct.domain + "_at", acct.at);
+				notf(key, 0);
 				ckdb(key);
 			});
 		}
@@ -58,16 +60,20 @@
 		if ($("#timeline-container").length) {
 			$("#timeline-container").html("");
 		}
-		tlCloser();
 		Object.keys(obj).forEach(function(key) {
 			var acct = obj[key];
+			if(acct.type=="notf"){
+				var notf_attr=' data-notf='+acct.domain;
+			}else{
+				var notf_attr='';
+			}
 			var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 				'"><div class="notice-box z-depth-2">'+
-				'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。"></i></div>'+
+				'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。"></i></div>'+
 				'<div class="area-notice_name"><span id="notice_' + key + '"" class="tl-title"></span></div>'+
 				'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
 							  ')" class="setting nex" title="このアカウントの通知"><i class="material-icons waves-effect nex notf-icon_' +
-							  key + '">notifications</i></a></div>'+
+							  acct.domain + '">notifications</i></a></div>'+
 				'<div class="area-a2"><a onclick="removeColumn(' + key +
 							  ')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">remove_circle</i></a></div>'+
 				'<div class="area-a3"><a onclick="mediaToggle(' + key +
@@ -78,8 +84,8 @@
 							  key + '">On</span></a></div>'+
 			  '<div class="hide notf-indv-box" id="notf-box_' + key +
 			  '"><div id="notifications_' + key +
-			  '"></div></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
-				'" class="tl" tlid="' + key + '"></div></div></div>';
+			  '" data-notf="' + acct.domain + '"></div></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+				'" class="tl" tlid="' + key + '"'+notf_attr+'></div></div></div>';
 			$("#timeline-container").append(html);
 			if (acct.data) {
 				var data = acct.data;
@@ -87,7 +93,6 @@
 				var data = "";
 			}
 			tl(acct.type, data, acct.domain, key);
-			notf(acct.domain, key);
 			cardCheck(key);
 			mediaCheck(key);
 		});
@@ -103,20 +108,6 @@
 		}else if (box == "hide"){
 			$("body").addClass("mini-post");
 			$(".mini-btn").text("expand_less");
-		}
-		var vis = localStorage.getItem("vis");
-		if (!vis) {
-			$("#vis").text("public");
-		} else {
-			if (vis == "memory") {
-				var memory = localStorage.getItem("vis-memory");
-				if (!memory) {
-					memory = "public";
-				}
-				$("#vis").text(memory);
-			} else {
-				$("#vis").text(vis);
-			}
 		}
 		favTag();
 	}

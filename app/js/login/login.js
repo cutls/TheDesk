@@ -261,7 +261,8 @@ function ckdb(acct_id) {
 			localStorage.removeItem("bb_" + acct_id);
 		}
 	}else{
-		var start = "https://dl.thedesk.top/mastodon_data.json";
+		var ver=enc(localStorage.getItem("ver"));
+		var start = "https://dl.thedesk.top/mastodon_data.json?"+ver;
 		fetch(start, {
 			method: 'GET',
 			headers: {
@@ -307,7 +308,8 @@ function ckdb(acct_id) {
 
 //サポートインスタンス取得
 function support() {
-	var start = "https://dl.thedesk.top/mastodon_data.json";
+	var ver=enc(localStorage.getItem("ver"));
+	var start = "https://dl.thedesk.top/mastodon_data.json?"+ver;
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -367,3 +369,12 @@ function multi() {
 	});
 }
 
+//バージョンエンコ
+function enc(ver){
+    var ver = ver.replace( /\s/g , "" );
+    var ver = ver.replace( /\(/g , "-" );
+    var ver = ver.replace( /\)/g , "" );
+    var ver = ver.replace( /\[/g , "_" );
+    var ver = ver.replace( /\]/g , "" );
+    return ver;
+}
