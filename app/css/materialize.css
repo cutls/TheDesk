@@ -5445,7 +5445,7 @@ button.btn-floating {
   overflow-y: auto;
   opacity: 0;
   position: absolute;
-  z-index: 999;
+  z-index: 505;
   will-change: width, height;
 }
 
@@ -5675,7 +5675,7 @@ button.btn-floating {
 
 .modal-overlay {
   position: fixed;
-  z-index: 999;
+  z-index: 506;
   top: -25%;
   left: 0;
   bottom: 0;

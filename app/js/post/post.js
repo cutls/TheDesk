@@ -72,14 +72,14 @@ function clear() {
 	$("#cw").removeClass("cw-avail");
 	$("#rec").text("いいえ");
 	$("#mec").text("なし");
-	var vis = localStorage.getItem("vis");
-	if (!vis) {
-		$("#vis").text("public");
+	var vist = localStorage.getItem("vis");
+	if (!vist) {
+		vis("public");
 	} else {
-		if (vis == "memory") {
+		if (vist == "memory") {
 			localStorage.setItem("vis-memory", $("#vis").text());
 		} else {
-			$("#vis").text(vis);
+			vis(vist);
 		}
 	}
 	$("#nsfw").addClass("blue");

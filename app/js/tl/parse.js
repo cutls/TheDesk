@@ -215,7 +215,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				var emoji = toot.emojis[key5];
 				var shortcode = emoji.shortcode;
 				var emoji_url = '<img src="' + emoji.url +
-					'" style="width:1em" class="emoji-img">';
+					'" class="emoji-img">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
 				spoil = toot.spoiler_text.replace(regExp, emoji_url);
