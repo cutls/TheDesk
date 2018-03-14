@@ -32,7 +32,7 @@ function load() {
 		var list = key * 1 + 1;
 		templete = '<div class="acct" id="acct_' + key + '">' + list +
 			'.<img src="' + acct.prof + '" width="40" height="40"><div class="text">' +
-			acct.name + '&nbsp;<span class="gray">' + acct.user + '@' + acct.domain +
+			acct.name + '&nbsp;<span class="gray">' + escapeHTML(acct.user) + '@' + acct.domain +
 			'</span></div><button class="btn waves-effect disTar" onclick="data(\'' +
 			acct.domain +
 			'\')">インスタンスデータ表示</button><button class="btn waves-effect" onclick="refresh(' +

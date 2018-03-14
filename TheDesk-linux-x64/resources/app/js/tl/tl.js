@@ -182,6 +182,9 @@ function moreload(type, tlid) {
 		if (type == "mix") {
 			mixmore(tlid);
 			return;
+		}else if (type == "notf") {
+			notfmore(tlid);
+			return;
 		}
 		localStorage.setItem("now", type);
 		todo(cap(type) + " TL MoreLoading");
@@ -205,6 +208,7 @@ function moreload(type, tlid) {
 			$("#timeline_" + tlid).append(templete);
 			additional(acct_id, tlid);
 			jQuery("time.timeago").timeago();
+			localStorage.removeItem("morelock")
 			todc();
 		});
 	}

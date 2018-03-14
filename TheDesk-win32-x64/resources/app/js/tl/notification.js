@@ -80,6 +80,56 @@ function notf(acct_id, tlid, sys) {
 		console.error('WebSocket Error ' + error);
 	};
 }
+//一定のスクロールで発火
+function notfmore(tlid) {
+	var multi = localStorage.getItem("column");
+	var obj = JSON.parse(multi);
+	var acct_id = obj[tlid].domain;
+	if (!type) {
+		var type = obj[tlid].type;
+	}else{
+		var data;
+	}
+	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
+	console.log(sid);
+	if (localStorage.getItem("morelock") != sid) {
+		localStorage.setItem("morelock", sid);
+		localStorage.setItem("now", type);
+		todo("Notfication TL MoreLoading");
+		var domain = localStorage.getItem("domain_" + acct_id);
+		var at = localStorage.getItem(domain + "_at");
+		var start = "https://" + domain + "/api/v1/notifications"+
+			"max_id=" + sid;
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			},
+		}).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			todo(error);
+			console.error(error);
+		}).then(function(json) {
+			var templete="";
+			Object.keys(json).forEach(function(key) {
+				var obj = json[key];
+				if(obj.type!="follow"){
+					templete = templete+parse([obj], '', acct_id, tlid, -1);
+				}else{
+					templete = templete+userparse([obj.account], '', acct_id, tlid, -1);
+				}
+				
+			});
+			$("#timeline_" + tlid).append(templete);
+			additional(acct_id, tlid);
+			jQuery("time.timeago").timeago();
+			localStorage.removeItem("morelock")
+			todc();
+		});
+	}
+}
 
 //通知トグルボタン
 function notfToggle(acct, tlid) {

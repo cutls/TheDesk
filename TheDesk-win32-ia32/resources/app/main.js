@@ -123,6 +123,16 @@ ipc.on('download-btn', (e, args) => {
 			var zip="TheDesk-win32-ia32.zip";
 		}
 	}else if(platform=="linux"){
+		const options = {
+			type: 'info',
+			title: 'Linux Supporting System',
+			message: "thedesk.topをブラウザで開きます。",
+			buttons: ['OK']
+		  }
+		  dialog.showMessageBox(options, function(index) {
+			shell.openExternal("https://thedesk.top");
+		  })
+		  return;
 		if(bit=="x64"){
 			var zip="TheDesk-linux-x64.zip";
 		}else if(bit=="ia32"){
@@ -226,17 +236,6 @@ ipc.on('about', (e, args) => {
 			 "resizable": false });
 	   window.loadURL('file://' + __dirname + '/about.html?ver='+ver);
 	   return "true"
-	/*
-	openAboutWindow({
-		icon_path: join(__dirname, 'desk.png'),
-		copyright: 'Copyright (c) TheDesk on Mastodon 2018 & Cutls.com 2015 All Rights Reserved. CDN provided by AWS CloudFront.',
-		license: 'This work is licensed under TheDesk LICENSE. See also GitHub.',
-		description: 'ここに表示されているバージョンは内部バージョンで、一般的に使われている愛称とは異なります。',
-		bug_report_url: 'https://cutls.com/report',
-		css_path: join(__dirname, './css/about.css'),
-		adjust_window_size: true
-	});
-	*/
 });
 
 ipc.on('column-del', (e, args) => {

@@ -25,7 +25,7 @@ function scrollck() {
 			}
 		}
 		//続きを読むトリガー
-		var scrt = $(this).find(".tl").height() - 1500;
+		var scrt = $(this).find(".tl").height() - $(window).height();
 		var scr = $(this).scrollTop();
 		if (scr > scrt) {
 			moreload('', tlid);

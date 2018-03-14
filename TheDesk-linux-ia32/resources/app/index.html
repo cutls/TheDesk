@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//トゥートリンク追加
-var ver="Airi (ver.4[fixed])";
+var ver="Airi (ver.5)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -35,59 +35,59 @@ var tlid=0;
  </script>
 <textarea id="copy" style="top:-100px; position:fixed;"></textarea>
 <div id="masara">
-<!--最初にログインする-->ログインしたいインスタンスのアドレス
+<!--最初にログインする--><span data-trans="want_login">ログインしたいインスタンスのアドレス</span>
 <br>
 <input type="text" id="url" style="width:70%" placeholder="mstdn.jp">
 <div id="ins-suggest">
 </div>
 <button class="btn waves-effect" onclick="instance()">Login</button>
-<br>Linuxでご使用の方はチェックを入れて下さい。
+<br><span data-trans="linux_ck">Linuxでご使用の方はチェックを入れて下さい。</span>
 <br>
 <input type="checkbox" class="filled-in" id="linux" />
-<label for="linux">コードセットアップ</label>
+<label for="linux" data-trans="code_setup">コードセットアップ</label>
 <br>
 <span style="font-family:Open Sans;">Supports</span>
 <div id="support">
 </div>
-<br>各インスタンスの独自機能もAPIの範囲内で実装させていただきます。お知らせください。
-<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P(@Cutls@kirishima.cloud)</a>まで。
-<br>ログイン後は設定画面から@Cutls@kirishima.cloudにコンタクトをとることができます。
+<br><span data-trans="invite_before">各インスタンスの独自機能もAPIの範囲内で実装させていただきます。お知らせください。</span>
+<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P(@Cutls@kirishima.cloud)</a><span data-trans="made">まで。</span>
+<br><span data-trans="invite_after">ログイン後は設定画面から@Cutls@kirishima.cloudにコンタクトをとることができます。</span>
 <br>
-<button class="btn waves-effect indigo" onclick="about()">このソフトについて</button>
+<button class="btn waves-effect indigo" onclick="about()" data-trans="about">このソフトについて</button>
 <br>
 </div>
 <div id="auth">
-<!--PINコードで認証-->指定されたコードを貼り付けてください。ログインウィンドウは閉じていただいて構いません。
+<!--PINコードで認証--><span data-trans="enter_code">指定されたコードを貼り付けてください。ログインウィンドウは閉じていただいて構いません。</span>
 <br>
-<input type="text" id="code" placeholder="コードを入力">
-<button class="btn waves-effect" onclick="code()">認証</button>
+<input type="text" id="code" placeholder="コードを入力" data-trans-placeholder="code">
+<button class="btn waves-effect" onclick="code()" data-trans="auth">認証</button>
 <br>
 </div>
 <div id="tl">
 <!--TL-->
 <!--ドラッグハンドラ-->
 <div id="drag">
-<div id="drag-content">ここにドラッグして添付(ドラッグと同時にアップロードされます)
+<div id="drag-content" data-trans="drag_here">ここにドラッグして添付(ドラッグと同時にアップロードされます)
 <br>
-<button class="btn waves-effect" onclick="closedrop()">閉じる</button>
+<button class="btn waves-effect" onclick="closedrop()" data-trans="close">閉じる</button>
 </div>
 </div>
 <!--カラム追加-->
 <div id="add-box" class="hide z-depth-4 notf-box">
-<div class="input-field">アカウント選択
+<div class="input-field"><span data-trans="your_acct">アカウント選択</span>
 <br>
 <select id="add-acct-sel" class="acct-sel" style="color:black"></select>
 <label></label>
 </div>
 <div class="input-field">
 <select id="type-sel" style="color:black">
-	<option value="local">ローカル</option>
-	<option value="home">ホーム</option>
-	<option value="pub">連合</option>
-	<option value="mix">統合(ローカルとホーム)</option>
-	<option value="notf">通知</option>
+	<option value="local" data-trans="local">ローカル</option>
+	<option value="home" data-trans="home">ホーム</option>
+	<option value="pub" data-trans="public">連合</option>
+	<option value="mix" data-trans="integrated">統合(ローカルとホーム)</option>
+	<option value="notf" data-trans="notification">通知</option>
 </select>
-<label>表示するタイムライン</label>
+<label data-trans="show_tl">表示するタイムライン</label>
 </div>
 <button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()">
 	<i class="material-icons left">add</i>追加
@@ -204,9 +204,9 @@ var tlid=0;
 </div>
 <div id="sidebar-btm">
 <!--最小化-->
-<div id="menu-btn" onclick="show()">
+<div id="menu-btn" class="big-menu" onclick="show()">
 <a class="waves-effect">
-	<i class="large material-icons">mode_edit</i>
+	<i class="material-icons big-icon">mode_edit</i>
 	<br>
 	<span class="side-label">投稿</span>
 </a>
@@ -235,6 +235,7 @@ var tlid=0;
 </div>
 <span id="radio-sta" class="radio"></span>
 <div id="radio-view" class="hide radio mize">
+<a onclick="nowplaying()" class="pointer"><i class="fa fa-spotify"></i>NowPlaying</a>
 <span class="cbadge pointer waves-effect" onclick="Rplay('https://listen.moe/stream','Listen.moe')" data-name="Listen.moe">Listen.moe</span>
 <span class="cbadge pointer waves-effect" onclick="Rplay('http://itori.animenfo.com:443/;','AnimeNfo Radio')" data-name="AnimeNfo Radio">AnimeNfo Radio</span>
 <span class="cbadge pointer waves-effect" onclick="Rplay('http://hyades.shoutca.st:8043/stream','LoFi hip hop Radio')" data-name="LoFi hip hop Radio">LoFi hip hop Radio</span>
@@ -676,7 +677,7 @@ var tlid=0;
 <!--左下メッセージ-->
 <div id="message">
 </div>
-<!--Radio-->
+<!--Radio Happy(Yui) Taku Inoue-->
 <audio src="" id="radio"></audio>
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/tl/parse.js"></script>
@@ -699,6 +700,7 @@ var tlid=0;
 <script type="text/javascript" src="./js/ui/pip.js"></script>
 <script type="text/javascript" src="./js/ui/radio.js"></script>
 <script type="text/javascript" src="./js/ui/sort.js"></script>
+<script type="text/javascript" src="./js/ui/spotify.js"></script>
 <script type="text/javascript" src="./js/post/post.js"></script>
 <script type="text/javascript" src="./js/post/reply.js"></script>
 <script type="text/javascript" src="./js/post/secure.js"></script>

@@ -168,6 +168,22 @@
 			<span class="emphasized">　強調色(テーマによって異なります。)　</span>
 		</div>
 	</li>
+	<li>
+		<div class="collapsible-header">
+			<i class="fa fa-spotify"></i>SpotifyとNowPlayingの設定
+		</div>
+		<div class="collapsible-body">
+			<i class="material-icons nex" title="Radio(Select/Pause)">play_circle_outline</i>ボタンで表示されるメニューから簡単にNowPlayingができます。<br>
+			Windowsのみの対応です。APIの性質上，thedesk.topへアクセスします。<br>
+			<a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i class="fa fa-spotify left"></i>接続</a>
+			<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i class="fa fa-spotify left"></i>切断</a>
+			<br>トゥートテンプレート<br>
+			<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
+{url} #Spotify-with-TheDesk</textarea><br>
+				テンプレート:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
+			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
+		</div>
+	</li>
 </ul>
 <br>
 <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>戻る</a>
@@ -223,6 +239,7 @@
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
 <script type="text/javascript" src="./js/login/logout.js"></script>
+<script type="text/javascript" src="./js/ui/spotify.js"></script>
 <script type="text/javascript" src="./js/ui/settings.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script type="text/javascript" src="./js/tl/date.js"></script>

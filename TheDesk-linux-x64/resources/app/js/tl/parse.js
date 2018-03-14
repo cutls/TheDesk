@@ -130,12 +130,6 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			}
 		}
 		var id = toot.id;
-		//Integratedである場合はUnix時間をキーに配列を生成しておく
-		if (mix == "mix") {
-			local[date(obj[key].created_at, 'unix')] = toot.id;
-			times.push(date(obj[key].created_at, 'unix'));
-			var divider = '<div class="divider"></div>';
-		}
 		if (mix == "home") {
 			var home = "Home TLより"
 			var divider = '<div class="divider"></div>';
@@ -169,7 +163,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		}
 		if (toot.spoiler_text && cw) {
 			var content = toot.content;
-			var spoil = toot.spoiler_text;
+			var spoil = escapeHTML(toot.spoiler_text);
 			var spoiler = "cw cw_hide_" + toot.id;
 			var api_spoil = "gray";
 			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
@@ -187,7 +181,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 					'\')" class="nex parsed">続き…</a><br>';
 			} else {
 				var content = toot.content;
-				var spoil = toot.spoiler_text;
+				var spoil = escapeHTML(toot.spoiler_text);
 				var spoiler = "";
 				var spoiler_show = "";
 			}
@@ -218,7 +212,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 					'" class="emoji-img">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
-				spoil = toot.spoiler_text.replace(regExp, emoji_url);
+				spoil = spoil.replace(regExp, emoji_url);
 			});
 		}
 		var mediack = toot.media_attachments[0];
@@ -439,7 +433,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 		}
 		var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
-				Materialize.toast(toot.display_name+"にフォローされました", popup * 1000);
+				Materialize.toast(escapeHTML(toot.display_name)+"にフォローされました", popup * 1000);
 				$(".notf-icon_" + tlid).addClass("red-text");
 				localStorage.setItem("notice-mem", noticetext);
 				noticetext = "";
@@ -453,7 +447,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			'<img src="' + toot.avatar + '" width="40" class="prof-img" user="' + toot
 			.acct + '"></a></div>' +
 			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"><big>' +
-			toot.display_name + '</big></div>' +
+			escapeHTML(toot.display_name) + '</big></div>' +
 			'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
 			toot.acct + locked + '</div>' +
 			'</div>' + auth +

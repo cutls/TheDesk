@@ -47,12 +47,14 @@ function xpand() {
 	if ($("#sidebar").hasClass("xed")) {
 		$(".side-label").show();
 		$("#sidebar").css('width', '75px');
+		$("#sidebar").css('min-width', '75px');
 		$("#sidebar .big-menu i").addClass('big-icon');
 		$("#sidebar").removeClass("xed");
 		$("#x-btn").text("keyboard_arrow_right");
 		localStorage.removeItem("xed");
 	} else {
 		$("#sidebar").css('width', '24px');
+		$("#sidebar").css('min-width', '24px');
 		$("#sidebar").addClass("xed");
 		$("#sidebar .big-menu i").removeClass('big-icon');
 		$(".side-label").hide();
