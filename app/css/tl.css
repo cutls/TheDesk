@@ -12,6 +12,7 @@
 }
 #sidebar{
   width:75px;
+  min-width:75px;
   height:100vh;
   background-color:#e0e0e0;
   display:flex;
@@ -83,7 +84,9 @@ iframe {
   font-size:1.2em;
 }
 .emoji-img{
-  width:1.2rem;
+  width: 20px;
+  vertical-align: middle;
+  margin: -3px 0 0;
 }
 .tl-box{ height:calc(100% - 40px); overflow-y:scroll; overflow-x:hidden }
 .additional {

@@ -211,6 +211,7 @@ load();
 climute();
 wordmute();
 wordemp();
+checkSpotify();
 function climute(){
 	//クライアントミュート
 	var cli = localStorage.getItem("client_mute");
