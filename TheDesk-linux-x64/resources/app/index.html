@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//トゥートリンク追加
-var ver="Airi (ver.3)";
+var ver="Airi (ver.4[fixed])";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -133,6 +133,7 @@ var tlid=0;
 	<i class="material-icons left">close</i>閉じる
 </button>
 </div>
+<div id="main">
 <!--TLのTL-->
 <div id="timeline-container">
 </div>
@@ -141,21 +142,21 @@ var tlid=0;
 <div id="sidebar-top">
 <div class="big-menu" id="add-tgl">
 <a onclick="addToggle()" class="nex waves-effect">
-	<i class="material-icons nex" title="カラム追加">add</i>
+	<i class="material-icons nex big-icon" title="カラム追加">add</i>
 </a>
 <br>
 <span class="side-label">カラム追加</span>
 </div>
 <div class="big-menu" id="src-tgl">
 <a onclick="srcToggle()" class="nex waves-effect">
-	<i class="material-icons nex" title="検索">search</i>
+	<i class="material-icons nex big-icon" title="検索">search</i>
 </a>
 <br>
 <span class="side-label">検索</span>
 </div>
 <div class="big-menu" id="sort-tgl">
 <a onclick="sortToggle()" class="nex waves-effect">
-	<i class="material-icons nex" title="並べ替え">sort</i>
+	<i class="material-icons nex big-icon" title="並べ替え">sort</i>
 </a>
 <br>
 <span class="side-label">並べ替え</span>
@@ -192,6 +193,14 @@ var tlid=0;
 	<span class="side-label">管理</span>
 </a>
 </div>
+<div id="side-dead">
+</div>
+<div class="small-menu">
+	<a onclick="xpand()" class="nex waves-effect">
+		<i class="material-icons" title="サイドバーの開閉" id="x-btn">keyboard_arrow_right</i>
+		<span class="side-label">たたむ</span>
+	</a>
+	</div>
 </div>
 <div id="sidebar-btm">
 <!--最小化-->
@@ -201,6 +210,7 @@ var tlid=0;
 	<br>
 	<span class="side-label">投稿</span>
 </a>
+</div>
 </div>
 </div>
 </div>
@@ -354,7 +364,7 @@ var tlid=0;
 <i class="material-icons">tag_faces</i>
 </button>
 <!--絵文字ピッカー-->
-<div id="emoji" class="hide shared">
+<div id="emoji" class="hide shared z-depth-4">
 <span class="gray sml">インスタンスによって実装が異なります。
 <i>
 	<a onclick="emojiGet('true')" class="pointer">絵文字更新</a>
@@ -421,239 +431,6 @@ var tlid=0;
 <button class="btn waves-effect indigo unmize" style="width:100%; padding:0; margin-top:10px;" onclick="post()" id="toot-post-btn">トゥート</button>
 </div>
 </div>
-<!-- Modal Structure Tootdata-->
-<div id="tootmodal" class="modal modal-fixed-footer">
-<div class="modal-content">
-<ul class="collapsible" data-collapsible="accordion" id="det-col">
-<li>
-	<div class="collapsible-header">
-	<i class="material-icons">arrow_upward</i>これよりあとのコンテクスト
-	</div>
-	<div class="collapsible-body toot-reset" id="toot-after">
-	</div>
-</li>
-<li>
-	<div class="collapsible-header">
-	<i class="material-icons">reply_all</i>このトゥートからのリプライ
-	</div>
-	<div class="collapsible-body toot-reset" id="toot-reply">
-	</div>
-</li>
-<li>
-	<div class="collapsible-header" id="activator">
-	<i class="material-icons">more_horiz</i>対象のトゥート
-	</div>
-	<div class="collapsible-body toot-reset" id="toot-this">
-	</div>
-</li>
-<li>
-	<div class="collapsible-header">
-	<i class="material-icons">arrow_downward</i>これより前のLocal TL
-	</div>
-	<div class="collapsible-body toot-reset" id="toot-before">
-	</div>
-</li>
-<li>
-	<div class="collapsible-header">
-	<i class="material-icons">star</i>このトゥートをお気に入りに登録した人
-	</div>
-	<div class="collapsible-body toot-reset" id="toot-fav">
-	</div>
-</li>
-<li>
-	<div class="collapsible-header">
-	<i class="text-darken-3 fa fa-retweet"></i>このトゥートをブーストした人
-	</div>
-	<div class="collapsible-body toot-reset" id="toot-rt">
-	</div>
-</li>
-</ul>
-<div id="toot-tools">
-</div>
-<div id="toot-after">
-</div>
-</div>
-<div class="modal-footer">
-<a href="#!" class="waves-effect waves-green btn-flat" onclick="shot()">スクリーンショット</a>
-<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy()">URLをコピー</a>
-<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy('emb')">埋め込む</a>
-<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-</div>
-</div>
-<!-- Modal Structure Userdata -->
-<div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
-<div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
-<div id="his-data-show">
-<img src="./img/loading.svg" id="his-prof" style="">
-<div class="his-float">
-<span id="his-name" style="font-size:1.5rem">Loading...</span>
-<br>@
-<span id="his-acct"></span>
-<span class="gray" id="his-relation"></span>
-<br>
-<span class="cbadge">
-<span id="his-sta"></span>トゥート
-</span>
-<span class="cbadge">フォロー:
-<span id="his-follow"></span>
-</span>
-<span class="cbadge">フォロワー:
-<span id="his-follower"></span>
-</span>
-<span class="cbadge">Since:
-<span id="his-since"></span>
-</div>
-<div class="his-float">
-<span id="his-des"></span>
-<br>
-</div>
-<div class="row">
-<div class="col s12" id="my-data-nav">
-<ul class="custom-tabs transparent">
-	<li class="custom-tab col my-data-width active-back">
-		<a go="#his-tl">Timeline</a>
-	</li>
-	<li class="custom-tab col my-data-width">
-		<a go="#his-follow-list">Follows</a>
-	</li>
-	<li class="custom-tab col my-data-width">
-		<a go="#his-follower-list">Followers</a>
-	</li>
-	<li class="custom-tab col my-data-width only-my-data">
-		<a go="#his-fav-list">Favorites</a>
-	</li>
-	<li class="custom-tab col my-data-width only-my-data">
-		<a go="#his-blocking-list">Blocking</a>
-	</li>
-	<li class="custom-tab col my-data-width only-my-data">
-		<a go="#his-muting-list">Muting</a>
-	</li>
-	<li class="custom-tab col my-data-width only-my-data">
-		<a go="#his-domain-list">Domain Blocking</a>
-	</li>
-	<li class="custom-tab col my-data-width only-my-data">
-		<a go="#his-prof-list">Edit Profile</a>
-	</li>
-	<li class="custom-tab col my-data-width only-my-data">
-		<a go="#his-request-list">Follow Request</a>
-	</li>
-</ul>
-</div>
-<div id="his-tl" class="col s12 tab-content">
-<div id="his-tl-contents" class="cont-series">
-</div>
-<button class="btn waves-effect " style="width:100%; padding:0;" onclick="utl('--now','more')">もっと</button>
-</div>
-<div id="his-follow-list" class="col s12  tab-content">
-<div id="his-follow-list-contents" class="cont-series">
-</div>
-<button class="btn waves-effect " style="width:100%; padding:0;" onclick="flw('--now','more')">もっと</button>
-</div>
-<div id="his-follower-list" class="col s12  tab-content">
-<div id="his-follower-list-contents" class="cont-series">
-</div>
-<button class="btn waves-effect " style="width:100%; padding:0;" onclick="fer('--now','more')">もっと</button>
-</div>
-<div id="his-fav-list" class="col s12  tab-content">
-<div id="his-fav-list-contents" class="cont-series">
-</div>
-<button class="btn waves-effect" style="width:100%; padding:0;" onclick="showFav('more')">もっと</button>
-</div>
-<div id="his-blocking-list" class="col s12  tab-content">
-<div id="his-blocking-list-contents"class="cont-series" >
-</div>
-<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showBlo('more')">もっと</button>
-</div>
-<div id="his-muting-list" class="col s12  tab-content">
-<div id="his-muting-list-contents" class="cont-series">
-</div>
-<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showMut('more')">もっと</button>
-</div>
-<div id="his-domain-list" class="col s12  tab-content">
-<div id="his-domain-list-contents" class="cont-series">
-</div>
-<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showDom('more')">もっと</button>ブロックするドメイン
-<br>
-<input type="text" placeholder="example.com" id="domainblock">
-<button class="btn waves-effect" onclick="addDomainblock()">ブロック</button>
-<br>
-</div>
-<div id="his-prof-list" class="col s12  tab-content">名前
-<br>
-<input type="text" placeholder="名前" id="his-name-val" width="max-width:150px;">
-<br>自己紹介
-<br>
-<div class="input-field col s12">
-<textarea placeholder="自己紹介" id="his-des-val" class="materialize-textarea"></textarea>
-<label for="his-des-val">自己紹介</label>
-</div>
-<button onclick="profedit()" class="btn waves-effect indigo">適用</button>
-<br>
-<br>プロフィール画像変更:
-<span id="prof-change">
-	<input type="file" onchange="imgChange(this,'avatar')">
-</span>
-<br>ヘッダー画像変更:
-<span id="header-change">
-	<input type="file" onchange="imgChange(this,'header')">
-</span>
-</div>
-<div id="his-request-list" class="col s12  tab-content">
-<div id="his-request-list-contents" class="cont-series">
-</div>
-<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">もっと</button>
-</div>
-</div>
-</div>
-</div>
-<div class="modal-footer">
-<button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn" onclick="historyShow()">一つ前のユーザーデータ</button>
-<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">フォロー</a>
-<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">ミュート</a>
-<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">ブロック</a>
-<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-emp-btn" onclick="empUser()">ユーザー強調</a>
-<a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Close</a>
-</div>
-</div>
-<!-- Modal Structure Image-->
-<div id="imagemodal" class="modal modal-fixed-footer" style="min-width:550px">
-<div class="modal-content">
-<div id="imagewrap">
-<img src="" id="imgmodal">
-</div>
-<br>
-</div>
-<div class="modal-footer">
-<a class="waves-effect white-text" onclick="zoom(2)">
-	<i class="material-icons">zoom_in</i>
-</a>
-<a class="waves-effect white-text" onclick="zoom(0.5)">
-	<i class="material-icons">zoom_out</i>
-</a>
-<button class="btn waves-effect purple" onclick="dlImg()">
-	<i class="material-icons">file_download</i>
-</button>
-<button class="btn waves-effect brown" onclick="detFromImg()">当該トゥート</button>
-<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">
-	<i class="material-icons">keyboard_arrow_left</i>
-</button>
-<button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next">
-	<i class="material-icons">keyboard_arrow_right</i>
-</button>
-<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">
-	<i class="material-icons">close</i>
-</a>
-</div>
-</div>
-<!-- Modal Structure Video-->
-<div id="videomodal" class="modal modal-fixed-footer">
-<div class="modal-content">
-<video src="" id="video" style="width:100%;" controls >
-</div>
-<div class="modal-footer">
-<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-</div>
-</div>
 <!--PiP-->
 <div id="pip" class="hide pip-bottom pip-left">
 <i class="material-icons pip-horiz pointer" onclick="pipHoriz()">chevron_right</i>　
@@ -662,6 +439,240 @@ var tlid=0;
 <div id="pip-content">
 </div>
 </div>
+</div>
+<!-- Modal Structure Tootdata-->
+<div id="tootmodal" class="modal modal-fixed-footer">
+	<div class="modal-content">
+	<ul class="collapsible" data-collapsible="accordion" id="det-col">
+	<li>
+		<div class="collapsible-header">
+		<i class="material-icons">arrow_upward</i>これよりあとのコンテクスト
+		</div>
+		<div class="collapsible-body toot-reset" id="toot-after">
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+		<i class="material-icons">reply_all</i>このトゥートからのリプライ
+		</div>
+		<div class="collapsible-body toot-reset" id="toot-reply">
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header" id="activator">
+		<i class="material-icons">more_horiz</i>対象のトゥート
+		</div>
+		<div class="collapsible-body toot-reset" id="toot-this">
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+		<i class="material-icons">arrow_downward</i>これより前のLocal TL
+		</div>
+		<div class="collapsible-body toot-reset" id="toot-before">
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+		<i class="material-icons">star</i>このトゥートをお気に入りに登録した人
+		</div>
+		<div class="collapsible-body toot-reset" id="toot-fav">
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+		<i class="text-darken-3 fa fa-retweet"></i>このトゥートをブーストした人
+		</div>
+		<div class="collapsible-body toot-reset" id="toot-rt">
+		</div>
+	</li>
+	</ul>
+	<div id="toot-tools">
+	</div>
+	<div id="toot-after">
+	</div>
+	</div>
+	<div class="modal-footer">
+	<a href="#!" class="waves-effect waves-green btn-flat" onclick="shot()">スクリーンショット</a>
+	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy()">URLをコピー</a>
+	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy('emb')">埋め込む</a>
+	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+	</div>
+	</div>
+	<!-- Modal Structure Userdata -->
+	<div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
+	<div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
+	<div id="his-data-show">
+	<img src="./img/loading.svg" id="his-prof" style="">
+	<div class="his-float">
+	<span id="his-name" style="font-size:1.5rem">Loading...</span>
+	<br>@
+	<span id="his-acct"></span>
+	<span class="gray" id="his-relation"></span>
+	<br>
+	<span class="cbadge">
+	<span id="his-sta"></span>トゥート
+	</span>
+	<span class="cbadge">フォロー:
+	<span id="his-follow"></span>
+	</span>
+	<span class="cbadge">フォロワー:
+	<span id="his-follower"></span>
+	</span>
+	<span class="cbadge">Since:
+	<span id="his-since"></span>
+	</div>
+	<div class="his-float">
+	<span id="his-des"></span>
+	<br>
+	</div>
+	<div class="row">
+	<div class="col s12" id="my-data-nav">
+	<ul class="custom-tabs transparent">
+		<li class="custom-tab col my-data-width active-back">
+			<a go="#his-tl">Timeline</a>
+		</li>
+		<li class="custom-tab col my-data-width">
+			<a go="#his-follow-list">Follows</a>
+		</li>
+		<li class="custom-tab col my-data-width">
+			<a go="#his-follower-list">Followers</a>
+		</li>
+		<li class="custom-tab col my-data-width only-my-data">
+			<a go="#his-fav-list">Favorites</a>
+		</li>
+		<li class="custom-tab col my-data-width only-my-data">
+			<a go="#his-blocking-list">Blocking</a>
+		</li>
+		<li class="custom-tab col my-data-width only-my-data">
+			<a go="#his-muting-list">Muting</a>
+		</li>
+		<li class="custom-tab col my-data-width only-my-data">
+			<a go="#his-domain-list">Domain Blocking</a>
+		</li>
+		<li class="custom-tab col my-data-width only-my-data">
+			<a go="#his-prof-list">Edit Profile</a>
+		</li>
+		<li class="custom-tab col my-data-width only-my-data">
+			<a go="#his-request-list">Follow Request</a>
+		</li>
+	</ul>
+	</div>
+	<div id="his-tl" class="col s12 tab-content">
+	<div id="his-tl-contents" class="cont-series">
+	</div>
+	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="utl('--now','more')">もっと</button>
+	</div>
+	<div id="his-follow-list" class="col s12  tab-content">
+	<div id="his-follow-list-contents" class="cont-series">
+	</div>
+	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="flw('--now','more')">もっと</button>
+	</div>
+	<div id="his-follower-list" class="col s12  tab-content">
+	<div id="his-follower-list-contents" class="cont-series">
+	</div>
+	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="fer('--now','more')">もっと</button>
+	</div>
+	<div id="his-fav-list" class="col s12  tab-content">
+	<div id="his-fav-list-contents" class="cont-series">
+	</div>
+	<button class="btn waves-effect" style="width:100%; padding:0;" onclick="showFav('more')">もっと</button>
+	</div>
+	<div id="his-blocking-list" class="col s12  tab-content">
+	<div id="his-blocking-list-contents"class="cont-series" >
+	</div>
+	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showBlo('more')">もっと</button>
+	</div>
+	<div id="his-muting-list" class="col s12  tab-content">
+	<div id="his-muting-list-contents" class="cont-series">
+	</div>
+	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showMut('more')">もっと</button>
+	</div>
+	<div id="his-domain-list" class="col s12  tab-content">
+	<div id="his-domain-list-contents" class="cont-series">
+	</div>
+	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showDom('more')">もっと</button>ブロックするドメイン
+	<br>
+	<input type="text" placeholder="example.com" id="domainblock">
+	<button class="btn waves-effect" onclick="addDomainblock()">ブロック</button>
+	<br>
+	</div>
+	<div id="his-prof-list" class="col s12  tab-content">名前
+	<br>
+	<input type="text" placeholder="名前" id="his-name-val" width="max-width:150px;">
+	<br>自己紹介
+	<br>
+	<div class="input-field col s12">
+	<textarea placeholder="自己紹介" id="his-des-val" class="materialize-textarea"></textarea>
+	<label for="his-des-val">自己紹介</label>
+	</div>
+	<button onclick="profedit()" class="btn waves-effect indigo">適用</button>
+	<br>
+	<br>プロフィール画像変更:
+	<span id="prof-change">
+		<input type="file" onchange="imgChange(this,'avatar')">
+	</span>
+	<br>ヘッダー画像変更:
+	<span id="header-change">
+		<input type="file" onchange="imgChange(this,'header')">
+	</span>
+	</div>
+	<div id="his-request-list" class="col s12  tab-content">
+	<div id="his-request-list-contents" class="cont-series">
+	</div>
+	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">もっと</button>
+	</div>
+	</div>
+	</div>
+	</div>
+	<div class="modal-footer">
+	<button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn" onclick="historyShow()">一つ前のユーザーデータ</button>
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">フォロー</a>
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">ミュート</a>
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">ブロック</a>
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-emp-btn" onclick="empUser()">ユーザー強調</a>
+	<a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Close</a>
+	</div>
+	</div>
+	<!-- Modal Structure Image-->
+	<div id="imagemodal" class="modal modal-fixed-footer" style="min-width:550px">
+	<div class="modal-content">
+	<div id="imagewrap">
+	<img src="" id="imgmodal">
+	</div>
+	<br>
+	</div>
+	<div class="modal-footer">
+	<a class="waves-effect white-text" onclick="zoom(2)">
+		<i class="material-icons">zoom_in</i>
+	</a>
+	<a class="waves-effect white-text" onclick="zoom(0.5)">
+		<i class="material-icons">zoom_out</i>
+	</a>
+	<button class="btn waves-effect purple" onclick="dlImg()">
+		<i class="material-icons">file_download</i>
+	</button>
+	<button class="btn waves-effect brown" onclick="detFromImg()">当該トゥート</button>
+	<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">
+		<i class="material-icons">keyboard_arrow_left</i>
+	</button>
+	<button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next">
+		<i class="material-icons">keyboard_arrow_right</i>
+	</button>
+	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">
+		<i class="material-icons">close</i>
+	</a>
+	</div>
+	</div>
+	<!-- Modal Structure Video-->
+	<div id="videomodal" class="modal modal-fixed-footer">
+	<div class="modal-content">
+	<video src="" id="video" style="width:100%;" controls >
+	</div>
+	<div class="modal-footer">
+	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+	</div>
+	</div>
 <!--左下メッセージ-->
 <div id="message">
 </div>
@@ -679,10 +690,10 @@ var tlid=0;
 <script type="text/javascript" src="./js/tl/src.js"></script>
 <script type="text/javascript" src="./js/tl/filter.js"></script>
 <script type="text/javascript" src="./js/tl/tag.js"></script>
+<script type="text/javascript" src="./js/ui/post-box.js"></script>
 <script type="text/javascript" src="./js/ui/layout.js"></script>
 <script type="text/javascript" src="./js/login/login.js"></script>
 <script type="text/javascript" src="./js/login/instance.js"></script>
-<script type="text/javascript" src="./js/ui/post-box.js"></script>
 <script type="text/javascript" src="./js/ui/img.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script type="text/javascript" src="./js/ui/pip.js"></script>

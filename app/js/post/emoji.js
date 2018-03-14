@@ -7,6 +7,9 @@ $("#emoji-next").addClass("disabled");
 function emoji() {
 	var acct_id = $("#post-acct-sel").val();
 	var selin = $("#textarea").prop('selectionStart');
+	if(!selin){
+		selin=0;
+	}
 	localStorage.setItem("cursor", selin);
 	if ($("#emoji").hasClass("hide")) {
 		$("#emoji").removeClass("hide")

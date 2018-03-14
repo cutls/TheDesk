@@ -41,8 +41,27 @@ function zoomBox() {
 		$("#post-box").css('width', '50vw');
 		$("#post-box").addClass("bigbox")
 	}
-
 }
+//サイドバー開閉
+function xpand() {
+	if ($("#sidebar").hasClass("xed")) {
+		$(".side-label").show();
+		$("#sidebar").css('width', '75px');
+		$("#sidebar .big-menu i").addClass('big-icon');
+		$("#sidebar").removeClass("xed");
+		$("#x-btn").text("keyboard_arrow_right");
+		localStorage.removeItem("xed");
+	} else {
+		$("#sidebar").css('width', '24px');
+		$("#sidebar").addClass("xed");
+		$("#sidebar .big-menu i").removeClass('big-icon');
+		$(".side-label").hide();
+		$("#x-btn").text("keyboard_arrow_left");
+		localStorage.setItem("xed","true");
+	}
+}
+
+
 //コード受信
 if(location.search){
 	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);

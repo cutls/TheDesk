@@ -4,6 +4,7 @@ function srcToggle() {
 	$("#src-box").toggleClass("hide");
 	$("#src-box").toggleClass("show");
 	$("#src-box").css("top",$('#src-tgl').offset().top+"px");
+	$("#src-box").css("left",$('#src-tgl').offset().left-410+"px");
 	$('ul.tabs').tabs('select_tab', 'src-sta');
 	$("#src-contents").html("");
 }

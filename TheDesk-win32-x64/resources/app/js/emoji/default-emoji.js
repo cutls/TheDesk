@@ -48,8 +48,9 @@ function defEmoji(target){
                             var after    = now.substr(selin, now.length);
                             newt = before+ emoji.emoji + after;
                         }else{
-                            newt = code;
+                            newt = now+emoji.emoji;
                         }
+                        console.log(emoji.emoji);
                         $("#textarea").val(newt);
                         //emoji();
                         $("#textarea").focus();

@@ -10,13 +10,16 @@
 	function addToggle() {
 		$("#add-box").toggleClass("hide");
 		$("#add-box").css("top",$('#add-tgl').offset().top+"px");
+		$("#add-box").css("left",$('#add-tgl').offset().left-410+"px");
 		$("#add-box").toggleClass("show");
 	}
 //最初、カラム変更時に発火
 	function parseColumn() {
 		var size = localStorage.getItem("size");
 		if (size) {
-			$("html").css("font-size", size + "px");
+			$("#timeline-container").css("font-size", size + "px");
+			$(".toot-reset").css("font-size", size + "px");
+			$(".cont-series").css("font-size", size + "px");
 		}
 		tlCloser();
 		var multi = localStorage.getItem("multi");
@@ -45,6 +48,10 @@
 				notf(key, 0);
 				ckdb(key);
 			});
+		}
+		var xed=localStorage.getItem("xed");
+		if(xed){
+			xpand();
 		}
 		var col = localStorage.getItem("column");
 		if (!col) {
@@ -85,7 +92,7 @@
 			  '<div class="hide notf-indv-box" id="notf-box_' + key +
 			  '"><div id="notifications_' + key +
 			  '" data-notf="' + acct.domain + '"></div></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
-				'" class="tl" tlid="' + key + '"'+notf_attr+'></div></div></div>';
+				'" class="tl" tlid="' + key + '"'+notf_attr+'><div style="text-align:center">[ここにトゥートはありません。]<br>F5で再読込できます。</div></div></div></div>';
 			$("#timeline-container").append(html);
 			if (acct.data) {
 				var data = acct.data;

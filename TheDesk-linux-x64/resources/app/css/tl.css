@@ -1,16 +1,18 @@
 /*TL CSS(ただしBBCode pulse:master.css/spin:font-awesome*/
+#main{
+  display:flex;
+  width:100vw;
+}
 #timeline-container {
   overflow-x: scroll;
   overflow-y: hidden;
   display: flex;
-  width: calc(100vw - 70px);
   height: 100vh;
-  float:left;
+  flex-grow:4;
 }
 #sidebar{
-  width:70px;
+  width:75px;
   height:100vh;
-  float:left;
   background-color:#e0e0e0;
   display:flex;
   flex-wrap:wrap;
@@ -37,14 +39,14 @@
 #sidebar .big-menu{
   text-align:center;
 }
-#sidebar .big-menu i{
+#sidebar .big-menu i.big-icon{
   font-size:5em;
 }
 #sidebar .small-menu i{
   font-size:2rem;
 }
 #sidebar .small-menu .side-label{
-  font-size:1rem;
+  font-size:12px;
   vertical-align: 0.6rem;
 }
 #sidebar #side-dead{
@@ -78,7 +80,10 @@ iframe {
 }
 .user{
   cursor:text;
-  font-size:1.2rem;
+  font-size:1.2em;
+}
+.emoji-img{
+  width:1.2rem;
 }
 .tl-box{ height:calc(100% - 40px); overflow-y:scroll; overflow-x:hidden }
 .additional {
@@ -158,7 +163,7 @@ font-size:1rem;
   color: gray;
 }
 .sml {
-  font-size: 0.8rem;
+  font-size: 0.8em;
 }
 .toot {
   overflow: hide;
@@ -175,7 +180,7 @@ font-size:1rem;
   display: inline-block;
   min-width: 10px;
   padding: 3px 7px;
-  font-size: 0.8rem;
+  font-size: 0.8em;
   margin-right: 5px;
   line-height: 1;
   color: #fff;
@@ -211,7 +216,7 @@ p:not(:last-child){
   margin-right: 10px;
   width:100%;
   min-height:60px;
-  z-index:1000;
+  z-index:500;
   padding:5px;
   display: grid;
   grid-template-columns: 40px 1fr 1fr 1fr 1fr;
@@ -276,7 +281,7 @@ p:not(:last-child){
   right: 70px;
   background-color: white;
   border: thin solid gray;
-  z-index: 1001;
+  z-index: 501;
   width: 400px;
   padding: 5px;
   min-height: 100px;

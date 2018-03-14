@@ -25,7 +25,7 @@ function profedit() {
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
-		getdata();
+		$('#his-data').modal('close');
 		todc();
 	});
 }
@@ -62,7 +62,7 @@ function imgChange(imgfile, target) {
 			console.error(error);
 		}).then(function(json) {
 			console.log(json);
-			getdata();
+			$('#his-data').modal('close');
 			todc();
 		});
 	}

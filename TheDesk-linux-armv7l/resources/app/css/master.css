@@ -1,5 +1,5 @@
 /*共通CSS*/
-body{overflow:hidden; user-select: none; cursor:default;}
+html,body{overflow:hidden; user-select: none; cursor:default; font-size:13px;}
 .btn {
   margin: 5px;
   text-transform: none;
@@ -140,7 +140,7 @@ blockquote:before, .quote:before {
   font-family:'Baloo Bhai'
 }
 #pip{
-  z-index:1001;
+  z-index:504;
   width:418px;
   background-color: white;
   position:absolute;
@@ -180,9 +180,6 @@ blockquote:before, .quote:before {
   to{
       opacity: 1;
   }
-}
-.modal-overlay{
-  z-index:999 !important;
 }
 
 /*black theme*/

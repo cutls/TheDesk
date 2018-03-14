@@ -17,7 +17,7 @@
 }
 #his-data-show {
   margin: 50px;
-  background-color: #e6ee9c;
+  background-color:rgba(255, 255, 255, 0.9);
   width: calc(100% - 50px);
   height: calc(100% - 50px);
   margin-bottom: 0;
@@ -31,7 +31,7 @@
   width: 11.11%;
 }
 .active-back{
-  background-color:rgba(255, 255, 255, 0.3);
+  background-color: #e6ee9c;
 }
 
 

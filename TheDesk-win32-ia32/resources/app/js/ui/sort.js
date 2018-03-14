@@ -75,11 +75,13 @@ function sort(){
 	sortload();
 	parseColumn();
 }
+//ソートボタントグル
 function sortToggle(){
 	$("#sort").html("");
 	if ($("#sort-box").hasClass("hide")) {
 		$("#sort-box").removeClass("hide");
 		$("#sort-box").css("top",$('#sort-tgl').offset().top+"px");
+		$("#sort-box").css("left",$('#sort-tgl').offset().left-410+"px");
 		//並べ替え
 		sortload();
 	} else {
