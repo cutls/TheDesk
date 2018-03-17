@@ -23,11 +23,13 @@ function checkSpotify(){
         $("#spotify-enable").removeClass("disabled");
         $("#spotify-disable").addClass("disabled");
     }
-    console.log(localStorage.getItem("spotify-refresh"));
+    var content=localStorage.getItem("np-temp");
+    $("#np-temp").val(content);
 }
 function nowplaying(){
     var start = "https://thedesk.top/now-playing?at="+localStorage.getItem("spotify")+"&rt="+localStorage.getItem("spotify-refresh");
-	var at = localStorage.getItem("spotify");
+    var at = localStorage.getItem("spotify");
+    if(at){
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -43,7 +45,7 @@ function nowplaying(){
         var item=json.item;
         var content=localStorage.getItem("np-temp");
         if(!content){
-            var content="#NowPlaying {song} / {album} / {artist}\n{url} #Spotify-with-TheDesk";
+            var content="#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk";
         }
         var regExp = new RegExp("{song}", "g");
         content = content.replace(regExp, item.name);
@@ -52,9 +54,12 @@ function nowplaying(){
         var regExp = new RegExp("{artist}", "g");
         content = content.replace(regExp, item.artists[0].name);
         var regExp = new RegExp("{url}", "g");
-        content = content.replace(regExp, item.href);
+        content = content.replace(regExp, item.external_urls.spotify);
         $("#textarea").val(content);
-	});
+    });
+    }else{
+        alert("アカウント連携設定をして下さい。");
+    }
 }
 function spotifySave(){
     var temp=$("#np-temp").val();
