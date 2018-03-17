@@ -93,13 +93,4 @@ function clear() {
 	$("#post-acct-sel").prop("disabled", false);
 	$('select').material_select();
 	localStorage.removeItem("image");
-	if ($("#post-box").hasClass("post-more")) {
-		$("#file-wrap").html(
-			'<input class="more-show" style="display:inline-block;" type="file" name="pic" id="upfile" onchange="pimg(document.getElementById(\'upfile\').files);" multiple>'
-		);
-	} else {
-		$("#file-wrap").html(
-			'<input class="more-show" type="file" name="pic" id="upfile" onchange="pimg(document.getElementById(\'upfile\').files);" multiple>'
-		);
-	}
 }

@@ -11,6 +11,7 @@
 	<link href='./css/post.css' rel='stylesheet' type='text/css'>
 	<link href="./css/master.css" type="text/css" rel="stylesheet">
 	<link href='./css/sort.css' rel='stylesheet' type='text/css'>
+	<link href='./css/twemoji-awesome.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
 	<meta charset="utf-8">
 </head>
@@ -26,7 +27,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//トゥートリンク追加
-var ver="Airi (ver.5)";
+var ver="Airi (ver.6)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -89,12 +90,12 @@ var tlid=0;
 </select>
 <label data-trans="show_tl">表示するタイムライン</label>
 </div>
-<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()">
+<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()" data-trans-i="add">
 	<i class="material-icons left">add</i>追加
 </button>
 <br>
 <br>
-<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="addToggle()">
+<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="addToggle()" data-trans-i="close">
 	<i class="material-icons left">close</i>閉じる
 </button>
 </div>
@@ -103,15 +104,15 @@ var tlid=0;
 <div class="input-field">
 <i class="material-icons prefix">search</i>
 <input id="src" type="text" class="validate" style="width:calc( 70% - 40px);">
-<br>ハッシュタグを検索するときは#を抜いてください。
-<br>検索に使用するアカウント選択を
+<br><span data-trans="src_tip">ハッシュタグを検索するときは#を抜いてください。</span>
+<br><span data-trans="src_acct_sel">検索に使用するアカウントを選択</span>
 <br>
 <div class="input-field">
 <select id="src-acct-sel" class="acct-sel"></select>
 <label></label>
 </div>
-<label for="src">検索</label>
-<button class="btn waves-effect indigo" style="width:calc( 60% - 40px);" onclick="src()">
+<label for="src" data-trans="src">検索</label>
+<button class="btn waves-effect indigo" style="width:calc( 60% - 40px);" onclick="src()" data-trans-i="src">
 	<i class="material-icons left">search</i>検索
 </button>
 </div>
@@ -119,17 +120,17 @@ var tlid=0;
 <div id="src-contents">
 </div>
 <button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="srcToggle()">
-	<i class="material-icons left">close</i>閉じる
+	<i class="material-icons left" data-trans-i="close">close</i>閉じる
 </button>
 </div>
 </div>
 <!--並べ替え-->
 <div id="sort-box" class="hide notf-box z-depth-4">
 <ul id="sort"></ul>
-<button onclick="sort()" class="btn waves-effect light-blue nex" style="width:100%; max-width:200px;">
+<button onclick="sort()" class="btn waves-effect light-blue nex" style="width:100%; max-width:200px;" data-trans-i="sort">
 	<i class="material-icons left">sort</i>並べ替え設定
 </button>
-<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="sortToggle()">
+<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="sortToggle()" data-trans-i="close">
 	<i class="material-icons left">close</i>閉じる
 </button>
 </div>
@@ -141,38 +142,38 @@ var tlid=0;
 <div id="sidebar">
 <div id="sidebar-top">
 <div class="big-menu" id="add-tgl">
-<a onclick="addToggle()" class="nex waves-effect">
-	<i class="material-icons nex big-icon" title="カラム追加">add</i>
+<a onclick="addToggle()" class="nex waves-effect" data-trans-i="add">
+	<i class="material-icons nex big-icon" title="カラム追加" data-trans-title="column_add">add</i>
 </a>
 <br>
-<span class="side-label">カラム追加</span>
+<span class="side-label" data-trans="column_add">カラム追加</span>
 </div>
 <div class="big-menu" id="src-tgl">
 <a onclick="srcToggle()" class="nex waves-effect">
-	<i class="material-icons nex big-icon" title="検索">search</i>
+	<i class="material-icons nex big-icon" title="検索" data-trans-title="src">search</i>
 </a>
 <br>
-<span class="side-label">検索</span>
+<span class="side-label" data-trans="src">検索</span>
 </div>
 <div class="big-menu" id="sort-tgl">
 <a onclick="sortToggle()" class="nex waves-effect">
-	<i class="material-icons nex big-icon" title="並べ替え">sort</i>
+	<i class="material-icons nex big-icon" title="並べ替え" data-trans-title="sort">sort</i>
 </a>
 <br>
-<span class="side-label">並べ替え</span>
+<span class="side-label" data-trans="sort">並べ替え</span>
 </div>
 <div id="side-dead">
 </div>
 <div class="small-menu">
 <a href="setting.html" class="nex waves-effect">
-	<i class="material-icons nex" title="設定">settings</i>
-	<span class="side-label">設定</span>
+	<i class="material-icons nex" title="設定" data-trans-title="setting">settings</i>
+	<span class="side-label" data-trans="setting">設定</span>
 </a>
 </div>
 <div class="small-menu">
 <a href="index.html" class="nex mize waves-effect">
-	<i class="material-icons nex" title="スーパーリロード">refresh</i>
-	<span class="side-label">再読込</span>
+	<i class="material-icons nex" title="スーパーリロード" data-trans-title="reload">refresh</i>
+	<span class="side-label" data-trans="reload">再読込</span>
 </a>
 </div>
 <div class="small-menu">
@@ -183,22 +184,22 @@ var tlid=0;
 </div>
 <div class="small-menu">
 <a onclick="nano()" class="nex waves-effect">
-	<i class="material-icons" title="最小のマストドン。TheDesk Nano">remove_from_queue</i>
-	<span class="side-label">Nano</span>
+	<i class="material-icons" title="最小のマストドン。TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
+	<span class="side-label" data-trans="nano">Nano</span>
 </a>
 </div>
 <div class="small-menu">
 <a href="acct.html" class="nex waves-effect">
-	<i class="material-icons" title="アカウントマネージャー">account_circle</i>
-	<span class="side-label">管理</span>
+	<i class="material-icons" title="アカウントマネージャー" data-trans-title="manager">account_circle</i>
+	<span class="side-label" data-trans="manager_short">管理</span>
 </a>
 </div>
 <div id="side-dead">
 </div>
 <div class="small-menu">
 	<a onclick="xpand()" class="nex waves-effect">
-		<i class="material-icons" title="サイドバーの開閉" id="x-btn">keyboard_arrow_right</i>
-		<span class="side-label">たたむ</span>
+		<i class="material-icons" title="サイドバーの開閉" data-trans-title="sidebar_xpand" id="x-btn">keyboard_arrow_right</i>
+		<span class="side-label" data-trans="sidebar_xpand_short">たたむ</span>
 	</a>
 	</div>
 </div>
@@ -208,7 +209,7 @@ var tlid=0;
 <a class="waves-effect">
 	<i class="material-icons big-icon">mode_edit</i>
 	<br>
-	<span class="side-label">投稿</span>
+	<span class="side-label" data-trans="post">投稿</span>
 </a>
 </div>
 </div>
@@ -218,18 +219,18 @@ var tlid=0;
 <div id="post-box" class="z-depth-3">
 <!--トゥートボックス-->
 <span class="cancel">
-	<i class="material-icons waves-effect" onclick="hide()" title="このボックスを閉じる(X)">cancel</i>
-	<i class="material-icons waves-effect mini-btn" onclick="mini()" title="このボックスを最小化">expand_more</i>
+	<i class="material-icons waves-effect" onclick="hide()" title="このボックスを閉じる(X)" data-trans-title="post_box_close">cancel</i>
+	<i class="material-icons waves-effect mini-btn" onclick="mini()" title="このボックスを最小化" data-trans-title="post_box_mini">expand_more</i>
 </span>
 <br>
 <a id="clear" class="setting nex waves-effect">
-	<i class="material-icons nex mize" title="トゥートボックスのクリア">clear</i>
+	<i class="material-icons nex mize" title="トゥートボックスのクリア" data-trans-title="post_box_clear">clear</i>
 </a>
 <a onclick="zoomBox()" class="setting nex waves-effect">
-	<i class="material-icons nex mize" title="ボックスの拡大・縮小(E)">zoom_out_map</i>
+	<i class="material-icons nex mize" title="ボックスの拡大・縮小(E)" data-trans-title="post_box_zoom">zoom_out_map</i>
 </a>
 <a onclick="Rtoggle()" class="setting nex mize waves-effect" id="radio-btn">
-	<i class="material-icons nex" title="Radio(Select/Pause)">play_circle_outline</i>
+	<i class="material-icons nex" title="Spotify NowPlaying/Radio(Select/Pause)">play_circle_outline</i>
 </a>
 <div id="waveform">
 </div>
@@ -251,7 +252,7 @@ var tlid=0;
 <button class="btn waves-effect" onclick="Rselect()">Presets</button>
 </div>
 <div class="row" style="margin-bottom:0;">
-<span class="sml gray mize">画面内どこでもドラッグ・アンド・ドロップできます。</span>
+<span class="sml gray mize" data-trans="post_box_dd">画面内どこでもドラッグ・アンド・ドロップできます。</span>
 <span class="mize">
 	<br>アカウント選択
 </span>
@@ -262,7 +263,7 @@ var tlid=0;
 </div>
 <div class="mize" style="float:left;">
 <a onclick="profShow()" style="vertical-align:-1.5rem;">
-<i class="material-icons nex pointer mize waves-effect" title="選択中のプロフィール表示">account_circle</i>
+<i class="material-icons nex pointer mize waves-effect" title="選択中のプロフィール表示" data-trans-title="post_box_prof">account_circle</i>
 </a>
 </div>
 <!--Markdown-->
@@ -311,7 +312,7 @@ var tlid=0;
 </div>
 <div class="input-field col s12" id="toot-field" style="margin-top: 0;">
 <textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;" data-length="500"></textarea>
-<label for="textarea">トゥート</label>
+<label for="textarea" data-trans="toot">トゥート</label>
 <br>
 <span class="sml gray pointer more-show markdown mize" id="preview-btn">
 <a onclick="preview()">Preview</a>
@@ -322,19 +323,20 @@ var tlid=0;
 <br>
 <span id="suggest"></span>
 </div>
-<div class="col s12 mize" style="margin-bottom:5px;">
+<div class="col s11 mize" style="margin-bottom:5px; padding:0;">
+
 <span id="preview" class="mize"></span>
-<span class=" sml mize">返信モード:
-<span id="rec">いいえ</span>/添付:
-<span id="mec">なし</span>/公開範囲:
-<span id="vis">public</span>/画像制限:
+<span class=" sml mize"><span data-trans="reply">返信モード</span>:
+<span id="rec">いいえ</span>/<span data-trans="file">添付</span>:
+<span id="mec">なし</span>/<span data-trans="vis">公開範囲</span>:
+<span id="vis">public</span>/<span data-trans="nsfw">画像制限</span>:
 <span id="nsc">なし</span>
 </span>
 <br>
-<span id="file-wrap mize">
-<input class="more-show" type="file" name="pic" id="upfile" onchange="pimg(document.getElementById('upfile').files);" multiple>
-</span>
 <input type="text" id="cw-text" placeholder="警告文" class="mize">
+</div>
+<div class="col s1 mize" style="padding:0;">
+	<i class="material-icons pointer" onclick="fileselect()" title="ファイルを選択">photo_library</i>
 </div>
 <div class="col s3 mize">
 <button class="btn waves-effect  blue darken-3" style="width:100%; padding:0; margin-top:0;" id="cw" onclick="cw()" title="コンテンツワーニング(トゥートを表示する前にメッセージで隠す)(青:OFF)">CW</button>
@@ -385,7 +387,7 @@ var tlid=0;
 </button>
 </div>
 <div id="default-emoji">
-<span id="now-emoji"></span>一覧を表示中
+<span id="now-emoji"></span>一覧を表示中<br><span class="gray sml">一部デフォルト絵文字は入力・描画できません。</span>
 <br>
 <a onclick="customEmoji()" class="pointer waves-effect" title="カスタム絵文字">
 <i class="material-icons">add</i>
@@ -430,14 +432,6 @@ var tlid=0;
 <!--END hidden area-->
 <div class="col s12" id="toot-btn-field">
 <button class="btn waves-effect indigo unmize" style="width:100%; padding:0; margin-top:10px;" onclick="post()" id="toot-post-btn">トゥート</button>
-</div>
-</div>
-<!--PiP-->
-<div id="pip" class="hide pip-bottom pip-left">
-<i class="material-icons pip-horiz pointer" onclick="pipHoriz()">chevron_right</i>　
-<i class="material-icons pip-vert pointer" onclick="pipVert()">expand_less</i>　
-<i class="material-icons pointer" onclick="endPip()">close</i>
-<div id="pip-content">
 </div>
 </div>
 </div>
@@ -668,17 +662,37 @@ var tlid=0;
 	<!-- Modal Structure Video-->
 	<div id="videomodal" class="modal modal-fixed-footer">
 	<div class="modal-content">
-	<video src="" id="video" style="width:100%;" controls >
+	<video src="" id="video" style="max-width:100%; max-height:100%;" controls >
 	</div>
 	<div class="modal-footer">
 	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
 	</div>
+	</div>
+	<!--PiP-->
+	<div id="pip" class="hide pip-bottom pip-left">
+		<i class="material-icons pip-horiz pointer" onclick="pipHoriz()">chevron_right</i>　
+		<i class="material-icons pip-vert pointer" onclick="pipVert()">expand_less</i>　
+		<i class="material-icons pointer" onclick="endPip()">close</i>
+		<div id="pip-content">
+		</div>
 	</div>
 <!--左下メッセージ-->
 <div id="message">
 </div>
 <!--Radio Happy(Yui) Taku Inoue-->
 <audio src="" id="radio"></audio>
+<!--大量のデフォルト絵文字-->
+<script type="text/javascript" src="./js/emoji/emoji-map.js"></script>
+<script type="text/javascript" src="./js/emoji/activity.js"></script>
+<script type="text/javascript" src="./js/emoji/flag.js"></script>
+<script type="text/javascript" src="./js/emoji/food.js"></script>
+<script type="text/javascript" src="./js/emoji/nature.js"></script>
+<script type="text/javascript" src="./js/emoji/object.js"></script>
+<script type="text/javascript" src="./js/emoji/people.js"></script>
+<script type="text/javascript" src="./js/emoji/place.js"></script>
+<script type="text/javascript" src="./js/emoji/symbol.js"></script>
+<script type="text/javascript" src="./js/emoji/default-emoji.js"></script>
+<!--JS-->
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/tl/parse.js"></script>
 <script type="text/javascript" src="./js/ui/scroll.js"></script>
@@ -713,13 +727,3 @@ var tlid=0;
 <script type="text/javascript" src="./js/userdata/his-data.js"></script>
 <script type="text/javascript" src="./js/userdata/prof-edit.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
-<!--大量のデフォルト絵文字-->
-<script type="text/javascript" src="./js/emoji/activity.js"></script>
-<script type="text/javascript" src="./js/emoji/flag.js"></script>
-<script type="text/javascript" src="./js/emoji/food.js"></script>
-<script type="text/javascript" src="./js/emoji/nature.js"></script>
-<script type="text/javascript" src="./js/emoji/object.js"></script>
-<script type="text/javascript" src="./js/emoji/people.js"></script>
-<script type="text/javascript" src="./js/emoji/place.js"></script>
-<script type="text/javascript" src="./js/emoji/symbol.js"></script>
-<script type="text/javascript" src="./js/emoji/default-emoji.js"></script>

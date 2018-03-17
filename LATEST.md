@@ -1,9 +1,8 @@
 ## For Astarte(kirishima.cloud), My Primary Instance
 
-TheDesk :thedesk: Airi (ver.5)  
-・Spotify NowPlaying機能を追加
-・脆弱性の修正
-・絵文字の描画に関する修正
+TheDesk :thedesk: Airi (ver.6)  
+・Tootsearchでトゥート検索(β)
+・バグフィックス
 【重要】このアップデートは以下の理由で推奨されます。
 ・脆弱性の修正
 https://thedesk.top
@@ -11,10 +10,9 @@ https://thedesk.top
 
  ## For Vanilla Instances
 
- Windows/LinuxクライアントTheDesk Airi (ver.5)リリース
-・Spotify NowPlaying機能を追加
-・脆弱性の修正
-・絵文字の描画に関する修正
+ Windows/LinuxクライアントTheDesk Airi (ver.66)リリース
+・Tootsearchでトゥート検索(β)
+・バグフィックス
 【重要】このアップデートは以下の理由で推奨されます。
 ・脆弱性の修正
 TheDeskはマルチカラム，マルチアカウントはもちろんのこと，なにかとマストドンライフをシンプルに効率化するクライアントです。

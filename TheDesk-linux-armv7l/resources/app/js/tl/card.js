@@ -50,6 +50,37 @@ function additional(acct_id, tlid) {
 			$(this).attr("title",text);
 		}
 	});
+	$("i.unparsed").each(function(i, elem) {
+		var dem=$(this).text();
+		var dom=$(this);
+		var start = "./js/emoji/emoji-map.json";
+		var xmlHttpRequest = new XMLHttpRequest();
+	 xmlHttpRequest.onreadystatechange = function()
+	 {
+		 if( this.readyState == 4 && this.status == 200 ) {
+			 if( this.response){
+				 var json=this.response;
+				 var emojis=json.emojis;
+				 for (i = 0; i < emojis.length; i++) {
+					  var emojie = emojis[i];
+					  var regExp = new RegExp(dem, "g");
+					   if (emojie.emoji.match(regExp)) {
+						 var sc=emojie.name;
+						 var sc="twa-"+sc.replace(/_/g,"-");
+						 dom.addClass(sc);
+						 dom.text("");
+						 dom.removeClass("unparsed");
+						  break;
+					  }
+				   }   
+		 }
+	 }
+ } 
+ xmlHttpRequest.open( 'GET', start, true );
+ xmlHttpRequest.responseType = 'json';
+ xmlHttpRequest.send( null );
+	});
+				
 	$("#timeline_" + tlid + " .toot:not(:has(a:not(.add-show,.parsed)))").each(function(i, elem) {
 		$(this).parent().find(".add-show").hide();
 	});

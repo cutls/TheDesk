@@ -145,7 +145,7 @@
 		ipc.send('column-del', "");
 		ipc.on('column-del-reply', function (event, arg) {
 			console.log(arg);
-			if(arg==0){
+			if(arg==1){
 				localStorage.removeItem("card_" + tlid);
 				obj.splice(tlid, 1);
 				var json = JSON.stringify(obj);

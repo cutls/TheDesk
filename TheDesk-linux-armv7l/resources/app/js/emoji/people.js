@@ -1,314 +1,316 @@
-var people='<a onclick="defEmoji(\':grinning:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 68.75%;"></span></a>'+
-'<a onclick="defEmoji(\':smiley:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 75%;"></span></a>'+
-'<a onclick="defEmoji(\':smile:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':grin:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 70.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':laughing:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 81.25%;"></span></a>'+
-'<a onclick="defEmoji(\':sweat_smile:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 79.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':joy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 72.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':rolling_on_the_floor_laughing:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 60.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':relaxed:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 2.08333% 35.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':blush:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':innocent:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 83.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':slightly_smiling_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 2.08333%;"></span></a>'+
-'<a onclick="defEmoji(\':upside_down_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 4.16667%;"></span></a>'+
-'<a onclick="defEmoji(\':wink:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 87.5%;"></span></a>'+
-'<a onclick="defEmoji(\':relieved:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 93.75%;"></span></a>'+
-'<a onclick="defEmoji(\':heart_eyes:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 95.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':kissing_heart:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 16.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':kissing:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 14.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':kissing_smiling_eyes:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 18.75%;"></span></a>'+
-'<a onclick="defEmoji(\':kissing_closed_eyes:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 20.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':yum:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 91.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':stuck_out_tongue_winking_eye:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 25%;"></span></a>'+
-'<a onclick="defEmoji(\':stuck_out_tongue_closed_eyes:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 27.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':stuck_out_tongue:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 22.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':money_mouth_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':hugging_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':nerd_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 68.75%;"></span></a>'+
-'<a onclick="defEmoji(\':sunglasses:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 97.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':clown_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 56.25%;"></span></a>'+
-'<a onclick="defEmoji(\':face_with_cowboy_hat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 54.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':smirk:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 100%;"></span></a>'+
-'<a onclick="defEmoji(\':unamused:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 4.16667%;"></span></a>'+
-'<a onclick="defEmoji(\':disappointed:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 29.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':pensive:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 8.33333%;"></span></a>'+
-'<a onclick="defEmoji(\':worried:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 31.25%;"></span></a>'+
-'<a onclick="defEmoji(\':confused:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 10.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':slightly_frowning_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':white_frowning_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 2.08333% 33.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':persevere:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 39.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':confounded:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 12.5%;"></span></a>'+
-'<a onclick="defEmoji(\':tired_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 56.25%;"></span></a>'+
-'<a onclick="defEmoji(\':weary:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 52.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':triumph:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 41.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':angry:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 33.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':rage:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 35.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':no_mouth:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 79.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':neutral_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':expressionless:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 2.08333%;"></span></a>'+
-'<a onclick="defEmoji(\':hushed:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':frowning:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 45.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':anguished:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 47.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':open_mouth:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 62.5%;"></span></a>'+
-'<a onclick="defEmoji(\':astonished:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 70.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':dizzy_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':flushed:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 72.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':scream:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 68.75%;"></span></a>'+
-'<a onclick="defEmoji(\':fearful:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 50%;"></span></a>'+
-'<a onclick="defEmoji(\':cold_sweat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 66.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':cry:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 37.5%;"></span></a>'+
-'<a onclick="defEmoji(\':disappointed_relieved:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 43.75%;"></span></a>'+
-'<a onclick="defEmoji(\':drooling_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 62.5%;"></span></a>'+
-'<a onclick="defEmoji(\':sob:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 60.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':sweat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 6.25%;"></span></a>'+
-'<a onclick="defEmoji(\':sleepy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 54.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':sleeping:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 75%;"></span></a>'+
-'<a onclick="defEmoji(\':face_with_rolling_eyes:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 6.25%;"></span></a>'+
-'<a onclick="defEmoji(\':thinking_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 70.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':lying_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':grimacing:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 58.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':zipper_mouth_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 62.5%;"></span></a>'+
-'<a onclick="defEmoji(\':nauseated_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 58.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':sneezing_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 79.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':mask:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 81.25%;"></span></a>'+
-'<a onclick="defEmoji(\':face_with_thermometer:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 66.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':face_with_head_bandage:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 72.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':smiling_imp:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 85.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':imp:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 97.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':japanese_ogre:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 75%;"></span></a>'+
-'<a onclick="defEmoji(\':japanese_goblin:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':hankey:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 35.4167% 43.75%;"></span></a>'+
-'<a onclick="defEmoji(\':ghost:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 79.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':skull:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 100%;"></span></a>'+
-'<a onclick="defEmoji(\':skull_and_crossbones:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 2.08333% 16.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':alien:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 93.75%;"></span></a>'+
-'<a onclick="defEmoji(\':space_invader:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 95.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':robot_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 75%;"></span></a>'+
-'<a onclick="defEmoji(\':jack_o_lantern:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 14.5833% 31.25%;"></span></a>'+
-'<a onclick="defEmoji(\':smiley_cat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 87.5%;"></span></a>'+
-'<a onclick="defEmoji(\':smile_cat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 83.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':joy_cat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 85.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':heart_eyes_cat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':smirk_cat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 91.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':kissing_cat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 93.75%;"></span></a>'+
-'<a onclick="defEmoji(\':scream_cat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 100%;"></span></a>'+
-'<a onclick="defEmoji(\':crying_cat_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 97.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':pouting_cat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 47.9167% 95.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':open_hands:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 37.5%;"></span></a>'+
-'<a onclick="defEmoji(\':raised_hands:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':clap:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 25%;"></span></a>'+
-'<a onclick="defEmoji(\':pray:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 52.0833% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':handshake:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 39.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':+1:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':-1:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 12.5%;"></span></a>'+
-'<a onclick="defEmoji(\':facepunch:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 25% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':fist:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 4.16667% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':left-facing_fist:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 14.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':right-facing_fist:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 27.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':hand_with_index_and_middle_fingers_crossed:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 41.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':v:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 6.25% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':the_horns:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 79.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':ok_hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 25% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':point_left:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 25% 39.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':point_right:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 25% 52.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':point_up_2:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 25% 14.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':point_down:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 25% 27.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':point_up:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 2.08333% 4.16667%;"></span></a>'+
-'<a onclick="defEmoji(\':hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 4.16667% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':raised_back_of_hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 2.08333%;"></span></a>'+
-'<a onclick="defEmoji(\':raised_hand_with_fingers_splayed:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 43.75% 79.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':spock-hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 2.08333%;"></span></a>'+
-'<a onclick="defEmoji(\':wave:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 25% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':call_me_hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 56.25% 91.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':muscle:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 35.4167% 45.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':middle_finger:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 43.75% 91.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':writing_hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 6.25% 12.5%;"></span></a>'+
-'<a onclick="defEmoji(\':selfie:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 93.75%;"></span></a>'+
-'<a onclick="defEmoji(\':nail_care:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 39.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':ring:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 87.5%;"></span></a>'+
-'<a onclick="defEmoji(\':lipstick:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 37.5%;"></span></a>'+
-'<a onclick="defEmoji(\':kiss:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 83.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':lips:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 25% 10.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':tongue:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 25% 12.5%;"></span></a>'+
-'<a onclick="defEmoji(\':ear:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 22.9167% 87.5%;"></span></a>'+
-'<a onclick="defEmoji(\':nose:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 22.9167% 100%;"></span></a>'+
-'<a onclick="defEmoji(\':footprints:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 87.5%;"></span></a>'+
-'<a onclick="defEmoji(\':eye:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 22.9167% 85.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':eyes:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 22.9167% 83.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':speaking_head_in_silhouette:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 45.8333% 47.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':bust_in_silhouette:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':busts_in_silhouette:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 91.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':baby:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 37.5%;"></span></a>'+
-'<a onclick="defEmoji(\':boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 93.75%;"></span></a>'+
-'<a onclick="defEmoji(\':girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 4.16667%;"></span></a>'+
-'<a onclick="defEmoji(\':man:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 16.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 29.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':blond-haired-woman:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 60.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':person_with_blond_hair:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':older_man:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 12.5%;"></span></a>'+
-'<a onclick="defEmoji(\':older_woman:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 25%;"></span></a>'+
-'<a onclick="defEmoji(\':man_with_gua_pi_mao:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-wearing-turban:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 85.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':man_with_turban:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':female-police-officer:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 31.25%;"></span></a>'+
-'<a onclick="defEmoji(\':cop:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 50%;"></span></a>'+
-'<a onclick="defEmoji(\':female-construction-worker:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 89.5833% 8.33333%;"></span></a>'+
-'<a onclick="defEmoji(\':construction_worker:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 50%;"></span></a>'+
-'<a onclick="defEmoji(\':female-guard:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 89.5833% 58.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':guardsman:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 12.5%;"></span></a>'+
-'<a onclick="defEmoji(\':female-detective:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 91.6667% 31.25%;"></span></a>'+
-'<a onclick="defEmoji(\':sleuth_or_spy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 43.75% 35.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':female-doctor:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 87.5%;"></span></a>'+
-'<a onclick="defEmoji(\':male-doctor:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 29.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':female-farmer:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 79.1667% 12.5%;"></span></a>'+
-'<a onclick="defEmoji(\':male-farmer:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 75% 50%;"></span></a>'+
-'<a onclick="defEmoji(\':female-cook:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 79.1667% 25%;"></span></a>'+
-'<a onclick="defEmoji(\':male-cook:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 75% 62.5%;"></span></a>'+
-'<a onclick="defEmoji(\':female-student:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 79.1667% 37.5%;"></span></a>'+
-'<a onclick="defEmoji(\':male-student:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 75% 75%;"></span></a>'+
-'<a onclick="defEmoji(\':female-singer:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 79.1667% 50%;"></span></a>'+
-'<a onclick="defEmoji(\':male-singer:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 75% 87.5%;"></span></a>'+
-'<a onclick="defEmoji(\':female-teacher:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 79.1667% 75%;"></span></a>'+
-'<a onclick="defEmoji(\':male-teacher:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 77.0833% 10.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':female-factory-worker:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 79.1667% 87.5%;"></span></a>'+
-'<a onclick="defEmoji(\':male-factory-worker:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 77.0833% 22.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':female-technologist:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 81.25% 2.08333%;"></span></a>'+
-'<a onclick="defEmoji(\':male-technologist:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 77.0833% 39.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':female-office-worker:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 81.25% 14.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':male-office-worker:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 77.0833% 52.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':female-mechanic:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 81.25% 27.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':male-mechanic:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 77.0833% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':female-scientist:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 81.25% 39.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':male-scientist:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 77.0833% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':female-artist:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 79.1667% 62.5%;"></span></a>'+
-'<a onclick="defEmoji(\':male-artist:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 75% 100%;"></span></a>'+
-'<a onclick="defEmoji(\':female-firefighter:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 81.25% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':male-firefighter:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 79.1667% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':female-pilot:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 10.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':male-pilot:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 54.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':female-astronaut:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 81.25% 52.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':male-astronaut:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 77.0833% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':female-judge:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 100%;"></span></a>'+
-'<a onclick="defEmoji(\':male-judge:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 41.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':mother_christmas:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 60.4167% 29.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':santa:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 14.5833% 35.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':princess:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 62.5%;"></span></a>'+
-'<a onclick="defEmoji(\':prince:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 60.4167% 4.16667%;"></span></a>'+
-'<a onclick="defEmoji(\':bride_with_veil:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':man_in_tuxedo:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 60.4167% 16.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':angel:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 31.25% 81.25%;"></span></a>'+
-'<a onclick="defEmoji(\':pregnant_woman:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 81.25%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-bowing:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 93.75% 4.16667%;"></span></a>'+
-'<a onclick="defEmoji(\':bow:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 33.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':information_desk_person:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':man-tipping-hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 89.5833% 45.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':no_good:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 8.33333%;"></span></a>'+
-'<a onclick="defEmoji(\':man-gesturing-no:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 91.6667% 68.75%;"></span></a>'+
-'<a onclick="defEmoji(\':ok_woman:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 20.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':man-gesturing-ok:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 91.6667% 93.75%;"></span></a>'+
-'<a onclick="defEmoji(\':raising_hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 52.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':man-raising-hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 93.75% 41.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':face_palm:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 58.3333% 66.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-facepalming:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 97.9167% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':man-facepalming:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 97.9167% 12.5%;"></span></a>'+
-'<a onclick="defEmoji(\':shrug:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 60.4167% 41.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-shrugging:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 97.9167% 25%;"></span></a>'+
-'<a onclick="defEmoji(\':man-shrugging:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 97.9167% 37.5%;"></span></a>'+
-'<a onclick="defEmoji(\':person_with_pouting_face:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':man-pouting:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 93.75% 91.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':person_frowning:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 50% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':man-frowning:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 93.75% 66.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':haircut:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':man-getting-haircut:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 91.6667% 18.75%;"></span></a>'+
-'<a onclick="defEmoji(\':massage:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 52.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':man-getting-massage:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 89.5833% 95.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':man_in_business_suit_levitating:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 43.75% 22.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':dancer:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 25%;"></span></a>'+
-'<a onclick="defEmoji(\':man_dancing:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 43.75% 56.25%;"></span></a>'+
-'<a onclick="defEmoji(\':dancers:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 62.5%;"></span></a>'+
-'<a onclick="defEmoji(\':man-with-bunny-ears-partying:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 58.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-walking:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 95.8333% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':walking:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 54.1667% 54.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-running:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 81.25% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':runner:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 16.6667% 72.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':couple:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 43.75%;"></span></a>'+
-'<a onclick="defEmoji(\':two_women_holding_hands:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 47.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':two_men_holding_hands:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 45.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':couple_with_heart:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 95.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-heart-woman:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 25%;"></span></a>'+
-'<a onclick="defEmoji(\':man-heart-man:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 66.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':couplekiss:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 33.3333% 91.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-kiss-woman:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 29.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':man-kiss-man:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 68.75%;"></span></a>'+
-'<a onclick="defEmoji(\':man-woman-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 18.75%;"></span></a>'+
-'<a onclick="defEmoji(\':man-woman-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 22.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':man-woman-girl-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 25%;"></span></a>'+
-'<a onclick="defEmoji(\':man-woman-boy-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 20.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':man-woman-girl-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 27.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-woman-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-woman-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 81.25%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-woman-girl-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 83.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-woman-boy-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 79.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-woman-girl-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 85.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':man-man-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 8.33333%;"></span></a>'+
-'<a onclick="defEmoji(\':man-man-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 12.5%;"></span></a>'+
-'<a onclick="defEmoji(\':man-man-girl-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 14.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':man-man-boy-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 10.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':man-man-girl-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 16.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 79.1667% 100%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 81.25% 0%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-girl-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 72.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-boy-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 70.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-girl-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 75%;"></span></a>'+
-'<a onclick="defEmoji(\':man-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 77.0833% 35.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':man-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 77.0833% 37.5%;"></span></a>'+
-'<a onclick="defEmoji(\':man-girl-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 4.16667%;"></span></a>'+
-'<a onclick="defEmoji(\':man-boy-boy:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 2.08333%;"></span></a>'+
-'<a onclick="defEmoji(\':man-girl-girl:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 85.4167% 6.25%;"></span></a>'+
-'<a onclick="defEmoji(\':womans_clothes:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 68.75%;"></span></a>'+
-'<a onclick="defEmoji(\':shirt:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 58.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':jeans:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 60.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':necktie:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 56.25%;"></span></a>'+
-'<a onclick="defEmoji(\':dress:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 62.5%;"></span></a>'+
-'<a onclick="defEmoji(\':bikini:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 66.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':kimono:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 64.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':high_heel:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 81.25%;"></span></a>'+
-'<a onclick="defEmoji(\':sandal:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 83.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':boot:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 85.4167%;"></span></a>'+
-'<a onclick="defEmoji(\':mans_shoe:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 77.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':athletic_shoe:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 79.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':womans_hat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 52.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':tophat:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 16.6667% 8.33333%;"></span></a>'+
-'<a onclick="defEmoji(\':mortar_board:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 14.5833% 75%;"></span></a>'+
-'<a onclick="defEmoji(\':crown:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 50%;"></span></a>'+
-'<a onclick="defEmoji(\':helmet_with_white_cross:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 4.16667% 25%;"></span></a>'+
-'<a onclick="defEmoji(\':school_satchel:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 14.5833% 72.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':pouch:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 75%;"></span></a>'+
-'<a onclick="defEmoji(\':purse:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 70.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':handbag:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 72.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':briefcase:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 35.4167% 93.75%;"></span></a>'+
-'<a onclick="defEmoji(\':eyeglasses:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 27.0833% 54.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':dark_sunglasses:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 43.75% 47.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':closed_umbrella:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 8.33333% 72.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':umbrella:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 0% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':family:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 29.1667% 41.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-heart-man:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 22.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-kiss-man:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 27.0833%;"></span></a>'+
-'<a onclick="defEmoji(\':male-police-officer:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 43.75%;"></span></a>'+
-'<a onclick="defEmoji(\':blond-haired-man:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 72.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':man-wearing-turban:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 97.9167%;"></span></a>'+
-'<a onclick="defEmoji(\':male-construction-worker:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 89.5833% 20.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':male-guard:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 89.5833% 70.8333%;"></span></a>'+
-'<a onclick="defEmoji(\':male-detective:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 91.6667% 43.75%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-with-bunny-ears-partying:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 87.5% 56.25%;"></span></a>'+
-'<a onclick="defEmoji(\':man-running:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 81.25% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-getting-massage:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 89.5833% 83.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-getting-haircut:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 91.6667% 6.25%;"></span></a>'+
-'<a onclick="defEmoji(\':man-walking:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 95.8333% 89.5833%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-tipping-hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 89.5833% 33.3333%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-gesturing-no:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 91.6667% 56.25%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-gesturing-ok:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 91.6667% 81.25%;"></span></a>'+
-'<a onclick="defEmoji(\':man-bowing:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 93.75% 16.6667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-raising-hand:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 93.75% 29.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-frowning:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 93.75% 54.1667%;"></span></a>'+
-'<a onclick="defEmoji(\':woman-pouting:\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: 93.75% 79.1667%;"></span></a>';
+var people=[
+{shortcode:"grinning",css:"45.8333% 68.75%"},
+{shortcode:"smiley",css:"45.8333% 75%"},
+{shortcode:"smile",css:"45.8333% 77.0833%"},
+{shortcode:"grin",css:"45.8333% 70.8333%"},
+{shortcode:"laughing",css:"45.8333% 81.25%"},
+{shortcode:"sweat_smile",css:"45.8333% 79.1667%"},
+{shortcode:"joy",css:"45.8333% 72.9167%"},
+{shortcode:"rolling_on_the_floor_laughing",css:"58.3333% 60.4167%"},
+{shortcode:"relaxed",css:"2.08333% 35.4167%"},
+{shortcode:"blush",css:"45.8333% 89.5833%"},
+{shortcode:"innocent",css:"45.8333% 83.3333%"},
+{shortcode:"slightly_smiling_face",css:"50% 2.08333%"},
+{shortcode:"upside_down_face",css:"50% 4.16667%"},
+{shortcode:"wink",css:"45.8333% 87.5%"},
+{shortcode:"relieved",css:"45.8333% 93.75%"},
+{shortcode:"heart_eyes",css:"45.8333% 95.8333%"},
+{shortcode:"kissing_heart",css:"47.9167% 16.6667%"},
+{shortcode:"kissing",css:"47.9167% 14.5833%"},
+{shortcode:"kissing_smiling_eyes",css:"47.9167% 18.75%"},
+{shortcode:"kissing_closed_eyes",css:"47.9167% 20.8333%"},
+{shortcode:"yum",css:"45.8333% 91.6667%"},
+{shortcode:"stuck_out_tongue_winking_eye",css:"47.9167% 25%"},
+{shortcode:"stuck_out_tongue_closed_eyes",css:"47.9167% 27.0833%"},
+{shortcode:"stuck_out_tongue",css:"47.9167% 22.9167%"},
+{shortcode:"money_mouth_face",css:"56.25% 64.5833%"},
+{shortcode:"hugging_face",css:"56.25% 77.0833%"},
+{shortcode:"nerd_face",css:"56.25% 68.75%"},
+{shortcode:"sunglasses",css:"45.8333% 97.9167%"},
+{shortcode:"clown_face",css:"58.3333% 56.25%"},
+{shortcode:"face_with_cowboy_hat",css:"58.3333% 54.1667%"},
+{shortcode:"smirk",css:"45.8333% 100%"},
+{shortcode:"unamused",css:"47.9167% 4.16667%"},
+{shortcode:"disappointed",css:"47.9167% 29.1667%"},
+{shortcode:"pensive",css:"47.9167% 8.33333%"},
+{shortcode:"worried",css:"47.9167% 31.25%"},
+{shortcode:"confused",css:"47.9167% 10.4167%"},
+{shortcode:"slightly_frowning_face",css:"50% 0%"},
+{shortcode:"white_frowning_face",css:"2.08333% 33.3333%"},
+{shortcode:"persevere",css:"47.9167% 39.5833%"},
+{shortcode:"confounded",css:"47.9167% 12.5%"},
+{shortcode:"tired_face",css:"47.9167% 56.25%"},
+{shortcode:"weary",css:"47.9167% 52.0833%"},
+{shortcode:"triumph",css:"47.9167% 41.6667%"},
+{shortcode:"angry",css:"47.9167% 33.3333%"},
+{shortcode:"rage",css:"47.9167% 35.4167%"},
+{shortcode:"no_mouth",css:"47.9167% 79.1667%"},
+{shortcode:"neutral_face",css:"47.9167% 0%"},
+{shortcode:"expressionless",css:"47.9167% 2.08333%"},
+{shortcode:"hushed",css:"47.9167% 64.5833%"},
+{shortcode:"frowning",css:"47.9167% 45.8333%"},
+{shortcode:"anguished",css:"47.9167% 47.9167%"},
+{shortcode:"open_mouth",css:"47.9167% 62.5%"},
+{shortcode:"astonished",css:"47.9167% 70.8333%"},
+{shortcode:"dizzy_face",css:"47.9167% 77.0833%"},
+{shortcode:"flushed",css:"47.9167% 72.9167%"},
+{shortcode:"scream",css:"47.9167% 68.75%"},
+{shortcode:"fearful",css:"47.9167% 50%"},
+{shortcode:"cold_sweat",css:"47.9167% 66.6667%"},
+{shortcode:"cry",css:"47.9167% 37.5%"},
+{shortcode:"disappointed_relieved",css:"47.9167% 43.75%"},
+{shortcode:"drooling_face",css:"58.3333% 62.5%"},
+{shortcode:"sob",css:"47.9167% 60.4167%"},
+{shortcode:"sweat",css:"47.9167% 6.25%"},
+{shortcode:"sleepy",css:"47.9167% 54.1667%"},
+{shortcode:"sleeping",css:"47.9167% 75%"},
+{shortcode:"face_with_rolling_eyes",css:"50% 6.25%"},
+{shortcode:"thinking_face",css:"56.25% 70.8333%"},
+{shortcode:"lying_face",css:"58.3333% 64.5833%"},
+{shortcode:"grimacing",css:"47.9167% 58.3333%"},
+{shortcode:"zipper_mouth_face",css:"56.25% 62.5%"},
+{shortcode:"nauseated_face",css:"58.3333% 58.3333%"},
+{shortcode:"sneezing_face",css:"58.3333% 79.1667%"},
+{shortcode:"mask",css:"47.9167% 81.25%"},
+{shortcode:"face_with_thermometer",css:"56.25% 66.6667%"},
+{shortcode:"face_with_head_bandage",css:"56.25% 72.9167%"},
+{shortcode:"smiling_imp",css:"45.8333% 85.4167%"},
+{shortcode:"imp",css:"31.25% 97.9167%"},
+{shortcode:"japanese_ogre",css:"31.25% 75%"},
+{shortcode:"japanese_goblin",css:"31.25% 77.0833%"},
+{shortcode:"hankey",css:"35.4167% 43.75%"},
+{shortcode:"ghost",css:"31.25% 79.1667%"},
+{shortcode:"skull",css:"31.25% 100%"},
+{shortcode:"skull_and_crossbones",css:"2.08333% 16.6667%"},
+{shortcode:"alien",css:"31.25% 93.75%"},
+{shortcode:"space_invader",css:"31.25% 95.8333%"},
+{shortcode:"robot_face",css:"56.25% 75%"},
+{shortcode:"jack_o_lantern",css:"14.5833% 31.25%"},
+{shortcode:"smiley_cat",css:"47.9167% 87.5%"},
+{shortcode:"smile_cat",css:"47.9167% 83.3333%"},
+{shortcode:"joy_cat",css:"47.9167% 85.4167%"},
+{shortcode:"heart_eyes_cat",css:"47.9167% 89.5833%"},
+{shortcode:"smirk_cat",css:"47.9167% 91.6667%"},
+{shortcode:"kissing_cat",css:"47.9167% 93.75%"},
+{shortcode:"scream_cat",css:"47.9167% 100%"},
+{shortcode:"crying_cat_face",css:"47.9167% 97.9167%"},
+{shortcode:"pouting_cat",css:"47.9167% 95.8333%"},
+{shortcode:"open_hands",css:"27.0833% 37.5%"},
+{shortcode:"raised_hands",css:"50% 64.5833%"},
+{shortcode:"clap",css:"27.0833% 25%"},
+{shortcode:"pray",css:"52.0833% 0%"},
+{shortcode:"handshake",css:"58.3333% 39.5833%"},
+{shortcode:"+1",css:"27.0833% 0%"},
+{shortcode:"-1",css:"27.0833% 12.5%"},
+{shortcode:"facepunch",css:"25% 64.5833%"},
+{shortcode:"fist",css:"4.16667% 77.0833%"},
+{shortcode:"left-facing_fist",css:"58.3333% 14.5833%"},
+{shortcode:"right-facing_fist",css:"58.3333% 27.0833%"},
+{shortcode:"hand_with_index_and_middle_fingers_crossed",css:"58.3333% 41.6667%"},
+{shortcode:"v",css:"6.25% 0%"},
+{shortcode:"the_horns",css:"56.25% 79.1667%"},
+{shortcode:"ok_hand",css:"25% 89.5833%"},
+{shortcode:"point_left",css:"25% 39.5833%"},
+{shortcode:"point_right",css:"25% 52.0833%"},
+{shortcode:"point_up_2",css:"25% 14.5833%"},
+{shortcode:"point_down",css:"25% 27.0833%"},
+{shortcode:"point_up",css:"2.08333% 4.16667%"},
+{shortcode:"hand",css:"4.16667% 89.5833%"},
+{shortcode:"raised_back_of_hand",css:"58.3333% 2.08333%"},
+{shortcode:"raised_hand_with_fingers_splayed",css:"43.75% 79.1667%"},
+{shortcode:"spock-hand",css:"45.8333% 2.08333%"},
+{shortcode:"wave",css:"25% 77.0833%"},
+{shortcode:"call_me_hand",css:"56.25% 91.6667%"},
+{shortcode:"muscle",css:"35.4167% 45.8333%"},
+{shortcode:"middle_finger",css:"43.75% 91.6667%"},
+{shortcode:"writing_hand",css:"6.25% 12.5%"},
+{shortcode:"selfie",css:"58.3333% 93.75%"},
+{shortcode:"nail_care",css:"33.3333% 39.5833%"},
+{shortcode:"ring",css:"33.3333% 87.5%"},
+{shortcode:"lipstick",css:"33.3333% 37.5%"},
+{shortcode:"kiss",css:"33.3333% 83.3333%"},
+{shortcode:"lips",css:"25% 10.4167%"},
+{shortcode:"tongue",css:"25% 12.5%"},
+{shortcode:"ear",css:"22.9167% 87.5%"},
+{shortcode:"nose",css:"22.9167% 100%"},
+{shortcode:"footprints",css:"27.0833% 87.5%"},
+{shortcode:"eye",css:"22.9167% 85.4167%"},
+{shortcode:"eyes",css:"22.9167% 83.3333%"},
+{shortcode:"speaking_head_in_silhouette",css:"45.8333% 47.9167%"},
+{shortcode:"bust_in_silhouette",css:"27.0833% 89.5833%"},
+{shortcode:"busts_in_silhouette",css:"27.0833% 91.6667%"},
+{shortcode:"baby",css:"31.25% 37.5%"},
+{shortcode:"boy",css:"27.0833% 93.75%"},
+{shortcode:"girl",css:"29.1667% 4.16667%"},
+{shortcode:"man",css:"29.1667% 16.6667%"},
+{shortcode:"woman",css:"29.1667% 29.1667%"},
+{shortcode:"blond-haired-woman",css:"87.5% 60.4167%"},
+{shortcode:"person_with_blond_hair",css:"29.1667% 77.0833%"},
+{shortcode:"older_man",css:"31.25% 12.5%"},
+{shortcode:"older_woman",css:"31.25% 25%"},
+{shortcode:"man_with_gua_pi_mao",css:"29.1667% 89.5833%"},
+{shortcode:"woman-wearing-turban",css:"87.5% 85.4167%"},
+{shortcode:"man_with_turban",css:"31.25% 0%"},
+{shortcode:"female-police-officer",css:"87.5% 31.25%"},
+{shortcode:"cop",css:"29.1667% 50%"},
+{shortcode:"female-construction-worker",css:"89.5833% 8.33333%"},
+{shortcode:"construction_worker",css:"31.25% 50%"},
+{shortcode:"female-guard",css:"89.5833% 58.3333%"},
+{shortcode:"guardsman",css:"33.3333% 12.5%"},
+{shortcode:"female-detective",css:"91.6667% 31.25%"},
+{shortcode:"sleuth_or_spy",css:"43.75% 35.4167%"},
+{shortcode:"female-doctor",css:"85.4167% 87.5%"},
+{shortcode:"male-doctor",css:"85.4167% 29.1667%"},
+{shortcode:"female-farmer",css:"79.1667% 12.5%"},
+{shortcode:"male-farmer",css:"75% 50%"},
+{shortcode:"female-cook",css:"79.1667% 25%"},
+{shortcode:"male-cook",css:"75% 62.5%"},
+{shortcode:"female-student",css:"79.1667% 37.5%"},
+{shortcode:"male-student",css:"75% 75%"},
+{shortcode:"female-singer",css:"79.1667% 50%"},
+{shortcode:"male-singer",css:"75% 87.5%"},
+{shortcode:"female-teacher",css:"79.1667% 75%"},
+{shortcode:"male-teacher",css:"77.0833% 10.4167%"},
+{shortcode:"female-factory-worker",css:"79.1667% 87.5%"},
+{shortcode:"male-factory-worker",css:"77.0833% 22.9167%"},
+{shortcode:"female-technologist",css:"81.25% 2.08333%"},
+{shortcode:"male-technologist",css:"77.0833% 39.5833%"},
+{shortcode:"female-office-worker",css:"81.25% 14.5833%"},
+{shortcode:"male-office-worker",css:"77.0833% 52.0833%"},
+{shortcode:"female-mechanic",css:"81.25% 27.0833%"},
+{shortcode:"male-mechanic",css:"77.0833% 64.5833%"},
+{shortcode:"female-scientist",css:"81.25% 39.5833%"},
+{shortcode:"male-scientist",css:"77.0833% 77.0833%"},
+{shortcode:"female-artist",css:"79.1667% 62.5%"},
+{shortcode:"male-artist",css:"75% 100%"},
+{shortcode:"female-firefighter",css:"81.25% 64.5833%"},
+{shortcode:"male-firefighter",css:"79.1667% 0%"},
+{shortcode:"female-pilot",css:"87.5% 10.4167%"},
+{shortcode:"male-pilot",css:"85.4167% 54.1667%"},
+{shortcode:"female-astronaut",css:"81.25% 52.0833%"},
+{shortcode:"male-astronaut",css:"77.0833% 89.5833%"},
+{shortcode:"female-judge",css:"85.4167% 100%"},
+{shortcode:"male-judge",css:"85.4167% 41.6667%"},
+{shortcode:"mother_christmas",css:"60.4167% 29.1667%"},
+{shortcode:"santa",css:"14.5833% 35.4167%"},
+{shortcode:"princess",css:"31.25% 62.5%"},
+{shortcode:"prince",css:"60.4167% 4.16667%"},
+{shortcode:"bride_with_veil",css:"29.1667% 64.5833%"},
+{shortcode:"man_in_tuxedo",css:"60.4167% 16.6667%"},
+{shortcode:"angel",css:"31.25% 81.25%"},
+{shortcode:"pregnant_woman",css:"58.3333% 81.25%"},
+{shortcode:"woman-bowing",css:"93.75% 4.16667%"},
+{shortcode:"bow",css:"50% 33.3333%"},
+{shortcode:"information_desk_person",css:"33.3333% 0%"},
+{shortcode:"man-tipping-hand",css:"89.5833% 45.8333%"},
+{shortcode:"no_good",css:"50% 8.33333%"},
+{shortcode:"man-gesturing-no",css:"91.6667% 68.75%"},
+{shortcode:"ok_woman",css:"50% 20.8333%"},
+{shortcode:"man-gesturing-ok",css:"91.6667% 93.75%"},
+{shortcode:"raising_hand",css:"50% 52.0833%"},
+{shortcode:"man-raising-hand",css:"93.75% 41.6667%"},
+{shortcode:"face_palm",css:"58.3333% 66.6667%"},
+{shortcode:"woman-facepalming",css:"97.9167% 0%"},
+{shortcode:"man-facepalming",css:"97.9167% 12.5%"},
+{shortcode:"shrug",css:"60.4167% 41.6667%"},
+{shortcode:"woman-shrugging",css:"97.9167% 25%"},
+{shortcode:"man-shrugging",css:"97.9167% 37.5%"},
+{shortcode:"person_with_pouting_face",css:"50% 89.5833%"},
+{shortcode:"man-pouting",css:"93.75% 91.6667%"},
+{shortcode:"person_frowning",css:"50% 77.0833%"},
+{shortcode:"man-frowning",css:"93.75% 66.6667%"},
+{shortcode:"haircut",css:"33.3333% 64.5833%"},
+{shortcode:"man-getting-haircut",css:"91.6667% 18.75%"},
+{shortcode:"massage",css:"33.3333% 52.0833%"},
+{shortcode:"man-getting-massage",css:"89.5833% 95.8333%"},
+{shortcode:"man_in_business_suit_levitating",css:"43.75% 22.9167%"},
+{shortcode:"dancer",css:"33.3333% 25%"},
+{shortcode:"man_dancing",css:"43.75% 56.25%"},
+{shortcode:"dancers",css:"29.1667% 62.5%"},
+{shortcode:"man-with-bunny-ears-partying",css:"87.5% 58.3333%"},
+{shortcode:"woman-walking",css:"95.8333% 77.0833%"},
+{shortcode:"walking",css:"54.1667% 54.1667%"},
+{shortcode:"woman-running",css:"81.25% 77.0833%"},
+{shortcode:"runner",css:"16.6667% 72.9167%"},
+{shortcode:"couple",css:"29.1667% 43.75%"},
+{shortcode:"two_women_holding_hands",css:"29.1667% 47.9167%"},
+{shortcode:"two_men_holding_hands",css:"29.1667% 45.8333%"},
+{shortcode:"couple_with_heart",css:"33.3333% 95.8333%"},
+{shortcode:"woman-heart-woman",css:"87.5% 25%"},
+{shortcode:"man-heart-man",css:"85.4167% 66.6667%"},
+{shortcode:"couplekiss",css:"33.3333% 91.6667%"},
+{shortcode:"woman-kiss-woman",css:"87.5% 29.1667%"},
+{shortcode:"man-kiss-man",css:"85.4167% 68.75%"},
+{shortcode:"man-woman-boy",css:"85.4167% 18.75%"},
+{shortcode:"man-woman-girl",css:"85.4167% 22.9167%"},
+{shortcode:"man-woman-girl-boy",css:"85.4167% 25%"},
+{shortcode:"man-woman-boy-boy",css:"85.4167% 20.8333%"},
+{shortcode:"man-woman-girl-girl",css:"85.4167% 27.0833%"},
+{shortcode:"woman-woman-boy",css:"85.4167% 77.0833%"},
+{shortcode:"woman-woman-girl",css:"85.4167% 81.25%"},
+{shortcode:"woman-woman-girl-boy",css:"85.4167% 83.3333%"},
+{shortcode:"woman-woman-boy-boy",css:"85.4167% 79.1667%"},
+{shortcode:"woman-woman-girl-girl",css:"85.4167% 85.4167%"},
+{shortcode:"man-man-boy",css:"85.4167% 8.33333%"},
+{shortcode:"man-man-girl",css:"85.4167% 12.5%"},
+{shortcode:"man-man-girl-boy",css:"85.4167% 14.5833%"},
+{shortcode:"man-man-boy-boy",css:"85.4167% 10.4167%"},
+{shortcode:"man-man-girl-girl",css:"85.4167% 16.6667%"},
+{shortcode:"woman-boy",css:"79.1667% 100%"},
+{shortcode:"woman-girl",css:"81.25% 0%"},
+{shortcode:"woman-girl-boy",css:"85.4167% 72.9167%"},
+{shortcode:"woman-boy-boy",css:"85.4167% 70.8333%"},
+{shortcode:"woman-girl-girl",css:"85.4167% 75%"},
+{shortcode:"man-boy",css:"77.0833% 35.4167%"},
+{shortcode:"man-girl",css:"77.0833% 37.5%"},
+{shortcode:"man-girl-boy",css:"85.4167% 4.16667%"},
+{shortcode:"man-boy-boy",css:"85.4167% 2.08333%"},
+{shortcode:"man-girl-girl",css:"85.4167% 6.25%"},
+{shortcode:"womans_clothes",css:"27.0833% 68.75%"},
+{shortcode:"shirt",css:"27.0833% 58.3333%"},
+{shortcode:"jeans",css:"27.0833% 60.4167%"},
+{shortcode:"necktie",css:"27.0833% 56.25%"},
+{shortcode:"dress",css:"27.0833% 62.5%"},
+{shortcode:"bikini",css:"27.0833% 66.6667%"},
+{shortcode:"kimono",css:"27.0833% 64.5833%"},
+{shortcode:"high_heel",css:"27.0833% 81.25%"},
+{shortcode:"sandal",css:"27.0833% 83.3333%"},
+{shortcode:"boot",css:"27.0833% 85.4167%"},
+{shortcode:"mans_shoe",css:"27.0833% 77.0833%"},
+{shortcode:"athletic_shoe",css:"27.0833% 79.1667%"},
+{shortcode:"womans_hat",css:"27.0833% 52.0833%"},
+{shortcode:"tophat",css:"16.6667% 8.33333%"},
+{shortcode:"mortar_board",css:"14.5833% 75%"},
+{shortcode:"crown",css:"27.0833% 50%"},
+{shortcode:"helmet_with_white_cross",css:"4.16667% 25%"},
+{shortcode:"school_satchel",css:"14.5833% 72.9167%"},
+{shortcode:"pouch",css:"27.0833% 75%"},
+{shortcode:"purse",css:"27.0833% 70.8333%"},
+{shortcode:"handbag",css:"27.0833% 72.9167%"},
+{shortcode:"briefcase",css:"35.4167% 93.75%"},
+{shortcode:"eyeglasses",css:"27.0833% 54.1667%"},
+{shortcode:"dark_sunglasses",css:"43.75% 47.9167%"},
+{shortcode:"closed_umbrella",css:"8.33333% 72.9167%"},
+{shortcode:"umbrella",css:"0% 89.5833%"},
+{shortcode:"family",css:"29.1667% 41.6667%"},
+{shortcode:"woman-heart-man",css:"87.5% 22.9167%"},
+{shortcode:"woman-kiss-man",css:"87.5% 27.0833%"},
+{shortcode:"male-police-officer",css:"87.5% 43.75%"},
+{shortcode:"blond-haired-man",css:"87.5% 72.9167%"},
+{shortcode:"man-wearing-turban",css:"87.5% 97.9167%"},
+{shortcode:"male-construction-worker",css:"89.5833% 20.8333%"},
+{shortcode:"male-guard",css:"89.5833% 70.8333%"},
+{shortcode:"male-detective",css:"91.6667% 43.75%"},
+{shortcode:"woman-with-bunny-ears-partying",css:"87.5% 56.25%"},
+{shortcode:"man-running",css:"81.25% 89.5833%"},
+{shortcode:"woman-getting-massage",css:"89.5833% 83.3333%"},
+{shortcode:"woman-getting-haircut",css:"91.6667% 6.25%"},
+{shortcode:"man-walking",css:"95.8333% 89.5833%"},
+{shortcode:"woman-tipping-hand",css:"89.5833% 33.3333%"},
+{shortcode:"woman-gesturing-no",css:"91.6667% 56.25%"},
+{shortcode:"woman-gesturing-ok",css:"91.6667% 81.25%"},
+{shortcode:"man-bowing",css:"93.75% 16.6667%"},
+{shortcode:"woman-raising-hand",css:"93.75% 29.1667%"},
+{shortcode:"woman-frowning",css:"93.75% 54.1667%"},
+{shortcode:"woman-pouting",css:"93.75% 79.1667%"}
+];

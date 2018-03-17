@@ -24,50 +24,63 @@ function imgv(id, key, acct_id) {
 			var height = element.naturalHeight;
 			var windowH = $(window).height();
 			var windowW = $(window).width();
-			var aspect = width/height;
-			if (aspect < 2.8 && aspect > 0.3){
-				//moderate
-				if(windowW > windowH){
-					//画面が横長(縦幅基準)
-					$("#imgmodal").css('height',windowH/1.2-70+"px");
-					var imgW = (windowH/1.2-70)/height*width;
-					$("#imgmodal").css('width',imgW+"px");
-					$("#imagewrap").css('height',windowH/1.2-60+"px");
-					$("#imagemodal").css('height',windowH/1.2+"px");
-					$("#imagewrap").css('width',imgW+50+"px");
-					$("#imagemodal").css('width',imgW+50+"px");
-				}else{
-					//画面が縦長・正方形(横幅基準)
-					$("#imgmodal").css('width',windowW/1.2-30+"px");
-					var imgH = (windowW/1.2-30)/width*height;
-					$("#imgmodal").css('height',imgH+"px");
-					$("#imagewrap").css('width',windowW/1.2+"px");
-					$("#imagemodal").css('width',windowW/1.2+"px");
-					$("#imagewrap").css('height',imgH+60+"px");
-					$("#imagemodal").css('height',imgH+120+"px");
-				}
+			//小さい画像
+			if(width<(windowW - 50) && height<(windowH-1000)){
+				$("#imgmodal").css('height',height+"px");
+				$("#imgmodal").css('width',width+"px");
+				$("#imagewrap").css('height',height+"px");
+				$("#imagemodal").css('height',height+100+"px");
+				$("#imagewrap").css('width',width+"px");
+				$("#imagemodal").css('width',width+"px");
+				$("#imagemodal").css('margin-top',(windowH /2) - (height / 2) +"px");
 			}else{
-				//極端な画像
-				if(height > width){
-					//縦長
-					$("#imgmodal").css('height',windowH-60+"px");
-					var imgW = (windowH-50)/height*width;
-					$("#imgmodal").css('width',imgW+"px");
-					$("#imagewrap").css('height',windowH-50+"px");
-					$("#imagemodal").css('height',windowH+"px");
-					$("#imagewrap").css('width',imgW+50+"px");
-					$("#imagemodal").css('width',imgW+50+"px");
+				$("#imagemodal").css('margin-top',0);
+				var aspect = width/height;
+				if (aspect < 2.8 && aspect > 0.3){
+					//moderate
+					if(windowW > windowH){
+						//画面が横長(縦幅基準)
+						$("#imgmodal").css('height',windowH/1.2-70+"px");
+						var imgW = (windowH/1.2-70)/height*width;
+						$("#imgmodal").css('width',imgW+"px");
+						$("#imagewrap").css('height',windowH/1.2-60+"px");
+						$("#imagemodal").css('height',windowH/1.2+"px");
+						$("#imagewrap").css('width',imgW+50+"px");
+						$("#imagemodal").css('width',imgW+50+"px");
+					}else{
+						//画面が縦長・正方形(横幅基準)
+						$("#imgmodal").css('width',windowW/1.2-30+"px");
+						var imgH = (windowW/1.2-30)/width*height;
+						$("#imgmodal").css('height',imgH+"px");
+						$("#imagewrap").css('width',windowW/1.2+"px");
+						$("#imagemodal").css('width',windowW/1.2+"px");
+						$("#imagewrap").css('height',imgH+60+"px");
+						$("#imagemodal").css('height',imgH+120+"px");
+					}
 				}else{
-					//横長・正方形
-					$("#imgmodal").css('width',windowW-30+"px");
-					var imgH = (windowW-50)/width*height;
-					$("#imgmodal").css('height',imgH+"px");
-					$("#imagewrap").css('width',windowW+"px");
-					$("#imagemodal").css('width',windowW+"px");
-					$("#imagewrap").css('height',imgH+60+"px");
-					$("#imagemodal").css('height',imgH+120+"px");
+					//極端な画像
+					if(height > width){
+						//縦長
+						$("#imgmodal").css('height',windowH-60+"px");
+						var imgW = (windowH-50)/height*width;
+						$("#imgmodal").css('width',imgW+"px");
+						$("#imagewrap").css('height',windowH-50+"px");
+						$("#imagemodal").css('height',windowH+"px");
+						$("#imagewrap").css('width',imgW+50+"px");
+						$("#imagemodal").css('width',imgW+50+"px");
+					}else{
+						//横長・正方形
+						$("#imgmodal").css('width',windowW-30+"px");
+						var imgH = (windowW-50)/width*height;
+						$("#imgmodal").css('height',imgH+"px");
+						$("#imagewrap").css('width',windowW+"px");
+						$("#imagemodal").css('width',windowW+"px");
+						$("#imagewrap").css('height',imgH+60+"px");
+						$("#imagemodal").css('height',imgH+120+"px");
+					}
 				}
 			}
+			
 		}
 		if ($("#" + id + "-image-" + (key * 1 + 1)).length == 0) {
 			$("#image-next").prop("disabled", true);
@@ -112,48 +125,60 @@ function imgCont(type) {
 			var height = element.naturalHeight;
 			var windowH = $(window).height();
 			var windowW = $(window).width();
-			var aspect = width/height;
-			if (aspect < 2.8 && aspect > 0.3){
-				//moderate
-				if(windowW > windowH){
-					//画面が横長(縦幅基準)
-					$("#imgmodal").css('height',windowH/1.2-70+"px");
-					var imgW = (windowH/1.2-70)/height*width;
-					$("#imgmodal").css('width',imgW+"px");
-					$("#imagewrap").css('height',windowH/1.2-60+"px");
-					$("#imagemodal").css('height',windowH/1.2+"px");
-					$("#imagewrap").css('width',imgW+50+"px");
-					$("#imagemodal").css('width',imgW+50+"px");
-				}else{
-					//画面が縦長・正方形(横幅基準)
-					$("#imgmodal").css('width',windowW/1.2-30+"px");
-					var imgH = (windowW/1.2-30)/width*height;
-					$("#imgmodal").css('height',imgH+"px");
-					$("#imagewrap").css('width',windowW/1.2+"px");
-					$("#imagemodal").css('width',windowW/1.2+"px");
-					$("#imagewrap").css('height',imgH+60+"px");
-					$("#imagemodal").css('height',imgH+120+"px");
-				}
+			//小さい画像
+			if(width<(windowW - 50) && height<(windowH-1000)){
+				$("#imgmodal").css('height',height+"px");
+				$("#imgmodal").css('width',width+"px");
+				$("#imagewrap").css('height',height+"px");
+				$("#imagemodal").css('height',height+100+"px");
+				$("#imagewrap").css('width',width+"px");
+				$("#imagemodal").css('width',width+"px");
+				$("#imagemodal").css('margin-top',(windowH /2) - (height / 2) +"px");
 			}else{
-				//極端な画像
-				if(height > width){
-					//縦長
-					$("#imgmodal").css('height',windowH-60+"px");
-					var imgW = (windowH-50)/height*width;
-					$("#imgmodal").css('width',imgW+"px");
-					$("#imagewrap").css('height',windowH-50+"px");
-					$("#imagemodal").css('height',windowH+"px");
-					$("#imagewrap").css('width',imgW+50+"px");
-					$("#imagemodal").css('width',imgW+50+"px");
+				$("#imagemodal").css('margin-top',0);
+				var aspect = width/height;
+				if (aspect < 2.8 && aspect > 0.3){
+					//moderate
+					if(windowW > windowH){
+						//画面が横長(縦幅基準)
+						$("#imgmodal").css('height',windowH/1.2-70+"px");
+						var imgW = (windowH/1.2-70)/height*width;
+						$("#imgmodal").css('width',imgW+"px");
+						$("#imagewrap").css('height',windowH/1.2-60+"px");
+						$("#imagemodal").css('height',windowH/1.2+"px");
+						$("#imagewrap").css('width',imgW+50+"px");
+						$("#imagemodal").css('width',imgW+50+"px");
+					}else{
+						//画面が縦長・正方形(横幅基準)
+						$("#imgmodal").css('width',windowW/1.2-30+"px");
+						var imgH = (windowW/1.2-30)/width*height;
+						$("#imgmodal").css('height',imgH+"px");
+						$("#imagewrap").css('width',windowW/1.2+"px");
+						$("#imagemodal").css('width',windowW/1.2+"px");
+						$("#imagewrap").css('height',imgH+60+"px");
+						$("#imagemodal").css('height',imgH+120+"px");
+					}
 				}else{
-					//横長・正方形
-					$("#imgmodal").css('width',windowW-30+"px");
-					var imgH = (windowW-50)/width*height;
-					$("#imgmodal").css('height',imgH+"px");
-					$("#imagewrap").css('width',windowW+"px");
-					$("#imagemodal").css('width',windowW+"px");
-					$("#imagewrap").css('height',imgH+60+"px");
-					$("#imagemodal").css('height',imgH+120+"px");
+					//極端な画像
+					if(height > width){
+						//縦長
+						$("#imgmodal").css('height',windowH-60+"px");
+						var imgW = (windowH-50)/height*width;
+						$("#imgmodal").css('width',imgW+"px");
+						$("#imagewrap").css('height',windowH-50+"px");
+						$("#imagemodal").css('height',windowH+"px");
+						$("#imagewrap").css('width',imgW+50+"px");
+						$("#imagemodal").css('width',imgW+50+"px");
+					}else{
+						//横長・正方形
+						$("#imgmodal").css('width',windowW-30+"px");
+						var imgH = (windowW-50)/width*height;
+						$("#imgmodal").css('height',imgH+"px");
+						$("#imagewrap").css('width',windowW+"px");
+						$("#imagemodal").css('width',windowW+"px");
+						$("#imagewrap").css('height',imgH+60+"px");
+						$("#imagemodal").css('height',imgH+120+"px");
+					}
 				}
 			}
 		}

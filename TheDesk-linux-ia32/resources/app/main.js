@@ -34,6 +34,7 @@ try {
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
 	if (process.platform != 'darwin') {
+		electron.session.defaultSession.clearCache(() => {})
 		app.quit();
 	}
 });
@@ -72,6 +73,9 @@ function createWindow() {
 app.on('ready', createWindow);
 var ipc = electron.ipcMain;
 ipc.on('update', function(e, x, y) {
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform!="darwin"){
 	var window = new BrowserWindow({
 		width: 600,
 		height: 400,
@@ -82,6 +86,9 @@ ipc.on('update', function(e, x, y) {
 	window.loadURL('file://' + __dirname + '/update.html');
 
 	return "true"
+	}else{
+		return false;
+	}
 })
 ipc.on('screen', function(e, args) {
 	var window = new BrowserWindow({
@@ -99,16 +106,25 @@ ipc.on('screen', function(e, args) {
 //Web魚拓
 ipc.on('shot', function(e, args) {
 	console.log(args[0]);
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform=="win32"){
+		var dir=app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\"+args[4]+"-toot.png";
+		var folder=app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\";
+	}else if(platform=="linux" || platform=="darwin" ){
+		var dir=app.getPath('home')+"/Pictures/TheDesk/Screenshots/"+args[4]+"-toot.png";
+		var folder=app.getPath('home')+"/Pictures/TheDesk/Screenshots/";
+	}
 	Jimp.read(Buffer.from( args[3],'base64'), function (err, lenna) {
 		if (err) throw err;
-		lenna.crop( 0, 0, args[1], args[2] ).write(app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\"+args[4]+"-toot.png");
+		lenna.crop( 0, 0, args[1], args[2] ).write(dir);
 	});
-	shell.showItemInFolder(app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\");
+	shell.showItemInFolder(folder);
 })
 ipc.on('shot-img-dl', (e, args) => {
 	Jimp.read(args[0], function (err, lenna) {
 		if (err) throw err;
-		lenna.write(app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\"+args[1]);
+		lenna.write(folder+args[1]);
 	});
 	
 });
@@ -122,7 +138,7 @@ ipc.on('download-btn', (e, args) => {
 		}else if(bit=="ia32"){
 			var zip="TheDesk-win32-ia32.zip";
 		}
-	}else if(platform=="linux"){
+	}else if(platform=="linux" || platform=="darwin" ){
 		const options = {
 			type: 'info',
 			title: 'Linux Supporting System',
@@ -147,7 +163,9 @@ ipc.on('download-btn', (e, args) => {
 			defaultPath: zip
         }, (savedFiles) => {
 			console.log(savedFiles);
-
+			if(!savedFiles){
+				return false;
+			}
 			var m = savedFiles.match(/(.+)\\(.+)$/);
 			  if(isExistFile(savedFiles)){
 				fs.statSync(savedFiles);
@@ -187,7 +205,17 @@ function dl(ver,files,fullname){
 		}
 	}
 	zip=zip+"?"+ver;
-	console.log(zip);
+	var l = 8;
+
+	// 生成する文字列に含める文字セット
+	var c = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+	var cl = c.length;
+	var r = "";
+	for(var i=0; i<l; i++){
+	  r += c[Math.floor(Math.random()*cl)];
+	}
+	zip=zip+r;
 	mainWindow.webContents.send('comp', "ダウンロードを開始します。");
 	const opts = {
 		directory:files,
@@ -207,7 +235,14 @@ function dl(ver,files,fullname){
 }
 ipc.on('general-dl', (e, args) => {
 	var name="";
-	var dir=app.getPath('home')+"\\Pictures\\TheDesk";
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform=="win32"){
+		var dir=app.getPath('home')+"\\Pictures\\TheDesk";
+	}else if(platform=="linux" || platform=="darwin" ){
+		var dir=app.getPath('home')+"/Pictures/TheDesk";
+	}
+	
 	mainWindow.webContents.send('general-dl-message', "ダウンロードを開始します。");
 	const opts = {
 		directory: dir,
@@ -237,13 +272,36 @@ ipc.on('about', (e, args) => {
 	   window.loadURL('file://' + __dirname + '/about.html?ver='+ver);
 	   return "true"
 });
+//
+ipc.on('file-select', (e, args) => {
+	dialog.showOpenDialog(null, {
+		properties: ['openFile', 'multiSelections'],
+		title: '添付ファイルを選択',
+		defaultPath: '.',
+		filters: [
+			{name: 'メディアファイル', extensions: ['jpg', 'png', 'gif', 'bmp', 'jpeg','mp4','webm']},
+			{name: '画像', extensions: ['jpg', 'png', 'gif', 'bmp', 'jpeg']},
+      		{name: '動画', extensions: ['mp4','webm']},
+      		{name: '全てのファイル', extensions: ['*']}
+		]
+	}, (fileNames) => {
+		if(!fileNames){
+			return false;
+		}
+		for(var i=0;i<fileNames.length;i++){
+			var path=fileNames[i];
+			var bin = fs.readFileSync(path, 'base64');
+			mainWindow.webContents.send('bmp-img-comp', bin);
+		}
+	});
+});
 
 ipc.on('column-del', (e, args) => {
 const options = {
     type: 'info',
     title: 'カラム削除',
     message: "カラムを削除しますか？",
-    buttons: ['はい', 'いいえ']
+    buttons: ['いいえ', 'はい']
   }
   dialog.showMessageBox(options, function(index) {
     mainWindow.webContents.send('column-del-reply', index);

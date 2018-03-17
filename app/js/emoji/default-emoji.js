@@ -1,3 +1,4 @@
+var defaultemojiList=["activity","flag","food","nature","object","people","place","symbol"];
 var defaultemoji={
     activity:activity,
     flag:flag,
@@ -19,8 +20,13 @@ var defaultemojiname={
     symbol:"記号"
 };
 function defaultEmoji(target){
-    var html=defaultemoji[target];
-    $("#emoji-list").html(html);
+    var json=defaultemoji[target];
+    var emojis="";
+    Object.keys(json).forEach(function(key) {
+        var emoji = json[key];
+        emojis = emojis + '<a onclick="defEmoji(\''+emoji["shortcode"]+'\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: '+emoji["css"]+';"></span></a>';
+    });
+    $("#emoji-list").html(emojis);
     $("#now-emoji").text(defaultemojiname[target]+"の絵文字");
     $(".emoji-control").addClass("hide");
 }
@@ -29,23 +35,16 @@ function customEmoji(){
     emojiList('home')
 }
 function defEmoji(target){
-    var start = "./js/emoji/emoji-map.json";
-    var xmlHttpRequest = new XMLHttpRequest();
-    xmlHttpRequest.onreadystatechange = function()
-    {
-        if( this.readyState == 4 && this.status == 200 ) {
-            if( this.response){
-                var json=this.response;
-                var emojis=json.emojis;
-                for (i = 0; i < emojis.length; i++) {
-                     var emoji = emojis[i];
-                      if (emoji.shortname==target) {
-                        var now = $("#textarea").val();
-                        var selin = localStorage.getItem("cursor");
-                        var now = $("#textarea").val();
-                        if(selin>0){
-                            var before   = now.substr(0, selin);
-                            var after    = now.substr(selin, now.length);
+    var emojis=map;
+    for (i = 0; i < emojis.length; i++) {
+        var emoji = emojis[i];
+        if (emoji.name==target) {
+            var now = $("#textarea").val();
+            var selin = localStorage.getItem("cursor");
+            var now = $("#textarea").val();
+             if(selin>0){
+                 var before   = now.substr(0, selin);
+                    var after    = now.substr(selin, now.length);
                             newt = before+ emoji.emoji + after;
                         }else{
                             newt = emoji.emoji+now;
@@ -57,11 +56,5 @@ function defEmoji(target){
                          break;
                      }
                   }   
-            }
-        }
-}
-
-xmlHttpRequest.open( 'GET', start, true );
-xmlHttpRequest.responseType = 'json';
-xmlHttpRequest.send( null );
+            
 }

@@ -54,7 +54,7 @@
 }
 #emoji-list {
   width: 100%;
-  height: calc(100% - 110px);
+  height: calc(100% - 130px);
   overflow-y: scroll;
 }
 .emoji-control {}

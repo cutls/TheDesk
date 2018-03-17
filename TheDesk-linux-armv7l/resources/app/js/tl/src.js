@@ -13,6 +13,10 @@ function srcToggle() {
 function src() {
 	var q = $("#src").val();
 	var acct_id = $("#src-acct-sel").val();
+	if(acct_id=="tootsearch"){
+		tootsearch(q);
+		return false;
+	}
 	localStorage.setItem("last-use", acct_id);
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
@@ -35,12 +39,12 @@ function src() {
 	}).then(function(json) {
 		//トゥート
 		if (json.statuses[0]) {
-			var templete = parse(json.statuses);
+			var templete = parse(json.statuses,'',acct_id);
 			$("#src-contents").append("Mentions<br>" + templete);
 		}
 		//アカウント
 		if (json.accounts[0]) {
-			var templete = userparse(json.accounts);
+			var templete = userparse(json.accounts,'',acct_id);
 			$("#src-contents").append("Accounts<br>" + templete);
 		}
 		//ハッシュタグ
@@ -53,6 +57,37 @@ function src() {
 			});
 			$("#src-contents").append("Tags<br>" + tags);
 		}
+		jQuery("time.timeago").timeago();
+	});
+}
+function tootsearch(q){
+	var start = "https://tootsearch.chotto.moe/api/v1/search?from=0&sort=created_at%3Adesc&q=" + q
+	console.log(start)
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json'
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(raw) {
+			var templete="";
+			var json=raw.hits.hits;
+			console.log(json);
+			Object.keys(json).forEach(function(key5) {
+				var toot = json[key5]["_source"];
+				console.log(toot);
+				if(toot && toot.account){
+					templete = templete+parse([toot],'');
+				}
+			});
+			if(!templete){
+				templete="データはありません。";
+			}
+			$("#src-contents").html("Tootsearch(時系列)<br>" + templete);
 		jQuery("time.timeago").timeago();
 	});
 }

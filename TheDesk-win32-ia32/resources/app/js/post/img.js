@@ -13,7 +13,6 @@ obj.on('dragend', function(e) {
 obj.on('dragenter', function(e) {
 	if (system != "locked") {
 		$("#drag").css('display', 'flex');
-		more();
 	}
 
 });
@@ -59,6 +58,10 @@ ipc.on('bmp-img-comp', function (event, b64) {
 //ドラッグ・アンド・ドロップを終了
 function closedrop() {
 	$("#drag").css('display', 'none');
+}
+//ファイル選択
+function fileselect() {
+	ipc.send('file-select', "");
 }
 
 //ファイル読み込み

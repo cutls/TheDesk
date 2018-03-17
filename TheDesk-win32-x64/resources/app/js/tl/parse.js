@@ -169,8 +169,11 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
 				'\')" class="nex parsed">見る</a><br>';
 		} else {
-			var ct = toot.content.split('</p>').length + toot.content.split('<br />').length -
+			var ct1 = toot.content.split('</p>').length + toot.content.split('<br />').length -
 				2;
+			var ct2 = toot.content.split('</p>').length + toot.content.split('<br>').length -
+				2;
+			if(ct1>ct2){ var ct= ct1; }else{ var ct= ct2;  }
 			if ((sent < ct && $.mb_strlen($.strip_tags(toot.content)) > 5) || ($.strip_tags(toot.content).length > ltr && $.mb_strlen($.strip_tags(toot.content)) > 5)) {
 				var content = '<span class="gray">以下全文</span><br>' + toot.content
 				var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tags(
@@ -213,6 +216,38 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
 				spoil = spoil.replace(regExp, emoji_url);
+			});
+		}
+		//デフォ絵文字
+		var defemo=content.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g);
+		
+		if(defemo && defemo[0]){
+			defemo = defemo.filter(function (x, i, self) {
+				return self.indexOf(x) === i;
+			});
+			Object.keys(defemo).forEach(function(key12) {
+				var demo=defemo[key12];
+				var regExp = new RegExp(demo, "g");
+				for(var i=0;i<map.length;i++){
+					var imap=map[i];
+					//console.log(regExp);
+					if (imap.emoji.match(regExp)) {
+						for(var l=0;l<defaultemojiList.length;l++){
+							var catlist=defaultemoji[defaultemojiList[l]];
+							for(var m=0;m<catlist.length;m++){
+								var imoji=catlist[m];
+								if(imoji.shortcode==imap.name){
+									content=content.replace(regExp,'<span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: '+imoji["css"]+';"></span>');
+									break;
+								}
+							}
+							
+						}
+						
+						break;
+					}
+				}
+				
 			});
 		}
 		var mediack = toot.media_attachments[0];

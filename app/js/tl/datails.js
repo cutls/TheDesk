@@ -3,6 +3,28 @@ function details(id, acct_id, tlid) {
 	$(".toot-reset").html("データなし");
 	var html = $("#timeline_"+tlid+" #pub_" + id).html();
 	$("#toot-this").html(html);
+	if(!$("#timeline_"+tlid+" #pub_" + id).length){
+		console.log("API Using");
+		var domain = localStorage.getItem("domain_" + acct_id);
+		var at = localStorage.getItem(domain + "_at");
+		var start = "https://" + domain + "/api/v1/statuses/" + id;
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			},
+		}).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			todo(error);
+			console.error(error);
+		}).then(function(json) {
+			var html = parse([json]);
+			$("#toot-this").html(html);
+			jQuery("time.timeago").timeago();
+		});
+	}
 	$('#tootmodal').modal('open');
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
