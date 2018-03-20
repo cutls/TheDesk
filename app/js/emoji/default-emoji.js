@@ -31,6 +31,7 @@ function defaultEmoji(target){
     $(".emoji-control").addClass("hide");
 }
 function customEmoji(){
+    $("#emoji-suggest").val("");
     $(".emoji-control").removeClass("hide");
     emojiList('home')
 }

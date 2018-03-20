@@ -78,83 +78,25 @@ function parse(obj, mix, acct_id, tlid, popup) {
 	var times=[];
 	Object.keys(obj).forEach(function(key) {
 		var toot = obj[key];
-		if (mix == "notf") {
-			if (toot.type == "mention") {
-				var what = "返信しました";
-			} else if (toot.type == "reblog") {
-				var what = "ブーストしました";
-			} else if (toot.type == "favourite") {
-				var what = "お気に入り登録しました";
-			}
-			var noticetext = '<span class="cbadge"title="' + date(toot.created_at,
-				'absolute') + '(通知された時間)"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
-				datetype) +
-			'</span><a onclick="udg(\'' + toot.account.id +
-				'\',\'' + acct_id + '\')" class="pointer">' + toot.account.display_name +
-				"(" + toot.account.acct +
-				")</a>が" + what;
-			var notice = noticetext;
-			var memory = localStorage.getItem("notice-mem");
-			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
-				var domain = localStorage.getItem("domain_" + acct_id);
-				if(popup>0){
-					Materialize.toast("["+domain+"より]"+toot.account.display_name+"が"+what, popup * 1000);
-				}
-				$(".notf-icon_" + acct_id).addClass("red-text");
-				localStorage.setItem("notice-mem", noticetext);
-				noticetext = "";
-			}
-			var toot = toot.status;
-		}else{
 			if (toot.reblog) {
 				var notice = toot.account.display_name + "(" + toot.account.acct +
 					")がブースト<br>";
 					var boostback = "shared";
 				var toot = toot.reblog;
-			} else {
-				var notice = "";
-				var boostback = "";
-				//ユーザー強調
-				if(toot.account.username!=toot.account.acct){
-					var fullname=toot.account.acct;
-				}else{
-					var domain = localStorage.getItem("domain_" + acct_id);
-					var fullname=toot.account.acct+"@"+domain;
-				}
-				if(useremp){
-					Object.keys(useremp).forEach(function(key10) {
-					var user = useremp[key10];
-					if(user==fullname){
-						boostback = "emphasized";
-					}
-					});
-				}
+			}else{
+				var notice="";
 			}
-		}
 		var id = toot.id;
-		if (mix == "home") {
-			var home = "Home TLより"
 			var divider = '<div class="divider"></div>';
-		} else {
-			var home = "";
-			var divider = '<div class="divider"></div>';
-		}
 		if (toot.account.locked) {
 			var locked = ' <i class="fa fa-lock red-text"></i>';
 		} else {
 			var locked = "";
 		}
 		if (!toot.application) {
-			var via = '<span style="font-style: italic;">Unknown</span>';
+			var via = 'Unknown';
 		} else {
 			var via = toot.application.name;
-			//強調チェック
-			Object.keys(emp).forEach(function(key6) {
-				var cli = emp[key6];
-				if(cli == via){
-					boostback = "emphasized";
-				}
-			});
 			//ミュートチェック
 			Object.keys(mute).forEach(function(key7) {
 				var cli = mute[key7];
@@ -189,7 +131,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				var spoiler_show = "";
 			}
 		}
-		var urls = $.strip_tags(content).replace(/\n/g, " ").match(
+		var urls = content.match(
 			/https?:\/\/([-a-zA-Z0-9@.]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
 		);
 		if (urls) {
@@ -264,11 +206,9 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				} else {
 					var sense = ""
 				}
-				viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
-					acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
-					'" data-type="' + media.type + '" class="img-parsed"><img src="' +
+				viewer = viewer + '<img src="' +
 					purl + '" class="' + sense +
-					' toot-img pointer" style="width:' + cwdt + '%; height:'+imh+'px;"></a></span>';
+					' toot-img pointer" style="width:' + cwdt + '%; height:'+imh+'px;">';
 			});
 		} else {
 			viewer = "";
@@ -381,7 +321,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
 			' ' + hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
 				key].created_at, 'unix') + '">' +
-			'<div class="area-notice"><span class="gray sharesta">' + notice + home +
+			'<div class="area-notice"><span class="gray sharesta">' + notice  +
 			'</span></div>' +
 			'<div class="area-icon"><a onclick="udg(\'' + toot.account.id +
 			'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
@@ -401,9 +341,10 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
 			'</span>' +
 			'' + viewer + '' +
-			'</div><div class="area-additional"><span class="additional">' + analyze +
-			'</span>' +
-			'' + mentions + tags + '</div>' +
+			'</div><div class="area-additional"><span style="color:green;"><span class="rt_ct">' + toot.reblogs_count +
+			'</span>シェア</span><br><span style="color:orange;"><i class="fa  fa-star"></i><span class="fav_ct">' + toot.favourites_count +
+			'</a></span></span><br><a onclick="details(\'' + toot.id + '\',' + acct_id +
+			','+tlid+')" class="waves-effect waves-dark btn-flat details" style="padding:0; color:#0275d8; font-size:80%;">詳細</a></div>' +
 			'<div class="area-actions" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
 			'<div class="action"><span style="padding:0">' +
 			vis + '</span></div><div class="action"><a onclick="re(\'' + toot.id +
@@ -413,21 +354,13 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			'<div class="action '+can_rt+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをブースト"><i class="text-darken-3 fa fa-retweet ' +
-			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
-			'</span></a></div>' +
+			if_rt + ' rt_' + toot.id + '"></i></a></div>' +
 			'<div class="action"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをお気に入り登録"><i class="fa text-darken-3 fa-star' +
-			if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
-			'</a></span></div>' +
-			'<div class="' + if_mine + ' action"><a onclick="del(\'' + toot.id + '\',' +
-			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを削除"><i class="fa fa-trash-o"></i></a></div>' +
-			'<div class="' + if_mine + ' action pin"><a onclick="pin(\'' + toot.id + '\',' +
-			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをピン留め"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' +
-			'<div class="action"><a onclick="details(\'' + toot.id + '\',' + acct_id +
-			','+tlid+')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
+			if_fav + ' fav_' + toot.id + '"></i></div>' +
+			'<div class="' + if_mine + ' action"></div>' +
+			'<div class="action"></div>' +
 			'</div><div class="area-date_via">' +
 			'<div><span class="cbadge waves-effect" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
 			via +
@@ -498,63 +431,9 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	return templete;
 }
 //クライアントダイアログ
-function client(name) {
-	if(name!="Unknown"){
-	//聞く
-	localStorage.removeItem("client_mute");
-	var electron = require("electron");
-	var remote=electron.remote;
-	var dialog=remote.dialog;
-	const options = {
-		type: 'info',
-		title: 'クライアント処理',
-		message: name+"に対する処理を選択してください。",
-		buttons: ['何もしない','強調表示/解除', 'ミュート']
-	  }
-	  dialog.showMessageBox(options, function(arg) {
-		if(arg==1){
-			var cli = localStorage.getItem("client_emp");
-			var obj = JSON.parse(cli);
-			if(!obj){
-				var obj=[];
-				obj.push(name);
-				Materialize.toast(name+"を強調表示します。", 2000);
-			}else{
-			var can;
-			Object.keys(obj).forEach(function(key) {
-				var cliT = obj[key];
-				if(cliT!=name && !can){
-					can=false;
-				}else{
-					can=true;
-					obj.splice(key, 1);
-					Materialize.toast(name+"の強調表示を解除しました。", 2000);
-				}
-			});
-			if(!can){
-				obj.push(name);
-				Materialize.toast(name+"を強調表示します。", 2000);
-			}else{
-				
-			}
-		}
-			var json = JSON.stringify(obj);
-			localStorage.setItem("client_emp", json);
-		}else if(arg==2){
-			var cli = localStorage.getItem("client_mute");
-			var obj = JSON.parse(cli);
-			if(!obj){
-				var obj=[];
-			}
-			obj.push(name);
-			var json = JSON.stringify(obj);
-			localStorage.setItem("client_mute", json);
-			Materialize.toast(name+"をミュートします。設定から削除できます。", 2000);
-		}else{
-			return;
-		}
-		parseColumn();
-	  })
-	
-}
-}
+function scrollevent(){}
+function todo(){}
+function todc(){}
+function vis(){ $('#myModal').modal('hide') }
+function additional(){}
+function re(){ alert("設計中") }

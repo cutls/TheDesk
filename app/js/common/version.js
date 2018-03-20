@@ -1,5 +1,16 @@
 //バージョンチェッカー
 function verck(ver) {
+	var date=new Date(); 
+	var month = date.getMonth()+1;
+	var day = date.getDate();
+	if(month=="4" && day=="1" && !localStorage.getItem("sincere")){
+		var electron = require("electron");
+		var ipc = electron.ipcRenderer;
+		ipc.send('fool', "true");
+		location.href="error.html";
+	}else{
+		localStorage.removeItem("sincere")
+	}
 	localStorage.setItem("ver", ver);
 	var l = 5;
 
