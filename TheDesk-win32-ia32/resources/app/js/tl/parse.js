@@ -78,7 +78,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 	var times=[];
 	Object.keys(obj).forEach(function(key) {
 		var toot = obj[key];
-		if(popup){
+		if (mix == "notf") {
 			if (toot.type == "mention") {
 				var what = "返信しました";
 			} else if (toot.type == "reblog") {
@@ -97,7 +97,9 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
 				var domain = localStorage.getItem("domain_" + acct_id);
-				Materialize.toast("["+domain+"より]"+toot.account.display_name+"が"+what, popup * 1000);
+				if(popup>0){
+					Materialize.toast("["+domain+"より]"+toot.account.display_name+"が"+what, popup * 1000);
+				}
 				$(".notf-icon_" + acct_id).addClass("red-text");
 				localStorage.setItem("notice-mem", noticetext);
 				noticetext = "";
@@ -169,10 +171,8 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
 				'\')" class="nex parsed">見る</a><br>';
 		} else {
-			var ct1 = toot.content.split('</p>').length + toot.content.split('<br />').length -
-				2;
-			var ct2 = toot.content.split('</p>').length + toot.content.split('<br>').length -
-				2;
+			var ct1 = toot.content.split('</p>').length + toot.content.split('<br />').length -2;
+			var ct2 = toot.content.split('</p>').length + toot.content.split('<br>').length -2;
 			if(ct1>ct2){ var ct= ct1; }else{ var ct= ct2;  }
 			if ((sent < ct && $.mb_strlen($.strip_tags(toot.content)) > 5) || ($.strip_tags(toot.content).length > ltr && $.mb_strlen($.strip_tags(toot.content)) > 5)) {
 				var content = '<span class="gray">以下全文</span><br>' + toot.content
@@ -189,7 +189,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				var spoiler_show = "";
 			}
 		}
-		var urls = content.match(
+		var urls = $.strip_tags(content).replace(/\n/g, " ").match(
 			/https?:\/\/([-a-zA-Z0-9@.]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
 		);
 		if (urls) {

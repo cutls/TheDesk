@@ -74,12 +74,17 @@
 			}else{
 				var notf_attr='';
 			}
+			if(localStorage.getItem("notification_" + acct.domain)){
+				var unique_notf=localStorage.getItem("notification_" + acct.domain);
+			}else{
+				var unique_notf="通知";
+			}
 			var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 				'"><div class="notice-box z-depth-2">'+
 				'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。"></i></div>'+
 				'<div class="area-notice_name"><span id="notice_' + key + '"" class="tl-title"></span></div>'+
 				'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
-							  ')" class="setting nex" title="このアカウントの通知"><i class="material-icons waves-effect nex notf-icon_' +
+							  ')" class="setting nex" title="このアカウントの'+unique_notf+'"><i class="material-icons waves-effect nex notf-icon_' +
 							  acct.domain + '">notifications</i></a></div>'+
 				'<div class="area-a2"><a onclick="removeColumn(' + key +
 							  ')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">remove_circle</i></a></div>'+
@@ -129,6 +134,7 @@
 		};
 		var multi = localStorage.getItem("column");
 		var obj = JSON.parse(multi);
+		console.log(obj.length)
 		localStorage.setItem("card_" + obj.length,"true");
 		obj.push(add);
 		var json = JSON.stringify(obj);

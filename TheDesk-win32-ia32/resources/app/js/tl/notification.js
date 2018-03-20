@@ -22,9 +22,9 @@ function notf(acct_id, tlid, sys) {
 		Object.keys(json).forEach(function(key) {
 			var obj = json[key];
 			if(obj.type!="follow"){
-				templete = templete+parse([obj], '', acct_id, tlid, -1);
+				templete = templete+parse([obj], 'notf', acct_id, tlid, -1);
 			}else{
-				templete = templete+userparse([obj.account], '', acct_id, tlid, -1);
+				templete = templete+userparse([obj.account], 'notf', acct_id, tlid, -1);
 			}
 			
 		});
@@ -64,9 +64,9 @@ function notf(acct_id, tlid, sys) {
 			}
 			var templete="";
 			if(obj.type!="follow"){
-				templete = templete+parse([obj], '', acct_id, tlid, popup);
+				templete = templete+parse([obj], 'notf', acct_id, tlid, popup);
 			}else{
-				templete = templete+userparse([obj], '', acct_id, tlid, popup);
+				templete = templete+userparse([obj], 'notf', acct_id, tlid, popup);
 			}
 			$("div[data-notf=" + acct_id +"]").prepend(templete);
 			jQuery("time.timeago").timeago();

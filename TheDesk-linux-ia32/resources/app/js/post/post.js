@@ -9,16 +9,30 @@ function post() {
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/statuses";
 	var reply = $("#reply").val();
+	var toot={
+		status: str
+	}
+	if(reply){
+		toot.in_reply_to_id=reply
+	}
 	var media = $("#media").val();
+	if(media){
+		toot.media_ids=media;
+	}
 	if ($("#nsfw").hasClass("nsfw-avail")) {
 		var nsfw = "true";
+		toot.sensitive=nsfw;
 	} else {
 		var nsfw = "false";
 	}
 	var vis = $("#vis").text();
+	if(vis!="public"){
+		toot.visibility=vis;
+	}
 	if ($("#cw").hasClass("cw-avail")) {
 		var spo = $("#cw-text").val();
 		cw();
+		toot.spoiler_text=spo;
 	} else {
 		var spo = "";
 	}
@@ -28,14 +42,7 @@ function post() {
 			'content-type': 'application/json',
 			'Authorization': 'Bearer ' + at
 		},
-		body: JSON.stringify({
-			status: str,
-			in_reply_to_id: reply,
-			media_ids: media.split(","),
-			sensitive: nsfw,
-			spoiler_text: spo,
-			visibility: vis
-		})
+		body: JSON.stringify(toot)
 	}).then(function(response) {
 		return response.json();
 	}).catch(function(error) {

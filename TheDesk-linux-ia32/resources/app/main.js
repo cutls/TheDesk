@@ -327,4 +327,19 @@ ipc.on('nano', function (e, x, y) {
    window.setPosition(0, 0);
    return "true"
  })
+
+ ipc.on('fool', function(e, x, y) {
+	var window = new BrowserWindow({
+		width: 400,
+		height: 800,
+		"transparent": false, // ウィンドウの背景を透過
+		"frame": true, // 枠の無いウィンドウ
+		"resizable": true
+	});
+	window.loadURL('file://' + __dirname + '/cro.html');
+
+	return "true"
+})
+
+
 app.setAsDefaultProtocolClient('thedesk')

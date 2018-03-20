@@ -26,8 +26,8 @@
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
-	//トゥートリンク追加
-var ver="Airi (ver.6)";
+	//必ずアプデ時のremove instance消して！
+var ver="Airi (ver.7)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -42,7 +42,7 @@ var tlid=0;
 <div id="ins-suggest">
 </div>
 <button class="btn waves-effect" onclick="instance()">Login</button>
-<br><span data-trans="linux_ck">Linuxでご使用の方はチェックを入れて下さい。</span>
+<br><span data-trans="linux_ck">Linuxでご使用の方やPleromaにログインされる方はチェックを入れて下さい。</span>
 <br>
 <input type="checkbox" class="filled-in" id="linux" />
 <label for="linux" data-trans="code_setup">コードセットアップ</label>
@@ -355,7 +355,7 @@ var tlid=0;
 	<a onclick="vis('unlisted')">未収載(Unlisted)</a>
 </li>
 <li>
-	<a onclick="vis('private')">非公開(Private)</a>
+	<a onclick="vis('private')" id="private-button">非公開(Private)</a>
 </li>
 <li>
 	<a onclick="vis('direct')" class="disabled direct">ダイレクト(Direct)</a>
@@ -374,6 +374,7 @@ var tlid=0;
 </i>
 <br>
 </span>
+<input type="text" id="emoji-suggest" placeholder="カスタム絵文字検索">
 <div id="emoji-list" class="" style="">
 </div>
 <div class="emoji-control center">

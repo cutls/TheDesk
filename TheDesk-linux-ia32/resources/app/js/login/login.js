@@ -19,7 +19,6 @@ function ck() {
 		
 	}
 	if (at) {
-		ckdb(0);
 		$("#tl").show();
 		parseColumn();
 		multi();
@@ -262,7 +261,7 @@ function ckdb(acct_id) {
 		}
 	}else{
 		var ver=enc(localStorage.getItem("ver"));
-		var start = "https://dl.thedesk.top/mastodon_data.json?"+ver;
+		var start = "https://dl.thedesk.top/mastodon_data.json?eu=ai";
 		fetch(start, {
 			method: 'GET',
 			headers: {
@@ -299,6 +298,19 @@ function ckdb(acct_id) {
 				$(".markdown").show();
 			}else{
 				localStorage.removeItem("bb_" + acct_id);
+			}
+			if(json[domain + "_home"]){
+				console.log("unique name:"+json[domain + "_home"]);
+				localStorage.setItem("home_" + acct_id, json[domain + "_home"]);
+			}
+			if(json[domain + "_local"]){
+				localStorage.setItem("local_" + acct_id, json[domain + "_local"]);
+			}
+			if(json[domain + "_public"]){
+				localStorage.setItem("public_" + acct_id, json[domain + "_public"]);
+			}
+			if(json[domain + "_notification"]){
+				localStorage.setItem("notification_" + acct_id, json[domain + "_notification"]);
 			}
 	
 		});

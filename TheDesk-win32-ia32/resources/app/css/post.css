@@ -48,13 +48,13 @@
   bottom: 120px;
   right: 20px;
   width: 300px;
-  height: 370px;
+  height: 440px;
   z-index: 502;
   padding: 5px;
 }
 #emoji-list {
   width: 100%;
-  height: calc(100% - 130px);
+  height: calc(100% - 190px);
   overflow-y: scroll;
 }
 .emoji-control {}

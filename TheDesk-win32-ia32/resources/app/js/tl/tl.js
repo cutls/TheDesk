@@ -40,7 +40,7 @@ function tl(type, data, acct_id, tlid) {
 	} else if (type == "notf") {
 		//通知なら飛ばす
 		//notf(acct_id, tlid, 'direct');
-		$("#notice_" + tlid).text(cap(type, data) + " TL(" + localStorage.getItem(
+		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
 			$("#notice_icon_" + tlid).text("notifications");
 		return;
@@ -48,7 +48,7 @@ function tl(type, data, acct_id, tlid) {
 	localStorage.setItem("now", type);
 	todo(cap(type) + " TL Loading...");
 	var at = localStorage.getItem(domain + "_at");
-	$("#notice_" + tlid).text(cap(type, data) + " TL(" + localStorage.getItem(
+	$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
 		"user_" + acct_id) + "@" + domain + ")");
 		$("#notice_icon_" + tlid).text(icon(type));
 	var url=com(type, data);
@@ -119,7 +119,7 @@ function reload(type, cc, acct_id, tlid, data) {
 	}
 	websocket[wsid].onmessage = function(mess) {
 		console.log(tlid + ":Receive Streaming API:");
-		console.log(websocket[wsid]);
+		console.log(mess);
 
 
 		var typeA = JSON.parse(mess.data).event;
@@ -256,20 +256,37 @@ function tlCloser() {
 }
 
 //TLのタイトル
-function cap(type, data) {
+function cap(type, data, acct_id) {
 	if (type == "home") {
-		return "Home"
+		if(localStorage.getItem("home_" + acct_id)){
+			var response=localStorage.getItem("home_" + acct_id);
+		}else{
+			var response="Home TL";
+		}
 	} else if (type == "local") {
-		return "Local"
+		if(localStorage.getItem("local_" + acct_id)){
+			var response=localStorage.getItem("local_" + acct_id);
+		}else{
+			var response="Local TL";
+		}
 	} else if (type == "pub") {
-		return "Public"
+		if(localStorage.getItem("public_" + acct_id)){
+			var response=localStorage.getItem("public_" + acct_id);
+		}else{
+			var response="Federated TL";
+		}
 	} else if (type == "tag") {
-		return "#" + data
+		var response= "#" + data
 	} else if (type == "list") {
-		return "List(id:" + data + ")"
+		var response= "List(id:" + data + ")"
 	} else if (type == "notf") {
-		return "Notification"
+		if(localStorage.getItem("notification_" + acct_id)){
+			var response=localStorage.getItem("notification_" + acct_id);
+		}else{
+			var response="Notification TL";
+		}
 	}
+	return response;
 }
 
 //TLのURL

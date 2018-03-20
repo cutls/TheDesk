@@ -108,7 +108,7 @@ function multiDel(target) {
 
 //サポートインスタンス
 function support() {
-	var start = "https://dl.thedesk.top/mastodon_data.json";
+	var start = "https://dl.thedesk.top/mastodon_data.json?eu=ai";
 	fetch(start, {
 		method: 'GET',
 		headers: {
