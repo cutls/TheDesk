@@ -306,19 +306,19 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		var visen = toot.visibility;
 		if (visen == "public") {
 			var vis =
-				'<i class="text-darken-3 material-icons gray sml" title="公開">public</i>';
+				'<i class="text-darken-3 material-icons gray sml vis-data" title="公開" data-vis="public">public</i>';
 			var can_rt = "";
 		} else if (visen == "unlisted") {
 			var vis =
-				'<i class="text-darken-3 material-icons blue-text" title="未収載">lock_open</i>';
+				'<i class="text-darken-3 material-icons blue-text vis-data" title="未収載" data-vis="unlisted">lock_open</i>';
 			var can_rt = "";
 		} else if (visen == "plivate") {
 			var vis =
-				'<i class="text-darken-3 material-icons orange-text" title="非公開">lock</i>';
+				'<i class="text-darken-3 material-icons orange-text vis-data" title="非公開" data-vis="private">lock</i>';
 			var can_rt = "hide";
 		} else if (visen == "direct") {
 			var vis =
-				'<i class="text-darken-3 material-icons red-text" title="ダイレクト">mail</i>';
+				'<i class="text-darken-3 material-icons red-text vis-data" title="ダイレクト" data-vis="direct">mail</i>';
 			var can_rt = "hide";
 		}
 		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {

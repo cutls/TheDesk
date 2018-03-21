@@ -1,6 +1,6 @@
 //お気に入り登録やブースト等、フォローやブロック等
 //お気に入り登録
-function fav(id, acct_id) {
+function fav(id, acct_id, remote) {
 	if ($("#pub_" + id).hasClass("faved")) {
 		var flag = "unfavourite";
 	} else {
@@ -23,6 +23,7 @@ function fav(id, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
+		if(!remote){
 		//APIのふぁぼカウントがおかしい
 		if ($("[toot-id=" + id + "] .fav_ct").text() == json.favourites_count){
 			if(flag=="unfavourite"){
@@ -46,11 +47,14 @@ function fav(id, acct_id) {
 			$("[toot-id=" + id +"]").addClass("faved");
 			$(".fav_" + id).addClass("yellow-text");
 		}
+		}else{
+			Materialize.toast("お気に入り登録しました。インスタンスが違うときは時間がかかる場合があります。", 1000);
+		}
 	});
 }
 
 //ブースト
-function rt(id, acct_id) {
+function rt(id, acct_id, remote) {
 	if ($("#pub_" + id).hasClass("rted")) {
 		var flag = "unreblog";
 	} else {
@@ -73,6 +77,7 @@ function rt(id, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
+		if(!remote){
 		$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
 		if (!json.reblog) {
 			if(flag=="unreblog"){
@@ -92,20 +97,27 @@ function rt(id, acct_id) {
 			$("[toot-id=" + id +"]").addClass("rted");
 			$(".rt_" + id).addClass("teal-text");
 		}
+	}else{
+		Materialize.toast("ブーストしました。インスタンスが違うときは時間がかかる場合があります。", 1000);
+	}
 	});
 }
 
 //フォロー
-function follow(acct_id) {
-	if (!acct_id) {
+function follow(acct_id,remote) {
+	if (!acct_id && acct_id!="selector") {
 		var acct_id = $('#his-data').attr("use-acct");
+	}else if (acct_id=="selector") {
+		var acct_id = $("#user-acct-sel").val();
 	}
-	var id = $("#his-data").attr("user-id");
-	var remote = $("#his-data").attr("remote");
-	if ($("#his-data").hasClass("following")) {
+	if (!remote && $("#his-data").hasClass("following")) {
 		var flag = "unfollow";
 	} else {
 		var flag = "follow";
+	}
+	var id = $("#his-data").attr("user-id");
+	if(!remote){
+		var remote = $("#his-data").attr("remote");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
@@ -352,4 +364,35 @@ function empUser(){
 function tootUriCopy(url){
 	execCopy(url);
 	Materialize.toast("トゥートURLをコピーしました", 1500);
+}
+
+//他のアカウントで…
+function staEx(mode){
+	var url=$("#tootmodal").attr("data-url");
+	var acct_id = $("#status-acct-sel").val();
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem(domain + "_at");
+	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+url
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		}
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		var id=json.statuses[0].id;
+		if(mode=="rt"){
+			rt(id, acct_id, 'remote')
+		}else if(mode=="fav"){
+			fav(id, acct_id, 'remote')
+		}else if(mode=="reply"){
+			reEx(id)
+		}
+	});
+	return;
 }
