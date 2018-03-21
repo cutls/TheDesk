@@ -87,7 +87,7 @@
 							  ')" class="setting nex" title="このアカウントの'+unique_notf+'"><i class="material-icons waves-effect nex notf-icon_' +
 							  acct.domain + '">notifications</i></a></div>'+
 				'<div class="area-a2"><a onclick="removeColumn(' + key +
-							  ')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">remove_circle</i></a></div>'+
+							  ')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a></div>'+
 				'<div class="area-a3"><a onclick="mediaToggle(' + key +
 							  ')" class="setting nex"><i class="material-icons waves-effect nex" title="メディアフィルター">perm_media</i><span id="sta-media-' +
 							  key + '">On</span></div>'+
@@ -157,6 +157,7 @@
 				var json = JSON.stringify(obj);
 				localStorage.setItem("column", json);
 				parseColumn();
+				sortload()
 			}
 		})
 	}

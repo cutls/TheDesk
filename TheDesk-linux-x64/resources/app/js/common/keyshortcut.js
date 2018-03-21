@@ -42,6 +42,20 @@ $(function($) {
 				}
 			}
 		}
+		//Ctrl+Sift+C:全消し
+		if (event.ctrlKey && event.shiftKey) {
+			if (e.keyCode === 67) {
+				clear();
+				return false;
+			}
+		}
+		//Ctrl+Sift+N:NowPlaying
+		if (event.ctrlKey && event.shiftKey) {
+			if (e.keyCode === 78) {
+				nowplaying()
+				return false;
+			}
+		}
 		//input/textareaにフォーカスなし時
 		if (!hasFocus && !hasFocus2) {
 			//X:開閉
@@ -74,10 +88,24 @@ $(function($) {
 					return false;
 				}
 			}
-			//Sift+C:全消し
-			if (event.shiftKey) {
-				if (e.keyCode === 67) {
-					clear();
+			//Ctrl+Sift+S:設定
+			if (event.ctrlKey && event.shiftKey) {
+				if (e.keyCode === 83) {
+					location.href = "setting.html";
+					return false;
+				}
+			}
+			//Ctrl+Sift+M:アカマネ
+			if (event.ctrlKey && event.shiftKey) {
+				if (e.keyCode === 77) {
+					location.href = "acct.html";
+					return false;
+				}
+			}
+			//Ctrl+Sift+P:プロフ
+			if (event.ctrlKey && event.shiftKey) {
+				if (e.keyCode === 80) {
+					profShow()
 					return false;
 				}
 			}

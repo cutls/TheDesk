@@ -26,7 +26,7 @@ function post() {
 		var nsfw = "false";
 	}
 	var vis = $("#vis").text();
-	if(vis!="public"){
+	if(vis!="inherit"){
 		toot.visibility=vis;
 	}
 	if ($("#cw").hasClass("cw-avail")) {

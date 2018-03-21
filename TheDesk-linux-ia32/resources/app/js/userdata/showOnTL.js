@@ -6,8 +6,29 @@ if(location.search){
 	var mode=m[1];
 	var codex=m[2];
 	if(mode=="user"){
-		udg(codex,0);
+		udgEx(codex,0);
 	}
+}
+function udgEx(user,acct_id){
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem(domain + "_at");
+	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+user
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		}
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		var id=json.accounts[0].id;
+		udg(id,0);
+	});
+	return;
 }
 function udg(user, acct_id) {
 	reset();
@@ -90,9 +111,11 @@ function udg(user, acct_id) {
 				$("#his-domain-btn").hide();
 				$("#his-emp-btn").hide();
 				$(".only-my-data").show();
+				$(".only-his-data").hide();
 			} else {
 				relations(user, acct_id);
 				$(".only-my-data").hide();
+				$(".only-his-data").show();
 			}
 		}
 		todc();

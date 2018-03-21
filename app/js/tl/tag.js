@@ -1,3 +1,12 @@
+//タグ表示
+if(location.search){
+	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);
+	var mode=m[1];
+	var codex=m[2];
+	if(mode=="tag"){
+		tl('tag',decodeURI(codex),0,'add');
+	}
+}
 //よく使うタグ
 function tagShow(tag){
 	$("[data-tag="+tag+"]").toggleClass("hide");

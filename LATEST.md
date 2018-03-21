@@ -1,19 +1,19 @@
 ## For Astarte(kirishima.cloud), My Primary Instance
 
-TheDesk :thedesk: Airi (ver.7)  
+TheDesk :thedesk: Airi (ver.8)  
 ・バグフィックス
-・カスタム絵文字検索
-・Pleroma暫定対応(投稿・表示のみ。)
-・個別インスタンスの対応
+・UI改善
+・キーボードショートカット追加・変更
+・他垢からふぁぼ・フォローなどが可能に
 https://thedesk.top
  :github: https://github.com/cutls/TheDesk #Desk #DeskUpdate
 
  ## For Vanilla Instances
 
- Windows/LinuxクライアントTheDesk Airi (ver.7)リリース
+ Windows/LinuxクライアントTheDesk Airi (ver.8)リリース
 ・バグフィックス
-・カスタム絵文字検索
-・Pleroma暫定対応(投稿・表示のみ。)
-・個別インスタンスの対応
+・UI改善
+・キーボードショートカット追加・変更
+・他垢からふぁぼ・フォローなどが可能に
 TheDeskはマルチカラム，マルチアカウントはもちろんのこと，なにかとマストドンライフをシンプルに効率化するクライアントです。
 https://thedesk.top

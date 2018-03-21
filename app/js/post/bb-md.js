@@ -16,9 +16,9 @@ function mdCheck(){
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if(domain=="mstdn.y-zu.org"){
-		//$("#private-button").text("限定公開(Yづドン!)");
+		$("#private-button").text("限定公開(Yづドン!)");
 	}else{
-		//$("#private-button").text("非公開(Private)");
+		$("#private-button").text("非公開(Private)");
 	}
 }
 //BOXのトグルボタン

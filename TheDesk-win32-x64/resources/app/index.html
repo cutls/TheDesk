@@ -27,7 +27,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Airi (ver.7)";
+var ver="Airi (ver.8)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -166,7 +166,7 @@ var tlid=0;
 </div>
 <div class="small-menu">
 <a href="setting.html" class="nex waves-effect">
-	<i class="material-icons nex" title="設定" data-trans-title="setting">settings</i>
+	<i class="material-icons nex" title="設定(Ctrl+Shift+S)" data-trans-title="setting">settings</i>
 	<span class="side-label" data-trans="setting">設定</span>
 </a>
 </div>
@@ -190,7 +190,7 @@ var tlid=0;
 </div>
 <div class="small-menu">
 <a href="acct.html" class="nex waves-effect">
-	<i class="material-icons" title="アカウントマネージャー" data-trans-title="manager">account_circle</i>
+	<i class="material-icons" title="アカウントマネージャー(Ctrl+Shift+M)" data-trans-title="manager">account_circle</i>
 	<span class="side-label" data-trans="manager_short">管理</span>
 </a>
 </div>
@@ -224,7 +224,7 @@ var tlid=0;
 </span>
 <br>
 <a id="clear" class="setting nex waves-effect">
-	<i class="material-icons nex mize" title="トゥートボックスのクリア" data-trans-title="post_box_clear">clear</i>
+	<i class="material-icons nex mize" title="トゥートボックスのクリア(Ctrl+Shit+C)" data-trans-title="post_box_clear">clear</i>
 </a>
 <a onclick="zoomBox()" class="setting nex waves-effect">
 	<i class="material-icons nex mize" title="ボックスの拡大・縮小(E)" data-trans-title="post_box_zoom">zoom_out_map</i>
@@ -236,7 +236,7 @@ var tlid=0;
 </div>
 <span id="radio-sta" class="radio"></span>
 <div id="radio-view" class="hide radio mize">
-<a onclick="nowplaying()" class="pointer"><i class="fa fa-spotify"></i>NowPlaying</a>
+<a onclick="nowplaying()" class="pointer" title="Ctrl+Shift+N"><i class="fa fa-spotify"></i>NowPlaying</a>
 <span class="cbadge pointer waves-effect" onclick="Rplay('https://listen.moe/stream','Listen.moe')" data-name="Listen.moe">Listen.moe</span>
 <span class="cbadge pointer waves-effect" onclick="Rplay('http://itori.animenfo.com:443/;','AnimeNfo Radio')" data-name="AnimeNfo Radio">AnimeNfo Radio</span>
 <span class="cbadge pointer waves-effect" onclick="Rplay('http://hyades.shoutca.st:8043/stream','LoFi hip hop Radio')" data-name="LoFi hip hop Radio">LoFi hip hop Radio</span>
@@ -263,7 +263,7 @@ var tlid=0;
 </div>
 <div class="mize" style="float:left;">
 <a onclick="profShow()" style="vertical-align:-1.5rem;">
-<i class="material-icons nex pointer mize waves-effect" title="選択中のプロフィール表示" data-trans-title="post_box_prof">account_circle</i>
+<i class="material-icons nex pointer mize waves-effect" title="選択中のプロフィール表示(Ctrl+Shift+P)" data-trans-title="post_box_prof">account_circle</i>
 </a>
 </div>
 <!--Markdown-->
@@ -320,6 +320,7 @@ var tlid=0;
 <span class="sml gray pointer more-show anti-markdown hide mize">
 <a onclick="mdToggle()">Markdownエディタを表示</a>
 </span>
+
 <br>
 <span id="suggest"></span>
 </div>
@@ -483,6 +484,21 @@ var tlid=0;
 		</div>
 	</li>
 	</ul>
+	他のアカウントを使用(<i class="fa fa-retweet"></i>/<i class="fa fa-star"></i>の解除はできません)<br>
+	<div class="row">
+		<div class="col s4">
+				<select id="status-acct-sel" class="acct-sel"></select>
+		</div>
+		<div class="col s2">
+			<button class="dropdown-button btn waves-effect" style="width:100%;" onclick="staEx('reply')"><i class="fa fa-share left"></i>返信</button>
+		</div>
+		<div class="col s2">
+			<button class="dropdown-button btn waves-effect indigo" style="width:100%;" onclick="staEx('rt')"><i class="fa fa-retweet left"></i>ブースト</button>
+		</div>
+		<div class="col s3">
+			<button class="dropdown-button btn waves-effect orange" style="width:100%;" onclick="staEx('fav')"><i class="fa fa-star left"></i>お気に入り登録</button>
+		</div>
+	</div>
 	<div id="toot-tools">
 	</div>
 	<div id="toot-after">
@@ -526,31 +542,34 @@ var tlid=0;
 	<div class="col s12" id="my-data-nav">
 	<ul class="custom-tabs transparent">
 		<li class="custom-tab col my-data-width active-back">
-			<a go="#his-tl">Timeline</a>
+			<a go="#his-tl">タイムライン</a>
 		</li>
 		<li class="custom-tab col my-data-width">
-			<a go="#his-follow-list">Follows</a>
+			<a go="#his-follow-list">フォロー</a>
 		</li>
 		<li class="custom-tab col my-data-width">
-			<a go="#his-follower-list">Followers</a>
+			<a go="#his-follower-list">フォロワー</a>
+		</li>
+		<li class="custom-tab col my-data-width only-his-data">
+			<a go="#his-action">他アカウントで操作</a>
 		</li>
 		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-fav-list">Favorites</a>
+			<a go="#his-fav-list">お気に入り登録</a>
 		</li>
 		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-blocking-list">Blocking</a>
+			<a go="#his-blocking-list">ブロック</a>
 		</li>
 		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-muting-list">Muting</a>
+			<a go="#his-muting-list">ミュート</a>
 		</li>
 		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-domain-list">Domain Blocking</a>
+			<a go="#his-domain-list">ドメインブロック</a>
 		</li>
 		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-prof-list">Edit Profile</a>
+			<a go="#his-prof-list">プロフィール編集</a>
 		</li>
 		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-request-list">Follow Request</a>
+			<a go="#his-request-list">フォローリクエスト</a>
 		</li>
 	</ul>
 	</div>
@@ -564,10 +583,15 @@ var tlid=0;
 	</div>
 	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="flw('--now','more')">もっと</button>
 	</div>
-	<div id="his-follower-list" class="col s12  tab-content">
+	<div id="his-follower-list" class="col s12 tab-content">
 	<div id="his-follower-list-contents" class="cont-series">
 	</div>
 	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="fer('--now','more')">もっと</button>
+	</div>
+	<div id="his-action" class="col s12 tab-content">
+		他のアカウントを使用してフォロー(解除はできません)<br>
+		<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>で
+		<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">フォロー</a>
 	</div>
 	<div id="his-fav-list" class="col s12  tab-content">
 	<div id="his-fav-list-contents" class="cont-series">

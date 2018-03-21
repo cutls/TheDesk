@@ -377,9 +377,10 @@ function multi() {
 			'" class="left circle" ' + sel + '>' + acct.user + '@' + acct.domain +
 			'</option>';
 		$(".acct-sel").append(templete);
-		$("#src-acct-sel").append('<option value="tootsearch">Tootsearch</option>');
-		$('select').material_select('update');
+		
 	});
+	$("#src-acct-sel").append('<option value="tootsearch">Tootsearch</option>');
+	$('select').material_select('update');
 }
 
 //バージョンエンコ

@@ -10,7 +10,8 @@ function sortload(){
 			if(localStorage.getItem("card_" + key)=="true"){
 				flag="true"
 			}
-			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'">'+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data)+' TL</li>';
+			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'">'+localStorage.getItem("domain_" + acct.type)+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data)+' TL　<a onclick="removeColumn(' + key +
+			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a></li>';
 			$("#sort").append(html);
 		});
 		drag();

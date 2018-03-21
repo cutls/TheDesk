@@ -190,7 +190,7 @@ function load() {
 
 	var size = localStorage.getItem("size");
 	if (!size) {
-		var size = "15";
+		var size = "13";
 	}
 	$("#size").val(size);
 
