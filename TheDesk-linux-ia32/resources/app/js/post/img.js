@@ -145,6 +145,7 @@ function media(b64, type) {
 		$("#toot-post-btn").prop("disabled", false);
 		$("#post-acct-sel").prop("disabled", true);
 		$('select').material_select();
+		$("#mec").text("あり");
 		Materialize.toast("ファイルアップロード後はアカウントを切り替えられません。", 1000);
 		localStorage.removeItem("image");
 	});

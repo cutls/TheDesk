@@ -17,7 +17,7 @@ function post() {
 	}
 	var media = $("#media").val();
 	if(media){
-		toot.media_ids=media;
+		toot.media_ids=media.split(",");
 	}
 	if ($("#nsfw").hasClass("nsfw-avail")) {
 		var nsfw = "true";

@@ -99,6 +99,7 @@
 			  '" data-notf="' + acct.domain + '"></div></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
 				'" class="tl" tlid="' + key + '"'+notf_attr+'><div style="text-align:center">[ここにトゥートはありません。]<br>F5で再読込できます。</div></div></div></div>';
 			$("#timeline-container").append(html);
+			localStorage.removeItem("pool_" + key);
 			if (acct.data) {
 				var data = acct.data;
 			} else {

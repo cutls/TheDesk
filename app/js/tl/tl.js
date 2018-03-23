@@ -15,6 +15,7 @@ function tl(type, data, acct_id, tlid) {
 		};
 		var multi = localStorage.getItem("column");
 		var obj = JSON.parse(multi);
+		localStorage.setItem("card_" + obj.length,"true");
 		obj.push(add);
 		console.log(obj);
 		var json = JSON.stringify(obj);

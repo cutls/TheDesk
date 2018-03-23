@@ -8,6 +8,7 @@ var Jimp = require("jimp");
 const shell = electron.shell;
 const os = require('os')
 const path = require('path')
+const Menu=electron.Menu
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 
@@ -68,6 +69,30 @@ function createWindow() {
 	mainWindow.on('close', function() {
 		fs.writeFileSync(info_path, JSON.stringify(mainWindow.getBounds()));
 	});
+	  // Create the Application's main menu
+	  var template = [{
+        label: "アプリケーション",
+        submenu: [
+			{ label: "TheDeskについて", click: function() { about(); } },
+            { type: "separator" },
+            { label: "終了", accelerator: "Command+Q", click: function() { app.quit(); }}
+        ]}, {
+        label: "編集",
+        submenu: [
+            { label: "元に戻す", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+            { label: "やり直し", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+            { type: "separator" },
+            { label: "切り取り", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+            { label: "コピー", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+            { label: "貼り付け", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+            { label: "すべて選択", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+        ]}
+    ];
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform=="darwin"){
+		Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+	}
 }
 // Electronの初期化完了後に実行
 app.on('ready', createWindow);
@@ -264,6 +289,9 @@ ipc.on('quit', (e, args) => {
 	app.quit();
 });
 ipc.on('about', (e, args) => {
+	about();
+});
+function about(){
 	var ver=app.getVersion()
 	var window = new BrowserWindow({width: 300, height: 460,
 		"transparent": false,    // ウィンドウの背景を透過
@@ -271,7 +299,7 @@ ipc.on('about', (e, args) => {
 			 "resizable": false });
 	   window.loadURL('file://' + __dirname + '/about.html?ver='+ver);
 	   return "true"
-});
+}
 //
 ipc.on('file-select', (e, args) => {
 	dialog.showOpenDialog(null, {
