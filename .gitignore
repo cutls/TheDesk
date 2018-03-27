@@ -1,4 +1,4 @@
 *.bat
 *.zip
 *.7z
-/TheDesk*/
+TheDesk-*
