@@ -18,7 +18,7 @@ TheDeskを関西で開発しています。[Cutls Portal](https://the.cutls.com)
 
 ## License
 
-[TheDesk LICENSE v2](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
+[TheDesk LICENSE v3](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
 
 ## Component/構成
 
