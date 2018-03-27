@@ -179,6 +179,19 @@ function cbCopy(mode){
 		
 	}
 }
+//本文のコピー
+function staCopy(id){
+	var html=$("[toot-id="+id+"] .toot").html();
+	html = html.match(/^<p>(.+)<\/p>$/)[1];
+	html = html.replace(/<br\s?\/?>/, "\n");
+	html = html.replace(/<p>/, "\n");
+	html = html.replace(/<\/p>/, "\n");
+	html=$.strip_tags(html);
+	if(execCopy(html)){
+		Materialize.toast("トゥート本文をコピーしました", 1500);
+	}
+	
+}
 //魚拓
 function shot(){
 	var id=$("#tootmodal").attr("data-id");

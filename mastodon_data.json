@@ -41,5 +41,14 @@
 	"mstdn.osaka_home":"ウチ",
 	"mstdn.osaka_local":"近所",
 	"mstdn.osaka_notification":"あめちゃん",
-	"mstdn.osaka_public":"新世界"
+	"mstdn.osaka_public":"新世界",
+	"mstdn.kemono-friends.info":"instance",
+	"mstdn.kemono-friends.info_name":"ますとどんちほー",
+	"mstdn.kemono-friends.info_letters":"1024",
+	"mstdn.kemono-friends.info_bbcode":"disabled",
+	"mstdn.kemono-friends.info_markdown":"disabled",
+	"mstdn.kemono-friends.info_home":"なわばり",
+	"mstdn.kemono-friends.info_local":"ますとどんちほー",
+	"mstdn.kemono-friends.info_notification":"ねえねえ!",
+	"mstdn.kemono-friends.info_public":"ジャパリパーク"
 }

@@ -36,26 +36,18 @@ function customEmoji(){
     emojiList('home')
 }
 function defEmoji(target){
-    var emojis=map;
-    for (i = 0; i < emojis.length; i++) {
-        var emoji = emojis[i];
-        if (emoji.name==target) {
-            var now = $("#textarea").val();
-            var selin = localStorage.getItem("cursor");
-            var now = $("#textarea").val();
-             if(selin>0){
-                 var before   = now.substr(0, selin);
-                    var after    = now.substr(selin, now.length);
-                            newt = before+ emoji.emoji + after;
-                        }else{
-                            newt = emoji.emoji+now;
-                        }
-                        console.log(emoji.emoji);
-                        $("#textarea").val(newt);
-                        //emoji();
-                        $("#textarea").focus();
-                         break;
-                     }
-                  }   
-            
+    var emoji=emojione.shortnameToUnicode(":"+target+":");
+    var now = $("#textarea").val();
+    var selin = localStorage.getItem("cursor");
+    var now = $("#textarea").val();
+     if(selin>0){
+        var before = now.substr(0, selin);
+        var after = now.substr(selin, now.length);
+        newt = before+ emoji + after;
+            }else{
+        newt = emoji+now;
+        }
+        console.log(emoji);
+        $("#textarea").val(newt);
+        $("#textarea").focus();
 }

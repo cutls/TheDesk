@@ -15,6 +15,7 @@ function tl(type, data, acct_id, tlid) {
 		};
 		var multi = localStorage.getItem("column");
 		var obj = JSON.parse(multi);
+		localStorage.setItem("card_" + obj.length,"true");
 		obj.push(add);
 		console.log(obj);
 		var json = JSON.stringify(obj);
@@ -35,9 +36,16 @@ function tl(type, data, acct_id, tlid) {
 			$("#notice_" + tlid).text("Integrated TL(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
 			$("#notice_icon_" + tlid).text("merge_type");
-		mixtl(acct_id, tlid);
+		mixtl(acct_id, tlid, "integrated");
 		return;
-	} else if (type == "notf") {
+	}else if (type == "plus") {
+		//Local+なら飛ばす
+			$("#notice_" + tlid).text("Local+ TL(" + localStorage.getItem(
+			"user_" + acct_id) + "@" + domain + ")");
+			$("#notice_icon_" + tlid).text("people_outline");
+		mixtl(acct_id, tlid, "plus");
+		return;
+	}else if (type == "notf") {
 		//通知なら飛ばす
 		//notf(acct_id, tlid, 'direct');
 		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
@@ -48,8 +56,20 @@ function tl(type, data, acct_id, tlid) {
 	localStorage.setItem("now", type);
 	todo(cap(type) + " TL Loading...");
 	var at = localStorage.getItem(domain + "_at");
-	$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
-		"user_" + acct_id) + "@" + domain + ")");
+	if(type!="noauth"){
+		var hdr={
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		};
+		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
+			"user_" + acct_id) + "@" + domain + ")");
+	}else{
+		var hdr={
+			'content-type': 'application/json'
+		};
+		domain=acct_id;
+		$("#notice_" + tlid).text("Glance TL(" + domain + ")");
+	}
 		$("#notice_icon_" + tlid).text(icon(type));
 	var url=com(type, data);
 		if(type=="tag"){
@@ -62,17 +82,14 @@ function tl(type, data, acct_id, tlid) {
 	console.log(start);
 	fetch(start, {
 		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
+		headers: hdr,
 	}).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json, '', acct_id, tlid);
+		var templete = parse(json, type, acct_id, tlid);
 		$("#timeline_" + tlid).html(templete);
 		additional(acct_id, tlid);
 		jQuery("time.timeago").timeago();
@@ -108,7 +125,10 @@ function reload(type, cc, acct_id, tlid, data) {
 		}
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=hashtag&tag=" + data +"&access_token=" + at;
-	} 
+	} else if (type == "noauth") {
+		var start = "wss://" + acct_id +
+			"/api/v1/streaming/?stream=public:local";
+	}
 	console.log(start);
 	var wsid = websocket.length;
 	websocket[wsid] = new WebSocket(start);
@@ -131,7 +151,7 @@ function reload(type, cc, acct_id, tlid, data) {
 			var obj = JSON.parse(JSON.parse(mess.data).payload);
 			console.log(obj);
 			if($("#timeline_" + tlid +" [toot-id=" + obj.id + "]").length < 1){
-				var templete = parse([obj], '', acct_id, tlid);
+				var templete = parse([obj], type, acct_id, tlid);
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
 					pool = templete + pool;
@@ -180,7 +200,10 @@ function moreload(type, tlid) {
 	if (localStorage.getItem("morelock") != sid) {
 		localStorage.setItem("morelock", sid);
 		if (type == "mix") {
-			mixmore(tlid);
+			mixmore(tlid,"integrated");
+			return;
+		}else if (type == "plus") {
+			mixmore(tlid,"plus");
 			return;
 		}else if (type == "notf") {
 			notfmore(tlid);
@@ -257,20 +280,25 @@ function tlCloser() {
 
 //TLのタイトル
 function cap(type, data, acct_id) {
+	//独自ロケール
+	var locale = localStorage.getItem("locale");
+	if(locale=="yes"){
+		var locale=false;
+	}
 	if (type == "home") {
-		if(localStorage.getItem("home_" + acct_id)){
+		if(localStorage.getItem("home_" + acct_id) && !locale){
 			var response=localStorage.getItem("home_" + acct_id);
 		}else{
 			var response="Home TL";
 		}
 	} else if (type == "local") {
-		if(localStorage.getItem("local_" + acct_id)){
+		if(localStorage.getItem("local_" + acct_id) && !locale){
 			var response=localStorage.getItem("local_" + acct_id);
 		}else{
 			var response="Local TL";
 		}
 	} else if (type == "pub") {
-		if(localStorage.getItem("public_" + acct_id)){
+		if(localStorage.getItem("public_" + acct_id) && !locale){
 			var response=localStorage.getItem("public_" + acct_id);
 		}else{
 			var response="Federated TL";
@@ -280,11 +308,13 @@ function cap(type, data, acct_id) {
 	} else if (type == "list") {
 		var response= "List(id:" + data + ")"
 	} else if (type == "notf") {
-		if(localStorage.getItem("notification_" + acct_id)){
+		if(localStorage.getItem("notification_" + acct_id) && !locale){
 			var response=localStorage.getItem("notification_" + acct_id);
 		}else{
 			var response="Notification TL";
 		}
+	} else if (type == "noauth") {
+		var response= "Glance TL"
 	}
 	return response;
 }
@@ -293,7 +323,7 @@ function cap(type, data, acct_id) {
 function com(type, data) {
 	if (type == "home") {
 		return "home?"
-	} else if (type == "local") {
+	} else if (type == "local" || type == "noauth") {
 		return "public?local=true&"
 	} else if (type == "pub") {
 		return "public?"
@@ -309,7 +339,7 @@ function com(type, data) {
 function icon(type) {
 	if (type == "home") {
 		return "home"
-	} else if (type == "local") {
+	} else if (type == "local" || type == "noauth") {
 		return "people_outline"
 	} else if (type == "pub") {
 		return "language"

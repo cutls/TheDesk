@@ -51,7 +51,7 @@
   vertical-align: 0.6rem;
 }
 #sidebar #side-dead{
-  height:50px;
+  height:30px;
 }
 
 iframe {
@@ -83,7 +83,7 @@ iframe {
   cursor:text;
   font-size:1.2em;
 }
-.emoji-img{
+.emojione,.emoji-img{
   width: 20px;
   vertical-align: middle;
   margin: -3px 0 0;

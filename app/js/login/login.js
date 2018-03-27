@@ -3,6 +3,61 @@
 //アスタルテ判定初期化
 localStorage.removeItem("kirishima")
 localStorage.removeItem("image");
+var idata={
+	"kirishima.cloud":"instance",
+	"kirishima.cloud_name":"アスタルテ",
+	"kirishima.cloud_letters":"6229",
+	"kirishima.cloud_bbcode":"enabled",
+	"kirishima.cloud_markdown":"disabled",
+	"knzk.me":"instance",
+	"knzk.me_name":"神崎丼",
+	"knzk.me_letters":"5000",
+	"knzk.me_bbcode":"disabled",
+	"knzk.me_markdown":"disabled",
+	"mastodos.com":"instance",
+	"mastodos.com_name":"マストどす",
+	"mastodos.com_letters":"500",
+	"mastodos.com_bbcode":"disabled",
+	"mastodos.com_markdown":"disabled",
+	"dev.kirishima.cloud":"hidden",
+	"dev.kirishima.cloud_name":"アスタルテ(Dev)",
+	"dev.kirishima.cloud_letters":"6229",
+	"dev.kirishima.cloud_bbcode":"enabled",
+	"dev.kirishima.cloud_markdown":"disabled",
+	"mstdn.y-zu.org":"instance",
+	"mstdn.y-zu.org_name":"Yづドン!(502 BadGateway)",
+	"mstdn.y-zu.org_letters":"500",
+	"mstdn.y-zu.org_bbcode":"disabled",
+	"mstdn.y-zu.org_markdown":"disabled",
+	"imastodon.net":"instance",
+	"imastodon.net_name":"im@stodon",
+	"imastodon.net_letters":"500",
+	"imastodon.net_bbcode":"disabled",
+	"imastodon.net_markdown":"disabled",
+	"imastodon.net_home":"オフィス",
+	"imastodon.net_local":"楽屋",
+	"imastodon.net_notification":"ホワイトボード",
+	"imastodon.net_public":"ライブステージ",
+	"mstdn.osaka":"instance",
+	"mstdn.osaka_name":"大阪丼",
+	"mstdn.osaka_letters":"500",
+	"mstdn.osaka_bbcode":"disabled",
+	"mstdn.osaka_markdown":"disabled",
+	"mstdn.osaka_home":"ウチ",
+	"mstdn.osaka_local":"近所",
+	"mstdn.osaka_notification":"あめちゃん",
+	"mstdn.osaka_public":"新世界",
+	"mstdn.kemono-friends.info":"instance",
+	"mstdn.kemono-friends.info_name":"ますとどんちほー",
+	"mstdn.kemono-friends.info_letters":"1024",
+	"mstdn.kemono-friends.info_bbcode":"disabled",
+	"mstdn.kemono-friends.info_markdown":"disabled",
+	"mstdn.kemono-friends.info_home":"なわばり",
+	"mstdn.kemono-friends.info_local":"ますとどんちほー",
+	"mstdn.kemono-friends.info_notification":"ねえねえ!",
+	"mstdn.kemono-friends.info_public":"ジャパリパーク"
+};
+localStorage.setItem("instance", JSON.stringify(idata));
 function ck() {
 	var domain = localStorage.getItem("domain_0");
 	var at = localStorage.getItem(domain + "_at");
@@ -23,9 +78,8 @@ function ck() {
 		parseColumn();
 		multi();
 	} else {
-		$("#masara").show();
-		console.log("Please Login");
-		support();
+		$("#tl").show();
+		multi();
 	}
 }
 ck();
@@ -223,7 +277,7 @@ function getdataAdv(domain, at) {
 	});
 }
 
-//TheDesk独自のマストドンDBでMarkdownやBBCodeの対応、文字数制限をチェック
+//MarkdownやBBCodeの対応、文字数制限をチェック
 function ckdb(acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if(domain=="kirishima.cloud"){
@@ -235,46 +289,6 @@ function ckdb(acct_id) {
 	var letters = domain + "_letters";
 	if(localStorage.getItem("instance")){
 		var json=JSON.parse(localStorage.getItem("instance"));
-		if (json[bbcode]) {
-			if (json[bbcode] == "enabled") {
-				localStorage.setItem("bb_" + acct_id, "true");
-			} else {
-				localStorage.removeItem("bb_" + acct_id);
-				$("[data-activates='bbcode']").addClass("disabled");
-				$("[data-activates='bbcode']").prop("disabled", true);
-			}
-		} else {
-			localStorage.removeItem("bb_" + acct_id);
-			$("[data-activates='bbcode']").addClass("disabled");
-			$("[data-activates='bbcode']").addClass("disabled", true);
-		}
-		if (json[letters]) {
-			if($("#textarea").attr("data-length")<json[letters]){
-				$("#textarea").attr("data-length", json[letters]);
-			}
-		} else {}
-		if (json[domain + "_markdown"] == "enabled") {
-			localStorage.setItem("md_" + acct_id, "true");
-			$(".markdown").show();
-		}else{
-			localStorage.removeItem("bb_" + acct_id);
-		}
-	}else{
-		var ver=enc(localStorage.getItem("ver"));
-		var start = "https://dl.thedesk.top/mastodon_data.json?eu=ai";
-		fetch(start, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			},
-		}).then(function(response) {
-			return response.json();
-		}).catch(function(error) {
-			todo(error);
-			console.error(error);
-		}).then(function(json) {
-			console.log(json);
-			localStorage.setItem("instance", JSON.stringify(json));
 			if (json[bbcode]) {
 				if (json[bbcode] == "enabled") {
 					localStorage.setItem("bb_" + acct_id, "true");
@@ -313,7 +327,6 @@ function ckdb(acct_id) {
 				localStorage.setItem("notification_" + acct_id, json[domain + "_notification"]);
 			}
 	
-		});
 	}
 	
 }
@@ -350,13 +363,7 @@ function support() {
 function multi() {
 	var multi = localStorage.getItem("multi");
 	if (!multi) {
-		var obj = [{
-			at: localStorage.getItem(localStorage.getItem("domain_" + acct_id) + "_at"),
-			name: localStorage.getItem("name_" + acct_id),
-			domain: localStorage.getItem("domain_" + acct_id),
-			user: localStorage.getItem("user_" + acct_id),
-			prof: localStorage.getItem("prof_" + acct_id)
-		}];
+		var obj = [];
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
 	} else {
@@ -365,6 +372,11 @@ function multi() {
 	var templete;
 	var last = localStorage.getItem("last-use");
 	var sel;
+	console.log(obj.length)
+	if(obj.length<1){
+		$("#src-acct-sel").html('<option value="tootsearch">Tootsearch</option>');
+		$("#add-acct-sel").html('<option value="noauth">認証せずに見る</option>');
+	}else{
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
 		var list = key * 1 + 1;
@@ -379,7 +391,9 @@ function multi() {
 		$(".acct-sel").append(templete);
 		
 	});
-	$("#src-acct-sel").append('<option value="tootsearch">Tootsearch</option>');
+		$("#src-acct-sel").append('<option value="tootsearch">Tootsearch</option>');
+		$("#add-acct-sel").append('<option value="noauth">認証せずに見る</option>');
+	}
 	$('select').material_select('update');
 }
 

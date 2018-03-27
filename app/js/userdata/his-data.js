@@ -35,8 +35,40 @@ function utl(user, more, acct_id) {
 		if (more) {
 			$("#his-tl-contents").append(templete);
 		} else {
-			$("#his-tl-contents").html(templete);
+			pinutl(templete,user, acct_id)
 		}
+		jQuery("time.timeago").timeago();
+	});
+}
+//ピン留めTL
+function pinutl(before,user, acct_id) {
+	if (!acct_id) {
+		var acct_id = $('#his-data').attr("use-acct");
+	}
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem(domain + "_at");
+	if (user == "--now") {
+		var user = $('#his-data').attr("user-id");
+	}
+		var plus = "?pinned=1";
+	var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses" +
+		plus
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		var templete = parse(json, '', acct_id);
+		var height = $("#his-data-content").height() - 245;
+		$(".tab-content").css('height', height);
+			$("#his-tl-contents").html(templete+before);
 		jQuery("time.timeago").timeago();
 	});
 }

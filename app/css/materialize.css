@@ -3,6 +3,7 @@
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  * Modified by Cutls P(Airi (ver.3)-2018/03/14)
+ * Modified by Cutls P(Airi (ver.9)-2018/03/27) - pinned escape
  */
 .materialize-red {
   background-color: #e51c23 !important;
@@ -2792,10 +2793,11 @@ video.responsive-video {
   position: relative;
 }
 
+/*
 .pinned {
   position: fixed !important;
 }
-
+*/
 /*********************
   Transition Classes
 **********************/

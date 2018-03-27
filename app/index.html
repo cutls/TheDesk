@@ -4,7 +4,6 @@
 	<title>TheDesk</title>
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="./css/materialize.css" type="text/css" rel="stylesheet">
-	<link href="./css/auth.css" type="text/css" rel="stylesheet">
 	<link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
 	<link href='./css/tl.css' rel='stylesheet' type='text/css'>
 	<link href='./css/userdata.css' rel='stylesheet' type='text/css'>
@@ -27,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Airi (ver.8)";
+var ver="Airi (ver.9)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -35,35 +34,6 @@ var tlid=0;
   verck(ver);
  </script>
 <textarea id="copy" style="top:-100px; position:fixed;"></textarea>
-<div id="masara">
-<!--最初にログインする--><span data-trans="want_login">ログインしたいインスタンスのアドレス</span>
-<br>
-<input type="text" id="url" style="width:70%" placeholder="mstdn.jp">
-<div id="ins-suggest">
-</div>
-<button class="btn waves-effect" onclick="instance()">Login</button>
-<br><span data-trans="linux_ck">Linuxでご使用の方やPleromaにログインされる方はチェックを入れて下さい。</span>
-<br>
-<input type="checkbox" class="filled-in" id="linux" />
-<label for="linux" data-trans="code_setup">コードセットアップ</label>
-<br>
-<span style="font-family:Open Sans;">Supports</span>
-<div id="support">
-</div>
-<br><span data-trans="invite_before">各インスタンスの独自機能もAPIの範囲内で実装させていただきます。お知らせください。</span>
-<a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P(@Cutls@kirishima.cloud)</a><span data-trans="made">まで。</span>
-<br><span data-trans="invite_after">ログイン後は設定画面から@Cutls@kirishima.cloudにコンタクトをとることができます。</span>
-<br>
-<button class="btn waves-effect indigo" onclick="about()" data-trans="about">このソフトについて</button>
-<br>
-</div>
-<div id="auth">
-<!--PINコードで認証--><span data-trans="enter_code">指定されたコードを貼り付けてください。ログインウィンドウは閉じていただいて構いません。</span>
-<br>
-<input type="text" id="code" placeholder="コードを入力" data-trans-placeholder="code">
-<button class="btn waves-effect" onclick="code()" data-trans="auth">認証</button>
-<br>
-</div>
 <div id="tl">
 <!--TL-->
 <!--ドラッグハンドラ-->
@@ -77,18 +47,24 @@ var tlid=0;
 <div id="add-box" class="hide z-depth-4 notf-box">
 <div class="input-field"><span data-trans="your_acct">アカウント選択</span>
 <br>
-<select id="add-acct-sel" class="acct-sel" style="color:black"></select>
+<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
 <label></label>
 </div>
 <div class="input-field">
+<div id="auth">
 <select id="type-sel" style="color:black">
 	<option value="local" data-trans="local">ローカル</option>
 	<option value="home" data-trans="home">ホーム</option>
 	<option value="pub" data-trans="public">連合</option>
 	<option value="mix" data-trans="integrated">統合(ローカルとホーム)</option>
+	<option value="plus" data-trans="plus">統合(ローカルとブースト・リプライ)</option>
 	<option value="notf" data-trans="notification">通知</option>
 </select>
 <label data-trans="show_tl">表示するタイムライン</label>
+</div>
+<div id="noauth" class="hide">表示するタイムライン
+	<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);" placeholder="e.g:mstdn.jp">
+</div>
 </div>
 <button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()" data-trans-i="add">
 	<i class="material-icons left">add</i>追加
@@ -137,6 +113,8 @@ var tlid=0;
 <div id="main">
 <!--TLのTL-->
 <div id="timeline-container">
+	まずは右のアカウントボタンからアカウントを追加してください。<br>
+	右のカラム追加ボタンで認証せずにローカルタイムラインを見ることもできます。
 </div>
 <!--サイドバー-->
 <div id="sidebar">
@@ -148,12 +126,12 @@ var tlid=0;
 <br>
 <span class="side-label" data-trans="column_add">カラム追加</span>
 </div>
-<div class="big-menu" id="src-tgl">
-<a onclick="srcToggle()" class="nex waves-effect">
-	<i class="material-icons nex big-icon" title="検索" data-trans-title="src">search</i>
+<div class="big-menu">
+<a href="acct.html" class="nex waves-effect">
+	<i class="material-icons nex big-icon" title="アカウントマネージャー(Ctrl+Shift+M)" data-trans-title="manager">account_circle</i>
 </a>
 <br>
-<span class="side-label" data-trans="src">検索</span>
+<span class="side-label" data-trans="manager_short">アカウント</span>
 </div>
 <div class="big-menu" id="sort-tgl">
 <a onclick="sortToggle()" class="nex waves-effect">
@@ -163,6 +141,12 @@ var tlid=0;
 <span class="side-label" data-trans="sort">並べ替え</span>
 </div>
 <div id="side-dead">
+</div>
+<div class="small-menu" id="src-tgl">
+	<a onclick="srcToggle()" class="nex waves-effect">
+		<i class="material-icons" title="検索" data-trans-title="src">search</i>
+		<span class="side-label" data-trans="src">検索</span>
+	</a>
 </div>
 <div class="small-menu">
 <a href="setting.html" class="nex waves-effect">
@@ -186,12 +170,6 @@ var tlid=0;
 <a onclick="nano()" class="nex waves-effect">
 	<i class="material-icons" title="最小のマストドン。TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
 	<span class="side-label" data-trans="nano">Nano</span>
-</a>
-</div>
-<div class="small-menu">
-<a href="acct.html" class="nex waves-effect">
-	<i class="material-icons" title="アカウントマネージャー(Ctrl+Shift+M)" data-trans-title="manager">account_circle</i>
-	<span class="side-label" data-trans="manager_short">管理</span>
 </a>
 </div>
 <div id="side-dead">
@@ -706,17 +684,6 @@ var tlid=0;
 </div>
 <!--Radio Happy(Yui) Taku Inoue-->
 <audio src="" id="radio"></audio>
-<!--大量のデフォルト絵文字-->
-<script type="text/javascript" src="./js/emoji/emoji-map.js"></script>
-<script type="text/javascript" src="./js/emoji/activity.js"></script>
-<script type="text/javascript" src="./js/emoji/flag.js"></script>
-<script type="text/javascript" src="./js/emoji/food.js"></script>
-<script type="text/javascript" src="./js/emoji/nature.js"></script>
-<script type="text/javascript" src="./js/emoji/object.js"></script>
-<script type="text/javascript" src="./js/emoji/people.js"></script>
-<script type="text/javascript" src="./js/emoji/place.js"></script>
-<script type="text/javascript" src="./js/emoji/symbol.js"></script>
-<script type="text/javascript" src="./js/emoji/default-emoji.js"></script>
 <!--JS-->
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/tl/parse.js"></script>
@@ -733,7 +700,6 @@ var tlid=0;
 <script type="text/javascript" src="./js/ui/post-box.js"></script>
 <script type="text/javascript" src="./js/ui/layout.js"></script>
 <script type="text/javascript" src="./js/login/login.js"></script>
-<script type="text/javascript" src="./js/login/instance.js"></script>
 <script type="text/javascript" src="./js/ui/img.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script type="text/javascript" src="./js/ui/pip.js"></script>
@@ -751,4 +717,7 @@ var tlid=0;
 <script type="text/javascript" src="./js/userdata/showOnTL.js"></script>
 <script type="text/javascript" src="./js/userdata/his-data.js"></script>
 <script type="text/javascript" src="./js/userdata/prof-edit.js"></script>
+<script type="text/javascript" src="./js/emoji/emojione.js"></script>
+<script type="text/javascript" src="./js/emoji/emojipack.js"></script>
+<script type="text/javascript" src="./js/emoji/default-emoji.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>

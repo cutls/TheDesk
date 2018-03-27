@@ -109,17 +109,7 @@ function multiDel(target) {
 //サポートインスタンス
 function support() {
 	var start = "https://dl.thedesk.top/mastodon_data.json?eu=ai";
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
-		},
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
+	var json=JSON.parse(localStorage.getItem("instance"));
 		console.log(json);
 		Object.keys(json).forEach(function(key) {
 			var instance = json[key];
@@ -129,7 +119,6 @@ function support() {
 				$("#support").append(templete);
 			}
 		});
-	});
 }
 
 //URL指定してポップアップ

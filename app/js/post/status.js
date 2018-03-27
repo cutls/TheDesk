@@ -23,7 +23,7 @@ function fav(id, acct_id, remote) {
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
-		if(!remote){
+		if(remote!="remote"){
 		//APIのふぁぼカウントがおかしい
 		if ($("[toot-id=" + id + "] .fav_ct").text() == json.favourites_count){
 			if(flag=="unfavourite"){
@@ -77,7 +77,7 @@ function rt(id, acct_id, remote) {
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
-		if(!remote){
+		if(remote!="remote"){
 		$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
 		if (!json.reblog) {
 			if(flag=="unreblog"){

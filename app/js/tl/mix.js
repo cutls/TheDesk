@@ -1,6 +1,6 @@
 //Integrated TL
-function mixtl(acct_id, tlid) {
-	var type = "mix";
+function mixtl(acct_id, tlid, type) {
+	console.log(type);
 	localStorage.removeItem("morelock")
 	localStorage.setItem("now", type);
 	todo("Integrated TL Loading...(Local)");
@@ -39,21 +39,30 @@ function mixtl(acct_id, tlid) {
                 if(date(a.created_at,"unix")>date(b.created_at,"unix")) return -1;
                 if(date(a.created_at,"unix")<date(b.created_at,"unix")) return 1;
                 return 0;
-            });
-            timeline.splice(20);
+			});
+			if(type=="integrated"){
+				timeline.splice(20);
+			}
             var templete="";
             Object.keys(timeline).forEach(function(key) {
                 var pkey=key*1+1;
-                if(pkey<20){
+                if(pkey<timeline.length){
                     if(date(timeline[key].created_at,"unix")!=date(timeline[pkey].created_at,"unix")){
-                        templete = templete+parse([timeline[key]], '', acct_id, tlid);
+						if(type=="integrated"){
+							templete = templete+parse([timeline[key]], '', acct_id, tlid);
+						}else if(type=="plus"){
+							if(timeline[key].account.acct==timeline[key].account.username){
+								templete = templete+parse([timeline[key]], '', acct_id, tlid);
+							}
+						}
+                        
                     }
                 }
 
             });
             
              $("#timeline_" + tlid).html(templete);
-            mixre(acct_id, tlid);
+            mixre(acct_id, tlid, type);
 			additional(acct_id, tlid);
 			jQuery("time.timeago").timeago();
 			todc();
@@ -63,11 +72,9 @@ function mixtl(acct_id, tlid) {
 
 
 //Streamingに接続
-function mixre(acct_id, tlid) {
+function mixre(acct_id, tlid, TLtype) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
-	var type = "mix";
-	localStorage.setItem("now", type);
 	var startHome = "wss://" + domain +
 		"/api/v1/streaming/?stream=user&access_token=" + at;
 
@@ -96,6 +103,7 @@ function mixre(acct_id, tlid) {
 			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 		} else if (type == "update") {
 			var templete = parse([obj], '', acct_id, tlid);
+			if (!$("[toot-id="+obj.id+"]").length) {
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
 					pool = templete + pool;
@@ -107,7 +115,7 @@ function mixre(acct_id, tlid) {
 				additional(acct_id, tlid);
 				jQuery("time.timeago").timeago();
 				todc();
-		}
+		}}
 	}
 	websocketHome[wshid].onmessage = function(mess) {
 		console.log("Receive Streaming API:(Home)");
@@ -119,8 +127,16 @@ function mixre(acct_id, tlid) {
 			$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
 			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 		} else if (type == "update") {
-			var templete = parse([obj], '', acct_id, tlid);
-				if (obj.visibility != "public" || obj.account.acct != obj.account.username) {
+			if(TLtype=="integrated"){
+				var templete = parse([obj], '', acct_id, tlid);
+			}else if(TLtype=="plus"){
+				if(obj.account.acct==obj.account.username){
+					var templete = parse([obj], '', acct_id, tlid);
+				}else{
+					var templete="";
+				}
+			}
+		if (!$("[toot-id="+obj.id+"]").length) {
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
 					pool = templete + pool;
@@ -143,7 +159,7 @@ function mixre(acct_id, tlid) {
 }
 
 //ある程度のスクロールで発火
-function mixmore(tlid) {
+function mixmore(tlid,type) {
 	var multi = localStorage.getItem("column");
 	var obj = JSON.parse(multi);
 	var acct_id = obj[tlid].domain;
@@ -192,7 +208,13 @@ function mixmore(tlid) {
                 var pkey=key*1+1;
                 if(pkey<20){
                     if(date(timeline[key].created_at,"unix")!=date(timeline[pkey].created_at,"unix")){
-                        templete = templete+parse([timeline[key]], '', acct_id, tlid);
+                        if(type=="integrated"){
+							templete = templete+parse([timeline[key]], '', acct_id, tlid);
+						}else if(type=="plus"){
+							if(timeline[key].account.acct==timeline[key].account.username){
+								templete = templete+parse([timeline[key]], '', acct_id, tlid);
+							}
+						}
                     }
                 }
 

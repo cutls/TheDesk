@@ -34,16 +34,10 @@ Japanese
 ## Requirement/環境
 
 - Windows (to launch TheDesk/実行に必要) / Linux (x64/ia32/armv7l)
-- Electron beta.1.8.2-beta4
+- Electron beta.1.8.4
 - electron-dl
-- electron-about-window
 - Jimp(Node.js)
 - Ability to read unformated files!
-
-### Why do we use Electron beta version?/Beta版の利用について
-
-Some animated emojis are not GIF but PNG, only rendered by Electron beta version(Chromium 59 and above).  
-アニメ絵文字の一部がChromium 59以降のみ対応のAPNGで提供されているためBetaを利用しています。
 
 ## See also/詳しく
 

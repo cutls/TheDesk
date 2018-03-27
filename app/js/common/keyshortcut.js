@@ -109,6 +109,17 @@ $(function($) {
 					return false;
 				}
 			}
+			//数字:TL
+			if (event.ctrlKey) {
+			if (e.keyCode >= 49 && e.keyCode <= 57) {
+				var kz=e.keyCode-49;
+				if($('[tlid='+kz+']').length){
+					console.log($('[tlid='+kz+']').offset().left);
+					$("#timeline-container").animate({scrollLeft:$("#timeline-container").scrollLeft()+$('[tlid='+kz+']').offset().left});
+				}
+				return false;
+			}
+			}
 		}
 		//textareaフォーカス時
 		if (hasFocus2) {

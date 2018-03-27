@@ -105,6 +105,13 @@ function settings() {
 		Materialize.toast("タグの取得範囲を「" + tagt + "」に設定しました。", 3000);
 	}
 	localStorage.setItem("tag-range", tagd);
+
+	var uld = $("[name=ul]:checked").val();
+	var ult = $("[for=ul_"+uld+"]").text();
+	if (uld != localStorage.getItem("locale")) {
+		Materialize.toast("独自ロケール設定を" + ult + "に設定しました。", 3000);
+	}
+	localStorage.setItem("locale", uld);
 }
 
 //読み込み時の設定ロード
@@ -205,6 +212,12 @@ function load() {
 		var tag = "all";
 	}
 	$("#t_" + tag).prop("checked", true);
+
+	var uld = localStorage.getItem("locale");
+	if (!uld) {
+		var uld = "yes";
+	}
+	$("#ul_" + uld).prop("checked", true);
 }
 //最初に読む
 load();
