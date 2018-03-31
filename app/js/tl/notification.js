@@ -80,11 +80,13 @@ function notf(acct_id, tlid, sys) {
 			var templete="";
 			localStorage.setItem("lastnotf_" + acct_id,obj.id);
 			if(obj.type!="follow"){
-				templete = templete+parse([obj], 'notf', acct_id, tlid, popup);
+				templete = parse([obj], 'notf', acct_id, tlid, popup);
 			}else{
-				templete = templete+userparse([obj], 'notf', acct_id, tlid, popup);
+				templete = userparse([obj], 'notf', acct_id, tlid, popup);
 			}
-			$("div[data-notf=" + acct_id +"]").prepend(templete);
+			if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
+				$("div[data-notf=" + acct_id +"]").prepend(templete);
+			}
 			jQuery("time.timeago").timeago();
 		} else if (type == "delete") {
 			$("[toot-id=" + obj + "]").hide();
@@ -151,8 +153,5 @@ function notfmore(tlid) {
 function notfToggle(acct, tlid) {
 	$("#notf-box_" + tlid).toggleClass("hide");
 	$("#notf-box_" + tlid).toggleClass("show");
-	if (!$("#notf-box_" + tlid).hasClass("fetched")) {
-		notf(acct, tlid);
-	}
 	$(".notf-icon_" + acct).removeClass("red-text");
 }

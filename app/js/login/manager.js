@@ -30,15 +30,15 @@ function load() {
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
 		var list = key * 1 + 1;
-		templete = '<div class="acct" id="acct_' + key + '">' + list +
-			'.<img src="' + acct.prof + '" width="40" height="40"><div class="text">' +
+		templete = '<div id="acct_' + key + '"><div class="col s1">' + list +
+			'.</div><div class="col s2"><img src="' + acct.prof + '" width="40" height="40"></div><div class="text col s3">' +
 			acct.name + '&nbsp;<span class="gray">' + escapeHTML(acct.user) + '@' + acct.domain +
-			'</span></div><button class="btn waves-effect disTar" onclick="data(\'' +
+			'</span></div><div class="col s2"><button class="btn waves-effect disTar" onclick="data(\'' +
 			acct.domain +
-			'\')">インスタンスデータ表示</button><button class="btn waves-effect" onclick="refresh(' +
+			'\')">インスタンス情報</button></div><div class="col s2"><button class="btn waves-effect" onclick="refresh(' +
 			key +
-			')">情報更新</button><button class="btn waves-effect red disTar" onclick="multiDel(' +
-			key + ')">削除</button><br></div>';
+			')">情報更新</button></div><div class="col s2"><button class="btn waves-effect red disTar" onclick="multiDel(' +
+			key + ')">削除</button><br></div></div>';
 		$("#acct-list").append(templete);
 	});
 	var acctN = localStorage.getItem("acct");
@@ -108,14 +108,13 @@ function multiDel(target) {
 
 //サポートインスタンス
 function support() {
-	var start = "https://dl.thedesk.top/mastodon_data.json?eu=ai";
 	var json=JSON.parse(localStorage.getItem("instance"));
 		console.log(json);
 		Object.keys(json).forEach(function(key) {
 			var instance = json[key];
 			if (instance == "instance") {
-				templete = '<button class="btn waves-effect" onclick="login(\'' + key +
-					'\')">' + json[key + "_name"] + '(' + key + ')</button>';
+				templete = '<a onclick="login(\'' + key +
+					'\')" class="collection-item pointer transparent">' + json[key + "_name"] + '(' + key + ')</a>';
 				$("#support").append(templete);
 			}
 		});

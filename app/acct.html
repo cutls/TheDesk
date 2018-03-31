@@ -24,18 +24,25 @@ body,html{overflow-y: scroll;}
 <script type="text/javascript" src="./js/common/time.js"></script>
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">戻る</a><br>
-<div id="acct-list"></div>
+<div id="acct-list" class="row"></div>
 <div class="divider"></div>
 アカウントを追加<br>
 <div id="add">
-<input type="text" id="url" style="width:70%" placeholder="mstdn.jp">
-<div id="ins-suggest"></div>
-<button class="btn waves-effect" onclick="instance()">Login</button><br>
-Windows以外でご使用の方やPleromaにログインされる方はチェックを入れて下さい。<br>
-<input type="checkbox" class="filled-in" id="linux" />
-      <label for="linux">コードセットアップ</label><br>
-<span style="font-family:Open Sans;">Supports</span>
-<div id="support"></div>
+<div class="row">
+      <div class="col s6">
+            <input type="text" id="url" style="width:70%" placeholder="mstdn.jp">
+            <div id="ins-suggest"></div>
+            <button class="btn waves-effect" onclick="instance()">Login</button><br>
+            Windows以外でご使用の方やPleromaにログインされる方はチェックを入れて下さい。<br>
+            <input type="checkbox" class="filled-in" id="linux" />
+                  <label for="linux">コードセットアップ</label><br>
+      </div>
+      <div class="col s6">
+            <span style="font-family:Open Sans;">Supports</span>
+            <div id="support" class="collection transparent"></div>
+      </div>
+</div>
+
 </div>
 <div id="auth" style="display:none">
 指定されたコードを貼り付けてください。ログインウィンドウは閉じていただいて構いません。<br>

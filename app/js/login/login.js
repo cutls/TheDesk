@@ -10,6 +10,11 @@ var idata={
 	"kirishima.cloud_letters":"6229",
 	"kirishima.cloud_bbcode":"enabled",
 	"kirishima.cloud_markdown":"disabled",
+	"minohdon.jp":"instance",
+	"minohdon.jp_name":"箕面丼",
+	"minohdon.jp_letters":"5000",
+	"minohdon.jp_bbcode":"disabled",
+	"minohdon.jp_markdown":"disabled",
 	"knzk.me":"instance",
 	"knzk.me_name":"神崎丼",
 	"knzk.me_letters":"5000",
@@ -346,20 +351,7 @@ function ckdb(acct_id) {
 
 //サポートインスタンス取得
 function support() {
-	var ver=enc(localStorage.getItem("ver"));
-	var start = "https://dl.thedesk.top/mastodon_data.json?"+ver;
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
-		},
-		//body: JSON.stringify({})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
+	var json=JSON.parse(localStorage.getItem("instance"));
 		console.log(json);
 		Object.keys(json).forEach(function(key) {
 			var instance = json[key];
@@ -369,7 +361,6 @@ function support() {
 				$("#support").append(templete);
 			}
 		});
-	});
 }
 
 //アカウントを選択…を実装

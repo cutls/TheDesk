@@ -134,8 +134,10 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				localStorage.setItem("notice-mem", noticetext);
 				noticetext = "";
 			}
+			var if_notf='data-notfIndv="'+acct_id+"_"+toot.id+'"';
 			var toot = toot.status;
 		}else{
+			var if_notf="";
 			if (toot.reblog) {
 				var rebtxt = "がブースト";
 				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
@@ -405,7 +407,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
 			' ' + hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
-				key].created_at, 'unix') + '">' +
+				key].created_at, 'unix') + '" '+if_notf+'>' +
 			'<div class="area-notice"><span class="gray sharesta">' + notice + home +
 			'</span></div>' +
 			'<div class="area-icon"><a onclick="udg(\'' + toot.account.id +

@@ -11,12 +11,15 @@ const path = require('path')
 const Menu=electron.Menu
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
-const WindowsToaster = require('node-notifier').WindowsToaster;
-var notifier = new WindowsToaster({
-    withFallback: false, // Fallback to Growl or Balloons? 
-    customPath: void 0 // Relative path if you want to use your fork of toast.exe 
-});
-
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform=="win32"){
+	const WindowsToaster = require('node-notifier').WindowsToaster;
+	var notifier = new WindowsToaster({
+    	withFallback: false, // Fallback to Growl or Balloons? 
+    	customPath: void 0 // Relative path if you want to use your fork of toast.exe 
+	});
+	}
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
 const {
@@ -108,6 +111,9 @@ var onError = function(err,response){
 
 var ipc = electron.ipcMain;
 ipc.on('native-notf', function(e, args) {
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform=="win32"){
 	Jimp.read(args[2], function (err, lenna) {
 		if (err) throw err;
 		lenna.write(tmp_img);
@@ -120,7 +126,7 @@ ipc.on('native-notf', function(e, args) {
 		}, function(error, response) {
 		});
 	});
-
+	}
 });
 ipc.on('update', function(e, x, y) {
 	var platform=process.platform;
