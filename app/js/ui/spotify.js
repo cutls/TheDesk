@@ -4,11 +4,29 @@ function spotifyConnect(){
   			shell
   		} = require('electron');
 
-		  shell.openExternal(auth);
-		  var electron = require("electron");
-		  var ipc = electron.ipcRenderer;
-				ipc.send('quit', 'go');
 		  
+          var electron = require("electron");
+          var remote=electron.remote;
+          var platform=remote.process.platform;
+	    if(platform=="win32"){
+            shell.openExternal(auth);
+		  var ipc = electron.ipcRenderer;
+                ipc.send('quit', 'go');
+        }else{
+            auth=auth+"&state=code";
+            $("#spotify-code-show").removeClass("hide");
+            shell.openExternal(auth);
+        }
+        
+		  
+}
+function spotifyAuth(){
+    var code=$("#spotify-code").val();
+    localStorage.setItem("spotify", "code");
+    localStorage.setItem("spotify-refresh", code);
+    $("#spotify-code-show").addClass("hide");
+    $("#spotify-enable").addClass("disabled");
+    $("#spotify-disable").removeClass("disabled");
 }
 function spotifyDisconnect(){
     localStorage.removeItem("spotify");
@@ -24,6 +42,9 @@ function checkSpotify(){
         $("#spotify-disable").addClass("disabled");
     }
     var content=localStorage.getItem("np-temp");
+    if(!content || content==""){
+        var content="#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk";
+    }
     $("#np-temp").val(content);
 }
 function nowplaying(){
@@ -44,7 +65,7 @@ function nowplaying(){
         console.log(json);
         var item=json.item;
         var content=localStorage.getItem("np-temp");
-        if(!content){
+        if(!content || content==""){
             var content="#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk";
         }
         var regExp = new RegExp("{song}", "g");

@@ -4,13 +4,13 @@ function tl(type, data, acct_id, tlid) {
 	localStorage.removeItem("morelock");
 	localStorage.removeItem("pool");
 	var domain = localStorage.getItem("domain_" + acct_id);
-	//タグの場合はカラム追加して描画
+	//タグとかの場合はカラム追加して描画
 	if (tlid == "add") {
 		console.log("add");
 		var newtab = $(".box").length;
 		var add = {
 			domain: acct_id,
-			type: "tag",
+			type: type,
 			data: data
 		};
 		var multi = localStorage.getItem("column");
@@ -128,6 +128,9 @@ function reload(type, cc, acct_id, tlid, data) {
 	} else if (type == "noauth") {
 		var start = "wss://" + acct_id +
 			"/api/v1/streaming/?stream=public:local";
+	} else if (type=="list"){
+		var start = "wss://" + domain +
+			"/api/v1/streaming/?stream=list&list=" + data +"&access_token=" + at;
 	}
 	console.log(start);
 	var wsid = websocket.length;
@@ -306,7 +309,8 @@ function cap(type, data, acct_id) {
 	} else if (type == "tag") {
 		var response= "#" + data
 	} else if (type == "list") {
-		var response= "List(id:" + data + ")"
+		var ltitle=localStorage.getItem("list_"+data+"_"+acct_id);
+		var response= "List(" + ltitle + ")"
 	} else if (type == "notf") {
 		if(localStorage.getItem("notification_" + acct_id) && !locale){
 			var response=localStorage.getItem("notification_" + acct_id);
@@ -345,6 +349,8 @@ function icon(type) {
 		return "language"
 	} else if (type == "tag") {
 		return "search"
+	} else if (type == "list") {
+		return "view_headline"
 	}
 	if (type == "list") {
 		return "subject"

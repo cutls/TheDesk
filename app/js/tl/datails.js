@@ -209,12 +209,13 @@ function trans(tar){
 	if(html.match(/^<p>(.+)<\/p>$/)){
 		html = html.match(/^<p>(.+)<\/p>$/)[1];
 	}
-	html = html.replace(/<br\s?\/?>/, "\n");
-	html = html.replace(/<p>/, "\n");
-	html = html.replace(/<\/p>/, "\n");
+	html = html.replace(/<br\s?\/?>/g, "\n");
+	html = html.replace(/<p>/g, "\n");
+	html = html.replace(/<\/p>/g, "\n");
 	html=$.strip_tags(html);
 	$("#toot-this .additional").text("Loading...(Powered by Google Translate)");
-	var exec='https://script.google.com/macros/s/AKfycbz0ETqcUxwNlw961GjErNb7vr_X18N2s1AS5Xu5nFTbYXcdcRM/exec?text='+html+'&source='+tar+'&target=ja'
+	var exec='https://script.google.com/macros/s/AKfycbz0ETqcUxwNlw961GjErNb7vr_X18N2s1AS5Xu5nFTbYXcdcRM/exec?text='+encodeURIComponent(html)+'&source='+tar+'&target=ja'
+	console.log(exec);
 	fetch(exec, {
 		method: 'GET',
 	}).then(function(response) {

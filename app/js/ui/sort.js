@@ -81,11 +81,13 @@ function sortToggle(){
 	$("#sort").html("");
 	if ($("#sort-box").hasClass("hide")) {
 		$("#sort-box").removeClass("hide");
+		$("#sort-box").addClass("show");
 		$("#sort-box").css("top",$('#sort-tgl').offset().top+"px");
 		$("#sort-box").css("left",$('#sort-tgl').offset().left-410+"px");
 		//並べ替え
 		sortload();
 	} else {
-		$("#sort-box").addClass("hide")
+		$("#sort-box").addClass("hide");
+		$("#sort-box").removeClass("show");
 	}
 }

@@ -121,6 +121,7 @@ function udg(user, acct_id) {
 				$(".only-his-data").hide();
 			} else {
 				relations(user, acct_id);
+				hisList(user,acct_id);
 				$(".only-my-data").hide();
 				$(".only-his-data").show();
 			}

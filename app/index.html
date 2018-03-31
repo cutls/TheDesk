@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Mizuki (ver.2)";
+var ver="Mizuki (ver.3)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -110,6 +110,21 @@ var tlid=0;
 	<i class="material-icons left">close</i>閉じる
 </button>
 </div>
+<!--リスト-->
+<div id="list-box" class="hide notf-box z-depth-4">
+	アカウント選択
+	<div class="input-field">
+		<select id="list-acct-sel" class="acct-sel"></select>
+		<label></label>
+	</div>
+	<button class="btn waves-effect indigo" style="width:calc( 60% - 40px);" onclick="list()" data-trans-i="lists">
+		リスト一覧
+	</button><br><br>
+	<div id="lists"></div>
+	<div id="lists-user"></div>
+	<input type="text" style="width:150px" id="list-add" placeholder="タイトル">
+		<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">新規作成</button>
+</div>
 <div id="main">
 <!--TLのTL-->
 <div id="timeline-container">
@@ -154,6 +169,12 @@ var tlid=0;
 	<span class="side-label" data-trans="setting">設定</span>
 </a>
 </div>
+<div class="small-menu" id="list-tgl">
+<a onclick="listToggle()" class="nex waves-effect">
+	<i class="material-icons" title="リスト" data-trans-title="list">view_headline</i>
+	<span class="side-label" data-trans="list">リスト</span>
+</a>
+</div>
 <div class="small-menu">
 <a href="index.html" class="nex mize waves-effect">
 	<i class="material-icons nex" title="スーパーリロード" data-trans-title="reload">refresh</i>
@@ -183,7 +204,7 @@ var tlid=0;
 </div>
 <div id="sidebar-btm">
 <!--最小化-->
-<div id="menu-btn" class="big-menu" onclick="show()">
+<div id="menu-btn" class="big-menu" onclick="show()" style="display:none;">
 <a class="waves-effect">
 	<i class="material-icons big-icon">mode_edit</i>
 	<br>
@@ -534,6 +555,9 @@ var tlid=0;
 		<li class="custom-tab col my-data-width only-his-data">
 			<a go="#his-action">他アカウントで操作</a>
 		</li>
+		<li class="custom-tab col my-data-width only-his-data">
+			<a go="#his-list">リスト</a>
+		</li>
 		<li class="custom-tab col my-data-width only-my-data">
 			<a go="#his-fav-list">お気に入り登録</a>
 		</li>
@@ -575,6 +599,11 @@ var tlid=0;
 		<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">フォロー</a><br>
 		または<br>
 		<a href="#!" class="waves-effect btn" onclick="udgEx('selector', 'selector')">プロフを開く</a><br>
+	</div>
+	<div id="his-list" class="col s12  tab-content">
+		<div id="his-lists-a"></div>
+		
+		<div id="his-lists-b"></div>
 	</div>
 	<div id="his-fav-list" class="col s12  tab-content">
 	<div id="his-fav-list-contents" class="cont-series">
@@ -702,6 +731,7 @@ var tlid=0;
 <script type="text/javascript" src="./js/tl/src.js"></script>
 <script type="text/javascript" src="./js/tl/filter.js"></script>
 <script type="text/javascript" src="./js/tl/tag.js"></script>
+<script type="text/javascript" src="./js/tl/list.js"></script>
 <script type="text/javascript" src="./js/ui/post-box.js"></script>
 <script type="text/javascript" src="./js/ui/layout.js"></script>
 <script type="text/javascript" src="./js/login/login.js"></script>

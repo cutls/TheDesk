@@ -183,7 +183,8 @@
 		<div class="collapsible-body">
 			<i class="material-icons nex" title="Radio(Select/Pause)">play_circle_outline</i>ボタンで表示されるメニューから簡単にNowPlayingができます。<br>
 			<h5>アカウントの連携</h5>
-			Windowsのみの対応です。APIの性質上，thedesk.topへアクセスします。<br>
+			APIの性質上，thedesk.topへアクセスします。<br>
+			<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">設定</button></div>
 			<a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i class="fa fa-spotify left"></i>接続</a>
 			<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i class="fa fa-spotify left"></i>切断</a>
 			<h5>テンプレートの編集</h5>
