@@ -250,12 +250,17 @@ function getdata(domain, at) {
 				5000);
 			return;
 		}
+		var avatar=json["avatar"];
+		//missingがmissingなやつ
+		if(avatar=="/avatars/original/missing.png"){
+			avatar="./img/missing.svg";
+		}
 		var add = {
 			at: at,
 			name: json["display_name"],
 			domain: domain,
 			user: json["acct"],
-			prof: json["avatar"],
+			prof: avatar,
 			id: json["id"]
 		};
 		var multi = localStorage.getItem("multi");
@@ -265,7 +270,7 @@ function getdata(domain, at) {
 		localStorage.setItem("name_" + target, json["display_name"]);
 		localStorage.setItem("user_" + target, json["acct"]);
 		localStorage.setItem("user-id_" + target, json["id"]);
-		localStorage.setItem("prof_" + target, json["avatar"]);
+		localStorage.setItem("prof_" + target, avatar);
 		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
@@ -299,12 +304,17 @@ function refresh(target) {
 				5000);
 			return;
 		}
+		var avatar=json["avatar"];
+		//missingがmissingなやつ
+		if(avatar=="/avatars/original/missing.png"){
+			avatar="./img/missing.svg";
+		}
 		var ref = {
 			at: obj[target].at,
 			name: json["display_name"],
 			domain: obj[target].domain,
 			user: json["acct"],
-			prof: json["avatar"],
+			prof: avatar,
 			id: json["id"]
 		};
 		localStorage.setItem("name_" + target, json["display_name"]);
@@ -312,7 +322,7 @@ function refresh(target) {
 		localStorage.setItem("user-id_" + target, json["id"]);
 		console.log("user-id_" + target+":"+json["id"])
 		console.log(localStorage.getItem("user-id_"+target));
-		localStorage.setItem("prof_" + target, json["avatar"]);
+		localStorage.setItem("prof_" + target, avatar);
 		obj[target] = ref;
 		console.log(obj);
 		var json = JSON.stringify(obj);

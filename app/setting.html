@@ -31,6 +31,13 @@
 		<input type="text" style="width:50px" id="popup">秒 
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
+		<h5>ネイティブ通知設定</h5><a onclick="require('electron').ipcRenderer.send('native-notf', ['TheDesk通知テスト','通知テスト(画像はあなたのアカウントのアイコンです)',localStorage.getItem('prof_0')]);" class="pointer">通知テスト</a>
+		<br>
+		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_yes" value="yes" />
+		<label for="ntf_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_no" value="no" />
+		<label for="ntf_no">いいえ</label>
+		<br>
 		<h5>マルチカラムの最低横幅</h5>画面全体の横幅÷コラム数がこの値を超えた時、横スクロールとなります。
 		<br>
 		<input type="text" style="width:50px" id="width">px以上 

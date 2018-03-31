@@ -1,6 +1,7 @@
 /*ログイン処理・認証までのJS*/
 //最初に読むやつ
 //アスタルテ判定初期化
+
 localStorage.removeItem("kirishima")
 localStorage.removeItem("image");
 var idata={
@@ -58,6 +59,7 @@ var idata={
 	"mstdn.kemono-friends.info_public":"ジャパリパーク"
 };
 localStorage.setItem("instance", JSON.stringify(idata));
+
 function ck() {
 	var domain = localStorage.getItem("domain_0");
 	var at = localStorage.getItem(domain + "_at");
@@ -73,6 +75,7 @@ function ck() {
 		}
 		
 	}
+	
 	if (at) {
 		$("#tl").show();
 		parseColumn();
@@ -211,12 +214,17 @@ function getdata() {
 				5000);
 			return;
 		}
+		var avatar=json["avatar"];
+		//missingがmissingなやつ
+		if(avatar=="/avatars/original/missing.png"){
+			avatar="./img/missing.svg";
+		}
 		var obj = [{
 			at: at,
 			name: json["display_name"],
 			domain: domain,
 			user: json["acct"],
-			prof: json["avatar"]
+			prof: avatar
 		}];
 		var json = JSON.stringify(obj);
 		console.log(obj);
@@ -224,7 +232,7 @@ function getdata() {
 		localStorage.setItem("name_" + acct_id, json["display_name"]);
 		localStorage.setItem("user_" + acct_id, json["acct"]);
 		localStorage.setItem("user-id_" + acct_id, json["id"]);
-		localStorage.setItem("prof_" + acct_id, json["avatar"]);
+		localStorage.setItem("prof_" + acct_id, avatar);
 		$("#masara").hide();
 		$("#auth").hide();
 		$("#tl").show();
@@ -254,12 +262,17 @@ function getdataAdv(domain, at) {
 				5000);
 			return;
 		}
+		var avatar=json["avatar"];
+		//missingがmissingなやつ
+		if(avatar=="/avatars/original/missing.png"){
+			avatar="./img/missing.svg";
+		}
 		var add = {
 			at: at,
 			name: json["display_name"],
 			domain: domain,
 			user: json["acct"],
-			prof: json["avatar"],
+			prof: avatar,
 			id: json["id"]
 		};
 		var multi = localStorage.getItem("multi");
@@ -269,7 +282,7 @@ function getdataAdv(domain, at) {
 		localStorage.setItem("name_" + target, json["display_name"]);
 		localStorage.setItem("user_" + target, json["acct"]);
 		localStorage.setItem("user-id_" + target, json["id"]);
-		localStorage.setItem("prof_" + target, json["avatar"]);
+		localStorage.setItem("prof_" + target, avatar);
 		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
@@ -382,6 +395,15 @@ function multi() {
 		var list = key * 1 + 1;
 		if (key == last) {
 			sel = "selected";
+			var profimg=localStorage.getItem("prof_"+key);
+			var domain=localStorage.getItem("domain_"+key);
+			$("#acct-sel-prof").attr("src",profimg);
+			$("#toot-post-btn").text("トゥート("+domain+")");
+			if(domain=="kirishima.cloud"){
+				$("#faicon-btn").show();
+			}else{
+				$("#faicon-btn").hide();
+			}
 		} else {
 			sel = "";
 		}

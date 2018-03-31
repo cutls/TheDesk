@@ -10,6 +10,13 @@ if(location.search){
 	}
 }
 function udgEx(user,acct_id){
+	if(user=="selector"){
+		user = $("#his-acct").attr('fullname');
+	}
+	if(acct_id=="selector"){
+		acct_id = $("#user-acct-sel").val();
+	}
+	console.log(user);
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+user
@@ -26,7 +33,7 @@ function udgEx(user,acct_id){
 		console.error(error);
 	}).then(function(json) {
 		var id=json.accounts[0].id;
-		udg(id,0);
+		udg(id,acct_id);
 	});
 	return;
 }

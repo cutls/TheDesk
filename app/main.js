@@ -11,6 +11,11 @@ const path = require('path')
 const Menu=electron.Menu
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
+const WindowsToaster = require('node-notifier').WindowsToaster;
+var notifier = new WindowsToaster({
+    withFallback: false, // Fallback to Growl or Balloons? 
+    customPath: void 0 // Relative path if you want to use your fork of toast.exe 
+});
 
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
@@ -22,6 +27,7 @@ const join = require('path').join;
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow;
 var info_path = join(app.getPath("userData"), "window-size.json");
+var tmp_img = join(app.getPath("userData"), "tmp.png");
 var window_size;
 try {
 	window_size = JSON.parse(fs.readFileSync(info_path, 'utf8'));
@@ -96,7 +102,26 @@ function createWindow() {
 }
 // Electronの初期化完了後に実行
 app.on('ready', createWindow);
+var onError = function(err,response){
+    console.error(err,response);
+};
+
 var ipc = electron.ipcMain;
+ipc.on('native-notf', function(e, args) {
+	Jimp.read(args[2], function (err, lenna) {
+		if (err) throw err;
+		lenna.write(tmp_img);
+		notifier.notify({
+			message: args[1],
+			title: args[0],
+			sound: false,//"Bottle",
+			icon : tmp_img,
+			wait:false
+		}, function(error, response) {
+		});
+	});
+
+});
 ipc.on('update', function(e, x, y) {
 	var platform=process.platform;
 	var bit=process.arch;
@@ -115,6 +140,7 @@ ipc.on('update', function(e, x, y) {
 		return false;
 	}
 })
+
 ipc.on('screen', function(e, args) {
 	var window = new BrowserWindow({
 		width: args[0],

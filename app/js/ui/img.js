@@ -284,6 +284,36 @@ element.onmousewheel = function(e) {
 		zoom(0.9)
 	}
 }
+//画像を貼り付けたら…
+var element =  document.querySelector("#textarea");
+element.addEventListener("paste", function(e){
+    // 画像の場合
+    // e.clipboardData.types.length == 0
+    // かつ
+    // e.clipboardData.types[0] == "Files"
+    // となっているので、それ以外を弾く
+    if (!e.clipboardData 
+            || !e.clipboardData.types
+            || (e.clipboardData.types.length != 1)
+            || (e.clipboardData.types[0] != "Files")) {
+            return true;
+    }
+
+    // ファイルとして得る
+    // (なぜかgetAsStringでは上手くいかなかった)
+    var imageFile = e.clipboardData.items[0].getAsFile();
+
+    // FileReaderで読み込む
+    var fr = new FileReader();
+    fr.onload = function(e) {
+        // onload内ではe.target.resultにbase64が入っているのであとは煮るなり焼くなり
+        var base64 = e.target.result;
+		beforeMedia(base64,"image/png");
+    };
+    fr.readAsDataURL(imageFile);
+
+    // 画像以外がペーストされたときのために、元に戻しておく
+});
 //当該トゥート
 function detFromImg(){
 	var id=$("#imagemodal").attr("data-id");

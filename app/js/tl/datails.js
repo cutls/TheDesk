@@ -203,3 +203,26 @@ function shot(){
 	var ipc = electron.ipcRenderer;
 	ipc.send('screen', [w,h,id]);
 }
+//翻訳
+function trans(tar){
+	var html=$("#toot-this .toot").html();
+	if(html.match(/^<p>(.+)<\/p>$/)){
+		html = html.match(/^<p>(.+)<\/p>$/)[1];
+	}
+	html = html.replace(/<br\s?\/?>/, "\n");
+	html = html.replace(/<p>/, "\n");
+	html = html.replace(/<\/p>/, "\n");
+	html=$.strip_tags(html);
+	$("#toot-this .additional").text("Loading...(Powered by Google Translate)");
+	var exec='https://script.google.com/macros/s/AKfycbz0ETqcUxwNlw961GjErNb7vr_X18N2s1AS5Xu5nFTbYXcdcRM/exec?text='+html+'&source='+tar+'&target=ja'
+	fetch(exec, {
+		method: 'GET',
+	}).then(function(response) {
+		return response.text();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(text) {
+		$("#toot-this .additional").html('<span class="gray">'+text+'</span>');
+	});
+}

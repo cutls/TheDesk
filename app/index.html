@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Airi (ver.9)";
+var ver="Mizuki (ver.1)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -240,8 +240,8 @@ var tlid=0;
 <select id="post-acct-sel" class="acct-sel" onchange="mdCheck()"></select>
 </div>
 <div class="mize" style="float:left;">
-<a onclick="profShow()" style="vertical-align:-1.5rem;">
-<i class="material-icons nex pointer mize waves-effect" title="選択中のプロフィール表示(Ctrl+Shift+P)" data-trans-title="post_box_prof">account_circle</i>
+<a onclick="profShow()" style="vertical-align:-2.5rem;" class="pointer">
+	<img src="" id="acct-sel-prof" title="選択中のプロフィール表示(Ctrl+Shift+P)" data-trans-title="post_box_prof" width="24px">
 </a>
 </div>
 <!--Markdown-->
@@ -367,7 +367,7 @@ var tlid=0;
 </button>
 </div>
 <div id="default-emoji">
-<span id="now-emoji"></span>一覧を表示中<br><span class="gray sml">一部デフォルト絵文字は入力・描画できません。</span>
+<span id="now-emoji"></span>一覧を表示中<br><span class="gray sml">一部デフォルト絵文字は入力・描画できません。(国旗系など)</span>
 <br>
 <a onclick="customEmoji()" class="pointer waves-effect" title="カスタム絵文字">
 <i class="material-icons">add</i>
@@ -395,6 +395,9 @@ var tlid=0;
 </a>
 <a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="国旗">
 <i class="material-icons">flag</i>
+</a>
+<a onclick="faicon()" class="pointer waves-effect" title="faicon" id="faicon-btn">
+<i class="fa fa-fort-awesome"></i>
 </a>
 </div>
 </div>
@@ -569,7 +572,9 @@ var tlid=0;
 	<div id="his-action" class="col s12 tab-content">
 		他のアカウントを使用してフォロー(解除はできません)<br>
 		<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>で
-		<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">フォロー</a>
+		<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">フォロー</a><br>
+		または<br>
+		<a href="#!" class="waves-effect btn" onclick="udgEx('selector', 'selector')">プロフを開く</a><br>
 	</div>
 	<div id="his-fav-list" class="col s12  tab-content">
 	<div id="his-fav-list-contents" class="cont-series">

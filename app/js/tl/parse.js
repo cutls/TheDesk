@@ -12,6 +12,11 @@ function parse(obj, mix, acct_id, tlid, popup) {
 	if(locale=="yes"){
 		var locale=false;
 	}
+	//ネイティブ通知
+	var native=localStorage.getItem("nativenotf");
+	if(!native){
+		native="yes";
+	}
 	//クライアント強調
 	var emp = localStorage.getItem("client_emp");
 	if(emp){
@@ -118,6 +123,11 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if(popup>0){
+					if(native=="yes"){
+						var electron = require("electron");
+						var ipc = electron.ipcRenderer;
+						ipc.send('native-notf', ['TheDesk:'+domain,toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),toot.account.avatar]);
+					}
 					Materialize.toast("["+domain+"より]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
 				}
 				$(".notf-icon_" + acct_id).addClass("red-text");
@@ -386,6 +396,12 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				}
 			});
 		}
+		//日本語じゃない
+		if(toot.language!="ja"){
+			var trans='<div class="action pin"><a onclick="trans(\''+toot.language+'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを日本語に翻訳"><i class="material-icons">g_translate</i></a></div>';
+		}else{
+			var trans="";
+		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
 			' ' + hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
@@ -434,7 +450,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを削除"><i class="fa fa-trash-o"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをピン留め"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをピン留め"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' +trans+
 			'<div class="action"><a onclick="details(\'' + toot.id + '\',' + acct_id +
 			','+tlid+')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
 			'</div><div class="area-date_via">' +

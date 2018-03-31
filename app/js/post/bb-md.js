@@ -2,6 +2,9 @@
 //アカウント変えた時にBBとかMDとか
 function mdCheck(){
 	var acct_id = $("#post-acct-sel").val();
+	var profimg=localStorage.getItem("prof_"+acct_id);
+			$("#acct-sel-prof").attr("src",profimg);
+			$("#toot-post-btn").text("トゥート("+localStorage.getItem("domain_"+acct_id)+")");
 	  if(!localStorage.getItem("bb_"+acct_id) && !localStorage.getItem("md_"+acct_id)){
 		 $(".markdown").addClass("hide");
 		$(".anti-markdown").addClass("hide");
@@ -19,6 +22,11 @@ function mdCheck(){
 		$("#private-button").text("限定公開(Yづドン!)");
 	}else{
 		$("#private-button").text("非公開(Private)");
+	}
+	if(domain=="kirishima.cloud"){
+		$("#faicon-btn").show();
+	}else{
+		$("#faicon-btn").hide();
 	}
 }
 //BOXのトグルボタン

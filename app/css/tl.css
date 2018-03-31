@@ -76,7 +76,7 @@ iframe {
   flex: 1;
   border: thin solid gray;
 }
-.box .pin{
+.box .pin,#his-data .pin{
   display:none;
 }
 .user{
@@ -87,6 +87,9 @@ iframe {
   width: 20px;
   vertical-align: middle;
   margin: -3px 0 0;
+}
+.faicon_FTL{
+  display:none;
 }
 .tl-box{ height:calc(100% - 40px); overflow-y:scroll; overflow-x:hidden }
 .additional {

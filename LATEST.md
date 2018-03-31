@@ -1,22 +1,24 @@
 ## For Astarte(kirishima.cloud), My Primary Instance
 
-TheDesk :thedesk: Airi (ver.9)  
-・本文コピー(各TLの公開範囲のボタンをクリック。)
-・絵文字大幅拡充
-・Local+ TL(ローカルTLに，同一インスタンスのリプライやブーストを)
-・Glance TL(認証しなくてもローカルTLが見れる)
-・ますとどんちほー(mstdn.kemono-friends.info)に対応
-・独自ロケール拡充
+TheDesk :thedesk: Mizuki (ver.1)  
+・トゥート翻訳(By Google翻訳)
+・ネイティブ通知
+・faiconピッカー
+・画像貼り付け
+・他アカウントでプロフを開く
+・誤爆防止措置
 ほか
 https://thedesk.top
  :github: https://github.com/cutls/TheDesk #Desk #DeskUpdate
 
  ## For Vanilla Instances
 
- Windows/LinuxクライアントTheDesk Airi (ver.9)リリース
-・本文コピー
-・絵文字大幅拡充
-・Local+ TL
-・Glance TL
+ Windows/LinuxクライアントTheDesk Mizuki (ver.1)リリース
+・トゥート翻訳(By Google翻訳)
+・ネイティブ通知
+・faiconピッカー
+・画像貼り付け
+・他アカウントでプロフを開く
+・誤爆防止措置
 TheDeskはマルチカラム，マルチアカウントはもちろんのこと，なにかとマストドンライフをシンプルに効率化するクライアントです。
 https://thedesk.top

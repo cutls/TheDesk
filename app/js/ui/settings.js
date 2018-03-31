@@ -112,6 +112,13 @@ function settings() {
 		Materialize.toast("独自ロケール設定を" + ult + "に設定しました。", 3000);
 	}
 	localStorage.setItem("locale", uld);
+
+	var ntd = $("[name=notf]:checked").val();
+	var ntt = $("[for=ntf_"+ntd+"]").text();
+	if (ntd != localStorage.getItem("nativenotf")) {
+		Materialize.toast("ネイティブ通知を" + ntt + "に設定しました。", 3000);
+	}
+	localStorage.setItem("nativenotf", ntd);
 }
 
 //読み込み時の設定ロード
@@ -218,6 +225,12 @@ function load() {
 		var uld = "yes";
 	}
 	$("#ul_" + uld).prop("checked", true);
+
+	var nnd = localStorage.getItem("nativenotf");
+	if (!nnd) {
+		var nnd = "yes";
+	}
+	$("#ntf_" + nnd).prop("checked", true);
 }
 //最初に読む
 load();

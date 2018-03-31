@@ -2,6 +2,10 @@
 //取得+Streaming接続
 function notf(acct_id, tlid, sys) {
 	todo("Notifications Loading...");
+	var native=localStorage.getItem("nativenotf");
+	if(!native){
+		native="yes";
+	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/notifications";
@@ -19,8 +23,19 @@ function notf(acct_id, tlid, sys) {
 		console.error(error);
 	}).then(function(json) {
 		var templete="";
+		var lastnotf=localStorage.getItem("lastnotf_" + acct_id);
+		localStorage.setItem("lastnotf_" + acct_id,json[0].id);
 		Object.keys(json).forEach(function(key) {
 			var obj = json[key];
+			if(lastnotf==obj.id && key>0 && native=="yes"){
+				var ct=key+1;
+				if(key==14){
+					ct="15+";
+				}
+				var electron = require("electron");
+				var ipc = electron.ipcRenderer;
+				ipc.send('native-notf', ['TheDesk:'+domain,ct+"件の新しい通知",localStorage.getItem("prof_"+acct_id)]);
+			}
 			if(obj.type!="follow"){
 				templete = templete+parse([obj], 'notf', acct_id, tlid, -1);
 			}else{
@@ -63,6 +78,7 @@ function notf(acct_id, tlid, sys) {
 				popup = 0;
 			}
 			var templete="";
+			localStorage.setItem("lastnotf_" + acct_id,obj.id);
 			if(obj.type!="follow"){
 				templete = templete+parse([obj], 'notf', acct_id, tlid, popup);
 			}else{

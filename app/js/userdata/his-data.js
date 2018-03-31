@@ -30,6 +30,9 @@ function utl(user, more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		var templete = parse(json, '', acct_id);
+		if(!json[0]){
+			templete="データはありません<br>";
+		}
 		var height = $("#his-data-content").height() - 245;
 		$(".tab-content").css('height', height);
 		if (more) {
@@ -66,6 +69,9 @@ function pinutl(before,user, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		var templete = parse(json, '', acct_id);
+		if(!json[0]){
+			templete="データはありません<br>";
+		}
 		var height = $("#his-data-content").height() - 245;
 		$(".tab-content").css('height', height);
 			$("#his-tl-contents").html(templete+before);
@@ -104,6 +110,9 @@ function flw(user, more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		var templete = userparse(json,'',acct_id);
+		if(!json[0]){
+			templete="データはありません<br>";
+		}
 		if (more) {
 			$("#his-follow-list-contents").append(templete);
 		} else {
@@ -145,6 +154,9 @@ function fer(user, more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		var templete = userparse(json,'',acct_id);
+		if(!json[0]){
+			templete="データはありません<br>";
+		}
 		if (more) {
 			$("#his-follower-list-contents").append(templete);
 		} else {
@@ -182,6 +194,9 @@ function showFav(more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		var templete = parse(json, '', acct_id);
+		if(!json[0]){
+			templete="データはありません<br>";
+		}
 		if (more) {
 			$("#his-fav-list-contents").append(templete);
 		} else {
@@ -217,6 +232,9 @@ function showMut(more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
+		if(!json[0]){
+			templete="データはありません<br>";
+		}
 		var templete = userparse(json,'',acct_id);
 		if (more) {
 			$("#his-muting-list-contents").append(templete);
@@ -253,6 +271,9 @@ function showBlo(more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
+		if(!json[0]){
+			templete="データはありません<br>";
+		}
 		var templete = userparse(json,'',acct_id);
 		if (more) {
 			$("#his-blocking-list-contents").append(templete);
@@ -290,6 +311,9 @@ function showReq(more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		var templete = userparse(json, 'true',acct_id);
+		if(!json[0]){
+			templete="データはありません<br>";
+		}
 		if (more) {
 			$("#his-request-list-contents").append(templete);
 		} else {
@@ -327,6 +351,9 @@ function showDom(more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		var templete = "";
+		if(!json[0]){
+			templete="データはありません<br>";
+		}
 		Object.keys(json).forEach(function(key) {
 			var domain = json[key];
 			templete = templete + domain +
