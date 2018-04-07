@@ -9,6 +9,13 @@
 	  var urls=[];
 	  if(url){
 		urls = url.match(/https?:\/\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/);
+		//トゥートのURLぽかったら
+		toot = url.match(/https:\/\/([a-zA-Z0-9.-]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/);
+		if(toot){
+			if(toot[1]){
+				detEx(url);
+			}
+		}else{
 		//hrefがhttp/httpsならブラウザで
 		if(urls){
 		if (urls[0]) {
@@ -25,6 +32,7 @@
 		location.href = url;
 	}
 	  }
+	}
   	return false;
   });
   
@@ -87,7 +95,6 @@
 	var result = document.execCommand('copy');
 	return result;
   }
-  //Nano
   //Nano
 function nano(){
     var electron = require("electron");

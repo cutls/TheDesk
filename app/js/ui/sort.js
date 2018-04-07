@@ -10,7 +10,22 @@ function sortload(){
 			if(localStorage.getItem("card_" + key)=="true"){
 				flag="true"
 			}
-			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'">'+localStorage.getItem("user_" + acct.domain)+"@"+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data)+' TL　<a onclick="removeColumn(' + key +
+			var insert="";
+
+			if(acct.background){
+			if(acct.text=="def"){
+				
+			}else{
+			if(acct.text=="black"){
+				var txhex="000000";
+			}else if(acct.text=="white"){
+				var txhex="ffffff";
+			}
+				insert=' style="background-color:#'+acct.background+'; color: #'+txhex+'" ';
+			}
+		}
+			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'"'+insert+'><a onclick="goColumn(' + key +
+			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムへ">forward</i></a>'+localStorage.getItem("user_" + acct.domain)+"@"+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data)+' TL　<a onclick="removeColumn(' + key +
 			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a></li>';
 			$("#sort").append(html);
 		});

@@ -442,6 +442,9 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをブースト"><i class="text-darken-3 fa fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 			'</span></a></div>' +
+			'<div class="action '+can_rt+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
+			',\'' + toot.account.acct +'\',\''+toot.url+
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを引用"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
 			'<div class="action"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをお気に入り登録"><i class="fa text-darken-3 fa-star' +

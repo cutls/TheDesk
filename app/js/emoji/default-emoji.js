@@ -36,6 +36,9 @@ function customEmoji(){
     emojiList('home')
 }
 function defEmoji(target){
+    if(target=="thinking_face"){
+        target="thinking";
+    }
     var emoji=emojione.shortnameToUnicode(":"+target+":");
     var now = $("#textarea").val();
     var selin = localStorage.getItem("cursor");

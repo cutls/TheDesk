@@ -227,3 +227,43 @@ function trans(tar){
 		$("#toot-this .additional").html('<span class="gray">'+text+'</span>');
 	});
 }
+//ブラウザで開く
+function brws(){
+	var url=$("#tootmodal").attr("data-url");
+	const {
+		shell
+	} = require('electron');
+
+	shell.openExternal(url);
+}
+//外部からトゥート開く
+function detEx(url){
+	var domain = localStorage.getItem("domain_0");
+	var at = localStorage.getItem(domain + "_at");
+	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+url
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		}
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		if(!json.statuses){
+			const {
+				shell
+			} = require('electron');
+  
+			shell.openExternal(url);
+		}else{
+			var id=json.statuses[0].id;
+			details(id, 0, 0)
+		}
+		
+	});
+	return;
+}

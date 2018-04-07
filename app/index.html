@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Mizuki (ver.3)";
+var ver="Mizuki (ver.4)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -150,10 +150,10 @@ var tlid=0;
 </div>
 <div class="big-menu" id="sort-tgl">
 <a onclick="sortToggle()" class="nex waves-effect">
-	<i class="material-icons nex big-icon" title="並べ替え" data-trans-title="sort">sort</i>
+	<i class="material-icons nex big-icon" title="カラム一覧" data-trans-title="sort">sort</i>
 </a>
 <br>
-<span class="side-label" data-trans="sort">並べ替え</span>
+<span class="side-label" data-trans="sort">カラム一覧</span>
 </div>
 <div id="side-dead">
 </div>
@@ -507,6 +507,7 @@ var tlid=0;
 	</div>
 	</div>
 	<div class="modal-footer">
+	<a href="#!" class="waves-effect waves-green btn-flat" onclick="brws()">ブラウザで開く</a>
 	<a href="#!" class="waves-effect waves-green btn-flat" onclick="shot()">スクリーンショット</a>
 	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy()">URLをコピー</a>
 	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy('emb')">埋め込む</a>
@@ -672,9 +673,11 @@ var tlid=0;
 	<div id="imagewrap">
 	<img src="" id="imgmodal">
 	</div>
+	
 	<br>
 	</div>
 	<div class="modal-footer">
+	DL:<span id="imgprog"></span>%
 	<a class="waves-effect white-text" onclick="zoom(2)">
 		<i class="material-icons">zoom_in</i>
 	</a>
@@ -742,7 +745,7 @@ var tlid=0;
 <script type="text/javascript" src="./js/ui/sort.js"></script>
 <script type="text/javascript" src="./js/ui/spotify.js"></script>
 <script type="text/javascript" src="./js/post/post.js"></script>
-<script type="text/javascript" src="./js/post/reply.js"></script>
+<script type="text/javascript" src="./js/post/use-txtbox.js"></script>
 <script type="text/javascript" src="./js/post/secure.js"></script>
 <script type="text/javascript" src="./js/post/img.js"></script>
 <script type="text/javascript" src="./js/post/status.js"></script>

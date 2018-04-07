@@ -39,3 +39,9 @@ function goTop(id){
 	}
 	$("#timeline_box_"+id+"_box .tl-box").animate({scrollTop:0});
 }
+function goColumn(key){
+	if($('[tlid='+key+']').length){
+		console.log($('[tlid='+key+']').offset().left);
+		$("#timeline-container").animate({scrollLeft:$("#timeline-container").scrollLeft()+$('[tlid='+key+']').offset().left});
+	}
+}

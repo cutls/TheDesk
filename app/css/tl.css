@@ -185,6 +185,7 @@ font-size:1rem;
 .cbadge {
   display: inline-block;
   min-width: 10px;
+  max-width:100px;
   padding: 3px 7px;
   font-size: 0.8em;
   margin-right: 5px;
@@ -225,9 +226,9 @@ p:not(:last-child){
   z-index:500;
   padding:5px;
   display: grid;
-  grid-template-columns: 40px 1fr 1fr 1fr 1fr;
+  grid-template-columns: 40px 1fr 1fr 1fr;
   grid-template-rows: 30px 30px;
-  grid-template-areas: 'notice notice_name notice_name notice_name notice_name' 'notice a1 a2 a3 a4' 'notf-box notf-box notf-box notf-box notf-box';
+  grid-template-areas: 'notice notice_name notice_name notice_name' 'notice a1 a2 a3' 'notf-box notf-box notf-box notf-box';
 }
 .emp{
   font-weight: bold;
@@ -259,11 +260,6 @@ p:not(:last-child){
 .area-a3 {
   text-align: center;
   grid-area: a3;
-}
-
-.area-a4 {
-  text-align: center;
-  grid-area: a4;
 }
 .tl-title {
   font-family: Open Sans;

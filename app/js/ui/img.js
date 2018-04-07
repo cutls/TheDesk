@@ -1,6 +1,7 @@
 /*イメージビューワー*/
 //postのimg.jsとは異なります。
 function imgv(id, key, acct_id) {
+	$("#imgprog").text(0);
 	$('#imgmodal').attr('src', './img/loading.svg');
 	var murl = $("#" + id + "-image-" + key).attr("data-url");
 	var type = $("#" + id + "-image-" + key).attr("data-type");
@@ -8,6 +9,23 @@ function imgv(id, key, acct_id) {
 	$("#imagemodal").attr("data-acct",acct_id);
 	$(document).ready(function() {
 		if (type == "image") {
+  			xhr = new XMLHttpRequest;
+			xhr.open('GET', murl, true);
+			xhr.addEventListener('progress', function (event) {
+  			if (event.lengthComputable) {
+    			var total=event.total;
+				var now=event.loaded;
+				var per=now/total*100;
+				$("#imgprog").text(per);
+  			}
+			}, false);
+			xhr.addEventListener('loadend', function (event) {
+				var total=event.total;
+				var now=event.loaded;
+				var per=now/total*100;
+				$("#imgprog").text(per);
+			}, false);
+			xhr.send();
 			$('#imgmodal').attr('src', murl);
 			$('#imagewrap').dragScroll(); // ドラッグスクロール設定
 			$('#imagemodal').modal('open');
@@ -97,6 +115,7 @@ function imgv(id, key, acct_id) {
 }
 //イメージビューワーの送り
 function imgCont(type) {
+	$("#imgprog").text(0);
 	var key = $('#imagemodal').attr('data-key');
 	var id = $('#imagemodal').attr('data-id');
 	if (type == "next") {
@@ -110,6 +129,23 @@ function imgCont(type) {
 	var type = $("#" + id + "-image-" + key).attr("data-type");
 	$(document).ready(function() {
 		if (type == "image") {
+			xhr = new XMLHttpRequest;
+			xhr.open('GET', murl, true);
+			xhr.addEventListener('progress', function (event) {
+  			if (event.lengthComputable) {
+    			var total=event.total;
+				var now=event.loaded;
+				var per=now/total*100;
+				$("#imgprog").text(per);
+  			}
+			}, false);
+			xhr.addEventListener('loadend', function (event) {
+				var total=event.total;
+				var now=event.loaded;
+				var per=now/total*100;
+				$("#imgprog").text(per);
+			}, false);
+			xhr.send();
 			$('#imgmodal').attr('src', murl);
 			$('#imagewrap').dragScroll(); // ドラッグスクロール設定
 			$('#imagemodal').attr('data-key', key);

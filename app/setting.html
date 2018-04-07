@@ -152,6 +152,15 @@
 			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
 		</label>
 		<br>
+		<h5>引用形式</h5>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_simple" value="simple" />
+		<label for="q_simple">URLのみ</label>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
+		<label for="q_mention">URLとアカウント名(相手に通知)</label>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
+		<label for="q_full">本文・URL・アカウント名
+		</label>
+		<br>
 	</div>
 	</li>
 	<li>

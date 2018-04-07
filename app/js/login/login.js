@@ -388,6 +388,9 @@ function multi() {
 			sel = "selected";
 			var profimg=localStorage.getItem("prof_"+key);
 			var domain=localStorage.getItem("domain_"+key);
+			if(!profimg){
+				profimg="./img/missing.svg";
+			}
 			$("#acct-sel-prof").attr("src",profimg);
 			$("#toot-post-btn").text("トゥート("+domain+")");
 			if(domain=="kirishima.cloud"){

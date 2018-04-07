@@ -46,6 +46,14 @@ function load() {
 		localStorage.setItem("acct", 0);
 		var acctN = 0;
 	}
+	var electron = require("electron");
+          var remote=electron.remote;
+          var platform=remote.process.platform;
+	    if(platform=="win32"){
+           
+        }else{
+			$("#linux").prop("checked", true);
+        }
 
 }
 //最初に読む
@@ -62,6 +70,7 @@ function data(domain) {
 	$("#ins-per").text("Loading...");
 	$("#ins-user").text("Loading...");
 	$("#ins-ver").text("Loading...");
+	$("#ins-name").text("Loading...");
 	$("#ins-prof").attr('src', "./img/loading.svg");
 	var start = "https://instances.social/api/1.0/instances/show?name=" + domain;
 	fetch(start, {
@@ -78,6 +87,7 @@ function data(domain) {
 	}).then(function(json) {
 		console.log(json);
 		if (!json.error) {
+			$("#ins-name").text(json.name);
 			$("#ins-upd").text(date(json.checked_at, 'full'));
 			$("#ins-add").text(date(json.added_at, 'full'));
 			$("#ins-connect").text(json.connections);
@@ -305,7 +315,7 @@ function refresh(target) {
 		}
 		var avatar=json["avatar"];
 		//missingがmissingなやつ
-		if(avatar=="/avatars/original/missing.png"){
+		if(avatar=="/avatars/original/missing.png" || !avatar){
 			avatar="./img/missing.svg";
 		}
 		var ref = {

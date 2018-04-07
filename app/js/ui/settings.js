@@ -119,6 +119,13 @@ function settings() {
 		Materialize.toast("ネイティブ通知を" + ntt + "に設定しました。", 3000);
 	}
 	localStorage.setItem("nativenotf", ntd);
+
+	var qtd = $("[name=quote]:checked").val();
+	var qtt = $("[for=q_"+qtd+"]").text();
+	if (qtd != localStorage.getItem("quote")) {
+		Materialize.toast("引用形式を" + qtt + "に設定しました。", 3000);
+	}
+	localStorage.setItem("quote", qtd);
 }
 
 //読み込み時の設定ロード
@@ -231,6 +238,12 @@ function load() {
 		var nnd = "yes";
 	}
 	$("#ntf_" + nnd).prop("checked", true);
+
+	var qt = localStorage.getItem("quote");
+	if (!qt) {
+		var qt = "simple";
+	}
+	$("#q_" + qt).prop("checked", true);
 }
 //最初に読む
 load();
