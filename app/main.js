@@ -9,6 +9,7 @@ const shell = electron.shell;
 const os = require('os')
 const path = require('path')
 const Menu=electron.Menu
+var updatewin=null;
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 	var platform=process.platform;
@@ -128,18 +129,19 @@ ipc.on('native-notf', function(e, args) {
 	});
 	}
 });
+
 ipc.on('update', function(e, x, y) {
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform!="darwin"){
-	var window = new BrowserWindow({
+	updatewin = new BrowserWindow({
 		width: 600,
 		height: 400,
 		"transparent": false, // ウィンドウの背景を透過
 		"frame": false, // 枠の無いウィンドウ
 		"resizable": false
 	});
-	window.loadURL('file://' + __dirname + '/update.html');
+	updatewin.loadURL('file://' + __dirname + '/update.html');
 
 	return "true"
 	}else{
@@ -273,19 +275,19 @@ function dl(ver,files,fullname){
 	  r += c[Math.floor(Math.random()*cl)];
 	}
 	zip=zip+r;
-	mainWindow.webContents.send('comp', "ダウンロードを開始します。");
+	updatewin.webContents.send('mess', "ダウンロードを開始します。");
 	const opts = {
 		directory:files,
 		openFolderWhenDone: true,
 		onProgress: function(e) {
-			mainWindow.webContents.send('prog', e);
+			updatewin.webContents.send('prog', e);
 		},
 		saveAs: false
 	};
 	download(BrowserWindow.getFocusedWindow(),
 			'https://dl.thedesk.top/'+zip, opts)
 		.then(dl => {
-			mainWindow.webContents.send('comp', "ダウンロードが完了しました。");
+			updatewin.webContents.send('mess', "ダウンロードが完了しました。");
 			app.quit();
 		})
 		.catch(console.error);

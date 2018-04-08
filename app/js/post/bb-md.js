@@ -18,10 +18,10 @@ function mdCheck(){
 		localStorage.removeItem("md");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain=="mstdn.y-zu.org"){
-		$("#private-button").text("限定公開(Yづドン!)");
+	if(domain=="itabashi.0j0.jp"){
+		$("#limited-button").removeClass("hide");
 	}else{
-		$("#private-button").text("非公開(Private)");
+		$("#limited-button").addClass("hide");
 	}
 	if(domain=="kirishima.cloud"){
 		$("#faicon-btn").show();

@@ -13,7 +13,13 @@
 		toot = url.match(/https:\/\/([a-zA-Z0-9.-]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/);
 		if(toot){
 			if(toot[1]){
-				detEx(url);
+				var acct_id=$a.parent().attr("data-acct");
+				if(!acct_id){
+					acct_id=0;
+				}
+				$a.parent().addClass("loadp")
+				$a.parent().text("Loading...")
+				detEx(url,acct_id);
 			}
 		}else{
 		//hrefがhttp/httpsならブラウザで

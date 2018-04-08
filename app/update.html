@@ -50,9 +50,11 @@ verck();
     }
 ipc.on('prog', function (event, arg) {
 	console.log(arg);
-	$(".determinate").css('width',arg*100+"%");
+    $(".determinate").css('width',arg*100+"%");
+    $("#prog").text("ダウンロード中:"+Math.floor(arg*100)+"%");
 })
 ipc.on('mess', function (event, arg) {
+    console.log(arg);
 	$("#prog").text(arg);
 })
 function verck(){

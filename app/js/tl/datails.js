@@ -237,8 +237,8 @@ function brws(){
 	shell.openExternal(url);
 }
 //外部からトゥート開く
-function detEx(url){
-	var domain = localStorage.getItem("domain_0");
+function detEx(url,acct_id){
+	var domain = localStorage.getItem("domain_"+acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+url
 	fetch(start, {
@@ -261,7 +261,9 @@ function detEx(url){
 			shell.openExternal(url);
 		}else{
 			var id=json.statuses[0].id;
-			details(id, 0, 0)
+			$(".loadp").text($(".loadp").attr("href"));
+			$(".loadp").removeClass("loadp");
+			details(id, acct_id, 0)
 		}
 		
 	});

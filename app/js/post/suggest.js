@@ -6,12 +6,31 @@ var input = document.getElementById("textarea");
 var prev_val = input.value;
 var oldSuggest;
 var suggest;
+
 input.addEventListener("focus", function() {
+	var acct_id = $("#post-acct-sel").val();
 	$("#suggest").html("");
 	window.clearInterval(timer);
 	timer = window.setInterval(function() {
 		var new_val = input.value;
 		if (prev_val != new_val) {
+			var semoji = new_val.match(/:(\S{3,})/);
+			if(semoji){
+				var obj = JSON.parse(localStorage.getItem("emoji_" + acct_id));
+				var num = obj.length;
+				var ehtml="";
+				for (i = 0; i < num; i++) {
+					var emoji = obj[i];
+					if ( ~emoji.shortcode.indexOf(semoji[1])) {
+						if (emoji) {
+						ehtml =  ehtml+'<a onclick="emojiInsert(\':' + emoji.shortcode +
+							': \',\':'+semoji[1]+'\')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
+						}
+					}
+					}
+				$("#suggest").html(ehtml);
+			}
+			
 			var tag = new_val.match(/#(\S{3,})/);
 			var acct = new_val.match(/@(\S{3,})/);
 			if (tag && tag[1]) {
@@ -19,7 +38,7 @@ input.addEventListener("focus", function() {
 			} else if (acct && acct[1]) {
 				var q = acct[1];
 			} else {
-				$("#suggest").html("");
+				//$("#suggest").html("");
 				return;
 			}
 			var domain = localStorage.getItem("domain_" + acct_id);

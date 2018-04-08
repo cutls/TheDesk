@@ -35,6 +35,9 @@ function vis(set){
 	}else  if(set=="direct"){
 		$("#vis-icon i").text("mail");
 		$("#vis-icon").addClass("red");
+	}else  if(set=="limited"){
+		$("#vis-icon i").text("group");
+		$("#vis-icon").addClass("teal");
 	}
 	var vis=localStorage.getItem("vis");
 		if(vis=="memory"){

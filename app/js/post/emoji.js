@@ -119,7 +119,7 @@ function emojiInsert(code, del) {
 	}
 	if (!del) {
 		$("#textarea").val(newt);
-		emoji();
+		//emoji();
 	} else {
 		var regExp = new RegExp(del, "g");
 		var now = now.replace(regExp, "");

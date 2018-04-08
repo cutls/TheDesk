@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Mizuki (ver.4)";
+var ver="Mizuki (ver.5)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -262,7 +262,7 @@ var tlid=0;
 </div>
 <div class="mize" style="float:left;">
 <a onclick="profShow()" style="vertical-align:-2.5rem;" class="pointer">
-	<img src="" id="acct-sel-prof" title="選択中のプロフィール表示(Ctrl+Shift+P)" data-trans-title="post_box_prof" width="24px">
+	<img src="./img/missing.svg" id="acct-sel-prof" title="選択中のプロフィール表示(Ctrl+Shift+P)" data-trans-title="post_box_prof" width="24px">
 </a>
 </div>
 <!--Markdown-->
@@ -356,6 +356,9 @@ var tlid=0;
 </li>
 <li>
 	<a onclick="vis('private')" id="private-button">非公開(Private)</a>
+</li>
+<li id="limited-button" class="hide">
+	<a onclick="vis('limited')">限定公開(Limited)</a>
 </li>
 <li>
 	<a onclick="vis('direct')" class="disabled direct">ダイレクト(Direct)</a>

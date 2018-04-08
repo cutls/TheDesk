@@ -61,7 +61,12 @@ var idata={
 	"mstdn.kemono-friends.info_home":"なわばり",
 	"mstdn.kemono-friends.info_local":"ますとどんちほー",
 	"mstdn.kemono-friends.info_notification":"ねえねえ!",
-	"mstdn.kemono-friends.info_public":"ジャパリパーク"
+	"mstdn.kemono-friends.info_public":"ジャパリパーク",
+	"itabashi.0j0.jp":"instance",
+	"itabashi.0j0.jp_name":"板橋丼",
+	"itabashi.0j0.jp_letters":"500",
+	"itabashi.0j0.jp_bbcode":"disabled",
+	"itabashi.0j0.jp_markdown":"disabled",
 };
 localStorage.setItem("instance", JSON.stringify(idata));
 
