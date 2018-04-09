@@ -353,7 +353,7 @@ ipc.on('file-select', (e, args) => {
 		for(var i=0;i<fileNames.length;i++){
 			var path=fileNames[i];
 			var bin = fs.readFileSync(path, 'base64');
-			mainWindow.webContents.send('bmp-img-comp', bin);
+			mainWindow.webContents.send('bmp-img-comp', [bin,'new']);
 		}
 	});
 });
@@ -370,11 +370,11 @@ const options = {
   })
 });
 ipc.on('bmp-image', (e, args) => {
-	var m = args.match(/(.+)\\(.+)\.(.+)$/);
-	Jimp.read(args, function (err, lenna) {
+	var m = args[0].match(/(.+)\\(.+)\.(.+)$/);
+	Jimp.read(args[0], function (err, lenna) {
 		if (err) throw err;
 		lenna.getBase64(Jimp.MIME_PNG, function (err, src) {
-			mainWindow.webContents.send('bmp-img-comp', src);
+			mainWindow.webContents.send('bmp-img-comp', [src,args[1]]);
 	   });
 	});
 	

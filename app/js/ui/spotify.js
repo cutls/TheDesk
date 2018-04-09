@@ -47,40 +47,67 @@ function checkSpotify(){
     }
     $("#np-temp").val(content);
 }
-function nowplaying(){
-    var start = "https://thedesk.top/now-playing?at="+localStorage.getItem("spotify")+"&rt="+localStorage.getItem("spotify-refresh");
-    var at = localStorage.getItem("spotify");
-    if(at){
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
-		}
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-        console.log(json);
-        var item=json.item;
-        var content=localStorage.getItem("np-temp");
-        if(!content || content==""){
-            var content="#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk";
+function nowplaying(mode){
+    if(mode=="spotify"){
+        var start = "https://thedesk.top/now-playing?at="+localStorage.getItem("spotify")+"&rt="+localStorage.getItem("spotify-refresh");
+        var at = localStorage.getItem("spotify");
+        if(at){
+        fetch(start, {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(function(response) {
+            return response.json();
+        }).catch(function(error) {
+            todo(error);
+            console.error(error);
+        }).then(function(json) {
+            console.log(json);
+            var item=json.item;
+            var content=localStorage.getItem("np-temp");
+            if(!content || content==""){
+                var content="#NowPlaying {song} / {album} / {artist}\n{url}";
+            }
+            var regExp = new RegExp("{song}", "g");
+            content = content.replace(regExp, item.name);
+            var regExp = new RegExp("{album}", "g");
+            content = content.replace(regExp, item.album.name);
+            var regExp = new RegExp("{artist}", "g");
+            content = content.replace(regExp, item.artists[0].name);
+            var regExp = new RegExp("{url}", "g");
+            content = content.replace(regExp, item.external_urls.spotify);
+            $("#textarea").val(content);
+        });
+        }else{
+            alert("アカウント連携設定をして下さい。");
         }
-        var regExp = new RegExp("{song}", "g");
-        content = content.replace(regExp, item.name);
-        var regExp = new RegExp("{album}", "g");
-        content = content.replace(regExp, item.album.name);
-        var regExp = new RegExp("{artist}", "g");
-        content = content.replace(regExp, item.artists[0].name);
-        var regExp = new RegExp("{url}", "g");
-        content = content.replace(regExp, item.external_urls.spotify);
-        $("#textarea").val(content);
-    });
-    }else{
-        alert("アカウント連携設定をして下さい。");
+    }else if(mode=="itunes"){
+        var electron = require("electron");
+	    var ipc = electron.ipcRenderer;
+	    ipc.send('itunes', "");
+	    ipc.on('itunesRes', function (event, arg) {
+            var content=localStorage.getItem("np-temp");
+            if(!content || content==""){
+                var content="#NowPlaying {song} / {album} / {artist}\n{url}";
+            }
+            var str_array=arg.artist.split('');//1文字ずつ配列に入れる
+            var utf8Array=Encoding.convert(str_array, 'SJIS', 'AUTO');//UTF-8に変換
+            console.log(utf8Array);
+             var convert=Encoding.codeToString( utf8Array );
+             console.log(convert);
+            var regExp = new RegExp("{song}", "g");
+            content = content.replace(regExp, arg.name);
+            var regExp = new RegExp("{album}", "g");
+            content = content.replace(regExp, arg.album);
+            var regExp = new RegExp("{artist}", "g");
+            content = content.replace(regExp, arg.artist);
+            var regExp = new RegExp("{url}", "g");
+            content = content.replace(regExp, "");
+            $("#textarea").val(content);
+	    })
     }
+    
 }
 function spotifySave(){
     var temp=$("#np-temp").val();

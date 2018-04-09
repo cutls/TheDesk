@@ -20,7 +20,7 @@ function details(id, acct_id, tlid) {
 		console.error(error);
 	}).then(function(json) {
 		if(!$("#timeline_"+tlid+" #pub_" + id).length){
-			var html = parse([json]);
+			var html = parse([json], '', acct_id);
 			$("#toot-this").html(html);
 			jQuery("time.timeago").timeago();
 		}
@@ -137,7 +137,7 @@ function faved(id, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json);
+		var templete = userparse(json, '', acct_id);
 		$("#toot-fav").html(templete);
 	});
 }
@@ -159,7 +159,7 @@ function rted(id, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json);
+		var templete = userparse(json, '', acct_id);
 		$("#toot-rt").html(templete);
 	});
 }

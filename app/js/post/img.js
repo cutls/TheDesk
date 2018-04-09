@@ -42,18 +42,18 @@ function pimg(files) {
 		if(dot=="bmp" || dot=="BMP"){
 			var electron = require("electron");
 		  	var ipc = electron.ipcRenderer;
-			  ipc.send('bmp-image', files[i].path);
+			  ipc.send('bmp-image', [files[i].path,i]);
 			  todo("変換中...");
 			  
 		}else{
-			handleFileUpload(files[i], obj);
+			handleFileUpload(files[i], obj,i);
 		}
 	}
 }
 var electron = require("electron");
 var ipc = electron.ipcRenderer;
 ipc.on('bmp-img-comp', function (event, b64) {
-	beforeMedia(b64,"image/png");
+	media(b64[0],"image/png",b64[1]);
   });
 //ドラッグ・アンド・ドロップを終了
 function closedrop() {
@@ -65,37 +65,31 @@ function fileselect() {
 }
 
 //ファイル読み込み
-function handleFileUpload(files, obj) {
+function handleFileUpload(files, obj, no) {
 	var fr = new FileReader();
 	fr.onload = function(evt) {
 		var b64 = evt.target.result;
 		$('#b64-box').val(b64);
-		var ret = beforeMedia(b64, files["type"])
+		var ret = media(b64, files["type"], no)
 	}
 	fr.readAsDataURL(files);
 	$("#mec").append(files["name"] + "/");
 }
 
-//順番意識
-function beforeMedia(b64,type){
-	var busy = localStorage.getItem("image");
-	if(busy=="busy"){
-		timerID = setInterval(function(){
-			var busy = localStorage.getItem("image");
-			console.log("busy... please wait."+type)
-			if(!busy){
-				clearInterval(timerID);
-                timerID = null;
-				media(b64,type);
-			}
-		 }, 20);
-	}else{
-		localStorage.removeItem("image");
-		media(b64,type);
-	}
-}
 //ファイルアップロード
-function media(b64, type) {
+function media(b64, type, no) {
+	var l = 4;
+	var c = "abcdefghijklmnopqrstuvwxyz0123456789";
+	var cl = c.length;
+	var r = "";
+	for(var i=0; i<l; i++){
+  		r += c[Math.floor(Math.random()*cl)];
+	}
+	if ($("#media").val()) {
+		$("#media").val($("#media").val() + ',' + "tmp_"+r);
+	} else {
+		$("#media").val("tmp_"+r);
+	}
 	$("#toot-post-btn").prop("disabled", true);
 	localStorage.setItem("image","busy");
 	todo("Image Upload...");
@@ -132,11 +126,11 @@ function media(b64, type) {
 			var img = "no-act";
 		}
 		if (img != "inline") {
-			if ($("#media").val()) {
-				$("#media").val($("#media").val() + ',' + json["id"]);
-			} else {
-				$("#media").val(json["id"]);
-			}
+			var mediav=$("#media").val();
+			var regExp = new RegExp("tmp_"+r, "g");
+			mediav = mediav.replace(regExp, json["id"]);
+			$("#media").val(mediav);
+			
 		}
 		if (img == "url") {
 			$("#textarea").val($("#textarea").val() + " " + json["text_url"])
