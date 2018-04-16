@@ -36,30 +36,27 @@ function post() {
 	} else {
 		var spo = "";
 	}
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify(toot)
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		console.log(json);
-		var box = localStorage.getItem("box");
-		if (box == "yes") {
-			hide();
-		}else if (box == "hide"){
-			$("body").addClass("mini-post");
-			$(".mini-btn").text("expand_less");
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify(toot));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			var box = localStorage.getItem("box");
+			if (box == "yes") {
+				hide();
+			}else if (box == "hide"){
+				$("body").addClass("mini-post");
+				$(".mini-btn").text("expand_less");
+			}
+			todc();
+			clear();
 		}
-		todc();
-		clear();
-	});
+	}
 }
 
 //クリア(Shift+C)

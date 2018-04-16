@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Mizuki (ver.6)";
+var ver="Mizuki (ver.7)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -336,7 +336,8 @@ var tlid=0;
 <input type="text" id="cw-text" placeholder="警告文" class="mize">
 </div>
 <div class="col s1 mize" style="padding:0;">
-	<i class="material-icons pointer" onclick="fileselect()" title="ファイルを選択">photo_library</i>
+	<span id="imgup"></span>
+	<span id="imgsel"><i class="material-icons pointer" onclick="fileselect()" title="ファイルを選択">photo_library</i><span id="imgup"></span>
 </div>
 <div class="col s3 mize">
 <button class="btn waves-effect  blue darken-3" style="width:100%; padding:0; margin-top:0;" id="cw" onclick="cw()" title="コンテンツワーニング(トゥートを表示する前にメッセージで隠す)(青:OFF)">CW</button>
@@ -448,18 +449,18 @@ var tlid=0;
 	<ul class="collapsible" data-collapsible="accordion" id="det-col">
 	<li>
 		<div class="collapsible-header">
-		<i class="material-icons">arrow_upward</i>これよりあとのコンテクスト
-		</div>
-		<div class="collapsible-body toot-reset" id="toot-after">
-		</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
-		<i class="material-icons">reply_all</i>このトゥートからのリプライ
+		<i class="material-icons">arrow_upward</i>これより前の会話
 		</div>
 		<div class="collapsible-body toot-reset" id="toot-reply">
 		</div>
 	</li>
+	<li>
+		<div class="collapsible-header">
+		<i class="material-icons">arrow_downward</i>これよりあとの会話
+		</div>
+		<div class="collapsible-body toot-reset" id="toot-after">
+		</div>
+		</li>
 	<li>
 		<div class="collapsible-header" id="activator">
 		<i class="material-icons">more_horiz</i>対象のトゥート
@@ -537,7 +538,7 @@ var tlid=0;
 	<span class="cbadge">フォロワー:
 	<span id="his-follower"></span>
 	</span>
-	<span class="cbadge">Since:
+	<span class="cbadge" style="max-width:150px; width:150px; ">Since:
 	<span id="his-since"></span>
 	</div>
 	<div class="his-float">

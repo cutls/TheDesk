@@ -153,45 +153,42 @@ function login(url) {
 	}
 	localStorage.setItem("redirect", red);
 	var start = "https://" + url + "/api/v1/apps";
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json'
-		},
-		body: JSON.stringify({
-			scopes: 'read write follow',
-			client_name: "TheDesk(PC)",
-			redirect_uris: red,
-			website: "https://thedesk.top"
-		})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		console.log(json);
-		var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
-				"client_id"] + "&client_secret=" + json["client_secret"] +
-			"&response_type=code&scope=read+write+follow&redirect_uri="+red;
-		localStorage.setItem("domain_tmp", url);
-		localStorage.setItem("client_id", json["client_id"]);
-		localStorage.setItem("client_secret", json["client_secret"]);
-		$("#auth").show();
-		$("#add").hide();
-		const {
-  			shell
-  		} = require('electron');
-
-		  shell.openExternal(auth);
-		  var electron = require("electron");
-		  var ipc = electron.ipcRenderer;
-		  if($('#linux:checked').val()=="on"){
-			}else{
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify({
+		scopes: 'read write follow',
+		client_name: "TheDesk(PC)",
+		redirect_uris: red,
+		website: "https://thedesk.top"
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
+					"client_id"] + "&client_secret=" + json["client_secret"] +
+				"&response_type=code&scope=read+write+follow&redirect_uri=" + red;
+			localStorage.setItem("domain_tmp", url);
+			localStorage.setItem("client_id", json["client_id"]);
+			localStorage.setItem("client_secret", json["client_secret"]);
+			$("#auth").show();
+			$("#add").hide();
+			const {
+				shell
+			} = require('electron');
+	
+			shell.openExternal(auth);
+			var electron = require("electron");
+			var ipc = electron.ipcRenderer;
+			if ($('#linux:checked').val() == "on") {} else {
 				ipc.send('quit', 'go');
 			}
-		  
-	});
+		}
+	}
+	
+
 }
 
 //テキストボックスにURL入れた
@@ -211,30 +208,28 @@ function code(code) {
 	var start = "https://" + url + "/oauth/token";
 	var id = localStorage.getItem("client_id");
 	var secret = localStorage.getItem("client_secret");
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json'
-		},
-		body: JSON.stringify({
-			grant_type: "authorization_code",
-			redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
-			client_id: id,
-			client_secret: secret,
-			code: code
-		})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		if (json["access_token"]) {
-			$("#auth").hide();
-			$("#add").show();
-			getdata(url, json["access_token"]);
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify({
+		grant_type: "authorization_code",
+		redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
+		client_id: id,
+		client_secret: secret,
+		code: code
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			if (json["access_token"]) {
+				$("#auth").hide();
+				$("#add").show();
+				getdata(url, json["access_token"]);
+			}
 		}
-	});
+	}
 }
 
 //ユーザーデータ取得

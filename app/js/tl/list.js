@@ -51,24 +51,21 @@ function makeNewList(){
     var at = localStorage.getItem(domain + "_at");
     var start = "https://" + domain + "/api/v1/lists"
 	console.log(start)
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({
-			title: text
-		})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-        list();
-		$("#list-add").val("")
-	});
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify({
+		title: text
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			list();
+			$("#list-add").val("")
+		}
+	}
 }
 function listShow(id,title,acct_id){
     localStorage.setItem("list_"+id+"_"+acct_id,title);
@@ -164,44 +161,38 @@ function listAdd(id,user,acct_id){
     var at = localStorage.getItem(domain + "_at");
     var start = "https://" + domain + "/api/v1/lists/"+id+"/accounts"
 	console.log(start)
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({
-			account_ids: [user]
-		})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-        hisList(user,acct_id)
-	});
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify({
+		account_ids: [user]
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			hisList(user,acct_id)
+		}
+	}
 }
 function listRemove(id,user,acct_id){
     var domain = localStorage.getItem("domain_" + acct_id);
     var at = localStorage.getItem(domain + "_at");
     var start = "https://" + domain + "/api/v1/lists/"+id+"/accounts"
 	console.log(start)
-	fetch(start, {
-		method: 'DELETE',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({
-			account_ids: [user]
-		})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-        hisList(user,acct_id)
-	});
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('DELETE', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify({
+		account_ids: [user]
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			hisList(user,acct_id)
+		}
+	}
 }

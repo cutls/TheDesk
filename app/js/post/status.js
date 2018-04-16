@@ -9,48 +9,44 @@ function fav(id, acct_id, remote) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		console.log(json);
-		if(remote!="remote"){
-		//APIのふぁぼカウントがおかしい
-		if ($("[toot-id=" + id + "] .fav_ct").text() == json.favourites_count){
-			if(flag=="unfavourite"){
-				var fav=json.favourites_count - 1;
-			}else{
-				var fav=json.favourites_count + 1;
-				//var fav = json.favourites_count;
-			}
-		}else{
-			var fav = json.favourites_count;
-		}
-		$("[toot-id=" + id + "] .fav_ct").text(fav);
-		if (!json.reblog) {
-		} else {
-			$("[toot-id=" + id + "] .rt_ct").text(fav);
-		}
-		if ($("[toot-id=" + id +"]").hasClass("faved")) {
-			$("[toot-id=" + id +"]").removeClass("faved");
-			$(".fav_" + id).removeClass("yellow-text");
-		} else {
-			$("[toot-id=" + id +"]").addClass("faved");
-			$(".fav_" + id).addClass("yellow-text");
-		}
-		}else{
-			Materialize.toast("お気に入り登録しました。インスタンスが違うときは時間がかかる場合があります。", 1000);
-		}
-	});
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+        if (httpreq.readyState == 4) {
+            var json = httpreq.response;
+            if(remote!="remote"){
+				//APIのふぁぼカウントがおかしい
+				if ($("[toot-id=" + id + "] .fav_ct").text() == json.favourites_count){
+					if(flag=="unfavourite"){
+						var fav=json.favourites_count - 1;
+					}else{
+						var fav=json.favourites_count + 1;
+						//var fav = json.favourites_count;
+					}
+				}else{
+					var fav = json.favourites_count;
+				}
+				$("[toot-id=" + id + "] .fav_ct").text(fav);
+				if (!json.reblog) {
+				} else {
+					$("[toot-id=" + id + "] .rt_ct").text(fav);
+				}
+				if ($("[toot-id=" + id +"]").hasClass("faved")) {
+					$("[toot-id=" + id +"]").removeClass("faved");
+					$(".fav_" + id).removeClass("yellow-text");
+				} else {
+					$("[toot-id=" + id +"]").addClass("faved");
+					$(".fav_" + id).addClass("yellow-text");
+				}
+				}else{
+					Materialize.toast("お気に入り登録しました。インスタンスが違うときは時間がかかる場合があります。", 1000);
+				}
+        }
+	}
 }
 
 //ブースト
@@ -63,44 +59,41 @@ function rt(id, acct_id, remote) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		console.log(json);
-		if(remote!="remote"){
-		$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
-		if (!json.reblog) {
-			if(flag=="unreblog"){
-				var rt=json.reblogs_count - 1;
-			}else{
-				var rt=json.reblogs_count + 1;
-			}
-			$("[toot-id=" + id + "] .rt_ct").text(rt);
-		} else {
-			$("[toot-id=" + id + "] .rt_ct").text(json.reblog.reblogs_count);
-		}
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			if (remote != "remote") {
+				$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
+				if (!json.reblog) {
+					if (flag == "unreblog") {
+						var rt = json.reblogs_count - 1;
+					} else {
+						var rt = json.reblogs_count + 1;
+					}
+					$("[toot-id=" + id + "] .rt_ct").text(rt);
+				} else {
+					$("[toot-id=" + id + "] .rt_ct").text(json.reblog.reblogs_count);
+				}
 
-		if ($("[toot-id=" + id +"]").hasClass("rted")) {
-			$("[toot-id=" + id +"]").removeClass("rted");
-			$(".rt_" + id).removeClass("teal-text");
-		} else {
-			$("[toot-id=" + id +"]").addClass("rted");
-			$(".rt_" + id).addClass("teal-text");
+				if ($("[toot-id=" + id + "]").hasClass("rted")) {
+					$("[toot-id=" + id + "]").removeClass("rted");
+					$(".rt_" + id).removeClass("teal-text");
+				} else {
+					$("[toot-id=" + id + "]").addClass("rted");
+					$(".rt_" + id).addClass("teal-text");
+				}
+			} else {
+				Materialize.toast("ブーストしました。インスタンスが違うときは時間がかかる場合があります。", 1000);
+			}
 		}
-	}else{
-		Materialize.toast("ブーストしました。インスタンスが違うときは時間がかかる場合があります。", 1000);
 	}
-	});
 }
 
 //フォロー
@@ -129,27 +122,25 @@ function follow(acct_id,remote) {
 		var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
 		var ent={}
 	}
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify(ent)
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		if ($("#his-data").hasClass("following")) {
-			$("#his-data").removeClass("following");
-			$("#his-follow-btn").text("フォロー");
-		} else {
-			$("#his-data").addClass("following");
-			$("#his-follow-btn").text("フォロー解除");
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			if ($("#his-data").hasClass("following")) {
+				$("#his-data").removeClass("following");
+				$("#his-follow-btn").text("フォロー");
+			} else {
+				$("#his-data").addClass("following");
+				$("#his-follow-btn").text("フォロー解除");
+			}
 		}
-	});
+	}
 }
 
 //ブロック
@@ -166,27 +157,23 @@ function block(acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		if ($("#his-data").hasClass("blocking")) {
-			$("#his-data").removeClass("blocking");
-			$("#his-block-btn").text("ブロック");
-		} else {
-			$("#his-data").addClass("blocking");
-			$("#his-block-btn").text("ブロック解除");
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			if ($("#his-data").hasClass("blocking")) {
+				$("#his-data").removeClass("blocking");
+				$("#his-block-btn").text("ブロック");
+			} else {
+				$("#his-data").addClass("blocking");
+				$("#his-block-btn").text("ブロック解除");
+			}
 		}
-	});
+	}
 }
 
 //ミュート
@@ -203,27 +190,23 @@ function mute(acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		if ($("#his-data").hasClass("muting")) {
-			$("#his-data").removeClass("muting");
-			$("#his-mute-btn").text("ミュート");
-		} else {
-			$("#his-data").addClass("muting");
-			$("#his-mute-btn").text("ミュート解除");
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			if ($("#his-data").hasClass("muting")) {
+				$("#his-data").removeClass("muting");
+				$("#his-mute-btn").text("ミュート");
+			} else {
+				$("#his-data").addClass("muting");
+				$("#his-mute-btn").text("ミュート解除");
+			}
 		}
-	});
+	}
 }
 
 //投稿削除
@@ -231,21 +214,16 @@ function del(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id;
-	fetch(start, {
-		method: 'DELETE',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		//ここで消さなくてもStreamingが消す
-		//$("#pub_"+id).hide();
-	});
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('DELETE', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+		}
+	}
 }
 //ピン留め
 function pin(id, acct_id) {
@@ -257,28 +235,25 @@ function pin(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		console.log(json);
-		if ($("[toot-id=" + id +"]").hasClass("pined")) {
-			$("[toot-id=" + id +"]").removeClass("pined");
-			$(".pin_" + id).removeClass("blue-text");
-		} else {
-			$("[toot-id=" + id +"]").addClass("pined");
-			$(".pin_" + id).addClass("blue-text");
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('DELETE', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			if ($("[toot-id=" + id + "]").hasClass("pined")) {
+				$("[toot-id=" + id + "]").removeClass("pined");
+				$(".pin_" + id).removeClass("blue-text");
+			} else {
+				$("[toot-id=" + id + "]").addClass("pined");
+				$(".pin_" + id).addClass("blue-text");
+			}
 		}
-	});
+	}
 }
 
 //フォロリク
@@ -286,21 +261,19 @@ function request(id, flag, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/follow_requests/" + id + "/" + flag;
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		showReq();
-	});
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			showReq();
+		}
+	}
 }
 
 //ドメインブロック(未実装)
@@ -311,23 +284,19 @@ function domainblock(add, flag, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/domain_blocks"
-	fetch(start, {
-		method: flag,
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({
-			domain: add
-		})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		showDom();
-	});
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			showDom();
+		}
+	}
 }
 
 function addDomainblock() {

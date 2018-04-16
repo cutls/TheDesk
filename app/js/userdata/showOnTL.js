@@ -96,7 +96,18 @@ function udg(user, acct_id) {
 			$("#his-follow").text(json.following_count);
 			$("#his-follower").text(json.followers_count);
 			$("#his-since").text(crat(json.created_at));
-			$("#his-des").html(json.note);
+			if(json.fields){
+				var note=json.note+'My Fields<br><table class="responsive-table">'
+				for(var i=0;i<json.fields.length;i++){
+					var fname=json.fields[i].name;
+					var fval=json.fields[i].value;
+					note=note+'<tr><td>'+fname+'</td><td>'+fval+'</td></tr>';
+				}
+				note=note+'</table>'
+				$("#his-des").html(note);
+			}else{
+				$("#his-des").html(json.note);
+			}
 			$('#his-data').css('background-size', 'cover');
 			localStorage.setItem("history" , user);
 			//自分の時

@@ -101,48 +101,47 @@ function media(b64, type, no) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/media";
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'Authorization': 'Bearer ' + at
-		},
-		body: fd
-	}).then(function(response) {
-		console.log(response)
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		console.log(json);
-		var img = localStorage.getItem("img");
-		if (json.type=="image") {
-			var html = '<img src="' + json.preview_url + '" style="width:50px; max-height:100px;">';
-			$('#preview').append(html);
-		} else {
-			$('#preview').append("プレビューできません");
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.upload.addEventListener("progress", progshow, false);
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send(fd);
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			var img = localStorage.getItem("img");
+			if (json.type=="image") {
+				var html = '<img src="' + json.preview_url + '" style="width:50px; max-height:100px;">';
+				$('#preview').append(html);
+			} else {
+				$('#preview').append("プレビューできません");
+			}
+			if (!img) {
+				var img = "no-act";
+			}
+			if (img != "inline") {
+				var mediav=$("#media").val();
+				var regExp = new RegExp("tmp_"+r, "g");
+				mediav = mediav.replace(regExp, json["id"]);
+				$("#media").val(mediav);
+				
+			}
+			if (img == "url") {
+				$("#textarea").val($("#textarea").val() + " " + json["text_url"])
+			}
+			todc();
+			$("#toot-post-btn").prop("disabled", false);
+			$("#post-acct-sel").prop("disabled", true);
+			$('select').material_select();
+			$("#mec").text("あり");
+			Materialize.toast("ファイルアップロード後はアカウントを切り替えられません。", 1000);
+			$("#imgup").text("");
+			$("#imgsel").show();
+			localStorage.removeItem("image");
 		}
-		if (!img) {
-			var img = "no-act";
-		}
-		if (img != "inline") {
-			var mediav=$("#media").val();
-			var regExp = new RegExp("tmp_"+r, "g");
-			mediav = mediav.replace(regExp, json["id"]);
-			$("#media").val(mediav);
-			
-		}
-		if (img == "url") {
-			$("#textarea").val($("#textarea").val() + " " + json["text_url"])
-		}
-		todc();
-		$("#toot-post-btn").prop("disabled", false);
-		$("#post-acct-sel").prop("disabled", true);
-		$('select').material_select();
-		$("#mec").text("あり");
-		Materialize.toast("ファイルアップロード後はアカウントを切り替えられません。", 1000);
-		localStorage.removeItem("image");
-	});
+	}
 }
 
 //Base64からBlobへ
@@ -163,3 +162,37 @@ function toBlob(base64, type) {
 
 	return blob;
 }
+//画像を貼り付けたら…
+var element =  document.querySelector("#textarea");
+element.addEventListener("paste", function(e){
+    // 画像の場合
+    // e.clipboardData.types.length == 0
+    // かつ
+    // e.clipboardData.types[0] == "Files"
+    // となっているので、それ以外を弾く
+    if (!e.clipboardData 
+            || !e.clipboardData.types
+            || (e.clipboardData.types.length != 1)
+            || (e.clipboardData.types[0] != "Files")) {
+            return true;
+    }
+
+    // ファイルとして得る
+    // (なぜかgetAsStringでは上手くいかなかった)
+    var imageFile = e.clipboardData.items[0].getAsFile();
+
+    // FileReaderで読み込む
+    var fr = new FileReader();
+    fr.onload = function(e) {
+        // onload内ではe.target.resultにbase64が入っているのであとは煮るなり焼くなり
+		var base64 = e.target.result;
+		var mediav = $("#media").val();
+		if(mediav){
+			var i=media.split(",").length;
+		}
+		media(base64, "image/png", i)
+    };
+    fr.readAsDataURL(imageFile);
+
+    // 画像以外がペーストされたときのために、元に戻しておく
+});

@@ -8,26 +8,21 @@ function profedit() {
 	var start = "https://" + domain + "/api/v1/accounts/update_credentials";
 	var name = $("#his-name-val").val();
 	var des = $("#his-des-val").val();
-	fetch(start, {
-		method: 'PATCH',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		body: JSON.stringify({
-			display_name: name,
-			note: des
-		})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		console.log(json);
-		$('#his-data').modal('close');
-		todc();
-	});
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('PATCH', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify({
+		display_name: name,
+		note: des
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			$('#his-data').modal('close');
+			todc();
+		}
+	}
 }
 
 //画像系
@@ -48,23 +43,21 @@ function imgChange(imgfile, target) {
 		var domain = localStorage.getItem("domain_" + acct_id);
 		var at = localStorage.getItem(domain + "_at");
 		var start = "https://" + domain + "/api/v1/accounts/update_credentials";
-		fetch(start, {
-			method: 'PATCH',
-			headers: {
-				'Authorization': 'Bearer ' + at
-			},
-			body: fd
-		}).then(function(response) {
-			console.log(response)
-			return response.json();
-		}).catch(function(error) {
-			todo(error);
-			console.error(error);
-		}).then(function(json) {
-			console.log(json);
-			$('#his-data').modal('close');
-			todc();
-		});
+		var httpreq = new XMLHttpRequest();
+		httpreq.open('PATCH', start, true);
+		httpreq.upload.addEventListener("progress", progshow, false);
+		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+		httpreq.responseType = 'json';
+		httpreq.send(fd);
+   		httpreq.onreadystatechange = function() {
+			if (httpreq.readyState == 4) {
+				var json = httpreq.response;
+				console.log(json);
+				$('#his-data').modal('close');
+				todc();
+				localStorage.removeItem("image");
+			}
+		}
 	}
 	$("#prof-change").html($("#prof-change").html());
 	$("#header-change").html($("#header-change").html());

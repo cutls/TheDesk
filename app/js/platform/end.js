@@ -107,3 +107,15 @@ function nano(){
     var ipc = electron.ipcRenderer;
     ipc.send('nano', "");
 }
+function progshow(e) {
+	if (e.lengthComputable) {
+	  var percent = e.loaded / e.total;
+	  console.log(percent * 100);
+	  $("#imgsel").hide();
+	  if(percent<1){
+		 $("#imgup").text(Math.floor(percent*100)+"%");
+	  }else{
+		$("#imgup").text("処理中");
+	  }
+	}
+  }

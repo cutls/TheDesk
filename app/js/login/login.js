@@ -106,24 +106,21 @@ function login(url) {
 	}
 	localStorage.setItem("redirect", red);
 	var start = "https://" + url + "/api/v1/apps";
-	fetch(start, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json'
-		},
-		body: JSON.stringify({
-			scopes: 'read write follow',
-			client_name: "TheDesk(PC)",
-			redirect_uris: red,
-			website: "https://thedesk.top"
-		})
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify({
+		scopes: 'read write follow',
+		client_name: "TheDesk(PC)",
+		redirect_uris: red,
+		website: "https://thedesk.top"
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 				"client_id"] + "&client_secret=" + json["client_secret"] +
 			"&response_type=code&redirect_uri="+red+"&scope=read+write+follow";
 		localStorage.setItem("domain_" + acct_id, url);
@@ -143,8 +140,8 @@ function login(url) {
 			var ipc = electron.ipcRenderer;
 			ipc.send('quit', 'go');
 		}
-		  
-	});
+		}
+	}
 }
 
 //テキストボックスにURL入れた
