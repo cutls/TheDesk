@@ -200,14 +200,50 @@ blockquote:before, .quote:before {
 .blacktheme #imagemodal,.blacktheme  #videomodal,.blacktheme  #tootmodal {
   background-color: black;
 }
-.blacktheme .collapsible-header {
+.blacktheme .collapsible-header,.blacktheme .tabs,.blacktheme #pip {
   background-color: #212121;
 }
-.blacktheme .tabs {
-  background-color: #212121;
+/*indigo theme*/
+.indigotheme body {
+  color: white;
+  background-color: #031833;
 }
-.blacktheme #pip {
-  background-color: #212121;
+.indigotheme #drag {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+}
+.indigotheme #imagemodal,.indigotheme  #videomodal,.indigotheme  #tootmodal {
+  background-color: #0d1351;
+}
+.indigotheme .collapsible-header,.indigotheme .tabs,.indigotheme #pip {
+  background-color: #0d1351;
+}
+/*brown theme*/
+.browntheme body {
+  color: white;
+  background-color: #261411;
+}
+.browntheme #drag {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+}
+.browntheme #imagemodal,.browntheme  #videomodal,.browntheme  #tootmodal {
+  background-color: #261411;
+}
+.browntheme .collapsible-header,.browntheme .tabs,.browntheme #pip {
+  background-color: #4e342e;
 }
 
 /*スクロールバー*/

@@ -198,6 +198,8 @@ function moreload(type, tlid) {
 		if(tag=="local"){
 			data=data+"&local=true";
 		}
+	}else if(type=="list"){
+		var data=obj[tlid].data;
 	}
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
 	if (localStorage.getItem("morelock") != sid) {

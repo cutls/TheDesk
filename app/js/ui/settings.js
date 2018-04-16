@@ -130,6 +130,9 @@ function settings() {
 
 //読み込み時の設定ロード
 function load() {
+	if(localStorage.getItem("kirishima")){
+		$(".imas").removeClass("hide");
+	}
 	var prof = localStorage.getItem("prof");
 	$("#my-prof").attr("src", prof);
 	var datetype = localStorage.getItem("datetype");

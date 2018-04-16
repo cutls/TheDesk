@@ -3,6 +3,7 @@
 //アスタルテ判定初期化
 
 localStorage.removeItem("kirishima")
+localStorage.removeItem("imas")
 localStorage.removeItem("image");
 var idata={
 	"kirishima.cloud":"instance",
@@ -12,7 +13,7 @@ var idata={
 	"kirishima.cloud_markdown":"disabled",
 	"minohdon.jp":"instance",
 	"minohdon.jp_name":"箕面丼",
-	"minohdon.jp_letters":"5000",
+	"minohdon.jp_letters":"500",
 	"minohdon.jp_bbcode":"disabled",
 	"minohdon.jp_markdown":"disabled",
 	"knzk.me":"instance",
@@ -64,7 +65,7 @@ var idata={
 	"mstdn.kemono-friends.info_public":"ジャパリパーク",
 	"itabashi.0j0.jp":"instance",
 	"itabashi.0j0.jp_name":"板橋丼",
-	"itabashi.0j0.jp_letters":"500",
+	"itabashi.0j0.jp_letters":"1024",
 	"itabashi.0j0.jp_bbcode":"disabled",
 	"itabashi.0j0.jp_markdown":"disabled",
 };
@@ -306,6 +307,8 @@ function ckdb(acct_id) {
 	if(domain=="kirishima.cloud"){
 		localStorage.setItem("kirishima", "true");
 		$("#ranking-btn").show();
+	}else if(domain=="imastodon.nat"){
+		localStorage.setItem("imas", "true");
 	}
 	var at = localStorage.getItem(domain + "_at");
 	var bbcode = domain + "_bbcode";
@@ -325,11 +328,7 @@ function ckdb(acct_id) {
 				$("[data-activates='bbcode']").addClass("disabled");
 				$("[data-activates='bbcode']").addClass("disabled", true);
 			}
-			if (json[letters]) {
-				if($("#textarea").attr("data-length")<json[letters]){
-					$("#textarea").attr("data-length", json[letters]);
-				}
-			} else {}
+			
 			if (json[domain + "_markdown"] == "enabled") {
 				localStorage.setItem("md_" + acct_id, "true");
 				$(".markdown").show();
@@ -391,6 +390,12 @@ function multi() {
 		var list = key * 1 + 1;
 		if (key == last) {
 			sel = "selected";
+			var domain = localStorage.getItem("domain_" + key);
+			if(idata[domain+"_letters"]){
+				$("#textarea").attr("data-length", idata[domain+"_letters"])
+			}else{
+				$("#textarea").attr("data-length", 500)
+			}
 			var profimg=localStorage.getItem("prof_"+key);
 			var domain=localStorage.getItem("domain_"+key);
 			if(!profimg){

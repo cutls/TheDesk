@@ -26,6 +26,9 @@ app:Raw files(you can download to modify or check)
 
 app:そのままのファイル。ダウンロード→テスト用  
 
+desk.icns: If you build yourself on macOS, you can use this .icns file as icon.  
+desk.icns: macOS向けアイコン。セルフビルドにどうぞ。  
+
 ## Language/言語
 
 Japanese  

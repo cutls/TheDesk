@@ -309,20 +309,14 @@ p:not(:last-child){
 }
 
 /*black theme*/
-.blacktheme .notf-box {
+.blacktheme .notf-box,.blacktheme .modal-footer,.blacktheme #sidebar {
   background-color: #424242;
 }
-.blacktheme .modal-footer {
-  background-color: #424242;
-}
-.blacktheme .btn-flat {
+.blacktheme .btn-flat,.blacktheme .mention ,.blacktheme #sidebar a {
   color: white
 }
 .blacktheme .shared {
   background-color: #004d40;
-}
-.blacktheme .mention {
-  color: white;
 }
 .blacktheme .notice-box {
   background-color: #333333;
@@ -330,9 +324,35 @@ p:not(:last-child){
 .blacktheme .emphasized {
   background-color: #4e342e;
 }
-.blacktheme #sidebar{
-  background-color: #424242;
+/*indigo theme*/
+.indigotheme .notf-box,.indigotheme .modal-footer,.indigotheme #sidebar {
+  background-color: #0d1351;
 }
-.blacktheme #sidebar a{
-  color:white;
+.indigotheme .btn-flat,.indigotheme .mention ,.indigotheme #sidebar a {
+  color: white
+}
+.indigotheme .shared {
+  background-color: #004d40;
+}
+.indigotheme .notice-box {
+  background-color: #0d47a1;
+}
+.indigotheme .emphasized {
+  background-color: #4e342e;
+}
+/*brown theme*/
+.browntheme .notf-box,.browntheme .modal-footer,.browntheme #sidebar {
+  background-color: #4e342e;
+}
+.browntheme .btn-flat,.browntheme .mention ,.browntheme #sidebar a {
+  color: white
+}
+.browntheme .shared {
+  background-color: #004d40;
+}
+.browntheme .notice-box {
+  background-color: #4e342e;
+}
+.browntheme .emphasized {
+  background-color: #0d47a1;
 }

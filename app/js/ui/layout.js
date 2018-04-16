@@ -103,7 +103,7 @@ function parseColumn() {
 						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除"'+icnsert+'>cancel</i></a></div>'+
 		  '<div class="area-a3"><a onclick="setToggle(' + key +
 		  ')" class="setting nex" title="このカラムの設定"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
-		  '<div class="hide notf-indv-box" id="notf-box_' + key +
+		  '<div class="hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"><div id="notifications_' + key +
 		  '" data-notf="' + acct.domain + '"></div></div><div class="hide notf-indv-box" id="util-box_' + key +
 		  '" style="padding:5px;"><a onclick="mediaToggle(' + key +

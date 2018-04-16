@@ -333,7 +333,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			var vis =
 				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="未収載(クリックして本文コピー)" data-vis="unlisted" onclick="staCopy(\''+id+'\')">lock_open</i>';
 			var can_rt = "";
-		} else if (visen == "plivate") {
+		} else if (visen == "private") {
 			var vis =
 				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="非公開(クリックして本文コピー)" data-vis="private" onclick="staCopy(\''+id+'\')">lock</i>';
 			var can_rt = "hide";

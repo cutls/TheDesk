@@ -41,7 +41,6 @@ try {
 		height: 750
 	}; // デフォルトバリュー
 }
-
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
 	if (process.platform != 'darwin') {
@@ -52,7 +51,14 @@ app.on('window-all-closed', function() {
 
 function createWindow() {
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
-	mainWindow = new BrowserWindow(window_size);
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform=="linux"){
+		var arg={width:window_size.width,height:window_size.height,icon: __dirname + '/thedesk.ico'}
+	}else{
+		var arg=window_size
+	}
+	mainWindow = new BrowserWindow(arg);
 	electron.session.defaultSession.clearCache(() => {})
 	if(process.argv){
 		if(process.argv[1]){

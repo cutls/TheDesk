@@ -28,6 +28,11 @@ function mdCheck(){
 	}else{
 		$("#faicon-btn").hide();
 	}
+	if(idata[domain+"_letters"]){
+		$("#textarea").attr("data-length", idata[domain+"_letters"])
+	}else{
+		$("#textarea").attr("data-length", 500)
+	}
 }
 //BOXのトグルボタン
 function mdToggle(){

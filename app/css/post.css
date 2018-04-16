@@ -57,7 +57,6 @@
   height: calc(100% - 190px);
   overflow-y: scroll;
 }
-.emoji-control {}
 #preview-field {
   display: none;
 }
@@ -65,11 +64,25 @@
   color:white;
   margin-right:2px;
 }
+.character-counter{
+  position: relative;
+  top: -25px;
+}
+
 
 /*black theme*/
 .blacktheme #post-box {
   background-color: #424242;
 }
+/*indigo theme*/
+.indigotheme #post-box {
+  background-color: #1a237e ;
+}
+/*brown theme*/
+.browntheme #post-box {
+  background-color: #4e342e;
+}
+/*
 .blacktheme #drag {
   width: 100%;
   height: 100px;
@@ -77,10 +90,8 @@
   color: white;
   padding: 3px;
 }
-.character-counter{
-  position: relative;
-  top: -25px;
-}
+*/
+
 
 /*mini*/
 .mini-post .mize{

@@ -42,3 +42,17 @@
 .blacktheme .active-back{
   background-color:#757575;
 }
+/*indigo theme*/
+.indigotheme #his-data-show {
+  background-color: rgba(13, 19, 81,0.8);
+}
+.indigotheme .active-back{
+  background-color:#757575;
+}
+/*brown theme*/
+.browntheme #his-data-show {
+  background-color: rgba(62, 39, 35,0.8);
+}
+.browntheme .active-back{
+  background-color:#757575;
+}
