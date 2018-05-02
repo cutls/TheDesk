@@ -71,8 +71,7 @@ function clear() {
 	} else {
 		$("#cw-text").val("");
 	}
-	$("#cw").addClass("blue");
-	$("#cw").removeClass("yellow");
+	$("#cw").removeClass("yellow-text");
 	$("#cw").removeClass("cw-avail");
 	$("#rec").text("いいえ");
 	$("#mec").text("なし");
@@ -86,9 +85,8 @@ function clear() {
 			vis(vist);
 		}
 	}
-	$("#nsfw").addClass("blue");
-	$("#nsfw").removeClass("yellow");
-	$("#nsi").html("lock_open");
+	$("#nsfw").removeClass("yellow-text");
+	$("#nsfw").html("visibility_off");
 	$("#nsfw").removeClass("nsfw-avail");
 	$("#nsc").text("なし");
 	$("#drag").css("background-color", "#e0e0e0");

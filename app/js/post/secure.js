@@ -2,42 +2,38 @@
 //画像保護
 function nsfw(){
 	if($("#nsfw").hasClass("nsfw-avail")){
-		$("#nsfw").addClass("blue");
-		$("#nsfw").removeClass("yellow");
-		$("#nsi").html("lock_open");
+		$("#nsfw").removeClass("yellow-text");
+		$("#nsfw").html("visibility_off");
 		$("#nsfw").removeClass("nsfw-avail");
-		$("#nsc").text("なし");
 	}else{
-		$("#nsfw").removeClass("blue");
-		$("#nsfw").addClass("yellow");
-		$("#nsi").html("lock_outline");
+		$("#nsfw").addClass("yellow-text");
+		$("#nsfw").html("visibility");
 		$("#nsfw").addClass("nsfw-avail");
-		$("#nsc").text("あり");
 	}
 }
 
 //投稿公開範囲
 function vis(set){
 	$("#vis").text(set);
-	$("#vis-icon").removeClass("red");
-	$("#vis-icon").removeClass("orange");
-	$("#vis-icon").removeClass("blue");
-	$("#vis-icon").removeClass("purple");
+	$("#vis-icon").removeClass("red-text");
+	$("#vis-icon").removeClass("orange-text");
+	$("#vis-icon").removeClass("blue-text");
+	$("#vis-icon").removeClass("purple-text");
 	if(set=="public"){
-		$("#vis-icon i").text("public");
-		$("#vis-icon").addClass("purple");
+		$("#vis-icon").text("public");
+		$("#vis-icon").addClass("purple-text");
 	}else if(set=="unlisted"){
-		$("#vis-icon i").text("lock_open");
-		$("#vis-icon").addClass("blue");
+		$("#vis-icon").text("lock_open");
+		$("#vis-icon").addClass("blue-text");
 	}else  if(set=="private"){
-		$("#vis-icon i").text("lock");
-		$("#vis-icon").addClass("orange");
+		$("#vis-icon").text("lock");
+		$("#vis-icon").addClass("orange-text");
 	}else  if(set=="direct"){
-		$("#vis-icon i").text("mail");
-		$("#vis-icon").addClass("red");
+		$("#vis-icon").text("mail");
+		$("#vis-icon").addClass("red-text");
 	}else  if(set=="limited"){
-		$("#vis-icon i").text("group");
-		$("#vis-icon").addClass("teal");
+		$("#vis-icon").text("group");
+		$("#vis-icon").addClass("teal-text");
 	}
 	var vis=localStorage.getItem("vis");
 		if(vis=="memory"){
@@ -67,13 +63,11 @@ function cw(){
 	if($("#cw").hasClass("cw-avail")){
 		$("#cw-text").val();
 		$("#cw-text").hide();
-		$("#cw").addClass("blue");
-		$("#cw").removeClass("yellow");
+		$("#cw").removeClass("yellow-text");
 		$("#cw").removeClass("cw-avail");
 	}else{
 		$("#cw-text").show();
-		$("#cw").removeClass("blue");
-		$("#cw").addClass("yellow");
+		$("#cw").addClass("yellow-text");
 		$("#cw").addClass("cw-avail");
 		var cwt=localStorage.getItem("cw-text");
 		if(cwt){

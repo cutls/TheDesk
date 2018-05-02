@@ -172,3 +172,37 @@ function cardCheck(tlid) {
 		$("#sta-card-" + tlid).css("color",'red');
 	}
 }
+
+function mov(id,tlid){
+	if(tlid=="notf"){
+		var tlide="[data-notf="+acct_id+"]";
+	}else{
+		var tlide="[tlid="+tlid+"]";
+	}
+	var mouseover=localStorage.getItem("mouseover");
+	if(!mouseover){
+		mouseover="";
+	}else if(mouseover=="yes"){
+		mouseover="hide";
+	}else if(mouseover=="no"){
+		mouseover="";
+	}
+	if(mouseover=="hide"){
+		$(tlide+" [toot-id="+id+"] .area-actions").removeClass("hide")
+	}
+}
+
+function resetmv(){
+	var mouseover=localStorage.getItem("mouseover");
+	if(!mouseover){
+		mouseover="";
+	}else if(mouseover=="yes"){
+		mouseover="hide";
+	}else if(mouseover=="no"){
+		mouseover="";
+	}
+	if(mouseover=="hide"){
+		$(".area-actions").addClass("hide");
+	}
+	
+}

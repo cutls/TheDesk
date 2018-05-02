@@ -131,6 +131,9 @@ function reload(type, cc, acct_id, tlid, data) {
 	} else if (type=="list"){
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=list&list=" + data +"&access_token=" + at;
+	} else if (type=="dm"){
+		var start = "wss://" + domain +
+			"/api/v1/streaming/?stream=direct&access_token=" + at;
 	}
 	console.log(start);
 	var wsid = websocket.length;
@@ -321,6 +324,8 @@ function cap(type, data, acct_id) {
 		}
 	} else if (type == "noauth") {
 		var response= "Glance TL"
+	} else if (type == "dm") {
+		var response= "DM"
 	}
 	return response;
 }
@@ -335,9 +340,10 @@ function com(type, data) {
 		return "public?"
 	} else if (type == "tag") {
 		return "tag/" + data + "?"
-	}
-	if (type == "list") {
+	}else if (type == "list") {
 		return "list/" + data + "?"
+	}else if (type="dm") {
+		return "direct?"
 	}
 }
 
@@ -353,8 +359,9 @@ function icon(type) {
 		return "search"
 	} else if (type == "list") {
 		return "view_headline"
-	}
-	if (type == "list") {
+	}else if (type == "list") {
 		return "subject"
+	}else if (type == "dm") {
+		return "mail"
 	}
 }

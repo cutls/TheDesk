@@ -9,7 +9,7 @@ var idata={
 	"kirishima.cloud":"instance",
 	"kirishima.cloud_name":"アスタルテ",
 	"kirishima.cloud_letters":"6229",
-	"kirishima.cloud_bbcode":"enabled",
+	"kirishima.cloud_bbcode":"disabled",
 	"kirishima.cloud_markdown":"disabled",
 	"minohdon.jp":"instance",
 	"minohdon.jp_name":"箕面丼",
@@ -30,7 +30,7 @@ var idata={
 	"dev.kirishima.cloud_name":"アスタルテ(Dev)",
 	"dev.kirishima.cloud_letters":"6229",
 	"dev.kirishima.cloud_bbcode":"enabled",
-	"dev.kirishima.cloud_markdown":"disabled",
+	"dev.kirishima.cloud_markdown":"enabled",
 	"mstdn.y-zu.org":"instance",
 	"mstdn.y-zu.org_name":"Yづドン!(502 BadGateway)",
 	"mstdn.y-zu.org_letters":"500",
@@ -392,6 +392,11 @@ function multi() {
 				$("#textarea").attr("data-length", idata[domain+"_letters"])
 			}else{
 				$("#textarea").attr("data-length", 500)
+			}
+			if(domain=="knzk.me" || domain=="mstdn.y-zu.org"){
+				$("#type-sel").append('<option value="dm" data-trans="dm" id="direct-add">ダイレクトメッセージ</option>');
+			}else{
+				$("#direct-add").remove();
 			}
 			var profimg=localStorage.getItem("prof_"+key);
 			var domain=localStorage.getItem("domain_"+key);

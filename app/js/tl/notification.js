@@ -28,8 +28,8 @@ function notf(acct_id, tlid, sys) {
 		Object.keys(json).forEach(function(key) {
 			var obj = json[key];
 			if(lastnotf==obj.id && key>0 && native=="yes"){
-				var ct=key+1;
-				if(key==14){
+				var ct=key;
+				if(key>14){
 					ct="15+";
 				}
 				var electron = require("electron");
@@ -37,9 +37,9 @@ function notf(acct_id, tlid, sys) {
 				ipc.send('native-notf', ['TheDesk:'+domain,ct+"件の新しい通知",localStorage.getItem("prof_"+acct_id)]);
 			}
 			if(obj.type!="follow"){
-				templete = templete+parse([obj], 'notf', acct_id, tlid, -1);
+				templete = templete+parse([obj], 'notf', acct_id, 'notf', -1);
 			}else{
-				templete = templete+userparse([obj.account], 'notf', acct_id, tlid, -1);
+				templete = templete+userparse([obj.account], 'notf', acct_id, 'notf', -1);
 			}
 			
 		});
@@ -80,9 +80,9 @@ function notf(acct_id, tlid, sys) {
 			var templete="";
 			localStorage.setItem("lastnotf_" + acct_id,obj.id);
 			if(obj.type!="follow"){
-				templete = parse([obj], 'notf', acct_id, tlid, popup);
+				templete = parse([obj], 'notf', acct_id, 'notf', popup);
 			}else{
-				templete = userparse([obj], 'notf', acct_id, tlid, popup);
+				templete = userparse([obj], 'notf', acct_id, 'notf', popup);
 			}
 			if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
 				$("div[data-notf=" + acct_id +"]").prepend(templete);

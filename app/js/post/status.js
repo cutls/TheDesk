@@ -365,3 +365,22 @@ function staEx(mode){
 	});
 	return;
 }
+function toggleAction(id,tlid,acct_id){
+	if(tlid=="notf"){
+		var tlide="[data-notf="+acct_id+"]";
+	}else{
+		var tlide="[tlid="+tlid+"]";
+	}
+	if(!$(tlide+" [toot-id="+id+"]").hasClass("ext-mode")){
+		$(tlide+" [toot-id="+id+"] .type-a").hide();
+		$(tlide+" [toot-id="+id+"] .type-b").show();
+		$(tlide+" [toot-id="+id+"]").addClass("ext-mode")
+		$(tlide+" [toot-id="+id+"] .act-icon").text("expand_less");
+	}else{
+		$(tlide+" [toot-id="+id+"] .type-b").hide();
+		$(tlide+" [toot-id="+id+"] .type-a").show();
+		$(tlide+" [toot-id="+id+"]").removeClass("ext-mode")
+		$(tlide+" [toot-id="+id+"] .act-icon").text("expand_more");
+	}
+	
+}

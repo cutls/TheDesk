@@ -3,7 +3,7 @@ function pip(id){
     $("#pip").removeClass("hide");
 }
 function endPip(){
-    $("#pip-content").html();
+    $("#pip-content").html("");
     $("#pip").addClass("hide");
 }
 

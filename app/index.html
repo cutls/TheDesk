@@ -26,9 +26,9 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Mizuki (ver.7)";
+var ver="Mio (ver.1 beta)";
 //betaを入れるとバージョンチェックしない
-//var ver="beta";
+var ver="beta";
 var acct_id=0;
 var tlid=0;
   verck(ver);
@@ -134,6 +134,7 @@ var tlid=0;
 <!--サイドバー-->
 <div id="sidebar">
 <div id="sidebar-top">
+<div class="side-dead"></div>
 <div class="big-menu" id="add-tgl">
 <a onclick="addToggle()" class="nex waves-effect" data-trans-i="add">
 	<i class="material-icons nex big-icon" title="カラム追加" data-trans-title="column_add">add</i>
@@ -155,7 +156,7 @@ var tlid=0;
 <br>
 <span class="side-label" data-trans="sort">カラム一覧</span>
 </div>
-<div id="side-dead">
+<div class="side-dead">
 </div>
 <div class="small-menu" id="src-tgl">
 	<a onclick="srcToggle()" class="nex waves-effect">
@@ -217,58 +218,25 @@ var tlid=0;
 </div>
 <div id="post-box" class="z-depth-3">
 <!--トゥートボックス-->
-<span class="cancel">
-	<i class="material-icons waves-effect" onclick="hide()" title="このボックスを閉じる(X)" data-trans-title="post_box_close">cancel</i>
-	<i class="material-icons waves-effect mini-btn" onclick="mini()" title="このボックスを最小化" data-trans-title="post_box_mini">expand_more</i>
-</span>
-<br>
-<a id="clear" class="setting nex waves-effect">
-	<i class="material-icons nex mize" title="トゥートボックスのクリア(Ctrl+Shit+C)" data-trans-title="post_box_clear">clear</i>
-</a>
-<a onclick="zoomBox()" class="setting nex waves-effect">
-	<i class="material-icons nex mize" title="ボックスの拡大・縮小(E)" data-trans-title="post_box_zoom">zoom_out_map</i>
-</a>
-<a onclick="Rtoggle()" class="setting nex mize waves-effect" id="radio-btn">
-	<i class="material-icons nex" title="Spotify NowPlaying/Radio(Select/Pause)">play_circle_outline</i>
-</a>
-<div id="waveform">
-</div>
-<span id="radio-sta" class="radio"></span>
-<div id="radio-view" class="hide radio mize">
-<a onclick="nowplaying('spotify')" class="pointer" title="Ctrl+Shift+N"><i class="fa fa-spotify"></i>NowPlaying</a>
-<span class="cbadge pointer waves-effect" onclick="Rplay('https://listen.moe/stream','Listen.moe')" data-name="Listen.moe">Listen.moe</span>
-<span class="cbadge pointer waves-effect" onclick="Rplay('http://itori.animenfo.com:443/;','AnimeNfo Radio')" data-name="AnimeNfo Radio">AnimeNfo Radio</span>
-<span class="cbadge pointer waves-effect" onclick="Rplay('http://hyades.shoutca.st:8043/stream','LoFi hip hop Radio')" data-name="LoFi hip hop Radio">LoFi hip hop Radio</span>
-<span class="cbadge pointer waves-effect" onclick="Rplay('http://89.16.185.174:8004/stream','Linn Classical')" data-name="Linn Classical">Linn Classical</span>
-<span class="cbadge pointer waves-effect" onclick="Rplay('http://89.16.185.174:8000/stream','Linn Jazz')" data-name="Linn Jazz">Linn Jazz</span>
-<span class="cbadge pointer waves-effect" onclick="Rplay('http://edge-ads-01-cr.sharp-stream.com/jazzfmmobile.aac','Jazz FM')" data-name="Jazz FM">Jazz FM</span>
-<span class="cbadge pointer waves-effect" onclick="Rplay('http://91.121.59.45:10024/stream','canal-jazz.eu')" data-name="canal-jazz.eu">canal-jazz.eu</span>
-<span class="cbadge pointer waves-effect" onclick="Ryourself()">Others</span>
-</div>
-<div id="radio-input" class="hide radio mize">
-<input type="url" id="radio-url" placeholder="URL" style="width:100px">
-<button class="btn waves-effect" onclick="Rinput()">Play</button>
-<button class="btn waves-effect" onclick="Rselect()">Presets</button>
-</div>
+
 <div class="row" style="margin-bottom:0;">
-<span class="sml gray mize" data-trans="post_box_dd">画面内どこでもドラッグ・アンド・ドロップできます。</span>
-<span class="mize">
-	<br>アカウント選択
 </span>
-<br>
-</span>
-<div class="input-field mize" style="float:left; width:calc(100% - 24px)">
-<select id="post-acct-sel" class="acct-sel" onchange="mdCheck()"></select>
-</div>
-<div class="mize" style="float:left;">
-<a onclick="profShow()" style="vertical-align:-2.5rem;" class="pointer">
+<div class="" style="float:left;">
+<a onclick="profShow()" style="vertical-align:-2.5rem;" class="pointer mize">
 	<img src="./img/missing.svg" id="acct-sel-prof" title="選択中のプロフィール表示(Ctrl+Shift+P)" data-trans-title="post_box_prof" width="24px">
 </a>
 </div>
+<div class="input-field mize" style="float:left; width:calc(100% - 24px)">
+<select id="post-acct-sel" class="acct-sel" onchange="mdCheck()"></select>
+</div>
+<span class="cancel">
+		<i class="material-icons waves-effect" onclick="hide()" title="このボックスを閉じる(X)" data-trans-title="post_box_close">cancel</i>
+		<i class="material-icons waves-effect mini-btn" onclick="mini()" title="このボックスを最小化" data-trans-title="post_box_mini">expand_more</i>
+	</span>
 <!--Markdown-->
 <div class="row" style="margin-bottom:0">
 <div class="markdown mize">
-<div class="col s12 more-show">
+<div class="col s12">
 <i class="material-icons pointer setting waves-effect" onclick="tagsel('b')" title="太字(Ctrl+B)テキストボックス内を選択してから押すと囲みます。">format_bold</i>
 <i class="material-icons pointer setting waves-effect" onclick="tagsel('i')" title="斜字(Ctrl+I)テキストボックス内を選択してから押すと囲みます。">format_italic</i>
 <i class="material-icons pointer setting waves-effect" onclick="tagsel('u')" title="下線(Ctrl+U)テキストボックス内を選択してから押すと囲みます。">format_underlined</i>
@@ -310,6 +278,7 @@ var tlid=0;
 </span>
 </div>
 <div class="input-field col s12" id="toot-field" style="margin-top: 0;">
+
 <textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;" data-length="500"></textarea>
 <label for="textarea" data-trans="toot">トゥート</label>
 <br>
@@ -319,9 +288,17 @@ var tlid=0;
 <span class="sml gray pointer more-show anti-markdown hide mize">
 <a onclick="mdToggle()">Markdownエディタを表示</a>
 </span>
-
-<br>
 <span id="suggest"></span>
+</div>
+<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
+		<i class="waves-effect gray material-icons" id="nsfw" title="画像に制限を付与" onclick="nsfw()">visibility_off</i>
+		<i class="waves-effect gray material-icons purple-text dropdown-button" data-activates='dropdown1' id="vis-icon">public</i>
+		<a class="waves-effect gray" id="cw" onclick="cw()" title="コンテンツワーニング(トゥートを表示する前にメッセージで隠す)">CW</a>
+		<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray" onclick="fileselect()" title="ファイルを選択">photo_library</i></span></span>
+		<i class="waves-effect gray material-icons" onclick="adobe()" title="Adobeフォトエディタ">format_shapes</i>
+		<i class="waves-effect gray material-icons" onclick="emoji()" title="絵文字を挿入">tag_faces</i>
+		<a onclick="nowplaying('spotify')" class="pointer waves-effect gray" title="Spotify Now Playing(アカウント連携が必要です)Ctrl+Shift+N"><i class="fa fa-spotify" style="font-size:24px;"></i></a>
+		<i class="material-icons nex gray waves-effect" title="トゥートボックスのクリア(Ctrl+Shit+C)" data-trans-title="post_box_clear" id="clear">clear</i>
 </div>
 <div class="col s11 mize" style="margin-bottom:5px; padding:0;">
 
@@ -329,26 +306,15 @@ var tlid=0;
 <span class=" sml mize"><span data-trans="reply">返信モード</span>:
 <span id="rec">いいえ</span>/<span data-trans="file">添付</span>:
 <span id="mec">なし</span>/<span data-trans="vis">公開範囲</span>:
-<span id="vis">public</span>/<span data-trans="nsfw">画像制限</span>:
-<span id="nsc">なし</span>
+<span id="vis">public</span>
 </span>
 <br>
 <input type="text" id="cw-text" placeholder="警告文" class="mize">
 </div>
-<div class="col s1 mize" style="padding:0;">
-	<span id="imgup"></span>
-	<span id="imgsel"><i class="material-icons pointer" onclick="fileselect()" title="ファイルを選択">photo_library</i><span id="imgup"></span>
 </div>
-<div class="col s3 mize">
-<button class="btn waves-effect  blue darken-3" style="width:100%; padding:0; margin-top:0;" id="cw" onclick="cw()" title="コンテンツワーニング(トゥートを表示する前にメッセージで隠す)(青:OFF)">CW</button>
-</div>
-<div class="col s3 mize">
-<button class="dropdown-button btn waves-effect purple " style="width:100%; padding:0; margin-top:0;" data-activates='dropdown1' id="vis-icon">
-<i class="material-icons">public</i>
-</button>
 <!-- 公開範囲 Dropdown Structure -->
 <ul id='dropdown1' class='dropdown-content'>
-<li>公開範囲指定</li>
+<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">公開範囲指定</li>
 <li>
 	<a onclick="vis('public')">公開(Public)</a>
 </li>
@@ -365,83 +331,70 @@ var tlid=0;
 	<a onclick="vis('direct')" class="disabled direct">ダイレクト(Direct)</a>
 </li>
 </ul>
-</div>
-<div class="col s3 mize">
-<button class="btn waves-effect red darken-3" style="width:100%; padding:0; margin-top:0;" onclick="emoji()" title="絵文字">
-<i class="material-icons">tag_faces</i>
-</button>
-<!--絵文字ピッカー-->
-<div id="emoji" class="hide shared z-depth-4">
-<span class="gray sml">インスタンスによって実装が異なります。
-<i>
-	<a onclick="emojiGet('true')" class="pointer">絵文字更新</a>
-</i>
-<br>
-</span>
-<input type="text" id="emoji-suggest" placeholder="カスタム絵文字検索">
-<div id="emoji-list" class="" style="">
-</div>
-<div class="emoji-control center">
-<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('before')" id="emoji-before">
-<i class="material-icons">navigate_before</i>
-</button>
-<span id="emoji-count"></span>/
-<span id="emoji-sum"></span>
-<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('next')" id="emoji-next">
-<i class="material-icons">navigate_next</i>
-</button>
-</div>
-<div id="default-emoji">
-<span id="now-emoji"></span>一覧を表示中<br><span class="gray sml">一部デフォルト絵文字は入力・描画できません。(国旗系など)</span>
-<br>
-<a onclick="customEmoji()" class="pointer waves-effect" title="カスタム絵文字">
-<i class="material-icons">add</i>
-</a>
-<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="ひと">
-<i class="material-icons">people</i>
-</a>
-<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="自然">
-<i class="material-icons">local_florist</i>
-</a>
-<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="食べ物">
-<i class="material-icons">restaurant</i>
-</a>
-<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="活動">
-<i class="material-icons">directions_run</i>
-</a>
-<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="場所">
-<i class="material-icons">directions_car</i>
-</a>
-<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="もの">
-<i class="material-icons">attach_file</i>
-</a>
-<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="記号">
-<i class="material-icons">gesture</i>
-</a>
-<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="国旗">
-<i class="material-icons">flag</i>
-</a>
-<a onclick="faicon()" class="pointer waves-effect" title="faicon" id="faicon-btn">
-<i class="fa fa-fort-awesome"></i>
-</a>
-</div>
-</div>
-</div>
-<div class="col s3 mize">
-<button class="btn waves-effect blue darken-3" style="width:100%; padding:0; margin-top:0;" onclick="nsfw()" id="nsfw" title="画像に制限を付与(青:OFF)">
-<i class="material-icons">photo</i>
-<i class="material-icons" id="nsi">lock_open</i>
-</button>
-</div>
-</div>
 <!--hidden area-->
 <input type="hidden" id="reply">
 <input type="hidden" id="media">
 <!--END hidden area-->
-<div class="col s12" id="toot-btn-field">
-<button class="btn waves-effect indigo unmize" style="width:100%; padding:0; margin-top:10px;" onclick="post()" id="toot-post-btn">トゥート</button>
+</div>
+<div id="toot-btn-field">
+	<button class="btn waves-effect indigo unmize" style="width:calc(100% - 10px); padding:0; margin-top:10px;" onclick="post()" id="toot-post-btn">トゥート</button>
 </div>
 </div>
+<!--絵文字ピッカー-->
+<div id="emoji" class="hide shared z-depth-4">
+	<span class="gray sml">インスタンスによって実装が異なります。
+	<i>
+		<a onclick="emojiGet('true')" class="pointer">絵文字更新</a>
+	</i>
+	<br>
+	</span>
+	<input type="text" id="emoji-suggest" placeholder="カスタム絵文字検索">
+	<div id="emoji-list" class="" style="">
+	</div>
+	<div class="emoji-control center">
+		<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('before')" id="emoji-before">
+		<i class="material-icons">navigate_before</i>
+		</button>
+		<span id="emoji-count"></span>/
+		<span id="emoji-sum"></span>
+		<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('next')" id="emoji-next">
+		<i class="material-icons">navigate_next</i>
+		</button>
+		</div>
+		<div id="default-emoji">
+		<span id="now-emoji"></span>一覧を表示中<br><span class="gray sml">一部デフォルト絵文字は入力・描画できません。(国旗系など)</span>
+		<br>
+		<a onclick="customEmoji()" class="pointer waves-effect" title="カスタム絵文字">
+		<i class="material-icons">add</i>
+		</a>
+		<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="ひと">
+		<i class="material-icons">people</i>
+		</a>
+		<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="自然">
+		<i class="material-icons">local_florist</i>
+		</a>
+		<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="食べ物">
+		<i class="material-icons">restaurant</i>
+		</a>
+		<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="活動">
+		<i class="material-icons">directions_run</i>
+		</a>
+		<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="場所">
+		<i class="material-icons">directions_car</i>
+		</a>
+		<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="もの">
+		<i class="material-icons">attach_file</i>
+		</a>
+		<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="記号">
+		<i class="material-icons">gesture</i>
+		</a>
+		<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="国旗">
+		<i class="material-icons">flag</i>
+		</a>
+		<a onclick="faicon()" class="pointer waves-effect" title="faicon" id="faicon-btn">
+		<i class="fa fa-fort-awesome"></i>
+		</a>
+	</div>
 </div>
 <!-- Modal Structure Tootdata-->
 <div id="tootmodal" class="modal modal-fixed-footer">
@@ -455,13 +408,6 @@ var tlid=0;
 		</div>
 	</li>
 	<li>
-		<div class="collapsible-header">
-		<i class="material-icons">arrow_downward</i>これよりあとの会話
-		</div>
-		<div class="collapsible-body toot-reset" id="toot-after">
-		</div>
-		</li>
-	<li>
 		<div class="collapsible-header" id="activator">
 		<i class="material-icons">more_horiz</i>対象のトゥート
 		</div>
@@ -470,9 +416,23 @@ var tlid=0;
 	</li>
 	<li>
 		<div class="collapsible-header">
-		<i class="material-icons">arrow_downward</i>これより前のLocal TL
+		<i class="material-icons">arrow_downward</i>これよりあとの会話
+		</div>
+		<div class="collapsible-body toot-reset" id="toot-after">
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+		<i class="material-icons">people_outline</i>これより前のLocal TL(エアリプソース確認)
 		</div>
 		<div class="collapsible-body toot-reset" id="toot-before">
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+		<i class="material-icons">person_outline</i>これより前のユーザーTL(BTソース確認)
+		</div>
+		<div class="collapsible-body toot-reset" id="user-before">
 		</div>
 	</li>
 	<li>
@@ -745,7 +705,6 @@ var tlid=0;
 <script type="text/javascript" src="./js/ui/img.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script type="text/javascript" src="./js/ui/pip.js"></script>
-<script type="text/javascript" src="./js/ui/radio.js"></script>
 <script type="text/javascript" src="./js/ui/sort.js"></script>
 <script type="text/javascript" src="./js/ui/spotify.js"></script>
 <script type="text/javascript" src="./js/post/post.js"></script>
@@ -763,3 +722,30 @@ var tlid=0;
 <script type="text/javascript" src="./js/emoji/emojipack.js"></script>
 <script type="text/javascript" src="./js/emoji/default-emoji.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
+<!--
+<script type="text/javascript" src="https://dme0ih8comzn4.cloudfront.net/imaging/v2/editor.js"></script>
+<script type="text/javascript">
+	//Adobeエディターのセットアップ関数
+	function set_adbe_image(){
+	  //<body>内の画像要素を取得
+	  var image = document.getElementById('imgmodal');
+	  //画像編集エディタを利用するための準備
+	  var Editor = new Aviary.Feather({
+		  apiKey: 'ffee425017ab44b18ce95dab98a5cdc1',
+		  language: 'ja',
+		  onSave: function(imageID, newURL) {
+        	console.log(newURL);
+    	},
+	  });
+	  //画像要素をクリックしたら、「編集エディタ」を表示
+	  image.addEventListener('click', function () {
+		  Editor.launch({
+			  //<img>内のidとsrcを取得
+			  image: image.id,
+			  url: image.src
+		  });
+	  });
+	}
+	//エディター動作割り当てる
+	set_adbe_image();
+</script>-->

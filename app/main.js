@@ -26,7 +26,6 @@ const BrowserWindow = electron.BrowserWindow;
 const {
 	download
 } = require('electron-dl');
-const openAboutWindow = require('about-window').default;
 const join = require('path').join;
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow;
@@ -395,6 +394,33 @@ ipc.on('nano', function (e, x, y) {
    window.setPosition(0, 0);
    return "true"
  })
+ ipc.on('adobe', (e, arg) => {
+	 if(!arg){
+		const options = {
+			type: 'info',
+			title: 'Adobeフォトエディタ',
+			message: "「許可」または「永続的に許可」をクリックするとTheDeskとAdobeで情報を共有します。",
+			buttons: ['拒否', '許可','永続的に許可']
+		  }
+		  dialog.showMessageBox(options, function(index) {
+			if(index==2){
+				mainWindow.webContents.send('adobeagree', "true");
+			}
+			if(index>0){
+				adobeWindow();
+			}
+		  })
+	 }else{
+		adobeWindow();
+	 }
+});
+function adobeWindow(){
+	var window = new BrowserWindow({
+		width: 1000,
+		height: 750
+	});
+	window.loadURL('file://' + __dirname + '/adobe.html');
+}
 
 
 app.setAsDefaultProtocolClient('thedesk')

@@ -6,18 +6,18 @@
   background-color: white;
   border: thin solid gray;
   z-index: 500;
-  width: 350px;
-  min-width:350px;
+  width: 300px;
+  min-width:300px;
   max-width:100%;
   padding: 5px;
 }
 .cancel {
-  position: absolute;
-  top: 3px;
-  right: 3px;
   font-size: 0.5rem;
   color: gray;
   cursor: pointer;
+  position: absolute;
+  width: 60px;
+  right: 0px;
 }
 .more-show {
   display: none;

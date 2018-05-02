@@ -19,10 +19,11 @@
   flex-wrap:wrap;
 }
 #sidebar-top{
-  height:70vh;
+  height:calc(100vh - 100px);
   display:flex;
   flex-wrap:wrap;
-  align-content:center;
+  align-content:flex-start;
+  overflow-y:scroll;
 }
 #sidebar-btm{
   height:9em;
@@ -50,7 +51,7 @@
   font-size:12px;
   vertical-align: 0.6rem;
 }
-#sidebar #side-dead{
+#sidebar .side-dead{
   height:30px;
 }
 
@@ -81,7 +82,7 @@ iframe {
 }
 .user{
   cursor:text;
-  font-size:1.2em;
+  font-size:1.2rem;
 }
 .emojione,.emoji-img{
   width: 20px;
@@ -106,7 +107,7 @@ iframe {
   width: 100%;
   display: grid;
   grid-template-columns: 43px 2fr 1fr;
-  grid-template-areas: 'notice notice notice' 'icon display_name acct' 'icon toot toot' 'icon additional additional' 'actions actions date_via';
+  grid-template-areas: 'notice notice notice' 'icon display_name acct' 'icon toot toot' 'vis additional additional' 'actions actions actions';
 }
 
 .area-notice {
@@ -161,6 +162,11 @@ grid-area: toot;
 margin:2px;
 grid-area: actions;
 }
+.area-vis {
+  margin:2px;
+  font-size:0.5rem !important;
+  grid-area: vis;
+  }
 
 .action i{
 font-size:1rem;
@@ -199,6 +205,7 @@ font-size:1rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  height:calc(0.8em + 8px);
 }
 p {
   margin: 0;
@@ -306,6 +313,9 @@ p:not(:last-child){
 .mention {
   color: black;
   cursor: text;
+}
+.type-b{
+  display:none;
 }
 
 /*black theme*/

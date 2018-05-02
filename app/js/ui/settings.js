@@ -126,6 +126,21 @@ function settings() {
 		Materialize.toast("引用形式を" + qtt + "に設定しました。", 3000);
 	}
 	localStorage.setItem("quote", qtd);
+	
+	var viad = $("[name=via]:checked").val();
+	var viat = $("[for=via_"+viad+"]").text();
+	if (viad != localStorage.getItem("viashow")) {
+		Materialize.toast("via表示を" + viat + "に設定しました。", 3000);
+	}
+	localStorage.setItem("viashow", viad);
+
+	var movd = $("[name=mov]:checked").val();
+	var movt = $("[for=mov_"+movd+"]").text();
+	if (movd != localStorage.getItem("mouseover")) {
+		Materialize.toast("マウスオーバー・ヒディングを" + movt + "に設定しました。", 3000);
+	}
+	localStorage.setItem("mouseover", movd);
+
 }
 
 //読み込み時の設定ロード
@@ -247,6 +262,18 @@ function load() {
 		var qt = "simple";
 	}
 	$("#q_" + qt).prop("checked", true);
+
+	var viat = localStorage.getItem("viashow");
+	if (!viat) {
+		var viat = "hide";
+	}
+	$("#via_" + viat).prop("checked", true);
+
+	var movt = localStorage.getItem("mouseover");
+	if (!movt) {
+		var movt = "no";
+	}
+	$("#mov_" + movt).prop("checked", true);
 }
 //最初に読む
 load();

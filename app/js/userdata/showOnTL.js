@@ -97,14 +97,18 @@ function udg(user, acct_id) {
 			$("#his-follower").text(json.followers_count);
 			$("#his-since").text(crat(json.created_at));
 			if(json.fields){
-				var note=json.note+'My Fields<br><table class="responsive-table">'
-				for(var i=0;i<json.fields.length;i++){
-					var fname=json.fields[i].name;
-					var fval=json.fields[i].value;
-					note=note+'<tr><td>'+fname+'</td><td>'+fval+'</td></tr>';
+				if(json.fields.length>0){
+					var note=json.note+'My Fields<br><table style="vertical-align: baseline; text-align:center; padding:0;">'
+					for(var i=0;i<json.fields.length;i++){
+						var fname=json.fields[i].name;
+						var fval=json.fields[i].value;
+						note=note+'<tr style="height:1.5rem; padding:0;"><td style="height:1.5rem; padding:0; background-color:#757575; text-align:center; ">'+fname+'</td><td style="height:1.5rem; padding:0; padding-left:5px;">'+fval+'</td></tr>';
+					}
+					note=note+'</table>'
+					$("#his-des").html(note);
+				}else{
+					$("#his-des").html(json.note);
 				}
-				note=note+'</table>'
-				$("#his-des").html(note);
 			}else{
 				$("#his-des").html(json.note);
 			}

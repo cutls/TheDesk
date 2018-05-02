@@ -1,6 +1,20 @@
 //オブジェクトパーサー(トゥート)
 function parse(obj, mix, acct_id, tlid, popup) {
 	var templete = '';
+	var actb = localStorage.getItem("action_btns");
+	var actb='re,rt,fav,qt,del,pin';
+	if(actb){
+		var actb = actb.split(',');
+		var disp={};
+		for(var k=0;k<actb.length;k++){
+			if(k<4){
+				var tp="type-a";
+			}else{
+				var tp="type-b";
+			}
+			disp[actb[k]]=tp;
+		}
+	}
 	var datetype = localStorage.getItem("datetype");
 	var nsfwtype = localStorage.getItem("nsfw");
 	var sent = localStorage.getItem("sentence");
@@ -83,11 +97,25 @@ function parse(obj, mix, acct_id, tlid, popup) {
 	if(!wordmute){
 		var wordmute=[];
 	}
+	//via通知
+	var viashow=localStorage.getItem("viashow");
+	if(!viashow){
+		viashow="hide";
+	}
 	//認証なしTL
 	if(mix=="noauth"){
 		var noauth="hide";
 	}else{
 		var noauth="";
+	}
+	//マウスオーバーのみ
+	var mouseover=localStorage.getItem("mouseover");
+	if(!mouseover){
+		mouseover="";
+	}else if(mouseover=="yes"){
+		mouseover="hide";
+	}else if(mouseover=="no"){
+		mouseover="";
 	}
 	var local = [];
 	var times=[];
@@ -327,25 +355,27 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		var visen = toot.visibility;
 		if (visen == "public") {
 			var vis =
-				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="公開(クリックして本文コピー)" data-vis="public" onclick="staCopy(\''+id+'\')">public</i>';
+				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="公開(クリックして本文コピー)" data-vis="public" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">public</i>';
 			var can_rt = "";
 		} else if (visen == "unlisted") {
 			var vis =
-				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="未収載(クリックして本文コピー)" data-vis="unlisted" onclick="staCopy(\''+id+'\')">lock_open</i>';
+				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="未収載(クリックして本文コピー)" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock_open</i>';
 			var can_rt = "";
 		} else if (visen == "private") {
 			var vis =
-				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="非公開(クリックして本文コピー)" data-vis="private" onclick="staCopy(\''+id+'\')">lock</i>';
+				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="非公開(クリックして本文コピー)" data-vis="private" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock</i>';
 			var can_rt = "hide";
 		} else if (visen == "direct") {
 			var vis =
-				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="ダイレクト(クリックして本文コピー)" data-vis="direct" onclick="staCopy(\''+id+'\')">mail</i>';
+				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="ダイレクト(クリックして本文コピー)" data-vis="direct" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">mail</i>';
 			var can_rt = "hide";
 		}
 		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
 			var if_mine = "";
+			var mine_via="type-b";
 		} else {
 			var if_mine = "hide";
+			var mine_via="";
 		}
 		if (toot.favourited) {
 			var if_fav = " yellow-text";
@@ -407,7 +437,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
 			' ' + hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
-				key].created_at, 'unix') + '" '+if_notf+'>' +
+				key].created_at, 'unix') + '" '+if_notf+' onmouseover="mov(\'' + toot.id + '\',\''+tlid+'\')" onmouseout="resetmv()">' +
 			'<div class="area-notice"><span class="gray sharesta">' + notice + home +
 			'</span></div>' +
 			'<div class="area-icon"><a onclick="udg(\'' + toot.account.id +
@@ -422,7 +452,8 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			'<div class="area-acct"><div><span class="cbadge pointer waves-effect" onclick="tootUriCopy(\'' +
 			toot.url + '\');" title="' + date(toot.created_at, 'absolute') +
 			'(クリックでトゥートURLをコピー)"><i class="fa fa-clock-o"></i>' +
-			date(toot.created_at, datetype) + '</span></div></div>' +
+			date(toot.created_at, datetype) + '</span><span style="padding:0;">' +
+			vis + '</span></div></div>' +
 			'<div class="area-toot"><span class="toot ' + spoiler + '">' + content +
 			'</span><span class="' +
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
@@ -431,38 +462,38 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			'</div><div class="area-additional"><span class="additional">' + analyze +
 			'</span>' +
 			'' + mentions + tags + '</div>' +
-			'<div class="area-actions '+noauth+'" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
-			'<div class="action"><span style="padding:0">' +
-			vis + '</span></div><div class="action"><a onclick="re(\'' + toot.id +
+			'<div class="area-vis"></div>'+
+			'<div class="area-actions '+noauth+' '+mouseover+'" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
+			'<div class="action '+disp["re"]+'"><a onclick="re(\'' + toot.id +
 			'\',\'' + toot.account.acct + '\',' +
 			acct_id + ',\''+visen+
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートに返信"><i class="fa fa-share"></i></a></div>' +
-			'<div class="action '+can_rt+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
+			'<div class="action '+can_rt+' '+disp["rt"]+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをブースト"><i class="text-darken-3 fa fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 			'</span></a></div>' +
-			'<div class="action '+can_rt+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
+			'<div class="action '+can_rt+' '+disp["qt"]+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
 			',\'' + toot.account.acct +'\',\''+toot.url+
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを引用"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
-			'<div class="action"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
+			'<div class="action '+disp["fav"]+'"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをお気に入り登録"><i class="fa text-darken-3 fa-star' +
 			if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
 			'</a></span></div>' +
-			'<div class="' + if_mine + ' action"><a onclick="del(\'' + toot.id + '\',' +
+			'<div class="' + if_mine + ' action '+disp["del"]+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを削除"><i class="fa fa-trash-o"></i></a></div>' +
-			'<div class="' + if_mine + ' action pin"><a onclick="pin(\'' + toot.id + '\',' +
+			'<div class="' + if_mine + ' action pin '+disp["pin"]+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをピン留め"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' +trans+
+			'<div class="action ' + if_mine + '"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
 			'<div class="action"><a onclick="details(\'' + toot.id + '\',' + acct_id +
-			','+tlid+')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
-			'</div><div class="area-date_via">' +
-			'<div><span class="cbadge waves-effect" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
+			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
+			'<span class="cbadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
 			via +
-			'</span></div></div></div>' +
-			'</div>' + divider;
+			'</span></div></div>' +
+			'</div></div>' + divider;
 	});
 	if (mix == "mix") {
 		return [templete, local, times]

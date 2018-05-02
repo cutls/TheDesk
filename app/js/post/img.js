@@ -196,3 +196,11 @@ element.addEventListener("paste", function(e){
 
     // 画像以外がペーストされたときのために、元に戻しておく
 });
+//Adobeフォトエディタ
+function adobe(){
+	var agree = localStorage.getItem("adobeagree");
+	ipc.send('adobe', agree);
+}
+ipc.on('adobeagree', function (event, arg) {
+	localStorage.setItem("adobeagree",arg);
+  });

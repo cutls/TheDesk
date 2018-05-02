@@ -37,10 +37,12 @@ function details(id, acct_id, tlid) {
 			replyTL(json.in_reply_to_id, acct_id);
 		}
 		context(id, acct_id);
+		beforeToot(id, acct_id);
+		userToot(id, acct_id, json.account.id);
 		faved(id, acct_id);
 		rted(id, acct_id);
 		if(!$("#activator").hasClass("active")){
-			$('#det-col').collapsible('open', 2);
+			$('#det-col').collapsible('open', 1);
 		}
 		
 	});
@@ -63,7 +65,7 @@ function replyTL(id, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse([json]);
+		var templete = parse([json], '', acct_id);
 		$("#toot-reply").prepend(templete);
 		jQuery("time.timeago").timeago();
 		if (json.in_reply_to_id) {
@@ -89,9 +91,9 @@ function context(id, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json.descendants);
+		var templete = parse(json.descendants, '', acct_id);
 		$("#toot-after").html(templete);
-		beforeToot(id, acct_id);
+		
 		jQuery("time.timeago").timeago();
 	});
 }
@@ -114,8 +116,30 @@ function beforeToot(id, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json);
+		var templete = parse(json, '', acct_id);
 		$("#toot-before").html(templete);
+		jQuery("time.timeago").timeago();
+	});
+}
+//前のユーザーのトゥート
+function userToot(id, acct_id, user) {
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem(domain + "_at");
+	var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses?max_id=" + id;
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		var templete = parse(json, '', acct_id);
+		$("#user-before").html(templete);
 		jQuery("time.timeago").timeago();
 	});
 }
