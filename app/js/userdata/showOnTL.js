@@ -87,7 +87,24 @@ function udg(user, acct_id) {
 			utl(json.id, '', acct_id);
 			flw(json.id, '', acct_id);
 			fer(json.id, '', acct_id);
-			$("#his-name").text(json.display_name);
+			var dis_name=escapeHTML(json.display_name);
+			if(json.emojis){
+				var actemojick = json.emojis[0];
+			}else{
+				var actemojick=false;
+			}
+			//絵文字があれば
+			if (actemojick) {
+				Object.keys(json.emojis).forEach(function(key5) {
+					var emoji = json.emojis[key5];
+					var shortcode = emoji.shortcode;
+					var emoji_url = '<img src="' + emoji.url +
+					'" class="emoji-img" data-emoji="'+shortcode+'">';
+					var regExp = new RegExp(":" + shortcode + ":", "g");
+					dis_name = dis_name.replace(regExp, emoji_url);
+				});
+			}
+			$("#his-name").html(dis_name);
 			$("#his-acct").text(json.acct);
 			$("#his-acct").attr("fullname",fullname);
 			$("#his-prof").attr("src", json.avatar);

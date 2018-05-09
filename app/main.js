@@ -399,7 +399,7 @@ ipc.on('nano', function (e, x, y) {
 		const options = {
 			type: 'info',
 			title: 'Adobeフォトエディタ',
-			message: "「許可」または「永続的に許可」をクリックするとTheDeskとAdobeで情報を共有します。",
+			message: "「許可」または「永続的に許可」をクリックするとTheDeskとAdobeで情報を共有します。\n次のウィンドウを開いている時以外は一切提供しません。",
 			buttons: ['拒否', '許可','永続的に許可']
 		  }
 		  dialog.showMessageBox(options, function(index) {

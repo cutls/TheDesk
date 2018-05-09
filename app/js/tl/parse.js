@@ -121,6 +121,23 @@ function parse(obj, mix, acct_id, tlid, popup) {
 	var times=[];
 	Object.keys(obj).forEach(function(key) {
 		var toot = obj[key];
+		var dis_name=escapeHTML(toot.account.display_name);
+		if(toot.account.emojis){
+			var actemojick = toot.account.emojis[0];
+		}else{
+			var actemojick=false;
+		}
+		//絵文字があれば
+		if (actemojick) {
+			Object.keys(toot.account.emojis).forEach(function(key5) {
+				var emoji = toot.account.emojis[key5];
+				var shortcode = emoji.shortcode;
+				var emoji_url = '<img src="' + emoji.url +
+					'" class="emoji-img" data-emoji="'+shortcode+'">';
+				var regExp = new RegExp(":" + shortcode + ":", "g");
+				dis_name = dis_name.replace(regExp, emoji_url);
+			});
+		}
 		if (mix == "notf") {
 			if (toot.type == "mention") {
 				var what = "が返信しました";
@@ -143,7 +160,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				'absolute') + '(通知された時間)"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
 				datetype) +
 			'</span><a onclick="udg(\'' + toot.account.id +
-				'\',\'' + acct_id + '\')" class="pointer">' + escapeHTML(toot.account.display_name) +
+				'\',\'' + acct_id + '\')" class="pointer">' + dis_name +
 				"(" + toot.account.acct +
 				")</a>" + what;
 			var notice = noticetext;
@@ -164,6 +181,23 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			}
 			var if_notf='data-notfIndv="'+acct_id+"_"+toot.id+'"';
 			var toot = toot.status;
+			var dis_name=escapeHTML(toot.account.display_name);
+			if(toot.account.emojis){
+				var actemojick = toot.account.emojis[0];
+			}else{
+				var actemojick=false;
+			}
+		//絵文字があれば
+		if (actemojick) {
+			Object.keys(toot.account.emojis).forEach(function(key5) {
+				var emoji = toot.account.emojis[key5];
+				var shortcode = emoji.shortcode;
+				var emoji_url = '<img src="' + emoji.url +
+					'" class="emoji-img" data-emoji="'+shortcode+'">';
+				var regExp = new RegExp(":" + shortcode + ":", "g");
+				dis_name = dis_name.replace(regExp, emoji_url);
+			});
+		}
 		}else{
 			var if_notf="";
 			if (toot.reblog) {
@@ -173,7 +207,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
 					rebtxt = "がしばいた";
 				}
-				var notice = escapeHTML(toot.account.display_name) + "(" + toot.account.acct +
+				var notice = dis_name + "(" + toot.account.acct +
 					")"+rebtxt+"<br>";
 					var boostback = "shared";
 				var toot = toot.reblog;
@@ -284,7 +318,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				spoil = spoil.replace(regExp, emoji_url);
 			});
 		}
-		var dis_name=escapeHTML(toot.account.display_name);
+		
 		//デフォ絵文字
 		content=emojione.unicodeToImage(content);
 		if(dis_name){
@@ -411,7 +445,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				if(worde){
 					var word=worde.tag;
 					var regExp = new RegExp( word, "g" ) ;
-					if(content.match(regExp)){
+					if($.strip_tags(content).match(regExp)){
 						boostback = "hide";
 					}
 				}

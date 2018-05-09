@@ -151,6 +151,7 @@ function login(url) {
 	}else{
 		var red = 'thedesk://manager';
 	}
+	console.log(red);
 	localStorage.setItem("redirect", red);
 	var start = "https://" + url + "/api/v1/apps";
 	var httpreq = new XMLHttpRequest();

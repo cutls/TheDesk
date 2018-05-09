@@ -26,9 +26,9 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Mio (ver.1 beta)";
+var ver="Mio (ver.1)";
 //betaを入れるとバージョンチェックしない
-var ver="beta";
+//var ver="beta";
 var acct_id=0;
 var tlid=0;
   verck(ver);
@@ -282,10 +282,10 @@ var tlid=0;
 <textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;" data-length="500"></textarea>
 <label for="textarea" data-trans="toot">トゥート</label>
 <br>
-<span class="sml gray pointer more-show markdown mize" id="preview-btn">
+<span class="sml gray pointer markdown mize" id="preview-btn">
 <a onclick="preview()">Preview</a>
 </span>
-<span class="sml gray pointer more-show anti-markdown hide mize">
+<span class="sml gray pointer anti-markdown mize">
 <a onclick="mdToggle()">Markdownエディタを表示</a>
 </span>
 <span id="suggest"></span>
@@ -722,30 +722,3 @@ var tlid=0;
 <script type="text/javascript" src="./js/emoji/emojipack.js"></script>
 <script type="text/javascript" src="./js/emoji/default-emoji.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
-<!--
-<script type="text/javascript" src="https://dme0ih8comzn4.cloudfront.net/imaging/v2/editor.js"></script>
-<script type="text/javascript">
-	//Adobeエディターのセットアップ関数
-	function set_adbe_image(){
-	  //<body>内の画像要素を取得
-	  var image = document.getElementById('imgmodal');
-	  //画像編集エディタを利用するための準備
-	  var Editor = new Aviary.Feather({
-		  apiKey: 'ffee425017ab44b18ce95dab98a5cdc1',
-		  language: 'ja',
-		  onSave: function(imageID, newURL) {
-        	console.log(newURL);
-    	},
-	  });
-	  //画像要素をクリックしたら、「編集エディタ」を表示
-	  image.addEventListener('click', function () {
-		  Editor.launch({
-			  //<img>内のidとsrcを取得
-			  image: image.id,
-			  url: image.src
-		  });
-	  });
-	}
-	//エディター動作割り当てる
-	set_adbe_image();
-</script>-->
