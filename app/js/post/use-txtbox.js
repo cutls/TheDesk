@@ -6,6 +6,7 @@ function re(id,at,acct_id,mode){
 	$("#textarea").val("@"+at+" "+te);
 	$("#rec").text("はい");
 	$("#post-acct-sel").val(acct_id);
+	$("#post-acct-sel").prop("disabled", true);
 	$('select').material_select();
 	$("#textarea").attr("placeholder","返信モードです。クリアするときはCtrl+Shift+Cを押してください。");
 	$("#textarea").focus();

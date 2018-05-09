@@ -136,6 +136,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 					'" class="emoji-img" data-emoji="'+shortcode+'">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				dis_name = dis_name.replace(regExp, emoji_url);
+				
 			});
 		}
 		if (mix == "notf") {
@@ -211,6 +212,23 @@ function parse(obj, mix, acct_id, tlid, popup) {
 					")"+rebtxt+"<br>";
 					var boostback = "shared";
 				var toot = toot.reblog;
+				var dis_name=escapeHTML(toot.account.display_name);
+				if(toot.account.emojis){
+					var actemojick = toot.account.emojis[0];
+				}else{
+					var actemojick=false;
+				}
+			//絵文字があれば
+			if (actemojick) {
+				Object.keys(toot.account.emojis).forEach(function(key5) {
+					var emoji = toot.account.emojis[key5];
+					var shortcode = emoji.shortcode;
+					var emoji_url = '<img src="' + emoji.url +
+						'" class="emoji-img" data-emoji="'+shortcode+'">';
+					var regExp = new RegExp(":" + shortcode + ":", "g");
+					dis_name = dis_name.replace(regExp, emoji_url);
+				});
+			}
 			} else {
 				var notice = "";
 				var boostback = "";
