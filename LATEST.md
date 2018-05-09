@@ -1,17 +1,22 @@
 ## For Astarte(kirishima.cloud), My Primary Instance
 
-TheDesk :thedesk: Mizuki (ver.7)  
-【重要】
-このアップデートは必ず適用して下さい。
-理由:インスタンスにログインできない、トゥートができない等の問題を修正しています。
+TheDesk :thedesk: Mio (ver.1)  
+・Adobeフォトエディタ
+・トゥートボックスUI変更。よりコンパクトに
+・サイドバーの挙動修正
+・名前のカスタム絵文字に対応
+・マウスオーバーでアクションを表示
+・ブーストの言及元を簡単チェック
+ほか
 https://thedesk.top
  :github: https://github.com/cutls/TheDesk #Desk #DeskUpdate
 
  ## For Other Instances
 
-PCクライアントTheDesk :thedesk: Mizuki (ver.7)  
-【重要】このトゥートは重要な事項を含むため他のインスタンスでもトゥートされます。
-このアップデートは必ず適用して下さい。
-理由:インスタンスにログインできない、トゥートができない等の問題を修正しています。
+PCクライアントTheDesk Mio (ver.1)  
+・Adobeフォトエディタを内包。
+・トゥートボックスUI変更。よりコンパクトに
+・名前のカスタム絵文字に対応
+・ブーストの言及元を簡単チェック
 TheDeskはマルチカラム，マルチアカウントはもちろんのこと，なにかとマストドンライフをシンプルに効率化するクライアントです。
 https://thedesk.top
