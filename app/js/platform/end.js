@@ -11,6 +11,17 @@
 		urls = url.match(/https?:\/\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/);
 		//トゥートのURLぽかったら
 		toot = url.match(/https:\/\/([a-zA-Z0-9.-]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/);
+		//タグのURLぽかったら
+			var tags=[];
+			tags = url.match(
+				/https:\/\/([-a-zA-Z0-9@.]+)\/tags\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
+			);
+		//メンションっぽかったら
+		var ats=[];
+			ats = url.match(
+				/https:\/\/([-a-zA-Z0-9@.]+)\/@([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
+			);
+		console.log(ats);
 		if(toot){
 			if(toot[1]){
 				var acct_id=$a.parent().attr("data-acct");
@@ -20,6 +31,15 @@
 				$a.parent().addClass("loadp")
 				$a.parent().text("Loading...")
 				detEx(url,acct_id);
+			}
+			
+		}else if(tags){
+			if(tags[2]){
+				tagShow(tags[2]);
+			}
+		}else if(ats){
+			if(ats[2]){
+				return false;
 			}
 		}else{
 		//hrefがhttp/httpsならブラウザで

@@ -310,7 +310,7 @@ p:not(:last-child){
   max-height: 190px;
   overflow-y: scroll;
 }
-.mention {
+.u-url {
   color: black;
   cursor: text;
 }
@@ -322,7 +322,7 @@ p:not(:last-child){
 .blacktheme .notf-box,.blacktheme .modal-footer,.blacktheme #sidebar {
   background-color: #424242;
 }
-.blacktheme .btn-flat,.blacktheme .mention ,.blacktheme #sidebar a {
+.blacktheme .btn-flat,.blacktheme .u-url ,.blacktheme #sidebar a {
   color: white
 }
 .blacktheme .shared {
@@ -338,7 +338,7 @@ p:not(:last-child){
 .indigotheme .notf-box,.indigotheme .modal-footer,.indigotheme #sidebar {
   background-color: #0d1351;
 }
-.indigotheme .btn-flat,.indigotheme .mention ,.indigotheme #sidebar a {
+.indigotheme .btn-flat,.indigotheme .u-url ,.indigotheme #sidebar a {
   color: white
 }
 .indigotheme .shared {
@@ -354,7 +354,7 @@ p:not(:last-child){
 .browntheme .notf-box,.browntheme .modal-footer,.browntheme #sidebar {
   background-color: #4e342e;
 }
-.browntheme .btn-flat,.browntheme .mention ,.browntheme #sidebar a {
+.browntheme .btn-flat,.browntheme .u-url ,.browntheme #sidebar a {
   color: white
 }
 .browntheme .shared {

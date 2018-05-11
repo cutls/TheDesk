@@ -93,7 +93,7 @@ function parseColumn() {
 			}
 		}
 		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
-			'"><div class="notice-box z-depth-2" id="menu_'+key+'"'+insert+'>'+
+			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'"'+insert+'>'+
 			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +

@@ -75,7 +75,9 @@ function sort(){
 		var add = {
 			domain: data.domain,
 			type: data.type,
-			data:data.data
+			data:data.data,
+			background:data.background,
+			text:data.text
 		};
 		newobj.push(add);
 		if(flags[i]=="true"){

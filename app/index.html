@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Mio (ver.1[fixed])";
+var ver="Mio (ver.2)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -56,6 +56,7 @@ var tlid=0;
 	<option value="local" data-trans="local">ローカル</option>
 	<option value="home" data-trans="home">ホーム</option>
 	<option value="pub" data-trans="public">連合</option>
+	<option value="dm" data-trans="dm">ダイレクトメッセージ</option>
 	<option value="mix" data-trans="integrated">統合(ローカルとホーム)</option>
 	<option value="plus" data-trans="plus">統合(ローカルとブースト・リプライ)</option>
 	<option value="notf" data-trans="notification">通知</option>
@@ -277,7 +278,7 @@ var tlid=0;
 <a onclick="previewEdit()">Edit</a>
 </span>
 </div>
-<div class="input-field col s12" id="toot-field" style="margin-top: 0;">
+<div class="input-field col s12" id="toot-field" style="margin-top: 10px;">
 
 <textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;" data-length="500"></textarea>
 <label for="textarea" data-trans="toot">トゥート</label>

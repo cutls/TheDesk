@@ -379,7 +379,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		var mentions = "";
 		//メンションであれば
 		if (menck) {
-			mentions = "Links: ";
+			mentions = "";
 			Object.keys(toot.mentions).forEach(function(key3) {
 				var mention = toot.mentions[key3];
 				mentions = mentions + '<a onclick="udg(\'' + mention.id + '\',' +
@@ -391,12 +391,9 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		var tags = "";
 		//タグであれば
 		if (tagck) {
-			if (!menck) {
-				tags = "Links: ";
-			}
 			Object.keys(toot.tags).forEach(function(key4) {
 				var tag = toot.tags[key4];
-				tags = tags + '<a onclick="tagShow(\'' + tag.name + '\')" class="pointer">#' + tag.name + '</a><span class="hide" data-tag="' + tag.name + '">　<a onclick="tl(\'tag\',\'' + tag.name + '\',' + acct_id +
+				tags = tags + '<span class="hide" data-tag="' + tag.name + '">#' + tag.name + ':<a onclick="tl(\'tag\',\'' + tag.name + '\',' + acct_id +
 					',\'add\')" class="pointer" title="#' + tag.name + 'のタイムライン">TL</a>　<a onclick="brInsert(\'#' + tag.name + '\')" class="pointer" title="#' + tag.name + 'でトゥート">Toot</a>　'+
 					'<a onclick="tagPin(\'' + tag.name + '\')" class="pointer" title="#' + tag.name + 'をよく使うタグへ">Pin</a></span> ';
 			});

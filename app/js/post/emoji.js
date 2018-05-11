@@ -125,7 +125,13 @@ function emojiInsert(code, del) {
 		var now = now.replace(regExp, "");
 		$("#textarea").val(now + " " + code);
 	}
+	
 	$("#textarea").focus();
+	var selin = $("#textarea").prop('selectionStart');
+	if(!selin){
+		selin=0;
+	}
+	localStorage.setItem("cursor", selin);
 }
 //改行挿入
 function brInsert(code) {

@@ -2,8 +2,26 @@
 //全てのTL処理で呼び出し
 function additional(acct_id, tlid) {
 	//メンション系
-	$(".mention").attr("href", "#");
+	//$(".mention").attr("href", "");
+	
 	$(".mention").addClass("parsed");
+
+	$(".hashtag").each(function(i, elem) {
+		var tags = $(this).attr("href").match(
+			/https?:\/\/([-a-zA-Z0-9@.]+)\/tags\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
+		);
+		$(this).attr("href","#");
+		if(tags){
+			if(tags[2]){
+				$(this).attr("onclick",'tagShow(\'' + tags[2] + '\')');
+			}
+			
+		}
+		
+		
+	});
+	
+	
 	//トゥートサムネ
 	$("#timeline_" + tlid + " .toot a:not(.parsed)").each(function(i, elem) {
 		var domain = localStorage.getItem("domain_" + acct_id);
