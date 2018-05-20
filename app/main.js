@@ -144,7 +144,7 @@ ipc.on('native-notf', function(e, args) {
 ipc.on('update', function(e, x, y) {
 	var platform=process.platform;
 	var bit=process.arch;
-	if(platform!="darwin"){
+	if(platform!="others"){
 	updatewin = new BrowserWindow({
 		width: 600,
 		height: 400,
@@ -202,16 +202,22 @@ ipc.on('shot-img-dl', (e, args) => {
 ipc.on('download-btn', (e, args) => {
 	var platform=process.platform;
 	var bit=process.arch;
-	if(platform=="win32"){
-		if(bit=="x64"){
+	if(platform=="win32" || platform=="linux" || platform=="darwin" ){
+		if(platform=="win32" || bit=="x64"){
 			var zip="TheDesk-win32-x64.zip";
-		}else if(bit=="ia32"){
+		}else if(platform=="win32" || bit=="ia32"){
 			var zip="TheDesk-win32-ia32.zip";
+		}else if(platform=="linux" || bit=="x64"){
+			var zip="TheDesk-linux-x64.zip";
+		}else if(platform=="linux" || bit=="ia32"){
+			var zip="TheDesk-linux-ia32.zip";
+		}else if(platform=="darwin"){
+			var zip="TheDesk-darwin-x64.zip";
 		}
-	}else if(platform=="linux" || platform=="darwin" ){
+	}else{
 		const options = {
 			type: 'info',
-			title: 'Linux Supporting System',
+			title: 'Other OS Supporting System',
 			message: "thedesk.topをブラウザで開きます。",
 			buttons: ['OK']
 		  }
@@ -236,7 +242,12 @@ ipc.on('download-btn', (e, args) => {
 			if(!savedFiles){
 				return false;
 			}
-			var m = savedFiles.match(/(.+)\\(.+)$/);
+			if(platform=="win32"){
+				var m = savedFiles.match(/(.+)\\(.+)$/);
+			}else{
+				var m = savedFiles.match(/(.+)\/(.+)$/);
+			}
+			
 			  if(isExistFile(savedFiles)){
 				fs.statSync(savedFiles);
 				fs.unlink(savedFiles);
@@ -273,6 +284,8 @@ function dl(ver,files,fullname){
 		}else if(bit=="ia32"){
 			var zip="TheDesk-linux-ia32.zip";
 		}
+	}else if(platform=="darwin"){
+			var zip="TheDesk-darwin-x64.zip";
 	}
 	zip=zip+"?"+ver;
 	var l = 8;
@@ -352,7 +365,6 @@ ipc.on('itunes', (e, args) => {
 	const nowplaying = require("itunes-nowplaying-mac")
 
 nowplaying().then(function (value) {
-    console.log(value);
     mainWindow.webContents.send('itunes-np', value);
 }).catch(function (error) {
     // 非同期処理失敗。呼ばれない
