@@ -12,7 +12,9 @@
   "dependencies": {
     "electron-dl": "^1.11.0",
     "jimp": "^0.2.28",
-    "itunes-nowplaying-mac": "^0.2.3",
     "node-notifier": "5.2.1"
+  },
+  "optionalDependencies": {
+    "itunes-nowplaying-mac": "^0.2.3"
   }
 }
