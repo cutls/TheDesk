@@ -40,6 +40,7 @@ try {
 		height: 750
 	}; // デフォルトバリュー
 }
+
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
 	if (process.platform != 'darwin') {
@@ -121,16 +122,21 @@ ipc.on('native-notf', function(e, args) {
 	var bit=process.arch;
 	if(platform=="win32"){
 	Jimp.read(args[2], function (err, lenna) {
-		if (err) throw err;
-		lenna.write(tmp_img);
+		if(!err && lenna){
+			lenna.write(tmp_img);
+			var tmp_imge=tmp_img;
+		}else{
+			var tmp_imge="";
+		}
 		notifier.notify({
 			message: args[1],
 			title: args[0],
 			sound: false,//"Bottle",
-			icon : tmp_img,
+			icon : tmp_imge,
 			wait:false
 		}, function(error, response) {
 		});
+		
 	});
 	}
 });
@@ -339,7 +345,21 @@ function about(){
 	   window.loadURL('file://' + __dirname + '/about.html?ver='+ver);
 	   return "true"
 }
-//
+ipc.on('itunes', (e, args) => {
+	var platform=process.platform;
+	var bit=process.arch;
+	if(platform=="darwin"){
+	const nowplaying = require("itunes-nowplaying-mac")
+
+nowplaying().then(function (value) {
+    console.log(value);
+    mainWindow.webContents.send('itunes-np', value);
+}).catch(function (error) {
+    // 非同期処理失敗。呼ばれない
+    console.log(error);
+});
+}
+});
 ipc.on('file-select', (e, args) => {
 	dialog.showOpenDialog(null, {
 		properties: ['openFile', 'multiSelections'],
@@ -385,14 +405,25 @@ ipc.on('bmp-image', (e, args) => {
 	
 });
 ipc.on('nano', function (e, x, y) {
-	var window = new BrowserWindow({width: 300, height: 200,
+	var nano_info_path = join(app.getPath("userData"), "nano-window-position.json");
+	var window_pos;
+	try {
+		window_pos = JSON.parse(fs.readFileSync(nano_info_path, 'utf8'));
+	} catch (e) {
+	window_pos = [0,0]; // デフォルトバリュー
+	}
+	var nanowindow = new BrowserWindow({width: 300, height: 200,
 	"transparent": false,    // ウィンドウの背景を透過
 		 "frame": false,     // 枠の無いウィンドウ
 		 "resizable": false });
-   window.loadURL('file://' + __dirname + '/nano.html');
-   window.setAlwaysOnTop(true);
-   window.setPosition(0, 0);
-   return "true"
+	nanowindow.loadURL('file://' + __dirname + '/nano.html');
+	nanowindow.setAlwaysOnTop(true);
+
+	nanowindow.setPosition(window_pos[0], window_pos[1]);
+   nanowindow.on('close', function() {
+		fs.writeFileSync(nano_info_path, JSON.stringify(nanowindow.getPosition()));
+	});
+	return true;
  })
  ipc.on('adobe', (e, arg) => {
 	 if(!arg){

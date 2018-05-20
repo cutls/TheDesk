@@ -1,8 +1,12 @@
 /*投稿系*/
 //投稿
 function post() {
+	if($("#toot-post-btn").prop("disabled")){
+		return
+	}
 	var str = $("#textarea").val();
 	var acct_id = $("#post-acct-sel").val();
+	$("#toot-post-btn").prop("disabled", true);
 	localStorage.setItem("last-use", acct_id);
 	todo("Posting");
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -53,6 +57,7 @@ function post() {
 				$("body").addClass("mini-post");
 				$(".mini-btn").text("expand_less");
 			}
+			$("#toot-post-btn").prop("disabled", false);
 			todc();
 			clear();
 		}
@@ -95,4 +100,7 @@ function clear() {
 	$("#post-acct-sel").prop("disabled", false);
 	$('select').material_select();
 	localStorage.removeItem("image");
+	if(localStorage.getItem("mainuse")=="main"){
+		multi();
+	}
 }

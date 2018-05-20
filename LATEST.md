@@ -1,22 +1,28 @@
 ## For Astarte(kirishima.cloud), My Primary Instance
 
-TheDesk :thedesk: Mio (ver.1)  
-・Adobeフォトエディタ
-・トゥートボックスUI変更。よりコンパクトに
-・サイドバーの挙動修正
-・名前のカスタム絵文字に対応
-・マウスオーバーでアクションを表示
-・ブーストの言及元を簡単チェック
+TheDesk :thedesk: Mio (ver.3)  
+・macOS版正式リリース
+・Spotifyなうぷれ改修(アートワーク投稿)
+・iTunesなうぷれ機能(macOS必須)
+・メインアカウント機能(起動時や投稿後のアカウントを指定)
+・エアリプソース確認が投稿者のアカウントのLTLに
+・未認証TLのトゥートをメインアカウントで詳細表示できるように
+・Nano機能がウィンドウ位置を記憶するように
+・DMタイムラインを実装
+・(imastodon.net)トレンドタグ表示機能
 ほか
 https://thedesk.top
  :github: https://github.com/cutls/TheDesk #Desk #DeskUpdate
 
  ## For Other Instances
 
-PCクライアントTheDesk Mio (ver.1)  
-・Adobeフォトエディタを内包。
-・トゥートボックスUI変更。よりコンパクトに
-・名前のカスタム絵文字に対応
-・ブーストの言及元を簡単チェック
-TheDeskはマルチカラム，マルチアカウントはもちろんのこと，なにかとマストドンライフをシンプルに効率化するクライアントです。
+PCクライアントTheDesk Mio (ver.3)  
+・Spotifyなうぷれ改修(アートワーク投稿)
+・iTunesなうぷれ機能(macOS必須)
+・メインアカウント機能(起動時や投稿後のアカウントを指定)
+・エアリプソース確認が投稿者のアカウントのLTLに
+・未認証TLのトゥートをメインアカウントで詳細表示できるように
+・Nano機能がウィンドウ位置を記憶するように
+・DMタイムラインを実装
+・(imastodon.net)トレンドタグ表示機能
 https://thedesk.top

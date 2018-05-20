@@ -141,6 +141,12 @@ function settings() {
 	}
 	localStorage.setItem("mouseover", movd);
 
+	var maind = $("[name=main]:checked").val();
+	var maint = $("[for=mn_"+maind+"]").text();
+	if (maind != localStorage.getItem("mainuse")) {
+		Materialize.toast("起動時・投稿時のアカウントを" + maint + "に設定しました。", 3000);
+	}
+	localStorage.setItem("mainuse", maind);
 }
 
 //読み込み時の設定ロード
@@ -274,6 +280,12 @@ function load() {
 		var movt = "no";
 	}
 	$("#mov_" + movt).prop("checked", true);
+
+	var maint = localStorage.getItem("mainuse");
+	if (!maint) {
+		var maint = "remain";
+	}
+	$("#mn_" + maint).prop("checked", true);
 }
 //最初に読む
 load();

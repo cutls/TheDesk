@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Mio (ver.2)";
+var ver="Mio (ver.3)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -298,11 +298,11 @@ var tlid=0;
 		<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray" onclick="fileselect()" title="ファイルを選択">photo_library</i></span></span>
 		<i class="waves-effect gray material-icons" onclick="adobe()" title="Adobeフォトエディタ">format_shapes</i>
 		<i class="waves-effect gray material-icons" onclick="emoji()" title="絵文字を挿入">tag_faces</i>
-		<a onclick="nowplaying('spotify')" class="pointer waves-effect gray" title="Spotify Now Playing(アカウント連携が必要です)Ctrl+Shift+N"><i class="fa fa-spotify" style="font-size:24px;"></i></a>
+		<a class="pointer waves-effect gray" id="npbtn" title="NowPlaying[クリックでSpotify(アカウント連携が必要です)/右クリックでiTunes(macOSが必要です)]"><i class="material-icons" style="font-size:24px;">music_note</i></a>
 		<i class="material-icons nex gray waves-effect" title="トゥートボックスのクリア(Ctrl+Shit+C)" data-trans-title="post_box_clear" id="clear">clear</i>
 </div>
-<div class="col s11 mize" style="margin-bottom:5px; padding:0;">
-
+<div class="col s12 mize" style="margin-bottom:5px; padding:0;">
+	<div id="taglist"></div>
 <span id="preview" class="mize"></span>
 <span class=" sml mize"><span data-trans="reply">返信モード</span>:
 <span id="rec">いいえ</span>/<span data-trans="file">添付</span>:
@@ -344,9 +344,8 @@ var tlid=0;
 <!--絵文字ピッカー-->
 <div id="emoji" class="hide shared z-depth-4">
 	<span class="gray sml">インスタンスによって実装が異なります。
-	<i>
 		<a onclick="emojiGet('true')" class="pointer">絵文字更新</a>
-	</i>
+		<i class="material-icons waves-effect" onclick="emoji()" title="このボックスを閉じる" data-trans-title="post_box_close">cancel</i>
 	<br>
 	</span>
 	<input type="text" id="emoji-suggest" placeholder="カスタム絵文字検索">

@@ -105,8 +105,10 @@ function parse(obj, mix, acct_id, tlid, popup) {
 	//認証なしTL
 	if(mix=="noauth"){
 		var noauth="hide";
+		var antinoauth="";
 	}else{
 		var noauth="";
+		var antinoauth="hide";
 	}
 	//マウスオーバーのみ
 	var mouseover=localStorage.getItem("mouseover");
@@ -512,32 +514,33 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			'</span>' +
 			'' + mentions + tags + '</div>' +
 			'<div class="area-vis"></div>'+
-			'<div class="area-actions '+noauth+' '+mouseover+'" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
-			'<div class="action '+disp["re"]+'"><a onclick="re(\'' + toot.id +
+			'<div class="area-actions '+mouseover+'" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
+			'<div class="action '+antinoauth+'"><a onclick="detEx(\''+toot.url+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">詳細(メインアカウント経由)</a></div>' +
+			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="re(\'' + toot.id +
 			'\',\'' + toot.account.acct + '\',' +
 			acct_id + ',\''+visen+
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートに返信"><i class="fa fa-share"></i></a></div>' +
-			'<div class="action '+can_rt+' '+disp["rt"]+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
+			'<div class="action '+can_rt+' '+disp["rt"]+' '+noauth+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをブースト"><i class="text-darken-3 fa fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 			'</span></a></div>' +
-			'<div class="action '+can_rt+' '+disp["qt"]+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
+			'<div class="action '+can_rt+' '+disp["qt"]+' '+noauth+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
 			',\'' + toot.account.acct +'\',\''+toot.url+
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを引用"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
-			'<div class="action '+disp["fav"]+'"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
+			'<div class="action '+disp["fav"]+' '+noauth+'"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをお気に入り登録"><i class="fa text-darken-3 fa-star' +
 			if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
 			'</a></span></div>' +
-			'<div class="' + if_mine + ' action '+disp["del"]+'"><a onclick="del(\'' + toot.id + '\',' +
+			'<div class="' + if_mine + ' action '+disp["del"]+' '+noauth+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを削除"><i class="fa fa-trash-o"></i></a></div>' +
-			'<div class="' + if_mine + ' action pin '+disp["pin"]+'"><a onclick="pin(\'' + toot.id + '\',' +
+			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをピン留め"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' +trans+
-			'<div class="action ' + if_mine + '"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
-			'<div class="action"><a onclick="details(\'' + toot.id + '\',' + acct_id +
+			'<div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
+			'<div class="action '+noauth+'"><a onclick="details(\'' + toot.id + '\',' + acct_id +
 			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
 			'<span class="cbadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
 			via +

@@ -4,7 +4,8 @@ if(location.search){
 	var mode=m[1];
 	var codex=m[2];
 	if(mode=="tag"){
-		tl('tag',decodeURI(codex),0,'add');
+        var acct_id=localStorage.getItem("main");
+		tl('tag',decodeURI(codex),acct_id,'add');
 	}
 }
 //よく使うタグ
@@ -45,6 +46,7 @@ function tagRemove(key) {
     favTag();
 }
 function favTag(){
+    $("#taglist").html("");
     var tagarr = localStorage.getItem("tag");
     if(!tagarr){
         var obj=[];
@@ -58,10 +60,48 @@ function favTag(){
             '<a onclick="tagRemove(\'' + key + '\')" class="pointer" title="#' + tag + 'をよく使うタグから削除">Unpin</a></span> ';
     });
     if(obj.length>0){
-        $("#suggest").append("My Tags:" + tags);
+        $("#taglist").append("My Tags:" + tags);
     }else{
-        $("#suggest").append("");
+        $("#taglist").append("");
     }
+}
+function trendTag(){
+    $("#trendtag").html("");
+    var domain="imastodon.net"
+    var at = localStorage.getItem(domain + "_at");
+    var start = "https://" + domain + "/api/v1/trend_tags"
+	console.log(start)
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		if (json) {
+            var tags="";
+            json=json.score;
+            Object.keys(json).forEach(function(tag) {
+                tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="#' + tag + 'のタイムライン">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer" title="#' + tag + 'でトゥート">Toot</a></span> ';
+             });
+             $("#taglist").append('<span id="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' + tags+'</span>');
+             trendintervalset()
+        }else{
+            $("#taglist").html("");
+        }
+    });
+    
+}
+
+function trendintervalset(){
+    setTimeout(trendTag, 6000000);
+
+
 }
 function tagTL(a,b,c,d){
     var acct_id = $("#post-acct-sel").val();

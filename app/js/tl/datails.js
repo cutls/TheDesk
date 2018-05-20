@@ -37,7 +37,12 @@ function details(id, acct_id, tlid) {
 			replyTL(json.in_reply_to_id, acct_id);
 		}
 		context(id, acct_id);
-		beforeToot(id, acct_id);
+		if(json.account.acct!=json.account.username){
+			var dom=json.account.acct.replace(/.+@/g,'');
+		}else{
+			var dom=domain;
+		}
+		beforeToot(id, acct_id, dom);
 		userToot(id, acct_id, json.account.id);
 		faved(id, acct_id);
 		rted(id, acct_id);
@@ -99,8 +104,8 @@ function context(id, acct_id) {
 }
 
 //前のトゥート(Back TL)
-function beforeToot(id, acct_id) {
-	var domain = localStorage.getItem("domain_" + acct_id);
+function beforeToot(id, acct_id, domain) {
+	//var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain +
 		"/api/v1/timelines/public?local=true&max_id=" + id;
@@ -108,7 +113,6 @@ function beforeToot(id, acct_id) {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
 		},
 	}).then(function(response) {
 		return response.json();
@@ -116,7 +120,7 @@ function beforeToot(id, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json, '', acct_id);
+		var templete = parse(json, 'noauth', acct_id);
 		$("#toot-before").html(templete);
 		jQuery("time.timeago").timeago();
 	});
@@ -262,6 +266,9 @@ function brws(){
 }
 //外部からトゥート開く
 function detEx(url,acct_id){
+	if(acct_id=="main"){
+		acct_id=localStorage.getItem("main");
+	}
 	var domain = localStorage.getItem("domain_"+acct_id);
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+url

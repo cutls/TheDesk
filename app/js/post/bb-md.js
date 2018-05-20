@@ -28,6 +28,11 @@ function mdCheck(){
 	}else{
 		$("#faicon-btn").hide();
 	}
+	if(domain=="imastodon.net"){
+		trendTag();
+	}else{
+		$("#trendtag").html("");
+	}
 	if(idata[domain+"_letters"]){
 		$("#textarea").attr("data-length", idata[domain+"_letters"])
 	}else{

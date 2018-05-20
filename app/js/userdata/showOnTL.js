@@ -6,7 +6,7 @@ if(location.search){
 	var mode=m[1];
 	var codex=m[2];
 	if(mode=="user"){
-		udgEx(codex,0);
+		udgEx(codex,'main');
 	}
 }
 function udgEx(user,acct_id){
@@ -15,6 +15,9 @@ function udgEx(user,acct_id){
 	}
 	if(acct_id=="selector"){
 		acct_id = $("#user-acct-sel").val();
+	}
+	if(acct_id=="main"){
+		acct_id = localStorage.getItem("main");
 	}
 	console.log(user);
 	var domain = localStorage.getItem("domain_" + acct_id);

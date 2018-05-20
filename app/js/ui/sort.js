@@ -25,7 +25,7 @@ function sortload(){
 			}
 		}
 			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'"'+insert+'><a onclick="goColumn(' + key +
-			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムへ">forward</i></a>'+localStorage.getItem("user_" + acct.domain)+"@"+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data)+' TL　<a onclick="removeColumn(' + key +
+			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムへ">forward</i></a>'+localStorage.getItem("user_" + acct.domain)+"@"+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data)+' <a onclick="removeColumn(' + key +
 			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a></li>';
 			$("#sort").append(html);
 		});
@@ -33,7 +33,7 @@ function sortload(){
 }
 
 //TLのタイトル
-function cap(type, data) {
+function Scap(type, data) {
 	if (type == "home") {
 		return "Home"
 	} else if (type == "local") {

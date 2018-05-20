@@ -30,17 +30,19 @@ function load() {
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
 		var list = key * 1 + 1;
-		templete = '<div id="acct_' + key + '"><div class="col s1">' + list +
-			'.</div><div class="col s2"><img src="' + acct.prof + '" width="40" height="40"></div><div class="text col s3">' +
-			acct.name + '&nbsp;<span class="gray">' + escapeHTML(acct.user) + '@' + acct.domain +
-			'</span></div><div class="col s2"><button class="btn waves-effect disTar" onclick="data(\'' +
+		templete = '<div id="acct_' + key + '" class="card"><div class="card-content white-text"><span class="lts">' + list +
+			'.</span><img src="' + acct.prof + '" width="40" height="40"><span class="card-title">' +
+			acct.name + '</span>' + escapeHTML(acct.user) + '@' + acct.domain +
+			'</div><div class="card-action"><a class="waves-effect disTar pointer white-text" onclick="data(\'' +
 			acct.domain +
-			'\')">インスタンス情報</button></div><div class="col s2"><button class="btn waves-effect" onclick="refresh(' +
+			'\')"><i class="material-icons">info</i>インスタンス情報</a><a class="waves-effect disTar pointer  white-text" onclick="refresh(' +
 			key +
-			')">情報更新</button></div><div class="col s2"><button class="btn waves-effect red disTar" onclick="multiDel(' +
-			key + ')">削除</button><br></div></div>';
+			')"><i class="material-icons">refresh</i>情報更新</a><a class="waves-effect disTar pointer red-text" onclick="multiDel(' +
+			key +
+			')"><i class="material-icons">delete</i>削除</a></div></div>';
 		$("#acct-list").append(templete);
 	});
+	multisel();
 	var acctN = localStorage.getItem("acct");
 	if (!acctN) {
 		localStorage.setItem("acct", 0);
@@ -335,4 +337,52 @@ function refresh(target) {
 
 		load();
 	});
+}
+//アカウントを選択…を実装
+function multisel() {
+	var multi = localStorage.getItem("multi");
+	if (!multi) {
+		var obj = [];
+		var json = JSON.stringify(obj);
+		localStorage.setItem("multi", json);
+	} else {
+		var obj = JSON.parse(multi);
+	}
+	var templete;
+	var last = localStorage.getItem("main");
+	var sel;
+	console.log(obj.length)
+	if(obj.length<1){
+		$("#src-acct-sel").html('<option value="tootsearch">Tootsearch</option>');
+		$("#add-acct-sel").html('<option value="noauth">認証せずに見る</option>');
+	}else{
+	Object.keys(obj).forEach(function(key) {
+		var acct = obj[key];
+		var list = key * 1 + 1;
+		if (key == last) {
+			sel = "selected";
+			mainb="(既定)"
+			var domain = localStorage.getItem("domain_" + key);
+			var profimg=localStorage.getItem("prof_"+key);
+			var domain=localStorage.getItem("domain_"+key);
+			if(!profimg){
+				profimg="./img/missing.svg";
+			}
+		} else {
+			sel = "";
+			mainb=""
+		}
+		templete = '<option value="' + key + '" data-icon="' + acct.prof +
+			'" class="left circle" ' + sel + '>' + acct.user + '@' + acct.domain +mainb+
+			'</option>';
+		$(".acct-sel").append(templete);
+		
+	});
+	}
+	$('select').material_select('update');
+}
+function mainacct(){
+	var acct_id = $("#main-acct-sel").val();
+	localStorage.setItem("main", acct_id);
+	Materialize.toast("メインアカウントを設定しました。", 3000);
 }

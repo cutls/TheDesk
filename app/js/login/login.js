@@ -72,6 +72,10 @@ var idata={
 localStorage.setItem("instance", JSON.stringify(idata));
 
 function ck() {
+	var main = localStorage.getItem("main");
+	if(!main){
+		localStorage.setItem("main",0)
+	}
 	var domain = localStorage.getItem("domain_0");
 	var at = localStorage.getItem(domain + "_at");
 	//コード受信
@@ -375,7 +379,11 @@ function multi() {
 		var obj = JSON.parse(multi);
 	}
 	var templete;
-	var last = localStorage.getItem("last-use");
+	if(localStorage.getItem("mainuse")=="main"){
+		var last = localStorage.getItem("main");
+	}else{
+		var last = localStorage.getItem("last-use");
+	}
 	var sel;
 	console.log(obj.length)
 	if(obj.length<1){
@@ -393,11 +401,6 @@ function multi() {
 			}else{
 				$("#textarea").attr("data-length", 500)
 			}
-			if(domain=="knzk.me" || domain=="mstdn.y-zu.org"){
-				$("#type-sel").append('<option value="dm" data-trans="dm" id="direct-add">ダイレクトメッセージ</option>');
-			}else{
-				$("#direct-add").remove();
-			}
 			var profimg=localStorage.getItem("prof_"+key);
 			var domain=localStorage.getItem("domain_"+key);
 			if(!profimg){
@@ -409,6 +412,11 @@ function multi() {
 				$("#faicon-btn").show();
 			}else{
 				$("#faicon-btn").hide();
+			}
+			if(domain=="imastodon.net"){
+				trendTag();
+			}else{
+				$("#trendtag").html("");
 			}
 		} else {
 			sel = "";

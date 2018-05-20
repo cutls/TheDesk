@@ -18,7 +18,7 @@ TheDeskを関西で開発しています。[Cutls Portal](https://the.cutls.com)
 
 ## License
 
-[TheDesk LICENSE v3](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
+[TheDesk LICENSE v4](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
 
 ## Component/構成
 
@@ -37,9 +37,11 @@ Japanese
 ## Requirement/環境
 
 - Windows (to launch TheDesk/実行に必要) / Linux (x64/ia32/armv7l)
-- Electron beta.1.8.4
+- Electron 1.8.4
 - electron-dl
 - Jimp(Node.js)
+- itunes-nowplaying-mac(for macOS)
+- node-notifier
 - Ability to read unformated files!
 
 ## See also/詳しく
