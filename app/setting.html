@@ -35,7 +35,7 @@
 		<input type="text" style="width:50px" id="popup">秒 
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
-		<h5>ネイティブ通知設定</h5><a onclick="require('electron').ipcRenderer.send('native-notf', ['TheDesk通知テスト','通知テスト(画像はあなたのアカウントのアイコンです)',localStorage.getItem('prof_0')]);" class="pointer">通知テスト</a>
+		<h5>ネイティブ通知設定</h5><a onclick="notftest()" class="pointer">通知テスト</a>
 		<br>
 		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_yes" value="yes" />
 		<label for="ntf_yes">はい</label>

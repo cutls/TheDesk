@@ -34,7 +34,17 @@ function notf(acct_id, tlid, sys) {
 				}
 				var electron = require("electron");
 				var ipc = electron.ipcRenderer;
-				ipc.send('native-notf', ['TheDesk:'+domain,ct+"件の新しい通知",localStorage.getItem("prof_"+acct_id)]);
+				var os = electron.remote.process.platform;
+					var options = {
+						body: ct+"件の新しい通知",
+						icon: tlocalStorage.getItem("prof_"+acct_id)
+					  };
+					if(os=="darwin"){
+						var n = new Notification('TheDesk:'+domain, options);
+					}else{
+						ipc.send('native-notf', ['TheDesk:'+domain,ct+"件の新しい通知",localStorage.getItem("prof_"+acct_id)]);
+					}
+				
 			}
 			if(obj.type!="follow"){
 				templete = templete+parse([obj], 'notf', acct_id, 'notf', -1);

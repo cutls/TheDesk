@@ -15,7 +15,6 @@
     "node-notifier": "^5.2.1"
   },
   "optionalDependencies": {
-    "itunes-nowplaying-mac": "^0.2.3",
-    "node-mac-notifier":"0.1.0"
+    "itunes-nowplaying-mac": "^0.2.3"
   }
 }

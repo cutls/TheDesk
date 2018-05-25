@@ -174,19 +174,21 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if(popup>0){
-					if(native=="yes"){
-						var electron = require("electron");
-						var ipc = electron.ipcRenderer;
-						var options = {
-							body: toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),
-							icon: toot.account.avatar
-						  };
-						  var n = new Notification('TheDesk:'+domain, options);
-						  
-						  console.log(n);
-						//ipc.send('native-notf', ['TheDesk:'+domain,toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),toot.account.avatar]);
-					}
 					Materialize.toast("["+domain+"より]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
+				}
+				if(native=="yes"){
+					var electron = require("electron");
+					var ipc = electron.ipcRenderer;
+					var os = electron.remote.process.platform;
+					var options = {
+						body: toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),
+						icon: toot.account.avatar
+					  };
+					if(os=="darwin"){
+						var n = new Notification('TheDesk:'+domain, options);
+					}else{
+						ipc.send('native-notf', ['TheDesk:'+domain,toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),toot.account.avatar]);
+					}
 				}
 				$(".notf-icon_" + acct_id).addClass("red-text");
 				localStorage.setItem("notice-mem", noticetext);

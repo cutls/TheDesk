@@ -350,3 +350,18 @@ function wordempSave(){
 	var json = JSON.stringify(word);
 	localStorage.setItem("word_emp", json);
 }
+function notftest(){
+	var electron = require("electron");
+		var ipc = electron.ipcRenderer;
+		var os = electron.remote.process.platform;
+		var options = {
+				body: '通知テスト(画像はあなたのアカウントのアイコンです)',
+				icon: localStorage.getItem("prof_0")
+		  };
+		if(os=="darwin"){
+			var n = new Notification('TheDesk通知テスト', options);
+		}else{
+			ipc.send('native-notf', ['TheDesk通知テスト','通知テスト(画像はあなたのアカウントのアイコンです)',localStorage.getItem('prof_0')]);
+		}
+	
+}
