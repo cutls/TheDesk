@@ -82,9 +82,12 @@ iframe {
 }
 .user{
   cursor:text;
-  font-size:1.2rem;
+  font-size:1.1rem;
 }
 .emojione,.emoji-img{
+  width: 15px;
+}
+.area-toot .emojione,.area-toot .emoji-img{
   width: 20px;
   vertical-align: middle;
   margin: -3px 0 0;
@@ -107,7 +110,7 @@ iframe {
   width: 100%;
   display: grid;
   grid-template-columns: 43px 2fr 1fr;
-  grid-template-areas: 'notice notice notice' 'icon display_name acct' 'icon toot toot' 'vis additional additional' 'actions actions actions';
+  grid-template-areas: 'notice notice notice' 'icon display_name display_name' 'icon toot toot' 'vis additional additional' 'actions actions actions';
 }
 
 .area-notice {
@@ -125,25 +128,31 @@ grid-area: icon;
   user-select: auto;
 height:1.5em;
 margin:2px;
+margin-left:5px;
 overflow:hidden;
 grid-area: display_name;
 white-space: nowrap;
 text-overflow: ellipsis;
+display:flex;
+justify-content:space-between;
+  width:100%;
+  flex-wrap:nowrap
+}
+.flex-name{
+  max-width:calc(100% - 60px);
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+.flex-time{
+  
 }
 
-.area-acct {
-margin:2px;
-grid-area: acct;
-overflow:hidden;
-text-align:right;
-white-space: nowrap;
-text-overflow: ellipsis;
-}
 
 .area-toot {
   cursor:text;
   user-select: auto;
 margin:2px;
+margin-left:5px;
 grid-area: toot;
 }
 
@@ -206,6 +215,14 @@ font-size:1rem;
   white-space: nowrap;
   text-overflow: ellipsis;
   height:calc(0.8em + 8px);
+}
+.cbadge-hover {
+  color: #000;
+  background-color: transparent;
+}
+.cbadge-hover:hover {
+  color: #fff;
+  background-color: #777;
 }
 p {
   margin: 0;
@@ -319,6 +336,7 @@ p:not(:last-child){
 }
 
 /*black theme*/
+.blacktheme .cbadge-hover,.browntheme .cbadge-hover,.indigotheme .cbadge-hover { color: #fff;}
 .blacktheme .notf-box,.blacktheme .modal-footer,.blacktheme #sidebar {
   background-color: #424242;
 }

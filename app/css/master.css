@@ -160,6 +160,9 @@ blockquote:before, .quote:before {
 #pip-content .material-icons{
   display:none;
 }
+.big-text{
+  font-size:1.2rem;
+}
 
 @media only screen and (min-width: 993px){
 #toast-container {
@@ -197,7 +200,7 @@ blockquote:before, .quote:before {
   justify-content: center;
   align-items: center;
 }
-.blacktheme #imagemodal,.blacktheme  #videomodal,.blacktheme  #tootmodal {
+.blacktheme #imagemodal,.blacktheme  #videomodal,.blacktheme  #tootmodal,.blacktheme #releasenote {
   background-color: black;
 }
 .blacktheme .collapsible-header,.blacktheme .tabs,.blacktheme #pip {
@@ -218,7 +221,7 @@ blockquote:before, .quote:before {
   justify-content: center;
   align-items: center;
 }
-.indigotheme #imagemodal,.indigotheme  #videomodal,.indigotheme  #tootmodal {
+.indigotheme #imagemodal,.indigotheme  #videomodal,.indigotheme  #tootmodal,.indigotheme #releasenote  {
   background-color: #0d1351;
 }
 .indigotheme .collapsible-header,.indigotheme .tabs,.indigotheme #pip {
@@ -239,7 +242,7 @@ blockquote:before, .quote:before {
   justify-content: center;
   align-items: center;
 }
-.browntheme #imagemodal,.browntheme  #videomodal,.browntheme  #tootmodal {
+.browntheme #imagemodal,.browntheme  #videomodal,.browntheme  #tootmodal,.browntheme #releasenote {
   background-color: #261411;
 }
 .browntheme .collapsible-header,.browntheme .tabs,.browntheme #pip {

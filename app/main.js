@@ -21,6 +21,7 @@ const app = electron.app;
     	customPath: void 0 // Relative path if you want to use your fork of toast.exe 
 	});
 	}
+
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
 const {

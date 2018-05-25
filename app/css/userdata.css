@@ -33,6 +33,9 @@
 .active-back{
   background-color: #e6ee9c;
 }
+#his-name .emojione,#his-name .emoji-img{
+  width: 20px;
+}
 
 
 /*black theme*/

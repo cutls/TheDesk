@@ -144,8 +144,10 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		if (mix == "notf") {
 			if (toot.type == "mention") {
 				var what = "が返信しました";
+				var icon = "fa-share teal-text";
 			} else if (toot.type == "reblog") {
 				var what = "がブーストしました";
+				var icon = "fa-retweet light-blue-text";
 				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
 					what = ":「わかるわ」";
 				}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
@@ -153,19 +155,20 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				}
 			} else if (toot.type == "favourite") {
 				var what = "がお気に入り登録しました";
+				var icon = "fa-star  yellow-text";
 				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
 					what = "の頭にティンときたようです";
 				}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
 					what = "がええやんと言いました";
 				}
 			}
-			var noticetext = '<span class="cbadge"title="' + date(toot.created_at,
+			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.created_at,
 				'absolute') + '(通知された時間)"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
 				datetype) +
-			'</span><a onclick="udg(\'' + toot.account.id +
-				'\',\'' + acct_id + '\')" class="pointer">' + dis_name +
+			'</span><i class="big-text fa '+icon+'"></i><a onclick="udg(\'' + toot.account.id +
+				'\',\'' + acct_id + '\')" class="pointer grey-text">' + dis_name +
 				"(" + toot.account.acct +
-				")</a>" + what;
+				")</a>";
 			var notice = noticetext;
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
@@ -205,13 +208,14 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			var if_notf="";
 			if (toot.reblog) {
 				var rebtxt = "がブースト";
+				var rticon = "fa-retweet light-blue-text";
 				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
 					rebtxt = ":「わかるわ」";
 				}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
 					rebtxt = "がしばいた";
 				}
-				var notice = dis_name + "(" + toot.account.acct +
-					")"+rebtxt+"<br>";
+				var notice = '<i class="big-text fa '+rticon+'"></i>'+ dis_name + "(" + toot.account.acct +
+					")<br>";
 					var boostback = "shared";
 				var toot = toot.reblog;
 				var dis_name=escapeHTML(toot.account.display_name);
@@ -496,15 +500,15 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			'<img src="' + avatar +
 			'" width="40" class="prof-img" user="' + toot.account.acct +
 			'"></a></div>' +
-			'<div class="area-display_name"><span class="user">' +
+			'<div class="area-display_name"><div class="flex-name"><span class="user">' +
 			dis_name +
 			'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"> @' +
 			toot.account.acct + locked + '</span></div>' +
-			'<div class="area-acct"><div><span class="cbadge pointer waves-effect" onclick="tootUriCopy(\'' +
+			'<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'' +
 			toot.url + '\');" title="' + date(toot.created_at, 'absolute') +
 			'(クリックでトゥートURLをコピー)"><i class="fa fa-clock-o"></i>' +
-			date(toot.created_at, datetype) + '</span><span style="padding:0;">' +
-			vis + '</span></div></div>' +
+			date(toot.created_at, datetype) + '</span>' +
+			'</div></div>' +
 			'<div class="area-toot"><span class="toot ' + spoiler + '">' + content +
 			'</span><span class="' +
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
@@ -515,6 +519,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			'' + mentions + tags + '</div>' +
 			'<div class="area-vis"></div>'+
 			'<div class="area-actions '+mouseover+'" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
+			'<div class="action">'+vis+'</div>'+
 			'<div class="action '+antinoauth+'"><a onclick="detEx(\''+toot.url+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">詳細(メインアカウント経由)</a></div>' +
 			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="re(\'' + toot.id +
 			'\',\'' + toot.account.acct + '\',' +

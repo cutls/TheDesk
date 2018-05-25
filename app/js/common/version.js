@@ -1,6 +1,20 @@
 //バージョンチェッカー
 function verck(ver) {
-	localStorage.setItem("ver", ver);
+	if(localStorage.getItem("ver")!=ver){
+		localStorage.setItem("ver", ver);
+		console.log("Thank you for your update");
+		$(document).ready(function(){
+			$('#releasenote').modal('open');
+			verp=ver.replace( '(', '');
+			verp=verp.replace( '.', '-');
+			verp=verp.replace( '[', '-');
+			verp=verp.replace( ']', '');
+			verp=verp.replace( ')', '');
+			verp=verp.replace( ' ', '_');
+			$("#release-"+verp).show();
+		  });
+	}
+	
 	var l = 5;
 
 	// 生成する文字列に含める文字セット

@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
 	//必ずアプデ時のremove instance消して！
-var ver="Mio (ver.3)";
+var ver="Mio (ver.4)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -298,7 +298,7 @@ var tlid=0;
 		<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray" onclick="fileselect()" title="ファイルを選択">photo_library</i></span></span>
 		<i class="waves-effect gray material-icons" onclick="adobe()" title="Adobeフォトエディタ">format_shapes</i>
 		<i class="waves-effect gray material-icons" onclick="emoji()" title="絵文字を挿入">tag_faces</i>
-		<a class="pointer waves-effect gray" id="npbtn" title="NowPlaying[クリックでSpotify(アカウント連携が必要です)/右クリックでiTunes(macOSが必要です)]"><i class="material-icons" style="font-size:24px;">music_note</i></a>
+		<a class="pointer waves-effect gray" id="npbtn" title="NowPlaying[クリックでSpotify(アカウント連携が必要です)/control+クリックでiTunes(macOSが必要です)]"><i class="material-icons" style="font-size:24px;">music_note</i></a>
 		<i class="material-icons nex gray waves-effect" title="トゥートボックスのクリア(Ctrl+Shit+C)" data-trans-title="post_box_clear" id="clear">clear</i>
 </div>
 <div class="col s12 mize" style="margin-bottom:5px; padding:0;">
@@ -671,6 +671,38 @@ var tlid=0;
 	<div class="modal-footer">
 	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
 	</div>
+	</div>
+	<!-- Modal Structure Release Note-->
+	<div id="releasenote" class="modal modal-fixed-footer">
+		<div class="modal-content">
+		<h3>TheDesk</h3>
+		<a href="https://thedesk.top" target="_blank">HP</a><br>
+		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br><br>
+			<div id="release-Mio_ver-4" style="display:none">
+				<h5>Release Note</h5>
+・nodist セキュリティアップデート<br>
+・UI変更<br>
+以下はver.3の新機能<br>
+・macOS版正式リリース<br>
+・Spotifyなうぷれ改修(アートワーク投稿)<br>
+・iTunesなうぷれ機能(macOS必須)<br>
+・メインアカウント機能(起動時や投稿後のアカウントを指定)<br>
+・エアリプソース確認が投稿者のアカウントのLTLに<br>
+・未認証TLのトゥートをメインアカウントで詳細表示できるように<br>
+・Nano機能がウィンドウ位置を記憶するように<br>
+・DMタイムライン<br>
+・(imastodon.net)トレンドタグ表示機能<br>
+			</div>
+			<br><br>
+		TheDeskはオープンソース・ソフトウェアです。<br>
+		皆様のあたたかい支援のもとで製作されています。<br>
+		<a href="https://enty.jp/Cutls" target="_blank">Entyで支援</a><br>
+		<a href="mailto:mstdn@thedesk.top" target="_blank">mstdn@thedesk.top</a>にAmazonギフトカードを送る<br>
+		<a href="https://osushi.love/Cutls_P" target="_blank">Osushi.love</a>で寿司を贈る<br>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+		</div>
 	</div>
 	<!--PiP-->
 	<div id="pip" class="hide pip-bottom pip-left">

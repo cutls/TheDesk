@@ -116,7 +116,8 @@
 		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_no" value="no" />
 		<label for="mov_no">いいえ</label>
 		<br>
-		<h5>指定行数以上を折りたたむ</h5>5文字以下のトゥートは折りたたみません。また、折りたたみ時は改行が描画されません。
+		<h5>指定行数以上を折りたたむ</h5>
+		5文字以下のトゥートは折りたたみません。また、折りたたみ時は改行が描画されません。改行のみを行数とカウントします。
 		<br>
 		<input type="text" style="width:50px" id="sentence">行以上または 
 		<input type="text" style="width:50px" id="letters">文字以上 
@@ -224,8 +225,9 @@
 			<h5>テンプレートの編集</h5>
 			以下を編集してテンプレートを変更できます。<br>
 			<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
-{url} #SpotifyWithTheDesk</textarea><br>
+{url}</textarea><br>
 				テンプレート:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
+				iTunes NowPlayingでも{url}以外のテンプレートに従ってトゥートされます。<br>
 			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
 		</div>
 	</li>

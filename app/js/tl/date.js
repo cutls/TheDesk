@@ -21,7 +21,7 @@ function date(str, datetype) {
 			var sec = date.getSeconds();
 		}
 		if (datetype == "full") {
-			var ret = date.getFullYear() + "年" + month + "月" + date.getDate() + "日 " +
+			var ret = date.getFullYear() + "/" + month + "/" + date.getDate() + "/ " +
 				date.getHours() + ":" + min + ":" + sec;
 		}
 		if (date.getFullYear() == now.getFullYear()) {
@@ -34,15 +34,15 @@ function date(str, datetype) {
 					}
 
 				} else {
-					var ret = month + "月" + date.getDate() + "日 " + date.getHours() + ":" +
+					var ret = month + "/" + date.getDate() + " " + date.getHours() + ":" +
 						min + ":" + sec;
 				}
 			} else {
-				var ret = month + "月" + date.getDate() + "日 " + date.getHours() + ":" + min +
+				var ret = month + "/" + date.getDate() + " " + date.getHours() + ":" + min +
 					":" + sec;
 			}
 		} else {
-			var ret = date.getFullYear() + "年" + month + "月" + date.getDate() + "日 " +
+			var ret = date.getFullYear() + "/" + month + "/" + date.getDate() + " " +
 				date.getHours() + ":" + min + ":" + sec;
 		}
 		if (datetype == "double") {
