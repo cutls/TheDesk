@@ -177,7 +177,14 @@ function parse(obj, mix, acct_id, tlid, popup) {
 					if(native=="yes"){
 						var electron = require("electron");
 						var ipc = electron.ipcRenderer;
-						ipc.send('native-notf', ['TheDesk:'+domain,toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),toot.account.avatar]);
+						var options = {
+							body: toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),
+							icon: toot.account.avatar
+						  };
+						  var n = new Notification('TheDesk:'+domain, options);
+						  
+						  console.log(n);
+						//ipc.send('native-notf', ['TheDesk:'+domain,toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),toot.account.avatar]);
 					}
 					Materialize.toast("["+domain+"より]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
 				}

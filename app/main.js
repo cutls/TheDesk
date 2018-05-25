@@ -20,6 +20,8 @@ const app = electron.app;
     	withFallback: false, // Fallback to Growl or Balloons? 
     	customPath: void 0 // Relative path if you want to use your fork of toast.exe 
 	});
+	}else if(platform=="darwin"){
+		Notification = require('node-mac-notifier');
 	}
 
 // ウィンドウを作成するモジュール
@@ -130,16 +132,24 @@ ipc.on('native-notf', function(e, args) {
 			var tmp_imge="";
 		}
 		notifier.notify({
-			message: args[1],
+			body: args[1],
 			title: args[0],
-			sound: false,//"Bottle",
 			icon : tmp_imge,
-			wait:false
-		}, function(error, response) {
 		});
 		
 	});
-	}
+	}else if(platform=="darwin"){
+		Jimp.read(args[2], function (err, lenna) {
+			if(!err && lenna){
+				lenna.write(tmp_img);
+				var tmp_imge=tmp_img;
+			}else{
+				var tmp_imge="";
+			}
+			noti = new Notification(args[0], {body: args[0],icon: tmp_imge});
+			
+		});
+		}
 });
 
 ipc.on('update', function(e, x, y) {
