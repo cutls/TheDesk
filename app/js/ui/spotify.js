@@ -81,6 +81,10 @@ function nowplaying(mode){
             content = content.replace(regExp, item.artists[0].name);
             var regExp = new RegExp("{url}", "g");
             content = content.replace(regExp, item.external_urls.spotify);
+            var regExp = new RegExp("{composer}", "g");
+            content = content.replace(regExp, "");
+            var regExp = new RegExp("{hz}", "g");
+            content = content.replace(regExp, "");
             $("#textarea").val(content);
         });
         }else{
@@ -91,7 +95,7 @@ function nowplaying(mode){
 	    var ipc = electron.ipcRenderer;
 	    ipc.send('itunes', "");
 	    ipc.on('itunes-np', function (event, arg) {
-
+            console.log(arg);
             var content=localStorage.getItem("np-temp");
             if(!content || content==""){
                 var content="#NowPlaying {song} / {album} / {artist}\n{url}";
@@ -104,6 +108,10 @@ function nowplaying(mode){
             content = content.replace(regExp, arg.artist);
             var regExp = new RegExp("{url}", "g");
             content = content.replace(regExp, "");
+            var regExp = new RegExp("{composer}", "g");
+            content = content.replace(regExp, arg.composer);
+            var regExp = new RegExp("{hz}", "g");
+            content = content.replace(regExp, arg.sampleRate/1000+"kHz");
             $("#textarea").val(content);
 	    })
     }

@@ -2,3 +2,5 @@
 *.zip
 *.7z
 TheDesk-*
+app/.DS_Store
+.DS_Store

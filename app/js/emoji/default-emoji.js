@@ -39,7 +39,11 @@ function defEmoji(target){
     if(target=="thinking_face"){
         target="thinking";
     }
-    var emoji=emojione.shortnameToUnicode(":"+target+":");
+    //var emoji=emojione.shortnameToUnicode(":"+target+":");
+    var emojiraw = emojisc.emojis.filter(function(item, index){
+        if (item.shortname == ':'+target+":") return true;
+      });
+    var emoji=emojiraw[0].emoji;
     var now = $("#textarea").val();
     var selin = localStorage.getItem("cursor");
     var now = $("#textarea").val();
@@ -53,6 +57,11 @@ function defEmoji(target){
         console.log(emoji);
         $("#textarea").val(newt);
         $("#textarea").focus();
+        var selin = $("#textarea").prop('selectionStart');
+	    if(!selin){
+	    	selin=0;
+	    }
+	        localStorage.setItem("cursor", selin);
 }
 function faicon(){
     var json=faicons;

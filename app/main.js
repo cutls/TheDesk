@@ -103,7 +103,16 @@ function createWindow() {
             { label: "コピー", accelerator: "CmdOrCtrl+C", selector: "copy:" },
             { label: "貼り付け", accelerator: "CmdOrCtrl+V", selector: "paste:" },
             { label: "すべて選択", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
-        ]}
+		]},{
+		label: "表示",
+		submenu: [
+			{
+				label: 'Toggle Developer Tools',
+				accelerator: 'Alt+Command+I',
+				click: function() { mainWindow.toggleDevTools(); }
+			  },
+		]
+		}
     ];
 	var platform=process.platform;
 	var bit=process.arch;
@@ -201,16 +210,18 @@ ipc.on('download-btn', (e, args) => {
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="win32" || platform=="linux" || platform=="darwin" ){
-		if(platform=="win32" || bit=="x64"){
+		if(platform=="win32" && bit=="x64"){
 			var zip="TheDesk-win32-x64.zip";
-		}else if(platform=="win32" || bit=="ia32"){
+		}else if(platform=="win32" && bit=="ia32"){
 			var zip="TheDesk-win32-ia32.zip";
-		}else if(platform=="linux" || bit=="x64"){
+		}else if(platform=="linux" && bit=="x64"){
 			var zip="TheDesk-linux-x64.zip";
-		}else if(platform=="linux" || bit=="ia32"){
+		}else if(platform=="linux" && bit=="ia32"){
 			var zip="TheDesk-linux-ia32.zip";
 		}else if(platform=="darwin"){
 			var zip="TheDesk-darwin-x64.zip";
+		}else{
+			retrun;
 		}
 	}else{
 		const options = {
@@ -230,6 +241,7 @@ ipc.on('download-btn', (e, args) => {
 		}
 	}
 	var ver=args[1];
+	console.log(zip);
 	if(args[0]=="true"){
 		dialog.showSaveDialog(null, {
             title: '保存',

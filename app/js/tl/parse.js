@@ -353,18 +353,18 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		}
 		
 		//デフォ絵文字
-		content=emojione.unicodeToImage(content);
+		content=twemoji.parse(content);
 		if(dis_name){
-			dis_name=emojione.unicodeToImage(dis_name);
+			dis_name=twemoji.parse(dis_name);
 		}
 		if(spoil){
-			spoil=emojione.unicodeToImage(spoil);
+			spoil=twemoji.parse(spoil);
 		}
 		if(noticetext){
-			noticetext=emojione.unicodeToImage(noticetext);
+			noticetext=twemoji.parse(noticetext);
 		}
 		if(notice){
-			notice=emojione.unicodeToImage(notice);
+			notice=twemoji.parse(notice);
 		}
 		var mediack = toot.media_attachments[0];
 		//メディアがあれば
@@ -611,6 +611,24 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				localStorage.setItem("notice-mem", noticetext);
 				noticetext = "";
 			}
+		var dis_name=escapeHTML(toot.display_name);
+		if(toot.emojis){
+			var actemojick = toot.emojis[0];
+		}else{
+			var actemojick=false;
+		}
+	//絵文字があれば
+	if (actemojick) {
+		Object.keys(toot.emojis).forEach(function(key5) {
+			var emoji = toot.emojis[key5];
+			var shortcode = emoji.shortcode;
+			var emoji_url = '<img src="' + emoji.url +
+				'" class="emoji-img" data-emoji="'+shortcode+'">';
+			var regExp = new RegExp(":" + shortcode + ":", "g");
+			dis_name = dis_name.replace(regExp, emoji_url);
+		});
+	}
+	dis_name=twemoji.parse(dis_name);
 		templete = templete +
 			'<div class="" style="padding-top:5px;" user-id="' + toot.id + '">' +
 			notftext +
@@ -620,7 +638,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			'<img src="' + toot.avatar + '" width="40" class="prof-img" user="' + toot
 			.acct + '"></a></div>' +
 			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"><big>' +
-			escapeHTML(toot.display_name) + '</big></div>' +
+			dis_name + '</big></div>' +
 			'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
 			toot.acct + locked + '</div>' +
 			'</div>' + auth +

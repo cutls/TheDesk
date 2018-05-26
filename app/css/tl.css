@@ -84,10 +84,10 @@ iframe {
   cursor:text;
   font-size:1.1rem;
 }
-.emojione,.emoji-img{
+.emoji,.emoji-img{
   width: 15px;
 }
-.area-toot .emojione,.area-toot .emoji-img{
+.area-toot .emoji,.area-toot .emoji-img{
   width: 20px;
   vertical-align: middle;
   margin: -3px 0 0;

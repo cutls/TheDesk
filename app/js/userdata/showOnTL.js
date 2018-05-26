@@ -91,6 +91,7 @@ function udg(user, acct_id) {
 			flw(json.id, '', acct_id);
 			fer(json.id, '', acct_id);
 			var dis_name=escapeHTML(json.display_name);
+			dis_name=twemoji.parse(dis_name);
 			if(json.emojis){
 				var actemojick = json.emojis[0];
 			}else{
@@ -122,6 +123,7 @@ function udg(user, acct_id) {
 					for(var i=0;i<json.fields.length;i++){
 						var fname=json.fields[i].name;
 						var fval=json.fields[i].value;
+						fval=twemoji.parse(fval);
 						note=note+'<tr style="height:1.5rem; padding:0;"><td style="height:1.5rem; padding:0; background-color:#757575; text-align:center; ">'+fname+'</td><td style="height:1.5rem; padding:0; padding-left:5px;">'+fval+'</td></tr>';
 					}
 					note=note+'</table>'
