@@ -401,7 +401,7 @@ ipc.on('itunes', (e, args) => {
 	if(platform=="darwin"){
 	const nowplaying = require("itunes-nowplaying-mac")
 
-nowplaying().then(function (value) {
+nowplaying.getRawData().then(function (value) {
     mainWindow.webContents.send('itunes-np', value);
 }).catch(function (error) {
     // 非同期処理失敗。呼ばれない

@@ -104,6 +104,10 @@ function nowplaying(mode){
             content = content.replace(regExp, "");
             var regExp = new RegExp("{hz}", "g");
             content = content.replace(regExp, "");
+            var regExp = new RegExp("{bitRate}", "g");
+            content = content.replace(regExp, "");
+            var regExp = new RegExp("{genre}", "g");
+            content = content.replace(regExp, "");
             $("#textarea").val(content);
         });
         }else{
@@ -122,7 +126,7 @@ function nowplaying(mode){
             var regExp = new RegExp("{song}", "g");
             content = content.replace(regExp, arg.name);
             var regExp = new RegExp("{album}", "g");
-            content = content.replace(regExp, arg.album.name);
+            content = content.replace(regExp, arg.album);
             var regExp = new RegExp("{artist}", "g");
             content = content.replace(regExp, arg.artist);
             var regExp = new RegExp("{url}", "g");
@@ -131,6 +135,10 @@ function nowplaying(mode){
             content = content.replace(regExp, arg.composer);
             var regExp = new RegExp("{hz}", "g");
             content = content.replace(regExp, arg.sampleRate/1000+"kHz");
+            var regExp = new RegExp("{bitRate}", "g");
+            content = content.replace(regExp, arg.bitRate+"kbps");
+            var regExp = new RegExp("{genre}", "g");
+            content = content.replace(regExp, arg.genre);
             $("#textarea").val(content);
 	    })
     }
