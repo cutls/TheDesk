@@ -141,6 +141,14 @@ $(function($) {
 					tagsel('s');
 					return false;
 				}
+				//C+S+(No):ワンクリ
+				if (event.ctrlKey && event.shiftKey) {
+					if (e.keyCode >= 49 && e.keyCode <= 51) {
+						var no=e.keyCode-48;
+						if(localStorage.getItem("oks-"+no)){$("#textarea").val(localStorage.getItem("oks-"+no))}
+						return false;
+					}
+				}
 			}
 		}
 		//イメージビューワー切り替え

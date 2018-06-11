@@ -66,7 +66,7 @@ function favTag(){
     }
 }
 function trendTag(){
-    $("#trendtag").html("");
+    $(".trendtag").remove();
     var domain="imastodon.net"
     var at = localStorage.getItem(domain + "_at");
     var start = "https://" + domain + "/api/v1/trend_tags"
@@ -89,7 +89,7 @@ function trendTag(){
             Object.keys(json).forEach(function(tag) {
                 tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="#' + tag + 'のタイムライン">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer" title="#' + tag + 'でトゥート">Toot</a></span> ';
              });
-             $("#taglist").append('<span id="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' + tags+'</span>');
+             $("#taglist").append('<span class="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' + tags+'</span>');
              trendintervalset()
         }else{
             $("#taglist").html("");
@@ -100,7 +100,6 @@ function trendTag(){
 
 function trendintervalset(){
     setTimeout(trendTag, 6000000);
-
 
 }
 function tagTL(a,b,c,d){

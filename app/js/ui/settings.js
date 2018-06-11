@@ -293,6 +293,7 @@ climute();
 wordmute();
 wordemp();
 checkSpotify();
+oksload();
 function climute(){
 	//クライアントミュート
 	var cli = localStorage.getItem("client_mute");
@@ -364,4 +365,14 @@ function notftest(){
 			ipc.send('native-notf', ['TheDesk通知テスト','通知テスト(画像はあなたのアカウントのアイコンです)',localStorage.getItem('prof_0')]);
 		}
 	
+}
+function oks(no){
+	var txt=$("#oks-"+no).val();
+	localStorage.setItem("oks-"+no, txt);
+	Materialize.toast("キーボードショートカットを更新しました。", 3000);
+}
+function oksload(){
+	if(localStorage.getItem("oks-1")){$("#oks-1").val(localStorage.getItem("oks-1"))}
+	if(localStorage.getItem("oks-2")){$("#oks-2").val(localStorage.getItem("oks-2"))}
+	if(localStorage.getItem("oks-3")){$("#oks-3").val(localStorage.getItem("oks-3"))}
 }

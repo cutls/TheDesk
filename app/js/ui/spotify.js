@@ -46,6 +46,22 @@ function checkSpotify(){
         var content="#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk";
     }
     $("#np-temp").val(content);
+    var flag=localStorage.getItem("artwork");
+    if(flag){
+        $("#awk_yes").prop("checked", true);
+    }else{
+        $("#awk_no").prop("checked", true);
+    }
+}
+function spotifyFlagSave(){
+    var awk = $("[name=awk]:checked").val();
+    if(awk=="yes"){
+        localStorage.setItem("artwork","yes");
+        Materialize.toast("アルバムアートワークを添付します。", 3000);
+    }else{
+        localStorage.removeItem("artwork");
+        Materialize.toast("アルバムアートワークを添付しません。", 3000);
+    }
 }
 function nowplaying(mode){
     if(mode=="spotify"){
@@ -68,7 +84,10 @@ function nowplaying(mode){
             var img=item.album.images[0].url;
             var electron = require("electron");
              var ipc = electron.ipcRenderer;
-            ipc.send('bmp-image', [img,0]);
+             var flag=localStorage.getItem("artwork");
+            if(flag){
+                ipc.send('bmp-image', [img,0]);
+            }
             var content=localStorage.getItem("np-temp");
             if(!content || content==""){
                 var content="#NowPlaying {song} / {album} / {artist}\n{url}";

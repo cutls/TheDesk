@@ -54,8 +54,8 @@ function xpand() {
 		$("#x-btn").text("keyboard_arrow_right");
 		localStorage.removeItem("xed");
 	} else {
-		$("#sidebar").css('width', '24px');
-		$("#sidebar").css('min-width', '24px');
+		$("#sidebar").css('width', '29px');
+		$("#sidebar").css('min-width', '29px');
 		$("#post-box").css('right', '27px');
 		$("#sidebar").addClass("xed");
 		$("#sidebar .big-menu i").removeClass('big-icon');

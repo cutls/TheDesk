@@ -24,6 +24,7 @@
   flex-wrap:wrap;
   align-content:flex-start;
   overflow-y:scroll;
+  overflow-x:hidden;
 }
 #sidebar-btm{
   height:9em;

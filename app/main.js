@@ -12,16 +12,6 @@ const Menu=electron.Menu
 var updatewin=null;
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
-	var platform=process.platform;
-	var bit=process.arch;
-	if(platform=="win32"){
-	const WindowsToaster = require('node-notifier').WindowsToaster;
-	var notifier = new WindowsToaster({
-    	withFallback: false, // Fallback to Growl or Balloons? 
-    	customPath: void 0 // Relative path if you want to use your fork of toast.exe 
-	});
-	}
-
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
 const {
@@ -31,6 +21,7 @@ const join = require('path').join;
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow;
 var info_path = join(app.getPath("userData"), "window-size.json");
+var max_info_path = join(app.getPath("userData"), "max-window-size.json");
 var tmp_img = join(app.getPath("userData"), "tmp.png");
 var window_size;
 try {
@@ -39,6 +30,17 @@ try {
 	window_size = {
 		width: 1000,
 		height: 750
+	}; // デフォルトバリュー
+}
+var max_window_size;
+try {
+	max_window_size = JSON.parse(fs.readFileSync(max_info_path, 'utf8'));
+} catch (e) {
+	max_window_size = {
+		width: "string",
+		height: "string",
+		x: "string",
+		y: "string"
 	}; // デフォルトバリュー
 }
 
@@ -55,9 +57,9 @@ function createWindow() {
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="linux"){
-		var arg={width:window_size.width,height:window_size.height,icon: __dirname + '/thedesk.ico'}
+		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,icon: __dirname + '/thedesk.ico'}
 	}else{
-		var arg=window_size
+		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,simpleFullscreen:true}
 	}
 	mainWindow = new BrowserWindow(arg);
 	electron.session.defaultSession.clearCache(() => {})
@@ -79,12 +81,31 @@ function createWindow() {
 	}else{
 		mainWindow.loadURL('file://' + __dirname + '/index.html');
 	}
+	if(!window_size.x && !window_size.y){
+		mainWindow.center();
+	}
+	if(window_size.max){
+		mainWindow.maximize();
+	}
 	// ウィンドウが閉じられたらアプリも終了
 	mainWindow.on('closed', function() {
 		mainWindow = null;
 	});
 	mainWindow.on('close', function() {
-		fs.writeFileSync(info_path, JSON.stringify(mainWindow.getBounds()));
+		if(
+			max_window_size.width==mainWindow.getBounds().width && 
+			max_window_size.height==mainWindow.getBounds().height &&
+			max_window_size.x==mainWindow.getBounds().x &&
+		  	max_window_size.y==mainWindow.getBounds().y
+		){
+			var size={width:mainWindow.getBounds().width,height:mainWindow.getBounds().height,x:mainWindow.getBounds().x,y:mainWindow.getBounds().y,max:true}
+		}else{
+			var size={width:mainWindow.getBounds().width,height:mainWindow.getBounds().height,x:mainWindow.getBounds().x,y:mainWindow.getBounds().y}
+		}
+		fs.writeFileSync(info_path, JSON.stringify(size));
+	});
+	mainWindow.on('maximize', function() {
+		fs.writeFileSync(max_info_path, JSON.stringify(mainWindow.getBounds()));
 	});
 	  // Create the Application's main menu
 	  var template = [{
@@ -128,9 +149,12 @@ var onError = function(err,response){
 
 var ipc = electron.ipcMain;
 ipc.on('native-notf', function(e, args) {
+	
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="win32"){
+		const notifier = require('node-notifier');
+	// String
 	Jimp.read(args[2], function (err, lenna) {
 		if(!err && lenna){
 			lenna.write(tmp_img);
@@ -139,9 +163,12 @@ ipc.on('native-notf', function(e, args) {
 			var tmp_imge="";
 		}
 		notifier.notify({
-			body: args[1],
+			appName: "top.thedesk.thedesk",
+			message: args[1],
 			title: args[0],
 			icon : tmp_imge,
+			sound: false,
+			wait: false
 		});
 		
 	});

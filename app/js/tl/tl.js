@@ -113,9 +113,15 @@ function reload(type, cc, acct_id, tlid, data) {
 	} else if (type == "pub") {
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=public&access_token=" + at;
+	} else if (type == "pub-media") {
+		var start = "wss://" + domain +
+			"/api/v1/streaming/?stream=public:media&access_token=" + at;
 	} else if (type == "local") {
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=public:local&access_token=" + at;
+	} else if (type == "local-media") {
+		var start = "wss://" + domain +
+			"/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=" + at;
 	} else if (type == "tag") {
 		if(type=="tag"){
 			var tag = localStorage.getItem("tag-range");
@@ -305,11 +311,23 @@ function cap(type, data, acct_id) {
 		}else{
 			var response="Local TL";
 		}
+	} else if (type == "local-media") {
+		if(localStorage.getItem("local_" + acct_id) && !locale){
+			var response=localStorage.getItem("local_" + acct_id)+"(メディア)";
+		}else{
+			var response="Local TL(Media)";
+		}
 	} else if (type == "pub") {
 		if(localStorage.getItem("public_" + acct_id) && !locale){
 			var response=localStorage.getItem("public_" + acct_id);
 		}else{
 			var response="Federated TL";
+		}
+	} else if (type == "pub-media") {
+		if(localStorage.getItem("public_" + acct_id) && !locale){
+			var response=localStorage.getItem("public_" + acct_id)+"(メディア)";
+		}else{
+			var response="Federated TL(Media)";
 		}
 	} else if (type == "tag") {
 		var response= "#" + data
@@ -336,8 +354,12 @@ function com(type, data) {
 		return "home?"
 	} else if (type == "local" || type == "noauth") {
 		return "public?local=true&"
+	} else if (type == "local-media") {
+		return "public?local=true&only_media=true&"
 	} else if (type == "pub") {
 		return "public?"
+	} else if (type == "pub-media") {
+		return "public?only_media=true&"
 	} else if (type == "tag") {
 		return "tag/" + data + "?"
 	}else if (type == "list") {
@@ -351,9 +373,9 @@ function com(type, data) {
 function icon(type) {
 	if (type == "home") {
 		return "home"
-	} else if (type == "local" || type == "noauth") {
+	} else if (type == "local" || type == "noauth" || type == "local-media") {
 		return "people_outline"
-	} else if (type == "pub") {
+	} else if (type == "pub" || type == "pub-media") {
 		return "language"
 	} else if (type == "tag") {
 		return "search"

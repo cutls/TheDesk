@@ -370,3 +370,45 @@ function showDom(more, acct_id) {
 	});
 }
 
+//ユーザーマッチングリスト
+function showMat() {
+	$("#his-matching-list-contents").html("30秒から数分かかります");
+	var full=$("#his-acct").attr("fullname");
+	var acct_id=$("#his-data").attr("use-acct");
+	full=full.split("@");
+	var start = "https://vinayaka.distsn.org/cgi-bin/vinayaka-user-match-api.cgi?"+full[1]+"+" + full[0];
+	console.log(start);
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json'
+		},
+		//body: JSON.stringify({})
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		console.log(json);
+		var templete="";
+		Object.keys(json).forEach(function(key) {
+			var user = json[key];
+			templete = templete +
+			'<div class="" style="padding-top:5px;">' +
+			'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-end;">' +
+			'<div style="flex-basis:40px;"><a onclick="udgEx(\'' + user.user + '\',' +
+			acct_id + ');" user="' + user.user + '" class="udg">' +
+			'<img src="' + user.avatar + '" width="40" class="prof-img" user="' + user.user + '"></a></div>' +
+			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"><big>' +
+			escapeHTML(user.screen_name) + '</big></div>' +
+			'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
+			user.user + '@'+user.host+'</div>' +
+			'</div>' + 
+			'<div class="divider"></div>' +
+			'</div>' +
+			'</div>';
+		});
+		$("#his-matching-list-contents").html(templete);
+	});
+}

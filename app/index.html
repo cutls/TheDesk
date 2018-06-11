@@ -24,8 +24,7 @@
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
-	//必ずアプデ時のremove instance消して！
-var ver="Mio (ver.5)";
+var ver="Mio (15.6.0)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -53,8 +52,10 @@ var tlid=0;
 <div id="auth">
 <select id="type-sel" style="color:black">
 	<option value="local" data-trans="local">ローカル</option>
+	<option value="local-media" data-trans="local-media">ローカル(メディア)</option>
 	<option value="home" data-trans="home">ホーム</option>
 	<option value="pub" data-trans="public">連合</option>
+	<option value="pub-media" data-trans="public-media">連合(メディア)</option>
 	<option value="dm" data-trans="dm">ダイレクトメッセージ</option>
 	<option value="mix" data-trans="integrated">統合(ローカルとホーム)</option>
 	<option value="plus" data-trans="plus">統合(ローカルとブースト・リプライ)</option>
@@ -84,7 +85,7 @@ var tlid=0;
 <br><span data-trans="src_acct_sel">検索に使用するアカウントを選択</span>
 <br>
 <div class="input-field">
-<select id="src-acct-sel" class="acct-sel"></select>
+<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
 <label></label>
 </div>
 <label for="src" data-trans="src">検索</label>
@@ -151,7 +152,7 @@ var tlid=0;
 </div>
 <div class="big-menu" id="sort-tgl">
 <a onclick="sortToggle()" class="nex waves-effect">
-	<i class="material-icons nex big-icon" title="カラム一覧" data-trans-title="sort">sort</i>
+	<i class="material-icons nex big-icon" title="カラム一覧/並べ替え" data-trans-title="sort">sort</i>
 </a>
 <br>
 <span class="side-label" data-trans="sort">カラム一覧</span>
@@ -201,7 +202,7 @@ var tlid=0;
 		<i class="material-icons" title="サイドバーの開閉" data-trans-title="sidebar_xpand" id="x-btn">keyboard_arrow_right</i>
 		<span class="side-label" data-trans="sidebar_xpand_short">たたむ</span>
 	</a>
-	</div>
+</div>
 </div>
 <div id="sidebar-btm">
 <!--最小化-->
@@ -483,7 +484,7 @@ var tlid=0;
 	<div id="his-data-show">
 	<img src="./img/loading.svg" id="his-prof" style="">
 	<div class="his-float">
-	<span id="his-name" style="font-size:1.5rem">Loading...</span>
+	<span id="his-name" style="font-size:1.5rem">Loading...</span><span class="gray" id="his-bot"></span>
 	<br>@
 	<span id="his-acct"></span>
 	<span class="gray" id="his-relation"></span>
@@ -507,7 +508,7 @@ var tlid=0;
 	<div class="row">
 	<div class="col s12" id="my-data-nav">
 	<ul class="custom-tabs transparent">
-		<li class="custom-tab col my-data-width active-back">
+		<li class="custom-tab col my-data-width active-back column-first">
 			<a go="#his-tl">タイムライン</a>
 		</li>
 		<li class="custom-tab col my-data-width">
@@ -540,6 +541,9 @@ var tlid=0;
 		<li class="custom-tab col my-data-width only-my-data">
 			<a go="#his-request-list">フォローリクエスト</a>
 		</li>
+		<li class="custom-tab col my-data-width">
+			<a go="#his-matching-list">似てる</a>
+		</li>
 	</ul>
 	</div>
 	<div id="his-tl" class="col s12 tab-content">
@@ -565,7 +569,7 @@ var tlid=0;
 		<a href="#!" class="waves-effect btn" onclick="udgEx('selector', 'selector')">プロフを開く</a><br>
 	</div>
 	<div id="his-list" class="col s12  tab-content">
-		<div id="his-lists-a"></div>
+		<div id="his-lists-a">リストに追加するためにはフォローが必要です。</div>
 		
 		<div id="his-lists-b"></div>
 	</div>
@@ -595,15 +599,13 @@ var tlid=0;
 	</div>
 	<div id="his-prof-list" class="col s12  tab-content">名前
 	<br>
-	<input type="text" placeholder="名前" id="his-name-val" width="max-width:150px;">
+	<input type="text" placeholder="名前" id="his-name-val" style="max-width:250px;">
 	<br>自己紹介
 	<br>
 	<div class="input-field col s12">
 	<textarea placeholder="自己紹介" id="his-des-val" class="materialize-textarea"></textarea>
 	<label for="his-des-val">自己紹介</label>
 	</div>
-	<button onclick="profedit()" class="btn waves-effect indigo">適用</button>
-	<br>
 	<br>プロフィール画像変更:
 	<span id="prof-change">
 		<input type="file" onchange="imgChange(this,'avatar')">
@@ -617,6 +619,14 @@ var tlid=0;
 	<div id="his-request-list-contents" class="cont-series">
 	</div>
 	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">もっと</button>
+	</div>
+	<div id="his-matching-list" class="col s12  tab-content">
+		似ているユーザーを取得できます。<br>
+		Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User Matching</a><br>
+		<div id="his-matching-list-contents" class="cont-series">
+				
+		</div>
+		<button class="btn waves-effect " onclick="showMat()">取得</button>
 	</div>
 	</div>
 	</div>
@@ -677,31 +687,48 @@ var tlid=0;
 		<h3>TheDesk</h3>
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br><br>
-			<div id="release-Mio_ver-5" style="display:none">
-				<h5>Release Note Mio (ver.5)</h5>
-・絵文字がいい感じに(Twemoji採用)<br>
-・打てる絵文字が拡充<br>
-・iTunesなうぷれのタグ追加<br>
-・ダウンローダーに関する不具合を修正<br>
+			<div id="release-Mio_15-6-0" style="display:none">
+				<h5>Release Note Mio (ver.6)</h5>
+<ul>
+	<li>ウィンドウの最大化を記憶するように</li>
+	<li>v2.4.0/1対応(bot表示/v2-search/rc時のトレンドタグ)</li>
+	<li>NanoウィンドウのUI改善</li>
+	<li>キーボードショートカット追加(Ctrl+Shift+1/2/3で特定文字を入力)</li>
+	<li>Spotifyのアートワーク投稿を任意に</li>
+	<li>さまざまなバグを修正</li>
+	以下ver.5の新機能<br>
+	<li>絵文字がいい感じに(Twemoji採用)</li>
+	<li>打てる絵文字が拡充</li>
+	<li>iTunesなうぷれのタグ追加</li>
+	<li>ダウンローダーに関する不具合を修正</li>
+</ul>			
 以下ver.4の新機能<br>
-・セキュリティアップデート<br>
-・UI変更<br>
-・macOSで通知が表示されるように<br>
+<ul>
+	<li>セキュリティアップデート</li>
+	<li>UI変更</li>
+	<li>macOSで通知が表示されるように</li>
+</ul>
 以下はver.3の新機能<br>
-・macOS版正式リリース<br>
-・Spotifyなうぷれ改修(アートワーク投稿)<br>
-・iTunesなうぷれ機能(macOS必須/Thanks to rinsuki)<br>
-・メインアカウント機能(起動時や投稿後のアカウントを指定)<br>
-・エアリプソース確認が投稿者のアカウントのLTLに<br>
-・未認証TLのトゥートをメインアカウントで詳細表示できるように<br>
-・Nano機能がウィンドウ位置を記憶するように<br>
-・DMタイムライン<br>
-・(imastodon.net)トレンドタグ表示機能<br>
+<ul><li>macOS版正式リリース</li>
+	<li>Spotifyなうぷれ改修(アートワーク投稿)</li>
+	<li>iTunesなうぷれ機能(macOS必須/Thanks to rinsuki)</li>
+	<li>メインアカウント機能(起動時や投稿後のアカウントを指定)</li>
+	<li>エアリプソース確認が投稿者のアカウントのLTLに</li>
+	<li>未認証TLのトゥートをメインアカウントで詳細表示できるように</li>
+	<li>Nano機能がウィンドウ位置を記憶するように</li>
+	<li>DMタイムライン</li>
+	<li>(imastodon.net)トレンドタグ表示機能</li>
+</ul>
 			</div>
 			<br><br>
 		TheDeskはオープンソース・ソフトウェアです。<br>
 		皆様のあたたかい支援のもとで製作されています。<br>
+		<h5>TheDesk自己主張ステッカー(5cm四方・透明)</h5>
+		<img src="./img/sticker.png" width="100">
+		<a href="https://cutls.booth.pm" target="_blank">購入</a><br>
+		<h5>その他</h5>
 		<a href="https://enty.jp/Cutls" target="_blank">Entyで支援</a><br>
+		<a href="https://www.amazon.co.jp/registry/wishlist/2TV35ZHHJPDSB" target="_blank">Amazonほしいものリスト</a><br>
 		<a href="mailto:mstdn@thedesk.top" target="_blank">mstdn@thedesk.top</a>にAmazonギフトカードを送る<br>
 		<a href="https://osushi.love/Cutls_P" target="_blank">Osushi.love</a>で寿司を贈る<br>
 		</div>

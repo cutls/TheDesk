@@ -15,7 +15,7 @@ function profedit() {
 	httpreq.responseType = 'json';
 	httpreq.send(JSON.stringify({
 		display_name: name,
-		note: des
+		note: des,
 	}));
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState == 4) {

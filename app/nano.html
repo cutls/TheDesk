@@ -6,13 +6,27 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <title>TheDesk Nano</title>
 <style>
-body {
-    background-color: rgba(0, 0, 0, 0.1);
+html{
+	-webkit-app-region: drag !important;
+	 cursor: move !important;
+	 width:100vw;
+	 height:100vh;
+	 overflow:hidden;
 }
-#draghandle{
- -webkit-app-region: drag;
- cursor: move;
- }
+body {
+	background-color: rgba(0, 0, 0, 0.1);
+	font-size:11px;
+}
+#timeline_nano{
+	overflow-y:scroll;
+	overflow-x:hidden;
+	-webkit-app-region: no-drag;
+	max-height:100px;
+}
+.user{font-size:12px;}
+select {
+  -webkit-app-region: no-drag;
+}
 button {
   -webkit-app-region: no-drag;
 }
@@ -56,21 +70,21 @@ textarea {
 <body>
         <script type="text/javascript" src="./js/common/jquery.js"></script>
         <script type="text/javascript" src="./js/platform/first.js"></script>
-<div id="draghandle">+ここを持って移動+</div>
-<span id="timeline_nano">
-            <select id="type-sel">
-                <option value="local">Local</option>
-                <option value="home">Home</option>
-            </select>
-            <button onclick="tl()">表示</button>
-</span><br><button onclick="window.close()">終了</button><br>
-<textarea id="textarea" style="width:100%; background-color:transparent"></textarea>
+<select id="post-acct-sel" style="max-width:150px">
+</select>
+<select id="type-sel" style="max-width:60px">
+	<option value="local">Local</option>
+	<option value="home">Home</option>
+</select><button onclick="tl()">表示</button><button onclick="window.close()">x</button><br>
+<div id="timeline_nano">
+	
+</div>
+<br>
+<textarea id="textarea" style="width:80%; background-color:transparent"></textarea>
 <input type="hidden" id="reply">
 <input type="hidden" id="media">
-<select id="post-acct-sel">
-
-    </select>
-<button class="btn" onclick="post()">投稿</button>
+	<button class="btn" onclick="post()">投稿</button>
+<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
 <script type="text/javascript" src="./js/post/post.js"></script>
 <script type="text/javascript" src="./js/post/reply.js"></script>
 <script type="text/javascript" src="./js/tl/parse.js"></script>

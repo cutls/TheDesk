@@ -63,6 +63,7 @@ function udg(user, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
+		console.log(json);
 		//一つ前のユーザーデータ
 		if (!localStorage.getItem("history")){
 			$("#his-history-btn").prop("disabled",true);
@@ -134,6 +135,9 @@ function udg(user, acct_id) {
 			}else{
 				$("#his-des").html(json.note);
 			}
+			if(json.bot){
+				$("#his-bot").html("botアカウント");
+			}
 			$('#his-data').css('background-size', 'cover');
 			localStorage.setItem("history" , user);
 			//自分の時
@@ -144,6 +148,10 @@ function udg(user, acct_id) {
 				showDom('', acct_id);
 				showReq('', acct_id);
 				$("#his-name-val").val(json.display_name);
+				$("#his-f1-name").val(json.fields[0].name); $("#his-f1-val").val($.strip_tags(json.fields[0].value));
+				$("#his-f2-name").val(json.fields[1].name); $("#his-f2-val").val($.strip_tags(json.fields[1].value));
+				$("#his-f3-name").val(json.fields[2].name); $("#his-f3-val").val($.strip_tags(json.fields[2].value));
+				$("#his-f4-name").val(json.fields[3].name); $("#his-f4-val").val($.strip_tags(json.fields[3].value));
 				var des = json.note;
 				des = des.replace(/<br \/>/g, "\n")
 				des = $.strip_tags(des);
@@ -158,7 +166,6 @@ function udg(user, acct_id) {
 				$(".only-his-data").hide();
 			} else {
 				relations(user, acct_id);
-				hisList(user,acct_id);
 				$(".only-my-data").hide();
 				$(".only-his-data").show();
 			}
@@ -203,6 +210,7 @@ function relations(user, acct_id) {
 			//自分がフォローしている
 			$("#his-data").addClass("following");
 			$("#his-follow-btn").text("フォロー解除");
+			hisList(user,acct_id);
 		}else{
 			$("#his-follow-btn").text("フォロー");
 		}
@@ -248,6 +256,8 @@ function hisclose() {
 function reset(){
 	$(".tab-content:eq(0)").show();
 	$(".tab-content:gt(0)").hide();
+	$(".active-back").removeClass("active-back");
+	$(".column-first").addClass("active-back");
 	$("#his-name").text("Loading");
 	$("#his-acct").text("");
 	$("#his-prof").attr("src", "./img/loading.svg");
@@ -263,6 +273,7 @@ function reset(){
 	$("#his-data").removeClass("blocking");
 	$("#his-data").removeClass("mutingNotf");
 	$("#his-data").removeClass("blockingDom");
+	$("#his-bot").html("");
 	$("#his-follow-btn").show();
 	$("#his-block-btn").show();
 	$("#his-mute-btn").show();
@@ -277,6 +288,14 @@ function reset(){
 	$("#his-relation").text("");
 	$(".cont-series").html("");
 	$("#domainblock").val("");
+	$("#his-lists-a").html('リストに追加するためにはフォローが必要です。');
+	$("#his-lists-b").html('');
+	$("#his-name-val").val("");
+	$("#his-des-val").val("");
+	$("#his-f1-name").val(""); $("#his-f1-val").val("");
+	$("#his-f2-name").val(""); $("#his-f2-val").val("");
+	$("#his-f3-name").val(""); $("#his-f3-val").val("");
+	$("#his-f4-name").val(""); $("#his-f4-val").val("");
 }
 $('#my-data-nav .custom-tab').on('click',function(){
 	var target=$(this).find("a").attr("go");

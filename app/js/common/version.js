@@ -7,10 +7,12 @@ function verck(ver) {
 			$('#releasenote').modal('open');
 			verp=ver.replace( '(', '');
 			verp=verp.replace( '.', '-');
+			verp=verp.replace( '.', '-');
 			verp=verp.replace( '[', '-');
 			verp=verp.replace( ']', '');
 			verp=verp.replace( ')', '');
 			verp=verp.replace( ' ', '_');
+			console.log(verp);
 			$("#release-"+verp).show();
 		  });
 	}

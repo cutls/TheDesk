@@ -1,15 +1,12 @@
 ## For Astarte(kirishima.cloud), My Primary Instance
 
-TheDesk :thedesk: Mio (ver.3)  
-・macOS版正式リリース
-・Spotifyなうぷれ改修(アートワーク投稿)
-・iTunesなうぷれ機能(macOS必須)
-・メインアカウント機能(起動時や投稿後のアカウントを指定)
-・エアリプソース確認が投稿者のアカウントのLTLに
-・未認証TLのトゥートをメインアカウントで詳細表示できるように
-・Nano機能がウィンドウ位置を記憶するように
-・DMタイムラインを実装
-・(imastodon.net)トレンドタグ表示機能
+TheDesk :thedesk: Mio (ver.6)  
+・ウィンドウの最大化を記憶するように
+・v2.4.0/1対応(bot表示/v2-search/rc時のトレンドタグ)
+・NanoウィンドウのUI改善
+・キーボードショートカット追加(Ctrl+Shift+1/2/3で特定文字を入力)
+・Spotifyのアートワーク投稿を任意に
+・さまざまなバグを修正
 ほか
 https://thedesk.top
  :github: https://github.com/cutls/TheDesk #Desk #DeskUpdate
@@ -17,12 +14,10 @@ https://thedesk.top
  ## For Other Instances
 
 PCクライアントTheDesk Mio (ver.3)  
-・Spotifyなうぷれ改修(アートワーク投稿)
-・iTunesなうぷれ機能(macOS必須)
-・メインアカウント機能(起動時や投稿後のアカウントを指定)
-・エアリプソース確認が投稿者のアカウントのLTLに
-・未認証TLのトゥートをメインアカウントで詳細表示できるように
-・Nano機能がウィンドウ位置を記憶するように
-・DMタイムラインを実装
-・(imastodon.net)トレンドタグ表示機能
+・ウィンドウの最大化を記憶するように
+・v2.4.0/1対応(bot表示/v2-search/rc時のトレンドタグ)
+・NanoウィンドウのUI改善
+・キーボードショートカット追加(Ctrl+Shift+1/2/3で特定文字を入力)
+・Spotifyのアートワーク投稿を任意に
+・さまざまなバグを修正
 https://thedesk.top

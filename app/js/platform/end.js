@@ -21,8 +21,16 @@
 			ats = url.match(
 				/https:\/\/([-a-zA-Z0-9@.]+)\/@([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
 			);
-		console.log(ats);
+		console.log(toot);
 		if(toot){
+			ques = url.match(/https:\/\/quesdon\.rinsuki\.net\//);
+			console.log(ques);
+			if(ques){
+				if(ques[1]){
+					console.log("quesdon");
+					toot=[];
+				}
+			}
 			if(toot[1]){
 				var acct_id=$a.parent().attr("data-acct");
 				if(!acct_id){
@@ -39,7 +47,17 @@
 			}
 		}else if(ats){
 			if(ats[2]){
-				return false;
+				if(ats[1]!="quesdon.rinsuki.net"){
+					return false
+				}else{
+					const {
+						shell
+					} = require('electron');
+		  
+					shell.openExternal(url);
+				}
+				
+				
 			}
 		}else{
 		//hrefがhttp/httpsならブラウザで

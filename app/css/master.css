@@ -163,7 +163,9 @@ blockquote:before, .quote:before {
 .big-text{
   font-size:1.2rem;
 }
-
+#releasenote li{
+  list-style-type: disc
+}
 @media only screen and (min-width: 993px){
 #toast-container {
     top:auto;

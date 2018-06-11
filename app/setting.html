@@ -35,7 +35,8 @@
 		<input type="text" style="width:50px" id="popup">秒 
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
-		<h5>ネイティブ通知設定</h5><a onclick="notftest()" class="pointer">通知テスト</a>
+		<h5>ネイティブ通知設定</h5>
+		Windows 10の最新バージョンでは通知が表示されません。これは既知のバグですが解決が難しいため保留しています。<br><a onclick="notftest()" class="pointer">通知テスト</a>
 		<br>
 		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_yes" value="yes" />
 		<label for="ntf_yes">はい</label>
@@ -191,6 +192,22 @@
 	</li>
 	<li>
 		<div class="collapsible-header">
+				<i class="material-icons">keyboard</i>キーボードショートカットの設定
+		</div>
+		<div class="collapsible-body">
+			<h5>簡単文字入力</h5>
+			絵文字やタグ、&gt;BTなどを登録しておくとすぐに入力できます。<br>
+			Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
+			<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
+			Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
+			<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
+			Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
+			<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
+
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
 				<i class="material-icons">bookmark</i>ミュート・強調の設定
 		</div>
 		<div class="collapsible-body">
@@ -229,6 +246,12 @@
 				テンプレート:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
 				iTunes NowPlayingでも{url}以外のテンプレートに従ってトゥートされます。また、作曲家{composer}/サンプルレート{hz}が有効です。<br>
 			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
+			<h5>Spotifyでアルバムアートワークを添付する</h5>
+			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
+			<label for="awk_yes">はい</label>
+			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
+			<label for="awk_no">いいえ</label>
+			<br>
 		</div>
 	</li>
 </ul>

@@ -1,5 +1,5 @@
 # TheDesk
-Mastodon client for Windows/Linux(Linux ver. is not supported by developer.)  
+Mastodon client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドンのWindows/Linuxクライアント  
 Download:[TheDesk](https://thedesk.top)  
 Latest Info(Markdown Toot)/最新情報(マークダウン形式のトゥート): [LATEST.md](https://github.com/cutls/TheDesk/blob/master/LATEST.md)

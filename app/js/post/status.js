@@ -122,12 +122,13 @@ function follow(acct_id,remote) {
 		var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
 		var ent={}
 	}
+	console.log(ent);
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = 'json';
-	httpreq.send();
+	httpreq.send(JSON.stringify(ent));
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState == 4) {
 			var json = httpreq.response;
