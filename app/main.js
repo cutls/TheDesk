@@ -135,7 +135,7 @@ function createWindow() {
           {
             label: '再読み込み',
             accelerator: 'CmdOrCtrl+R',
-            click: function() { mainWindow.webContents.send('reload', ""); }
+            click: function() { mainWindow.webContents.send('reload', " "); }
           }
 		]
 		}
