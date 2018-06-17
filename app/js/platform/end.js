@@ -157,3 +157,10 @@ function progshow(e) {
 	  }
 	}
   }
+
+  var electron = require("electron");
+  var ipc = electron.ipcRenderer;
+  ipc.on('reload', function (event, arg) {
+	location.reload();
+})
+	

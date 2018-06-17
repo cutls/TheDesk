@@ -132,6 +132,11 @@ function createWindow() {
 				accelerator: 'Alt+Command+I',
 				click: function() { mainWindow.toggleDevTools(); }
 			  },
+          {
+            label: '再読み込み',
+            accelerator: 'CmdOrCtrl+R',
+            click: function() { mainWindow.webContents.send('reload', ""); }
+          }
 		]
 		}
     ];
