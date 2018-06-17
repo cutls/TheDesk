@@ -36,7 +36,7 @@ function mixtl(acct_id, tlid, type) {
             var homearr=[];
             var timeline = jsonL.concat(jsonH);
             timeline.sort(function(a,b){
-                if(date(a.created_at,"unix")>date(b.created_at,"unix")) return -1;
+                if(date(a.created_at,"unix")>=date(b.created_at,"unix")) return -1;
                 if(date(a.created_at,"unix")<date(b.created_at,"unix")) return 1;
                 return 0;
 			});
@@ -85,15 +85,15 @@ function mixre(acct_id, tlid, TLtype) {
 	websocketHome[wshid] = new WebSocket(startHome);
 	websocketLocal[wslid] = new WebSocket(startLocal);
 	websocketHome[wshid].onopen = function(mess) {
-		console.log("Connect Streaming API(Home)");
+		console.log("Connect Streaming API(Integrated:Home)");
 		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocketLocal[wslid].onopen = function(mess) {
-		console.log("Connect Streaming API(Local)");
+		console.log("Connect Streaming API(Integrated:Local)");
 		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocketLocal[wslid].onmessage = function(mess) {
-		console.log("Receive Streaming API:");
+		console.log("Receive Streaming API:(Integrated:Local)");
 
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
 		console.log(obj);
@@ -103,12 +103,14 @@ function mixre(acct_id, tlid, TLtype) {
 			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 		} else if (type == "update") {
 			var templete = parse([obj], '', acct_id, tlid);
-			if (!$("[toot-id="+obj.id+"]").length) {
+			if (!$("#timeline_"+tlid+" [toot-id="+obj.id+"]").length) {
 				var pool = localStorage.getItem("pool_" + tlid);
-				if (pool) {
+				if (pool && templete) {
 					pool = templete + pool;
-				} else {
+				} else if (templete) {
 					pool = templete
+				}else{
+					pool="";
 				}
 				localStorage.setItem("pool_" + tlid, pool);
 				scrollck();
@@ -118,7 +120,7 @@ function mixre(acct_id, tlid, TLtype) {
 		}}
 	}
 	websocketHome[wshid].onmessage = function(mess) {
-		console.log("Receive Streaming API:(Home)");
+		console.log("Receive Streaming API:(Integrated:Home)");
 
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
 		console.log(obj);
@@ -136,12 +138,14 @@ function mixre(acct_id, tlid, TLtype) {
 					var templete="";
 				}
 			}
-		if (!$("[toot-id="+obj.id+"]").length) {
+		if (!$("#timeline_"+tlid+" [toot-id="+obj.id+"]").length) {
 				var pool = localStorage.getItem("pool_" + tlid);
-				if (pool) {
+				if (pool && templete) {
 					pool = templete + pool;
-				} else {
+				} else if (templete) {
 					pool = templete
+				}else{
+					pool="";
 				}
 				localStorage.setItem("pool_" + tlid, pool);
 				scrollck();

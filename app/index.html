@@ -24,7 +24,7 @@
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Mio (15.6.0)";
+var ver="Mio (15.7.0)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -236,7 +236,7 @@ var tlid=0;
 	</span>
 <!--Markdown-->
 <div class="row" style="margin-bottom:0">
-<div class="markdown mize">
+<div class="markdown mize hide">
 <div class="col s12">
 <i class="material-icons pointer setting waves-effect" onclick="tagsel('b')" title="太字(Ctrl+B)テキストボックス内を選択してから押すと囲みます。">format_bold</i>
 <i class="material-icons pointer setting waves-effect" onclick="tagsel('i')" title="斜字(Ctrl+I)テキストボックス内を選択してから押すと囲みます。">format_italic</i>
@@ -687,38 +687,20 @@ var tlid=0;
 		<h3>TheDesk</h3>
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br><br>
-			<div id="release-Mio_15-6-0" style="display:none">
-				<h5>Release Note Mio (ver.6)</h5>
-<ul>
-	<li>ウィンドウの最大化を記憶するように</li>
-	<li>v2.4.0/1対応(bot表示/v2-search/rc時のトレンドタグ)</li>
-	<li>NanoウィンドウのUI改善</li>
-	<li>キーボードショートカット追加(Ctrl+Shift+1/2/3で特定文字を入力)</li>
-	<li>Spotifyのアートワーク投稿を任意に</li>
-	<li>さまざまなバグを修正</li>
-	以下ver.5の新機能<br>
-	<li>絵文字がいい感じに(Twemoji採用)</li>
-	<li>打てる絵文字が拡充</li>
-	<li>iTunesなうぷれのタグ追加</li>
-	<li>ダウンローダーに関する不具合を修正</li>
-</ul>			
-以下ver.4の新機能<br>
-<ul>
-	<li>セキュリティアップデート</li>
-	<li>UI変更</li>
-	<li>macOSで通知が表示されるように</li>
-</ul>
-以下はver.3の新機能<br>
-<ul><li>macOS版正式リリース</li>
-	<li>Spotifyなうぷれ改修(アートワーク投稿)</li>
-	<li>iTunesなうぷれ機能(macOS必須/Thanks to rinsuki)</li>
-	<li>メインアカウント機能(起動時や投稿後のアカウントを指定)</li>
-	<li>エアリプソース確認が投稿者のアカウントのLTLに</li>
-	<li>未認証TLのトゥートをメインアカウントで詳細表示できるように</li>
-	<li>Nano機能がウィンドウ位置を記憶するように</li>
-	<li>DMタイムライン</li>
-	<li>(imastodon.net)トレンドタグ表示機能</li>
-</ul>
+			<div id="release-Mio_15-7-0" style="display:none">
+				<h5>Release Note Mio (15.7.0)</h5>
+					<ul>
+						<li>公開範囲情報の記録がインスタンスごとに(これにより一度記録がリセットされます。)</li>
+						<li>インスタンスのユーザー設定に従った公開範囲指定(アカウント設定より情報更新をしてください。)</li>
+						<li>インスタンスカラーを設定できるように(アカウント設定から)</li>
+						<li>スクリーンショット(魚拓)機能の高速化</li>
+						<li>Integrated TLのバグ修正</li>
+						<li>キーボードショートカットのバグ修正</li>
+						<li>コピペのバグ改善(ただし、ワンクリックコピーで複数の絵文字があるトゥートをコピーするとバグが発生します)</li>
+						<li>CWのバグ改善</li>
+						<li><b>DTP鯖(dtp-mstdn.jp)とtheboss.techをサポート</b>タグ付きトゥート時、デフォルトタグがないとき確認ダイアログが表示されます。</li>
+					</ul>
+
 			</div>
 			<br><br>
 		TheDeskはオープンソース・ソフトウェアです。<br>
@@ -766,6 +748,7 @@ var tlid=0;
 <script type="text/javascript" src="./js/tl/list.js"></script>
 <script type="text/javascript" src="./js/ui/post-box.js"></script>
 <script type="text/javascript" src="./js/ui/layout.js"></script>
+<script type="text/javascript" src="./js/login/instance.js"></script>
 <script type="text/javascript" src="./js/login/login.js"></script>
 <script type="text/javascript" src="./js/ui/img.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>

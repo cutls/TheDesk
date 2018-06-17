@@ -193,23 +193,9 @@ ipc.on('update', function(e, x, y) {
 		return false;
 	}
 })
-
-ipc.on('screen', function(e, args) {
-	var window = new BrowserWindow({
-		width: args[0],
-		height: args[1],
-		"transparent": false, // ウィンドウの背景を透過
-		"frame": false, // 枠の無いウィンドウ
-		"resizable": true
-	});
-	window.loadURL('file://' + __dirname + '/screenshot.html?id='+args[2]);
-	window.setAlwaysOnTop(true);
-	window.setPosition(0, 0);
-	return "true"
-})
 //Web魚拓
 ipc.on('shot', function(e, args) {
-	console.log(args[0]);
+	console.log("link:"+args[0]+" width:"+args[1]+" height:"+args[2]+" title:"+args[4]+" top:"+args[5]+" left:"+args[6]);
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="win32"){
@@ -221,17 +207,21 @@ ipc.on('shot', function(e, args) {
 	}
 	Jimp.read(Buffer.from( args[3],'base64'), function (err, lenna) {
 		if (err) throw err;
-		lenna.crop( 0, 0, args[1], args[2] ).write(dir);
+		lenna.crop( args[6], args[5], args[1], args[2] ).write(dir);
 	});
 	shell.showItemInFolder(folder);
 })
 ipc.on('shot-img-dl', (e, args) => {
 	Jimp.read(args[0], function (err, lenna) {
 		if (err) throw err;
+		if(process.platform=="win32"){
+			var folder=app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\";
+		}else if(process.platform=="linux" || process.platform=="darwin" ){
+			var folder=app.getPath('home')+"/Pictures/TheDesk/Screenshots/";
+		}
 		lenna.write(folder+args[1]);
 	});
-	
-});
+})
 //アプデDL
 ipc.on('download-btn', (e, args) => {
 	var platform=process.platform;

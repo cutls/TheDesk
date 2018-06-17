@@ -150,7 +150,9 @@
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="direct" value="direct" />
 		<label for="direct">ダイレクト(Direct)</label>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="memory" value="memory" />
-		<label for="memory">前回の投稿設定を記憶する</label>
+		<label for="memory">前回の投稿設定を記憶する(インスタンスごとに記憶されます)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="server" value="server" />
+		<label for="server">マストドンアカウント設定の既定値</label>
 		<br>
 		<h5>デフォルトでのボックスの挙動(起動時・トゥート後)</h5>
 		<input class="with-gap" onchange="settings()" name="box" type="radio" id="b_yes" value="yes" />
@@ -287,7 +289,7 @@
 <button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i class="material-icons left">info</i>このソフトについて</button>
 <a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">web</i>公式HP</a>
 <a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>支援(Enty)</a>
-<a href="https://trello.com/b/FZtwd1xx" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>Trello(今後のToDo)</a>
+<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>ヘルプ/Docs(制作中)</a>
 <a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
 <a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="./img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
 <a class="btn waves-effect red lighten-2" href="https://osushi.love/Cutls_P" target="_blank" style="width:100%; max-width:500px;"><img src="./img/sushi.svg" class="left" width="25" style="padding-top:5px;">寿司を投げる</a>
@@ -299,7 +301,7 @@
 	<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
 	<br>
 </span><br>
-TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>を応援しています。<br>
+TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
 タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>

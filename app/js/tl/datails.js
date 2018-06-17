@@ -210,10 +210,12 @@ function cbCopy(mode){
 //本文のコピー
 function staCopy(id){
 	var html=$("[toot-id="+id+"] .toot").html();
-	html = html.match(/^<p>(.+)<\/p>$/)[1];
+	html = html.replace(/^<p>(.+)<\/p>$/,"$1");
 	html = html.replace(/<br\s?\/?>/, "\n");
 	html = html.replace(/<p>/, "\n");
 	html = html.replace(/<\/p>/, "\n");
+	console.log(html);
+	html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, "$1");
 	html=$.strip_tags(html);
 	if(execCopy(html)){
 		Materialize.toast("トゥート本文をコピーしました", 1500);
@@ -222,14 +224,49 @@ function staCopy(id){
 }
 //魚拓
 function shot(){
-	var id=$("#tootmodal").attr("data-id");
-	var w=$("#toot-this").width();
-	var h=$("#toot-this").height()+150;
-	var text=$("#toot-this").html();
-	localStorage.setItem("sc-text",text)
+	var title=$("#tootmodal").attr("data-id");
+	var off = $('#toot-this').offset();
+	var w=$("#toot-this").width()+50;
+	var h=$("#toot-this").height()+50;
 	var electron = require("electron");
+	const fs = require("fs");
+	const os = require('os')
+	const shell = electron.shell;
+	const path = require('path')
 	var ipc = electron.ipcRenderer;
-	ipc.send('screen', [w,h,id]);
+	let options = {
+        types: ['screen'],
+        thumbnailSize: {
+            width: window.parent.screen.width,
+            height: window.parent.screen.height
+          }
+	}
+	const desktopCapturer = electron.desktopCapturer;
+	desktopCapturer.getSources(options, function(error, sources) {
+		if (error) return console.log(error)
+
+		sources.forEach(function(source) {
+			if (source.name === 'Screen 1' || source.name === 'TheDesk') {
+                var durl=source.thumbnail.toDataURL();
+                var b64 = durl.match(
+                    /data:image\/png;base64,(.+)/
+                );
+                const screenshotPath = path.join(os.tmpdir(), 'screenshot.png');
+                const savePath = path.join(os.tmpdir(), 'screenshot.png');
+                    var ipc = electron.ipcRenderer;
+                    ipc.send('shot', ['file://' + screenshotPath,w,h,b64[1],title,off.top+50,off.left]);
+                    if($("#toot-this .img-parsed").length>0){
+                        for(i=0;i<$("#toot-this .img-parsed").length;i++){
+                            var url=$("#toot-this .img-parsed").eq(i).attr("data-url");
+                            ipc.send('shot-img-dl', [url,title+"_img"+i+".png"]);
+                        }
+                    }
+                    return;
+					const message = `Saved screenshot to: ${screenshotPath}`
+					//screenshotMsg.textContent = message
+			}
+		})
+	})
 }
 //翻訳
 function trans(tar){

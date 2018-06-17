@@ -6,10 +6,28 @@ function post() {
 	}
 	var str = $("#textarea").val();
 	var acct_id = $("#post-acct-sel").val();
-	$("#toot-post-btn").prop("disabled", true);
 	localStorage.setItem("last-use", acct_id);
-	todo("Posting");
 	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain=="theboss.tech"){
+		if(~str.indexOf("#")){
+			if(str.indexOf("#theboss_tech")=="-1"){
+				if(!confirm("デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。")){
+					return false;
+				}
+			}
+		}
+	}
+	if(domain=="dtp-mstdn.jp"){
+		if(~str.indexOf("#")){
+			if(str.indexOf("#dtp")=="-1"){
+				if(!confirm("デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。")){
+					return false;
+				}
+			}
+		}
+	}
+	$("#toot-post-btn").prop("disabled", true);
+	todo("Posting");
 	var at = localStorage.getItem(domain + "_at");
 	var start = "https://" + domain + "/api/v1/statuses";
 	var reply = $("#reply").val();
@@ -80,16 +98,7 @@ function clear() {
 	$("#cw").removeClass("cw-avail");
 	$("#rec").text("いいえ");
 	$("#mec").text("なし");
-	var vist = localStorage.getItem("vis");
-	if (!vist) {
-		vis("public");
-	} else {
-		if (vist == "memory") {
-			localStorage.setItem("vis-memory", $("#vis").text());
-		} else {
-			vis(vist);
-		}
-	}
+	loadVis();
 	$("#nsfw").removeClass("yellow-text");
 	$("#nsfw").html("visibility_off");
 	$("#nsfw").removeClass("nsfw-avail");

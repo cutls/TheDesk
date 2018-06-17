@@ -9,8 +9,7 @@ function mdCheck(){
 		 $(".markdown").addClass("hide");
 		$(".anti-markdown").addClass("hide");
 	  }else{
-		   $(".markdown").removeClass("hide");
-		$(".anti-markdown").addClass("hide");
+		$(".anti-markdown").removeClass("hide");
 	  }
 	  if($(".markdown").hasClass("hide")){
 		localStorage.setItem("md","hide");
@@ -38,6 +37,21 @@ function mdCheck(){
 	}else{
 		$("#textarea").attr("data-length", 500)
 	}
+	var multi = localStorage.getItem("multi");
+	if (multi) {
+		var obj = JSON.parse(multi);
+		if(obj[acct_id].background && obj[acct_id].background!="def" && obj[acct_id].text && obj[acct_id].text!="def"){
+			$("#toot-post-btn").removeClass("indigo");
+			$("#toot-post-btn").css("background-color","#"+obj[acct_id].background);
+			$("#toot-post-btn").css("color",obj[acct_id].text);
+		}else{
+			$("#toot-post-btn").css("background-color","");
+			$("#toot-post-btn").css("color","");
+			$("#toot-post-btn").addClass("indigo");
+
+		}
+	}
+	loadVis();
 }
 //BOXのトグルボタン
 function mdToggle(){

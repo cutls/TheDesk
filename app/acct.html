@@ -15,6 +15,9 @@
 body,html{overflow-y: scroll;}
 #acct-list{display:flex; flex-wrap:wrap; color:white; align-items: flex-start}
 .lts{font-size:150%}
+.colorsel{ display:flex; }
+.card .colorsel div:not(.exc){width:20px;height:20px;}
+.card .colorsel div.exc{width:40px;height:20px;}
 </style>
 <meta charset="utf-8">
 </head>
@@ -68,6 +71,6 @@ body,html{overflow-y: scroll;}
 マストドンバージョン:<span id="ins-ver"></span><br>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
-<script type="text/javascript" src="./js/login/manager.js"></script>
 <script type="text/javascript" src="./js/login/instance.js"></script>
+<script type="text/javascript" src="./js/login/manager.js"></script>
 <script type="text/javascript" src="./js/tl/date.js"></script>

@@ -49,8 +49,3 @@ function shot(){
 		})
 	})
       }
-      $(window).load(function(){
-        setTimeout(function(){
-            shot();
-       },2000);
-      });

@@ -44,6 +44,7 @@ function parseColumn() {
 			ckdb(key);
 		});
 	}
+	var acctlist=obj;
 	var xed=localStorage.getItem("xed");
 	if(xed){
 		xpand();
@@ -88,12 +89,15 @@ function parseColumn() {
 				var txhex="ffffff";
 				var ichex="eeeeee"
 			}
-			insert=' style="background-color:#'+acct.background+'; color: #'+txhex+'" ';
+			insert='background-color:#'+acct.background+'; color: #'+txhex+'; ';
 			icnsert=' style="color: #'+ichex+'" ';
 			}
 		}
+		if(acctlist[acct.domain].background!="def"){
+			insert=insert+" border-bottom:medium solid #"+acctlist[acct.domain].background;
+		}
 		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
-			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'"'+insert+'>'+
+			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
 			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
@@ -249,7 +253,8 @@ function coloradd(key,bg,txt){
 	var json = JSON.stringify(o);
 	localStorage.setItem("column", json);
 	if(txt=="def"){
-		$("#menu_"+key).attr("style","")
+		$("#menu_"+key).css("background-color","");
+		$("#menu_"+key).css("color","");
 	}else{
 	$("#menu_"+key).css('background-color','#'+bg);
 	if(txt=="black"){

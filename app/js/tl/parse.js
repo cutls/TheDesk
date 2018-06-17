@@ -135,7 +135,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				var emoji = toot.account.emojis[key5];
 				var shortcode = emoji.shortcode;
 				var emoji_url = '<img src="' + emoji.url +
-					'" class="emoji-img" data-emoji="'+shortcode+'">';
+					'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				dis_name = dis_name.replace(regExp, emoji_url);
 				
@@ -208,7 +208,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				var emoji = toot.account.emojis[key5];
 				var shortcode = emoji.shortcode;
 				var emoji_url = '<img src="' + emoji.url +
-					'" class="emoji-img" data-emoji="'+shortcode+'">';
+					'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				dis_name = dis_name.replace(regExp, emoji_url);
 			});
@@ -239,7 +239,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 					var emoji = toot.account.emojis[key5];
 					var shortcode = emoji.shortcode;
 					var emoji_url = '<img src="' + emoji.url +
-						'" class="emoji-img" data-emoji="'+shortcode+'">';
+						'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
 					var regExp = new RegExp(":" + shortcode + ":", "g");
 					dis_name = dis_name.replace(regExp, emoji_url);
 				});
@@ -345,7 +345,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				var emoji = toot.emojis[key5];
 				var shortcode = emoji.shortcode;
 				var emoji_url = '<img src="' + emoji.url +
-					'" class="emoji-img" data-emoji="'+shortcode+'">';
+					'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
 				spoil = spoil.replace(regExp, emoji_url);
@@ -623,7 +623,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			var emoji = toot.emojis[key5];
 			var shortcode = emoji.shortcode;
 			var emoji_url = '<img src="' + emoji.url +
-				'" class="emoji-img" data-emoji="'+shortcode+'">';
+				'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
 			var regExp = new RegExp(":" + shortcode + ":", "g");
 			dis_name = dis_name.replace(regExp, emoji_url);
 		});

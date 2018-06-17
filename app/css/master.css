@@ -254,7 +254,7 @@ blockquote:before, .quote:before {
 /*スクロールバー*/
 ::-webkit-scrollbar {
   width: 5px;
-  height: 5px;
+  height: 10px;
   background: rgba(0, 0, 0, 0.05);
 }
 ::-webkit-scrollbar-track {

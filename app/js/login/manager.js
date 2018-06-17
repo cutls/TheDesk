@@ -30,7 +30,12 @@ function load() {
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
 		var list = key * 1 + 1;
-		templete = '<div id="acct_' + key + '" class="card"><div class="card-content white-text"><span class="lts">' + list +
+		if(acct.background!="def" && acct.text!="def"){
+			var style='style="background-color:#'+acct.background+'; color:'+acct.text+';"'
+		}else{
+			var style=""
+		}
+		templete = '<div id="acct_' + key + '" class="card" '+style+'><div class="card-content "><span class="lts">' + list +
 			'.</span><img src="' + acct.prof + '" width="40" height="40"><span class="card-title">' +
 			acct.name + '</span>' + escapeHTML(acct.user) + '@' + acct.domain +
 			'</div><div class="card-action"><a class="waves-effect disTar pointer white-text" onclick="data(\'' +
@@ -39,8 +44,9 @@ function load() {
 			key +
 			')"><i class="material-icons">refresh</i>情報更新</a><a class="waves-effect disTar pointer red-text" onclick="multiDel(' +
 			key +
-			')"><i class="material-icons">delete</i>削除</a></div></div>';
+			')"><i class="material-icons">delete</i>削除</a><br>アカウントカラーの選択<div id="colorsel_'+key+'" class="colorsel"></div></div></div>';
 		$("#acct-list").append(templete);
+	colorpicker(key)
 	});
 	multisel();
 	var acctN = localStorage.getItem("acct");
@@ -120,13 +126,11 @@ function multiDel(target) {
 
 //サポートインスタンス
 function support() {
-	var json=JSON.parse(localStorage.getItem("instance"));
-		console.log(json);
-		Object.keys(json).forEach(function(key) {
-			var instance = json[key];
+		Object.keys(idata).forEach(function(key) {
+			var instance = idata[key];
 			if (instance == "instance") {
 				templete = '<a onclick="login(\'' + key +
-					'\')" class="collection-item pointer transparent">' + json[key + "_name"] + '(' + key + ')</a>';
+					'\')" class="collection-item pointer transparent">' + idata[key + "_name"] + '(' + key + ')</a>';
 				$("#support").append(templete);
 			}
 		});
@@ -268,7 +272,8 @@ function getdata(domain, at) {
 			domain: domain,
 			user: json["acct"],
 			prof: avatar,
-			id: json["id"]
+			id: json["id"],
+			vis: json["source"]["privacy"]
 		};
 		var multi = localStorage.getItem("multi");
 		var obj = JSON.parse(multi);
@@ -322,7 +327,8 @@ function refresh(target) {
 			domain: obj[target].domain,
 			user: json["acct"],
 			prof: avatar,
-			id: json["id"]
+			id: json["id"],
+			vis: json["source"]["privacy"]
 		};
 		localStorage.setItem("name_" + target, json["display_name"]);
 		localStorage.setItem("user_" + target, json["acct"]);
@@ -386,3 +392,104 @@ function mainacct(){
 	localStorage.setItem("main", acct_id);
 	Materialize.toast("メインアカウントを設定しました。", 3000);
 }
+function colorpicker(key){
+	temp=
+		'<div onclick="coloradd('+key+',\'def\',\'def\')" class="pointer exc">なし</div>'+
+		'<div onclick="coloradd('+key+',\'f44336\',\'white\')" class="red white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'e91e63\',\'white\')" class="pink white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'9c27b0\',\'white\')" class="purple white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'673ab7\',\'white\')" class="deep-purple white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'3f51b5\',\'white\')" class="indigo white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'2196f3\',\'white\')" class="blue white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'03a9f4\',\'black\')" class="light-blue black-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'00bcd4\',\'black\')" class="cyan black-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'009688\',\'white\')" class="teal white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'4caf50\',\'black\')" class="green black-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'8bc34a\',\'black\')" class="light-green black-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'cddc39\',\'black\')" class="lime black-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'ffeb3b\',\'black\')" class="yellow black-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'ffc107\',\'black\')" class="amber black-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'ff9800\',\'black\')" class="orange black-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'ff5722\',\'white\')" class="deep-orange white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'795548\',\'white\')" class="brown white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'9e9e9e\',\'white\')" class="grey white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'607d8b\',\'white\')" class="blue-grey white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'000000\',\'white\')" class="black white-text pointer"></div>'+
+		'<div onclick="coloradd('+key+',\'ffffff\',\'black\')" class="white black-text pointer"></div>';
+	$("#colorsel_"+key).html(temp);
+}
+function coloradd(key,bg,txt){
+	var col = localStorage.getItem("multi");
+	var o = JSON.parse(col);
+	var obj=o[key];
+	obj.background=bg;
+	obj.text=txt;
+	o[key]=obj;
+	var json = JSON.stringify(o);
+	localStorage.setItem("multi", json);
+	if(txt=="def"){
+		$("#acct_"+key).attr("style","")
+	}else{
+	$("#acct_"+key).css('background-color','#'+bg);
+	if(txt=="black"){
+		var bghex="000000";
+		var ichex="9e9e9e"
+	}else if(txt=="white"){
+		var bghex="ffffff";
+		var ichex="eeeeee"
+	}
+	$("#acct_"+key+" .nex").css('color','#'+ichex);
+	$("#acct_"+key).css('color','#'+bghex);
+	}
+}
+//入力時にハッシュタグと@をサジェスト
+var timer = null;
+
+var input = document.getElementById("url");
+
+var prev_val = input.value;
+var oldSuggest;
+var suggest;
+input.addEventListener("focus", function() {
+	$("#ins-suggest").html("");
+	window.clearInterval(timer);
+	timer = window.setInterval(function() {
+		var new_val = input.value;
+		if (prev_val != new_val) {
+			if (new_val.length > 3) {
+				var start = "https://instances.social/api/1.0/instances/search?q=" +
+					new_val;
+				fetch(start, {
+					method: 'GET',
+					headers: {
+						'content-type': 'application/json',
+						'Authorization': 'Bearer tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M'
+					},
+				}).then(function(response) {
+					return response.json();
+				}).catch(function(error) {
+					todo(error);
+					console.error(error);
+				}).then(function(json) {
+					console.log(json);
+					if (!json.error) {
+
+						var urls = "もしかして:";
+						Object.keys(json.instances).forEach(function(key) {
+							var url = json.instances[key];
+							urls = urls + '　<a onclick="login(\'' + url.name +
+								'\')" class="pointer">' + url.name + '</a>  ';
+						});
+						$("#ins-suggest").html(urls);
+					}
+				});
+			}
+			oldSuggest = suggest;
+			prev_value = new_val;
+		}
+	}, 1000);
+}, false);
+
+input.addEventListener("blur", function() {
+	window.clearInterval(timer);
+}, false);

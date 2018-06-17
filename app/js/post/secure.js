@@ -37,16 +37,28 @@ function vis(set){
 	}
 	var vis=localStorage.getItem("vis");
 		if(vis=="memory"){
-			localStorage.setItem("vis-memory",set);
+			var acct_id = $("#post-acct-sel").val();
+			localStorage.setItem("vis-memory-"+acct_id,set);
 		}
 }
 function loadVis(){
 		var vist = localStorage.getItem("vis");
+		console.log(vist);
 		if (!vist) {
 			vis("public");
 		} else {
 			if (vist == "memory") {
-				var memory = localStorage.getItem("vis-memory");
+				var acct_id = $("#post-acct-sel").val();
+				var memory = localStorage.getItem("vis-memory-"+acct_id);
+				if (!memory) {
+					memory = "public";
+				}
+				vis(memory);
+			} else if(vist == "server") {
+				var acct_id = $("#post-acct-sel").val();
+				var multi = localStorage.getItem("multi");
+				var obj = JSON.parse(multi);
+				var memory = obj[acct_id]["vis"];
 				if (!memory) {
 					memory = "public";
 				}
@@ -58,7 +70,7 @@ function loadVis(){
 }
 loadVis();
 
-//コンテンツワーニング
+//コンテントワーニング
 function cw(){
 	if($("#cw").hasClass("cw-avail")){
 		$("#cw-text").val();
@@ -75,8 +87,23 @@ function cw(){
 		}
 	}
 }
-//TLでコンテンツワーニングを表示トグル
+//TLでコンテントワーニングを表示トグル
 function cw_show(id){
 	$(".cw_hide_"+id).toggleClass("cw");
 	$(".cw-long-"+id).toggleClass("hide");
 }
+$(function() {
+	$('#cw-text').on('change', function(event) {
+		var acct_id = $("#post-acct-sel").val();
+		var domain = localStorage.getItem("domain_" + acct_id);
+		var cwlen=$('#cw-text').val().length;
+
+		if(idata[domain+"_letters"]){
+			$("#textarea").attr("data-length", idata[domain+"_letters"]-cwlen)
+		}else{
+			$("#textarea").attr("data-length", 500-cwlen)
+		}
+		
+
+	});
+  });
