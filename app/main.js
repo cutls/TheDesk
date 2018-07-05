@@ -431,7 +431,7 @@ ipc.on('column-del', (e, args) => {
 const options = {
     type: 'info',
     title: 'カラム削除',
-    message: "カラムを削除しますか？",
+    message: "カラムを削除しますか？(すべてのカラムのリンク解析がOFFになります。)",
     buttons: ['いいえ', 'はい']
   }
   dialog.showMessageBox(options, function(index) {

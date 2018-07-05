@@ -87,6 +87,20 @@ function settings() {
 	}
 	localStorage.setItem("img", imgd);
 
+	var fontd = $("#font").val();
+	if(fontd){
+		if (fontd != localStorage.getItem("font")) {
+			Materialize.toast("フォントを" + fontd + "に設定しました。", 3000);
+		}
+		localStorage.setItem("font", fontd);
+		themes();
+	}else{
+		localStorage.removeItem("font");
+		Materialize.toast("フォントをデフォルトに設定しました。", 3000);
+		themes();
+	}
+	
+
 	var sized = $("#size").val();
 	if (sized != localStorage.getItem("size")) {
 		Materialize.toast("フォントサイズを" + sized + "pxに設定しました。", 3000);
@@ -232,6 +246,12 @@ function load() {
 		var img = "no-act";
 	}
 	$("#i_" + img).prop("checked", true);
+	
+	var font = localStorage.getItem("font");
+	if (!font) {
+		var font = "";
+	}
+	$("#font").val(font);
 
 	var size = localStorage.getItem("size");
 	if (!size) {

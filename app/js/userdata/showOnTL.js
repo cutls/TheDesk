@@ -74,7 +74,7 @@ function udg(user, acct_id) {
 		//moved設定時
 		if (json.moved) {
 			Materialize.toast(
-				'このアカウントは移行します<button class="btn-flat toast-action" onclick="udg(\"' +
+				'このアカウントは移行しています<button class="btn-flat toast-action" onclick="udg(\"' +
 				json.moved + ','+acct_id+'\")">移行先を見る</button>', 4000)
 		} else {
 			$('#his-data').modal('open');
@@ -118,6 +118,7 @@ function udg(user, acct_id) {
 			$("#his-follow").text(json.following_count);
 			$("#his-follower").text(json.followers_count);
 			$("#his-since").text(crat(json.created_at));
+			var note=json.note;
 			if(json.fields){
 				if(json.fields.length>0){
 					var note=json.note+'My Fields<br><table style="vertical-align: baseline; text-align:center; padding:0;">'
@@ -128,12 +129,12 @@ function udg(user, acct_id) {
 						note=note+'<tr style="height:1.5rem; padding:0;"><td style="height:1.5rem; padding:0; background-color:#757575; text-align:center; ">'+fname+'</td><td style="height:1.5rem; padding:0; padding-left:5px;">'+fval+'</td></tr>';
 					}
 					note=note+'</table>'
-					$("#his-des").html(note);
+					$("#his-des").html(twemoji.parse(note));
 				}else{
-					$("#his-des").html(json.note);
+					$("#his-des").html(twemoji.parse(note));
 				}
 			}else{
-				$("#his-des").html(json.note);
+				$("#his-des").html(twemoji.parse(note));
 			}
 			if(json.bot){
 				$("#his-bot").html("botアカウント");

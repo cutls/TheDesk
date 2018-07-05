@@ -20,10 +20,8 @@ function ck() {
 		var codex=m[2];
 		if(mode=="manager" || mode=="login"){
 			code(codex,mode);
-		}else{
-			
+		}else{	
 		}
-		
 	}
 	
 	if (at) {
@@ -272,6 +270,8 @@ function ckdb(acct_id) {
 				localStorage.setItem("md_" + acct_id, "true");
 				$(".markdown").show();
 			}else{
+				$(".anti-markdown").hide();
+				$(".markdown").hide();
 				localStorage.removeItem("bb_" + acct_id);
 			}
 			if(json[domain + "_home"]){

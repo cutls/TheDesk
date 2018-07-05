@@ -203,6 +203,9 @@ function removeColumn(tlid) {
 		if(arg==1){
 			localStorage.removeItem("card_" + tlid);
 			obj.splice(tlid, 1);
+			for(var i=0;i<obj.length;i++){
+				localStorage.setItem("card_" + i,"true");
+			}
 			var json = JSON.stringify(obj);
 			localStorage.setItem("column", json);
 			parseColumn();

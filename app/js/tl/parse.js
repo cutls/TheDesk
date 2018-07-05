@@ -167,7 +167,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				datetype) +
 			'</span><i class="big-text fa '+icon+'"></i><a onclick="udg(\'' + toot.account.id +
 				'\',\'' + acct_id + '\')" class="pointer grey-text">' + dis_name +
-				"(" + toot.account.acct +
+				"(@" + toot.account.acct +
 				")</a>";
 			var notice = noticetext;
 			var memory = localStorage.getItem("notice-mem");
@@ -223,7 +223,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 				}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
 					rebtxt = "がしばいた";
 				}
-				var notice = '<i class="big-text fa '+rticon+'"></i>'+ dis_name + "(" + toot.account.acct +
+				var notice = '<i class="big-text fa '+rticon+'"></i>'+ dis_name + "(@" + toot.account.acct +
 					")<br>";
 					var boostback = "shared";
 				var toot = toot.reblog;

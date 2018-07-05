@@ -127,7 +127,7 @@ function trend(){
 	}).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
-		todo(error);
+		//todo(error);
 		console.error(error);
 	}).then(function(json) {
 		var tags = "";

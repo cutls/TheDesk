@@ -8,7 +8,7 @@
 	  }
 	  var urls=[];
 	  if(url){
-		urls = url.match(/https?:\/\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/);
+		urls = url.match(/https?:\/\/(.+)/);
 		//トゥートのURLぽかったら
 		toot = url.match(/https:\/\/([a-zA-Z0-9.-]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/);
 		//タグのURLぽかったら
@@ -46,8 +46,10 @@
 				tagShow(tags[2]);
 			}
 		}else if(ats){
+			console.log(ats);
 			if(ats[2]){
 				if(ats[1]!="quesdon.rinsuki.net"){
+					udgEx(ats[2]+"@"+ats[1],"main");
 					return false
 				}else{
 					const {

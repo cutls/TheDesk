@@ -91,6 +91,7 @@ function media(b64, type, no) {
 		$("#media").val("tmp_"+r);
 	}
 	$("#toot-post-btn").prop("disabled", true);
+	$("#post-acct-sel").prop("disabled", true);
 	localStorage.setItem("image","busy");
 	todo("Image Upload...");
 	var media = toBlob(b64, type);
@@ -133,7 +134,6 @@ function media(b64, type, no) {
 			}
 			todc();
 			$("#toot-post-btn").prop("disabled", false);
-			$("#post-acct-sel").prop("disabled", true);
 			$('select').material_select();
 			$("#mec").text("あり");
 			Materialize.toast("ファイルアップロード後はアカウントを切り替えられません。", 1000);

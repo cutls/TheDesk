@@ -34,5 +34,11 @@ function themes(theme) {
 		$("html").removeClass("browntheme");
 		$("html").removeClass("blacktheme");
 	}
+	var font = localStorage.getItem("font");
+	if(font){
+		$("html").css("font-family",font);
+	}else{
+		$("html").css("font-family","");
+	}
 }
 themes();
