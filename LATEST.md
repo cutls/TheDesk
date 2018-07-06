@@ -1,6 +1,6 @@
 ## For Astarte(kirishima.cloud), My Primary Instance
 
-TheDesk :thedesk: Mio (ver.8)  
+TheDesk :thedesk: Mio (15.8.0)  
 ・Glance TLの不具合解消
 ・フォントが変更可能に
 ・同一インスタンスで複数垢ログインに対応
@@ -11,7 +11,7 @@ https://thedesk.top
 
  ## For Other Instances
 
-PCクライアントTheDesk Mio (ver.8)  
+PCクライアントTheDesk Mio (15.8.0)  
 ・Glance TLの不具合解消
 ・フォントが変更可能に
 ・同一インスタンスで複数垢ログインに対応
