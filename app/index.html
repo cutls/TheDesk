@@ -5,6 +5,7 @@
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="./css/materialize.css" type="text/css" rel="stylesheet">
 	<link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
+	<link href="./css/themes.css" type="text/css" rel="stylesheet">
 	<link href='./css/tl.css' rel='stylesheet' type='text/css'>
 	<link href='./css/userdata.css' rel='stylesheet' type='text/css'>
 	<link href='./css/post.css' rel='stylesheet' type='text/css'>
@@ -24,7 +25,7 @@
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Mio (15.7.0)";
+var ver="Mio (15.8.0)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -541,8 +542,11 @@ var tlid=0;
 		<li class="custom-tab col my-data-width only-my-data">
 			<a go="#his-request-list">フォローリクエスト</a>
 		</li>
-		<li class="custom-tab col my-data-width">
+		<li class="custom-tab col my-data-width only-his-data">
 			<a go="#his-matching-list">似てる</a>
+		</li>
+		<li class="custom-tab col my-data-width only-my-data">
+			<a go="#his-follow-recom-list">おすすめ</a>
 		</li>
 	</ul>
 	</div>
@@ -627,6 +631,10 @@ var tlid=0;
 				
 		</div>
 		<button class="btn waves-effect " onclick="showMat()">取得</button>
+	</div>
+	<div id="his-follow-recom-list" class="col s12  tab-content">
+		<div id="his-follow-recom-contents" class="cont-series">
+	</div>
 	</div>
 	</div>
 	</div>

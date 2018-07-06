@@ -57,7 +57,7 @@ function createWindow() {
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="linux"){
-		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,icon: __dirname + '/thedesk.ico'}
+		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,icon: __dirname + '/thedesk.png'}
 	}else{
 		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,simpleFullscreen:true}
 	}

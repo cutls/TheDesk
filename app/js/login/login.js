@@ -12,7 +12,24 @@ function ck() {
 		localStorage.setItem("main",0)
 	}
 	var domain = localStorage.getItem("domain_0");
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_0_at");
+	var oldat = localStorage.getItem(domain + "_at");
+	if(oldat){
+		console.log("Move to New Account Management System")
+		var multi = localStorage.getItem("multi");
+		if (!multi) {
+			var acctlen=1;
+		} else {
+			var obj = JSON.parse(multi);
+			var acctlen=obj.length;
+		}
+		for(i=0;acctlen>i;i++){
+			var domain = localStorage.getItem("domain_"+i);
+			var oldat = localStorage.getItem(domain + "_at");
+			var newat = localStorage.setItem("acct_"+ i + "_at",oldat);
+			localStorage.removeItem(domain + "_at");
+		}
+	}
 	//コード受信
 	if(location.search){
 		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);
@@ -27,10 +44,10 @@ function ck() {
 	if (at) {
 		$("#tl").show();
 		parseColumn();
-		multi();
+		multiSelector();
 	} else {
 		$("#tl").show();
-		multi();
+		multiSelector();
 	}
 }
 ck();
@@ -138,7 +155,7 @@ function code(code,mode) {
 function getdata() {
 	var acct_id = 0;
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/verify_credentials";
 	fetch(start, {
 		method: 'GET',
@@ -214,6 +231,11 @@ function getdataAdv(domain, at) {
 		if(avatar=="/avatars/original/missing.png"){
 			avatar="./img/missing.svg";
 		}
+		if(json["source"]["privacy"]){
+			var priv=json["source"]["privacy"];
+		}else{
+			var priv="public";
+		}
 		var add = {
 			at: at,
 			name: json["display_name"],
@@ -221,7 +243,7 @@ function getdataAdv(domain, at) {
 			user: json["acct"],
 			prof: avatar,
 			id: json["id"],
-			vis: json["source"]["privacy"]
+			vis: priv
 		};
 		var multi = localStorage.getItem("multi");
 		var obj = JSON.parse(multi);
@@ -244,10 +266,10 @@ function ckdb(acct_id) {
 	if(domain=="kirishima.cloud"){
 		localStorage.setItem("kirishima", "true");
 		$("#ranking-btn").show();
-	}else if(domain=="imastodon.nat"){
+	}else if(domain=="imastodon.net"){
 		localStorage.setItem("imas", "true");
 	}
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var bbcode = domain + "_bbcode";
 	var letters = domain + "_letters";
 	if(localStorage.getItem("instance")){
@@ -291,7 +313,6 @@ function ckdb(acct_id) {
 	}
 	
 }
-
 //サポートインスタンス取得
 function support() {
 	var json=JSON.parse(localStorage.getItem("instance"));
@@ -307,7 +328,7 @@ function support() {
 }
 
 //アカウントを選択…を実装
-function multi() {
+function multiSelector() {
 	var multi = localStorage.getItem("multi");
 	if (!multi) {
 		var obj = [];

@@ -68,7 +68,7 @@ function favTag(){
 function trendTag(){
     $(".trendtag").remove();
     var domain="imastodon.net"
-    var at = localStorage.getItem(domain + "_at");
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/trend_tags"
 	console.log(start)
 	fetch(start, {

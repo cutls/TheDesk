@@ -7,7 +7,7 @@ function notf(acct_id, tlid, sys) {
 		native="yes";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/notifications";
 	fetch(start, {
 		method: 'GET',
@@ -125,7 +125,7 @@ function notfmore(tlid) {
 		localStorage.setItem("now", type);
 		todo("Notfication TL MoreLoading");
 		var domain = localStorage.getItem("domain_" + acct_id);
-		var at = localStorage.getItem(domain + "_at");
+		var at = localStorage.getItem("acct_"+ acct_id + "_at");
 		var start = "https://" + domain + "/api/v1/notifications"+
 			"max_id=" + sid;
 		fetch(start, {

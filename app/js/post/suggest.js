@@ -42,7 +42,7 @@ input.addEventListener("focus", function() {
 				return;
 			}
 			var domain = localStorage.getItem("domain_" + acct_id);
-			var at = localStorage.getItem(domain + "_at");
+			var at = localStorage.getItem("acct_"+ acct_id + "_at");
 			suggest = "https://" + domain + "/api/v1/search?q=" + q
 			if (suggest != oldSuggest) {
 				console.log(suggest)

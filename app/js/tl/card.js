@@ -25,7 +25,7 @@ function additional(acct_id, tlid) {
 	//トゥートサムネ
 	$("#timeline_" + tlid + " .toot a:not(.parsed)").each(function(i, elem) {
 		var domain = localStorage.getItem("domain_" + acct_id);
-		var at = localStorage.getItem(domain + "_at");
+		var at = localStorage.getItem("acct_"+ acct_id + "_at");
 		var card = localStorage.getItem("card_" + tlid);
 		var text = $(this).attr('href');
 		var urls = text.match(
@@ -124,7 +124,7 @@ function additional(acct_id, tlid) {
 
 function additionalIndv(tlid, acct_id, id) {
 		var domain = localStorage.getItem("domain_" + acct_id);
-		var at = localStorage.getItem(domain + "_at");
+		var at = localStorage.getItem("acct_"+ acct_id + "_at");
 		var text = $("[toot-id="+id+"] .toot a").attr('href');
 		var urls = text.match(
 			/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/

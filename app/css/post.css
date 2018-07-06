@@ -3,7 +3,7 @@
   position: fixed;
   right: 78px;
   bottom: 3px;
-  background-color: white;
+  background-color: var(--postbox);
   border: thin solid gray;
   z-index: 500;
   width: 300px;
@@ -25,8 +25,6 @@
 #drag {
   width: 100%;
   height: 100px;
-  background-color: #e0e0e0;
-  color: black;
 }
 #post-btn {
   display: none;
@@ -70,27 +68,6 @@
 }
 
 
-/*black theme*/
-.blacktheme #post-box {
-  background-color: #424242;
-}
-/*indigo theme*/
-.indigotheme #post-box {
-  background-color: #1a237e ;
-}
-/*brown theme*/
-.browntheme #post-box {
-  background-color: #4e342e;
-}
-/*
-.blacktheme #drag {
-  width: 100%;
-  height: 100px;
-  background-color: #004d40;
-  color: white;
-  padding: 3px;
-}
-*/
 
 
 /*mini*/

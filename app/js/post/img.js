@@ -100,7 +100,7 @@ function media(b64, type, no) {
 	fd.append('file', media);
 	var acct_id = $("#post-acct-sel").val();
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/media";
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);

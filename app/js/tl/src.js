@@ -23,7 +23,7 @@ function src(mode) {
 	}
 	localStorage.setItem("last-use", acct_id);
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
@@ -112,7 +112,7 @@ function trend(){
 		return false;
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}

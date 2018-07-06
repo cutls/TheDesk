@@ -9,7 +9,7 @@ function settings() {
 	localStorage.setItem("datetype", dd);
 
 	var cd = $("[name=theme]:checked").val();
-	var ct = $("[for="+cd+"]").text();
+	var ct = $("[for="+cd+"]").html();
 	if (cd != localStorage.getItem("theme")) {
 		Materialize.toast("テーマ設定を" + ct + "に設定しました。", 3000);
 	}
@@ -95,9 +95,11 @@ function settings() {
 		localStorage.setItem("font", fontd);
 		themes();
 	}else{
-		localStorage.removeItem("font");
-		Materialize.toast("フォントをデフォルトに設定しました。", 3000);
-		themes();
+		if(localStorage.getItem("font")){
+			localStorage.removeItem("font");
+			Materialize.toast("フォントをデフォルトに設定しました。", 3000);
+			themes();
+		}
 	}
 	
 
@@ -165,7 +167,7 @@ function settings() {
 
 //読み込み時の設定ロード
 function load() {
-	if(localStorage.getItem("kirishima")){
+	if(localStorage.getItem("imas")){
 		$(".imas").removeClass("hide");
 	}
 	var prof = localStorage.getItem("prof");

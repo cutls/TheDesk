@@ -39,12 +39,13 @@ function parseColumn() {
 			localStorage.setItem("user-id_" + key, acct.id);
 			localStorage.setItem("prof_" + key, acct.prof);
 			localStorage.setItem("domain_" + key, acct.domain);
-			localStorage.setItem(acct.domain + "_at", acct.at);
+			localStorage.setItem("acct_"+ key + "_at", acct.at);
 			notf(key, 0);
 			ckdb(key);
 		});
 	}
 	var acctlist=obj;
+	console.log(obj);
 	var xed=localStorage.getItem("xed");
 	if(xed){
 		xpand();
@@ -93,8 +94,11 @@ function parseColumn() {
 			icnsert=' style="color: #'+ichex+'" ';
 			}
 		}
-		if(acctlist[acct.domain].background!="def"){
-			insert=insert+" border-bottom:medium solid #"+acctlist[acct.domain].background;
+		console.log(acct.domain);
+		if(acctlist[acct.domain]){
+			if(acctlist[acct.domain].background!="def"){
+				insert=insert+" border-bottom:medium solid #"+acctlist[acct.domain].background;
+			}
 		}
 		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+

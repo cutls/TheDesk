@@ -21,7 +21,7 @@ function udgEx(user,acct_id){
 	}
 	console.log(user);
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+user
 	fetch(start, {
 		method: 'GET',
@@ -48,7 +48,7 @@ function udg(user, acct_id) {
 	}
 	todo("User Data Loading...");
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + user;
 	console.log(start);
 	fetch(start, {
@@ -148,6 +148,7 @@ function udg(user, acct_id) {
 				showMut('', acct_id);
 				showDom('', acct_id);
 				showReq('', acct_id);
+				showFrl('', acct_id);
 				$("#his-name-val").val(json.display_name);
 				$("#his-f1-name").val(json.fields[0].name); $("#his-f1-val").val($.strip_tags(json.fields[0].value));
 				$("#his-f2-name").val(json.fields[1].name); $("#his-f2-val").val($.strip_tags(json.fields[1].value));
@@ -191,7 +192,7 @@ function profShow(){
 //FF関係取得
 function relations(user, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/relationships?id=" + user;
 	fetch(start, {
 		method: 'GET',

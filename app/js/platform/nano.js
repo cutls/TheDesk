@@ -10,7 +10,7 @@ function tl(data) {
 			//デフォルト
 			var type = "local";
 		}
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	$("#notice_nano").text(cap(type, data) + " TL(" + localStorage.getItem(
 		"user_" + acct_id) + "@" + domain + ")");
 	var start = "https://" + domain + "/api/v1/timelines/" + com(type, data);
@@ -38,7 +38,7 @@ var websocket=[];
 function reload(type, cc, acct_id, data) {
     var tlid=0;
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (type == "home") {
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=user&access_token=" + at;

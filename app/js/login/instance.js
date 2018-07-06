@@ -5,6 +5,7 @@ var idata={
 	"kirishima.cloud_letters":"6229",
 	"kirishima.cloud_bbcode":"enabled",
 	"kirishima.cloud_markdown":"enabled",
+	"kirishima.cloud_public":"パブリックタイムライン",
 	"minohdon.jp":"instance",
 	"minohdon.jp_name":"箕面丼",
 	"minohdon.jp_letters":"500",

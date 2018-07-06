@@ -14,7 +14,7 @@
   width:75px;
   min-width:75px;
   height:100vh;
-  background-color:#e0e0e0;
+  background-color:var(--sidebar);
   display:flex;
   flex-wrap:wrap;
 }
@@ -37,7 +37,7 @@
   vertical-align:text-bottom;
 }
 #sidebar a{
-  color:black;
+  color:var(--color);
 }
 #sidebar .big-menu{
   text-align:center;
@@ -218,7 +218,7 @@ font-size:1rem;
   height:calc(0.8em + 8px);
 }
 .cbadge-hover {
-  color: #000;
+  color: var(--color);
   background-color: transparent;
 }
 .cbadge-hover:hover {
@@ -233,17 +233,17 @@ p:not(:last-child){
   margin-bottom: 10px;
 }
 .shared {
-  background-color: #cfd8dc;
+  background-color: var(--shared);
 }
 .emphasized {
-  background-color: #81c784;
+  background-color: var(--emphasized);
 }
 .udg {
   cursor: pointer;
 }
 .notice-box {
   top: 0;
-  background-color:white;
+  background-color:var(--notfbox);
   position: relative;
   margin-right: 10px;
   width:100%;
@@ -306,7 +306,7 @@ p:not(:last-child){
 .notf-box {
   position: fixed;
   right: 70px;
-  background-color: white;
+  background-color: var(--box);
   border: thin solid gray;
   z-index: 501;
   width: 400px;
@@ -329,59 +329,15 @@ p:not(:last-child){
   overflow-y: scroll;
 }
 .u-url {
-  color: black;
+  color: var(--color);
   cursor: text;
 }
 .type-b{
   display:none;
 }
-
-/*black theme*/
-.blacktheme .cbadge-hover,.browntheme .cbadge-hover,.indigotheme .cbadge-hover { color: #fff;}
-.blacktheme .notf-box,.blacktheme .modal-footer,.blacktheme #sidebar {
-  background-color: #424242;
+.modal-footer{
+  background-color:var(--box);
 }
-.blacktheme .btn-flat,.blacktheme .u-url ,.blacktheme #sidebar a {
-  color: white
-}
-.blacktheme .shared {
-  background-color: #004d40;
-}
-.blacktheme .notice-box {
-  background-color: #333333;
-}
-.blacktheme .emphasized {
-  background-color: #4e342e;
-}
-/*indigo theme*/
-.indigotheme .notf-box,.indigotheme .modal-footer,.indigotheme #sidebar {
-  background-color: #0d1351;
-}
-.indigotheme .btn-flat,.indigotheme .u-url ,.indigotheme #sidebar a {
-  color: white
-}
-.indigotheme .shared {
-  background-color: #004d40;
-}
-.indigotheme .notice-box {
-  background-color: #0d47a1;
-}
-.indigotheme .emphasized {
-  background-color: #4e342e;
-}
-/*brown theme*/
-.browntheme .notf-box,.browntheme .modal-footer,.browntheme #sidebar {
-  background-color: #4e342e;
-}
-.browntheme .btn-flat,.browntheme .u-url ,.browntheme #sidebar a {
-  color: white
-}
-.browntheme .shared {
-  background-color: #004d40;
-}
-.browntheme .notice-box {
-  background-color: #4e342e;
-}
-.browntheme .emphasized {
-  background-color: #0d47a1;
+.btn-flat{
+  color:var(--color);
 }

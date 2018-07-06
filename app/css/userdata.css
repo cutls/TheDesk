@@ -17,7 +17,7 @@
 }
 #his-data-show {
   margin: 50px;
-  background-color:rgba(255, 255, 255, 0.9);
+  background-color:var(--his-data);
   width: calc(100% - 50px);
   height: calc(100% - 50px);
   margin-bottom: 0;
@@ -31,31 +31,8 @@
   width: 10%;
 }
 .active-back{
-  background-color: #e6ee9c;
+  background-color: var(--active);
 }
 #his-name .emojione,#his-name .emoji-img{
   width: 20px;
-}
-
-
-/*black theme*/
-.blacktheme #his-data-show {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-.blacktheme .active-back{
-  background-color:#757575;
-}
-/*indigo theme*/
-.indigotheme #his-data-show {
-  background-color: rgba(13, 19, 81,0.8);
-}
-.indigotheme .active-back{
-  background-color:#757575;
-}
-/*brown theme*/
-.browntheme #his-data-show {
-  background-color: rgba(62, 39, 35,0.8);
-}
-.browntheme .active-back{
-  background-color:#757575;
 }

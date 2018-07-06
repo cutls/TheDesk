@@ -16,14 +16,14 @@ function imgv(id, key, acct_id) {
     			var total=event.total;
 				var now=event.loaded;
 				var per=now/total*100;
-				$("#imgprog").text(per);
+				$("#imgprog").text(Math.floor(per));
   			}
 			}, false);
 			xhr.addEventListener('loadend', function (event) {
 				var total=event.total;
 				var now=event.loaded;
 				var per=now/total*100;
-				$("#imgprog").text(per);
+				$("#imgprog").text(Math.floor(per));
 			}, false);
 			xhr.send();
 			$('#imgmodal').attr('src', murl);
@@ -136,14 +136,14 @@ function imgCont(type) {
     			var total=event.total;
 				var now=event.loaded;
 				var per=now/total*100;
-				$("#imgprog").text(per);
+				$("#imgprog").text(Math.floor(per));
   			}
 			}, false);
 			xhr.addEventListener('loadend', function (event) {
 				var total=event.total;
 				var now=event.loaded;
 				var per=now/total*100;
-				$("#imgprog").text(per);
+				$("#imgprog").text(Math.floor(per));
 			}, false);
 			xhr.send();
 			$('#imgmodal').attr('src', murl);

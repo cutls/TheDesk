@@ -15,7 +15,7 @@ function list(){
     $("#lists-user").html("");
     var acct_id = $("#list-acct-sel").val();
     var domain = localStorage.getItem("domain_" + acct_id);
-    var at = localStorage.getItem(domain + "_at");
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/lists"
 	console.log(start)
 	fetch(start, {
@@ -48,7 +48,7 @@ function makeNewList(){
     var acct_id = $("#list-acct-sel").val();
     var text=$("#list-add").val();
     var domain = localStorage.getItem("domain_" + acct_id);
-    var at = localStorage.getItem(domain + "_at");
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/lists"
 	console.log(start)
 	var httpreq = new XMLHttpRequest();
@@ -73,7 +73,7 @@ function listShow(id,title,acct_id){
 }
 function listUser(id,acct_id){
     var domain = localStorage.getItem("domain_" + acct_id);
-    var at = localStorage.getItem(domain + "_at");
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/lists/"+id+"/accounts"
 	console.log(start)
 	fetch(start, {
@@ -102,7 +102,7 @@ function listUser(id,acct_id){
 }
 function hisList(user,acct_id){
     var domain = localStorage.getItem("domain_" + acct_id);
-    var at = localStorage.getItem(domain + "_at");
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/lists"
 	console.log(start)
 	fetch(start, {
@@ -158,7 +158,7 @@ function hisList(user,acct_id){
 }
 function listAdd(id,user,acct_id){
     var domain = localStorage.getItem("domain_" + acct_id);
-    var at = localStorage.getItem(domain + "_at");
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/lists/"+id+"/accounts"
 	console.log(start)
 	var httpreq = new XMLHttpRequest();
@@ -178,7 +178,7 @@ function listAdd(id,user,acct_id){
 }
 function listRemove(id,user,acct_id){
     var domain = localStorage.getItem("domain_" + acct_id);
-    var at = localStorage.getItem(domain + "_at");
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/lists/"+id+"/accounts"
 	console.log(start)
 	var httpreq = new XMLHttpRequest();

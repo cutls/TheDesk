@@ -5,7 +5,7 @@ function details(id, acct_id, tlid) {
 	$("#toot-this").html(html);
 	$('#tootmodal').modal('open');
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id;
 	fetch(start, {
 		method: 'GET',
@@ -56,7 +56,7 @@ function details(id, acct_id, tlid) {
 //返信タイムライン
 function replyTL(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id;
 	fetch(start, {
 		method: 'GET',
@@ -82,7 +82,7 @@ function replyTL(id, acct_id) {
 //コンテクストってなんですか
 function context(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/context";
 	fetch(start, {
 		method: 'GET',
@@ -106,7 +106,7 @@ function context(id, acct_id) {
 //前のトゥート(Back TL)
 function beforeToot(id, acct_id, domain) {
 	//var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain +
 		"/api/v1/timelines/public?local=true&max_id=" + id;
 	fetch(start, {
@@ -128,7 +128,7 @@ function beforeToot(id, acct_id, domain) {
 //前のユーザーのトゥート
 function userToot(id, acct_id, user) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses?max_id=" + id;
 	fetch(start, {
 		method: 'GET',
@@ -151,7 +151,7 @@ function userToot(id, acct_id, user) {
 //ふぁぼ一覧
 function faved(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/favourited_by";
 	fetch(start, {
 		method: 'GET',
@@ -173,7 +173,7 @@ function faved(id, acct_id) {
 //ブースト一覧
 function rted(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/reblogged_by";
 	fetch(start, {
 		method: 'GET',
@@ -307,7 +307,7 @@ function detEx(url,acct_id){
 		acct_id=localStorage.getItem("main");
 	}
 	var domain = localStorage.getItem("domain_"+acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+url
 	fetch(start, {
 		method: 'GET',

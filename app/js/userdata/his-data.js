@@ -5,7 +5,7 @@ function utl(user, more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
@@ -49,7 +49,7 @@ function pinutl(before,user, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
@@ -85,7 +85,7 @@ function flw(user, more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
@@ -129,7 +129,7 @@ function fer(user, more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
@@ -173,7 +173,7 @@ function showFav(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (more) {
 		var sid = $("#his-fav-list .cvo").last().attr("toot-id");
 		var plus = "?max_id=" + sid;
@@ -212,7 +212,7 @@ function showMut(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (more) {
 		var sid = $("#his-muting-list .cvo").last().attr("user-id");
 		var plus = "?max_id=" + sid;
@@ -251,7 +251,7 @@ function showBlo(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (more) {
 		var sid = $("#his-blocking-list .cvo").last().attr("user-id");
 		var plus = "?max_id=" + sid;
@@ -290,7 +290,7 @@ function showReq(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (more) {
 		var sid = $("#his-request-list .cvo").last().attr("user-id");
 		var plus = "?max_id=" + sid;
@@ -329,7 +329,7 @@ function showDom(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (more) {
 		var sid = $("#his-domain-list .cvo").last().attr("user-id");
 		var plus = "?max_id=" + sid;
@@ -370,8 +370,48 @@ function showDom(more, acct_id) {
 	});
 }
 
+//フォローレコメンデーションリスト
+function showFrl(more, acct_id) {
+	if (!acct_id) {
+		var acct_id = $('#his-data').attr("use-acct");
+	}
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	if (more) {
+		var sid = $("#his-follow-recom-list .cvo").last().attr("user-id");
+		var plus = "?max_id=" + sid;
+	} else {
+		var plus = "";
+	}
+	var start = "https://" + domain + "/api/v1/suggestions" + plus
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		$("#his-follow-recom-contents").html("データはありません(Mastodon 2.4.3~が必要です)<br>");
+		console.error(error);
+	}).then(function(json) {
+		if(!json[0]){
+			templete="データはありません(Mastodon 2.4.3~)<br>";
+		}
+		var templete = userparse(json,'',acct_id);
+		if (more) {
+			$("#his-follow-recom-contents").append(templete);
+		} else {
+			$("#his-follow-recom-contents").html(templete);
+		}
+
+	});
+}
+
 //ユーザーマッチングリスト
 function showMat() {
+	
 	$("#his-matching-list-contents").html("30秒から数分かかります");
 	var full=$("#his-acct").attr("fullname");
 	var acct_id=$("#his-data").attr("use-acct");

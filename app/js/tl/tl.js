@@ -55,7 +55,7 @@ function tl(type, data, acct_id, tlid) {
 	}
 	localStorage.setItem("now", type);
 	todo(cap(type) + " TL Loading...");
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if(type!="noauth"){
 		var hdr={
 			'content-type': 'application/json',
@@ -105,7 +105,7 @@ function reload(type, cc, acct_id, tlid, data) {
 		var type = localStorage.getItem("now");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	localStorage.setItem("now", type);
 	if (type == "home") {
 		var start = "wss://" + domain +
@@ -226,7 +226,7 @@ function moreload(type, tlid) {
 		localStorage.setItem("now", type);
 		todo(cap(type) + " TL MoreLoading");
 		var domain = localStorage.getItem("domain_" + acct_id);
-		var at = localStorage.getItem(domain + "_at");
+		var at = localStorage.getItem("acct_"+ acct_id + "_at");
 		var start = "https://" + domain + "/api/v1/timelines/" + com(type,data) +
 			"max_id=" + sid;
 		fetch(start, {

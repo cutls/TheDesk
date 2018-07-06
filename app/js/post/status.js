@@ -7,7 +7,7 @@ function fav(id, acct_id, remote) {
 		var flag = "favourite";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -57,7 +57,7 @@ function rt(id, acct_id, remote) {
 		var flag = "reblog";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -113,7 +113,7 @@ function follow(acct_id,remote) {
 		var remote = $("#his-data").attr("remote");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if(remote=="true" && flag=="follow"){
 		var start = "https://" + domain + "/api/v1/follows";
 		var user=$("#his-acct").text();
@@ -156,7 +156,7 @@ function block(acct_id) {
 		var flag = "block";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -189,7 +189,7 @@ function mute(acct_id) {
 		var flag = "mute";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -213,7 +213,7 @@ function mute(acct_id) {
 //投稿削除
 function del(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('DELETE', start, true);
@@ -234,7 +234,7 @@ function pin(id, acct_id) {
 		var flag = "pin";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('DELETE', start, true);
@@ -260,7 +260,7 @@ function pin(id, acct_id) {
 //フォロリク
 function request(id, flag, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/follow_requests/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -283,7 +283,7 @@ function domainblock(add, flag, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/domain_blocks"
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -341,7 +341,7 @@ function staEx(mode){
 	var url=$("#tootmodal").attr("data-url");
 	var acct_id = $("#status-acct-sel").val();
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+url
 	fetch(start, {
 		method: 'GET',

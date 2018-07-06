@@ -5,7 +5,7 @@ function mixtl(acct_id, tlid) {
 	localStorage.setItem("now", type);
 	todo("Integrated TL Loading...(Local)");
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	//まずLocal
 	var start = "https://" + domain + "/api/v1/timelines/public?local=true";
 	fetch(start, {
@@ -96,7 +96,7 @@ function mixtl(acct_id, tlid) {
 //Streamingに接続
 function mixre(acct_id, tlid) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var type = "mix";
 	localStorage.setItem("now", type);
 	var startHome = "wss://" + domain +
@@ -180,7 +180,7 @@ function mixmore(tlid) {
 	var acct_id = obj[tlid].domain;
 	todo("Integrated TL MoreLoading...(Local)");
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
 	var len = $("#timeline_" + tlid + " .cvo").length
 	var start = "https://" + domain +

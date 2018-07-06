@@ -28,7 +28,7 @@ function post() {
 	}
 	$("#toot-post-btn").prop("disabled", true);
 	todo("Posting");
-	var at = localStorage.getItem(domain + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses";
 	var reply = $("#reply").val();
 	var toot={
