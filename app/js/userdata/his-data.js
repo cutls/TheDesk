@@ -416,7 +416,7 @@ function showMat() {
 	var full=$("#his-acct").attr("fullname");
 	var acct_id=$("#his-data").attr("use-acct");
 	full=full.split("@");
-	var start = "https://vinayaka.distsn.org/cgi-bin/vinayaka-user-match-api.cgi?"+full[1]+"+" + full[0];
+	var start = "https://vinayaka.distsn.org/cgi-bin/vinayaka-user-match-filtered-api.cgi?"+full[1]+"+" + full[0];
 	console.log(start);
 	fetch(start, {
 		method: 'GET',
