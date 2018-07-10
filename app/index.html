@@ -78,21 +78,20 @@ var tlid=0;
 </button>
 </div>
 <!--検索-->
-<div id="src-box" class="hide notf-box z-depth-4">
-<div class="input-field">
+<div id="src-box" class="hide notf-box z-depth-4" style="width:500px">
+		<div class="input-field">
+		<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
+</div><div class="input-field">
 <i class="material-icons prefix">search</i>
-<input id="src" type="text" class="validate" style="width:calc( 70% - 40px);">
-<br><span data-trans="src_tip">ハッシュタグを検索するときは#を抜いてください。</span>
-<br><span data-trans="src_acct_sel">検索に使用するアカウントを選択</span>
-<br>
-<div class="input-field">
-<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
-<label></label>
-</div>
+<input id="src" type="text" class="validate" style="width:calc( 60% - 40px);">
 <label for="src" data-trans="src">検索</label>
-<button class="btn waves-effect indigo" style="width:calc( 60% - 40px);" onclick="src()" data-trans-i="src">
+<button class="btn waves-effect indigo" style="width:calc( 40% - 40px);" onclick="src()" data-trans-i="src">
 	<i class="material-icons left">search</i>検索
 </button>
+<br>
+<br>
+
+
 </div>
 <div id="search">
 <div id="src-contents">

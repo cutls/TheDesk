@@ -6,8 +6,8 @@ function srcToggle() {
 	if($("#src-box").hasClass("show")){
 		trend();
 	}
-	$("#src-box").css("top",$('#src-tgl').offset().top-$("#src-box").height()/2+"px");
-	$("#src-box").css("left",$('#src-tgl').offset().left-410+"px");
+	$("#src-box").css("top",$('#src-tgl').offset().top+"px");
+	$("#src-box").css("left",$('#src-tgl').offset().left-510+"px");
 	$('ul.tabs').tabs('select_tab', 'src-sta');
 	$("#src-contents").html("");
 }
@@ -24,6 +24,8 @@ function src(mode) {
 	localStorage.setItem("last-use", acct_id);
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var m = q.match(/^#(.+)$/);
+	if(m){q=m[1];}
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
