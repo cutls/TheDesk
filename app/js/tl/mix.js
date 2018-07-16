@@ -1,6 +1,6 @@
 //Integrated TL
-function mixtl(acct_id, tlid, type) {
-	console.log(type);
+function mixtl(acct_id, tlid, type,delc) {
+	console.log(delc);
 	localStorage.removeItem("morelock")
 	localStorage.setItem("now", type);
 	todo("Integrated TL Loading...(Local)");
@@ -48,11 +48,16 @@ function mixtl(acct_id, tlid, type) {
                 var pkey=key*1+1;
                 if(pkey<timeline.length){
                     if(date(timeline[key].created_at,"unix")!=date(timeline[pkey].created_at,"unix")){
+						if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
+							var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),"mix");
+						}else{
+							var mute=[];
+						}
 						if(type=="integrated"){
-							templete = templete+parse([timeline[key]], '', acct_id, tlid);
+							templete = templete+parse([timeline[key]], '', acct_id, tlid, "", mute);
 						}else if(type=="plus"){
 							if(timeline[key].account.acct==timeline[key].account.username){
-								templete = templete+parse([timeline[key]], '', acct_id, tlid);
+								templete = templete+parse([timeline[key]], '', acct_id, tlid, "", mute);
 							}
 						}
                         
@@ -62,7 +67,7 @@ function mixtl(acct_id, tlid, type) {
             });
             
              $("#timeline_" + tlid).html(templete);
-            mixre(acct_id, tlid, type);
+            mixre(acct_id, tlid, type, mute,delc);
 			additional(acct_id, tlid);
 			jQuery("time.timeago").timeago();
 			todc();
@@ -72,7 +77,7 @@ function mixtl(acct_id, tlid, type) {
 
 
 //Streamingに接続
-function mixre(acct_id, tlid, TLtype) {
+function mixre(acct_id, tlid, TLtype, mute,delc) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var startHome = "wss://" + domain +
@@ -99,10 +104,16 @@ function mixre(acct_id, tlid, TLtype) {
 		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "delete") {
-			$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
-			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
+			if(delc=="true"){
+				$("#timeline_"+tlid+" [toot-id=" + JSON.parse(mess.data).payload + "]").addClass("emphasized");
+				$("#timeline_"+tlid+" [toot-id=" + JSON.parse(mess.data).payload + "]").addClass("by_delcatch");
+			}else{
+				$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
+				$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
+			}
+
 		} else if (type == "update") {
-			var templete = parse([obj], '', acct_id, tlid);
+			var templete = parse([obj], '', acct_id, tlid,"",mute);
 			if (!$("#timeline_"+tlid+" [toot-id="+obj.id+"]").length) {
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool && templete) {
@@ -126,14 +137,19 @@ function mixre(acct_id, tlid, TLtype) {
 		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "delete") {
-			$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
-			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
+			if(delc=="true"){
+				$("[toot-id=" + JSON.parse(mess.data).payload + "]").addClass("emphasized");
+				$("[toot-id=" + JSON.parse(mess.data).payload + "]").addClass("by_delcatch");
+			}else{
+				$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
+				$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
+			}
 		} else if (type == "update") {
 			if(TLtype=="integrated"){
 				var templete = parse([obj], '', acct_id, tlid);
 			}else if(TLtype=="plus"){
 				if(obj.account.acct==obj.account.username){
-					var templete = parse([obj], '', acct_id, tlid);
+					var templete = parse([obj], '', acct_id, tlid,"",mute);
 				}else{
 					var templete="";
 				}
@@ -212,11 +228,16 @@ function mixmore(tlid,type) {
                 var pkey=key*1+1;
                 if(pkey<20){
                     if(date(timeline[key].created_at,"unix")!=date(timeline[pkey].created_at,"unix")){
+						if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
+							var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),"mix");
+						}else{
+							var mute=[];
+						}
                         if(type=="integrated"){
-							templete = templete+parse([timeline[key]], '', acct_id, tlid);
+							templete = templete+parse([timeline[key]], '', acct_id, tlid,"",mute);
 						}else if(type=="plus"){
 							if(timeline[key].account.acct==timeline[key].account.username){
-								templete = templete+parse([timeline[key]], '', acct_id, tlid);
+								templete = templete+parse([timeline[key]], '', acct_id, tlid,"",mute);
 							}
 						}
                     }

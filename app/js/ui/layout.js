@@ -42,6 +42,8 @@ function parseColumn() {
 			localStorage.setItem("acct_"+ key + "_at", acct.at);
 			notf(key, 0);
 			ckdb(key);
+			//フィルターデータ読もう
+			getFilter(key);
 		});
 	}
 	var acctlist=obj;
@@ -113,13 +115,16 @@ function parseColumn() {
 		  ')" class="setting nex" title="このカラムの設定"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
 		  '<div class="hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"><div id="notifications_' + key +
-		  '" data-notf="' + acct.domain + '"></div></div><div class="hide notf-indv-box" id="util-box_' + key +
+		  '" data-notf="' + acct.domain + '" data-type="notf"></div></div><div class="hide notf-indv-box" id="util-box_' + key +
 		  '" style="padding:5px;"><a onclick="mediaToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="メディアフィルター">perm_media</i><span id="sta-media-' +
 		  key + '">On</span></a>メディアフィルター<br><a onclick="cardToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="リンクの解析を切り替え(OFFで制限を回避出来る場合があります)">link</i><span id="sta-card-' +
-		  key + '">On</span></a>リンク解析<br>TLヘッダーの色<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
-			'" class="tl" tlid="' + key + '"'+notf_attr+'><div style="text-align:center">[ここにトゥートはありません。]<br>F5/⌘+Rで再読込できます。</div></div></div></div>';
+		  key + '">On</span></a>リンク解析<br><a onclick="catchToggle(' + key +
+		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="削除捕捉(削除されても残ります。背景色が変化します。)">delete</i><span id="sta-del-' +
+		  key + '">On</span></a>削除捕捉<a onclick="delreset(' + key +
+		  ')" class="pointer">リセット</a><br>TLヘッダーの色<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+			'" class="tl" tlid="' + key + '"'+notf_attr+' data-type="' + acct.type + '"><div style="text-align:center">[ここにトゥートはありません。]<br>F5/⌘+Rで再読込できます。</div></div></div></div>';
 		$("#timeline-container").append(html);
 		localStorage.removeItem("pool_" + key);
 		if (acct.data) {
@@ -127,9 +132,15 @@ function parseColumn() {
 		} else {
 			var data = "";
 		}
-		tl(acct.type, data, acct.domain, key);
+		if(localStorage.getItem("catch_" + tlid)){
+			var delc="true";
+		}else{
+			var delc="false";
+		}
+		tl(acct.type, data, acct.domain, key, delc);
 		cardCheck(key);
 		mediaCheck(key);
+		catchCheck(key)
 	});
 	var width = localStorage.getItem("width");
 	if (width) {

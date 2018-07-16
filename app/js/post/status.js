@@ -226,6 +226,34 @@ function del(id, acct_id) {
 		}
 	}
 }
+//redraft
+function redraft(id, acct_id){
+	if(confirm("削除して再編集しますか？そのトゥートの全てのデータがリセットされます。この機能はベータ版です。画像は~v2.4.1で破棄されます。")){
+		show();
+		del(id, acct_id);
+		$("#post-acct-sel").prop("disabled", true);
+		var medias=$("[toot-id="+id+"]").attr("data-medias");
+		var vismode=$("[toot-id="+id+"] .vis-data").attr("data-vis");
+		vis(vismode);
+		$("#media").val(medias);
+		var ct=medias.split(",").length;
+		$("[toot-id="+id+"] img.toot-img").each(function(i, elem) {
+			if(i<ct){
+				var url=$(elem).attr("src");
+				console.log(url);
+				$('#preview').append('<img src="' + url + '" style="width:50px; max-height:100px;">');
+			}
+		});
+		var html=$("[toot-id="+id+"] .toot").html();
+		html = html.replace(/^<p>(.+)<\/p>$/,"$1");
+		html = html.replace(/<br\s?\/?>/, "\n");
+		html = html.replace(/<p>/, "\n");
+		html = html.replace(/<\/p>/, "\n");
+		html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, "$1");
+		html=$.strip_tags(html);
+		$("#textarea").val(html);
+	}
+}
 //ピン留め
 function pin(id, acct_id) {
 	if ($("#pub_" + id).hasClass("pined")) {

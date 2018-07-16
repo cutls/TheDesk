@@ -70,8 +70,17 @@ function replyTL(id, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse([json], '', acct_id);
+		if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
+			var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),"thread");
+		}else{
+			var mute=[];
+		}
+		console.log(mute);
+		var templete = parse([json], '', acct_id,"","",mute);
 		$("#toot-reply").prepend(templete);
+		$("#toot-reply .hide").html("フィルターされました。");
+		$("#toot-reply .by_filter").css("display","block");
+		$("#toot-reply .by_filter").removeClass("hide");
 		jQuery("time.timeago").timeago();
 		if (json.in_reply_to_id) {
 			replyTL(json.in_reply_to_id, acct_id);
@@ -96,9 +105,16 @@ function context(id, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json.descendants, '', acct_id);
+		if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
+			var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),"thread");
+		}else{
+			var mute=[];
+		}
+		var templete = parse(json.descendants, '', acct_id,"","",mute);
 		$("#toot-after").html(templete);
-		
+		$("#toot-after .hide").html("フィルターされました。");
+		$("#toot-after .by_filter").css("display","block");
+		$("#toot-after .by_filter").removeClass("hide");
 		jQuery("time.timeago").timeago();
 	});
 }

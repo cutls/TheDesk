@@ -113,18 +113,57 @@ var tlid=0;
 </div>
 <!--リスト-->
 <div id="list-box" class="hide notf-box z-depth-4">
-	アカウント選択
-	<div class="input-field">
+	<div class="input-field" style="width:calc( 100% - 100px);float:left">
 		<select id="list-acct-sel" class="acct-sel"></select>
-		<label></label>
+		<label>アカウント選択</label>
 	</div>
-	<button class="btn waves-effect indigo" style="width:calc( 60% - 40px);" onclick="list()" data-trans-i="lists">
-		リスト一覧
-	</button><br><br>
+	<div style="float:left; padding-top:8px; padding-bottom:28px;">
+		<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
+			一覧
+		</button>
+	</div>
+	<br><br>
 	<div id="lists"></div>
 	<div id="lists-user"></div>
 	<input type="text" style="width:150px" id="list-add" placeholder="タイトル">
 		<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">新規作成</button>
+</div>
+<!--フィルター-->
+<div id="filter-box" class="hide notf-box z-depth-4">
+	<div class="input-field" style="width:calc( 100% - 100px);float:left">
+		<select id="filter-acct-sel" class="acct-sel"></select>
+		<label>アカウント選択</label>
+	</div>
+	<div style="float:left; padding-top:8px; padding-bottom:28px;">
+		<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
+			一覧
+		</button>
+	</div>
+	<div id="filtered-words"></div>
+	<input type="hidden" id="filter-edit-id">
+	<input type="text" style="width:150px" id="filter-add-word" placeholder="フィルターワード"><br>
+	適用範囲<br>
+	<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+	  <label for="home_filter">ホーム</label>
+	<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+	  <label for="local_filter">ローカル</label>
+	<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+	  <label for="notf_filter">通知</label>
+	<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+	  <label for="conv_filter">会話</label><br>
+	オプション<br>
+	<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+	  <label for="wholeword_filter">単語マッチ</label><br>
+	<span class="sml">非ラテン系の文字列では「単語マッチ」は推奨されません。</span><br>
+	<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+	  <label for="except_filter">除外</label><br>
+	<span class="sml">「除外」時マッチしたトゥートは非可逆的に除外され、削除後も閲覧できません。</span><br>
+	有効期限(あと)<span class="sml">未指定(または0分)で「無制限」になります。<b>仕様上数値の正確性を保証できません。</b></span><br><br>
+	<input type="text" style="width:50px" id="days_filter" placeholder="d" value="0">日
+	<input type="text" style="width:50px" id="hours_filter" placeholder="h" value="0">時間
+	<input type="text" style="width:50px" id="mins_filter" placeholder="m" value="0">分
+	<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">追加</button><br>
+	<span class="sml">Integrated TL/Plus TLは、公開/ホームのフィルターワードが合算されて適応されます。どちらか一方の指定でも非表示になります。</span>
 </div>
 <div id="main">
 <!--TLのTL-->
@@ -176,6 +215,12 @@ var tlid=0;
 	<i class="material-icons" title="リスト" data-trans-title="list">view_headline</i>
 	<span class="side-label" data-trans="list">リスト</span>
 </a>
+</div>
+<div class="small-menu" id="filter-tgl">
+	<a onclick="filterToggle()" class="nex waves-effect">
+		<i class="material-icons" title="フィルター" data-trans-title="filter">filter_list</i>
+		<span class="side-label" data-trans="filter">Filter</span>
+	</a>
 </div>
 <div class="small-menu">
 <a href="index.html" class="nex mize waves-effect">

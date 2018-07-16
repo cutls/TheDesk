@@ -351,6 +351,7 @@ function multiSelector() {
 	}else{
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
+		
 		var list = key * 1 + 1;
 		if (key == last) {
 			sel = "selected";

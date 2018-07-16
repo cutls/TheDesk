@@ -70,7 +70,7 @@ function pinutl(before,user, acct_id) {
 	}).then(function(json) {
 		var templete = parse(json, '', acct_id);
 		if(!json[0]){
-			templete="データはありません<br>";
+			templete="";
 		}
 		var height = $("#his-data-content").height() - 245;
 		$(".tab-content").css('height', height);
@@ -396,10 +396,14 @@ function showFrl(more, acct_id) {
 		$("#his-follow-recom-contents").html("データはありません(Mastodon 2.4.3~が必要です)<br>");
 		console.error(error);
 	}).then(function(json) {
+		console.log(json);
 		if(!json[0]){
-			templete="データはありません(Mastodon 2.4.3~)<br>";
+			console.log("No data");
+			templete="データはありません(非フォローだけど絡みがある時に表示されます。)<br>";
+		}else{
+			var templete = userparse(json,'',acct_id);
 		}
-		var templete = userparse(json,'',acct_id);
+		
 		if (more) {
 			$("#his-follow-recom-contents").append(templete);
 		} else {

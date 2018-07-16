@@ -1,8 +1,8 @@
 //オブジェクトパーサー(トゥート)
-function parse(obj, mix, acct_id, tlid, popup) {
+function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var templete = '';
 	var actb = localStorage.getItem("action_btns");
-	var actb='re,rt,fav,qt,del,pin';
+	var actb='re,rt,fav,qt,del,pin,red';
 	if(actb){
 		var actb = actb.split(',');
 		var disp={};
@@ -55,7 +55,13 @@ function parse(obj, mix, acct_id, tlid, popup) {
 	var wordmute = localStorage.getItem("word_mute");
 	if(wordmute){
 		var wordmute = JSON.parse(wordmute);
+		wordmute = wordmute.concat(mutefilter);
+	}else{
+		wordmute = mutefilter;
 	}
+
+	
+	
 	if (!sent) {
 		var sent = 500;
 	}
@@ -368,12 +374,14 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		}
 		var mediack = toot.media_attachments[0];
 		//メディアがあれば
+		var media_ids="";
 		if (mediack) {
 			hasmedia = "hasmedia";
-			var cwdt = 100 / toot.media_attachments.length
+			var cwdt = 100 / toot.media_attachments.length;
 			Object.keys(toot.media_attachments).forEach(function(key2) {
 				var media = toot.media_attachments[key2];
 				var purl = media.preview_url;
+				media_ids=media_ids+media.id+",";
 				var url = media.url;
 				if (toot.sensitive && nsfw) {
 					var sense = "sensitive"
@@ -386,6 +394,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 					purl + '" class="' + sense +
 					' toot-img pointer" style="width:' + cwdt + '%; height:'+imh+'px;"></a></span>';
 			});
+			media_ids = media_ids.slice(0, -1) ;
 		} else {
 			viewer = "";
 			hasmedia = "nomedia";
@@ -473,10 +482,14 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			Object.keys(wordmute).forEach(function(key8) {
 				var worde = wordmute[key8];
 				if(worde){
-					var word=worde.tag;
+					if(worde.tag){
+						var word=worde.tag;
+					}else{
+						var word=worde
+					}
 					var regExp = new RegExp( word, "g" ) ;
 					if($.strip_tags(content).match(regExp)){
-						boostback = "hide";
+						boostback = "hide by_filter";
 					}
 				}
 			});
@@ -500,7 +513,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
-			' ' + hasmedia + '" toot-id="' + id + '" unixtime="' + date(obj[
+			' ' + hasmedia + '" toot-id="' + id + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
 				key].created_at, 'unix') + '" '+if_notf+' onmouseover="mov(\'' + toot.id + '\',\''+tlid+'\')" onmouseout="resetmv()">' +
 			'<div class="area-notice"><span class="gray sharesta">' + notice + home +
 			'</span></div>' +
@@ -527,7 +540,7 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			'</span>' +
 			'' + mentions + tags + '</div>' +
 			'<div class="area-vis"></div>'+
-			'<div class="area-actions '+mouseover+'" style="padding:0; margin:0; top:-20px; display:flex; justify-content:space-around; max-width:100%; ">' +
+			'<div class="area-actions '+mouseover+'">' +
 			'<div class="action">'+vis+'</div>'+
 			'<div class="action '+antinoauth+'"><a onclick="detEx(\''+toot.url+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">詳細(メインアカウント経由)</a></div>' +
 			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="re(\'' + toot.id +
@@ -552,14 +565,17 @@ function parse(obj, mix, acct_id, tlid, popup) {
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを削除"><i class="fa fa-trash-o"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをピン留め"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' +trans+
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをピン留め"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 
+			+'<div class="' + if_mine + ' action '+disp["red"]+' '+noauth+'"><a onclick="redraft(\'' + toot.id + '\',' +
+			acct_id +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを削除して再投稿"><i class="material-icons">redo</i></a></div>'+trans+
 			'<div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
 			'<div class="action '+noauth+'"><a onclick="details(\'' + toot.id + '\',' + acct_id +
 			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
 			'<span class="cbadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
 			via +
 			'</span></div></div>' +
-			'</div></div>' + divider;
+			'</div></div>';
 	});
 	if (mix == "mix") {
 		return [templete, local, times]

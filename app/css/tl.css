@@ -106,6 +106,7 @@ iframe {
 }
 .cvo {
   padding-left: 5px;
+  border-bottom:0.5px solid;
   padding-right: 2px;
   word-break: break-all;
   width: 100%;
@@ -169,8 +170,15 @@ grid-area: toot;
   }
 
 .area-actions {
-margin:2px;
-grid-area: actions;
+  padding:0; 
+  margin:0; 
+  top:-20px; 
+  display:flex; 
+  justify-content:space-around; 
+  width:300px;
+  max-width:100%;
+  margin:2px;
+  grid-area: actions;
 }
 .area-vis {
   margin:2px;
@@ -338,6 +346,18 @@ p:not(:last-child){
 .modal-footer{
   background-color:var(--box);
 }
+.ballons{
+  background-color: var(--box);
+  position:absolute;
+  bottom:0px;
+  right:0px;
+}
 .btn-flat{
   color:var(--color);
+}
+.toot a span.ellipsis:after{
+  content:"...";
+}
+.toot a:not(.mention) span:last-of-type{
+  display:none;
 }
