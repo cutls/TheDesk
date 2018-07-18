@@ -224,7 +224,7 @@ function moreload(type, tlid) {
 	}else if(type=="list"){
 		var data=obj[tlid].data;
 	}
-	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
+	var sid = $("#timeline_" + tlid + " .cvo").last().attr("unique-id");
 	if (localStorage.getItem("morelock") != sid) {
 		localStorage.setItem("morelock", sid);
 		if (type == "mix") {

@@ -186,7 +186,7 @@ function mixmore(tlid,type) {
 	todo("Integrated TL MoreLoading...(Local)");
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
+	var sid = $("#timeline_" + tlid + " .cvo").last().attr("unique-id");
 
 
 	var start = "https://" + domain + "/api/v1/timelines/public?local=true&max_id="+sid;

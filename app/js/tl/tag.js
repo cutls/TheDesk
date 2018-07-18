@@ -89,7 +89,7 @@ function trendTag(){
             Object.keys(json).forEach(function(tag) {
                 tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="#' + tag + 'のタイムライン">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer" title="#' + tag + 'でトゥート">Toot</a></span> ';
              });
-             $("#taglist").append('<span class="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' + tags+'</span>');
+             $("#taglist").append('<div class="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' + tags+'</div>');
              trendintervalset()
         }else{
             $("#taglist").html("");

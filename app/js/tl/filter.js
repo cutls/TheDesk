@@ -279,6 +279,9 @@ function getFilter(acct_id){
 	});
 }
 function getFilterType(json,type){
+	if(!json){
+		return [];
+	}
 	if(type=="local"){
 		type="public";
 	}else if(type=="list"){

@@ -232,11 +232,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				var notice = '<i class="big-text fa '+rticon+'"></i>'+ dis_name + "(@" + toot.account.acct +
 					")<br>";
 					var boostback = "shared";
+				var uniqueid=toot.id;
 				var toot = toot.reblog;
 				var dis_name=escapeHTML(toot.account.display_name);
 				if(toot.account.emojis){
 					var actemojick = toot.account.emojis[0];
 				}else{
+					var uniqueid=toot.id;
 					var actemojick=false;
 				}
 			//絵文字があれば
@@ -251,6 +253,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				});
 			}
 			} else {
+				var uniqueid=toot.id;
 				var notice = "";
 				var boostback = "";
 				//ユーザー強調
@@ -513,7 +516,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
-			' ' + hasmedia + '" toot-id="' + id + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
+			' ' + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
 				key].created_at, 'unix') + '" '+if_notf+' onmouseover="mov(\'' + toot.id + '\',\''+tlid+'\')" onmouseout="resetmv()">' +
 			'<div class="area-notice"><span class="gray sharesta">' + notice + home +
 			'</span></div>' +
