@@ -35,7 +35,7 @@ input.addEventListener("focus", function() {
 			var acct = new_val.match(/@(\S{3,})/);
 			if(localStorage.getItem("imas")){
 				//セルフNP
-				var cpnp = new_val.match(/\/\/(\S{1,})/);
+				var cpnp = new_val.match(/^(?!.*http)\/\/(\S{1,})/);
 			}else{
 				var cpnp=[];
 			}

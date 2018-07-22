@@ -10,7 +10,7 @@ Contact me(bug report...):GitHub Issues, mention to [Cutls@kirishima.cloud](http
 
 ## License
 
-[TheDesk LICENSE v4](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
+[TheDesk LICENSE v5](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
 
 ## Component/構成
 
