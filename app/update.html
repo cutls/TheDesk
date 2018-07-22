@@ -32,7 +32,8 @@ a,button{
   </div><br>
   アップデートはセキュアかつ高速なAmazon CloudFront CDNを通じて提供されます。<br>
   アップデート内容の詳細は<a href="https://github.com/cutls/TheDesk/blob/master/LATEST.md">GitHub</a>をご覧ください。<br><br>
-  <a onclick="window.close();" class="pointer">このアップデートを飛ばす</a>(次回TL表示時まで有効)<br><a onclick="quit()" class="pointer">このソフトを終了</a><br>
+  このアップデートを飛ばす(<a onclick="window.close();" class="pointer">次回TL表示時まで</a>/<a onclick="nextv();" class="pointer">次のバージョンが出るまで</a>)<br>
+  <a onclick="quit()" class="pointer">このソフトを終了</a><br>
   <a onclick="about()" class="pointer">このソフトについて</a><br>
   アップデートに問題が生じる場合は<a href="https://thedesk.top">TheDesk HP</a>からのダウンロードをおためしください。
   <script type="text/javascript" src="./js/common/about.js"></script>
@@ -74,6 +75,10 @@ function verck(){
 			 $("#det").text(json.detail);
 			 $("#now").text(localStorage.getItem("ver"));
     });
+}
+function nextv(){
+    localStorage.setItem("new-ver-skip","true");
+    window.close();
 }
 function enc(ver){
     var ver = ver.replace( /\s/g , "" );

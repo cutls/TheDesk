@@ -39,18 +39,7 @@ function catchToggle(tlid) {
 		localStorage.setItem("catch_" + tlid, "true");
 		$("#sta-del-" + tlid).text("On");
         $("#sta-del-" + tlid).css("color",'#009688');
-		$("#timeline_"+tlid).addClass("media-filter");
 		parseColumn();
-	}
-}
-function catchCheck(tlid) {
-	var catchck = localStorage.getItem("catch_" + tlid);
-	if (catchck) {
-		$("#sta-del-" + tlid).text("On");
-        $("#sta-del-" + tlid).css("color",'#009688');
-	} else {
-		$("#sta-del-" + tlid).text("Off");
-        $("#sta-del-" + tlid).css("color",'red');
 	}
 }
 function catchCheck(tlid) {
@@ -347,3 +336,9 @@ function filterUpdateInternal(json,type){
 			});
 		}
 }
+/*
+<a onclick="catchToggle(' + key +
+		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="削除捕捉(削除されても残ります。背景色が変化します。)">delete</i><span id="sta-del-' +
+		  key + '">On</span></a>削除捕捉<a onclick="delreset(' + key +
+		  ')" class="pointer">リセット</a><br>
+*/

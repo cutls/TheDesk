@@ -315,6 +315,7 @@ climute();
 wordmute();
 wordemp();
 checkSpotify();
+voiceSettingLoad();
 oksload();
 function climute(){
 	//クライアントミュート

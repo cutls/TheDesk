@@ -33,11 +33,20 @@ input.addEventListener("focus", function() {
 			
 			var tag = new_val.match(/#(\S{3,})/);
 			var acct = new_val.match(/@(\S{3,})/);
-			if (tag && tag[1]) {
+			if(localStorage.getItem("imas")){
+				//セルフNP
+				var cpnp = new_val.match(/\/\/(\S{1,})/);
+			}else{
+				var cpnp=[];
+			}
+			if (cpnp && cpnp[1]) {
+				var q = cpnp[1];
+				cgNPs(q);
+			} else if (tag && tag[1]) {
 				var q = tag[1];
 			} else if (acct && acct[1]) {
 				var q = acct[1];
-			} else {
+			}else  {
 				//$("#suggest").html("");
 				return;
 			}
@@ -108,4 +117,33 @@ function tagInsert(code, del) {
 	$("#textarea").val(newt);
 	$("#textarea").focus();
 	$("#suggest").html("");
+}
+function cgNPs(q){
+	suggest = "https://cg.toot.app/api/v1/search/light?q=" + q
+			if (suggest != oldSuggest) {
+				console.log(suggest)
+				fetch(suggest, {
+					method: 'GET',
+					headers: {
+						'content-type': 'application/json'
+					},
+				}).then(function(response) {
+					return response.json();
+				}).catch(function(error) {
+					todo(error);
+					console.error(error);
+				}).then(function(json) {
+					console.log(json);
+					if (json[0]) {
+						var tags = "";
+						Object.keys(json).forEach(function(key4) {
+							var tag = json[key4];
+							tags = tags + '<a onclick="cgNP(\''+json[key4]+'\')" class="pointer">' + json[key4] + '</a>  ';
+						});
+						$("#suggest").html("Cinderella NowPlaying:" + tags);
+					}else{
+						$("#suggest").html("Cinderella NowPlaying:Not Found");
+					}
+				});
+			}
 }

@@ -1,6 +1,6 @@
 {
   "name": "TheDesk",
-  "version": "15.9.1",
+  "version": "15.10.0",
   "description": "TheDesk on Mastodonはシンプルと多機能を両立したデスクトップ向けクライアントです",
   "main": "main.js",
   "scripts": {

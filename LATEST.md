@@ -1,6 +1,6 @@
 ## For Astarte(kirishima.cloud), My Primary Instance
 
-TheDesk :thedesk: Mio (15.9.0)  
+TheDesk :thedesk: Mio (15.9.1)  
 ・フィルター機能に対応
 ・削除して再編集に対応
 ・削除追跡(削除されたトゥートが画面から消えずに背景色のみ変化します。)
@@ -11,7 +11,7 @@ https://thedesk.top
 
  ## For Other Instances
 
-PCクライアントTheDesk Mio (15.9.0)  
+PCクライアントTheDesk Mio (15.9.1)  
 ・フィルター機能に対応
 ・削除して再編集に対応
 ・削除追跡(削除されたトゥートが画面から消えずに背景色のみ変化します。)

@@ -110,9 +110,17 @@ function verck(ver) {
 				//betaならアプデチェックしない
 			} else if (ver != "beta") {
 				localStorage.removeItem("instance")
-				
-				var ipc = electron.ipcRenderer;
-				ipc.send('update', "true");
+				if(localStorage.getItem("new-ver-skip")){
+					if(localStorage.getItem("next-ver")!=newest){
+						var ipc = electron.ipcRenderer;
+						ipc.send('update', "true");
+					}else{
+						todo("アップデートはスキップされました。");
+					}
+				}else{
+					var ipc = electron.ipcRenderer;
+					ipc.send('update', "true");
+				}
 			}
 		}
 	});

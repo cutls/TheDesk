@@ -91,12 +91,9 @@ code, pre {
   background-color: #000;
   padding: 1em 1em 1em;
   position: relative;
-  -webkit-border-top-left-radius: 10px;
-  -webkit-border-bottom-right-radius: 10px;
-  -webkit-border-bottom-left-radius: 10px;
-  -moz-border-radius-topleft: 10px;
-  -moz-border-radius-bottomright: 10px;
-  -moz-border-radius-bottomleft: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 blockquote, .quote p {
   margin: 0;
@@ -106,15 +103,32 @@ blockquote, .quote {
   background-color: #ddd;
   padding: 1em 1em 1em;
   position: relative;
-  -webkit-border-top-left-radius: 10px;
-  -webkit-border-bottom-right-radius: 10px;
-  -webkit-border-bottom-left-radius: 10px;
-  -moz-border-radius-topleft: 10px;
-  -moz-border-radius-bottomright: 10px;
-  -moz-border-radius-bottomleft: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 blockquote:before, .quote:before {
   content: "Quote";
+  font-size: 1.8rem;
+  line-height: 1em;
+  font-family: Open Sans, cursive;
+  color: #999;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.twitter-tweet {
+  color: black;
+  background-color: #fff;
+  padding: 1em 1em 1em;
+  position: relative;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-left: 5px solid #0c7abf;
+}
+.twitter-tweet :before {
+  content: "From Twitter";
   font-size: 1.8rem;
   line-height: 1em;
   font-family: Open Sans, cursive;

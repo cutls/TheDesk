@@ -120,10 +120,9 @@ function parseColumn() {
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="メディアフィルター">perm_media</i><span id="sta-media-' +
 		  key + '">On</span></a>メディアフィルター<br><a onclick="cardToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="リンクの解析を切り替え(OFFで制限を回避出来る場合があります)">link</i><span id="sta-card-' +
-		  key + '">On</span></a>リンク解析<br><a onclick="catchToggle(' + key +
-		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="削除捕捉(削除されても残ります。背景色が変化します。)">delete</i><span id="sta-del-' +
-		  key + '">On</span></a>削除捕捉<a onclick="delreset(' + key +
-		  ')" class="pointer">リセット</a><br>TLヘッダーの色<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+		  key + '">On</span></a>リンク解析<br><a onclick="voiceToggle(' + key +
+		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="読み上げ">hearing</i><span id="sta-voice-' +
+		  key + '">On</span></a>読み上げTL<br>TLヘッダーの色<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
 			'" class="tl" tlid="' + key + '"'+notf_attr+' data-type="' + acct.type + '"><div style="text-align:center">[ここにトゥートはありません。]<br>F5/⌘+Rで再読込できます。</div></div></div></div>';
 		$("#timeline-container").append(html);
 		localStorage.removeItem("pool_" + key);
@@ -132,15 +131,22 @@ function parseColumn() {
 		} else {
 			var data = "";
 		}
-		if(localStorage.getItem("catch_" + tlid)){
+		if(localStorage.getItem("catch_" + key)){
 			var delc="true";
 		}else{
 			var delc="false";
 		}
-		tl(acct.type, data, acct.domain, key, delc);
+
+		if(localStorage.getItem("voice_" + key)){
+			var voice=true;
+		}else{
+			var voice=false;
+		}
+		tl(acct.type, data, acct.domain, key, delc,voice);
 		cardCheck(key);
 		mediaCheck(key);
 		catchCheck(key)
+		voiceCheck(key)
 	});
 	var width = localStorage.getItem("width");
 	if (width) {
@@ -220,6 +226,7 @@ function removeColumn(tlid) {
 			obj.splice(tlid, 1);
 			for(var i=0;i<obj.length;i++){
 				localStorage.setItem("card_" + i,"true");
+				localStorage.removeItem("catch_" + i);
 			}
 			var json = JSON.stringify(obj);
 			localStorage.setItem("column", json);

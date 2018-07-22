@@ -177,7 +177,6 @@ grid-area: toot;
   justify-content:space-around; 
   width:300px;
   max-width:100%;
-  margin:2px;
   grid-area: actions;
 }
 .area-vis {
@@ -329,7 +328,9 @@ p:not(:last-child){
   overflow-y: scroll;
   overflow-x: hidden;
   border: thin solid gray;
+  border-bottom: 2px solid white;
   grid-area: notf-box;
+  box-shadow:0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3), 0px -10px 10px 0px rgba(0,0,0,0.3) inset;
 }
 #src-contents {
   min-height: 100px;
@@ -359,5 +360,8 @@ p:not(:last-child){
   content:"...";
 }
 .toot a:not(.mention) span:last-of-type{
+  display:none;
+}
+.tl-box .via-hide{
   display:none;
 }

@@ -1,5 +1,5 @@
 //TL取得
-function tl(type, data, acct_id, tlid, delc) {
+function tl(type, data, acct_id, tlid, delc, voice) {
 	scrollevent();
 	localStorage.removeItem("morelock");
 	localStorage.removeItem("pool");
@@ -36,14 +36,14 @@ function tl(type, data, acct_id, tlid, delc) {
 			$("#notice_" + tlid).text("Integrated TL(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
 			$("#notice_icon_" + tlid).text("merge_type");
-		mixtl(acct_id, tlid, "integrated",delc);
+		mixtl(acct_id, tlid, "integrated",delc,voice);
 		return;
 	}else if (type == "plus") {
 		//Local+なら飛ばす
 			$("#notice_" + tlid).text("Local+ TL(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
 			$("#notice_icon_" + tlid).text("people_outline");
-		mixtl(acct_id, tlid, "plus",delc);
+		mixtl(acct_id, tlid, "plus",delc,voice);
 		return;
 	}else if (type == "notf") {
 		//通知なら飛ばす
@@ -100,13 +100,13 @@ function tl(type, data, acct_id, tlid, delc) {
 		additional(acct_id, tlid);
 		jQuery("time.timeago").timeago();
 		todc();
-		reload(type, '', acct_id, tlid, data, mute, delc);
+		reload(type, '', acct_id, tlid, data, mute, delc,voice);
 		$(window).scrollTop(0);
 	});
 }
 
 //Streaming接続
-function reload(type, cc, acct_id, tlid, data, mute, delc) {
+function reload(type, cc, acct_id, tlid, data, mute, delc, voice) {
 	if (!type) {
 		var type = localStorage.getItem("now");
 	}
@@ -175,6 +175,10 @@ function reload(type, cc, acct_id, tlid, data, mute, delc) {
 			var obj = JSON.parse(JSON.parse(mess.data).payload);
 			console.log(obj);
 			if($("#timeline_" + tlid +" [toot-id=" + obj.id + "]").length < 1){
+				console.log("speech:"+voice);
+				if(voice){
+					say(obj.content)
+				}	
 				var templete = parse([obj], type, acct_id, tlid,"",mute);
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {

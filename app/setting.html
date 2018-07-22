@@ -133,9 +133,9 @@
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
 		<h5>画像の高さ</h5>
-		<br>
 		<input type="text" style="width:50px" id="img-height">px
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
 		<br>
 	</div>
 	</li>
@@ -243,7 +243,7 @@
 			<i class="fa fa-spotify"></i>SpotifyとNowPlayingの設定
 		</div>
 		<div class="collapsible-body">
-			<i class="fa fa-spotify" style="font-size:24px;"></i>ボタンから簡単にNowPlayingができます。<br>
+			<i class="material-icons" style="font-size:24px;">music_note</i>ボタンから簡単にNowPlayingができます。<br>
 			<h5>アカウントの連携</h5>
 			APIの性質上，thedesk.topへアクセスします。<br>
 			<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">設定</button></div>
@@ -255,8 +255,11 @@
 {url}</textarea><br>
 				テンプレート:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
 				iTunes NowPlayingでも{url}以外のテンプレートに従ってトゥートされます。また、作曲家{composer}/サンプルレート{hz}/ビットレート{bitRate}/ジャンル{genre}が有効です。<br>
+				CINDERELLA NowPlaying(imastodon.net限定)では作曲家{composer}/作詞家{lyricist}/BPM{bpm}が有効です。<br>
+				CINDERELLA NowPlayingはimastodon.netにログインしているとき、トゥート欄に「//」を入力し、その後に曲名を入れることで可能です。<br>
 			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
 			<h5>Spotifyでアルバムアートワークを添付する</h5>
+			この設定はCINDERELLA NowPlaying(imastodon.net限定)にも適用されます。<br>
 			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
 			<label for="awk_yes">はい</label>
 			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
@@ -264,8 +267,30 @@
 			<br>
 		</div>
 	</li>
+	<li>
+		<div class="collapsible-header">
+			<i class="material-icons">hearing</i>読み上げの設定
+		</div>
+		<div class="collapsible-body">
+			<h5>読み上げの速さ</h5>
+			1-100まで、デフォルトは10。<br>
+			<p class="range-field"><input type="range" id="voicespeed" min="1" max="100" value="10" style="width:500px; max-width:100%"/></p>
+			<h5>読み上げの高さ</h5>
+			0-100まで、デフォルトは50。(大きくなるほど高い)<br>
+			<p class="range-field"><input type="range" id="voicepitch" min="0" max="100" value="50" style="width:500px; max-width:100%"/></p>
+			<h5>読み上げの音量</h5>
+			0-100まで、デフォルトは100。<br>
+			<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100" style="width:500px; max-width:100%"/></p>
+			<h5>テスト</h5>
+			<input type="text" style="width:350px" id="voicetxt" value="これはテスト音声です。TheDeskはオープンソースのPC向けマストドンクライアントです。マルチインスタンスやマルチカラムに対応しています。">
+			<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()" id="testplay">再生/停止</button><br>
+			<br>
+			<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">設定</button>
+		</div>
+	</li>
 </ul>
 <br>
+
 <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>戻る</a>
 <br>
 <br>キーボードショートカット一覧 
@@ -277,9 +302,9 @@
 <li>F5:スーパーリロード</li>
 <li>E:投稿パネルの幅を切り替え</li>
 <li>Ctrl+Shift+C:入力内容を消す</li>
-<li>Ctrl+Shift+S:設</li>
+<li>Ctrl+Shift+S:設定</li>
 <li>Ctrl+Shift+M:アカウントマネージャ</li>
-<li>Ctrl+Shift+N:NowPlaying(Spotify</li>
+<li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
 <li>Ctrl+Shift+P:現在選択中のプロフィール</li>
 <li>←/→:イメージビューワー起動時に画像切り替え</li>
 <li>マウスホイール:イメージビューワー時に拡大縮小</li>
@@ -302,8 +327,9 @@
 <a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="./img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
 <a class="btn waves-effect red lighten-2" href="https://osushi.love/Cutls_P" target="_blank" style="width:100%; max-width:500px;"><img src="./img/sushi.svg" class="left" width="25" style="padding-top:5px;">寿司を投げる</a>
 <br>
+<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pouinter">アップデートを確認</a><br>
 <a href="oss.html">OSS License(オープンソースライセンス)</a><br>
-<span style="font-family:Open Sans;">Copyright &copy; TheDesk on Mastodon 2018 & Cutls.com 2015 All Rights Reserved. 
+<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved. 
 	<a href="https://github.com/cutls/TheDesk/blob/master/LICENSE.md">TheDesk LICENSE (Latest Ver.)</a>
 	<br>Developer: Cutls P( 
 	<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
@@ -315,6 +341,7 @@ TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のため
 <script type="text/javascript" src="./js/platform/end.js"></script>
 <script type="text/javascript" src="./js/login/logout.js"></script>
 <script type="text/javascript" src="./js/ui/spotify.js"></script>
+<script type="text/javascript" src="./js/tl/speech.js"></script>
 <script type="text/javascript" src="./js/ui/settings.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script type="text/javascript" src="./js/tl/date.js"></script>

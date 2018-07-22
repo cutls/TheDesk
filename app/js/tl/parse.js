@@ -106,7 +106,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	//via通知
 	var viashow=localStorage.getItem("viashow");
 	if(!viashow){
-		viashow="hide";
+		viashow="via-hide";
+	}
+	if(viashow=="hide"){
+		viashow="via-hide";
 	}
 	//認証なしTL
 	if(mix=="noauth"){

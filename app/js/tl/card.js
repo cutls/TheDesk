@@ -58,6 +58,16 @@ function additional(acct_id, tlid) {
 				console.error(error);
 			}).then(function(json) {
 				console.log(json);
+				//このリンク鳥やんけ、ってとき
+				if (json.provider_name=="Twitter"){
+					if(json.image){
+						var twiImg='<br><img src="'+json.image+'">';
+					}else{
+						var twiImg='';
+					}
+					$("[toot-id=" + id + "] .additional").html(
+						'<blockquote class="twitter-tweet"><b>'+json.author_name+'</b><br>'+json.description+twiImg+'</blockquote>');
+				}
 				if (json.title) {
 					$("[toot-id=" + id + "] .additional").html(
 						"<span class=\"gray\">URLチェック:<br>Title:" + json.title + "<br>" +
@@ -149,14 +159,26 @@ function additionalIndv(tlid, acct_id, id) {
 				console.error(error);
 			}).then(function(json) {
 				console.log(json);
-				if (json.title) {
+				//このリンク鳥やんけ、ってとき
+				console.log(json.provider_name);
+				if (json.provider_name=="Twitter"){
+					if(json.image){
+						var twiImg='<br><img src="'+json.image+'" style="max-width:100%">';
+					}else{
+						var twiImg='';
+					}
 					$("[toot-id=" + id + "] .additional").html(
-						"<span class=\"gray\">URLチェック:<br>Title:" + json.title + "<br>" +
-						json.description + "</span>");
-				}
-				if (json.html) {
-					$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="ながら観モード">picture_in_picture_alt</i>');
-
+						'<div class="twitter-tweet"><b>'+json.author_name+'</b><br>'+json.description+twiImg+'</div>');
+				}else{
+					if (json.title) {
+						$("[toot-id=" + id + "] .additional").html(
+							"<span class=\"gray\">URLチェック:<br>Title:" + json.title + "<br>" +
+							json.description + "</span>");
+					}
+					if (json.html) {
+						$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="ながら観モード">picture_in_picture_alt</i>');
+	
+					}
 				}
 				if (json.title) {
 					$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
