@@ -6,8 +6,8 @@ function srcToggle() {
 	if($("#src-box").hasClass("show")){
 		trend();
 	}
-	$("#src-box").css("top",$('#src-tgl').offset().top+"px");
-	$("#src-box").css("left",$('#src-tgl').offset().left-510+"px");
+	$("#src-box").css("bottom","40px");
+	$("#src-box").css("left",$('#src-tgl').offset().left-$('#src-box').width()/2+"px");
 	$('ul.tabs').tabs('select_tab', 'src-sta');
 	$("#src-contents").html("");
 }

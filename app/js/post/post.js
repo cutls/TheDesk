@@ -66,6 +66,9 @@ function post() {
 	httpreq.send(JSON.stringify(toot));
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState == 4) {
+			if(str.indexOf(localStorage.getItem("stable"))==-1){
+				localStorage.removeItem("stable")
+			}
 			var json = httpreq.response;
 			console.log(json);
 			var box = localStorage.getItem("box");
@@ -85,6 +88,9 @@ function post() {
 //クリア(Shift+C)
 function clear() {
 	$("#textarea").val("");
+	if(localStorage.getItem("stable")){
+		$("#textarea").val(localStorage.getItem("stable"));
+	}
 	$("#textarea").attr("placeholder", "");
 	$("#reply").val("");
 	$("#media").val("");

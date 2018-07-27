@@ -242,6 +242,10 @@ function support() {
 function login(url) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
+	if(url=="misskey.xyz"){
+		misskeyLogin();
+		return;
+	}
 	if($('#linux:checked').val()=="on"){
 		var red = "urn:ietf:wg:oauth:2.0:oob"
 	}else{
@@ -282,6 +286,54 @@ function login(url) {
 			if ($('#linux:checked').val() == "on") {} else {
 				ipc.send('quit', 'go');
 			}
+		}
+	}
+	
+
+}
+//これが後のMisskeyである。
+function misskeyLogin() {
+	var multi = localStorage.getItem("multi");
+	var obj = JSON.parse(multi);
+	var start = "https://misskey.xyz/api/auth/session/generate";
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify({
+		appSecret: "D8Zoa1CFA12SeeJpAZDMc2VyAqtjqXZV"
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			const {
+				shell
+			} = require('electron');
+	
+			shell.openExternal(json.url);
+			var electron = require("electron");
+
+			/*
+			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
+					"client_id"] + "&client_secret=" + json["client_secret"] +
+				"&response_type=code&scope=read+write+follow&redirect_uri=" + red;
+			localStorage.setItem("domain_tmp", url);
+			localStorage.setItem("client_id", json["client_id"]);
+			localStorage.setItem("client_secret", json["client_secret"]);
+			$("#auth").show();
+			$("#add").hide();
+			const {
+				shell
+			} = require('electron');
+	
+			shell.openExternal(auth);
+			var electron = require("electron");
+			var ipc = electron.ipcRenderer;
+			if ($('#linux:checked').val() == "on") {} else {
+				ipc.send('quit', 'go');
+			}
+			*/
 		}
 	}
 	

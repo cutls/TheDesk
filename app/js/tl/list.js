@@ -2,14 +2,15 @@ function listToggle(){
     if ($("#list-box").hasClass("hide")) {
         $("#list-box").removeClass("hide");
         $("#list-box").addClass("show");
-		$("#list-box").css("top",$('#list-tgl').offset().top+"px");
-		$("#list-box").css("left",$('#list-tgl').offset().left-410+"px");
+		$("#list-box").css("bottom","40px");
+		$("#list-box").css("left",$('#list-tgl').offset().left-$('#list-box').width()/2+"px");
 		//リストロード
 	} else {
         $("#list-box").removeClass("show");
 		$("#list-box").addClass("hide")
 	}
-} 
+}
+
 
 function list(){
     $("#lists-user").html("");

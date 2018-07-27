@@ -1,21 +1,10 @@
 /*ささやきボックス(Cr民並感)*/
-//もっとボタン
-function more() {
-	$(".more-show").show();
-	$(".more-hide").hide();
-	$("#post-box").addClass("post-more");
-}
-//閉じるボタン
-function less() {
-	$(".more-show").hide();
-	$(".more-hide").show();
-	$("#post-box").removeClass("post-more");
-}
 //✕隠す
 function hide() {
-	$("#post-box").addClass("hidenbox");
-	$("#post-box").fadeOut();
-	$("#menu-btn").fadeIn();
+	$('#post-box').removeClass("appear")
+	$('#post-box').animate({
+		'bottom': "-500px"
+	});
 }
 //最小化
 function mini() {
@@ -28,42 +17,14 @@ function mini() {
 }
 //最小化時に展開
 function show() {
-	$("#post-box").removeClass("hidenbox");
-	$("#post-box").fadeIn();
-	$("#menu-btn").fadeOut();
+	$("#textarea").focus();
+	$('#post-box').addClass("appear")
+	$('#post-box').css("left",$('#posttgl').position().left+"px");
+	$('#post-box').animate({
+		'bottom': 0
+	});
 }
-//横幅
-function zoomBox() {
-	if ($("#post-box").hasClass("bigbox")) {
-		$("#post-box").css('width', '350px');
-		$("#post-box").removeClass("bigbox")
-	} else {
-		$("#post-box").css('width', '50vw');
-		$("#post-box").addClass("bigbox")
-	}
-}
-//サイドバー開閉
-function xpand() {
-	if ($("#sidebar").hasClass("xed")) {
-		$(".side-label").show();
-		$("#sidebar").css('width', '75px');
-		$("#post-box").css('right', '78px');
-		$("#sidebar").css('min-width', '75px');
-		$("#sidebar .big-menu i").addClass('big-icon');
-		$("#sidebar").removeClass("xed");
-		$("#x-btn").text("keyboard_arrow_right");
-		localStorage.removeItem("xed");
-	} else {
-		$("#sidebar").css('width', '29px');
-		$("#sidebar").css('min-width', '29px');
-		$("#post-box").css('right', '27px');
-		$("#sidebar").addClass("xed");
-		$("#sidebar .big-menu i").removeClass('big-icon');
-		$(".side-label").hide();
-		$("#x-btn").text("keyboard_arrow_left");
-		localStorage.setItem("xed","true");
-	}
-}
+
 
 
 //コード受信
@@ -80,3 +41,34 @@ if(location.search){
 		$(".mini-btn").text("expand_less");
 	}
 }
+$('#posttgl').focusin(function(e) {
+	if(!$('#post-box').hasClass("appear")){
+		show();
+	}
+});
+
+$("#timeline-container,#group").click(function(e) {
+	if($('#post-box').hasClass("appear") && !localStorage.getItem("nohide")){
+		hide();
+	}
+	localStorage.removeItem("nohide")
+});
+
+$("#timeline-container").click(function(e) {
+	if(!$('#list-box').hasClass("hide")){
+		$("#list-box").removeClass("show");
+		$("#list-box").addClass("hide")
+	}
+	if(!$('#src-box').hasClass("hide")){
+		$("#src-box").removeClass("show");
+		$("#src-box").addClass("hide")
+	}
+	if(!$('#filter-box').hasClass("hide")){
+		$("#filter-box").removeClass("show");
+		$("#filter-box").addClass("hide")
+	}
+	if(!$('#add-box').hasClass("hide")){
+		$("#add-box").removeClass("show");
+		$("#add-box").addClass("hide")
+	}
+});

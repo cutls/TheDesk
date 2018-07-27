@@ -10,8 +10,8 @@ var websocketNotf = [];
 function addToggle() {
 	$("#add-box").toggleClass("hide");
 	addselCk()
-	$("#add-box").css("top",$('#add-tgl').offset().top+"px");
-	$("#add-box").css("left",$('#add-tgl').offset().left-410+"px");
+	$("#add-box").css("bottom","40px");
+	$("#add-box").css("left",$('#add-tgl').offset().left-$('#add-box').width()/2+"px");
 	$("#add-box").toggleClass("show");
 }
 //最初、カラム変更時に発火
@@ -108,7 +108,7 @@ function parseColumn() {
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
 						  ')" class="setting nex" title="このアカウントの'+unique_notf+'"'+icnsert+'><i class="material-icons waves-effect nex notf-icon_' +
-						  acct.domain + '">notifications</i></a></div>'+
+						  acct.domain + '">notifications</i></div><div class="area-sta"><span class="new badge teal notf-reply_'+acct.domain+' hide" data-badge-caption="Reply">0</span><span class="new badge yellow black-text notf-fav_'+acct.domain+' hide" data-badge-caption="Fav">0</span><span class="new badge blue notf-bt_'+acct.domain+' hide" data-badge-caption="BT">0</span><span class="new badge orange notf-follow_'+acct.domain+' hide" data-badge-caption="Follow">0</span></a></div>'+
 			'<div class="area-a2"><a onclick="removeColumn(' + key +
 						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除"'+icnsert+'>cancel</i></a></div>'+
 		  '<div class="area-a3"><a onclick="setToggle(' + key +
@@ -145,8 +145,8 @@ function parseColumn() {
 		tl(acct.type, data, acct.domain, key, delc,voice);
 		cardCheck(key);
 		mediaCheck(key);
-		catchCheck(key)
-		voiceCheck(key)
+		catchCheck(key);
+		voiceCheck(key);
 	});
 	var width = localStorage.getItem("width");
 	if (width) {

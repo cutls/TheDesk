@@ -268,6 +268,7 @@ function ckdb(acct_id) {
 		$("#ranking-btn").show();
 	}else if(domain=="imastodon.net"){
 		localStorage.setItem("imas", "true");
+		$(".imasonly").show();
 	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var bbcode = domain + "_bbcode";

@@ -170,5 +170,38 @@ function notfmore(tlid) {
 function notfToggle(acct, tlid) {
 	$("#notf-box_" + tlid).toggleClass("hide");
 	$("#notf-box_" + tlid).toggleClass("show");
+	notfCanceler(acct)
+}
+function notfCanceler(acct){
+	$(".notf-reply_" + acct_id).text(0);
+	$(".notf-reply_" + acct_id).addClass("hide");
+	$(".notf-fav_" + acct_id).text(0);
+	$(".notf-fav_" + acct_id).addClass("hide");
+	$(".notf-bt_" + acct_id).text(0);
+	$(".notf-bt_" + acct_id).addClass("hide");
+	$(".notf-follow_" + acct_id).text(0);
+	$(".notf-follow_" + acct_id).addClass("hide");
 	$(".notf-icon_" + acct).removeClass("red-text");
+}
+function allNotfRead(){
+	var multi = localStorage.getItem("multi");
+	if (!multi) {
+		var obj = [{
+			at: localStorage.getItem("acct_0_at"),
+			name: localStorage.getItem("name_0"),
+			domain: localStorage.getItem("domain_0"),
+			user: localStorage.getItem("user_0"),
+			prof: localStorage.getItem("prof_0"),
+			id: localStorage.getItem("user-id_0")
+		}];
+		var json = JSON.stringify(obj);
+		localStorage.setItem("multi", json);
+	} else {
+		var obj = JSON.parse(multi);
+	}
+	console.log(obj);
+	var templete;
+	Object.keys(obj).forEach(function(key) {
+		notfCanceler(key)
+	});
 }

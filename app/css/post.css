@@ -1,11 +1,11 @@
 /*トゥートボックス向けCSS*/
 #post-box {
   position: fixed;
-  right: 78px;
-  bottom: 3px;
+  left: 78px;
+  bottom: -500px;
   background-color: var(--postbox);
   border: thin solid gray;
-  z-index: 500;
+  z-index: 501;
   width: 300px;
   min-width:300px;
   max-width:100%;

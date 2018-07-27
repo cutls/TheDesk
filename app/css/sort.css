@@ -1,13 +1,42 @@
 .drag-content{
 	width:300px;
 	max-width:100%;
-	height:30px;
+	height:300px;
 	text-overflow: ellipsis;
 	cursor:move;
 	user-select: none;
-	background-color:black;
+	background-color:var(--modalfooter);
 	margin:5px;
 	border-radius:5px;
-	color:white;
+	color:var(--color);
 	padding:3px;
+	font-family:Open Sans;
+	font-size:20px;
+	flex-grow:1;
+	text-align: center;
+	padding:10px;
+}
+#sort{
+	display:flex;
+	flex-direction:row;
+	overflow-x:scroll;
+	display: flex;
+	justify-content: center;
+	width:100vw;
+  	
+}
+#sort-box{
+	position:absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width:100vw; 
+	height:calc(100vh - 40px);
+	background-color: rgba(0, 0, 0, 0.8);
+	z-index:10002;
+}
+#sort-box button{
+	background-color: var(--notfbox);
+	color:var(--color);
 }

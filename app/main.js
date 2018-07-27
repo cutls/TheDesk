@@ -496,6 +496,18 @@ function adobeWindow(){
 	});
 	window.loadURL('file://' + __dirname + '/adobe.html');
 }
-
+var cbTimer1;
+ipc.on('startmem', (e, arg) => {
+	cbTimer1 = setInterval(mems, 1000);
+});
+ipc.on('endmem', (e, arg) => {
+	if(cbTimer1){
+		clearInterval(cbTimer1);
+	}
+});
+function mems(){
+	var mem=os.totalmem()-os.freemem();
+	mainWindow.webContents.send('memory', [mem,os.cpus()[0].model,os.totalmem()]);
+}
 
 app.setAsDefaultProtocolClient('thedesk')

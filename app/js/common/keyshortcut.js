@@ -52,17 +52,23 @@ $(function($) {
 		//Ctrl+Sift+N:NowPlaying
 		if (event.ctrlKey && event.shiftKey) {
 			if (e.keyCode === 78) {
+				show();
 				nowplaying()
 				return false;
 			}
 		}
 		//input/textareaにフォーカスなし時
 		if (!hasFocus && !hasFocus2) {
+			//Ctrl+V:いつもの
+			if (event.ctrlKey) {
+				if (e.keyCode === 86) {
+					show();
+				}
+			}
 			//X:開閉
 			if (e.keyCode === 88) {
-				if ($("#post-box").hasClass("hidenbox")) {
+				if (!$("#post-box").hasClass("appear")) {
 					show();
-					$('textarea').focus();
 				} else {
 					hide();
 				}
@@ -70,16 +76,18 @@ $(function($) {
 			}
 			//N:新トゥート
 			if (e.keyCode === 78) {
-				if ($("#post-box").hasClass("hidenbox")) {
+				if (!$("#post-box").hasClass("appear")) {
 					show();
 				}
 				$('textarea').focus();
 				return false;
 			}
-			//E:拡張On/Off
-			if (e.keyCode === 69) {
-				zoomBox();
-				return false;
+			//Ctrl+E:全ての通知未読を既読にする
+			if (event.ctrlKey) {
+				if (e.keyCode === 69) {
+					allNotfRead();
+					return false;
+				}
 			}
 			//Ctrl+Space:読み込み
 			if (event.ctrlKey) {

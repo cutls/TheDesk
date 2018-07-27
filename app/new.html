@@ -24,7 +24,7 @@
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Akane (16.0.0) beta";
+var ver="Mio (15.10.0)";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
 var acct_id=0;
@@ -41,9 +41,229 @@ var tlid=0;
 <button class="btn waves-effect" onclick="closedrop()" data-trans="close">閉じる</button>
 </div>
 </div>
+<!--カラム追加-->
+<div id="add-box" class="hide z-depth-4 notf-box">
+<div class="input-field"><span data-trans="your_acct">アカウント選択</span>
+<br>
+<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
+<label></label>
+</div>
+<div class="input-field">
+<div id="auth">
+<select id="type-sel" style="color:black">
+	<option value="local" data-trans="local">ローカル</option>
+	<option value="local-media" data-trans="local-media">ローカル(メディア)</option>
+	<option value="home" data-trans="home">ホーム</option>
+	<option value="pub" data-trans="public">連合</option>
+	<option value="pub-media" data-trans="public-media">連合(メディア)</option>
+	<option value="dm" data-trans="dm">ダイレクトメッセージ</option>
+	<option value="mix" data-trans="integrated">統合(ローカルとホーム)</option>
+	<option value="plus" data-trans="plus">統合(ローカルとブースト・リプライ)</option>
+	<option value="notf" data-trans="notification">通知</option>
+</select>
+<label data-trans="show_tl">表示するタイムライン</label>
+</div>
+<div id="noauth" class="hide">表示するタイムライン
+	<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);" placeholder="e.g:mstdn.jp">
+</div>
+</div>
+<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()" data-trans-i="add">
+	<i class="material-icons left">add</i>追加
+</button>
+<br>
+<br>
+<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="addToggle()" data-trans-i="close">
+	<i class="material-icons left">close</i>閉じる
+</button>
+</div>
+<!--検索-->
+<div id="src-box" class="hide notf-box z-depth-4" style="width:500px">
+		<div class="input-field">
+		<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
+</div><div class="input-field">
+<i class="material-icons prefix">search</i>
+<input id="src" type="text" class="validate" style="width:calc( 60% - 40px);">
+<label for="src" data-trans="src">検索</label>
+<button class="btn waves-effect indigo" style="width:calc( 40% - 40px);" onclick="src()" data-trans-i="src">
+	<i class="material-icons left">search</i>検索
+</button>
+<br>
+<br>
+
+
+</div>
+<div id="search">
+<div id="src-contents">
+</div>
+<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="srcToggle()">
+	<i class="material-icons left" data-trans-i="close">close</i>閉じる
+</button>
+</div>
+</div>
+<!--並べ替え-->
+<div id="sort-box" class="hide notf-box z-depth-4">
+<ul id="sort"></ul>
+<button onclick="sort()" class="btn waves-effect light-blue nex" style="width:100%; max-width:200px;" data-trans-i="sort">
+	<i class="material-icons left">sort</i>並べ替え設定
+</button>
+<button class="btn waves-effect orange " style="width:calc( 100% - 10px);" onclick="sortToggle()" data-trans-i="close">
+	<i class="material-icons left">close</i>閉じる
+</button>
+</div>
+<!--リスト-->
+<div id="list-box" class="hide notf-box z-depth-4">
+	<div class="input-field" style="width:calc( 100% - 100px);float:left">
+		<select id="list-acct-sel" class="acct-sel"></select>
+		<label>アカウント選択</label>
+	</div>
+	<div style="float:left; padding-top:8px; padding-bottom:28px;">
+		<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
+			一覧
+		</button>
+	</div>
+	<br><br>
+	<div id="lists"></div>
+	<div id="lists-user"></div>
+	<input type="text" style="width:150px" id="list-add" placeholder="タイトル">
+		<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">新規作成</button>
+</div>
+<!--フィルター-->
+<div id="filter-box" class="hide notf-box z-depth-4">
+	<div class="input-field" style="width:calc( 100% - 100px);float:left">
+		<select id="filter-acct-sel" class="acct-sel"></select>
+		<label>アカウント選択</label>
+	</div>
+	<div style="float:left; padding-top:8px; padding-bottom:28px;">
+		<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
+			一覧
+		</button>
+	</div>
+	<div id="filtered-words"></div>
+	<input type="hidden" id="filter-edit-id">
+	<input type="text" style="width:150px" id="filter-add-word" placeholder="フィルターワード"><br>
+	適用範囲<br>
+	<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+	  <label for="home_filter">ホーム</label>
+	<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+	  <label for="local_filter">ローカル</label>
+	<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+	  <label for="notf_filter">通知</label>
+	<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+	  <label for="conv_filter">会話</label><br>
+	オプション<br>
+	<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+	  <label for="wholeword_filter">単語マッチ</label><br>
+	<span class="sml">非ラテン系の文字列では「単語マッチ」は推奨されません。</span><br>
+	<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+	  <label for="except_filter">除外</label><br>
+	<span class="sml">「除外」時マッチしたトゥートは非可逆的に除外され、削除後も閲覧できません。</span><br>
+	有効期限(あと)<span class="sml">未指定(または0分)で「無制限」になります。<b>仕様上数値の正確性を保証できません。</b></span><br><br>
+	<input type="text" style="width:50px" id="days_filter" placeholder="d" value="0">日
+	<input type="text" style="width:50px" id="hours_filter" placeholder="h" value="0">時間
+	<input type="text" style="width:50px" id="mins_filter" placeholder="m" value="0">分
+	<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">追加</button><br>
+	<span class="sml">Integrated TL/Plus TLは、公開/ホームのフィルターワードが合算されて適応されます。どちらか一方の指定でも非表示になります。</span>
+</div>
+<div id="main">
+<!--TLのTL-->
+<div id="timeline-container">
+	まずは右のアカウントボタンからアカウントを追加してください。<br>
+	右のカラム追加ボタンで認証せずにローカルタイムラインを見ることもできます。
+</div>
+<!--サイドバー-->
+<div id="sidebar">
+<div id="sidebar-top">
+<div class="side-dead"></div>
+<div class="big-menu" id="add-tgl">
+<a onclick="addToggle()" class="nex waves-effect" data-trans-i="add">
+	<i class="material-icons nex big-icon" title="カラム追加" data-trans-title="column_add">add</i>
+</a>
+<br>
+<span class="side-label" data-trans="column_add">カラム追加</span>
+</div>
+<div class="big-menu">
+<a href="acct.html" class="nex waves-effect">
+	<i class="material-icons nex big-icon" title="アカウントマネージャー(Ctrl+Shift+M)" data-trans-title="manager">account_circle</i>
+</a>
+<br>
+<span class="side-label" data-trans="manager_short">アカウント</span>
+</div>
+<div class="big-menu" id="sort-tgl">
+<a onclick="sortToggle()" class="nex waves-effect">
+	<i class="material-icons nex big-icon" title="カラム一覧/並べ替え" data-trans-title="sort">sort</i>
+</a>
+<br>
+<span class="side-label" data-trans="sort">カラム一覧</span>
+</div>
+<div class="side-dead">
+</div>
+<div class="small-menu" id="src-tgl">
+	<a onclick="srcToggle()" class="nex waves-effect">
+		<i class="material-icons" title="検索" data-trans-title="src">search</i>
+		<span class="side-label" data-trans="src">検索</span>
+	</a>
+</div>
+<div class="small-menu">
+<a href="setting.html" class="nex waves-effect">
+	<i class="material-icons nex" title="設定(Ctrl+Shift+S)" data-trans-title="setting">settings</i>
+	<span class="side-label" data-trans="setting">設定</span>
+</a>
+</div>
+<div class="small-menu" id="list-tgl">
+<a onclick="listToggle()" class="nex waves-effect">
+	<i class="material-icons" title="リスト" data-trans-title="list">view_headline</i>
+	<span class="side-label" data-trans="list">リスト</span>
+</a>
+</div>
+<div class="small-menu" id="filter-tgl">
+	<a onclick="filterToggle()" class="nex waves-effect">
+		<i class="material-icons" title="フィルター" data-trans-title="filter">filter_list</i>
+		<span class="side-label" data-trans="filter">Filter</span>
+	</a>
+</div>
+<div class="small-menu">
+<a href="index.html" class="nex mize waves-effect">
+	<i class="material-icons nex" title="スーパーリロード(F5/⌘+R)" data-trans-title="reload">refresh</i>
+	<span class="side-label" data-trans="reload">再読込</span>
+</a>
+</div>
+<div class="small-menu">
+<a onclick="window.open('https://astarte.thedesk.top');" class="setting nex waves-effect" target="_blank" id="ranking-btn" style="display:none;">
+	<i class="material-icons nex" title="アスタルテランキング">timeline</i>
+	<span class="side-label">暇ラン</span>
+</a>
+</div>
+<div class="small-menu">
+<a onclick="nano()" class="nex waves-effect">
+	<i class="material-icons" title="最小のマストドン。TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
+	<span class="side-label" data-trans="nano">Nano</span>
+</a>
+</div>
+<div id="side-dead">
+</div>
+<div class="small-menu">
+	<a onclick="xpand()" class="nex waves-effect">
+		<i class="material-icons" title="サイドバーの開閉" data-trans-title="sidebar_xpand" id="x-btn">keyboard_arrow_right</i>
+		<span class="side-label" data-trans="sidebar_xpand_short">たたむ</span>
+	</a>
+</div>
+</div>
+<div id="sidebar-btm">
+<!--最小化-->
+<div id="menu-btn" class="big-menu" onclick="show()" style="display:none;">
+<a class="waves-effect">
+	<i class="material-icons big-icon">mode_edit</i>
+	<br>
+	<span class="side-label" data-trans="post">投稿</span>
+</a>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="post-box" class="z-depth-3">
 <!--トゥートボックス-->
+
 <div class="row" style="margin-bottom:0;">
 </span>
 <div class="" style="float:left;">
@@ -549,202 +769,7 @@ var tlid=0;
 		<i class="material-icons pointer" onclick="endPip()">close</i>
 		<div id="pip-content">
 		</div>
-    </div>
-<!--カラム追加-->
-<div id="add-box" class="hide z-depth-4 notf-box">
-<div class="input-field"><span data-trans="your_acct">アカウント選択</span>
-<br>
-<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
-<label></label>
-</div>
-<div class="input-field">
-<div id="auth">
-<select id="type-sel" style="color:black">
-	<option value="local" data-trans="local">ローカル</option>
-	<option value="local-media" data-trans="local-media">ローカル(メディア)</option>
-	<option value="home" data-trans="home">ホーム</option>
-	<option value="pub" data-trans="public">連合</option>
-	<option value="pub-media" data-trans="public-media">連合(メディア)</option>
-	<option value="dm" data-trans="dm">ダイレクトメッセージ</option>
-	<option value="mix" data-trans="integrated">統合(ローカルとホーム)</option>
-	<option value="plus" data-trans="plus">統合(ローカルとブースト・リプライ)</option>
-	<option value="notf" data-trans="notification">通知</option>
-</select>
-<label data-trans="show_tl">表示するタイムライン</label>
-</div>
-<div id="noauth" class="hide">表示するタイムライン
-	<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);" placeholder="e.g:mstdn.jp">
-</div>
-</div>
-<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()" data-trans-i="add">
-	<i class="material-icons left">add</i>追加
-</button>
-<br>
-<br>
-</div>
-<!--検索-->
-<div id="src-box" class="hide notf-box z-depth-4" style="width:500px">
-		<div class="input-field">
-		<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
-</div><div class="input-field">
-<i class="material-icons prefix">search</i>
-<input id="src" type="text" class="validate" style="width:calc( 60% - 40px);">
-<label for="src" data-trans="src">検索</label>
-<button class="btn waves-effect indigo" style="width:calc( 40% - 40px);" onclick="src()" data-trans-i="src">
-	<i class="material-icons left">search</i>検索
-</button>
-<br>
-<br>
-</div>
-<div id="search">
-<div id="src-contents">
-</div>
-</div>
-</div>
-<!--並べ替え-->
-<div id="sort-box" class="hide">
-<ul id="sort"></ul>
-<div>
-<button onclick="sort()" class="btn waves-effect nex" style="width:100%; max-width:300px;" data-trans-i="sort">
-	<i class="material-icons left">sort</i>並べ替え設定
-</button>
-<button onclick="sortToggle()" class="btn waves-effect nex" style="width:100%; max-width:300px;" data-trans-i="close">
-		<i class="material-icons left">close</i>閉じる
-</button>
-</div>
-</div>
-<!--リスト-->
-<div id="list-box" class="hide notf-box z-depth-4">
-	<div class="input-field" style="width:calc( 100% - 100px);float:left">
-		<select id="list-acct-sel" class="acct-sel"></select>
-		<label>アカウント選択</label>
 	</div>
-	<div style="float:left; padding-top:8px; padding-bottom:28px;">
-		<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
-			一覧
-		</button>
-	</div>
-	<br><br>
-	<div id="lists"></div>
-	<div id="lists-user"></div>
-	<input type="text" style="width:150px" id="list-add" placeholder="タイトル">
-		<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">新規作成</button>
-</div>
-<!--フィルター-->
-<div id="filter-box" class="hide notf-box z-depth-4">
-	<div class="input-field" style="width:calc( 100% - 100px);float:left">
-		<select id="filter-acct-sel" class="acct-sel"></select>
-		<label>アカウント選択</label>
-	</div>
-	<div style="float:left; padding-top:8px; padding-bottom:28px;">
-		<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
-			一覧
-		</button>
-	</div>
-	<div id="filtered-words"></div>
-	<input type="hidden" id="filter-edit-id">
-	<input type="text" style="width:150px" id="filter-add-word" placeholder="フィルターワード"><br>
-	適用範囲<br>
-	<input type="checkbox" class="filled-in" id="home_filter" value="home" />
-	  <label for="home_filter">ホーム</label>
-	<input type="checkbox" class="filled-in" id="local_filter" value="public" />
-	  <label for="local_filter">ローカル</label>
-	<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
-	  <label for="notf_filter">通知</label>
-	<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
-	  <label for="conv_filter">会話</label><br>
-	オプション<br>
-	<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
-	  <label for="wholeword_filter">単語マッチ</label><br>
-	<span class="sml">非ラテン系の文字列では「単語マッチ」は推奨されません。</span><br>
-	<input type="checkbox" class="filled-in" id="except_filter" value="1" />
-	  <label for="except_filter">除外</label><br>
-	<span class="sml">「除外」時マッチしたトゥートは非可逆的に除外され、削除後も閲覧できません。</span><br>
-	有効期限(あと)<span class="sml">未指定(または0分)で「無制限」になります。<b>仕様上数値の正確性を保証できません。</b></span><br><br>
-	<input type="text" style="width:50px" id="days_filter" placeholder="d" value="0">日
-	<input type="text" style="width:50px" id="hours_filter" placeholder="h" value="0">時間
-	<input type="text" style="width:50px" id="mins_filter" placeholder="m" value="0">分
-	<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">追加</button><br>
-	<span class="sml">Integrated TL/Plus TLは、公開/ホームのフィルターワードが合算されて適応されます。どちらか一方の指定でも非表示になります。</span>
-</div>
-<div id="main">
-<!--TLのTL-->
-<div id="timeline-container">
-	まずは右のアカウントボタンからアカウントを追加してください。<br>
-	右のカラム追加ボタンで認証せずにローカルタイムラインを見ることもできます。
-</div>
-</div>
-</div>
-<!--bottom-->
-<div id="bottom">
-    <div class="leftside">
-        <div id="dambox">
-                <input type="text" id="posttgl" placeholder="トゥート" style="height:2rem">
-        </div>
-        <div class="leftside" id="group">
-            <div class="btnsgroup"><span class="grouptitle">Columns:</span>
-                <a onclick="addToggle()" class="nex waves-effect" data-trans-i="add" id="add-tgl">
-                    <i class="material-icons nex" title="カラム追加" data-trans-title="column_add">add</i>
-                </a>
-                <a onclick="sortToggle()" class="nex waves-effect">
-                    <i class="material-icons nex big-icon" title="カラム一覧/並べ替え" data-trans-title="sort">sort</i>
-                </a>
-            </div>
-            <div class="btnsgroup"><span class="grouptitle">Accounts:</span>
-                <a href="acct.html" class="nex waves-effect">
-                    <i class="material-icons nex big-icon" title="アカウントマネージャー(Ctrl+Shift+M)" data-trans-title="manager">account_circle</i>
-                </a>
-                <a onclick="srcToggle()" class="nex waves-effect" id="src-tgl">
-                    <i class="material-icons" title="検索" data-trans-title="src">search</i>
-                </a>
-                <a onclick="listToggle()" class="nex waves-effect" id="list-tgl">
-                    <i class="material-icons" title="リスト" data-trans-title="list">view_headline</i>
-                </a>
-                <a onclick="filterToggle()" class="nex waves-effect" id="filter-tgl">
-                    <i class="material-icons" title="フィルター" data-trans-title="filter">filter_list</i>
-                </a>
-            </div>
-            <div class="btnsgroup"><span class="grouptitle">Preferances:</span>
-                <a href="setting.html" class="nex waves-effect">
-                    <i class="material-icons nex" title="設定(Ctrl+Shift+S)" data-trans-title="setting">settings</i>
-                </a>
-                <a href="index.html" class="nex mize waves-effect">
-                    <i class="material-icons nex" title="スーパーリロード(F5/⌘+R)" data-trans-title="reload">refresh</i>
-                </a>
-                <a onclick="nano()" class="nex waves-effect">
-                    <i class="material-icons" title="最小のマストドン。TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
-                </a>
-                <a onclick="window.open('https://astarte.thedesk.top');" class="setting nex waves-effect" target="_blank" id="ranking-btn" style="display:none;">
-                    <i class="material-icons nex" title="アスタルテランキング">timeline</i>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div>
-		<div id="tips-menu">
-			<div class="btnsgroup" style="height:34px"><span class="grouptitle">Tips:</span>
-				<a onclick="tips('ver')" class="nex waves-effect">
-					<i class="material-icons nex" title="バージョン" data-trans-title="ver">info</i>
-				</a>
-				<a onclick="tips('clock')" class="nex waves-effect">
-					<i class="material-icons nex" title="時計" data-trans-title="clock">access_time</i>
-				</a>
-				<a onclick="tips('memory')" class="nex waves-effect">
-					<i class="material-icons nex" title="メモリ" data-trans-title="memory">memory</i>
-				</a>
-				<a onclick="tips('trend')" class="nex waves-effect imasonly" style="display:none;">
-						<i class="material-icons nex" title="アイマストドントレンド" data-trans-title="trendtip">whatshot</i>
-				</a>
-			</div>
-		</div>
-		<div id="tips" class="hide">
-			<a onclick="tipsToggle()" class="nex waves-effect" style="float:left">
-					<i class="material-icons nex" title="Tipsの変更" data-trans-title="tips">bubble_chart</i>
-			</a>
-			<div id="tips-text" style="float:left; width:300px;"></div>
-		</div>
-    </div>
-</div>
 <!--左下メッセージ-->
 <div id="message">
 </div>
@@ -790,3 +815,6 @@ var tlid=0;
 <script type="text/javascript" src="./js/emoji/emojipack.js"></script>
 <script type="text/javascript" src="./js/emoji/default-emoji.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
+
+
+

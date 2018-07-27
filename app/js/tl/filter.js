@@ -62,8 +62,8 @@ function filterToggle(){
     if ($("#filter-box").hasClass("hide")) {
         $("#filter-box").removeClass("hide");
         $("#filter-box").addClass("show");
-		$("#filter-box").css("top",$('#filter-tgl').offset().top-$('#filter-box').height()/2+"px");
-		$("#filter-box").css("left",$('#filter-tgl').offset().left-410+"px");
+		$("#filter-box").css("bottom","40px");
+		$("#filter-box").css("left",$('#filter-tgl').offset().left-$('#filter-box').width()/2+"px");
 		//フィルターロード
 	} else {
         $("#filter-box").removeClass("show");

@@ -1,5 +1,13 @@
 /*共通CSS*/
-html,body{overflow:hidden; user-select: none; cursor:default; font-size:13px;height: 100vh; background-color: var(--bg); color: var(--color);}
+html,body{
+  overflow:hidden;
+  user-select: none;
+  cursor:default;
+  font-size:13px;
+  height: 100vh;
+  background-color: var(--bg);
+  color: var(--color);
+}
 .btn {
   margin: 5px;
   text-transform: none;
@@ -53,6 +61,10 @@ option {
 }
 .pointer {
   cursor: pointer;
+}
+.badge{
+   min-width: 0 !important;
+   margin-left: 5px !important;
 }
 .bbcode-pulse-loadings, .bbcode-pulse-loading, .fa-pulse {
   display: inline-block;
@@ -212,6 +224,7 @@ blockquote:before, .quote:before {
 }
 
 
+
 /*スクロールバー*/
 ::-webkit-scrollbar {
   width: 5px;
@@ -226,6 +239,6 @@ blockquote:before, .quote:before {
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   border-radius: 5px;
-  background: #9e9e9e;
+  background: #607d8b;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }

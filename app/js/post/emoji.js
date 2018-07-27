@@ -135,6 +135,10 @@ function emojiInsert(code, del) {
 }
 //改行挿入
 function brInsert(code) {
+	if(!$('#post-box').hasClass("appear")){
+		localStorage.setItem("nohide",true);
+		show();
+	}
 	var now = $("#textarea").val();
 	$("#textarea").val(now + code);
 	$("#textarea").focus();

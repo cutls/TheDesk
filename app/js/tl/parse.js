@@ -181,6 +181,16 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var notice = noticetext;
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
+				if (toot.type == "mention") {
+					$(".notf-reply_" + acct_id).text($(".notf-reply_" + acct_id).text()*1+1);
+					$(".notf-reply_" + acct_id).removeClass("hide")
+				}else if (toot.type == "reblog") {
+					$(".notf-bt_" + acct_id).text($(".notf-bt_" + acct_id).text()*1+1);
+					$(".notf-bt_" + acct_id).removeClass("hide")
+				}else if (toot.type == "favourite") {
+					$(".notf-fav_" + acct_id).text($(".notf-fav_" + acct_id).text()*1+1);
+					$(".notf-fav_" + acct_id).removeClass("hide")
+				}
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if(popup>0){
 					Materialize.toast("["+domain+"より]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
@@ -575,12 +585,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			+'<div class="' + if_mine + ' action '+disp["red"]+' '+noauth+'"><a onclick="redraft(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを削除して再投稿"><i class="material-icons">redo</i></a></div>'+trans+
-			'<div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
+			'<span class="cbadge viabadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
+			via +
+			'</span>'+
+			'</div><div class="area-side"><div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
 			'<div class="action '+noauth+'"><a onclick="details(\'' + toot.id + '\',' + acct_id +
 			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
-			'<span class="cbadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
-			via +
-			'</span></div></div>' +
+			'</div></div>' +
 			'</div></div>';
 	});
 	if (mix == "mix") {

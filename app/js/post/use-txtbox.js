@@ -1,5 +1,6 @@
 /*リプライ*/
 function re(id,at,acct_id,mode){
+	localStorage.setItem("nohide",true);
 	show();
 	$("#reply").val(id);
 	var te=$("#textarea").val();
@@ -21,6 +22,7 @@ function reEx(id){
 }
 //引用
 function qt(id,acct_id,at,url){
+	localStorage.setItem("nohide",true);
 	var qt = localStorage.getItem("quote");
 	if(!qt){
 		var qt="simple";

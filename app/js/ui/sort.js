@@ -25,8 +25,8 @@ function sortload(){
 			}
 		}
 			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'"'+insert+'><a onclick="goColumn(' + key +
-			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムへ">forward</i></a>'+localStorage.getItem("user_" + acct.domain)+"@"+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data)+' <a onclick="removeColumn(' + key +
-			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a></li>';
+			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムへ">forward</i></a> <a onclick="removeColumn(' + key +
+			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a><br>'+localStorage.getItem("user_" + acct.domain)+"@"+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data)+'</li>';
 			$("#sort").append(html);
 		});
 		drag();
@@ -92,6 +92,7 @@ function sort(){
 	Materialize.toast("並べ替え完了。", 3000);
 	sortload();
 	parseColumn();
+	sortToggle()
 }
 //ソートボタントグル
 function sortToggle(){
@@ -99,8 +100,6 @@ function sortToggle(){
 	if ($("#sort-box").hasClass("hide")) {
 		$("#sort-box").removeClass("hide");
 		$("#sort-box").addClass("show");
-		$("#sort-box").css("top",$('#sort-tgl').offset().top+"px");
-		$("#sort-box").css("left",$('#sort-tgl').offset().left-410+"px");
 		//並べ替え
 		sortload();
 	} else {

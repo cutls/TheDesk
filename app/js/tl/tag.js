@@ -57,7 +57,7 @@ function favTag(){
     Object.keys(obj).forEach(function(key) {
         var tag = obj[key];
         tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="#' + tag + 'のタイムライン">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer" title="#' + tag + 'でトゥート">Toot</a>　'+
-            '<a onclick="tagRemove(\'' + key + '\')" class="pointer" title="#' + tag + 'をよく使うタグから削除">Unpin</a></span> ';
+            '<a onclick="autoToot(\'#' + tag + ' \');brInsert(\'#' + tag + ' \')" class="pointer" title="常に#' + tag + 'でトゥート">実況</a>　<a onclick="tagRemove(\'' + key + '\')" class="pointer" title="#' + tag + 'をよく使うタグから削除">削除</a></span> ';
     });
     if(obj.length>0){
         $("#taglist").append("My Tags:" + tags);
@@ -87,9 +87,9 @@ function trendTag(){
             var tags="";
             json=json.score;
             Object.keys(json).forEach(function(tag) {
-                tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="#' + tag + 'のタイムライン">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer" title="#' + tag + 'でトゥート">Toot</a></span> ';
+                tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="#' + tag + 'のタイムライン">TL</a>　<a onclick="show();brInsert(\'#' + tag + '\')" class="pointer" title="#' + tag + 'でトゥート">Toot</a></span> ';
              });
-             $("#taglist").append('<div class="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' + tags+'</div>');
+             $("#taglist").append('<div class="trendtag">アイマストドントレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' + tags+'</div>');
              trendintervalset()
         }else{
             $("#taglist").html("");
@@ -105,4 +105,8 @@ function trendintervalset(){
 function tagTL(a,b,c,d){
     var acct_id = $("#post-acct-sel").val();
     tl(a,b,acct_id,d);
+}
+function autoToot(tag){
+    localStorage.setItem("stable",tag);
+    Materialize.toast("次に"+tag+"なしでトゥートするまで全てのトゥートに"+tag+"が付与されます。",3000);
 }
