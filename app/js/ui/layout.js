@@ -75,9 +75,14 @@ function parseColumn() {
 			var notf_attr='';
 		}
 		if(localStorage.getItem("notification_" + acct.domain)){
-			var unique_notf=localStorage.getItem("notification_" + acct.domain);
+			var unique_notf=lang_layout_thisacct[lang].replace("{{notf}}" ,localStorage.getItem("notification_" + acct.domain));
 		}else{
-			var unique_notf="通知";
+			if(lang=="ja"){
+				var notflocale="通知";
+			}else if(lang=="en"){
+				var notflocale="Notification";
+			} 
+			var unique_notf=lang_layout_thisacct[lang].replace("{{notf}}" ,notflocale);
 		}
 		var insert="";
 		var icnsert="";
@@ -104,26 +109,26 @@ function parseColumn() {
 		}
 		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
-			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。"></i></div>'+
+			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang_layout_gotop[lang]+'"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
-						  ')" class="setting nex" title="このアカウントの'+unique_notf+'"'+icnsert+'><i class="material-icons waves-effect nex notf-icon_' +
+						  ')" class="setting nex" title="'+unique_notf+'"'+icnsert+'><i class="material-icons waves-effect nex notf-icon_' +
 						  acct.domain + '">notifications</i></div><div class="area-sta"><span class="new badge teal notf-reply_'+acct.domain+' hide" data-badge-caption="Reply">0</span><span class="new badge yellow black-text notf-fav_'+acct.domain+' hide" data-badge-caption="Fav">0</span><span class="new badge blue notf-bt_'+acct.domain+' hide" data-badge-caption="BT">0</span><span class="new badge orange notf-follow_'+acct.domain+' hide" data-badge-caption="Follow">0</span></a></div>'+
 			'<div class="area-a2"><a onclick="removeColumn(' + key +
-						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除"'+icnsert+'>cancel</i></a></div>'+
+						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_delthis[lang]+'"'+icnsert+'>cancel</i></a></div>'+
 		  '<div class="area-a3"><a onclick="setToggle(' + key +
-		  ')" class="setting nex" title="このカラムの設定"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
+		  ')" class="setting nex" title="'+lang_layout_setthis[lang]+'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
 		  '<div class="hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"><div id="notifications_' + key +
 		  '" data-notf="' + acct.domain + '" data-type="notf"></div></div><div class="hide notf-indv-box" id="util-box_' + key +
 		  '" style="padding:5px;"><a onclick="mediaToggle(' + key +
-		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="メディアフィルター">perm_media</i><span id="sta-media-' +
-		  key + '">On</span></a>メディアフィルター<br><a onclick="cardToggle(' + key +
-		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="リンクの解析を切り替え(OFFで制限を回避出来る場合があります)">link</i><span id="sta-card-' +
-		  key + '">On</span></a>リンク解析<br><a onclick="voiceToggle(' + key +
-		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="読み上げ">hearing</i><span id="sta-voice-' +
-		  key + '">On</span></a>読み上げTL<br>TLヘッダーの色<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
-			'" class="tl" tlid="' + key + '"'+notf_attr+' data-type="' + acct.type + '"><div style="text-align:center">[ここにトゥートはありません。]<br>F5/⌘+Rで再読込できます。</div></div></div></div>';
+		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_mediafil[lang]+'">perm_media</i><span id="sta-media-' +
+		  key + '">On</span></a>'+lang_layout_mediafil[lang]+'<br><a onclick="cardToggle(' + key +
+		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_linkanades[lang]+'">link</i><span id="sta-card-' +
+		  key + '">On</span></a>'+lang_layout_linkana[lang]+'<br><a onclick="voiceToggle(' + key +
+		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_tts[lang]+'">hearing</i><span id="sta-voice-' +
+		  key + '">On</span></a>'+lang_layout_tts[lang]+'TL<br>'+lang_layout_headercolor[lang]+'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+			'" class="tl" tlid="' + key + '"'+notf_attr+' data-type="' + acct.type + '"><div style="text-align:center">'+lang_layout_nodata[lang]+'</div></div></div></div>';
 		$("#timeline-container").append(html);
 		localStorage.removeItem("pool_" + key);
 		if (acct.data) {
@@ -204,7 +209,7 @@ function addselCk(){
 		$("#noauth").addClass("hide");
 	}
 	if(domain=="knzk.me" || domain=="mstdn.y-zu.org"){
-		$("#type-sel").append('<option value="dm" data-trans="dm" id="direct-add">ダイレクトメッセージ</option>');
+		$("#type-sel").append('<option value="dm" data-trans="dm" id="direct-add">'+lang_layout_dm[lang]+'</option>');
 		$('#type-sel').material_select('update');
 	}else{
 		$("#direct-add").remove();

@@ -331,7 +331,7 @@ function cap(type, data, acct_id) {
 		}
 	} else if (type == "local-media") {
 		if(localStorage.getItem("local_" + acct_id) && !locale){
-			var response=localStorage.getItem("local_" + acct_id)+"(メディア)";
+			var response=localStorage.getItem("local_" + acct_id)+"("+lang_tl_media[lang]+")";
 		}else{
 			var response="Local TL(Media)";
 		}
@@ -343,7 +343,7 @@ function cap(type, data, acct_id) {
 		}
 	} else if (type == "pub-media") {
 		if(localStorage.getItem("public_" + acct_id) && !locale){
-			var response=localStorage.getItem("public_" + acct_id)+"(メディア)";
+			var response=localStorage.getItem("public_" + acct_id)+"("+lang_tl_media[lang]+")";
 		}else{
 			var response="Federated TL(Media)";
 		}

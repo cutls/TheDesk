@@ -173,14 +173,14 @@ function notfToggle(acct, tlid) {
 	notfCanceler(acct)
 }
 function notfCanceler(acct){
-	$(".notf-reply_" + acct_id).text(0);
-	$(".notf-reply_" + acct_id).addClass("hide");
-	$(".notf-fav_" + acct_id).text(0);
-	$(".notf-fav_" + acct_id).addClass("hide");
-	$(".notf-bt_" + acct_id).text(0);
-	$(".notf-bt_" + acct_id).addClass("hide");
-	$(".notf-follow_" + acct_id).text(0);
-	$(".notf-follow_" + acct_id).addClass("hide");
+	$(".notf-reply_" + acct).text(0);
+	$(".notf-reply_" + acct).addClass("hide");
+	$(".notf-fav_" + acct).text(0);
+	$(".notf-fav_" + acct).addClass("hide");
+	$(".notf-bt_" + acct).text(0);
+	$(".notf-bt_" + acct).addClass("hide");
+	$(".notf-follow_" + acct).text(0);
+	$(".notf-follow_" + acct).addClass("hide");
 	$(".notf-icon_" + acct).removeClass("red-text");
 }
 function allNotfRead(){
@@ -199,9 +199,8 @@ function allNotfRead(){
 	} else {
 		var obj = JSON.parse(multi);
 	}
-	console.log(obj);
-	var templete;
 	Object.keys(obj).forEach(function(key) {
+		console.log(key);
 		notfCanceler(key)
 	});
 }

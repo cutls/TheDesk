@@ -57,10 +57,10 @@ function spotifyFlagSave(){
     var awk = $("[name=awk]:checked").val();
     if(awk=="yes"){
         localStorage.setItem("artwork","yes");
-        Materialize.toast("アルバムアートワークを添付します。", 3000);
+        Materialize.toast(lang_spotify_img[lang], 3000);
     }else{
         localStorage.removeItem("artwork");
-        Materialize.toast("アルバムアートワークを添付しません。", 3000);
+        Materialize.toast(lang_spotify_imgno[lang], 3000);
     }
 }
 function nowplaying(mode){
@@ -115,7 +115,7 @@ function nowplaying(mode){
             $("#textarea").val(content);
         });
         }else{
-            alert("アカウント連携設定をして下さい。");
+            alert(lang_spotify_acct[lang]);
         }
     }else if(mode=="itunes"){
         var electron = require("electron");
@@ -155,7 +155,7 @@ function nowplaying(mode){
 function spotifySave(){
     var temp=$("#np-temp").val();
     localStorage.setItem("np-temp", temp);
-    Materialize.toast("NowPlaying文章を更新しました。", 3000);
+    Materialize.toast(lang_spotify_np[lang], 3000);
 }
 if(location.search){
     var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);

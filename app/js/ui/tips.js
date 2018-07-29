@@ -128,7 +128,7 @@ function spotifytips(){
 			spotint=setInterval(spotStart, 1000);
         });
         }else{
-            alert("アカウント連携設定をして下さい。");
+            alert(lang_spotify_acct[lang]);
         }
 }
 function spotStart(){
@@ -172,7 +172,7 @@ function clockStart(){
 	if(nowMin<10){nowMin="0"+nowMin }
 	var nowSec  = nowTime.getSeconds(); // 秒を抜き出す
 	if(nowSec<10){nowSec="0"+nowSec }
-	var msg =  nowTime.getFullYear()+"年"+(nowTime.getMonth()+1)+"月"+nowTime.getDate()+'日<span style="font-size:20px; font-family:Open Sans">'+nowHour + ":" + nowMin + ":" + nowSec+"</span>";
+	var msg =  nowTime.getFullYear()+"/"+(nowTime.getMonth()+1)+"/"+nowTime.getDate()+'<span style="font-size:20px; font-family:Open Sans">'+nowHour + ":" + nowMin + ":" + nowSec+"</span>";
 	$("#tips-text").html(msg);
 }
 function sleep(waitMsec) {

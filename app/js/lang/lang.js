@@ -216,17 +216,17 @@ var lang_list_remove={
     "ja":"リストから削除",
     "en":"Remove from the list" 
 }
-//js/notification.js
+//tl/notification.js
 var lang_notf_new={
     "ja":"件の新しい通知",
     "en":" new notifications" 
 }
-//js/speech.js
+//tl/speech.js
 var lang_speech_refresh={
     "ja":"音声読み上げ設定を更新しました。",
     "en":"Refresh setting of TTS" 
 }
-//js/src.js
+//tl/src.js
 var lang_src_ts={
     "ja":"時系列",
     "en":"chronological order" 
@@ -234,4 +234,88 @@ var lang_src_ts={
 var lang_src_people={
     "ja":"人がトゥート",
     "en":" people toot" 
+}
+//tl/tag.js
+var lang_tags_always={
+    "ja":"常に",
+    "en":"Always toots with " 
+}
+var lang_tags_realtime={
+    "ja":"実況",
+    "en":"Tag-stream toot" 
+}
+var lang_tags_tagunpin={
+    "ja":"{{tag}}をよく使うタグから削除",
+    "en":"Unpin {{tag}}"
+}
+var lang_tags_tagwarn={
+    "ja":"次に{{tag}}なしでトゥートするまで全てのトゥートに{{tag}}が付与されます。",
+    "en":"When you toot without {{tag}}, tag-streaming mode will be off."
+}
+//tl/tl.js
+var lang_tl_media={
+    "ja":"メディア",
+    "en":"Media"
+}
+//ui/layout.js
+var lang_layout_gotop={
+    "ja":"一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。",
+    "en":"Go top of this column. When icon is red, this column cannot connect straming API. Please reload."
+}
+var lang_layout_thisacct={
+    "ja":"このアカウントの{{notf}}",
+    "en":"{{notf}} of this account"
+}
+var lang_layout_delthis={
+    "ja":"このカラムを削除",
+    "en":"Remove this column"
+}
+var lang_layout_setthis={
+    "ja":"このカラムの設定",
+    "en":"Setting of this column"
+}
+var lang_layout_mediafil={
+    "ja":"メディアフィルター",
+    "en":"Media filtering"
+}
+var lang_layout_linkana={
+    "ja":"リンク解析",
+    "en":"Auto Link Analyzer"
+}
+var lang_layout_linkanades={
+    "ja":"リンクの解析を切り替え(OFFで制限を回避出来る場合があります)",
+    "en":"Auto link analyzer(You may got limitation of API)"
+}
+var lang_layout_tts={
+    "ja":"読み上げ",
+    "en":"Text to speech "
+}
+var lang_layout_headercolor={
+    "ja":"TLヘッダーカラー",
+    "en":"Header color of this column"
+}
+var lang_layout_nodata={
+    "ja":"[ここにトゥートはありません。]<br>F5/⌘+Rで再読込できます。",
+    "en":"[No data]<br>F5/⌘+R to reload"
+}
+var lang_layout_dm={
+    "ja":"ダイレクトメッセージ",
+    "en":"Direct Message"
+}
+//ui/spotify.js
+var lang_spotify_img={
+    "ja":"アルバムアートワークを添付します。",
+    "en":"Attach an album artwork"
+}
+var lang_spotify_imgno={
+    "ja":"アルバムアートワークを添付しません。",
+    "en":"Not ttach an album artwork"
+}
+var lang_spotify_acct={
+    "ja":"アカウント連携をしてください。",
+    "en":"Connect TheDesk to Spotify"
+}
+var lang_spotify_np={
+    "ja":"NowPlaying文書を更新しました。",
+    "en":"Done:templete of NowPlaying"
 }
