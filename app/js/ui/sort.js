@@ -26,7 +26,7 @@ function sortload(){
 		}
 			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'"'+insert+'><a onclick="goColumn(' + key +
 			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムへ">forward</i></a> <a onclick="removeColumn(' + key +
-			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a><br>'+localStorage.getItem("user_" + acct.domain)+"@"+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data)+'</li>';
+			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a><br>'+localStorage.getItem("user_" + acct.domain)+"@"+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data,acct.domain)+'</li>';
 			$("#sort").append(html);
 		});
 		drag();
@@ -48,6 +48,8 @@ function Scap(type, data) {
 		return "Notification"
 	} else if (type == "mix") {
 		return "Integrated"
+	}else{
+		console.log(type);
 	}
 }
 

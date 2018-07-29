@@ -18,6 +18,8 @@
 <script type="text/javascript" src="./js/common/jquery.js"></script>
 <script type="text/javascript" src="./js/platform/first.js"></script>
 <script type="text/javascript" src="./js/common/materialize.js"></script>
+<script type="text/javascript" src="./js/lang/lang.js"></script>
+<script type="text/javascript" src="./js/lang/parse.lang.js"></script>
 <script type="text/javascript" src="./js/common/time.js"></script>
 <script type="text/javascript" src="./js/common/version.js"></script>
 <script type="text/javascript" src="./js/common/keyshortcut.js"></script>
@@ -27,6 +29,7 @@
 var ver="Akane (16.0.0) beta";
 //betaを入れるとバージョンチェックしない
 //var ver="beta";
+var lang="en";
 var acct_id=0;
 var tlid=0;
   verck(ver);
@@ -734,6 +737,9 @@ var tlid=0;
 				</a>
 				<a onclick="tips('trend')" class="nex waves-effect imasonly" style="display:none;">
 						<i class="material-icons nex" title="アイマストドントレンド" data-trans-title="trendtip">whatshot</i>
+				</a>
+				<a onclick="tips('spotify')" class="nex waves-effect">
+					<i class="fa fa-spotify nex" title="Spotify" data-trans-title="spotifytips"></i>
 				</a>
 			</div>
 		</div>

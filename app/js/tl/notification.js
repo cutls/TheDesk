@@ -38,13 +38,13 @@ function notf(acct_id, tlid, sys) {
 				var ipc = electron.ipcRenderer;
 				var os = electron.remote.process.platform;
 					var options = {
-						body: ct+"件の新しい通知",
+						body: ct+lang_notf_new[lang],
 						icon: localStorage.getItem("prof_"+acct_id)
 					  };
 					if(os=="darwin"){
 						var n = new Notification('TheDesk:'+domain, options);
 					}else{
-						ipc.send('native-notf', ['TheDesk:'+domain,ct+"件の新しい通知",localStorage.getItem("prof_"+acct_id)]);
+						ipc.send('native-notf', ['TheDesk:'+domain,ct+lang_notf_new[lang],localStorage.getItem("prof_"+acct_id)]);
 					}
 				
 			}

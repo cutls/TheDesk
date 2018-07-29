@@ -97,15 +97,15 @@ function filter(){
 				var filterword = json[key];
 				var context = filterword.context.join(',');
 				filters = filters + filterword.phrase+'<span class="sml">(for '+context+')</span>:<a onclick="filterEdit(\'' + filterword.id + '\',\'' + acct_id +
-					'\')" class="pointer">編集</a>/<a onclick="filterDel(' + filterword.id + ',' + acct_id +
-					')" class="pointer">削除</a><br> ';
+					'\')" class="pointer">'+lang_edit[lang]+'</a>/<a onclick="filterDel(' + filterword.id + ',' + acct_id +
+					')" class="pointer">'+lang_del[lang]+'</a><br> ';
 			});
 			if(filters==""){
-				filters="フィルターはありません<br>";
+				filters=lang_filter_nodata[lang]+"<br>";
 			}
 			$("#filtered-words").html(filters);
 		}else{
-            $("#filtered-words").html("フィルターはありません");
+            $("#filtered-words").html(lang_filter_nodata[lang]);
         }
 	});
 }
@@ -127,7 +127,7 @@ function makeNewFilter(){
 	}
 	console.log(cont);
 	if(!cont.length){
-		$("#filtered-words").html('Error:適応範囲を最低一つ以上チェックしてください。');
+		$("#filtered-words").html('Error:'+lang_filter_errordegree[lang]);
 	}
 	var exc=$("#except_filter:checked").val();
 	var who=$("#wholeword_filter:checked").val();
@@ -169,7 +169,7 @@ function makeNewFilter(){
 			$("#days_filter").val("0");
 			$("#hours_filter").val("0");
 			$("#mins_filter").val("0");
-			$("#add-filter-btn").text("追加");
+			$("#add-filter-btn").text(lang_add[lang]);
 			$("#filter-edit-id").val("")
 		}
 	}
@@ -185,7 +185,7 @@ function filterEdit(id,acct_id){
 		$("#days_filter").val("0");
 		$("#hours_filter").val("0");
 		$("#mins_filter").val("0");
-	$("#add-filter-btn").text("編集");
+	$("#add-filter-btn").text(lang_edit[lang]);
 	$("#filter-edit-id").val(id);
 	var domain = localStorage.getItem("domain_" + acct_id);
     var at = localStorage.getItem("acct_"+ acct_id + "_at");

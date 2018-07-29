@@ -213,6 +213,8 @@ function addselCk(){
 }
 //カラム削除
 function removeColumn(tlid) {
+	$("#sort-box").addClass("hide");
+	$("#sort-box").removeClass("show");
 	var multi = localStorage.getItem("column");
 	var obj = JSON.parse(multi);
 	//聞く

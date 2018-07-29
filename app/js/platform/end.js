@@ -155,7 +155,7 @@ function progshow(e) {
 	  if(percent<1){
 		 $("#imgup").text(Math.floor(percent*100)+"%");
 	  }else{
-		$("#imgup").text("処理中");
+		$("#imgup").text(lang_progress[lang]);
 	  }
 	}
   }

@@ -509,5 +509,9 @@ function mems(){
 	var mem=os.totalmem()-os.freemem();
 	mainWindow.webContents.send('memory', [mem,os.cpus()[0].model,os.totalmem()]);
 }
+ipc.on('mkc', (e, arg) => {
+	var mkc = fs.readFileSync(__dirname + '/.tkn', 'utf8');
+	mainWindow.webContents.send('mkcr', mkc);
+});
 
 app.setAsDefaultProtocolClient('thedesk')

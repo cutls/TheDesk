@@ -11,7 +11,7 @@ function post() {
 	if(domain=="theboss.tech"){
 		if(~str.indexOf("#")){
 			if(str.indexOf("#theboss_tech")=="-1"){
-				if(!confirm("デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。")){
+				if(!confirm(lang_post_tagTL[lang])){
 					return false;
 				}
 			}
@@ -20,7 +20,7 @@ function post() {
 	if(domain=="dtp-mstdn.jp"){
 		if(~str.indexOf("#")){
 			if(str.indexOf("#dtp")=="-1"){
-				if(!confirm("デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。")){
+				if(!confirm(lang_post_tagTL[lang])){
 					return false;
 				}
 			}
@@ -91,7 +91,7 @@ function clear() {
 	if(localStorage.getItem("stable")){
 		$("#textarea").val(localStorage.getItem("stable"));
 	}
-	$("#textarea").attr("placeholder", "");
+	$("#textarea").attr("placeholder", lang_toot[lang]);
 	$("#reply").val("");
 	$("#media").val("");
 	var cwt = localStorage.getItem("cw-text");
@@ -102,13 +102,13 @@ function clear() {
 	}
 	$("#cw").removeClass("yellow-text");
 	$("#cw").removeClass("cw-avail");
-	$("#rec").text("いいえ");
-	$("#mec").text("なし");
+	$("#rec").text(lang_no[lang]);
+	$("#mec").text(lang_nothing[lang]);
 	loadVis();
 	$("#nsfw").removeClass("yellow-text");
 	$("#nsfw").html("visibility_off");
 	$("#nsfw").removeClass("nsfw-avail");
-	$("#nsc").text("なし");
+	$("#nsc").text(lang_nothing[lang]);
 	$("#drag").css("background-color", "#e0e0e0");
 	$("#preview").html("");
 	$("#toot-post-btn").prop("disabled", false);

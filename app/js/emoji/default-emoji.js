@@ -9,16 +9,32 @@ var defaultemoji={
     place:place,
     symbol:symbol
 };
-var defaultemojiname={
-    activity:"活動",
-    flag:"国旗",
-    food:"食べ物",
-    nature:"自然",
-    object:"もの",
-    people:"ひと",
-    place:"場所",
-    symbol:"記号"
-};
+if(lang=="ja"){
+    var defaultemojiname={
+        activity:"活動",
+        flag:"国旗",
+        food:"食べ物",
+        nature:"自然",
+        object:"もの",
+        people:"ひと",
+        place:"場所",
+        symbol:"記号"
+    };
+    var lang_defaultemojis_text="{{cat}}の絵文字";
+}else if(lang=="en"){
+    var defaultemojiname={
+        activity:"Activities",
+        flag:"Flags",
+        food:"Foods",
+        nature:"Nature",
+        object:"Tools",
+        people:"People",
+        place:"Places",
+        symbol:"Symbols"
+    };
+    var lang_defaultemojis_text="Emojis of {{cat}}";
+}
+
 function defaultEmoji(target){
     var json=defaultemoji[target];
     var emojis="";
@@ -27,7 +43,7 @@ function defaultEmoji(target){
         emojis = emojis + '<a onclick="defEmoji(\''+emoji["shortcode"]+'\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: '+emoji["css"]+';"></span></a>';
     });
     $("#emoji-list").html(emojis);
-    $("#now-emoji").text(defaultemojiname[target]+"の絵文字");
+    $("#now-emoji").text(lang_defaultemojis_text.replace("{{cat}}" ,defaultemojiname[target]));
     $(".emoji-control").addClass("hide");
 }
 function customEmoji(){

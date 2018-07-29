@@ -43,7 +43,7 @@ function pimg(files) {
 			var electron = require("electron");
 		  	var ipc = electron.ipcRenderer;
 			  ipc.send('bmp-image', [files[i].path,i]);
-			  todo("変換中...");
+			  todo(lang_progress[lang]);
 			  
 		}else{
 			handleFileUpload(files[i], obj,i);
@@ -117,7 +117,7 @@ function media(b64, type, no) {
 				var html = '<img src="' + json.preview_url + '" style="width:50px; max-height:100px;">';
 				$('#preview').append(html);
 			} else {
-				$('#preview').append("プレビューできません");
+				$('#preview').append(lang_postimg_previewdis[lang]);
 			}
 			if (!img) {
 				var img = "no-act";
@@ -135,8 +135,8 @@ function media(b64, type, no) {
 			todc();
 			$("#toot-post-btn").prop("disabled", false);
 			$('select').material_select();
-			$("#mec").text("あり");
-			Materialize.toast("ファイルアップロード後はアカウントを切り替えられません。", 1000);
+			$("#mec").text(lang_there[lang]);
+			Materialize.toast(lang_postimg_aftupload[lang], 1000);
 			$("#imgup").text("");
 			$("#imgsel").show();
 			localStorage.removeItem("image");

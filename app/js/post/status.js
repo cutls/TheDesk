@@ -43,7 +43,7 @@ function fav(id, acct_id, remote) {
 					$(".fav_" + id).addClass("yellow-text");
 				}
 				}else{
-					Materialize.toast("お気に入り登録しました。インスタンスが違うときは時間がかかる場合があります。", 1000);
+					Materialize.toast(lang_status_favWarn[lang], 1000);
 				}
         }
 	}
@@ -90,7 +90,7 @@ function rt(id, acct_id, remote) {
 					$(".rt_" + id).addClass("teal-text");
 				}
 			} else {
-				Materialize.toast("ブーストしました。インスタンスが違うときは時間がかかる場合があります。", 1000);
+				Materialize.toast(lang_status_btWarn[lang], 1000);
 			}
 		}
 	}
@@ -135,10 +135,10 @@ function follow(acct_id,remote) {
 			console.log(json);
 			if ($("#his-data").hasClass("following")) {
 				$("#his-data").removeClass("following");
-				$("#his-follow-btn").text("フォロー");
+				$("#his-follow-btn").text(lang_status_follow[lang]);
 			} else {
 				$("#his-data").addClass("following");
-				$("#his-follow-btn").text("フォロー解除");
+				$("#his-follow-btn").text(lang_status_unfollow[lang]);
 			}
 		}
 	}
@@ -168,10 +168,10 @@ function block(acct_id) {
 		if (httpreq.readyState == 4) {
 			if ($("#his-data").hasClass("blocking")) {
 				$("#his-data").removeClass("blocking");
-				$("#his-block-btn").text("ブロック");
+				$("#his-block-btn").text(lang_status_block[lang]);
 			} else {
 				$("#his-data").addClass("blocking");
-				$("#his-block-btn").text("ブロック解除");
+				$("#his-block-btn").text(lang_status_unblock[lang]);
 			}
 		}
 	}
@@ -201,10 +201,10 @@ function mute(acct_id) {
 		if (httpreq.readyState == 4) {
 			if ($("#his-data").hasClass("muting")) {
 				$("#his-data").removeClass("muting");
-				$("#his-mute-btn").text("ミュート");
+				$("#his-mute-btn").text(lang_status_mute[lang]);
 			} else {
 				$("#his-data").addClass("muting");
-				$("#his-mute-btn").text("ミュート解除");
+				$("#his-mute-btn").text(lang_status_unmute[lang]);
 			}
 		}
 	}
@@ -228,7 +228,7 @@ function del(id, acct_id) {
 }
 //redraft
 function redraft(id, acct_id){
-	if(confirm("削除して再編集しますか？そのトゥートの全てのデータがリセットされます。この機能はベータ版です。画像は~v2.4.1で破棄されます。")){
+	if(confirm(lang_status_redraft[lang])){
 		show();
 		del(id, acct_id);
 		$("#post-acct-sel").prop("disabled", true);
@@ -251,6 +251,8 @@ function redraft(id, acct_id){
 		html = html.replace(/<\/p>/, "\n");
 		html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, "$1");
 		html=$.strip_tags(html);
+		localStorage.setItem("nohide",true);
+		show();
 		$("#textarea").val(html);
 	}
 }
@@ -341,7 +343,7 @@ function empUser(){
 	if(!obj){
 		var obj=[];
 		obj.push(id);
-		Materialize.toast(id+"を強調します。設定を適用するにはF5を押して下さい。", 4000);
+		Materialize.toast(id+lang_status_emphas[lang], 4000);
 	}else{
 		var can;
 		Object.keys(obj).forEach(function(key) {
@@ -351,7 +353,7 @@ function empUser(){
 			}else{
 				can=true;
 				obj.splice(key, 1);
-				Materialize.toast(id+"の強調を解除しました。設定を適用するにはF5を押して下さい。", 4000);
+				Materialize.toast(id+lang_status_unemphas[lang], 4000);
 			}
 		});
 	}

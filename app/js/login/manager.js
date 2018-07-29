@@ -40,11 +40,11 @@ function load() {
 			acct.name + '</span>' + escapeHTML(acct.user) + '@' + acct.domain +
 			'</div><div class="card-action"><a class="waves-effect disTar pointer white-text" onclick="data(\'' +
 			acct.domain +
-			'\')"><i class="material-icons">info</i>インスタンス情報</a><a class="waves-effect disTar pointer  white-text" onclick="refresh(' +
+			'\')"><i class="material-icons">info</i>'+lang_manager_info[lang]+'</a><a class="waves-effect disTar pointer  white-text" onclick="refresh(' +
 			key +
-			')"><i class="material-icons">refresh</i>情報更新</a><a class="waves-effect disTar pointer red-text" onclick="multiDel(' +
+			')"><i class="material-icons">refresh</i>'+lang_manager_refresh[lang]+'</a><a class="waves-effect disTar pointer red-text" onclick="multiDel(' +
 			key +
-			')"><i class="material-icons">delete</i>削除</a><br>アカウントカラーの選択<div id="colorsel_'+key+'" class="colorsel"></div></div></div>';
+			')"><i class="material-icons">delete</i>'+lang_manager_delete[lang]+'</a><br>'+lang_manager_color[lang]+'<div id="colorsel_'+key+'" class="colorsel"></div></div></div>';
 		$("#acct-list").append(templete);
 	colorpicker(key)
 	});
@@ -61,7 +61,11 @@ function load() {
            
         }else{
 			$("#linux").prop("checked", true);
-        }
+		}
+	ipc.send('mkc', "");
+	ipc.on('mkcr', function (event, arg) {
+		localStorage.setItem("mkc",arg)
+	})
 
 }
 //最初に読む
@@ -114,7 +118,7 @@ function multiDel(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
 	//削除確認ダイアログ
-	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] + "を削除します")) {
+	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] +lang_manager_confirm[lang])) {
 		Object.keys(obj).forEach(function(key) {
 			var nk=key-1;
 			//公開範囲(差分のみ)
@@ -178,7 +182,7 @@ function multiDel(target) {
 function multiDel2(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] + "を削除します")) {
+	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] +lang_manager_confirm[lang])) {
 		obj.splice(target, 1);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
@@ -301,7 +305,7 @@ function misskeyLogin() {
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.responseType = 'json';
 	httpreq.send(JSON.stringify({
-		appSecret: "D8Zoa1CFA12SeeJpAZDMc2VyAqtjqXZV"
+		appSecret: localStorage.getItem("mkc")
 	}));
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState == 4) {
@@ -399,7 +403,7 @@ function getdata(domain, at) {
 		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
-			Materialize.toast("エラーが発生しました。しばらく待ってから再起動してください。Error:" + json.error,
+			Materialize.toast(lang_fatalerroroccured[lang]+"Error:" + json.error,
 				5000);
 			return;
 		}
@@ -459,7 +463,7 @@ function refresh(target) {
 		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
-			Materialize.toast("エラーが発生しました。しばらく待ってから再起動してください。Error:" + json.error,
+			Materialize.toast(lang_fatalerroroccured[lang]+"Error:" + json.error,
 				5000);
 			return;
 		}
@@ -506,7 +510,7 @@ function multisel() {
 	console.log(obj.length)
 	if(obj.length<1){
 		$("#src-acct-sel").html('<option value="tootsearch">Tootsearch</option>');
-		$("#add-acct-sel").html('<option value="noauth">認証せずに見る</option>');
+		$("#add-acct-sel").html('<option value="noauth">'+lang_login_noauth[lang]+'</option>');
 	}else{
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
@@ -536,7 +540,7 @@ function multisel() {
 function mainacct(){
 	var acct_id = $("#main-acct-sel").val();
 	localStorage.setItem("main", acct_id);
-	Materialize.toast("メインアカウントを設定しました。", 3000);
+	Materialize.toast(lang_manager_mainAcct[lang], 3000);
 }
 function colorpicker(key){
 	temp=
@@ -620,7 +624,7 @@ input.addEventListener("focus", function() {
 					console.log(json);
 					if (!json.error) {
 
-						var urls = "もしかして:";
+						var urls = "Suggest:";
 						Object.keys(json.instances).forEach(function(key) {
 							var url = json.instances[key];
 							urls = urls + '　<a onclick="login(\'' + url.name +

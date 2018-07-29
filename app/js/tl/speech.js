@@ -86,7 +86,7 @@ function voiceSettings(){
     localStorage.setItem("voice_speed", $("#voicespeed").val()/10);
     localStorage.setItem("voice_pitch", $("#voicepitch").val()/50);
     localStorage.setItem("voice_vol", $("#voicevol").val()/100);
-    Materialize.toast("音声読み上げ設定を更新しました。", 3000);
+    Materialize.toast(lang_speech_refresh[lang], 3000);
 }
 function voiceSettingLoad(){
     var speed=localStorage.getItem("voice_speed");

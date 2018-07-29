@@ -54,13 +54,24 @@
   margin-right:15px;
   border-radius:5px;
 }
+#spot-box{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#spot-img{
+  margin-right:2px;
+}
+#spot-art{
+  margin-right:2px;
+  margin-left:2px;
+}
 .btnsgroup .grouptitle{
   font-family:Open Sans;
   font-size:15px;
 }
 @media screen and (max-width: 1344px) {
   .btnsgroup .grouptitle{ display: none; }
-  #tips{ display: none; }
+  #tips,#tips-menu{ display: none; }
 }
 iframe {
 	max-width:100%;

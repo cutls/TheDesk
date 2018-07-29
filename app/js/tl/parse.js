@@ -152,10 +152,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}
 		if (mix == "notf") {
 			if (toot.type == "mention") {
-				var what = "が返信しました";
+				var what = lang_parse_mentioned[lang];
 				var icon = "fa-share teal-text";
 			} else if (toot.type == "reblog") {
-				var what = "がブーストしました";
+				var what = lang_parse_bted[lang];
 				var icon = "fa-retweet light-blue-text";
 				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
 					what = ":「わかるわ」";
@@ -163,7 +163,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					what = "がしばきました";
 				}
 			} else if (toot.type == "favourite") {
-				var what = "がお気に入り登録しました";
+				var what = lang_parse_faved[lang];
 				var icon = "fa-star  yellow-text";
 				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
 					what = "の頭にティンときたようです";
@@ -172,7 +172,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				}
 			}
 			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.created_at,
-				'absolute') + '(通知された時間)"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
+				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
 				datetype) +
 			'</span><i class="big-text fa '+icon+'"></i><a onclick="udg(\'' + toot.account.id +
 				'\',\'' + acct_id + '\')" class="pointer grey-text">' + dis_name +
@@ -193,7 +193,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				}
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if(popup>0){
-					Materialize.toast("["+domain+"より]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
+					Materialize.toast("["+domain+"]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
 				}
 				if(native=="yes"){
 					var electron = require("electron");
@@ -235,7 +235,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}else{
 			var if_notf="";
 			if (toot.reblog) {
-				var rebtxt = "がブースト";
+				var rebtxt = lang_parse_btedsimple[lang];
 				var rticon = "fa-retweet light-blue-text";
 				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
 					rebtxt = ":「わかるわ」";
@@ -324,19 +324,19 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var spoiler = "cw cw_hide_" + toot.id;
 			var api_spoil = "gray";
 			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-				'\')" class="nex parsed">見る</a><br>';
+				'\')" class="nex parsed">'+lang_parse_cwshow[lang]+'</a><br>';
 		} else {
 			var ct1 = toot.content.split('</p>').length + toot.content.split('<br />').length -2;
 			var ct2 = toot.content.split('</p>').length + toot.content.split('<br>').length -2;
 			if(ct1>ct2){ var ct= ct1; }else{ var ct= ct2;  }
 			if ((sent < ct && $.mb_strlen($.strip_tags(toot.content)) > 5) || ($.strip_tags(toot.content).length > ltr && $.mb_strlen($.strip_tags(toot.content)) > 5)) {
-				var content = '<span class="gray">以下全文</span><br>' + toot.content
+				var content = '<span class="gray">'+lang_parse_fulltext[lang]+'</span><br>' + toot.content
 				var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tags(
 						toot.content), 0, 100) +
-					'</span><span class="gray">自動折りたたみ</span>';
+					'</span><span class="gray">'+lang_parse_autofold[lang]+'</span>';
 				var spoiler = "cw cw_hide_" + toot.id;
 				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-					'\')" class="nex parsed">続き…</a><br>';
+					'\')" class="nex parsed">'+lang_parse_more[lang]+'</a><br>';
 			} else {
 				var content = toot.content;
 				var spoil = escapeHTML(toot.spoiler_text);
@@ -349,7 +349,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		);
 		if (urls) {
 			var analyze = '<a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
-				',\'' + id + '\')" class="add-show pointer">URL解析</a><br>';
+				',\'' + id + '\')" class="add-show pointer">'+lang_parse_url[lang]+'</a><br>';
 		} else {
 			var analyze = '';
 		}
@@ -434,8 +434,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			Object.keys(toot.tags).forEach(function(key4) {
 				var tag = toot.tags[key4];
 				tags = tags + '<span class="hide" data-tag="' + tag.name + '">#' + tag.name + ':<a onclick="tl(\'tag\',\'' + tag.name + '\',' + acct_id +
-					',\'add\')" class="pointer" title="#' + tag.name + 'のタイムライン">TL</a>　<a onclick="brInsert(\'#' + tag.name + '\')" class="pointer" title="#' + tag.name + 'でトゥート">Toot</a>　'+
-					'<a onclick="tagPin(\'' + tag.name + '\')" class="pointer" title="#' + tag.name + 'をよく使うタグへ">Pin</a></span> ';
+					',\'add\')" class="pointer" title="' +lang_parse_tagTL[lang].replace("{{tag}}" ,'#'+tag.name)+ '">TL</a>　<a onclick="brInsert(\'#' + tag.name + '\')" class="pointer" title="' + lang_parse_tagtoot[lang].replace("{{tag}}" ,'#'+tag.name) + '">Toot</a>　'+
+					'<a onclick="tagPin(\'' + tag.name + '\')" class="pointer" title="' +lang_parse_tagpin[lang].replace("{{tag}}" ,'#'+tag.name)+ '">Pin</a></span> ';
 			});
 			tags = '<div style="float:right">' + tags + '</div>';
 		}
@@ -444,19 +444,19 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		var visen = toot.visibility;
 		if (visen == "public") {
 			var vis =
-				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="公開(クリックして本文コピー)" data-vis="public" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">public</i>';
+				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="'+lang_parse_public[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="public" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">public</i>';
 			var can_rt = "";
 		} else if (visen == "unlisted") {
 			var vis =
-				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="未収載(クリックして本文コピー)" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock_open</i>';
+				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="'+lang_parse_unlisted[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock_open</i>';
 			var can_rt = "";
 		} else if (visen == "private") {
 			var vis =
-				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="非公開(クリックして本文コピー)" data-vis="private" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock</i>';
+				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="'+lang_parse_private[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="private" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock</i>';
 			var can_rt = "hide";
 		} else if (visen == "direct") {
 			var vis =
-				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="ダイレクト(クリックして本文コピー)" data-vis="direct" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">mail</i>';
+				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="'+lang_parse_direct[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="direct" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">mail</i>';
 			var can_rt = "hide";
 		}
 		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
@@ -523,7 +523,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}
 		//日本語じゃない
 		if(toot.language!="ja"){
-			var trans='<div class="action pin"><a onclick="trans(\''+toot.language+'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを日本語に翻訳"><i class="material-icons">g_translate</i></a></div>';
+			var trans='<div class="action pin"><a onclick="trans(\''+toot.language+'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_trans[lang]+'"><i class="material-icons">g_translate</i></a></div>';
 		}else{
 			var trans="";
 		}
@@ -544,7 +544,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			toot.account.acct + locked + '</span></div>' +
 			'<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'' +
 			toot.url + '\');" title="' + date(toot.created_at, 'absolute') +
-			'(クリックでトゥートURLをコピー)"><i class="fa fa-clock-o"></i>' +
+			'('+lang_parse_clickcopyurl[lang]+')"><i class="fa fa-clock-o"></i>' +
 			date(toot.created_at, datetype) + '</span>' +
 			'</div></div>' +
 			'<div class="area-toot"><span class="toot ' + spoiler + '">' + content +
@@ -558,33 +558,33 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<div class="area-vis"></div>'+
 			'<div class="area-actions '+mouseover+'">' +
 			'<div class="action">'+vis+'</div>'+
-			'<div class="action '+antinoauth+'"><a onclick="detEx(\''+toot.url+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">詳細(メインアカウント経由)</a></div>' +
+			'<div class="action '+antinoauth+'"><a onclick="detEx(\''+toot.url+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">'+lang_parse_det[lang]+'</a></div>' +
 			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="re(\'' + toot.id +
 			'\',\'' + toot.account.acct + '\',' +
 			acct_id + ',\''+visen+
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートに返信"><i class="fa fa-share"></i></a></div>' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_replyto[lang]+'"><i class="fa fa-share"></i></a></div>' +
 			'<div class="action '+can_rt+' '+disp["rt"]+' '+noauth+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをブースト"><i class="text-darken-3 fa fa-retweet ' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_bt[lang]+'"><i class="text-darken-3 fa fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 			'</span></a></div>' +
 			'<div class="action '+can_rt+' '+disp["qt"]+' '+noauth+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
 			',\'' + toot.account.acct +'\',\''+toot.url+
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを引用"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_quote[lang]+'"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
 			'<div class="action '+disp["fav"]+' '+noauth+'"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをお気に入り登録"><i class="fa text-darken-3 fa-star' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_fav[lang]+'"><i class="fa text-darken-3 fa-star' +
 			if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
 			'</a></span></div>' +
 			'<div class="' + if_mine + ' action '+disp["del"]+' '+noauth+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを削除"><i class="fa fa-trash-o"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_del[lang]+'"><i class="fa fa-trash-o"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートをピン留め"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_pin[lang]+'"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 
 			+'<div class="' + if_mine + ' action '+disp["red"]+' '+noauth+'"><a onclick="redraft(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="このトゥートを削除して再投稿"><i class="material-icons">redo</i></a></div>'+trans+
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_redraft[lang]+'"><i class="material-icons">redo</i></a></div>'+trans+
 			'<span class="cbadge viabadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
 			via +
 			'</span>'+
@@ -623,7 +623,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 		} else {
 			var auth = "";
 		}
-		var ftxt="フォローされました";
+		var ftxt=lang_parse_followed[lang];
 		if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
 			ftxt = "名刺をいただきました";
 		}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
@@ -631,7 +631,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 		}
 		if(popup > 0 || popup==-1){
 			var notftext='<span class="cbadge"title="' + date(toot.created_at,
-				'absolute') + '(通知された時間)"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
+				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
 				datetype) +
 			'</span>'+ftxt+'。<br>';
 		}else{
@@ -663,23 +663,23 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	}
 	dis_name=twemoji.parse(dis_name);
 		templete = templete +
-			'<div class="" style="padding-top:5px;" user-id="' + toot.id + '">' +
+			'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +
 			notftext +
-			'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-end;">' +
-			'<div style="flex-basis:40px;"><a onclick="udg(\'' + toot.id + '\',' +
+			'</div><div class="area-icon"><a onclick="udg(\'' + toot.id + '\',' +
 			acct_id + ');" user="' + toot.acct + '" class="udg">' +
 			'<img src="' + toot.avatar + '" width="40" class="prof-img" user="' + toot
 			.acct + '"></a></div>' +
-			'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"><big>' +
-			dis_name + '</big></div>' +
-			'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
-			toot.acct + locked + '</div>' +
-			'</div>' + auth +
-			'<div style="justify-content:space-around"> <div class="cbadge" style="width:100px;">Follows:' +
+			'<div class="area-display_name"><div class="flex-name"><span class="user">' +
+			dis_name + '</span>' +
+			'<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
+			toot.acct + locked + auth +'</span>' +
+			'</div>' +
+			'</div>' +
+			'<div style="justify-content:space-around" class="area-toot"> <div class="cbadge" style="width:100px;">Follows:' +
 			toot.following_count +
 			'</div><div class="cbadge" style="width:100px;">Followers:' + toot.followers_count +
 			'</div>' +
-			'<div class="divider"></div>' +
+			'</div>' +
 			'</div>' +
 			'</div>';
 
@@ -696,9 +696,9 @@ function client(name) {
 	var dialog=remote.dialog;
 	const options = {
 		type: 'info',
-		title: 'クライアント処理',
-		message: name+"に対する処理を選択してください。",
-		buttons: ['何もしない','強調表示/解除', 'ミュート']
+		title: lang_parse_clientop[lang],
+		message: name+lang_parse_clienttxt[lang],
+		buttons: [lang_parse_clientno[lang],lang_parse_clienemp[lang], lang_parse_clientmute[lang]]
 	  }
 	  dialog.showMessageBox(options, function(arg) {
 		if(arg==1){
@@ -707,7 +707,7 @@ function client(name) {
 			if(!obj){
 				var obj=[];
 				obj.push(name);
-				Materialize.toast(name+"を強調表示します。", 2000);
+				Materialize.toast(name+lang_status_emphas[lang], 2000);
 			}else{
 			var can;
 			Object.keys(obj).forEach(function(key) {
@@ -717,12 +717,12 @@ function client(name) {
 				}else{
 					can=true;
 					obj.splice(key, 1);
-					Materialize.toast(name+"の強調表示を解除しました。", 2000);
+					Materialize.toast(name+lang_status_unemphas[lang], 2000);
 				}
 			});
 			if(!can){
 				obj.push(name);
-				Materialize.toast(name+"を強調表示します。", 2000);
+				Materialize.toast(name+lang_status_emphas[lang], 2000);
 			}else{
 				
 			}
@@ -738,7 +738,7 @@ function client(name) {
 			obj.push(name);
 			var json = JSON.stringify(obj);
 			localStorage.setItem("client_mute", json);
-			Materialize.toast(name+"をミュートします。設定から削除できます。", 2000);
+			Materialize.toast(name+lang_parse_mute[lang], 2000);
 		}else{
 			return;
 		}

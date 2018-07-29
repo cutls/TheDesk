@@ -1,6 +1,6 @@
 //トゥートの詳細
 function details(id, acct_id, tlid) {
-	$(".toot-reset").html("データなし");
+	$(".toot-reset").html(lang_details_nodata[lang]);
 	var html = $("#timeline_"+tlid+" #pub_" + id).html();
 	$("#toot-this").html(html);
 	$('#tootmodal').modal('open');
@@ -78,7 +78,7 @@ function replyTL(id, acct_id) {
 		console.log(mute);
 		var templete = parse([json], '', acct_id,"","",mute);
 		$("#toot-reply").prepend(templete);
-		$("#toot-reply .hide").html("フィルターされました。");
+		$("#toot-reply .hide").html(lang_details_filtered[lang]);
 		$("#toot-reply .by_filter").css("display","block");
 		$("#toot-reply .by_filter").removeClass("hide");
 		jQuery("time.timeago").timeago();
@@ -112,7 +112,7 @@ function context(id, acct_id) {
 		}
 		var templete = parse(json.descendants, '', acct_id,"","",mute);
 		$("#toot-after").html(templete);
-		$("#toot-after .hide").html("フィルターされました。");
+		$("#toot-after .hide").html(lang_details_filtered[lang]);
 		$("#toot-after .by_filter").css("display","block");
 		$("#toot-after .by_filter").removeClass("hide");
 		jQuery("time.timeago").timeago();
@@ -215,10 +215,10 @@ function cbCopy(mode){
 	if(mode=="emb"){
 		var emb='<iframe src="'+url+'/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400"></iframe><script src="https://'+domain+'/embed.js" async="async"></script>';
 		execCopy(emb)
-		Materialize.toast("埋め込みHTMLをコピーしました", 1500);
+		Materialize.toast(lang_details_embed[lang], 1500);
 	}else{
 		if(execCopy(url)){
-			Materialize.toast("トゥートURLをコピーしました", 1500);
+			Materialize.toast(lang_details_url[lang], 1500);
 		}
 		
 	}
@@ -234,7 +234,7 @@ function staCopy(id){
 	html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, "$1");
 	html=$.strip_tags(html);
 	if(execCopy(html)){
-		Materialize.toast("トゥート本文をコピーしました", 1500);
+		Materialize.toast(lang_details_txt[lang], 1500);
 	}
 	
 }

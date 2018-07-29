@@ -47,7 +47,7 @@ function verck(ver) {
 				var newest=mess.desk;
 			}
 			if (newest == ver) {
-				todo("お使いのバージョン" + mess.desk + "は最新です。");
+				todo(lang_version_usever[lang].replace("{{ver}}" ,mess.desk));
 				//betaならアプデチェックしない
 			} else if (ver.indexOf("beta")==-1) {
 				localStorage.removeItem("instance")
@@ -56,7 +56,7 @@ function verck(ver) {
 						var ipc = electron.ipcRenderer;
 						ipc.send('update', "true");
 					}else{
-						todo("アップデートはスキップされました。");
+						todo(lang_version_skipver[lang]);
 					}
 				}else{
 					var ipc = electron.ipcRenderer;

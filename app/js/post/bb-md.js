@@ -4,7 +4,7 @@ function mdCheck(){
 	var acct_id = $("#post-acct-sel").val();
 	var profimg=localStorage.getItem("prof_"+acct_id);
 			$("#acct-sel-prof").attr("src",profimg);
-			$("#toot-post-btn").text("トゥート("+localStorage.getItem("domain_"+acct_id)+")");
+			$("#toot-post-btn").text(lang_toot[lang]+"("+localStorage.getItem("domain_"+acct_id)+")");
 	  if(!localStorage.getItem("bb_"+acct_id) && !localStorage.getItem("md_"+acct_id)){
 		 $(".markdown").addClass("hide");
 		$(".anti-markdown").addClass("hide");

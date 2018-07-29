@@ -172,7 +172,7 @@ function getdata() {
 		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
-			Materialize.toast("エラーが発生しました。しばらく待ってから再起動してください。Error:" + json.error,
+			Materialize.toast(lang_fatalerroroccured[lang]+"Error:" + json.error,
 				5000);
 			return;
 		}
@@ -222,7 +222,7 @@ function getdataAdv(domain, at) {
 		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
-			Materialize.toast("エラーが発生しました。しばらく待ってから再起動してください。Error:" + json.error,
+			Materialize.toast(lang_fatalerroroccured[lang]+"Error:" + json.error,
 				5000);
 			return;
 		}
@@ -348,7 +348,7 @@ function multiSelector() {
 	console.log(obj.length)
 	if(obj.length<1){
 		$("#src-acct-sel").html('<option value="tootsearch">Tootsearch</option>');
-		$("#add-acct-sel").html('<option value="noauth">認証せずに見る</option>');
+		$("#add-acct-sel").html('<option value="noauth">'+lang_login_noauth[lang]+'</option>');
 	}else{
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
@@ -368,7 +368,7 @@ function multiSelector() {
 				profimg="./img/missing.svg";
 			}
 			$("#acct-sel-prof").attr("src",profimg);
-			$("#toot-post-btn").text("トゥート("+domain+")");
+			$("#toot-post-btn").text(lang_toot[lang]+"("+domain+")");
 			if(acct.background && acct.background!="def" && acct.text && acct.text!="def"){
 				$("#toot-post-btn").removeClass("indigo");
 				$("#toot-post-btn").css("background-color","#"+acct.background);
@@ -395,7 +395,7 @@ function multiSelector() {
 		
 	});
 		$("#src-acct-sel").append('<option value="tootsearch">Tootsearch</option>');
-		$("#add-acct-sel").append('<option value="noauth">認証せずに見る</option>');
+		$("#add-acct-sel").append('<option value="noauth">'+lang_login_noauth[lang]+'</option>');
 	}
 	$('select').material_select('update');
 }

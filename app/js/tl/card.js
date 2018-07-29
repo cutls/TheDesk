@@ -70,11 +70,11 @@ function additional(acct_id, tlid) {
 				}
 				if (json.title) {
 					$("[toot-id=" + id + "] .additional").html(
-						"<span class=\"gray\">URLチェック:<br>Title:" + json.title + "<br>" +
+						"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
 						json.description + "</span>");
 				}
 				if (json.html) {
-					$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons" onclick="pip('+id+')">picture_in_picture_alt</i>');
+					$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');
 				}
 				if (json.title) {
 					$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
@@ -172,11 +172,11 @@ function additionalIndv(tlid, acct_id, id) {
 				}else{
 					if (json.title) {
 						$("[toot-id=" + id + "] .additional").html(
-							"<span class=\"gray\">URLチェック:<br>Title:" + json.title + "<br>" +
+							"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
 							json.description + "</span>");
 					}
 					if (json.html) {
-						$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="ながら観モード">picture_in_picture_alt</i>');
+						$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');
 	
 					}
 				}

@@ -15,7 +15,7 @@ function emoji() {
 		$("#emoji").removeClass("hide")
 		if (!localStorage.getItem("emoji_" + acct_id)) {
 			var html =
-				'<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="emojiGet(\'true\');">絵文字リスト取得</button>';
+				'<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="emojiGet(\'true\');">'+lang_emoji_get[lang]+'</button>';
 			$("#emoji-list").html(html);
 		} else {
 			emojiList('home');
@@ -63,7 +63,7 @@ function emojiGet(parse) {
 
 //リストの描画
 function emojiList(target) {
-	$("#now-emoji").text("カスタム絵文字");
+	$("#now-emoji").text(lang_emoji_custom[lang]);
 	var acct_id = $("#post-acct-sel").val();
 	var start = localStorage.getItem("emojiseek");
 	if (target == "next") {

@@ -362,6 +362,10 @@ function cap(type, data, acct_id) {
 		var response= "Glance TL"
 	} else if (type == "dm") {
 		var response= "DM"
+	} else if (type == "mix") {
+		var response= "Integrated"
+	} else if (type == "plus") {
+		var response= "Local+"
 	}
 	return response;
 }

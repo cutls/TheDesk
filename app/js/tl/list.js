@@ -36,12 +36,12 @@ function list(){
 			Object.keys(json).forEach(function(key) {
                 var list = json[key];
 				lists = lists + list.title+':<a onclick="listShow(' + list.id + ',\'' + list.title + '\',\'' + acct_id +
-					'\')" class="pointer">表示</a>/<a onclick="listUser(' + list.id + ',' + acct_id +
-					')" class="pointer">ユーザー一覧</a><br> ';
+					'\')" class="pointer">'+lang_list_show[lang]+'</a>/<a onclick="listUser(' + list.id + ',' + acct_id +
+					')" class="pointer">'+lang_list_users[lang]+'</a><br> ';
 			});
 			$("#lists").html(lists);
 		}else{
-            $("#lists").html("リストはありません");
+            $("#lists").html(lang_list_nodata[lang]);
         }
 	});
 }
@@ -93,11 +93,11 @@ function listUser(id,acct_id){
 			var lists = "";
             var templete = userparse(json,'',acct_id);
             if(!json[0]){
-                templete="ユーザーはいません";
+                templete=lang_list_nouser[lang];
             }
 			$("#lists-user").html(templete);
 		}else{
-            $("#lists-user").html("ユーザーはいません");
+            $("#lists-user").html(lang_list_nouser[lang]);
         }
 	});
 }
@@ -119,7 +119,7 @@ function hisList(user,acct_id){
 		console.error(error);
 	}).then(function(json) {
 		if (json) {
-			var lists = "リストに追加<br>";
+			var lists = lang_list_add[lang]+"<br>";
 			Object.keys(json).forEach(function(key) {
                 var list = json[key];
 				lists = lists + '<a onclick="listAdd(' + list.id + ',\'' + user + '\',\'' + acct_id +
@@ -127,7 +127,7 @@ function hisList(user,acct_id){
 			});
 			$("#his-lists-a").html(lists);
 		}else{
-            $("#his-lists-a").html('リストはありません');
+            $("#his-lists-a").html(lang_list_nodata[lang]);
         }
     });
     var start = "https://" + domain + "/api/v1/accounts/"+user+"/lists"
@@ -145,7 +145,7 @@ function hisList(user,acct_id){
 		console.error(error);
 	}).then(function(json) {
 		if (json) {
-			var lists = "リストから削除<br>";
+			var lists = lang_list_remove[lang]+"<br>";
 			Object.keys(json).forEach(function(key) {
                 var list = json[key];
 				lists = lists + '<a onclick="listRemove(' + list.id + ',\'' + user + '\',\'' + acct_id +
@@ -153,7 +153,7 @@ function hisList(user,acct_id){
 			});
 			$("#his-lists-b").html(lists);
 		}else{
-            $("#his-lists-b").html('リストはありません');
+            $("#his-lists-b").html(lang_list_nodata[lang]);
         }
     });
 }

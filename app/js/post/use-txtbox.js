@@ -9,7 +9,7 @@ function re(id,at,acct_id,mode){
 	$("#post-acct-sel").val(acct_id);
 	$("#post-acct-sel").prop("disabled", true);
 	$('select').material_select();
-	$("#textarea").attr("placeholder","返信モードです。クリアするときはCtrl+Shift+Cを押してください。");
+	$("#textarea").attr("placeholder",lang_usetxtbox_reply[lang]);
 	$("#textarea").focus();
 	vis(mode);
 }
