@@ -39,6 +39,31 @@ var lang_fatalerroroccured={
     "ja":"エラーが発生しました。しばらく待ってから再起動してください。",
     "en":"Some errors are occured, please restart TheDesk."
 }
+var lang_speech={
+    "ja":"Google 日本語",
+    "en":"Google US English"
+}
+//language.html
+var lang_lang={
+    "ja":"言語",
+    "en":"Language"
+}
+var lang_langlocale={
+    "ja":"日本語",
+    "en":"English"
+}
+var lang_back={
+    "ja":"戻る",
+    "en":"Back"
+}
+var lang_set={
+    "ja":"設定",
+    "en":"Set"
+}
+var lang_langadd={
+    "ja":"<a href=\"https://github.com/cutls/TheDesk\" target=\"_blank\">GitHub</a>から翻訳に参加できます。英語の校正(緊急)や他言語に翻訳していただける方を募集しております。",
+    "en":"Translate TheDesk to other languages or proofread TheDesk on <a href=\"https://github.com/cutls/TheDesk\" target=\"_blank\">GitHub</a>. TheDesk needs your help."
+}
 //common/version.js
 var lang_version_usever={
     "ja":"お使いのバージョン{{ver}}は最新です。",
@@ -78,6 +103,14 @@ var lang_manager_confirm={
 var lang_manager_mainAcct={
     "ja":"メインアカウントを設定しました。",
     "en":"Done:choose main account"
+}
+var lang_manager_def={
+    "ja":"既定",
+    "en":"Default"
+}
+var lang_manager_none={
+    "ja":"なし",
+    "en":"None"
 }
 //post/emoji.js
 var lang_emoji_get={
@@ -224,7 +257,7 @@ var lang_notf_new={
 //tl/speech.js
 var lang_speech_refresh={
     "ja":"音声読み上げ設定を更新しました。",
-    "en":"Refresh setting of TTS" 
+    "en":"Save valie about TTS config" 
 }
 //tl/src.js
 var lang_src_ts={
@@ -272,7 +305,7 @@ var lang_layout_delthis={
 }
 var lang_layout_setthis={
     "ja":"このカラムの設定",
-    "en":"Setting of this column"
+    "en":"Preferences of this column"
 }
 var lang_layout_mediafil={
     "ja":"メディアフィルター",
@@ -318,4 +351,46 @@ var lang_spotify_acct={
 var lang_spotify_np={
     "ja":"NowPlaying文書を更新しました。",
     "en":"Done:templete of NowPlaying"
+}
+//userdata/his-data.js
+var lang_hisdata_frcreq={
+    "ja":"Mastodon 2.4.3~が必要です",
+    "en":"Required Mastodon 2.4.3 and above"
+}
+var lang_hisdata_frcwarn={
+    "ja":"非フォローだけど絡みがある時に表示されます。",
+    "en":"Unfollow accounts will be shown."
+}
+var lang_hisdata_taketime={
+    "ja":"30秒から数分かかります",
+    "en":"It will take 30s ~ several minutes"
+}
+//userdata/showOnTL.js
+var lang_showontl_movetxt={
+    "ja":"このアカウントは移行しています",
+    "en":"This account was moved"
+}
+var lang_showontl_movebtn={
+    "ja":"移行先を見る",
+    "en":"Continue on the new account"
+}
+var lang_showontl_botacct={
+    "ja":"botアカウント",
+    "en":"[bot]"
+}
+var lang_showontl_followed={
+    "ja":"フォローされています",
+    "en":"Following you"
+}
+var lang_showontl_notf={
+    "ja":"通知",
+    "en":"Notification "
+}
+var lang_showontl_domain={
+    "ja":"ドメイン",
+    "en":"Domain "
+}
+var lang_showontl_listwarn={
+    "ja":"リストに追加するためにはフォローが必要です。",
+    "en":"Follow to add this user to lists."
 }

@@ -74,8 +74,8 @@ function udg(user, acct_id) {
 		//moved設定時
 		if (json.moved) {
 			Materialize.toast(
-				'このアカウントは移行しています<button class="btn-flat toast-action" onclick="udg(\"' +
-				json.moved + ','+acct_id+'\")">移行先を見る</button>', 4000)
+				lang_showontl_movetxt[lang]+'<button class="btn-flat toast-action" onclick="udg(\"' +
+				json.moved + ','+acct_id+'\")">'+lang_showontl_movebtn[lang]+'</button>', 4000)
 		} else {
 			$('#his-data').modal('open');
 			$('#his-data').attr("user-id", user);
@@ -137,7 +137,7 @@ function udg(user, acct_id) {
 				$("#his-des").html(twemoji.parse(note));
 			}
 			if(json.bot){
-				$("#his-bot").html("botアカウント");
+				$("#his-bot").html(lang_showontl_botacct[lang]);
 			}
 			$('#his-data').css('background-size', 'cover');
 			localStorage.setItem("history" , user);
@@ -214,38 +214,38 @@ function relations(user, acct_id) {
 		if (json.following) {
 			//自分がフォローしている
 			$("#his-data").addClass("following");
-			$("#his-follow-btn").text("フォロー解除");
+			$("#his-follow-btn").text(lang_status_unfollow[lang]);
 			hisList(user,acct_id);
 		}else{
-			$("#his-follow-btn").text("フォロー");
+			$("#his-follow-btn").text(lang_status_follow[lang]);
 		}
 		if (json.followed_by) {
 			//フォローされてる
-			$("#his-relation").text("フォローされています");
+			$("#his-relation").text(lang_showontl_followed[lang]);
 		}
 		if (json.blocking) {
 			$("#his-data").addClass("blocking");
-			$("#his-block-btn").text("ブロック解除");
+			$("#his-block-btn").text(lang_status_unblock[lang]);
 		}else{
-			$("#his-block-btn").text("ブロック");
+			$("#his-block-btn").text(lang_status_block[lang]);
 		}
 		if (json.muting) {
 			$("#his-data").addClass("muting");
-			$("#his-mute-btn").text("ミュート解除");
+			$("#his-mute-btn").text(lang_status_unmute[lang]);
 		}else{
-			$("#his-mute-btn").text("ミュート");
+			$("#his-mute-btn").text(lang_status_mute[lang]);
 		}
 		if (json.muting_notifications) {
 			$("#his-data").addClass("mutingNotf");
-			$("#his-notf-btn").text("通知ミュート解除");
+			$("#his-notf-btn").text(lang_showontl_notf[lang]+lang_status_unmute[lang]);
 		}else{
-			$("#his-notf-btn").text("通知ミュート");
+			$("#his-notf-btn").text(lang_showontl_notf[lang]+lang_status_mute[lang]);
 		}
 		if (json.domain_blocking) {
 			$("#his-data").addClass("blockingDom");
-			$("#his-domain-btn").text("ドメインブロック解除");
+			$("#his-domain-btn").text(lang_showontl_domain[lang]+lang_status_unblock[lang]);
 		}else{
-			$("#his-domain-btn").text("ドメインブロック");
+			$("#his-domain-btn").text(lang_showontl_domain[lang]+lang_status_block[lang]);
 		}
 
 	});
@@ -285,15 +285,15 @@ function reset(){
 	$("#his-notf-btn").show();
 	$("#his-domain-btn").show();
 	$("#his-emp-btn").show();
-	$("#his-follow-btn").text("フォロー");
-	$("#his-mute-btn").text("ミュート");
-	$("#his-block-btn").text("ブロック");
-	$("#his-notf-btn").text("通知ミュート");
-	$("#his-domain-btn").text("ドメインブロック");
+	$("#his-follow-btn").text(lang_status_follow[lang]);
+	$("#his-mute-btn").text(lang_status_mute[lang]);
+	$("#his-block-btn").text(lang_status_block[lang]);
+	$("#his-notf-btn").text(lang_showontl_notf[lang]+lang_status_mute[lang]);
+	$("#his-domain-btn").text(lang_showontl_domain[lang]+lang_status_block[lang]);
 	$("#his-relation").text("");
 	$(".cont-series").html("");
 	$("#domainblock").val("");
-	$("#his-lists-a").html('リストに追加するためにはフォローが必要です。');
+	$("#his-lists-a").html(lang_showontl_listwarn[lang]);
 	$("#his-lists-b").html('');
 	$("#his-name-val").val("");
 	$("#his-des-val").val("");

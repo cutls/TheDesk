@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="{{lang}}">
 <head>
 	<title>TheDesk</title>
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
@@ -28,9 +28,11 @@
 <script>
 var ver="Akane (16.0.0) beta";
 //betaを入れるとバージョンチェックしない
+//GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
 var acct_id=0;
 var tlid=0;
+var lang="{{lang}}";
   verck(ver);
  </script>
 <textarea id="copy" style="top:-100px; position:fixed;"></textarea>
@@ -300,7 +302,7 @@ var tlid=0;
 	<a href="#!" class="waves-effect waves-green btn-flat" onclick="shot()">{{screenshot}}</a>
 	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy()">{{copyURL}}</a>
 	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy('emb')">{{embed}}</a>
-	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">{{useOtherAcct}}</a>
+	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">{{useOtherAcct1}}</a>
 	</div>
 	</div>
 	<!-- Modal Structure Userdata -->
@@ -422,7 +424,7 @@ var tlid=0;
 	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showDom('more')">{{more}}</button>{{blockDomain}}
 	<br>
 	<input type="text" placeholder="example.com" id="domainblock">
-	<button class="btn waves-effect" onclick="addDomainblock()">{{block}}</button>
+	<button class="btn waves-effect" onclick="addDomainblock()">{{add}}</button>
 	<br>
 	</div>
 	<div id="his-prof-list" class="col s12  tab-content">{{name}}

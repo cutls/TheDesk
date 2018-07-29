@@ -363,7 +363,7 @@ function empUser(){
 //URLコピー
 function tootUriCopy(url){
 	execCopy(url);
-	Materialize.toast("トゥートURLをコピーしました", 1500);
+	Materialize.toast(lang_details_url[lang], 1500);
 }
 
 //他のアカウントで…

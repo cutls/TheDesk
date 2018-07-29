@@ -517,7 +517,7 @@ function multisel() {
 		var list = key * 1 + 1;
 		if (key == last) {
 			sel = "selected";
-			mainb="(既定)"
+			mainb='('+lang_manager_def[lang]+')'
 			var domain = localStorage.getItem("domain_" + key);
 			var profimg=localStorage.getItem("prof_"+key);
 			var domain=localStorage.getItem("domain_"+key);
@@ -544,7 +544,7 @@ function mainacct(){
 }
 function colorpicker(key){
 	temp=
-		'<div onclick="coloradd('+key+',\'def\',\'def\')" class="pointer exc">なし</div>'+
+		'<div onclick="coloradd('+key+',\'def\',\'def\')" class="pointer exc">'+lang_manager_none[lang]+'</div>'+
 		'<div onclick="coloradd('+key+',\'f44336\',\'white\')" class="red white-text pointer"></div>'+
 		'<div onclick="coloradd('+key+',\'e91e63\',\'white\')" class="pink white-text pointer"></div>'+
 		'<div onclick="coloradd('+key+',\'9c27b0\',\'white\')" class="purple white-text pointer"></div>'+

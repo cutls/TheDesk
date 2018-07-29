@@ -4,14 +4,14 @@ function settings() {
 	var dd = $("[name=time]:checked").val();
 	var dt = $("[for="+dd+"]").text();
 		if (dd != localStorage.getItem("datetype")) {
-		Materialize.toast("時間設定を" + dt + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_time[lang].replace("{{set}}" ,dt), 3000);
 	}
 	localStorage.setItem("datetype", dd);
 
 	var cd = $("[name=theme]:checked").val();
 	var ct = $("[for="+cd+"]").html();
 	if (cd != localStorage.getItem("theme")) {
-		Materialize.toast("テーマ設定を" + ct + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_theme[lang].replace("{{set}}" ,ct), 3000);
 	}
 	//テーマはこの場で設定
 	themes(cd);
@@ -20,84 +20,77 @@ function settings() {
 	var nd = $("[name=nsfw]:checked").val();
 	var nt = $("[for=n_"+nd+"]").text();
 	if (nd != localStorage.getItem("nsfw")) {
-		Materialize.toast("画像表示設定を" + nt + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_nsfw[lang].replace("{{set}}" ,nt), 3000);
 	}
 	localStorage.setItem("nsfw", nd);
 
 	var cwd = $("[name=cw]:checked").val();
 	var cwt = $("[for=c_"+cwd+"]").text();
 	if (cwd != localStorage.getItem("cw")) {
-		Materialize.toast("テキスト表示設定を" + cwt + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_cw[lang].replace("{{set}}" ,cwt), 3000);
 	}
 	localStorage.setItem("cw", cwd);
 
 	var cwtd = $("#cw-text").val();
 	if (cwtd != localStorage.getItem("cw-text")) {
-		Materialize.toast("デフォルトの警告文を「" + cwtd + "」に設定しました。", 3000);
+		Materialize.toast(lang_setting_cwtext[lang].replace("{{set}}" ,cwtd), 3000);
 	}
 	localStorage.setItem("cw-text", cwtd);
 
 	var visd = $("[name=vis]:checked").val();
 	var vist = $("[for="+visd+"]").text();
 	if (visd != localStorage.getItem("vis")) {
-		Materialize.toast("デフォルトの公開設定を" + vist + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_vis[lang].replace("{{set}}" ,vist), 3000);
 	}
 	localStorage.setItem("vis", visd);
 
 	var popd = $("#popup").val();
 	if (popd > 0 && popd != localStorage.getItem("popup")) {
-		Materialize.toast("ポップアップお知らせを" + popd + "秒に設定しました。", 3000);
+		Materialize.toast(lang_setting_popup[lang].replace("{{set}}" ,popd+lang_setting_s[lang]), 3000);
 	} else if (popd != localStorage.getItem("popup")) {
-		Materialize.toast("ポップアップお知らせをオフに設定しました。", 3000);
+		Materialize.toast(lang_setting_popup[lang].replace("{{set}}" ,lang_setting_off[lang]), 3000);
 	}
 	localStorage.setItem("popup", popd);
-
-	var boxd = $("[name=box]:checked").val();
-	var boxt = $("[for=b_"+boxd+"]").text();
-	if (boxd != localStorage.getItem("box")) {
-		Materialize.toast("デフォルトでのボックスの挙動を" + boxt + "に設定しました。", 3000);
-	}
-	localStorage.setItem("box", boxd);
 
 	var gifd = $("[name=gif]:checked").val();
 	var gift = $("[for=g_"+gifd+"]").text();
 	if (gifd != localStorage.getItem("gif")) {
-		Materialize.toast("アイコンアニメーション再生を" + gift + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_gif[lang].replace("{{set}}" ,gift), 3000);
 	}
 	localStorage.setItem("gif", gifd);
 
 	var sentd = $("#sentence").val();
 	var ltrd = $("#letters").val();
 	if (sentd != localStorage.getItem("sentence") || ltrd != localStorage.getItem("letters")) {
-		Materialize.toast(sentd + "行以上または"+ltrd+"文字以上でテキストを隠します。", 3000);
+		Materialize.toast(lang_setting_selt[lang].replace("{{set1}}" ,sentd).replace("{{set1}}" ,ltrd), 3000);
 	}
 	localStorage.setItem("sentence", sentd);
 	localStorage.setItem("letters", ltrd);
 
 	var widthd = $("#width").val();
 	if (widthd != localStorage.getItem("width")) {
-		Materialize.toast("横幅最低を" + widthd + "pxに設定しました。", 3000);
+		Materialize.toast(lang_setting_width[lang].replace("{{set}}" ,widthd), 3000);
 	}
 	localStorage.setItem("width", widthd);
 
 	var imgd = $("[name=img]:checked").val();
 	var imgt = $("[for=i_"+imgd+"]").text();
 	if (imgd != localStorage.getItem("img")) {
-		Materialize.toast("画像投稿後の設定を「" + imgt + "」に設定しました。", 3000);
+		Materialize.toast(lang_setting_img[lang].replace("{{set}}" ,imgt), 3000);
 	}
 	localStorage.setItem("img", imgd);
 
 	var fontd = $("#font").val();
 	if(fontd){
 		if (fontd != localStorage.getItem("font")) {
-			Materialize.toast("フォントを" + fontd + "に設定しました。", 3000);
+			Materialize.toast(lang_setting_font[lang].replace("{{set}}" ,fontd), 3000);
 		}
 		localStorage.setItem("font", fontd);
 		themes();
 	}else{
 		if(localStorage.getItem("font")){
 			localStorage.removeItem("font");
-			Materialize.toast("フォントをデフォルトに設定しました。", 3000);
+			Materialize.toast(lang_setting_font[lang].replace("{{set}}" ,lang_setting_default[lang]), 3000);
 			themes();
 		}
 	}
@@ -105,62 +98,62 @@ function settings() {
 
 	var sized = $("#size").val();
 	if (sized != localStorage.getItem("size")) {
-		Materialize.toast("フォントサイズを" + sized + "pxに設定しました。", 3000);
+		Materialize.toast(lang_setting_size[lang].replace("{{set}}" ,sized), 3000);
 	}
 	localStorage.setItem("size", sized);
 
 	var heid = $("#img-height").val();
 	if (heid != localStorage.getItem("img-height")) {
-		Materialize.toast("画像高さを" + heid + "pxに設定しました。", 3000);
+		Materialize.toast(lang_setting_imgheight[lang].replace("{{set}}" ,heid), 3000);
 	}
 	localStorage.setItem("img-height", heid);
 
 	var tagd = $("[name=tag]:checked").val();
 	var tagt = $("[for=t_"+tagd+"]").text();
 	if (tagd != localStorage.getItem("tag-range")) {
-		Materialize.toast("タグの取得範囲を「" + tagt + "」に設定しました。", 3000);
+		Materialize.toast(lang_setting_tag[lang].replace("{{set}}" ,tagt), 3000);
 	}
 	localStorage.setItem("tag-range", tagd);
 
 	var uld = $("[name=ul]:checked").val();
 	var ult = $("[for=ul_"+uld+"]").text();
 	if (uld != localStorage.getItem("locale")) {
-		Materialize.toast("独自ロケール設定を" + ult + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_ul[lang].replace("{{set}}" ,ult), 3000);
 	}
 	localStorage.setItem("locale", uld);
 
 	var ntd = $("[name=notf]:checked").val();
 	var ntt = $("[for=ntf_"+ntd+"]").text();
 	if (ntd != localStorage.getItem("nativenotf")) {
-		Materialize.toast("ネイティブ通知を" + ntt + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_notf[lang].replace("{{set}}" ,ntt), 3000);
 	}
 	localStorage.setItem("nativenotf", ntd);
 
 	var qtd = $("[name=quote]:checked").val();
 	var qtt = $("[for=q_"+qtd+"]").text();
 	if (qtd != localStorage.getItem("quote")) {
-		Materialize.toast("引用形式を" + qtt + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_quote[lang].replace("{{set}}" ,qtt), 3000);
 	}
 	localStorage.setItem("quote", qtd);
 	
 	var viad = $("[name=via]:checked").val();
 	var viat = $("[for=via_"+viad+"]").text();
 	if (viad != localStorage.getItem("viashow")) {
-		Materialize.toast("via表示を" + viat + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_via[lang].replace("{{set}}" ,viat), 3000);
 	}
 	localStorage.setItem("viashow", viad);
 
 	var movd = $("[name=mov]:checked").val();
 	var movt = $("[for=mov_"+movd+"]").text();
 	if (movd != localStorage.getItem("mouseover")) {
-		Materialize.toast("マウスオーバー・ヒディングを" + movt + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_mov[lang].replace("{{set}}" ,movt), 3000);
 	}
 	localStorage.setItem("mouseover", movd);
 
 	var maind = $("[name=main]:checked").val();
 	var maint = $("[for=mn_"+maind+"]").text();
 	if (maind != localStorage.getItem("mainuse")) {
-		Materialize.toast("起動時・投稿時のアカウントを" + maint + "に設定しました。", 3000);
+		Materialize.toast(lang_setting_main[lang].replace("{{set}}" ,maint), 3000);
 	}
 	localStorage.setItem("mainuse", maind);
 }
@@ -169,6 +162,9 @@ function settings() {
 function load() {
 	if(localStorage.getItem("imas")){
 		$(".imas").removeClass("hide");
+	}
+	if(localStorage.getItem("kirishima")){
+		$(".kirishima").removeClass("hide");
 	}
 	var prof = localStorage.getItem("prof");
 	$("#my-prof").attr("src", prof);

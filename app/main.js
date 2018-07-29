@@ -179,6 +179,54 @@ ipc.on('native-notf', function(e, args) {
 	});
 	}
 });
+//言語
+ipc.on('lang', function(e, arg) {
+	//index.html
+	var indextemp=fs.readFileSync(__dirname + '/index.sample.html', 'utf8');
+	var indexjson=JSON.parse(fs.readFileSync(__dirname + '/language/index.'+arg+'.json', 'utf8'));
+	Object.keys(indexjson).forEach(function(indexkey) {
+		var regExp = new RegExp("{{" + indexkey + "}}", "g");
+		indextemp = indextemp.replace(regExp, indexjson[indexkey]);
+	});
+	var regExp = new RegExp("{{lang}}", "g");
+	indextemp = indextemp.replace(regExp, arg);
+	fs.writeFileSync(__dirname + '/index.html',indextemp);
+
+	//acct.html
+	var accttemp=fs.readFileSync(__dirname + '/acct.sample.html', 'utf8');
+	var acctjson=JSON.parse(fs.readFileSync(__dirname + '/language/acct.'+arg+'.json', 'utf8'));
+	Object.keys(acctjson).forEach(function(acctkey) {
+		var regExp = new RegExp("{{" + acctkey + "}}", "g");
+		accttemp = accttemp.replace(regExp, acctjson[acctkey]);
+	});
+	var regExp = new RegExp("{{lang}}", "g");
+	accttemp = accttemp.replace(regExp, arg);
+	fs.writeFileSync(__dirname + '/acct.html',accttemp);
+
+	//setting.html
+	var settingtemp=fs.readFileSync(__dirname + '/setting.sample.html', 'utf8');
+	var settingjson=JSON.parse(fs.readFileSync(__dirname + '/language/setting.'+arg+'.json', 'utf8'));
+	Object.keys(settingjson).forEach(function(settingkey) {
+		var regExp = new RegExp("{{" + settingkey + "}}", "g");
+		settingtemp = settingtemp.replace(regExp, settingjson[settingkey]);
+	});
+	var regExp = new RegExp("{{lang}}", "g");
+	settingtemp = settingtemp.replace(regExp, arg);
+	fs.writeFileSync(__dirname + '/setting.html',settingtemp);
+
+	//update.html
+	var updatetemp=fs.readFileSync(__dirname + '/update.sample.html', 'utf8');
+	var updatejson=JSON.parse(fs.readFileSync(__dirname + '/language/update.'+arg+'.json', 'utf8'));
+	Object.keys(updatejson).forEach(function(updatekey) {
+		var regExp = new RegExp("{{" + updatekey + "}}", "g");
+		updatetemp = updatetemp.replace(regExp, updatejson[updatekey]);
+	});
+	var regExp = new RegExp("{{lang}}", "g");
+	updatetemp = updatetemp.replace(regExp, arg);
+	fs.writeFileSync(__dirname + '/update.html',updatetemp);
+	console.log("done");
+	mainWindow.webContents.send('langres', "");
+})
 
 ipc.on('update', function(e, x, y) {
 	var platform=process.platform;

@@ -31,7 +31,7 @@ function utl(user, more, acct_id) {
 	}).then(function(json) {
 		var templete = parse(json, '', acct_id);
 		if(!json[0]){
-			templete="データはありません<br>";
+			templete=lang_details_nodata[lang]+"<br>";
 		}
 		var height = $("#his-data-content").height() - 245;
 		$(".tab-content").css('height', height);
@@ -111,7 +111,7 @@ function flw(user, more, acct_id) {
 	}).then(function(json) {
 		var templete = userparse(json,'',acct_id);
 		if(!json[0]){
-			templete="データはありません<br>";
+			templete=lang_details_nodata[lang]+"<br>";
 		}
 		if (more) {
 			$("#his-follow-list-contents").append(templete);
@@ -155,7 +155,7 @@ function fer(user, more, acct_id) {
 	}).then(function(json) {
 		var templete = userparse(json,'',acct_id);
 		if(!json[0]){
-			templete="データはありません<br>";
+			templete=lang_details_nodata[lang]+"<br>";
 		}
 		if (more) {
 			$("#his-follower-list-contents").append(templete);
@@ -195,7 +195,7 @@ function showFav(more, acct_id) {
 	}).then(function(json) {
 		var templete = parse(json, '', acct_id);
 		if(!json[0]){
-			templete="データはありません<br>";
+			templete=lang_details_nodata[lang]+"<br>";
 		}
 		if (more) {
 			$("#his-fav-list-contents").append(templete);
@@ -233,7 +233,7 @@ function showMut(more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		if(!json[0]){
-			templete="データはありません<br>";
+			templete=lang_details_nodata[lang]+"<br>";
 		}
 		var templete = userparse(json,'',acct_id);
 		if (more) {
@@ -272,7 +272,7 @@ function showBlo(more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		if(!json[0]){
-			templete="データはありません<br>";
+			templete=lang_details_nodata[lang]+"<br>";
 		}
 		var templete = userparse(json,'',acct_id);
 		if (more) {
@@ -312,7 +312,7 @@ function showReq(more, acct_id) {
 	}).then(function(json) {
 		var templete = userparse(json, 'true',acct_id);
 		if(!json[0]){
-			templete="データはありません<br>";
+			templete=lang_details_nodata[lang]+"<br>";
 		}
 		if (more) {
 			$("#his-request-list-contents").append(templete);
@@ -352,7 +352,7 @@ function showDom(more, acct_id) {
 	}).then(function(json) {
 		var templete = "";
 		if(!json[0]){
-			templete="データはありません<br>";
+			templete=lang_details_nodata[lang]+"<br>";
 		}
 		Object.keys(json).forEach(function(key) {
 			var domain = json[key];
@@ -393,13 +393,13 @@ function showFrl(more, acct_id) {
 	}).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
-		$("#his-follow-recom-contents").html("データはありません(Mastodon 2.4.3~が必要です)<br>");
+		$("#his-follow-recom-contents").html(lang_details_nodata[lang]+"("+lang_hisdata_frcreq[lang]+")<br>");
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
 		if(!json[0]){
 			console.log("No data");
-			templete="データはありません(非フォローだけど絡みがある時に表示されます。)<br>";
+			templete=lang_details_nodata[lang]+"("+lang_hisdata_frcwarn[lang]+")<br>";
 		}else{
 			var templete = userparse(json,'',acct_id);
 		}
@@ -416,7 +416,7 @@ function showFrl(more, acct_id) {
 //ユーザーマッチングリスト
 function showMat() {
 	
-	$("#his-matching-list-contents").html("30秒から数分かかります");
+	$("#his-matching-list-contents").html(lang_hisdata_taketime[lang]);
 	var full=$("#his-acct").attr("fullname");
 	var acct_id=$("#his-data").attr("use-acct");
 	full=full.split("@");

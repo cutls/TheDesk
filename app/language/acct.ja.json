@@ -1,0 +1,19 @@
+{
+    "list":"アカウント一覧",
+    "back":"戻る",
+    "add":"アカウントを追加",
+    "codesetupwarn":"Windows以外でご使用の方やPleromaにログインされる方はチェックを入れて下さい。",
+    "codesetup":"コードセットアップ",
+    "mainacct":"メインアカウント",
+    "selacct":"アカウントを選択",
+    "codepastewarn":"指定されたコードを貼り付けてください。ログインウィンドウは閉じていただいて構いません。",
+    "codepaste":"コードを入力",
+    "domain":"ドメイン名",
+    "connect":"接続インスタンス数",
+    "toots":"トゥート数",
+    "users":"ユーザー数",
+    "users2":"人",
+    "safety":"コネクション",
+    "ver":"Mastodonバージョン",
+    "ko":"個"
+}

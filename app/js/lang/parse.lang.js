@@ -136,5 +136,5 @@ var lang_parse_clientmute={
 }
 var lang_parse_mute={
     "ja":"ミュートします。設定から解除できます。",
-    "en":" will be muted. You can remove on a setting."
+    "en":" will be muted. You can remove on preferences."
 }

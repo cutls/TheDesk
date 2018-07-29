@@ -1,5 +1,5 @@
 $voise        = null;
-    $voiseName    = 'Google 日本語';
+    $voiseName    = lang_speech[lang];
     $voices       = speechSynthesis.getVoices();
     $synthes      = new SpeechSynthesisUtterance();
     $voise = $.grep($voices, function(n, i){return n.name == $voiseName})[0];
