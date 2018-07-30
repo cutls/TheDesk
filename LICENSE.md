@@ -1,4 +1,4 @@
-# TheDesk LICENSE v5
+# TheDesk LICENSE v5.1
 
 (C)TheDesk 2018 all rights reserved. Website:[https://thedesk.top](https://thedesk.top)
 
@@ -6,6 +6,7 @@
  - このソフトウェアを改変して下記の行為を行うことを禁止します。
    - 同一内容の連投行為
    - 複数インスタンスやSNSへの同時投稿
+   - misskey.xyzへのthedesk-misskeyからの投稿
  - 下記例外を除き、改変した場合コードを公開する必要があります。
  - 以下の場合、改変後のソフトウェアを公開する必要はありません。
    - theme.cssの変数の変更/master.cssのフォントの変更

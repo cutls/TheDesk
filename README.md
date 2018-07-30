@@ -10,7 +10,7 @@ Contact me(bug report...):GitHub Issues, mention to [Cutls@kirishima.cloud](http
 
 ## License
 
-[TheDesk LICENSE v5](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
+[TheDesk LICENSE v5.1](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
 
 ## Language/言語
 
@@ -49,6 +49,9 @@ desk.icns: macOS向けアイコン.セルフビルドにどうぞ.
 - Ability to read unformated files!
 
 ## Build/ビルド
+Misskey(misskey.xyz) application token is not in cutls/TheDesk  
+Misskey(misskey.xyz)のトークンは含まれておりません。  
+  
 electron-packager is required. electron-packagerが必要です.  
 Windows  
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=2.0.5 --icon=.\app\thedesk.ico --overwrite`  
