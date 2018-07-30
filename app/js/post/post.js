@@ -26,6 +26,10 @@ function post() {
 			}
 		}
 	}
+	if(domain=="misskey.xyz"){
+		misskeyPost();
+		return;
+	}
 	$("#toot-post-btn").prop("disabled", true);
 	todo("Posting");
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
@@ -84,6 +88,80 @@ function post() {
 		}
 	}
 }
+function misskeyPost(){
+	var str = $("#textarea").val();
+	var acct_id = $("#post-acct-sel").val();
+	localStorage.setItem("last-use", acct_id);
+	var domain = "misskey.xyz"
+	$("#toot-post-btn").prop("disabled", true);
+	todo("Posting");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var start = "https://" + domain + "/api/notes/create";
+	var reply = $("#reply").val();
+	var toot={
+		text: str
+	}
+	if(reply){
+		if(reply.indexOf("renote")!== -1){
+			toot.renoteId=reply.replace("renote_","")
+		}else{
+			toot.replyId=reply
+		}
+	}
+	
+	var media = $("#media").val();
+	if(media){
+		toot.mediaIds=media.split(",");
+	}
+	if ($("#nsfw").hasClass("nsfw-avail")) {
+		var nsfw = "true";
+		toot.sensitive=nsfw;
+	} else {
+		var nsfw = "false";
+	}
+	var vis = $("#vis").text();
+	if(vis=="unlisted"){
+		vis=="home"
+	}else if(vis=="direct"){
+		vis=="specified";
+		toot.visibleUserIds=str.match(/@([a-zA-Z0-9_@.-]+)(\s|$)/g).join('').split("@");
+	}
+	if(vis!="inherit"){
+		toot.visibility=vis;
+	}
+	if ($("#cw").hasClass("cw-avail")) {
+		var spo = $("#cw-text").val();
+		cw();
+		toot.cw=spo;
+	} else {
+		var spo = "";
+	}
+	toot.i=at;
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify(toot));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			if(str.indexOf(localStorage.getItem("stable"))==-1){
+				localStorage.removeItem("stable")
+			}
+			var json = httpreq.response;
+			console.log(json);
+			var box = localStorage.getItem("box");
+			if (box == "yes") {
+				hide();
+			}else if (box == "hide"){
+				$("body").addClass("mini-post");
+				$(".mini-btn").text("expand_less");
+			}
+			$("#toot-post-btn").prop("disabled", false);
+			todc();
+			clear();
+		}
+	}
+}
 
 //クリア(Shift+C)
 function clear() {
@@ -113,9 +191,9 @@ function clear() {
 	$("#preview").html("");
 	$("#toot-post-btn").prop("disabled", false);
 	$("#post-acct-sel").prop("disabled", false);
-	$('select').material_select();
 	localStorage.removeItem("image");
 	if(localStorage.getItem("mainuse")=="main"){
-		multi();
+		$("#post-acct-sel").val(localStorage.getItem("main"));
 	}
+	$('select').material_select();
 }

@@ -112,6 +112,11 @@ var lang_manager_none={
     "ja":"なし",
     "en":"None"
 }
+//post/bb-md.js
+var lang_bbmd_misskey={
+    "ja":"TheDeskにおけるMisskeyでは、@を返信として扱いますが、全ての@は消去され別パラメータに入力されます。また、「未収載」を「ホーム」として扱います。",
+    "en":"TheDesk regards \"@\" as reply, but put other parameter. Unlisted on Mastodon means Home on Misskey."
+}
 //post/emoji.js
 var lang_emoji_get={
     "ja":"絵文字リストを取得",
@@ -364,6 +369,10 @@ var lang_hisdata_frcwarn={
 var lang_hisdata_taketime={
     "ja":"30秒から数分かかります",
     "en":"It will take 30s ~ several minutes"
+}
+var lang_hisdata_notonmisskey={
+    "ja":"このシステムはMisskeyにはありません。",
+    "en":"Misskey is unable to request."
 }
 //userdata/showOnTL.js
 var lang_showontl_movetxt={

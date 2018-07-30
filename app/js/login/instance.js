@@ -72,7 +72,12 @@ var idata={
 	"dtp-mstdn.jp_name":"DTP鯖",
 	"dtp-mstdn.jp_letters":"500",
 	"dtp-mstdn.jp_bbcode":"disabled",
-	"dtp-mstdn.jp_markdown":"disabled"
+	"dtp-mstdn.jp_markdown":"disabled",
+	"misskey.xyz":"instance",
+	"misskey.xyz_name":"Misskey",
+	"misskey.xyz_letters":"1000",
+	"misskey.xyz_bbcode":"disabled",
+	"misskey.xyz_markdown":"enabled"
 };
 
 localStorage.setItem("instance", JSON.stringify(idata));

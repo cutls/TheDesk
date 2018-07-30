@@ -1,6 +1,9 @@
 //カード処理やメンション、ハッシュタグの別途表示
 //全てのTL処理で呼び出し
 function additional(acct_id, tlid) {
+	if(localStorage.getItem("domain_" + acct_id)=="misskey.xyz"){
+		return false;
+	}
 	//メンション系
 	//$(".mention").attr("href", "");
 	

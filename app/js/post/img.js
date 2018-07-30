@@ -101,20 +101,37 @@ function media(b64, type, no) {
 	var acct_id = $("#post-acct-sel").val();
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/media";
 	var httpreq = new XMLHttpRequest();
-	httpreq.open('POST', start, true);
-	httpreq.upload.addEventListener("progress", progshow, false);
-	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
-	httpreq.send(fd);
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain + "/api/drive/files/create";
+		httpreq.open('POST', start, true);
+		httpreq.upload.addEventListener("progress", progshow, false);
+		httpreq.responseType = 'json';
+		if ($("#nsfw").hasClass("nsfw-avail")) {
+			var nsfw = true;
+		} else {
+			var nsfw = false;
+		}
+		var previewer="url"
+		fd.append('i', at);
+		//fd.append('isSensitive', nsfw);
+		httpreq.send(fd);
+	}else{
+		var previewer="preview_url"
+		var start = "https://" + domain + "/api/v1/media";
+		httpreq.open('POST', start, true);
+		httpreq.upload.addEventListener("progress", progshow, false);
+		httpreq.responseType = 'json';
+		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+		httpreq.send(fd);
+	}
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState == 4) {
 			var json = httpreq.response;
 			console.log(json);
 			var img = localStorage.getItem("img");
-			if (json.type=="image") {
-				var html = '<img src="' + json.preview_url + '" style="width:50px; max-height:100px;">';
+			if (json.type.indexOf("image")!=-1) {
+				var html = '<img src="' + json[previewer] + '" style="width:50px; max-height:100px;">';
 				$('#preview').append(html);
 			} else {
 				$('#preview').append(lang_postimg_previewdis[lang]);

@@ -6,44 +6,85 @@ function details(id, acct_id, tlid) {
 	$('#tootmodal').modal('open');
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/statuses/" + id;
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain + "/api/notes/show";
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify({
+				i:at,
+				noteId:id
+			})
+		}
+	}else{
+		var start = "https://" + domain + "/api/v1/statuses/" + id;
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			},
+		}
+	}
+	
+	fetch(start, i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
+		console.log(json);
 		if(!$("#timeline_"+tlid+" #pub_" + id).length){
 			var html = parse([json], '', acct_id);
 			$("#toot-this").html(html);
 			jQuery("time.timeago").timeago();
 		}
+		if(domain=="misskey.xyz"){
+			var url="https://misskey.xyz/notes/"+json.id;
+			var scn=json.user.username;
+			if(!json.user.host){
+				var local=true;
+			}else{
+				var local=false;
+				scn=scn+"@"+host;
+			}
+			var rep="";
+			var uid=json.user.id;
+			if(json._replyIds){
+				replyTL(json._replyIds[0], acct_id);
+			}
+		}else{
+			var url=json.url
+			if(json.account.acct==json.account.username){
+				var local=true;
+			}else{
+				var local=false;
+			}
+			var scn=json.account.acct;
+			var uid=json.account.id;
+			if (json["in_reply_to_id"]) {
+				replyTL(json["in_reply_to_id"], acct_id);
+			}
+		}
 		$("#toot-this .fav_ct").text(json.favourites_count);
 		$("#toot-this .rt_ct").text(json.reblogs_count);
-		$("#tootmodal").attr("data-url",json.url);
+		$("#tootmodal").attr("data-url",url);
 		$("#tootmodal").attr("data-id",json.id);
-		if(json.account.acct==json.account.username){
-			$("#tootmodal").attr("data-user",json.account.acct+"@"+domain);
+		if(local){
+			$("#tootmodal").attr("data-user",scn+"@"+domain);
 		}else{
-			$("#tootmodal").attr("data-user",json.account.acct);
-		}
-		if (json.in_reply_to_id) {
-			replyTL(json.in_reply_to_id, acct_id);
+			$("#tootmodal").attr("data-user",scn);
 		}
 		context(id, acct_id);
-		if(json.account.acct!=json.account.username){
-			var dom=json.account.acct.replace(/.+@/g,'');
+		if(!local){
+			var dom=scn.replace(/.+@/g,'');
 		}else{
 			var dom=domain;
 		}
 		beforeToot(id, acct_id, dom);
-		userToot(id, acct_id, json.account.id);
+		userToot(id, acct_id, uid);
 		faved(id, acct_id);
 		rted(id, acct_id);
 		if(!$("#activator").hasClass("active")){
@@ -57,14 +98,29 @@ function details(id, acct_id, tlid) {
 function replyTL(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/statuses/" + id;
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain + "/api/notes/show";
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify({
+				i:at,
+				noteId:id
+			})
+		}
+	}else{
+		var start = "https://" + domain + "/api/v1/statuses/" + id;
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			},
+		}
+	}
+	fetch(start, i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
@@ -75,16 +131,29 @@ function replyTL(id, acct_id) {
 		}else{
 			var mute=[];
 		}
-		console.log(mute);
-		var templete = parse([json], '', acct_id,"","",mute);
-		$("#toot-reply").prepend(templete);
-		$("#toot-reply .hide").html(lang_details_filtered[lang]);
-		$("#toot-reply .by_filter").css("display","block");
-		$("#toot-reply .by_filter").removeClass("hide");
+		if(domain=="misskey.xyz"){
+			var templete = misskeyParse([json], '', acct_id,"","",mute);
+			$("#toot-after").prepend(templete);
+			$("#toot-after .hide").html(lang_details_filtered[lang]);
+			$("#toot-after .by_filter").css("display","block");
+			$("#toot-after .by_filter").removeClass("hide");
+			var rep="_replyIds";
+			if (json[rep]) {
+				replyTL(json[rep][0], acct_id);
+			}
+		}else{
+			var templete = parse([json], '', acct_id,"","",mute);
+			$("#toot-reply").prepend(templete);
+			$("#toot-reply .hide").html(lang_details_filtered[lang]);
+			$("#toot-reply .by_filter").css("display","block");
+			$("#toot-reply .by_filter").removeClass("hide");
 		jQuery("time.timeago").timeago();
-		if (json.in_reply_to_id) {
-			replyTL(json.in_reply_to_id, acct_id);
+			var rep="in_reply_to_id";
+			if (json[rep]) {
+				replyTL(json[rep], acct_id);
+			}
 		}
+		
 	});
 }
 
@@ -92,30 +161,56 @@ function replyTL(id, acct_id) {
 function context(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/statuses/" + id + "/context";
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain + "/api/notes/conversation";
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify({
+				i:at,
+				noteId:id
+			})
+		}
+	}else{
+		var start = "https://" + domain + "/api/v1/statuses/" + id + "/context";
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			},
+		}
+	}
+	fetch(start, i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
-			var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),"thread");
+		if(domain=="misskey.xyz"){
+			console.log(json);
+			var templete = misskeyParse(json, '', acct_id,"","",[]);
+			$("#toot-reply").html(templete);
+			$("#toot-reply .hide").html(lang_details_filtered[lang]);
+			$("#toot-reply .by_filter").css("display","block");
+			$("#toot-reply .by_filter").removeClass("hide");
+			jQuery("time.timeago").timeago();
 		}else{
-			var mute=[];
+			if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
+				var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),"thread");
+			}else{
+				var mute=[];
+			}
+			var templete = parse(json.descendants, '', acct_id,"","",mute);
+			$("#toot-after").html(templete);
+			$("#toot-after .hide").html(lang_details_filtered[lang]);
+			$("#toot-after .by_filter").css("display","block");
+			$("#toot-after .by_filter").removeClass("hide");
+			jQuery("time.timeago").timeago();
 		}
-		var templete = parse(json.descendants, '', acct_id,"","",mute);
-		$("#toot-after").html(templete);
-		$("#toot-after .hide").html(lang_details_filtered[lang]);
-		$("#toot-after .by_filter").css("display","block");
-		$("#toot-after .by_filter").removeClass("hide");
-		jQuery("time.timeago").timeago();
+		
 	});
 }
 
@@ -123,50 +218,101 @@ function context(id, acct_id) {
 function beforeToot(id, acct_id, domain) {
 	//var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain +
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain +
+		"/api/notes/local-timeline"
+		fetch(start, {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify({
+				i:at,
+				untilID:id
+			})
+			}).then(function(response) {
+				return response.json();
+			}).catch(function(error) {
+				todo(error);
+				console.error(error);
+			}).then(function(json) {
+				var templete = misskeyParse(json, 'noauth', acct_id);
+				$("#toot-before").html(templete);
+				jQuery("time.timeago").timeago();
+			});
+	}else{
+		var start = "https://" + domain +
 		"/api/v1/timelines/public?local=true&max_id=" + id;
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-		},
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		var templete = parse(json, 'noauth', acct_id);
-		$("#toot-before").html(templete);
-		jQuery("time.timeago").timeago();
-	});
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+			},
+		}).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			todo(error);
+			console.error(error);
+		}).then(function(json) {
+			var templete = parse(json, 'noauth', acct_id);
+			$("#toot-before").html(templete);
+			jQuery("time.timeago").timeago();
+		});
+	}
 }
 //前のユーザーのトゥート
 function userToot(id, acct_id, user) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses?max_id=" + id;
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		var templete = parse(json, '', acct_id);
-		$("#user-before").html(templete);
-		jQuery("time.timeago").timeago();
-	});
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain +
+		"/api/users/notes"
+		fetch(start, {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify({
+				i:at,
+				untilID:id,
+				userId:user
+			})
+			}).then(function(response) {
+				return response.json();
+			}).catch(function(error) {
+				todo(error);
+				console.error(error);
+			}).then(function(json) {
+				var templete = misskeyParse(json, 'noauth', acct_id);
+				$("#user-before").html(templete);
+				jQuery("time.timeago").timeago();
+			});
+	}else{
+		var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses?max_id=" + id;
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			},
+		}).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			todo(error);
+			console.error(error);
+		}).then(function(json) {
+			var templete = parse(json, '', acct_id);
+			$("#user-before").html(templete);
+			jQuery("time.timeago").timeago();
+		});
+	}
+	
 }
 
 //ふぁぼ一覧
 function faved(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain=="misskey.xyz"){ return false; }
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/favourited_by";
 	fetch(start, {
@@ -189,6 +335,7 @@ function faved(id, acct_id) {
 //ブースト一覧
 function rted(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain=="misskey.xyz"){ return false; }
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/reblogged_by";
 	fetch(start, {

@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Akane (16.0.0) beta";
+var ver="Akane (16.0.0)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -629,7 +629,7 @@ var lang="{{lang}}";
 	<br><br>
 	<div id="lists"></div>
 	<div id="lists-user"></div>
-	<input type="text" style="width:150px" id="list-add" placeholder="タイトル">
+	<input type="text" style="width:150px" id="list-add" placeholder="{{name}}">
 		<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">{{makeNew}}</button>
 </div>
 <!--フィルター-->
@@ -759,6 +759,7 @@ var lang="{{lang}}";
 <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/tl/parse.js"></script>
+<script type="text/javascript" src="./js/tl/misskeyparse.js"></script>
 <script type="text/javascript" src="./js/ui/scroll.js"></script>
 <script type="text/javascript" src="./js/tl/tl.js"></script>
 <script type="text/javascript" src="./js/tl/card.js"></script>
@@ -785,6 +786,7 @@ var lang="{{lang}}";
 <script type="text/javascript" src="./js/post/secure.js"></script>
 <script type="text/javascript" src="./js/post/img.js"></script>
 <script type="text/javascript" src="./js/post/status.js"></script>
+<script type="text/javascript" src="./js/post/misskeystatus.js"></script>
 <script type="text/javascript" src="./js/post/emoji.js"></script>
 <script type="text/javascript" src="./js/post/suggest.js"></script>
 <script type="text/javascript" src="./js/post/bb-md.js"></script>

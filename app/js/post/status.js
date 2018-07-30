@@ -105,8 +105,10 @@ function follow(acct_id,remote) {
 	}
 	if (!remote && $("#his-data").hasClass("following")) {
 		var flag = "unfollow";
+		var flagm = "delete";
 	} else {
 		var flag = "follow";
+		var flagm = "create";
 	}
 	var id = $("#his-data").attr("user-id");
 	if(!remote){
@@ -114,7 +116,11 @@ function follow(acct_id,remote) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(remote=="true" && flag=="follow"){
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain + "/api/following/"+flagm;
+		var user=$("#his-acct").text();
+		var ent={"i":at,"userId":id}
+	}else if(remote=="true" && flag=="follow"){
 		var start = "https://" + domain + "/api/v1/follows";
 		var user=$("#his-acct").text();
 		var ent={"uri":user}
@@ -185,18 +191,27 @@ function mute(acct_id) {
 	var id = $("#his-data").attr("user-id");
 	if ($("#his-data").hasClass("muting")) {
 		var flag = "unmute";
+		var flagm = "delete";
 	} else {
 		var flag = "mute";
+		var flagm = "create";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain + "/api/mute/"+flagm;
+		var ent={"i":at,"userId":id}
+		var rq=JSON.stringify(ent);
+	}else{
+		var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
+		var rq="";
+	}
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = 'json';
-	httpreq.send();
+	httpreq.send(rq);
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState == 4) {
 			if ($("#his-data").hasClass("muting")) {
@@ -214,13 +229,22 @@ function mute(acct_id) {
 function del(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/statuses/" + id;
-	var httpreq = new XMLHttpRequest();
-	httpreq.open('DELETE', start, true);
-	httpreq.setRequestHeader('Content-Type', 'application/json');
-	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
-	httpreq.send();
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain + "/api/notes/delete";
+		var httpreq = new XMLHttpRequest();
+		httpreq.open('POST', start, true);
+		httpreq.setRequestHeader('Content-Type', 'application/json');
+		httpreq.responseType = 'json';
+		httpreq.send(JSON.stringify({i:at,noteId:id}));
+	}else{
+		var start = "https://" + domain + "/api/v1/statuses/" + id;
+		var httpreq = new XMLHttpRequest();
+		httpreq.open('DELETE', start, true);
+		httpreq.setRequestHeader('Content-Type', 'application/json');
+		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+		httpreq.responseType = 'json';
+		httpreq.send();
+	}
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState == 4) {
 		}

@@ -314,30 +314,13 @@ function misskeyLogin() {
 			const {
 				shell
 			} = require('electron');
-	
+			var token=json.token;
+			$("#auth").show();
+			$("#code").val(token);
+			$("#add").hide();
+			localStorage.setItem("domain_tmp","misskey.xyz");
 			shell.openExternal(json.url);
 			var electron = require("electron");
-
-			/*
-			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
-					"client_id"] + "&client_secret=" + json["client_secret"] +
-				"&response_type=code&scope=read+write+follow&redirect_uri=" + red;
-			localStorage.setItem("domain_tmp", url);
-			localStorage.setItem("client_id", json["client_id"]);
-			localStorage.setItem("client_secret", json["client_secret"]);
-			$("#auth").show();
-			$("#add").hide();
-			const {
-				shell
-			} = require('electron');
-	
-			shell.openExternal(auth);
-			var electron = require("electron");
-			var ipc = electron.ipcRenderer;
-			if ($('#linux:checked').val() == "on") {} else {
-				ipc.send('quit', 'go');
-			}
-			*/
 		}
 	}
 	
@@ -358,6 +341,51 @@ function code(code) {
 	}
 	var url = localStorage.getItem("domain_tmp");
 	localStorage.removeItem("domain_tmp");
+	console.log(url);
+	if(url=="misskey.xyz"){
+		var start = "https://misskey.xyz/api/auth/session/userkey";
+		var httpreq = new XMLHttpRequest();
+		httpreq.open('POST', start, true);
+		httpreq.setRequestHeader('Content-Type', 'application/json');
+		httpreq.responseType = 'json';
+		httpreq.send(JSON.stringify({
+			token:code,
+			appSecret:localStorage.getItem("mkc")
+		}));
+    	httpreq.onreadystatechange = function() {
+			if (httpreq.readyState == 4) {
+				var json = httpreq.response;
+				var i = sha256(json.accessToken + localStorage.getItem("mkc"));
+				console.log(json);
+				var avatar=json["user"]["avatarUrl"];
+				var priv="public";
+				var add = {
+					at: i,
+					name: json["user"]["name"],
+					domain: "misskey.xyz",
+					user: json["user"]["username"],
+					prof: avatar,
+					id: json["user"]["id"],
+					vis: priv
+				};
+				var multi = localStorage.getItem("multi");
+				var obj = JSON.parse(multi);
+				var target = obj.lengtth;
+				obj.push(add);
+				localStorage.setItem("name_" + target, json["user"]["name"]);
+				localStorage.setItem("user_" + target, json["user"]["username"]);
+				localStorage.setItem("user-id_" + target, json["user"]["id"]);
+				localStorage.setItem("prof_" + target, avatar);
+				console.log(obj);
+				var json = JSON.stringify(obj);
+				localStorage.setItem("multi", json);
+
+				load();
+				return;
+			}
+		}	
+		return;
+	}
 	var start = "https://" + url + "/oauth/token";
 	var id = localStorage.getItem("client_id");
 	var secret = localStorage.getItem("client_secret");
@@ -445,6 +473,10 @@ function getdata(domain, at) {
 function refresh(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
+	if(obj[target].domain=="misskey.xyz"){
+		misskeyRefresh(obj,target);
+		return
+	}
 	var start = "https://" + obj[target].domain +
 		"/api/v1/accounts/verify_credentials";
 		console.log(start);
@@ -493,6 +525,48 @@ function refresh(target) {
 
 		load();
 	});
+}
+function misskeyRefresh(obj,target){
+	var start = "https://misskey.xyz/api/users/show";
+		var httpreq = new XMLHttpRequest();
+		httpreq.open('POST', start, true);
+		httpreq.setRequestHeader('Content-Type', 'application/json');
+		httpreq.responseType = 'json';
+		httpreq.send(JSON.stringify({
+			username:obj[target].user,
+			i:localStorage.getItem("at")
+		}));
+    	httpreq.onreadystatechange = function() {
+			if (httpreq.readyState == 4) {
+				var json = httpreq.response;
+				console.log(json);
+				return;
+				var avatar=json["user"]["avatarURL"];
+				var priv="public";
+				var add = {
+					at: json.accessToken,
+					name: json["user"]["name"],
+					domain: "misskey.xyz",
+					user: json["user"]["username"],
+					prof: avatar,
+					id: json["user"]["id"],
+					vis: priv
+				};
+				var multi = localStorage.getItem("multi");
+				var obj = JSON.parse(multi);
+				var target = obj.lengtth;
+				obj.push(add);
+				localStorage.setItem("name_" + target, json["user"]["name"]);
+				localStorage.setItem("user_" + target, json["user"]["username"]);
+				localStorage.setItem("user-id_" + target, json["user"]["id"]);
+				localStorage.setItem("prof_" + target, avatar);
+				console.log(obj);
+				var json = JSON.stringify(obj);
+				localStorage.setItem("multi", json);
+				load();
+				return;
+			}
+		}	
 }
 //アカウントを選択…を実装
 function multisel() {

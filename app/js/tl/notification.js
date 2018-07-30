@@ -3,20 +3,33 @@
 function notf(acct_id, tlid, sys) {
 	todo("Notifications Loading...");
 	var native=localStorage.getItem("nativenotf");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if(!native){
 		native="yes";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/notifications";
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-		//body: JSON.stringify({})
-	}).then(function(response) {
+	if(domain=="misskey.xyz"){
+		var start = "https://" + domain + "/api/i/notifications";
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify({
+				i:at
+			})
+		}
+	}else{
+		var start = "https://" + domain + "/api/v1/notifications";
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			},
+		}
+	}
+	fetch(start, i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
@@ -25,7 +38,6 @@ function notf(acct_id, tlid, sys) {
 		if(json[0]){
 		var templete="";
 		var lastnotf=localStorage.getItem("lastnotf_" + acct_id);
-		console.log(domain);
 		localStorage.setItem("lastnotf_" + acct_id,json[0].id);
 		Object.keys(json).forEach(function(key) {
 			var obj = json[key];
@@ -54,9 +66,18 @@ function notf(acct_id, tlid, sys) {
 				var mute=[];
 			}
 			if(obj.type!="follow"){
-				templete = templete+parse([obj], 'notf', acct_id, 'notf', -1, mute);
+				if(domain=="misskey.xyz"){
+					templete = templete+misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute);
+				}else{
+					templete = templete+parse([obj], 'notf', acct_id, 'notf', -1, mute);
+				}
 			}else{
-				templete = templete+userparse([obj.account], 'notf', acct_id, 'notf', -1);
+				if(domain=="misskey.xyz"){
+					templete = templete+misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute);
+				}else{
+					templete = templete+userparse([obj.account], 'notf', acct_id, 'notf', -1);
+				}
+				
 			}
 		});
 		
@@ -71,8 +92,13 @@ function notf(acct_id, tlid, sys) {
 		$("#notf-box").addClass("fetched");
 		todc();
 	});
-	var start = "wss://" + domain + "/api/v1/streaming/?stream=user&access_token=" +
+	if(domain!="misskey.xyz"){
+		var start = "wss://" + domain + "/api/v1/streaming/?stream=user&access_token=" +
 		at;
+	}else{
+		var start = "wss://" + domain + "/?i=" +
+		at;
+	}
 
 	console.log(start);
 	var wsid = websocketNotf.length;
@@ -85,15 +111,30 @@ function notf(acct_id, tlid, sys) {
 	}
 	websocketNotf[wsid].onmessage = function(mess) {
 		console.log("Receive Streaming API(Notf):"+acct_id);
-
+		var popup = localStorage.getItem("popup");
+			if (!popup) {
+				popup = 0;
+			}
+		if(domain=="misskey.xyz"){
+			console.log(JSON.parse(mess.data));
+			if (JSON.parse(mess.data).type == "notification") {
+				var obj = JSON.parse(mess.data).body;
+				console.log(obj);
+				if(obj.type!="follow"){
+					templete = misskeyParse([obj], 'notf', acct_id, 'notf', popup);
+				}else{
+					templete = misskeyUserparse([obj], 'notf', acct_id, 'notf', popup);
+				}
+				if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
+					$("div[data-notf=" + acct_id +"]").prepend(templete);
+				}
+				jQuery("time.timeago").timeago();
+			}
+		}else{
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
 		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "notification") {
-			var popup = localStorage.getItem("popup");
-			if (!popup) {
-				popup = 0;
-			}
 			var templete="";
 			localStorage.setItem("lastnotf_" + acct_id,obj.id);
 			if(obj.type!="follow"){
@@ -109,7 +150,7 @@ function notf(acct_id, tlid, sys) {
 			$("[toot-id=" + obj + "]").hide();
 			$("[toot-id=" + obj + "]").remove();
 		}
-
+		}
 	}
 	websocketNotf[wsid].onerror = function(error) {
 		console.error('WebSocket Error ' + error);
@@ -133,8 +174,30 @@ function notfmore(tlid) {
 		todo("Notfication TL MoreLoading");
 		var domain = localStorage.getItem("domain_" + acct_id);
 		var at = localStorage.getItem("acct_"+ acct_id + "_at");
-		var start = "https://" + domain + "/api/v1/notifications"+
-			"max_id=" + sid;
+		
+			if(domain=="misskey.xyz"){
+				var start = "https://" + domain + "/api/i/notifications";
+				var i={
+					method: 'POST',
+					headers: {
+						'content-type': 'application/json',
+					},
+					body:JSON.stringify({
+						i:at,
+						untilId:sid
+					})
+				}
+			}else{
+				var start = "https://" + domain + "/api/v1/notifications"+
+					"max_id=" + sid;
+				var i={
+					method: 'GET',
+					headers: {
+						'content-type': 'application/json',
+						'Authorization': 'Bearer ' + at
+					},
+				}
+			}
 		fetch(start, {
 			method: 'GET',
 			headers: {
@@ -151,9 +214,17 @@ function notfmore(tlid) {
 			Object.keys(json).forEach(function(key) {
 				var obj = json[key];
 				if(obj.type!="follow"){
-					templete = templete+parse([obj], '', acct_id, tlid, -1);
+					if(domain=="misskey.xyz"){
+						templete = templete+misskeyParse([obj], '', acct_id, tlid, -1);
+					}else{
+						templete = templete+parse([obj], '', acct_id, tlid, -1);
+					}
 				}else{
-					templete = templete+userparse([obj.account], '', acct_id, tlid, -1);
+					if(domain=="misskey.xyz"){
+						templete = templete+misskeyUserparse([obj], '', acct_id, tlid, -1);
+					}else{
+						templete = templete+userparse([obj.account], '', acct_id, tlid, -1);
+					}
 				}
 				
 			});

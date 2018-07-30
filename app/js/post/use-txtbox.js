@@ -5,7 +5,7 @@ function re(id,at,acct_id,mode){
 	$("#reply").val(id);
 	var te=$("#textarea").val();
 	$("#textarea").val("@"+at+" "+te);
-	$("#rec").text("はい");
+	$("#rec").text(lang_yesno[lang]);
 	$("#post-acct-sel").val(acct_id);
 	$("#post-acct-sel").prop("disabled", true);
 	$('select').material_select();

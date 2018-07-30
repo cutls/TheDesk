@@ -32,6 +32,9 @@ function mdCheck(){
 	}else{
 		$("#trendtag").html("");
 	}
+	if(domain=="misskey.xyz"){
+		Materialize.toast(lang_bbmd_misskey[lang], 5000);
+	}
 	if(idata[domain+"_letters"]){
 		$("#textarea").attr("data-length", idata[domain+"_letters"])
 	}else{
@@ -104,8 +107,11 @@ if(localStorage.getItem("md")=="hide"){
 }
 //PHPのnl2brと同様
 function nl2br(str) {
+	if(!str){
+		return "";
+	}
     str = str.replace(/\r\n/g, "<br />");
-    str = str.replace(/(\n|\r)/g, "<br />");
+	str = str.replace(/(\n|\r)/g, "<br />");
     return str;
 }
 //テキストボックスで選択したやつをタグで囲む(BB版)

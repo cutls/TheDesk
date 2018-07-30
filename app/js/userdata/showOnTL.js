@@ -21,6 +21,7 @@ function udgEx(user,acct_id){
 	}
 	console.log(user);
 	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain=="misskey.xyz"){ return false; }
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+user
 	fetch(start, {
@@ -48,6 +49,10 @@ function udg(user, acct_id) {
 	}
 	todo("User Data Loading...");
 	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain=="misskey.xyz"){
+		misskeyUdg(user, acct_id)
+		return;
+	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + user;
 	console.log(start);
@@ -174,6 +179,125 @@ function udg(user, acct_id) {
 				$(".only-his-data").show();
 			}
 		}
+		todc();
+	});
+}
+function misskeyUdg(user, acct_id) {
+	reset();
+	if (!user) {
+		user = localStorage.getItem("user-id_"+acct_id);
+		console.log(user);
+	}
+	todo("User Data Loading...");
+	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain!="misskey.xyz"){
+		udg(user, acct_id)
+		return;
+	}
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var start = "https://" + domain + "/api/users/show";
+	console.log(user);
+	fetch(start, {
+		method: 'POST',
+		headers: {
+			'content-type': 'application/json',
+		},
+		body: JSON.stringify({
+			i:at,
+			userId:user
+		})
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		console.log(json);
+		//一つ前のユーザーデータ
+		if (!localStorage.getItem("history")){
+			$("#his-history-btn").prop("disabled",true);
+		}else{
+			$("#his-history-btn").prop("disabled",false);
+			$('#his-data').attr("history", localStorage.getItem("history"));
+		}
+			$('#his-data').modal('open');
+			$('#his-data').attr("user-id", user);
+			$('#his-data').attr("use-acct", acct_id);
+			if(json.host){
+				//Remote
+				$('#his-data').attr("remote", "false");
+				var fullname=json.username+"@"+json.host;
+			}else{
+				$('#his-data').attr("remote", "false");
+				var fullname=json.acct+"@"+domain;
+			}
+			utl(json.id, '', acct_id);
+			flw(json.id, '', acct_id);
+			fer(json.id, '', acct_id);
+			if(json.name){
+				var dis_name=escapeHTML(json.name);
+				dis_name=twemoji.parse(dis_name);
+			}else{
+				var dis_name=json.name
+			}
+			$("#his-name").html(dis_name);
+			$("#his-acct").text(json.username);
+			$("#his-acct").attr("fullname",fullname);
+			$("#his-prof").attr("src", json.avatarUrl);
+			$('#his-data').css('background-image', 'url(' + json.bannerUrl + ')');
+			$("#his-sta").text(json.notesCount);
+			$("#his-follow").text(json.followingCount);
+			$("#his-follower").text(json.followersCount);
+			$("#his-since").text(crat(json.createdAt));
+			var note=json.description;
+			$("#his-des").html(twemoji.parse(note));
+			if(json.isCat){
+				$("#his-bot").html("Cat"+twemoji.parse("😺"));
+			}
+			$('#his-data').css('background-size', 'cover');
+			localStorage.setItem("history" , user);
+			//自分の時
+			if (json.username == localStorage.getItem("user_"+acct_id) && !json.host) {
+				//showFav('', acct_id);
+				//showMut('', acct_id);
+				//showReq('', acct_id);
+				showFrl('', acct_id);
+				$("#his-name-val").val(json.name);
+				var des = json.note;
+				des = nl2br(des)
+				des = $.strip_tags(des);
+				$("#his-des-val").val(des);
+				$("#his-follow-btn").hide();
+				$("#his-block-btn").hide();
+				$("#his-mute-btn").hide();
+				$("#his-notf-btn").hide();
+				$("#his-domain-btn").hide();
+				$("#his-emp-btn").hide();
+				$(".only-my-data").show();
+				$(".only-his-data").hide();
+			} else {
+				if (json.isFollowing) {
+					//自分がフォローしている
+					$("#his-data").addClass("following");
+					$("#his-follow-btn").text(lang_status_unfollow[lang]);
+					hisList(user,acct_id);
+				}else{
+					$("#his-follow-btn").text(lang_status_follow[lang]);
+				}
+				if (json.isFollowed) {
+					//フォローされてる
+					$("#his-relation").text(lang_showontl_followed[lang]);
+				}
+				$("#his-block-btn").hide();
+				if (json.isMuted) {
+					$("#his-data").addClass("muting");
+					$("#his-mute-btn").text(lang_status_unmute[lang]);
+				}else{
+					$("#his-mute-btn").text(lang_status_mute[lang]);
+				}
+				$(".only-my-data").hide();
+				$(".only-his-data").show();
+			}
 		todc();
 	});
 }

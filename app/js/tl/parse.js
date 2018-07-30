@@ -633,16 +633,16 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			var notftext='<span class="cbadge"title="' + date(toot.created_at,
 				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
 				datetype) +
-			'</span>'+ftxt+'。<br>';
+			'</span>'+ftxt+'<br>';
 		}else{
 			var notftext="";
 		}
 		var memory = localStorage.getItem("notice-mem");
-			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
-				Materialize.toast(escapeHTML(toot.display_name)+"に"+ftxt, popup * 1000);
+			if (popup >= 0 && obj.length < 5 && notftext != memory) {
+				Materialize.toast(escapeHTML(toot.display_name)+":"+ftxt, popup * 1000);
 				$(".notf-icon_" + tlid).addClass("red-text");
-				localStorage.setItem("notice-mem", noticetext);
-				noticetext = "";
+				localStorage.setItem("notice-mem", notftext);
+				notftext = "";
 			}
 		var dis_name=escapeHTML(toot.display_name);
 		if(toot.emojis){

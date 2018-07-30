@@ -138,3 +138,44 @@ var lang_parse_mute={
     "ja":"ミュートします。設定から解除できます。",
     "en":" will be muted. You can remove on preferences."
 }
+//misskey
+var lang_misskeyparse_renote={
+    "ja":"再投稿",
+    "en":"Repost"
+}
+var lang_misskeyparse_renoteqt={
+    "ja":"引用",
+    "en":"Renote"
+}
+var lang_misskeyparse_reaction={
+    "ja":"リアクション",
+    "en":"Reaction"
+}
+var lang_misskeyparse_tagnostr={
+    "ja":"タグTLはストリーミング非対応です。",
+    "en":"No streaming API on Tag TLs"
+}
+var lang_misskeyparse_listnostr={
+    "ja":"リストTLはストリーミング非対応です。",
+    "en":"No streaming API on List TLs"
+}
+var lang_misskeyparse_home={
+    "ja":"ホーム",
+    "en":"Home"
+}
+var lang_misskeyparse_qt={
+    "ja":"MisskeyのRenote(引用モード)中:Ctrl+Shift+Cでクリア",
+    "en":"Misskey renote(quote) mode:Ctrl+Shift+Enter to clear"
+}
+var lang_misskeyparse_renoted={
+    "ja":"がRepost",
+    "en":" renoted your following post."
+}
+var lang_misskeyparse_quoted={
+    "ja":"が引用",
+    "en":" quoted your following post."
+}
+var lang_misskeyparse_reaction={
+    "ja":"がリアクション",
+    "en":" reacted your following post."
+}

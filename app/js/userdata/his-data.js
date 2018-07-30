@@ -9,27 +9,49 @@ function utl(user, more, acct_id) {
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
-	if (more) {
-		var sid = $("#his-tl .cvo").last().attr("toot-id");
-		var plus = "?max_id=" + sid;
-	} else {
-		var plus = "";
+	if(domain!="misskey.xyz"){
+		if (more) {
+			var sid = $("#his-tl .cvo").last().attr("toot-id");
+			var plus = "?max_id=" + sid;
+		} else {
+			var plus = "";
+		}
+		var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses" +
+			plus;
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			}
+		}
+	}else{
+		var req={i:at}
+		if (more) {
+			var sid = $("#his-tl .cvo").last().attr("toot-id");
+			req.maxId=sid;
+		}
+		req.userId=user;
+		var start = "https://" + domain + "/api/users/notes"
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify(req)
+		}
 	}
-	var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses" +
-		plus
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
+	fetch(start, i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json, '', acct_id);
+		if(domain=="misskey.xyz"){
+			var templete = misskeyParse(json, '', acct_id);
+		}else{
+			var templete = parse(json, '', acct_id);
+		}
 		if(!json[0]){
 			templete=lang_details_nodata[lang]+"<br>";
 		}
@@ -38,7 +60,11 @@ function utl(user, more, acct_id) {
 		if (more) {
 			$("#his-tl-contents").append(templete);
 		} else {
-			pinutl(templete,user, acct_id)
+			if(domain!="misskey.xyz"){
+				pinutl(templete,user, acct_id)
+			}else{
+				$("#his-tl-contents").html(templete);
+			}
 		}
 		jQuery("time.timeago").timeago();
 	});
@@ -89,28 +115,49 @@ function flw(user, more, acct_id) {
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
-	if (more) {
-		var sid = $("#his-follow-list .cvo").last().attr("user-id");
-		var plus = "?max_id=" + sid;
-	} else {
-		var plus = "";
+	if(domain=="misskey.xyz"){
+		var req={i:at}
+		if (more) {
+			var sid = $("#his-follow-list .cvo").last().attr("user-id");
+			req.maxId=sid;
+		}
+		req.userId=user;
+		var start = "https://" + domain + "/api/users/following"
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify(req)
+		}
+	}else{
+		if (more) {
+			var sid = $("#his-follow-list .cvo").last().attr("user-id");
+			var plus = "?max_id=" + sid;
+		} else {
+			var plus = "";
+		}
+		var start = "https://" + domain + "/api/v1/accounts/" + user + "/following" +
+			plus
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+			}
+		}
 	}
-	var start = "https://" + domain + "/api/v1/accounts/" + user + "/following" +
-		plus
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
+	fetch(start,i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json,'',acct_id);
-		if(!json[0]){
+		if(domain=="misskey.xyz"){
+			var templete = misskeyUserparse(json,'',acct_id);
+		}else{
+			var templete = userparse(json,'',acct_id);
+		}
+		if(templete==""){
 			templete=lang_details_nodata[lang]+"<br>";
 		}
 		if (more) {
@@ -133,28 +180,49 @@ function fer(user, more, acct_id) {
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
-	if (more) {
-		var sid = $("#his-follower-list .cvo").last().attr("user-id");
-		var plus = "?max_id=" + sid;
-	} else {
-		var plus = "";
+	if(domain=="misskey.xyz"){
+		var req={i:at}
+		if (more) {
+			var sid = $("#his-follower-list .cvo").last().attr("user-id");
+			req.maxId=sid;
+		}
+		req.userId=user;
+		var start = "https://" + domain + "/api/users/followers"
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify(req)
+		}
+	}else{
+		if (more) {
+			var sid = $("#his-follower-list .cvo").last().attr("user-id");
+			var plus = "?max_id=" + sid;
+		} else {
+			var plus = "";
+		}
+		var start = "https://" + domain + "/api/v1/accounts/" + user + "/followers" +
+			plus
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+			}
+		}
 	}
-	var start = "https://" + domain + "/api/v1/accounts/" + user + "/followers" +
-		plus;
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
+	fetch(start, i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json,'',acct_id);
-		if(!json[0]){
+		if(domain=="misskey.xyz"){
+			var templete = misskeyUserparse(json,'',acct_id);
+		}else{
+			var templete = userparse(json,'',acct_id);
+		}
+		if(templete==""){
 			templete=lang_details_nodata[lang]+"<br>";
 		}
 		if (more) {
@@ -174,26 +242,48 @@ function showFav(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if (more) {
-		var sid = $("#his-fav-list .cvo").last().attr("toot-id");
-		var plus = "?max_id=" + sid;
-	} else {
-		var plus = "";
+	if(domain!="misskey.xyz"){
+		if (more) {
+			var sid = $("#his-fav-list .cvo").last().attr("toot-id");
+			var plus = "?max_id=" + sid;
+		} else {
+			var plus = "";
+		}
+		var start = "https://" + domain + "/api/v1/favourites" + plus
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			}
+		}
+	}else{
+		var req={i:at}
+		if (more) {
+			var sid = $("#his-fav-list .cvo").last().attr("toot-id");
+			req.maxId=sid;
+		}
+		var start = "https://" + domain + "/api/i/favorites"
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify(req)
+			}
 	}
-	var start = "https://" + domain + "/api/v1/favourites" + plus
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
+	
+	fetch(start, i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json, '', acct_id);
+		if(domain!="misskey.xyz"){
+			var templete = parse(json, '', acct_id);
+		}else{
+			var templete = misskeyParse(json, '', acct_id);
+		}
 		if(!json[0]){
 			templete=lang_details_nodata[lang]+"<br>";
 		}
@@ -213,20 +303,37 @@ function showMut(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if (more) {
-		var sid = $("#his-muting-list .cvo").last().attr("user-id");
-		var plus = "?max_id=" + sid;
-	} else {
-		var plus = "";
+	if(domain=="misskey.xyz"){
+		var req={i:at}
+		if (more) {
+			var sid = $("#his-muting-list .cvo").last().attr("user-id");
+			req.maxId=sid;
+		}
+		var start = "https://" + domain + "/api/mute/list"
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify(req)
+		}
+	}else{
+		if (more) {
+			var sid = $("#his-muting-list .cvo").last().attr("user-id");
+			var plus = "?max_id=" + sid;
+		} else {
+			var plus = "";
+		}
+		var start = "https://" + domain + "/api/v1/mutes" + plus
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+			}
+		}
 	}
-	var start = "https://" + domain + "/api/v1/mutes" + plus
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
+	
+	fetch(start,i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
@@ -251,6 +358,10 @@ function showBlo(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain=="misskey.xyz"){
+		$("#his-blocking-list-contents").html(lang_hisdata_notonmisskey[lang]+"<br>");
+		return false;
+	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (more) {
 		var sid = $("#his-blocking-list .cvo").last().attr("user-id");
@@ -286,31 +397,53 @@ function showBlo(more, acct_id) {
 
 //フォロリクリスト
 function showReq(more, acct_id) {
+	
 	if (!acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if (more) {
-		var sid = $("#his-request-list .cvo").last().attr("user-id");
-		var plus = "?max_id=" + sid;
-	} else {
-		var plus = "";
+	if(domain=="misskey.xyz"){
+		var req={i:at}
+		if (more) {
+			var sid = $("#his-request-list .cvo").last().attr("user-id");
+			req.maxId=sid;
+		}
+		var start = "https://" + domain + "/following/requests/list"
+		var i={
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+			},
+			body:JSON.stringify(req)
+		}
+	}else{
+		if (more) {
+			var sid = $("#his-request-list .cvo").last().attr("user-id");
+			var plus = "?max_id=" + sid;
+		} else {
+			var plus = "";
+		}
+		var start = "https://" + domain + "/api/v1/follow_requests" + plus
+		var i={
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+			}
+		}
 	}
-	var start = "https://" + domain + "/api/v1/follow_requests" + plus
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function(response) {
+	fetch(start,i).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = userparse(json, 'true',acct_id);
+		if(domain="misskey.xyz"){
+			var templete = userparse(json, 'true',acct_id);
+		}else{
+			var templete = misskeyUserparse(json, 'true',acct_id);
+		}
+		
 		if(!json[0]){
 			templete=lang_details_nodata[lang]+"<br>";
 		}
@@ -329,6 +462,10 @@ function showDom(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain=="misskey.xyz"){
+		$("#his-domain-list-contents").html(lang_hisdata_notonmisskey[lang]+"<br>");
+		return false;
+	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (more) {
 		var sid = $("#his-domain-list .cvo").last().attr("user-id");
@@ -376,6 +513,10 @@ function showFrl(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
+	if(domain=="misskey.xyz"){
+		$("#his-follow-recom-contents").html(lang_hisdata_notonmisskey[lang]+"<br>");
+		return false;
+	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (more) {
 		var sid = $("#his-follow-recom-list .cvo").last().attr("user-id");

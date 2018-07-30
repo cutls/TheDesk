@@ -118,6 +118,9 @@
   	return ret;
   };
   $.strip_tags = function(str, allowed) {
+	if(!str){
+		return "";
+	}
   	allowed = (((allowed || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || [])
   		.join('');
   	var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi,

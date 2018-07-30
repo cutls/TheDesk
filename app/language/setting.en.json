@@ -118,6 +118,7 @@
     "keyrow":"Show next or previous image",
     "keyzoom":"Mousewheel:Zoom a image",
     "reset":"Reset(Danger)",
+    "resetconfirm":"Delete all data. You cannot undo. Continue?",
     "about":"About TheDesk",
     "hp":"Website",
     "support":"Support",
