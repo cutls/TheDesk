@@ -3,7 +3,7 @@
     "nowver":"Current version",
     "afterdl":"TheDesk will be quit TheDesk after downloading.",
     "download":"Download",
-    "cdn":"Delivered by Amazon Web Services(S3/CloudFront)",
+    "winzip":"On Windows, TheDesk will self-unzip and launch the latest file. Durling unzippng, TheDesk may freeze. It takes several seconds.",
     "releasenote1":"Visit a releasenote of ",
     "releasenote2":"",
     "skipupd":"Skip this uodate",

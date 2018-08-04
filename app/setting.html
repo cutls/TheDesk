@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<title>Settings - TheDesk</title>
+	<meta content="width=device-width,initial-scale=1.0" name="viewport">
+	<link href="./css/materialize.css" type="text/css" rel="stylesheet">
+	<link href="./css/themes.css" type="text/css" rel="stylesheet">
+	<link href="./css/master.css" type="text/css" rel="stylesheet">
+	<link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
+	<meta charset="utf-8">
+</head>
+<body id="mainView" style="overflow-y:scroll">
+<script type="text/javascript" src="./js/common/jquery.js"></script>
+<script type="text/javascript" src="./js/platform/first.js"></script>
+<script type="text/javascript" src="./js/common/materialize.js"></script>
+<script type="text/javascript" src="./js/lang/setting.lang.js"></script>
+<script>var lang="ja";</script>
+<h4>設定</h4>
+<ul class="collapsible" data-collapsible="accordion">
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">desktop_windows</i>環境設定
+	</div>
+	<div class="collapsible-body">
+		<h5>言語</h5>
+		<a href="language.html" class="btn waves-effect indigo nex" style="width:100%; max-width:200px;">変更</a><br>
+		<h5>設定のインポートとエクスポート</h5>
+		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">エクスポート</button>
+		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">インポート</button>
+		<h5>テーマの設定</h5>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
+		<label for="black">Black</label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
+		<label for="white">White</label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
+		<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
+		<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
+		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
+		<br>
+		<h5>新規通知のポップアップお知らせの表示秒数</h5>0に設定すると表示されません
+		<br>
+		<input type="text" style="width:50px" id="popup">秒
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>ネイティブ通知設定</h5>
+		Windows 10の最新バージョンでは通知が表示されません。これは既知のバグですが解決が難しいため保留しています。<br><a onclick="notftest()" class="pointer">通知テスト</a>
+		<br>
+		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_yes" value="yes" />
+		<label for="ntf_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_no" value="no" />
+		<label for="ntf_no">いいえ</label>
+		<br>
+		<h5>マルチカラムの最低横幅</h5>画面全体の横幅÷コラム数がこの値を超えた時、横スクロールとなります。
+		<br>
+		<input type="text" style="width:50px" id="width">px以上
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>フォント</h5>
+		ローカルフォントを指定します。<br>
+		<input type="text" style="width:150px" id="font">
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>フォントサイズ</h5>
+		<span style="font-size:15px">15px(絶対指定)</span>
+		<br>
+		<input type="text" style="width:50px" id="size">px 
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+	</div>
+	</li>
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">reorder</i>タイムラインの設定
+	</div>
+	<div class="collapsible-body">
+		<h5>時間表記設定</h5>相対時間の例:"1分前","3日前"
+		<br>絶対時間の例"23:25:21","2017年12月30日 23:59:00"
+		<br>混合表示は、当日のトゥートのみ相対、それ以外は絶対で表示 
+		<br>
+		<input class="with-gap" onchange="settings()" onchange="settings()" name="time" type="radio" id="relative" value="relative" />
+		<label for="relative">相対時間</label>
+		<input class="with-gap" onchange="settings()" name="time" type="radio" id="absolute" value="absolute" />
+		<label for="absolute">絶対時間</label>
+		<input class="with-gap" onchange="settings()" name="time" type="radio" id="double" value="double" />
+		<label for="double">両方表示</label>
+		<input class="with-gap" onchange="settings()" name="time" type="radio" id="medium" value="medium" />
+		<label for="medium">混合表示</label>
+		<h5>独自ロケールを使用</h5>対応インスタンスではそのインスタンスにあわせた言語表示ができます。
+		<br>
+		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_yes" value="yes" />
+		<label for="ul_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_no" value="no" />
+		<label for="ul_no">いいえ</label>
+		<br>
+		<h5>非表示設定の画像(NSFW)を隠す</h5>きつめのぼかしがかかります。
+		<br>
+		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_yes" value="yes" />
+		<label for="n_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_no" value="no" />
+		<label for="n_no">いいえ</label>
+		<br>
+		<h5>非表示設定のテキスト(CW)を隠す</h5>
+		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_yes" value="yes" />
+		<label for="c_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_no" value="no" />
+		<label for="c_no">いいえ</label>
+		<br>
+		<h5>アイコンのアニメーションを再生する</h5>
+		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_yes" value="yes" />
+		<label for="g_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_no" value="no" />
+		<label for="g_no">いいえ</label>
+		<br>
+		<h5>タグタイムラインの表示範囲</h5>
+		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_all" value="all" />
+		<label for="t_all">接続しているインスタンス</label>
+		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_local" value="local" />
+		<label for="t_local">検索対象のインスタンスのみ</label>
+		<br>
+		<h5>viaを表示する</h5>
+		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_yes" value="yes" />
+		<label for="via_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_hide" value="hide" />
+		<label for="via_hide">いいえ</label>
+		<br>
+		<h5>マウスオーバーするまでアクションメニューを非表示</h5>
+		1画面で得られる情報量が格段にアップしますが、すこし鬱陶しいと思うかもしれません。<br>
+		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_yes" value="yes" />
+		<label for="mov_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_no" value="no" />
+		<label for="mov_no">いいえ</label>
+		<br>
+		<h5>指定行数以上を折りたたむ</h5>
+		5文字以下のトゥートは折りたたみません。また、折りたたみ時は改行が描画されません。改行のみを行数とカウントします。
+		<br>
+		<input type="text" style="width:50px" id="sentence">行以上または
+		<input type="text" style="width:50px" id="letters">文字以上
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>画像の高さ
+        </h5>
+		<input type="text" style="width:50px" id="img-height">px
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<br>
+	</div>
+	</li>
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">send</i>投稿設定
+	</div>
+	<div class="collapsible-body">
+		<h5>デフォルトの警告文</h5>
+		<input type="text" style="width:150px" id="cw-text">
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+		<br>
+		<h5>デフォルトの公開設定</h5>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="public" value="public" />
+		<label for="public">公開(Public)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="unlisted" value="unlisted" />
+		<label for="unlisted">未収載(Unlisted)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="private" value="private" />
+		<label for="private">非公開(Private)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="direct" value="direct" />
+		<label for="direct">ダイレクト(Direct)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="memory" value="memory" />
+		<label for="memory">前回の投稿設定を記憶する(インスタンスごとに記憶されます)</label>
+		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="server" value="server" />
+		<label for="server">マストドンアカウント設定の既定値</label>
+		<br>
+		<h5>画像投稿設定</h5>
+		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_url" value="url" />
+		<label for="i_url">画像を投稿し、画像のURLを最後に表示</label>
+		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_no-act" value="no-act" />
+		<label for="i_no-act">画像を投稿するがURLは表示しない</label>
+		<br>
+		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_inline" value="inline" disabled />
+		<label for="i_inline">現在利用できません。 
+			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
+		</label>
+		<br>
+		<h5>引用形式</h5>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_simple" value="simple" />
+		<label for="q_simple">URLのみ</label>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
+		<label for="q_mention">URLとアカウント名(相手に通知)</label>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
+		<label for="q_full">本文・URL・アカウント名
+		</label>
+		<br>
+		<h5>投稿後や起動時のアカウント</h5>
+		メインアカウントはアカウント設定で指定できます。投稿以外のアカウント選択にも影響します。<br>
+		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_remain" value="remain" />
+		<label for="mn_remain">最後に使用したアカウント</label>
+		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_main" value="main" />
+		<label for="mn_main">メインアカウント</label>
+		</label>
+		<br>
+	</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+				<i class="material-icons">keyboard</i>キーボードショートカットの設定
+		</div>
+		<div class="collapsible-body">
+			<h5>簡単文字入力</h5>
+			絵文字やタグ、&gt;BTなどを登録しておくとすぐに入力できます。<br>
+			Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
+			<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
+			Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
+			<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
+			Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
+			<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
+
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+				<i class="material-icons">bookmark</i>ミュート・強調の設定
+		</div>
+		<div class="collapsible-body">
+			<h5>クライアントミュート</h5>
+			<div id="mute-cli"></div>
+			<h5>クライアント強調</h5>
+			各トゥートのクライアントをクリックすると設定できます。
+			<h5>ワードミュート</h5>
+			Enterで確定<br>
+			<div class="chips" id="wordmute" style="background-color:gray;"></div>
+			<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">設定</button>
+			<h5>ワード強調</h5>
+			Enterで確定<br>
+			<div class="chips" id="wordemp" style="background-color:gray;"></div>
+			<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">設定</button>
+			<h5>ユーザー強調</h5>
+			各ユーザーのデータ表示画面で設定できます。
+			<span class="emphasized">　強調色(テーマによって異なります。)　</span>
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+			<i class="fa fa-spotify"></i>SpotifyとNowPlayingの設定
+		</div>
+		<div class="collapsible-body">
+			<i class="material-icons" style="font-size:24px;">music_note</i>ボタンから簡単にNowPlayingができます。<br>
+			<h5>アカウントの連携</h5>
+			APIの性質上，thedesk.topへアクセスします。<br>
+			<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">設定</button></div>
+			<a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i class="fa fa-spotify left"></i>接続</a>
+			<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i class="fa fa-spotify left"></i>切断</a>
+			<h5>テンプレートの編集</h5>
+			以下を編集してテンプレートを変更できます。<br>
+			<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
+{url}</textarea><br>
+				テンプレート:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
+				iTunes NowPlayingでも{url}以外のテンプレートに従ってトゥートされます。また、作曲家{composer}/サンプルレート{hz}/ビットレート{bitRate}/ジャンル{genre}が有効です。<br>
+				<span class="imas hide">CINDERELLA NowPlaying(imastodon.net限定)では作曲家{composer}/作詞家{lyricist}/BPM{bpm}が有効です。<br>
+                    CINDERELLA NowPlayingはimastodon.netにログインしているとき、トゥート欄に「//」を入力し、その後に曲名を入れることで可能です。</span><br>
+			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
+			<h5>Spotifyでアルバムアートワークを添付する</h5>
+			<span class="imas hide">この設定はCINDERELLA NowPlaying(imastodon.net限定)にも適用されます。</span><br>
+			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
+			<label for="awk_yes">はい</label>
+			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
+			<label for="awk_no">いいえ</label>
+			<br>
+		</div>
+	</li>
+	<li>
+		<div class="collapsible-header">
+			<i class="material-icons">hearing</i>読み上げの設定
+		</div>
+		<div class="collapsible-body">
+			<h5>読み上げの速さ</h5>
+			1-100まで、デフォルトは10。<br>
+			<p class="range-field"><input type="range" id="voicespeed" min="1" max="100" value="10" style="width:500px; max-width:100%"/></p>
+			<h5>読み上げの高さ</h5>
+			0-100まで、デフォルトは50。(大きくなるほど高い)<br>
+			<p class="range-field"><input type="range" id="voicepitch" min="0" max="100" value="50" style="width:500px; max-width:100%"/></p>
+			<h5>読み上げの音量</h5>
+			0-100まで、デフォルトは100。<br>
+			<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100" style="width:500px; max-width:100%"/></p>
+			<h5>テスト</h5>
+			<input type="text" style="width:350px" id="voicetxt" value="これはテスト音声です。TheDeskはオープンソースのPC向けマストドンクライアントです。マルチインスタンスやマルチカラムに対応しています。">
+			<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()" id="testplay">再生/停止</button><br>
+			<br>
+			<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">設定</button>
+		</div>
+	</li>
+</ul>
+<br>
+<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>戻る</a>
+<br>
+<br>キーボードショートカット一覧
+<li>Ctrl+1-9:1番目～9番目のTLにスクロール</li>
+<li>N:投稿パネルを開く</li>
+<li>X:投稿パネルを開閉</li>
+<li>Ctrl+Enter:投稿</li>
+<li>Ctrl+E:全ての通知を既読にする</li>
+<li>Esc:投稿パネルを消す</li>
+<li>F5:スーパーリロード</li>
+<li>Ctrl+Shift+C:入力内容を消す</li>
+<li>Ctrl+Shift+S:設定</li>
+<li>Ctrl+Shift+M:アカウントマネージャ</li>
+<li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
+<li>Ctrl+Shift+P:現在選択中のプロフィール</li>
+<li>←/→:イメージビューワー起動時に画像切り替え</li>
+<li>マウスホイール:イメージビューワー時に拡大縮小</li>
+<div class="hide kirishima">
+以下Markdownに対応したインスタンスのみ。
+<br>
+<li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線</li>
+<li>Shift+Enter:全角スペースを入れて改行</li>
+<li>Shift+Space:ゼロ幅スペース</li>
+以下アスタルテにログインしている場合のみ 
+<br>
+<li>Ctrl+R: 
+<a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
+</li><br>
+</div>
+<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('全てのデータを削除します。この操作は取り消せません。')){ localStorage.clear(); location.href='index.html'; }"><i class="material-icons left">delete</i>初期化</button><br><br>
+<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i class="material-icons left">info</i>このソフトについて</button>
+<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">web</i>公式HP</a>
+<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>支援(Enty)</a>
+<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>ヘルプ/Docs(Constructing)</a>
+<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
+<a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="./img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
+<a class="btn waves-effect red lighten-2" href="https://osushi.love/Cutls_P" target="_blank" style="width:100%; max-width:500px;"><img src="./img/sushi.svg" class="left" width="25" style="padding-top:5px;">寿司を投げる</a>
+<br>
+<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">アップデートを確認</a><br>
+<a href="oss.html">OSS License(オープンソースライセンス)</a><br>
+<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved. 
+	<a href="https://github.com/cutls/TheDesk/blob/master/LICENSE.md">TheDesk LICENSE (Latest Ver.)</a>
+	<br>Developer: Cutls P( 
+	<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
+	<br>
+</span><br>
+TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
+タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
+<script type="text/javascript" src="./js/common/about.js"></script>
+<script type="text/javascript" src="./js/platform/end.js"></script>
+<script type="text/javascript" src="./js/login/logout.js"></script>
+<script type="text/javascript" src="./js/ui/spotify.js"></script>
+<script type="text/javascript" src="./js/tl/speech.js"></script>
+<script type="text/javascript" src="./js/ui/settings.js"></script>
+<script type="text/javascript" src="./js/ui/theme.js"></script>
+<script type="text/javascript" src="./js/tl/date.js"></script>

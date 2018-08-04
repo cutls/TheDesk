@@ -6,6 +6,9 @@ $voise        = null;
     $synthes.voice = $voise;                  // 音声の設定
     localStorage.removeItem("voicebank");
     speechSynthesis.cancel()
+    if(!localStorage.getItem("voice_vol")){
+        localStorage.setItem("voice_vol",1)
+    }
     $synthes.rate=localStorage.getItem("voice_speed");
     $synthes.pitch=localStorage.getItem("voice_pitch");
     $synthes.volume=localStorage.getItem("voice_vol");
@@ -30,6 +33,7 @@ $repeat  = setInterval(function() {
             var obj = JSON.parse(voice);
             if(obj[0]){
                 $synthes.text  = obj[0];
+                console.log($synthes);
                 speechSynthesis.speak($synthes);
                 obj.splice(0, 1);
                 var json = JSON.stringify(obj);

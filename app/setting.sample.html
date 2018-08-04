@@ -24,7 +24,10 @@
 	</div>
 	<div class="collapsible-body">
 		<h5>{{setlang}}</h5>
-		<a href="language.html" class="btn waves-effect indigo nex" style="width:100%; max-width:200px;">{{change}}</a>
+		<a href="language.html" class="btn waves-effect indigo nex" style="width:100%; max-width:200px;">{{change}}</a><br>
+		<h5>{{backup}}</h5>
+		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">{{export}}</button>
+		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">{{import}}</button>
 		<h5>{{theme}}</h5>
 		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
 		<label for="black">Black</label>

@@ -168,4 +168,13 @@ function progshow(e) {
   ipc.on('reload', function (event, arg) {
 	location.reload();
 })
-	
+ipc.on('mess', function (event, arg) {
+    if(arg=="unzip"){
+		if(lang=="ja"){
+			$("body").text("アップデートを展開中です。");
+		}else{
+			$("body").text("Unzipping...");
+		}
+        
+    }
+})

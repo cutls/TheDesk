@@ -1,6 +1,6 @@
 {
   "name": "TheDesk",
-  "version": "15.10.0",
+  "version": "16.0.1",
   "description": "TheDesk on Mastodonはシンプルと多機能を両立したデスクトップ向けクライアントです",
   "main": "main.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "author": "Cutls P",
   "license": "TheDesk LICENSE",
   "dependencies": {
+    "adm-zip": "^0.4.11",
     "electron-dl": "^1.11.0",
     "jimp": "^0.2.28",
     "node-notifier": "^5.2.1",

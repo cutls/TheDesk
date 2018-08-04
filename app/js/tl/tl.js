@@ -224,7 +224,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice) {
 			if (JSON.parse(mess.data).type == "note") {
 				var obj = JSON.parse(mess.data).body;
 				if(voice){
-					say(obj.content)
+					say(obj.text)
 				}
 				var templete = misskeyParse([obj], type, acct_id, tlid,"",mute);
 				var pool = localStorage.getItem("pool_" + tlid);

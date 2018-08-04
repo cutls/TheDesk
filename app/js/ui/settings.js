@@ -318,10 +318,10 @@ function climute(){
 	var cli = localStorage.getItem("client_mute");
 	var obj = JSON.parse(cli);
 	if(!obj){
-		$("#mute-cli").html("ミュートしているクライアントはありません。");
+		$("#mute-cli").html(lang_setting_nomuting[lang]);
 	}else{
 		if(!obj[0]){
-			$("#mute-cli").html("ミュートしているクライアントはありません。");
+			$("#mute-cli").html(lang_setting_nomuting[lang]);
 			return;
 		}
 	var templete;
@@ -331,7 +331,7 @@ function climute(){
 		templete = '<div class="acct" id="acct_' + key + '">' + list +
 			'.' +
 			cli + '<button class="btn waves-effect red disTar" onclick="cliMuteDel(' +
-			key + ')">削除</button><br></div>';
+			key + ')">'+lang_del[lang]+'</button><br></div>';
 		$("#mute-cli").append(templete);
 	});
 }
@@ -371,27 +371,183 @@ function wordempSave(){
 	localStorage.setItem("word_emp", json);
 }
 function notftest(){
-	var electron = require("electron");
+		var electron = require("electron");
 		var ipc = electron.ipcRenderer;
 		var os = electron.remote.process.platform;
 		var options = {
-				body: '通知テスト(画像はあなたのアカウントのアイコンです)',
+				body: lang_setting_notftest[lang]+'('+lang_setting_notftestprof[lang]+')',
 				icon: localStorage.getItem("prof_0")
 		  };
 		if(os=="darwin"){
-			var n = new Notification('TheDesk通知テスト', options);
+			var n = new Notification('TheDesk'+lang_setting_notftest[lang], options);
 		}else{
-			ipc.send('native-notf', ['TheDesk通知テスト','通知テスト(画像はあなたのアカウントのアイコンです)',localStorage.getItem('prof_0')]);
+			ipc.send('native-notf', ['TheDesk'+lang_setting_notftest[lang],lang_setting_notftest[lang]+'('+lang_setting_notftestprof[lang]+')',localStorage.getItem('prof_0')]);
 		}
 	
 }
 function oks(no){
 	var txt=$("#oks-"+no).val();
 	localStorage.setItem("oks-"+no, txt);
-	Materialize.toast("キーボードショートカットを更新しました。", 3000);
+	Materialize.toast(lang_setting_ksref[lang], 3000);
 }
 function oksload(){
 	if(localStorage.getItem("oks-1")){$("#oks-1").val(localStorage.getItem("oks-1"))}
 	if(localStorage.getItem("oks-2")){$("#oks-2").val(localStorage.getItem("oks-2"))}
 	if(localStorage.getItem("oks-3")){$("#oks-3").val(localStorage.getItem("oks-3"))}
+}
+function exportSettings(){
+	if(!confirm(lang_setting_exportwarn[lang])){
+		return false;
+	}
+	var electron = require("electron");
+	var remote=electron.remote;
+	var dialog=remote.dialog;
+	var ipc = electron.ipcRenderer;
+	dialog.showSaveDialog(null, {
+		title: 'Export',
+		properties: ['openFile', 'createDirectory'],
+		defaultPath: "export.thedeskconfig"
+	}, (savedFiles) => {
+		console.log(savedFiles);
+		if(!savedFiles){
+			return false;
+		}
+		var exp={};
+		//Accounts
+		var multi = localStorage.getItem("multi");
+		var acct = JSON.parse(multi);
+		exp.accts=acct;
+		//Columns
+		var multi = localStorage.getItem("column");
+		var column = JSON.parse(multi);
+		exp.columns=column;
+		//Themes
+		exp.theme=localStorage.getItem("theme");
+		//Min width
+		exp.minwidth=localStorage.getItem("width");
+		//Font
+		exp.font=localStorage.getItem("font");
+		exp.size=localStorage.getItem("size");
+		//Img height
+		exp.imgheight=localStorage.getItem("img-height");
+		//Main
+		exp.mainuse=localStorage.getItem("mainuse");
+		//CW text
+		exp.cw=localStorage.getItem("cw-text");
+		//vis
+		exp.vis=localStorage.getItem("vis");
+		//keysc
+		exp.ksc=[
+			localStorage.getItem("oks-1"),
+			localStorage.getItem("oks-2"),
+			localStorage.getItem("oks-3")
+		];
+		//climu
+		var cli = localStorage.getItem("client_mute");
+		var climu = JSON.parse(cli);
+		exp.clientMute=climu;
+		//wordmu
+		var wdm = localStorage.getItem("word_mute");
+		var wordmu = JSON.parse(wdm);
+		exp.wordMute=wordmu;
+		//spotify
+		exp.spotifyArtwork=localStorage.getItem("artwork")
+		exp.spotifyTemplete=localStorage.getItem("np-temp")
+		//tags
+		var tagarr = localStorage.getItem("tag");
+		var favtag = JSON.parse(tagarr);
+		exp.favoriteTags=favtag;
+		console.log(exp);
+		ipc.send('export', [savedFiles,JSON.stringify(exp)]);
+		alert("Done.")
+		//cards
+		//lang
+	});
+}
+function importSettings(){
+	if(!confirm(lang_setting_importwarn[lang])){
+		return false;
+	}
+	var electron = require("electron");
+	var remote=electron.remote;
+	var dialog=remote.dialog;
+	var ipc = electron.ipcRenderer;
+	dialog.showOpenDialog(null, {
+		title: 'Import',
+		properties: ['openFile'],
+		filters: [
+			{name: 'TheDesk Config', extensions: ['thedeskconfig']},
+		]
+	}, (fileNames) => {
+		console.log(fileNames);
+		if(!fileNames){
+			return false;
+		}
+		ipc.send('import', fileNames[0]);
+		ipc.on('config', function (event, arg) {
+			var obj = JSON.parse(arg);
+			if(obj){
+				localStorage.clear();
+				localStorage.setItem("multi",JSON.stringify(obj.accts));
+				for(var key=0;key<obj.accts.length;key++){
+					var acct=obj.accts[key];
+					localStorage.setItem("name_" + key, acct.name);
+					localStorage.setItem("user_" + key, acct.user);
+					localStorage.setItem("user-id_" + key, acct.id);
+					localStorage.setItem("prof_" + key, acct.prof);
+					localStorage.setItem("domain_" + key, acct.domain);
+					localStorage.setItem("acct_"+ key + "_at", acct.at);
+				}
+				localStorage.setItem("column",JSON.stringify(obj.columns));
+				localStorage.setItem("theme",obj.theme);
+				if(obj.width){
+					console.log(obj.width)
+					localStorage.setItem("width",obj.width);
+				}
+				if(obj.font){
+					localStorage.setItem("font",obj.font);
+				}
+				if(obj.size){
+					localStorage.setItem("size",obj.size);
+				}
+				themes(obj.theme);
+				if(obj.imgheight){
+					localStorage.setItem("img-height",obj.imgheight);
+				}
+				localStorage.setItem("mainuse",obj.mainuse);
+				if(obj.cw){
+					localStorage.setItem("cwtext",obj.cw);
+				}
+				localStorage.setItem("vis",obj.vis);
+				if(obj.ksc[0]){
+					localStorage.setItem("oks-1",obj.ksc[0]);
+				}
+				if(obj.ksc[1]){
+					localStorage.setItem("oks-2",obj.ksc[1]);
+				}
+				if(obj.ksc[2]){
+					localStorage.setItem("oks-3",obj.ksc[2]);
+				}
+				if(obj.clientMute){
+					localStorage.setItem("client_mute",JSON.stringify(obj.clientMute));
+				}
+				if(obj.wordMute){
+					localStorage.setItem("word_mute",JSON.stringify(obj.wordMute));
+				}
+				if(obj.favoriteTags){
+					localStorage.setItem("tag",JSON.stringify(obj.favoriteTags));
+				}
+				localStorage.setItem("np-temp",obj.spotifyTemplete);
+				for(var i=0;i<obj.columns.length;i++){
+					localStorage.setItem("card_" + i,"true");
+					localStorage.removeItem("catch_" + i);
+				}
+				location.href="language.html";
+			}else{
+				alert("Error.")
+			}
+		})
+		//cards
+		//lang
+	});
 }

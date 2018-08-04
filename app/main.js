@@ -367,7 +367,7 @@ function dl(ver,files,fullname){
 	}else if(platform=="darwin"){
 			var zip="TheDesk-darwin-x64.zip";
 	}
-	zip=zip+"?"+ver;
+	//zip=zip+"?"+ver;
 	var l = 8;
 
 	// 生成する文字列に含める文字セット
@@ -378,7 +378,7 @@ function dl(ver,files,fullname){
 	for(var i=0; i<l; i++){
 	  r += c[Math.floor(Math.random()*cl)];
 	}
-	zip=zip+r;
+
 	updatewin.webContents.send('mess', "ダウンロードを開始します。");
 	const opts = {
 		directory:files,
@@ -392,7 +392,27 @@ function dl(ver,files,fullname){
 			'https://dl.thedesk.top/'+zip, opts)
 		.then(dl => {
 			updatewin.webContents.send('mess', "ダウンロードが完了しました。");
-			app.quit();
+			if(platform=="win32"){
+				mainWindow.webContents.send('mess', "unzip");
+				console.log(files+"/"+zip);
+				fs.rename(files+"/"+zip, app.getPath("userData")+"/TheDesk-temp.zip", function (err) {
+					var AdmZip = require('adm-zip');
+					var zipp = new AdmZip(app.getPath("userData")+"/TheDesk-temp.zip");
+					zipp.extractAllTo(app.getPath("userData")+"/",true);
+					var bat='@echo off\nrmdir  /s /q "'+files+'\\TheDesk-win32-'+bit+'" /Q\nmove /Y "'+app.getPath("userData")+'\\TheDesk-win32-'+bit+'" "'+files+'\\"\nstart '+files+'\\TheDesk-win32-'+bit+'\\TheDesk.exe\nexit';
+					fs.writeFile(app.getPath("userData")+"/update.bat",bat,function(err){
+						const exec = require('child_process').exec;
+					exec('start '+app.getPath("userData")+"\\update.bat", (err, stdout, stderr) => {
+						app.quit();
+						  if (err) { console.log(err); }
+						  console.log(stdout);
+						});
+					 });
+			})
+			}else{
+				app.quit();
+			}
+			
 		})
 		.catch(console.error);
 }
@@ -560,6 +580,12 @@ function mems(){
 ipc.on('mkc', (e, arg) => {
 	var mkc = fs.readFileSync(__dirname + '/.tkn', 'utf8');
 	mainWindow.webContents.send('mkcr', mkc);
+});
+ipc.on('export', (e, args) => {
+	fs.writeFileSync(args[0], args[1]);
+});
+ipc.on('import', (e, arg) => {
+	mainWindow.webContents.send('config', fs.readFileSync(arg, 'utf8'));
 });
 
 app.setAsDefaultProtocolClient('thedesk')

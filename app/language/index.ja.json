@@ -121,7 +121,7 @@
     "hours":"時間",
     "mins":"分",
     "warnOnIntegratedTL":"Integrated TL/Plus TLは、公開/ホームのフィルターワードが合算されて適応されます。どちらか一方の指定でも非表示になります。",
-    "helloTheDesk":"<h3>Welcome to TheDesk</h3><a href=\"acct.html\">アカウントを追加</a>するか下の<i class=\"material-icons\">add</i>ボタンよりカラムを追加してください。",
+    "helloTheDesk":"<h3>Welcome to TheDesk</h3><br><a href=\"acct.html\">アカウントを追加</a>するか下の<i class=\"material-icons\">add</i>ボタンよりカラムを追加してください。",
     "addColumn":"カラム追加",
     "sortColumns":"カラム一覧/並べ替え",
     "acctMan":"アカウントマネージャー",

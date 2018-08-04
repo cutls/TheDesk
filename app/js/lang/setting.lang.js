@@ -98,3 +98,27 @@ var lang_setting_main={
     "ja":"起動時・投稿時のアカウントを{{set}}に設定しました。",
     "en":"Default account:{{set}}"
 }
+var lang_setting_ksref={
+    "ja":"キーボードショートカットが更新されました。",
+    "en":"Keyboard shortcuts are refreshed."
+}
+var lang_setting_nomuting={
+    "ja":"ミュートしているクライアントはありません。",
+    "en":"No client is muted."
+}
+var lang_setting_notftest={
+    "ja":"通知テスト",
+    "en":" Notification test "
+}
+var lang_setting_notftestprof={
+    "ja":"アイコンはあなたのアカウントのものです。",
+    "en":"Your icon is shown."
+}
+var lang_setting_exportwarn={
+    "ja":"重要なデータのみエクスポートされます。エクスポートされたデータは外部に公開しないでください。全ての認証データが含まれています。",
+    "en":"Only important data will be exported. You must keep this data secure."
+}
+var lang_setting_importwarn={
+    "ja":"全てのデータがリセットされます。",
+    "en":"All data will be deleted."
+}
