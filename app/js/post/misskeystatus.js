@@ -118,3 +118,52 @@ function reaction(mode,id,acct_id,tlid){
 		}
 	}
 }
+//Vote
+function vote(acct_id,id,to){
+    var domain = localStorage.getItem("domain_" + acct_id);
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
+    var start = "https://" + domain + "/api/notes/polls/vote";
+    if(domain!="misskey.xyz"){
+        return false;
+    }
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+    httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify({i:at,noteId:id,choice:to}));
+    httpreq.onreadystatechange = function() {
+		voterefresh(acct_id,id)
+	}
+}
+function voterefresh(acct_id,id){
+    var httpreqd = new XMLHttpRequest();
+    var domain = localStorage.getItem("domain_" + acct_id);
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
+    var start = "https://" + domain + "/api/notes/show";
+	httpreqd.open('POST', start, true);
+	httpreqd.setRequestHeader('Content-Type', 'application/json');
+    httpreqd.responseType = 'json';
+	httpreqd.send(JSON.stringify({i:at,noteId:id}));
+    httpreqd.onreadystatechange = function() {
+		if (httpreqd.readyState == 4) {
+            var json = httpreqd.response;
+            if(!json){
+                return false;
+            }
+            var poll="";
+		    if(json.poll){
+			    var choices=json.poll.choices;
+			    Object.keys(choices).forEach(function(keyc) {
+                    var choice = choices[keyc];
+                    if(choice.isVoted){
+                        var myvote=twemoji.parse("✅");
+                    }else{
+                           var myvote="";
+                    }
+                    poll=poll+'<div class="pointer vote" onclick="vote(\''+acct_id+'\',\''+json.id+'\','+choice.id+')">'+choice.text+'('+choice.votes+''+myvote+')</div>';
+                });
+                $(".vote_"+json.id).html(poll)
+		    }
+		}
+	}
+}

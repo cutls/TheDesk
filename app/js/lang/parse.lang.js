@@ -163,6 +163,14 @@ var lang_misskeyparse_home={
     "ja":"ホーム",
     "en":"Home"
 }
+var lang_misskeyparse_followers={
+    "ja":"フォロワー",
+    "en":"Follower"
+}
+var lang_misskeyparse_specified={
+    "ja":"ユーザー指定",
+    "en":"Specified User"
+}
 var lang_misskeyparse_qt={
     "ja":"MisskeyのRenote(引用モード)中:Ctrl+Shift+Cでクリア",
     "en":"Misskey renote(quote) mode:Ctrl+Shift+Enter to clear"

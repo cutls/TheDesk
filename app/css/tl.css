@@ -392,3 +392,10 @@ p:not(:last-child){
 .tl-box .via-hide{
   display:none;
 }
+.vote{
+  width: 100%;
+  border: 1px solid;
+  margin-top: 3px;
+  padding: 1px;
+  border-radius: 3px;
+}

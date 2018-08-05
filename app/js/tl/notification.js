@@ -245,12 +245,16 @@ function notfToggle(acct, tlid) {
 }
 function notfCanceler(acct){
 	$(".notf-reply_" + acct).text(0);
+	localStorage.removeItem("notf-reply_" + acct_id)
 	$(".notf-reply_" + acct).addClass("hide");
 	$(".notf-fav_" + acct).text(0);
+	localStorage.removeItem("notf-fav_" + acct_id)
 	$(".notf-fav_" + acct).addClass("hide");
 	$(".notf-bt_" + acct).text(0);
+	localStorage.removeItem("notf-bt_" + acct_id)
 	$(".notf-bt_" + acct).addClass("hide");
 	$(".notf-follow_" + acct).text(0);
+	localStorage.removeItem("notf-follow_" + acct_id)
 	$(".notf-follow_" + acct).addClass("hide");
 	$(".notf-icon_" + acct).removeClass("red-text");
 }
@@ -275,3 +279,4 @@ function allNotfRead(){
 		notfCanceler(key)
 	});
 }
+allNotfRead()

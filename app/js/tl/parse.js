@@ -182,13 +182,19 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
 				if (toot.type == "mention") {
-					$(".notf-reply_" + acct_id).text($(".notf-reply_" + acct_id).text()*1+1);
+					var replyct=localStorage.getItem("notf-reply_" + acct_id)
+					$(".notf-reply_" + acct_id).text(replyct*1+1);
+					localStorage.setItem("notf-reply_" + acct_id,replyct*1+1)
 					$(".notf-reply_" + acct_id).removeClass("hide")
 				}else if (toot.type == "reblog") {
-					$(".notf-bt_" + acct_id).text($(".notf-bt_" + acct_id).text()*1+1);
+					var btct=localStorage.getItem("notf-bt_" + acct_id)
+					$(".notf-bt_" + acct_id).text(btct*1+1);
+					localStorage.setItem("notf-bt_" + acct_id,btct*1+1)
 					$(".notf-bt_" + acct_id).removeClass("hide")
 				}else if (toot.type == "favourite") {
-					$(".notf-fav_" + acct_id).text($(".notf-fav_" + acct_id).text()*1+1);
+					var favct=localStorage.getItem("notf-fav_" + acct_id)
+					$(".notf-fav_" + acct_id).text(favct*1+1);
+					localStorage.setItem("notf-fav_" + acct_id,favct*1+1)
 					$(".notf-fav_" + acct_id).removeClass("hide")
 				}
 				var domain = localStorage.getItem("domain_" + acct_id);
@@ -603,6 +609,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 
 //オブジェクトパーサー(ユーザーデータ)
 function userparse(obj, auth, acct_id, tlid, popup) {
+	console.log("notf-get")
 	//独自ロケール
 	var locale = localStorage.getItem("locale");
 	if(locale=="yes"){
@@ -612,6 +619,12 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	var datetype = localStorage.getItem("datetype");
 	Object.keys(obj).forEach(function(key) {
 		var toot = obj[key];
+		if(!toot.username){
+			toot=toot.account;
+			var notf=true;
+		}else{
+			var notf=false;
+		}
 		if (toot.locked) {
 			var locked = ' <i class="fa fa-lock red-text"></i>';
 		} else {
@@ -629,8 +642,8 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 		}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
 			ftxt = "ツルまれました";
 		}
-		if(popup > 0 || popup==-1){
-			var notftext='<span class="cbadge"title="' + date(toot.created_at,
+		if(popup > 0 || popup==-1 || notf){
+			var notftext='<span class="cbadge" title="' + date(toot.created_at,
 				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
 				datetype) +
 			'</span>'+ftxt+'<br>';
@@ -644,7 +657,12 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				localStorage.setItem("notice-mem", notftext);
 				notftext = "";
 			}
-		var dis_name=escapeHTML(toot.display_name);
+			if(toot.display_name){
+				var dis_name=escapeHTML(toot.display_name);
+			}else{
+				var dis_name=toot.username;
+			}
+		
 		if(toot.emojis){
 			var actemojick = toot.emojis[0];
 		}else{
@@ -661,13 +679,21 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			dis_name = dis_name.replace(regExp, emoji_url);
 		});
 	}
-	dis_name=twemoji.parse(dis_name);
+	if(dis_name){
+		dis_name=twemoji.parse(dis_name);
+	}
+	if(toot.avatar){
+		var avatar=toot.avatar;
+	}else{
+		var avatar="./img/missing.svg";
+	}
+	
 		templete = templete +
 			'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +
 			notftext +
 			'</div><div class="area-icon"><a onclick="udg(\'' + toot.id + '\',' +
 			acct_id + ');" user="' + toot.acct + '" class="udg">' +
-			'<img src="' + toot.avatar + '" width="40" class="prof-img" user="' + toot
+			'<img src="' + avatar + '" width="40" class="prof-img" user="' + toot
 			.acct + '"></a></div>' +
 			'<div class="area-display_name"><div class="flex-name"><span class="user">' +
 			dis_name + '</span>' +

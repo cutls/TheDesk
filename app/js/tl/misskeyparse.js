@@ -164,13 +164,19 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
 				if (toot.type == "reply") {
-					$(".notf-reply_" + acct_id).text($(".notf-reply_" + acct_id+":eq(0)").text()*1+1);
+					var replyct=localStorage.getItem("notf-reply_" + acct_id)
+					$(".notf-reply_" + acct_id).text(replyct*1+1);
+					localStorage.setItem("notf-reply_" + acct_id,replyct*1+1)
 					$(".notf-reply_" + acct_id).removeClass("hide")
 				}else if (toot.type == "renote" || toot.type=="quote") {
-					$(".notf-bt_" + acct_id).text($(".notf-bt_" + acct_id+":eq(0)").text()*1+1);
+					var btct=localStorage.getItem("notf-bt_" + acct_id)
+					$(".notf-bt_" + acct_id).text(btct*1+1);
+					localStorage.setItem("notf-bt_" + acct_id,btct*1+1)
 					$(".notf-bt_" + acct_id).removeClass("hide")
 				}else if (toot.type == "reaction") {
-					$(".notf-fav_" + acct_id).text($(".notf-fav_" + acct_id+":eq(0)").text()*1+1);
+					var favct=localStorage.getItem("notf-fav_" + acct_id)
+					$(".notf-fav_" + acct_id).text(favct*1+1);
+					localStorage.setItem("notf-fav_" + acct_id,favct*1+1)
 					$(".notf-fav_" + acct_id).removeClass("hide")
 				}
 				var domain = localStorage.getItem("domain_" + acct_id);
@@ -188,7 +194,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					if(os=="darwin"){
 						var n = new Notification('TheDesk:'+domain, options);
 					}else{
-						ipc.send('native-notf', ['TheDesk:'+domain,toot.user.name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.note.text),toot.user.avatarUrl]);
+						ipc.send('native-notf', ['TheDesk:'+domain,toot.user.name+"(" + toot.user.acct +")"+what+"\n\n"+$.strip_tags(toot.note.text),toot.user.avatarUrl]);
 					}
 				}
 				$(".notf-icon_" + acct_id).addClass("red-text");
@@ -312,7 +318,17 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
         }
         //デフォ絵文字
         if(content){
-			content=content.replace(/(http(s)?:\/\/[\x21-\x7e]+)/gi, "<a href='$1' target='_blank'>$1</a>")
+			//MFM
+			content=content.replace(/^"([^"]+)"$/gmi, '<blockquote>$1</blockquote>')
+			content=content.replace(/`(.+)`/gi, '<code>$1</code>')
+			content=content.replace(/(http(s)?:\/\/[\x21-\x7e]+)/gi, '<a href="$1" target="_blank">$1</a>')
+			content=content.replace(/\(\(\((.+)\)\)\)/gi, '<span class="shake">$1</span>')
+			content=content.replace(/<motion>(.+)<\/motion>/gi, '<span class="shake">$1</span>')
+			content=content.replace(/\*\*\*([^*]+)\*\*\*/gi, '<span class="shake" style="font-size:200%">$1</span>')
+			content=content.replace(/\*\*([^*]+)\*\*/gi, '<b>$1</b>')
+			content=content.replace(/^(.+)\s検索$/gmi, '<div class="input-field"><i class="material-icons prefix">search</i><input type="text" style="width:calc( 60% - 80px);" name="q" value="$1" id="srcbox_'+toot.id+'"><label for="src" data-trans="src" class="">検索</label><button class="btn waves-effect indigo" style="width:40%;" data-trans-i="src" onclick="goGoogle(\''+toot.id+'\')">検索</button></div>')
+			content=content.replace(/\[(.+)\]\(<a href="(http(s)?:\/\/[\x21-\x7e]+)".+\)/gi,'<a href="$2" target="_blank">$1</a>');
+			
             content=twemoji.parse(content);
         }else{
             content="";
@@ -346,11 +362,20 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				} else {
 					var sense = ""
 				}
-				viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
+				if(media.type.indexOf("video") !== -1){
+					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
+					acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
+					'" data-type="video" class="img-parsed"><video src="' +
+					purl + '" class="' + sense +
+					' toot-img pointer" style="max-width:100%; height:'+imh+'px;"></a></span>';
+				}else{
+					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
 					acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 					'" data-type="image" class="img-parsed"><img src="' +
 					purl + '" class="' + sense +
 					' toot-img pointer" style="width:' + cwdt + '%; height:'+imh+'px;"></a></span>';
+				}
+				
 			});
 			media_ids = media_ids.slice(0, -1) ;
 		} else {
@@ -455,7 +480,22 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					content=content.replace(regExp,'<span class="emp">'+word+"</span>");
 				}
 			});
-        }
+		}
+		//Poll
+		var poll="";
+		if(toot.poll){
+			var choices=toot.poll.choices;
+			Object.keys(choices).forEach(function(keyc) {
+				var choice = choices[keyc];
+				if(choice.isVoted){
+					var myvote=twemoji.parse("✅");
+				}else{
+					var myvote="";
+				}
+				poll=poll+'<div class="pointer vote" onclick="vote(\''+acct_id+'\',\''+toot.id+'\','+choice.id+')">'+choice.text+'('+choice.votes+''+myvote+')</div>';
+			});
+			poll='<div class="vote_'+toot.id+'">'+poll+'</div>';
+		}
         //Reactions
         if(toot.reactionCounts){
         if(toot.reactionCounts.like){
@@ -532,7 +572,10 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
         }else{
             var reacted="";
         }
-        content=nl2br(content);
+		content=nl2br(content);
+		if(!content || content==""){
+			content='<span class="gray">This post has no content. It may be media-only, private or deleted.</span>';
+		}
 		var trans="";
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + '  ' + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
@@ -577,7 +620,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("😥")+'</a><span class="re-confusedct">'+confused+
             '</span></span><span class="'+pudhide+' reaction re-pudding"><a onclick="reaction(\'pudding\',\'' + toot.id + '\',' + acct_id +
             ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("🍮")+'</a><span class="re-puddingct">'+pudding+
-			'</span></div>' + mentions + tags + '</div>' +
+			'</span></div>'+poll + mentions + tags + '</div>' +
 			'<div class="area-vis"></div>'+
 			'<div class="area-actions '+mouseover+'">' +
 			'<div class="action">'+vis+'</div>'+
@@ -658,7 +701,6 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 			}else{
 				var dis_name=toot.name;
 			}
-		console.log(dis_name)
 		templete = templete +
 			'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +
 			notftext +
@@ -682,4 +724,13 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 
 	});
 	return templete;
+}
+function goGoogle(id){
+	var val=$("#srcbox_"+id).val();
+	var url="https://google.com/search?q="+val;
+	const {
+		shell
+	} = require('electron');
+
+	shell.openExternal(url);
 }

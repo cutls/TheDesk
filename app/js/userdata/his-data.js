@@ -143,6 +143,7 @@ function flw(user, more, acct_id) {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
 			}
 		}
 	}
@@ -208,6 +209,7 @@ function fer(user, more, acct_id) {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
 			}
 		}
 	}
@@ -329,6 +331,7 @@ function showMut(more, acct_id) {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
 			}
 		}
 	}
@@ -429,6 +432,7 @@ function showReq(more, acct_id) {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
 			}
 		}
 	}
