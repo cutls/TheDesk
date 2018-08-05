@@ -156,6 +156,13 @@
 		<input type="text" style="width:150px" id="cw-text">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
+		<h5>標準でCWを設定</h5>
+		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_yes" value="yes" />
+		<label for="cws_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_no" value="no" />
+		<label for="cws_no">いいえ
+		</label>
+		<br>
 		<h5>デフォルトの公開設定</h5>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="public" value="public" />
 		<label for="public">公開(Public)</label>
@@ -180,6 +187,15 @@
 		<label for="i_inline">現在利用できません。 
 			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
 		</label>
+		<br>
+		<h5>投稿ボックスの挙動</h5>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_yes" value="yes" />
+		<label for="bx_yes">たたむ</label>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_no" value="no" />
+		<label for="bx_no">投稿後も隠さない
+		</label>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_abs" value="absolute" />
+		<label for="bx_abs">枠外クリックで閉じない(起動時に展開)</label>
 		<br>
 		<h5>引用形式</h5>
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_simple" value="simple" />
@@ -341,6 +357,7 @@ TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のため
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
 <script type="text/javascript" src="./js/login/logout.js"></script>
+<script type="text/javascript" src="./js/lang/lang.js"></script>
 <script type="text/javascript" src="./js/ui/spotify.js"></script>
 <script type="text/javascript" src="./js/tl/speech.js"></script>
 <script type="text/javascript" src="./js/ui/settings.js"></script>

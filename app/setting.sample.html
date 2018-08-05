@@ -156,6 +156,13 @@
 		<input type="text" style="width:150px" id="cw-text">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
 		<br>
+		<h5>{{cws}}</h5>
+		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_yes" value="yes" />
+		<label for="cws_yes">{{yes}}</label>
+		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_no" value="no" />
+		<label for="cws_no">{{no}}
+		</label>
+		<br>
 		<h5>{{defaultvis}}</h5>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="public" value="public" />
 		<label for="public">{{public}}</label>
@@ -180,6 +187,15 @@
 		<label for="i_inline">{{disabled}} 
 			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
 		</label>
+		<br>
+		<h5>{{box}}</h5>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_yes" value="yes" />
+		<label for="bx_yes">{{boxyes}}</label>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_no" value="no" />
+		<label for="bx_no">{{boxno}}
+		</label>
+		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_abs" value="absolute" />
+		<label for="bx_abs">{{boxabs}}</label>
 		<br>
 		<h5>{{quote}}</h5>
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_simple" value="simple" />
@@ -341,6 +357,7 @@ TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のため
 <script type="text/javascript" src="./js/common/about.js"></script>
 <script type="text/javascript" src="./js/platform/end.js"></script>
 <script type="text/javascript" src="./js/login/logout.js"></script>
+<script type="text/javascript" src="./js/lang/lang.js"></script>
 <script type="text/javascript" src="./js/ui/spotify.js"></script>
 <script type="text/javascript" src="./js/tl/speech.js"></script>
 <script type="text/javascript" src="./js/ui/settings.js"></script>

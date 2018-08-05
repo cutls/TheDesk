@@ -78,9 +78,6 @@ function post() {
 			var box = localStorage.getItem("box");
 			if (box == "yes") {
 				hide();
-			}else if (box == "hide"){
-				$("body").addClass("mini-post");
-				$(".mini-btn").text("expand_less");
 			}
 			$("#toot-post-btn").prop("disabled", false);
 			todc();
@@ -178,8 +175,16 @@ function clear() {
 	} else {
 		$("#cw-text").val("");
 	}
-	$("#cw").removeClass("yellow-text");
-	$("#cw").removeClass("cw-avail");
+	var acw = localStorage.getItem("always-cw");
+	if (acw != "yes") {
+		$("#cw").removeClass("yellow-text");
+		$("#cw").removeClass("cw-avail");
+		$("#cw-text").hide();
+	}else{
+		$("#cw").addClass("yellow-text");
+		$("#cw").addClass("cw-avail");
+		$("#cw-text").show();
+	}
 	$("#rec").text(lang_no[lang]);
 	$("#mec").text(lang_nothing[lang]);
 	loadVis();

@@ -1,13 +1,27 @@
 {
-  "name": "TheDesk",
-  "version": "16.0.1",
-  "description": "TheDesk on Mastodonはシンプルと多機能を両立したデスクトップ向けクライアントです",
+  "name": "thedesk",
+  "version": "16.0.2",
+  "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Cutls P",
+  "bugs":{ 
+    "url" : "https://github.com/cutls/TheDesk/issues",
+    "email" : "mstdn@thedesk.top"
+  },
+  "homepage":"https://thedesk.top",
+  "author": { 
+    "name": "Cutls P",
+    "url" : "https://kirishima.clooud/@Cutls",
+    "email" : "web-pro@cutls.com"
+  },
+  "contributor": [{ 
+    "name": "とねぢ",
+    "url" : "https://minohdon.jp/@toneji",
+    "email" : "solfa.tono@gmail.com"
+  }],
   "license": "TheDesk LICENSE",
   "dependencies": {
     "adm-zip": "^0.4.11",

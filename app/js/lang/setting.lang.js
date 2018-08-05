@@ -18,6 +18,10 @@ var lang_setting_cwtext={
     "ja":"デフォルトの警告文を「{{set}}」に設定しました。",
     "en":"Default CW text:{{set}}"
 }
+var lang_setting_cws={
+    "ja":"標準でCW:{{set}}",
+    "en":"Always CW on:{{set}}"
+}
 var lang_setting_vis={
     "ja":"デフォルトの公開設定を{{set}}に設定しました。",
     "en":"Default visibility:{{set}}"
@@ -73,6 +77,10 @@ var lang_setting_imgheight={
 var lang_setting_tag={
     "ja":"タグの取得範囲を「{{set}}」に設定しました。",
     "en":"Tag TL:{{set}}"
+}
+var lang_setting_box={
+    "ja":"投稿ボックスを{{set}}",
+    "en":"Post box:{{set}}"
 }
 var lang_setting_ul={
     "ja":"独自ロケール設定を{{set}}に設定しました。",

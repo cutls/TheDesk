@@ -159,15 +159,22 @@ function parseColumn() {
 		$(".box").css("min-width", width + "px");
 	}
 	var box = localStorage.getItem("box");
-	if (box == "yes") {
-		$("#post-box").addClass("hidenbox");
-		$("#post-box").fadeOut();
-		$("#menu-btn").fadeIn();
-	}else if (box == "hide"){
-		$("body").addClass("mini-post");
-		$(".mini-btn").text("expand_less");
+	if (box == "absolute") {
+		show();
 	}
 	favTag();
+	var cw = localStorage.getItem("always-cw");
+	if (cw == "yes") {
+		if(!$("#cw").hasClass("cw-avail")){
+			$("#cw-text").show();
+			$("#cw").addClass("yellow-text");
+			$("#cw").addClass("cw-avail");
+			var cwt=localStorage.getItem("cw-text");
+			if(cwt){
+				$("#cw-text").val(cwt);
+			}
+		}
+	}
 }
 //カラム追加
 function addColumn() {

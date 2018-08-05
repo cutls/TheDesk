@@ -37,6 +37,13 @@ function settings() {
 	}
 	localStorage.setItem("cw-text", cwtd);
 
+	var cwsd = $("[name=cws]:checked").val();
+	var cwst = $("[for=cws_"+cwsd+"]").text();
+	if (cwsd != localStorage.getItem("always-cw")) {
+		Materialize.toast(lang_setting_cws[lang].replace("{{set}}" ,cwst), 3000);
+	}
+	localStorage.setItem("always-cw", cwsd);
+
 	var visd = $("[name=vis]:checked").val();
 	var vist = $("[for="+visd+"]").text();
 	if (visd != localStorage.getItem("vis")) {
@@ -107,6 +114,13 @@ function settings() {
 		Materialize.toast(lang_setting_imgheight[lang].replace("{{set}}" ,heid), 3000);
 	}
 	localStorage.setItem("img-height", heid);
+
+	var boxd = $("[name=box]:checked").val();
+	var boxt = $("[for=bx_"+boxd+"]").text();
+	if (boxd != localStorage.getItem("box")) {
+		Materialize.toast(lang_setting_box[lang].replace("{{set}}" ,boxt), 3000);
+	}
+	localStorage.setItem("box", boxd);
 
 	var tagd = $("[name=tag]:checked").val();
 	var tagt = $("[for=t_"+tagd+"]").text();
@@ -192,6 +206,12 @@ function load() {
 	}
 	$("#c_" + cw).prop("checked", true);
 
+	var cws = localStorage.getItem("always-cw");
+	if (!cws) {
+		var cws = "no";
+	}
+	$("#cws_" + cws).prop("checked", true);
+
 	var popup = localStorage.getItem("popup");
 	if (!popup) {
 		var popup = "0";
@@ -202,7 +222,10 @@ function load() {
 	if (!box) {
 		var box = "no";
 	}
-	$("#b_" + box).prop("checked", true);
+	if(box=="absolute"){
+		var box = "abs";
+	}
+	$("#bx_" + box).prop("checked", true);
 
 	var gif = localStorage.getItem("gif");
 	if (!gif) {
@@ -232,6 +255,12 @@ function load() {
 		var cwt = "";
 	}
 	$("#cw-text").val(cwt);
+
+	var cws = localStorage.getItem("always-cw");
+	if (!cws) {
+		var cws = "no";
+	}
+	$("#cws_" + cws).prop("checked", true);
 
 	var vis = localStorage.getItem("vis");
 	if (!vis) {
@@ -268,6 +297,12 @@ function load() {
 		var tag = "all";
 	}
 	$("#t_" + tag).prop("checked", true);
+
+	var box = localStorage.getItem("box");
+	if (!box) {
+		var box = "yes";
+	}
+	$("#bx_" + box).prop("checked", true);
 
 	var uld = localStorage.getItem("locale");
 	if (!uld) {

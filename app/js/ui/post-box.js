@@ -48,8 +48,10 @@ $('#posttgl').focusin(function(e) {
 });
 
 $("#timeline-container,#group").click(function(e) {
-	if($('#post-box').hasClass("appear") && !localStorage.getItem("nohide")){
-		hide();
+	if(localStorage.getItem("box")!="absolute"){
+		if($('#post-box').hasClass("appear") && !localStorage.getItem("nohide")){
+			hide();
+		}
 	}
 	localStorage.removeItem("nohide")
 });

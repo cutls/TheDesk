@@ -14,10 +14,11 @@ Contact me(bug report...):GitHub Issues, mention to [Cutls@kirishima.cloud](http
 
 ## Language/言語
 
- - 日本語(Japanese)
- - English(英語)
+- 日本語(Japanese)
+- English(英語)
 
 ### Translation/翻訳
+
 The Developer needs nice translation of TheDesk!  
 Pull Request to `language/*.json` and `js/lang/*.js`.  
 You cannot PR? You can also write Issues.  
@@ -37,18 +38,25 @@ app:そのままのファイル.ダウンロード→テスト用
 desk.icns: If you build yourself on macOS, you can use this .icns file as icon.  
 desk.icns: macOS向けアイコン.セルフビルドにどうぞ.  
 
-
 ## Requirement/環境
 
 - Windows (to launch TheDesk/実行に必要) / Linux (x64/ia32/armv7l)
 - Electron 2.0.5
 - electron-dl
-- Jimp(Node.js)
+- Jimp
+- adm-zip
 - itunes-nowplaying-mac(for macOS)
 - node-notifier
 - Ability to read unformated files!
 
+## Contributors/コントリビューター
+
+macOSビルダー  
+
+- [とねぢ](https://minohdon.jp/@toneji)
+
 ## Build/ビルド
+
 Misskey(misskey.xyz) application token is not in cutls/TheDesk  
 Misskey(misskey.xyz)のトークンは含まれておりません。  
   
