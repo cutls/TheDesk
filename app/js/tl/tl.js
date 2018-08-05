@@ -321,12 +321,12 @@ function moreload(type, tlid) {
 		localStorage.setItem("now", type);
 		todo(cap(type) + " TL MoreLoading");
 		if(type!="noauth"){
+			var at = localStorage.getItem("acct_"+ acct_id + "_at");
 			var hdr={
 				'content-type': 'application/json',
 				'Authorization': 'Bearer ' + at
 			};
 				var domain = localStorage.getItem("domain_" + acct_id);
-				var at = localStorage.getItem("acct_"+ acct_id + "_at");
 		}else{
 			var hdr={
 				'content-type': 'application/json'
