@@ -183,18 +183,18 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
 				if (toot.type == "mention") {
 					var replyct=localStorage.getItem("notf-reply_" + acct_id)
-					$(".notf-reply_" + acct_id).text(replyct*1+1);
-					localStorage.setItem("notf-reply_" + acct_id,replyct*1+1)
+					$(".notf-reply_" + acct_id).text(replyct*1-(-1));
+					localStorage.setItem("notf-reply_" + acct_id,replyct*1-(-1))
 					$(".notf-reply_" + acct_id).removeClass("hide")
 				}else if (toot.type == "reblog") {
 					var btct=localStorage.getItem("notf-bt_" + acct_id)
-					$(".notf-bt_" + acct_id).text(btct*1+1);
-					localStorage.setItem("notf-bt_" + acct_id,btct*1+1)
+					$(".notf-bt_" + acct_id).text(btct*1-(-1));
+					localStorage.setItem("notf-bt_" + acct_id,btct*1-(-1))
 					$(".notf-bt_" + acct_id).removeClass("hide")
 				}else if (toot.type == "favourite") {
 					var favct=localStorage.getItem("notf-fav_" + acct_id)
-					$(".notf-fav_" + acct_id).text(favct*1+1);
-					localStorage.setItem("notf-fav_" + acct_id,favct*1+1)
+					$(".notf-fav_" + acct_id).text(favct*1-(-1));
+					localStorage.setItem("notf-fav_" + acct_id,favct*1-(-1))
 					$(".notf-fav_" + acct_id).removeClass("hide")
 				}
 				var domain = localStorage.getItem("domain_" + acct_id);
