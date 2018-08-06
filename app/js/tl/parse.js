@@ -157,18 +157,14 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			} else if (toot.type == "reblog") {
 				var what = lang_parse_bted[lang];
 				var icon = "fa-retweet light-blue-text";
-				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
-					what = ":「わかるわ」";
-				}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
-					what = "がしばきました";
+				if(!locale && localStorage.getItem("bt_" + acct_id)){
+					what = localStorage.getItem("bt_" + acct_id);
 				}
 			} else if (toot.type == "favourite") {
 				var what = lang_parse_faved[lang];
 				var icon = "fa-star  yellow-text";
-				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
-					what = "の頭にティンときたようです";
-				}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
-					what = "がええやんと言いました";
+				if(!locale && localStorage.getItem("fav_" + acct_id)){
+					what = localStorage.getItem("fav_" + acct_id);
 				}
 			}
 			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.created_at,
@@ -637,10 +633,8 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			var auth = "";
 		}
 		var ftxt=lang_parse_followed[lang];
-		if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
-			ftxt = "名刺をいただきました";
-		}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
-			ftxt = "ツルまれました";
+		if(!locale && localStorage.getItem("follow_" + acct_id)){
+			ftxt = localStorage.getItem("follow_" + acct_id);
 		}
 		if(popup > 0 || popup==-1 || notf){
 			var notftext='<span class="cbadge" title="' + date(toot.created_at,

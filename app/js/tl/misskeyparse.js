@@ -131,7 +131,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		if (mix == "notf") {
 			if (toot.type == "reply") {
 				var what = lang_parse_mentioned[lang];
-				var icon = '<i class="big-text fa fa-share teal"></i>';
+				var icon = '<i class="big-text fa fa-share teal-text"></i>';
 			} else if (toot.type == "renote") {
 				var what = lang_misskeyparse_renoted[lang];
 				var icon = '<i class="big-text fa fa-retweet light-blue-text"></i>';
@@ -326,7 +326,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			content=content.replace(/<motion>(.+)<\/motion>/gi, '<span class="shake">$1</span>')
 			content=content.replace(/\*\*\*([^*]+)\*\*\*/gi, '<span class="shake" style="font-size:200%">$1</span>')
 			content=content.replace(/\*\*([^*]+)\*\*/gi, '<b>$1</b>')
-			content=content.replace(/^(.+)\s検索$/gmi, '<div class="input-field"><i class="material-icons prefix">search</i><input type="text" style="width:calc( 60% - 80px);" name="q" value="$1" id="srcbox_'+toot.id+'"><label for="src" data-trans="src" class="">検索</label><button class="btn waves-effect indigo" style="width:40%;" data-trans-i="src" onclick="goGoogle(\''+toot.id+'\')">検索</button></div>')
+			content=content.replace(/^(.+)\s(検索|search)$/gmi, '<div class="input-field"><i class="material-icons prefix">search</i><input type="text" style="width:calc( 60% - 80px);" name="q" value="$1" id="srcbox_'+toot.id+'"><label for="src" data-trans="src" class="">検索</label><button class="btn waves-effect indigo" style="width:40%;" data-trans-i="src" onclick="goGoogle(\''+toot.id+'\')">検索</button></div>')
 			content=content.replace(/\[(.+)\]\(<a href="(http(s)?:\/\/[\x21-\x7e]+)".+\)/gi,'<a href="$2" target="_blank">$1</a>');
 			
             content=twemoji.parse(content);

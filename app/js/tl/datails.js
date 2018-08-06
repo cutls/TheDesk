@@ -190,6 +190,7 @@ function context(id, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		if(domain=="misskey.xyz"){
+			json.reverse();
 			console.log(json);
 			var templete = misskeyParse(json, '', acct_id,"","",[]);
 			$("#toot-reply").html(templete);

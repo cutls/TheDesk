@@ -310,7 +310,18 @@ function ckdb(acct_id) {
 			if(json[domain + "_notification"]){
 				localStorage.setItem("notification_" + acct_id, json[domain + "_notification"]);
 			}
-	
+			if(json[domain + "_post"]){
+				localStorage.setItem("post_" + acct_id, json[domain + "_post"]);
+			}
+			if(json[domain + "_fav"]){
+				localStorage.setItem("fav_" + acct_id, json[domain + "_fav"]);
+			}
+			if(json[domain + "_bt"]){
+				localStorage.setItem("bt_" + acct_id, json[domain + "_bt"]);
+			}
+			if(json[domain + "_follow"]){
+				localStorage.setItem("follow_" + acct_id, json[domain + "_follow"]);
+			}
 	}
 	
 }

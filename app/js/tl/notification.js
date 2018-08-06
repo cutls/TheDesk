@@ -245,20 +245,21 @@ function notfToggle(acct, tlid) {
 }
 function notfCanceler(acct){
 	$(".notf-reply_" + acct).text(0);
-	localStorage.removeItem("notf-reply_" + acct_id)
+	localStorage.removeItem("notf-reply_" + acct)
 	$(".notf-reply_" + acct).addClass("hide");
 	$(".notf-fav_" + acct).text(0);
-	localStorage.removeItem("notf-fav_" + acct_id)
+	localStorage.removeItem("notf-fav_" + acct)
 	$(".notf-fav_" + acct).addClass("hide");
 	$(".notf-bt_" + acct).text(0);
-	localStorage.removeItem("notf-bt_" + acct_id)
+	localStorage.removeItem("notf-bt_" + acct)
 	$(".notf-bt_" + acct).addClass("hide");
 	$(".notf-follow_" + acct).text(0);
-	localStorage.removeItem("notf-follow_" + acct_id)
+	localStorage.removeItem("notf-follow_" + acct)
 	$(".notf-follow_" + acct).addClass("hide");
 	$(".notf-icon_" + acct).removeClass("red-text");
 }
 function allNotfRead(){
+	console.log(localStorage.getItem("notf-fav_2"));
 	var multi = localStorage.getItem("multi");
 	if (!multi) {
 		var obj = [{
