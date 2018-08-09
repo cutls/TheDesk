@@ -152,6 +152,21 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					"pudding":"🍮"
 				}
 				var icon=reactions[toot.reaction];
+				var reactions=["like","love","laugh","hmm","surprise","congrats","angry","confused","pudding"];
+                for(var i=0;i<reactions.length;i++){
+                    if(toot.note.reactionCounts[reactions[i]]){
+                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(toot.note.reactionCounts[reactions[i]])
+                        $("#pub_" + id +" .re-"+reactions[i]).removeClass("hide")
+                    }else{
+                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(0)
+                        if($("#pub_" + id +" .reactions").hasClass("fullreact")){
+                            $("#pub_" + id +" .re-"+reactions[i]).addClass("hide")
+                        }else{
+                            $("#pub_" + id +" .re-"+reactions[i]).removeClass("hide")
+                        }
+                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(toot.note.reactionCounts[reactions[i]])
+                    }
+                }
 			}
 			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.createdAt,
 				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.createdAt,

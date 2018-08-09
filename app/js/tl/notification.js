@@ -239,8 +239,29 @@ function notfmore(tlid) {
 
 //通知トグルボタン
 function notfToggle(acct, tlid) {
-	$("#notf-box_" + tlid).toggleClass("hide");
-	$("#notf-box_" + tlid).toggleClass("show");
+	if($("#notf-box_" + tlid).hasClass("column-hide")){
+		$("#notf-box_" + tlid).css("display","block")
+		$("#notf-box_" + tlid).animate({
+			'height': '400px'
+		},{
+			'duration': 300,
+			'complete': function(){
+				$("#notf-box_" + tlid).css("overflow-y","scroll")
+				$("#notf-box_" + tlid).removeClass("column-hide")
+			}
+		});
+	}else{
+		$("#notf-box_" + tlid).css("overflow-y","hidden")
+		$("#notf-box_" + tlid).animate({
+			'height': '0'
+		},{
+			'duration': 300,
+			'complete': function(){
+				$("#notf-box_" + tlid).addClass("column-hide")
+				$("#notf-box_" + tlid).css("display","none")
+			}
+		});
+	}
 	notfCanceler(acct)
 }
 function notfCanceler(acct){

@@ -114,21 +114,28 @@ function mixre(acct_id, tlid, TLtype, mute,delc) {
 
 		} else if (type == "update") {
 			var templete = parse([obj], '', acct_id, tlid,"",mute);
-			if (!$("#timeline_"+tlid+" [toot-id="+obj.id+"]").length) {
+			if($("#timeline_" + tlid +" [toot-id=" + obj.id + "]").length < 1){
+				if(voice){
+					say(obj.content)
+				}	
+				var templete = parse([obj], type, acct_id, tlid,"",mute);
 				var pool = localStorage.getItem("pool_" + tlid);
-				if (pool && templete) {
+				if (pool) {
 					pool = templete + pool;
-				} else if (templete) {
+				} else {
 					pool = templete
-				}else{
-					pool="";
 				}
 				localStorage.setItem("pool_" + tlid, pool);
+	
 				scrollck();
+	
 				additional(acct_id, tlid);
 				jQuery("time.timeago").timeago();
-				todc();
-		}}
+			}else{
+				todo("二重取得発生中");
+			}
+
+			}
 	}
 	websocketHome[wshid].onmessage = function(mess) {
 		console.log("Receive Streaming API:(Integrated:Home)");
@@ -154,19 +161,25 @@ function mixre(acct_id, tlid, TLtype, mute,delc) {
 					var templete="";
 				}
 			}
-		if (!$("#timeline_"+tlid+" [toot-id="+obj.id+"]").length) {
+			if($("#timeline_" + tlid +" [toot-id=" + obj.id + "]").length < 1){
+				if(voice){
+					say(obj.content)
+				}	
+				var templete = parse([obj], type, acct_id, tlid,"",mute);
 				var pool = localStorage.getItem("pool_" + tlid);
-				if (pool && templete) {
+				if (pool) {
 					pool = templete + pool;
-				} else if (templete) {
+				} else {
 					pool = templete
-				}else{
-					pool="";
 				}
 				localStorage.setItem("pool_" + tlid, pool);
+	
 				scrollck();
+	
 				additional(acct_id, tlid);
 				jQuery("time.timeago").timeago();
+			}else{
+				todo("二重取得発生中");
 			}
 		}
 	}

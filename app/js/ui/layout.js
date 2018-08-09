@@ -119,9 +119,9 @@ function parseColumn() {
 						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_delthis[lang]+'"'+icnsert+'>cancel</i></a></div>'+
 		  '<div class="area-a3"><a onclick="setToggle(' + key +
 		  ')" class="setting nex" title="'+lang_layout_setthis[lang]+'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
-		  '<div class="hide notf-indv-box z-depth-4" id="notf-box_' + key +
+		  '<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"><div id="notifications_' + key +
-		  '" data-notf="' + acct.domain + '" data-type="notf"></div></div><div class="hide notf-indv-box" id="util-box_' + key +
+		  '" data-notf="' + acct.domain + '" data-type="notf"></div></div><div class="column-hide notf-indv-box" id="util-box_' + key +
 		  '" style="padding:5px;"><a onclick="mediaToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_mediafil[lang]+'">perm_media</i><span id="sta-media-' +
 		  key + '">On</span></a>'+lang_layout_mediafil[lang]+'<br><a onclick="cardToggle(' + key +
@@ -254,8 +254,29 @@ function removeColumn(tlid) {
 //設定トグル
 function setToggle(tlid) {
 	colorpicker(tlid);
-	$("#util-box_" + tlid).toggleClass("hide");
-	$("#util-box_" + tlid).toggleClass("show");
+	if($("#util-box_" + tlid).hasClass("column-hide")){
+		$("#util-box_" + tlid).css("display","block")
+		$("#util-box_" + tlid).animate({
+			'height': '200px'
+		},{
+			'duration': 300,
+			'complete': function(){
+				$("#util-box_" + tlid).css("overflow-y","scroll")
+				$("#util-box_" + tlid).removeClass("column-hide")
+			}
+		});
+	}else{
+		$("#util-box_" + tlid).css("overflow-y","hidden")
+		$("#util-box_" + tlid).animate({
+			'height': '0'
+		},{
+			'duration': 300,
+			'complete': function(){
+				$("#util-box_" + tlid).addClass("column-hide")
+				$("#util-box_" + tlid).css("display","none")
+			}
+		});
+	}
 }
 function colorpicker(key){
 	temp=

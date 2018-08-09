@@ -485,7 +485,11 @@ function cap(type, data, acct_id) {
 	} else if (type == "dm") {
 		var response= "DM"
 	} else if (type == "mix") {
-		var response= "Integrated"
+		if(localStorage.getItem("domain_" + acct_id)=="misskey.xyz"){
+			var response= "Social TL"
+		}else{
+			var response= "Integrated"
+		}
 	} else if (type == "plus") {
 		var response= "Local+"
 	}

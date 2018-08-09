@@ -549,9 +549,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'('+lang_parse_clickcopyurl[lang]+')"><i class="fa fa-clock-o"></i>' +
 			date(toot.created_at, datetype) + '</span>' +
 			'</div></div>' +
-			'<div class="area-toot"><span class="toot ' + spoiler + '">' + content +
-			'</span><span class="' +
+			'<div class="area-toot"><span class="' +
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
+			'</span><span class="toot ' + spoiler + '">' + content +
 			'</span>' +
 			'' + viewer + '' +
 			'</div><div class="area-additional"><span class="additional">' + analyze +
@@ -605,7 +605,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 
 //オブジェクトパーサー(ユーザーデータ)
 function userparse(obj, auth, acct_id, tlid, popup) {
-	console.log("notf-get")
 	//独自ロケール
 	var locale = localStorage.getItem("locale");
 	if(locale=="yes"){
@@ -616,6 +615,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	Object.keys(obj).forEach(function(key) {
 		var toot = obj[key];
 		if(!toot.username){
+			var raw=toot;
 			toot=toot.account;
 			var notf=true;
 		}else{
@@ -637,10 +637,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			ftxt = localStorage.getItem("follow_" + acct_id);
 		}
 		if(popup > 0 || popup==-1 || notf){
-			var notftext='<span class="cbadge" title="' + date(toot.created_at,
-				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
-				datetype) +
-			'</span>'+ftxt+'<br>';
+			var notftext=ftxt+'<br>';
 		}else{
 			var notftext="";
 		}

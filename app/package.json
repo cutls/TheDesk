@@ -1,27 +1,29 @@
 {
   "name": "thedesk",
-  "version": "16.0.3",
+  "version": "16.0.4",
   "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "bugs":{ 
-    "url" : "https://github.com/cutls/TheDesk/issues",
-    "email" : "mstdn@thedesk.top"
+  "bugs": {
+    "url": "https://github.com/cutls/TheDesk/issues",
+    "email": "mstdn@thedesk.top"
   },
-  "homepage":"https://thedesk.top",
-  "author": { 
+  "homepage": "https://thedesk.top",
+  "author": {
     "name": "Cutls P",
-    "url" : "https://kirishima.clooud/@Cutls",
-    "email" : "web-pro@cutls.com"
+    "url": "https://kirishima.clooud/@Cutls",
+    "email": "web-pro@cutls.com"
   },
-  "contributor": [{ 
-    "name": "とねぢ",
-    "url" : "https://minohdon.jp/@toneji",
-    "email" : "solfa.tono@gmail.com"
-  }],
+  "contributor": [
+    {
+      "name": "とねぢ",
+      "url": "https://minohdon.jp/@toneji",
+      "email": "solfa.tono@gmail.com"
+    }
+  ],
   "license": "TheDesk LICENSE",
   "dependencies": {
     "adm-zip": "^0.4.11",
