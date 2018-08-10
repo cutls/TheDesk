@@ -578,8 +578,11 @@ function mems(){
 	mainWindow.webContents.send('memory', [mem,os.cpus()[0].model,os.totalmem()]);
 }
 ipc.on('mkc', (e, arg) => {
-	var mkc = fs.readFileSync(__dirname + '/.tkn', 'utf8');
-	mainWindow.webContents.send('mkcr', mkc);
+	var platform=process.platform;
+	if(platform=="linux" || platform=="win32" ){
+		var mkc = fs.readFileSync(__dirname + '/.tkn', 'utf8');
+		mainWindow.webContents.send('mkcr', mkc);
+	}
 });
 ipc.on('export', (e, args) => {
 	fs.writeFileSync(args[0], args[1]);
