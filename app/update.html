@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 <head>
 <title>Update - TheDesk</title>
 <link href="./css/materialize.css" type="text/css" rel="stylesheet">
@@ -21,21 +21,21 @@ a,button{
 <script type="text/javascript" src="./js/common/jquery.js"></script>
 <script type="text/javascript" src="./js/platform/first.js"></script>
 <script type="text/javascript" src="./js/common/materialize.js"></script>
-<h5>アップデートがあります[TheDesk <span id="ver"></span>]</h5>
+<h5>Latest TheDesk[TheDesk <span id="ver"></span>]</h5>
 <span id="det"></span><br>
-現在のバージョン<span id="now"></span><br>
-ダウンロード後は選択したフォルダが開きソフトは閉じられます。<br>
-<button id="update" class="waves-effect btn" onclick="update('true')">ダウンロード</button>
+Current version<span id="now"></span><br>
+TheDesk will be quit TheDesk after downloading.<br>
+<button id="update" class="waves-effect btn" onclick="update('true')">Download</button>
 <p id="prog"></p>
   <div class="progress">
       <div class="determinate" style="width: 0%"></div>
   </div><br>
-  <b>Windows環境の場合、自動で展開され起動します。展開時にTheDeskが固まることがありますが、しばらくお待ち下さい。</b><br>
-  アップデート内容の詳細は<a href="https://github.com/cutls/TheDesk/blob/master/LATEST.md">GitHub</a>をご覧ください。<br><br>
-  このアップデートを飛ばす(<a onclick="window.close();" class="pointer">次回TL表示時まで</a>/<a onclick="nextv();" class="pointer">次のバージョンが出るまで</a>)<br>
-  <a onclick="quit()" class="pointer">このソフトを終了</a><br>
-  <a onclick="about()" class="pointer">このソフトについて</a><br>
-  アップデートに問題が生じる場合は<a href="https://thedesk.top">TheDesk HP</a>からのダウンロードをおためしください。
+  <b>On Windows, TheDesk will self-unzip and launch the latest file. Durling unzippng, TheDesk may freeze. It takes several seconds.</b><br>
+  Visit a releasenote of <a href="https://github.com/cutls/TheDesk/blob/master/LATEST.md">GitHub</a><br><br>
+  Skip this uodate(<a onclick="window.close();" class="pointer">until next TL loading</a>/<a onclick="nextv();" class="pointer">until next version</a>)<br>
+  <a onclick="quit()" class="pointer">Quit</a><br>
+  <a onclick="about()" class="pointer">About TheDesk</a><br>
+  Some problems? Please download on <a href="https://thedesk.top">TheDesk HP</a>
   <script type="text/javascript" src="./js/common/about.js"></script>
   <script type="text/javascript" src="./js/platform/end.js"></script>
 <script>
@@ -52,7 +52,7 @@ verck();
 ipc.on('prog', function (event, arg) {
 	console.log(arg);
     $(".determinate").css('width',arg*100+"%");
-    $("#prog").text("ダウンロード中:"+Math.floor(arg*100)+"%");
+    $("#prog").text("Downloading:"+Math.floor(arg*100)+"%");
 })
 ipc.on('mess', function (event, arg) {
     console.log(arg);

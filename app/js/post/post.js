@@ -76,7 +76,8 @@ function post() {
 			var json = httpreq.response;
 			console.log(json);
 			var box = localStorage.getItem("box");
-			if (box == "yes") {
+			if (box == "yes" || !box) {
+				$("#textarea").blur();
 				hide();
 			}
 			$("#toot-post-btn").prop("disabled", false);

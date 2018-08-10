@@ -72,8 +72,10 @@ function parseColumn() {
 		var acct = obj[key];
 		if(acct.type=="notf"){
 			var notf_attr=' data-notf='+acct.domain;
+			var if_notf="hide";
 		}else{
 			var notf_attr='';
+			var if_notf="";
 		}
 		if(localStorage.getItem("notification_" + acct.domain)){
 			var unique_notf=lang_layout_thisacct[lang].replace("{{notf}}" ,localStorage.getItem("notification_" + acct.domain));
@@ -108,12 +110,13 @@ function parseColumn() {
 				insert=insert+" border-bottom:medium solid #"+acctlist[acct.domain].background;
 			}
 		}
+
 		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
 			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang_layout_gotop[lang]+'"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
-						  ')" class="setting nex" title="'+unique_notf+'"'+icnsert+'><i class="material-icons waves-effect nex notf-icon_' +
+						  ')" class="setting nex '+if_notf+'" title="'+unique_notf+'"'+icnsert+'><i class="material-icons waves-effect nex notf-icon_' +
 						  acct.domain + '">notifications</i></div><div class="area-sta"><span class="new badge teal notf-reply_'+acct.domain+' hide" data-badge-caption="Reply">0</span><span class="new badge yellow black-text notf-fav_'+acct.domain+' hide" data-badge-caption="Fav">0</span><span class="new badge blue notf-bt_'+acct.domain+' hide" data-badge-caption="BT">0</span><span class="new badge orange notf-follow_'+acct.domain+' hide" data-badge-caption="Follow">0</span></a></div>'+
 			'<div class="area-a2"><a onclick="removeColumn(' + key +
 						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_delthis[lang]+'"'+icnsert+'>cancel</i></a></div>'+

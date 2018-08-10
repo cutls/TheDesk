@@ -351,6 +351,8 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		
 		if(dis_name){
 			dis_name=twemoji.parse(dis_name);
+		}else{
+			dis_name="";
 		}
 		if(spoil){
 			spoil=twemoji.parse(spoil);

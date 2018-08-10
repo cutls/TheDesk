@@ -308,10 +308,10 @@ function moreload(type, tlid) {
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("unique-id");
 	if (localStorage.getItem("morelock") != sid) {
 		localStorage.setItem("morelock", sid);
-		if (type == "mix" && domain!="misskey.xyz") {
+		if (type == "mix" && localStorage.getItem("domain_" + acct_id)!="misskey.xyz") {
 			mixmore(tlid,"integrated");
 			return;
-		}else if (type == "plus" && domain!="misskey.xyz") {
+		}else if (type == "plus" && localStorage.getItem("domain_" + acct_id)!="misskey.xyz") {
 			mixmore(tlid,"plus");
 			return;
 		}else if (type == "notf") {

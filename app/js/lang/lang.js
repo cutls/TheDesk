@@ -185,6 +185,11 @@ var lang_status_unemphas={
     "ja":"を強調解除します。リロードしてください。",
     "en":"'s toots are not emphasized. Please reload after this action." 
 }
+//post/suggest.js
+var lang_suggest_nodata={
+    "ja":"サジェストのために絵文字リストを取得してください。",
+    "en":"Please get emojis list in order to show suggestion." 
+}
 //post/use-txtbox.js
 var lang_usetxtbox_reply={
     "ja":"返信モードです。クリアするときはCtrl+Shift+Cを押してください。",

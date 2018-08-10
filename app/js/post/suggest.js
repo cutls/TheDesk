@@ -17,17 +17,22 @@ input.addEventListener("focus", function() {
 			var semoji = new_val.match(/:(\S{3,})/);
 			if(semoji){
 				var obj = JSON.parse(localStorage.getItem("emoji_" + acct_id));
-				var num = obj.length;
-				var ehtml="";
-				for (i = 0; i < num; i++) {
-					var emoji = obj[i];
-					if ( ~emoji.shortcode.indexOf(semoji[1])) {
-						if (emoji) {
-						ehtml =  ehtml+'<a onclick="emojiInsert(\':' + emoji.shortcode +
-							': \',\':'+semoji[1]+'\')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
+				if(!obj){
+					var ehtml=lang_suggest_nodata[lang];
+				}else{
+					var num = obj.length;
+					var ehtml="";
+					for (i = 0; i < num; i++) {
+						var emoji = obj[i];
+						if ( ~emoji.shortcode.indexOf(semoji[1])) {
+							if (emoji) {
+							ehtml =  ehtml+'<a onclick="emojiInsert(\':' + emoji.shortcode +
+								': \',\':'+semoji[1]+'\')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
+							}
 						}
-					}
-					}
+						}
+				}
+				
 				$("#suggest").html(ehtml);
 			}
 			

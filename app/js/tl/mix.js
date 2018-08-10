@@ -1,5 +1,5 @@
 //Integrated TL
-function mixtl(acct_id, tlid, type,delc) {
+function mixtl(acct_id, tlid, type,delc,voice) {
 	console.log(delc);
 	localStorage.removeItem("morelock")
 	localStorage.setItem("now", type);
@@ -67,7 +67,7 @@ function mixtl(acct_id, tlid, type,delc) {
             });
             
              $("#timeline_" + tlid).html(templete);
-            mixre(acct_id, tlid, type, mute,delc);
+            mixre(acct_id, tlid, type, mute,delc,voice);
 			additional(acct_id, tlid);
 			jQuery("time.timeago").timeago();
 			todc();
@@ -77,7 +77,7 @@ function mixtl(acct_id, tlid, type,delc) {
 
 
 //Streamingに接続
-function mixre(acct_id, tlid, TLtype, mute,delc) {
+function mixre(acct_id, tlid, TLtype, mute,delc,voice) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var startHome = "wss://" + domain +
