@@ -160,7 +160,7 @@ function parseColumn() {
 	}
 	var box = localStorage.getItem("box");
 	if (box == "absolute") {
-		show();
+		setTimeout(show, 1000);
 	}
 	favTag();
 	var cw = localStorage.getItem("always-cw");

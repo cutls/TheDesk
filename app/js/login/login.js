@@ -5,7 +5,6 @@
 localStorage.removeItem("kirishima")
 localStorage.removeItem("imas")
 localStorage.removeItem("image");
-
 function ck() {
 	var main = localStorage.getItem("main");
 	if(!main){
@@ -43,6 +42,7 @@ function ck() {
 	
 	if (at) {
 		$("#tl").show();
+		
 		parseColumn();
 		multiSelector();
 	} else {

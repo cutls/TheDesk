@@ -19,7 +19,8 @@ function mini() {
 function show() {
 	$("#textarea").focus();
 	$('#post-box').addClass("appear")
-	$('#post-box').css("left",$('#posttgl').position().left+"px");
+	console.log($('#posttgl').offset());
+	$('#post-box').css("left",$('#posttgl').offset().left+"px");
 	$('#post-box').animate({
 		'bottom': 0
 	});
