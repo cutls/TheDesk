@@ -70,9 +70,3 @@ macOS
 ## See also/詳しく
 
 [TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
-
-## How to use Misskey on TheDesk/MisskeyをTheDeskで使う
-
-1. Make `.tkn` on 'app' folder.(/TheDesk/app/.tkn) (If you use build-ver TheDesk, you make it on 'resources' folder./ `.tkn`というファイルを「app」フォルダ内に作成してください。(もしビルド済みのものを利用されている場合、resourcesフォルダになります。)
-
-1. Access https://misskey.xyz/dev and make your app!! (Callback URL: https://thedesk.top/misskey.html / all permitions must be allowed.)
