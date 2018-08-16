@@ -306,7 +306,7 @@ function moreload(type, tlid) {
 		var data=obj[tlid].data;
 	}
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("unique-id");
-	if (localStorage.getItem("morelock") != sid) {
+	if (sid && localStorage.getItem("morelock") != sid) {
 		localStorage.setItem("morelock", sid);
 		if (type == "mix" && localStorage.getItem("domain_" + acct_id)!="misskey.xyz") {
 			mixmore(tlid,"integrated");
