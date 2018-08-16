@@ -110,7 +110,11 @@ function parseColumn() {
 				insert=insert+" border-bottom:medium solid #"+acctlist[acct.domain].background;
 			}
 		}
-
+		if(acct.type=="notf" && localStorage.getItem("setasread")=="no"){
+			localStorage.setItem("hasNotfC_" + acct.domain,"true");
+		}else{
+			localStorage.removeItem("hasNotfC_" + acct.domain);
+		}
 		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
 			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang_layout_gotop[lang]+'"></i></div>'+
@@ -131,8 +135,9 @@ function parseColumn() {
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_linkanades[lang]+'">link</i><span id="sta-card-' +
 		  key + '">On</span></a>'+lang_layout_linkana[lang]+'<br><a onclick="voiceToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_tts[lang]+'">hearing</i><span id="sta-voice-' +
-		  key + '">On</span></a>'+lang_layout_tts[lang]+'TL<br>'+lang_layout_headercolor[lang]+'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
-			'" class="tl" tlid="' + key + '"'+notf_attr+' data-type="' + acct.type + '"><div style="text-align:center">'+lang_layout_nodata[lang]+'</div></div></div></div>';
+		  key + '">On</span></a>'+lang_layout_tts[lang]+'TL<br><a onclick="reconnector(' + key +
+		  ',\''+acct.type+'\',\''+acct.domain+'\',\''+acct.data+'\')" class="setting nex '+if_notf+'"><i class="material-icons waves-effect nex '+if_notf+'" title="'+lang_layout_reconnect[lang]+'">low_priority</i></a><span class="'+if_notf+'">'+lang_layout_reconnect[lang]+'</span><br>'+lang_layout_headercolor[lang]+'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+			'" class="tl" tlid="' + key + '"'+notf_attr+' data-type="' + acct.type + '"><div id="landing_'+key+'" style="text-align:center">'+lang_layout_nodata[lang]+'</div></div></div></div>';
 		$("#timeline-container").append(html);
 		localStorage.removeItem("pool_" + key);
 		if (acct.data) {

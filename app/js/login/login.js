@@ -259,8 +259,65 @@ function getdataAdv(domain, at) {
 		location.href="index.html";
 	});
 }
+//ユーザーデータ更新
+function refresh(target) {
+	var multi = localStorage.getItem("multi");
+	var obj = JSON.parse(multi);
+	if(obj[target].domain=="misskey.xyz"){
+		return
+	}
+	var start = "https://" + obj[target].domain +
+		"/api/v1/accounts/verify_credentials";
+		console.log(start);
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + obj[target].at
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		console.log(json);
+		if (json.error) {
+			console.error("Error:" + json.error);
+			Materialize.toast(lang_fatalerroroccured[lang]+"Error:" + json.error,
+				5000);
+			return;
+		}
+		var avatar=json["avatar"];
+		//missingがmissingなやつ
+		if(avatar=="/avatars/original/missing.png" || !avatar){
+			avatar="./img/missing.svg";
+		}
+		var ref = {
+			at: obj[target].at,
+			name: json["display_name"],
+			domain: obj[target].domain,
+			user: json["acct"],
+			prof: avatar,
+			id: json["id"],
+			vis: json["source"]["privacy"]
+		};
+		localStorage.setItem("name_" + target, json["display_name"]);
+		localStorage.setItem("user_" + target, json["acct"]);
+		localStorage.setItem("user-id_" + target, json["id"]);
+		console.log("user-id_" + target+":"+json["id"])
+		console.log(localStorage.getItem("user-id_"+target));
+		localStorage.setItem("prof_" + target, avatar);
+		localStorage.setItem("follow_" + target, json["following_count"]);
+		obj[target] = ref;
+		var json = JSON.stringify(obj);
+		localStorage.setItem("multi", json);
 
+		load();
+	});
+}
 //MarkdownやBBCodeの対応、文字数制限をチェック
+//絶対ストリーミングを閉じさせないマン
 function ckdb(acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if(domain=="kirishima.cloud"){
@@ -323,20 +380,31 @@ function ckdb(acct_id) {
 				localStorage.setItem("follow_" + acct_id, json[domain + "_follow"]);
 			}
 	}
-	
-}
-//サポートインスタンス取得
-function support() {
-	var json=JSON.parse(localStorage.getItem("instance"));
-		console.log(json);
-		Object.keys(json).forEach(function(key) {
-			var instance = json[key];
-			if (instance == "instance") {
-				templete = '<button class="btn waves-effect" onclick="login(\'' + key +
-					'\')">' + json[key + "_name"] + '(' + key + ')</button>';
-				$("#support").append(templete);
+	if(domain!="misskey.xyz"){
+		var start = "https://" + domain + "/api/v1/instance/activity";
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			},
+		}).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			console.error(error);
+		}).then(function(json) {
+			console.log(json);
+			if (json.error) {
+				return;
+			}
+			if(json){
+				localStorage.setItem("users_" + acct_id, json["logins"]);
+				localStorage.setItem("statuses_" + acct_id, json["statuses"]);
 			}
 		});
+		
+	}
+	
+
 }
 
 //アカウントを選択…を実装

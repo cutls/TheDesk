@@ -12,19 +12,17 @@ function load() {
 	$(".now-domain").text(domain);
 	var multi = localStorage.getItem("multi");
 	if (!multi) {
-		var obj = [{
-			at: localStorage.getItem("acct_0_at"),
-			name: localStorage.getItem("name_0"),
-			domain: localStorage.getItem("domain_0"),
-			user: localStorage.getItem("user_0"),
-			prof: localStorage.getItem("prof_0"),
-			id: localStorage.getItem("user-id_0")
-		}];
-		var json = JSON.stringify(obj);
-		localStorage.setItem("multi", json);
+		var obj = [];
 	} else {
 		var obj = JSON.parse(multi);
 	}
+	if(obj[0]){
+		if(!obj[0].at){
+			obj=[];
+			localStorage.removeItem("multi");
+		}
+	}
+	
 	console.log(obj);
 	var templete;
 	Object.keys(obj).forEach(function(key) {
@@ -251,7 +249,7 @@ function login(url) {
 		return;
 	}
 	if($('#linux:checked').val()=="on"){
-		var red = "urn:ietf:wg:oauth:2.0:oob"
+		var red = "https://thedesk.top/hello.html"
 	}else{
 		var red = 'thedesk://manager';
 	}
@@ -274,7 +272,7 @@ function login(url) {
 			console.log(json);
 			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 					"client_id"] + "&client_secret=" + json["client_secret"] +
-				"&response_type=code&scope=read+write+follow&redirect_uri=" + red;
+				"&response_type=code&scope=read+write+follow&redirect_uri=" + encodeURIComponent(red);
 			localStorage.setItem("domain_tmp", url);
 			localStorage.setItem("client_id", json["client_id"]);
 			localStorage.setItem("client_secret", json["client_secret"]);
@@ -385,34 +383,42 @@ function code(code) {
 			}
 		}	
 		return;
-	}
-	var start = "https://" + url + "/oauth/token";
-	var id = localStorage.getItem("client_id");
-	var secret = localStorage.getItem("client_secret");
-	var httpreq = new XMLHttpRequest();
-	httpreq.open('POST', start, true);
-	httpreq.setRequestHeader('Content-Type', 'application/json');
-	httpreq.responseType = 'json';
-	httpreq.send(JSON.stringify({
-		grant_type: "authorization_code",
-		redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
-		client_id: id,
-		client_secret: secret,
-		code: code
-	}));
-    httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
-			var json = httpreq.response;
-			console.log(json);
-			if (json["access_token"]) {
-				$("#auth").hide();
-				$("#add").show();
-				getdata(url, json["access_token"]);
+	}else{
+		var start = "https://" + url + "/oauth/token";
+		var id = localStorage.getItem("client_id");
+		var secret = localStorage.getItem("client_secret");
+		var httpreq = new XMLHttpRequest();
+		httpreq.open('POST', start, true);
+		httpreq.setRequestHeader('Content-Type', 'application/json');
+		httpreq.responseType = 'json';
+		httpreq.send(JSON.stringify({
+			grant_type: "authorization_code",
+			redirect_uri: "https://thedesk.top/hello.html",
+			client_id: id,
+			client_secret: secret,
+			code: code
+		}));
+		console.log({
+			grant_type: "authorization_code",
+			redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
+			client_id: id,
+			client_secret: secret,
+			code: code
+		})
+		httpreq.onreadystatechange = function() {
+			if (httpreq.readyState == 4) {
+				var json = httpreq.response;
+				console.log(json);
+				if (json["access_token"]) {
+					$("#auth").hide();
+					$("#add").show();
+					getdata(url, json["access_token"]);
+				}
 			}
 		}
 	}
+	
 }
-
 //ユーザーデータ取得
 function getdata(domain, at) {
 	var start = "https://" + domain + "/api/v1/accounts/verify_credentials";

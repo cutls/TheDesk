@@ -95,6 +95,54 @@ function reactiontoggle(id,acct_id,tlid){
 		}
 	}
 }
+function reactRefresh(acct_id,id){
+    var domain = localStorage.getItem("domain_" + acct_id);
+    var at = localStorage.getItem("acct_"+ acct_id + "_at");
+    var start = "https://" + domain + "/api/notes/show";
+   
+    var req={};
+    req.i=at;
+    req.noteId=id;
+    var i={
+        method: "POST",
+        body: JSON.stringify(req),
+    }
+    console.log(req)
+    fetch(start, i,
+    ).then(function(response) {
+        return response.json();
+    }).catch(function(error) {
+        todo(error);
+        console.error(error);
+    }).then(function(json) {
+        if(!json){
+            return false;
+        }
+        var poll="";
+        console.log(json);
+        reactRefreshCore(json)
+    });
+}
+function reactRefreshCore(json){
+    var id=json.id;
+    if(json.reactionCounts){
+        var reactions=["like","love","laugh","hmm","surprise","congrats","angry","confused","pudding"];
+        $("#pub_" + id +" .reactions").removeClass("hide")
+        for(var i=0;i<reactions.length;i++){
+            if(json.reactionCounts[reactions[i]]){
+                console.log(json.reactionCounts[reactions[i]])
+                $("#pub_" + id +" .re-"+reactions[i]+"ct").text(json.reactionCounts[reactions[i]])
+                $("#pub_" + id +" .re-"+reactions[i]).removeClass("hide")
+            }else{
+                $("#pub_" + id +" .re-"+reactions[i]+"ct").text(0)
+                if($("#pub_" + id +" .reactions").hasClass("fullreact")){
+                    $("#pub_" + id +" .re-"+reactions[i]).addClass("hide")
+                }
+                $("#pub_" + id +" .re-"+reactions[i]+"ct").text(json.reactionCounts[reactions[i]])
+            }
+        }
+    }
+}
 function reaction(mode,id,acct_id,tlid){
     var domain = localStorage.getItem("domain_" + acct_id);
     var at = localStorage.getItem("acct_"+ acct_id + "_at");

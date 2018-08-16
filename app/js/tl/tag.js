@@ -100,7 +100,6 @@ function trendTag(){
 
 function trendintervalset(){
     setTimeout(trendTag, 6000000);
-
 }
 function tagTL(a,b,c,d){
     var acct_id = $("#post-acct-sel").val();

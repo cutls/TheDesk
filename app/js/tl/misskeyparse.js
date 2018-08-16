@@ -1,6 +1,7 @@
 //オブジェクトパーサー(トゥート)
 function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var templete = '';
+	localStorage.setItem("lastunix_"+ tlid,date(obj[0].createdAt, 'unix'));
 	var actb = localStorage.getItem("action_btns");
 	var actb='re,rt,fav,qt,del,pin,red';
 	if(actb){
@@ -115,7 +116,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var mouseover=localStorage.getItem("mouseover");
 	if(!mouseover){
 		mouseover="";
-	}else if(mouseover=="yes"){
+	}else if(mouseover=="yes" || mouseover=="click"){
 		mouseover="hide";
 	}else if(mouseover=="no"){
 		mouseover="";
@@ -167,6 +168,8 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                         $("#pub_" + id +" .re-"+reactions[i]+"ct").text(toot.note.reactionCounts[reactions[i]])
                     }
                 }
+			}else{
+				var icon = '<i class="big-text material-icons indigo-text" style="font-size:17px">info</i>';
 			}
 			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.createdAt,
 				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.createdAt,
@@ -178,6 +181,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var notice = noticetext;
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
+				if(localStorage.getItem("hasNotfC_" + acct_id)!="true"){
 				if (toot.type == "reply") {
 					var replyct=localStorage.getItem("notf-reply_" + acct_id)
 					$(".notf-reply_" + acct_id).text(replyct*1-(-1));
@@ -193,6 +197,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					$(".notf-fav_" + acct_id).text(favct*1-(-1));
 					localStorage.setItem("notf-fav_" + acct_id,favct*1-(-1))
 					$(".notf-fav_" + acct_id).removeClass("hide")
+				}
 				}
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if(popup>0){
@@ -212,7 +217,9 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 						ipc.send('native-notf', ['TheDesk:'+domain,toot.user.name+"(" + toot.user.acct +")"+what+"\n\n"+$.strip_tags(toot.note.text),toot.user.avatarUrl]);
 					}
 				}
-				$(".notf-icon_" + acct_id).addClass("red-text");
+				if(localStorage.getItem("hasNotfC_" + acct_id)!="true"){
+					$(".notf-icon_" + acct_id).addClass("red-text");
+				}
 				localStorage.setItem("notice-mem", noticetext);
 				noticetext = "";
 			}
@@ -323,6 +330,15 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			}
 		}
 		var analyze = '';
+		var urls = $.strip_tags(content).replace(/\n/g, " ").match(
+			/https?:\/\/([-a-zA-Z0-9@.]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
+		);
+		if (urls) {
+			var analyze = '<a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
+				',\'' + id + '\')" class="add-show pointer">'+lang_parse_url[lang]+'</a><br>';
+		} else {
+			var analyze = '';
+		}
 		var viewer = "";
 		var hasmedia = "";
 		var youtube = "";
@@ -363,7 +379,12 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		if(notice){
 			notice=twemoji.parse(notice);
 		}
-		var mediack = toot.media[0];
+		if(toot.media){
+			var mediack = toot.media[0];
+		}else{
+			var mediack=false;
+		}
+		
 		//メディアがあれば
 		var media_ids="";
 		if (mediack) {
@@ -412,9 +433,9 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		if (tagck) {
 			Object.keys(toot.tags).forEach(function(key4) {
 				var tag = toot.tags[key4];
-				var tags =  '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">#' + tag + ':<a onclick="tl(\'tag\',\'' + tag + '\',' + acct_id +
-					',\'add\')" class="pointer" title="' +lang_parse_tagTL[lang].replace("{{tag}}" ,'#'+tag)+ '">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer" title="' + lang_parse_tagtoot[lang].replace("{{tag}}" ,'#'+tag) + '">Toot</a>　'+
-                    '<a onclick="tagPin(\'' + tag + '\')" class="pointer" title="' +lang_parse_tagpin[lang].replace("{{tag}}" ,'#'+tag)+ '">Pin</a></span> ';
+				var tags =  '<a onclick="tagShow(\'' + tag + '\')" class="pointer parsed">#' + tag + '</a><span class="hide" data-tag="' + tag + '">#' + tag + ':<a onclick="tl(\'tag\',\'' + tag + '\',' + acct_id +
+					',\'add\')" class="pointer parsed" title="' +lang_parse_tagTL[lang].replace("{{tag}}" ,'#'+tag)+ '">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer parsed" title="' + lang_parse_tagtoot[lang].replace("{{tag}}" ,'#'+tag) + '">Toot</a>　'+
+                    '<a onclick="tagPin(\'' + tag + '\')" class="pointer parsed" title="' +lang_parse_tagpin[lang].replace("{{tag}}" ,'#'+tag)+ '">Pin</a></span> ';
                 content=content.replace("#"+tag,tags);
 			});
 			//tags = '<div style="float:right">' + tags + '</div>';
@@ -596,7 +617,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		var trans="";
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + '  ' + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
-				key].created_at, 'unix') + '" '+if_notf+' onmouseover="mov(\'' + toot.id + '\',\''+tlid+'\')" onmouseout="resetmv()" reacted="'+reacted+'">' +
+				key].created_at, 'unix') + '" '+if_notf+' onmouseover="mov(\'' + toot.id + '\',\''+tlid+'\',\'mv\')" onclick="mov(\'' + toot.id + '\',\''+tlid+'\',\'cl\')" onmouseout="resetmv(\'mv\')" reacted="'+reacted+'">' +
 			'<div class="area-notice"><span class="gray sharesta">' + notice + home +
 			'</span></div>' +
 			'<div class="area-icon"><a onclick="udg(\'' + toot.user.id +
@@ -618,8 +639,8 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
 			'</span>' +
 			'' + viewer + '' +
-            '</div><div class="area-additional"><span class="additional">'+
-            '<div class="reactions '+fullhide+'" style="height: 20px;"><span class="'+likehide+' reaction re-like"><a onclick="reaction(\'like\',\'' + toot.id + '\',' + acct_id +
+            '</div><div class="area-additional"><span class="additional">'+analyze+
+            '<div class="reactions '+fullhide+'" style="height: 25px;"><span class="'+likehide+' reaction re-like"><a onclick="reaction(\'like\',\'' + toot.id + '\',' + acct_id +
             ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat" style="padding:0">'+twemoji.parse("👍")+'</a><span class="re-likect">'+like+
             '</span></span><span class="'+lovehide+' reaction re-love"><a onclick="reaction(\'love\',\'' + toot.id + '\',' + acct_id +
             ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("💓")+'</a><span class="re-lovect">'+love+
@@ -668,7 +689,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<span class="cbadge viabadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
 			via +
 			'</span>'+
-			'</div><div class="area-side"><div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
+			'</div><div class="area-side '+mouseover+'"><div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
 			'<div class="action '+noauth+'"><a onclick="details(\'' + toot.id + '\',' + acct_id +
 			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
 			'</div></div>' +

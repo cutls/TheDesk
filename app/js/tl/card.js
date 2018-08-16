@@ -1,9 +1,6 @@
 //カード処理やメンション、ハッシュタグの別途表示
 //全てのTL処理で呼び出し
 function additional(acct_id, tlid) {
-	if(localStorage.getItem("domain_" + acct_id)=="misskey.xyz"){
-		return false;
-	}
 	//メンション系
 	//$(".mention").attr("href", "");
 	
@@ -31,9 +28,14 @@ function additional(acct_id, tlid) {
 		var at = localStorage.getItem("acct_"+ acct_id + "_at");
 		var card = localStorage.getItem("card_" + tlid);
 		var text = $(this).attr('href');
-		var urls = text.match(
-			/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
-		);
+		if(text){
+			var urls = text.match(
+				/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
+			);
+		}else{
+			var urls =[]
+		}
+		
 		//トゥートのURLぽかったら
 		toot = text.match(/https:\/\/([a-zA-Z0-9.-]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/);
 		if(toot){
@@ -44,46 +46,70 @@ function additional(acct_id, tlid) {
 		if (urls) {
 			$(this).remove();
 		} else if (!card) {
-
 			var id = $(this).parents('.cvo').attr("toot-id");
-			var start = "https://" + domain + "/api/v1/statuses/" + id + "/card";
-			fetch(start, {
-				method: 'GET',
-				headers: {
-					'content-type': 'application/json',
-					'Authorization': 'Bearer ' + at
-				},
-				//body: JSON.stringify({})
-			}).then(function(response) {
-				return response.json();
-			}).catch(function(error) {
-				todo(error);
-				console.error(error);
-			}).then(function(json) {
-				console.log(json);
-				//このリンク鳥やんけ、ってとき
-				if (json.provider_name=="Twitter"){
-					if(json.image){
-						var twiImg='<br><img src="'+json.image+'">';
-					}else{
-						var twiImg='';
+			if(localStorage.getItem("domain_" + acct_id)=="misskey.xyz"){
+				var start = "https://" + domain + "/url?url="+text;
+				fetch(start, {
+					method: 'GET',
+					headers: {
+						'content-type': 'application/json'
+					},
+					//body: JSON.stringify({})
+				}).then(function(response) {
+					return response.json();
+				}).catch(function(error) {
+					todo(error);
+					console.error(error);
+				}).then(function(json) {
+					if (json.title) {
+						$("[toot-id=" + id + "] .additional").html(
+							"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
+							json.description + "</span>");
+						$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
+						$("[toot-id=" + id + "]").addClass("parsed");
 					}
-					$("[toot-id=" + id + "] .additional").html(
-						'<blockquote class="twitter-tweet"><b>'+json.author_name+'</b><br>'+json.description+twiImg+'</blockquote>');
-				}
-				if (json.title) {
-					$("[toot-id=" + id + "] .additional").html(
-						"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
-						json.description + "</span>");
-				}
-				if (json.html) {
-					$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');
-				}
-				if (json.title) {
-					$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
-					$("[toot-id=" + id + "]").addClass("parsed");
-				}
-			});
+				});
+			}else{
+				var start = "https://" + domain + "/api/v1/statuses/" + id + "/card";
+				fetch(start, {
+					method: 'GET',
+					headers: {
+						'content-type': 'application/json',
+						'Authorization': 'Bearer ' + at
+					},
+					//body: JSON.stringify({})
+				}).then(function(response) {
+					return response.json();
+				}).catch(function(error) {
+					todo(error);
+					console.error(error);
+				}).then(function(json) {
+					console.log(json);
+					//このリンク鳥やんけ、ってとき
+					if (json.provider_name=="Twitter"){
+						if(json.image){
+							var twiImg='<br><img src="'+json.image+'">';
+						}else{
+							var twiImg='';
+						}
+						$("[toot-id=" + id + "] .additional").html(
+							'<blockquote class="twitter-tweet"><b>'+json.author_name+'</b><br>'+json.description+twiImg+'</blockquote>');
+					}
+					if (json.title) {
+						$("[toot-id=" + id + "] .additional").html(
+							"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
+							json.description + "</span>");
+					}
+					if (json.html) {
+						$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');
+					}
+					if (json.title) {
+						$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
+						$("[toot-id=" + id + "]").addClass("parsed");
+					}
+				});
+			}
+		
 		}else{
 			$(this).attr("title",text);
 		}
@@ -145,49 +171,81 @@ function additionalIndv(tlid, acct_id, id) {
 		if (urls) {
 			$("[toot-id="+id+"] .toot a").remove();
 		} else {
-
-			var id = $("[toot-id="+id+"] .toot a").parents('.cvo').attr("toot-id");
-			var start = "https://" + domain + "/api/v1/statuses/" + id + "/card";
-			fetch(start, {
-				method: 'GET',
-				headers: {
-					'content-type': 'application/json',
-					'Authorization': 'Bearer ' + at
-				},
-				//body: JSON.stringify({})
-			}).then(function(response) {
-				return response.json();
-			}).catch(function(error) {
-				todo(error);
-				console.error(error);
-			}).then(function(json) {
-				console.log(json);
-				//このリンク鳥やんけ、ってとき
-				console.log(json.provider_name);
-				if (json.provider_name=="Twitter"){
-					if(json.image){
-						var twiImg='<br><img src="'+json.image+'" style="max-width:100%">';
-					}else{
-						var twiImg='';
-					}
-					$("[toot-id=" + id + "] .additional").html(
-						'<div class="twitter-tweet"><b>'+json.author_name+'</b><br>'+json.description+twiImg+'</div>');
-				}else{
+			if(localStorage.getItem("domain_" + acct_id)=="misskey.xyz"){
+				var start = "https://" + domain + "/url?url="+text;
+				fetch(start, {
+					method: 'GET',
+					headers: {
+						'content-type': 'application/json'
+					},
+					//body: JSON.stringify({})
+				}).then(function(response) {
+					return response.json();
+				}).catch(function(error) {
+					todo(error);
+					console.error(error);
+				}).then(function(json) {
 					if (json.title) {
 						$("[toot-id=" + id + "] .additional").html(
 							"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
 							json.description + "</span>");
+						$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
+						$("[toot-id=" + id + "]").addClass("parsed");
 					}
-					if (json.html) {
-						$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');
-	
+				});
+			}else{
+				var id = $("[toot-id="+id+"] .toot a").parents('.cvo').attr("toot-id");
+				var start = "https://" + domain + "/api/v1/statuses/" + id + "/card";
+				fetch(start, {
+					method: 'GET',
+					headers: {
+						'content-type': 'application/json',
+						'Authorization': 'Bearer ' + at
+					},
+					//body: JSON.stringify({})
+				}).then(function(response) {
+					return response.json();
+				}).catch(function(error) {
+					todo(error);
+					console.error(error);
+				}).then(function(json) {
+					console.log(json);
+					//このリンク鳥やんけ、ってとき
+					console.log(json.provider_name);
+					if (json.provider_name=="Twitter"){
+						if(json.image){
+							var twiImg='<br><img src="'+json.image+'" style="max-width:100%" onclick="imgv(\'twi_'+id+'\', 0, \'twitter\');" id="twi_'+id+'-image-0" data-url="'+json.image+'" data-type="image">';
+						}else{
+							var twiImg='';
+						}
+						$("[toot-id=" + id + "] .additional").html(
+							'<div class="twitter-tweet"><b>'+json.author_name+'</b><br>'+json.description+twiImg+'</div>');
+					}else if (json.provider_name=="pixiv"){	
+						if(json.image){
+							var pxvImg='<br><img src="'+json.image+'" style="max-width:100%" onclick="imgv(\'pixiv_'+id+'\', 0, \'pixiv\');" id="pixiv_'+id+'-image-0" data-url="'+json.embed_url+'" data-type="image">';
+						}else{
+							var pxvImg='';
+						}
+						$("[toot-id=" + id + "] .additional").html(
+							'<div class="pixiv-post"><b><a href="'+json.author_url+'" target="_blank">'+json.author_name+'</a></b><br>'+json.title+pxvImg+'</div>');
+					}else{
+						if (json.title) {
+							$("[toot-id=" + id + "] .additional").html(
+								"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
+								json.description + "</span>");
+						}
+						if (json.html) {
+							$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');
+		
+						}
 					}
-				}
-				if (json.title) {
-					$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
-					$("[toot-id=" + id + "]").addClass("parsed");
-				}
-			});
+					if (json.title) {
+						$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
+						$("[toot-id=" + id + "]").addClass("parsed");
+					}
+				});
+			}
+			
 		}
 }
 
@@ -216,7 +274,7 @@ function cardCheck(tlid) {
 	}
 }
 
-function mov(id,tlid){
+function mov(id,tlid,type){
 	if(tlid=="notf"){
 		var tlide="[data-notf="+acct_id+"]";
 	}else{
@@ -225,17 +283,24 @@ function mov(id,tlid){
 	var mouseover=localStorage.getItem("mouseover");
 	if(!mouseover){
 		mouseover="";
-	}else if(mouseover=="yes"){
+	}
+	if(mouseover=="yes"){
 		mouseover="hide";
+	}else if(mouseover=="click"){
+		if(type=="mv"){
+			mouseover="";
+		}else{
+			mouseover="hide";
+		}
 	}else if(mouseover=="no"){
 		mouseover="";
 	}
 	if(mouseover=="hide"){
-		$(tlide+" [toot-id="+id+"] .area-actions").removeClass("hide")
+		$(tlide+" [toot-id="+id+"] .area-actions").toggleClass("hide")
 	}
 }
 
-function resetmv(){
+function resetmv(type){
 	var mouseover=localStorage.getItem("mouseover");
 	if(!mouseover){
 		mouseover="";
@@ -243,6 +308,8 @@ function resetmv(){
 		mouseover="hide";
 	}else if(mouseover=="no"){
 		mouseover="";
+	}else if(mouseover=="click" && type!="mv"){
+		mouseover="hide";
 	}
 	if(mouseover=="hide"){
 		$(".area-actions").addClass("hide");

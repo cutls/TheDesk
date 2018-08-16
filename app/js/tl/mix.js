@@ -65,7 +65,7 @@ function mixtl(acct_id, tlid, type,delc,voice) {
                 }
 
             });
-            
+            $("#landing_" + tlid).hide();
              $("#timeline_" + tlid).html(templete);
             mixre(acct_id, tlid, type, mute,delc,voice);
 			additional(acct_id, tlid);
@@ -90,10 +90,12 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice) {
 	websocketHome[wshid] = new WebSocket(startHome);
 	websocketLocal[wslid] = new WebSocket(startLocal);
 	websocketHome[wshid].onopen = function(mess) {
+		localStorage.setItem("wssH_" + tlid, wshid);
 		console.log("Connect Streaming API(Integrated:Home)");
 		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocketLocal[wslid].onopen = function(mess) {
+		localStorage.setItem("wssL_" + tlid, wslid);
 		console.log("Connect Streaming API(Integrated:Local)");
 		$("#notice_icon_" + tlid).removeClass("red-text");
 	}

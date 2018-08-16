@@ -99,8 +99,12 @@ var lang_setting_via={
     "en":"Via:{{set}}"
 }
 var lang_setting_mov={
-    "ja":"マウスオーバー・ヒディングを{{set}}に設定しました。",
-    "en":"Mouseover:{{set}}"
+    "ja":"アクションボタン非表示を{{set}}に設定しました。",
+    "en":"Action buttons hiding:{{set}}"
+}
+var lang_setting_setasread={
+    "ja":"通知カラム存在時新着非表示を{{set}}に設定しました。",
+    "en":"Notification markers:{{set}}"
 }
 var lang_setting_main={
     "ja":"起動時・投稿時のアカウントを{{set}}に設定しました。",

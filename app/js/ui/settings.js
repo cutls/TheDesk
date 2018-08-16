@@ -157,6 +157,13 @@ function settings() {
 	}
 	localStorage.setItem("viashow", viad);
 
+	var notfmd = $("[name=notfm]:checked").val();
+	var notfmt = $("[for=notfm_"+notfmd+"]").text();
+	if (notfmd != localStorage.getItem("setasread")) {
+		Materialize.toast(lang_setting_setasread[lang].replace("{{set}}" ,notfmt), 3000);
+	}
+	localStorage.setItem("setasread", notfmd);
+
 	var movd = $("[name=mov]:checked").val();
 	var movt = $("[for=mov_"+movd+"]").text();
 	if (movd != localStorage.getItem("mouseover")) {
@@ -333,6 +340,12 @@ function load() {
 		var movt = "no";
 	}
 	$("#mov_" + movt).prop("checked", true);
+
+	var notfmt = localStorage.getItem("setasread");
+	if (!notfmt) {
+		var notfmt = "yes";
+	}
+	$("#notfm_" + notfmt).prop("checked", true);
 
 	var maint = localStorage.getItem("mainuse");
 	if (!maint) {

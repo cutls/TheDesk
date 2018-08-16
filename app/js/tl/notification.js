@@ -86,7 +86,7 @@ function notf(acct_id, tlid, sys) {
 		} else {
 			$("div[data-notf=" + acct_id +"]").html(templete);
 		}
-
+		$("#landing_" + tlid).hide();
 		jQuery("time.timeago").timeago();
 		}
 		$("#notf-box").addClass("fetched");
@@ -102,33 +102,44 @@ function notf(acct_id, tlid, sys) {
 
 	console.log(start);
 	var wsid = websocketNotf.length;
-	websocketNotf[wsid] = new WebSocket(start);
+	websocketNotf[acct_id] = new WebSocket(start);
 	console.log(websocketNotf);
-	websocketNotf[wsid].onopen = function(mess) {
+	websocketNotf[acct_id].onopen = function(mess) {
 		console.log("Connect Streaming API(Notf):");
 		console.log(mess);
 		$("i[data-notf=" + acct_id +"]").removeClass("red-text");
+
 	}
-	websocketNotf[wsid].onmessage = function(mess) {
+	websocketNotf[acct_id].onmessage = function(mess) {
 		console.log("Receive Streaming API(Notf):"+acct_id);
 		var popup = localStorage.getItem("popup");
 			if (!popup) {
 				popup = 0;
 			}
+			console.log(domain)
 		if(domain=="misskey.xyz"){
+			console.log("misskey")
 			console.log(JSON.parse(mess.data));
 			if (JSON.parse(mess.data).type == "notification") {
 				var obj = JSON.parse(mess.data).body;
 				console.log(obj);
 				if(obj.type!="follow"){
+					
 					templete = misskeyParse([obj], 'notf', acct_id, 'notf', popup);
 				}else{
 					templete = misskeyUserparse([obj], 'notf', acct_id, 'notf', popup);
+				}
+				if(obj.type=="reaction"){
+					console.log("refresh")
+					reactRefresh(acct_id,obj.note.id)
 				}
 				if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
 					$("div[data-notf=" + acct_id +"]").prepend(templete);
 				}
 				jQuery("time.timeago").timeago();
+			}else if(JSON.parse(mess.data).type == "note-updated"){
+				var obj = JSON.parse(mess.data).body.note;
+				reactRefreshCore(obj)
 			}
 		}else{
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
@@ -152,7 +163,7 @@ function notf(acct_id, tlid, sys) {
 		}
 		}
 	}
-	websocketNotf[wsid].onerror = function(error) {
+	websocketNotf[acct_id].onerror = function(error) {
 		console.error('WebSocket Error ' + error);
 	};
 }
@@ -174,7 +185,7 @@ function notfmore(tlid) {
 		todo("Notfication TL MoreLoading");
 		var domain = localStorage.getItem("domain_" + acct_id);
 		var at = localStorage.getItem("acct_"+ acct_id + "_at");
-		
+
 			if(domain=="misskey.xyz"){
 				var start = "https://" + domain + "/api/i/notifications";
 				var i={
@@ -198,13 +209,8 @@ function notfmore(tlid) {
 					},
 				}
 			}
-		fetch(start, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json',
-				'Authorization': 'Bearer ' + at
-			},
-		}).then(function(response) {
+		fetch(start, i,
+		).then(function(response) {
 			return response.json();
 		}).catch(function(error) {
 			todo(error);
@@ -215,7 +221,7 @@ function notfmore(tlid) {
 				var obj = json[key];
 				if(obj.type!="follow"){
 					if(domain=="misskey.xyz"){
-						templete = templete+misskeyParse([obj], '', acct_id, tlid, -1);
+						templete = templete+misskeyParse([obj.note], '', acct_id, tlid, -1);
 					}else{
 						templete = templete+parse([obj], '', acct_id, tlid, -1);
 					}

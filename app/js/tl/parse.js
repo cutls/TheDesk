@@ -1,6 +1,13 @@
 //オブジェクトパーサー(トゥート)
 function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var templete = '';
+	if(obj[0]){
+		if(tlid==1){
+			console.log("testalive:"+"lastunix_"+ tlid+":"+date(obj[0].created_at, 'unix'))
+		}
+		localStorage.setItem("lastunix_"+ tlid,date(obj[0].created_at, 'unix'));
+	}
+	
 	var actb = localStorage.getItem("action_btns");
 	var actb='re,rt,fav,qt,del,pin,red';
 	if(actb){
@@ -123,7 +130,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var mouseover=localStorage.getItem("mouseover");
 	if(!mouseover){
 		mouseover="";
-	}else if(mouseover=="yes"){
+	}else if(mouseover=="yes" || mouseover=="click"){
 		mouseover="hide";
 	}else if(mouseover=="no"){
 		mouseover="";
@@ -177,22 +184,25 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var notice = noticetext;
 			var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && noticetext != memory) {
-				if (toot.type == "mention") {
-					var replyct=localStorage.getItem("notf-reply_" + acct_id)
-					$(".notf-reply_" + acct_id).text(replyct*1-(-1));
-					localStorage.setItem("notf-reply_" + acct_id,replyct*1-(-1))
-					$(".notf-reply_" + acct_id).removeClass("hide")
-				}else if (toot.type == "reblog") {
-					var btct=localStorage.getItem("notf-bt_" + acct_id)
-					$(".notf-bt_" + acct_id).text(btct*1-(-1));
-					localStorage.setItem("notf-bt_" + acct_id,btct*1-(-1))
-					$(".notf-bt_" + acct_id).removeClass("hide")
-				}else if (toot.type == "favourite") {
-					var favct=localStorage.getItem("notf-fav_" + acct_id)
-					$(".notf-fav_" + acct_id).text(favct*1-(-1));
-					localStorage.setItem("notf-fav_" + acct_id,favct*1-(-1))
-					$(".notf-fav_" + acct_id).removeClass("hide")
+				if(localStorage.getItem("hasNotfC_" + acct_id)!="true"){
+					if (toot.type == "mention") {
+						var replyct=localStorage.getItem("notf-reply_" + acct_id)
+						$(".notf-reply_" + acct_id).text(replyct*1-(-1));
+						localStorage.setItem("notf-reply_" + acct_id,replyct*1-(-1))
+						$(".notf-reply_" + acct_id).removeClass("hide")
+					}else if (toot.type == "reblog") {
+						var btct=localStorage.getItem("notf-bt_" + acct_id)
+						$(".notf-bt_" + acct_id).text(btct*1-(-1));
+						localStorage.setItem("notf-bt_" + acct_id,btct*1-(-1))
+						$(".notf-bt_" + acct_id).removeClass("hide")
+					}else if (toot.type == "favourite") {
+						var favct=localStorage.getItem("notf-fav_" + acct_id)
+						$(".notf-fav_" + acct_id).text(favct*1-(-1));
+						localStorage.setItem("notf-fav_" + acct_id,favct*1-(-1))
+						$(".notf-fav_" + acct_id).removeClass("hide")
+					}
 				}
+				
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if(popup>0){
 					Materialize.toast("["+domain+"]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
@@ -211,7 +221,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 						ipc.send('native-notf', ['TheDesk:'+domain,toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),toot.account.avatar]);
 					}
 				}
-				$(".notf-icon_" + acct_id).addClass("red-text");
+				if(localStorage.getItem("hasNotfC_" + acct_id)!="true"){
+					$(".notf-icon_" + acct_id).addClass("red-text");
+				}
 				localStorage.setItem("notice-mem", noticetext);
 				noticetext = "";
 			}
@@ -406,8 +418,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				} else {
 					var sense = ""
 				}
-				viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
-					acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
+				viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',\'' +
+					acct_id + '\')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 					'" data-type="' + media.type + '" class="img-parsed"><img src="' +
 					purl + '" class="' + sense +
 					' toot-img pointer" style="width:' + cwdt + '%; height:'+imh+'px;"></a></span>';
@@ -532,7 +544,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
 			' ' + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
-				key].created_at, 'unix') + '" '+if_notf+' onmouseover="mov(\'' + toot.id + '\',\''+tlid+'\')" onmouseout="resetmv()">' +
+				key].created_at, 'unix') + '" '+if_notf+' onmouseover="mov(\'' + toot.id + '\',\''+tlid+'\',\'mv\')" onclick="mov(\'' + toot.id + '\',\''+tlid+'\',\'cl\')" onmouseout="resetmv(\'mv\')">' +
 			'<div class="area-notice"><span class="gray sharesta">' + notice + home +
 			'</span></div>' +
 			'<div class="area-icon"><a onclick="udg(\'' + toot.account.id +
@@ -590,7 +602,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<span class="cbadge viabadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
 			via +
 			'</span>'+
-			'</div><div class="area-side"><div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
+			'</div><div class="area-side '+mouseover+'"><div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
 			'<div class="action '+noauth+'"><a onclick="details(\'' + toot.id + '\',' + acct_id +
 			',\''+tlid+'\')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
 			'</div></div>' +

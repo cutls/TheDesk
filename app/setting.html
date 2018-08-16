@@ -126,11 +126,19 @@
 		<label for="via_hide">No</label>
 		<br>
 		<h5>Hide action buttons without mouseover</h5>
-		You may feel unconfortable:(<br>
+		You may feel 'mouseover' is unconfortable:(<br>
 		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_yes" value="yes" />
-		<label for="mov_yes">Yes</label>
+		<label for="mov_yes">Mouseover to show</label>
+		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_click" value="click" />
+		<label for="mov_click">Click to show</label>
 		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_no" value="no" />
 		<label for="mov_no">No</label>
+		<br>
+		<h5>Show Notification marker, red colored bell and counter(if you show a notification column.)</h5>
+		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_yes" value="yes" />
+		<label for="notfm_yes">Yes</label>
+		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_no" value="no" />
+		<label for="notfm_no">No</label>
 		<br>
 		<h5>Auto folding</h5>
 		TheDesk does not collapse totes of 5 characters or less. Also, when collapsing, newlines are not shown. TheDesk count only newlines as the number of lines.

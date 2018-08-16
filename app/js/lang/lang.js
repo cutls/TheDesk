@@ -300,6 +300,10 @@ var lang_tl_media={
     "ja":"メディア",
     "en":"Media"
 }
+var lang_tl_reconnect={
+    "ja":"Streamingに再接続しました",
+    "en":"Reconnect to streaming API"
+}
 //ui/layout.js
 var lang_layout_gotop={
     "ja":"一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。",
@@ -332,6 +336,10 @@ var lang_layout_linkanades={
 var lang_layout_tts={
     "ja":"読み上げ",
     "en":"Text to speech "
+}
+var lang_layout_reconnect={
+    "ja":"ストリーミング再接続",
+    "en":"Reconnect to streaming API"
 }
 var lang_layout_headercolor={
     "ja":"TLヘッダーカラー",

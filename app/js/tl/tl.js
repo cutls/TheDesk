@@ -117,7 +117,8 @@ function tl(type, data, acct_id, tlid, delc, voice) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
+		console.log(json)
+		$("#landing_" + tlid).hide();
 		if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
 			var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),type);
 		}else{
@@ -127,6 +128,7 @@ function tl(type, data, acct_id, tlid, delc, voice) {
 			var templete = misskeyParse(json, type, acct_id, tlid, "", mute);
 		}else{
 			var templete = parse(json, type, acct_id, tlid, "", mute);
+			localStorage.setItem("lastobj_"+ tlid,json[0].id)
 		}
 		$("#timeline_" + tlid).html(templete);
 		additional(acct_id, tlid);
@@ -211,6 +213,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice) {
 	
 	console.log(start);
 	var wsid = websocket.length;
+	localStorage.setItem("wss_" + tlid, wsid);
 	websocket[wsid] = new WebSocket(start);
 	websocket[wsid].onopen = function(mess) {
 		console.log(tlid + ":Connect Streaming API:" + type);
@@ -226,6 +229,10 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice) {
 				if(voice){
 					say(obj.text)
 				}
+				websocketNotf[acct_id].send(JSON.stringify({
+					type: 'capture',
+					id: obj.id
+				}))
 				var templete = misskeyParse([obj], type, acct_id, tlid,"",mute);
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
@@ -306,7 +313,7 @@ function moreload(type, tlid) {
 		var data=obj[tlid].data;
 	}
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("unique-id");
-	if (localStorage.getItem("morelock") != sid) {
+	if (sid && localStorage.getItem("morelock") != sid) {
 		localStorage.setItem("morelock", sid);
 		if (type == "mix" && localStorage.getItem("domain_" + acct_id)!="misskey.xyz") {
 			mixmore(tlid,"integrated");
@@ -429,7 +436,7 @@ function tlCloser() {
 		}
 
 	});
-	websocketLocal = [];
+	websocketNotf = [];
 }
 
 //TLのタイトル
@@ -556,3 +563,109 @@ function icon(type) {
 		return "share"
 	}
 }
+function strAlive(){
+    var date = new Date() ;
+	var a = date.getTime() ;
+	var unix = Math.floor( a / 1000 ) ;
+	var col = localStorage.getItem("column");
+	if(col){
+		var obj = JSON.parse(col);
+		Object.keys(obj).forEach(function(key) {
+			var type=obj[key].type;
+			var lastunix=localStorage.getItem("lastunix_"+ key);
+			if(obj[key].type=="pub" || obj[key].type=="pub-media"){
+				//連合[連合数100超 or not]
+				if(localStorage.getItem("connects_" + obj[key].domain)>100){
+					var should=30;
+				}else{
+					var should=120;
+				}
+			}else if(obj[key].type=="local" || obj[key].type=="local-media"){
+				//連合[週間トゥ数10000超 or not]
+				if(localStorage.getItem("statuses_" + obj[key].domain)>10000){
+					var should=10;
+				}else if(localStorage.getItem("statuses_" + obj[key].domain)>1000){
+					var should=120;
+				}else{
+					var should=600;
+				}
+			}else{
+				if(type=="local" || type=="local-media" || type=="mix" || type=="plus"){
+				//ローカル[週間トゥ数10000超 or not]
+				if(localStorage.getItem("statuses_" + obj[key].domain)>10000){
+					var should=10;
+				}else if(localStorage.getItem("statuses_" + obj[key].domain)>1000){
+					var should=120;
+				}else{
+					var should=600;
+				}
+				}
+				if(type=="home" || type=="mix"){
+				//ホーム[フォロー数]
+				var flw=localStorage.getItem("follow_" + obj[key].domain)
+				if(flw>1000){
+					var should=10;
+				}else if(flw>500){
+					var should=20;
+				}else if(flw>100){
+					var should=30;
+				}else if(flw>50){
+					var should=45;
+				}else{
+					var should=60;
+				}
+			}
+			}
+			if (obj[key].data) {
+				var data = obj[key].data;
+			} else {
+				var data = "";
+			}
+			if(unix*1>lastunix*1+should*1 && should){
+				reconnector(tlid,type,obj[key].domain,data);
+			}
+		});
+	}
+}
+
+function strAliveInt(){
+    setTimeout(strAlive, 10000);
+}
+function reconnector(tlid,type,acct_id,data){
+	console.log("Reconnector")
+	if(type=="mix" || type=="plus"){
+		if(localStorage.getItem("voice_" + tlid)){
+			var voice=true;
+		}else{
+			var voice=false;
+		}
+		if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
+			var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),type);
+		}else{
+			var mute=[];
+		}
+		var wssh=localStorage.getItem("wssH_" + tlid);
+		websocketHome[wssh].close();
+		var wssh=localStorage.getItem("wssL_" + tlid);
+		websocketLocal[wssl].close();
+		mixre(acct_id, tlid, type, mute,"",voice);
+	}else if(type=="notf"){
+	}else{
+		var wss=localStorage.getItem("wss_" + tlid);
+		websocket[wss].close();
+		if(localStorage.getItem("voice_" + tlid)){
+			var voice=true;
+		}else{
+			var voice=false;
+		}
+		if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
+			var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),type);
+		}else{
+			var mute=[];
+		}
+		reload(type, '', acct_id, tlid, data, mute, "",voice);
+	}
+	Materialize.toast(lang_tl_reconnect[lang], 2000);
+}
+
+strAliveInt()
