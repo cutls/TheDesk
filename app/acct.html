@@ -45,24 +45,32 @@ body,html{overflow-y: scroll;}
             Check if TheDesk is not working on Windows, you want to login Pleroma instance.<br>
             <input type="checkbox" class="filled-in" id="linux" />
                   <label for="linux">Code setup</label><br>
+            <input type="checkbox" class="filled-in" id="misskey" />
+                  <label for="misskey">Login as Misskey</label><br>
             <button class="btn waves-effect" onclick="instance()">Login</button><br>
       </div>
       <div class="col s6">
             <span style="font-family:Open Sans;">Supports</span>
             <div id="support" class="collection transparent"></div>
       </div>
-</div>
+</div></div>
+<div id="auth" style="display:none">
+      Paste the code and close browser.<br>
+      <input type="text" id="code" placeholder="Code">
+      <button class="btn waves-effect" onclick="code()">Auth</button><br>
+      </div>
+      <div id="misskeylogin" style="display:none">
+                  <h5>AppSecret</h5>
+                  Read <a href="https://thedesk.top/how-to-misskey-login.html">Docs(ja)</a> to login Misskey.<br>
+                  <input type="hidden" id="misskey-url">
+                  <input type="text" id="misskey-key" placeholder="Code">
+                  <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br>
+            </div>
 <h5>Main an account</h5>
 <div class="input-field" style="width:300px"><span data-trans="your_acct">Select an account</span>
       <br>
       <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
       <label></label>
-</div>
-</div>
-<div id="auth" style="display:none">
-Paste the code and close browser.<br>
-<input type="text" id="code" placeholder="Code">
-<button class="btn waves-effect" onclick="code()">Auth</button><br>
 </div>
 Instance data by <a href="https://instances.social" target="_blank">instances.social API</a><br>
 <img src="./img/loading.svg" id="ins-prof" width="200"><br>

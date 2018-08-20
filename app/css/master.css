@@ -1,5 +1,6 @@
 /*共通CSS*/
 html,body{
+  /*transform: translate3d(0,0,0);*/
   overflow:hidden;
   user-select: none;
   cursor:default;

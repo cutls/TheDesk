@@ -77,7 +77,7 @@ function mixtl(acct_id, tlid, type,delc,voice) {
 
 
 //Streamingに接続
-function mixre(acct_id, tlid, TLtype, mute,delc,voice) {
+function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var startHome = "wss://" + domain +
@@ -146,6 +146,11 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice) {
 		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "delete") {
+			if(del>10){
+				reconnector(tlid,type,acct_id,data)
+			}else{
+				localStorage.setItem("delete",del*1+1)
+			}
 			if(delc=="true"){
 				$("[toot-id=" + JSON.parse(mess.data).payload + "]").addClass("emphasized");
 				$("[toot-id=" + JSON.parse(mess.data).payload + "]").addClass("by_delcatch");
@@ -154,6 +159,7 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice) {
 				$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 			}
 		} else if (type == "update") {
+			localStorage.removeItem("delete");
 			if(TLtype=="integrated"){
 				var templete = parse([obj], '', acct_id, tlid);
 			}else if(TLtype=="plus"){
@@ -187,10 +193,42 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice) {
 	}
 	websocketLocal[wslid].onerror = function(error) {
 		console.error('WebSocket Error ' + error);
+		if(mode=="error"){
+			$("#notice_icon_" + tlid).addClass("red-text");
+			todo('WebSocket Error ' + error);
+		}else{
+			reconnector(tlid,TLtype,acct_id,"","error");
+		}
+	};
+	websocketLocal[wslid].onclose = function() {
+		console.error('WebSocketLocal Closing by error:' + tlid);
+		if(mode=="error"){
+			$("#notice_icon_" + tlid).addClass("red-text");
+			todo('WebSocket Closed');
+		}else{
+			reconnector(tlid,TLtype,acct_id,"","error");
+		}
 	};
 	websocketHome[wshid].onerror = function(error) {
 		console.error('WebSocket Error ' + error);
+		if(mode=="error"){
+			$("#notice_icon_" + tlid).addClass("red-text");
+			todo('WebSocket Error ' + error);
+		}else{
+			reconnector(tlid,TLtype,acct_id,"","error");
+		}
 	};
+	websocketHome[wshid].onclose = function() {
+		console.error('WebSocketHome Closing by error:' + tlid);
+		if(mode=="error"){
+			$("#notice_icon_" + tlid).addClass("red-text");
+			todo('WebSocket Closed');
+		}else{
+			reconnector(tlid,TLtype,acct_id,"","error");
+		}
+		
+	};
+
 }
 
 //ある程度のスクロールで発火

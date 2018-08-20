@@ -15,5 +15,7 @@
     "users2":"人",
     "safety":"コネクション",
     "ver":"Mastodonバージョン",
-    "ko":"個"
+    "ko":"個",
+    "thisismisskey":"Misskeyとしてログイン",
+    "misskeylogin":"<a href=\"https://thedesk.top/how-to-misskey-login.html\">ドキュメント</a>を参照して正しいコードを入れてください。"
 }

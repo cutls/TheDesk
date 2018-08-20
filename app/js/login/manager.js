@@ -244,8 +244,8 @@ function support() {
 function login(url) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	if(url=="misskey.xyz"){
-		misskeyLogin();
+	if($('#misskey:checked').val()=="on"){
+		misskeyLogin(url);
 		return;
 	}
 	if($('#linux:checked').val()=="on"){
@@ -270,6 +270,7 @@ function login(url) {
 		if (httpreq.readyState == 4) {
 			var json = httpreq.response;
 			console.log(json);
+			localStorage.setItem("msky","false");
 			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 					"client_id"] + "&client_secret=" + json["client_secret"] +
 				"&response_type=code&scope=read+write+follow&redirect_uri=" + encodeURIComponent(red);
@@ -281,7 +282,7 @@ function login(url) {
 			const {
 				shell
 			} = require('electron');
-	
+			
 			shell.openExternal(auth);
 			var electron = require("electron");
 			var ipc = electron.ipcRenderer;
@@ -294,16 +295,42 @@ function login(url) {
 
 }
 //これが後のMisskeyである。
-function misskeyLogin() {
+function misskeyLogin(url) {
+	if(!url){
+		var url=$("#misskey-url").val();
+	}
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	var start = "https://misskey.xyz/api/auth/session/generate";
+	var start = "https://"+url+"/api/auth/session/generate";
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.responseType = 'json';
+	localStorage.setItem("msky","ture");
+	if(url=="misskey.xyz"){
+		var mkc=localStorage.getItem("mkc");
+	}else{
+		var mkc=$("#misskey-key").val();
+		if(!mkc){
+			$("#misskeylogin").show();
+			$("#misskey-url").val(url);
+			if(confirm(lang_manager_godev[lang])){
+				const {
+					shell
+				} = require('electron');
+				console.log("https://"+url+"/dev")
+				shell.openExternal("https://"+url+"/dev");
+				shell.openExternal("https://thedesk.top/how-to-login-misskey.html");
+			}
+
+			return false;
+		}else{
+			$("#misskeylogin").hide();
+			$("#misskey-url").val("");
+		}
+	}
 	httpreq.send(JSON.stringify({
-		appSecret: localStorage.getItem("mkc")
+		appSecret: mkc
 	}));
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState == 4) {
@@ -316,7 +343,7 @@ function misskeyLogin() {
 			$("#auth").show();
 			$("#code").val(token);
 			$("#add").hide();
-			localStorage.setItem("domain_tmp","misskey.xyz");
+			localStorage.setItem("domain_tmp",url);
 			shell.openExternal(json.url);
 			var electron = require("electron");
 		}
@@ -328,6 +355,10 @@ function misskeyLogin() {
 //テキストボックスにURL入れた
 function instance() {
 	var url = $("#url").val();
+	if(url.indexOf("@")!=-1 || url.indexOf("https")!=-1){
+		alert("入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは\"mstdn.jp\"です。)")
+		return false;
+	}
 	login(url);
 }
 
@@ -336,12 +367,13 @@ function code(code) {
 	localStorage.removeItem("redirect")
 	if(!code){
 		var code = $("#code").val();
+		$("#code").val("");
 	}
 	var url = localStorage.getItem("domain_tmp");
 	localStorage.removeItem("domain_tmp");
 	console.log(url);
-	if(url=="misskey.xyz"){
-		var start = "https://misskey.xyz/api/auth/session/userkey";
+	if(localStorage.getItem("msky")=="true"){
+		var start = "https://"+url+"/api/auth/session/userkey";
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('POST', start, true);
 		httpreq.setRequestHeader('Content-Type', 'application/json');
@@ -360,11 +392,12 @@ function code(code) {
 				var add = {
 					at: i,
 					name: json["user"]["name"],
-					domain: "misskey.xyz",
+					domain: url,
 					user: json["user"]["username"],
 					prof: avatar,
 					id: json["user"]["id"],
-					vis: priv
+					vis: priv,
+					mode: "misskey"
 				};
 				var multi = localStorage.getItem("multi");
 				var obj = JSON.parse(multi);
@@ -398,13 +431,6 @@ function code(code) {
 			client_secret: secret,
 			code: code
 		}));
-		console.log({
-			grant_type: "authorization_code",
-			redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
-			client_id: id,
-			client_secret: secret,
-			code: code
-		})
 		httpreq.onreadystatechange = function() {
 			if (httpreq.readyState == 4) {
 				var json = httpreq.response;
@@ -458,7 +484,8 @@ function getdata(domain, at) {
 			user: json["acct"],
 			prof: avatar,
 			id: json["id"],
-			vis: priv
+			vis: priv,
+			mode: "mastodon"
 		};
 		var multi = localStorage.getItem("multi");
 		var obj = JSON.parse(multi);
@@ -479,8 +506,8 @@ function getdata(domain, at) {
 function refresh(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	if(obj[target].domain=="misskey.xyz"){
-		misskeyRefresh(obj,target);
+	if(obj[target].mode=="misskey"){
+		misskeyRefresh(obj,target,obj[target].domain);
 		return
 	}
 	var start = "https://" + obj[target].domain +
@@ -532,8 +559,9 @@ function refresh(target) {
 		load();
 	});
 }
-function misskeyRefresh(obj,target){
-	var start = "https://misskey.xyz/api/users/show";
+function misskeyRefresh(obj,target,url){
+
+	var start = "https://"+url+"/api/users/show";
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('POST', start, true);
 		httpreq.setRequestHeader('Content-Type', 'application/json');
@@ -552,7 +580,7 @@ function misskeyRefresh(obj,target){
 				var add = {
 					at: json.accessToken,
 					name: json["user"]["name"],
-					domain: "misskey.xyz",
+					domain: url,
 					user: json["user"]["username"],
 					prof: avatar,
 					id: json["user"]["id"],

@@ -157,7 +157,18 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				
 			});
 		}
+		var noticeavatar="";
 		if (mix == "notf") {
+			if (gif == "yes") {
+				noticeavatar = toot.account.avatar;
+			} else {
+				noticeavatar = toot.account.avatar_static;
+			}
+			noticeavatar='<a onclick="udg(\'' + toot.account.id +
+			'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
+			'<img src="' + noticeavatar +
+			'" width="20" class="notf-icon prof-img" user="' + toot.account.acct +
+			'"></a>';
 			if (toot.type == "mention") {
 				var what = lang_parse_mentioned[lang];
 				var icon = "fa-share teal-text";
@@ -249,6 +260,16 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}else{
 			var if_notf="";
 			if (toot.reblog) {
+				if (gif == "yes") {
+					noticeavatar = toot.account.avatar;
+				} else {
+					noticeavatar = toot.account.avatar_static;
+				}
+				noticeavatar='<a onclick="udg(\'' + toot.account.id +
+				'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
+				'<img src="' + noticeavatar +
+				'" width="20" class="notf-icon prof-img" user="' + toot.account.acct +
+				'"></a>';
 				var rebtxt = lang_parse_btedsimple[lang];
 				var rticon = "fa-retweet light-blue-text";
 				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
@@ -387,7 +408,24 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				spoil = spoil.replace(regExp, emoji_url);
 			});
 		}
-		
+		//ニコフレ絵文字
+		if(toot.profile_emojis){
+			var nicoemojick = toot.profile_emojis[0];
+		}else{
+			var nicoemojick=false;
+		}
+		//絵文字があれば
+		if (nicoemojick) {
+			Object.keys(toot.profile_emojis).forEach(function(keynico) {
+				var emoji = toot.profile_emojis[keynico];
+				var shortcode = emoji.shortcode;
+				var emoji_url = '<img src="' + emoji.url +
+					'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
+				var regExp = new RegExp(":" + shortcode + ":", "g");
+				content = content.replace(regExp, emoji_url);
+				spoil = spoil.replace(regExp, emoji_url);
+			});
+		}
 		//デフォ絵文字
 		content=twemoji.parse(content);
 		if(dis_name){
@@ -551,7 +589,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
 			'<img src="' + avatar +
 			'" width="40" class="prof-img" user="' + toot.account.acct +
-			'"></a></div>' +
+			'"></a>'+noticeavatar+'</div>' +
 			'<div class="area-display_name"><div class="flex-name"><span class="user">' +
 			dis_name +
 			'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"> @' +

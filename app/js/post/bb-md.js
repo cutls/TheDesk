@@ -3,11 +3,14 @@
 function mdCheck(){
 	var acct_id = $("#post-acct-sel").val();
 	var profimg=localStorage.getItem("prof_"+acct_id);
-			$("#acct-sel-prof").attr("src",profimg);
+	if(!profimg){
+		profimg="./img/missing.svg";
+	}
+	$("#acct-sel-prof").attr("src",profimg);
 			if(localStorage.getItem("post_" + acct_id)){
 				$("#toot-post-btn").text(localStorage.getItem("post_" + acct_id)+"("+localStorage.getItem("domain_"+acct_id)+")");
 			}else{
-				$("#toot-post-btn").text(lang_toot[lang]+"("+localStorage.getItem("domain_"+acct_id)+")");
+				$("#toot-post-btn").text(lang_toot[lang]+"("+localStorage.getItem("domain_"+acct_id).replace( "misskey::", "" )+")");
 			}
 	  if(!localStorage.getItem("bb_"+acct_id) && !localStorage.getItem("md_"+acct_id)){
 		 $(".markdown").addClass("hide");
@@ -36,7 +39,7 @@ function mdCheck(){
 	}else{
 		$("#trendtag").html("");
 	}
-	if(domain=="misskey.xyz"){
+	if(~domain.indexOf("misskey::")){
 		Materialize.toast(lang_bbmd_misskey[lang], 5000);
 	}
 	if(idata[domain+"_letters"]){

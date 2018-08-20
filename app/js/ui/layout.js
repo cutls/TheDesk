@@ -156,7 +156,7 @@ function parseColumn() {
 		}else{
 			var voice=false;
 		}
-		tl(acct.type, data, acct.domain, key, delc,voice);
+		tl(acct.type, data, acct.domain, key, delc,voice,"");
 		cardCheck(key);
 		mediaCheck(key);
 		catchCheck(key);

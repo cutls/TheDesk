@@ -102,8 +102,9 @@ function media(b64, type, no) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var httpreq = new XMLHttpRequest();
-	if(domain=="misskey.xyz"){
-		var start = "https://" + domain + "/api/drive/files/create";
+	if(~domain.indexOf("misskey::")){
+
+		var start = "https://" + domain.replace( "misskey::", "" ) + "/api/drive/files/create";
 		httpreq.open('POST', start, true);
 		httpreq.upload.addEventListener("progress", progshow, false);
 		httpreq.responseType = 'json';

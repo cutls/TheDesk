@@ -1,5 +1,5 @@
 //TL取得
-function tl(type, data, acct_id, tlid, delc, voice) {
+function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	scrollevent();
 	localStorage.removeItem("morelock");
 	localStorage.removeItem("pool");
@@ -140,7 +140,7 @@ function tl(type, data, acct_id, tlid, delc, voice) {
 }
 
 //Streaming接続
-function reload(type, cc, acct_id, tlid, data, mute, delc, voice) {
+function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	if (!type) {
 		var type = localStorage.getItem("now");
 	}
@@ -247,6 +247,12 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice) {
 		}else{
 			var typeA = JSON.parse(mess.data).event;
 			if (typeA == "delete") {
+				var del=localStorage.getItem("delete");
+				if(del>10){
+					reconnector(tlid,type,acct_id,data)
+				}else{
+					localStorage.setItem("delete",del*1+1)
+				}
 				var obj = JSON.parse(mess.data).payload;
 				if(delc=="true"){
 					$("#timeline_"+tlid+" [toot-id=" + JSON.parse(mess.data).payload + "]").addClass("emphasized");
@@ -257,6 +263,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice) {
 				}
 				
 			} else if (typeA == "update") {
+				localStorage.removeItem("delete");
 				var obj = JSON.parse(JSON.parse(mess.data).payload);
 				console.log(obj);
 				if($("#timeline_" + tlid +" [toot-id=" + obj.id + "]").length < 1){
@@ -264,16 +271,18 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice) {
 						say(obj.content)
 					}	
 					var templete = parse([obj], type, acct_id, tlid,"",mute);
-					var pool = localStorage.getItem("pool_" + tlid);
-					if (pool) {
-						pool = templete + pool;
-					} else {
-						pool = templete
+					if ($("timeline_box_"+tlid+"_box .tl-box").scrollTop() == 0) {
+						$("#timeline_" + tlid).prepend(templete);
+					}else{
+						var pool = localStorage.getItem("pool_" + tlid);
+						if (pool) {
+							pool = templete + pool;
+						} else {
+							pool = templete
+						}
+						localStorage.setItem("pool_" + tlid, pool);
 					}
-					localStorage.setItem("pool_" + tlid, pool);
-		
 					scrollck();
-		
 					additional(acct_id, tlid);
 					jQuery("time.timeago").timeago();
 				}else{
@@ -290,7 +299,23 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice) {
 	}
 	websocket[wsid].onerror = function(error) {
 		console.error('WebSocket Error ' + error);
+		if(mode=="error"){
+			$("#notice_icon_" + tlid).addClass("red-text");
+			todo('WebSocket Error ' + error);
+		}else{
+			reconnector(tlid,type,acct_id,data,"error");
+		}
 	};
+	websocket[wsid].onclose = function() {
+		console.error('WebSocket Closing by error:' + tlid);
+		if(mode=="error"){
+			$("#notice_icon_" + tlid).addClass("red-text");
+			todo('WebSocket Closed');
+		}else{
+			reconnector(tlid,type,acct_id,data,"error");
+		}
+	};
+
 }
 
 //一定のスクロールで発火
@@ -571,58 +596,11 @@ function strAlive(){
 	if(col){
 		var obj = JSON.parse(col);
 		Object.keys(obj).forEach(function(key) {
-			var type=obj[key].type;
-			var lastunix=localStorage.getItem("lastunix_"+ key);
-			if(obj[key].type=="pub" || obj[key].type=="pub-media"){
-				//連合[連合数100超 or not]
-				if(localStorage.getItem("connects_" + obj[key].domain)>100){
-					var should=30;
-				}else{
-					var should=120;
-				}
-			}else if(obj[key].type=="local" || obj[key].type=="local-media"){
-				//連合[週間トゥ数10000超 or not]
-				if(localStorage.getItem("statuses_" + obj[key].domain)>10000){
-					var should=10;
-				}else if(localStorage.getItem("statuses_" + obj[key].domain)>1000){
-					var should=120;
-				}else{
-					var should=600;
-				}
-			}else{
-				if(type=="local" || type=="local-media" || type=="mix" || type=="plus"){
-				//ローカル[週間トゥ数10000超 or not]
-				if(localStorage.getItem("statuses_" + obj[key].domain)>10000){
-					var should=10;
-				}else if(localStorage.getItem("statuses_" + obj[key].domain)>1000){
-					var should=120;
-				}else{
-					var should=600;
-				}
-				}
-				if(type=="home" || type=="mix"){
-				//ホーム[フォロー数]
-				var flw=localStorage.getItem("follow_" + obj[key].domain)
-				if(flw>1000){
-					var should=10;
-				}else if(flw>500){
-					var should=20;
-				}else if(flw>100){
-					var should=30;
-				}else if(flw>50){
-					var should=45;
-				}else{
-					var should=60;
-				}
-			}
-			}
-			if (obj[key].data) {
-				var data = obj[key].data;
-			} else {
-				var data = "";
-			}
-			if(unix*1>lastunix*1+should*1 && should){
-				reconnector(tlid,type,obj[key].domain,data);
+			if($("#notice_icon_" + key).hasClass("red-text")){
+				var type=obj[key].type;
+				var acct_id=obj[key].domain;
+				var data=obj[key].data;
+				reconnector(key,type,acct_id,data,"error");
 			}
 		});
 	}
@@ -631,8 +609,8 @@ function strAlive(){
 function strAliveInt(){
     setTimeout(strAlive, 10000);
 }
-function reconnector(tlid,type,acct_id,data){
-	console.log("Reconnector")
+function reconnector(tlid,type,acct_id,data,mode){
+	console.log("Reconnector:"+mode)
 	if(type=="mix" || type=="plus"){
 		if(localStorage.getItem("voice_" + tlid)){
 			var voice=true;
@@ -648,7 +626,7 @@ function reconnector(tlid,type,acct_id,data){
 		websocketHome[wssh].close();
 		var wssh=localStorage.getItem("wssL_" + tlid);
 		websocketLocal[wssl].close();
-		mixre(acct_id, tlid, type, mute,"",voice);
+		mixre(acct_id, tlid, type, mute,"",voice,mode);
 	}else if(type=="notf"){
 	}else{
 		var wss=localStorage.getItem("wss_" + tlid);
@@ -663,7 +641,7 @@ function reconnector(tlid,type,acct_id,data){
 		}else{
 			var mute=[];
 		}
-		reload(type, '', acct_id, tlid, data, mute, "",voice);
+		reload(type, '', acct_id, tlid, data, mute, "",voice,mode);
 	}
 	Materialize.toast(lang_tl_reconnect[lang], 2000);
 }

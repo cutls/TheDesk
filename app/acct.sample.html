@@ -45,24 +45,32 @@ body,html{overflow-y: scroll;}
             {{codesetupwarn}}<br>
             <input type="checkbox" class="filled-in" id="linux" />
                   <label for="linux">{{codesetup}}</label><br>
+            <input type="checkbox" class="filled-in" id="misskey" />
+                  <label for="misskey">{{thisismisskey}}</label><br>
             <button class="btn waves-effect" onclick="instance()">Login</button><br>
       </div>
       <div class="col s6">
             <span style="font-family:Open Sans;">Supports</span>
             <div id="support" class="collection transparent"></div>
       </div>
-</div>
+</div></div>
+<div id="auth" style="display:none">
+      {{codepastewarn}}<br>
+      <input type="text" id="code" placeholder="{{codepaste}}">
+      <button class="btn waves-effect" onclick="code()">Auth</button><br>
+      </div>
+      <div id="misskeylogin" style="display:none">
+                  <h5>AppSecret</h5>
+                  {{misskeylogin}}<br>
+                  <input type="hidden" id="misskey-url">
+                  <input type="text" id="misskey-key" placeholder="{{codepaste}}">
+                  <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br>
+            </div>
 <h5>{{mainacct}}</h5>
 <div class="input-field" style="width:300px"><span data-trans="your_acct">{{selacct}}</span>
       <br>
       <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
       <label></label>
-</div>
-</div>
-<div id="auth" style="display:none">
-{{codepastewarn}}<br>
-<input type="text" id="code" placeholder="{{codepaste}}">
-<button class="btn waves-effect" onclick="code()">Auth</button><br>
 </div>
 Instance data by <a href="https://instances.social" target="_blank">instances.social API</a><br>
 <img src="./img/loading.svg" id="ins-prof" width="200"><br>

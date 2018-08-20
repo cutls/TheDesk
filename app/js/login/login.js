@@ -263,7 +263,7 @@ function getdataAdv(domain, at) {
 function refresh(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	if(obj[target].domain=="misskey.xyz"){
+	if(obj[target].mode=="misskey"){
 		return
 	}
 	var start = "https://" + obj[target].domain +
@@ -320,6 +320,7 @@ function refresh(target) {
 //絶対ストリーミングを閉じさせないマン
 function ckdb(acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
+
 	if(domain=="kirishima.cloud"){
 		localStorage.setItem("kirishima", "true");
 		$("#ranking-btn").show();
@@ -380,7 +381,7 @@ function ckdb(acct_id) {
 				localStorage.setItem("follow_" + acct_id, json[domain + "_follow"]);
 			}
 	}
-	if(domain!="misskey.xyz"){
+	if(domain.indexOf("misskey::")==-1 || domain!="misskey.xyz"){
 		var start = "https://" + domain + "/api/v1/instance/activity";
 		fetch(start, {
 			method: 'GET',
@@ -402,6 +403,10 @@ function ckdb(acct_id) {
 			}
 		});
 		
+	}else{
+		if(domain=="misskey.xyz"){
+			localStorage.setItem("domain_" + acct_id,"misskey::misskey.xyz");
+		}
 	}
 	
 
@@ -420,29 +425,30 @@ function multiSelector() {
 	var templete;
 	if(localStorage.getItem("mainuse")=="main"){
 		var last = localStorage.getItem("main");
-	}else{
+	}else if(localStorage.getItem("last-use")){
 		var last = localStorage.getItem("last-use");
+	}else{
+		var last=0;
 	}
 	var sel;
-	console.log(obj.length)
 	if(obj.length<1){
 		$("#src-acct-sel").html('<option value="tootsearch">Tootsearch</option>');
 		$("#add-acct-sel").html('<option value="noauth">'+lang_login_noauth[lang]+'</option>');
 	}else{
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
-		
 		var list = key * 1 + 1;
 		if (key == last) {
 			sel = "selected";
 			var domain = localStorage.getItem("domain_" + key);
+			var domain=domain.replace( "misskey::", "" );
 			if(idata[domain+"_letters"]){
 				$("#textarea").attr("data-length", idata[domain+"_letters"])
 			}else{
 				$("#textarea").attr("data-length", 500)
 			}
 			var profimg=localStorage.getItem("prof_"+key);
-			var domain=localStorage.getItem("domain_"+key);
+			console.log(profimg);
 			if(!profimg){
 				profimg="./img/missing.svg";
 			}

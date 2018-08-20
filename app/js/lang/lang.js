@@ -112,6 +112,10 @@ var lang_manager_none={
     "ja":"なし",
     "en":"None"
 }
+var lang_manager_godev={
+    "ja":"MisskeyのDevセンターに移動します。同時に開かれるドキュメントを参考にログインしてください。",
+    "en":"Open DevCenter of Misskey. We show also an official documents to refer."
+}
 //post/bb-md.js
 var lang_bbmd_misskey={
     "ja":"TheDeskにおけるMisskeyでは、@を返信として扱いますが、全ての@は消去され別パラメータに入力されます。また、「未収載」を「ホーム」として扱います。",

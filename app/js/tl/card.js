@@ -29,9 +29,11 @@ function additional(acct_id, tlid) {
 		var card = localStorage.getItem("card_" + tlid);
 		var text = $(this).attr('href');
 		if(text){
-			var urls = text.match(
-				/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
-			);
+			if(text.indexOf("twimg.com")=== -1){
+				var urls = text.match(
+					/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
+				);
+			}
 		}else{
 			var urls =[]
 		}
@@ -297,6 +299,7 @@ function mov(id,tlid,type){
 	}
 	if(mouseover=="hide"){
 		$(tlide+" [toot-id="+id+"] .area-actions").toggleClass("hide")
+		$(tlide+" [toot-id="+id+"] .area-side").toggleClass("hide")
 	}
 }
 
@@ -313,6 +316,7 @@ function resetmv(type){
 	}
 	if(mouseover=="hide"){
 		$(".area-actions").addClass("hide");
+		$(".area-side").addClass("hide");
 	}
 	
 }

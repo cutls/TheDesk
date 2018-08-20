@@ -15,5 +15,7 @@
     "users2":"users",
     "safety":"Connection",
     "ver":"Mastodon version",
-    "ko":""
+    "ko":"",
+    "thisismisskey":"Login as Misskey",
+    "misskeylogin":"Read <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> to login Misskey."
 }

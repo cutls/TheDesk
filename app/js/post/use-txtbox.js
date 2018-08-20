@@ -11,6 +11,11 @@ function re(id,at,acct_id,mode){
 	$('select').material_select();
 	$("#textarea").attr("placeholder",lang_usetxtbox_reply[lang]);
 	$("#textarea").focus();
+	var profimg=localStorage.getItem("prof_"+acct_id);
+	if(!profimg){
+		profimg="./img/missing.svg";
+	}
+	$("#acct-sel-prof").attr("src",profimg);
 	vis(mode);
 }
 function reEx(id){
