@@ -113,7 +113,8 @@ function createWindow() {
         submenu: [
 			{ label: "TheDeskについて", click: function() { about(); } },
             { type: "separator" },
-            { label: "終了", accelerator: "Command+Q", click: function() { app.quit(); }}
+			{ label: "終了", accelerator: "Command+Q", click: function() { app.quit(); }}
+			
         ]}, {
         label: "編集",
         submenu: [
@@ -138,7 +139,23 @@ function createWindow() {
             click: function() { mainWindow.webContents.send('reload', " "); }
           }
 		]
-		}
+		},
+		{
+		label: 'ウィンドウ',
+		role: 'window',
+		submenu: [
+			  {
+				label: '最小化',
+				accelerator: 'CmdOrCtrl+M',
+				role: 'minimize'
+			  },
+			  {
+				label: '閉じる',
+				accelerator: 'CmdOrCtrl+W',
+				role: 'close'
+			  },
+			]
+		  }
     ];
 	var platform=process.platform;
 	var bit=process.arch;

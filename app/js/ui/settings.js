@@ -69,10 +69,18 @@ function settings() {
 	var sentd = $("#sentence").val();
 	var ltrd = $("#letters").val();
 	if (sentd != localStorage.getItem("sentence") || ltrd != localStorage.getItem("letters")) {
-		Materialize.toast(lang_setting_selt[lang].replace("{{set1}}" ,sentd).replace("{{set1}}" ,ltrd), 3000);
+		Materialize.toast(lang_setting_selt[lang].replace("{{set1}}" ,sentd).replace("{{set2}}" ,ltrd), 3000);
 	}
 	localStorage.setItem("sentence", sentd);
 	localStorage.setItem("letters", ltrd);
+
+	var csentd = $("#cw_sentence").val();
+	var cltrd = $("#cw_letters").val();
+	if (csentd != localStorage.getItem("sentcw_sentenceence") || cltrd != localStorage.getItem("cw_letters")) {
+		Materialize.toast(lang_setting_autocw[lang].replace("{{set1}}" ,csentd).replace("{{set2}}" ,cltrd), 3000);
+	}
+	localStorage.setItem("cw_sentence", csentd);
+	localStorage.setItem("cw_letters", cltrd);
 
 	var widthd = $("#width").val();
 	if (widthd != localStorage.getItem("width")) {
@@ -250,6 +258,17 @@ function load() {
 		var ltrs = "500";
 	}
 	$("#letters").val(ltrs);
+
+	var csent = localStorage.getItem("cw_sentence");
+	if (!csent) {
+		var csent = "500";
+	}
+	$("#cw_sentence").val(csent);
+	var cltrs = localStorage.getItem("cw_letters");
+	if (!cltrs) {
+		var cltrs = "500";
+	}
+	$("#cw_letters").val(cltrs);
 
 	var width = localStorage.getItem("width");
 	if (!width) {

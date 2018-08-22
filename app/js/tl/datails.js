@@ -6,7 +6,7 @@ function details(id, acct_id, tlid) {
 	$('#tootmodal').modal('open');
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var start = "https://" + domain + "/api/notes/show";
 		var i={
 			method: 'POST',
@@ -41,8 +41,8 @@ function details(id, acct_id, tlid) {
 			$("#toot-this").html(html);
 			jQuery("time.timeago").timeago();
 		}
-		if(domain=="misskey.xyz"){
-			var url="https://misskey.xyz/notes/"+json.id;
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
+			var url="https://"+domain+"/notes/"+json.id;
 			var scn=json.user.username;
 			if(!json.user.host){
 				var local=true;
@@ -98,7 +98,7 @@ function details(id, acct_id, tlid) {
 function replyTL(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var start = "https://" + domain + "/api/notes/show";
 		var i={
 			method: 'POST',
@@ -131,7 +131,7 @@ function replyTL(id, acct_id) {
 		}else{
 			var mute=[];
 		}
-		if(domain=="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
 			var templete = misskeyParse([json], '', acct_id,"","",mute);
 			$("#toot-after").prepend(templete);
 			$("#toot-after .hide").html(lang_details_filtered[lang]);
@@ -161,7 +161,7 @@ function replyTL(id, acct_id) {
 function context(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var start = "https://" + domain + "/api/notes/conversation";
 		var i={
 			method: 'POST',
@@ -189,7 +189,7 @@ function context(id, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		if(domain=="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
 			json.reverse();
 			console.log(json);
 			var templete = misskeyParse(json, '', acct_id,"","",[]);
@@ -219,7 +219,7 @@ function context(id, acct_id) {
 function beforeToot(id, acct_id, domain) {
 	//var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var start = "https://" + domain +
 		"/api/notes/local-timeline"
 		fetch(start, {
@@ -265,7 +265,7 @@ function beforeToot(id, acct_id, domain) {
 function userToot(id, acct_id, user) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var start = "https://" + domain +
 		"/api/users/notes"
 		fetch(start, {
@@ -313,7 +313,7 @@ function userToot(id, acct_id, user) {
 //ふぁぼ一覧
 function faved(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain=="misskey.xyz"){ return false; }
+	if(localStorage.getItem("mode_" + domain)=="misskey"){ return false; }
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/favourited_by";
 	fetch(start, {
@@ -336,7 +336,7 @@ function faved(id, acct_id) {
 //ブースト一覧
 function rted(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain=="misskey.xyz"){ return false; }
+	if(localStorage.getItem("mode_" + domain)=="misskey"){ return false; }
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/reblogged_by";
 	fetch(start, {

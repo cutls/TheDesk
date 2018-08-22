@@ -50,6 +50,10 @@ var lang_setting_selt={
     "ja":"{{set1}}行以上または{{set2}}文字以上でテキストを隠します。",
     "en":"Auto fold:{{set1}} lines and above, {{set2}} letters and above"
 }
+var lang_setting_autocw={
+    "ja":"{{set1}}行以上または{{set2}}文字以上で警告を表示します。",
+    "en":"Auto CW:{{set1}} lines and above, {{set2}} letters and above"
+}
 var lang_setting_width={
     "ja":"横幅最低を{{set}}pxに設定しました。",
     "en":"Minimam width:{{set}}"

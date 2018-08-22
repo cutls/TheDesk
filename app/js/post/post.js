@@ -1,6 +1,6 @@
 /*投稿系*/
 //投稿
-function post() {
+function post(mode) {
 	if($("#toot-post-btn").prop("disabled")){
 		return
 	}
@@ -26,7 +26,31 @@ function post() {
 			}
 		}
 	}
-	if(domain=="misskey.xyz"){
+	if(mode!="pass" && !$("#cw").hasClass("cw-avail") && (str.length>localStorage.getItem("cw_sentence") || (str.split("\n").length - 1)>localStorage.getItem("cw_letters"))){
+		var electron = require("electron");
+		var remote=electron.remote;
+		var dialog=remote.dialog;
+		var plus=str.replace(/\n/g,"").slice(0,10)+"...";
+		const options = {
+			type: 'info',
+			title: lang_post_cwtitle[lang],
+			message: lang_post_cwtxt[lang]+plus,
+			buttons: [lang_post_btn1[lang],lang_post_btn2[lang], lang_post_btn3[lang]]
+	  	}
+	  	dialog.showMessageBox(options, function(arg) {
+			if(arg==1){
+				$("#cw-text").show();
+				$("#cw").addClass("yellow-text");
+				$("#cw").addClass("cw-avail");
+				$("#cw-text").val(plus);
+				post("pass");
+			}else if(arg==2){
+				post("pass");
+			}
+	  	})
+		  return false;
+	}
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		misskeyPost();
 		return;
 	}
@@ -90,7 +114,7 @@ function misskeyPost(){
 	var str = $("#textarea").val();
 	var acct_id = $("#post-acct-sel").val();
 	localStorage.setItem("last-use", acct_id);
-	var domain = "misskey.xyz"
+	var domain = localStorage.getItem("domain_" + acct_id);
 	$("#toot-post-btn").prop("disabled", true);
 	todo("Posting");
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");

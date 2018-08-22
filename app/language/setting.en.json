@@ -58,6 +58,8 @@
     "or":"or",
     "imgheight":"Height of images",
     "post":"Posting Preferences",
+    "autocw":"Alert before posting a long toot.",
+    "autocwwarn":"Show dialog whether you make too-long text hidden.",
     "defaultcw":"Default warining text",
     "cws":"Always CW set",
     "defaultvis":"Default visibility",

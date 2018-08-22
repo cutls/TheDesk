@@ -69,10 +69,10 @@ function verck(){
         todo(error);
 		console.error(error);
     }).then(function(json) {
-		 console.log(json);
+		    console.log(json);
              $("#ver").text(json.desk);
              localStorage.setItem("next-ver",json.desk);
-			 $("#det").text(json.detail);
+			 $("#det").html(json.detail);
 			 $("#now").text(localStorage.getItem("ver"));
     });
 }

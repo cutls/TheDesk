@@ -21,7 +21,7 @@ function udgEx(user,acct_id){
 	}
 	console.log(user);
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain=="misskey.xyz"){ return false; }
+	if(localStorage.getItem("mode_" + domain)=="misskey"){ return false; }
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+user
 	fetch(start, {
@@ -49,7 +49,7 @@ function udg(user, acct_id) {
 	}
 	todo("User Data Loading...");
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		misskeyUdg(user, acct_id)
 		return;
 	}
@@ -190,7 +190,7 @@ function misskeyUdg(user, acct_id) {
 	}
 	todo("User Data Loading...");
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain!="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)!="misskey"){
 		udg(user, acct_id)
 		return;
 	}

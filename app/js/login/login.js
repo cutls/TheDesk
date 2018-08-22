@@ -381,7 +381,7 @@ function ckdb(acct_id) {
 				localStorage.setItem("follow_" + acct_id, json[domain + "_follow"]);
 			}
 	}
-	if(domain.indexOf("misskey::")==-1 || domain!="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var start = "https://" + domain + "/api/v1/instance/activity";
 		fetch(start, {
 			method: 'GET',
@@ -404,9 +404,6 @@ function ckdb(acct_id) {
 		});
 		
 	}else{
-		if(domain=="misskey.xyz"){
-			localStorage.setItem("domain_" + acct_id,"misskey::misskey.xyz");
-		}
 	}
 	
 
@@ -441,7 +438,6 @@ function multiSelector() {
 		if (key == last) {
 			sel = "selected";
 			var domain = localStorage.getItem("domain_" + key);
-			var domain=domain.replace( "misskey::", "" );
 			if(idata[domain+"_letters"]){
 				$("#textarea").attr("data-length", idata[domain+"_letters"])
 			}else{

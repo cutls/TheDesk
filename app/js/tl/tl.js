@@ -31,7 +31,10 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 			var type = "local";
 		}
 	}
-	if (type == "mix" && domain != "misskey.xyz") {
+	/*
+	
+	*/
+	if (type == "mix" && localStorage.getItem("mode_" + domain)!="misskey") {
 		//Integratedなら飛ばす
 			$("#notice_" + tlid).text("Integrated TL(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
@@ -71,7 +74,8 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		$("#notice_" + tlid).text("Glance TL(" + domain + ")");
 	}
 		$("#notice_icon_" + tlid).text(icon(type));
-		if(domain=="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
+			var misskey=true;
 			var url=misskeycom(type, data);
 			var start = "https://" + domain + "/api/notes/"+url;
 			var method="POST";
@@ -95,6 +99,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 				body: JSON.stringify(req),
 			}
 		}else{
+			var misskey=false;
 			var url=com(type, data);
 			if(type=="tag"){
 				var tag = localStorage.getItem("tag-range");
@@ -124,7 +129,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		}else{
 			var mute=[];
 		}
-		if(domain=="misskey.xyz"){
+		if(misskey){
 			var templete = misskeyParse(json, type, acct_id, tlid, "", mute);
 		}else{
 			var templete = parse(json, type, acct_id, tlid, "", mute);
@@ -147,7 +152,8 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	localStorage.setItem("now", type);
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
+		var misskey=true;
 		if (type == "home") {
 			var start = "wss://" + domain +
 				"/?i=" + at;
@@ -175,6 +181,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			Materialize.toast(lang_misskeyparse_listnostr[lang], 1000);
 		}
 	}else{
+		var misskey=false;
 		if (type == "home") {
 			var start = "wss://" + domain +
 				"/api/v1/streaming/?stream=user&access_token=" + at;
@@ -223,7 +230,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	websocket[wsid].onmessage = function(mess) {
 		console.log(tlid + ":Receive Streaming API:");
 		console.log(JSON.parse(mess.data));
-		if(domain=="misskey.xyz"){
+		if(misskey){
 			if (JSON.parse(mess.data).type == "note") {
 				var obj = JSON.parse(mess.data).body;
 				if(voice){
@@ -298,22 +305,34 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		
 	}
 	websocket[wsid].onerror = function(error) {
-		console.error('WebSocket Error ' + error);
+		console.error("Error closing");
+		console.error(error);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Error ' + error);
 		}else{
-			reconnector(tlid,type,acct_id,data,"error");
+			var errorct=localStorage.getItem("wserror_" + tlid)*1+1;
+			localStorage.setItem("wserror_" + tlid,errorct);
+			if(errorct<3){
+				reconnector(tlid,type,acct_id,data,"error");
+			}
 		}
+		return false;
 	};
 	websocket[wsid].onclose = function() {
-		console.error('WebSocket Closing by error:' + tlid);
+		console.error("Closing");
+		console.error(tlid);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Closed');
 		}else{
-			reconnector(tlid,type,acct_id,data,"error");
+			var errorct=localStorage.getItem("wserror_" + tlid)*1+1;
+			localStorage.setItem("wserror_" + tlid,errorct);
+			if(errorct<3){
+				reconnector(tlid,type,acct_id,data,"error");
+			}
 		}
+		return false;
 	};
 
 }
@@ -340,10 +359,10 @@ function moreload(type, tlid) {
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("unique-id");
 	if (sid && localStorage.getItem("morelock") != sid) {
 		localStorage.setItem("morelock", sid);
-		if (type == "mix" && localStorage.getItem("domain_" + acct_id)!="misskey.xyz") {
+		if (type == "mix" && localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct_id))!="misskey") {
 			mixmore(tlid,"integrated");
 			return;
-		}else if (type == "plus" && localStorage.getItem("domain_" + acct_id)!="misskey.xyz") {
+		}else if (type == "plus" && localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct_id))!="misskey") {
 			mixmore(tlid,"plus");
 			return;
 		}else if (type == "notf") {
@@ -365,7 +384,8 @@ function moreload(type, tlid) {
 			};
 			domain=acct_id;
 		}
-		if(domain=="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
+			var misskey=true;
 			hdr={
 				'content-type': 'application/json'
 			};
@@ -393,6 +413,7 @@ function moreload(type, tlid) {
 				body: JSON.stringify(req),
 			}
 		}else{
+			var misskey=false;
 			var start = "https://" + domain + "/api/v1/timelines/" + com(type,data) +
 			"max_id=" + sid;
 			var method="GET";
@@ -409,7 +430,7 @@ function moreload(type, tlid) {
 			todo(error);
 			console.error(error);
 		}).then(function(json) {
-			if(domain=="misskey.xyz"){
+			if(misskey){
 				var templete = misskeyParse(json, '', acct_id, tlid,"",mute);
 			}else{
 				var templete = parse(json, '', acct_id, tlid,"",mute);
@@ -517,7 +538,7 @@ function cap(type, data, acct_id) {
 	} else if (type == "dm") {
 		var response= "DM"
 	} else if (type == "mix") {
-		if(localStorage.getItem("domain_" + acct_id)=="misskey.xyz"){
+		if(localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct_id))=="misskey"){
 			var response= "Social TL"
 		}else{
 			var response= "Integrated"
@@ -600,10 +621,12 @@ function strAlive(){
 				var type=obj[key].type;
 				var acct_id=obj[key].domain;
 				var data=obj[key].data;
+				localStorage.removeItem("wserror_" + tlid)
 				reconnector(key,type,acct_id,data,"error");
 			}
 		});
 	}
+	return;
 }
 
 function strAliveInt(){

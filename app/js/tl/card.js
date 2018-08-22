@@ -49,7 +49,7 @@ function additional(acct_id, tlid) {
 			$(this).remove();
 		} else if (!card) {
 			var id = $(this).parents('.cvo').attr("toot-id");
-			if(localStorage.getItem("domain_" + acct_id)=="misskey.xyz"){
+			if(localStorage.getItem("mode_" + domain)=="misskey"){
 				var start = "https://" + domain + "/url?url="+text;
 				fetch(start, {
 					method: 'GET',
@@ -173,7 +173,7 @@ function additionalIndv(tlid, acct_id, id) {
 		if (urls) {
 			$("[toot-id="+id+"] .toot a").remove();
 		} else {
-			if(localStorage.getItem("domain_" + acct_id)=="misskey.xyz"){
+			if(localStorage.getItem("mode_" + domain)=="misskey"){
 				var start = "https://" + domain + "/url?url="+text;
 				fetch(start, {
 					method: 'GET',

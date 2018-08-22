@@ -9,7 +9,7 @@ function utl(user, more, acct_id) {
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
-	if(domain!="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)!="misskey"){
 		if (more) {
 			var sid = $("#his-tl .cvo").last().attr("toot-id");
 			var plus = "?max_id=" + sid;
@@ -47,7 +47,7 @@ function utl(user, more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		if(domain=="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
 			var templete = misskeyParse(json, '', acct_id);
 		}else{
 			var templete = parse(json, '', acct_id);
@@ -60,7 +60,7 @@ function utl(user, more, acct_id) {
 		if (more) {
 			$("#his-tl-contents").append(templete);
 		} else {
-			if(domain!="misskey.xyz"){
+			if(localStorage.getItem("mode_" + domain)!="misskey"){
 				pinutl(templete,user, acct_id)
 			}else{
 				$("#his-tl-contents").html(templete);
@@ -115,7 +115,7 @@ function flw(user, more, acct_id) {
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var req={i:at}
 		if (more) {
 			var sid = $("#his-follow-list .cvo").last().attr("user-id");
@@ -153,7 +153,7 @@ function flw(user, more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		if(domain=="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
 			var templete = misskeyUserparse(json,'',acct_id);
 		}else{
 			var templete = userparse(json,'',acct_id);
@@ -181,7 +181,7 @@ function fer(user, more, acct_id) {
 	if (user == "--now") {
 		var user = $('#his-data').attr("user-id");
 	}
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var req={i:at}
 		if (more) {
 			var sid = $("#his-follower-list .cvo").last().attr("user-id");
@@ -219,7 +219,7 @@ function fer(user, more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		if(domain=="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
 			var templete = misskeyUserparse(json,'',acct_id);
 		}else{
 			var templete = userparse(json,'',acct_id);
@@ -244,7 +244,7 @@ function showFav(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain!="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)!="misskey"){
 		if (more) {
 			var sid = $("#his-fav-list .cvo").last().attr("toot-id");
 			var plus = "?max_id=" + sid;
@@ -281,7 +281,7 @@ function showFav(more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		if(domain!="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)!="misskey"){
 			var templete = parse(json, '', acct_id);
 		}else{
 			var templete = misskeyParse(json, '', acct_id);
@@ -305,7 +305,7 @@ function showMut(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var req={i:at}
 		if (more) {
 			var sid = $("#his-muting-list .cvo").last().attr("user-id");
@@ -361,7 +361,7 @@ function showBlo(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		$("#his-blocking-list-contents").html(lang_hisdata_notonmisskey[lang]+"<br>");
 		return false;
 	}
@@ -406,7 +406,7 @@ function showReq(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var req={i:at}
 		if (more) {
 			var sid = $("#his-request-list .cvo").last().attr("user-id");
@@ -442,7 +442,7 @@ function showReq(more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		if(domain="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
 			var templete = userparse(json, 'true',acct_id);
 		}else{
 			var templete = misskeyUserparse(json, 'true',acct_id);
@@ -466,7 +466,7 @@ function showDom(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		$("#his-domain-list-contents").html(lang_hisdata_notonmisskey[lang]+"<br>");
 		return false;
 	}
@@ -517,7 +517,7 @@ function showFrl(more, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		$("#his-follow-recom-contents").html(lang_hisdata_notonmisskey[lang]+"<br>");
 		return false;
 	}

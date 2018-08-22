@@ -33,9 +33,14 @@ function load() {
 		}else{
 			var style=""
 		}
+		if(acct.name){
+			var name=acct.name;
+		}else{
+			var name=acct.user;
+		}
 		templete = '<div id="acct_' + key + '" class="card" '+style+'><div class="card-content "><span class="lts">' + list +
 			'.</span><img src="' + acct.prof + '" width="40" height="40"><span class="card-title">' +
-			acct.name + '</span>' + escapeHTML(acct.user) + '@' + acct.domain +
+			name + '</span>' + escapeHTML(acct.user) + '@' + acct.domain +
 			'</div><div class="card-action"><a class="waves-effect disTar pointer white-text" onclick="data(\'' +
 			acct.domain +
 			'\')"><i class="material-icons">info</i>'+lang_manager_info[lang]+'</a><a class="waves-effect disTar pointer  white-text" onclick="refresh(' +
@@ -306,11 +311,12 @@ function misskeyLogin(url) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.responseType = 'json';
-	localStorage.setItem("msky","ture");
+	localStorage.setItem("msky","true");
 	if(url=="misskey.xyz"){
 		var mkc=localStorage.getItem("mkc");
 	}else{
 		var mkc=$("#misskey-key").val();
+		localStorage.setItem("mkc",mkc)
 		if(!mkc){
 			$("#misskeylogin").show();
 			$("#misskey-url").val(url);
@@ -371,7 +377,7 @@ function code(code) {
 	}
 	var url = localStorage.getItem("domain_tmp");
 	localStorage.removeItem("domain_tmp");
-	console.log(url);
+	console.log(localStorage.getItem("msky"));
 	if(localStorage.getItem("msky")=="true"){
 		var start = "https://"+url+"/api/auth/session/userkey";
 		var httpreq = new XMLHttpRequest();
@@ -399,6 +405,7 @@ function code(code) {
 					vis: priv,
 					mode: "misskey"
 				};
+				localStorage.setItem("mode_" + url,"misskey")
 				var multi = localStorage.getItem("multi");
 				var obj = JSON.parse(multi);
 				var target = obj.lengtth;
@@ -560,7 +567,6 @@ function refresh(target) {
 	});
 }
 function misskeyRefresh(obj,target,url){
-
 	var start = "https://"+url+"/api/users/show";
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('POST', start, true);

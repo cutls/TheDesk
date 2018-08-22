@@ -116,7 +116,7 @@ function follow(acct_id,remote) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var start = "https://" + domain + "/api/following/"+flagm;
 		var user=$("#his-acct").text();
 		var ent={"i":at,"userId":id}
@@ -198,7 +198,7 @@ function mute(acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var start = "https://" + domain + "/api/mute/"+flagm;
 		var ent={"i":at,"userId":id}
 		var rq=JSON.stringify(ent);
@@ -229,7 +229,7 @@ function mute(acct_id) {
 function del(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var start = "https://" + domain + "/api/notes/delete";
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('POST', start, true);

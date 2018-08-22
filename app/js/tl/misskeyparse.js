@@ -130,9 +130,20 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             dis_name=escapeHTML(dis_name);
         }
 		if (mix == "notf") {
+			if (gif == "yes") {
+				noticeavatar = toot.user.avatarUrl;
+			} else {
+				noticeavatar = toot.user.avatarUrl;
+			}
+			noticeavatar='<a onclick="udg(\'' + toot.user.id +
+			'\',' + acct_id + ');" user="' + toot.user.username + '" class="udg">' +
+			'<img src="' + noticeavatar +
+			'" width="20" class="notf-icon prof-img" user="' + toot.user.username +
+			'"></a>';
 			if (toot.type == "reply") {
 				var what = lang_parse_mentioned[lang];
 				var icon = '<i class="big-text fa fa-share teal-text"></i>';
+				noticeavatar="";
 			} else if (toot.type == "renote") {
 				var what = lang_misskeyparse_renoted[lang];
 				var icon = '<i class="big-text fa fa-retweet light-blue-text"></i>';
@@ -339,7 +350,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		} else {
 			var analyze = '';
 		}
-		var viewer = "";
+		var viewer = "<br>";
 		var hasmedia = "";
 		var youtube = "";
 		if(toot.emojis){
@@ -424,7 +435,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		var mentions = "";
 		//メンションであれば
 		if (menck) {
-			mentions = '<div style="float:right"><a onclick="udg(\'' + menck.user.username + '\',' +
+			mentions = '<div style="float:right"><a onclick="udg(\'' + menck.user.id + '\',' +
             acct_id + ')" class="pointer">@' + menck.user.username + '</a></div>';
 		}
 		var tagck = toot.tags[0];
@@ -641,23 +652,23 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'' + viewer + '' +
             '</div><div class="area-additional"><span class="additional">'+analyze+
             '<div class="reactions '+fullhide+'" style="height: 25px;"><span class="'+likehide+' reaction re-like"><a onclick="reaction(\'like\',\'' + toot.id + '\',' + acct_id +
-            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat" style="padding:0">'+twemoji.parse("👍")+'</a><span class="re-likect">'+like+
+            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat" style="padding:0;margin-left:3px;">'+twemoji.parse("👍")+'</a><span class="re-likect">'+like+
             '</span></span><span class="'+lovehide+' reaction re-love"><a onclick="reaction(\'love\',\'' + toot.id + '\',' + acct_id +
-            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("💓")+'</a><span class="re-lovect">'+love+
+            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("💓")+'</a><span class="re-lovect">'+love+
             '</span></span><span class="'+laughhide+' reaction re-laugh"><a onclick="reaction(\'laugh\',\'' + toot.id + '\',' + acct_id +
-            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("😁")+'</a><span class="re-laughct">'+laugh+
+            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("😁")+'</a><span class="re-laughct">'+laugh+
             '</span></span><span class="'+hmmhide+' reaction re-hmm"><a onclick="reaction(\'hmm\',\'' + toot.id + '\',' + acct_id +
-            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("🤔")+'</a><span class="re-hmmct">'+hmm+
+            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("🤔")+'</a><span class="re-hmmct">'+hmm+
             '</span></span><span class="'+suphide+' reaction re-surprise"><a onclick="reaction(\'surprise\',\'' + toot.id + '\',' + acct_id +
-            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("😮")+'</a><span class="re-surprisect">'+surprise+
+            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("😮")+'</a><span class="re-surprisect">'+surprise+
             '</span></span><span class="'+conghide+' reaction  re-congrats"><a onclick="reaction(\'congrats\',\'' + toot.id + '\',' + acct_id +
-            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("🎉")+'</a><span class="re-congratsct">'+congrats+
+            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("🎉")+'</a><span class="re-congratsct">'+congrats+
             '</span></span><span class="'+anghide+' reaction re-angry"><a onclick="reaction(\'angry\',\'' + toot.id + '\',' + acct_id +
-            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("💢")+'</a><span class="re-angryct">'+angry+
+            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("💢")+'</a><span class="re-angryct">'+angry+
             '</span></span><span class="'+confhide+' reaction re-confused"><a onclick="reaction(\'confused\',\'' + toot.id + '\',' + acct_id +
-            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("😥")+'</a><span class="re-confusedct">'+confused+
+            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("😥")+'</a><span class="re-confusedct">'+confused+
             '</span></span><span class="'+pudhide+' reaction re-pudding"><a onclick="reaction(\'pudding\',\'' + toot.id + '\',' + acct_id +
-            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0">'+twemoji.parse("🍮")+'</a><span class="re-puddingct">'+pudding+
+            ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("🍮")+'</a><span class="re-puddingct">'+pudding+
 			'</span></div>'+poll + mentions + tags + '</div>' +
 			'<div class="area-vis"></div>'+
 			'<div class="area-actions '+mouseover+'">' +

@@ -102,9 +102,9 @@ function media(b64, type, no) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var httpreq = new XMLHttpRequest();
-	if(~domain.indexOf("misskey::")){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
 
-		var start = "https://" + domain.replace( "misskey::", "" ) + "/api/drive/files/create";
+		var start = "https://" + domain + "/api/drive/files/create";
 		httpreq.open('POST', start, true);
 		httpreq.upload.addEventListener("progress", progshow, false);
 		httpreq.responseType = 'json';
@@ -183,6 +183,7 @@ function toBlob(base64, type) {
 //画像を貼り付けたら…
 var element =  document.querySelector("#textarea");
 element.addEventListener("paste", function(e){
+	console.log("paste")
     // 画像の場合
     // e.clipboardData.types.length == 0
     // かつ
@@ -192,6 +193,7 @@ element.addEventListener("paste", function(e){
             || !e.clipboardData.types
             || (e.clipboardData.types.length != 1)
             || (e.clipboardData.types[0] != "Files")) {
+				console.log("not image")
             return true;
     }
 
@@ -206,7 +208,7 @@ element.addEventListener("paste", function(e){
 		var base64 = e.target.result;
 		var mediav = $("#media").val();
 		if(mediav){
-			var i=media.split(",").length;
+			var i=mediav.split(",").length;
 		}
 		media(base64, "image/png", i)
     };

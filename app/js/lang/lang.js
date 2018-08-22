@@ -144,6 +144,26 @@ var lang_post_tagTL={
     "ja":"デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。",
     "en":"This toot does not contain a default tag. This toot will not be shown on Local TL. Continue?"
 }
+var lang_post_cwtitle={
+    "ja":"長文投稿の警告",
+    "en":"Auto CW Alert"
+}
+var lang_post_cwtxt={
+    "ja":"指定文字数、行数を超えるトゥートを行おうとしています。\n自動CWのタイトル:",
+    "en":"You are about to post longer toot than you set.\nWarning text:"
+}
+var lang_post_btn1={
+    "ja":"キャンセル(投稿しない)",
+    "en":"Cancel (will not post)"
+}
+var lang_post_btn2={
+    "ja":"自動でCWを付ける",
+    "en":"Make text hidden automatically"
+}
+var lang_post_btn3={
+    "ja":"そのまま投稿",
+    "en":"Continue to post"
+}
 //post/status.js
 var lang_status_favWarn={
     "ja":"お気に入り登録しました。インスタンスが違うときは時間がかかる場合があります。",

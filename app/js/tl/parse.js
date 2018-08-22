@@ -172,6 +172,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			if (toot.type == "mention") {
 				var what = lang_parse_mentioned[lang];
 				var icon = "fa-share teal-text";
+				noticeavatar="";
 			} else if (toot.type == "reblog") {
 				var what = lang_parse_bted[lang];
 				var icon = "fa-retweet light-blue-text";

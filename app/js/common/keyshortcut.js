@@ -4,7 +4,7 @@ $(function($) {
 		var hasFocus = $('input').is(':focus');
 		var hasFocus2 = $('textarea').is(':focus');
 		//Ctrl+Enter:投稿
-		if (event.ctrlKey) {
+		if (event.metaKey || event.ctrlKey) {
 			if (e.keyCode === 13) {
 				post();
 				return false;
@@ -35,7 +35,7 @@ $(function($) {
 			return false;
 		}
 		//Ctrl+R:ランキング
-		if (event.ctrlKey) {
+		if (event.metaKey || event.ctrlKey) {
 			if (e.keyCode === 82) {
 				if(localStorage.getItem("kirishima")){
 					window.open("https://astarte.thedesk.top");
@@ -43,14 +43,14 @@ $(function($) {
 			}
 		}
 		//Ctrl+Sift+C:全消し
-		if (event.ctrlKey && event.shiftKey) {
+		if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 			if (e.keyCode === 67) {
 				clear();
 				return false;
 			}
 		}
 		//Ctrl+Sift+N:NowPlaying
-		if (event.ctrlKey && event.shiftKey) {
+		if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 			if (e.keyCode === 78) {
 				show();
 				nowplaying()
@@ -60,7 +60,7 @@ $(function($) {
 		//input/textareaにフォーカスなし時
 		if (!hasFocus && !hasFocus2) {
 			//Ctrl+V:いつもの
-			if (event.ctrlKey) {
+			if (event.metaKey || event.ctrlKey) {
 				if (e.keyCode === 86) {
 					show();
 				}
@@ -83,42 +83,42 @@ $(function($) {
 				return false;
 			}
 			//Ctrl+E:全ての通知未読を既読にする
-			if (event.ctrlKey) {
+			if (event.metaKey || event.ctrlKey) {
 				if (e.keyCode === 69) {
 					allNotfRead();
 					return false;
 				}
 			}
 			//Ctrl+Space:読み込み
-			if (event.ctrlKey) {
+			if (event.metaKey || event.ctrlKey) {
 				if (e.keyCode === 32) {
 					parseColumn();
 					return false;
 				}
 			}
 			//Ctrl+Sift+S:設定
-			if (event.ctrlKey && event.shiftKey) {
+			if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 				if (e.keyCode === 83) {
 					location.href = "setting.html";
 					return false;
 				}
 			}
 			//Ctrl+Sift+M:アカマネ
-			if (event.ctrlKey && event.shiftKey) {
+			if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 				if (e.keyCode === 77) {
 					location.href = "acct.html";
 					return false;
 				}
 			}
 			//Ctrl+Sift+P:プロフ
-			if (event.ctrlKey && event.shiftKey) {
+			if ((event.ctrlKey) && event.shiftKey) {
 				if (e.keyCode === 80) {
 					profShow()
 					return false;
 				}
 			}
 			//数字:TL
-			if (event.ctrlKey) {
+			if (event.metaKey || event.ctrlKey) {
 			if (e.keyCode >= 49 && e.keyCode <= 57) {
 				var kz=e.keyCode-49;
 				goColumn(kz);
@@ -128,7 +128,7 @@ $(function($) {
 		}
 		//textareaフォーカス時
 		if (hasFocus2) {
-			if (event.ctrlKey) {
+			if (event.metaKey || event.ctrlKey) {
 				//Ctrl+B:太字
 				if (e.keyCode === 66) {
 					tagsel('b');
@@ -150,7 +150,7 @@ $(function($) {
 					return false;
 				}
 				//C+S+(No):ワンクリ
-				if (event.ctrlKey && event.shiftKey) {
+				if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 					if (e.keyCode >= 49 && e.keyCode <= 51) {
 						var no=e.keyCode-48;
 						if(localStorage.getItem("oks-"+no)){$("#textarea").val($("#textarea").val()+localStorage.getItem("oks-"+no))}

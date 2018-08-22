@@ -6,7 +6,7 @@ function renote(id, acct_id, remote) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/notes/create";
-    if(domain!="misskey.xyz"){
+    if(localStorage.getItem("mode_" + domain)!="misskey"){
         return false;
     }
 	var httpreq = new XMLHttpRequest();
@@ -52,7 +52,7 @@ function reactiontoggle(id,acct_id,tlid){
     var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/notes/show";
-    if(domain!="misskey.xyz"){
+    if(localStorage.getItem("mode_" + domain)!="misskey"){
         return false;
     }
 	var httpreq = new XMLHttpRequest();
@@ -152,7 +152,7 @@ function reaction(mode,id,acct_id,tlid){
         var flag="create";
     }
     var start = "https://" + domain + "/api/notes/reactions/"+flag;
-    if(domain!="misskey.xyz"){
+    if(localStorage.getItem("mode_" + domain)!="misskey"){
         return false;
     }
 	var httpreq = new XMLHttpRequest();
@@ -171,7 +171,7 @@ function vote(acct_id,id,to){
     var domain = localStorage.getItem("domain_" + acct_id);
     var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/notes/polls/vote";
-    if(domain!="misskey.xyz"){
+    if(localStorage.getItem("mode_" + domain)!="misskey"){
         return false;
     }
 	var httpreq = new XMLHttpRequest();

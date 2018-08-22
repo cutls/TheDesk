@@ -8,7 +8,8 @@ function notf(acct_id, tlid, sys) {
 		native="yes";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if(domain=="misskey.xyz"){
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
+		var misskey=true;
 		var start = "https://" + domain + "/api/i/notifications";
 		var i={
 			method: 'POST',
@@ -20,6 +21,7 @@ function notf(acct_id, tlid, sys) {
 			})
 		}
 	}else{
+		var misskey=false;
 		var start = "https://" + domain + "/api/v1/notifications";
 		var i={
 			method: 'GET',
@@ -66,13 +68,13 @@ function notf(acct_id, tlid, sys) {
 				var mute=[];
 			}
 			if(obj.type!="follow"){
-				if(domain=="misskey.xyz"){
+				if(misskey){
 					templete = templete+misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute);
 				}else{
 					templete = templete+parse([obj], 'notf', acct_id, 'notf', -1, mute);
 				}
 			}else{
-				if(domain=="misskey.xyz"){
+				if(misskey){
 					templete = templete+misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute);
 				}else{
 					templete = templete+userparse([obj.account], 'notf', acct_id, 'notf', -1);
@@ -92,7 +94,7 @@ function notf(acct_id, tlid, sys) {
 		$("#notf-box").addClass("fetched");
 		todc();
 	});
-	if(domain!="misskey.xyz"){
+	if(!misskey){
 		var start = "wss://" + domain + "/api/v1/streaming/?stream=user&access_token=" +
 		at;
 	}else{
@@ -117,7 +119,7 @@ function notf(acct_id, tlid, sys) {
 				popup = 0;
 			}
 			console.log(domain)
-		if(domain=="misskey.xyz"){
+		if(misskey){
 			console.log("misskey")
 			console.log(JSON.parse(mess.data));
 			if (JSON.parse(mess.data).type == "notification") {
@@ -186,7 +188,8 @@ function notfmore(tlid) {
 		var domain = localStorage.getItem("domain_" + acct_id);
 		var at = localStorage.getItem("acct_"+ acct_id + "_at");
 
-			if(domain=="misskey.xyz"){
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
+			var misskey=true;
 				var start = "https://" + domain + "/api/i/notifications";
 				var i={
 					method: 'POST',
@@ -199,6 +202,7 @@ function notfmore(tlid) {
 					})
 				}
 			}else{
+				var misskey=false;
 				var start = "https://" + domain + "/api/v1/notifications"+
 					"max_id=" + sid;
 				var i={
@@ -220,13 +224,13 @@ function notfmore(tlid) {
 			Object.keys(json).forEach(function(key) {
 				var obj = json[key];
 				if(obj.type!="follow"){
-					if(domain=="misskey.xyz"){
+					if(misskey){
 						templete = templete+misskeyParse([obj.note], '', acct_id, tlid, -1);
 					}else{
 						templete = templete+parse([obj], '', acct_id, tlid, -1);
 					}
 				}else{
-					if(domain=="misskey.xyz"){
+					if(misskey){
 						templete = templete+misskeyUserparse([obj], '', acct_id, tlid, -1);
 					}else{
 						templete = templete+userparse([obj.account], '', acct_id, tlid, -1);
