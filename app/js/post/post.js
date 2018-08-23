@@ -26,7 +26,17 @@ function post(mode) {
 			}
 		}
 	}
-	if(mode!="pass" && !$("#cw").hasClass("cw-avail") && (str.length>localStorage.getItem("cw_sentence") || (str.split("\n").length - 1)>localStorage.getItem("cw_letters"))){
+	if(!localStorage.getItem("cw_sentence")){
+		var cw_sent=500;
+	}else{
+		var cw_sent=localStorage.getItem("cw_sentence");
+	}
+	if(!localStorage.getItem("cw_letters")){
+		var cw_ltres=500;
+	}else{
+		var cw_ltres=localStorage.getItem("cw_letters");
+	}
+	if(mode!="pass" && !$("#cw").hasClass("cw-avail") && (str.length>cw_sent || (str.split("\n").length - 1)>cw_ltres)){
 		var electron = require("electron");
 		var remote=electron.remote;
 		var dialog=remote.dialog;

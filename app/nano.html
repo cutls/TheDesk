@@ -85,9 +85,18 @@ textarea {
 <input type="hidden" id="reply">
 <input type="hidden" id="media">
 	<button class="btn" onclick="post()">Post</button>
+	<script>
+	if(localStorage.getItem("lang")){
+		var lang=localStorage.getItem("lang");
+    }else{
+		var lang="ja";
+	}
+	</script>
+	<script type="text/javascript" src="./js/lang/lang.js"></script>
+	<script type="text/javascript" src="./js/lang/parse.lang.js"></script>
 <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
 <script type="text/javascript" src="./js/post/post.js"></script>
-<script type="text/javascript" src="./js/post/reply.js"></script>
+<script type="text/javascript" src="./js/post/use-txtbox.js"></script>
 <script type="text/javascript" src="./js/tl/parse.js"></script>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script type="text/javascript" src="./js/tl/date.js"></script>
@@ -124,4 +133,10 @@ var multi = localStorage.getItem("multi");
 			'</option>';
 		$("#post-acct-sel").append(templete);
 	});
+function mov(){
+	return false;
+}
+function resetmv(){
+	return false;
+}
 </script>

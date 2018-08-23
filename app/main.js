@@ -296,6 +296,7 @@ ipc.on('shot-img-dl', (e, args) => {
 ipc.on('download-btn', (e, args) => {
 	var platform=process.platform;
 	var bit=process.arch;
+	var versioning=args[3];
 	if(platform=="win32" || platform=="linux" || platform=="darwin" ){
 		if(platform=="win32" && bit=="x64"){
 			var zip="TheDesk-win32-x64.zip";
@@ -308,7 +309,10 @@ ipc.on('download-btn', (e, args) => {
 		}else if(platform=="darwin"){
 			var zip="TheDesk-darwin-x64.zip";
 		}else{
-			retrun;
+			return;
+		}
+		if(versioning){
+			zip=zip.replace(".zip","."+args[1]+".zip");
 		}
 	}else{
 		const options = {
@@ -328,6 +332,8 @@ ipc.on('download-btn', (e, args) => {
 		}
 	}
 	var ver=args[1];
+	var unzipper=args[2];
+	
 	console.log(zip);
 	if(args[0]=="true"){
 		dialog.showSaveDialog(null, {
@@ -350,10 +356,10 @@ ipc.on('download-btn', (e, args) => {
 				fs.unlink(savedFiles);
 			  }
 			  console.log(m[1]+":"+savedFiles)
-            dl(ver,m[1],savedFiles);
+            dl(unzipper,ver,m[1],savedFiles);
         });
 	}else{
-		dl(ver);
+		dl(unzipper,ver);
 	}
 	
 });
@@ -365,7 +371,7 @@ function isExistFile(file) {
 	  if(err.code === 'ENOENT') return false
 	}
   }
-function dl(ver,files,fullname){
+function dl(unzipper,ver,files,fullname){
 	console.log(files);
 	var platform=process.platform;
 	var bit=process.arch;
@@ -409,7 +415,7 @@ function dl(ver,files,fullname){
 			'https://dl.thedesk.top/'+zip, opts)
 		.then(dl => {
 			updatewin.webContents.send('mess', "ダウンロードが完了しました。");
-			if(platform=="win32"){
+			if(unzipper && platform=="win32"){
 				mainWindow.webContents.send('mess', "unzip");
 				console.log(files+"/"+zip);
 				fs.rename(files+"/"+zip, app.getPath("userData")+"/TheDesk-temp.zip", function (err) {

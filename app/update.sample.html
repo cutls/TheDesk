@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{lang}}">
+<html lang="en">
 <head>
 <title>Update - TheDesk</title>
 <link href="./css/materialize.css" type="text/css" rel="stylesheet">
@@ -8,57 +8,144 @@
 <meta charset="utf-8">
 </head>
 <body>
-    <style>
-    body{
+<style>
+body{
     font-family:'Open Sans';
     -webkit-app-region: drag;
     cursor: move;
     padding:10px;
+    text-align:right;
 }
-a,button{
+#start{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100vw;
+    height: calc(100vh - 2.5rem);
+    text-align:center;
+}
+#checkbox{
+    text-align:left;
+}
+a,button,input,label,i{
     -webkit-app-region: no-drag;
-}</style>
+}
+#updskip{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.skipbtn{
+    display:block;
+    float:left;
+    width:200px;
+    height:200px;
+    border:1px solid;
+    margin-left:5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid;
+    overflow: hidden;
+}
+.skipbtn:hover{
+    background-color: #b3e5fc;
+    transition: all 0.3s ease-in-out;
+}
+#prog{
+    font-size:200%;
+}
+</style>
 <script type="text/javascript" src="./js/common/jquery.js"></script>
 <script type="text/javascript" src="./js/platform/first.js"></script>
 <script type="text/javascript" src="./js/common/materialize.js"></script>
-<h5>{{updatehere}}[TheDesk <span id="ver"></span>]</h5>
-<span id="det"></span><br>
-{{nowver}}<span id="now"></span><br>
-{{afterdl}}<br>
-<button id="update" class="waves-effect btn" onclick="update('true')">{{download}}</button>
-<p id="prog"></p>
-  <div class="progress">
-      <div class="determinate" style="width: 0%"></div>
-  </div><br>
-  <b>{{winzip}}</b><br>
-  {{releasenote1}}<a href="https://github.com/cutls/TheDesk/blob/master/LATEST.md">GitHub</a>{{releasenote2}}<br><br>
-  {{skipupd}}(<a onclick="window.close();" class="pointer">{{nexttl}}</a>/<a onclick="nextv();" class="pointer">{{nextver}}</a>)<br>
-  <a onclick="quit()" class="pointer">{{endthedesk}}</a><br>
-  <a onclick="about()" class="pointer">{{about}}</a><br>
-  {{problem1}}<a href="https://thedesk.top">TheDesk HP</a>{{problem2}}
-  <script type="text/javascript" src="./js/common/about.js"></script>
+<i class="material-icons pointer waves-effect" onclick="about();">info</i>
+<i class="material-icons pointer waves-effect" onclick="skipper();">clear</i>
+<!--a href="update.html">Reload</a-->
+<div id="start">
+    <div id="box" class="show">
+        <h2>TheDesk</h2>
+        <p>{{updatehere}}</p>
+        <span id="now"></span>→<b id="ver"></b><br>
+        <span id="det"></span><br>
+        <button id="update" class="waves-effect btn" onclick="update('true')" style="margin-left:15px;">{{download}}</button>
+        <div id="checkbox">
+            Options:<br>
+            <input type="checkbox" class="filled-in" id="updator" value="true" onchange="alert('{{winzip}}')" />
+            <label for="updator">{{plusunzip}}</label><br>
+            <input type="checkbox" class="filled-in" id="rewrite" value="true" />
+            <label for="rewrite">{{unrewrite}}</label><br>
+        </div>
+        {{problem1}}<br>{{problem2}}
+    </div>
+    <div id="skipper" class="hide">
+        <h4>{{sureupd}}</h4>
+        {{skipupd}}<br>
+        <div id="updskip">
+                <a onclick="window.close();" class="pointer skipbtn waves-effect waves-light"><div>{{nexttl}}</div></a>
+                <a onclick="nextv();" class="pointer skipbtn waves-effect waves-light"><div>{{nextver}}</div></a>
+        </div>
+        <a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">{{continue}}</a>
+    </div>
+    <div id="dlnow" class="hide">
+        <h4>{{dlnow}}</h4>
+        <h4 id="prog"></h4>
+    </div>
+</div>
+<script type="text/javascript" src="./js/common/about.js"></script>
   <script type="text/javascript" src="./js/platform/end.js"></script>
 <script>
+function skipper(){
+    $("#dlnow").addClass("hide");
+    $("#box").toggleClass("show");
+    if($("#box").hasClass("hide") && $("#skipper").hasClass("hide")){
+        $("#skipper").removeClass("hide");
+        $("#skipper").addClass("show");
+    }else{
+        $("#box").toggleClass("hide");
+        $("#skipper").toggleClass("hide");
+        $("#skipper").toggleClass("show");
+    }
+}
 var electron = require("electron");
 var ipc = electron.ipcRenderer;
 verck();
-    function update(sel){
-		$("#prog").text("");
-				ipc.send('download-btn', [sel,enc(localStorage.getItem("next-ver"))]);
+function update(sel){
+    $("#box").toggleClass("show");
+    $("#box").toggleClass("hide");
+    $("#dlnow").toggleClass("hide");
+    $("#dlnow").toggleClass("show");
+    $("#prog").text("");
+    if($('#rewrite:checked').val()=="true"){
+        var versioning=true;
+	}else{
+        var versioning=false;
     }
+    if($('#updator:checked').val()=="true"){
+		var zip=true;
+	}else{
+        var zip=false;
+    }
+	ipc.send('download-btn', [sel,enc(localStorage.getItem("next-ver")),zip,versioning]);
+}
 	function quit(){
 				ipc.send('quit', 'go');
     }
 ipc.on('prog', function (event, arg) {
-	console.log(arg);
-    $(".determinate").css('width',arg*100+"%");
-    $("#prog").text("{{dlnow}}:"+Math.floor(arg*100)+"%");
+    console.log(arg);
+    $("body").css('background','linear-gradient(#fff 0%,#fff '+(1-arg)*100+'%, #d7ccc8 '+(1-arg)*100+'%, #d7ccc8 100%)');
+    $("#prog").text(Math.floor(arg*100)+"%");
 })
 ipc.on('mess', function (event, arg) {
     console.log(arg);
 	$("#prog").text(arg);
 })
 function verck(){
+    var remote=electron.remote;
+	var platform=remote.process.platform;
+	if(platform!="win32"){
+		$('#updator').prop("disabled",true)
+	}
 	var start="https://thedesk.top/ver.json";
 	fetch(start, {
 		method: 'GET',

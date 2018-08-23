@@ -132,6 +132,7 @@ function icon(type) {
 }
 function todo(){}
 function todc(){}
+function hide(){}
 $(function($) {
 	//キーボードショートカット
 	$(window).keydown(function(e) {

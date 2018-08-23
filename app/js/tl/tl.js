@@ -31,9 +31,6 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 			var type = "local";
 		}
 	}
-	/*
-	
-	*/
 	if (type == "mix" && localStorage.getItem("mode_" + domain)!="misskey") {
 		//Integratedなら飛ばす
 			$("#notice_" + tlid).text("Integrated TL(" + localStorage.getItem(

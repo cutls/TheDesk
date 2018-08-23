@@ -640,8 +640,8 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			dis_name +
 			'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"> @' +
 			toot.user.username + '</span></div>' +
-			'<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'' +
-			toot.url + '\');" title="' + date(toot.createdAt, 'absolute') +
+			'<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'https://' +domain+"/notes/"+
+			toot.id + '\');" title="' + date(toot.createdAt, 'absolute') +
 			'('+lang_parse_clickcopyurl[lang]+')"><i class="fa fa-clock-o"></i>' +
 			date(toot.createdAt, datetype) + '</span>' +
 			'</div></div>' +

@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "16.0.9",
+  "version": "16.0.10",
   "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {

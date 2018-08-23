@@ -65,4 +65,117 @@ function verck(ver) {
 			}
 		}
 	});
+	if(!localStorage.getItem("last-notice-id")){
+		localStorage.setItem("last-notice-id",0)
+	}
+	console.log(localStorage.getItem("last-notice-id"))
+	var start = "https://thedesk.top/notice?since_id="+localStorage.getItem("last-notice-id");
+	console.log(start);
+	fetch(start, {
+		method: 'GET'
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(mess) {
+		console.log(mess.length);
+		if(mess.length<1){
+			return false;
+		}else{
+			var last=localStorage.getItem("last-notice-id")
+			localStorage.setItem("last-notice-id",mess[0].ID)
+		for(i=0;i<mess.length;i++){
+			var obj=mess[i];
+			if(obj.ID*1<=last){
+				break;
+			}else{
+				var show=true;
+				if(obj.Toot!=""){
+					var toot='<button class="btn-flat toast-action" onclick="detEx(\''+obj.Toot+'\',\'main\')">Show</button>';
+				}else{
+					var toot="";
+				}
+				if(obj.Ver!=""){
+					if(obj.Ver==ver){
+						show=true;
+					}else{
+						show=false;
+					}
+				}
+				if(obj.Domain!=""){
+					var multi = localStorage.getItem("multi");
+					if (multi) {
+						show=false;
+						var accts = JSON.parse(multi);
+						Object.keys(accts).forEach(function(key) {
+							var acct = accts[key];
+							if(acct.domain==obj.Domain){
+								show=true;
+							}
+						});
+					}
+				}
+				if(show){
+					Materialize.toast(obj.Text+toot+'<span class="sml grey-text">(スライドして消去)</span>', 86400);
+				}
+			}
+			
+		}
+	}
+	});
+	infows = new WebSocket("wss://thedesk.top/ws/");
+	infows.onopen = function(mess) {
+		console.log(tlid + ":Connect Streaming Info:");
+		console.log(mess);
+	}
+	infows.onmessage = function(mess) {
+		console.log(":Receive Streaming:");
+		console.log(JSON.parse(mess.data));
+		var obj=JSON.parse(mess.data);
+		if(obj.type!="counter"){
+		if(obj.id*1<=localStorage.getItem("last-notice-id")){
+			
+		}else{
+			localStorage.setItem("last-notice-id",obj.id)
+			var show=true;
+			if(obj.toot!=""){
+				var toot='<button class="btn-flat toast-action" onclick="detEx(\''+obj.toot+'\',\'main\')">Show</button>';
+			}else{
+				var toot="";
+			}
+			if(obj.ver!=""){
+				if(obj.ver==ver){
+					show=true;
+				}else{
+					show=false;
+				}
+			}
+			if(obj.domain!=""){
+				var multi = localStorage.getItem("multi");
+				if (multi) {
+					show=false;
+					var accts = JSON.parse(multi);
+					Object.keys(accts).forEach(function(key) {
+						var acct = accts[key];
+						if(acct.domain==obj.domain){
+							show=true;
+						}
+					});
+				}
+			}
+			if(show){
+				Materialize.toast(obj.text+toot+'<span class="sml grey-text">(スライドして消去)</span>', 86400);
+			}
+		}
+	}
+	}
+	infows.onerror = function(error) {
+		console.error("Error closing:info");
+		console.error(error);
+		return false;
+	};
+	infows.onclose = function() {
+		console.error("Closing:info");
+	};
 }
