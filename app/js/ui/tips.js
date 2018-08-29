@@ -14,7 +14,7 @@ function tips(mode){
 	clearInterval(spotStart);
 	if(mode=="ver"){
 		tipsToggle()
-		$("#tips-text").html('<img src="./img/desk.png" width="20"><span style="font-size:20px">TheDesk</span> '+localStorage.getItem("ver"))
+		$("#tips-text").html('<img src="./img/desk.png" width="20"><span style="font-size:20px">TheDesk</span> '+localStorage.getItem("ver")+'[<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons"></span>]')
 		localStorage.setItem("tips","ver")
 	}else if(mode=="clock"){
 		tipsToggle()
@@ -109,6 +109,7 @@ function spotifytips(){
 					artisttxt=item.artists[0].name;
 				}
 			}
+			artisttxt=escapeHTML(artisttxt);
 			sleep(last);
 			var tms=item.duration_ms;
 			var per=ms/item.duration_ms*100;
@@ -124,7 +125,7 @@ function spotifytips(){
 				ts="0"+ts;
 			}
 			var tm=(Math.round(tms)-Math.round(tms)%60)/60;
-			$("#tips-text").html('<div id="spot-box"><i class="material-icons pointer" onclick="spotifytips()" style="font-size:12px">refresh</i><img src="'+img+'" width="20" id="spot-img">'+item.name+'<span class="gray sml" id="spot-art">'+artisttxt+'</span><span id="spot-m">'+m+'</span>:<span id="spot-s">'+s+'</span>/'+tm+":"+ts+'</span></div><div class="progress grey"><div class="determinate spotify-prog grey lighten-2" style="width: '+per+'%" data-s="'+Math.round(ms)+'" data-total="'+item.duration_ms+'"></div></div>');
+			$("#tips-text").html('<div id="spot-box"><i class="material-icons pointer" onclick="spotifytips()" style="font-size:12px">refresh</i><img src="'+img+'" width="20" id="spot-img">'+escapeHTML(item.name)+'<span class="gray sml" id="spot-art">'+artisttxt+'</span><span id="spot-m">'+m+'</span>:<span id="spot-s">'+s+'</span>/'+tm+":"+ts+'</span></div><div class="progress grey"><div class="determinate spotify-prog grey lighten-2" style="width: '+per+'%" data-s="'+Math.round(ms)+'" data-total="'+item.duration_ms+'"></div></div>');
 			spotint=setInterval(spotStart, 1000);
         });
         }else{

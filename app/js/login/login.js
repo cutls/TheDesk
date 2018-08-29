@@ -382,7 +382,7 @@ function ckdb(acct_id) {
 				localStorage.setItem("follow_" + acct_id, json[domain + "_follow"]);
 			}
 	}
-	if(localStorage.getItem("mode_" + domain)=="misskey"){
+	if(localStorage.getItem("mode_" + domain)!="misskey"){
 		var start = "https://" + domain + "/api/v1/instance/activity";
 		fetch(start, {
 			method: 'GET',

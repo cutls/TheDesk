@@ -96,7 +96,7 @@ function filter(){
 			Object.keys(json).forEach(function(key) {
 				var filterword = json[key];
 				var context = filterword.context.join(',');
-				filters = filters + filterword.phrase+'<span class="sml">(for '+context+')</span>:<a onclick="filterEdit(\'' + filterword.id + '\',\'' + acct_id +
+				filters = filters + escapeHTML(filterword.phrase)+'<span class="sml">(for '+context+')</span>:<a onclick="filterEdit(\'' + filterword.id + '\',\'' + acct_id +
 					'\')" class="pointer">'+lang_edit[lang]+'</a>/<a onclick="filterDel(' + filterword.id + ',' + acct_id +
 					')" class="pointer">'+lang_del[lang]+'</a><br> ';
 			});
@@ -131,6 +131,9 @@ function makeNewFilter(){
 	}
 	var exc=$("#except_filter:checked").val();
 	var who=$("#wholeword_filter:checked").val();
+	if(!who){
+		who=false;
+	}
 	var time=$("#days_filter").val()*24*60*60+$("#hours_filter").val()*60*60+$("#mins_filter").val()*60;
     var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
@@ -249,7 +252,8 @@ function filterDel(id,acct_id){
 }
 function getFilter(acct_id){
     var domain = localStorage.getItem("domain_" + acct_id);
-    var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	if(localStorage.getItem("mode_" + domain)!="misskey"){
     var start = "https://" + domain + "/api/v1/filters"
 	console.log(start)
 	fetch(start, {
@@ -266,6 +270,9 @@ function getFilter(acct_id){
 	}).then(function(json) {
 		localStorage.setItem("filter_"+ acct_id ,JSON.stringify(json));
 	});
+	}else{
+		localStorage.setItem("filter_"+ acct_id ,JSON.stringify({}));
+	}
 }
 function getFilterType(json,type){
 	if(!json){

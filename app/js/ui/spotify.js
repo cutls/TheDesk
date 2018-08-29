@@ -42,7 +42,7 @@ function checkSpotify(){
         $("#spotify-disable").addClass("disabled");
     }
     var content=localStorage.getItem("np-temp");
-    if(!content || content==""){
+    if(!content || content=="" || content=="null"){
         var content="#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk";
     }
     $("#np-temp").val(content);
@@ -80,6 +80,9 @@ function nowplaying(mode){
             console.error(error);
         }).then(function(json) {
             console.log(json);
+            if(json.length<1){
+                return false;
+            }
             var item=json.item;
             var img=item.album.images[0].url;
             var electron = require("electron");
@@ -89,7 +92,7 @@ function nowplaying(mode){
                 ipc.send('bmp-image', [img,0]);
             }
             var content=localStorage.getItem("np-temp");
-            if(!content || content==""){
+            if(!content || content=="" || content=="null"){
                 var content="#NowPlaying {song} / {album} / {artist}\n{url}";
             }
             var regExp = new RegExp("{song}", "g");
@@ -124,7 +127,7 @@ function nowplaying(mode){
 	    ipc.on('itunes-np', function (event, arg) {
             console.log(arg);
             var content=localStorage.getItem("np-temp");
-            if(!content || content==""){
+            if(!content || content=="" || content=="null"){
                 var content="#NowPlaying {song} / {album} / {artist}\n{url}";
             }
             var regExp = new RegExp("{song}", "g");

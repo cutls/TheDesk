@@ -168,6 +168,8 @@ function verck(ver) {
 				Materialize.toast(obj.text+toot+'<span class="sml grey-text">(スライドして消去)</span>', 86400);
 			}
 		}
+	}else{
+		$("#persons").text(obj.text);
 	}
 	}
 	infows.onerror = function(error) {

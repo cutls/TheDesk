@@ -128,7 +128,9 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
         var dis_name=toot.user.name;
         if(dis_name){
             dis_name=escapeHTML(dis_name);
-        }
+        }else{
+			disname="";
+		}
 		if (mix == "notf") {
 			if (gif == "yes") {
 				noticeavatar = toot.user.avatarUrl;

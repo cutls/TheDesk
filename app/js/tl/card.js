@@ -95,12 +95,12 @@ function additional(acct_id, tlid) {
 							var twiImg='';
 						}
 						$("[toot-id=" + id + "] .additional").html(
-							'<blockquote class="twitter-tweet"><b>'+json.author_name+'</b><br>'+json.description+twiImg+'</blockquote>');
+							'<blockquote class="twitter-tweet"><b>'+escapeHTML(json.author_name)+'</b><br>'+escapeHTML(json.description)+twiImg+'</blockquote>');
 					}
 					if (json.title) {
 						$("[toot-id=" + id + "] .additional").html(
-							"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
-							json.description + "</span>");
+							"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + escapeHTML(json.title) + "<br>" +
+							escapeHTML(json.description) + "</span>");
 					}
 					if (json.html) {
 						$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');
@@ -221,7 +221,7 @@ function additionalIndv(tlid, acct_id, id) {
 							var twiImg='';
 						}
 						$("[toot-id=" + id + "] .additional").html(
-							'<div class="twitter-tweet"><b>'+json.author_name+'</b><br>'+json.description+twiImg+'</div>');
+							'<div class="twitter-tweet"><b>'+escapeHTML(json.author_name)+'</b><br>'+escapeHTML(json.description)+twiImg+'</div>');
 					}else if (json.provider_name=="pixiv"){	
 						if(json.image){
 							var pxvImg='<br><img src="'+json.image+'" style="max-width:100%" onclick="imgv(\'pixiv_'+id+'\', 0, \'pixiv\');" id="pixiv_'+id+'-image-0" data-url="'+json.embed_url+'" data-type="image">';
@@ -229,12 +229,12 @@ function additionalIndv(tlid, acct_id, id) {
 							var pxvImg='';
 						}
 						$("[toot-id=" + id + "] .additional").html(
-							'<div class="pixiv-post"><b><a href="'+json.author_url+'" target="_blank">'+json.author_name+'</a></b><br>'+json.title+pxvImg+'</div>');
+							'<div class="pixiv-post"><b><a href="'+json.author_url+'" target="_blank">'+escapeHTML(json.author_name)+'</a></b><br>'+escapeHTML(json.title)+pxvImg+'</div>');
 					}else{
 						if (json.title) {
 							$("[toot-id=" + id + "] .additional").html(
-								"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
-								json.description + "</span>");
+								"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + escapeHTML(json.title) + "<br>" +
+								escapeHTML(json.description) + "</span>");
 						}
 						if (json.html) {
 							$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');

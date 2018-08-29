@@ -519,7 +519,12 @@ function exportSettings(){
 		exp.wordMute=wordmu;
 		//spotify
 		exp.spotifyArtwork=localStorage.getItem("artwork")
-		exp.spotifyTemplete=localStorage.getItem("np-temp")
+		var content=localStorage.getItem("np-temp");
+		if(content || content=="" || content=="null"){
+			exp.spotifyTemplete=content;
+		}else{
+			exp.spotifyTemplete=null;
+		}
 		//tags
 		var tagarr = localStorage.getItem("tag");
 		var favtag = JSON.parse(tagarr);
@@ -604,6 +609,7 @@ function importSettings(){
 				if(obj.favoriteTags){
 					localStorage.setItem("tag",JSON.stringify(obj.favoriteTags));
 				}
+				
 				localStorage.setItem("np-temp",obj.spotifyTemplete);
 				for(var i=0;i<obj.columns.length;i++){
 					localStorage.setItem("card_" + i,"true");

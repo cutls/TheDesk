@@ -123,7 +123,7 @@ function hisList(user,acct_id){
 			Object.keys(json).forEach(function(key) {
                 var list = json[key];
 				lists = lists + '<a onclick="listAdd(' + list.id + ',\'' + user + '\',\'' + acct_id +
-					'\')" class="pointer">'+list.title+'</a><br> ';
+					'\')" class="pointer">'+escapeHTML(list.title)+'</a><br> ';
 			});
 			$("#his-lists-a").html(lists);
 		}else{
