@@ -75,7 +75,7 @@ function load() {
 load();
 support();
 
-//instances.social
+//instances.social/instances API
 function data(domain) {
 	$("#ins-upd").text("Loading...");
 	$("#ins-add").text("Loading...");
@@ -112,6 +112,30 @@ function data(domain) {
 			$("#ins-user").text(json.users);
 			$("#ins-ver").text(json.version);
 			$("#ins-prof").attr('src', json.thumbnail);
+		}
+	});
+	var start = "https://" + domain +"/api/v1/instance";
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		console.log(json);
+		if (!json.error) {
+			$("#ins-name").text(json.title);
+			$("#ins-desc").text(text.description);
+			$("#ins-email").text(json.email);
+			$("#ins-toot").text(json.stats.status_count);
+			$("#ins-user").text(json.stats.user_count);
+			$("#ins-ver").text(json.version);
+			$("#ins-prof").attr('src', json.thumbnail);
+			$("#ins-admin").text(json.contanct_acount.username);
 		}
 	});
 }

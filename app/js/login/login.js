@@ -383,7 +383,7 @@ function ckdb(acct_id) {
 			}
 	}
 	if(localStorage.getItem("mode_" + domain)!="misskey"){
-		var start = "https://" + domain + "/api/v1/instance/activity";
+		var start = "https://" + domain + "/api/v1/instance";
 		fetch(start, {
 			method: 'GET',
 			headers: {
@@ -399,8 +399,8 @@ function ckdb(acct_id) {
 				return;
 			}
 			if(json){
-				localStorage.setItem("users_" + acct_id, json["logins"]);
-				localStorage.setItem("statuses_" + acct_id, json["statuses"]);
+				localStorage.setItem("letters_" + acct_id, json["max_toot_chars"]);
+				//localStorage.setItem("statuses_" + acct_id, json["statuses"]);
 			}
 		});
 		
@@ -442,7 +442,12 @@ function multiSelector() {
 			if(idata[domain+"_letters"]){
 				$("#textarea").attr("data-length", idata[domain+"_letters"])
 			}else{
-				$("#textarea").attr("data-length", 500)
+				var maxletters = localStorage.getItem("letters_" + key);
+				if(maxletters){
+					$("#textarea").attr("data-length", maxletters)
+				}else{
+					$("#textarea").attr("data-length", 500)
+				}
 			}
 			var profimg=localStorage.getItem("prof_"+key);
 			console.log(profimg);
