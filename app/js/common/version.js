@@ -27,6 +27,7 @@ function verck(ver) {
 	for(var i=0; i<l; i++){
   		r += c[Math.floor(Math.random()*cl)];
 	}
+	/*
 	var start = "https://thedesk.top/ver.json";
 	fetch(start, {
 		method: 'GET'
@@ -65,6 +66,7 @@ function verck(ver) {
 			}
 		}
 	});
+	*/
 	if(!localStorage.getItem("last-notice-id")){
 		localStorage.setItem("last-notice-id",0)
 	}

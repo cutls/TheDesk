@@ -307,173 +307,172 @@ var lang="{{lang}}";
 	</div>
 	<!-- Modal Structure Userdata -->
 	<div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
-	<div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
-	<div id="his-data-show">
-	<img src="./img/loading.svg" id="his-prof" style="">
-	<div class="his-float">
-	<span id="his-name" style="font-size:1.5rem">Loading...</span><span class="gray" id="his-bot"></span>
-	<br>@
-	<span id="his-acct"></span>
-	<span class="gray" id="his-relation"></span>
-	<br>
-	<span class="cbadge">
-	<span id="his-sta"></span>{{toots}}
-	</span>
-	<span class="cbadge">{{follow}}:
-	<span id="his-follow"></span>
-	</span>
-	<span class="cbadge">{{follower}}:
-	<span id="his-follower"></span>
-	</span>
-	<span class="cbadge" style="max-width:150px; width:150px; ">Since:
-	<span id="his-since"></span>
-	</div>
-	<div class="his-float">
-	<span id="his-des"></span>
-	<br>
-	</div>
-	<div class="row">
-	<div class="col s12" id="my-data-nav">
-	<ul class="custom-tabs transparent">
-		<li class="custom-tab col my-data-width active-back column-first">
-			<a go="#his-tl">{{timeline}}</a>
-		</li>
-		<li class="custom-tab col my-data-width">
-			<a go="#his-follow-list">{{follow}}</a>
-		</li>
-		<li class="custom-tab col my-data-width">
-			<a go="#his-follower-list">{{follower}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-his-data">
-			<a go="#his-action">{{operateOtherAcct}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-his-data">
-			<a go="#his-list">{{list}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-fav-list">{{favRegist}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-blocking-list">{{blocks}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-muting-list">{{mutes}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-domain-list">{{domainBlock}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-prof-list">{{editProf}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-request-list">{{followReq}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-his-data">
-			<a go="#his-matching-list">{{likeHimOrHer}}</a>
-		</li>
-		<li class="custom-tab col my-data-width only-my-data">
-			<a go="#his-follow-recom-list">{{frc}}</a>
-		</li>
-	</ul>
-	</div>
-	<div id="his-tl" class="col s12 tab-content">
-	<div id="his-tl-contents" class="cont-series">
-	</div>
-	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="utl('--now','more')">{{more}}</button>
-	</div>
-	<div id="his-follow-list" class="col s12  tab-content">
-	<div id="his-follow-list-contents" class="cont-series">
-	</div>
-	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="flw('--now','more')">{{more}}</button>
-	</div>
-	<div id="his-follower-list" class="col s12 tab-content">
-	<div id="his-follower-list-contents" class="cont-series">
-	</div>
-	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="fer('--now','more')">{{more}}</button>
-	</div>
-	<div id="his-action" class="col s12 tab-content">
-		{{useOtherAcct1}}{{revoverJP}}{{follow}}({{warnUseOtherAcct}})<br>
-		<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>{{revoverJPde}}
-		<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">{{follow}}</a><br>
-		{{or}}<br>
-		<a href="#!" class="waves-effect btn" onclick="udgEx('selector', 'selector')">{{openProf}}</a><br>
-	</div>
-	<div id="his-list" class="col s12  tab-content">
-		<div id="his-lists-a">{{warnListRegist}}</div>
-		
-		<div id="his-lists-b"></div>
-	</div>
-	<div id="his-fav-list" class="col s12  tab-content">
-	<div id="his-fav-list-contents" class="cont-series">
-	</div>
-	<button class="btn waves-effect" style="width:100%; padding:0;" onclick="showFav('more')">{{more}}</button>
-	</div>
-	<div id="his-blocking-list" class="col s12  tab-content">
-	<div id="his-blocking-list-contents"class="cont-series" >
-	</div>
-	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showBlo('more')">{{more}}</button>
-	</div>
-	<div id="his-muting-list" class="col s12  tab-content">
-	<div id="his-muting-list-contents" class="cont-series">
-	</div>
-	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showMut('more')">{{more}}</button>
-	</div>
-	<div id="his-domain-list" class="col s12  tab-content">
-	<div id="his-domain-list-contents" class="cont-series">
-	</div>
-	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showDom('more')">{{more}}</button>{{blockDomain}}
-	<br>
-	<input type="text" placeholder="example.com" id="domainblock">
-	<button class="btn waves-effect" onclick="addDomainblock()">{{add}}</button>
-	<br>
-	</div>
-	<div id="his-prof-list" class="col s12  tab-content">{{name}}
-	<br>
-	<input type="text" placeholder="{{name}}" id="his-name-val" style="max-width:250px;">
-	<br>{{note}}
-	<br>
-	<div class="input-field col s12">
-	<textarea placeholder="{{note}}" id="his-des-val" class="materialize-textarea"></textarea>
-	<label for="his-des-val">{{note}}</label>
-	</div>
-	<br>{{editProfImg}}:
-	<span id="prof-change">
-		<input type="file" onchange="imgChange(this,'avatar')">
-	</span>
-	<br>{{editHeader}}:
-	<span id="header-change">
-		<input type="file" onchange="imgChange(this,'header')">
-	</span>
-	</div>
-	<div id="his-request-list" class="col s12  tab-content">
-	<div id="his-request-list-contents" class="cont-series">
-	</div>
-	<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">{{more}}</button>
-	</div>
-	<div id="his-matching-list" class="col s12  tab-content">
-		{{likeUserDes}}<br>
-		Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User Matching</a><br>
-		<div id="his-matching-list-contents" class="cont-series">
+			<div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
+			<div id="his-data-show">
+			<div class="his-float" id="his-float-data">
+			<div id="his-basic-prof">
+			<img src="./img/loading.svg" id="his-prof">
+			<span id="his-name">Loading...</span><span class="gray" id="his-bot"></span>
+			<br>@
+			<span id="his-acct"></span><br>
+			<span class="gray" id="his-relation"></span>
+			<br>
+			<span class="cbadge">
+			<span id="his-sta"></span>{{toots}}
+			</span>
+			<span class="cbadge">{{follow}}:
+			<span id="his-follow"></span>
+			</span>
+			<span class="cbadge">{{follower}}:
+			<span id="his-follower"></span>
+			</span><br>
+			<span class="cbadge" style="max-width:150px; width:150px; ">Since:
+			<span id="his-since"></span>
+			</span>
+			</div>
+			<div id="his-des"></div><br>
+			<div id="his-plus-action">
+					<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn" onclick="empUser()">{{empUser}}</a>
+					<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-end-btn" onclick="pinUser()">{{endorse}}</a><br>
+					<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin" onclick="profbrws()">{{openinbrowser}}</a><br>
+			</div><br>
+			<div id="his-matching-list">
+					{{likeUserDes}}<br>
+					Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User Matching</a><br>
+					<div id="his-matching-list-contents" class="cont-series"></div>
+				<button class="btn waves-effect " onclick="showMat()" style="width:100%;">{{get}}</button>
+			</div>
+			</div>
+			<div class="his-float" id="his-float-timeline">
+			<div id="my-data-nav">
+			<ul class="custom-tabs transparent">
+				<li class="custom-tab col my-data-width active-back column-first">
+					<a go="#his-tl" title="{{timeline}}"><i class="material-icons">timeline</i></a>
+				</li>
+				<li class="custom-tab col my-data-width">
+					<a go="#his-follow-list" title="{{follow}}"><i class="material-icons">people</i>→</a>
+				</li>
+				<li class="custom-tab col my-data-width">
+					<a go="#his-follower-list" title="{{follower}}"><i class="material-icons">people</i>←</a>
+				</li>
+				<li class="custom-tab col my-data-width only-his-data">
+					<a go="#his-action" title="{{operateOtherAcct}}"><i class="material-icons">account_box</i></a>
+				</li>
+				<li class="custom-tab col my-data-width only-his-data">
+					<a go="#his-list" title="{{list}}"><i class="material-icons">list</i></a>
+				</li>
+				<li class="custom-tab col my-data-width only-my-data">
+					<a go="#his-fav-list" title="{{favRegist}}"><i class="material-icons">star</i></a>
+				</li>
+				<li class="custom-tab col my-data-width only-my-data">
+					<a go="#his-blocking-list" title="{{blocks}}"><i class="material-icons">block</i></a>
+				</li>
+				<li class="custom-tab col my-data-width only-my-data">
+						<a go="#his-blocking-list" title="{{blocks}}"><i class="material-icons">voice_over_off</i></a>
+				</li>
+				<li class="custom-tab col my-data-width only-my-data">
+					<a go="#his-domain-list" title="{{domainBlock}}"><i class="material-icons">language</i><i class="material-icons">block</i></a>
+				</li>
+				<li class="custom-tab col my-data-width only-my-data">
+					<a go="#his-prof-list" title="{{editProf}}"><i class="material-icons">create</i></a>
+				</li>
+				<li class="custom-tab col my-data-width only-my-data">
+					<a go="#his-request-list" title="{{followReq}}"><i class="material-icons">how_to_reg</i></a>
+				</li>
+				<li class="custom-tab col my-data-width only-my-data">
+					<a go="#his-follow-recom-list" title="{{frc}}"><i class="material-icons">recent_actors</i></a>
+				</li>
+			</ul>
+			</div>
+			<div id="his-tl" class="tab-content">
+			<div id="his-tl-contents" class="cont-series">
+			</div>
+			<button class="btn waves-effect " style="width:100%; padding:0;" onclick="utl('--now','more')">{{more}}</button>
+			</div>
+			<div id="his-follow-list" class="tab-content">
+			<div id="his-follow-list-contents" class="cont-series">
+			</div>
+			<button class="btn waves-effect " style="width:100%; padding:0;" onclick="flw('--now','more')">{{more}}</button>
+			</div>
+			<div id="his-follower-list" class="tab-content">
+			<div id="his-follower-list-contents" class="cont-series">
+			</div>
+			<button class="btn waves-effect " style="width:100%; padding:0;" onclick="fer('--now','more')">{{more}}</button>
+			</div>
+			<div id="his-action" class="tab-content">
+				{{useOtherAcct1}}{{revoverJP}}{{follow}}({{warnUseOtherAcct}})<br>
+				<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>{{revoverJPde}}
+				<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">{{follow}}</a><br>
+				{{or}}<br>
+				<a href="#!" class="waves-effect btn" onclick="udgEx('selector', 'selector')">{{openProf}}</a><br>
+			</div>
+			<div id="his-list" class="tab-content">
+				<div id="his-lists-a">{{warnListRegist}}</div>
 				
-		</div>
-		<button class="btn waves-effect " onclick="showMat()">{{get}}</button>
-	</div>
-	<div id="his-follow-recom-list" class="col s12  tab-content">
-		<div id="his-follow-recom-contents" class="cont-series">
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	<div class="modal-footer">
-	<button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn" onclick="historyShow()">{{historyBack}}</button>
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">{{follow}}</a>
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">{{mute}}</a>
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">{{block}}</a>
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-emp-btn" onclick="empUser()">{{empUser}}</a>
-	<a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">{{close}}</a>
-	</div>
-	</div>
+				<div id="his-lists-b"></div>
+			</div>
+			<div id="his-fav-list" class="tab-content">
+			<div id="his-fav-list-contents" class="cont-series">
+			</div>
+			<button class="btn waves-effect" style="width:100%; padding:0;" onclick="showFav('more')">{{more}}</button>
+			</div>
+			<div id="his-blocking-list" class="tab-content">
+			<div id="his-blocking-list-contents"class="cont-series" >
+			</div>
+			<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showBlo('more')">{{more}}</button>
+			</div>
+			<div id="his-muting-list" class="tab-content">
+			<div id="his-muting-list-contents" class="cont-series">
+			</div>
+			<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showMut('more')">{{more}}</button>
+			</div>
+			<div id="his-domain-list" class="tab-content">
+			<div id="his-domain-list-contents" class="cont-series">
+			</div>
+			<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showDom('more')">{{more}}</button>{{blockDomain}}
+			<br>
+			<input type="text" placeholder="example.com" id="domainblock">
+			<button class="btn waves-effect" onclick="addDomainblock()">{{add}}</button>
+			<br>
+			</div>
+			<div id="his-prof-list" class="tab-content">{{name}}
+			<br>
+			<input type="text" placeholder="{{name}}" id="his-name-val" style="max-width:250px;">
+			<br>{{note}}
+			<br>
+			<div class="input-field col s12">
+			<textarea placeholder="{{note}}" id="his-des-val" class="materialize-textarea"></textarea>
+			<label for="his-des-val">{{note}}</label>
+			</div>
+			<br>{{editProfImg}}:
+			<span id="prof-change">
+				<input type="file" onchange="imgChange(this,'avatar')">
+			</span>
+			<br>{{editHeader}}:
+			<span id="header-change">
+				<input type="file" onchange="imgChange(this,'header')">
+			</span>
+			</div>
+			<div id="his-request-list" class="tab-content">
+			<div id="his-request-list-contents" class="cont-series">
+			</div>
+			<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">{{more}}</button>
+			</div>
+			<div id="his-follow-recom-list" class="tab-content">
+				<div id="his-follow-recom-contents" class="cont-series">
+			</div>
+			</div>
+			</div>
+			</div>
+			</div>
+			<div class="modal-footer">
+			<button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn" onclick="historyShow()">{{historyBack}}</button>
+			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn" onclick="follow()">{{follow}}</a>
+			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn" onclick="mute()">{{mute}}</a>
+			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn" onclick="block()">{{block}}</a>
+			<a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">{{close}}</a>
+			</div>
+			</div>
 	<!-- Modal Structure Image-->
 	<div id="imagemodal" class="modal modal-fixed-footer" style="min-width:550px">
 	<div class="modal-content">

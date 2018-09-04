@@ -123,15 +123,16 @@ function udg(user, acct_id) {
 			$("#his-follow").text(json.following_count);
 			$("#his-follower").text(json.followers_count);
 			$("#his-since").text(crat(json.created_at));
+			$("#his-openin").attr("data-href", json.url);
 			var note=json.note;
 			if(json.fields){
 				if(json.fields.length>0){
-					var note=json.note+'My Fields<br><table style="vertical-align: baseline; text-align:center; padding:0;">'
+					var note=json.note+'<table id="his-field">'
 					for(var i=0;i<json.fields.length;i++){
 						var fname=json.fields[i].name;
 						var fval=json.fields[i].value;
 						fval=twemoji.parse(fval);
-						note=note+'<tr style="height:1.5rem; padding:0;"><td style="height:1.5rem; padding:0; background-color:#757575; text-align:center; ">'+fname+'</td><td style="height:1.5rem; padding:0; padding-left:5px;">'+fval+'</td></tr>';
+						note=note+'<tr><td class="his-field-title">'+fname+'</td><td class="his-field-content">'+fval+'</td></tr>';
 					}
 					note=note+'</table>'
 					$("#his-des").html(twemoji.parse(note));
@@ -145,6 +146,7 @@ function udg(user, acct_id) {
 				$("#his-bot").html(lang_showontl_botacct[lang]);
 			}
 			$('#his-data').css('background-size', 'cover');
+			$("#his-data .tab-content").css("height",$("#his-float-timeline").height()-70+"px")
 			localStorage.setItem("history" , user);
 			//自分の時
 			if (json.acct == localStorage.getItem("user_"+acct_id)) {
@@ -371,10 +373,22 @@ function relations(user, acct_id) {
 		}else{
 			$("#his-domain-btn").text(lang_showontl_domain[lang]+lang_status_block[lang]);
 		}
+		//Endorsed
+		if(json.endorsed){
+			$("#his-end-btn").addClass("endorsed");
+			$("#his-end-btn").text(lang_status_unendorse[lang])
+		}else{
+			$("#his-end-btn").removeClass("endorsed");
+			$("#his-end-btn").text(lang_status_endorse[lang])
+		}
 
 	});
 }
-
+function profbrws(){
+	const {shell} = require('electron');
+	var url=$("#his-openin").attr("data-href")
+	shell.openExternal(url);
+}
 //オールリセット
 function hisclose() {
 	$('#his-data').modal('close');
@@ -402,6 +416,7 @@ function reset(){
 	$("#his-data").removeClass("blocking");
 	$("#his-data").removeClass("mutingNotf");
 	$("#his-data").removeClass("blockingDom");
+	$("#his-end-btn").removeClass("endorsed");
 	$("#his-bot").html("");
 	$("#his-follow-btn").show();
 	$("#his-block-btn").show();
@@ -425,6 +440,8 @@ function reset(){
 	$("#his-f2-name").val(""); $("#his-f2-val").val("");
 	$("#his-f3-name").val(""); $("#his-f3-val").val("");
 	$("#his-f4-name").val(""); $("#his-f4-val").val("");
+	$("#his-endorse").html("");
+	$("#his-openin").attr("data-href", "");
 }
 $('#my-data-nav .custom-tab').on('click',function(){
 	var target=$(this).find("a").attr("go");

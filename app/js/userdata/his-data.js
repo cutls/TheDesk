@@ -55,8 +55,6 @@ function utl(user, more, acct_id) {
 		if(!json[0]){
 			templete=lang_details_nodata[lang]+"<br>";
 		}
-		var height = $("#his-data-content").height() - 245;
-		$(".tab-content").css('height', height);
 		if (more) {
 			$("#his-tl-contents").append(templete);
 		} else {
@@ -98,9 +96,7 @@ function pinutl(before,user, acct_id) {
 		if(!json[0]){
 			templete="";
 		}
-		var height = $("#his-data-content").height() - 245;
-		$(".tab-content").css('height', height);
-			$("#his-tl-contents").html(templete+before);
+		$("#his-tl-contents").html(templete+before);
 		jQuery("time.timeago").timeago();
 	});
 }
@@ -598,6 +594,7 @@ function showMat() {
 			'</div>' +
 			'</div>';
 		});
+		$("#his-matching-list").css("height",$("#his-float-data").height()-$("#his-basic-prof").height()-$("#his-des").height()-$("#his-plus-action").height()+"px");
 		$("#his-matching-list-contents").html(templete);
 	});
 }

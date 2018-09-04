@@ -291,7 +291,7 @@ function pin(id, acct_id) {
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
-	httpreq.open('DELETE', start, true);
+	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = 'json';
@@ -383,6 +383,39 @@ function empUser(){
 	}
 	var json = JSON.stringify(obj);
 	localStorage.setItem("user_emp", json);
+}
+//Endorse
+function pinUser(){
+	var id=$("#his-data").attr("user-id");
+	var acct_id=$("#his-data").attr("use-acct");
+	if ($("#his-end-btn").hasClass("endorsed")) {
+		var flag = "unpin";
+	} else {
+		var flag = "pin";
+	}
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send();
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			if ($("#his-end-btn").hasClass("endorsed")) {
+				$("#his-end-btn").removeClass("endorsed")
+				$("#his-end-btn").text(lang_status_endorse[lang])
+			} else {
+				$("#his-end-btn").addClass("endorsed")
+				$("#his-end-btn").text(lang_status_unendorse[lang])
+				
+			}
+		}
+	}
 }
 //URLコピー
 function tootUriCopy(url){

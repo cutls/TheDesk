@@ -4,27 +4,67 @@
   background-image: url('/img/loading.svg');
   overflow-y: hidden;
 }
+#his-name{
+  font-size:1.5rem;
+}
 #his-prof {
   float: left;
   width: 100px;
+  margin-right:5px;
 }
 .his-float {
   float: left;
-  width: calc(50% - 50px);
-  height: 122px;
   overflow-y: scroll;
   padding: 5px;
 }
+#his-float-data{
+  width: 400px;
+}
+#his-float-timeline{
+  width: calc(100% - 400px);
+  height:100%;
+  overflow-y:hidden;
+}
+#his-basic-prof{
+  min-height:130px;
+}
+#his-matching-list{
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#his-field{
+  vertical-align: baseline;
+  text-align:center;
+  padding:0;
+}
+#his-field tr{
+  height:1.5rem;
+}
+.his-field-title{
+  height:1.5rem; padding:0; background-color:#757575; text-align:center; 
+  padding:5px;
+  margin-bottom:1px;
+}
+.his-field-content{
+  height:1.5rem; padding:0; padding-left:5px;
+}
+#his-data a span.ellipsis:after{
+  content:"...";
+}
+#his-data a:not(.mention) span:last-of-type{
+  display:none;
+}
 #his-data-show {
-  margin: 50px;
+  margin: 20px;
   background-color:var(--his-data);
-  width: calc(100% - 50px);
-  height: calc(100% - 50px);
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
   margin-bottom: 0;
   padding: 5px;
 }
 .tab-content {
   overflow-y: scroll;
+  overflow-x: hidden;
   height: calc(100% - 240px)
 }
 .my-data-width {
@@ -35,4 +75,13 @@
 }
 #his-name .emojione,#his-name .emoji-img{
   width: 20px;
+}
+#his-plus-action .btn{
+  width:170px
+}
+.custom-tabs{
+  display:flex;
+}
+.custom-tabs .custom-tab a{
+  padding: 8px 12px;
 }

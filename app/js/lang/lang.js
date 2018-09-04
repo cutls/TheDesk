@@ -209,6 +209,14 @@ var lang_status_unemphas={
     "ja":"を強調解除します。リロードしてください。",
     "en":"'s toots are not emphasized. Please reload after this action." 
 }
+var lang_status_unendorse={
+    "ja":"紹介解除",
+    "en":"Not feature on profile" 
+}
+var lang_status_endorse={
+    "ja":"プロフで紹介する",
+    "en":"Feature on profile" 
+}
 //post/suggest.js
 var lang_suggest_nodata={
     "ja":"サジェストのために絵文字リストを取得してください。",
