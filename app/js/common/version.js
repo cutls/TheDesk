@@ -27,7 +27,6 @@ function verck(ver) {
 	for(var i=0; i<l; i++){
   		r += c[Math.floor(Math.random()*cl)];
 	}
-	/*
 	var start = "https://thedesk.top/ver.json";
 	fetch(start, {
 		method: 'GET'
@@ -49,8 +48,8 @@ function verck(ver) {
 			}
 			if (newest == ver) {
 				todo(lang_version_usever[lang].replace("{{ver}}" ,mess.desk));
-				//betaならアプデチェックしない
-			} else if (ver.indexOf("beta")==-1) {
+				//betaかWInstoreならアプデチェックしない
+			} else if (ver.indexOf("beta")==-1 || winstore) {
 				localStorage.removeItem("instance")
 				if(localStorage.getItem("new-ver-skip")){
 					if(localStorage.getItem("next-ver")!=newest){
@@ -66,7 +65,6 @@ function verck(ver) {
 			}
 		}
 	});
-	*/
 	if(!localStorage.getItem("last-notice-id")){
 		localStorage.setItem("last-notice-id",0)
 	}
