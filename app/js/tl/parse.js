@@ -135,6 +135,11 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	}else if(mouseover=="no"){
 		mouseover="";
 	}
+	//リプカウント
+	var replyct_view=localStorage.getItem("replyct");
+	if(!replyct_view){
+		replyct_view="hidden";
+	}
 	var local = [];
 	var times=[];
 	Object.keys(obj).forEach(function(key) {
@@ -492,6 +497,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			});
 			tags = '<div style="float:right">' + tags + '</div>';
 		}
+		//リプ数
+		if(toot.replies_count || toot.replies_count===0){
+			var replyct=toot.replies_count;
+			if(replyct_view=="hidden" && replyct>1){
+				replyct="1+";
+			}
+		}else{
+			var replyct="";
+		}
 		//公開範囲を取得
 		var vis = "";
 		var visen = toot.visibility;
@@ -615,7 +629,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="re(\'' + toot.id +
 			'\',\'' + toot.account.acct + '\',' +
 			acct_id + ',\''+visen+
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_replyto[lang]+'"><i class="fa fa-share"></i></a></div>' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_replyto[lang]+'"><i class="fa fa-share"></i><span class="rep_ct">' + replyct +
+			'</a></span></a></div>' +
 			'<div class="action '+can_rt+' '+disp["rt"]+' '+noauth+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
 			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_bt[lang]+'"><i class="text-darken-3 fa fa-retweet ' +

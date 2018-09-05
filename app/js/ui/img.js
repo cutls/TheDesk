@@ -333,7 +333,12 @@ function dlImg(){
 	var url=$("#imgmodal").attr("src");
 	var electron = require("electron");
 	var ipc = electron.ipcRenderer;
-	ipc.send('general-dl', [url,false]);
+	if(localStorage.getItem("savefolder")){
+		var save=localStorage.getItem("savefolder");
+	}else{
+		var save="";
+	}
+	ipc.send('general-dl', [url,save,false]);
 	ipc.on('general-dl-prog', function (event, arg) {
 		console.log(arg);
 	})

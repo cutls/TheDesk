@@ -449,6 +449,9 @@ function multiSelector() {
 					$("#textarea").attr("data-length", 500)
 				}
 			}
+			if(idata[domain+"_glitch"]){
+				$("#local-button").removeClass("hide")
+			}
 			var profimg=localStorage.getItem("prof_"+key);
 			console.log(profimg);
 			if(!profimg){

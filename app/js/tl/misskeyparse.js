@@ -392,19 +392,25 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		if(notice){
 			notice=twemoji.parse(notice);
 		}
-		if(toot.media){
-			var mediack = toot.media[0];
-		}else{
-			var mediack=false;
-		}
 		
+		if(toot.files){
+			var mediack = toot.files[0];
+			var useparam="files";
+		}else{
+			if(toot.media){
+				var mediack = toot.media[0];
+				var useparam="media";
+			}else{
+				var mediack=false;
+			}
+		}
 		//メディアがあれば
 		var media_ids="";
 		if (mediack) {
 			hasmedia = "hasmedia";
-			var cwdt = 100 / toot.media.length;
-			Object.keys(toot.media).forEach(function(key2) {
-				var media = toot.media[key2];
+			var cwdt = 100 / toot[useparam].length;
+			Object.keys(toot[useparam]).forEach(function(key2) {
+				var media = toot[useparam][key2];
 				var purl = media.url;
 				media_ids=media_ids+media.id+",";
 				var url = media.url;

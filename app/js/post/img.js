@@ -103,7 +103,6 @@ function media(b64, type, no) {
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var httpreq = new XMLHttpRequest();
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
-
 		var start = "https://" + domain + "/api/drive/files/create";
 		httpreq.open('POST', start, true);
 		httpreq.upload.addEventListener("progress", progshow, false);
@@ -183,7 +182,7 @@ function toBlob(base64, type) {
 //画像を貼り付けたら…
 var element =  document.querySelector("#textarea");
 element.addEventListener("paste", function(e){
-	console.log("paste")
+	console.log(e)
     // 画像の場合
     // e.clipboardData.types.length == 0
     // かつ

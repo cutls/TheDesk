@@ -14,23 +14,15 @@
 		//タグのURLぽかったら
 			var tags=[];
 			tags = url.match(
-				/https:\/\/([-a-zA-Z0-9@.]+)\/tags\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
+				/https:\/\/([-a-zA-Z0-9@.]+)\/tags\/([-_.!~*\'()a-zA-Z0-9;\/?:\&=+\$,%#]+)/
 			);
 		//メンションっぽかったら
 		var ats=[];
 			ats = url.match(
-				/https:\/\/([-a-zA-Z0-9@.]+)\/@([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
+				/https:\/\/([-a-zA-Z0-9@.]+)\/@([-_.!~*\'()a-zA-Z0-9;\/?:\&=+\$,%#]+)/
 			);
 		console.log(toot);
 		if(toot){
-			ques = url.match(/https:\/\/quesdon\.rinsuki\.net\//);
-			console.log(ques);
-			if(ques){
-				if(ques[1]){
-					console.log("quesdon");
-					toot=[];
-				}
-			}
 			if(toot[1]){
 				var acct_id=$a.parent().attr("data-acct");
 				if(!acct_id){
@@ -44,6 +36,7 @@
 		}else if(tags){
 			if(tags[2]){
 				tagShow(tags[2]);
+				Materialize.toast('<a class="btn-flat toast-action" href="detEx(\''+url+'\')">Open in browser</a>', 86400);
 			}
 		}else if(ats){
 			console.log(ats);

@@ -44,6 +44,13 @@ function settings() {
 	}
 	localStorage.setItem("always-cw", cwsd);
 
+	var rpd = $("[name=rp]:checked").val();
+	var rpt = $("[for=c_"+cwd+"]").text();
+	if (rpd != localStorage.getItem("replyct")) {
+		Materialize.toast(lang_setting_rp[lang].replace("{{set}}" ,rpt), 3000);
+	}
+	localStorage.setItem("replyct", rpd);
+
 	var visd = $("[name=vis]:checked").val();
 	var vist = $("[for="+visd+"]").text();
 	if (visd != localStorage.getItem("vis")) {
@@ -76,7 +83,7 @@ function settings() {
 
 	var csentd = $("#cw_sentence").val();
 	var cltrd = $("#cw_letters").val();
-	if (csentd != localStorage.getItem("sentcw_sentenceence") || cltrd != localStorage.getItem("cw_letters")) {
+	if (csentd != localStorage.getItem("cw_sentence") || cltrd != localStorage.getItem("cw_letters")) {
 		Materialize.toast(lang_setting_autocw[lang].replace("{{set1}}" ,csentd).replace("{{set2}}" ,cltrd), 3000);
 	}
 	localStorage.setItem("cw_sentence", csentd);
@@ -287,6 +294,12 @@ function load() {
 		var cws = "no";
 	}
 	$("#cws_" + cws).prop("checked", true);
+
+	var rps = localStorage.getItem("replyct");
+	if (!rps) {
+		var rps = "hidden";
+	}
+	$("#rp_" + rps).prop("checked", true);
 
 	var vis = localStorage.getItem("vis");
 	if (!vis) {
@@ -622,5 +635,16 @@ function importSettings(){
 		})
 		//cards
 		//lang
+	});
+}
+function savefolder(){
+	var electron = require("electron");
+	var remote=electron.remote;
+	var dialog=remote.dialog;
+	dialog.showOpenDialog(null, {
+		title: 'Save folder',
+		properties: ['openDirectory'],
+	}, (fileNames) => {
+		localStorage.setItem("savefolder",fileNames[0]);
 	});
 }

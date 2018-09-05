@@ -268,13 +268,19 @@ ipc.on('shot', function(e, args) {
 	console.log("link:"+args[0]+" width:"+args[1]+" height:"+args[2]+" title:"+args[4]+" top:"+args[5]+" left:"+args[6]);
 	var platform=process.platform;
 	var bit=process.arch;
-	if(platform=="win32"){
-		var dir=app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\"+args[4]+"-toot.png";
-		var folder=app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\";
-	}else if(platform=="linux" || platform=="darwin" ){
-		var dir=app.getPath('home')+"/Pictures/TheDesk/Screenshots/"+args[4]+"-toot.png";
-		var folder=app.getPath('home')+"/Pictures/TheDesk/Screenshots/";
+	if(args[7]==""){
+		if(platform=="win32"){
+			var dir=app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\"+args[4]+"-toot.png";
+			var folder=app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\";
+		}else if(platform=="linux" || platform=="darwin" ){
+			var dir=app.getPath('home')+"/Pictures/TheDesk/Screenshots/"+args[4]+"-toot.png";
+			var folder=app.getPath('home')+"/Pictures/TheDesk/Screenshots/";
+		}
+	}else{
+		var folder=args[7];
+		var dir=folder+args[4]+"-toot.png";
 	}
+	
 	Jimp.read(Buffer.from( args[3],'base64'), function (err, lenna) {
 		if (err) throw err;
 		lenna.crop( args[6], args[5], args[1], args[2] ).write(dir);
@@ -284,11 +290,16 @@ ipc.on('shot', function(e, args) {
 ipc.on('shot-img-dl', (e, args) => {
 	Jimp.read(args[0], function (err, lenna) {
 		if (err) throw err;
-		if(process.platform=="win32"){
-			var folder=app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\";
-		}else if(process.platform=="linux" || process.platform=="darwin" ){
-			var folder=app.getPath('home')+"/Pictures/TheDesk/Screenshots/";
+		if(args[1]==""){
+			if(process.platform=="win32"){
+				var folder=app.getPath('home')+"\\Pictures\\TheDesk\\Screenshots\\";
+			}else if(process.platform=="linux" || process.platform=="darwin" ){
+				var folder=app.getPath('home')+"/Pictures/TheDesk/Screenshots/";
+			}
+		}else{
+			var folder=args[2];
 		}
+		
 		lenna.write(folder+args[1]);
 	});
 })
@@ -443,12 +454,15 @@ ipc.on('general-dl', (e, args) => {
 	var name="";
 	var platform=process.platform;
 	var bit=process.arch;
-	if(platform=="win32"){
-		var dir=app.getPath('home')+"\\Pictures\\TheDesk";
-	}else if(platform=="linux" || platform=="darwin" ){
-		var dir=app.getPath('home')+"/Pictures/TheDesk";
-	}
-	
+	if(args[1]==""){
+		if(platform=="win32"){
+			var dir=app.getPath('home')+"\\Pictures\\TheDesk";
+		}else if(platform=="linux" || platform=="darwin" ){
+			var dir=app.getPath('home')+"/Pictures/TheDesk";
+		}
+	}else{
+		var dir=args[1];
+	}	
 	mainWindow.webContents.send('general-dl-message', "ダウンロードを開始します。");
 	const opts = {
 		directory: dir,

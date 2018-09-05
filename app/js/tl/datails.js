@@ -417,12 +417,22 @@ function shot(){
                 );
                 const screenshotPath = path.join(os.tmpdir(), 'screenshot.png');
                 const savePath = path.join(os.tmpdir(), 'screenshot.png');
-                    var ipc = electron.ipcRenderer;
-                    ipc.send('shot', ['file://' + screenshotPath,w,h,b64[1],title,off.top+50,off.left]);
+					var ipc = electron.ipcRenderer;
+					if(localStorage.getItem("savefolder")){
+						var save=localStorage.getItem("savefolder");
+					}else{
+						var save="";
+					}
+                    ipc.send('shot', ['file://' + screenshotPath,w,h,b64[1],title,off.top+50,off.left,save]);
                     if($("#toot-this .img-parsed").length>0){
                         for(i=0;i<$("#toot-this .img-parsed").length;i++){
-                            var url=$("#toot-this .img-parsed").eq(i).attr("data-url");
-                            ipc.send('shot-img-dl', [url,title+"_img"+i+".png"]);
+							var url=$("#toot-this .img-parsed").eq(i).attr("data-url");
+							if(localStorage.getItem("savefolder")){
+								var save=localStorage.getItem("savefolder");
+							}else{
+								var save="";
+							}
+                            ipc.send('shot-img-dl', [url,title+"_img"+i+".png",save]);
                         }
                     }
                     return;

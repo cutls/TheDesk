@@ -36,8 +36,15 @@ function udgEx(user,acct_id){
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var id=json.accounts[0].id;
-		udg(id,acct_id);
+		console.log(json);
+		if(json.accounts){
+			var id=json.accounts[0].id;
+			udg(id,acct_id);
+		}else{
+			var url="https://"+user.split('@')[1]+"/@"+user.split('@')[0];
+			const {shell} = require('electron');
+			shell.openExternal(url);
+		}
 	});
 	return;
 }

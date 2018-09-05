@@ -47,6 +47,11 @@ function mdCheck(){
 	}else{
 		$("#textarea").attr("data-length", 500)
 	}
+	if(idata[domain+"_glitch"]){
+		$("#local-button").removeClass("hide");
+	}else{
+		$("#local-button").removeClass("hide");
+	}
 	var multi = localStorage.getItem("multi");
 	if (multi) {
 		var obj = JSON.parse(multi);

@@ -67,7 +67,11 @@
 		<span style="font-size:15px">15px(absolute value)</span>
 		<br>
 		<input type="text" style="width:50px" id="size">px 
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button><br>
+		<h5>Folder to save</h5>
+		TheDesk uses this value when it try to save pictures or take screenshots.<br>
+		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">Save</button>
+		<br>
 	</div>
 	</li>
 	<li>
@@ -106,6 +110,12 @@
 		<label for="c_yes">Yes</label>
 		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_no" value="no" />
 		<label for="c_no">No</label>
+		<br>
+		<h5>Reply counter style</h5>
+		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_hidden" value="hidden" />
+		<label for="rp_hidden">Show 1+ if the replies are more than 1.</label>
+		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_all" value="all" />
+		<label for="rp_all">Show full count(1,2...)</label>
 		<br>
 		<h5>Animated GIF images animation</h5>
 		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_yes" value="yes" />

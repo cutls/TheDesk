@@ -86,8 +86,10 @@ function post(mode) {
 		var nsfw = "false";
 	}
 	var vis = $("#vis").text();
-	if(vis!="inherit"){
+	if(vis!="inherit" && vis!="local"){
 		toot.visibility=vis;
+	}else if(vis=="local"){
+		toot.status=str+"👁️";
 	}
 	if ($("#cw").hasClass("cw-avail")) {
 		var spo = $("#cw-text").val();

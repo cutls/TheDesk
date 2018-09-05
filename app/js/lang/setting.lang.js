@@ -22,6 +22,10 @@ var lang_setting_cws={
     "ja":"標準でCW:{{set}}",
     "en":"Always CW on:{{set}}"
 }
+var lang_setting_rp={
+    "ja":"リプライ数表示:{{set}}",
+    "en":"Reply counter:{{set}}"
+}
 var lang_setting_vis={
     "ja":"デフォルトの公開設定を{{set}}に設定しました。",
     "en":"Default visibility:{{set}}"

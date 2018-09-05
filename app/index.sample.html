@@ -155,6 +155,9 @@ var lang="{{lang}}";
 <li id="limited-button" class="hide">
 	<a onclick="vis('limited')">限定公開(Limited)</a>
 </li>
+<li id="local-button" class="hide">
+	<a onclick="vis('local')">{{localJP}}(Local)</a>
+</li>
 <li>
 	<a onclick="vis('direct')" class="disabled direct">{{directJP}}(Direct)</a>
 </li>
@@ -238,7 +241,8 @@ var lang="{{lang}}";
 		<div class="collapsible-header" id="activator">
 		<i class="material-icons">more_horiz</i>{{thisToot}}
 		</div>
-		<div class="collapsible-body toot-reset" id="toot-this">
+		<div class="collapsible-body" >
+			<div class="toot-reset" id="toot-this"></div>
 		</div>
 	</li>
 	<li>

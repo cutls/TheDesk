@@ -22,6 +22,7 @@
     "publicJP":"公開",
     "unlistedJP":"未収載",
     "privateJP":"非公開",
+    "localJP":"ローカル限定",
     "directJP":"ダイレクト",
     "emojiWarn":"インスタンスによって実装が異なります。",
     "emojiInsertWarn":"一部絵文字は入力できません。",

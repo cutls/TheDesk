@@ -67,7 +67,11 @@
 		<span style="font-size:15px">15px({{absolute}})</span>
 		<br>
 		<input type="text" style="width:50px" id="size">px 
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button><br>
+		<h5>{{savefolder}}</h5>
+		{{savefolderwarn}}<br>
+		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">{{change}}</button>
+		<br>
 	</div>
 	</li>
 	<li>
@@ -106,6 +110,12 @@
 		<label for="c_yes">{{yes}}</label>
 		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_no" value="no" />
 		<label for="c_no">{{no}}</label>
+		<br>
+		<h5>{{replyct}}</h5>
+		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_hidden" value="hidden" />
+		<label for="rp_hidden">{{replyct_hidden}}</label>
+		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_all" value="all" />
+		<label for="rp_all">{{replyct_full}}</label>
 		<br>
 		<h5>{{gif}}</h5>
 		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_yes" value="yes" />
