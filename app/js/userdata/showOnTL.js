@@ -86,9 +86,9 @@ function udg(user, acct_id) {
 		//moved設定時
 		if (json.moved) {
 			Materialize.toast(
-				lang_showontl_movetxt[lang]+'<button class="btn-flat toast-action" onclick="udg(\"' +
-				json.moved + ','+acct_id+'\")">'+lang_showontl_movebtn[lang]+'</button>', 4000)
-		} else {
+				lang_showontl_movetxt[lang]+'<button class="btn-flat toast-action" onclick="udg(\'' +
+				json.moved.id + '\',\''+acct_id+'\')">'+lang_showontl_movebtn[lang]+'</button>', 4000)
+		}
 			$('#his-data').modal('open');
 			$('#his-data').attr("user-id", user);
 			$('#his-data').attr("use-acct", acct_id);
@@ -187,7 +187,6 @@ function udg(user, acct_id) {
 				$(".only-my-data").hide();
 				$(".only-his-data").show();
 			}
-		}
 		todc();
 	});
 }

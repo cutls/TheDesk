@@ -485,7 +485,7 @@ function multiSelector() {
 		
 	});
 		$("#src-acct-sel").append('<option value="tootsearch">Tootsearch</option>');
-		$("#add-acct-sel").append('<option value="noauth">'+lang_login_noauth[lang]+'</option>');
+		$("#add-acct-sel").append('<option value="noauth">'+lang_login_noauth[lang]+'</option><option value="webview">Twitter</option>');
 	}
 	$('select').material_select('update');
 }

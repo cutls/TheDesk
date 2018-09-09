@@ -542,6 +542,8 @@ function cap(type, data, acct_id) {
 		}
 	} else if (type == "plus") {
 		var response= "Local+"
+	}else if (type == "webview") {
+		var response="Twitter"
 	}
 	return response;
 }

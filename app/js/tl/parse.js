@@ -235,7 +235,14 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					if(os=="darwin"){
 						var n = new Notification('TheDesk:'+domain, options);
 					}else{
-						ipc.send('native-notf', ['TheDesk:'+domain,toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),toot.account.avatar]);
+						ipc.send('native-notf', [
+							'TheDesk:'+domain,
+							toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),
+							toot.account.avatar,
+							"toot",
+							acct_id,
+							toot.status.id
+						]);
 					}
 				}
 				if(localStorage.getItem("hasNotfC_" + acct_id)!="true"){
@@ -713,13 +720,40 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				$(".notf-icon_" + tlid).addClass("red-text");
 				localStorage.setItem("notice-mem", notftext);
 				notftext = "";
+				var native=localStorage.getItem("nativenotf");
+			if(!native){
+				native="yes";
+			}
+			if(native=="yes"){
+				var electron = require("electron");
+				var ipc = electron.ipcRenderer;
+				var os = electron.remote.process.platform;
+				var options = {
+					body: toot.display_name+"(" + toot.acct +")"+ftxt,
+					icon: toot.avatar
+				  };
+				  var domain = localStorage.getItem("domain_" + acct_id);
+				if(os=="darwin"){
+					var n = new Notification('TheDesk:'+domain, options);
+				}else{
+					ipc.send('native-notf', [
+						'TheDesk:'+domain,
+						toot.display_name+"(" + toot.acct +")"+ftxt,
+						toot.avatar,
+						"userdata",
+						acct_id,
+						toot.id
+					]);
+				}
+			}
 			}
 			if(toot.display_name){
 				var dis_name=escapeHTML(toot.display_name);
 			}else{
 				var dis_name=toot.username;
 			}
-		
+			//ネイティブ通知
+			
 		if(toot.emojis){
 			var actemojick = toot.emojis[0];
 		}else{

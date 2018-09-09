@@ -24,9 +24,17 @@ function sortload(){
 				insert=' style="background-color:#'+acct.background+'; color: #'+txhex+'" ';
 			}
 		}
+			var user=localStorage.getItem("user_" + acct.domain);
+			var domain=localStorage.getItem("domain_" + acct.domain);
+			if(!user || !domain){
+				var acctdata="";
+			}else{
+				var acctdata=user+"@"+domain;
+			}
+			
 			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'"'+insert+'><a onclick="goColumn(' + key +
 			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムへ">forward</i></a> <a onclick="removeColumn(' + key +
-			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a><br>'+localStorage.getItem("user_" + acct.domain)+"@"+localStorage.getItem("domain_" + acct.domain)+" "+cap(acct.type, acct.data,acct.domain)+'</li>';
+			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a><br>'+acctdata+" "+cap(acct.type, acct.data,acct.domain)+'</li>';
 			$("#sort").append(html);
 		});
 		drag();
@@ -48,6 +56,8 @@ function Scap(type, data) {
 		return "Notification"
 	} else if (type == "mix") {
 		return "Integrated"
+	}else if (type == "webview") {
+		return "Twitter"
 	}else{
 		console.log(type);
 	}

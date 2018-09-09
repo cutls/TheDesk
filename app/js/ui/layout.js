@@ -115,6 +115,10 @@ function parseColumn() {
 		}else{
 			localStorage.removeItem("hasNotfC_" + acct.domain);
 		}
+		if(acct.type=="webview"){
+			var html =webview("https://mobile.twitter.com",key,insert,icnsert);
+			$("#timeline-container").append(html);
+		}else{
 		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
 			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang_layout_gotop[lang]+'"></i></div>'+
@@ -161,6 +165,7 @@ function parseColumn() {
 		mediaCheck(key);
 		catchCheck(key);
 		voiceCheck(key);
+		}
 	});
 	var width = localStorage.getItem("width");
 	if (width) {
@@ -192,6 +197,9 @@ function addColumn() {
 	if(acct=="noauth"){
 		acct=$("#noauth-url").val();
 		type="noauth"
+	}else if(acct=="webview"){
+		acct="";
+		type="webview"
 	}
 	var add = {
 		domain: acct,
@@ -217,12 +225,18 @@ function addColumn() {
 function addselCk(){
 	var acct = $("#add-acct-sel").val();
 	var domain=localStorage.getItem("domain_" + acct);
-	if(acct=="noauth"){
+	if(acct=="webview"){
+		$("#auth").addClass("hide");
+		$("#noauth").addClass("hide");
+		$("#webview-add").removeClass("hide");
+	}else if(acct=="noauth"){
 		$("#auth").addClass("hide");
 		$("#noauth").removeClass("hide");
+		$("#webview-add").addClass("hide");
 	}else{
 		$("#auth").removeClass("hide");
 		$("#noauth").addClass("hide");
+		$("#webview-add").addClass("hide");
 	}
 	if(domain=="knzk.me" || domain=="mstdn.y-zu.org"){
 		$("#type-sel").append('<option value="dm" data-trans="dm" id="direct-add">'+lang_layout_dm[lang]+'</option>');
@@ -336,4 +350,22 @@ function coloradd(key,bg,txt){
 	$("#menu_"+key+" .nex").css('color','#'+ichex);
 	$("#menu_"+key).css('color','#'+bghex);
 	}
+}
+//禁断のTwitter
+function webview(url,key,insert,icnsert){
+	var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
+			'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
+			'<div class="area-notice"><i class="fa fa-twitter waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
+			'<div class="area-notice_name tl-title">WebView('+url+')</div>'+
+			'<div class="area-a1"></div>'+
+			'<div class="area-a2"><a onclick="removeColumn(' + key +
+						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_delthis[lang]+'"'+icnsert+'>cancel</i></a></div>'+
+		  '<div class="area-a3"><a onclick="setToggle(' + key +
+		  ')" class="setting nex" title="'+lang_layout_setthis[lang]+'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
+		  '<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
+		  '"></div><div class="column-hide notf-indv-box" id="util-box_' + key +
+		  '" style="padding:5px;">'+lang_layout_headercolor[lang]+'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:calc(100% - 110px);"><div id="timeline_' + key +
+			'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="'+url+'" style="width:100%;height:100%;" id="webview"></webview></div></div></div>';
+	
+	return html;
 }

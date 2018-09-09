@@ -174,3 +174,19 @@ ipc.on('mess', function (event, arg) {
         
     }
 })
+//Native Notf
+ipc.on('shownotf', function (event, args) {
+    if(args["type"]=="toot"){
+		details(id, acct_id)
+	}else  if(args["type"]=="userdata"){
+		udg(user, acct_id)
+	}
+})
+function opendev(){
+	var webview = document.getElementById("webview");
+	//webview.openDevTools();
+	webview.sendInputEvent({
+		type: "keyDown",
+		keyCode: '.'
+	  });
+}

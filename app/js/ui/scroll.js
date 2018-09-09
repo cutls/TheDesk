@@ -18,8 +18,8 @@ function scrollck() {
 				localStorage.removeItem("pool_" + tlid);
 			}
 			//自動リフレッシュ
-			if( $("#timeline_" + tlid+" .cvo").length > 100 ){
-				for(var i=100;i<$("#timeline_" + tlid +" .cvo").length;i++){
+			if( $("#timeline_" + tlid+" .cvo").length > 30 ){
+				for(var i=30;i<$("#timeline_" + tlid +" .cvo").length;i++){
 					$("#timeline_" + tlid +" .cvo").eq(i).remove();
 				}
 			}

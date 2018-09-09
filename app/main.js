@@ -171,12 +171,11 @@ var onError = function(err,response){
 
 var ipc = electron.ipcMain;
 ipc.on('native-notf', function(e, args) {
-	
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="win32"){
-		const notifier = require('node-notifier');
-	// String
+		const notifier = require('node-notifier')
+		var tmp_imge=tmp_img;
 	Jimp.read(args[2], function (err, lenna) {
 		if(!err && lenna){
 			lenna.write(tmp_img);
@@ -185,14 +184,16 @@ ipc.on('native-notf', function(e, args) {
 			var tmp_imge="";
 		}
 		notifier.notify({
-			appName: "top.thedesk.thedesk",
+			appID: "top.thedesk",
 			message: args[1],
 			title: args[0],
 			icon : tmp_imge,
 			sound: false,
-			wait: false
-		});
-		
+			wait: true,
+		},
+		function(err, response) {
+		  console.log(err, response)
+		});	
 	});
 	}
 });
@@ -612,7 +613,9 @@ ipc.on('endmem', (e, arg) => {
 });
 function mems(){
 	var mem=os.totalmem()-os.freemem();
-	mainWindow.webContents.send('memory', [mem,os.cpus()[0].model,os.totalmem()]);
+	if(mainWindow){
+		mainWindow.webContents.send('memory', [mem,os.cpus()[0].model,os.totalmem()]);
+	}
 }
 ipc.on('mkc', (e, arg) => {
 	var platform=process.platform;

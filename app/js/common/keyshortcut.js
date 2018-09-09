@@ -3,6 +3,18 @@ $(function($) {
 	$(window).keydown(function(e) {
 		var hasFocus = $('input').is(':focus');
 		var hasFocus2 = $('textarea').is(':focus');
+		if(document.getElementById("webview")){
+			var webview=document.getElementById("webview");
+			if(webview.getURL()=="https://mobile.twitter.com/compose/tweet" || webview.getURL()=="https://mobile.twitter.com"){
+				if (e.keyCode === 8) {
+					webview.sendInputEvent({
+						type: "keyDown",
+						keyCode: '\u0008'
+					  });
+				}
+				return false;
+			}
+		}
 		//Ctrl+Enter:投稿
 		if (event.metaKey || event.ctrlKey) {
 			if (e.keyCode === 13) {

@@ -14,7 +14,7 @@
     "popupwarn":"Hide to set \"0\"",
     "s":"sec",
     "nativenotf":"Native notification",
-    "nnwarn":"This does not work on Windows 10.",
+    "nnwarn":"This does not work on Windows Portable ver.",
     "nntest":"Notification test",
     "minwidth":"Minimam width of columns",
     "minwidthwarn":"Scroll bar will be shown when your window size is more than ammounts of columns.",

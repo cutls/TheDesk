@@ -1,7 +1,7 @@
 //トゥートの詳細
 function details(id, acct_id, tlid) {
 	$(".toot-reset").html(lang_details_nodata[lang]);
-	var html = $("#timeline_"+tlid+" #pub_" + id).html();
+	var html = $("#timeline_"+tlid+" [toot-id=" + id + "]").html();
 	$("#toot-this").html(html);
 	$('#tootmodal').modal('open');
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -87,6 +87,11 @@ function details(id, acct_id, tlid) {
 		userToot(id, acct_id, uid);
 		faved(id, acct_id);
 		rted(id, acct_id);
+		if($("#toot-this div").hasClass("cvo")){
+			$("#toot-this").removeClass("cvo");
+		}else{
+			$("#toot-this").addClass("cvo");
+		}
 		if(!$("#activator").hasClass("active")){
 			$('#det-col').collapsible('open', 1);
 		}

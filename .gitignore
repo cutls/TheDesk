@@ -2,6 +2,7 @@
 *.zip
 *.7z
 TheDesk-*
+app/build
 app/.DS_Store
 .DS_Store
 enq.md

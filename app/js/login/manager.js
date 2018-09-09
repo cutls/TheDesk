@@ -111,7 +111,6 @@ function data(domain) {
 			$("#ins-per").text(json.uptime * 100);
 			$("#ins-user").text(json.users);
 			$("#ins-ver").text(json.version);
-			$("#ins-prof").attr('src', json.thumbnail);
 		}
 	});
 	var start = "https://" + domain +"/api/v1/instance";
@@ -128,14 +127,16 @@ function data(domain) {
 	}).then(function(json) {
 		console.log(json);
 		if (!json.error) {
-			$("#ins-name").text(json.title);
-			$("#ins-desc").text(text.description);
+			$("#ins-title").text(json.title);
+			$("#ins-desc").html(json.description);
 			$("#ins-email").text(json.email);
 			$("#ins-toot").text(json.stats.status_count);
 			$("#ins-user").text(json.stats.user_count);
 			$("#ins-ver").text(json.version);
 			$("#ins-prof").attr('src', json.thumbnail);
-			$("#ins-admin").text(json.contanct_acount.username);
+			$("#ins-admin").text(json.contact_account.username);
+			$("#ins-admin").text(json.contact_account.display_name+"("+json.contact_account.acct+")");
+			$("#ins-admin").attr("href","index.html?mode=user&code="+json.contact_account.username+"@"+domain);
 		}
 	});
 }
