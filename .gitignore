@@ -1,10 +1,13 @@
 *.bat
 *.zip
 *.7z
+*.exe
 TheDesk-*
 app/build
 app/.DS_Store
 .DS_Store
+.vs/*
+.vscode/*
 enq.md
 app/.tkn
 app/node_modules

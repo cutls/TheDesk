@@ -48,9 +48,9 @@ function utl(user, more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		if(localStorage.getItem("mode_" + domain)=="misskey"){
-			var templete = misskeyParse(json, '', acct_id);
+			var templete = misskeyParse(json, '', acct_id, 'user');
 		}else{
-			var templete = parse(json, '', acct_id);
+			var templete = parse(json, '', acct_id, 'user');
 		}
 		if(!json[0]){
 			templete=lang_details_nodata[lang]+"<br>";
@@ -92,7 +92,7 @@ function pinutl(before,user, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json, '', acct_id);
+		var templete = parse(json, '', acct_id,'user');
 		if(!json[0]){
 			templete="";
 		}
@@ -278,9 +278,9 @@ function showFav(more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		if(localStorage.getItem("mode_" + domain)!="misskey"){
-			var templete = parse(json, '', acct_id);
+			var templete = parse(json, '', acct_id,'user');
 		}else{
-			var templete = misskeyParse(json, '', acct_id);
+			var templete = misskeyParse(json, '', acct_id,'user');
 		}
 		if(!json[0]){
 			templete=lang_details_nodata[lang]+"<br>";

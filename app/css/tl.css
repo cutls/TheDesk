@@ -16,17 +16,28 @@
   width:100vw;
   height:40px;
   padding:3px;
-  padding-right:40px;
+  padding-right:0;
+  padding-left:40px;
   background-color:var(--sidebar);
   display:flex;
-  flex-direction: row-reverse;
   justify-content: space-between;
   flex-wrap:wrap;
   z-index:500;
   box-shadow: 10px 0 10px 10px rgba(0, 0, 0, 0.2);
 }
+#bottom.reverse{
+  padding-left:0;
+  padding-right:40px;
+}
+.reverse{
+  flex-direction: row-reverse;
+}
 #bottom #dambox{
   width:300px; 
+  margin-right:10px;
+}
+#bottom.reverse #dambox{
+  margin-right:0;
 }
 #bottom .trendtag{
   height:40px; 
@@ -35,7 +46,7 @@
   margin-right:40px;
 }
 #bottom .leftside{
-  display:flex; flex-direction: row-reverse;
+  display:flex;
 }
 #bottom #tips img{
   vertical-align: -3px;

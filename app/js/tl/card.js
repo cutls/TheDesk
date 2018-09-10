@@ -279,9 +279,12 @@ function cardCheck(tlid) {
 function mov(id,tlid,type){
 	if(tlid=="notf"){
 		var tlide="[data-notf="+acct_id+"]";
+	}else if(tlid=="user"){
+		var tlide="#his-data";
 	}else{
 		var tlide="[tlid="+tlid+"]";
 	}
+	console.log(tlid)
 	var mouseover=localStorage.getItem("mouseover");
 	if(!mouseover){
 		mouseover="";

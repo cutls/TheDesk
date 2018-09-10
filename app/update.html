@@ -71,8 +71,8 @@ a,button,input,label,i{
         <button id="update" class="waves-effect btn" onclick="update('true')" style="margin-left:15px;">開始</button>
         <div id="checkbox">
             Options:<br>
-            <input type="checkbox" class="filled-in" id="updator" value="true" onchange="alert('zip展開時にTheDeskが固まることがありますが、しばらくお待ち下さい。')" />
-            <label for="updator">解凍も行う</label><br>
+            <input type="checkbox" class="filled-in" id="portable" value="true" />
+            <label for="portable">ポータブル版</label><br>
             <input type="checkbox" class="filled-in" id="rewrite" value="true" />
             <label for="rewrite">上書きしない</label><br>
         </div>
@@ -121,7 +121,7 @@ function update(sel){
 	}else{
         var versioning=false;
     }
-    if($('#updator:checked').val()=="true"){
+    if($('#portable:checked').val()=="true"){
 		var zip=true;
 	}else{
         var zip=false;

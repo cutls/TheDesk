@@ -6,6 +6,16 @@ function todo(mes){
 function todc(){
 	$('#message').fadeOut();
 }
+//reverse
+function bottomReverse(){
+	$("#bottom").toggleClass("reverse");
+	$(".leftside").toggleClass("reverse");
+	if($("#bottom").hasClass("reverse")){
+		localStorage.removeItem("reverse")
+	}else{
+		localStorage.setItem("reverse","true")
+	}
+}
 function tips(mode){
 	var electron = require("electron");
 	var ipc = electron.ipcRenderer;

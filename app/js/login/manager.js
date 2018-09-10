@@ -134,8 +134,7 @@ function data(domain) {
 			$("#ins-user").text(json.stats.user_count);
 			$("#ins-ver").text(json.version);
 			$("#ins-prof").attr('src', json.thumbnail);
-			$("#ins-admin").text(json.contact_account.username);
-			$("#ins-admin").text(json.contact_account.display_name+"("+json.contact_account.acct+")");
+			$("#ins-admin").text(escapeHTML(json.contact_account.display_name)+"("+json.contact_account.acct+")");
 			$("#ins-admin").attr("href","index.html?mode=user&code="+json.contact_account.username+"@"+domain);
 		}
 	});

@@ -116,7 +116,7 @@ function parseColumn() {
 			localStorage.removeItem("hasNotfC_" + acct.domain);
 		}
 		if(acct.type=="webview"){
-			var html =webview("https://mobile.twitter.com",key,insert,icnsert);
+			var html =webview("https://tweetdeck.twitter.com",key,insert,icnsert);
 			$("#timeline-container").append(html);
 		}else{
 		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
@@ -174,6 +174,10 @@ function parseColumn() {
 	var box = localStorage.getItem("box");
 	if (box == "absolute") {
 		setTimeout(show, 1000);
+	}
+	if(localStorage.getItem("reverse")){
+		$("#bottom").removeClass("reverse");
+		$(".leftside").removeClass("reverse");
 	}
 	favTag();
 	var cw = localStorage.getItem("always-cw");
@@ -357,7 +361,7 @@ function webview(url,key,insert,icnsert){
 			'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
 			'<div class="area-notice"><i class="fa fa-twitter waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
 			'<div class="area-notice_name tl-title">WebView('+url+')</div>'+
-			'<div class="area-a1"></div>'+
+			'<div class="area-sta"><input type="checkbox" id="webviewsel" value="true" class="filled-in"><label for="webviewsel">'+lang_layout_webviewmode[lang]+'</label></div>'+
 			'<div class="area-a2"><a onclick="removeColumn(' + key +
 						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_delthis[lang]+'"'+icnsert+'>cancel</i></a></div>'+
 		  '<div class="area-a3"><a onclick="setToggle(' + key +
@@ -365,7 +369,7 @@ function webview(url,key,insert,icnsert){
 		  '<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"></div><div class="column-hide notf-indv-box" id="util-box_' + key +
 		  '" style="padding:5px;">'+lang_layout_headercolor[lang]+'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:calc(100% - 110px);"><div id="timeline_' + key +
-			'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="'+url+'" style="width:100%;height:100%;" id="webview"></webview></div></div></div>';
+			'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="'+url+'" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview></div></div></div>';
 	
 	return html;
 }

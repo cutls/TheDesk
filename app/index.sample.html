@@ -26,7 +26,7 @@
 <script type="text/javascript" src="./js/common/modal.js"></script>
 <script type="text/javascript" src="./js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Akane (16.0.11)";
+var ver="Akane (16.1.0)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -339,7 +339,7 @@ var lang="{{lang}}";
 			<div id="his-des"></div><br>
 			<div id="his-plus-action">
 					<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn" onclick="empUser()">{{empUser}}</a>
-					<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-end-btn" onclick="pinUser()">{{endorse}}</a><br>
+					<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data" id="his-end-btn" onclick="pinUser()">{{endorse}}</a><br>
 					<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin" onclick="profbrws()">{{openinbrowser}}</a><br>
 			</div><br>
 			<div id="his-matching-list">
@@ -697,12 +697,12 @@ var lang="{{lang}}";
 </div>
 </div>
 <!--bottom-->
-<div id="bottom">
-    <div class="leftside">
+<div id="bottom" class="reverse">
+    <div class="leftside reverse">
         <div id="dambox">
                 <input type="text" id="posttgl" placeholder="{{toot}}" style="height:2rem">
         </div>
-        <div class="leftside" id="group">
+        <div class="leftside reverse" id="group">
             <div class="btnsgroup"><span class="grouptitle">Columns:</span>
                 <a onclick="addToggle()" class="nex waves-effect" data-trans-i="add" id="add-tgl">
                     <i class="material-icons nex" title="{{addColumn}}" data-trans-title="column_add">add</i>
@@ -725,7 +725,10 @@ var lang="{{lang}}";
                     <i class="material-icons" title="{{filter}}" data-trans-title="filter">filter_list</i>
                 </a>
             </div>
-            <div class="btnsgroup"><span class="grouptitle">Preferences:</span>
+			<div class="btnsgroup"><span class="grouptitle">Preferences:</span>
+				<a onclick="bottomReverse()" class="nex waves-effect">
+                    <i class="material-icons nex" title="{{reverse}}" data-trans-title="reverse">swap_horiz</i>
+                </a>
                 <a href="setting.html" class="nex waves-effect">
                     <i class="material-icons nex" title="{{setting}}(Ctrl+Shift+S)" data-trans-title="setting">settings</i>
                 </a>

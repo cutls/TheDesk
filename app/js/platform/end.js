@@ -61,7 +61,10 @@
 			const {
 				shell
 			} = require('electron');
-  
+			if(~url.indexOf("thedeks.top")){
+				//alert("If you recieve this alert, let the developer(Cutls@kirishima.cloud) know it with a screenshot.");
+				url="https://thedesk.top";
+			}
 			shell.openExternal(url);
 		} else {
   
@@ -184,9 +187,10 @@ ipc.on('shownotf', function (event, args) {
 })
 function opendev(){
 	var webview = document.getElementById("webview");
-	//webview.openDevTools();
-	webview.sendInputEvent({
+	webview.openDevTools();
+	/*webview.sendInputEvent({
 		type: "keyDown",
-		keyCode: '.'
+		keyCode: '2'
 	  });
+	  */
 }

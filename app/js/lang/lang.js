@@ -385,6 +385,10 @@ var lang_layout_dm={
     "ja":"ダイレクトメッセージ",
     "en":"Direct Message"
 }
+var lang_layout_webviewmode={
+    "ja":"WebView優先",
+    "en":"Prefer WebView"
+}
 //ui/spotify.js
 var lang_spotify_img={
     "ja":"アルバムアートワークを添付します。",

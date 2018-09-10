@@ -221,13 +221,20 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					var ipc = electron.ipcRenderer;
 					var os = electron.remote.process.platform;
 					var options = {
-						body: toot.user.name+"(" + toot.user.username +")"+what+"\n\n"+$.strip_tags(toot.note.text),
-						icon: toot.user.avatarUrl
+						body: toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),
+						icon: toot.account.avatar
 					  };
 					if(os=="darwin"){
 						var n = new Notification('TheDesk:'+domain, options);
 					}else{
-						ipc.send('native-notf', ['TheDesk:'+domain,toot.user.name+"(" + toot.user.acct +")"+what+"\n\n"+$.strip_tags(toot.note.text),toot.user.avatarUrl]);
+						ipc.send('native-notf', [
+							'TheDesk:'+domain,
+							toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),
+							toot.account.avatar,
+							"toot",
+							acct_id,
+							toot.status.id
+						]);
 					}
 				}
 				if(localStorage.getItem("hasNotfC_" + acct_id)!="true"){
@@ -751,6 +758,32 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 				$(".notf-icon_" + tlid).addClass("red-text");
 				localStorage.setItem("notice-mem", notftext);
 				notftext = "";
+				var native=localStorage.getItem("nativenotf");
+				if(!native){
+					native="yes";
+				}
+				if(native=="yes"){
+					var electron = require("electron");
+					var ipc = electron.ipcRenderer;
+					var os = electron.remote.process.platform;
+					var options = {
+						body: toot.display_name+"(" + toot.acct +")"+ftxt,
+						icon: toot.avatar
+					  };
+					  var domain = localStorage.getItem("domain_" + acct_id);
+					if(os=="darwin"){
+						var n = new Notification('TheDesk:'+domain, options);
+					}else{
+						ipc.send('native-notf', [
+							'TheDesk:'+domain,
+							toot.display_name+"(" + toot.acct +")"+ftxt,
+							toot.avatar,
+							"userdata",
+							acct_id,
+							toot.id
+						]);
+					}
+				}
 			}
 			if(toot.name){
 				var dis_name=escapeHTML(toot.name);
