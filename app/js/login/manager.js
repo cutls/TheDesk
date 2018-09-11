@@ -61,14 +61,10 @@ function load() {
           var remote=electron.remote;
           var platform=remote.process.platform;
 	    if(platform=="win32"){
-           
+
         }else{
 			$("#linux").prop("checked", true);
 		}
-	ipc.send('mkc', "");
-	ipc.on('mkcr', function (event, arg) {
-		localStorage.setItem("mkc",arg)
-	})
 
 }
 //最初に読む
@@ -336,8 +332,8 @@ function misskeyLogin(url) {
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.responseType = 'json';
 	localStorage.setItem("msky","true");
-	if(url=="misskey.xyz"){
-		var mkc=localStorage.getItem("mkc");
+	if(url=="misskey.xyz" && misskeytoken){
+		var mkc=misskeytoken;
 	}else{
 		var mkc=$("#misskey-key").val();
 		localStorage.setItem("mkc",mkc)

@@ -21,11 +21,11 @@ Contact me(bug report...):GitHub Issues, mention to [Cutls@kirishima.cloud](http
 ### Translation/翻訳
 
 The Developer needs nice translation of TheDesk!  
-Pull Request to `language/*.json` and `js/lang/*.js`.  
+Pull Request to `/app/view/make/language/*.json` and `/app/js/lang/*.js`.  
 You cannot PR? You can also write Issues.  
   
 翻訳を募集しております.特に英語に関しては文法語法的に間違っている箇所が多いので,  
-`language/*.json` と `js/lang/*.js`にプルリクエストするか,  
+`/app/view/make/language/*.json` と `/app/js/lang/*.js`にプルリクエストするか,  
 該当箇所がわからない場合はIssuesに書いてください.  
 他言語も大歓迎です！  
 

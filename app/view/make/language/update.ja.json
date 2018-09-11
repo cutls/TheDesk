@@ -1,8 +1,7 @@
 {
     "updatehere":"アップデートがあります",
     "download":"開始",
-    "plusunzip":"解凍も行う",
-    "winzip":"zip展開時にTheDeskが固まることがありますが、しばらくお待ち下さい。",
+    "portable":"ポータブル版",
     "unrewrite":"上書きしない",
     "sureupd":"アップデートは必ず行ってください",
     "skipupd":"アップデートをスキップする",

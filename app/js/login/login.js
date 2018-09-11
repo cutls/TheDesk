@@ -443,7 +443,7 @@ function multiSelector() {
 				$("#textarea").attr("data-length", idata[domain+"_letters"])
 			}else{
 				var maxletters = localStorage.getItem("letters_" + key);
-				if(maxletters){
+				if(maxletters>0){
 					$("#textarea").attr("data-length", maxletters)
 				}else{
 					$("#textarea").attr("data-length", 500)

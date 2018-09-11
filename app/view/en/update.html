@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <title>Update - TheDesk</title>
-<link href="./css/materialize.css" type="text/css" rel="stylesheet">
-<link href="./css/master.css" type="text/css" rel="stylesheet">
+<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
+<link href="../../css/master.css" type="text/css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 <meta charset="utf-8">
 </head>
@@ -56,44 +56,44 @@ a,button,input,label,i{
     font-size:200%;
 }
 </style>
-<script type="text/javascript" src="./js/common/jquery.js"></script>
-<script type="text/javascript" src="./js/platform/first.js"></script>
-<script type="text/javascript" src="./js/common/materialize.js"></script>
+<script type="text/javascript" src="../../js/common/jquery.js"></script>
+<script type="text/javascript" src="../../js/platform/first.js"></script>
+<script type="text/javascript" src="../../js/common/materialize.js"></script>
 <i class="material-icons pointer waves-effect" onclick="about();">info</i>
 <i class="material-icons pointer waves-effect" onclick="skipper();">clear</i>
 <!--a href="update.html">Reload</a-->
 <div id="start">
     <div id="box" class="show">
         <h2>TheDesk</h2>
-        <p>{{updatehere}}</p>
+        <p>Get latest TheDesk</p>
         <span id="now"></span>→<b id="ver"></b><br>
         <span id="det"></span><br>
-        <button id="update" class="waves-effect btn" onclick="update('true')" style="margin-left:15px;">{{download}}</button>
+        <button id="update" class="waves-effect btn" onclick="update('true')" style="margin-left:15px;">Start</button>
         <div id="checkbox">
             Options:<br>
-            <input type="checkbox" class="filled-in" id="updator" value="true" onchange="alert('{{winzip}}')" />
-            <label for="updator">{{plusunzip}}</label><br>
+            <input type="checkbox" class="filled-in" id="portable" value="true" />
+            <label for="portable">Poetable ver.</label><br>
             <input type="checkbox" class="filled-in" id="rewrite" value="true" />
-            <label for="rewrite">{{unrewrite}}</label><br>
+            <label for="rewrite">Not rewrite</label><br>
         </div>
-        {{problem1}}<br>{{problem2}}
+        Some problems?<br>Please download on <a href="https://thedesk.top">Oficial HP</a>.
     </div>
     <div id="skipper" class="hide">
-        <h4>{{sureupd}}</h4>
-        {{skipupd}}<br>
+        <h4>You may lose a cool experience!</h4>
+        Skip this update<br>
         <div id="updskip">
-                <a onclick="window.close();" class="pointer skipbtn waves-effect waves-light"><div>{{nexttl}}</div></a>
-                <a onclick="nextv();" class="pointer skipbtn waves-effect waves-light"><div>{{nextver}}</div></a>
+                <a onclick="window.close();" class="pointer skipbtn waves-effect waves-light"><div>Until next TL loading</div></a>
+                <a onclick="nextv();" class="pointer skipbtn waves-effect waves-light"><div>Until next version</div></a>
         </div>
-        <a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">{{continue}}</a>
+        <a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">Continue updating</a>
     </div>
     <div id="dlnow" class="hide">
-        <h4>{{dlnow}}</h4>
+        <h4>Downloading...</h4>
         <h4 id="prog"></h4>
     </div>
 </div>
-<script type="text/javascript" src="./js/common/about.js"></script>
-  <script type="text/javascript" src="./js/platform/end.js"></script>
+<script type="text/javascript" src="../../js/common/about.js"></script>
+  <script type="text/javascript" src="../../js/platform/end.js"></script>
 <script>
 function skipper(){
     $("#dlnow").addClass("hide");
@@ -121,7 +121,7 @@ function update(sel){
 	}else{
         var versioning=false;
     }
-    if($('#updator:checked').val()=="true"){
+    if($('#portable:checked').val()=="true"){
 		var zip=true;
 	}else{
         var zip=false;
@@ -144,7 +144,7 @@ function verck(){
     var remote=electron.remote;
 	var platform=remote.process.platform;
 	if(platform!="win32"){
-		$('#updator').prop("disabled",true)
+		$('#portable').prop("disabled",true)
 	}
 	var start="https://thedesk.top/ver.json";
 	fetch(start, {

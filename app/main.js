@@ -22,6 +22,7 @@ const join = require('path').join;
 let mainWindow;
 var info_path = join(app.getPath("userData"), "window-size.json");
 var max_info_path = join(app.getPath("userData"), "max-window-size.json");
+var lang_path=join(app.getPath("userData"), "language");
 var tmp_img = join(app.getPath("userData"), "tmp.png");
 var window_size;
 try {
@@ -62,6 +63,17 @@ function createWindow() {
 		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,simpleFullscreen:true}
 	}
 	mainWindow = new BrowserWindow(arg);
+	try {
+		var lang = fs.readFileSync(lang_path, 'utf8');
+	} catch (e) {
+		var lang=app.getLocale();
+		if(~lang.indexOf("ja")){
+			lang="ja";
+		}else{
+			lang="en";
+		}
+		fs.writeFileSync(lang_path,lang);
+	}
 	electron.session.defaultSession.clearCache(() => {})
 	if(process.argv){
 		if(process.argv[1]){
@@ -69,18 +81,17 @@ function createWindow() {
 			if(m){
 				var mode=m[1];
 				var code=m[2];
-				mainWindow.loadURL('file://' + __dirname + '/index.html?mode='+mode+'&code='+code);
+				var plus='?mode='+mode+'&code='+code;
 			}else{
-				//mainWindow.loadURL('file://' + __dirname + '/index.html?mode=share&code=日本語');
-				mainWindow.loadURL('file://' + __dirname + '/index.html');
+				var plus="";
 			}
 		}else{
-			mainWindow.loadURL('file://' + __dirname + '/index.html');
+			var plus="";
 		}
-	
 	}else{
-		mainWindow.loadURL('file://' + __dirname + '/index.html');
+		var plus="";
 	}
+	mainWindow.loadURL('file://' + __dirname + '/view/'+lang+'/index.html'+plus);
 	if(!window_size.x && !window_size.y){
 		mainWindow.center();
 	}
@@ -199,50 +210,7 @@ ipc.on('native-notf', function(e, args) {
 });
 //言語
 ipc.on('lang', function(e, arg) {
-	//index.html
-	var indextemp=fs.readFileSync(__dirname + '/index.sample.html', 'utf8');
-	var indexjson=JSON.parse(fs.readFileSync(__dirname + '/language/index.'+arg+'.json', 'utf8'));
-	Object.keys(indexjson).forEach(function(indexkey) {
-		var regExp = new RegExp("{{" + indexkey + "}}", "g");
-		indextemp = indextemp.replace(regExp, indexjson[indexkey]);
-	});
-	var regExp = new RegExp("{{lang}}", "g");
-	indextemp = indextemp.replace(regExp, arg);
-	fs.writeFileSync(__dirname + '/index.html',indextemp);
-
-	//acct.html
-	var accttemp=fs.readFileSync(__dirname + '/acct.sample.html', 'utf8');
-	var acctjson=JSON.parse(fs.readFileSync(__dirname + '/language/acct.'+arg+'.json', 'utf8'));
-	Object.keys(acctjson).forEach(function(acctkey) {
-		var regExp = new RegExp("{{" + acctkey + "}}", "g");
-		accttemp = accttemp.replace(regExp, acctjson[acctkey]);
-	});
-	var regExp = new RegExp("{{lang}}", "g");
-	accttemp = accttemp.replace(regExp, arg);
-	fs.writeFileSync(__dirname + '/acct.html',accttemp);
-
-	//setting.html
-	var settingtemp=fs.readFileSync(__dirname + '/setting.sample.html', 'utf8');
-	var settingjson=JSON.parse(fs.readFileSync(__dirname + '/language/setting.'+arg+'.json', 'utf8'));
-	Object.keys(settingjson).forEach(function(settingkey) {
-		var regExp = new RegExp("{{" + settingkey + "}}", "g");
-		settingtemp = settingtemp.replace(regExp, settingjson[settingkey]);
-	});
-	var regExp = new RegExp("{{lang}}", "g");
-	settingtemp = settingtemp.replace(regExp, arg);
-	fs.writeFileSync(__dirname + '/setting.html',settingtemp);
-
-	//update.html
-	var updatetemp=fs.readFileSync(__dirname + '/update.sample.html', 'utf8');
-	var updatejson=JSON.parse(fs.readFileSync(__dirname + '/language/update.'+arg+'.json', 'utf8'));
-	Object.keys(updatejson).forEach(function(updatekey) {
-		var regExp = new RegExp("{{" + updatekey + "}}", "g");
-		updatetemp = updatetemp.replace(regExp, updatejson[updatekey]);
-	});
-	var regExp = new RegExp("{{lang}}", "g");
-	updatetemp = updatetemp.replace(regExp, arg);
-	fs.writeFileSync(__dirname + '/update.html',updatetemp);
-	console.log("done");
+	fs.writeFileSync(lang_path,arg);
 	mainWindow.webContents.send('langres', "");
 })
 
@@ -257,7 +225,8 @@ ipc.on('update', function(e, x, y) {
 		"frame": false, // 枠の無いウィンドウ
 		"resizable": false
 	});
-	updatewin.loadURL('file://' + __dirname + '/update.html');
+	var lang = fs.readFileSync(lang_path, 'utf8');
+	updatewin.loadURL('file://' + __dirname + '/view/'+lang+'/update.html');
 
 	return "true"
 	}else{
@@ -309,11 +278,23 @@ ipc.on('download-btn', (e, args) => {
 	var platform=process.platform;
 	var bit=process.arch;
 	var versioning=args[3];
+	var portable=args[2];
 	if(platform=="win32" || platform=="linux" || platform=="darwin" ){
+		var exe=false;
 		if(platform=="win32" && bit=="x64"){
-			var zip="TheDesk-win32-x64.zip";
+			if(portable){
+				var zip="TheDesk.exe";
+			}else{
+				var zip="TheDesk-setup.exe";
+			}
+			exe=true;
 		}else if(platform=="win32" && bit=="ia32"){
-			var zip="TheDesk-win32-ia32.zip";
+			if(portable){
+				var zip="TheDesk-ia32.exe";
+			}else{
+				var zip="TheDesk-setup-ia32.exe";
+			}
+			exe=true;
 		}else if(platform=="linux" && bit=="x64"){
 			var zip="TheDesk-linux-x64.zip";
 		}else if(platform=="linux" && bit=="ia32"){
@@ -323,8 +304,10 @@ ipc.on('download-btn', (e, args) => {
 		}else{
 			return;
 		}
-		if(versioning){
+		if(versioning && !exe){
 			zip=zip.replace(".zip","."+args[1]+".zip");
+		}else if(versioning){
+			zip=zip.replace(".exe","."+args[1]+".exe");
 		}
 	}else{
 		const options = {
@@ -344,7 +327,6 @@ ipc.on('download-btn', (e, args) => {
 		}
 	}
 	var ver=args[1];
-	var unzipper=args[2];
 	
 	console.log(zip);
 	if(args[0]=="true"){
@@ -368,10 +350,10 @@ ipc.on('download-btn', (e, args) => {
 				fs.unlink(savedFiles);
 			  }
 			  console.log(m[1]+":"+savedFiles)
-            dl(unzipper,ver,m[1],savedFiles);
+              dl(portable,ver,m[1],savedFiles);
         });
 	}else{
-		dl(unzipper,ver);
+		dl(portable,ver);
 	}
 	
 });
@@ -383,15 +365,23 @@ function isExistFile(file) {
 	  if(err.code === 'ENOENT') return false
 	}
   }
-function dl(unzipper,ver,files,fullname){
+function dl(portable,ver,files,fullname){
 	console.log(files);
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="win32"){
 		if(bit=="x64"){
-			var zip="TheDesk-win32-x64.zip";
+			if(portable){
+				var zip="TheDesk.exe";
+			}else{
+				var zip="TheDesk-setup.exe";
+			}
 		}else if(bit=="ia32"){
-			var zip="TheDesk-win32-ia32.zip";
+			if(portable){
+				var zip="TheDesk-ia32.exe";
+			}else{
+				var zip="TheDesk-setup-ia32.exe";
+			}
 		}
 	}else if(platform=="linux"){
 		if(bit=="x64"){
@@ -416,7 +406,7 @@ function dl(unzipper,ver,files,fullname){
 
 	updatewin.webContents.send('mess', "ダウンロードを開始します。");
 	const opts = {
-		directory:files,
+		directory:fullname,
 		openFolderWhenDone: true,
 		onProgress: function(e) {
 			updatewin.webContents.send('prog', e);
@@ -427,26 +417,7 @@ function dl(unzipper,ver,files,fullname){
 			'https://dl.thedesk.top/'+zip, opts)
 		.then(dl => {
 			updatewin.webContents.send('mess', "ダウンロードが完了しました。");
-			if(unzipper && platform=="win32"){
-				mainWindow.webContents.send('mess', "unzip");
-				console.log(files+"/"+zip);
-				fs.rename(files+"/"+zip, app.getPath("userData")+"/TheDesk-temp.zip", function (err) {
-					var AdmZip = require('adm-zip');
-					var zipp = new AdmZip(app.getPath("userData")+"/TheDesk-temp.zip");
-					zipp.extractAllTo(app.getPath("userData")+"/",true);
-					var bat='@echo off\nrmdir  /s /q "'+files+'\\TheDesk-win32-'+bit+'" /Q\nmove /Y "'+app.getPath("userData")+'\\TheDesk-win32-'+bit+'" "'+files+'\\"\nstart '+files+'\\TheDesk-win32-'+bit+'\\TheDesk.exe\nexit';
-					fs.writeFile(app.getPath("userData")+"/update.bat",bat,function(err){
-						const exec = require('child_process').exec;
-					exec('start '+app.getPath("userData")+"\\update.bat", (err, stdout, stderr) => {
-						app.quit();
-						  if (err) { console.log(err); }
-						  console.log(stdout);
-						});
-					 });
-			})
-			}else{
-				app.quit();
-			}
+			app.quit();
 			
 		})
 		.catch(console.error);
@@ -490,8 +461,8 @@ ipc.on('about', (e, args) => {
 function about(){
 	var ver=app.getVersion()
 	var window = new BrowserWindow({width: 300, height: 460,
-		"transparent": false,    // ウィンドウの背景を透過
-			 "frame": false,     // 枠の無いウィンドウ
+			"transparent": false,    // ウィンドウの背景を透過
+			"frame": false,     // 枠の無いウィンドウ
 			 "resizable": false });
 	   window.loadURL('file://' + __dirname + '/about.html?ver='+ver);
 	   return "true"

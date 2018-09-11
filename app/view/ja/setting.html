@@ -3,18 +3,18 @@
 <head>
 	<title>Settings - TheDesk</title>
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
-	<link href="./css/materialize.css" type="text/css" rel="stylesheet">
-	<link href="./css/themes.css" type="text/css" rel="stylesheet">
-	<link href="./css/master.css" type="text/css" rel="stylesheet">
-	<link href='./css/font-awesome.css' rel='stylesheet' type='text/css'>
+	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
+	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<link href="../../css/master.css" type="text/css" rel="stylesheet">
+	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 	<meta charset="utf-8">
 </head>
 <body id="mainView" style="overflow-y:scroll">
-<script type="text/javascript" src="./js/common/jquery.js"></script>
-<script type="text/javascript" src="./js/platform/first.js"></script>
-<script type="text/javascript" src="./js/common/materialize.js"></script>
-<script type="text/javascript" src="./js/lang/setting.lang.js"></script>
+<script type="text/javascript" src="../../js/common/jquery.js"></script>
+<script type="text/javascript" src="../../js/platform/first.js"></script>
+<script type="text/javascript" src="../../js/common/materialize.js"></script>
+<script type="text/javascript" src="../../js/lang/setting.lang.js"></script>
 <script>var lang="ja";</script>
 <h4>設定</h4>
 <ul class="collapsible" data-collapsible="accordion">
@@ -24,7 +24,7 @@
 	</div>
 	<div class="collapsible-body">
 		<h5>言語</h5>
-		<a href="language.html" class="btn waves-effect indigo nex" style="width:100%; max-width:200px;">変更</a><br>
+		<a onclick="changelang('ja')" class="pointer">日本語</a>/<a onclick="changelang('en')" class="pointer">English</a>
 		<h5>設定のインポートとエクスポート</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">エクスポート</button>
 		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">インポート</button>
@@ -366,8 +366,8 @@
 <a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>支援(Enty)</a>
 <a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>ヘルプ/Docs(Constructing)</a>
 <a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
-<a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="./img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
-<a class="btn waves-effect red lighten-2" href="https://osushi.love/Cutls_P" target="_blank" style="width:100%; max-width:500px;"><img src="./img/sushi.svg" class="left" width="25" style="padding-top:5px;">寿司を投げる</a>
+<a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
+<a class="btn waves-effect red lighten-2" href="https://osushi.love/Cutls_P" target="_blank" style="width:100%; max-width:500px;"><img src="../../img/sushi.svg" class="left" width="25" style="padding-top:5px;">寿司を投げる</a>
 <br>
 <a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">アップデートを確認</a><br>
 <a href="oss.html">OSS License(オープンソースライセンス)</a><br>
@@ -379,12 +379,12 @@
 </span><br>
 TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
 タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
-<script type="text/javascript" src="./js/common/about.js"></script>
-<script type="text/javascript" src="./js/platform/end.js"></script>
-<script type="text/javascript" src="./js/login/logout.js"></script>
-<script type="text/javascript" src="./js/lang/lang.js"></script>
-<script type="text/javascript" src="./js/ui/spotify.js"></script>
-<script type="text/javascript" src="./js/tl/speech.js"></script>
-<script type="text/javascript" src="./js/ui/settings.js"></script>
-<script type="text/javascript" src="./js/ui/theme.js"></script>
-<script type="text/javascript" src="./js/tl/date.js"></script>
+<script type="text/javascript" src="../../js/common/about.js"></script>
+<script type="text/javascript" src="../../js/platform/end.js"></script>
+<script type="text/javascript" src="../../js/login/logout.js"></script>
+<script type="text/javascript" src="../../js/lang/lang.js"></script>
+<script type="text/javascript" src="../../js/ui/spotify.js"></script>
+<script type="text/javascript" src="../../js/tl/speech.js"></script>
+<script type="text/javascript" src="../../js/ui/settings.js"></script>
+<script type="text/javascript" src="../../js/ui/theme.js"></script>
+<script type="text/javascript" src="../../js/tl/date.js"></script>

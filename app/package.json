@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "16.1.0",
+  "version": "16.1.1",
   "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {
@@ -44,9 +44,7 @@
     "win": {
       "icon": "thedesk.ico",
       "target": [
-        "nsis",
-        "portable",
-        "msi"
+        "nsis","portable"
       ]
     },
     "linux": {

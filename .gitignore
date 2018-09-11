@@ -4,6 +4,7 @@
 *.exe
 TheDesk-*
 app/build
+make.js
 app/.DS_Store
 .DS_Store
 .vs/*
@@ -11,3 +12,4 @@ app/.DS_Store
 enq.md
 app/.tkn
 app/node_modules
+app/js/login/tkn.js

@@ -142,6 +142,9 @@ iframe {
   grid-template-columns: 43px 2fr 1fr;
   grid-template-areas: 'notice notice notice' 'icon display_name display_name' 'icon toot toot' 'vis additional additional' 'actions actions side';
 }
+.cvo h1,.cvo h2,.cvo h3,.cvo h4,.cvo h5,.cvo h6{
+  margin:0;
+}
 
 .area-notice {
 margin:2px;

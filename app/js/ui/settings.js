@@ -475,6 +475,14 @@ function oksload(){
 	if(localStorage.getItem("oks-2")){$("#oks-2").val(localStorage.getItem("oks-2"))}
 	if(localStorage.getItem("oks-3")){$("#oks-3").val(localStorage.getItem("oks-3"))}
 }
+function changelang(lang){
+	var electron = require("electron");
+	var ipc = electron.ipcRenderer;
+	ipc.send('lang',lang);
+	ipc.on('langres', function (event, arg) {
+		location.href="../"+lang+"/setting.html"
+	});
+}
 function exportSettings(){
 	if(!confirm(lang_setting_exportwarn[lang])){
 		return false;
