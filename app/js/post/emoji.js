@@ -12,6 +12,11 @@ function emoji() {
 	}
 	localStorage.setItem("cursor", selin);
 	if ($("#emoji").hasClass("hide")) {
+		if($("#bottom").hasClass("reverse")){
+			$('#emoji').css("left",$('#post-box').offset().left-295+"px");
+		}else{
+			$('#emoji').css("left",$('#post-box').offset().left+295+"px");
+		}
 		$("#emoji").removeClass("hide")
 		if (!localStorage.getItem("emoji_" + acct_id)) {
 			var html =
@@ -143,42 +148,3 @@ function brInsert(code) {
 	$("#textarea").val(now + code);
 	$("#textarea").focus();
 }
-
-//入力時に絵文字をサジェスト
-var etimer = null;
-
-var einput = document.getElementById("emoji-suggest");
-
-var prev_val = einput.value;
-var oldSuggest;
-var suggest;
-einput.addEventListener("focus", function() {
-	$(".emoji-control").addClass("hide");
-	$("#suggest").html("");
-	window.clearInterval(etimer);
-	etimer = window.setInterval(function() {
-		var new_val = einput.value;
-		var html="";
-		if (prev_val != new_val && new_val.length > 3) {
-			var obj = JSON.parse(localStorage.getItem("emoji_" + acct_id));
-			var num = obj.length;
-			for (i = 0; i < num; i++) {
-				var emoji = obj[i];
-				if ( ~emoji.shortcode.indexOf(new_val)) {
-					//strにhogeを含む場合の処理
-					if (emoji) {
-					html = html + '<a onclick="emojiInsert(\':' + emoji.shortcode +
-						': \')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
-					}
-				}
-				}
-		$("#emoji-list").html(html+'<br><a onclick="customEmoji()" class="pointer waves-effect">リセット</a>');
-		};
-		oldSuggest = suggest;
-		prev_value = new_val;
-	}, 1000);
-}, false);
-
-einput.addEventListener("blur", function() {
-	window.clearInterval(etimer);
-}, false);

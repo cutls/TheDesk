@@ -126,7 +126,7 @@ var lang="ja";
 		<a class="waves-effect gray" id="cw" onclick="cw()" title="コンテンツワーニング(トゥートを表示する前にメッセージで隠す)">CW</a>
 		<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray" onclick="fileselect()" title="ファイルを選択">photo_library</i></span></span>
 		<i class="waves-effect gray material-icons" onclick="adobe()" title="Adobeフォトエディタ">format_shapes</i>
-		<i class="waves-effect gray material-icons" onclick="emoji()" title="絵文字を挿入">tag_faces</i>
+		<i class="waves-effect gray material-icons" onclick="emoji()" id="emojibtn" title="絵文字を挿入">tag_faces</i>
 		<a class="pointer waves-effect gray" id="npbtn" title="NowPlaying[クリックでSpotify(アカウント連携が必要です)/control+クリックでiTunes(macOSが必要です)]"><i class="material-icons" style="font-size:24px;">music_note</i></a>
 		<i class="material-icons nex gray waves-effect" title="トゥートボックスのクリア(Ctrl+Shit+C)" data-trans-title="post_box_clear" id="clear">clear</i>
 </div>
@@ -180,7 +180,6 @@ var lang="ja";
 		<i class="material-icons waves-effect" onclick="emoji()" title="このボックスを閉じる" data-trans-title="post_box_close">cancel</i>
 	<br>
 	</span>
-	<input type="text" id="emoji-suggest" placeholder="カスタム絵文字 検索">
 	<div id="emoji-list" class="" style="">
 	</div>
 	<div class="emoji-control center">

@@ -126,7 +126,7 @@ var lang="{{lang}}";
 		<a class="waves-effect gray" id="cw" onclick="cw()" title="{{cwDes}}">CW</a>
 		<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray" onclick="fileselect()" title="{{selfile}}">photo_library</i></span></span>
 		<i class="waves-effect gray material-icons" onclick="adobe()" title="{{adobephoto}}">format_shapes</i>
-		<i class="waves-effect gray material-icons" onclick="emoji()" title="{{insertEmoji}}">tag_faces</i>
+		<i class="waves-effect gray material-icons" onclick="emoji()" id="emojibtn" title="{{insertEmoji}}">tag_faces</i>
 		<a class="pointer waves-effect gray" id="npbtn" title="{{NowPlayingDes}}"><i class="material-icons" style="font-size:24px;">music_note</i></a>
 		<i class="material-icons nex gray waves-effect" title="{{clearToot}}(Ctrl+Shit+C)" data-trans-title="post_box_clear" id="clear">clear</i>
 </div>
@@ -180,7 +180,6 @@ var lang="{{lang}}";
 		<i class="material-icons waves-effect" onclick="emoji()" title="{{closeThisBox}}" data-trans-title="post_box_close">cancel</i>
 	<br>
 	</span>
-	<input type="text" id="emoji-suggest" placeholder="{{customEmoji}} {{search}}">
 	<div id="emoji-list" class="" style="">
 	</div>
 	<div class="emoji-control center">

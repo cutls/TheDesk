@@ -126,7 +126,7 @@ var lang="en";
 		<a class="waves-effect gray" id="cw" onclick="cw()" title="Hide text behind warning">CW</a>
 		<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray" onclick="fileselect()" title="Attach..">photo_library</i></span></span>
 		<i class="waves-effect gray material-icons" onclick="adobe()" title="Adobe Photo Editor">format_shapes</i>
-		<i class="waves-effect gray material-icons" onclick="emoji()" title="Emojis">tag_faces</i>
+		<i class="waves-effect gray material-icons" onclick="emoji()" id="emojibtn" title="Emojis">tag_faces</i>
 		<a class="pointer waves-effect gray" id="npbtn" title="NowPlaying[Click to insert info of Spotify(account link is required.)/control+click to insert that of iTunes(macOS)]"><i class="material-icons" style="font-size:24px;">music_note</i></a>
 		<i class="material-icons nex gray waves-effect" title="Clear toot box(Ctrl+Shit+C)" data-trans-title="post_box_clear" id="clear">clear</i>
 </div>
@@ -180,7 +180,6 @@ var lang="en";
 		<i class="material-icons waves-effect" onclick="emoji()" title="Close this box" data-trans-title="post_box_close">cancel</i>
 	<br>
 	</span>
-	<input type="text" id="emoji-suggest" placeholder="Custom emojis Search">
 	<div id="emoji-list" class="" style="">
 	</div>
 	<div class="emoji-control center">

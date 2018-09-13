@@ -40,7 +40,7 @@ function defaultEmoji(target){
     var emojis="";
     Object.keys(json).forEach(function(key) {
         var emoji = json[key];
-        emojis = emojis + '<a onclick="defEmoji(\''+emoji["shortcode"]+'\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'./img/sheet.png\'); background-size: 4900%; background-position: '+emoji["css"]+';"></span></a>';
+        emojis = emojis + '<a onclick="defEmoji(\''+emoji["shortcode"]+'\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'../../img/sheet.png\'); background-size: 4900%; background-position: '+emoji["css"]+';"></span></a>';
     });
     $("#emoji-list").html(emojis);
     $("#now-emoji").text(lang_defaultemojis_text.replace("{{cat}}" ,defaultemojiname[target]));
@@ -52,14 +52,10 @@ function customEmoji(){
     emojiList('home')
 }
 function defEmoji(target){
-    if(target=="thinking_face"){
-        target="thinking";
-    }
-    //var emoji=emojione.shortnameToUnicode(":"+target+":");
-    var emojiraw = emojisc.emojis.filter(function(item, index){
-        if (item.shortname == ':'+target+":") return true;
-      });
-    var emoji=emojiraw[0].emoji;
+    var emojiraw = newpack.filter(function(item, index){
+     if (item.short_name == target) return true;
+    });
+    emoji=twemoji.convert.fromCodePoint(emojiraw[0].unified);
     var now = $("#textarea").val();
     var selin = localStorage.getItem("cursor");
     var now = $("#textarea").val();
@@ -77,7 +73,7 @@ function defEmoji(target){
 	    if(!selin){
 	    	selin=0;
 	    }
-	        localStorage.setItem("cursor", selin);
+	   localStorage.setItem("cursor", selin);
 }
 function faicon(){
     var json=faicons;

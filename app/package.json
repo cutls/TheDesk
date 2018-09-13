@@ -44,7 +44,8 @@
     "win": {
       "icon": "thedesk.ico",
       "target": [
-        "nsis","portable"
+        "nsis",
+        "portable"
       ]
     },
     "linux": {
@@ -55,9 +56,9 @@
       ],
       "category": "Network"
     },
-    "electronDownload":{
-      "version":"2.0.7"
+    "electronDownload": {
+      "version": "2.0.7"
     },
-    "electronVersion":"2.0.7"
+    "electronVersion": "2.0.7"
   }
 }

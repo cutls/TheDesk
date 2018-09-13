@@ -1,7 +1,10 @@
 //左下のメッセージ
+var todcTrigger=null;
 function todo(mes){
+	clearInterval(todcTrigger);
 	$('#message').text(mes);
 	$('#message').fadeIn();
+	todcTrigger=setTimeout(todc, 4000);
 }
 function todc(){
 	$('#message').fadeOut();
@@ -24,7 +27,7 @@ function tips(mode){
 	clearInterval(spotStart);
 	if(mode=="ver"){
 		tipsToggle()
-		$("#tips-text").html('<img src="../../img/desk.png" width="20"><span style="font-size:20px">TheDesk</span> '+localStorage.getItem("ver")+'[<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]')
+		$("#tips-text").html('<img src="../../img/desk.png" width="20" onclick="todo(\'!TheDesk! It\\\'s a nice client!\')"><span style="font-size:20px">TheDesk</span> '+localStorage.getItem("ver")+'[<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]')
 		localStorage.setItem("tips","ver")
 	}else if(mode=="clock"){
 		tipsToggle()
