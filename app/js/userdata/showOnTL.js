@@ -105,6 +105,7 @@ function udg(user, acct_id) {
 			fer(json.id, '', acct_id);
 			var dis_name=escapeHTML(json.display_name);
 			dis_name=twemoji.parse(dis_name);
+			var note=json.note;
 			if(json.emojis){
 				var actemojick = json.emojis[0];
 			}else{
@@ -119,6 +120,7 @@ function udg(user, acct_id) {
 					'" class="emoji-img" data-emoji="'+shortcode+'">';
 					var regExp = new RegExp(":" + shortcode + ":", "g");
 					dis_name = dis_name.replace(regExp, emoji_url);
+					note = note.replace(regExp, emoji_url);
 				});
 			}
 			$("#his-name").html(dis_name);
@@ -131,10 +133,9 @@ function udg(user, acct_id) {
 			$("#his-follower").text(json.followers_count);
 			$("#his-since").text(crat(json.created_at));
 			$("#his-openin").attr("data-href", json.url);
-			var note=json.note;
 			if(json.fields){
 				if(json.fields.length>0){
-					var note=json.note+'<table id="his-field">'
+					note=note+'<table id="his-field">'
 					for(var i=0;i<json.fields.length;i++){
 						var fname=json.fields[i].name;
 						var fval=json.fields[i].value;

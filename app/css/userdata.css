@@ -85,3 +85,7 @@
 .custom-tabs .custom-tab a{
   padding: 8px 12px;
 }
+#his-des .mention{
+  color: #039be5;
+  cursor: pointer;
+}
