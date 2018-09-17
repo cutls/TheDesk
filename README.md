@@ -9,9 +9,13 @@ Contact me(bug report...):GitHub Issues, mention to [Cutls@kirishima.cloud](http
 
 バグレポートなど:GitHub Issuesや[Cutls@kirishima.cloud](https://kirishima.cloud/@Cutls)へのリプ,または#Deskでトゥートして下さい.  
 
-## License
+## License/ライセンス
 
-[TheDesk LICENSE v5.1](https://github.com/cutls/TheDesk/blob/master/LICENSE.md)
+[GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)
+
+## Terms of Use/利用規約
+
+[TOS.md](https://github.com/cutls/TheDesk/blob/master/TOS.md)
 
 ## Language/言語
 
