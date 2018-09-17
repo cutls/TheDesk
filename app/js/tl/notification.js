@@ -95,7 +95,12 @@ function notf(acct_id, tlid, sys) {
 		todc();
 	});
 	if(!misskey){
-		var start = "wss://" + domain + "/api/v1/streaming/?stream=user&access_token=" +
+		if(localStorage.getItem("streaming_" + acct_id)){
+			var wss=localStorage.getItem("streaming_" + acct_id)
+		}else{
+			var wss="wss://"+domain
+		}
+		var start = wss + "/api/v1/streaming/?stream=user&access_token=" +
 		at;
 	}else{
 		var start = "wss://" + domain + "/?i=" +

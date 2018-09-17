@@ -179,6 +179,9 @@ function parseColumn() {
 		$("#bottom").removeClass("reverse");
 		$(".leftside").removeClass("reverse");
 	}
+	if(localStorage.getItem("sec") && localStorage.getItem("sec")!="nothing"){
+		secvis(localStorage.getItem("sec"));
+	}
 	favTag();
 	var cw = localStorage.getItem("always-cw");
 	if (cw == "yes") {
@@ -192,6 +195,29 @@ function parseColumn() {
 			}
 		}
 	}
+}
+//セカンダリートゥートボタン
+function secvis(set){
+	if(set=="public"){
+		$("#toot-sec-icon").text("public");
+		$("#toot-sec-btn").addClass("purple");
+	}else if(set=="unlisted"){
+		$("#toot-sec-icon").text("lock_open");
+		$("#toot-sec-btn").addClass("blue");
+	}else if(set=="private"){
+		$("#toot-sec-icon").text("lock");
+		$("#toot-sec-btn").addClass("orange");
+	}else if(set=="direct"){
+		$("#toot-sec-icon").text("mail");
+		$("#toot-sec-btn").addClass("red");
+	}else if(set=="limited"){
+		$("#toot-sec-icon").text("group");
+		$("#toot-sec-btn").addClass("teal");
+	}else if(set=="local"){
+		$("#toot-sec-icon").text("visibility");
+		$("#toot-sec-btn").addClass("light-blue");
+	}
+	$("#toot-sec-btn").removeClass("hide");
 }
 //カラム追加
 function addColumn() {

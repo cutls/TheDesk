@@ -19,6 +19,7 @@
 }
 #his-float-data{
   width: 400px;
+  height: 100%;
 }
 #his-float-timeline{
   width: calc(100% - 400px);

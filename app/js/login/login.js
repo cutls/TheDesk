@@ -399,8 +399,12 @@ function ckdb(acct_id) {
 				return;
 			}
 			if(json){
-				localStorage.setItem("letters_" + acct_id, json["max_toot_chars"]);
-				//localStorage.setItem("statuses_" + acct_id, json["statuses"]);
+				if(json["max_toot_chars"]){
+					localStorage.setItem("letters_" + acct_id, json["max_toot_chars"]);
+				}
+				if(json["urls"]["streaming_api"]){
+					localStorage.setItem("streaming_" + acct_id, json["urls"]["streaming_api"]);
+				}
 			}
 		});
 		

@@ -426,3 +426,24 @@ p:not(:last-child){
   padding: 1px;
   border-radius: 3px;
 }
+.fa-2x>.emoji-img {
+  width: 36px!important;
+  height: 36px!important
+}
+.fa-3x>.emoji-img {
+  width: 54px!important;
+  height: 54px!important
+}
+.fa-4x>.emoji-img {
+  width: 72px!important;
+  height: 72px!important
+}
+.fa-5x>.emoji-img {
+  width: 90px!important;
+  height: 90px!important
+}
+#lists-user{
+  overflow-y: scroll;
+	overflow-x: hidden;
+	max-height: 200px;
+}

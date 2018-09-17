@@ -23,6 +23,7 @@
     "unlistedJP":"",
     "privateJP":"",
     "localJP":"Local only",
+    "sectoot":"Secondary Toot",
     "directJP":"",
     "emojiWarn":"",
     "emojiInsertWarn":"Some emojis are not able to be inserted.",
@@ -138,5 +139,6 @@
     "verTips":"Version",
     "clockTips":"Clock",
     "ramTips":"RAM status",
-    "changeTips":"Change Tips"
+    "changeTips":"Change Tips",
+    "help":"Help"
 }

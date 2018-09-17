@@ -12,6 +12,16 @@ $(function($) {
 		}else{
 			var wv=true;
 		}
+		//Ctrl+Shift+Enter:Lgen
+		if (event.metaKey || event.ctrlKey && wv) {
+			if (event.shiftKey) {
+				if (e.keyCode === 13) {
+					post('local');
+					return false;
+				}
+			}
+			
+		}
 		//Ctrl+Enter:投稿
 		if (event.metaKey || event.ctrlKey && wv) {
 			if (e.keyCode === 13) {
@@ -19,13 +29,7 @@ $(function($) {
 				return false;
 			}
 		}
-		//Shift+Enter:Markdown
-		if (event.shiftKey) {
-			if (e.keyCode === 13) {
-				brInsert("　\n");
-				return false;
-			}
-		}
+		
 		//Shift+Space:Markdownゼロ幅スペース
 		if (event.shiftKey) {
 			if (e.keyCode === 32) {

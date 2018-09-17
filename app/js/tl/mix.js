@@ -80,10 +80,15 @@ function mixtl(acct_id, tlid, type,delc,voice) {
 function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var startHome = "wss://" + domain +
+	if(localStorage.getItem("streaming_" + acct_id)){
+		var wss=localStorage.getItem("streaming_" + acct_id)
+	}else{
+		var wss="wss://"+domain
+	}
+	var startHome = wss
 		"/api/v1/streaming/?stream=user&access_token=" + at;
 
-	var startLocal = "wss://" + domain +
+	var startLocal = wss
 		"/api/v1/streaming/?stream=public:local&access_token=" + at;
 	var wshid = websocketHome.length;
 	var wslid = websocketLocal.length;

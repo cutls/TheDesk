@@ -179,20 +179,25 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		}
 	}else{
 		var misskey=false;
+		if(localStorage.getItem("streaming_" + acct_id)){
+			var wss=localStorage.getItem("streaming_" + acct_id)
+		}else{
+			var wss="wss://"+domain
+		}
 		if (type == "home") {
-			var start = "wss://" + domain +
+			var start = wss +
 				"/api/v1/streaming/?stream=user&access_token=" + at;
 		} else if (type == "pub") {
-			var start = "wss://" + domain +
+			var start = wss +
 				"/api/v1/streaming/?stream=public&access_token=" + at;
 		} else if (type == "pub-media") {
-			var start = "wss://" + domain +
+			var start = wss +
 				"/api/v1/streaming/?stream=public:media&access_token=" + at;
 		} else if (type == "local") {
-			var start = "wss://" + domain +
+			var start = wss +
 				"/api/v1/streaming/?stream=public:local&access_token=" + at;
 		} else if (type == "local-media") {
-			var start = "wss://" + domain +
+			var start = wss +
 				"/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=" + at;
 		} else if (type == "tag") {
 			if(type=="tag"){
@@ -201,16 +206,16 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 					data=data+"&local=true";
 				}
 			}
-			var start = "wss://" + domain +
+			var start = wss +
 				"/api/v1/streaming/?stream=hashtag&tag=" + data +"&access_token=" + at;
 		} else if (type == "noauth") {
-			var start = "wss://" + acct_id +
+			var start = wss +
 				"/api/v1/streaming/?stream=public:local";
 		} else if (type=="list"){
-			var start = "wss://" + domain +
+			var start = wss +
 				"/api/v1/streaming/?stream=list&list=" + data +"&access_token=" + at;
 		} else if (type=="dm"){
-			var start = "wss://" + domain +
+			var start = wss +
 				"/api/v1/streaming/?stream=direct&access_token=" + at;
 		}
 	}

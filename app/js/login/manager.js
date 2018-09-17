@@ -269,7 +269,8 @@ function support() {
 function login(url) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	if($('#misskey:checked').val()=="on"){
+	if($('#misskey:checked').val()=="on" || url=="misskey.xyz"){
+		$("#misskey").prop("checked", true);
 		misskeyLogin(url);
 		return;
 	}
@@ -369,6 +370,7 @@ function misskeyLogin(url) {
 			$("#auth").show();
 			$("#code").val(token);
 			$("#add").hide();
+			$("#misskey").prop("checked", false);
 			localStorage.setItem("domain_tmp",url);
 			shell.openExternal(json.url);
 			var electron = require("electron");

@@ -238,6 +238,20 @@
 		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_main" value="main" />
 		<label for="mn_main">{{usemainacct}}</label>
 		</label>
+		<h5>{{secondary}}</h5>
+		{{secwarn}}<br>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-nothing" value="nothing" />
+		<label for="sec-nothing">{{nothing}}</label>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-public" value="public" />
+		<label for="sec-public">{{public}}</label>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-unlisted" value="unlisted" />
+		<label for="sec-unlisted">{{unlisted}}</label>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-private" value="private" />
+		<label for="sec-private">{{private}}</label>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-direct" value="direct" />
+		<label for="sec-direct">{{direct}}</label>
+		<input class="with-gap hide kirishima" onchange="settings()" name="sec" type="radio" id="sec-local" value="local" />
+		<label for="sec-local">{{localonly}}</label><span class="hide kirishima">非対応インスタンスでは「未収載」になります。</span>
 		<br>
 	</div>
 	</li>

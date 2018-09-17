@@ -118,6 +118,10 @@ var lang_setting_main={
     "ja":"起動時・投稿時のアカウントを{{set}}に設定しました。",
     "en":"Default account:{{set}}"
 }
+var lang_setting_sec={
+    "ja":"セカンダリートゥートボタン:{{set}}",
+    "en":"Secondary toot button:{{set}}"
+}
 var lang_setting_ksref={
     "ja":"キーボードショートカットが更新されました。",
     "en":"Keyboard shortcuts are refreshed."

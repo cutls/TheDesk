@@ -24,6 +24,7 @@
     "privateJP":"非公開",
     "localJP":"ローカル限定",
     "directJP":"ダイレクト",
+    "sectoot":"セカンダリートゥート",
     "emojiWarn":"インスタンスによって実装が異なります。",
     "emojiInsertWarn":"一部絵文字は入力できません。",
     "refreshEmoji":"絵文字更新",
@@ -138,5 +139,6 @@
     "verTips":"バージョン",
     "clockTips":"時計",
     "ramTips":"システムメモリ容量",
-    "changeTips":"Tips変更"
+    "changeTips":"Tips変更",
+    "help":"ヘルプ"
 }

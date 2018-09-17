@@ -238,6 +238,20 @@
 		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_main" value="main" />
 		<label for="mn_main">メインアカウント</label>
 		</label>
+		<h5>セカンダリートゥートボタン</h5>
+		公開範囲の変更とトゥートを一発でできます。<br>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-nothing" value="nothing" />
+		<label for="sec-nothing">表示しない</label>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-public" value="public" />
+		<label for="sec-public">公開(Public)</label>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-unlisted" value="unlisted" />
+		<label for="sec-unlisted">未収載(Unlisted)</label>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-private" value="private" />
+		<label for="sec-private">非公開(Private)</label>
+		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-direct" value="direct" />
+		<label for="sec-direct">ダイレクト(Direct)</label>
+		<input class="with-gap hide kirishima" onchange="settings()" name="sec" type="radio" id="sec-local" value="local" />
+		<label for="sec-local">ローカル限定</label><span class="hide kirishima">非対応インスタンスでは「未収載」になります。</span>
 		<br>
 	</div>
 	</li>

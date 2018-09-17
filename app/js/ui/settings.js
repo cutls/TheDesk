@@ -192,6 +192,13 @@ function settings() {
 		Materialize.toast(lang_setting_main[lang].replace("{{set}}" ,maint), 3000);
 	}
 	localStorage.setItem("mainuse", maind);
+
+	var secd = $("[name=sec]:checked").val();
+	var sect = $("[for=sec-"+secd+"]").text();
+	if (secd != localStorage.getItem("sec")) {
+		Materialize.toast(lang_setting_sec[lang].replace("{{set}}" ,sect), 3000);
+	}
+	localStorage.setItem("sec", secd);
 }
 
 //読み込み時の設定ロード
@@ -384,6 +391,12 @@ function load() {
 		var maint = "remain";
 	}
 	$("#mn_" + maint).prop("checked", true);
+
+	var sect = localStorage.getItem("sec");
+	if (!sect) {
+		var sect = "nothing";
+	}
+	$("#sec-" + sect).prop("checked", true);
 }
 //最初に読む
 load();

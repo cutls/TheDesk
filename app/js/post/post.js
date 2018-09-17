@@ -1,6 +1,15 @@
 /*投稿系*/
 //投稿
-function post(mode) {
+function sec(){
+	var mode=localStorage.getItem("sec");
+	var acct_id = $("#post-acct-sel").val();
+	var domain = localStorage.getItem("domain_" + acct_id);
+	if(~domain.indexOf("kirishima.cloud")>=0 && mode=="local"){
+		mode="unlisted";
+	}
+	post(null,mode);
+}
+function post(mode,postvis) {
 	if($("#toot-post-btn").prop("disabled")){
 		return
 	}
@@ -85,7 +94,12 @@ function post(mode) {
 	} else {
 		var nsfw = "false";
 	}
-	var vis = $("#vis").text();
+	if(postvis){
+		var vis = postvis;
+	}else{
+		var vis = $("#vis").text();
+	}
+	
 	if(vis!="inherit" && vis!="local"){
 		toot.visibility=vis;
 	}else if(vis=="local"){

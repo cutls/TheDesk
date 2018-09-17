@@ -12,8 +12,8 @@ $voise        = null;
     $synthes.rate=localStorage.getItem("voice_speed");
     $synthes.pitch=localStorage.getItem("voice_pitch");
     $synthes.volume=localStorage.getItem("voice_vol");
-function say(msg){
-    msg=voiceParse(msg);
+function say(msgr){
+    msg=voiceParse(msgr);
     var voice=localStorage.getItem("voicebank");
     var obj = JSON.parse(voice);
     if(!obj){
@@ -43,10 +43,11 @@ $repeat  = setInterval(function() {
     }
 }, 300);
 function voiceParse(msg){
+    msg = $.strip_tags(msg);
     msg = msg.replace(/#/g, "");
     msg = msg.replace(/'/g, "");
     msg = msg.replace(/"/g, "");
-    msg = msg.replace(/https?:\/\/[a-zA-Z0-9./-@_=?&]+/g, "");
+    msg = msg.replace(/https?:\/\/[a-zA-Z0-9./-@_=?%&-]+/g, "");
    return msg;
 }
 function voiceToggle(tlid) {

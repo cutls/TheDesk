@@ -26,7 +26,7 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Akane (16.1.2)";
+var ver="Akane (16.1.3)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -170,7 +170,8 @@ var lang="ja";
 <!--END hidden area-->
 </div>
 <div id="toot-btn-field">
-	<button class="btn waves-effect indigo unmize" style="width:calc(100% - 10px); padding:0; margin-top:10px;" onclick="post()" id="toot-post-btn">トゥート</button>
+	<button class="btn waves-effect indigo unmize" onclick="post()" id="toot-post-btn">トゥート</button>
+	<button class="btn waves-effect indigo darken-3 unmize hide" onclick="sec()" id="toot-sec-btn"><i class="material-icons" id="toot-sec-icon" title="セカンダリートゥート">lock_open</i></button>
 </div>
 </div>
 <!--絵文字ピッカー-->
@@ -307,7 +308,7 @@ var lang="ja";
 	<a href="#!" class="waves-effect waves-green btn-flat" onclick="shot()">スクリーンショット</a>
 	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy()">URLをコピー</a>
 	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy('emb')">埋め込む</a>
-	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">他のアカウントを使用</a>
+	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
 	</div>
 	</div>
 	<!-- Modal Structure Userdata -->
@@ -526,21 +527,19 @@ var lang="ja";
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Akane_16-0-11" style="display:none">
+			<div id="release-Akane_16-1-3" style="display:none">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
-					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。
-				<h5>Release Note Akane (16.0.11)</h5>
-					16.0.11<br>
+					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
+					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
+					<h5>Release Note Akane (16.1.3)</h5>
+					16.1.3<br>
 					<ul>
-						<li>様々なバグを修正</li>
+						<li>セカンダリートゥートボタン</li>
+						<li>読み上げや絵文字に関するバグの修正</li>
+						<li>公式ヘルプサイト:<a href="https://docs.thedesk.top">TheDesk Docs</a></li>
 					</ul>
-					16.0.10<br>
-					<ul>
-						<li>自動CWに関する不具合</li>
-						<li>アップデートに関する不具合</li>
-						<li>MisskeyのURLコピーに関する不具合</li>
-					</ul>
+					いつの間にかリアルタイムユーザー数が100を超えていました。皆様のご愛顧に感謝申し上げます。<br>
 			</div>
 			<br><br>
 			<h3>ご支援ください。</h3>
@@ -739,7 +738,10 @@ var lang="ja";
                 </a>
                 <a onclick="window.open('https://astarte.thedesk.top');" class="setting nex waves-effect" target="_blank" id="ranking-btn" style="display:none;">
                     <i class="material-icons nex" title="アスタルテランキング">timeline</i>
-                </a>
+				</a>
+				<a href="https://docs.thedesk.top" class="setting nex waves-effect" target="_blank">
+                    <i class="material-icons nex" title="ヘルプ">help_outline</i>
+				</a>
             </div>
         </div>
     </div>
