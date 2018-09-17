@@ -21,7 +21,6 @@ function additional(acct_id, tlid) {
 		
 	});
 	
-	
 	//トゥートサムネ
 	$("#timeline_" + tlid + " .toot a:not(.parsed)").each(function(i, elem) {
 		var domain = localStorage.getItem("domain_" + acct_id);
