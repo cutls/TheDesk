@@ -24,7 +24,7 @@
       "email": "solfa.tono@gmail.com"
     }
   ],
-  "license": "TheDesk LICENSE",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "electron-dl": "^1.11.0",
     "jimp": "^0.2.28",
