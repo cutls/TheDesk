@@ -73,7 +73,7 @@ function post(mode,postvis) {
 		misskeyPost();
 		return;
 	}
-	$("#toot-post-btn").prop("disabled", true);
+	$(".toot-btn-group").prop("disabled", true);
 	todo("Posting");
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses";
@@ -130,7 +130,7 @@ function post(mode,postvis) {
 				$("#textarea").blur();
 				hide();
 			}
-			$("#toot-post-btn").prop("disabled", false);
+			$(".toot-btn-group").prop("disabled", false);
 			todc();
 			clear();
 		}
@@ -141,7 +141,7 @@ function misskeyPost(){
 	var acct_id = $("#post-acct-sel").val();
 	localStorage.setItem("last-use", acct_id);
 	var domain = localStorage.getItem("domain_" + acct_id);
-	$("#toot-post-btn").prop("disabled", true);
+	$(".toot-btn-group").prop("disabled", true);
 	todo("Posting");
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/notes/create";
@@ -204,7 +204,7 @@ function misskeyPost(){
 				$("body").addClass("mini-post");
 				$(".mini-btn").text("expand_less");
 			}
-			$("#toot-post-btn").prop("disabled", false);
+			$(".toot-btn-group").prop("disabled", false);
 			todc();
 			clear();
 		}
@@ -245,7 +245,7 @@ function clear() {
 	$("#nsc").text(lang_nothing[lang]);
 	$("#drag").css("background-color", "#e0e0e0");
 	$("#preview").html("");
-	$("#toot-post-btn").prop("disabled", false);
+	$(".toot-btn-group").prop("disabled", false);
 	$("#post-acct-sel").prop("disabled", false);
 	localStorage.removeItem("image");
 	if(localStorage.getItem("mainuse")=="main"){

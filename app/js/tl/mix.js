@@ -85,10 +85,9 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 	}else{
 		var wss="wss://"+domain
 	}
-	var startHome = wss
+	var startHome = wss+
 		"/api/v1/streaming/?stream=user&access_token=" + at;
-
-	var startLocal = wss
+	var startLocal = wss+
 		"/api/v1/streaming/?stream=public:local&access_token=" + at;
 	var wshid = websocketHome.length;
 	var wslid = websocketLocal.length;

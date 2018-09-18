@@ -90,7 +90,7 @@ function media(b64, type, no) {
 	} else {
 		$("#media").val("tmp_"+r);
 	}
-	$("#toot-post-btn").prop("disabled", true);
+	$(".toot-btn-group").prop("disabled", true);
 	$("#post-acct-sel").prop("disabled", true);
 	localStorage.setItem("image","busy");
 	todo("Image Upload...");
@@ -150,7 +150,7 @@ function media(b64, type, no) {
 				$("#textarea").val($("#textarea").val() + " " + json["text_url"])
 			}
 			todc();
-			$("#toot-post-btn").prop("disabled", false);
+			$(".toot-btn-group").prop("disabled", false);
 			$('select').material_select();
 			$("#mec").text(lang_there[lang]);
 			Materialize.toast(lang_postimg_aftupload[lang], 1000);

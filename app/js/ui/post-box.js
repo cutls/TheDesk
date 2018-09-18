@@ -5,6 +5,7 @@ function hide() {
 	$('#post-box').animate({
 		'bottom': "-500px"
 	});
+	$("#emoji").addClass("hide")
 }
 //最小化
 function mini() {
@@ -49,12 +50,20 @@ $('#posttgl').focusin(function(e) {
 });
 
 $("#timeline-container,#group").click(function(e) {
+
 	if(localStorage.getItem("box")!="absolute"){
 		if($('#post-box').hasClass("appear") && !localStorage.getItem("nohide")){
 			hide();
 		}
 	}
 	localStorage.removeItem("nohide")
+});
+$('#textarea,#cw-text').focusout(function(e) {
+	localStorage.setItem("nohide",true)
+	var countup = function(){
+		localStorage.removeItem("nohide")
+	} 
+	//setTimeout(remove, 100);
 });
 
 $("#timeline-container").click(function(e) {

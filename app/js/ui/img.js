@@ -2,6 +2,7 @@
 //postのimg.jsとは異なります。
 function imgv(id, key, acct_id) {
 	$("#imgprog").text(0);
+	$('#imgmodal').hide();
 	$('#imgmodal').attr('src', './img/loading.svg');
 	var murl = $("#" + id + "-image-" + key).attr("data-url");
 	var type = $("#" + id + "-image-" + key).attr("data-type");
@@ -29,11 +30,13 @@ function imgv(id, key, acct_id) {
 			$('#imgmodal').attr('src', murl);
 			$('#imagewrap').dragScroll(); // ドラッグスクロール設定
 			$('#imagemodal').modal('open');
+			$('#imgmodal').show();
 			$('#imagemodal').attr('data-key', key);
 			$('#imagemodal').attr('data-id', id);
 		} else if (type == "video" || type == "gifv") {
 			$('#video').attr('src', murl);
 			$('#videomodal').modal('open');
+			$('#imgmodal').show();
 		}
 		var element = new Image();
 		var width;

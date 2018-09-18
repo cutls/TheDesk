@@ -7,11 +7,11 @@ function mdCheck(){
 		profimg="./img/missing.svg";
 	}
 	$("#acct-sel-prof").attr("src",profimg);
-			if(localStorage.getItem("post_" + acct_id)){
-				$("#toot-post-btn").text(localStorage.getItem("post_" + acct_id)+"("+localStorage.getItem("domain_"+acct_id)+")");
-			}else{
-				$("#toot-post-btn").text(lang_toot[lang]+"("+localStorage.getItem("domain_"+acct_id)+")");
-			}
+		if(localStorage.getItem("post_" + acct_id)){
+			$("#toot-post-btn").text(localStorage.getItem("post_" + acct_id)+"("+localStorage.getItem("domain_"+acct_id)+")");
+		}else{
+			$("#toot-post-btn").text(lang_toot[lang]+"("+localStorage.getItem("domain_"+acct_id)+")");
+		}
 	  if(!localStorage.getItem("bb_"+acct_id) && !localStorage.getItem("md_"+acct_id)){
 		 $(".markdown").addClass("hide");
 		$(".anti-markdown").addClass("hide");

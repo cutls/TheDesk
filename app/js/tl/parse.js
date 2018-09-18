@@ -815,7 +815,7 @@ function client(name) {
 		type: 'info',
 		title: lang_parse_clientop[lang],
 		message: name+lang_parse_clienttxt[lang],
-		buttons: [lang_parse_clientno[lang],lang_parse_clienemp[lang], lang_parse_clientmute[lang]]
+		buttons: [lang_parse_clientno[lang],lang_parse_clientemp[lang], lang_parse_clientmute[lang]]
 	  }
 	  dialog.showMessageBox(options, function(arg) {
 		if(arg==1){

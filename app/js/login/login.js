@@ -321,7 +321,16 @@ function refresh(target) {
 //絶対ストリーミングを閉じさせないマン
 function ckdb(acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-
+	localStorage.removeItem("home_" + acct_id);
+	localStorage.removeItem("bb_" + acct_id);
+	localStorage.removeItem("md_" + acct_id);
+	localStorage.removeItem("local_" + acct_id);
+	localStorage.removeItem("public_" + acct_id);
+	localStorage.removeItem("notification_" + acct_id);
+	localStorage.removeItem("post_" + acct_id);
+	localStorage.removeItem("fav_" + acct_id);
+	localStorage.removeItem("bt_" + acct_id);
+	localStorage.removeItem("follow_" + acct_id);
 	if(domain=="kirishima.cloud"){
 		localStorage.setItem("kirishima", "true");
 		$("#ranking-btn").show();

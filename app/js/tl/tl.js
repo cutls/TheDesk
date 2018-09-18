@@ -209,7 +209,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			var start = wss +
 				"/api/v1/streaming/?stream=hashtag&tag=" + data +"&access_token=" + at;
 		} else if (type == "noauth") {
-			var start = wss +
+			var start = "wss://" + acct_id+
 				"/api/v1/streaming/?stream=public:local";
 		} else if (type=="list"){
 			var start = wss +
