@@ -131,6 +131,7 @@
     "keynew":"Open toot box",
     "keytoggle":"Toggle toot box",
     "keypost":"Post",
+    "keysecpost":"Post(secondary toot)",
     "keyunread":"Make all notifications read",
     "keyesc":"Hide toot box",
     "keyf5":"Super Reload",

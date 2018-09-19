@@ -330,7 +330,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var ct2 =  nl2br(toot.text).split('<br>').length -2;
 			if(ct1>ct2){ var ct= ct1; }else{ var ct= ct2;  }
 			if ((sent < ct && $.mb_strlen($.strip_tags(toot.text)) > 5) || ($.strip_tags(toot.text).length > ltr && $.mb_strlen($.strip_tags(toot.text)) > 5)) {
-				var content = '<span class="gray">'+lang_parse_fulltext[lang]+'</span><br>' + toot.text
+				var content = '<span class="gray">'+lang_parse_fulltext[lang]+'</span><br>' + escapeHTML(toot.text)
 				var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tags(
 						toot.text), 0, 100) +
 					'</span><span class="gray">'+lang_parse_autofold[lang]+'</span>';
@@ -338,7 +338,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
 					'\')" class="nex parsed">'+lang_parse_more[lang]+'</a><br>';
 			} else {
-                var content = toot.text;
+                var content = escapeHTML(toot.text);
                 if(toot.cw){
                     var spoil = escapeHTML(toot.cw);
                 }else{

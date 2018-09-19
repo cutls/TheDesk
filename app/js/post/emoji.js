@@ -4,7 +4,7 @@ $("#emoji-before").addClass("disabled");
 $("#emoji-next").addClass("disabled");
 
 //絵文字ボタンのトグル
-function emoji() {
+function emojiToggle() {
 	var acct_id = $("#post-acct-sel").val();
 	var selin = $("#textarea").prop('selectionStart');
 	if(!selin){
