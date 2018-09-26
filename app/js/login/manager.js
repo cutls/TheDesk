@@ -335,6 +335,7 @@ function misskeyLogin(url) {
 	localStorage.setItem("msky","true");
 	if(url=="misskey.xyz" && misskeytoken){
 		var mkc=misskeytoken;
+		localStorage.setItem("mkc",mkc)
 	}else{
 		var mkc=$("#misskey-key").val();
 		localStorage.setItem("mkc",mkc)
