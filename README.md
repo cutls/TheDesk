@@ -10,7 +10,16 @@ Contact me(bug report...):GitHub Issues, mention to [Cutls@kirishima.cloud](http
 
 ## License/ライセンス
 
-[GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)
+[GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  
+
+The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)/アイコンは[クリエイティブ・コモンズ 表示-非営利-継承](https://creativecommons.org/licenses/by-nc-sa/4.0/)で提供されています。  
+[Press Kit](https://dl.thedesk.top/press/TheDesk+PressKit.zip)  
+* [PNG](https://dl.thedesk.top/press/TheDesk.png)
+* [Monotone SVG](https://dl.thedesk.top/press/TheDesk.svg)
+* [ico](https://dl.thedesk.top/press/TheDesk.ico)
+* [icns](https://dl.thedesk.top/press/TheDesk.icns)
+
+
 
 ## Terms of Use/利用規約
 
