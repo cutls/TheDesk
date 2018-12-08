@@ -47,10 +47,10 @@ function mdCheck(){
 	}else{
 		$("#textarea").attr("data-length", 500)
 	}
-	if(idata[domain+"_glitch"]){
+	if(idata[domain+"_glitch"]==="true"){
 		$("#local-button").removeClass("hide");
 	}else{
-		$("#local-button").removeClass("hide");
+		$("#local-button").addClass("hide");
 	}
 	var multi = localStorage.getItem("multi");
 	if (multi) {
@@ -116,15 +116,6 @@ if(localStorage.getItem("md")=="hide"){
       '>': '&gt;',
     }[match]
   });
-}
-//PHPのnl2brと同様
-function nl2br(str) {
-	if(!str){
-		return "";
-	}
-    str = str.replace(/\r\n/g, "<br />");
-	str = str.replace(/(\n|\r)/g, "<br />");
-    return str;
 }
 //テキストボックスで選択したやつをタグで囲む(BB版)
 function surroundHTML(tagS,tagE) {

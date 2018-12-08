@@ -271,7 +271,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 					$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 				}
 				
-			} else if (typeA == "update") {
+			} else if (typeA == "update" || typeA == "conversation") {
 				localStorage.removeItem("delete");
 				var obj = JSON.parse(JSON.parse(mess.data).payload);
 				console.log(obj);

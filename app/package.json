@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "16.1.6",
+  "version": "17.0.0",
   "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {
@@ -27,6 +27,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "electron-dl": "^1.11.0",
+    "font-manager": "^0.3.0",
     "jimp": "^0.2.28",
     "node-notifier": "^5.2.1",
     "sumchecker": "^2.0.2"
@@ -38,7 +39,7 @@
     "productName": "TheDesk",
     "appId": "top.thedesk",
     "directories": {
-      "output": "build"
+      "output": "../build"
     },
     "win": {
       "icon": "thedesk.ico",
@@ -56,9 +57,9 @@
       "category": "Network"
     },
     "electronDownload": {
-      "version": "3.0.0"
+      "version": "3.0.10"
     },
-    "electronVersion": "3.0.0"
+    "electronVersion": "3.0.10"
   },
   "devDependencies": {
     "electron-rebuild": "^1.8.2"

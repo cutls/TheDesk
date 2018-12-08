@@ -43,7 +43,7 @@ function ck() {
 	
 	if (at) {
 		$("#tl").show();
-		
+		ticker();
 		parseColumn();
 		multiSelector();
 	} else {
@@ -511,4 +511,25 @@ function enc(ver){
     var ver = ver.replace( /\[/g , "_" );
     var ver = ver.replace( /\]/g , "" );
     return ver;
+}
+//インスタンスティッカー
+function ticker() {
+	var start = "https://toot.app/toot/";
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json'
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		console.error(error);
+	}).then(function(json) {
+		if (json.error) {
+			return;
+		}
+		if(json){
+			localStorage.setItem("ticker", JSON.stringify(json));
+		}
+	});
 }

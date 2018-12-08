@@ -275,7 +275,18 @@ blockquote:before, .quote:before {
 .modal-footer{
   background-color: var(--modalfooter) !important;
 }
-
+.font{
+  font-size:1.5rem;
+  margin-bottom:5px;
+}
+.font:hover{
+  background-color: #999;
+}
+.release-do{
+  border: solid 2px;
+  border-color:var(--color);
+  padding:5px;
+}
 
 
 /*スクロールバー*/

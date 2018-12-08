@@ -8,6 +8,7 @@ var Jimp = require("jimp");
 const shell = electron.shell;
 const os = require('os')
 const path = require('path')
+const fm = require('font-manager');
 const Menu=electron.Menu
 var updatewin=null;
 // アプリケーションをコントロールするモジュール
@@ -604,5 +605,44 @@ ipc.on('export', (e, args) => {
 ipc.on('import', (e, arg) => {
 	mainWindow.webContents.send('config', fs.readFileSync(arg, 'utf8'));
 });
+//フォント
+function object_array_sort(data,key,order,fn){
+	//デフォは降順(DESC)
+	var num_a = -1;
+	var num_b = 1;
+   
+	if(order === 'asc'){//指定があれば昇順(ASC)
+	  num_a = 1;
+	  num_b = -1;
+	}
+   
+	data = data.sort(function(a, b){
+	  var x = a[key];
+	  var y = b[key];
+	  if (x > y) return num_a;
+	  if (x < y) return num_b;
+	  return 0;
+	});
+   
+	//重複排除
+	var arrObj = {};
+	for (var i = 0; i < data.length; i++) {
+	  arrObj[data[i]['family']] = data[i];
+	}
+   
+	data = [];
+	for (var key in arrObj) {
+	  data.push(arrObj[key]);
+	}
+   
+	fn(data); // ソート後の配列を返す
+  }
+ipc.on('fonts', (e, arg) => {
+	var fonts = fm.getAvailableFontsSync();
+object_array_sort(fonts, 'family', 'asc', function(fonts_sorted){
+	mainWindow.webContents.send('font-list', fonts_sorted);
+});
+});
+
 
 app.setAsDefaultProtocolClient('thedesk')

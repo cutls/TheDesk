@@ -82,6 +82,10 @@ var lang_setting_imgheight={
     "ja":"画像高さを{{set}}pxに設定しました。",
     "en":"Image height:{{set}}px"
 }
+var lang_setting_ticker={
+    "ja":"#InstanceTicker使用を{{set}}に設定しました。",
+    "en":"#InstanceTicker:{{set}}px"
+}
 var lang_setting_tag={
     "ja":"タグの取得範囲を「{{set}}」に設定しました。",
     "en":"Tag TL:{{set}}"

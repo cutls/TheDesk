@@ -61,7 +61,7 @@ function load() {
           var remote=electron.remote;
           var platform=remote.process.platform;
 	    if(platform=="win32"){
-
+			$("#linux").prop("checked", false);
         }else{
 			$("#linux").prop("checked", true);
 		}

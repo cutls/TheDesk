@@ -70,45 +70,6 @@ function additional(acct_id, tlid) {
 						$("[toot-id=" + id + "]").addClass("parsed");
 					}
 				});
-			}else{
-				var start = "https://" + domain + "/api/v1/statuses/" + id + "/card";
-				fetch(start, {
-					method: 'GET',
-					headers: {
-						'content-type': 'application/json',
-						'Authorization': 'Bearer ' + at
-					},
-					//body: JSON.stringify({})
-				}).then(function(response) {
-					return response.json();
-				}).catch(function(error) {
-					todo(error);
-					console.error(error);
-				}).then(function(json) {
-					console.log(json);
-					//このリンク鳥やんけ、ってとき
-					if (json.provider_name=="Twitter"){
-						if(json.image){
-							var twiImg='<br><img src="'+json.image+'">';
-						}else{
-							var twiImg='';
-						}
-						$("[toot-id=" + id + "] .additional").html(
-							'<blockquote class="twitter-tweet"><b>'+escapeHTML(json.author_name)+'</b><br>'+escapeHTML(json.description)+twiImg+'</blockquote>');
-					}
-					if (json.title) {
-						$("[toot-id=" + id + "] .additional").html(
-							"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + escapeHTML(json.title) + "<br>" +
-							escapeHTML(json.description) + "</span>");
-					}
-					if (json.html) {
-						$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');
-					}
-					if (json.title) {
-						$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
-						$("[toot-id=" + id + "]").addClass("parsed");
-					}
-				});
 			}
 		
 		}else{

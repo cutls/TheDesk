@@ -130,6 +130,13 @@ function settings() {
 	}
 	localStorage.setItem("img-height", heid);
 
+	var tckrd = $("[name=ticker]:checked").val();
+	var tckrt = $("[for=ticker_"+tckrd+"]").text();
+	if (tckrd != localStorage.getItem("ticker_ok")) {
+		Materialize.toast(lang_setting_ticker[lang].replace("{{set}}" ,tckrt), 3000);
+	}
+	localStorage.setItem("ticker_ok", tckrd);
+
 	var boxd = $("[name=box]:checked").val();
 	var boxt = $("[for=bx_"+boxd+"]").text();
 	if (boxd != localStorage.getItem("box")) {
@@ -337,6 +344,12 @@ function load() {
 		var imh = "200";
 	}
 	$("#img-height").val(imh);
+
+	var ticker = localStorage.getItem("ticker-ok");
+	if (!ticker) {
+		var ticker = "no";
+	}
+	$("#ticker_" + ticker).prop("checked", true);
 
 	var tag = localStorage.getItem("tag-range");
 	if (!tag) {
@@ -668,4 +681,20 @@ function savefolder(){
 	}, (fileNames) => {
 		localStorage.setItem("savefolder",fileNames[0]);
 	});
+}
+
+function font(){
+	var electron = require("electron");
+	var ipc = electron.ipcRenderer;
+	ipc.send('fonts', []);
+	ipc.on('font-list', function (event, arg) {
+		$("#fonts").removeClass("hide");
+		for( var i=0; i<arg.length; i++) {
+			var font=arg[i];
+			$("#fonts").append('<div class="font pointer" style="font-family:'+font.family+'" onclick="insertFont(\''+font.family+'\')">'+font.family+"</div>")
+		}
+	});
+}
+function insertFont(name){
+	$("#font").val(name);
 }

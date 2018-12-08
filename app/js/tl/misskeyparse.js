@@ -1,3 +1,25 @@
+function escapeHTMLtemp(str) {
+	if(!str){
+		return "";
+	}
+  return str.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#039;');
+}
+$.strip_tagstemp = function(str, allowed) {
+	if(!str){
+		return "";
+	}
+  	allowed = (((allowed || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || [])
+  		.join('');
+  	var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi,
+  		commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
+  	return str.replace(commentsAndPhpTags, '').replace(tags, function($0, $1) {
+  		return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
+  	});
+  };
 //オブジェクトパーサー(トゥート)
 function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var templete = '';
@@ -54,6 +76,13 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		wordmute = wordmute.concat(mutefilter);
 	}else{
 		wordmute = mutefilter;
+	}
+	//Ticker
+	var tickerck = localStorage.getItem("ticker_ok");
+	if(tickerck){
+		var ticker=true;
+	}else{
+		var ticker=false;
 	}
 	if (!sent) {
 		var sent = 500;
@@ -127,7 +156,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		var toot = obj[key];
         var dis_name=toot.user.name;
         if(dis_name){
-            dis_name=escapeHTML(dis_name);
+            dis_name=escapeHTMLtemp(dis_name);
         }else{
 			disname="";
 		}
@@ -214,14 +243,14 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				}
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if(popup>0){
-					Materialize.toast("["+domain+"]"+escapeHTML(toot.user.name)+what, popup * 1000);
+					Materialize.toast("["+domain+"]"+escapeHTMLtemp(toot.user.name)+what, popup * 1000);
 				}
 				if(native=="yes"){
 					var electron = require("electron");
 					var ipc = electron.ipcRenderer;
 					var os = electron.remote.process.platform;
 					var options = {
-						body: toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),
+						body: toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tagstemp(toot.status.content),
 						icon: toot.account.avatar
 					  };
 					if(os=="darwin"){
@@ -229,7 +258,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					}else{
 						ipc.send('native-notf', [
 							'TheDesk:'+domain,
-							toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tags(toot.status.content),
+							toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tagstemp(toot.status.content),
 							toot.account.avatar,
 							"toot",
 							acct_id,
@@ -245,7 +274,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			}
 			var if_notf='data-notfIndv="'+acct_id+"_"+toot.id+'"';
 			var toot = toot.note;
-			var dis_name=escapeHTML(toot.user.name);
+			var dis_name=escapeHTMLtemp(toot.user.name);
 		}else{
 			var if_notf="";
 			if (toot.renote) {
@@ -256,7 +285,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					var boostback = "shared";
 				var uniqueid=toot.id;
 				var toot = toot.renote;
-				var dis_name=escapeHTML(toot.user.name);
+				var dis_name=escapeHTMLtemp(toot.user.name);
 			    var uniqueid=toot.id;
 				var actemojick=false
 			} else {
@@ -320,7 +349,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}
 		if ((toot.cw || toot.cw=="") && cw) {
 			var content = toot.text;
-			var spoil = escapeHTML(toot.cw);
+			var spoil = escapeHTMLtemp(toot.cw);
 			var spoiler = "cw cw_hide_" + toot.id;
 			var api_spoil = "gray";
 			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
@@ -329,18 +358,18 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var ct1 =  nl2br(toot.text).split('<br />').length -2;
 			var ct2 =  nl2br(toot.text).split('<br>').length -2;
 			if(ct1>ct2){ var ct= ct1; }else{ var ct= ct2;  }
-			if ((sent < ct && $.mb_strlen($.strip_tags(toot.text)) > 5) || ($.strip_tags(toot.text).length > ltr && $.mb_strlen($.strip_tags(toot.text)) > 5)) {
-				var content = '<span class="gray">'+lang_parse_fulltext[lang]+'</span><br>' + escapeHTML(toot.text)
-				var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tags(
+			if ((sent < ct && $.mb_strlen($.strip_tagstemp(toot.text)) > 5) || ($.strip_tagstemp(toot.text).length > ltr && $.mb_strlen($.strip_tagstemp(toot.text)) > 5)) {
+				var content = '<span class="gray">'+lang_parse_fulltext[lang]+'</span><br>' + escapeHTMLtemp(toot.text)
+				var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tagstemp(
 						toot.text), 0, 100) +
 					'</span><span class="gray">'+lang_parse_autofold[lang]+'</span>';
 				var spoiler = "cw cw_hide_" + toot.id;
 				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
 					'\')" class="nex parsed">'+lang_parse_more[lang]+'</a><br>';
 			} else {
-                var content = escapeHTML(toot.text);
+                var content = escapeHTMLtemp(toot.text);
                 if(toot.cw){
-                    var spoil = escapeHTML(toot.cw);
+                    var spoil = escapeHTMLtemp(toot.cw);
                 }else{
                     var spoil="";
                 }
@@ -350,7 +379,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			}
 		}
 		var analyze = '';
-		var urls = $.strip_tags(content).replace(/\n/g, " ").match(
+		var urls = $.strip_tagstemp(content).replace(/\n/g, " ").match(
 			/https?:\/\/([-a-zA-Z0-9@.]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
 		);
 		if (urls) {
@@ -431,7 +460,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 					'" data-type="video" class="img-parsed"><video src="' +
 					purl + '" class="' + sense +
-					' toot-img pointer" style="max-width:100%; height:'+imh+'px;"></a></span>';
+					' toot-img pointer" style="max-width:100%;"></a></span>';
 				}else{
 					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
 					acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
@@ -528,7 +557,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 						var word=worde
 					}
 					var regExp = new RegExp( word, "g" ) ;
-					if($.strip_tags(content).match(regExp)){
+					if($.strip_tagstemp(content).match(regExp)){
 						boostback = "hide by_filter";
 					}
 				}
@@ -544,6 +573,23 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					content=content.replace(regExp,'<span class="emp">'+word+"</span>");
 				}
 			});
+		}
+		//Ticker
+		var tickerdom="";
+		if(ticker){
+			var tickerdata=JSON.parse(localStorage.getItem("ticker"));
+			
+			var thisdomain=toot.user.username.split("@");
+			if(thisdomain.length>1){
+				thisdomain=thisdomain[1];
+			}
+			for( var i=0; i<tickerdata.length; i++) {
+				var value=tickerdata[i];
+				if(value.domain==thisdomain){
+					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+value.name+'</span></div>';
+					break;
+				}
+		   }
 		}
 		//Poll
 		var poll="";
@@ -660,7 +706,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'('+lang_parse_clickcopyurl[lang]+')"><i class="fa fa-clock-o"></i>' +
 			date(toot.createdAt, datetype) + '</span>' +
 			'</div></div>' +
-			'<div class="area-toot"><span class="toot ' + spoiler + '">' + content +
+			'<div class="area-toot">'+tickerdom+'<span class="toot ' + spoiler + '">' + content +
 			'</span><span class="' +
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
 			'</span>' +
@@ -712,7 +758,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			+'<div class="' + if_mine + ' action '+disp["red"]+' '+noauth+'"><a onclick="redraft(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_redraft[lang]+'"><i class="material-icons">redo</i></a></div>'+trans+
-			'<span class="cbadge viabadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
+			'<span class="cbadge viabadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tagstemp(via)+'\')" title="via ' + $.strip_tagstemp(via) + '">via ' +
 			via +
 			'</span>'+
 			'</div><div class="area-side '+mouseover+'"><div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
@@ -754,7 +800,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 		}
 		var memory = localStorage.getItem("notice-mem");
 			if (popup >= 0 && obj.length < 5 && notftext != memory) {
-				Materialize.toast(escapeHTML(toot.name)+":"+ftxt, popup * 1000);
+				Materialize.toast(escapeHTMLtemp(toot.name)+":"+ftxt, popup * 1000);
 				$(".notf-icon_" + tlid).addClass("red-text");
 				localStorage.setItem("notice-mem", notftext);
 				notftext = "";
@@ -786,7 +832,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 				}
 			}
 			if(toot.name){
-				var dis_name=escapeHTML(toot.name);
+				var dis_name=escapeHTMLtemp(toot.name);
 				dis_name=twemoji.parse(dis_name);
 			}else{
 				var dis_name=toot.name;

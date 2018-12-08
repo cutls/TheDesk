@@ -59,7 +59,12 @@
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
 		<br>
 		<h5>Font</h5>
-		Set local font<br>
+		Select your favorite font to 'Select'<br>
+		<button class="btn waves-effect" style="width:100px;" onclick="font()">Select</button><br>
+		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;">
+
+		</div>
+		<br>
 		<input type="text" style="width:150px" id="font">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
 		<br>
@@ -162,6 +167,12 @@
 		<input type="text" style="width:50px" id="img-height">px
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
 		<br>
+		<h5>Enable #InstanceTicker</h5>
+		Show colorful stickers about tooters' instance. <a href="https://cdn.weep.me/mastodon/">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.<br>
+		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_yes" value="yes" />
+		<label for="ticker_yes">Yes</label>
+		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
+		<label for="ticker_no">No</label>
 		<br>
 	</div>
 	</li>

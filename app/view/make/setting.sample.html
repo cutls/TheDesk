@@ -60,6 +60,11 @@
 		<br>
 		<h5>{{font}}</h5>
 		{{fontwarn}}<br>
+		<button class="btn waves-effect" style="width:100px;" onclick="font()">{{select}}</button><br>
+		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;">
+
+		</div>
+		<br>
 		<input type="text" style="width:150px" id="font">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
 		<br>
@@ -162,6 +167,12 @@
 		<input type="text" style="width:50px" id="img-height">px
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
 		<br>
+		<h5>{{ticker}}</h5>
+		{{tickerwarn}}<br>
+		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_yes" value="yes" />
+		<label for="ticker_yes">{{yes}}</label>
+		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
+		<label for="ticker_no">{{no}}</label>
 		<br>
 	</div>
 	</li>

@@ -66,7 +66,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	}else{
 		wordmute = mutefilter;
 	}
-
+	//Ticker
+	var tickerck = localStorage.getItem("ticker_ok");
+	if(tickerck){
+		var ticker=true;
+	}else{
+		var ticker=false;
+	}
+	//Cards
+	var card = localStorage.getItem("card_" + tlid);
 	
 	
 	if (!sent) {
@@ -601,6 +609,42 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}else{
 			var trans="";
 		}
+		//Cards
+		if (!card && toot.card) {
+			var cards=toot.card;
+			if (cards.provider_name=="Twitter"){
+				if(cards.image){
+					var twiImg='<br><img src="'+cards.image+'">';
+				}else{
+					var twiImg='';
+				}
+				analyze='<blockquote class="twitter-tweet"><b>'+escapeHTML(cards.author_name)+'</b><br>'+escapeHTML(cards.description)+twiImg+'</blockquote>';
+			}
+			if (cards.title) {
+				analyze="<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + escapeHTML(cards.title) + "<br>" +
+					escapeHTML(cards.description) + "</span>";
+			}
+			if (cards.html) {
+				analyze=cards.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>';
+			}
+		}
+		//Ticker
+		var tickerdom="";
+		if(ticker){
+			var tickerdata=JSON.parse(localStorage.getItem("ticker"));
+			
+			var thisdomain=toot.account.acct.split("@");
+			if(thisdomain.length>1){
+				thisdomain=thisdomain[1];
+			}
+			for( var i=0; i<tickerdata.length; i++) {
+				var value=tickerdata[i];
+				if(value.domain==thisdomain){
+					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+value.name+'</span></div>';
+					break;
+				}
+		   }
+		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
 			' ' + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
@@ -621,7 +665,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'('+lang_parse_clickcopyurl[lang]+')"><i class="fa fa-clock-o"></i>' +
 			date(toot.created_at, datetype) + '</span>' +
 			'</div></div>' +
-			'<div class="area-toot"><span class="' +
+			'<div class="area-toot">'+tickerdom+'<span class="' +
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
 			'</span><span class="toot ' + spoiler + '">' + content +
 			'</span>' +

@@ -1,5 +1,5 @@
 //バージョンチェッカー
-function verck(ver) {
+function verck(ver,winstore) {
 	if(localStorage.getItem("ver")!=ver){
 		localStorage.setItem("ver", ver);
 		console.log("Thank you for your update");
@@ -18,7 +18,6 @@ function verck(ver) {
 	}
 	
 	var l = 5;
-
 	// 生成する文字列に含める文字セット
 	var c = "abcdefghijklmnopqrstuvwxyz0123456789";
 	var cl = c.length;
@@ -48,7 +47,9 @@ function verck(ver) {
 			if (newest == ver) {
 				todo(lang_version_usever[lang].replace("{{ver}}" ,mess.desk));
 				//betaかWInstoreならアプデチェックしない
-			} else if (ver.indexOf("beta")==-1 || winstore) {
+			} else if (ver.indexOf("beta")!=-1 || winstore) {
+				
+			}else{
 				localStorage.removeItem("instance")
 				if(localStorage.getItem("new-ver-skip")){
 					if(localStorage.getItem("next-ver")!=newest){

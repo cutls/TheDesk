@@ -239,12 +239,10 @@ function addColumn() {
 	var obj = JSON.parse(multi);
 	if(!obj){
 		var leng=0;
-		localStorage.setItem("card_" + leng,"true");
 		var json = JSON.stringify([add]);
 		localStorage.setItem("column", json);
 	}else{
 		var leng=obj.length;
-		localStorage.setItem("card_" + leng,"true");
 		obj.push(add);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("column", json);

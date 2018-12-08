@@ -2,6 +2,7 @@
     --bg:white;
     --drag:rgba(255, 255, 255, 0.8);
     --color:black;
+    --beforehover:#757575;
     --modal:white;
     --subcolor:#e0e0e0;
     --box:white;
@@ -18,6 +19,7 @@
     --bg:#212121;
     --drag:rgba(0, 0, 0, 0.8);
     --color:white;
+    --beforehover:#e0e0e0;
     --modal:black;
     --subcolor:#212121;
     --box:#424242;
@@ -34,6 +36,7 @@
     --bg:#031833;
     --drag:rgba(0, 0, 0, 0.8);
     --color:white;
+    --beforehover:#e0e0e0;
     --modal:#0d1351;
     --subcolor:#0d1351;
     --shared:#004d40;
@@ -50,6 +53,7 @@
     --bg:#261411;
     --drag:rgba(0, 0, 0, 0.8);
     --color:white;
+    --beforehover:#e0e0e0;
     --modal:#261411;
     --subcolor:#4e342e;
     --shared:#004d40;
@@ -66,6 +70,7 @@
     --bg:#c8e6c9;
     --drag:rgba(255, 255, 255, 0.8);
     --color:black;
+    --beforehover:#757575;
     --modal:#81c784;
     --subcolor:#a5d6a7;
     --box:#81c784;

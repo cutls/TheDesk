@@ -59,7 +59,12 @@
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
 		<h5>フォント</h5>
-		ローカルフォントを指定します。<br>
+		「選択」を押してフォントを選んでください。<br>
+		<button class="btn waves-effect" style="width:100px;" onclick="font()">選択</button><br>
+		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;">
+
+		</div>
+		<br>
 		<input type="text" style="width:150px" id="font">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
@@ -162,6 +167,12 @@
 		<input type="text" style="width:50px" id="img-height">px
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
+		<h5>#InstanceTickerを使う</h5>
+		トゥートした人の所属インスタンスをわかりやすく彩ります(自インスタンス以外のトゥート向け)。<a href="https://cdn.weep.me/mastodon/">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.<br>
+		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_yes" value="yes" />
+		<label for="ticker_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
+		<label for="ticker_no">いいえ</label>
 		<br>
 	</div>
 	</li>

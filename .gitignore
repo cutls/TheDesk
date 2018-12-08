@@ -4,6 +4,7 @@
 *.exe
 TheDesk-*
 app/build
+build
 make.js
 app/.DS_Store
 .DS_Store
