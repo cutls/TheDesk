@@ -23,7 +23,8 @@ The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.o
 
 ## Terms of Use/利用規約
 
-[TOS.md](https://github.com/cutls/TheDesk/blob/master/TOS.md)
+* [利用規約(Terms of Use(ja))](https://thedesk.top/tos.html)
+* [プライバシーポリシー(Privacy Policy(ja))](https://thedesk.top/priv.html)
 
 ## Language/言語
 
@@ -47,10 +48,10 @@ desk.icns: macOS向けアイコン.セルフビルドにどうぞ.
 
 ## Requirement/環境
 
-- Electron 2.0.7
+- Electron 3.0.10
 - electron-dl
 - Jimp
-- adm-zip
+- font-manager
 - itunes-nowplaying-mac(for macOS)
 - node-notifier
 - Ability to read unformated files!
@@ -66,14 +67,20 @@ macOSビルダー
 Misskey(misskey.xyz) application token is not in cutls/TheDesk  
 Misskey(misskey.xyz)のトークンは含まれておりません。  
   
-electron-packager is required. electron-packagerが必要です.  
+### electron-packager
 Windows  
-`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=2.0.7 --icon=.\app\thedesk.ico --overwrite`  
+`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=3.0.10 --icon=.\app\thedesk.ico --overwrite`  
 Linux  
-`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=2.0.7 --overwrite`  
+`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=3.0.10 --overwrite`  
 macOS  
-`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=2.0.7 --icon=./app/icon.icns --overwrite`  
+`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=3.0.10 --icon=./app/icon.icns --overwrite`  
 
+### electron-builder
+Windows config is all on package.json  
+Windows用のビルド設定はすべてpackage.jsonに記載しています。  
+  
+To build TheDesk for Linux and macOS, edit package.json  
+Linux,macOS版をビルドするためにはpackage.jsonを編集してください。
 ## See also/詳しく
 
 [TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
