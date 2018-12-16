@@ -47,6 +47,7 @@ Crowdinから翻訳に参加してみませんか？: https://crowdin.com/projec
   - VisualC++(Windows)(install yourself)
 - itunes-nowplaying-mac(for macOS)(in package.json)
 - node-notifier(in package.json)
+- sumchecker(in package.json)
 - Ability to read unformated files!(install yourself)
 
 
@@ -86,11 +87,11 @@ macOS
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=3.0.10 --icon=./app/icon.icns --overwrite`  
 
 ### electron-builder
-Windows config is all on package.json  
-Windows用のビルド設定はすべてpackage.jsonに記載しています。  
+Windows and Linux(untested) config is all on package.json  
+Windows,Linux(未テスト)用のビルド設定はすべてpackage.jsonに記載しています。  
   
 To build TheDesk for Linux and macOS, edit package.json  
-Linux,macOS版をビルドするためにはpackage.jsonを編集してください。
+macOS版をビルドするためにはpackage.jsonを編集してください。
 
 ## See also/詳しく
 
