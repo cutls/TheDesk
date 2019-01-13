@@ -57,6 +57,10 @@ macOSビルダー
 
 - [とねぢ](https://minohdon.jp/@toneji)
 
+Linuxビルダー  
+
+- [ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja)
+
 ## Build/ビルド
 
 Misskey(misskey.xyz) application token is not in cutls/TheDesk  
