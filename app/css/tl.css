@@ -137,7 +137,7 @@ iframe {
   padding-left: 5px;
   border-bottom:0.5px solid;
   padding-right: 2px;
-  word-break: break-all;
+  word-break: break-word;
   width: 100%;
   display: grid;
   grid-template-columns: 43px 2fr 1fr;
