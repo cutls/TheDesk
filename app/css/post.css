@@ -35,6 +35,15 @@
 #cw-text {
   display: none;
 }
+#sch-box {
+  display: none;
+}
+#sch-box input {
+  width:auto;
+}
+.picker__close, .picker__today, .picker__clear {
+	color: #26a69a !important;
+}
 .cw {
   display: none;
 }

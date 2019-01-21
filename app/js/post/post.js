@@ -105,12 +105,28 @@ function post(mode,postvis) {
 	}else if(vis=="local"){
 		toot.status=str+"👁️";
 	}
+	//ここに非公開・未収載タグについてwarn
+	if(~str.indexOf("#")){
+		if(vis == "local" || vis=="unlisted" || vis=="direct" || vis=="private"){
+			if(!confirm(lang_post_tagVis[lang])){
+				return false;
+			}
+		}
+	}
 	if ($("#cw").hasClass("cw-avail")) {
 		var spo = $("#cw-text").val();
 		cw();
 		toot.spoiler_text=spo;
 	} else {
 		var spo = "";
+	}
+	if ($("#sch-box").hasClass("sch-avail")) {
+		var scheduled=formattimeutc(new Date(Date.parse($("#sch-date").val())))
+		schedule();
+		toot.scheduled_at=scheduled;
+		
+	} else {
+		var scheduled = "";
 	}
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);

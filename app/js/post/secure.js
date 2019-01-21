@@ -113,3 +113,17 @@ $(function() {
 
 	});
   });
+//スケジュール
+function schedule(){
+	if($("#sch-box").hasClass("sch-avail")){
+		$("#sch-box").hide();
+		$("#sch-box").removeClass("sch-avail");
+	}else{
+		var date = new Date();
+		
+		$("#sch-box").show();
+		$("#sch-date").val(formattime(date));
+		console.log(formattime(date));
+		$("#sch-box").addClass("sch-avail");
+	}
+}
