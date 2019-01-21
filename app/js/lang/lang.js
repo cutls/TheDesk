@@ -144,6 +144,10 @@ var lang_post_tagTL={
     "ja":"デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。",
     "en":"This toot does not contain a default tag. This toot will not be shown on Local TL. Continue?"
 }
+var lang_post_tagVis={
+    "ja":"公開範囲が「公開」以外だと、タグTLに表示されません。(一部インスタンスを除く)",
+    "en":"This toot(not 'public' toot) is not shown on this tag's TL."
+}
 var lang_post_cwtitle={
     "ja":"長文投稿の警告",
     "en":"Auto CW Alert"
