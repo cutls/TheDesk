@@ -96,7 +96,7 @@
 		<label for="double">両方表示</label>
 		<input class="with-gap" onchange="settings()" name="time" type="radio" id="medium" value="medium" />
 		<label for="medium">混合表示</label>
-		<h5>独自ロケールを使用</h5>対応インスタンスではそのインスタンスにあわせた言語表示ができます。
+		<h5>独自ロケールを使用</h5>対応サーバーではそのサーバーにあわせた言語表示ができます。
 		<br>
 		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_yes" value="yes" />
 		<label for="ul_yes">はい</label>
@@ -130,9 +130,9 @@
 		<br>
 		<h5>タグタイムラインの表示範囲</h5>
 		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_all" value="all" />
-		<label for="t_all">接続しているインスタンス</label>
+		<label for="t_all">接続しているサーバー</label>
 		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_local" value="local" />
-		<label for="t_local">検索対象のインスタンスのみ</label>
+		<label for="t_local">検索対象のサーバーのみ</label>
 		<br>
 		<h5>viaを表示する</h5>
 		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_yes" value="yes" />
@@ -168,7 +168,7 @@
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
 		<h5>#InstanceTickerを使う</h5>
-		トゥートした人の所属インスタンスをわかりやすく彩ります(自インスタンス以外のトゥート向け)。<a href="https://cdn.weep.me/mastodon/">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.<br>
+		トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href="https://cdn.weep.me/mastodon/">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.<br>
 		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_yes" value="yes" />
 		<label for="ticker_yes">はい</label>
 		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
@@ -209,7 +209,7 @@
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="direct" value="direct" />
 		<label for="direct">ダイレクト(Direct)</label>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="memory" value="memory" />
-		<label for="memory">前回の投稿設定を記憶する(インスタンスごとに記憶されます)</label>
+		<label for="memory">前回の投稿設定を記憶する(サーバーごとに記憶されます)</label>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="server" value="server" />
 		<label for="server">マストドンアカウント設定の既定値</label>
 		<br>
@@ -348,7 +348,7 @@
 			0-100まで、デフォルトは100。<br>
 			<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100" style="width:500px; max-width:100%"/></p>
 			<h5>テスト</h5>
-			<input type="text" style="width:350px" id="voicetxt" value="これはテスト音声です。TheDeskはオープンソースのPC向けマストドンクライアントです。マルチインスタンスやマルチカラムに対応しています。">
+			<input type="text" style="width:350px" id="voicetxt" value="これはテスト音声です。TheDeskはオープンソースのPC向けマストドンクライアントです。マルチサーバーやマルチカラムに対応しています。">
 			<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()" id="testplay">再生/停止</button><br>
 			<br>
 			<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">設定</button>

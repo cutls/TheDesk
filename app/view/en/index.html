@@ -26,7 +26,7 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Miria (17.0.0)";
+var ver="Miria (17.0.1)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -125,9 +125,8 @@ var lang="en";
 		<i class="waves-effect gray material-icons purple-text dropdown-button" data-activates='dropdown1' id="vis-icon">public</i>
 		<a class="waves-effect gray" id="cw" onclick="cw()" title="Hide text behind warning">CW</a>
 		<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray" onclick="fileselect()" title="Attach..">photo_library</i></span></span>
-		<i class="waves-effect gray material-icons" onclick="adobe()" title="Adobe Photo Editor">format_shapes</i>
 		<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn" title="Emojis">tag_faces</i>
-		<a class="pointer waves-effect gray" id="npbtn" title="NowPlaying[Click to insert info of Spotify(account link is required.)/control+click to insert that of iTunes(macOS)]"><i class="material-icons" style="font-size:24px;">music_note</i></a>
+		<i class="waves-effect gray material-icons dropdown-button" data-activates='dropdown2'>more_vert</i>
 		<i class="material-icons nex gray waves-effect" title="Clear toot box(Ctrl+Shit+C)" data-trans-title="post_box_clear" id="clear">clear</i>
 </div>
 <div class="col s12 mize" style="margin-bottom:5px; padding:0;">
@@ -140,6 +139,9 @@ var lang="en";
 </span>
 <br>
 <input type="text" id="cw-text" placeholder="Warning text" class="mize" style="margin:0">
+<div id="sch-box">Post at<br><span class="sml">2.7.0~ Minimum time gap:5min(clock on the server may not be accurate.)</span><br>
+	<input type="datetime-local" id="sch-date" placeholder="Scheduled toot" class="datepicker" style="margin:0">
+</div>
 </div>
 </div>
 <!-- 公開範囲 Dropdown Structure -->
@@ -164,6 +166,21 @@ var lang="en";
 	<a onclick="vis('direct')" class="disabled direct">(Direct)</a>
 </li>
 </ul>
+<!-- その他 Dropdown Structure -->
+<ul id='dropdown2' class='dropdown-content'>
+	<li>
+		<a onclick="adobe()">Adobe Photo Editor</a>
+	</li>
+	<li>
+		<a onclick="nowplaying('spotify');">Spotify NowPlaying</a>
+	</li>
+	<li>
+		<a onclick="nowplaying('itunes');">iTunes NowPlaying(macOS)</a>
+	</li>
+	<li>
+		<a onclick="schedule();">Scheduled toot</a>
+	</li>
+	</ul>
 <!--hidden area-->
 <input type="hidden" id="reply">
 <input type="hidden" id="media">
@@ -528,16 +545,16 @@ var lang="en";
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Miria_17-0-0" class="release-do" style="display:none; ">
+			<div id="release-Miria_17-0-1" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Miria (17.0.0)</h5>
-					セキュリティアップデート、安定性の向上。<br>
-					<b>#InstanceTickerが使用できるように</b><br>
-					<b>フォントが直感的に選べるように</b><br>
-					<b>リンク解析をオンにしても制限がかからないように</b>(これによりデフォルトでオンになります。)<br>
+					<h5>Release Note Miria (17.0.1)</h5>
+					バグ修正<br>
+					(Mastodon 2.7)<b>時間指定投稿が利用できます。</b><br>
+					(Mastodon 2.7)<b>「インスタンス」を「サーバー」に変更</b><br>
+					
 			</div>
 			<br><br>
 			<h3>Support TheDesk!</h3>
