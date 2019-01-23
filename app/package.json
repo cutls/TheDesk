@@ -30,7 +30,7 @@
       "email": "popn.ja@gmail.com"
     }
   ],
-  "license": "GPL-3.0-or-later",
+  "license": "GPL-3.0",
   "dependencies": {
     "electron-dl": "^1.11.0",
     "font-manager": "^0.3.0",
