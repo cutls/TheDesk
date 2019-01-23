@@ -32,7 +32,7 @@
     "absolutetime":"Absolute format:\"23:25:21\",\"2017/12/30 23:59:00\"",
     "mixtime":"Mixed format:toots posted today are relative-format, others are absolute-format.",
     "relativesel":"Relative",
-    "absolutesel":"Absoltue",
+    "absolutesel":"Absolute",
     "doublesel":"Both relative and absolute",
     "mixsel":"Mixed",
     "locale":"Server's unique locale",
