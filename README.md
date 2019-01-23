@@ -1,6 +1,5 @@
 # TheDesk
 
-[![Snap Status](https://build.snapcraft.io/badge/cutls/TheDesk.svg)](https://build.snapcraft.io/user/cutls/TheDesk)
 
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのWindows/Linuxクライアント  
