@@ -1,8 +1,8 @@
 
   # After registering a name on build.snapcraft.io, commit an uncommented line:
-  # name: your-registered-name
+  name: thedesk
   version: '17.0.1' # just for humans, typically '1.2+git' or '1.3.2'
-  summary: Single-line elevator pitch for your amazing snap # 79 char long summary
+  summary: TheDesk is an open source client for Mastodon.  # 79 char long summary
   description: |
     TheDesk is an open source client for Mastodon. 
 
