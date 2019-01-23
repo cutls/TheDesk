@@ -4,7 +4,8 @@
   "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "build --linux snap"
   },
   "keywords": [],
   "bugs": {
@@ -60,6 +61,9 @@
         "rpm"
       ],
       "category": "Network"
+    },
+    "mac": {
+        "target": "dmg"
     },
     "electronDownload": {
       "version": "3.0.10"
