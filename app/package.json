@@ -57,8 +57,6 @@
     "linux": {
       "icon": "build/icons",
       "target": [
-        "deb",
-        "rpm",
         "snap"
       ],
       "category": "Network"
