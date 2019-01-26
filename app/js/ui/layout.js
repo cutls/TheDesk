@@ -78,14 +78,14 @@ function parseColumn() {
 			var if_notf="";
 		}
 		if(localStorage.getItem("notification_" + acct.domain)){
-			var unique_notf=lang_layout_thisacct[lang].replace("{{notf}}" ,localStorage.getItem("notification_" + acct.domain));
+			var unique_notf=lang.lang_layout_thisacct.replace("{{notf}}" ,localStorage.getItem("notification_" + acct.domain));
 		}else{
-			if(lang=="ja"){
+			if(lang.language=="ja"){
 				var notflocale="通知";
-			}else if(lang=="en"){
+			}else if(lang.language=="en"){
 				var notflocale="Notification";
 			} 
-			var unique_notf=lang_layout_thisacct[lang].replace("{{notf}}" ,notflocale);
+			var unique_notf=lang.lang_layout_thisacct.replace("{{notf}}" ,notflocale);
 		}
 		var insert="";
 		var icnsert="";
@@ -119,29 +119,38 @@ function parseColumn() {
 			var html =webview("https://tweetdeck.twitter.com",key,insert,icnsert);
 			$("#timeline-container").append(html);
 		}else{
+		if(acct.type=="notf"){
+			var exclude=':<br><input type="checkbox" class="filled-in" id="exc-reply-'+key+'" '+excludeCk(key,"mention")+' /><label for="exc-reply-'+key+'" class="exc-chb"><i class="fa fa-share exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-fav-'+key+'"  '+excludeCk(key,"favourite")+' /><label for="exc-fav-'+key+'" class="exc-chb"><i class="fa fa-star exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-bt-'+key+'" '+excludeCk(key,"reblog")+' /><label for="exc-bt-'+key+'" class="exc-chb" ><i class="fa fa-retweet exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"follow")+' /><label for="exc-follow-'+key+'" class="exc-chb" ><i class="fa fa-users exc-icons"></i></label> '+
+			'<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude('+key+')">Filter</button><br>';
+		}else{
+			var exclude="";
+		}
 		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
-			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang_layout_gotop[lang]+'"></i></div>'+
+			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang.lang_layout_gotop +'"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
 						  ')" class="setting nex '+if_notf+'" title="'+unique_notf+'"'+icnsert+'><i class="material-icons waves-effect nex notf-icon_' +
 						  acct.domain + '">notifications</i></div><div class="area-sta"><span class="new badge teal notf-reply_'+acct.domain+' hide" data-badge-caption="Reply">0</span><span class="new badge yellow black-text notf-fav_'+acct.domain+' hide" data-badge-caption="Fav">0</span><span class="new badge blue notf-bt_'+acct.domain+' hide" data-badge-caption="BT">0</span><span class="new badge orange notf-follow_'+acct.domain+' hide" data-badge-caption="Follow">0</span></a></div>'+
 			'<div class="area-a2"><a onclick="removeColumn(' + key +
-						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_delthis[lang]+'"'+icnsert+'>cancel</i></a></div>'+
+						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_delthis +'"'+icnsert+'>cancel</i></a></div>'+
 		  '<div class="area-a3"><a onclick="setToggle(' + key +
-		  ')" class="setting nex" title="'+lang_layout_setthis[lang]+'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
+		  ')" class="setting nex" title="'+lang.lang_layout_setthis +'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
 		  '<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"><div id="notifications_' + key +
 		  '" data-notf="' + acct.domain + '" data-type="notf"></div></div><div class="column-hide notf-indv-box" id="util-box_' + key +
-		  '" style="padding:5px;"><a onclick="mediaToggle(' + key +
-		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_mediafil[lang]+'">perm_media</i><span id="sta-media-' +
-		  key + '">On</span></a>'+lang_layout_mediafil[lang]+'<br><a onclick="cardToggle(' + key +
-		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_linkanades[lang]+'">link</i><span id="sta-card-' +
-		  key + '">On</span></a>'+lang_layout_linkana[lang]+'<br><a onclick="voiceToggle(' + key +
-		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_tts[lang]+'">hearing</i><span id="sta-voice-' +
-		  key + '">On</span></a>'+lang_layout_tts[lang]+'TL<br><a onclick="reconnector(' + key +
-		  ',\''+acct.type+'\',\''+acct.domain+'\',\''+acct.data+'\')" class="setting nex '+if_notf+'"><i class="material-icons waves-effect nex '+if_notf+'" title="'+lang_layout_reconnect[lang]+'">low_priority</i></a><span class="'+if_notf+'">'+lang_layout_reconnect[lang]+'</span><br>'+lang_layout_headercolor[lang]+'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
-			'" class="tl" tlid="' + key + '"'+notf_attr+' data-type="' + acct.type + '"><div id="landing_'+key+'" style="text-align:center">'+lang_layout_nodata[lang]+'</div></div></div></div>';
+		  '" style="padding:5px;">'+exclude+'<a onclick="mediaToggle(' + key +
+		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_mediafil +'">perm_media</i><span id="sta-media-' +
+		  key + '">On</span></a>'+lang.lang_layout_mediafil +'<br><a onclick="cardToggle(' + key +
+		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_linkanades +'">link</i><span id="sta-card-' +
+		  key + '">On</span></a>'+lang.lang_layout_linkana +'<br><a onclick="voiceToggle(' + key +
+		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_tts +'">hearing</i><span id="sta-voice-' +
+		  key + '">On</span></a>'+lang.lang_layout_tts +'TL<br><a onclick="reconnector(' + key +
+		  ',\''+acct.type+'\',\''+acct.domain+'\',\''+acct.data+'\')" class="setting nex '+if_notf+'"><i class="material-icons waves-effect nex '+if_notf+'" title="'+lang.lang_layout_reconnect+'">low_priority</i></a><span class="'+if_notf+'">'+lang.lang_layout_reconnect[lang]+'</span><br>'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+			'" class="tl" tlid="' + key + '" data-type="' + acct.type + '"><div id="landing_'+key+'" style="text-align:center">'+lang.lang_layout_nodata +'</div></div></div></div>';
 		$("#timeline-container").append(html);
 		localStorage.removeItem("pool_" + key);
 		if (acct.data) {
@@ -267,7 +276,7 @@ function addselCk(){
 		$("#webview-add").addClass("hide");
 	}
 	if(domain=="knzk.me" || domain=="mstdn.y-zu.org"){
-		$("#type-sel").append('<option value="dm" data-trans="dm" id="direct-add">'+lang_layout_dm[lang]+'</option>');
+		$("#type-sel").append('<option value="dm" data-trans="dm" id="direct-add">'+lang.layout_dm +'</option>');
 		$('#type-sel').material_select('update');
 	}else{
 		$("#direct-add").remove();
@@ -385,14 +394,14 @@ function webview(url,key,insert,icnsert){
 			'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
 			'<div class="area-notice"><i class="fa fa-twitter waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
 			'<div class="area-notice_name tl-title">WebView('+url+')</div>'+
-			'<div class="area-sta"><input type="checkbox" id="webviewsel" value="true" class="filled-in"><label for="webviewsel">'+lang_layout_webviewmode[lang]+'</label></div>'+
+			'<div class="area-sta"><input type="checkbox" id="webviewsel" value="true" class="filled-in"><label for="webviewsel">'+lang.lang_layout_webviewmode +'</label></div>'+
 			'<div class="area-a2"><a onclick="removeColumn(' + key +
-						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang_layout_delthis[lang]+'"'+icnsert+'>cancel</i></a></div>'+
+						  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_delthis +'"'+icnsert+'>cancel</i></a></div>'+
 		  '<div class="area-a3"><a onclick="setToggle(' + key +
-		  ')" class="setting nex" title="'+lang_layout_setthis[lang]+'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
+		  ')" class="setting nex" title="'+lang.lang_layout_setthis +'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
 		  '<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"></div><div class="column-hide notf-indv-box" id="util-box_' + key +
-		  '" style="padding:5px;">'+lang_layout_headercolor[lang]+'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:calc(100% - 110px);"><div id="timeline_' + key +
+		  '" style="padding:5px;">'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:calc(100% - 110px);"><div id="timeline_' + key +
 			'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="'+url+'" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview></div></div></div>';
 	
 	return html;

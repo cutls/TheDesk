@@ -57,6 +57,12 @@
 #bottom i{
   font-size:30px;
 }
+.exc-icons{
+  font-size:20px;
+}
+.exc-chb{
+  padding-left:24px !important;
+}
 #bottom .btnsgroup{
   border:1px solid;
   padding:1px;
