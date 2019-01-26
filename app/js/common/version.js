@@ -45,7 +45,7 @@ function verck(ver,winstore) {
 				var newest=mess.desk;
 			}
 			if (newest == ver) {
-				todo(lang_version_usever[lang].replace("{{ver}}" ,mess.desk));
+				todo(lang.lang_version_usever.replace("{{ver}}" ,mess.desk));
 				//betaかWInstoreならアプデチェックしない
 			} else if (ver.indexOf("beta")!=-1 || winstore) {
 				
@@ -56,7 +56,7 @@ function verck(ver,winstore) {
 						var ipc = electron.ipcRenderer;
 						ipc.send('update', "true");
 					}else{
-						todo(lang_version_skipver[lang]);
+						todo(lang.lang_version_skipver);
 					}
 				}else{
 					var ipc = electron.ipcRenderer;

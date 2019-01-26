@@ -134,6 +134,7 @@ function imgCont(type) {
 		if (type == "image") {
 			xhr = new XMLHttpRequest;
 			xhr.open('GET', murl, true);
+			xhr.responseType = "arraybuffer";
 			xhr.addEventListener('progress', function (event) {
   			if (event.lengthComputable) {
     			var total=event.total;

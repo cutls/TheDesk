@@ -57,10 +57,10 @@ function spotifyFlagSave(){
     var awk = $("[name=awk]:checked").val();
     if(awk=="yes"){
         localStorage.setItem("artwork","yes");
-        Materialize.toast(lang_spotify_img[lang], 3000);
+        Materialize.toast(lang.lang_spotify_img, 3000);
     }else{
         localStorage.removeItem("artwork");
-        Materialize.toast(lang_spotify_imgno[lang], 3000);
+        Materialize.toast(lang.lang_spotify_imgno, 3000);
     }
 }
 function nowplaying(mode){
@@ -118,7 +118,7 @@ function nowplaying(mode){
             $("#textarea").val(content);
         });
         }else{
-            alert(lang_spotify_acct[lang]);
+            alert(lang.lang_spotify_acct);
         }
     }else if(mode=="itunes"){
         var electron = require("electron");
@@ -158,7 +158,7 @@ function nowplaying(mode){
 function spotifySave(){
     var temp=$("#np-temp").val();
     localStorage.setItem("np-temp", temp);
-    Materialize.toast(lang_spotify_np[lang], 3000);
+    Materialize.toast(lang.lang_spotify_np, 3000);
 }
 if(location.search){
     var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);

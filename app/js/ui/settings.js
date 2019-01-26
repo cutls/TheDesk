@@ -4,14 +4,14 @@ function settings() {
 	var dd = $("[name=time]:checked").val();
 	var dt = $("[for="+dd+"]").text();
 		if (dd != localStorage.getItem("datetype")) {
-		Materialize.toast(lang_setting_time[lang].replace("{{set}}" ,dt), 3000);
+		Materialize.toast(lang.lang_setting_time.replace("{{set}}" ,dt), 3000);
 	}
 	localStorage.setItem("datetype", dd);
 
 	var cd = $("[name=theme]:checked").val();
 	var ct = $("[for="+cd+"]").html();
 	if (cd != localStorage.getItem("theme")) {
-		Materialize.toast(lang_setting_theme[lang].replace("{{set}}" ,ct), 3000);
+		Materialize.toast(lang.lang_setting_theme.replace("{{set}}" ,ct), 3000);
 	}
 	//テーマはこの場で設定
 	themes(cd);
@@ -20,63 +20,63 @@ function settings() {
 	var nd = $("[name=nsfw]:checked").val();
 	var nt = $("[for=n_"+nd+"]").text();
 	if (nd != localStorage.getItem("nsfw")) {
-		Materialize.toast(lang_setting_nsfw[lang].replace("{{set}}" ,nt), 3000);
+		Materialize.toast(lang.lang_setting_nsfw.replace("{{set}}" ,nt), 3000);
 	}
 	localStorage.setItem("nsfw", nd);
 
 	var cwd = $("[name=cw]:checked").val();
 	var cwt = $("[for=c_"+cwd+"]").text();
 	if (cwd != localStorage.getItem("cw")) {
-		Materialize.toast(lang_setting_cw[lang].replace("{{set}}" ,cwt), 3000);
+		Materialize.toast(lang.lang_setting_cw.replace("{{set}}" ,cwt), 3000);
 	}
 	localStorage.setItem("cw", cwd);
 
 	var cwtd = $("#cw-text").val();
 	if (cwtd != localStorage.getItem("cw-text")) {
-		Materialize.toast(lang_setting_cwtext[lang].replace("{{set}}" ,cwtd), 3000);
+		Materialize.toast(lang.lang_setting_cwtext.replace("{{set}}" ,cwtd), 3000);
 	}
 	localStorage.setItem("cw-text", cwtd);
 
 	var cwsd = $("[name=cws]:checked").val();
 	var cwst = $("[for=cws_"+cwsd+"]").text();
 	if (cwsd != localStorage.getItem("always-cw")) {
-		Materialize.toast(lang_setting_cws[lang].replace("{{set}}" ,cwst), 3000);
+		Materialize.toast(lang.lang_setting_cws.replace("{{set}}" ,cwst), 3000);
 	}
 	localStorage.setItem("always-cw", cwsd);
 
 	var rpd = $("[name=rp]:checked").val();
 	var rpt = $("[for=c_"+cwd+"]").text();
 	if (rpd != localStorage.getItem("replyct")) {
-		Materialize.toast(lang_setting_rp[lang].replace("{{set}}" ,rpt), 3000);
+		Materialize.toast(lang.lang_setting_rp.replace("{{set}}" ,rpt), 3000);
 	}
 	localStorage.setItem("replyct", rpd);
 
 	var visd = $("[name=vis]:checked").val();
 	var vist = $("[for="+visd+"]").text();
 	if (visd != localStorage.getItem("vis")) {
-		Materialize.toast(lang_setting_vis[lang].replace("{{set}}" ,vist), 3000);
+		Materialize.toast(lang.lang_setting_vis.replace("{{set}}" ,vist), 3000);
 	}
 	localStorage.setItem("vis", visd);
 
 	var popd = $("#popup").val();
 	if (popd > 0 && popd != localStorage.getItem("popup")) {
-		Materialize.toast(lang_setting_popup[lang].replace("{{set}}" ,popd+lang_setting_s[lang]), 3000);
+		Materialize.toast(lang.lang_setting_popup.replace("{{set}}" ,popd+lang.lang_setting_s), 3000);
 	} else if (popd != localStorage.getItem("popup")) {
-		Materialize.toast(lang_setting_popup[lang].replace("{{set}}" ,lang_setting_off[lang]), 3000);
+		Materialize.toast(lang.lang_setting_popup.replace("{{set}}" ,lang.lang_setting_off), 3000);
 	}
 	localStorage.setItem("popup", popd);
 
 	var gifd = $("[name=gif]:checked").val();
 	var gift = $("[for=g_"+gifd+"]").text();
 	if (gifd != localStorage.getItem("gif")) {
-		Materialize.toast(lang_setting_gif[lang].replace("{{set}}" ,gift), 3000);
+		Materialize.toast(lang.lang_setting_gif.replace("{{set}}" ,gift), 3000);
 	}
 	localStorage.setItem("gif", gifd);
 
 	var sentd = $("#sentence").val();
 	var ltrd = $("#letters").val();
 	if (sentd != localStorage.getItem("sentence") || ltrd != localStorage.getItem("letters")) {
-		Materialize.toast(lang_setting_selt[lang].replace("{{set1}}" ,sentd).replace("{{set2}}" ,ltrd), 3000);
+		Materialize.toast(lang.lang_setting_selt.replace("{{set1}}" ,sentd).replace("{{set2}}" ,ltrd), 3000);
 	}
 	localStorage.setItem("sentence", sentd);
 	localStorage.setItem("letters", ltrd);
@@ -84,35 +84,35 @@ function settings() {
 	var csentd = $("#cw_sentence").val();
 	var cltrd = $("#cw_letters").val();
 	if (csentd != localStorage.getItem("cw_sentence") || cltrd != localStorage.getItem("cw_letters")) {
-		Materialize.toast(lang_setting_autocw[lang].replace("{{set1}}" ,csentd).replace("{{set2}}" ,cltrd), 3000);
+		Materialize.toast(lang.lang_setting_autocw.replace("{{set1}}" ,csentd).replace("{{set2}}" ,cltrd), 3000);
 	}
 	localStorage.setItem("cw_sentence", csentd);
 	localStorage.setItem("cw_letters", cltrd);
 
 	var widthd = $("#width").val();
 	if (widthd != localStorage.getItem("width")) {
-		Materialize.toast(lang_setting_width[lang].replace("{{set}}" ,widthd), 3000);
+		Materialize.toast(lang.lang_setting_width.replace("{{set}}" ,widthd), 3000);
 	}
 	localStorage.setItem("width", widthd);
 
 	var imgd = $("[name=img]:checked").val();
 	var imgt = $("[for=i_"+imgd+"]").text();
 	if (imgd != localStorage.getItem("img")) {
-		Materialize.toast(lang_setting_img[lang].replace("{{set}}" ,imgt), 3000);
+		Materialize.toast(lang.lang_setting_img.replace("{{set}}" ,imgt), 3000);
 	}
 	localStorage.setItem("img", imgd);
 
 	var fontd = $("#font").val();
 	if(fontd){
 		if (fontd != localStorage.getItem("font")) {
-			Materialize.toast(lang_setting_font[lang].replace("{{set}}" ,fontd), 3000);
+			Materialize.toast(lang.lang_setting_font.replace("{{set}}" ,fontd), 3000);
 		}
 		localStorage.setItem("font", fontd);
 		themes();
 	}else{
 		if(localStorage.getItem("font")){
 			localStorage.removeItem("font");
-			Materialize.toast(lang_setting_font[lang].replace("{{set}}" ,lang_setting_default[lang]), 3000);
+			Materialize.toast(lang.lang_setting_font.replace("{{set}}" ,lang.lang_setting_default), 3000);
 			themes();
 		}
 	}
@@ -120,90 +120,90 @@ function settings() {
 
 	var sized = $("#size").val();
 	if (sized != localStorage.getItem("size")) {
-		Materialize.toast(lang_setting_size[lang].replace("{{set}}" ,sized), 3000);
+		Materialize.toast(lang.lang_setting_size.replace("{{set}}" ,sized), 3000);
 	}
 	localStorage.setItem("size", sized);
 
 	var heid = $("#img-height").val();
 	if (heid != localStorage.getItem("img-height")) {
-		Materialize.toast(lang_setting_imgheight[lang].replace("{{set}}" ,heid), 3000);
+		Materialize.toast(lang.lang_setting_imgheight.replace("{{set}}" ,heid), 3000);
 	}
 	localStorage.setItem("img-height", heid);
 
 	var tckrd = $("[name=ticker]:checked").val();
 	var tckrt = $("[for=ticker_"+tckrd+"]").text();
 	if (tckrd != localStorage.getItem("ticker_ok")) {
-		Materialize.toast(lang_setting_ticker[lang].replace("{{set}}" ,tckrt), 3000);
+		Materialize.toast(lang.lang_setting_ticker.replace("{{set}}" ,tckrt), 3000);
 	}
 	localStorage.setItem("ticker_ok", tckrd);
 
 	var boxd = $("[name=box]:checked").val();
 	var boxt = $("[for=bx_"+boxd+"]").text();
 	if (boxd != localStorage.getItem("box")) {
-		Materialize.toast(lang_setting_box[lang].replace("{{set}}" ,boxt), 3000);
+		Materialize.toast(lang.lang_setting_boxConfirm.replace("{{set}}" ,boxt), 3000);
 	}
 	localStorage.setItem("box", boxd);
 
 	var tagd = $("[name=tag]:checked").val();
 	var tagt = $("[for=t_"+tagd+"]").text();
 	if (tagd != localStorage.getItem("tag-range")) {
-		Materialize.toast(lang_setting_tag[lang].replace("{{set}}" ,tagt), 3000);
+		Materialize.toast(lang.lang_setting_tag.replace("{{set}}" ,tagt), 3000);
 	}
 	localStorage.setItem("tag-range", tagd);
 
 	var uld = $("[name=ul]:checked").val();
 	var ult = $("[for=ul_"+uld+"]").text();
 	if (uld != localStorage.getItem("locale")) {
-		Materialize.toast(lang_setting_ul[lang].replace("{{set}}" ,ult), 3000);
+		Materialize.toast(lang.lang_setting_ul.replace("{{set}}" ,ult), 3000);
 	}
 	localStorage.setItem("locale", uld);
 
 	var ntd = $("[name=notf]:checked").val();
 	var ntt = $("[for=ntf_"+ntd+"]").text();
 	if (ntd != localStorage.getItem("nativenotf")) {
-		Materialize.toast(lang_setting_notf[lang].replace("{{set}}" ,ntt), 3000);
+		Materialize.toast(lang.lang_setting_notf.replace("{{set}}" ,ntt), 3000);
 	}
 	localStorage.setItem("nativenotf", ntd);
 
 	var qtd = $("[name=quote]:checked").val();
 	var qtt = $("[for=q_"+qtd+"]").text();
 	if (qtd != localStorage.getItem("quote")) {
-		Materialize.toast(lang_setting_quote[lang].replace("{{set}}" ,qtt), 3000);
+		Materialize.toast(lang.lang_setting_quote.replace("{{set}}" ,qtt), 3000);
 	}
 	localStorage.setItem("quote", qtd);
 	
 	var viad = $("[name=via]:checked").val();
 	var viat = $("[for=via_"+viad+"]").text();
 	if (viad != localStorage.getItem("viashow")) {
-		Materialize.toast(lang_setting_via[lang].replace("{{set}}" ,viat), 3000);
+		Materialize.toast(lang.lang_setting_via.replace("{{set}}" ,viat), 3000);
 	}
 	localStorage.setItem("viashow", viad);
 
 	var notfmd = $("[name=notfm]:checked").val();
 	var notfmt = $("[for=notfm_"+notfmd+"]").text();
 	if (notfmd != localStorage.getItem("setasread")) {
-		Materialize.toast(lang_setting_setasread[lang].replace("{{set}}" ,notfmt), 3000);
+		Materialize.toast(lang.lang_setting_setasread.replace("{{set}}" ,notfmt), 3000);
 	}
 	localStorage.setItem("setasread", notfmd);
 
 	var movd = $("[name=mov]:checked").val();
 	var movt = $("[for=mov_"+movd+"]").text();
 	if (movd != localStorage.getItem("mouseover")) {
-		Materialize.toast(lang_setting_mov[lang].replace("{{set}}" ,movt), 3000);
+		Materialize.toast(lang.lang_setting_mov.replace("{{set}}" ,movt), 3000);
 	}
 	localStorage.setItem("mouseover", movd);
 
 	var maind = $("[name=main]:checked").val();
 	var maint = $("[for=mn_"+maind+"]").text();
 	if (maind != localStorage.getItem("mainuse")) {
-		Materialize.toast(lang_setting_main[lang].replace("{{set}}" ,maint), 3000);
+		Materialize.toast(lang.lang_setting_main.replace("{{set}}" ,maint), 3000);
 	}
 	localStorage.setItem("mainuse", maind);
 
 	var secd = $("[name=sec]:checked").val();
 	var sect = $("[for=sec-"+secd+"]").text();
 	if (secd != localStorage.getItem("sec")) {
-		Materialize.toast(lang_setting_sec[lang].replace("{{set}}" ,sect), 3000);
+		Materialize.toast(lang.lang_setting_sec.replace("{{set}}" ,sect), 3000);
 	}
 	localStorage.setItem("sec", secd);
 }
@@ -424,10 +424,10 @@ function climute(){
 	var cli = localStorage.getItem("client_mute");
 	var obj = JSON.parse(cli);
 	if(!obj){
-		$("#mute-cli").html(lang_setting_nomuting[lang]);
+		$("#mute-cli").html(lang.lang_setting_nomuting);
 	}else{
 		if(!obj[0]){
-			$("#mute-cli").html(lang_setting_nomuting[lang]);
+			$("#mute-cli").html(lang.lang_setting_nomuting);
 			return;
 		}
 	var templete;
@@ -437,7 +437,7 @@ function climute(){
 		templete = '<div class="acct" id="acct_' + key + '">' + list +
 			'.' +
 			cli + '<button class="btn waves-effect red disTar" onclick="cliMuteDel(' +
-			key + ')">'+lang_del[lang]+'</button><br></div>';
+			key + ')">'+lang.lang_del+'</button><br></div>';
 		$("#mute-cli").append(templete);
 	});
 }
@@ -481,20 +481,20 @@ function notftest(){
 		var ipc = electron.ipcRenderer;
 		var os = electron.remote.process.platform;
 		var options = {
-				body: lang_setting_notftest[lang]+'('+lang_setting_notftestprof[lang]+')',
+				body: lang.lang_setting_notftest+'('+lang.lang_setting_notftestprof+')',
 				icon: localStorage.getItem("prof_0")
 		  };
 		if(os=="darwin"){
-			var n = new Notification('TheDesk'+lang_setting_notftest[lang], options);
+			var n = new Notification('TheDesk'+lang.lang_setting_notftest, options);
 		}else{
-			ipc.send('native-notf', ['TheDesk'+lang_setting_notftest[lang],lang_setting_notftest[lang]+'('+lang_setting_notftestprof[lang]+')',localStorage.getItem('prof_0'),"",""]);
+			ipc.send('native-notf', ['TheDesk'+lang.lang_setting_notftest,lang.lang_setting_notftest+'('+lang.lang_setting_notftestprof+')',localStorage.getItem('prof_0'),"",""]);
 		}
 	
 }
 function oks(no){
 	var txt=$("#oks-"+no).val();
 	localStorage.setItem("oks-"+no, txt);
-	Materialize.toast(lang_setting_ksref[lang], 3000);
+	Materialize.toast(lang.lang_setting_ksref, 3000);
 }
 function oksload(){
 	if(localStorage.getItem("oks-1")){$("#oks-1").val(localStorage.getItem("oks-1"))}
@@ -510,7 +510,7 @@ function changelang(lang){
 	});
 }
 function exportSettings(){
-	if(!confirm(lang_setting_exportwarn[lang])){
+	if(!confirm(lang.lang_setting_exportwarn)){
 		return false;
 	}
 	var electron = require("electron");
@@ -584,7 +584,7 @@ function exportSettings(){
 	});
 }
 function importSettings(){
-	if(!confirm(lang_setting_importwarn[lang])){
+	if(!confirm(lang.lang_setting_importwarn)){
 		return false;
 	}
 	var electron = require("electron");

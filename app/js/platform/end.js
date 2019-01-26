@@ -136,7 +136,7 @@ function progshow(e) {
 	  if(percent<1){
 		 $("#imgup").text(Math.floor(percent*100)+"%");
 	  }else{
-		$("#imgup").text(lang_progress[lang]);
+		$("#imgup").text(lang.lang_progress);
 	  }
 	}
   }

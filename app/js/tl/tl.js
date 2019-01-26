@@ -47,7 +47,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		return;
 	}else if (type == "notf") {
 		//通知なら飛ばす
-		//notf(acct_id, tlid, 'direct');
+		notf(acct_id, tlid, 'direct');
 		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
 			$("#notice_icon_" + tlid).text("notifications");
@@ -508,7 +508,7 @@ function cap(type, data, acct_id) {
 		}
 	} else if (type == "local-media") {
 		if(localStorage.getItem("local_" + acct_id) && !locale){
-			var response=localStorage.getItem("local_" + acct_id)+"("+lang_tl_media[lang]+")";
+			var response=localStorage.getItem("local_" + acct_id)+"("+lang.lang_tl_media +")";
 		}else{
 			var response="Local TL(Media)";
 		}
@@ -520,7 +520,7 @@ function cap(type, data, acct_id) {
 		}
 	} else if (type == "pub-media") {
 		if(localStorage.getItem("public_" + acct_id) && !locale){
-			var response=localStorage.getItem("public_" + acct_id)+"("+lang_tl_media[lang]+")";
+			var response=localStorage.getItem("public_" + acct_id)+"("+lang.lang_tl_media +")";
 		}else{
 			var response="Federated TL(Media)";
 		}
@@ -670,7 +670,7 @@ function reconnector(tlid,type,acct_id,data,mode){
 		}
 		reload(type, '', acct_id, tlid, data, mute, "",voice,mode);
 	}
-	Materialize.toast(lang_tl_reconnect[lang], 2000);
+	Materialize.toast(lang.lang_tl_reconnect, 2000);
 }
 
 strAliveInt()

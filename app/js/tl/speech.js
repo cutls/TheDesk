@@ -1,5 +1,5 @@
 $voise        = null;
-    $voiseName    = lang_speech[lang];
+    $voiseName    = lang.lang_speech;
     $voices       = speechSynthesis.getVoices();
     $synthes      = new SpeechSynthesisUtterance();
     $voise = $.grep($voices, function(n, i){return n.name == $voiseName})[0];
@@ -91,7 +91,7 @@ function voiceSettings(){
     localStorage.setItem("voice_speed", $("#voicespeed").val()/10);
     localStorage.setItem("voice_pitch", $("#voicepitch").val()/50);
     localStorage.setItem("voice_vol", $("#voicevol").val()/100);
-    Materialize.toast(lang_speech_refresh[lang], 3000);
+    Materialize.toast(lang.lang_speech_refresh, 3000);
 }
 function voiceSettingLoad(){
     var speed=localStorage.getItem("voice_speed");

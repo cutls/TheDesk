@@ -14,8 +14,7 @@
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
-<script type="text/javascript" src="../../js/lang/setting.lang.js"></script>
-<script>var lang="en";</script>
+<script type="text/javascript" src="../../js/lang/lang.en.js"></script>
 <h4>Preferences</h4>
 <ul class="collapsible" data-collapsible="accordion">
 	<li>
@@ -91,7 +90,7 @@
 		<input class="with-gap" onchange="settings()" onchange="settings()" name="time" type="radio" id="relative" value="relative" />
 		<label for="relative">Relative</label>
 		<input class="with-gap" onchange="settings()" name="time" type="radio" id="absolute" value="absolute" />
-		<label for="absolute">Absoltue</label>
+		<label for="absolute">Absolute</label>
 		<input class="with-gap" onchange="settings()" name="time" type="radio" id="double" value="double" />
 		<label for="double">Both relative and absolute</label>
 		<input class="with-gap" onchange="settings()" name="time" type="radio" id="medium" value="medium" />
@@ -158,8 +157,8 @@
 		<h5>Auto folding</h5>
 		TheDesk does not collapse totes of 5 characters or less. Also, when collapsing, newlines are not shown. TheDesk count only newlines as the number of lines.
 		<br>
-		<input type="text" style="width:50px" id="sentence">linesaboveor
-		<input type="text" style="width:50px" id="letters">lettersabove
+		<input type="text" style="width:50px" id="sentence">lines above or
+		<input type="text" style="width:50px" id="letters">letters above
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
 		<br>
 		<h5>Height of images
@@ -188,8 +187,8 @@
 		<h5>Alert before posting a long toot.</h5>
 		Show dialog whether you make too-long text hidden.
 		<br>
-		<input type="text" style="width:50px" id="cw_sentence">linesaboveor
-		<input type="text" style="width:50px" id="cw_letters">lettersabove
+		<input type="text" style="width:50px" id="cw_sentence">lines above or
+		<input type="text" style="width:50px" id="cw_letters">letters above
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
 		<br>
 		<h5>Always CW set</h5>

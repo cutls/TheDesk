@@ -14,8 +14,7 @@
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
-<script type="text/javascript" src="../../js/lang/setting.lang.js"></script>
-<script>var lang="{{lang}}";</script>
+<script type="text/javascript" src="../../js/lang/lang.{{lang}}.js"></script>
 <h4>{{setting}}</h4>
 <ul class="collapsible" data-collapsible="accordion">
 	<li>
@@ -158,8 +157,8 @@
 		<h5>{{autofold}}</h5>
 		{{autofoldwarn}}
 		<br>
-		<input type="text" style="width:50px" id="sentence">{{lines}}{{above}}{{or}}
-		<input type="text" style="width:50px" id="letters">{{letters}}{{above}}
+		<input type="text" style="width:50px" id="sentence">{{lines}} {{above}} {{or}}
+		<input type="text" style="width:50px" id="letters">{{letters}} {{above}}
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
 		<br>
 		<h5>{{imgheight}}
@@ -188,8 +187,8 @@
 		<h5>{{autocw}}</h5>
 		{{autocwwarn}}
 		<br>
-		<input type="text" style="width:50px" id="cw_sentence">{{lines}}{{above}}{{or}}
-		<input type="text" style="width:50px" id="cw_letters">{{letters}}{{above}}
+		<input type="text" style="width:50px" id="cw_sentence">{{lines}} {{above}} {{or}}
+		<input type="text" style="width:50px" id="cw_letters">{{letters}} {{above}}
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
 		<br>
 		<h5>{{cws}}</h5>

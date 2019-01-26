@@ -53,7 +53,7 @@ function utl(user, more, acct_id) {
 			var templete = parse(json, '', acct_id, 'user');
 		}
 		if(!json[0]){
-			templete=lang_details_nodata[lang]+"<br>";
+			templete=lang.lang_details_nodata+"<br>";
 		}
 		if (more) {
 			$("#his-tl-contents").append(templete);
@@ -155,7 +155,7 @@ function flw(user, more, acct_id) {
 			var templete = userparse(json,'',acct_id);
 		}
 		if(templete==""){
-			templete=lang_details_nodata[lang]+"<br>";
+			templete=lang.lang_details_nodata+"<br>";
 		}
 		if (more) {
 			$("#his-follow-list-contents").append(templete);
@@ -221,7 +221,7 @@ function fer(user, more, acct_id) {
 			var templete = userparse(json,'',acct_id);
 		}
 		if(templete==""){
-			templete=lang_details_nodata[lang]+"<br>";
+			templete=lang.lang_details_nodata+"<br>";
 		}
 		if (more) {
 			$("#his-follower-list-contents").append(templete);
@@ -283,7 +283,7 @@ function showFav(more, acct_id) {
 			var templete = misskeyParse(json, '', acct_id,'user');
 		}
 		if(!json[0]){
-			templete=lang_details_nodata[lang]+"<br>";
+			templete=lang.lang_details_nodata+"<br>";
 		}
 		if (more) {
 			$("#his-fav-list-contents").append(templete);
@@ -339,7 +339,7 @@ function showMut(more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		if(!json[0]){
-			templete=lang_details_nodata[lang]+"<br>";
+			templete=lang.lang_details_nodata+"<br>";
 		}
 		var templete = userparse(json,'',acct_id);
 		if (more) {
@@ -358,7 +358,7 @@ function showBlo(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
-		$("#his-blocking-list-contents").html(lang_hisdata_notonmisskey[lang]+"<br>");
+		$("#his-blocking-list-contents").html(lang.lang_hisdata_notonmisskey+"<br>");
 		return false;
 	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
@@ -382,7 +382,7 @@ function showBlo(more, acct_id) {
 		console.error(error);
 	}).then(function(json) {
 		if(!json[0]){
-			templete=lang_details_nodata[lang]+"<br>";
+			templete=lang.lang_details_nodata+"<br>";
 		}
 		var templete = userparse(json,'',acct_id);
 		if (more) {
@@ -445,7 +445,7 @@ function showReq(more, acct_id) {
 		}
 		
 		if(!json[0]){
-			templete=lang_details_nodata[lang]+"<br>";
+			templete=lang.lang_details_nodata+"<br>";
 		}
 		if (more) {
 			$("#his-request-list-contents").append(templete);
@@ -463,7 +463,7 @@ function showDom(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
-		$("#his-domain-list-contents").html(lang_hisdata_notonmisskey[lang]+"<br>");
+		$("#his-domain-list-contents").html(lang.lang_hisdata_notonmisskey+"<br>");
 		return false;
 	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
@@ -489,7 +489,7 @@ function showDom(more, acct_id) {
 	}).then(function(json) {
 		var templete = "";
 		if(!json[0]){
-			templete=lang_details_nodata[lang]+"<br>";
+			templete=lang.lang_details_nodata+"<br>";
 		}
 		Object.keys(json).forEach(function(key) {
 			var domain = json[key];
@@ -514,7 +514,7 @@ function showFrl(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
-		$("#his-follow-recom-contents").html(lang_hisdata_notonmisskey[lang]+"<br>");
+		$("#his-follow-recom-contents").html(lang.lang_hisdata_notonmisskey+"<br>");
 		return false;
 	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
@@ -534,13 +534,13 @@ function showFrl(more, acct_id) {
 	}).then(function(response) {
 		return response.json();
 	}).catch(function(error) {
-		$("#his-follow-recom-contents").html(lang_details_nodata[lang]+"("+lang_hisdata_frcreq[lang]+")<br>");
+		$("#his-follow-recom-contents").html(lang.lang_details_nodata+"("+lang.lang_hisdata_frcreq+")<br>");
 		console.error(error);
 	}).then(function(json) {
 		console.log(json);
 		if(!json[0]){
 			console.log("No data");
-			templete=lang_details_nodata[lang]+"("+lang_hisdata_frcwarn[lang]+")<br>";
+			templete=lang.lang_details_nodata+"("+lang.lang_hisdata_frcwarn+")<br>";
 		}else{
 			var templete = userparse(json,'',acct_id);
 		}
@@ -557,7 +557,7 @@ function showFrl(more, acct_id) {
 //ユーザーマッチングリスト
 function showMat() {
 	
-	$("#his-matching-list-contents").html(lang_hisdata_taketime[lang]);
+	$("#his-matching-list-contents").html(lang.lang_hisdata_taketime);
 	var full=$("#his-acct").attr("fullname");
 	var acct_id=$("#his-data").attr("use-acct");
 	full=full.split("@");

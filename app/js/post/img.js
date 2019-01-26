@@ -43,7 +43,7 @@ function pimg(files) {
 			var electron = require("electron");
 		  	var ipc = electron.ipcRenderer;
 			  ipc.send('bmp-image', [files[i].path,i]);
-			  todo(lang_progress[lang]);
+			  todo(lang.lang_progress);
 			  
 		}else{
 			handleFileUpload(files[i], obj,i);
@@ -134,7 +134,7 @@ function media(b64, type, no) {
 				var html = '<img src="' + json[previewer] + '" style="width:50px; max-height:100px;">';
 				$('#preview').append(html);
 			} else {
-				$('#preview').append(lang_postimg_previewdis[lang]);
+				$('#preview').append(lang.lang_postimg_previewdis);
 			}
 			if (!img) {
 				var img = "no-act";
@@ -152,8 +152,8 @@ function media(b64, type, no) {
 			todc();
 			$(".toot-btn-group").prop("disabled", false);
 			$('select').material_select();
-			$("#mec").text(lang_there[lang]);
-			Materialize.toast(lang_postimg_aftupload[lang], 1000);
+			$("#mec").text(lang.lang_there);
+			Materialize.toast(lang.lang_postimg_aftupload, 1000);
 			$("#imgup").text("");
 			$("#imgsel").show();
 			localStorage.removeItem("image");

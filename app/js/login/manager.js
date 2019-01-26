@@ -43,11 +43,11 @@ function load() {
 			name + '</span>' + escapeHTML(acct.user) + '@' + acct.domain +
 			'</div><div class="card-action"><a class="waves-effect disTar pointer white-text" onclick="data(\'' +
 			acct.domain +
-			'\')"><i class="material-icons">info</i>'+lang_manager_info[lang]+'</a><a class="waves-effect disTar pointer  white-text" onclick="refresh(' +
+			'\')"><i class="material-icons">info</i>'+lang.lang_manager_info+'</a><a class="waves-effect disTar pointer  white-text" onclick="refresh(' +
 			key +
-			')"><i class="material-icons">refresh</i>'+lang_manager_refresh[lang]+'</a><a class="waves-effect disTar pointer red-text" onclick="multiDel(' +
+			')"><i class="material-icons">refresh</i>'+lang.lang_manager_refresh+'</a><a class="waves-effect disTar pointer red-text" onclick="multiDel(' +
 			key +
-			')"><i class="material-icons">delete</i>'+lang_manager_delete[lang]+'</a><br>'+lang_manager_color[lang]+'<div id="colorsel_'+key+'" class="colorsel"></div></div></div>';
+			')"><i class="material-icons">delete</i>'+lang.lang_manager_delete+'</a><br>'+lang.lang_manager_color+'<div id="colorsel_'+key+'" class="colorsel"></div></div></div>';
 		$("#acct-list").append(templete);
 	colorpicker(key)
 	});
@@ -141,7 +141,7 @@ function multiDel(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
 	//削除確認ダイアログ
-	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] +lang_manager_confirm[lang])) {
+	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] +lang.lang_manager_confirm)) {
 		Object.keys(obj).forEach(function(key) {
 			var nk=key-1;
 			//公開範囲(差分のみ)
@@ -205,7 +205,7 @@ function multiDel(target) {
 function multiDel2(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] +lang_manager_confirm[lang])) {
+	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] +lang.lang_manager_confirm)) {
 		obj.splice(target, 1);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
@@ -342,7 +342,7 @@ function misskeyLogin(url) {
 		if(!mkc){
 			$("#misskeylogin").show();
 			$("#misskey-url").val(url);
-			if(confirm(lang_manager_godev[lang])){
+			if(confirm(lang.lang_manager_godev)){
 				const {
 					shell
 				} = require('electron');
@@ -493,7 +493,7 @@ function getdata(domain, at) {
 		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
-			Materialize.toast(lang_fatalerroroccured[lang]+"Error:" + json.error,
+			Materialize.toast(lang.lang_fatalerroroccured+"Error:" + json.error,
 				5000);
 			return;
 		}
@@ -558,7 +558,7 @@ function refresh(target) {
 		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
-			Materialize.toast(lang_fatalerroroccured[lang]+"Error:" + json.error,
+			Materialize.toast(lang.lang_fatalerroroccured+"Error:" + json.error,
 				5000);
 			return;
 		}
@@ -647,14 +647,14 @@ function multisel() {
 	console.log(obj.length)
 	if(obj.length<1){
 		$("#src-acct-sel").html('<option value="tootsearch">Tootsearch</option>');
-		$("#add-acct-sel").html('<option value="noauth">'+lang_login_noauth[lang]+'</option>');
+		$("#add-acct-sel").html('<option value="noauth">'+lang.lang_login_noauth+'</option>');
 	}else{
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
 		var list = key * 1 + 1;
 		if (key == last) {
 			sel = "selected";
-			mainb='('+lang_manager_def[lang]+')'
+			mainb='('+lang.lang_manager_def+')'
 			var domain = localStorage.getItem("domain_" + key);
 			var profimg=localStorage.getItem("prof_"+key);
 			var domain=localStorage.getItem("domain_"+key);
@@ -677,11 +677,11 @@ function multisel() {
 function mainacct(){
 	var acct_id = $("#main-acct-sel").val();
 	localStorage.setItem("main", acct_id);
-	Materialize.toast(lang_manager_mainAcct[lang], 3000);
+	Materialize.toast(lang.lang_manager_mainAcct, 3000);
 }
 function colorpicker(key){
 	temp=
-		'<div onclick="coloradd('+key+',\'def\',\'def\')" class="pointer exc">'+lang_manager_none[lang]+'</div>'+
+		'<div onclick="coloradd('+key+',\'def\',\'def\')" class="pointer exc">'+lang.lang_manager_none+'</div>'+
 		'<div onclick="coloradd('+key+',\'f44336\',\'white\')" class="red white-text pointer"></div>'+
 		'<div onclick="coloradd('+key+',\'e91e63\',\'white\')" class="pink white-text pointer"></div>'+
 		'<div onclick="coloradd('+key+',\'9c27b0\',\'white\')" class="purple white-text pointer"></div>'+

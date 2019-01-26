@@ -64,7 +64,7 @@ function additional(acct_id, tlid) {
 				}).then(function(json) {
 					if (json.title) {
 						$("[toot-id=" + id + "] .additional").html(
-							"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
+							"<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + json.title + "<br>" +
 							json.description + "</span>");
 						$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
 						$("[toot-id=" + id + "]").addClass("parsed");
@@ -149,7 +149,7 @@ function additionalIndv(tlid, acct_id, id) {
 				}).then(function(json) {
 					if (json.title) {
 						$("[toot-id=" + id + "] .additional").html(
-							"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + json.title + "<br>" +
+							"<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + json.title + "<br>" +
 							json.description + "</span>");
 						$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
 						$("[toot-id=" + id + "]").addClass("parsed");
@@ -193,11 +193,11 @@ function additionalIndv(tlid, acct_id, id) {
 					}else{
 						if (json.title) {
 							$("[toot-id=" + id + "] .additional").html(
-								"<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + escapeHTML(json.title) + "<br>" +
+								"<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + escapeHTML(json.title) + "<br>" +
 								escapeHTML(json.description) + "</span>");
 						}
 						if (json.html) {
-							$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>');
+							$("[toot-id=" + id + "] .additional").html(json.html+'<i class="material-icons sml pointer" onclick="pip(\''+id+'\')" title="'+lang.lang_cards_pip+'">picture_in_picture_alt</i>');
 		
 						}
 					}

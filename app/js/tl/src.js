@@ -98,9 +98,9 @@ function tootsearch(q){
 				}
 			});
 			if(!templete){
-				templete=lang_details_nodata[lang];
+				templete=lang.lang_details_nodata;
 			}
-			$("#src-contents").html("Tootsearch("+lang_src_ts[lang]+")<br>" + templete);
+			$("#src-contents").html("Tootsearch("+lang.lang_src_ts+")<br>" + templete);
 		jQuery("time.timeago").timeago();
 	});
 }
@@ -119,12 +119,12 @@ function graphDraw(tag){
 		if(max==0){
 			tags = '<br><br><svg version="1.1" viewbox="0 0 60 50" width="60" height="50">'+
 	'</svg><span style="font-size:200%">'+his[0].uses+'</span>toots&nbsp;<a onclick="tl(\'tag\',\'' + tag.name + '\',\'' + acct_id +
-			'\',\'add\')" class="pointer">#' + tag.name + '</a>&nbsp;'+his[0].accounts+lang_src_people[lang];
+			'\',\'add\')" class="pointer">#' + tag.name + '</a>&nbsp;'+his[0].accounts+lang.lang_src_people;
 		}else{
 			tags = '<br><br><svg version="1.1" viewbox="0 0 60 50" width="60" height="50">'+
 			'<g><path d="M0,'+six+' L10,'+five+' 20,'+four+' 30,'+three+' 40,'+two+' 50,'+one+' 60,'+zero+'" style="stroke: #9e9e9e; stroke-width: 1;fill: none;"></path></g>'+
 		'</svg><span style="font-size:200%">'+his[0].uses+'</span>toots&nbsp;<a onclick="tl(\'tag\',\'' + tag.name + '\',\'' + acct_id +
-				'\',\'add\')" class="pointer">#' + tag.name + '</a>&nbsp;'+his[0].accounts+lang_src_people[lang];
+				'\',\'add\')" class="pointer">#' + tag.name + '</a>&nbsp;'+his[0].accounts+lang.lang_src_people;
 		}
 		
 	return tags;

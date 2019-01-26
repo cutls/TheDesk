@@ -20,7 +20,7 @@ function post(mode,postvis) {
 	if(domain=="theboss.tech"){
 		if(~str.indexOf("#")){
 			if(str.indexOf("#theboss_tech")=="-1"){
-				if(!confirm(lang_post_tagTL[lang])){
+				if(!confirm(lang.lang_post_tagTL)){
 					return false;
 				}
 			}
@@ -29,7 +29,7 @@ function post(mode,postvis) {
 	if(domain=="dtp-mstdn.jp"){
 		if(~str.indexOf("#")){
 			if(str.indexOf("#dtp")=="-1"){
-				if(!confirm(lang_post_tagTL[lang])){
+				if(!confirm(lang.lang_post_tagTL)){
 					return false;
 				}
 			}
@@ -52,9 +52,9 @@ function post(mode,postvis) {
 		var plus=str.replace(/\n/g,"").slice(0,10)+"...";
 		const options = {
 			type: 'info',
-			title: lang_post_cwtitle[lang],
-			message: lang_post_cwtxt[lang]+plus,
-			buttons: [lang_post_btn1[lang],lang_post_btn2[lang], lang_post_btn3[lang]]
+			title: lang.lang_post_cwtitle,
+			message: lang.lang_post_cwtxt+plus,
+			buttons: [lang.lang_post_btn1,lang.lang_post_btn2, lang.lang_post_btn3]
 	  	}
 	  	dialog.showMessageBox(options, function(arg) {
 			if(arg==1){
@@ -108,7 +108,7 @@ function post(mode,postvis) {
 	//ここに非公開・未収載タグについてwarn
 	if(~str.indexOf("#")){
 		if(vis == "local" || vis=="unlisted" || vis=="direct" || vis=="private"){
-			if(!confirm(lang_post_tagVis[lang])){
+			if(!confirm(lang.lang_post_tagVis)){
 				return false;
 			}
 		}
@@ -233,7 +233,7 @@ function clear() {
 	if(localStorage.getItem("stable")){
 		$("#textarea").val(localStorage.getItem("stable"));
 	}
-	$("#textarea").attr("placeholder", lang_toot[lang]);
+	$("#textarea").attr("placeholder", lang.lang_toot);
 	$("#reply").val("");
 	$("#media").val("");
 	var cwt = localStorage.getItem("cw-text");
@@ -252,13 +252,13 @@ function clear() {
 		$("#cw").addClass("cw-avail");
 		$("#cw-text").show();
 	}
-	$("#rec").text(lang_no[lang]);
-	$("#mec").text(lang_nothing[lang]);
+	$("#rec").text(lang.lang_no);
+	$("#mec").text(lang.lang_nothing);
 	loadVis();
 	$("#nsfw").removeClass("yellow-text");
 	$("#nsfw").html("visibility_off");
 	$("#nsfw").removeClass("nsfw-avail");
-	$("#nsc").text(lang_nothing[lang]);
+	$("#nsc").text(lang.lang_nothing);
 	$("#drag").css("background-color", "#e0e0e0");
 	$("#preview").html("");
 	$(".toot-btn-group").prop("disabled", false);

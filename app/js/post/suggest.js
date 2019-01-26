@@ -18,7 +18,7 @@ input.addEventListener("focus", function() {
 			if(semoji){
 				var obj = JSON.parse(localStorage.getItem("emoji_" + acct_id));
 				if(!obj){
-					var ehtml=lang_suggest_nodata[lang];
+					var ehtml=lang.lang_suggest_nodata;
 				}else{
 					var num = obj.length;
 					var ehtml="";

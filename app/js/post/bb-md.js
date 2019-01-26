@@ -10,7 +10,7 @@ function mdCheck(){
 		if(localStorage.getItem("post_" + acct_id)){
 			$("#toot-post-btn").text(localStorage.getItem("post_" + acct_id)+"("+localStorage.getItem("domain_"+acct_id)+")");
 		}else{
-			$("#toot-post-btn").text(lang_toot[lang]+"("+localStorage.getItem("domain_"+acct_id)+")");
+			$("#toot-post-btn").text(lang.lang_toot+"("+localStorage.getItem("domain_"+acct_id)+")");
 		}
 	  if(!localStorage.getItem("bb_"+acct_id) && !localStorage.getItem("md_"+acct_id)){
 		 $(".markdown").addClass("hide");
@@ -40,7 +40,7 @@ function mdCheck(){
 		$("#trendtag").html("");
 	}
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
-		Materialize.toast(lang_bbmd_misskey[lang], 5000);
+		Materialize.toast(lang.lang_bbmd_misskey, 5000);
 	}
 	if(idata[domain+"_letters"]){
 		$("#textarea").attr("data-length", idata[domain+"_letters"])

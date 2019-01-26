@@ -142,7 +142,7 @@ function spotifytips(){
 			spotint=setInterval(spotStart, 1000);
         });
         }else{
-            alert(lang_spotify_acct[lang]);
+            alert(lang.lang_spotify_acct);
         }
 }
 function spotStart(){

@@ -32,7 +32,7 @@ function renoteqt(id, acct_id) {
 	$("#post-acct-sel").val(acct_id);
 	$("#post-acct-sel").prop("disabled", true);
 	$('select').material_select();
-	$("#textarea").attr("placeholder",lang_misskeyparse_qt[lang]);
+	$("#textarea").attr("placeholder",lang.lang_misskeyparse_qt);
 	$("#textarea").focus();
 }
 //Reply
@@ -44,7 +44,7 @@ function misskeyreply(id, acct_id) {
 	$("#post-acct-sel").val(acct_id);
 	$("#post-acct-sel").prop("disabled", true);
 	$('select').material_select();
-	$("#textarea").attr("placeholder",lang_misskeyparse_qt[lang]);
+	$("#textarea").attr("placeholder",lang.lang_misskeyparse_qt);
 	$("#textarea").focus();
 }
 //Reaction

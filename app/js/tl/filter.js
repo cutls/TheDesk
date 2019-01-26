@@ -349,3 +349,51 @@ function filterUpdateInternal(json,type){
 		  key + '">On</span></a>削除捕捉<a onclick="delreset(' + key +
 		  ')" class="pointer">リセット</a><br>
 */
+//通知フィルター
+function exclude(key){
+	var excludetxt="";
+	if($('#exc-reply-'+key+':checked').val()){
+		excludetxt="?exclude_types[]=mention"
+		var reply=true
+	}else{
+		var reply=false;
+	}
+	if($('#exc-fav-'+key+':checked').val()){
+		if(reply){
+			excludetxt=excludetxt+"&exclude_types[]=favourite"
+		}else{
+			excludetxt="?exclude_types[]=favourite"
+		}
+		var fav=true
+	}else{
+		var fav=false;
+	}
+	if($('#exc-bt-'+key+':checked').val()){
+		if(reply || fav){
+			excludetxt=excludetxt+"&exclude_types[]=reblog"
+		}else{
+			excludetxt="?exclude_types[]=reblog"
+		}
+		var bt=true
+	}else{
+		var bt=false;
+	}
+	if($('#exc-follow-'+key+':checked').val()){
+		if(reply || bt || fav){
+			excludetxt=excludetxt+"&exclude_types[]=follow"
+		}else{
+			excludetxt="?exclude_types[]=follow"
+		}
+	}else{
+	}
+	localStorage.setItem("exclude-"+key,excludetxt)
+	parseColumn();
+}
+function excludeCk(key,target){
+	var exc=localStorage.getItem("exclude-"+key);
+	if(~exc.indexOf(target)){
+		return "checked"
+	}else{
+		return "";
+	}
+}

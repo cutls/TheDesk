@@ -183,24 +183,24 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'" width="20" class="notf-icon prof-img" user="' + toot.account.acct +
 			'"></a>';
 			if (toot.type == "mention") {
-				var what = lang_parse_mentioned[lang];
+				var what = lang.lang_parse_mentioned;
 				var icon = "fa-share teal-text";
 				noticeavatar="";
 			} else if (toot.type == "reblog") {
-				var what = lang_parse_bted[lang];
+				var what = lang.lang_parse_bted;
 				var icon = "fa-retweet light-blue-text";
 				if(!locale && localStorage.getItem("bt_" + acct_id)){
 					what = localStorage.getItem("bt_" + acct_id);
 				}
 			} else if (toot.type == "favourite") {
-				var what = lang_parse_faved[lang];
+				var what = lang.lang_parse_faved;
 				var icon = "fa-star  yellow-text";
 				if(!locale && localStorage.getItem("fav_" + acct_id)){
 					what = localStorage.getItem("fav_" + acct_id);
 				}
 			}
 			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.created_at,
-				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
+				'absolute') + '('+lang.lang_parse_notftime+')"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
 				datetype) +
 			'</span><i class="big-text fa '+icon+'"></i><a onclick="udg(\'' + toot.account.id +
 				'\',\'' + acct_id + '\')" class="pointer grey-text">' + dis_name +
@@ -291,7 +291,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				'<img src="' + noticeavatar +
 				'" width="20" class="notf-icon prof-img" user="' + toot.account.acct +
 				'"></a>';
-				var rebtxt = lang_parse_btedsimple[lang];
+				var rebtxt = lang.lang_parse_btedsimple;
 				var rticon = "fa-retweet light-blue-text";
 				if(localStorage.getItem("domain_" + acct_id)=="imastodon.net" && !locale){
 					rebtxt = ":「わかるわ」";
@@ -380,19 +380,19 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var spoiler = "cw cw_hide_" + toot.id;
 			var api_spoil = "gray";
 			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-				'\')" class="nex parsed">'+lang_parse_cwshow[lang]+'</a><br>';
+				'\')" class="nex parsed">'+lang.lang_parse_cwshow+'</a><br>';
 		} else {
 			var ct1 = toot.content.split('</p>').length + toot.content.split('<br />').length -2;
 			var ct2 = toot.content.split('</p>').length + toot.content.split('<br>').length -2;
 			if(ct1>ct2){ var ct= ct1; }else{ var ct= ct2;  }
 			if ((sent < ct && $.mb_strlen($.strip_tags(toot.content)) > 5) || ($.strip_tags(toot.content).length > ltr && $.mb_strlen($.strip_tags(toot.content)) > 5)) {
-				var content = '<span class="gray">'+lang_parse_fulltext[lang]+'</span><br>' + toot.content
+				var content = '<span class="gray">'+lang.lang_parse_fulltext+'</span><br>' + toot.content
 				var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tags(
 						toot.content), 0, 100) +
-					'</span><span class="gray">'+lang_parse_autofold[lang]+'</span>';
+					'</span><span class="gray">'+lang.lang_parse_autofold+'</span>';
 				var spoiler = "cw cw_hide_" + toot.id;
 				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-					'\')" class="nex parsed">'+lang_parse_more[lang]+'</a><br>';
+					'\')" class="nex parsed">'+lang.lang_parse_more+'</a><br>';
 			} else {
 				var content = toot.content;
 				var spoil = escapeHTML(toot.spoiler_text);
@@ -405,7 +405,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		);
 		if (urls) {
 			var analyze = '<a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
-				',\'' + id + '\')" class="add-show pointer">'+lang_parse_url[lang]+'</a><br>';
+				',\'' + id + '\')" class="add-show pointer">'+lang.lang_parse_url+'</a><br>';
 		} else {
 			var analyze = '';
 		}
@@ -507,8 +507,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			Object.keys(toot.tags).forEach(function(key4) {
 				var tag = toot.tags[key4];
 				tags = tags + '<span class="hide" data-tag="' + tag.name + '">#' + tag.name + ':<a onclick="tl(\'tag\',\'' + tag.name + '\',' + acct_id +
-					',\'add\')" class="pointer" title="' +lang_parse_tagTL[lang].replace("{{tag}}" ,'#'+tag.name)+ '">TL</a>　<a onclick="brInsert(\'#' + tag.name + '\')" class="pointer" title="' + lang_parse_tagtoot[lang].replace("{{tag}}" ,'#'+tag.name) + '">Toot</a>　'+
-					'<a onclick="tagPin(\'' + tag.name + '\')" class="pointer" title="' +lang_parse_tagpin[lang].replace("{{tag}}" ,'#'+tag.name)+ '">Pin</a></span> ';
+					',\'add\')" class="pointer" title="' +lang.lang_parse_tagTL.replace("{{tag}}" ,'#'+tag.name)+ '">TL</a>　<a onclick="brInsert(\'#' + tag.name + '\')" class="pointer" title="' + lang.lang_parse_tagtoot.replace("{{tag}}" ,'#'+tag.name) + '">Toot</a>　'+
+					'<a onclick="tagPin(\'' + tag.name + '\')" class="pointer" title="' +lang.lang_parse_tagpin.replace("{{tag}}" ,'#'+tag.name)+ '">Pin</a></span> ';
 			});
 			tags = '<div style="float:right">' + tags + '</div>';
 		}
@@ -526,19 +526,19 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		var visen = toot.visibility;
 		if (visen == "public") {
 			var vis =
-				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="'+lang_parse_public[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="public" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">public</i>';
+				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="'+lang.lang_parse_public+'('+lang.lang_parse_clickcopy+')" data-vis="public" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">public</i>';
 			var can_rt = "";
 		} else if (visen == "unlisted") {
 			var vis =
-				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="'+lang_parse_unlisted[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock_open</i>';
+				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="'+lang.lang_parse_unlisted+'('+lang.lang_parse_clickcopy+')" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock_open</i>';
 			var can_rt = "";
 		} else if (visen == "private") {
 			var vis =
-				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="'+lang_parse_private[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="private" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock</i>';
+				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="'+lang.lang_parse_private+'('+lang.lang_parse_clickcopy+')" data-vis="private" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock</i>';
 			var can_rt = "hide";
 		} else if (visen == "direct") {
 			var vis =
-				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="'+lang_parse_direct[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="direct" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">mail</i>';
+				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="'+lang.lang_parse_direct+'('+lang.lang_parse_clickcopy+')" data-vis="direct" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">mail</i>';
 			var can_rt = "hide";
 		}
 		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
@@ -605,7 +605,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}
 		//日本語じゃない
 		if(toot.language!="ja"){
-			var trans='<div class="action pin"><a onclick="trans(\''+toot.language+'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_trans[lang]+'"><i class="material-icons">g_translate</i></a></div>';
+			var trans='<div class="action pin"><a onclick="trans(\''+toot.language+'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_trans+'"><i class="material-icons">g_translate</i></a></div>';
 		}else{
 			var trans="";
 		}
@@ -621,11 +621,11 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				analyze='<blockquote class="twitter-tweet"><b>'+escapeHTML(cards.author_name)+'</b><br>'+escapeHTML(cards.description)+twiImg+'</blockquote>';
 			}
 			if (cards.title) {
-				analyze="<span class=\"gray\">URL"+lang_cards_check[lang]+":<br>Title:" + escapeHTML(cards.title) + "<br>" +
+				analyze="<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + escapeHTML(cards.title) + "<br>" +
 					escapeHTML(cards.description) + "</span>";
 			}
 			if (cards.html) {
-				analyze=cards.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang_cards_pip[lang]+'">picture_in_picture_alt</i>';
+				analyze=cards.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang.lang_cards_pip+'">picture_in_picture_alt</i>';
 			}
 		}
 		//Ticker
@@ -662,7 +662,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			toot.account.acct + locked + '</span></div>' +
 			'<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'' +
 			toot.url + '\');" title="' + date(toot.created_at, 'absolute') +
-			'('+lang_parse_clickcopyurl[lang]+')"><i class="fa fa-clock-o"></i>' +
+			'('+lang.lang_parse_clickcopyurl+')"><i class="fa fa-clock-o"></i>' +
 			date(toot.created_at, datetype) + '</span>' +
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="' +
@@ -676,34 +676,34 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<div class="area-vis"></div>'+
 			'<div class="area-actions '+mouseover+'">' +
 			'<div class="action">'+vis+'</div>'+
-			'<div class="action '+antinoauth+'"><a onclick="detEx(\''+toot.url+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">'+lang_parse_det[lang]+'</a></div>' +
+			'<div class="action '+antinoauth+'"><a onclick="detEx(\''+toot.url+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">'+lang.lang_parse_det+'</a></div>' +
 			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="re(\'' + toot.id +
 			'\',\'' + toot.account.acct + '\',' +
 			acct_id + ',\''+visen+
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_replyto[lang]+'"><i class="fa fa-share"></i><span class="rep_ct">' + replyct +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_replyto+'"><i class="fa fa-share"></i><span class="rep_ct">' + replyct +
 			'</a></span></a></div>' +
 			'<div class="action '+can_rt+' '+disp["rt"]+' '+noauth+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_bt[lang]+'"><i class="text-darken-3 fa fa-retweet ' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_bt+'"><i class="text-darken-3 fa fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 			'</span></a></div>' +
 			'<div class="action '+can_rt+' '+disp["qt"]+' '+noauth+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
 			',\'' + toot.account.acct +'\',\''+toot.url+
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_quote[lang]+'"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_quote+'"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
 			'<div class="action '+disp["fav"]+' '+noauth+'"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_fav[lang]+'"><i class="fa text-darken-3 fa-star' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_fav+'"><i class="fa text-darken-3 fa-star' +
 			if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
 			'</a></span></div>' +
 			'<div class="' + if_mine + ' action '+disp["del"]+' '+noauth+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_del[lang]+'"><i class="fa fa-trash-o"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="fa fa-trash-o"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_pin[lang]+'"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_pin+'"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 
 			+'<div class="' + if_mine + ' action '+disp["red"]+' '+noauth+'"><a onclick="redraft(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_redraft[lang]+'"><i class="material-icons">redo</i></a></div>'+trans+
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_redraft+'"><i class="material-icons">redo</i></a></div>'+trans+
 			'<span class="cbadge viabadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tags(via)+'\')" title="via ' + $.strip_tags(via) + '">via ' +
 			via +
 			'</span>'+
@@ -749,7 +749,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 		} else {
 			var auth = "";
 		}
-		var ftxt=lang_parse_followed[lang];
+		var ftxt=lang.lang_parse_followed;
 		if(!locale && localStorage.getItem("follow_" + acct_id)){
 			ftxt = localStorage.getItem("follow_" + acct_id);
 		}
@@ -857,9 +857,9 @@ function client(name) {
 	var dialog=remote.dialog;
 	const options = {
 		type: 'info',
-		title: lang_parse_clientop[lang],
-		message: name+lang_parse_clienttxt[lang],
-		buttons: [lang_parse_clientno[lang],lang_parse_clientemp[lang], lang_parse_clientmute[lang]]
+		title: lang.lang_parse_clientop,
+		message: name+lang.lang_parse_clienttxt,
+		buttons: [lang.lang_parse_clientno,lang.lang_parse_clientemp, lang.lang_parse_clientmute]
 	  }
 	  dialog.showMessageBox(options, function(arg) {
 		if(arg==1){
@@ -868,7 +868,7 @@ function client(name) {
 			if(!obj){
 				var obj=[];
 				obj.push(name);
-				Materialize.toast(name+lang_status_emphas[lang], 2000);
+				Materialize.toast(name+lang.lang_status_emphas, 2000);
 			}else{
 			var can;
 			Object.keys(obj).forEach(function(key) {
@@ -878,12 +878,12 @@ function client(name) {
 				}else{
 					can=true;
 					obj.splice(key, 1);
-					Materialize.toast(name+lang_status_unemphas[lang], 2000);
+					Materialize.toast(name+lang.lang_status_unemphas, 2000);
 				}
 			});
 			if(!can){
 				obj.push(name);
-				Materialize.toast(name+lang_status_emphas[lang], 2000);
+				Materialize.toast(name+lang.lang_status_emphas, 2000);
 			}else{
 				
 			}
@@ -899,7 +899,7 @@ function client(name) {
 			obj.push(name);
 			var json = JSON.stringify(obj);
 			localStorage.setItem("client_mute", json);
-			Materialize.toast(name+lang_parse_mute[lang], 2000);
+			Materialize.toast(name+lang.lang_parse_mute, 2000);
 		}else{
 			return;
 		}

@@ -5,11 +5,11 @@ function re(id,at,acct_id,mode){
 	$("#reply").val(id);
 	var te=$("#textarea").val();
 	$("#textarea").val("@"+at+" "+te);
-	$("#rec").text(lang_yesno[lang]);
+	$("#rec").text(lang.lang_yesno);
 	$("#post-acct-sel").val(acct_id);
 	$("#post-acct-sel").prop("disabled", true);
 	$('select').material_select();
-	$("#textarea").attr("placeholder",lang_usetxtbox_reply[lang]);
+	$("#textarea").attr("placeholder",lang.lang_usetxtbox_reply);
 	$("#textarea").focus();
 	var profimg=localStorage.getItem("prof_"+acct_id);
 	if(!profimg){

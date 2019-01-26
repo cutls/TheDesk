@@ -43,7 +43,7 @@ function fav(id, acct_id, remote) {
 					$(".fav_" + id).addClass("yellow-text");
 				}
 				}else{
-					Materialize.toast(lang_status_favWarn[lang], 1000);
+					Materialize.toast(lang.lang_status_favWarn, 1000);
 				}
         }
 	}
@@ -90,7 +90,7 @@ function rt(id, acct_id, remote) {
 					$(".rt_" + id).addClass("teal-text");
 				}
 			} else {
-				Materialize.toast(lang_status_btWarn[lang], 1000);
+				Materialize.toast(lang.lang_status_btWarn, 1000);
 			}
 		}
 	}
@@ -141,10 +141,10 @@ function follow(acct_id,remote) {
 			console.log(json);
 			if ($("#his-data").hasClass("following")) {
 				$("#his-data").removeClass("following");
-				$("#his-follow-btn").text(lang_status_follow[lang]);
+				$("#his-follow-btn").text(lang.lang_status_follow);
 			} else {
 				$("#his-data").addClass("following");
-				$("#his-follow-btn").text(lang_status_unfollow[lang]);
+				$("#his-follow-btn").text(lang.lang_status_unfollow);
 			}
 		}
 	}
@@ -174,10 +174,10 @@ function block(acct_id) {
 		if (httpreq.readyState == 4) {
 			if ($("#his-data").hasClass("blocking")) {
 				$("#his-data").removeClass("blocking");
-				$("#his-block-btn").text(lang_status_block[lang]);
+				$("#his-block-btn").text(lang.lang_status_block);
 			} else {
 				$("#his-data").addClass("blocking");
-				$("#his-block-btn").text(lang_status_unblock[lang]);
+				$("#his-block-btn").text(lang.lang_status_unblock);
 			}
 		}
 	}
@@ -216,10 +216,10 @@ function mute(acct_id) {
 		if (httpreq.readyState == 4) {
 			if ($("#his-data").hasClass("muting")) {
 				$("#his-data").removeClass("muting");
-				$("#his-mute-btn").text(lang_status_mute[lang]);
+				$("#his-mute-btn").text(lang.lang_status_mute);
 			} else {
 				$("#his-data").addClass("muting");
-				$("#his-mute-btn").text(lang_status_unmute[lang]);
+				$("#his-mute-btn").text(lang.lang_status_unmute);
 			}
 		}
 	}
@@ -252,7 +252,7 @@ function del(id, acct_id) {
 }
 //redraft
 function redraft(id, acct_id){
-	if(confirm(lang_status_redraft[lang])){
+	if(confirm(lang.lang_status_redraft)){
 		show();
 		del(id, acct_id);
 		$("#post-acct-sel").prop("disabled", true);
@@ -367,7 +367,7 @@ function empUser(){
 	if(!obj){
 		var obj=[];
 		obj.push(id);
-		Materialize.toast(id+lang_status_emphas[lang], 4000);
+		Materialize.toast(id+lang.lang_status_emphas, 4000);
 	}else{
 		var can;
 		Object.keys(obj).forEach(function(key) {
@@ -377,7 +377,7 @@ function empUser(){
 			}else{
 				can=true;
 				obj.splice(key, 1);
-				Materialize.toast(id+lang_status_unemphas[lang], 4000);
+				Materialize.toast(id+lang.lang_status_unemphas, 4000);
 			}
 		});
 	}
@@ -408,10 +408,10 @@ function pinUser(){
 			console.log(json);
 			if ($("#his-end-btn").hasClass("endorsed")) {
 				$("#his-end-btn").removeClass("endorsed")
-				$("#his-end-btn").text(lang_status_endorse[lang])
+				$("#his-end-btn").text(lang.lang_status_endorse)
 			} else {
 				$("#his-end-btn").addClass("endorsed")
-				$("#his-end-btn").text(lang_status_unendorse[lang])
+				$("#his-end-btn").text(lang.lang_status_unendorse)
 				
 			}
 		}
@@ -420,7 +420,7 @@ function pinUser(){
 //URLコピー
 function tootUriCopy(url){
 	execCopy(url);
-	Materialize.toast(lang_details_url[lang], 1500);
+	Materialize.toast(lang.lang_details_url, 1500);
 }
 
 //他のアカウントで…

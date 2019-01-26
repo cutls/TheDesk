@@ -172,17 +172,17 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'" width="20" class="notf-icon prof-img" user="' + toot.user.username +
 			'"></a>';
 			if (toot.type == "reply") {
-				var what = lang_parse_mentioned[lang];
+				var what = lang.lang_parse_mentioned;
 				var icon = '<i class="big-text fa fa-share teal-text"></i>';
 				noticeavatar="";
 			} else if (toot.type == "renote") {
-				var what = lang_misskeyparse_renoted[lang];
+				var what = lang.lang_misskeyparse_renoted;
 				var icon = '<i class="big-text fa fa-retweet light-blue-text"></i>';
 			}  else if (toot.type == "quote") {
-				var what = lang_misskeyparse_quoted[lang];
+				var what = lang.lang_misskeyparse_quoted;
 				var icon = '<i class="big-text fa fa-quote-right orange-text"></i>';
 			} else if (toot.type == "reaction") {
-				var what = lang_misskeyparse_reaction[lang];
+				var what = lang.lang_misskeyparse_reacted;
 				var reactions={
 					"like":"👍",
 					"love":"💓",
@@ -214,7 +214,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				var icon = '<i class="big-text material-icons indigo-text" style="font-size:17px">info</i>';
 			}
 			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.createdAt,
-				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.createdAt,
+				'absolute') + '('+lang.lang_parse_notftime+')"><i class="fa fa-clock-o"></i>' + date(toot.createdAt,
 				datetype) +
 			'</span>'+icon+'<a onclick="udg(\'' + toot.user.username +
 				'\',\'' + acct_id + '\')" class="pointer grey-text">' + dis_name +
@@ -278,7 +278,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}else{
 			var if_notf="";
 			if (toot.renote) {
-				var rebtxt = lang_parse_btedsimple[lang];
+				var rebtxt = lang.lang_parse_btedsimple;
 				var rticon = "fa-retweet light-blue-text";
 				var notice = '<i class="big-text fa '+rticon+'"></i>'+ dis_name + "(@" + toot.user.username +
 					")<br>";
@@ -353,19 +353,19 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var spoiler = "cw cw_hide_" + toot.id;
 			var api_spoil = "gray";
 			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-				'\')" class="nex parsed">'+lang_parse_cwshow[lang]+'</a><br>';
+				'\')" class="nex parsed">'+lang.lang_parse_cwshow+'</a><br>';
 		} else {
 			var ct1 =  nl2br(toot.text).split('<br />').length -2;
 			var ct2 =  nl2br(toot.text).split('<br>').length -2;
 			if(ct1>ct2){ var ct= ct1; }else{ var ct= ct2;  }
 			if ((sent < ct && $.mb_strlen($.strip_tagstemp(toot.text)) > 5) || ($.strip_tagstemp(toot.text).length > ltr && $.mb_strlen($.strip_tagstemp(toot.text)) > 5)) {
-				var content = '<span class="gray">'+lang_parse_fulltext[lang]+'</span><br>' + escapeHTMLtemp(toot.text)
+				var content = '<span class="gray">'+lang.lang_parse_fulltext+'</span><br>' + escapeHTMLtemp(toot.text)
 				var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tagstemp(
 						toot.text), 0, 100) +
-					'</span><span class="gray">'+lang_parse_autofold[lang]+'</span>';
+					'</span><span class="gray">'+lang.lang_parse_autofold+'</span>';
 				var spoiler = "cw cw_hide_" + toot.id;
 				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-					'\')" class="nex parsed">'+lang_parse_more[lang]+'</a><br>';
+					'\')" class="nex parsed">'+lang.lang_parse_more+'</a><br>';
 			} else {
                 var content = escapeHTMLtemp(toot.text);
                 if(toot.cw){
@@ -384,7 +384,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		);
 		if (urls) {
 			var analyze = '<a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
-				',\'' + id + '\')" class="add-show pointer">'+lang_parse_url[lang]+'</a><br>';
+				',\'' + id + '\')" class="add-show pointer">'+lang.lang_parse_url+'</a><br>';
 		} else {
 			var analyze = '';
 		}
@@ -489,8 +489,8 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			Object.keys(toot.tags).forEach(function(key4) {
 				var tag = toot.tags[key4];
 				var tags =  '<a onclick="tagShow(\'' + tag + '\')" class="pointer parsed">#' + tag + '</a><span class="hide" data-tag="' + tag + '">#' + tag + ':<a onclick="tl(\'tag\',\'' + tag + '\',' + acct_id +
-					',\'add\')" class="pointer parsed" title="' +lang_parse_tagTL[lang].replace("{{tag}}" ,'#'+tag)+ '">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer parsed" title="' + lang_parse_tagtoot[lang].replace("{{tag}}" ,'#'+tag) + '">Toot</a>　'+
-                    '<a onclick="tagPin(\'' + tag + '\')" class="pointer parsed" title="' +lang_parse_tagpin[lang].replace("{{tag}}" ,'#'+tag)+ '">Pin</a></span> ';
+					',\'add\')" class="pointer parsed" title="' +lang.lang_parse_tagTL.replace("{{tag}}" ,'#'+tag)+ '">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer parsed" title="' + lang.lang_parse_tagtoot.replace("{{tag}}" ,'#'+tag) + '">Toot</a>　'+
+                    '<a onclick="tagPin(\'' + tag + '\')" class="pointer parsed" title="' +lang.lang_parse_tagpin.replace("{{tag}}" ,'#'+tag)+ '">Pin</a></span> ';
                 content=content.replace("#"+tag,tags);
 			});
 			//tags = '<div style="float:right">' + tags + '</div>';
@@ -500,23 +500,23 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		var visen = toot.visibility;
 		if (visen == "public") {
 			var vis =
-				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="'+lang_parse_public[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="public" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">public</i>';
+				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="'+lang.lang_parse_public+'('+lang.lang_parse_clickcopy+')" data-vis="public" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">public</i>';
 			var can_rt = "";
 		} else if (visen == "home") {
 			var vis =
-				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="'+lang_misskeyparse_home[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock_open</i>';
+				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="'+lang.lang_misskeyparse_home+'('+lang.lang_parse_clickcopy+')" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock_open</i>';
 			var can_rt = "";
 		} else if (visen == "followers") {
 			var vis =
-				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="'+lang_misskeyparse_followers[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">people</i>';
+				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="'+lang.lang_misskeyparse_followers+'('+lang.lang_parse_clickcopy+')" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">people</i>';
 			var can_rt = "";
 		} else if (visen == "private") {
 			var vis =
-				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="'+lang_parse_private[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="private" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock</i>';
+				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="'+lang.lang_parse_private+'('+lang.lang_parse_clickcopy+')" data-vis="private" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock</i>';
 			var can_rt = "";
 		} else if (visen == "specified") {
 			var vis =
-				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="'+lang_misskeyparse_specified[lang]+'('+lang_parse_clickcopy[lang]+')" data-vis="direct" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">mail</i>';
+				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="'+lang.lang_misskeyparse_specified+'('+lang.lang_parse_clickcopy+')" data-vis="direct" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">mail</i>';
 			var can_rt = "hide";
 		}
 		if (toot.user.username == localStorage.getItem("user_" + acct_id)) {
@@ -703,7 +703,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			toot.user.username + '</span></div>' +
 			'<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'https://' +domain+"/notes/"+
 			toot.id + '\');" title="' + date(toot.createdAt, 'absolute') +
-			'('+lang_parse_clickcopyurl[lang]+')"><i class="fa fa-clock-o"></i>' +
+			'('+lang.lang_parse_clickcopyurl+')"><i class="fa fa-clock-o"></i>' +
 			date(toot.createdAt, datetype) + '</span>' +
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="toot ' + spoiler + '">' + content +
@@ -734,30 +734,30 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<div class="area-vis"></div>'+
 			'<div class="area-actions '+mouseover+'">' +
 			'<div class="action">'+vis+'</div>'+
-			'<div class="action '+antinoauth+'"><a onclick="detEx(\'https://misskey.xyz/notes/'+toot.id+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">'+lang_parse_det[lang]+'</a></div>' +
+			'<div class="action '+antinoauth+'"><a onclick="detEx(\'https://misskey.xyz/notes/'+toot.id+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">'+lang.lang_parse_det+'</a></div>' +
 			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="misskeyreply(\'' + toot.id +
 			'\',\'' + acct_id + '\',' +
 			acct_id + ',\''+visen+
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_replyto[lang]+'"><i class="fa fa-share"></i></a></div>' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_replyto+'"><i class="fa fa-share"></i></a></div>' +
 			'<div class="action '+can_rt+' '+disp["rt"]+' '+noauth+'"><a onclick="renote(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_misskeyparse_renote[lang]+'"><i class="text-darken-3 fa fa-retweet ' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_misskeyparse_renote+'"><i class="text-darken-3 fa fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct"></span></a></div>' +
 			'<div class="action '+can_rt+' '+disp["qt"]+' '+noauth+'"><a onclick="renoteqt(\'' + toot.id + '\',' + acct_id +
-			',\'misskey.xyz\',\'misskey.xyz\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_misskeyparse_renoteqt[lang]+'"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
+			',\'misskey.xyz\',\'misskey.xyz\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_misskeyparse_renoteqt+'"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
 			'<div class="action '+disp["fav"]+' '+noauth+'"><a onclick="reactiontoggle(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_misskeyparse_reaction[lang]+'"><i class="fa text-darken-3 fa-plus' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_misskeyparse_reaction+'"><i class="fa text-darken-3 fa-plus' +
 			if_fav + ' fav_' + toot.id + '"></i></div>' +
 			'<div class="' + if_mine + ' action '+disp["del"]+' '+noauth+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_del[lang]+'"><i class="fa fa-trash-o"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="fa fa-trash-o"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_pin[lang]+'"><i class="fa fa-map-pin pin_' + toot.id + '"></i></a></div>' 
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_pin+'"><i class="fa fa-map-pin pin_' + toot.id + '"></i></a></div>' 
 			+'<div class="' + if_mine + ' action '+disp["red"]+' '+noauth+'"><a onclick="redraft(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang_parse_redraft[lang]+'"><i class="material-icons">redo</i></a></div>'+trans+
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_redraft+'"><i class="material-icons">redo</i></a></div>'+trans+
 			'<span class="cbadge viabadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tagstemp(via)+'\')" title="via ' + $.strip_tagstemp(via) + '">via ' +
 			via +
 			'</span>'+
@@ -788,10 +788,10 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 		} else {
 			var auth = "";
 		}
-		var ftxt=lang_parse_followed[lang];
+		var ftxt=lang.lang_parse_followed;
 		if(popup > 0 || popup==-1){
 			var notftext='<span class="cbadge"title="' + date(toot.createdAt,
-				'absolute') + '('+lang_parse_notftime[lang]+')"><i class="fa fa-clock-o"></i>' + date(toot.createdAt,
+				'absolute') + '('+lang.lang_parse_notftime+')"><i class="fa fa-clock-o"></i>' + date(toot.createdAt,
 				datetype) +
 			'</span>'+ftxt+'<br>';
 			var toot = toot.user;
