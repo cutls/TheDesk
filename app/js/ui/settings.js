@@ -419,6 +419,7 @@ wordemp();
 checkSpotify();
 voiceSettingLoad();
 oksload();
+npprovider();
 function climute(){
 	//クライアントミュート
 	var cli = localStorage.getItem("client_mute");

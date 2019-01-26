@@ -11,6 +11,8 @@ const path = require('path')
 const fm = require('font-manager');
 const Menu=electron.Menu
 var updatewin=null;
+const join = require('path').join;
+const {NowPlaying,PlayerName} = require("nowplaying-node");
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 // ウィンドウを作成するモジュール
@@ -18,7 +20,6 @@ const BrowserWindow = electron.BrowserWindow;
 const {
 	download
 } = require('electron-dl');
-const join = require('path').join;
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow;
 var info_path = join(app.getPath("userData"), "window-size.json");
@@ -464,23 +465,65 @@ function about(){
 	var window = new BrowserWindow({width: 300, height: 460,
 			"transparent": false,    // ウィンドウの背景を透過
 			"frame": false,     // 枠の無いウィンドウ
-			 "resizable": false });
+			"resizable": false });
 	   window.loadURL('file://' + __dirname + '/about.html?ver='+ver);
 	   return "true"
 }
 ipc.on('itunes', (e, args) => {
-	var platform=process.platform;
-	var bit=process.arch;
-	if(platform=="darwin"){
-	const nowplaying = require("itunes-nowplaying-mac")
-
-nowplaying.getRawData().then(function (value) {
-    mainWindow.webContents.send('itunes-np', value);
-}).catch(function (error) {
-    // 非同期処理失敗。呼ばれない
-    console.log(error);
-});
-}
+	if(args[0]=="set"){
+		var nppath=join(app.getPath("userData"), "nowplaying");
+		var npProvider;
+		try {
+			npProvider = args[1];
+		} catch (e) {
+			npProvider="AIMP";
+		}
+		var myAIMP = new NowPlaying({
+			fetchCover: true,
+			player: PlayerName[npProvider],
+		});
+		fs.writeFileSync(nppath, npProvider);
+	}else{
+		var platform=process.platform;
+		var bit=process.arch;
+		if(platform=="darwin"){
+		const nowplaying = require("itunes-nowplaying-mac")
+		nowplaying.getRawData().then(function (value) {
+		mainWindow.webContents.send('itunes-np', value);
+		}).catch(function (error) {
+			// 非同期処理失敗。呼ばれない
+			console.log(error);
+		});
+		}else{
+			var nppath=join(app.getPath("userData"), "nowplaying");
+			var npProvider;
+			try {
+				npProvider = fs.readFileSync(nppath, 'utf8');
+			} catch (e) {
+				npProvider="AIMP";
+			}
+			var myAIMP = new NowPlaying({
+				fetchCover: true,
+				player: PlayerName[npProvider],
+			});
+			myAIMP.update();
+			var path=myAIMP.getCoverPath();
+			if(path){
+				var bin = fs.readFileSync(path, 'base64');
+			}else{
+				var bin=false;
+			}
+			
+			var value={
+				name:myAIMP.getTitle(),
+				artist:myAIMP.getArtist(),
+				album:myAIMP.getAlbum(),
+				path:bin
+			}
+			mainWindow.webContents.send('itunes-np', value);
+		}
+	}
+	
 });
 ipc.on('file-select', (e, args) => {
 	dialog.showOpenDialog(null, {

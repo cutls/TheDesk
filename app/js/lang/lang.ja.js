@@ -117,11 +117,13 @@ var lang={
     "lang_layout_nodata":"[ここにトゥートはありません。]<br>F5/⌘+Rで再読込できます。",
     "lang_layout_dm":"ダイレクトメッセージ",
     "lang_layout_webviewmode":"WebView優先",
+    "lang_excluded":"除外する通知",
 //ui/spotify.js
     "lang_spotify_img":"アルバムアートワークを添付します。",
     "lang_spotify_imgno":"アルバムアートワークを添付しません。",
     "lang_spotify_acct":"アカウント連携をしてください。",
     "lang_spotify_np":"NowPlaying文書を更新しました。",
+    "lang_setting_npprovide":"NowPlayingのソースを{{set}}に設定しました。",
 //userdata/his-data.js
     "lang_hisdata_frcreq":"Mastodon 2.4.3~が必要です",
     "lang_hisdata_frcwarn":"非フォローだけど絡みがある時に表示されます。",

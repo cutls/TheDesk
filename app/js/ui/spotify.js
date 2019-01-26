@@ -130,6 +130,10 @@ function nowplaying(mode){
             if(!content || content=="" || content=="null"){
                 var content="#NowPlaying {song} / {album} / {artist}\n{url}";
             }
+            var flag=localStorage.getItem("artwork");
+            if(flag && arg.path){
+                media(arg.path,"image/png","new");
+            }
             var regExp = new RegExp("{song}", "g");
             content = content.replace(regExp, arg.name);
             var regExp = new RegExp("{album}", "g");
@@ -159,6 +163,25 @@ function spotifySave(){
     var temp=$("#np-temp").val();
     localStorage.setItem("np-temp", temp);
     Materialize.toast(lang.lang_spotify_np, 3000);
+}
+function npprovider(){
+    var provd = $("[name=npp]:checked").val();
+    if(!provd){
+        if (localStorage.getItem("np_provider")) {
+            $("[value="+localStorage.getItem("np_provider")+"]").prop("checked", true);
+        }else{
+            $("[value=AIMP]").prop("checked", true);
+            localStorage.setItem("np_provider", "AIMP");
+        }
+    }else{
+        if (provd != localStorage.getItem("np_provider")) {
+            Materialize.toast(lang.lang_setting_npprovide.replace("{{set}}" ,provd), 3000);
+        }
+        localStorage.setItem("np_provider", provd);
+        var electron = require("electron");
+        var ipc = electron.ipcRenderer;
+        ipc.send('itunes', ["set",provd]);
+    }
 }
 if(location.search){
     var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);

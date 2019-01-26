@@ -116,11 +116,13 @@ var lang={
     "lang_layout_nodata":"[No data]<br>F5/⌘+R to reload",
     "lang_layout_dm":"Direct Message",
     "lang_layout_webviewmode":"Prefer WebView",
+    "lang_excluded":"Excluded type of notification",
     //ui/spotify.js
     "lang_spotify_img":"Attach an album artwork",
     "lang_spotify_imgno":"Not attach an album artwork",
     "lang_spotify_acct":"Connect TheDesk to Spotify",
     "lang_spotify_np":"Done:templete of NowPlaying",
+    "lang_setting_npprovide":"NowPlaying provider:{{set}}",
     //userdata/his-data.js
     "lang_hisdata_frcreq":"Required Mastodon 2.4.3 and above",
     "lang_hisdata_frcwarn":"Unfollow accounts will be shown.",

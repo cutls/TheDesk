@@ -39,7 +39,8 @@
     "sumchecker": "^2.0.2"
   },
   "optionalDependencies": {
-    "itunes-nowplaying-mac": "^0.2.3"
+    "itunes-nowplaying-mac": "^0.2.3",
+    "nowplaying-node": "^0.1.3"
   },
   "build": {
     "productName": "TheDesk",
@@ -62,7 +63,7 @@
       "category": "Network"
     },
     "mac": {
-        "target": "dmg"
+      "target": "dmg"
     },
     "electronDownload": {
       "version": "3.0.10"

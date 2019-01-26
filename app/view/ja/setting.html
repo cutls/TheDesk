@@ -308,6 +308,22 @@
 			<i class="fa fa-spotify"></i>SpotifyとNowPlayingの設定
 		</div>
 		<div class="collapsible-body">
+			<h5>NowPlayingのソース(Windows)</h5>
+			macOSやLinuxでは動作しません。AIMPとiTunes以外未検証です。<br>foobar2000, MusicBee,J. River Media Center, Media JukeboxはCADを、Last.fm Client, TTPlayer, OpenPandora, ZuneはWLMを選んでください。<br>ただし、foobar2000は<a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a>が必要です。<br>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
+			<label for="aimp">AIMP</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
+			<label for="itunes">iTunes</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="npmm" value="MEDIAMONKEY" />
+			<label for="npmm">MediaMonkey</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="winamp" value="WINAMP" />
+			<label for="winamp">Winamp</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wmp" value="WMP" />
+			<label for="wmp">WMP</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
+			<label for="wlm">WLM</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
+			<label for="cad">CAD</label><br><br>
 			<i class="material-icons" style="font-size:24px;">music_note</i>ボタンから簡単にNowPlayingができます。<br>
 			<h5>アカウントの連携</h5>
 			APIの性質上，thedesk.topへアクセスします。<br>
@@ -318,12 +334,13 @@
 			以下を編集してテンプレートを変更できます。<br>
 			<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
-				テンプレート:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
-				iTunes NowPlayingでも{url}以外のテンプレートに従ってトゥートされます。また、作曲家{composer}/サンプルレート{hz}/ビットレート{bitRate}/ジャンル{genre}が有効です。<br>
+				Spotify:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
+				macOS:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/作曲家{composer}/サンプルレート{hz}/ビットレート{bitRate}/ジャンル{genre}<br>
+				Windows:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名<br>
 				<span class="imas hide">CINDERELLA NowPlaying(imastodon.net限定)では作曲家{composer}/作詞家{lyricist}/BPM{bpm}が有効です。<br>
                     CINDERELLA NowPlayingはimastodon.netにログインしているとき、トゥート欄に「//」を入力し、その後に曲名を入れることで可能です。</span><br>
 			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
-			<h5>Spotifyでアルバムアートワークを添付する</h5>
+			<h5>アルバムアートワークを添付する(Spotify/Windows)</h5>
 			<span class="imas hide">この設定はCINDERELLA NowPlaying(imastodon.net限定)にも適用されます。</span><br>
 			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
 			<label for="awk_yes">はい</label>

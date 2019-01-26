@@ -308,6 +308,22 @@
 			<i class="fa fa-spotify"></i>{{spotify}}
 		</div>
 		<div class="collapsible-body">
+			<h5>{{npProvider}}</h5>
+			{{npPeoviderWarn}}<br>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
+			<label for="aimp">AIMP</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
+			<label for="itunes">iTunes</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="npmm" value="MEDIAMONKEY" />
+			<label for="npmm">MediaMonkey</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="winamp" value="WINAMP" />
+			<label for="winamp">Winamp</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wmp" value="WMP" />
+			<label for="wmp">WMP</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
+			<label for="wlm">WLM</label>
+			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
+			<label for="cad">CAD</label><br><br>
 			{{spotifynote1}}<i class="material-icons" style="font-size:24px;">music_note</i>{{spotifynote2}}<br>
 			<h5>{{link}}</h5>
 			{{linkwarn}}<br>
@@ -320,6 +336,7 @@
 {url}</textarea><br>
 				{{templete1}}<br>
 				{{templete2}}<br>
+				{{templete3}}<br>
 				<span class="imas hide">CINDERELLA NowPlaying(imastodon.net限定)では作曲家{composer}/作詞家{lyricist}/BPM{bpm}が有効です。<br>
                     CINDERELLA NowPlayingはimastodon.netにログインしているとき、トゥート欄に「//」を入力し、その後に曲名を入れることで可能です。</span><br>
 			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">{{set}}</button>
