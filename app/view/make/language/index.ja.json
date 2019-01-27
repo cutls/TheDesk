@@ -10,7 +10,7 @@
     "adobephoto":"Adobeフォトエディタ",
     "insertEmoji":"絵文字を挿入",
     "NPSpotify":"NowPlaying(Spotify)",
-    "NPiTunes":"NowPlaying",
+    "NPiTunes":"NowPlaying(macOS)",
     "schedule":"時間指定投稿",
     "postat":"時間指定投稿",
     "scheduleWarn":"2.7.0~ 5分以内には投稿できません。サーバーの時計が正確とは限りません。",
