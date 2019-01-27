@@ -2,7 +2,7 @@ os: windows
 language: node_js
 node_js:
 - '9.9.0'
-script: 7z a
+script: node -v
 before_deploy:
   - cd app
   - npm install electron -g
