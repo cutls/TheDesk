@@ -9,7 +9,6 @@ before_deploy:
   - sudo apt-get install -y wine1.7
   - cd app
   - npm install electron -g
-  - npm install electron-prebuilt -g
   - npm install electron-builder -g
   - npm install
   - npm install --save-dev electron-rebuild
