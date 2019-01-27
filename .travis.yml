@@ -2,6 +2,7 @@ sudo: false
 language: node_js
 node_js:
 - '9.9.0'
+script: node -v
 before_deploy:
   - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
   - sudo apt-get update -q
