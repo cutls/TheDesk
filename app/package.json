@@ -35,14 +35,14 @@
   "license": "GPL-3.0",
   "dependencies": {
     "electron-dl": "^1.11.0",
-    "electron-prebuilt": "^1.4.13",
     "font-manager": "^0.3.0",
     "jimp": "^0.2.28",
     "node-notifier": "^5.2.1",
     "sumchecker": "^2.0.2"
   },
   "optionalDependencies": {
-    "itunes-nowplaying-mac": "^0.2.3"
+    "itunes-nowplaying-mac": "^0.2.3",
+    "electron-prebuilt": "^1.4.13"
   },
   "build": {
     "productName": "TheDesk",
