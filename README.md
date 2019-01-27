@@ -1,5 +1,6 @@
 # TheDesk
 
+[![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのWindows/Linuxクライアント  
 Download:[TheDesk](https://thedesk.top)  

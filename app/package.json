@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dist": "build --linux snap",
-    "build:all": "electron-builder --platform win,linux",
-    "build:win": "electron-builder --platform win --arch -x64"
+    "build:all": "electron-builder --win --linux",
+    "build:win": "electron-builder --win"
   },
   "keywords": [],
   "bugs": {
