@@ -59,7 +59,8 @@
     },
     "nsis":{
       "oneClick":false,
-      "allowToChangeInstallationDirectory":true
+      "allowToChangeInstallationDirectory":true,
+      "artifactName":"TheDesk-setup.${ext}"
     },
     "linux": {
       "icon": "build/icons",
