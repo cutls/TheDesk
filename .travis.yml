@@ -10,7 +10,7 @@ before_deploy:
   - npm install
   - npm install --global --production windows-build-tools@4.0.0
   - npm install --save-dev electron-rebuild
-  - .\node_modules\.bin\electron-rebuild.cmd
+  - .\\node_modules\\.bin\\electron-rebuild.cmd
   - electron-builder --win --ia32
   - rename "build\TheDesk *.*.*.exe" TheDesk-ia32.exe
   - rename "build\TheDesk Setup *.*.*.exe" TheDesk-setup-ia32.exe
