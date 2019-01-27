@@ -12,11 +12,11 @@ before_deploy:
   - npm install --save-dev electron-rebuild
   - .\\node_modules\\.bin\\electron-rebuild.cmd
   - electron-builder --win --ia32
-  - rename "..\build\TheDesk *.*.*.exe" TheDesk-ia32.exe
-  - rename "..\build\TheDesk Setup *.*.*.exe" TheDesk-setup-ia32.exe
+  - rename "C:\Users\travis\build\cutls\TheDesk\build\TheDesk *.*.*.exe" TheDesk-ia32.exe
+  - rename "C:\Users\travis\build\cutls\TheDesk\build\TheDesk Setup *.*.*.exe" TheDesk-setup-ia32.exe
   - electron-builder --win --x64
-  - rename "..\build\TheDesk *.*.*.exe" TheDesk.exe
-  - rename "..\build\TheDesk Setup *.*.*.exe" TheDesk-setup.exe
+  - rename "C:\Users\travis\build\cutls\TheDesk\build\TheDesk *.*.*.exe" TheDesk.exe
+  - rename "C:\Users\travis\build\cutls\TheDesk\build\TheDesk Setup *.*.*.exe" TheDesk-setup.exe
   - electron-packager ./ TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=3.0.10 --overwrite
   - 7z a TheDesk-linux-x64.zip TheDesk-linux-x64
   - 7z a TheDesk-linux-ia32.zip TheDesk-linux-ia32
