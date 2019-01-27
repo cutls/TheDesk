@@ -1,3 +1,7 @@
+sudo: false
+language: node_js
+node_js:
+- '0.12'
 after_success:
 - cd app && npm run build:win && cd build && mv "TheDesk *.*.* .exe" TheDesk.exe && cd ../
 deploy:
