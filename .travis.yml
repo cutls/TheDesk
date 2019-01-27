@@ -7,7 +7,7 @@ before_deploy:
   - mkdir build
   - cd build
   - mkdir output
-  - cd../app
+  - cd ../app
   - npm install electron -g
   - npm install electron-packager -g
   - npm install electron-builder -g
