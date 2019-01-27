@@ -1,9 +1,15 @@
 sudo: false
 language: node_js
 node_js:
-- '0.12'
+- '9.9.0'
+before_deploy:
+  - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
+  - sudo apt-get update -q
+  - sudo apt-get install -y wine1.7
+  - cd app
+  - npm run build:win
 after_success:
-- cd app && npm run build:win && cd build && mv "TheDesk *.*.* .exe" TheDesk.exe && cd ../
+- cd build && mv "TheDesk *.*.* .exe" TheDesk.exe && cd ../
 deploy:
   provider: releases
   api_key:
@@ -11,3 +17,4 @@ deploy:
   file: "./build/TheDesk.exe"
   on:
     repo: cutls/TheDesk
+skip_cleanup: true
