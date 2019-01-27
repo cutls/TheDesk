@@ -41,8 +41,7 @@
     "sumchecker": "^2.0.2"
   },
   "optionalDependencies": {
-    "itunes-nowplaying-mac": "^0.2.3",
-    "electron-prebuilt": "^1.4.13"
+    "itunes-nowplaying-mac": "^0.2.3"
   },
   "build": {
     "productName": "TheDesk",
@@ -73,6 +72,7 @@
     "electronVersion": "3.0.10"
   },
   "devDependencies": {
-    "electron-rebuild": "^1.8.2"
+    "electron-rebuild": "^1.8.2",
+    "electron-prebuilt": "^1.4.13"
   }
 }
