@@ -12,6 +12,7 @@ const fm = require('font-manager');
 const Menu=electron.Menu
 var updatewin=null;
 const join = require('path').join;
+// linuxの時は定義しない
 if (process.platform!='linux') {
   const {NowPlaying,PlayerName} = require("nowplaying-node");
 }

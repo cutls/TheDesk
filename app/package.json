@@ -34,7 +34,7 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
-    "electron": "^4.0.2",
+    "electron": "^3.0.10",
     "electron-dl": "^1.11.0",
     "font-manager": "^0.3.0",
     "jimp": "^0.2.28",
