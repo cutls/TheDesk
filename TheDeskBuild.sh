@@ -5,7 +5,7 @@ sudo apt update
 sudo apt install -y nodejs build-essential
 sudo apt install -y git
 sudo apt install -y libfontconfig1-dev
-git clone https://github.com/cutls/TheDesk.git
+git clone https://github.com/kaias1jp/TheDesk.git
 cd TheDesk/app
 npm install electron
 npm install --save-dev electron-rebuild
