@@ -7,10 +7,10 @@ sudo apt install -y git
 sudo apt install -y libfontconfig1-dev
 git clone https://github.com/kaias1jp/TheDesk.git
 cd TheDesk/app
-npm install electron
+npm install electron@3.0.10
 npm install --save-dev electron-rebuild
 ./node_modules/.bin/electron-rebuild
 npm install electron-packager --save-dev
 cd ..
-app/node_modules/electron-packager/cli.js ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2019 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=4.0.1 --overwrite
+app/node_modules/electron-packager/cli.js ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2019 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=3.0.10 --overwrite
 
