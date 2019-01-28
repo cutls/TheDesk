@@ -12,7 +12,10 @@ const fm = require('font-manager');
 const Menu=electron.Menu
 var updatewin=null;
 const join = require('path').join;
-const {NowPlaying,PlayerName} = require("nowplaying-node");
+// linuxの時は定義しない
+if (process.platform!='linux') {
+  const {NowPlaying,PlayerName} = require("nowplaying-node");
+}
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 // ウィンドウを作成するモジュール
