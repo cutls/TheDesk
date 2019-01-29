@@ -356,7 +356,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var locked = "";
 		}
 		if (!toot.application) {
-			var via = '<span style="font-style: italic;">Unknown</span>';
+			var via = '';
 		} else {
 			var via = toot.application.name;
 			//強調チェック
@@ -666,7 +666,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			date(toot.created_at, datetype) + '</span>' +
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="' +
-			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
+			api_spoil + ' cw_text_' + toot.id + '"><span class="cw_text">' + spoil + "</span>" + spoiler_show +
 			'</span><span class="toot ' + spoiler + '">' + content +
 			'</span>' +
 			'' + viewer + '' +

@@ -90,7 +90,7 @@ var lang={
     //tl/notification.js
     "lang_notf_new":" new notifications",
     //tl/speech.js
-    "lang_speech_refresh":"Save valie about TTS config",
+    "lang_speech_refresh":"Save value about TTS config",
     //tl/src.js
     "lang_src_ts":"chronological order",
     "lang_src_people":" people toot",
