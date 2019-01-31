@@ -391,6 +391,9 @@ function exclude(key){
 }
 function excludeCk(key,target){
 	var exc=localStorage.getItem("exclude-"+key);
+	if(!exc){
+		return "";
+	}
 	if(~exc.indexOf(target)){
 		return "checked"
 	}else{

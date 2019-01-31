@@ -29,16 +29,10 @@ function tl(data) {
 		var templete = parse([json[0]], '', acct_id, tlid);
 		$("#timeline_nano").html(templete);
 		jQuery("time.timeago").timeago();
-		reload(type, '', acct_id, data);
 	});
-}
-
 //Streaming接続
 var websocket=[];
-function reload(type, cc, acct_id, data) {
     var tlid=0;
-	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if (type == "home") {
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=user&access_token=" + at;

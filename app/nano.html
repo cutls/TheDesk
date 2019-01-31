@@ -13,6 +13,7 @@ html{
 	 width:100vw;
 	 height:100vh;
 	 overflow:hidden;
+	 font-family:sans-serif;
 }
 body {
 	background-color: rgba(0, 0, 0, 0.1);
@@ -45,6 +46,7 @@ textarea {
 }
  .area-actions{display:none !important;}
  .area-date_via{display:none !important;}
+ .area-side{display:none !important;}
 /* Handle */
 ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 5px;
@@ -108,8 +110,6 @@ $.strip_tags = function(str, allowed) {
 </div>
 <br>
 <textarea id="textarea" style="width:80%; background-color:transparent"></textarea>
-<input type="hidden" id="reply">
-<input type="hidden" id="media">
 	<button class="btn" onclick="post()">Post</button>
 	<script>
 	if(localStorage.getItem("lang")){
@@ -118,9 +118,6 @@ $.strip_tags = function(str, allowed) {
 		var lang="ja";
 	}
 	</script>
-
-	<script type="text/javascript" src="./js/lang/lang.js"></script>
-	<script type="text/javascript" src="./js/lang/parse.lang.js"></script>
 <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
 <script type="text/javascript" src="./js/post/post.js"></script>
 <script type="text/javascript" src="./js/post/use-txtbox.js"></script>
@@ -165,5 +162,53 @@ function mov(){
 }
 function resetmv(){
 	return false;
+}
+function post(){
+	var acct_id=$("#post-acct-sel").val();
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var start = "https://" + domain + "/api/v1/statuses";
+	var str=$("#textarea").val();
+	var toot={
+		status: str
+	}
+	var vis = loadVis(acct_id)
+	toot.visibility=vis;
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+	httpreq.responseType = 'json';
+	httpreq.send(JSON.stringify(toot));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			$("#textarea").val("");
+		}
+	}
+}
+function loadVis(acct_id){
+		var vist = localStorage.getItem("vis");
+		console.log(vist);
+		if (!vist) {
+			return "public";
+		} else {
+			if (vist == "memory") {
+				var memory = localStorage.getItem("vis-memory-"+acct_id);
+				if (!memory) {
+					memory = "public";
+				}
+				return memory;
+			} else if(vist == "server") {
+				var multi = localStorage.getItem("multi");
+				var obj = JSON.parse(multi);
+				var memory = obj[acct_id]["vis"];
+				if (!memory) {
+					memory = "public";
+				}
+				return memory;
+			} else {
+				return vist;
+			}
+	}
 }
 </script>

@@ -357,6 +357,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}
 		if (!toot.application) {
 			var via = '';
+			viashow="hide";
 		} else {
 			var via = toot.application.name;
 			//強調チェック
@@ -373,6 +374,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					boostback = "hide";
 				}
 			});
+		}
+		if(mix=="pinned"){
+			boostback = "emphasized";
 		}
 		if (toot.spoiler_text && cw) {
 			var content = toot.content;

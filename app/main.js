@@ -13,7 +13,7 @@ const Menu=electron.Menu
 var updatewin=null;
 const join = require('path').join;
 // linuxの時は定義しない
-if (process.platform!='linux') {
+if (process.platform=='win32') {
   const {NowPlaying,PlayerName} = require("nowplaying-node");
 }
 // アプリケーションをコントロールするモジュール
@@ -580,7 +580,7 @@ ipc.on('nano', function (e, x, y) {
 	} catch (e) {
 	window_pos = [0,0]; // デフォルトバリュー
 	}
-	var nanowindow = new BrowserWindow({width: 300, height: 200,
+	var nanowindow = new BrowserWindow({width: 350, height: 200,
 	"transparent": false,    // ウィンドウの背景を透過
 		 "frame": false,     // 枠の無いウィンドウ
 		 "resizable": false });

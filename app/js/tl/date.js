@@ -56,14 +56,38 @@ function date(str, datetype) {
 //特殊フォーマット(インスタンス情報で利用)
 function crat(str) {
 	var date = new Date(str);
-
+	if(date.getMonth()<9){
+		var mnt="0"+(date.getMonth()+1);
+	}else{
+		var mnt=date.getMonth()+1;
+	}
+	if(date.getDate()<10){
+		var dat="0"+date.getDate();
+	}else{
+		var dat=date.getDate();
+	}
+	if(date.getHours()<10){
+		var hrs="0"+date.getHours();
+	}else{
+		var hrs=date.getHours();
+	}
+	if(date.getMinutes()<10){
+		var mns="0"+date.getMinutes();
+	}else{
+		var mns=date.getMinutes();
+	}
+	if(date.getSeconds()<10){
+		var sec="0"+date.getSeconds();
+	}else{
+		var sec=date.getSeconds();
+	}
 	format_str = 'YYYY-MM-DD hh:mm:ss';
 	format_str = format_str.replace(/YYYY/g, date.getFullYear());
-	format_str = format_str.replace(/MM/g, date.getMonth()+1);
-	format_str = format_str.replace(/DD/g, date.getDate());
-	format_str = format_str.replace(/hh/g, date.getHours());
-	format_str = format_str.replace(/mm/g, date.getMinutes());
-	format_str = format_str.replace(/ss/g, date.getSeconds());
+	format_str = format_str.replace(/MM/g, mnt);
+	format_str = format_str.replace(/DD/g, dat);
+	format_str = format_str.replace(/hh/g, hrs);
+	format_str = format_str.replace(/mm/g, mns);
+	format_str = format_str.replace(/ss/g, sec);
 
 	return format_str;
 }

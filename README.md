@@ -95,6 +95,14 @@ macOS
 Config is all on package.json  
 ビルド設定はすべてpackage.jsonに記載しています。  
 
+## Pleroma support
+
+Did you find a bug with Pleroma accounts?  
+Pleroma **does not** follow Mastodon API rules completely although Pleroma developers say so.  
+Please write issues to improve TheDesk affinity with Pleroma.  
+Pleromaは、Mastodon APIとの互換性を謳っていますが、実際には様々な差異があり、TheDeskで不具合が発生することがあります。  
+Issuesに書いてある問題についてはなるべく対処しますので、ぜひお知らせください。
+
 ## See also/詳しく
 
 [TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)

@@ -92,7 +92,7 @@ function pinutl(before,user, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		var templete = parse(json, '', acct_id,'user');
+		var templete = parse(json, 'pinned', acct_id,'user');
 		if(!json[0]){
 			templete="";
 		}
