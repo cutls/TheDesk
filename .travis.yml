@@ -21,6 +21,7 @@ before_deploy:
   - wine --version
   - brew install makensis
   - npm install electron-builder -g
+  - cd app
   - npm install
   - electron-builder --win --ia32
   - mv ../build/TheDesk-setup.exe ../TheDesk-setup-ia32.exe
