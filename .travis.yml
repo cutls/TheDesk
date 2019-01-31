@@ -30,7 +30,7 @@ before_deploy:
   - mv ../build/TheDesk-setup.exe ../TheDesk-setup.exe
   - mv ../build/TheDesk*.exe ../TheDesk.exe
   - electron-builder --linux --x64
-  - mv ../build/TheDesk*.snap ../TheDesk.snap
+  - mv ../build/thedesk*.snap ../TheDesk.snap
   - electron-builder --mac --x64
   - mv ../build/TheDesk*.dmg ../TheDesk.dmg
 deploy:
