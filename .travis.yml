@@ -33,6 +33,7 @@ before_deploy:
   - mv ../build/thedesk*.snap ../TheDesk.snap
   - electron-builder --mac --x64
   - mv ../build/TheDesk*.dmg ../TheDesk.dmg
+  - cd ../
 deploy:
   provider: releases
   # GitHub にリリースするための API KEY を暗号化した値
