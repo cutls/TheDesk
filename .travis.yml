@@ -13,11 +13,8 @@ before_install:
   # 指定バージョンの Node を有効にする
   - nvm use --delete-prefix $NODE_VERSION
   - node --version
-install:
-  - cd app
-  - npm install
 script:
-  - npm test
+  - node --version
 before_deploy:
   - brew update
   - brew install wine
