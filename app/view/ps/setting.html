@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="ps">
 <head>
 	<title>Settings - TheDesk</title>
-	<!--
+	
 	<script type="text/javascript">
 		var _jipt = [];
 		_jipt.push(['project', 'thedesk']);
 	</script>
 	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-	-->
+	
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
@@ -21,20 +21,20 @@
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.en.js"></script>
-<h4>Preferences</h4>
+<script type="text/javascript" src="../../js/lang/lang.ps.js"></script>
+<h4>crwdns524:0crwdne524:0</h4>
 <ul class="collapsible" data-collapsible="accordion">
 	<li>
 	<div class="collapsible-header">
-			<i class="material-icons">desktop_windows</i>System Preferences
+			<i class="material-icons">desktop_windows</i>crwdns529:0crwdne529:0
 	</div>
 	<div class="collapsible-body">
-		<h5>Languages</h5>
+		<h5>crwdns530:0crwdne530:0</h5>
 		<a onclick="changelang('ja')" class="pointer">日本語</a>/<a onclick="changelang('en')" class="pointer">English</a>/<a onclick="changelang('ps')" class="pointer">Crowdin In-context translation(beta)</a>
-		<h5>Import and export of preferences</h5>
-		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">Export</button>
-		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">Import</button>
-		<h5>Themes</h5>
+		<h5>crwdns531:0crwdne531:0</h5>
+		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">crwdns533:0crwdne533:0</button>
+		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">crwdns532:0crwdne532:0</button>
+		<h5>crwdns534:0crwdne534:0</h5>
 		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
 		<label for="black">Black</label>
 		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
@@ -46,277 +46,277 @@
 		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
 		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
 		<br>
-		<h5>Popup notification(on Windows)</h5>Hide to set "0"
+		<h5>crwdns1898:0crwdne1898:0</h5>crwdns536:0crwdne536:0
 		<br>
-		<input type="text" style="width:50px" id="popup">sec
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
+		<input type="text" style="width:50px" id="popup">crwdns537:0crwdne537:0
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
-		<h5>Native notification</h5>
-		This does not work on Windows Portable ver.<br><a onclick="notftest()" class="pointer">Notification test</a>
+		<h5>crwdns538:0crwdne538:0</h5>
+		crwdns539:0crwdne539:0<br><a onclick="notftest()" class="pointer">crwdns540:0crwdne540:0</a>
 		<br>
 		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_yes" value="yes" />
-		<label for="ntf_yes">Yes</label>
+		<label for="ntf_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_no" value="no" />
-		<label for="ntf_no">No</label>
+		<label for="ntf_no">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>Minimam width of columns</h5>Scroll bar will be shown when your window size is more than ammounts of columns.
+		<h5>crwdns541:0crwdne541:0</h5>crwdns542:0crwdne542:0
 		<br>
-		<input type="text" style="width:50px" id="width">pxabove
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
+		<input type="text" style="width:50px" id="width">pxcrwdns543:0crwdne543:0
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
-		<h5>Font</h5>
-		Select your favorite font to 'Select'<br>
-		<button class="btn waves-effect" style="width:100px;" onclick="font()">Select</button><br>
+		<h5>crwdns544:0crwdne544:0</h5>
+		crwdns1900:0crwdne1900:0<br>
+		<button class="btn waves-effect" style="width:100px;" onclick="font()">crwdns1896:0crwdne1896:0</button><br>
 		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;">
 
 		</div>
 		<br>
 		<input type="text" style="width:150px" id="font">
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
-		<h5>Font size</h5>
-		<span style="font-size:15px">15px(absolute value)</span>
+		<h5>crwdns546:0crwdne546:0</h5>
+		<span style="font-size:15px">15px(crwdns549:0crwdne549:0)</span>
 		<br>
 		<input type="text" style="width:50px" id="size">px 
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button><br>
-		<h5>Folder to save</h5>
-		TheDesk uses this value when it try to save pictures or take screenshots.<br>
-		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">Change</button>
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button><br>
+		<h5>crwdns547:0crwdne547:0</h5>
+		crwdns548:0crwdne548:0<br>
+		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">crwdns528:0crwdne528:0</button>
 		<br>
 	</div>
 	</li>
 	<li>
 	<div class="collapsible-header">
-			<i class="material-icons">reorder</i>Timeline Preferences
+			<i class="material-icons">reorder</i>crwdns550:0crwdne550:0
 	</div>
 	<div class="collapsible-body">
-		<h5>Time format</h5>Relative format:"1 minutes ago","3 days ago"
-		<br>Absolute format:"23:25:21","2017/12/30 23:59:00"
-		<br>Mixed format:toots posted today are relative-format, others are absolute-format.
+		<h5>crwdns551:0crwdne551:0</h5>crwdns552:0crwdne552:0
+		<br>crwdns553:0crwdne553:0
+		<br>crwdns554:0crwdne554:0
 		<br>
 		<input class="with-gap" onchange="settings()" onchange="settings()" name="time" type="radio" id="relative" value="relative" />
-		<label for="relative">Relative</label>
+		<label for="relative">crwdns555:0crwdne555:0</label>
 		<input class="with-gap" onchange="settings()" name="time" type="radio" id="absolute" value="absolute" />
-		<label for="absolute">Absolute</label>
+		<label for="absolute">crwdns1902:0crwdne1902:0</label>
 		<input class="with-gap" onchange="settings()" name="time" type="radio" id="double" value="double" />
-		<label for="double">Both relative and absolute</label>
+		<label for="double">crwdns557:0crwdne557:0</label>
 		<input class="with-gap" onchange="settings()" name="time" type="radio" id="medium" value="medium" />
-		<label for="medium">Mixed</label>
-		<h5>Server's unique locale</h5>This value is available on some Japanese servers
+		<label for="medium">crwdns558:0crwdne558:0</label>
+		<h5>crwdns1904:0crwdne1904:0</h5>crwdns1906:0crwdne1906:0
 		<br>
 		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_yes" value="yes" />
-		<label for="ul_yes">Yes</label>
+		<label for="ul_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_no" value="no" />
-		<label for="ul_no">No</label>
+		<label for="ul_no">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>Hide NSFW pictures</h5>Strong blur effect
+		<h5>crwdns561:0crwdne561:0</h5>crwdns562:0crwdne562:0
 		<br>
 		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_yes" value="yes" />
-		<label for="n_yes">Yes</label>
+		<label for="n_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_no" value="no" />
-		<label for="n_no">No</label>
+		<label for="n_no">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>Hide CW contents</h5>
+		<h5>crwdns563:0crwdne563:0</h5>
 		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_yes" value="yes" />
-		<label for="c_yes">Yes</label>
+		<label for="c_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_no" value="no" />
-		<label for="c_no">No</label>
+		<label for="c_no">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>Reply counter style</h5>
+		<h5>crwdns564:0crwdne564:0</h5>
 		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_hidden" value="hidden" />
-		<label for="rp_hidden">Show 1+ if the replies are more than 1.</label>
+		<label for="rp_hidden">crwdns565:0crwdne565:0</label>
 		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_all" value="all" />
-		<label for="rp_all">Show full count(1,2...)</label>
+		<label for="rp_all">crwdns566:0crwdne566:0</label>
 		<br>
-		<h5>Animated GIF images animation</h5>
+		<h5>crwdns567:0crwdne567:0</h5>
 		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_yes" value="yes" />
-		<label for="g_yes">Yes</label>
+		<label for="g_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_no" value="no" />
-		<label for="g_no">No</label>
+		<label for="g_no">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>Tag TL Search</h5>
+		<h5>crwdns572:0crwdne572:0</h5>
 		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_all" value="all" />
-		<label for="t_all">Use federated network</label>
+		<label for="t_all">crwdns573:0crwdne573:0</label>
 		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_local" value="local" />
-		<label for="t_local">Use local network</label>
+		<label for="t_local">crwdns574:0crwdne574:0</label>
 		<br>
-		<h5>Show via</h5>
+		<h5>crwdns575:0crwdne575:0</h5>
 		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_yes" value="yes" />
-		<label for="via_yes">Yes</label>
+		<label for="via_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_hide" value="hide" />
-		<label for="via_hide">No</label>
+		<label for="via_hide">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>Hide action buttons without mouseover</h5>
-		You may feel 'mouseover' is unconfortable:(<br>
+		<h5>crwdns576:0crwdne576:0</h5>
+		crwdns577:0crwdne577:0<br>
 		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_yes" value="yes" />
-		<label for="mov_yes">Mouseover to show</label>
+		<label for="mov_yes">crwdns578:0crwdne578:0</label>
 		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_click" value="click" />
-		<label for="mov_click">Click to show</label>
+		<label for="mov_click">crwdns579:0crwdne579:0</label>
 		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_no" value="no" />
-		<label for="mov_no">No</label>
+		<label for="mov_no">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>Show Notification marker, red colored bell and counter(if you show a notification column.)</h5>
+		<h5>crwdns580:0crwdne580:0</h5>
 		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_yes" value="yes" />
-		<label for="notfm_yes">Yes</label>
+		<label for="notfm_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_no" value="no" />
-		<label for="notfm_no">No</label>
+		<label for="notfm_no">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>Auto folding</h5>
-		TheDesk does not collapse totes of 5 characters or less. Also, when collapsing, newlines are not shown. TheDesk count only newlines as the number of lines.
+		<h5>crwdns581:0crwdne581:0</h5>
+		crwdns582:0crwdne582:0
 		<br>
-		<input type="text" style="width:50px" id="sentence">lines above or
-		<input type="text" style="width:50px" id="letters">letters above
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
+		<input type="text" style="width:50px" id="sentence">crwdns583:0crwdne583:0 crwdns543:0crwdne543:0 crwdns585:0crwdne585:0
+		<input type="text" style="width:50px" id="letters">crwdns584:0crwdne584:0 crwdns543:0crwdne543:0
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
-		<h5>Height of images
+		<h5>crwdns586:0crwdne586:0
         </h5>
 		<input type="text" style="width:50px" id="img-height">px
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
-		<h5>Enable #InstanceTicker</h5>
-		Show colorful stickers about tooters' server. <a href="https://cdn.weep.me/mastodon/">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.<br>
+		<h5>crwdns1908:0crwdne1908:0</h5>
+		crwdns1910:0crwdne1910:0<br>
 		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_yes" value="yes" />
-		<label for="ticker_yes">Yes</label>
+		<label for="ticker_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
-		<label for="ticker_no">No</label>
+		<label for="ticker_no">crwdns527:0crwdne527:0</label>
 		<br>
 	</div>
 	</li>
 	<li>
 	<div class="collapsible-header">
-			<i class="material-icons">send</i>Posting Preferences
+			<i class="material-icons">send</i>crwdns587:0crwdne587:0
 	</div>
 	<div class="collapsible-body">
-		<h5>Default warining text</h5>
+		<h5>crwdns590:0crwdne590:0</h5>
 		<input type="text" style="width:150px" id="cw-text">
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
-		<h5>Alert before posting a long toot.</h5>
-		Show dialog whether you make too-long text hidden.
+		<h5>crwdns588:0crwdne588:0</h5>
+		crwdns589:0crwdne589:0
 		<br>
-		<input type="text" style="width:50px" id="cw_sentence">lines above or
-		<input type="text" style="width:50px" id="cw_letters">letters above
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
+		<input type="text" style="width:50px" id="cw_sentence">crwdns583:0crwdne583:0 crwdns543:0crwdne543:0 crwdns585:0crwdne585:0
+		<input type="text" style="width:50px" id="cw_letters">crwdns584:0crwdne584:0 crwdns543:0crwdne543:0
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
-		<h5>Always CW set</h5>
+		<h5>crwdns591:0crwdne591:0</h5>
 		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_yes" value="yes" />
-		<label for="cws_yes">Yes</label>
+		<label for="cws_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_no" value="no" />
-		<label for="cws_no">No
+		<label for="cws_no">crwdns527:0crwdne527:0
 		</label>
 		<br>
-		<h5>Default visibility</h5>
+		<h5>crwdns592:0crwdne592:0</h5>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="public" value="public" />
-		<label for="public">Public</label>
+		<label for="public">crwdns593:0crwdne593:0</label>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="unlisted" value="unlisted" />
-		<label for="unlisted">Unlisted</label>
+		<label for="unlisted">crwdns594:0crwdne594:0</label>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="private" value="private" />
-		<label for="private">Private</label>
+		<label for="private">crwdns595:0crwdne595:0</label>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="direct" value="direct" />
-		<label for="direct">Direct</label>
+		<label for="direct">crwdns596:0crwdne596:0</label>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="memory" value="memory" />
-		<label for="memory">Memory(memorized as each server)</label>
+		<label for="memory">crwdns1912:0crwdne1912:0</label>
 		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="server" value="server" />
-		<label for="server">Default of your visibility(Set on preferences of Mastodon server)</label>
+		<label for="server">crwdns1914:0crwdne1914:0</label>
 		<br>
-		<h5>Posting images preferences</h5>
+		<h5>crwdns599:0crwdne599:0</h5>
 		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_url" value="url" />
-		<label for="i_url">Insert media URL</label>
+		<label for="i_url">crwdns600:0crwdne600:0</label>
 		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_no-act" value="no-act" />
-		<label for="i_no-act">Insert nothig</label>
+		<label for="i_no-act">crwdns601:0crwdne601:0</label>
 		<br>
 		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_inline" value="inline" disabled />
-		<label for="i_inline">Disabled 
+		<label for="i_inline">crwdns602:0crwdne602:0 
 			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
 		</label>
 		<br>
-		<h5>Action of posting-box</h5>
+		<h5>crwdns568:0crwdne568:0</h5>
 		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_yes" value="yes" />
-		<label for="bx_yes">Folding</label>
+		<label for="bx_yes">crwdns569:0crwdne569:0</label>
 		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_no" value="no" />
-		<label for="bx_no">Open after posting
+		<label for="bx_no">crwdns571:0crwdne571:0
 		</label>
 		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_abs" value="absolute" />
-		<label for="bx_abs">Absolutely open</label>
+		<label for="bx_abs">crwdns570:0crwdne570:0</label>
 		<br>
-		<h5>Quote format</h5>
+		<h5>crwdns603:0crwdne603:0</h5>
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_simple" value="simple" />
-		<label for="q_simple">Only URL</label>
+		<label for="q_simple">crwdns604:0crwdne604:0</label>
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
-		<label for="q_mention">URL and acct(mention to the user)</label>
+		<label for="q_mention">crwdns605:0crwdne605:0</label>
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
-		<label for="q_full">URL, text and acct(mention to the user)
+		<label for="q_full">crwdns606:0crwdne606:0
 		</label>
 		<br>
-		<h5>Default accounts of actions</h5>
-		Main account can be set on Account Manager.<br>
+		<h5>crwdns607:0crwdne607:0</h5>
+		crwdns608:0crwdne608:0<br>
 		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_remain" value="remain" />
-		<label for="mn_remain">Account you used recently</label>
+		<label for="mn_remain">crwdns609:0crwdne609:0</label>
 		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_main" value="main" />
-		<label for="mn_main">Main account</label>
+		<label for="mn_main">crwdns610:0crwdne610:0</label>
 		</label>
-		<h5>Secondary Toot Button</h5>
-		Toot with other visibility setting<br>
+		<h5>crwdns1916:0crwdne1916:0</h5>
+		crwdns1918:0crwdne1918:0<br>
 		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-nothing" value="nothing" />
-		<label for="sec-nothing">Hidden</label>
+		<label for="sec-nothing">crwdns1920:0crwdne1920:0</label>
 		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-public" value="public" />
-		<label for="sec-public">Public</label>
+		<label for="sec-public">crwdns593:0crwdne593:0</label>
 		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-unlisted" value="unlisted" />
-		<label for="sec-unlisted">Unlisted</label>
+		<label for="sec-unlisted">crwdns594:0crwdne594:0</label>
 		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-private" value="private" />
-		<label for="sec-private">Private</label>
+		<label for="sec-private">crwdns595:0crwdne595:0</label>
 		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-direct" value="direct" />
-		<label for="sec-direct">Direct</label>
+		<label for="sec-direct">crwdns596:0crwdne596:0</label>
 		<input class="with-gap hide kirishima" onchange="settings()" name="sec" type="radio" id="sec-local" value="local" />
-		<label for="sec-local">Local Only</label><span class="hide kirishima">非対応インスタンスでは「未収載」になります。</span>
+		<label for="sec-local">crwdns1922:0crwdne1922:0</label><span class="hide kirishima">非対応インスタンスでは「未収載」になります。</span>
 		<br>
 	</div>
 	</li>
 	<li>
 		<div class="collapsible-header">
-				<i class="material-icons">keyboard</i>Keyboard shortcut Preferences
+				<i class="material-icons">keyboard</i>crwdns611:0crwdne611:0
 		</div>
 		<div class="collapsible-body">
-			<h5>Easy inserter</h5>
-			You can insert any letters and emojis with only 3 keys<br>
+			<h5>crwdns612:0crwdne612:0</h5>
+			crwdns613:0crwdne613:0<br>
 			Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
-			<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">Save</button><br><br>
+			<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button><br><br>
 			Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
-			<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">Save</button><br><br>
+			<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button><br><br>
 			Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
-			<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">Save</button><br><br>
+			<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button><br><br>
 
 		</div>
 	</li>
 	<li>
 		<div class="collapsible-header">
-				<i class="material-icons">bookmark</i>Mute & Emphasis Preferences
+				<i class="material-icons">bookmark</i>crwdns614:0crwdne614:0
 		</div>
 		<div class="collapsible-body">
-			<h5>Client Mute</h5>
+			<h5>crwdns615:0crwdne615:0</h5>
 			<div id="mute-cli"></div>
-			<h5>Client Emphasis</h5>
-			Click client name on toots to toggle mute and emphasis.
-			<h5>Words Mute</h5>
-			Enter to set<br>
+			<h5>crwdns616:0crwdne616:0</h5>
+			crwdns617:0crwdne617:0
+			<h5>crwdns619:0crwdne619:0</h5>
+			crwdns618:0crwdne618:0<br>
 			<div class="chips" id="wordmute" style="background-color:gray;"></div>
-			<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">Save</button>
-			<h5>Words Emphasis</h5>
-			Enter to set<br>
+			<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
+			<h5>crwdns620:0crwdne620:0</h5>
+			crwdns618:0crwdne618:0<br>
 			<div class="chips" id="wordemp" style="background-color:gray;"></div>
-			<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">Save</button>
-			<h5>Users Emphasis</h5>
-			Set on users data modals.
-			<span class="emphasized">　Use this color to emphasis　</span>
+			<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
+			<h5>crwdns621:0crwdne621:0</h5>
+			crwdns622:0crwdne622:0
+			<span class="emphasized">　crwdns623:0crwdne623:0　</span>
 		</div>
 	</li>
 	<li>
 		<div class="collapsible-header">
-			<i class="fa fa-spotify"></i>Spotify and NowPlaying Preferences
+			<i class="fa fa-spotify"></i>crwdns624:0crwdne624:0
 		</div>
 		<div class="collapsible-body">
-			<h5>NowPlaying Provider(Windows)</h5>
-			macOS and Linux are not supported. AIMP and iTunes were checked by developer. <br>CAD:foobar2000, MusicBee,J. River Media Center, Media Jukebox<br>WLM:Last.fm Client, TTPlayer, OpenPandora, Zune.<br> For foobar2000, <a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a> is required.<br>
+			<h5>{{npProvider}}</h5>
+			{{npPeoviderWarn}}<br>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
 			<label for="aimp">AIMP</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
@@ -331,72 +331,72 @@
 			<label for="wlm">WLM</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
 			<label for="cad">CAD</label><br><br>
-			Click <i class="material-icons" style="font-size:24px;">music_note</i>icon to NowPlaying<br>
-			<h5>Account Connection</h5>
-			TheDesk save your data on thedesk.top server.<br>
-			<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">Save</button></div>
-			<a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i class="fa fa-spotify left"></i>Connect</a>
-			<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i class="fa fa-spotify left"></i>Disconnect</a>
-			<h5>Edit a template</h5>
-			<br>
+			crwdns625:0crwdne625:0<i class="material-icons" style="font-size:24px;">music_note</i>crwdns626:0crwdne626:0<br>
+			<h5>crwdns627:0crwdne627:0</h5>
+			crwdns628:0crwdne628:0<br>
+			<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button></div>
+			<a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i class="fa fa-spotify left"></i>crwdns629:0crwdne629:0</a>
+			<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i class="fa fa-spotify left"></i>crwdns630:0crwdne630:0</a>
+			<h5>crwdns631:0crwdne631:0</h5>
+			crwdns632:0crwdne632:0<br>
 			<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
-				Spotify:{song}:Song name/{album}:Album name/{artist}:Artist name/{url}:URL to Spotify<br>
-				macOS:{song}:Song name/{album}:Album name/{artist}:Artist name/composer:{composer}/spampling rate:{hz}/bit rate:{bitRate}/genre:{genre}<br>
-				Windows:{song}:Song name/{album}:Album name/{artist}:Artist name<br>
+				crwdns633:0{song}crwdnd633:0{album}crwdnd633:0{artist}crwdnd633:0{url}crwdne633:0<br>
+				crwdns634:0{url}crwdnd634:0{composer}crwdnd634:0{hz}crwdnd634:0{bitRate}crwdnd634:0{genre}crwdne634:0<br>
+				{{templete3}}<br>
 				<span class="imas hide">CINDERELLA NowPlaying(imastodon.net限定)では作曲家{composer}/作詞家{lyricist}/BPM{bpm}が有効です。<br>
                     CINDERELLA NowPlayingはimastodon.netにログインしているとき、トゥート欄に「//」を入力し、その後に曲名を入れることで可能です。</span><br>
-			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">Save</button>
-			<h5>Attach an Artwork of Spotify</h5>
+			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
+			<h5>crwdns635:0crwdne635:0</h5>
 			<span class="imas hide">この設定はCINDERELLA NowPlaying(imastodon.net限定)にも適用されます。</span><br>
 			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
-			<label for="awk_yes">Yes</label>
+			<label for="awk_yes">crwdns526:0crwdne526:0</label>
 			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
-			<label for="awk_no">No</label>
+			<label for="awk_no">crwdns527:0crwdne527:0</label>
 			<br>
 		</div>
 	</li>
 	<li>
 		<div class="collapsible-header">
-			<i class="material-icons">hearing</i>TTS(text to speech) Preferences
+			<i class="material-icons">hearing</i>crwdns636:0crwdne636:0
 		</div>
 		<div class="collapsible-body">
-			<h5>Speed</h5>
-			1-100(default:10)<br>
+			<h5>crwdns637:0crwdne637:0</h5>
+			crwdns638:0crwdne638:0<br>
 			<p class="range-field"><input type="range" id="voicespeed" min="1" max="100" value="10" style="width:500px; max-width:100%"/></p>
-			<h5>Pitch</h5>
-			0-100(default:50)<br>
+			<h5>crwdns639:0crwdne639:0</h5>
+			crwdns640:0crwdne640:0<br>
 			<p class="range-field"><input type="range" id="voicepitch" min="0" max="100" value="50" style="width:500px; max-width:100%"/></p>
-			<h5>Volume</h5>
-			0-100(default:100)<br>
+			<h5>crwdns641:0crwdne641:0</h5>
+			crwdns642:0crwdne642:0<br>
 			<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100" style="width:500px; max-width:100%"/></p>
-			<h5>Test</h5>
-			<input type="text" style="width:350px" id="voicetxt" value="TheDesk is an open-source Mastodon client for PC.">
-			<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()" id="testplay">Play/Stop</button><br>
+			<h5>crwdns643:0crwdne643:0</h5>
+			<input type="text" style="width:350px" id="voicetxt" value="crwdns644:0crwdne644:0">
+			<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()" id="testplay">crwdns645:0crwdne645:0</button><br>
 			<br>
-			<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">Save</button>
+			<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">crwdns525:0crwdne525:0</button>
 		</div>
 	</li>
 </ul>
 <br>
-<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>Back</a>
+<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>crwdns646:0crwdne646:0</a>
 <br>
-<br>Keyboard shortcuts
-<li>Ctrl+1-9:Jump to n(1-9)th column</li>
-<li>N:Open toot box</li>
-<li>X:Toggle toot box</li>
-<li>Ctrl+Enter:Post</li>
-<li>Ctrl+Enter+Shift:Post(secondary toot)</li>
-<li>Ctrl+E:Make all notifications read</li>
-<li>Esc:Hide toot box</li>
-<li>F5:Super Reload</li>
-<li>Ctrl+Shift+C:Clear toot box</li>
-<li>Ctrl+Shift+S:Preferences</li>
-<li>Ctrl+Shift+M:Account Manager</li>
+<br>crwdns647:0crwdne647:0
+<li>Ctrl+1-9:crwdns648:0crwdne648:0</li>
+<li>N:crwdns649:0crwdne649:0</li>
+<li>X:crwdns650:0crwdne650:0</li>
+<li>Ctrl+Enter:crwdns651:0crwdne651:0</li>
+<li>Ctrl+Enter+Shift:crwdns1924:0crwdne1924:0</li>
+<li>Ctrl+E:crwdns652:0crwdne652:0</li>
+<li>Esc:crwdns653:0crwdne653:0</li>
+<li>F5:crwdns654:0crwdne654:0</li>
+<li>Ctrl+Shift+C:crwdns655:0crwdne655:0</li>
+<li>Ctrl+Shift+S:crwdns524:0crwdne524:0</li>
+<li>Ctrl+Shift+M:crwdns656:0crwdne656:0</li>
 <li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
-<li>Ctrl+Shift+P:Show profile of selecting</li>
-<li>←/→:Show next or previous image</li>
-<li>Mousewheel:Zoom a image</li>
+<li>Ctrl+Shift+P:crwdns657:0crwdne657:0</li>
+<li>←/→:crwdns658:0crwdne658:0</li>
+<li>crwdns659:0crwdne659:0</li>
 <div class="hide kirishima">
 以下Markdownに対応したインスタンスのみ。
 <br>
@@ -409,19 +409,19 @@
 <a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
 </li><br>
 </div>
-<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('Delete all data. You cannot undo. Continue?')){ localStorage.clear(); location.href='index.html'; }"><i class="material-icons left">delete</i>Reset(Danger)</button><br><br>
-<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i class="material-icons left">info</i>About TheDesk</button>
-<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">web</i>Website</a>
-<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>Support(Enty)</a>
-<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>Help/Docs(Constructing)</a>
+<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('crwdns661:0crwdne661:0')){ localStorage.clear(); location.href='index.html'; }"><i class="material-icons left">delete</i>crwdns660:0crwdne660:0</button><br><br>
+<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i class="material-icons left">info</i>crwdns662:0crwdne662:0</button>
+<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">web</i>crwdns663:0crwdne663:0</a>
+<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>crwdns664:0crwdne664:0(Enty)</a>
+<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>crwdns665:0crwdne665:0/Docs(Constructing)</a>
 <a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
 <a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
-<a class="btn waves-effect red lighten-2" href="https://osushi.love/Cutls_P" target="_blank" style="width:100%; max-width:500px;"><img src="../../img/sushi.svg" class="left" width="25" style="padding-top:5px;">Give me a sushi!</a>
+<a class="btn waves-effect red lighten-2" href="https://osushi.love/Cutls_P" target="_blank" style="width:100%; max-width:500px;"><img src="../../img/sushi.svg" class="left" width="25" style="padding-top:5px;">crwdns666:0crwdne666:0</a>
 <br>
 Kyash<br>
 			<img src="../../img/kyash.png" width="100"><br>
-<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">Check update</a><br>
-<a href="oss.html">OSS License</a><br>
+<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">crwdns667:0crwdne667:0</a><br>
+<a href="oss.html">OSS Licensecrwdns668:0crwdne668:0</a><br>
 <span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved. 
 	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://github.com/cutls/TheDesk/blob/master/TOS.md">Terms of Use</a>
 	<br>Developer: Cutls P( 

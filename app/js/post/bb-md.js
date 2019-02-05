@@ -4,7 +4,7 @@ function mdCheck(){
 	var acct_id = $("#post-acct-sel").val();
 	var profimg=localStorage.getItem("prof_"+acct_id);
 	if(!profimg){
-		profimg="./img/missing.svg";
+		profimg="../../img/missing.svg";
 	}
 	$("#acct-sel-prof").attr("src",profimg);
 		if(localStorage.getItem("post_" + acct_id)){

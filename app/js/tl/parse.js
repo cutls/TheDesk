@@ -824,7 +824,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	if(toot.avatar){
 		var avatar=toot.avatar;
 	}else{
-		var avatar="./img/missing.svg";
+		var avatar="../../img/missing.svg";
 	}
 	
 		templete = templete +

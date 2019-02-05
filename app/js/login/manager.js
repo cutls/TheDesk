@@ -82,7 +82,7 @@ function data(domain) {
 	$("#ins-user").text("Loading...");
 	$("#ins-ver").text("Loading...");
 	$("#ins-name").text("Loading...");
-	$("#ins-prof").attr('src', "./img/loading.svg");
+	$("#ins-prof").attr('src', "../../img/loading.svg");
 	var start = "https://instances.social/api/1.0/instances/show?name=" + domain;
 	fetch(start, {
 		method: 'GET',
@@ -175,6 +175,7 @@ function multiDel(target) {
 		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
+		load();
 		//カラムデータコンフリクト
 		var col = localStorage.getItem("column");
 		var oldcols = JSON.parse(col);
@@ -199,7 +200,7 @@ function multiDel(target) {
 		});
 		var json = JSON.stringify(newcols);
 		localStorage.setItem("column", json);
-		load();
+		
 	}
 }
 function multiDel2(target) {
@@ -500,7 +501,7 @@ function getdata(domain, at) {
 		var avatar=json["avatar"];
 		//missingがmissingなやつ
 		if(avatar=="/avatars/original/missing.png"){
-			avatar="./img/missing.svg";
+			avatar="../../img/missing.svg";
 		}
 		if(json["source"]){
 			var priv=json["source"]["privacy"];
@@ -659,7 +660,7 @@ function multisel() {
 			var profimg=localStorage.getItem("prof_"+key);
 			var domain=localStorage.getItem("domain_"+key);
 			if(!profimg){
-				profimg="./img/missing.svg";
+				profimg="../../img/missing.svg";
 			}
 		} else {
 			sel = "";

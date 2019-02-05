@@ -410,8 +410,8 @@ function reset(){
 	$(".column-first").addClass("active-back");
 	$("#his-name").text("Loading");
 	$("#his-acct").text("");
-	$("#his-prof").attr("src", "./img/loading.svg");
-	$('#his-data').css('background-image', 'url(./img/loading.svg)');
+	$("#his-prof").attr("src", "../../img/loading.svg");
+	$('#his-data').css('background-image', 'url(../../img/loading.svg)');
 	$("#his-sta").text("");
 	$("#his-follow").text("");
 	$("#his-follower").text("");

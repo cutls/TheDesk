@@ -59,7 +59,6 @@ function parseColumn() {
 			domain: 0,
 			type: 'local'
 		}];
-		localStorage.setItem("card_0","true");
 		var json = JSON.stringify(obj);
 		localStorage.setItem("column", json);
 	} else {

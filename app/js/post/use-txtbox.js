@@ -13,7 +13,7 @@ function re(id,at,acct_id,mode){
 	$("#textarea").focus();
 	var profimg=localStorage.getItem("prof_"+acct_id);
 	if(!profimg){
-		profimg="./img/missing.svg";
+		profimg="../../img/missing.svg";
 	}
 	$("#acct-sel-prof").attr("src",profimg);
 	vis(mode);

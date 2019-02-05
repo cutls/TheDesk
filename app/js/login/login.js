@@ -40,15 +40,28 @@ function ck() {
 		}else{	
 		}
 	}
-	
-	if (at) {
+	var multi = localStorage.getItem("multi");
+	if (!multi) {
+		var obj = [];
+		var json = JSON.stringify(obj);
+		localStorage.setItem("multi", json);
+	} else {
+		var obj = JSON.parse(multi);
+	}
+	Object.keys(obj).forEach(function(key) {
+		var acct=obj[key];
+		if(acct.domain){
+			refresh(key,true)
+		}
+	});
+	console.log(obj);
+	if (obj[0].domain) {
 		$("#tl").show();
 		ticker();
-		parseColumn();
 		multiSelector();
 	} else {
 		$("#tl").show();
-		multiSelector();
+		$("#post-box").hide();
 	}
 }
 ck();
@@ -230,7 +243,7 @@ function getdataAdv(domain, at) {
 		var avatar=json["avatar"];
 		//missingがmissingなやつ
 		if(avatar=="/avatars/original/missing.png"){
-			avatar="./img/missing.svg";
+			avatar="../../img/missing.svg";
 		}
 		if(json["source"]["privacy"]){
 			var priv=json["source"]["privacy"];
@@ -261,7 +274,7 @@ function getdataAdv(domain, at) {
 	});
 }
 //ユーザーデータ更新
-function refresh(target) {
+function refresh(target,loadskip) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
 	if(obj[target].mode=="misskey"){
@@ -313,8 +326,9 @@ function refresh(target) {
 		obj[target] = ref;
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
-
-		load();
+		if(!loadskip){
+			load();
+		}
 	});
 }
 //MarkdownやBBCodeの対応、文字数制限をチェック
@@ -451,7 +465,8 @@ function multiSelector() {
 		var list = key * 1 + 1;
 		if (key == last) {
 			sel = "selected";
-			var domain = localStorage.getItem("domain_" + key);
+			var domain = acct.domain;
+			localStorage.setItem("domain_" + key, domain);
 			if(idata[domain+"_letters"]){
 				$("#textarea").attr("data-length", idata[domain+"_letters"])
 			}else{
@@ -465,13 +480,20 @@ function multiSelector() {
 			if(idata[domain+"_glitch"]){
 				$("#local-button").removeClass("hide")
 			}
-			var profimg=localStorage.getItem("prof_"+key);
+			var profimg = acct.prof;
+			localStorage.setItem("prof_" + key, profimg);
 			console.log(profimg);
 			if(!profimg){
-				profimg="./img/missing.svg";
+				profimg="../../img/missing.svg";
 			}
 			$("#acct-sel-prof").attr("src",profimg);
-			$("#toot-post-btn").text(lang.lang_toot+"("+domain+")");
+			console.log(domain);
+			if(domain){
+				var cc="("+domain+")";
+			}else{
+				var cc="";
+			}
+			$("#toot-post-btn").text(lang.lang_toot+cc);
 			if(acct.background && acct.background!="def" && acct.text && acct.text!="def"){
 				$("#toot-post-btn").removeClass("indigo");
 				$("#toot-post-btn").css("background-color","#"+acct.background);
@@ -501,6 +523,7 @@ function multiSelector() {
 		$("#add-acct-sel").append('<option value="noauth">'+lang.lang_login_noauth+'</option><option value="webview">Twitter</option>');
 	}
 	$('select').material_select('update');
+	parseColumn();
 }
 
 //バージョンエンコ

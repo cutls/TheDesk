@@ -1,7 +1,7 @@
 /*アイコンをクリックした時とかにでてくるユーザーデータ*/
 #his-data {
   background-repeat: no-repeat;
-  background-image: url('/img/loading.svg');
+  background-image: url('../../loading.svg');
   overflow-y: hidden;
 }
 #his-name{

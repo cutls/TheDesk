@@ -3,7 +3,7 @@
 function imgv(id, key, acct_id) {
 	$("#imgprog").text(0);
 	$('#imgmodal').hide();
-	$('#imgmodal').attr('src', './img/loading.svg');
+	$('#imgmodal').attr('src', '../../img/loading.svg');
 	var murl = $("#" + id + "-image-" + key).attr("data-url");
 	var type = $("#" + id + "-image-" + key).attr("data-type");
 	$("#imagemodal").attr("data-id",id);
@@ -128,7 +128,7 @@ function imgCont(type) {
 	}
 	var murl = $("#" + id + "-image-" + key).attr("data-url");
 	if(murl){
-	$('#imgmodal').attr('src', './img/loading.svg');
+	$('#imgmodal').attr('src', '../../img/loading.svg');
 	var type = $("#" + id + "-image-" + key).attr("data-type");
 	$(document).ready(function() {
 		if (type == "image") {

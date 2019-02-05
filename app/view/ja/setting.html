@@ -2,6 +2,13 @@
 <html lang="ja">
 <head>
 	<title>Settings - TheDesk</title>
+	<!--
+	<script type="text/javascript">
+		var _jipt = [];
+		_jipt.push(['project', 'thedesk']);
+	</script>
+	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+	-->
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
@@ -23,7 +30,7 @@
 	</div>
 	<div class="collapsible-body">
 		<h5>言語</h5>
-		<a onclick="changelang('ja')" class="pointer">日本語</a>/<a onclick="changelang('en')" class="pointer">English</a>
+		<a onclick="changelang('ja')" class="pointer">日本語</a>/<a onclick="changelang('en')" class="pointer">English</a>/<a onclick="changelang('ps')" class="pointer">Crowdin In-context translation(beta)</a>
 		<h5>設定のインポートとエクスポート</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">エクスポート</button>
 		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">インポート</button>
