@@ -1,7 +1,8 @@
 # TheDesk
 
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)  
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcutls%2FTheDesk.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcutls%2FTheDesk?ref=badge_shield)
+ 
 [![Server-up time](https://status.cutls.com/badge/?site=thedesk.top)](https://status.cutls.com/)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのWindows/Linuxクライアント  
@@ -22,6 +23,9 @@ The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.o
 * [Monotone SVG](https://dl.thedesk.top/press/TheDesk.svg)
 * [ico](https://dl.thedesk.top/press/TheDesk.ico)
 * [icns](https://dl.thedesk.top/press/TheDesk.icns)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcutls%2FTheDesk.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcutls%2FTheDesk?ref=badge_large)
 
 ## Terms of Use/利用規約
 
