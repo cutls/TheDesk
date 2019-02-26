@@ -19,6 +19,8 @@
     "nntest":"通知テスト",
     "minwidth":"マルチカラムの最低横幅",
     "minwidthwarn":"画面全体の横幅÷コラム数がこの値を超えた時、横スクロールとなります。",
+    "fixwidth":"TweetDeckの限定の最低横幅",
+    "fixwidthwarn":"",
     "above":"以上",
     "font":"フォント",
     "fontwarn":"「選択」を押してフォントを選んでください。",

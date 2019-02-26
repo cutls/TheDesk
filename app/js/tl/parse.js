@@ -635,7 +635,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		//Ticker
 		var tickerdom="";
 		if(ticker){
-			var tickerdata=JSON.parse(localStorage.getItem("ticker"));
+			var tickerdata=localStorage.getItem("ticker")
+			if(tickerdata){
+			var tickerdata=JSON.parse(tickerdata);
 			
 			var thisdomain=toot.account.acct.split("@");
 			if(thisdomain.length>1){
@@ -648,6 +650,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					break;
 				}
 		   }
+		}
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +

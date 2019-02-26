@@ -203,6 +203,7 @@ var lang={
     "lang_setting_selt":"{{set1}}行以上または{{set2}}文字以上でテキストを隠します。",
     "lang_setting_autocw":"{{set1}}行以上または{{set2}}文字以上で警告を表示します。",
     "lang_setting_width":"横幅最低を{{set}}pxに設定しました。",
+    "lang_setting_fixwidth":"TweetDeckの横幅を{{set}}pxに設定しました。",
     "lang_setting_img":"画像投稿後の設定を「{{set}}」に設定しました。",
     "lang_setting_font":"フォントを{{set}}に設定しました。",
     "lang_setting_default":"デフォルト",

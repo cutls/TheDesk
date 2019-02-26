@@ -35,13 +35,11 @@
   "license": "GPL-3.0",
   "dependencies": {
     "electron-dl": "^1.11.0",
-    "font-manager": "^0.3.0",
     "jimp": "^0.2.28",
     "node-notifier": "^5.2.1",
     "sumchecker": "^2.0.2"
   },
   "optionalDependencies": {
-    "nowplaying-node": "^0.1.3",
     "itunes-nowplaying-mac": "^0.2.3"
   },
   "build": {
@@ -81,6 +79,6 @@
     "electron": "^3.0.10",
     "electron-packager": "^13.0.1",
     "electron-prebuilt": "^1.4.13",
-    "electron-rebuild": "^1.8.2"
+    "electron-rebuild": "^1.8.4"
   }
 }

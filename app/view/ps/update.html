@@ -6,13 +6,13 @@
 <link href="../../css/master.css" type="text/css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 <meta charset="utf-8">
-
+{{comment-start}}
 <script type="text/javascript">
 	var _jipt = [];
 	_jipt.push(['project', 'thedesk']);
 </script>
 <script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-
+{{comment-end}}
 </head>
 <body>
 <style>
@@ -62,6 +62,9 @@ a,button,input,label,i{
 #prog{
     font-size:200%;
 }
+.linux, .mac{
+    display:none;
+}
 </style>
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
@@ -75,14 +78,11 @@ a,button,input,label,i{
         <p>crwdns669:0crwdne669:0</p>
         <span id="now"></span>→<b id="ver"></b><br>
         <span id="det"></span><br>
-        <button id="update" class="waves-effect btn" onclick="update('true')" style="margin-left:15px;">crwdns670:0crwdne670:0</button>
-        <div id="checkbox">
-            Options:<br>
-            <input type="checkbox" class="filled-in" id="portable" value="true" />
-            <label for="portable">crwdns1950:0crwdne1950:0</label><br>
-            <input type="checkbox" class="filled-in" id="rewrite" value="true" />
-            <label for="rewrite">crwdns673:0crwdne673:0</label><br>
-        </div>
+        <button class="waves-effect btn windows" onclick="update('install')" style="margin-left:15px;">{{installer}}</button>
+        <button class="waves-effect btn windows" onclick="update('portable')" style="margin-left:15px;">crwdns1950:0crwdne1950:0</button>
+        <button class="waves-effect btn linux" onclick="update('linux')" style="margin-left:15px;">crwdns670:0crwdne670:0</button>
+        <button class="waves-effect btn mac" onclick="update('mac')" style="margin-left:15px;">crwdns670:0crwdne670:0</button>
+        <br>
         crwdns678:0crwdne678:0<br>crwdns679:0crwdne679:0
     </div>
     <div id="skipper" class="hide">
@@ -123,17 +123,34 @@ function update(sel){
     $("#dlnow").toggleClass("hide");
     $("#dlnow").toggleClass("show");
     $("#prog").text("");
-    if($('#rewrite:checked').val()=="true"){
-        var versioning=true;
-	}else{
-        var versioning=false;
-    }
-    if($('#portable:checked').val()=="true"){
-		var zip=true;
-	}else{
-        var zip=false;
-    }
-	ipc.send('download-btn', [sel,enc(localStorage.getItem("next-ver")),zip,versioning]);
+    var remote=electron.remote;
+    var bit=process.arch;
+    var start="https://thedesk.top/ver.json";
+	fetch(start, {
+		method: 'GET',
+		headers: {'content-type': 'application/json'},
+    }).then(function(response) {
+       return response.json();
+    }).catch(function(error) {
+        todo(error);
+		console.error(error);
+    }).then(function(json) {
+        if(sel=="installer"){
+            if(bit=="64"){
+                var url=json["winx64"];
+            }else if(bit=="32"){
+                var url=json["winia32"];
+            }
+        }else if(sel=="portable"){
+            if(bit=="64"){
+                var url=json["winx64p"];
+            }else if(bit=="32"){
+                var url=json["winia32p"];
+            }
+        }
+        ipc.send('download-btn', url);
+    });
+	
 }
 	function quit(){
 				ipc.send('quit', 'go');
@@ -149,9 +166,14 @@ ipc.on('mess', function (event, arg) {
 })
 function verck(){
     var remote=electron.remote;
-	var platform=remote.process.platform;
-	if(platform!="win32"){
-		$('#portable').prop("disabled",true)
+    var platform=remote.process.platform;
+    var bit=process.arch;
+	if(platform=="linux"){
+        $('.windows').hide()
+        $('.linux').show()
+	}else if(platform=="mac"){
+        $('.windows').hide()
+        $('.mac').show()
 	}
 	var start="https://thedesk.top/ver.json";
 	fetch(start, {
@@ -167,7 +189,8 @@ function verck(){
              $("#ver").text(json.desk);
              localStorage.setItem("next-ver",json.desk);
 			 $("#det").html(json.detail);
-			 $("#now").text(localStorage.getItem("ver"));
+             $("#now").text(localStorage.getItem("ver"));
+             
     });
 }
 function nextv(){

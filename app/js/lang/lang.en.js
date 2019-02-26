@@ -202,6 +202,7 @@ var lang={
     "lang_setting_selt":"Auto fold:{{set1}} lines and above, {{set2}} letters and above",
     "lang_setting_autocw":"Auto CW:{{set1}} lines and above, {{set2}} letters and above",
     "lang_setting_width":"Minimam width:{{set}}",
+    "lang_setting_fixwidth":"TweetDeck fixed width:{{set}}px",
     "lang_setting_img":"After posting an image:{{set}}",
     "lang_setting_font":"Fonts:{{set}}",
     "lang_setting_default":"default font",

@@ -8,14 +8,14 @@ var Jimp = require("jimp");
 const shell = electron.shell;
 const os = require('os')
 const path = require('path')
-const fm = require('font-manager');
+//const fm = require('font-manager');
 const Menu=electron.Menu
 var updatewin=null;
 const join = require('path').join;
 // linuxの時は定義しない
-if (process.platform=='win32') {
+/*if (process.platform=='win32') {
   const {NowPlaying,PlayerName} = require("nowplaying-node");
-}
+}*/
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 // ウィンドウを作成するモジュール
@@ -474,6 +474,7 @@ function about(){
 }
 ipc.on('itunes', (e, args) => {
 	if(args[0]=="set"){
+		return;
 		var nppath=join(app.getPath("userData"), "nowplaying");
 		var npProvider;
 		try {
@@ -498,6 +499,7 @@ ipc.on('itunes', (e, args) => {
 			console.log(error);
 		});
 		}else{
+			return;
 			var nppath=join(app.getPath("userData"), "nowplaying");
 			var npProvider;
 			try {

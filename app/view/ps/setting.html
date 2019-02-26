@@ -2,13 +2,13 @@
 <html lang="ps">
 <head>
 	<title>Settings - TheDesk</title>
-	
+	{{comment-start}}
 	<script type="text/javascript">
 		var _jipt = [];
 		_jipt.push(['project', 'thedesk']);
 	</script>
 	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-	
+	{{comment-end}}
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
@@ -30,7 +30,7 @@
 	</div>
 	<div class="collapsible-body">
 		<h5>crwdns530:0crwdne530:0</h5>
-		<a onclick="changelang('ja')" class="pointer">日本語</a>/<a onclick="changelang('en')" class="pointer">English</a>/<a onclick="changelang('ps')" class="pointer">Crowdin In-context translation(beta)</a>
+		<a href="../ja/setting.html">日本語(Japanese)</a>/<a href="../en/setting.html">English</a>/<a href="../ps/setting.html">Crowdin web translate</a>/
 		<h5>crwdns531:0crwdne531:0</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">crwdns533:0crwdne533:0</button>
 		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">crwdns532:0crwdne532:0</button>
@@ -62,6 +62,10 @@
 		<h5>crwdns541:0crwdne541:0</h5>crwdns542:0crwdne542:0
 		<br>
 		<input type="text" style="width:50px" id="width">pxcrwdns543:0crwdne543:0
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
+		<br>
+		<h5>{{fixwidth}}</h5>{{fixwidthwarn}}
+		<input type="text" style="width:50px" id="fixwidth">pxcrwdns543:0crwdne543:0
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
 		<h5>crwdns544:0crwdne544:0</h5>

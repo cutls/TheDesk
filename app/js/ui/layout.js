@@ -106,7 +106,7 @@ function parseColumn() {
 		console.log(acct.domain);
 		if(acctlist[acct.domain]){
 			if(acctlist[acct.domain].background!="def"){
-				insert=insert+" border-bottom:medium solid #"+acctlist[acct.domain].background;
+				insert=insert+" border-bottom:medium solid #"+acctlist[acct.domain].background+";";
 			}
 		}
 		if(acct.type=="notf" && localStorage.getItem("setasread")=="no"){
@@ -115,9 +115,19 @@ function parseColumn() {
 			localStorage.removeItem("hasNotfC_" + acct.domain);
 		}
 		if(acct.type=="webview"){
-			var html =webview("https://tweetdeck.twitter.com",key,insert,icnsert);
+			if(localStorage.getItem("fixwidth")){
+				var fixwidth=localStorage.getItem("fixwidth");
+				var css=" min-width:"+fixwidth+"px;"
+			}else{
+				var css="";
+			}
+			var html =webview("https://tweetdeck.twitter.com",key,insert,icnsert,css);
 			$("#timeline-container").append(html);
 		}else{
+			var width = localStorage.getItem("width");
+		if (width) {
+			var css=" min-width:"+width+"px;"
+		}
 		if(acct.type=="notf"){
 			var exclude=lang.lang_excluded+':<br><input type="checkbox" class="filled-in" id="exc-reply-'+key+'" '+excludeCk(key,"mention")+' /><label for="exc-reply-'+key+'" class="exc-chb"><i class="fa fa-share exc-icons"></i></label> '+
 			'<input type="checkbox" class="filled-in" id="exc-fav-'+key+'"  '+excludeCk(key,"favourite")+' /><label for="exc-fav-'+key+'" class="exc-chb"><i class="fa fa-star exc-icons"></i></label> '+
@@ -127,8 +137,8 @@ function parseColumn() {
 		}else{
 			var exclude="";
 		}
-		var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
-			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
+		var html = '<div style="'+css+'" class="box" id="timeline_box_' + key + '_box" tlid="' + key +
+			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+' ">'+
 			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang.lang_layout_gotop +'"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
@@ -175,10 +185,6 @@ function parseColumn() {
 		voiceCheck(key);
 		}
 	});
-	var width = localStorage.getItem("width");
-	if (width) {
-		$(".box").css("min-width", width + "px");
-	}
 	var box = localStorage.getItem("box");
 	if (box == "absolute") {
 		setTimeout(show, 1000);
@@ -388,9 +394,9 @@ function coloradd(key,bg,txt){
 	}
 }
 //禁断のTwitter
-function webview(url,key,insert,icnsert){
+function webview(url,key,insert,icnsert,css){
 	var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
-			'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
+			'" style="'+css+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
 			'<div class="area-notice"><i class="fa fa-twitter waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
 			'<div class="area-notice_name tl-title">WebView('+url+')</div>'+
 			'<div class="area-sta"><input type="checkbox" id="webviewsel" value="true" class="filled-in"><label for="webviewsel">'+lang.lang_layout_webviewmode +'</label></div>'+
