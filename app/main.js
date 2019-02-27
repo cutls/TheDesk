@@ -280,13 +280,12 @@ ipc.on('shot-img-dl', (e, args) => {
 })
 //アプデDL
 ipc.on('download-btn', (e, args) => {
-	console.log(args);
+	//console.log(args[1]);
 	var platform=process.platform;
 	var bit=process.arch;
 		dialog.showSaveDialog(null, {
-            title: '保存',
-			properties: ['openFile', 'createDirectory'],
-			defaultPath: args[1]
+      title: 'Save',
+			defaultPath: app.getPath('home')+"/"+args[1]
         }, (savedFiles) => {
 			console.log(savedFiles);
 			if(!savedFiles){
@@ -297,12 +296,11 @@ ipc.on('download-btn', (e, args) => {
 			}else{
 				var m = savedFiles.match(/(.+)\/(.+)$/);
 			}
-			
+			//console.log(m);
 			  if(isExistFile(savedFiles)){
-				fs.statSync(savedFiles);
-				fs.unlink(savedFiles);
+					fs.unlinkSync(savedFiles);
 			  }
-              dl(args[0],args[1],savedFiles);
+              dl(args[0],args[1],m[1]);
         });
 });
 function isExistFile(file) {

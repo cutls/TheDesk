@@ -3,6 +3,7 @@
     "download":"Start",
     "portable":"Portable ver.",
     "installer":"Installer ver.",
+    "snap":"Snap ver may be on Snapcraft",
     "unrewrite":"Not rewrite",
     "sureupd":"You may lose a cool experience!",
     "skipupd":"Skip this update",
