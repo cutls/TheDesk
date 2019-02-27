@@ -80,6 +80,7 @@ a,button,input,label,i{
         <span id="det"></span><br>
         <button class="waves-effect btn windows" onclick="update('install')" style="margin-left:15px;">{{installer}}</button>
         <button class="waves-effect btn windows" onclick="update('portable')" style="margin-left:15px;">crwdns1950:0crwdne1950:0</button>
+        <span class="linux">{{snap}}<br></span>
         <button class="waves-effect btn linux" onclick="update('linux')" style="margin-left:15px;">crwdns670:0crwdne670:0</button>
         <button class="waves-effect btn mac" onclick="update('mac')" style="margin-left:15px;">crwdns670:0crwdne670:0</button>
         <br>
@@ -138,17 +139,32 @@ function update(sel){
         if(sel=="installer"){
             if(bit=="64"){
                 var url=json["winx64"];
+                var file="TheDesk-setup.exe";
             }else if(bit=="32"){
                 var url=json["winia32"];
+                var file="TheDesk-setup-ia32.exe";
             }
         }else if(sel=="portable"){
             if(bit=="64"){
                 var url=json["winx64p"];
+                var file="TheDesk.exe";
             }else if(bit=="32"){
                 var url=json["winia32p"];
+                var file="TheDesk-ia32.exe";
             }
+        }else if(sel=="linux"){
+            if(bit=="64"){
+                var url=json["linuxx64"];
+                var file="TheDesk-linux-x64.zip";
+            }else if(bit=="32"){
+                var url=json["linuxia64"];
+                var file="TheDesk-linux-ia32.zip";
+            }
+        }else if(sel=="mac"){
+            var url=json["mac"];
+            var file="TheDesk-darwin-x64.zip";
         }
-        ipc.send('download-btn', url);
+        ipc.send('download-btn', [url,file]);
     });
 	
 }

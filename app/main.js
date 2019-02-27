@@ -280,65 +280,13 @@ ipc.on('shot-img-dl', (e, args) => {
 })
 //アプデDL
 ipc.on('download-btn', (e, args) => {
+	console.log(args);
 	var platform=process.platform;
 	var bit=process.arch;
-	var versioning=args[3];
-	var portable=args[2];
-	if(platform=="win32" || platform=="linux" || platform=="darwin" ){
-		var exe=false;
-		if(platform=="win32" && bit=="x64"){
-			if(portable){
-				var zip="TheDesk.exe";
-			}else{
-				var zip="TheDesk-setup.exe";
-			}
-			exe=true;
-		}else if(platform=="win32" && bit=="ia32"){
-			if(portable){
-				var zip="TheDesk-ia32.exe";
-			}else{
-				var zip="TheDesk-setup-ia32.exe";
-			}
-			exe=true;
-		}else if(platform=="linux" && bit=="x64"){
-			var zip="TheDesk-linux-x64.zip";
-		}else if(platform=="linux" && bit=="ia32"){
-			var zip="TheDesk-linux-ia32.zip";
-		}else if(platform=="darwin"){
-			var zip="TheDesk-darwin-x64.zip";
-		}else{
-			return;
-		}
-		if(versioning && !exe){
-			zip=zip.replace(".zip","."+args[1]+".zip");
-		}else if(versioning){
-			zip=zip.replace(".exe","."+args[1]+".exe");
-		}
-	}else{
-		const options = {
-			type: 'info',
-			title: 'Other OS Supporting System',
-			message: "thedesk.topをブラウザで開きます。",
-			buttons: ['OK']
-		  }
-		  dialog.showMessageBox(options, function(index) {
-			shell.openExternal("https://thedesk.top");
-		  })
-		  return;
-		if(bit=="x64"){
-			var zip="TheDesk-linux-x64.zip";
-		}else if(bit=="ia32"){
-			var zip="TheDesk-linux-ia32.zip";
-		}
-	}
-	var ver=args[1];
-	
-	console.log(zip);
-	if(args[0]=="true"){
 		dialog.showSaveDialog(null, {
             title: '保存',
 			properties: ['openFile', 'createDirectory'],
-			defaultPath: zip
+			defaultPath: args[1]
         }, (savedFiles) => {
 			console.log(savedFiles);
 			if(!savedFiles){
@@ -354,13 +302,8 @@ ipc.on('download-btn', (e, args) => {
 				fs.statSync(savedFiles);
 				fs.unlink(savedFiles);
 			  }
-			  console.log(m[1]+":"+savedFiles)
-              dl(portable,ver,m[1],savedFiles);
+              dl(args[0],args[1],savedFiles);
         });
-	}else{
-		dl(portable,ver);
-	}
-	
 });
 function isExistFile(file) {
 	try {
@@ -370,48 +313,10 @@ function isExistFile(file) {
 	  if(err.code === 'ENOENT') return false
 	}
   }
-function dl(portable,ver,files,fullname){
-	console.log(files);
-	var platform=process.platform;
-	var bit=process.arch;
-	if(platform=="win32"){
-		if(bit=="x64"){
-			if(portable){
-				var zip="TheDesk.exe";
-			}else{
-				var zip="TheDesk-setup.exe";
-			}
-		}else if(bit=="ia32"){
-			if(portable){
-				var zip="TheDesk-ia32.exe";
-			}else{
-				var zip="TheDesk-setup-ia32.exe";
-			}
-		}
-	}else if(platform=="linux"){
-		if(bit=="x64"){
-			var zip="TheDesk-linux-x64.zip";
-		}else if(bit=="ia32"){
-			var zip="TheDesk-linux-ia32.zip";
-		}
-	}else if(platform=="darwin"){
-			var zip="TheDesk-darwin-x64.zip";
-	}
-	//zip=zip+"?"+ver;
-	var l = 8;
-
-	// 生成する文字列に含める文字セット
-	var c = "abcdefghijklmnopqrstuvwxyz0123456789";
-
-	var cl = c.length;
-	var r = "";
-	for(var i=0; i<l; i++){
-	  r += c[Math.floor(Math.random()*cl)];
-	}
-
+function dl(url,file,dir){
 	updatewin.webContents.send('mess', "ダウンロードを開始します。");
 	const opts = {
-		directory:fullname,
+		directory:dir,
 		openFolderWhenDone: true,
 		onProgress: function(e) {
 			updatewin.webContents.send('prog', e);
@@ -419,7 +324,7 @@ function dl(portable,ver,files,fullname){
 		saveAs: false
 	};
 	download(BrowserWindow.getFocusedWindow(),
-			'https://dl.thedesk.top/'+zip, opts)
+			url, opts)
 		.then(dl => {
 			updatewin.webContents.send('mess', "ダウンロードが完了しました。");
 			app.quit();
