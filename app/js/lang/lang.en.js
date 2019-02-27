@@ -117,6 +117,7 @@ var lang={
     "lang_layout_dm":"Direct Message",
     "lang_layout_webviewmode":"Prefer WebView",
     "lang_excluded":"Excluded type of notification",
+    "lang_layout_excludingbt":"Exclude Boosts",
     //ui/spotify.js
     "lang_spotify_img":"Attach an album artwork",
     "lang_spotify_imgno":"Not attach an album artwork",

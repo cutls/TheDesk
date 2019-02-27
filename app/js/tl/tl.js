@@ -80,6 +80,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 			if(type!="noauth"){
 				req.i=at;
 			}
+			
 			if(type=="local-media"||type=="pub-media"){
 				req.mediaOnly=true;
 			}
@@ -672,5 +673,4 @@ function reconnector(tlid,type,acct_id,data,mode){
 	}
 	Materialize.toast(lang.lang_tl_reconnect, 2000);
 }
-
 strAliveInt()

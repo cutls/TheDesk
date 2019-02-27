@@ -171,6 +171,7 @@ function notfColumn(acct_id, tlid, sys){
 			if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
 				$(".tl[data-notf=" + acct_id +"]").prepend(templete);
 			}
+			$(".notf-timeline[data-acct=" + acct_id +"]").prepend(templete);
 			jQuery("time.timeago").timeago();
 		} else if (type == "delete") {
 			$("[toot-id=" + obj + "]").hide();

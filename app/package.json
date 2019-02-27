@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "17.0.1",
+  "version": "17.0.2",
   "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {
@@ -71,9 +71,9 @@
       "target": "dmg"
     },
     "electronDownload": {
-      "version": "3.0.10"
+      "version": "4.0.5"
     },
-    "electronVersion": "3.0.10"
+    "electronVersion": "4.0.5"
   },
   "devDependencies": {
     "electron": "^4.0.5",

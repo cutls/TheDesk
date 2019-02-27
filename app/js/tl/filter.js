@@ -14,6 +14,21 @@ function mediaToggle(tlid) {
         $("#timeline_"+tlid).addClass("media-filter")
 	}
 }
+//各TL上方のBT[On/Off]
+function ebtToggle(tlid) {
+	var ebt = localStorage.getItem("ebt_" + tlid);
+	if (ebt) {
+        localStorage.removeItem("ebt_" + tlid);
+		$("#sta-bt-" + tlid).text("Off");
+        $("#sta-bt-" + tlid).css("color",'red');
+        $("#timeline_"+tlid).removeClass("bt-filter")
+	} else {
+		localStorage.setItem("ebt_" + tlid, "true");
+		$("#sta-bt-" + tlid).text("On");
+        $("#sta-bt-" + tlid).css("color",'#009688');
+        $("#timeline_"+tlid).addClass("bt-filter")
+	}
+}
 //各TL上方のMedia[On/Off]をチェック
 function mediaCheck(tlid) {
 	var media = localStorage.getItem("media_" + tlid);
@@ -25,6 +40,19 @@ function mediaCheck(tlid) {
 		$("#sta-media-" + tlid).text("Off");
         $("#sta-media-" + tlid).css("color",'red');
         $("#timeline_"+tlid).removeClass("media-filter")
+	}
+}
+//各TL上方のBT[On/Off]をチェック
+function ebtCheck(tlid) {
+	var ebt = localStorage.getItem("ebt_" + tlid);
+	if (ebt) {
+		$("#sta-bt-" + tlid).text("On");
+        $("#sta-bt-" + tlid).css("color",'#009688');
+        $("#timeline_"+tlid).addClass("bt-filter")
+	} else {
+		$("#sta-bt-" + tlid).text("Off");
+        $("#sta-bt-" + tlid).css("color",'red');
+        $("#timeline_"+tlid).removeClass("bt-filter")
 	}
 }
 /* 削除追跡*/

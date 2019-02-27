@@ -596,4 +596,5 @@ object_array_sort(fonts, 'family', 'asc', function(fonts_sorted){
 });
 
 
+
 app.setAsDefaultProtocolClient('thedesk')

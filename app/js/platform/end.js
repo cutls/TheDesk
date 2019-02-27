@@ -173,3 +173,11 @@ function opendev(){
 	  });
 	  */
 }
+
+var webview = document.getElementById('webview');
+const {
+	shell
+} = require('electron');
+webview.addEventListener('new-window', function(e) {
+    shell.openExternal(e.url);
+});

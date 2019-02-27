@@ -76,7 +76,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	//Cards
 	var card = localStorage.getItem("card_" + tlid);
 	
-	
 	if (!sent) {
 		var sent = 500;
 	}
