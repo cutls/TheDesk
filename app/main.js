@@ -15,7 +15,8 @@ const join = require('path').join;
 // linuxの時は定義しない
 /*if (process.platform=='win32') {
   const {NowPlaying,PlayerName} = require("nowplaying-node");
-}*/
+}
+*/
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 // ウィンドウを作成するモジュール

@@ -615,21 +615,22 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		//Cards
 		if (!card && toot.card) {
 			var cards=toot.card;
-			if (cards.provider_name=="Twitter"){
-				if(cards.image){
-					var twiImg='<br><img src="'+cards.image+'">';
-				}else{
-					var twiImg='';
+				if (cards.provider_name=="Twitter"){
+					if(cards.image){
+						var twiImg='<br><img src="'+cards.image+'">';
+					}else{
+						var twiImg='';
+					}
+					analyze='<blockquote class="twitter-tweet"><b>'+escapeHTML(cards.author_name)+'</b><br>'+escapeHTML(cards.description)+twiImg+'</blockquote>';
 				}
-				analyze='<blockquote class="twitter-tweet"><b>'+escapeHTML(cards.author_name)+'</b><br>'+escapeHTML(cards.description)+twiImg+'</blockquote>';
-			}
-			if (cards.title) {
-				analyze="<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + escapeHTML(cards.title) + "<br>" +
-					escapeHTML(cards.description) + "</span>";
-			}
-			if (cards.html) {
-				analyze=cards.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang.lang_cards_pip+'">picture_in_picture_alt</i>';
-			}
+				if (cards.title) {
+					analyze="<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + escapeHTML(cards.title) + "<br>" +
+						escapeHTML(cards.description) + "</span>";
+				}
+				if (cards.html) {
+					analyze=cards.html+'<i class="material-icons" onclick="pip('+id+')" title="'+lang.lang_cards_pip+'">picture_in_picture_alt</i>';
+				}
+			
 		}
 		//Ticker
 		var tickerdom="";
