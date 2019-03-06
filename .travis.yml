@@ -28,3 +28,6 @@ deploy:
     - TheDesk-setup-ia32.exe
   on:
     repo: cutls/TheDesk
+branches:
+  only:
+  - master
