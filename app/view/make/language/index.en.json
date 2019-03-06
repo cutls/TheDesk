@@ -47,6 +47,7 @@
     "poll":"Poll",
     "pollDdisabled":"Polls: Disabled",
     "pollProvider":"Provider of Poll",
+    "polluntil":"Hide 'votes' count until people vote it.",
     "choice":"Choice",
     "pollmulti":"Multiple select",
     "expires_in":"Expires in...(sec)",

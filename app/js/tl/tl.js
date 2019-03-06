@@ -53,14 +53,14 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 			"user_" + acct_id) + "@" + domain + ")");
 			$("#notice_icon_" + tlid).text("notifications");
 		return;
-	}else if (type == "dm") {
+	}/*else if (type == "dm") {
 		//DMなら飛ばす
 		dm(acct_id, tlid, "plus",delc,voice);
 		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
 			$("#notice_icon_" + tlid).text("notifications");
 		return;
-	}
+	}*/
 	localStorage.setItem("now", type);
 	todo(cap(type) + " TL Loading...");
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
@@ -579,7 +579,7 @@ function com(type, data) {
 	}else if (type == "list") {
 		return "list/" + data + "?"
 	}else if (type="dm") {
-		return "/api/v1/conversations?"
+		return "direct?"
 	}
 }
 function misskeycom(type, data) {

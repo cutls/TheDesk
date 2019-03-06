@@ -48,6 +48,7 @@
     "pollDdisabled":"アンケートを使用しない",
     "pollProvider":"アンケートのプロバイダ",
     "choice":"選択肢",
+    "polluntil":"投票するまで票数を隠す",
     "pollmulti":"複数選択を許可",
     "expires_in":"有効期限(秒)",
     "contextBefore":"これより前の会話",

@@ -141,6 +141,11 @@ function post(mode,postvis) {
 		}else{
 			var mul=false;
 		}
+		if($("#poll-until:checked").val()=="1"){
+			var htt=true;
+		}else{
+			var htt=false;
+		}
 		var exin=pollCalc();
 		if(!exin){
 			todc("Error: Poll expires_in param")
@@ -148,7 +153,8 @@ function post(mode,postvis) {
 		toot.poll={
 			options: options,
 			expires_in: exin,
-			multiple: mul
+			multiple: mul,
+			hide_totals: htt
 		}
 	}
 	console.log(toot);
