@@ -60,7 +60,7 @@ function load() {
 	var electron = require("electron");
           var remote=electron.remote;
           var platform=remote.process.platform;
-	    if(platform=="win32"){
+	    if(localStorage.getItem("winstore")!="localinstall"){
 			$("#linux").prop("checked", false);
         }else{
 			$("#linux").prop("checked", true);

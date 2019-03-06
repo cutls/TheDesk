@@ -13,6 +13,7 @@ before_deploy:
   - electron-builder --win --x64
   - mv ../build/TheDesk-setup.exe ../TheDesk-setup.exe
   - mv ../build/TheDesk*.exe ../TheDesk.exe
+  - mv ../build/TheDesk*.appx ../TheDesk.appx
   - cd ../
   - ls
 after_deploy: ls
@@ -26,6 +27,7 @@ deploy:
     - TheDesk-setup.exe
     - TheDesk-ia32.exe
     - TheDesk-setup-ia32.exe
+    - TheDesk.appx
   on:
     repo: cutls/TheDesk
 branches:
