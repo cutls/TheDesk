@@ -32,7 +32,7 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Miria (17.0.2)";
+var ver="Miria (17.1.0) beta1";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -273,6 +273,8 @@ var tlid=0;
 			<input type="text" class="mastodon-choice" placeholder="{{choice}}4">
 			<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
 			<label for="poll-multiple">{{pollmulti}}</label><br>
+			<input type="checkbox" class="filled-in" id="poll-until" value="1" />
+			<label for="poll-until">{{polluntil}}</label><br>
 			<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">crwdns507:0crwdne507:0
 			<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">crwdns508:0crwdne508:0
 			<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="0">crwdns509:0crwdne509:0
@@ -337,17 +339,17 @@ var tlid=0;
 	</ul>
 	crwdns430:0crwdne430:0(<i class="fa fa-retweet"></i>/<i class="fa fa-star"></i>crwdns431:0crwdne431:0)<br>
 	<div class="row">
-		<div class="col s4">
+		<div class="col s6">
 				<select id="status-acct-sel" class="acct-sel"></select>
 		</div>
 		<div class="col s2">
-			<button class="dropdown-button btn waves-effect" style="width:100%;" onclick="staEx('reply')"><i class="fa fa-share left"></i>crwdns432:0crwdne432:0</button>
+			<button class="dropdown-button btn waves-effect" style="width:100%;" onclick="staEx('reply')"><i class="fa fa-share"></i>/button>
 		</div>
 		<div class="col s2">
-			<button class="dropdown-button btn waves-effect indigo" style="width:100%;" onclick="staEx('rt')"><i class="fa fa-retweet left"></i>crwdns433:0crwdne433:0</button>
+			<button class="dropdown-button btn waves-effect indigo" style="width:100%;" onclick="staEx('rt')"><i class="fa fa-retweet"></i></button>
 		</div>
-		<div class="col s3">
-			<button class="dropdown-button btn waves-effect orange" style="width:100%;" onclick="staEx('fav')"><i class="fa fa-star left"></i>crwdns434:0crwdne434:0</button>
+		<div class="col s2">
+			<button class="dropdown-button btn waves-effect orange" style="width:100%;" onclick="staEx('fav')"><i class="fa fa-star"></i></button>
 		</div>
 	</div>
 	<div id="toot-tools">
@@ -580,22 +582,17 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Miria_17-0-2" class="release-do" style="display:none; ">
+			<div id="release-Miria_17-1-0" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Miria (17.0.2)</h5>
-					バグ修正<br>
-					ブーストを除外できる<br>
-					<u>17.0.1</u><br>
-					バグ修正<br>
-					(Mastodon 2.7)<b>時間指定投稿が利用できます。</b><br>
-					(Mastodon 2.7)<b>「インスタンス」を「サーバー」に変更</b><br>
-					CW付きのトゥートの再編集に対応<br>
-					インストール場所が指定できるように<br>
-					トゥートのコピペができない不具合を修正<br>
-					TweetDeckの横幅だけ広げられる機能
+					<h5>Release Note Miria (17.1.0)</h5>
+					トゥートボックスがフロートタイプに。左下、右下以外にも自由においてください。<br>
+					いろいろとアニメーション入れた(硬派な方は設定「タイムラインの設定」からオフに)<br>
+					アンケートができるように(OK:Mastodon (2.8~)/WIP: votedon./ NG: ニコフレ)<br>
+					フォント選択機能が復活<br>
+					WindowsからiTunesやAIMP、その他CAD系のNowPlayingができるように。要プラグインのソフトもある。<br>
 			</div>
 			<br><br>
 			<h3>crwdns473:0crwdne473:0</h3>

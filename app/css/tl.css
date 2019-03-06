@@ -229,6 +229,9 @@ grid-area: toot;
   margin:2px;
   grid-area: side;
 }
+.btn-flat{
+  color:var(--color);
+}
 .area-side i{
   margin-left:10px;
 }
@@ -238,11 +241,13 @@ grid-area: toot;
 .action i{
   font-size:1.2rem;
   margin-right:2px;
+}
+.actct{
   color:var(--beforehover);
 }
-.action i:hover{
+.actct:hover{
   color:var(--color);
-  transition: 1s;
+  transition: 0.5s;
 }
 
 .gray {
@@ -426,9 +431,6 @@ p:not(:last-child){
   bottom:0px;
   right:0px;
 }
-.btn-flat{
-  color:var(--color);
-}
 .toot a span.ellipsis:after{
   content:"...";
 }
@@ -468,8 +470,8 @@ p:not(:last-child){
 }
 .votebtn{
   border: 1px solid;
-  color: var(--color);
-  background-color: var(--modal);
+  color: var(--bg);
+  background-color: var(--beforehover);
   cursor:pointer;
   width: 50px;
   padding: 2px;
@@ -480,7 +482,7 @@ p:not(:last-child){
   transition-duration: 0.5s;
 }
 .votebtn:hover{
-  background-color:transparent;
+  background-color:var(--color);
 }
 @keyframes fadeInDown {
   from {
