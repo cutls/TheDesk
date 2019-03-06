@@ -141,6 +141,9 @@ iframe {
 .bt-filter .shared{
   display:none;
 }
+.except-bt-filter .unshared{
+  display:none;
+}
 .cvo {
   user-select: text;
   padding-left: 5px;
@@ -462,4 +465,55 @@ p:not(:last-child){
   overflow-y: scroll;
 	overflow-x: hidden;
 	max-height: 200px;
+}
+.votebtn{
+  border: 1px solid;
+  color: var(--color);
+  background-color: var(--modal);
+  cursor:pointer;
+  width: 50px;
+  padding: 2px;
+  display: inline-block;
+  text-align: center;
+  margin-top: 5px;
+  border-radius: 10px;
+  transition-duration: 0.5s;
+}
+.votebtn:hover{
+  background-color:transparent;
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+.box-anime {
+  animation-duration: 1s;
+  animation-name: fadeInLeft;
+}
+
+.cvo-anime {
+  animation-duration: 0.1s;
+  animation-name: fadeInDown;
 }

@@ -344,7 +344,7 @@ function ckdb(acct_id) {
 	localStorage.removeItem("post_" + acct_id);
 	localStorage.removeItem("fav_" + acct_id);
 	localStorage.removeItem("bt_" + acct_id);
-	localStorage.removeItem("follow_" + acct_id);
+	localStorage.removeItem("followlocale_" + acct_id);
 	if(domain=="kirishima.cloud"){
 		localStorage.setItem("kirishima", "true");
 		$("#ranking-btn").show();
@@ -402,7 +402,7 @@ function ckdb(acct_id) {
 				localStorage.setItem("bt_" + acct_id, json[domain + "_bt"]);
 			}
 			if(json[domain + "_follow"]){
-				localStorage.setItem("follow_" + acct_id, json[domain + "_follow"]);
+				localStorage.setItem("followlocale_" + acct_id, json[domain + "_follow"]);
 			}
 	}
 	if(localStorage.getItem("mode_" + domain)!="misskey"){

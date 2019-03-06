@@ -1,4 +1,5 @@
 //TL取得
+moreloading=false;
 function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	scrollevent();
 	localStorage.removeItem("morelock");
@@ -48,6 +49,13 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	}else if (type == "notf") {
 		//通知なら飛ばす
 		notf(acct_id, tlid, 'direct');
+		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
+			"user_" + acct_id) + "@" + domain + ")");
+			$("#notice_icon_" + tlid).text("notifications");
+		return;
+	}else if (type == "dm") {
+		//DMなら飛ばす
+		dm(acct_id, tlid, "plus",delc,voice);
 		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
 			$("#notice_icon_" + tlid).text("notifications");
@@ -360,8 +368,7 @@ function moreload(type, tlid) {
 		var data=obj[tlid].data;
 	}
 	var sid = $("#timeline_" + tlid + " .cvo").last().attr("unique-id");
-	if (sid && localStorage.getItem("morelock") != sid) {
-		localStorage.setItem("morelock", sid);
+	if (sid && !moreloading) {
 		if (type == "mix" && localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct_id))!="misskey") {
 			mixmore(tlid,"integrated");
 			return;
@@ -372,6 +379,7 @@ function moreload(type, tlid) {
 			notfmore(tlid);
 			return;
 		}
+		moreloading=true;
 		localStorage.setItem("now", type);
 		todo(cap(type) + " TL MoreLoading");
 		if(type!="noauth"){
@@ -441,7 +449,7 @@ function moreload(type, tlid) {
 			$("#timeline_" + tlid).append(templete);
 			additional(acct_id, tlid);
 			jQuery("time.timeago").timeago();
-			localStorage.removeItem("morelock")
+			moreloading=false;
 			todc();
 		});
 	}
@@ -571,7 +579,7 @@ function com(type, data) {
 	}else if (type == "list") {
 		return "list/" + data + "?"
 	}else if (type="dm") {
-		return "direct?"
+		return "/api/v1/conversations?"
 	}
 }
 function misskeycom(type, data) {

@@ -71,9 +71,7 @@
 		<h5>{{font}}</h5>
 		{{fontwarn}}<br>
 		<button class="btn waves-effect" style="width:100px;" onclick="font()">{{select}}</button><br>
-		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;">
-
-		</div>
+		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
 		<br>
 		<input type="text" style="width:150px" id="font">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
@@ -184,6 +182,11 @@
 		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
 		<label for="ticker_no">{{no}}</label>
 		<br>
+		<h5>{{animation}}</h5>
+		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_yes" value="yes" />
+		<label for="anime_yes">{{yes}}</label>
+		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
+		<label for="anime_no">{{no}}</label>
 	</div>
 	</li>
 	<li>
@@ -427,7 +430,7 @@ Kyash<br>
 <a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">{{checkup}}</a><br>
 <a href="oss.html">OSS License{{ossJP}}</a><br>
 <span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved. 
-	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://github.com/cutls/TheDesk/blob/master/TOS.md">Terms of Use</a>
+	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy Policy</a>
 	<br>Developer: Cutls P( 
 	<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
 	<br>

@@ -73,6 +73,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	}else{
 		var ticker=false;
 	}
+	//Animation
+	var anime = localStorage.getItem("animation");
+	if (anime=="yes" || !anime) {
+			var animecss="cvo-anime";
+	}else{
+			var animecss="";
+	}
 	//Cards
 	var card = localStorage.getItem("card_" + tlid);
 	
@@ -323,7 +330,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			} else {
 				var uniqueid=toot.id;
 				var notice = "";
-				var boostback = "";
+				var boostback = "unshared";
 				//ユーザー強調
 				if(toot.account.username!=toot.account.acct){
 					var fullname=toot.account.acct;
@@ -652,9 +659,36 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		   }
 		}
 		}
+		//Poll
+		var poll="";
+		if(toot.poll){
+			var choices=toot.poll.options;
+			if(toot.poll.voted){
+				var myvote=lang.lang_parse_voted;
+				var result_hide="";
+			}else{
+				myvote='<a onclick="voteMastodon(\''+acct_id+'\',\''+toot.poll.id+'\')" class="votebtn">'+lang.lang_parse_vote+'</a><br>';
+				myvote=myvote+'<a onclick="showResult(\''+acct_id+'\',\''+toot.poll.id+'\')" class="pointer">'+lang.lang_parse_unvoted+"</a>";
+				var result_hide="hide";
+			}
+			Object.keys(choices).forEach(function(keyc) {
+				var choice = choices[keyc];
+				if(!toot.poll.voted){
+					var votesel='voteSelMastodon(\''+acct_id+'\',\''+toot.poll.id+'\','+keyc+','+toot.poll.multiple+')';
+					var voteclass="pointer waves-effect waves-light";
+				}else{
+					var votesel="";
+					var voteclass="";
+				}
+				poll=poll+'<div class="'+voteclass+' vote vote_'+acct_id+'_'+toot.poll.id+'_'+keyc+'" onclick="'+votesel+'">'+choice.title+'<span class="vote_'+acct_id+'_'+toot.poll.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
+			});
+			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
+			'"><i class="fa fa-calendar-times-o"></i>' +
+			date(toot.poll.expires_at, datetype) + '</span></div>';
+		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
-			' ' + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
+			' ' + hasmedia + ' '+animecss+'" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
 				key].created_at, 'unix') + '" '+if_notf+' onmouseover="mov(\'' + toot.id + '\',\''+tlid+'\',\'mv\')" onclick="mov(\'' + toot.id + '\',\''+tlid+'\',\'cl\')" onmouseout="resetmv(\'mv\')">' +
 			'<div class="area-notice"><span class="gray sharesta">' + notice + home +
 			'</span></div>' +
@@ -679,7 +713,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'' + viewer + '' +
 			'</div><div class="area-additional"><span class="additional">' + analyze +
 			'</span>' +
-			'' + mentions + tags + '</div>' +
+			'' +poll+ mentions + tags + '</div>' +
 			'<div class="area-vis"></div>'+
 			'<div class="area-actions '+mouseover+'">' +
 			'<div class="action">'+vis+'</div>'+
@@ -757,8 +791,8 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			var auth = "";
 		}
 		var ftxt=lang.lang_parse_followed;
-		if(!locale && localStorage.getItem("follow_" + acct_id)){
-			ftxt = localStorage.getItem("follow_" + acct_id);
+		if(!locale && localStorage.getItem("followlocale_" + acct_id)){
+			ftxt = localStorage.getItem("followlocale_" + acct_id);
 		}
 		if(popup > 0 || popup==-1 || notf){
 			var notftext=ftxt+'<br>';

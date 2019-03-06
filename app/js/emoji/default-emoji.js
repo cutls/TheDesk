@@ -20,8 +20,7 @@ if(lang=="ja"){
         place:"場所",
         symbol:"記号"
     };
-    var lang_defaultemojis_text="{{cat}}の絵文字";
-}else if(lang=="en"){
+}else{
     var defaultemojiname={
         activity:"Activities",
         flag:"Flags",
@@ -32,7 +31,6 @@ if(lang=="ja"){
         place:"Places",
         symbol:"Symbols"
     };
-    var lang_defaultemojis_text="Emojis of {{cat}}";
 }
 
 function defaultEmoji(target){
@@ -43,7 +41,8 @@ function defaultEmoji(target){
         emojis = emojis + '<a onclick="defEmoji(\''+emoji["shortcode"]+'\')" class="pointer"><span style="width: 20px; height: 20px; display: inline-block; background-image: url(\'../../img/sheet.png\'); background-size: 4900%; background-position: '+emoji["css"]+';"></span></a>';
     });
     $("#emoji-list").html(emojis);
-    $("#now-emoji").text(lang_defaultemojis_text.replace("{{cat}}" ,defaultemojiname[target]));
+    $("#now-emoji").text(lang.lang_defaultemojis_text.replace("{{cat}}" ,defaultemojiname[target]));
+    console.log(target);
     $(".emoji-control").addClass("hide");
 }
 function customEmoji(){

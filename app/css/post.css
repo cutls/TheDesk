@@ -1,23 +1,35 @@
 /*トゥートボックス向けCSS*/
 #post-box {
+  display:none;
   position: fixed;
-  left: 78px;
-  bottom: -500px;
+  left: calc(50vw - 150px);
+  top: 50vh;
   background-color: var(--postbox);
   border: thin solid gray;
   z-index: 501;
-  width: 300px;
   min-width:300px;
   max-width:100%;
   padding: 5px;
+}
+#post-bar{
+  cursor:move;
+  text-align:center;
+  width:calc(100% + 10px);
+  background-color: var(--bg);
+  margin-left:-5px;
+  margin-right:-5px;
+  margin-top:-5px;
+  font-size:16px;
+  padding:4px;
 }
 .cancel {
   font-size: 0.5rem;
   color: gray;
   cursor: pointer;
   position: absolute;
-  width: 60px;
-  right: 0px;
+  right: 2px;
+  top:4px;
+
 }
 .more-show {
   display: none;
@@ -51,16 +63,11 @@
   filter: blur(50px);
 }
 #emoji {
-  position: fixed;
-  bottom: 40px;
-  width: 300px;
-  height: 380px;
-  z-index: 502;
-  padding: 5px;
+  
 }
 #emoji-list {
   width: 100%;
-  height: calc(100% - 130px);
+  height: 200px;
   overflow-y: scroll;
 }
 #preview-field {
@@ -87,7 +94,25 @@
 #toot-sec-btn{
   width:30px; padding:0; margin-top:10px;
 }
-
+#left-side{
+  float:left;
+  width:300px;
+}
+#right-side{
+  display:none;
+  float:left;
+  width:300px;
+  padding:5px;
+}
+#poll{
+  
+}
+.poll-provider{
+  position: absolute;
+  height: calc(100% - 90px);
+  overflow-y: scroll;
+  top: 90px;
+}
 
 /*mini*/
 .mini-post .mize{

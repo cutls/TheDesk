@@ -15,6 +15,9 @@
     --postbox:white;
     --modalfooter:#fafafa;
 }
+#imagemodal{
+    background: url("../img/pixel.white.svg");
+}
 .blacktheme {
     --bg:#212121;
     --drag:rgba(0, 0, 0, 0.8);
@@ -31,6 +34,9 @@
     --active:#757575;
     --postbox:#424242;
     --modalfooter:#212121;
+}
+.blacktheme #imagemodal{
+    background: url("../img/pixel.svg");
 }
 .indigotheme {
     --bg:#031833;
@@ -49,6 +55,9 @@
     --postbox:#1a237e;
     --modalfooter:#031833;
 }
+.indigotheme #imagemodal{
+    background: url("../img/pixel.svg");
+}
 .browntheme {
     --bg:#261411;
     --drag:rgba(0, 0, 0, 0.8);
@@ -66,6 +75,9 @@
     --postbox:#4e342e;
     --modalfooter:#261411;
 }
+.browntheme #imagemodal{
+    background: url("../img/pixel.svg");
+}
 .greentheme{
     --bg:#c8e6c9;
     --drag:rgba(255, 255, 255, 0.8);
@@ -82,4 +94,7 @@
     --active:#e6ee9c;
     --postbox:#a5d6a7;
     --modalfooter:#81c784;
+}
+.greentheme #imagemodal{
+    background: url("../img/pixel.white.svg");
 }

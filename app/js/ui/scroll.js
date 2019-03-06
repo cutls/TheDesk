@@ -28,6 +28,7 @@ function scrollck() {
 		var scrt = $(this).find(".tl").height() - $(window).height();
 		var scr = $(this).scrollTop();
 		if (scr > scrt) {
+			console.log("kicked");
 			moreload('', tlid);
 		}
 	});

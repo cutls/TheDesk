@@ -143,6 +143,13 @@ function settings() {
 	}
 	localStorage.setItem("ticker_ok", tckrd);
 
+	var animed = $("[name=anime]:checked").val();
+	var animet = $("[for=anime_"+animed+"]").text();
+	if (animed != localStorage.getItem("animation")) {
+		Materialize.toast(lang.lang_setting_animation.replace("{{set}}" ,animet), 3000);
+	}
+	localStorage.setItem("animation", animed);
+
 	var boxd = $("[name=box]:checked").val();
 	var boxt = $("[for=bx_"+boxd+"]").text();
 	if (boxd != localStorage.getItem("box")) {
@@ -362,6 +369,12 @@ function load() {
 		var ticker = "no";
 	}
 	$("#ticker_" + ticker).prop("checked", true);
+
+	var animation = localStorage.getItem("animation");
+	if (!animation) {
+		var animation = "yes";
+	}
+	$("#anime_" + animation).prop("checked", true);
 
 	var tag = localStorage.getItem("tag-range");
 	if (!tag) {

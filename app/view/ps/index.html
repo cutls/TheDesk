@@ -53,8 +53,10 @@ var tlid=0;
 </div>
 </div>
 </div>
-<div id="post-box" class="z-depth-3">
+<div id="post-box" class="z-depth-5">
+<div id="post-bar">{{post-new}}</div>
 <!--トゥートボックス-->
+<div id="left-side">
 <div class="row" style="margin-bottom:0;">
 </span>
 <div class="" style="float:left;">
@@ -185,6 +187,9 @@ var tlid=0;
 	<li>
 		<a onclick="schedule();">crwdns1884:0crwdne1884:0</a>
 	</li>
+	<li>
+		<a onclick="pollToggle();">{{poll}}</a>
+	</li>
 	</ul>
 <!--hidden area-->
 <input type="hidden" id="reply">
@@ -196,59 +201,84 @@ var tlid=0;
 	<button class="btn waves-effect indigo darken-3 unmize hide toot-btn-group" onclick="sec()" id="toot-sec-btn"><i class="material-icons" id="toot-sec-icon" title="crwdns1890:0crwdne1890:0">lock_open</i></button>
 </div>
 </div>
+<div id="right-side">
 <!--絵文字ピッカー-->
-<div id="emoji" class="hide shared z-depth-4">
-	<span class="gray sml">crwdns409:0crwdne409:0
-		<a onclick="emojiGet('true')" class="pointer">crwdns411:0crwdne411:0</a>
-		<i class="material-icons waves-effect" onclick="emojiToggle()" title="crwdns412:0crwdne412:0" data-trans-title="post_box_close">cancel</i>
-	<br>
-	</span>
-	<div id="emoji-list" class="" style="">
-	</div>
-	<div class="emoji-control center">
-		<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('before')" id="emoji-before">
-		<i class="material-icons">navigate_before</i>
-		</button>
-		<span id="emoji-count"></span>/
-		<span id="emoji-sum"></span>
-		<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('next')" id="emoji-next">
-		<i class="material-icons">navigate_next</i>
-		</button>
-		</div>
-		<div id="default-emoji">
-		<span id="now-emoji"></span>crwdns413:0crwdne413:0<br><span class="gray sml">crwdns410:0crwdne410:0</span>
+<div id="emoji" class="hide">
+		<span class="gray sml">crwdns409:0crwdne409:0
+			<a onclick="emojiGet('true')" class="pointer">crwdns411:0crwdne411:0</a>
+			<i class="material-icons waves-effect" onclick="emojiToggle()" title="crwdns412:0crwdne412:0" data-trans-title="post_box_close">cancel</i>
 		<br>
-		<a onclick="customEmoji()" class="pointer waves-effect" title="crwdns414:0crwdne414:0">
-		<i class="material-icons">add</i>
-		</a>
-		<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="crwdns415:0crwdne415:0">
-		<i class="material-icons">people</i>
-		</a>
-		<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="crwdns416:0crwdne416:0">
-		<i class="material-icons">local_florist</i>
-		</a>
-		<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="crwdns417:0crwdne417:0">
-		<i class="material-icons">restaurant</i>
-		</a>
-		<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="crwdns418:0crwdne418:0">
-		<i class="material-icons">directions_run</i>
-		</a>
-		<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="crwdns419:0crwdne419:0">
-		<i class="material-icons">directions_car</i>
-		</a>
-		<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="crwdns420:0crwdne420:0">
-		<i class="material-icons">attach_file</i>
-		</a>
-		<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="crwdns421:0crwdne421:0">
-		<i class="material-icons">gesture</i>
-		</a>
-		<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="crwdns422:0crwdne422:0">
-		<i class="material-icons">flag</i>
-		</a>
-		<a onclick="faicon()" class="pointer waves-effect" title="faicon" id="faicon-btn">
-		<i class="fa fa-fort-awesome"></i>
-		</a>
+		</span>
+		<div id="emoji-list" class="" style="">
+		</div>
+		<div class="emoji-control center">
+			<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('before')" id="emoji-before">
+			<i class="material-icons">navigate_before</i>
+			</button>
+			<span id="emoji-count"></span>/
+			<span id="emoji-sum"></span>
+			<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('next')" id="emoji-next">
+			<i class="material-icons">navigate_next</i>
+			</button>
+			</div>
+			<div id="default-emoji">
+			<span id="now-emoji"></span>crwdns413:0crwdne413:0<br><span class="gray sml">crwdns410:0crwdne410:0</span>
+			<br>
+			<a onclick="customEmoji()" class="pointer waves-effect" title="crwdns414:0crwdne414:0">
+			<i class="material-icons">add</i>
+			</a>
+			<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="crwdns415:0crwdne415:0">
+			<i class="material-icons">people</i>
+			</a>
+			<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="crwdns416:0crwdne416:0">
+			<i class="material-icons">local_florist</i>
+			</a>
+			<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="crwdns417:0crwdne417:0">
+			<i class="material-icons">restaurant</i>
+			</a>
+			<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="crwdns418:0crwdne418:0">
+			<i class="material-icons">directions_run</i>
+			</a>
+			<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="crwdns419:0crwdne419:0">
+			<i class="material-icons">directions_car</i>
+			</a>
+			<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="crwdns420:0crwdne420:0">
+			<i class="material-icons">attach_file</i>
+			</a>
+			<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="crwdns421:0crwdne421:0">
+			<i class="material-icons">gesture</i>
+			</a>
+			<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="crwdns422:0crwdne422:0">
+			<i class="material-icons">flag</i>
+			</a>
+			<a onclick="faicon()" class="pointer waves-effect" title="faicon" id="faicon-btn">
+			<i class="fa fa-fort-awesome"></i>
+			</a>
+		</div>
 	</div>
+	<!--Poll UI-->
+	<div id="poll" class="hide">
+		<select id="poll-sel"  onchange="pollProviderCk()">
+			<option value="nothing">{{pollDdisabled}}</option>
+			<option value="votedon">votedon.</option>
+			<option value="mastodon-poll">Mastodon(2.8~)</option>
+		</select>
+		<div id="votedon">
+	
+		</div>
+		<div id="mastodon-poll" class="poll-provider hide">
+			<input type="text" class="mastodon-choice" placeholder="{{choice}}1">
+			<input type="text" class="mastodon-choice" placeholder="{{choice}}2">
+			<input type="text" class="mastodon-choice" placeholder="{{choice}}3">
+			<input type="text" class="mastodon-choice" placeholder="{{choice}}4">
+			<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
+			<label for="poll-multiple">{{pollmulti}}</label><br>
+			<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">crwdns507:0crwdne507:0
+			<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">crwdns508:0crwdne508:0
+			<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="0">crwdns509:0crwdne509:0
+		</div>
+	</div>
+</div>
 </div>
 <!-- Modal Structure Tootdata-->
 <div id="tootmodal" class="modal modal-fixed-footer">
@@ -709,9 +739,9 @@ var tlid=0;
 	  <label for="except_filter">crwdns502:0crwdne502:0</label><br>
 	<span class="sml">crwdns503:0crwdne503:0</span><br>
 	crwdns504:0crwdne504:0<span class="sml">crwdns505:0crwdne505:0<b>crwdns506:0crwdne506:0</b></span><br><br>
-	<input type="text" style="width:50px" id="days_filter" placeholder="d" value="0">crwdns507:0crwdne507:0
-	<input type="text" style="width:50px" id="hours_filter" placeholder="h" value="0">crwdns508:0crwdne508:0
-	<input type="text" style="width:50px" id="mins_filter" placeholder="m" value="0">crwdns509:0crwdne509:0
+	<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">crwdns507:0crwdne507:0
+	<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">crwdns508:0crwdne508:0
+	<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">crwdns509:0crwdne509:0
 	<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">crwdns491:0crwdne491:0</button><br>
 	<span class="sml">crwdns510:0crwdne510:0</span>
 </div>
@@ -726,7 +756,9 @@ var tlid=0;
 <div id="bottom" class="reverse">
     <div class="leftside reverse">
         <div id="dambox">
-                <input type="text" id="posttgl" placeholder="crwdns388:0crwdne388:0" style="height:2rem">
+								<button id="posttgl" class="btn waves-effect indigo" style="width: 100%;height: 2.5rem;line-height: 0;margin: 0;">
+									<i class="material-icons" style="position: relative; top: 5px; font-size: 1.5rem; text-align: center; margin-right: 10px;">edit</i>crwdns388:0crwdne388:0
+								</button>
         </div>
         <div class="leftside reverse" id="group">
             <div class="btnsgroup"><span class="grouptitle">Columns:</span>
@@ -812,9 +844,11 @@ var tlid=0;
 <script type="text/javascript" src="../../js/common/about.js"></script>
 <script type="text/javascript" src="../../js/tl/parse.js"></script>
 <script type="text/javascript" src="../../js/tl/misskeyparse.js"></script>
+<script type="text/javascript" src="../../js/tl/dm.js"></script>
 <script type="text/javascript" src="../../js/ui/scroll.js"></script>
 <script type="text/javascript" src="../../js/tl/tl.js"></script>
 <script type="text/javascript" src="../../js/tl/card.js"></script>
+<script type="text/javascript" src="../../js/tl/poll.js"></script>
 <script type="text/javascript" src="../../js/tl/date.js"></script>
 <script type="text/javascript" src="../../js/tl/notification.js"></script>
 <script type="text/javascript" src="../../js/tl/datails.js"></script>

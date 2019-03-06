@@ -1,10 +1,8 @@
 /*ささやきボックス(Cr民並感)*/
 //✕隠す
 function hide() {
-	$('#post-box').removeClass("appear")
-	$('#post-box').animate({
-		'bottom': "-500px"
-	});
+	$('#post-box').fadeOut()
+	$("#post-box").removeClass("appear")
 	$("#emoji").addClass("hide")
 }
 //最小化
@@ -18,16 +16,23 @@ function mini() {
 }
 //最小化時に展開
 function show() {
+	$("#post-box").addClass("appear")
 	$("#textarea").focus();
-	$('#post-box').addClass("appear")
-	console.log($('#posttgl').offset());
-	$('#post-box').css("left",$('#posttgl').offset().left+"px");
-	$('#post-box').animate({
-		'bottom': 0
-	});
+	console.log("show"+localStorage.getItem("postbox-left"));
+	$('#post-box').css("left",localStorage.getItem("postbox-left")+"px")
+	$('#post-box').css("top",localStorage.getItem("postbox-top")+"px")
+	$('#post-box').fadeIn();
 }
 
-
+$(function() {
+  $( "#post-box" ).draggable({handle: "#post-bar",
+	stop: function() {
+		console.log("stopped");
+	  localStorage.setItem("postbox-left",$('#post-box').offset().left);
+	  localStorage.setItem("postbox-top",$('#post-box').offset().top);
+	}
+  });
+});
 
 //コード受信
 if(location.search){
@@ -43,9 +48,11 @@ if(location.search){
 		$(".mini-btn").text("expand_less");
 	}
 }
-$('#posttgl').focusin(function(e) {
+$('#posttgl').click(function(e) {
 	if(!$('#post-box').hasClass("appear")){
 		show();
+	}else{
+		hide();
 	}
 });
 

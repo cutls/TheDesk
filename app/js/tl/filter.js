@@ -14,19 +14,27 @@ function mediaToggle(tlid) {
         $("#timeline_"+tlid).addClass("media-filter")
 	}
 }
-//各TL上方のBT[On/Off]
+//各TL上方のBT[BTOnly/BTExc/Off]
 function ebtToggle(tlid) {
 	var ebt = localStorage.getItem("ebt_" + tlid);
-	if (ebt) {
+	if (ebt=="true") {
+		localStorage.setItem("ebt_" + tlid, "but");
+		$("#sta-bt-" + tlid).text("BT Only");
+        $("#sta-bt-" + tlid).css("color",'#ff9800');
+		$("#timeline_"+tlid).addClass("except-bt-filter")
+		$("#timeline_"+tlid).removeClass("bt-filter")
+	}else if (ebt=="but") {
         localStorage.removeItem("ebt_" + tlid);
 		$("#sta-bt-" + tlid).text("Off");
         $("#sta-bt-" + tlid).css("color",'red');
-        $("#timeline_"+tlid).removeClass("bt-filter")
+		$("#timeline_"+tlid).removeClass("bt-filter")
+		$("#timeline_"+tlid).removeClass("except-bt-filter")
 	} else {
 		localStorage.setItem("ebt_" + tlid, "true");
-		$("#sta-bt-" + tlid).text("On");
+		$("#sta-bt-" + tlid).text("BT Ex");
         $("#sta-bt-" + tlid).css("color",'#009688');
-        $("#timeline_"+tlid).addClass("bt-filter")
+		$("#timeline_"+tlid).addClass("bt-filter")
+		$("#timeline_"+tlid).removeClass("except-bt-filter")
 	}
 }
 //各TL上方のMedia[On/Off]をチェック
@@ -45,14 +53,21 @@ function mediaCheck(tlid) {
 //各TL上方のBT[On/Off]をチェック
 function ebtCheck(tlid) {
 	var ebt = localStorage.getItem("ebt_" + tlid);
-	if (ebt) {
-		$("#sta-bt-" + tlid).text("On");
+	if (ebt=="true") {
+		$("#sta-bt-" + tlid).text("BT Ex");
         $("#sta-bt-" + tlid).css("color",'#009688');
-        $("#timeline_"+tlid).addClass("bt-filter")
-	} else {
+		$("#timeline_"+tlid).addClass("bt-filter")
+		$("#timeline_"+tlid).removeClass("except-bt-filter")
+	} else if (ebt=="but") {
+		$("#sta-bt-" + tlid).text("BT Only");
+        $("#sta-bt-" + tlid).css("color",'#ff9800');
+		$("#timeline_"+tlid).addClass("except-bt-filter")
+		$("#timeline_"+tlid).removeClass("bt-filter")
+	} else{
 		$("#sta-bt-" + tlid).text("Off");
         $("#sta-bt-" + tlid).css("color",'red');
-        $("#timeline_"+tlid).removeClass("bt-filter")
+		$("#timeline_"+tlid).removeClass("bt-filter")
+		$("#timeline_"+tlid).removeClass("except-bt-filter")
 	}
 }
 /* 削除追跡*/

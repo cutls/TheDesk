@@ -39,6 +39,7 @@ var lang={
     //post/emoji.js
     "lang_emoji_get":"Get emojis",
     "lang_emoji_custom":"Custom emojis",
+    "lang_defaultemojis_text":"Emojis about {{cat}}",
     //post/img.js
     "lang_postimg_previewdis":"cannot preview",
     "lang_postimg_aftupload":"You cannot change accounts after uploading.",
@@ -117,7 +118,7 @@ var lang={
     "lang_layout_dm":"Direct Message",
     "lang_layout_webviewmode":"Prefer WebView",
     "lang_excluded":"Excluded type of notification",
-    "lang_layout_excludingbt":"Exclude Boosts",
+    "lang_layout_excludingbt":"Show BT mode(OFF/Exclude BT/Only BT)",
     //ui/spotify.js
     "lang_spotify_img":"Attach an album artwork",
     "lang_spotify_imgno":"Not attach an album artwork",
@@ -173,6 +174,9 @@ var lang={
     "lang_parse_clientemp":"emphasized(/not emphasized)",
     "lang_parse_clientmute":"muted",
     "lang_parse_mute":" will be muted. You can remove on preferences.",
+    "lang_parse_voted":"Voted",
+    "lang_parse_vote":"Voted",
+    "lang_parse_unvoted":"Show the result without voting",
     //misskey
     "lang_misskeyparse_renote":"Repost",
     "lang_misskeyparse_renoteqt":"Renote",
@@ -210,6 +214,7 @@ var lang={
     "lang_setting_size":"Font size:{{set}}px",
     "lang_setting_imgheight":"Image height:{{set}}px",
     "lang_setting_ticker":"#InstanceTicker:{{set}}px",
+    "lang_setting_animation":"Animation: {{set}}",
     "lang_setting_tag":"Tag TL:{{set}}",
     "lang_setting_boxConfirm":"Post box:{{set}}",
     "lang_setting_ul":"Native locale:{{set}}",

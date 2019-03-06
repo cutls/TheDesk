@@ -11,13 +11,10 @@ function emojiToggle() {
 		selin=0;
 	}
 	localStorage.setItem("cursor", selin);
+
 	if ($("#emoji").hasClass("hide")) {
-		if($("#bottom").hasClass("reverse")){
-			$('#emoji').css("left",$('#post-box').offset().left-295+"px");
-		}else{
-			$('#emoji').css("left",$('#post-box').offset().left+295+"px");
-		}
 		$("#emoji").removeClass("hide")
+		$("#right-side").show()
 		if (!localStorage.getItem("emoji_" + acct_id)) {
 			var html =
 				'<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="emojiGet(\'true\');">'+lang.lang_emoji_get+'</button>';
@@ -26,7 +23,9 @@ function emojiToggle() {
 			emojiList('home');
 		}
 	} else {
+		$("#poll").addClass("hide")
 		$("#emoji").addClass("hide")
+		$("#right-side").hide()
 	}
 
 

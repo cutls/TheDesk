@@ -71,9 +71,7 @@
 		<h5>Font</h5>
 		Select your favorite font to 'Select'<br>
 		<button class="btn waves-effect" style="width:100px;" onclick="font()">Select</button><br>
-		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;">
-
-		</div>
+		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
 		<br>
 		<input type="text" style="width:150px" id="font">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
@@ -184,6 +182,11 @@
 		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
 		<label for="ticker_no">No</label>
 		<br>
+		<h5>Animation of timelines</h5>
+		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_yes" value="yes" />
+		<label for="anime_yes">Yes</label>
+		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
+		<label for="anime_no">No</label>
 	</div>
 	</li>
 	<li>
@@ -320,7 +323,7 @@
 		</div>
 		<div class="collapsible-body">
 			<!-->h5>NowPlaying Provider(Windows)</h5>
-			macOS and Linux are not supported. AIMP and iTunes were checked by developer. <br>CAD:foobar2000, MusicBee,J. River Media Center, Media Jukebox<br>WLM:Last.fm Client, TTPlayer, OpenPandora, Zune.<br> For foobar2000, <a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a> is required.<br>
+			macOS and Linux are not supported. AIMP and iTunes were checked by developer. <br>CAD:foobar2000, MusicBee,J. River Media Center, Media Jukebox<br>WLM:Last.fm Client, TTPlayer, OpenPandora, Zune.<br> For foobar2000, <a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a> is required. And MusicBee requires CAD.<br>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
 			<label for="aimp">AIMP</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
@@ -427,7 +430,7 @@ Kyash<br>
 <a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">Check update</a><br>
 <a href="oss.html">OSS License</a><br>
 <span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved. 
-	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://github.com/cutls/TheDesk/blob/master/TOS.md">Terms of Use</a>
+	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy Policy</a>
 	<br>Developer: Cutls P( 
 	<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
 	<br>

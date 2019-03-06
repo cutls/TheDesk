@@ -41,12 +41,10 @@ option {
   display: none;
   max-width: 100vw;
   max-height: 100vh;
-  top:0;
-  background-color: var(--modal);
   position: fixed;
   z-index: 9;
 }
-#imagemodal, #videomodal, #tootmodal {
+#videomodal, #tootmodal {
   background-color: var(--modal);
 }
 #imagemodal .modal-content {
@@ -56,6 +54,7 @@ option {
   overflow-x:scroll;
   overflow-y:hidden;
 }
+
 #imagewrap {
   width: 100%;
   height: 100%;
@@ -267,6 +266,18 @@ blockquote:before, .quote:before {
   }
   to{
       opacity: 1;
+  }
+}
+.hide-anime{
+  animation: hide 0.2s linear 0s;
+  display:none;
+}
+@keyframes hide{
+  from{
+      opacity: 1;
+  }
+  to{
+      opacity: 0;
   }
 }
 .collapsible-header,.tabs{

@@ -128,6 +128,12 @@ function parseColumn() {
 		if (width) {
 			var css=" min-width:"+width+"px;"
 		}
+		var anime = localStorage.getItem("animation");
+		if (anime=="yes" || !anime) {
+			var animecss="box-anime";
+		}else{
+			var animecss="";
+		}
 		if(acct.type=="notf"){
 			var exclude=lang.lang_excluded+':<br><input type="checkbox" class="filled-in" id="exc-reply-'+key+'" '+excludeCk(key,"mention")+' /><label for="exc-reply-'+key+'" class="exc-chb"><i class="fa fa-share exc-icons"></i></label> '+
 			'<input type="checkbox" class="filled-in" id="exc-fav-'+key+'"  '+excludeCk(key,"favourite")+' /><label for="exc-fav-'+key+'" class="exc-chb"><i class="fa fa-star exc-icons"></i></label> '+
@@ -141,7 +147,7 @@ function parseColumn() {
 		}else{
 			var exclude="";
 		}
-		var html = '<div style="'+css+'" class="box" id="timeline_box_' + key + '_box" tlid="' + key +
+		var html = '<div style="'+css+'" class="box '+animecss+'" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+' ">'+
 			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang.lang_layout_gotop +'"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
@@ -163,7 +169,7 @@ function parseColumn() {
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_tts +'">hearing</i><span id="sta-voice-' +
 		  key + '">On</span></a>'+lang.lang_layout_tts +'TL<br><a onclick="reconnector(' + key +
 		  ',\''+acct.type+'\',\''+acct.domain+'\',\''+acct.data+'\')" class="setting nex '+if_notf+'"><i class="material-icons waves-effect nex '+if_notf+'" title="'+lang.lang_layout_reconnect+'">low_priority</i></a><span class="'+if_notf+'">'+lang.lang_layout_reconnect+'</span><br>'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
-			'" class="tl '+acct.type+'-timeline" tlid="' + key + '" data-type="' + acct.type + '" data-acct="'+acct.domain+'"><div id="landing_'+key+'" style="text-align:center">'+lang.lang_layout_nodata +'</div></div></div></div>';
+			'" class="tl '+acct.type+'-timeline " tlid="' + key + '" data-type="' + acct.type + '" data-acct="'+acct.domain+'"><div id="landing_'+key+'" style="text-align:center">'+lang.lang_layout_nodata +'</div></div></div></div>';
 		$("#timeline-container").append(html);
 		localStorage.removeItem("pool_" + key);
 		if (acct.data) {

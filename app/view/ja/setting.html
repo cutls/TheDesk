@@ -71,9 +71,7 @@
 		<h5>フォント</h5>
 		「選択」を押してフォントを選んでください。<br>
 		<button class="btn waves-effect" style="width:100px;" onclick="font()">選択</button><br>
-		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;">
-
-		</div>
+		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
 		<br>
 		<input type="text" style="width:150px" id="font">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
@@ -184,6 +182,11 @@
 		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
 		<label for="ticker_no">いいえ</label>
 		<br>
+		<h5>タイムラインのアニメーション</h5>
+		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_yes" value="yes" />
+		<label for="anime_yes">はい</label>
+		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
+		<label for="anime_no">いいえ</label>
 	</div>
 	</li>
 	<li>
@@ -320,7 +323,7 @@
 		</div>
 		<div class="collapsible-body">
 			<!-->h5>NowPlayingのソース(Windows)</h5>
-			macOSやLinuxでは動作しません。AIMPとiTunes以外未検証です。<br>foobar2000, MusicBee,J. River Media Center, Media JukeboxはCADを、Last.fm Client, TTPlayer, OpenPandora, ZuneはWLMを選んでください。<br>ただし、foobar2000は<a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a>が必要です。<br>
+			macOSやLinuxでは動作しません。AIMPとiTunes以外未検証です。<br>foobar2000, MusicBee,J. River Media Center, Media JukeboxはCADを、Last.fm Client, TTPlayer, OpenPandora, ZuneはWLMを選んでください。<br>ただし、foobar2000は<a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a>が必要です。MusicBeeもCADを有効にする必要があります。<br>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
 			<label for="aimp">AIMP</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
@@ -427,7 +430,7 @@ Kyash<br>
 <a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">アップデートを確認</a><br>
 <a href="oss.html">OSS License(オープンソースライセンス)</a><br>
 <span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved. 
-	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://github.com/cutls/TheDesk/blob/master/TOS.md">Terms of Use</a>
+	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy Policy</a>
 	<br>Developer: Cutls P( 
 	<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
 	<br>

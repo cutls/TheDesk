@@ -40,6 +40,7 @@ var lang={
 //post/emoji.js
     "lang_emoji_get":"絵文字リストを取得",
     "lang_emoji_custom":"カスタム絵文字",
+    "lang_defaultemojis_text":"{{cat}}の絵文字",
 //post/img.js
     "lang_postimg_previewdis":"プレビューできません。",
     "lang_postimg_aftupload":"アップロード後はアカウントを切り替えられません。",
@@ -118,7 +119,7 @@ var lang={
     "lang_layout_dm":"ダイレクトメッセージ",
     "lang_layout_webviewmode":"WebView優先",
     "lang_excluded":"除外する通知",
-    "lang_layout_excludingbt":"ブーストを除外",
+    "lang_layout_excludingbt":"BT表示(OFF/BT除外/BTのみ)",
 //ui/spotify.js
     "lang_spotify_img":"アルバムアートワークを添付します。",
     "lang_spotify_imgno":"アルバムアートワークを添付しません。",
@@ -174,6 +175,9 @@ var lang={
     "lang_parse_clientemp":"強調表示/解除",
     "lang_parse_clientmute":"ミュート",
     "lang_parse_mute":"ミュートします。設定から解除できます。",
+    "lang_parse_voted":"投票済みです",
+    "lang_parse_vote":"投票",
+    "lang_parse_unvoted":"結果だけ見る",
     //misskey
     "lang_misskeyparse_renote":"再投稿",
     "lang_misskeyparse_renoteqt":"引用",
@@ -211,6 +215,7 @@ var lang={
     "lang_setting_size":"フォントサイズを{{set}}pxに設定しました。",
     "lang_setting_imgheight":"画像高さを{{set}}pxに設定しました。",
     "lang_setting_ticker":"#InstanceTicker使用を{{set}}に設定しました。",
+    "lang_setting_animation":"アニメーションを{{set}}に設定しました。",
     "lang_setting_tag":"タグの取得範囲を「{{set}}」に設定しました。",
     "lang_setting_boxConfirm":"投稿ボックスを{{set}}",
     "lang_setting_ul":"独自ロケール設定を{{set}}に設定しました。",

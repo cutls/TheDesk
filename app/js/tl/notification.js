@@ -15,18 +15,16 @@ function notfColumn(acct_id, tlid, sys){
 		native="yes";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
+	console.log(start)
+	var httpreq = new XMLHttpRequest();
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var misskey=true;
 		var start = "https://" + domain + "/api/i/notifications";
-		var i={
-			method: 'POST',
-			headers: {
-				'content-type': 'application/json',
-			},
-			body:JSON.stringify({
-				i:at
-			})
-		}
+		httpreq.open(POST, start, true);
+		httpreq.setRequestHeader('Content-Type', 'application/json');
+		var body=JSON.stringify({
+			i:at
+		});
 	}else{
 		var misskey=false;
 		if(localStorage.getItem("exclude-"+tlid)){
@@ -35,73 +33,72 @@ function notfColumn(acct_id, tlid, sys){
 			var exc="";
 		}
 		var start = "https://" + domain + "/api/v1/notifications"+exc;
-		var i={
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json',
-				'Authorization': 'Bearer ' + at
-			},
+		httpreq.open("GET", start, true);
+		httpreq.setRequestHeader('Content-Type', 'application/json');
+		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+		var body="";
+	}
+	
+	httpreq.responseType = 'json';
+	httpreq.send(body);
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			var max_id = httpreq.getResponseHeader("link").match(/\?max_id=([0-9]+)/)[1];
+			if(json[0]){
+				var templete="";
+				var lastnotf=localStorage.getItem("lastnotf_" + acct_id);
+				localStorage.setItem("lastnotf_" + acct_id,json[0].id);
+				Object.keys(json).forEach(function(key) {
+					var obj = json[key];
+					if(lastnotf==obj.id && key>0 && native=="yes"){
+						var ct=key;
+						if(key>14){
+							ct="15+";
+						}
+						var electron = require("electron");
+						var ipc = electron.ipcRenderer;
+						var os = electron.remote.process.platform;
+							var options = {
+								body: ct+lang_notf_new[lang],
+								icon: localStorage.getItem("prof_"+acct_id)
+							  };
+							if(os=="darwin"){
+								var n = new Notification('TheDesk:'+domain, options);
+							}else{
+								ipc.send('native-notf', ['TheDesk:'+domain,ct+lang_notf_new[lang],localStorage.getItem("prof_"+acct_id)]);
+							}
+						
+					}
+					if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
+						var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),"notif");
+					}else{
+						var mute=[];
+					}
+					if(obj.type!="follow"){
+						if(misskey){
+							templete = templete+misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute);
+						}else{
+							templete = templete+parse([obj], 'notf', acct_id, 'notf', -1, mute);
+						}
+					}else{
+						if(misskey){
+							templete = templete+misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute);
+						}else{
+							templete = templete+userparse([obj.account], 'notf', acct_id, 'notf', -1);
+						}
+						
+					}
+				});
+				templete=templete+'<div class="hide notif-marker" data-maxid="'+max_id+'"></div>';
+				$("#timeline_" + tlid).html(templete);
+				$("#landing_" + tlid).hide();
+				jQuery("time.timeago").timeago();
+				}
+				$("#notf-box").addClass("fetched");
+				todc();
 		}
 	}
-	fetch(start, i).then(function(response) {
-		console.log(response.headers.get('link'));
-		return response.json();
-	}).catch(function(error) {
-		todo(error);
-		console.error(error);
-	}).then(function(json) {
-		if(json[0]){
-		var templete="";
-		var lastnotf=localStorage.getItem("lastnotf_" + acct_id);
-		localStorage.setItem("lastnotf_" + acct_id,json[0].id);
-		Object.keys(json).forEach(function(key) {
-			var obj = json[key];
-			if(lastnotf==obj.id && key>0 && native=="yes"){
-				var ct=key;
-				if(key>14){
-					ct="15+";
-				}
-				var electron = require("electron");
-				var ipc = electron.ipcRenderer;
-				var os = electron.remote.process.platform;
-					var options = {
-						body: ct+lang_notf_new[lang],
-						icon: localStorage.getItem("prof_"+acct_id)
-					  };
-					if(os=="darwin"){
-						var n = new Notification('TheDesk:'+domain, options);
-					}else{
-						ipc.send('native-notf', ['TheDesk:'+domain,ct+lang_notf_new[lang],localStorage.getItem("prof_"+acct_id)]);
-					}
-				
-			}
-			if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
-				var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),"notif");
-			}else{
-				var mute=[];
-			}
-			if(obj.type!="follow"){
-				if(misskey){
-					templete = templete+misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute);
-				}else{
-					templete = templete+parse([obj], 'notf', acct_id, 'notf', -1, mute);
-				}
-			}else{
-				if(misskey){
-					templete = templete+misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute);
-				}else{
-					templete = templete+userparse([obj.account], 'notf', acct_id, 'notf', -1);
-				}
-				
-			}
-		});
-		$("#timeline_" + tlid).html(templete);
-		$("#landing_" + tlid).hide();
-		jQuery("time.timeago").timeago();
-		}
-		$("#notf-box").addClass("fetched");
-		todc();
-	});
 	if(!misskey){
 		if(localStorage.getItem("streaming_" + acct_id)){
 			var wss=localStorage.getItem("streaming_" + acct_id)
@@ -355,6 +352,8 @@ function notfCommon(acct_id, tlid, sys) {
 }
 //一定のスクロールで発火
 function notfmore(tlid) {
+	console.log(moreloading);
+	console.log("kicked");
 	var multi = localStorage.getItem("column");
 	var obj = JSON.parse(multi);
 	var acct_id = obj[tlid].domain;
@@ -363,72 +362,79 @@ function notfmore(tlid) {
 	}else{
 		var data;
 	}
-	var sid = $("#timeline_" + tlid + " .cvo").last().attr("toot-id");
-	console.log(sid);
-	if (localStorage.getItem("morelock") != sid) {
-		localStorage.setItem("morelock", sid);
-		localStorage.setItem("now", type);
-		todo("Notfication TL MoreLoading");
-		var domain = localStorage.getItem("domain_" + acct_id);
-		var at = localStorage.getItem("acct_"+ acct_id + "_at");
-
-		if(localStorage.getItem("mode_" + domain)=="misskey"){
-			var misskey=true;
-				var start = "https://" + domain + "/api/i/notifications";
-				var i={
-					method: 'POST',
-					headers: {
-						'content-type': 'application/json',
-					},
-					body:JSON.stringify({
-						i:at,
-						untilId:sid
-					})
-				}
-			}else{
-				var misskey=false;
-				var start = "https://" + domain + "/api/v1/notifications"+
-					"max_id=" + sid;
-				var i={
-					method: 'GET',
-					headers: {
-						'content-type': 'application/json',
-						'Authorization': 'Bearer ' + at
-					},
-				}
-			}
-		fetch(start, i,
-		).then(function(response) {
-			return response.json();
-		}).catch(function(error) {
-			todo(error);
-			console.error(error);
-		}).then(function(json) {
-			var templete="";
-			Object.keys(json).forEach(function(key) {
-				var obj = json[key];
-				if(obj.type!="follow"){
-					if(misskey){
-						templete = templete+misskeyParse([obj.note], '', acct_id, tlid, -1);
-					}else{
-						templete = templete+parse([obj], '', acct_id, tlid, -1);
-					}
-				}else{
-					if(misskey){
-						templete = templete+misskeyUserparse([obj], '', acct_id, tlid, -1);
-					}else{
-						templete = templete+userparse([obj.account], '', acct_id, tlid, -1);
-					}
-				}
-				
-			});
-			$("#timeline_" + tlid).append(templete);
-			additional(acct_id, tlid);
-			jQuery("time.timeago").timeago();
-			localStorage.removeItem("morelock")
-			todc();
+	var sid = $("#timeline_" + tlid + " .notif-marker").last().attr("data-maxid");
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var domain = localStorage.getItem("domain_" + acct_id);
+	if (sid && !moreloading) {
+		moreloading=true;
+	var httpreq = new XMLHttpRequest();
+	if(localStorage.getItem("mode_" + domain)=="misskey"){
+		var misskey=true;
+		var start = "https://" + domain + "/api/i/notifications";
+		httpreq.open(POST, start, true);
+		httpreq.setRequestHeader('Content-Type', 'application/json');
+		var body=JSON.stringify({
+			i:at,
+			untilID:sid
 		});
+	}else{
+		var misskey=false;
+		if(localStorage.getItem("exclude-"+tlid)){
+			var exc=localStorage.getItem("exclude-"+tlid)+"&max_id="+sid;
+		}else{
+			var exc="?max_id="+sid;
+		}
+		var start = "https://" + domain + "/api/v1/notifications"+exc;
+		httpreq.open("GET", start, true);
+		httpreq.setRequestHeader('Content-Type', 'application/json');
+		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+		var body="";
 	}
+	
+	httpreq.responseType = 'json';
+	httpreq.send(body);
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState == 4) {
+			var json = httpreq.response;
+			console.log(json);
+			var max_id = httpreq.getResponseHeader("link").match(/\?max_id=([0-9]+)/)[1];
+			if(json[0]){
+				var templete="";
+				var lastnotf=localStorage.getItem("lastnotf_" + acct_id);
+				localStorage.setItem("lastnotf_" + acct_id,json[0].id);
+				Object.keys(json).forEach(function(key) {
+					var obj = json[key];
+					if(localStorage.getItem("filter_"+ acct_id)!="undefined"){
+						var mute=getFilterType(JSON.parse(localStorage.getItem("filter_"+ acct_id)),"notif");
+					}else{
+						var mute=[];
+					}
+					if(obj.type!="follow"){
+						if(misskey){
+							templete = templete+misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute);
+						}else{
+							templete = templete+parse([obj], 'notf', acct_id, 'notf', -1, mute);
+						}
+					}else{
+						if(misskey){
+							templete = templete+misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute);
+						}else{
+							templete = templete+userparse([obj.account], 'notf', acct_id, 'notf', -1);
+						}
+						
+					}
+				});
+				moreloading=false;
+				templete=templete+'<div class="hide notif-marker" data-maxid="'+max_id+'"></div>';
+				$("#timeline_" + tlid).append(templete);
+				$("#landing_" + tlid).hide();
+				jQuery("time.timeago").timeago();
+				}
+				$("#notf-box").addClass("fetched");
+				todc();
+		}
+	}
+}
 }
 
 //通知トグルボタン
