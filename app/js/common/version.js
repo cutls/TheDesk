@@ -16,7 +16,6 @@ function verck(ver,winstore) {
 			$("#release-"+verp).show();
 		  });
 	}
-	var name="Web";
 	var electron = require("electron");
 	var remote=electron.remote;
 	var dialog=remote.dialog;
