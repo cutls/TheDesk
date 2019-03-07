@@ -9,6 +9,7 @@ const shell = electron.shell;
 const os = require('os')
 const path = require('path')
 const fm = require('font-manager');
+const language = require('./language.js');
 const Menu=electron.Menu
 var updatewin=null;
 const join = require('path').join;
@@ -43,9 +44,20 @@ try {
 		height: "string",
 		x: "string",
 		y: "string"
+
 	}; // デフォルトバリュー
 }
-
+try {
+	var lang = fs.readFileSync(lang_path, 'utf8');
+} catch (e) {
+	var lang=app.getLocale();
+	if(~lang.indexOf("ja")){
+		lang="ja";
+	}else{
+		lang="en";
+	}
+	fs.writeFileSync(lang_path,lang);
+}
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
 	if (process.platform != 'darwin') {
@@ -64,17 +76,6 @@ function createWindow() {
 		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,simpleFullscreen:true}
 	}
 	mainWindow = new BrowserWindow(arg);
-	try {
-		var lang = fs.readFileSync(lang_path, 'utf8');
-	} catch (e) {
-		var lang=app.getLocale();
-		if(~lang.indexOf("ja")){
-			lang="ja";
-		}else{
-			lang="en";
-		}
-		fs.writeFileSync(lang_path,lang);
-	}
 	electron.session.defaultSession.clearCache(() => {})
 	if(process.argv){
 		if(process.argv[1]){
@@ -119,60 +120,11 @@ function createWindow() {
 	mainWindow.on('maximize', function() {
 		fs.writeFileSync(max_info_path, JSON.stringify(mainWindow.getBounds()));
 	});
-	  // Create the Application's main menu
-	  var template = [{
-        label: "アプリケーション",
-        submenu: [
-			{ label: "TheDeskについて", click: function() { about(); } },
-            { type: "separator" },
-			{ label: "終了", accelerator: "Command+Q", click: function() { app.quit(); }}
-			
-        ]}, {
-        label: "編集",
-        submenu: [
-            { label: "元に戻す", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-            { label: "やり直し", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-            { type: "separator" },
-            { label: "切り取り", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-            { label: "コピー", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-            { label: "貼り付け", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-            { label: "すべて選択", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
-		]},{
-		label: "表示",
-		submenu: [
-			{
-				label: 'Toggle Developer Tools',
-				accelerator: 'Alt+Command+I',
-				click: function() { mainWindow.toggleDevTools(); }
-			  },
-          {
-            label: '再読み込み',
-            accelerator: 'CmdOrCtrl+R',
-            click: function() { mainWindow.webContents.send('reload', " "); }
-          }
-		]
-		},
-		{
-		label: 'ウィンドウ',
-		role: 'window',
-		submenu: [
-			  {
-				label: '最小化',
-				accelerator: 'CmdOrCtrl+M',
-				role: 'minimize'
-			  },
-			  {
-				label: '閉じる',
-				accelerator: 'CmdOrCtrl+W',
-				role: 'close'
-			  },
-			]
-		  }
-    ];
+		
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="darwin"){
-		Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+		Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang)));
 	}
 }
 // Electronの初期化完了後に実行
@@ -455,12 +407,7 @@ ipc.on('file-select', (e, args) => {
 });
 
 ipc.on('column-del', (e, args) => {
-const options = {
-    type: 'info',
-    title: 'カラム削除',
-    message: "カラムを削除しますか？(すべてのカラムのリンク解析がOFFになります。)",
-    buttons: ['いいえ', 'はい']
-  }
+	var options=delsel(lang)
   dialog.showMessageBox(options, function(index) {
     mainWindow.webContents.send('column-del-reply', index);
   })
