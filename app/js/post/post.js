@@ -11,7 +11,7 @@ function sec(){
 }
 function post(mode,postvis) {
 	if($("#toot-post-btn").prop("disabled")){
-		return
+		return false;
 	}
 	var str = $("#textarea").val();
 	var acct_id = $("#post-acct-sel").val();
@@ -57,13 +57,13 @@ function post(mode,postvis) {
 			buttons: [lang.lang_post_btn1,lang.lang_post_btn2, lang.lang_post_btn3]
 	  }
 	  dialog.showMessageBox(options, function(arg) {
-			if(arg==1){
+			if(arg===1){
 				$("#cw-text").show();
 				$("#cw").addClass("yellow-text");
 				$("#cw").addClass("cw-avail");
 				$("#cw-text").val(plus);
 				post("pass");
-			}else if(arg==2){
+			}else if(arg===2){
 				post("pass");
 			}
 	  	})
@@ -162,10 +162,10 @@ function post(mode,postvis) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify(toot));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			if(str.indexOf(localStorage.getItem("stable"))==-1){
 				localStorage.removeItem("stable")
 			}
@@ -234,10 +234,10 @@ function misskeyPost(){
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify(toot));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			if(str.indexOf(localStorage.getItem("stable"))==-1){
 				localStorage.removeItem("stable")
 			}

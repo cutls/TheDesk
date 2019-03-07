@@ -11,9 +11,9 @@ function ck() {
 	if(!main){
 		localStorage.setItem("main",0)
 	}
-	var domain = localStorage.getItem("domain_0");
+	var domainz = localStorage.getItem("domain_0");
 	var at = localStorage.getItem("acct_0_at");
-	var oldat = localStorage.getItem(domain + "_at");
+	var oldat = localStorage.getItem(domainz + "_at");
 	if(oldat){
 		console.log("Move to New Account Management System")
 		var multi = localStorage.getItem("multi");
@@ -77,7 +77,7 @@ function login(url) {
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({
 		scopes: 'read write follow',
 		client_name: "TheDesk(PC)",
@@ -85,7 +85,7 @@ function login(url) {
 		website: "https://thedesk.top"
 	}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
@@ -96,9 +96,7 @@ function login(url) {
 		localStorage.setItem("client_secret", json["client_secret"]);
 		$("#auth").show();
 		$("#masara").hide();
-		const {
-  			shell
-  		} = require('electron');
+		const { shell } = require('electron');
 
 		  shell.openExternal(auth);
 		  

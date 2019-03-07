@@ -298,6 +298,10 @@ blockquote:before, .quote:before {
   border-color:var(--color);
   padding:5px;
 }
+#pickers{
+  display:flex;
+  flex-wrap: wrap;
+}
 
 
 /*スクロールバー*/

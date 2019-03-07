@@ -32,9 +32,6 @@ function dmParse(obj, mix, acct_id, tlid, popup, mutefilter) {
     console.log(obj);
 	var templete = '';
 	if(obj[0]){
-		if(tlid==1){
-			console.log("testalive:"+"lastunix_"+ tlid+":"+date(obj[0].created_at, 'unix'))
-		}
 		localStorage.setItem("lastunix_"+ tlid,date(obj[0].created_at, 'unix'));
 	}
 	

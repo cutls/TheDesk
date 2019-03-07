@@ -222,13 +222,13 @@ function imgCont(type) {
 				}
 			}
 		}
-		if ($("#" + id + "-image-" + (key * 1 + 1)).length == 0) {
+		if ($("#" + id + "-image-" + (key * 1 + 1)).length === 0) {
 			$("#image-next").prop("disabled", true);
 		} else {
 			$("#image-next").prop("disabled", false);
 		}
 		console.log("#" + id + "-image-" + (key * 1 - 1));
-		if ($("#" + id + "-image-" + (key * 1 - 1)).length == 0) {
+		if ($("#" + id + "-image-" + (key * 1 - 1)).length === 0) {
 			$("#image-prev").prop("disabled", true);
 		} else {
 			$("#image-prev").prop("disabled", false);
@@ -289,7 +289,7 @@ function zoom(z) {
 			'cursor': 'move'
 		}); //指が触れたか検知
 		$(this).on('touchmove', function(event) {
-			if ($(target).data('down') == true) {
+			if ($(target).data('down') === true) {
 				// スクロール
 				console.log($(target).data('x'));
 				target.scrollLeft($(target).data('scrollLeft') + $(target).data('x') -

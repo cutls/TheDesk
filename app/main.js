@@ -13,6 +13,7 @@ const language = require('./language.js');
 const Menu=electron.Menu
 var updatewin=null;
 const join = require('path').join;
+var JSON5 = require('json5');
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 // ウィンドウを作成するモジュール
@@ -25,6 +26,8 @@ let mainWindow;
 var info_path = join(app.getPath("userData"), "window-size.json");
 var max_info_path = join(app.getPath("userData"), "max-window-size.json");
 var lang_path=join(app.getPath("userData"), "language");
+var customcss=join(app.getPath("userData"), "custom.css");
+
 var tmp_img = join(app.getPath("userData"), "tmp.png");
 var window_size;
 try {
@@ -58,6 +61,7 @@ try {
 	}
 	fs.writeFileSync(lang_path,lang);
 }
+console.log("launch:"+lang);
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
 	if (process.platform != 'darwin') {
@@ -163,9 +167,94 @@ ipc.on('native-notf', function(e, args) {
 });
 //言語
 ipc.on('lang', function(e, arg) {
+	console.log("set:"+arg);
 	fs.writeFileSync(lang_path,arg);
 	mainWindow.webContents.send('langres', "");
 })
+//CSS
+ipc.on('custom-css-create', function(e, arg) {
+	fs.writeFileSync(customcss,arg);
+	mainWindow.webContents.send('custom-css-create-complete', "");
+})
+ipc.on('custom-css-request', function(e, arg) {
+	try {
+		var css = fs.readFileSync(customcss, 'utf8');
+	} catch (e) {
+		var css="";
+	}
+	mainWindow.webContents.send('custom-css-response', css);
+})
+ipc.on('theme-json-create', function(e, arg) {
+	console.log(arg);
+	console.log(JSON5.parse(arg))
+	var themecss=join(app.getPath("userData"), JSON5.parse(arg)["id"]+".thedesktheme");
+	fs.writeFileSync(themecss,JSON.stringify(JSON5.parse(arg)));
+	if(JSON5.parse(arg)["id"]){
+		mainWindow.webContents.send('theme-json-create-complete', "");
+	}else{
+		mainWindow.webContents.send('theme-json-create-complete', "error");	
+	}
+})
+ipc.on('theme-json-request', function(e, arg) {
+	var themecss=join(app.getPath("userData"), arg+".thedesktheme");
+	var json = JSON.parse(fs.readFileSync(themecss, 'utf8'));
+	mainWindow.webContents.send('theme-json-response', json);
+})
+ipc.on('theme-css-request', function(e, arg) {
+	var themecss=join(app.getPath("userData"), arg+".thedesktheme");
+	try {
+		var json = JSON.parse(fs.readFileSync(themecss, 'utf8'));
+		
+		var primary=json.vars.primary;
+		var secondary=json.vars.secondary;
+		var text=json.vars.text;
+		if(json.base=="light"){
+			var drag="rgba(255, 255, 255, 0.8)";
+			var beforehover="#757575";
+		}else{
+			var drag="rgba(0, 0, 0, 0.8)";
+			var beforehover="#9e9e9e";
+		}
+		if(json.props){
+			if(json.props.TheDeskAccent){
+				var emphasized=json.props.TheDeskAccent
+			}else{
+				var emphasized=secondary;
+			}
+		}else{
+			var emphasized=secondary;
+		}
+		
+		var css=".customtheme {--bg:"+primary+";--drag:"+drag+";"+
+			"--color:"+text+";--beforehover:"+beforehover+";--modal:"+primary+";--subcolor:"+secondary+";--box:"+secondary+";--sidebar:"+secondary+";--shared:"+emphasized+";"+
+			"--notfbox:"+primary+";--emphasized:"+secondary+";--his-data:"+primary+
+			+"--active:"+secondary+";--postbox:"+secondary+";--modalfooter:"+secondary+";}.blacktheme #imagemodal{background: url(\"../img/pixel.svg\");}";
+			mainWindow.webContents.send('theme-css-response', css);
+	} catch (e) {
+		var css="";
+	}
+	
+})
+ipc.on('theme-json-list', function(e, arg) {
+	fs.readdir(app.getPath("userData"), function(err, files){
+		if (err) throw err;
+		var fileList = files.filter(function(file){
+			var tfile=join(app.getPath("userData"), file);
+			return fs.statSync(tfile).isFile() && /.*\.thedesktheme$/.test(tfile); //絞り込み
+		})
+		var themes=[];
+		for(var i=0;i<fileList.length;i++){
+			var themecss=join(app.getPath("userData"), fileList[i]);
+			var json = JSON.parse(fs.readFileSync(themecss, 'utf8'));
+			themes.push({
+				name:json.name,
+				id:json.id
+			})
+		}
+		mainWindow.webContents.send('theme-json-list-response', themes);
+	});
+})
+
 
 ipc.on('update', function(e, x, y) {
 	var platform=process.platform;
@@ -407,7 +496,8 @@ ipc.on('file-select', (e, args) => {
 });
 
 ipc.on('column-del', (e, args) => {
-	var options=delsel(lang)
+	console.log(lang);
+	var options=language.delsel(lang)
   dialog.showMessageBox(options, function(index) {
     mainWindow.webContents.send('column-del-reply', index);
   })
@@ -452,7 +542,7 @@ ipc.on('nano', function (e, x, y) {
 			buttons: ['拒否', '許可','永続的に許可']
 		  }
 		  dialog.showMessageBox(options, function(index) {
-			if(index==2){
+			if(index===2){
 				mainWindow.webContents.send('adobeagree', "true");
 			}
 			if(index>0){

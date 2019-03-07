@@ -46,7 +46,7 @@ function udgEx(user,acct_id){
 			shell.openExternal(url);
 		}
 	});
-	return;
+	return true;
 }
 function udg(user, acct_id) {
 	reset();

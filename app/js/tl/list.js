@@ -56,12 +56,12 @@ function makeNewList(){
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({
 		title: text
 	}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			list();
 			$("#list-add").val("")
@@ -166,12 +166,12 @@ function listAdd(id,user,acct_id){
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({
 		account_ids: [user]
 	}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			hisList(user,acct_id)
 		}
@@ -186,12 +186,12 @@ function listRemove(id,user,acct_id){
 	httpreq.open('DELETE', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({
 		account_ids: [user]
 	}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			hisList(user,acct_id)
 		}

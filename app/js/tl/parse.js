@@ -2,7 +2,7 @@
 function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var templete = '';
 	if(obj[0]){
-		if(tlid==1){
+		if(tlid===1){
 			console.log("testalive:"+"lastunix_"+ tlid+":"+date(obj[0].created_at, 'unix'))
 		}
 		localStorage.setItem("lastunix_"+ tlid,date(obj[0].created_at, 'unix'));
@@ -84,7 +84,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var card = localStorage.getItem("card_" + tlid);
 	
 	if (!sent) {
-		var sent = 500;
+		sent = 500;
 	}
 	if (!ltr) {
 		var ltr = 500;
@@ -614,8 +614,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			});
 		}
 		//日本語じゃない
-		if(toot.language!="ja"){
-			var trans='<div class="action pin"><a onclick="trans(\''+toot.language+'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_trans+'"><i class="material-icons">g_translate</i></a></div>';
+		if(toot.language!=lang.language && toot.language){
+			var trans='<div class="action pin"><a onclick="trans(\''+toot.language+'\',\''+lang.language+'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_trans+'"><i class="material-icons">g_translate</i></a></div>';
 		}else{
 			var trans="";
 		}
@@ -673,9 +673,14 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				}
 				var result_hide="hide";
 			}
+			if(toot.poll.expired){
+				var ended=lang.lang_parse_endedvote;
+			}else{
+				var ended=date(toot.poll.expires_at, datetype);
+			}
 			Object.keys(choices).forEach(function(keyc) {
 				var choice = choices[keyc];
-				if(!toot.poll.voted){
+				if(!toot.poll.voted && !toot.poll.expired){
 					var votesel='voteSelMastodon(\''+acct_id+'\',\''+toot.poll.id+'\','+keyc+','+toot.poll.multiple+')';
 					var voteclass="pointer waves-effect waves-light";
 				}else{
@@ -686,7 +691,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			});
 			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
 			'"><i class="fa fa-calendar-times-o"></i>' +
-			date(toot.poll.expires_at, datetype) + '</span></div>';
+			 ended+ '</span></div>';
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
@@ -905,7 +910,7 @@ function client(name) {
 		buttons: [lang.lang_parse_clientno,lang.lang_parse_clientemp, lang.lang_parse_clientmute]
 	  }
 	  dialog.showMessageBox(options, function(arg) {
-		if(arg==1){
+		if(arg===1){
 			var cli = localStorage.getItem("client_emp");
 			var obj = JSON.parse(cli);
 			if(!obj){
@@ -933,7 +938,7 @@ function client(name) {
 		}
 			var json = JSON.stringify(obj);
 			localStorage.setItem("client_emp", json);
-		}else if(arg==2){
+		}else if(arg===2){
 			var cli = localStorage.getItem("client_mute");
 			var obj = JSON.parse(cli);
 			if(!obj){

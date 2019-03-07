@@ -177,6 +177,7 @@ var lang={
     "lang_parse_voted":"Voted",
     "lang_parse_vote":"Voted",
     "lang_parse_unvoted":"Show the result without voting",
+    "lang_parse_endedvote":"Expired",
     //misskey
     "lang_misskeyparse_renote":"Repost",
     "lang_misskeyparse_renoteqt":"Renote",

@@ -1,5 +1,8 @@
 // Create the Application's main menu
-function createMenu(lang){
+function templete(lang){
+    const electron = require("electron");
+    const app = electron.app;
+    const BrowserWindow = electron.BrowserWindow;
     const dict={
         "application":{
             "ja":"アプリケーション",
@@ -65,7 +68,14 @@ function createMenu(lang){
     const menu = [{
         label: dict.application[lang],
         submenu: [
-            { label: dict.about[lang], click: function() { about(); } },
+            { label: dict.about[lang], click: function() {
+                var ver=app.getVersion()
+	            var window = new BrowserWindow({width: 300, height: 460,
+			        "transparent": false,    // ウィンドウの背景を透過
+			        "frame": false,     // 枠の無いウィンドウ
+			        "resizable": false });
+	             window.loadURL('file://' + __dirname + '/about.html?ver='+ver);
+             } },
             { type: "separator" },
             { label: dict.quit[lang], accelerator: "Command+Q", click: function() { app.quit(); }}
             
@@ -141,5 +151,5 @@ function delsel(lang){
       return options;
 }
 
-exports.templete = createMenu;
+exports.template = templete;
 exports.delsel = delsel;

@@ -39,10 +39,10 @@ function notfColumn(acct_id, tlid, sys){
 		var body="";
 	}
 	
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(body);
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			var max_id = httpreq.getResponseHeader("link").match(/\?max_id=([0-9]+)/)[1];
 			if(json[0]){
@@ -391,10 +391,10 @@ function notfmore(tlid) {
 		var body="";
 	}
 	
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(body);
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			var max_id = httpreq.getResponseHeader("link").match(/\?max_id=([0-9]+)/)[1];

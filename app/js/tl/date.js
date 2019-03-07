@@ -15,10 +15,11 @@ function date(str, datetype) {
 		} else {
 			var min = date.getMinutes();
 		}
+		var sec=null;
 		if (date.getSeconds() < 10) {
-			var sec = "0" + date.getSeconds();
+			sec = "0" + date.getSeconds();
 		} else {
-			var sec = date.getSeconds();
+			sec = date.getSeconds();
 		}
 		if (datetype == "full") {
 			var ret = date.getFullYear() + "/" + month + "/" + date.getDate() + "/ " +
@@ -56,10 +57,11 @@ function date(str, datetype) {
 //特殊フォーマット(インスタンス情報で利用)
 function crat(str) {
 	var date = new Date(str);
+	var mnt=null;
 	if(date.getMonth()<9){
-		var mnt="0"+(date.getMonth()+1);
+		mnt="0"+(date.getMonth()+1);
 	}else{
-		var mnt=date.getMonth()+1;
+		mnt=date.getMonth()+1;
 	}
 	if(date.getDate()<10){
 		var dat="0"+date.getDate();

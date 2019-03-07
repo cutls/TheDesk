@@ -311,7 +311,7 @@ function removeColumn(tlid) {
 	ipc.send('column-del', "");
 	ipc.on('column-del-reply', function (event, arg) {
 		console.log(arg);
-		if(arg==1){
+		if(arg===1){
 			localStorage.removeItem("card_" + tlid);
 			obj.splice(tlid, 1);
 			for(var i=0;i<obj.length;i++){

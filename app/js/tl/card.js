@@ -83,7 +83,7 @@ function additional(acct_id, tlid) {
 		var xmlHttpRequest = new XMLHttpRequest();
 	 xmlHttpRequest.onreadystatechange = function()
 	 {
-		 if( this.readyState == 4 && this.status == 200 ) {
+		 if( this.readyState === 4 && this.status === 200 ) {
 			 if( this.response){
 				 var json=this.response;
 				 var emojis=json.emojis;

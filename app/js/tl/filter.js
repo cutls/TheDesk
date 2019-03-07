@@ -192,7 +192,7 @@ function makeNewFilter(){
 	httpreq.open(method, start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({
 		phrase: phr,
 		context: cont,
@@ -201,7 +201,7 @@ function makeNewFilter(){
 		expires_in:time
 	}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			filter();
 			filterUpdate(acct_id)
@@ -283,10 +283,10 @@ function filterDel(id,acct_id){
 	httpreq.open("DELETE", start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send();
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			filter();
 			filterUpdate(acct_id)
