@@ -17,7 +17,7 @@
 	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 	<meta charset="utf-8">
-	<style>input{max-height:50px!important}</style>
+	<style>input{max-height:50px!important} .pcr-result{height:1rem !important;}</style>
 </head>
 <body id="mainView" style="overflow-y:scroll">
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
@@ -34,6 +34,7 @@
 	</div>
 	<div class="collapsible-body">
 		<h5>{{setlang}}</h5>
+		To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
 		{{langlist}}
 		<h5>{{backup}}</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">{{export}}</button>
@@ -118,12 +119,12 @@
 		<label for="light">Light</label>
 		<div id="pickers">
 		<div>
-			<h5>Primary</h5>{{primary}}
+			<h5>Primary</h5>{{secondarycolor}}
 			<div id="color-picker0-wrap"><div class="color-picker" id="color-picker0"></div></div>
 			<input type="hidden" id="color-picker0_value">
 		</div>
 		<div>
-			<h5>Secondary</h5>{{secondarycolor}}
+			<h5>Secondary</h5>{{primary}}
 			<div id="color-picker1-wrap"><div class="color-picker" id="color-picker1"></div></div>
 			<input type="hidden" id="color-picker1_value">
 		</div>
@@ -138,7 +139,7 @@
 			<input type="hidden" id="color-picker3_value">
 		</div>
 		</div>
-		<button class="btn-large waves-effect" onclick="customComp()">{{change}}</button><br>
+		<button class="btn-large waves-effect" onclick="customComp()">{{change}}</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">{{delete}}</button><br><br>
 		<input type="text" style="width:300px" id="custom_json" class="materialize-textarea" placeholder="JSON style" readonly><br>
 		{{customShare}}
 		<h4>{{customImport}}</h4>

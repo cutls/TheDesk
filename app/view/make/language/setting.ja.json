@@ -40,6 +40,7 @@
     "desc":"説明",
     "customShare":"このコードは他のTheDeskなどとシェアできます。このコードをMiASに貼ることはご遠慮ください。",
     "customImport":"カスタムテーマのインポート",
+    "delete":"削除",
     "cImpWarn":"<a href=\"https://assets.msky.cafe/\" target=\"_blank\">MiAS</a>上の80を超えるテーマを張り付けることもできます。",
     "timeline":"タイムラインの設定",
     "timemode":"時間表記設定",

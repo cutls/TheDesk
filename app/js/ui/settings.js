@@ -739,6 +739,10 @@ function pickerDefine(i,color){
 			preview: true, // Left side color comparison
 			opacity: false, // Opacity slider
 			hue: true,     // Hue slider
+			interaction: {
+				rgba: false, // rgba option (red green blue and alpha)
+				input: true, // input / output element
+			}
 		},
 		strings: {
 		   save: 'Save',  // Default for save button
@@ -746,25 +750,28 @@ function pickerDefine(i,color){
 		}
 	   });
 		   pickr.on('change', (...args) => {
-			 var rgb='rgb('+rgs[0].toRGBA()[0]+','+rgs[0].toRGBA()[1]+','+rgs[0].toRGBA()[2]+')';
-			$("#color-picker"+i+"_value").val(rgb)
-		});
+			 	var rgb='rgb('+args[0].toRGBA()[0]+','+args[0].toRGBA()[1]+','+args[0].toRGBA()[2]+')';
+				$("#color-picker"+i+"_value").val(rgb)
+			});
 }
 function customComp(){
 	var nameC=$("#custom_name").val();
 	if(!nameC){return false;}
 	var descC=$("#custom_desc").val();
-	if(!descC){return false;}
 	var primaryC=$("#color-picker0_value").val();
-	if(!primaryC){return false;}
+	if(!primaryC){primaryC="rgb(255,255,255)"}
 	var secondaryC=$("#color-picker1_value").val();
-	if(!secondaryC){return false;}
+	if(!secondaryC){secondaryC="rgb(255,255,255)"}
 	var textC=$("#color-picker2_value").val();
-	if(!textC){return false;}
+	if(!textC){textC="rgb(255,255,255)"}
 	var accentC=$("#color-picker3_value").val();
-	if(!accentC){return false;}
+	if(!accentC){accentC="rgb(255,255,255)"}
 	var multi = localStorage.getItem("multi");
 	var my=JSON.parse(multi)[0].name;
+	var id=$("#custom-edit-sel").val();
+	if(id=="add_new"){
+		id=makeCID();
+	}
 	var json={
 		"name": nameC,
 		"author": my,
@@ -778,9 +785,50 @@ function customComp(){
 		"props": {
 			"TheDeskAccent": accentC
 		},
-		"id": makeCID()
+		"id": id
 	  }
 	  $("#custom_json").val(JSON.stringify(json));
+	  themes();
+	  $("#custom_name").val("");
+	  $("#custom_desc").val("");
+	  $("#dark").prop("checked", true);
+	  $("#custom_json").val("");
+	  $("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>')
+	  $("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>')
+	  $("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>')
+	  $("#color-picker3-wrap").html('<div class="color-picker" id="color-picker3"></div>')
+	  $("#color-picker0_value").val("");
+	  $("#color-picker1_value").val("");
+	  $("#color-picker2_value").val("");
+	  $("#color-picker3_value").val("");
+	  pickerDefine(0,"fff");
+	  pickerDefine(1,"fff");
+	  pickerDefine(2,"fff");
+	  pickerDefine(3,"fff");
+	  ipc.send('theme-json-create', JSON.stringify(json));
+}
+function deleteIt(){
+	var id=$("#custom-sel-sel").val();
+	$("#custom_name").val("");
+	$("#custom_desc").val("");
+	$("#dark").prop("checked", true);
+	$("#custom_json").val("");
+	$("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>')
+	$("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>')
+	$("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>')
+	$("#color-picker3-wrap").html('<div class="color-picker" id="color-picker3"></div>')
+	$("#color-picker0_value").val("");
+	$("#color-picker1_value").val("");
+	$("#color-picker2_value").val("");
+	$("#color-picker3_value").val("");
+	pickerDefine(0,"fff");
+	pickerDefine(1,"fff");
+	pickerDefine(2,"fff");
+	pickerDefine(3,"fff");
+	ipc.on('theme-json-delete-complete', function (event, args) {
+		ctLoad()
+	});
+	ipc.send('theme-json-delete', id);
 }
 function ctLoad(){
 	ipc.send('theme-json-list', "");
@@ -791,9 +839,10 @@ function ctLoad(){
 			var theme = args[key];
 			var themeid=theme.id
 			templete = templete+'<option value="'+themeid+'">' + theme.name +'</option>';
-			
-			
 		});
+		if(args[0]){
+			localStorage.setItem("customtheme-id",args[0].id)
+		}
 		$("#custom-sel-sel").html(templete);
 		templete='<option value="add_new">'+$("#edit-selector").attr("data-add")+'</option>'+templete;
 		$("#custom-edit-sel").html(templete);
@@ -811,17 +860,35 @@ function custom(){
 		$("#custom_desc").val("");
 		$("#dark").prop("checked", true);
 		$("#custom_json").val("");
+		$("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>')
+		$("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>')
+		$("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>')
+		$("#color-picker3-wrap").html('<div class="color-picker" id="color-picker3"></div>')
+		$("#color-picker0_value").val("");
+		$("#color-picker1_value").val("");
+		$("#color-picker2_value").val("");
+		$("#color-picker3_value").val("");
+		pickerDefine(0,"fff");
+		pickerDefine(1,"fff");
+		pickerDefine(2,"fff");
+		pickerDefine(3,"fff");
+		$("#delTheme").addClass("disabled")
 	}else{
+		$("#delTheme").removeClass("disabled")
 		ipc.send('theme-json-request', id);
 		ipc.on('theme-json-response', function (event, args) {
+			console.log(args);
 			$("#custom_name").val(args.name);
 			$("#custom_desc").val(args.desc);
 			$("#"+args.base).prop("checked", true);
 			$("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>')
 			pickerDefine(0,rgbToHex(args.vars.primary))
+			$("#color-picker0_value").val(args.vars.primary);
 			$("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>')
 			pickerDefine(1,rgbToHex(args.vars.secondary))
+			$("#color-picker1_value").val(args.vars.secondary);
 			$("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>')
+			$("#color-picker2_value").val(args.vars.text);
 			pickerDefine(2,rgbToHex(args.vars.text))
 			if(args.props){
 				if(args.props.TheDeskAccent){
@@ -846,6 +913,7 @@ function customImp(){
 		alert("Error")
 	}
 }
+
 ipc.on('theme-json-create-complete', function (event, args) {
 	$("#custom_import").val("");
 	ctLoad()

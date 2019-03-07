@@ -17,7 +17,7 @@
 	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 	<meta charset="utf-8">
-	<style>input{max-height:50px!important}</style>
+	<style>input{max-height:50px!important} .pcr-result{height:1rem !important;}</style>
 </head>
 <body id="mainView" style="overflow-y:scroll">
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
@@ -34,6 +34,7 @@
 	</div>
 	<div class="collapsible-body">
 		<h5>Languages</h5>
+		To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
 		<a href="../ja/setting.html" onclick="changelang('ja')">日本語(Japanese)</a>/<a href="../en/setting.html" onclick="changelang('en')">English</a>/<a href="../ps/setting.html" onclick="changelang('ps')">Crowdin web translate</a>/
 		<h5>Import and export of preferences</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">Export</button>
@@ -118,12 +119,12 @@
 		<label for="light">Light</label>
 		<div id="pickers">
 		<div>
-			<h5>Primary</h5>Background color
+			<h5>Primary</h5>Background of components
 			<div id="color-picker0-wrap"><div class="color-picker" id="color-picker0"></div></div>
 			<input type="hidden" id="color-picker0_value">
 		</div>
 		<div>
-			<h5>Secondary</h5>Background of components
+			<h5>Secondary</h5>Background color
 			<div id="color-picker1-wrap"><div class="color-picker" id="color-picker1"></div></div>
 			<input type="hidden" id="color-picker1_value">
 		</div>
@@ -138,11 +139,11 @@
 			<input type="hidden" id="color-picker3_value">
 		</div>
 		</div>
-		<button class="btn-large waves-effect" onclick="customComp()">Change</button><br>
+		<button class="btn-large waves-effect" onclick="customComp()">Change</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">Delete</button><br><br>
 		<input type="text" style="width:300px" id="custom_json" class="materialize-textarea" placeholder="JSON style" readonly><br>
-		Share this code with other TheDesk and Misskey.
+		Share this code with other TheDesk. Do not share this code with MiAS.
 		<h4>Import of custom themes</h4>
-		{{cImpWarn}}<br>
+		Get more themes on <a href="https://assets.msky.cafe/" target="_blank">MiAS</a><br>
 		<input type="text" style="width:300px" id="custom_import" class="materialize-textarea" placeholder="JSON/JSON5 style">
 		<button class="btn waves-effect" onclick="customImp()">Import</button><br>
 	</li>

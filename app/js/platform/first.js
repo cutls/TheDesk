@@ -129,7 +129,7 @@ function rgbToHex(color)
   }
   
   // 正規表現
-  var regex = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+  var regex = color.match(/^rgb\(([0-9.]+),\s*([0-9.]+),\s*([0-9.]+)\)$/);
   
   // 正規表現でマッチしたとき
   if (regex)
@@ -156,5 +156,5 @@ function rgbToHex(color)
     return hex;
   }
   
-  console.error('第1引数はRGB形式で入力');
+  console.error(color+':第1引数はRGB形式で入力');
 }

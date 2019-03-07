@@ -185,8 +185,6 @@ ipc.on('custom-css-request', function(e, arg) {
 	mainWindow.webContents.send('custom-css-response', css);
 })
 ipc.on('theme-json-create', function(e, arg) {
-	console.log(arg);
-	console.log(JSON5.parse(arg))
 	var themecss=join(app.getPath("userData"), JSON5.parse(arg)["id"]+".thedesktheme");
 	fs.writeFileSync(themecss,JSON.stringify(JSON5.parse(arg)));
 	if(JSON5.parse(arg)["id"]){
@@ -194,6 +192,13 @@ ipc.on('theme-json-create', function(e, arg) {
 	}else{
 		mainWindow.webContents.send('theme-json-create-complete', "error");	
 	}
+})
+ipc.on('theme-json-delete', function(e, arg) {
+	var themecss=join(app.getPath("userData"), arg+".thedesktheme");
+	console.log(themecss);
+	fs.unlink(themecss, function (err) {
+		mainWindow.webContents.send('theme-json-delete-complete', "");
+	});
 })
 ipc.on('theme-json-request', function(e, arg) {
 	var themecss=join(app.getPath("userData"), arg+".thedesktheme");
@@ -222,13 +227,13 @@ ipc.on('theme-css-request', function(e, arg) {
 				var emphasized=secondary;
 			}
 		}else{
-			var emphasized=secondary;
+			var emphasized=primary;
 		}
 		
-		var css=".customtheme {--bg:"+primary+";--drag:"+drag+";"+
-			"--color:"+text+";--beforehover:"+beforehover+";--modal:"+primary+";--subcolor:"+secondary+";--box:"+secondary+";--sidebar:"+secondary+";--shared:"+emphasized+";"+
-			"--notfbox:"+primary+";--emphasized:"+secondary+";--his-data:"+primary+
-			+"--active:"+secondary+";--postbox:"+secondary+";--modalfooter:"+secondary+";}.blacktheme #imagemodal{background: url(\"../img/pixel.svg\");}";
+		var css=".customtheme {--bg:"+secondary+";--drag:"+drag+";"+
+			"--color:"+text+";--beforehover:"+beforehover+";--modal:"+secondary+";--subcolor:"+primary+";--box:"+primary+";--sidebar:"+primary+";--shared:"+emphasized+";"+
+			"--notfbox:"+secondary+";--emphasized:"+primary+";--his-data:"+secondary+
+			+"--active:"+primary+";--postbox:"+primary+";--modalfooter:"+primary+";}.blacktheme #imagemodal{background: url(\"../img/pixel.svg\");}";
 			mainWindow.webContents.send('theme-css-response', css);
 	} catch (e) {
 		var css="";
@@ -265,7 +270,8 @@ ipc.on('update', function(e, x, y) {
 		height: 400,
 		"transparent": false, // ウィンドウの背景を透過
 		"frame": false, // 枠の無いウィンドウ
-		"resizable": false
+		"resizable": false,
+		"modal":true
 	});
 	var lang = fs.readFileSync(lang_path, 'utf8');
 	updatewin.loadURL('file://' + __dirname + '/view/'+lang+'/update.html');
