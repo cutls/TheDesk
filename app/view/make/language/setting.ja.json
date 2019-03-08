@@ -38,7 +38,7 @@
     "add_new":"新規作成",
     "name":"名前",
     "desc":"説明",
-    "customShare":"このコードは他のTheDeskなどとシェアできます。このコードをMiASに貼ることはご遠慮ください。",
+    "customShare":"このコードは他のTheDeskなどとシェアできます。このコードをMiASに貼ることはご遠慮ください。詳細:<a href=\"https://thedesk.top/mias.html\" target=\"_blank\">テーマ互換性</a>",
     "customImport":"カスタムテーマのインポート",
     "delete":"削除",
     "cImpWarn":"<a href=\"https://assets.msky.cafe/\" target=\"_blank\">MiAS</a>上の80を超えるテーマを張り付けることもできます。",

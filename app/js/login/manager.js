@@ -326,38 +326,36 @@ function misskeyLogin(url) {
 	if(!url){
 		var url=$("#misskey-url").val();
 	}
-	var multi = localStorage.getItem("multi");
-	var obj = JSON.parse(multi);
-	var start = "https://"+url+"/api/auth/session/generate";
+	var start = "https://"+url+"/api/app/create";
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.responseType = "json";
 	localStorage.setItem("msky","true");
-	if(url=="misskey.xyz" && misskeytoken){
-		var mkc=misskeytoken;
-		localStorage.setItem("mkc",mkc)
-	}else{
-		var mkc=$("#misskey-key").val();
-		localStorage.setItem("mkc",mkc)
-		if(!mkc){
-			$("#misskeylogin").show();
-			$("#misskey-url").val(url);
-			if(confirm(lang.lang_manager_godev)){
-				const {
-					shell
-				} = require('electron');
-				console.log("https://"+url+"/dev")
-				shell.openExternal("https://"+url+"/dev");
-				shell.openExternal("https://thedesk.top/how-to-login-misskey.html");
-			}
-
-			return false;
-		}else{
-			$("#misskeylogin").hide();
-			$("#misskey-url").val("");
+	httpreq.send(JSON.stringify({
+			name: "TheDesk(PC)",
+			description: "Mastodon client for PC",
+			permission: ["read","write","follow"]
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState === 4) {
+			var json = httpreq.response;
+			console.log(json);
+			misskeyAuth(url, json.secret)
 		}
 	}
+	
+
+}
+function misskeyAuth(url, mkc){
+	var start = "https://"+url+"/api/auth/session/generate";
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.responseType = "json";
+
+	localStorage.setItem("mkc",mkc)
+	localStorage.setItem("msky","true");
 	httpreq.send(JSON.stringify({
 		appSecret: mkc
 	}));
@@ -375,11 +373,8 @@ function misskeyLogin(url) {
 			$("#misskey").prop("checked", false);
 			localStorage.setItem("domain_tmp",url);
 			shell.openExternal(json.url);
-			var electron = require("electron");
 		}
 	}
-	
-
 }
 
 //テキストボックスにURL入れた
