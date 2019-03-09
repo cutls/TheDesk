@@ -16,7 +16,31 @@ function verck(ver,winstore) {
 			$("#release-"+verp).show();
 		  });
 	}
-	
+	var electron = require("electron");
+	var remote=electron.remote;
+	var dialog=remote.dialog;
+	const options = {
+		type: 'info',
+		title: "Select your platform",
+		message: lang.lang_version_platform,
+		buttons: [lang.lang_no,lang.lang_yesno]
+	  }
+	  var platform=remote.process.platform;
+	  if(platform=="win32"){
+		  console.log(localStorage.getItem("winstore"))
+		  if(!localStorage.getItem("winstore")){
+			  
+				dialog.showMessageBox(options, function(arg) {
+				  if(arg==1){
+					  localStorage.setItem("winstore","winstore")
+					}else{
+					  localStorage.setItem("winstore","localinstall")
+					}
+			  });
+		  }
+	  }else{
+		  localStorage.setItem("winstore","unix")
+	  }
 	var l = 5;
 	// 生成する文字列に含める文字セット
 	var c = "abcdefghijklmnopqrstuvwxyz0123456789";

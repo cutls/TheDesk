@@ -1,4 +1,4 @@
-/*投稿系*/
+/*投稿系*/ 
 //投稿
 function sec(){
 	var mode=localStorage.getItem("sec");
