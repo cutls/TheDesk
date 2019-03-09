@@ -10,6 +10,8 @@
     "backup":"Import and export of preferences",
     "import":"Import",
     "export":"Export",
+    "hardwareAcceleration":"Disable hardware acceleration",
+    "hardwareAccelerationWarn":"Auto restarted",
     "theme":"Themes",
     "popup":"Popup notification(on Windows)",
     "popupwarn":"Hide to set \"0\"",

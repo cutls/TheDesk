@@ -16,8 +16,6 @@ const join = require('path').join;
 var JSON5 = require('json5');
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
-
-//app.disableHardwareAcceleration()
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
 const {
@@ -29,8 +27,15 @@ var info_path = join(app.getPath("userData"), "window-size.json");
 var max_info_path = join(app.getPath("userData"), "max-window-size.json");
 var lang_path=join(app.getPath("userData"), "language");
 var customcss=join(app.getPath("userData"), "custom.css");
-
 var tmp_img = join(app.getPath("userData"), "tmp.png");
+var ha_path=join(app.getPath("userData"), "hardwareAcceleration");
+try{
+	fs.readFileSync(ha_path, 'utf8');
+	app.disableHardwareAcceleration()
+	console.log("disabled: HA");
+}catch{
+	console.log("enabled: HA");
+}
 var window_size;
 try {
 	window_size = JSON.parse(fs.readFileSync(info_path, 'utf8'));
@@ -261,7 +266,16 @@ ipc.on('theme-json-list', function(e, arg) {
 		mainWindow.webContents.send('theme-json-list-response', themes);
 	});
 })
-
+//ハードウェアアクセラレーションの無効化
+ipc.on('ha', function(e, arg) {
+	if(arg=="true"){
+		fs.writeFileSync(ha_path,arg);
+	}else{
+		fs.unlink(ha_path, function (err) {});
+	}
+	app.relaunch()
+	app.exit()
+})
 
 ipc.on('update', function(e, x, y) {
 	var platform=process.platform;

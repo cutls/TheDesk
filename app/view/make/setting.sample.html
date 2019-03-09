@@ -79,6 +79,14 @@
 		{{savefolderwarn}}<br>
 		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">{{change}}</button>
 		<br>
+		<h5>{{hardwareAcceleration}}</h5>
+		{{hardwareAccelerationWarn}}
+		<br>
+		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_true" value="true" />
+		<label for="ha_true">{{yes}}</label>
+		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_false" value="false" />
+		<label for="ha_false">{{no}}</label>
+		<br>
 	</div>
 	</li>
 	<li>
