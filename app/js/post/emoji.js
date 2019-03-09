@@ -90,7 +90,7 @@ function emojiList(target) {
 	var page = Math.ceil(num / 126);
 	$("#emoji-sum").text(page);
 	var ct = Math.ceil(start / 126);
-	if (ct == 0) {
+	if (ct === 0) {
 		var ct = 1;
 		$("#emoji-before").addClass("disabled");
 	} else {

@@ -32,7 +32,7 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Miria (17.1.1)";
+var ver="Miria (17.2.0)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -54,7 +54,7 @@ var tlid=0;
 </div>
 </div>
 <div id="post-box" class="z-depth-5">
-<div id="post-bar">{{post-new}}</div>
+<div id="post-bar">crwdns2402:0crwdne2402:0</div>
 <!--トゥートボックス-->
 <div id="left-side">
 <div class="row" style="margin-bottom:0;">
@@ -182,13 +182,13 @@ var tlid=0;
 		<a onclick="nowplaying('spotify');">crwdns1880:0crwdne1880:0</a>
 	</li>
 	<li>
-		<a onclick="nowplaying('itunes');">crwdns1882:0crwdne1882:0</a>
+		<a onclick="nowplaying('itunes');">crwdns2404:0crwdne2404:0</a>
 	</li>
 	<li>
 		<a onclick="schedule();">crwdns1884:0crwdne1884:0</a>
 	</li>
 	<li>
-		<a onclick="pollToggle();">{{poll}}</a>
+		<a onclick="pollToggle();">crwdns2406:0crwdne2406:0</a>
 	</li>
 	</ul>
 <!--hidden area-->
@@ -259,7 +259,7 @@ var tlid=0;
 	<!--Poll UI-->
 	<div id="poll" class="hide">
 		<select id="poll-sel"  onchange="pollProviderCk()">
-			<option value="nothing">{{pollDdisabled}}</option>
+			<option value="nothing">crwdns2408:0crwdne2408:0</option>
 			<option value="votedon">votedon.</option>
 			<option value="mastodon-poll">Mastodon(2.8~)</option>
 		</select>
@@ -267,14 +267,14 @@ var tlid=0;
 	WIP
 		</div>
 		<div id="mastodon-poll" class="poll-provider hide">
-			<input type="text" class="mastodon-choice" placeholder="{{choice}}1">
-			<input type="text" class="mastodon-choice" placeholder="{{choice}}2">
-			<input type="text" class="mastodon-choice" placeholder="{{choice}}3">
-			<input type="text" class="mastodon-choice" placeholder="{{choice}}4">
+			<input type="text" class="mastodon-choice" placeholder="crwdns2414:0crwdne2414:01">
+			<input type="text" class="mastodon-choice" placeholder="crwdns2414:0crwdne2414:02">
+			<input type="text" class="mastodon-choice" placeholder="crwdns2414:0crwdne2414:03">
+			<input type="text" class="mastodon-choice" placeholder="crwdns2414:0crwdne2414:04">
 			<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
-			<label for="poll-multiple">{{pollmulti}}</label><br>
+			<label for="poll-multiple">crwdns2416:0crwdne2416:0</label><br>
 			<input type="checkbox" class="filled-in" id="poll-until" value="1" />
-			<label for="poll-until">{{polluntil}}</label><br>
+			<label for="poll-until">crwdns2412:0crwdne2412:0</label><br>
 			<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">crwdns507:0crwdne507:0
 			<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">crwdns508:0crwdne508:0
 			<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="0">crwdns509:0crwdne509:0
@@ -582,17 +582,18 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Miria_17-1-0" class="release-do" style="display:none; ">
+			<div id="release-Miria_17-2-0" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Miria (17.1.0)</h5>
-					トゥートボックスがフロートタイプに。左下、右下以外にも自由においてください。<br>
-					いろいろとアニメーション入れた(硬派な方は設定「タイムラインの設定」からオフに)<br>
-					アンケートができるように(OK:Mastodon (2.8~)/WIP: votedon./ NG: ニコフレ)<br>
-					フォント選択機能が復活<br>
-					WindowsからiTunesやAIMP、その他CAD系のNowPlayingができるように。要プラグインのソフトもある。<br>
+					<h5>Release Note Miria (17.2.0)</h5>
+					カスタムテーマを実装。Misskeyのテーマとの一定の互換性あり。<a href="https://assets.msky.cafe/" target="_blank">MiAS</a>から80を超えるテーマを入手。
+					<a href="https://thedesk.top/mias.html">注意点</a><br>
+					Misskeyのログイン方法変更につき、いちいちDevCenterに行かなくてもよくなりました。<br>
+					日本語でベタ書きしていたダイアログを一部多言語対応に変更。<br>
+					
+					<img class="emoji" draggable="false" alt="⚠" src="https://twemoji.maxcdn.com/2/72x72/26a0.png">TheDeskのMisskeyについての機能追加は終了しています。<br>
 			</div>
 			<br><br>
 			<h3>crwdns473:0crwdne473:0</h3>

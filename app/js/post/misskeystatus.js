@@ -1,7 +1,7 @@
 //Renpost
 function renote(id, acct_id, remote) {
 	if ($("#pub_" + id).hasClass("rted")) {
-		return
+		return false;
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
@@ -12,10 +12,10 @@ function renote(id, acct_id, remote) {
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
-    httpreq.responseType = 'json';
+    httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({i:at,renoteId:id}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
             var json = httpreq.response;
             console.log(json);
             $("[toot-id=" + id + "]").addClass("rted");
@@ -58,10 +58,10 @@ function reactiontoggle(id,acct_id,tlid){
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
-    httpreq.responseType = 'json';
+    httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({i:at,noteId:id}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
             var json = httpreq.response;
             console.log(json);
             if(json.reactionCounts){
@@ -158,10 +158,10 @@ function reaction(mode,id,acct_id,tlid){
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
-    httpreq.responseType = 'json';
+    httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({i:at,noteId:id,reaction:mode}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
             $(".fav_"+id).toggleClass("yellow-text");
 		}
 	}
@@ -177,7 +177,7 @@ function vote(acct_id,id,to){
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
-    httpreq.responseType = 'json';
+    httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({i:at,noteId:id,choice:to}));
     httpreq.onreadystatechange = function() {
 		voterefresh(acct_id,id)

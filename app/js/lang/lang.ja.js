@@ -179,6 +179,7 @@ var lang={
     "lang_parse_voted":"投票済みです",
     "lang_parse_vote":"投票",
     "lang_parse_unvoted":"結果だけ見る",
+    "lang_parse_endedvote":"終了済み",
     //misskey
     "lang_misskeyparse_renote":"再投稿",
     "lang_misskeyparse_renoteqt":"引用",

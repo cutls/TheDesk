@@ -12,16 +12,20 @@
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<link href="../../css/pickr.css" type="text/css" rel="stylesheet">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
 	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 	<meta charset="utf-8">
+	<style>input{max-height:50px!important} .pcr-result{height:1rem !important;}</style>
 </head>
 <body id="mainView" style="overflow-y:scroll">
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
 <script type="text/javascript" src="../../js/lang/lang.en.js"></script>
+<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
+
 <h4>Preferences</h4>
 <ul class="collapsible" data-collapsible="accordion">
 	<li>
@@ -30,21 +34,11 @@
 	</div>
 	<div class="collapsible-body">
 		<h5>Languages</h5>
-		<a href="../ja/setting.html">日本語(Japanese)</a>/<a href="../en/setting.html">English</a>/<a href="../ps/setting.html">Crowdin web translate</a>/
+		To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
+		<a href="../ja/setting.html" onclick="changelang('ja')">日本語(Japanese)</a>/<a href="../en/setting.html" onclick="changelang('en')">English</a>/<a href="../ps/setting.html" onclick="changelang('ps')">Crowdin web translate</a>/
 		<h5>Import and export of preferences</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">Export</button>
 		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">Import</button>
-		<h5>Themes</h5>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
-		<label for="black">Black</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
-		<label for="white">White</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
-		<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
-		<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
-		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
 		<br>
 		<h5>Popup notification(on Windows)</h5>Hide to set "0"
 		<br>
@@ -86,6 +80,72 @@
 		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">Change</button>
 		<br>
 	</div>
+	</li>
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">color_lens</i>Themes
+	</div>
+	<div class="collapsible-body">
+		<h4>Select theme</h4>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
+		<label for="black">Black</label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
+		<label for="white">White</label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
+		<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
+		<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
+		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom" value="custom" />
+		<label for="custom">Custom</label>
+		<div style="width:300px" id="sel-selector">
+			<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
+		</div>
+		<h4>Edit and add custom themes</h4>
+		<div style="width:300px" id="edit-selector" data-add="Add new">
+			<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
+				<option value="add_new">Add new</option>
+			</select>
+		</div>
+		<h5>Name</h5>
+		<input type="text" style="width:300px" id="custom_name" placeholder="Name...">
+		<h5>About this theme</h5>
+		<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea" placeholder="About this theme..."></textarea></div>
+		<h5>Color scheme</h5>
+		<input class="with-gap" name="derection" type="radio" id="dark" value="dark" checked="true" />
+		<label for="dark">Dark</label>
+		<input class="with-gap" name="derection" type="radio" id="light" value="light" />
+		<label for="light">Light</label>
+		<div id="pickers">
+		<div>
+			<h5>Primary</h5>Background of components
+			<div id="color-picker0-wrap"><div class="color-picker" id="color-picker0"></div></div>
+			<input type="hidden" id="color-picker0_value">
+		</div>
+		<div>
+			<h5>Secondary</h5>Background color
+			<div id="color-picker1-wrap"><div class="color-picker" id="color-picker1"></div></div>
+			<input type="hidden" id="color-picker1_value">
+		</div>
+		<div>
+			<h5>Texts</h5>Text color
+			<div id="color-picker2-wrap"><div class="color-picker" id="color-picker2"></div></div>
+			<input type="hidden" id="color-picker2_value">
+		</div>
+		<div>
+			<h5>Accent</h5>Background of boosts
+			<div id="color-picker3-wrap"><div class="color-picker" id="color-picker3"></div></div>
+			<input type="hidden" id="color-picker3_value">
+		</div>
+		</div>
+		<button class="btn-large waves-effect" onclick="customComp()">Change</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">Delete</button><br><br>
+		<input type="text" style="width:300px" id="custom_json" class="materialize-textarea" placeholder="JSON style" readonly><br>
+		Share this code with other TheDesk. Do not share this code with MiAS.
+		<h4>Import of custom themes</h4>
+		Get more themes on <a href="https://assets.msky.cafe/" target="_blank">MiAS</a><br>
+		<input type="text" style="width:300px" id="custom_import" class="materialize-textarea" placeholder="JSON/JSON5 style">
+		<button class="btn waves-effect" onclick="customImp()">Import</button><br>
 	</li>
 	<li>
 	<div class="collapsible-header">
@@ -322,7 +382,7 @@
 			<i class="fa fa-spotify"></i>Spotify and NowPlaying Preferences
 		</div>
 		<div class="collapsible-body">
-			<!-->h5>NowPlaying Provider(Windows)</h5>
+			<h5>NowPlaying Provider(Windows)</h5>
 			macOS and Linux are not supported. AIMP and iTunes were checked by developer. <br>CAD:foobar2000, MusicBee,J. River Media Center, Media Jukebox<br>WLM:Last.fm Client, TTPlayer, OpenPandora, Zune.<br> For foobar2000, <a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a> is required. And MusicBee requires CAD.<br>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
 			<label for="aimp">AIMP</label>
@@ -337,7 +397,7 @@
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
 			<label for="wlm">WLM</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
-			<label for="cad">CAD</label><br><br-->
+			<label for="cad">CAD</label><br><br>
 			Click <i class="material-icons" style="font-size:24px;">music_note</i>icon to NowPlaying<br>
 			<h5>Account Connection</h5>
 			TheDesk save your data on thedesk.top server.<br>
@@ -443,6 +503,7 @@ TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のため
 <script type="text/javascript" src="../../js/lang/lang.js"></script>
 <script type="text/javascript" src="../../js/ui/spotify.js"></script>
 <script type="text/javascript" src="../../js/tl/speech.js"></script>
+<script type="text/javascript" src="../../js/platform/pickr.js"></script>
 <script type="text/javascript" src="../../js/ui/settings.js"></script>
 <script type="text/javascript" src="../../js/ui/theme.js"></script>
 <script type="text/javascript" src="../../js/tl/date.js"></script>

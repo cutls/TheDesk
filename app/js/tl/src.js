@@ -116,7 +116,7 @@ function graphDraw(tag){
 		var two=50-(his[2].uses/max*50);
 		var one=50-(his[1].uses/max*50);
 		var zero=50-(his[0].uses/max*50);
-		if(max==0){
+		if(max===0){
 			tags = '<br><br><svg version="1.1" viewbox="0 0 60 50" width="60" height="50">'+
 	'</svg><span style="font-size:200%">'+his[0].uses+'</span>toots&nbsp;<a onclick="tl(\'tag\',\'' + tag.name + '\',\'' + acct_id +
 			'\',\'add\')" class="pointer">#' + tag.name + '</a>&nbsp;'+his[0].accounts+lang.lang_src_people;

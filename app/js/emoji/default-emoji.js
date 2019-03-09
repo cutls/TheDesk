@@ -70,7 +70,7 @@ function defEmoji(target){
         $("#textarea").focus();
         var selin = $("#textarea").prop('selectionStart');
 	    if(!selin){
-	    	selin=0;
+            selin=0;
 	    }
 	   localStorage.setItem("cursor", selin);
 }

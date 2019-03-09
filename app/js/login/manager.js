@@ -286,7 +286,7 @@ function login(url) {
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({
 		scopes: 'read write follow',
 		client_name: "TheDesk(PC)",
@@ -294,7 +294,7 @@ function login(url) {
 		website: "https://thedesk.top"
 	}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			localStorage.setItem("msky","false");
@@ -326,43 +326,41 @@ function misskeyLogin(url) {
 	if(!url){
 		var url=$("#misskey-url").val();
 	}
-	var multi = localStorage.getItem("multi");
-	var obj = JSON.parse(multi);
+	var start = "https://"+url+"/api/app/create";
+	var httpreq = new XMLHttpRequest();
+	httpreq.open('POST', start, true);
+	httpreq.setRequestHeader('Content-Type', 'application/json');
+	httpreq.responseType = "json";
+	localStorage.setItem("msky","true");
+	httpreq.send(JSON.stringify({
+			name: "TheDesk(PC)",
+			description: "Mastodon client for PC",
+			permission: ["read","write","follow"]
+	}));
+    httpreq.onreadystatechange = function() {
+		if (httpreq.readyState === 4) {
+			var json = httpreq.response;
+			console.log(json);
+			misskeyAuth(url, json.secret)
+		}
+	}
+	
+
+}
+function misskeyAuth(url, mkc){
 	var start = "https://"+url+"/api/auth/session/generate";
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
-	httpreq.responseType = 'json';
-	localStorage.setItem("msky","true");
-	if(url=="misskey.xyz" && misskeytoken){
-		var mkc=misskeytoken;
-		localStorage.setItem("mkc",mkc)
-	}else{
-		var mkc=$("#misskey-key").val();
-		localStorage.setItem("mkc",mkc)
-		if(!mkc){
-			$("#misskeylogin").show();
-			$("#misskey-url").val(url);
-			if(confirm(lang.lang_manager_godev)){
-				const {
-					shell
-				} = require('electron');
-				console.log("https://"+url+"/dev")
-				shell.openExternal("https://"+url+"/dev");
-				shell.openExternal("https://thedesk.top/how-to-login-misskey.html");
-			}
+	httpreq.responseType = "json";
 
-			return false;
-		}else{
-			$("#misskeylogin").hide();
-			$("#misskey-url").val("");
-		}
-	}
+	localStorage.setItem("mkc",mkc)
+	localStorage.setItem("msky","true");
 	httpreq.send(JSON.stringify({
 		appSecret: mkc
 	}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			const {
@@ -375,11 +373,8 @@ function misskeyLogin(url) {
 			$("#misskey").prop("checked", false);
 			localStorage.setItem("domain_tmp",url);
 			shell.openExternal(json.url);
-			var electron = require("electron");
 		}
 	}
-	
-
 }
 
 //テキストボックスにURL入れた
@@ -407,13 +402,13 @@ function code(code) {
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('POST', start, true);
 		httpreq.setRequestHeader('Content-Type', 'application/json');
-		httpreq.responseType = 'json';
+		httpreq.responseType = "json";
 		httpreq.send(JSON.stringify({
 			token:code,
 			appSecret:localStorage.getItem("mkc")
 		}));
     	httpreq.onreadystatechange = function() {
-			if (httpreq.readyState == 4) {
+			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
 				var i = sha256(json.accessToken + localStorage.getItem("mkc"));
 				console.log(json);
@@ -454,7 +449,7 @@ function code(code) {
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('POST', start, true);
 		httpreq.setRequestHeader('Content-Type', 'application/json');
-		httpreq.responseType = 'json';
+		httpreq.responseType = "json";
 		httpreq.send(JSON.stringify({
 			grant_type: "authorization_code",
 			redirect_uri: "https://thedesk.top/hello.html",
@@ -463,7 +458,7 @@ function code(code) {
 			code: code
 		}));
 		httpreq.onreadystatechange = function() {
-			if (httpreq.readyState == 4) {
+			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
 				console.log(json);
 				if (json["access_token"]) {
@@ -595,13 +590,13 @@ function misskeyRefresh(obj,target,url){
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('POST', start, true);
 		httpreq.setRequestHeader('Content-Type', 'application/json');
-		httpreq.responseType = 'json';
+		httpreq.responseType = "json";
 		httpreq.send(JSON.stringify({
 			username:obj[target].user,
 			i:localStorage.getItem("at")
 		}));
     	httpreq.onreadystatechange = function() {
-			if (httpreq.readyState == 4) {
+			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
 				console.log(json);
 				return;

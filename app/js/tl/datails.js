@@ -78,10 +78,11 @@ function details(id, acct_id, tlid) {
 			$("#tootmodal").attr("data-user",scn);
 		}
 		context(id, acct_id);
+		var dom=null;
 		if(!local){
-			var dom=scn.replace(/.+@/g,'');
+			dom=scn.replace(/.+@/g,'');
 		}else{
-			var dom=domain;
+			dom=domain;
 		}
 		beforeToot(id, acct_id, dom);
 		userToot(id, acct_id, uid);
@@ -448,7 +449,7 @@ function shot(){
 	})
 }
 //翻訳
-function trans(tar){
+function trans(tar,to){
 	var html=$("#toot-this .toot").html();
 	if(html.match(/^<p>(.+)<\/p>$/)){
 		html = html.match(/^<p>(.+)<\/p>$/)[1];
@@ -457,18 +458,21 @@ function trans(tar){
 	html = html.replace(/<p>/g, "\n");
 	html = html.replace(/<\/p>/g, "\n");
 	html=$.strip_tags(html);
+	if(~tar.indexOf("zh")){
+		tar="zh";
+	}
 	$("#toot-this .additional").text("Loading...(Powered by Google Translate)");
-	var exec='https://script.google.com/macros/s/AKfycbz0ETqcUxwNlw961GjErNb7vr_X18N2s1AS5Xu5nFTbYXcdcRM/exec?text='+encodeURIComponent(html)+'&source='+tar+'&target=ja'
+	var exec='https://script.google.com/macros/s/AKfycbxhwW5tjjop9Irg-y1zr_WsXlCKEzwWG6KuoOt_vVRDfEbRv0c/exec?format=json&text='+encodeURIComponent(html)+'&source='+tar+'&target='+to
 	console.log(exec);
 	fetch(exec, {
 		method: 'GET',
 	}).then(function(response) {
-		return response.text();
+		return response.json();
 	}).catch(function(error) {
 		todo(error);
 		console.error(error);
 	}).then(function(text) {
-		$("#toot-this .additional").html('<span class="gray">'+text+'</span>');
+		$("#toot-this .additional").html('<span class="gray">'+text.text+'</span>');
 	});
 }
 //ブラウザで開く

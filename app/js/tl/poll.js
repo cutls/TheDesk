@@ -70,7 +70,7 @@ function voteMastodon(acct_id,id){
 	httpreq.open('POST', start, true);
     httpreq.setRequestHeader('Content-Type', 'application/json');
     httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-    httpreq.responseType = 'json';
+    httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({choices:choice}));
     httpreq.onreadystatechange = function() {
 		voteMastodonrefresh(acct_id,id)

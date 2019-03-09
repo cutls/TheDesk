@@ -289,7 +289,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 						say(obj.content)
 					}	
 					var templete = parse([obj], type, acct_id, tlid,"",mute);
-					if ($("timeline_box_"+tlid+"_box .tl-box").scrollTop() == 0) {
+					if ($("timeline_box_"+tlid+"_box .tl-box").scrollTop() === 0) {
 						$("#timeline_" + tlid).prepend(templete);
 					}else{
 						var pool = localStorage.getItem("pool_" + tlid);
@@ -578,7 +578,7 @@ function com(type, data) {
 		return "tag/" + data + "?"
 	}else if (type == "list") {
 		return "list/" + data + "?"
-	}else if (type="dm") {
+	}else if (type=="dm") {
 		return "direct?"
 	}
 }

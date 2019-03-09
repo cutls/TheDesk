@@ -106,7 +106,7 @@ function media(b64, type, no) {
 		var start = "https://" + domain + "/api/drive/files/create";
 		httpreq.open('POST', start, true);
 		httpreq.upload.addEventListener("progress", progshow, false);
-		httpreq.responseType = 'json';
+		httpreq.responseType = "json";
 		if ($("#nsfw").hasClass("nsfw-avail")) {
 			var nsfw = true;
 		} else {
@@ -121,12 +121,12 @@ function media(b64, type, no) {
 		var start = "https://" + domain + "/api/v1/media";
 		httpreq.open('POST', start, true);
 		httpreq.upload.addEventListener("progress", progshow, false);
-		httpreq.responseType = 'json';
+		httpreq.responseType = "json";
 		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 		httpreq.send(fd);
 	}
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			var img = localStorage.getItem("img");

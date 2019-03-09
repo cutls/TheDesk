@@ -290,10 +290,10 @@ function preview(){
 	for(let l = 0; l < li.length; l++) {
 		var u=li[l].match(/^1\. (.+)$/);
 		var listUl='<li>'+u[1]+'</li>';
-		if(l == 0){
+		if(l === 0){
 			listUl='<ol>'+listUl;
 		}
-		if(l==li.length-1){
+		if(l===li.length-1){
 			listUl=listUl+'</ol>';
 		}
 		var bb=bb.replace(new RegExp(li[l], ""),listUl);

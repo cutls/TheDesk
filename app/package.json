@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "17.1.1",
+  "version": "17.2.0",
   "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "electron-dl": "^1.11.0",
     "font-manager": "^0.3.0",
     "jimp": "^0.2.28",
+    "json5": "^2.1.0",
     "node-notifier": "^5.2.1",
     "sumchecker": "^2.0.2"
   },

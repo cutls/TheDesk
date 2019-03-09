@@ -11,12 +11,18 @@ function themes(theme) {
 	$("html").removeClass("greentheme");
 	$("html").removeClass("browntheme");
 	$("html").removeClass("blacktheme");
+	$("html").removeClass("customtheme");
 	$("html").addClass(theme+"theme");
 	var font = localStorage.getItem("font");
 	if(font){
 		$("html").css("font-family",font);
 	}else{
 		$("html").css("font-family","");
+	}
+	if(theme=="custom"){
+		if(localStorage.getItem("customtheme-id")){
+			ipc.send('theme-css-request', localStorage.getItem("customtheme-id"));
+		}
 	}
 }
 themes();

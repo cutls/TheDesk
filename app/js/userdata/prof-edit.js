@@ -12,13 +12,13 @@ function profedit() {
 	httpreq.open('PATCH', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify({
 		display_name: name,
 		note: des,
 	}));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			$('#his-data').modal('close');
 			todc();
 		}
@@ -47,10 +47,10 @@ function imgChange(imgfile, target) {
 		httpreq.open('PATCH', start, true);
 		httpreq.upload.addEventListener("progress", progshow, false);
 		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-		httpreq.responseType = 'json';
+		httpreq.responseType = "json";
 		httpreq.send(fd);
    		httpreq.onreadystatechange = function() {
-			if (httpreq.readyState == 4) {
+			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
 				console.log(json);
 				$('#his-data').modal('close');

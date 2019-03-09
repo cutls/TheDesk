@@ -82,3 +82,79 @@ function formattimeutc(date){
 	}
 	return str;
 }
+var electron = require("electron");
+var ipc = electron.ipcRenderer;
+ipc.send('custom-css-request', "");
+ipc.on('custom-css-response', function (event, arg) {
+	if(arg==""){ return false; }
+	var styleNode = document.createElement("style");
+	styleNode.setAttribute("type","text/css")
+
+	var content = document.createTextNode(arg)
+	styleNode.append(content)
+	document.getElementsByTagName("head")[0].append(styleNode)
+})
+ipc.on('theme-css-response', function (event, arg) {
+	if(arg==""){ return false; }
+	var styleNode = document.createElement("style");
+	styleNode.setAttribute("type","text/css")
+
+	var content = document.createTextNode(arg)
+	styleNode.append(content)
+	document.getElementsByTagName("head")[0].append(styleNode)
+})
+function makeCID(){
+	return randomStr(8)+"-"+randomStr(4)+"-"+randomStr(4)+"-"+randomStr(4)+"-"+randomStr(12);
+}
+function randomStr(l){
+	// 生成する文字列に含める文字セット
+	var c = "abcdefghijklmnopqrstuvwxyz0123456789";
+	var cl = c.length;
+	var r = "";
+	for(var i=0; i<l; i++){
+    	r += c[Math.floor(Math.random()*cl)];
+	}
+	return r;
+}
+function rgbToHex(color)
+{
+  // HEXに変換したものを代入する変数
+  var hex = '';
+  
+  // 第1引数がHEXのとき変換処理は必要ないのでそのままreturn
+  // IE8の場合はjQueryのcss()関数でHEXを返すので除外
+  if (color.match(/^#[a-f\d]{3}$|^#[a-f\d]{6}$/i))
+  {
+    return color;
+  }
+  
+  // 正規表現
+  var regex = color.match(/^rgb\(([0-9.]+),\s*([0-9.]+),\s*([0-9.]+)\)$/);
+  
+  // 正規表現でマッチしたとき
+  if (regex)
+  {
+    var rgb =
+    [
+      // RGBからHEXへ変換
+      parseInt(regex[1]).toString(16),
+      parseInt(regex[2]).toString(16),
+      parseInt(regex[3]).toString(16)
+    ];
+    
+    for (var i = 0; i < rgb.length; ++i)
+    {
+      // rgb(1,1,1)のようなときHEXに変換すると1桁になる
+      // 1桁のときは前に0を足す
+      if (rgb[i].length == 1)
+      {
+        rgb[i] = '0' + rgb[i];
+      }
+      hex += rgb[i];
+    }
+    
+    return hex;
+  }
+  
+  console.error(color+':第1引数はRGB形式で入力');
+}

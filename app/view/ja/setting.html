@@ -12,16 +12,20 @@
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<link href="../../css/pickr.css" type="text/css" rel="stylesheet">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
 	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 	<meta charset="utf-8">
+	<style>input{max-height:50px!important} .pcr-result{height:1rem !important;}</style>
 </head>
 <body id="mainView" style="overflow-y:scroll">
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
 <script type="text/javascript" src="../../js/lang/lang.ja.js"></script>
+<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
+
 <h4>設定</h4>
 <ul class="collapsible" data-collapsible="accordion">
 	<li>
@@ -30,21 +34,11 @@
 	</div>
 	<div class="collapsible-body">
 		<h5>言語</h5>
-		<a href="../ja/setting.html">日本語(Japanese)</a>/<a href="../en/setting.html">English</a>/<a href="../ps/setting.html">Crowdin web translate</a>/
+		To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
+		<a href="../ja/setting.html" onclick="changelang('ja')">日本語(Japanese)</a>/<a href="../en/setting.html" onclick="changelang('en')">English</a>/<a href="../ps/setting.html" onclick="changelang('ps')">Crowdin web translate</a>/
 		<h5>設定のインポートとエクスポート</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">エクスポート</button>
 		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">インポート</button>
-		<h5>テーマの設定</h5>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
-		<label for="black">Black</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
-		<label for="white">White</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
-		<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
-		<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
-		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
 		<br>
 		<h5>新規通知のポップアップお知らせの表示秒数</h5>0に設定すると表示されません
 		<br>
@@ -86,6 +80,72 @@
 		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">変更</button>
 		<br>
 	</div>
+	</li>
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">color_lens</i>テーマの設定
+	</div>
+	<div class="collapsible-body">
+		<h4>テーマの選択</h4>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
+		<label for="black">Black</label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
+		<label for="white">White</label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
+		<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
+		<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
+		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom" value="custom" />
+		<label for="custom">Custom</label>
+		<div style="width:300px" id="sel-selector">
+			<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
+		</div>
+		<h4>カスタムテーマの作成・編集</h4>
+		<div style="width:300px" id="edit-selector" data-add="新規作成">
+			<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
+				<option value="add_new">新規作成</option>
+			</select>
+		</div>
+		<h5>名前</h5>
+		<input type="text" style="width:300px" id="custom_name" placeholder="名前...">
+		<h5>説明</h5>
+		<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea" placeholder="説明..."></textarea></div>
+		<h5>色の系統</h5>
+		<input class="with-gap" name="derection" type="radio" id="dark" value="dark" checked="true" />
+		<label for="dark">Dark</label>
+		<input class="with-gap" name="derection" type="radio" id="light" value="light" />
+		<label for="light">Light</label>
+		<div id="pickers">
+		<div>
+			<h5>Primary</h5>補助要素に使われる背景色
+			<div id="color-picker0-wrap"><div class="color-picker" id="color-picker0"></div></div>
+			<input type="hidden" id="color-picker0_value">
+		</div>
+		<div>
+			<h5>Secondary</h5>全体の背景色など
+			<div id="color-picker1-wrap"><div class="color-picker" id="color-picker1"></div></div>
+			<input type="hidden" id="color-picker1_value">
+		</div>
+		<div>
+			<h5>Texts</h5>テキストの色
+			<div id="color-picker2-wrap"><div class="color-picker" id="color-picker2"></div></div>
+			<input type="hidden" id="color-picker2_value">
+		</div>
+		<div>
+			<h5>Accent</h5>ブーストの背景色など
+			<div id="color-picker3-wrap"><div class="color-picker" id="color-picker3"></div></div>
+			<input type="hidden" id="color-picker3_value">
+		</div>
+		</div>
+		<button class="btn-large waves-effect" onclick="customComp()">変更</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">削除</button><br><br>
+		<input type="text" style="width:300px" id="custom_json" class="materialize-textarea" placeholder="JSON style" readonly><br>
+		このコードは他のTheDeskなどとシェアできます。このコードをMiASに貼ることはご遠慮ください。詳細:<a href="https://thedesk.top/mias.html" target="_blank">テーマ互換性</a>
+		<h4>カスタムテーマのインポート</h4>
+		<a href="https://assets.msky.cafe/" target="_blank">MiAS</a>上の80を超えるテーマを張り付けることもできます。<br>
+		<input type="text" style="width:300px" id="custom_import" class="materialize-textarea" placeholder="JSON/JSON5 style">
+		<button class="btn waves-effect" onclick="customImp()">インポート</button><br>
 	</li>
 	<li>
 	<div class="collapsible-header">
@@ -322,7 +382,7 @@
 			<i class="fa fa-spotify"></i>SpotifyとNowPlayingの設定
 		</div>
 		<div class="collapsible-body">
-			<!-->h5>NowPlayingのソース(Windows)</h5>
+			<h5>NowPlayingのソース(Windows)</h5>
 			macOSやLinuxでは動作しません。AIMPとiTunes以外未検証です。<br>foobar2000, MusicBee,J. River Media Center, Media JukeboxはCADを、Last.fm Client, TTPlayer, OpenPandora, ZuneはWLMを選んでください。<br>ただし、foobar2000は<a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a>が必要です。MusicBeeもCADを有効にする必要があります。<br>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
 			<label for="aimp">AIMP</label>
@@ -337,7 +397,7 @@
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
 			<label for="wlm">WLM</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
-			<label for="cad">CAD</label><br><br-->
+			<label for="cad">CAD</label><br><br>
 			<i class="material-icons" style="font-size:24px;">music_note</i>ボタンから簡単にNowPlayingができます。<br>
 			<h5>アカウントの連携</h5>
 			APIの性質上，thedesk.topへアクセスします。<br>
@@ -443,6 +503,7 @@ TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のため
 <script type="text/javascript" src="../../js/lang/lang.js"></script>
 <script type="text/javascript" src="../../js/ui/spotify.js"></script>
 <script type="text/javascript" src="../../js/tl/speech.js"></script>
+<script type="text/javascript" src="../../js/platform/pickr.js"></script>
 <script type="text/javascript" src="../../js/ui/settings.js"></script>
 <script type="text/javascript" src="../../js/ui/theme.js"></script>
 <script type="text/javascript" src="../../js/tl/date.js"></script>

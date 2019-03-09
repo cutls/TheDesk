@@ -58,9 +58,7 @@
 		//hrefがhttp/httpsならブラウザで
 		if(urls){
 		if (urls[0]) {
-			const {
-				shell
-			} = require('electron');
+			const {shell} = require('electron');
 			if(~url.indexOf("thedeks.top")){
 				//alert("If you recieve this alert, let the developer(Cutls@kirishima.cloud) know it with a screenshot.");
 				url="https://thedesk.top";
@@ -81,8 +79,7 @@
   //よく使うライブラリ
   /*マルチバイト用切り出し*/
   $.isSurrogatePear = function(upper, lower) {
-  	return 0xD800 <= upper && upper <= 0xDBFF && 0xDC00 <= lower && lower <=
-  		0xDFFF;
+  	return 0xD800 <= upper && upper <= 0xDBFF && 0xDC00 <= lower && lower <= 0xDFFF;
   };
   $.mb_strlen = function(str) {
   	var ret = 0;

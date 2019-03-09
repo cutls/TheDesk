@@ -12,16 +12,20 @@
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<link href="../../css/pickr.css" type="text/css" rel="stylesheet">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
 	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 	<meta charset="utf-8">
+	<style>input{max-height:50px!important} .pcr-result{height:1rem !important;}</style>
 </head>
 <body id="mainView" style="overflow-y:scroll">
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
 <script type="text/javascript" src="../../js/lang/lang.ps.js"></script>
+<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
+
 <h4>crwdns524:0crwdne524:0</h4>
 <ul class="collapsible" data-collapsible="accordion">
 	<li>
@@ -30,21 +34,11 @@
 	</div>
 	<div class="collapsible-body">
 		<h5>crwdns530:0crwdne530:0</h5>
-		<a href="../ja/setting.html">日本語(Japanese)</a>/<a href="../en/setting.html">English</a>/<a href="../ps/setting.html">Crowdin web translate</a>/
+		To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
+		<a href="../ja/setting.html" onclick="changelang('ja')">日本語(Japanese)</a>/<a href="../en/setting.html" onclick="changelang('en')">English</a>/<a href="../ps/setting.html" onclick="changelang('ps')">Crowdin web translate</a>/
 		<h5>crwdns531:0crwdne531:0</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">crwdns533:0crwdne533:0</button>
 		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">crwdns532:0crwdne532:0</button>
-		<h5>crwdns534:0crwdne534:0</h5>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
-		<label for="black">Black</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
-		<label for="white">White</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
-		<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
-		<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
-		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
 		<br>
 		<h5>crwdns1898:0crwdne1898:0</h5>crwdns536:0crwdne536:0
 		<br>
@@ -59,12 +53,12 @@
 		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_no" value="no" />
 		<label for="ntf_no">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>crwdns541:0crwdne541:0</h5>crwdns542:0crwdne542:0
+		<h5>crwdns2376:0crwdne2376:0</h5>crwdns542:0crwdne542:0
 		<br>
 		<input type="text" style="width:50px" id="width">pxcrwdns543:0crwdne543:0
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
-		<h5>{{fixwidth}}</h5>{{fixwidthwarn}}
+		<h5>crwdns2378:0crwdne2378:0</h5>crwdns2380:0crwdne2380:0
 		<input type="text" style="width:50px" id="fixwidth">pxcrwdns543:0crwdne543:0
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
 		<br>
@@ -86,6 +80,72 @@
 		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">crwdns528:0crwdne528:0</button>
 		<br>
 	</div>
+	</li>
+	<li>
+	<div class="collapsible-header">
+			<i class="material-icons">color_lens</i>crwdns534:0crwdne534:0
+	</div>
+	<div class="collapsible-body">
+		<h4>crwdns2422:0crwdne2422:0</h4>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
+		<label for="black">Black</label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
+		<label for="white">White</label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
+		<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
+		<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
+		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
+		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom" value="custom" />
+		<label for="custom">Custom</label>
+		<div style="width:300px" id="sel-selector">
+			<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
+		</div>
+		<h4>crwdns2424:0crwdne2424:0</h4>
+		<div style="width:300px" id="edit-selector" data-add="crwdns2436:0crwdne2436:0">
+			<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
+				<option value="add_new">crwdns2436:0crwdne2436:0</option>
+			</select>
+		</div>
+		<h5>crwdns2438:0crwdne2438:0</h5>
+		<input type="text" style="width:300px" id="custom_name" placeholder="crwdns2438:0crwdne2438:0...">
+		<h5>crwdns2440:0crwdne2440:0</h5>
+		<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea" placeholder="crwdns2440:0crwdne2440:0..."></textarea></div>
+		<h5>crwdns2426:0crwdne2426:0</h5>
+		<input class="with-gap" name="derection" type="radio" id="dark" value="dark" checked="true" />
+		<label for="dark">Dark</label>
+		<input class="with-gap" name="derection" type="radio" id="light" value="light" />
+		<label for="light">Light</label>
+		<div id="pickers">
+		<div>
+			<h5>Primary</h5>crwdns2430:0crwdne2430:0
+			<div id="color-picker0-wrap"><div class="color-picker" id="color-picker0"></div></div>
+			<input type="hidden" id="color-picker0_value">
+		</div>
+		<div>
+			<h5>Secondary</h5>crwdns2428:0crwdne2428:0
+			<div id="color-picker1-wrap"><div class="color-picker" id="color-picker1"></div></div>
+			<input type="hidden" id="color-picker1_value">
+		</div>
+		<div>
+			<h5>Texts</h5>crwdns2432:0crwdne2432:0
+			<div id="color-picker2-wrap"><div class="color-picker" id="color-picker2"></div></div>
+			<input type="hidden" id="color-picker2_value">
+		</div>
+		<div>
+			<h5>Accent</h5>crwdns2434:0crwdne2434:0
+			<div id="color-picker3-wrap"><div class="color-picker" id="color-picker3"></div></div>
+			<input type="hidden" id="color-picker3_value">
+		</div>
+		</div>
+		<button class="btn-large waves-effect" onclick="customComp()">crwdns528:0crwdne528:0</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">{{delete}}</button><br><br>
+		<input type="text" style="width:300px" id="custom_json" class="materialize-textarea" placeholder="JSON style" readonly><br>
+		crwdns2442:0crwdne2442:0
+		<h4>crwdns2444:0crwdne2444:0</h4>
+		{{cImpWarn}}<br>
+		<input type="text" style="width:300px" id="custom_import" class="materialize-textarea" placeholder="JSON/JSON5 style">
+		<button class="btn waves-effect" onclick="customImp()">crwdns532:0crwdne532:0</button><br>
 	</li>
 	<li>
 	<div class="collapsible-header">
@@ -182,7 +242,7 @@
 		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
 		<label for="ticker_no">crwdns527:0crwdne527:0</label>
 		<br>
-		<h5>{{animation}}</h5>
+		<h5>crwdns2446:0crwdne2446:0</h5>
 		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_yes" value="yes" />
 		<label for="anime_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
@@ -322,8 +382,8 @@
 			<i class="fa fa-spotify"></i>crwdns624:0crwdne624:0
 		</div>
 		<div class="collapsible-body">
-			<!-->h5>{{npProvider}}</h5>
-			{{npPeoviderWarn}}<br>
+			<h5>crwdns2354:0crwdne2354:0</h5>
+			crwdns2356:0crwdne2356:0<br>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
 			<label for="aimp">AIMP</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
@@ -337,7 +397,7 @@
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
 			<label for="wlm">WLM</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
-			<label for="cad">CAD</label><br><br-->
+			<label for="cad">CAD</label><br><br>
 			crwdns625:0crwdne625:0<i class="material-icons" style="font-size:24px;">music_note</i>crwdns626:0crwdne626:0<br>
 			<h5>crwdns627:0crwdne627:0</h5>
 			crwdns628:0crwdne628:0<br>
@@ -348,9 +408,9 @@
 			crwdns632:0crwdne632:0<br>
 			<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
-				crwdns633:0{song}crwdnd633:0{album}crwdnd633:0{artist}crwdnd633:0{url}crwdne633:0<br>
-				crwdns634:0{url}crwdnd634:0{composer}crwdnd634:0{hz}crwdnd634:0{bitRate}crwdnd634:0{genre}crwdne634:0<br>
-				{{templete3}}<br>
+				crwdns2358:0{song}crwdnd2358:0{album}crwdnd2358:0{artist}crwdnd2358:0{url}crwdne2358:0<br>
+				crwdns2360:0{song}crwdnd2360:0{album}crwdnd2360:0{artist}crwdnd2360:0{composer}crwdnd2360:0{hz}crwdnd2360:0{bitRate}crwdnd2360:0{genre}crwdne2360:0<br>
+				crwdns2362:0{song}crwdnd2362:0{album}crwdnd2362:0{artist}crwdne2362:0<br>
 				<span class="imas hide">CINDERELLA NowPlaying(imastodon.net限定)では作曲家{composer}/作詞家{lyricist}/BPM{bpm}が有効です。<br>
                     CINDERELLA NowPlayingはimastodon.netにログインしているとき、トゥート欄に「//」を入力し、その後に曲名を入れることで可能です。</span><br>
 			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
@@ -443,6 +503,7 @@ TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のため
 <script type="text/javascript" src="../../js/lang/lang.js"></script>
 <script type="text/javascript" src="../../js/ui/spotify.js"></script>
 <script type="text/javascript" src="../../js/tl/speech.js"></script>
+<script type="text/javascript" src="../../js/platform/pickr.js"></script>
 <script type="text/javascript" src="../../js/ui/settings.js"></script>
 <script type="text/javascript" src="../../js/ui/theme.js"></script>
 <script type="text/javascript" src="../../js/tl/date.js"></script>

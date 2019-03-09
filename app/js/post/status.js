@@ -13,10 +13,10 @@ function fav(id, acct_id, remote) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send();
     httpreq.onreadystatechange = function() {
-        if (httpreq.readyState == 4) {
+        if (httpreq.readyState === 4) {
             var json = httpreq.response;
             if(remote!="remote"){
 				//APIのふぁぼカウントがおかしい
@@ -63,10 +63,10 @@ function rt(id, acct_id, remote) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send();
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			if (remote != "remote") {
@@ -133,10 +133,10 @@ function follow(acct_id,remote) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify(ent));
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			if ($("#his-data").hasClass("following")) {
@@ -168,10 +168,10 @@ function block(acct_id) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send();
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			if ($("#his-data").hasClass("blocking")) {
 				$("#his-data").removeClass("blocking");
 				$("#his-block-btn").text(lang.lang_status_block);
@@ -210,10 +210,10 @@ function mute(acct_id) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send(rq);
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			if ($("#his-data").hasClass("muting")) {
 				$("#his-data").removeClass("muting");
 				$("#his-mute-btn").text(lang.lang_status_mute);
@@ -234,7 +234,7 @@ function del(id, acct_id) {
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('POST', start, true);
 		httpreq.setRequestHeader('Content-Type', 'application/json');
-		httpreq.responseType = 'json';
+		httpreq.responseType = "json";
 		httpreq.send(JSON.stringify({i:at,noteId:id}));
 	}else{
 		var start = "https://" + domain + "/api/v1/statuses/" + id;
@@ -242,11 +242,11 @@ function del(id, acct_id) {
 		httpreq.open('DELETE', start, true);
 		httpreq.setRequestHeader('Content-Type', 'application/json');
 		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-		httpreq.responseType = 'json';
+		httpreq.responseType = "json";
 		httpreq.send();
 	}
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 		}
 	}
 }
@@ -300,10 +300,10 @@ function pin(id, acct_id) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send();
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			if ($("[toot-id=" + id + "]").hasClass("pined")) {
@@ -326,10 +326,10 @@ function request(id, flag, acct_id) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send();
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			showReq();
@@ -349,10 +349,10 @@ function domainblock(add, flag, acct_id) {
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send();
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			showDom();
@@ -406,10 +406,10 @@ function pinUser(){
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = 'json';
+	httpreq.responseType = "json";
 	httpreq.send();
     httpreq.onreadystatechange = function() {
-		if (httpreq.readyState == 4) {
+		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
 			if ($("#his-end-btn").hasClass("endorsed")) {
