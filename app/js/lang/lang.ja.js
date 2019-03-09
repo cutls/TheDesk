@@ -22,6 +22,8 @@ var lang={
 //common/version.js
     "lang_version_usever":"お使いのバージョン{{ver}}は最新です。",
     "lang_version_skipver":"アップデートはスキップされました。",
+    "lang_version_platform":"このソフトウェアはMicrosoft Storeからダウンロードされましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
+    "lang_version_platform_linux":"このソフトウェアはSnapcraft(snapd)からインストールしましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
 //login
 //login/login.js
     "lang_login_noauth":"認証せずに見る",
