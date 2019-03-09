@@ -16,6 +16,8 @@ const join = require('path').join;
 var JSON5 = require('json5');
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
+
+//app.disableHardwareAcceleration()
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
 const {
