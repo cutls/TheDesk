@@ -19,17 +19,40 @@ function show() {
 	$("#post-box").addClass("appear")
 	$("#textarea").focus();
 	console.log("show"+localStorage.getItem("postbox-left"));
-	$('#post-box').css("left",localStorage.getItem("postbox-left")+"px")
-	$('#post-box').css("top",localStorage.getItem("postbox-top")+"px")
+	var left=localStorage.getItem("postbox-left");
+	if(left>$('body').width()-$('#post-box').width()){
+	  left=$('body').width()-$('#post-box').width();
+	}else if(left<0){
+		left=0;
+	}
+	var top=localStorage.getItem("postbox-top");
+	if(top>$('body').height()-$('#post-box').height()){
+		top=$('body').height()-$('#post-box').height();
+	}else if(top<0){
+		top=0;
+	}
+	$('#post-box').css("left",left+"px")
+	$('#post-box').css("top",top+"px")
 	$('#post-box').fadeIn();
 }
 
 $(function() {
   $( "#post-box" ).draggable({handle: "#post-bar",
 	stop: function() {
-		console.log("stopped");
-	  localStorage.setItem("postbox-left",$('#post-box').offset().left);
-	  localStorage.setItem("postbox-top",$('#post-box').offset().top);
+	var left=$('#post-box').offset().left;
+	if(left>$('body').width()-$('#post-box').width()){
+	  left=$('body').width()-$('#post-box').width();
+	}else if(left<0){
+		left=0;
+	}
+	var top=$('#post-box').offset().top;
+	if(top>$('body').height()-$('#post-box').height()){
+		top=$('body').height()-$('#post-box').height();
+	}else if(top<0){
+		top=0;
+	}
+	  localStorage.setItem("postbox-left",left);
+	  localStorage.setItem("postbox-top",top);
 	}
   });
 });
