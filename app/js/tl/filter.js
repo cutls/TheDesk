@@ -140,15 +140,15 @@ function filter(){
 				var filterword = json[key];
 				var context = filterword.context.join(',');
 				filters = filters + escapeHTML(filterword.phrase)+'<span class="sml">(for '+context+')</span>:<a onclick="filterEdit(\'' + filterword.id + '\',\'' + acct_id +
-					'\')" class="pointer">'+lang_edit[lang]+'</a>/<a onclick="filterDel(' + filterword.id + ',' + acct_id +
-					')" class="pointer">'+lang_del[lang]+'</a><br> ';
+					'\')" class="pointer">'+lang.lang_edit+'</a>/<a onclick="filterDel(' + filterword.id + ',' + acct_id +
+					')" class="pointer">'+lang.lang_del+'</a><br> ';
 			});
 			if(filters==""){
-				filters=lang_filter_nodata[lang]+"<br>";
+				filters=lang.lang_filter_nodata+"<br>";
 			}
 			$("#filtered-words").html(filters);
 		}else{
-            $("#filtered-words").html(lang_filter_nodata[lang]);
+            $("#filtered-words").html(lang_filter_nodata);
         }
 	});
 }
@@ -170,7 +170,7 @@ function makeNewFilter(){
 	}
 	console.log(cont);
 	if(!cont.length){
-		$("#filtered-words").html('Error:'+lang_filter_errordegree[lang]);
+		$("#filtered-words").html('Error:'+lang.lang_filter_errordegree);
 	}
 	var exc=$("#except_filter:checked").val();
 	var who=$("#wholeword_filter:checked").val();
@@ -215,7 +215,7 @@ function makeNewFilter(){
 			$("#days_filter").val("0");
 			$("#hours_filter").val("0");
 			$("#mins_filter").val("0");
-			$("#add-filter-btn").text(lang_add[lang]);
+			$("#add-filter-btn").text(lang.lang_add);
 			$("#filter-edit-id").val("")
 		}
 	}
@@ -231,7 +231,7 @@ function filterEdit(id,acct_id){
 		$("#days_filter").val("0");
 		$("#hours_filter").val("0");
 		$("#mins_filter").val("0");
-	$("#add-filter-btn").text(lang_edit[lang]);
+	$("#add-filter-btn").text(lang.lang_edit);
 	$("#filter-edit-id").val(id);
 	var domain = localStorage.getItem("domain_" + acct_id);
     var at = localStorage.getItem("acct_"+ acct_id + "_at");
