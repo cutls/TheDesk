@@ -1,7 +1,6 @@
     //commonError
 var lang={
     "language":"ja",
-    //commonError
     "lang_toot":"トゥート",
     "lang_there":"あり",
     "lang_nothing":"なし",
