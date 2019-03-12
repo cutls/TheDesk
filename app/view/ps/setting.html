@@ -2,13 +2,13 @@
 <html lang="ps">
 <head>
 	<title>Settings - TheDesk</title>
-	{{comment-start}}
+	
 	<script type="text/javascript">
 		var _jipt = [];
 		_jipt.push(['project', 'thedesk']);
 	</script>
 	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-	{{comment-end}}
+	
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
@@ -255,6 +255,11 @@
 		<label for="anime_yes">crwdns526:0crwdne526:0</label>
 		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
 		<label for="anime_no">crwdns527:0crwdne527:0</label>
+		<br>
+		<h5>{{actionBtns}}</h5>
+		<input type="text" style="width:150px" id="action_btns"><br>
+		{{actionBtnsDesc}}<br>
+		{{alltoots}}<input type="text" style="width:50px" id="icons">{{icons}}
 	</div>
 	</li>
 	<li>
@@ -320,8 +325,9 @@
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
 		<label for="q_mention">crwdns605:0crwdne605:0</label>
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
-		<label for="q_full">crwdns606:0crwdne606:0
-		</label>
+		<label for="q_full">crwdns606:0crwdne606:0</label>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_nothing" value="nothing" />
+		<label for="q_nothing">{{notqt}}</label>
 		<br>
 		<h5>crwdns607:0crwdne607:0</h5>
 		crwdns608:0crwdne608:0<br>
@@ -462,6 +468,7 @@
 <li>X:crwdns650:0crwdne650:0</li>
 <li>Ctrl+Enter:crwdns651:0crwdne651:0</li>
 <li>Ctrl+Enter+Shift:crwdns1924:0crwdne1924:0</li>
+<li>Alt+Enter:crwdns1916:0crwdne1916:0</li>
 <li>Ctrl+E:crwdns652:0crwdne652:0</li>
 <li>Esc:crwdns653:0crwdne653:0</li>
 <li>F5:crwdns654:0crwdne654:0</li>

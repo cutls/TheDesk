@@ -13,13 +13,13 @@
 	<link href='../../css/sort.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
 	<meta charset="utf-8">
-	{{comment-start}}
+	
 	<script type="text/javascript">
 		var _jipt = [];
 		_jipt.push(['project', 'thedesk']);
 	</script>
 	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-	{{comment-end}}
+	
 </head>
 <body>
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
@@ -125,7 +125,6 @@ var tlid=0;
 <span class="sml gray pointer anti-markdown mize">
 <a onclick="mdToggle()">Markdownエディタを表示</a>
 </span>
-<span id="suggest"></span>
 </div>
 <div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
 		<i class="waves-effect gray material-icons" id="nsfw" title="crwdns389:0crwdne389:0" onclick="nsfw()">visibility_off</i>
@@ -202,6 +201,7 @@ var tlid=0;
 </div>
 </div>
 <div id="right-side">
+<div id="suggest"></div>
 <!--絵文字ピッカー-->
 <div id="emoji" class="hide">
 		<span class="gray sml">crwdns409:0crwdne409:0
@@ -880,3 +880,4 @@ var tlid=0;
 <script type="text/javascript" src="../../js/emoji/emojipack.js"></script>
 <script type="text/javascript" src="../../js/emoji/default-emoji.js"></script>
 <script type="text/javascript" src="../../js/platform/end.js"></script>
+<script type="text/javascript" src="../../js/ui/menubar.js"></script>

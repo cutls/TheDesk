@@ -44,7 +44,7 @@ function notfColumn(acct_id, tlid, sys){
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			var max_id = httpreq.getResponseHeader("link").match(/\?max_id=([0-9]+)/)[1];
+			var max_id = httpreq.getResponseHeader("link").match(/[?&]{1}max_id=([0-9]+)/)[1];
 			if(json[0]){
 				var templete="";
 				var lastnotf=localStorage.getItem("lastnotf_" + acct_id);
@@ -397,7 +397,7 @@ function notfmore(tlid) {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			console.log(json);
-			var max_id = httpreq.getResponseHeader("link").match(/\?max_id=([0-9]+)/)[1];
+			var max_id = httpreq.getResponseHeader("link").match(/[?&]{1}max_id=([0-9]+)/)[1];
 			if(json[0]){
 				var templete="";
 				var lastnotf=localStorage.getItem("lastnotf_" + acct_id);

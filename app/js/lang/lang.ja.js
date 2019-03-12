@@ -101,7 +101,8 @@ var lang={
     "lang_tags_always":"常に",
     "lang_tags_realtime":"実況",
     "lang_tags_tagunpin":"{{tag}}をよく使うタグから削除",
-    "lang_tags_tagwarn":"次に{{tag}}なしでトゥートするまで全てのトゥートに{{tag}}が付与されます。",
+    "lang_tags_unrealtime":"実況解除",
+    "lang_tags_tagwarn":"{{tag}}がない場合自動で補完されます。",
 //tl/tl.js
     "lang_tl_media":"メディア",
     "lang_tl_reconnect":"Streamingに再接続しました",

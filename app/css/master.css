@@ -9,6 +9,26 @@ html,body{
   background-color: var(--bg);
   color: var(--color);
 }
+body{
+  border: thin solid gray;
+}
+#titlebar{
+  font-family: Open Sans;
+  background-color: var(--notfbox);
+  -webkit-app-region: drag;
+  width: 100vw;
+  height: 2.5rem;
+  padding: 0.5rem;
+}
+#titlebar i{
+  -webkit-app-region: no-drag;
+}
+#tb-btns{
+  right: 0;
+  top: 0;
+  position: absolute;
+  cursor: pointer;
+}
 .btn {
   margin: 5px;
   text-transform: none;

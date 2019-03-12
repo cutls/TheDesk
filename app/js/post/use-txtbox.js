@@ -1,10 +1,15 @@
 /*リプライ*/
-function re(id,at,acct_id,mode){
+function re(id,ats_cm,acct_id,mode){
+	clear();
+	var ats=ats_cm.split(',');
 	localStorage.setItem("nohide",true);
 	show();
 	$("#reply").val(id);
-	var te=$("#textarea").val();
-	$("#textarea").val("@"+at+" "+te);
+	for(var i=0;i<ats.length;i++){
+		var at=ats[i];
+		var te=$("#textarea").val();
+		$("#textarea").val("@"+at+" "+te);
+	}
 	$("#rec").text(lang.lang_yesno);
 	$("#post-acct-sel").val(acct_id);
 	$("#post-acct-sel").prop("disabled", true);
@@ -31,6 +36,9 @@ function qt(id,acct_id,at,url){
 	var qt = localStorage.getItem("quote");
 	if(!qt){
 		var qt="simple";
+	}
+	if(qt=="nothing"){
+		return false;
 	}
 	if(qt=="simple"){
 		show();

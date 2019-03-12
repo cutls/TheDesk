@@ -111,6 +111,7 @@ iframe {
   height: 100vh;
   flex: 1;
   border: thin solid gray;
+  border-top:none;
 }
 .box .pin,#his-data .pin{
   display:none;
@@ -241,6 +242,9 @@ grid-area: toot;
 .action i{
   font-size:1.2rem;
   margin-right:2px;
+}
+.action .fa-quote-right{
+  margin-top: 2px;
 }
 .actct{
   color:var(--beforehover);

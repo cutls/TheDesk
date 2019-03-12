@@ -13,6 +13,13 @@ input.addEventListener("focus", function() {
 	window.clearInterval(timer);
 	timer = window.setInterval(function() {
 		var new_val = input.value;
+		if(new_val==""){
+			$("#suggest").html("");
+			if($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")){
+				$("#right-side").hide()
+			}
+			return;
+		}
 		if (prev_val != new_val) {
 			var semoji = new_val.match(/:(\S{3,})/);
 			if(semoji){
@@ -32,7 +39,15 @@ input.addEventListener("focus", function() {
 						}
 						}
 				}
-				
+				if(ehtml!=""){
+					$("#right-side").show()
+					$("#poll").addClass("hide")
+					$("#emoji").addClass("hide")
+				}else{
+					if($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")){
+						$("#right-side").hide()
+					}
+				}
 				$("#suggest").html(ehtml);
 			}
 			
@@ -52,7 +67,10 @@ input.addEventListener("focus", function() {
 			} else if (acct && acct[1]) {
 				var q = acct[1];
 			}else  {
-				//$("#suggest").html("");
+				$("#suggest").html("");
+				if($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")){
+					$("#right-side").hide()
+				}
 				return;
 			}
 			var domain = localStorage.getItem("domain_" + acct_id);
@@ -72,24 +90,38 @@ input.addEventListener("focus", function() {
 					todo(error);
 					console.error(error);
 				}).then(function(json) {
-					if (json.hashtags[0] && tag[1]) {
+					if (json.hashtags[0] && tag) {
+						if(tag[1]){
 						var tags = "";
 						Object.keys(json.hashtags).forEach(function(key4) {
 							var tag = json.hashtags[key4];
-							tags = tags + '<a onclick="tagInsert(\'#' + tag + '\',\'#' + q +
-								'\')" class="pointer">#' + tag + '</a>  ';
+							if(tag!=q){
+								tags = tags + '<a onclick="tagInsert(\'#' + tag + '\',\'#' + q +
+								'\')" class="pointer">#' + tag + '</a><br>';
+							}
 						});
-						$("#suggest").html("Tags:" + tags);
+						$("#right-side").show()
+						$("#suggest").html("Tags:<br>" + tags);
+						$("#poll").addClass("hide")
+						$("#emoji").addClass("hide")
+						}
 					} else if (json.accounts[0] && acct[1]) {
 						var accts = "";
 						Object.keys(json.accounts).forEach(function(key3) {
 							var acct = json.accounts[key3];
-							accts = accts + '<a onclick="tagInsert(\'@' + acct.acct +
-								'\',\'@' + q + '\')" class="pointer">@' + acct.acct + '</a>  ';
+							if(acct.acct!=q){
+								accts = accts + '<a onclick="tagInsert(\'@' + acct.acct +
+								'\',\'@' + q + '\')" class="pointer">@' + acct.acct + '</a><br>';
+							}
 						});
-						$("#suggest").html("@:" + accts);
+						$("#right-side").show()
+						$("#suggest").html("@:<br>" + accts);
+						$("#poll").addClass("hide")
+						$("#emoji").addClass("hide")
 					} else {
-						$("#suggest").html("Not Found");
+						if($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")){
+							$("#right-side").hide()
+						}
 					}
 				});
 			}
@@ -121,6 +153,9 @@ function tagInsert(code, del) {
 	}
 	$("#textarea").val(newt);
 	$("#textarea").focus();
+	if($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")){
+		$("#right-side").hide()
+	}
 	$("#suggest").html("");
 }
 function cgNPs(q){

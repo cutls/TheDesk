@@ -255,6 +255,11 @@
 		<label for="anime_yes">{{yes}}</label>
 		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
 		<label for="anime_no">{{no}}</label>
+		<br>
+		<h5>{{actionBtns}}</h5>
+		<input type="text" style="width:150px" id="action_btns"><br>
+		{{actionBtnsDesc}}<br>
+		{{alltoots}}<input type="text" style="width:50px" id="icons">{{icons}}
 	</div>
 	</li>
 	<li>
@@ -320,8 +325,9 @@
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
 		<label for="q_mention">{{mention}}</label>
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
-		<label for="q_full">{{full}}
-		</label>
+		<label for="q_full">{{full}}</label>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_nothing" value="nothing" />
+		<label for="q_nothing">{{notqt}}</label>
 		<br>
 		<h5>{{main}}</h5>
 		{{mainwarn}}<br>
@@ -462,6 +468,7 @@
 <li>X:{{keytoggle}}</li>
 <li>Ctrl+Enter:{{keypost}}</li>
 <li>Ctrl+Enter+Shift:{{keysecpost}}</li>
+<li>Alt+Enter:{{secondary}}</li>
 <li>Ctrl+E:{{keyunread}}</li>
 <li>Esc:{{keyesc}}</li>
 <li>F5:{{keyf5}}</li>

@@ -8,7 +8,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		localStorage.setItem("lastunix_"+ tlid,date(obj[0].created_at, 'unix'));
 	}
 	
-	var actb = localStorage.getItem("action_btns");
 	var actb='re,rt,fav,qt,del,pin,red';
 	if(actb){
 		var actb = actb.split(',');
@@ -21,6 +20,12 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			}
 			disp[actb[k]]=tp;
 		}
+	}
+	var qt = localStorage.getItem("quote");
+	if(qt=="nothing"){
+		var qtClass="hide";
+	}else{
+		var qtClass="";
 	}
 	var datetype = localStorage.getItem("datetype");
 	var nsfwtype = localStorage.getItem("nsfw");
@@ -503,12 +508,27 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		//メンションであれば
 		if (menck) {
 			mentions = "";
+			var to_mention=[];
 			Object.keys(toot.mentions).forEach(function(key3) {
 				var mention = toot.mentions[key3];
 				mentions = mentions + '<a onclick="udg(\'' + mention.id + '\',' +
 					acct_id + ')" class="pointer">@' + mention.acct + '</a> ';
+					//自分は除外
+					//自インスタンスかどうかを確認し、IDの一致
+				if(mention.acct==mention.username && mention.id==localStorage.getItem("user-id_" + acct_id)){
+					//自分
+				}else{
+					//そのトゥの人NG
+					if(toot.account.acct!=mention.acct){
+						to_mention.push(mention.acct);
+					}
+				}
+				
 			});
+			to_mention.push(toot.account.acct);
 			mentions = '<div style="float:right">' + mentions + '</div>';
+		}else{
+			var to_mention=[toot.account.acct];
 		}
 		var tagck = toot.tags[0];
 		var tags = "";
@@ -726,7 +746,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<div class="action">'+vis+'</div>'+
 			'<div class="action '+antinoauth+'"><a onclick="detEx(\''+toot.url+'\',\'main\')" class="waves-effect waves-dark details" style="padding:0">'+lang.lang_parse_det+'</a></div>' +
 			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="re(\'' + toot.id +
-			'\',\'' + toot.account.acct + '\',' +
+			'\',\'' + to_mention + '\',' +
 			acct_id + ',\''+visen+
 			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_replyto+'"><i class="fa fa-share"></i><span class="rep_ct">' + replyct +
 			'</a></span></a></div>' +
@@ -735,7 +755,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_bt+'"><i class="fa fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 			'</span></a></div>' +
-			'<div class="action '+can_rt+' '+disp["qt"]+' '+noauth+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
+			'<div class="action '+can_rt+' '+disp["qt"]+' '+noauth+' '+qtClass+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
 			',\'' + toot.account.acct +'\',\''+toot.url+
 			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_quote+'"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
 			'<div class="action '+disp["fav"]+' '+noauth+'"><a onclick="fav(\'' + toot.id + '\',' + acct_id +

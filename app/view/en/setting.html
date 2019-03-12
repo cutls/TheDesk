@@ -255,6 +255,11 @@
 		<label for="anime_yes">Yes</label>
 		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
 		<label for="anime_no">No</label>
+		<br>
+		<h5>{{actionBtns}}</h5>
+		<input type="text" style="width:150px" id="action_btns"><br>
+		{{actionBtnsDesc}}<br>
+		{{alltoots}}<input type="text" style="width:50px" id="icons">{{icons}}
 	</div>
 	</li>
 	<li>
@@ -320,8 +325,9 @@
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
 		<label for="q_mention">URL and acct(mention to the user)</label>
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
-		<label for="q_full">URL, text and acct(mention to the user)
-		</label>
+		<label for="q_full">URL, text and acct(mention to the user)</label>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_nothing" value="nothing" />
+		<label for="q_nothing">Disabled(Hide buttons on TLs)</label>
 		<br>
 		<h5>Default accounts of actions</h5>
 		Main account can be set on Account Manager.<br>
@@ -462,6 +468,7 @@
 <li>X:Toggle toot box</li>
 <li>Ctrl+Enter:Post</li>
 <li>Ctrl+Enter+Shift:Post(secondary toot)</li>
+<li>Alt+Enter:Secondary Toot Button</li>
 <li>Ctrl+E:Make all notifications read</li>
 <li>Esc:Hide toot box</li>
 <li>F5:Super Reload</li>

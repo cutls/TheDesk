@@ -101,7 +101,8 @@ var lang={
     "lang_tags_always":"Always toots with ",
     "lang_tags_realtime":"Tag-stream toot",
     "lang_tags_tagunpin":"Unpin {{tag}}",
-    "lang_tags_tagwarn":"When you toot without {{tag}}, tag-streaming mode will be off.",
+    "lang_tags_unrealtime":"Disable TsT",
+    "lang_tags_tagwarn":"Auto complete {{tag}}, if toot without {{tag}}",
     //tl/tl.js
     "lang_tl_media":"Media",
     "lang_tl_reconnect":"Reconnect to streaming API",

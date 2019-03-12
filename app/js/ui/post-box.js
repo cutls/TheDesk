@@ -1,6 +1,7 @@
 /*ささやきボックス(Cr民並感)*/
 //✕隠す
 function hide() {
+	$("#right-side").hide()
 	$('#post-box').fadeOut()
 	$("#post-box").removeClass("appear")
 	$("#emoji").addClass("hide")
