@@ -19,14 +19,14 @@ function verck(ver,winstore) {
 	var electron = require("electron");
 	var remote=electron.remote;
 	var dialog=remote.dialog;
-	const options = {
-		type: 'info',
-		title: "Select your platform",
-		message: lang.lang_version_platform,
-		buttons: [lang.lang_no,lang.lang_yesno]
-	  }
 	  var platform=remote.process.platform;
 	  if(platform=="win32"){
+		const options = {
+			type: 'info',
+			title: "Select your platform",
+			message: lang.lang_version_platform,
+			buttons: [lang.lang_no,lang.lang_yesno]
+		  }
 		  console.log(localStorage.getItem("winstore"))
 		  if(!localStorage.getItem("winstore")){
 			  
@@ -38,7 +38,27 @@ function verck(ver,winstore) {
 					}
 			  });
 		  }
-	  }else{
+	  }else if(platform=="linux"){
+		if(localStorage.getItem("winstore")=="unix"){
+			localStorage.removeItem("winstore")
+		}
+		console.log(localStorage.getItem("winstore"))
+		if(!localStorage.getItem("winstore")){
+			const options = {
+				type: 'info',
+				title: "Select your platform",
+				message: lang.lang_version_platform_linux,
+				buttons: [lang.lang_no,lang.lang_yesno]
+			  }
+			  dialog.showMessageBox(options, function(arg) {
+				if(arg==1){
+					localStorage.setItem("winstore","snapcraft")
+				  }else{
+					localStorage.setItem("winstore","localinstall")
+				  }
+			});
+		}
+	}else{
 		  localStorage.setItem("winstore","unix")
 	  }
 	var l = 5;

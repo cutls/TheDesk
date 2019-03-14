@@ -24,6 +24,7 @@ function settings() {
 		themes(cd);
 		localStorage.setItem("theme", cd);
 	}
+
 	var nd = $("[name=nsfw]:checked").val();
 	var nt = $("[for=n_"+nd+"]").text();
 	if (nd != localStorage.getItem("nsfw")) {
@@ -249,6 +250,12 @@ function load() {
 		var theme = "white";
 	}
 	$("#" + theme).prop("checked", true);
+
+	var ha = localStorage.getItem("ha");
+	if (!ha) {
+		var ha = "false";
+	}
+	$("#ha_" + ha).prop("checked", true);
 
 	var nsfw = localStorage.getItem("nsfw");
 	if (!nsfw) {
@@ -912,6 +919,12 @@ function customImp(){
 	}else{
 		alert("Error")
 	}
+}
+function hardwareAcceleration(){
+	var had = $("[name=ha]:checked").val();
+	localStorage.setItem("ha", had);
+	console.log("ha");
+	ipc.send('ha', had);
 }
 
 ipc.on('theme-json-create-complete', function (event, args) {

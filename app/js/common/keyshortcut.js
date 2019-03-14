@@ -29,6 +29,13 @@ $(function($) {
 				return false;
 			}
 		}
+		//Alt+Enter:セカンダリー
+		if (event.metaKey || event.altKey && wv) {
+			if (e.keyCode === 13) {
+				sec();
+				return false;
+			}
+		}
 		
 		//Shift+Space:Markdownゼロ幅スペース
 		if (event.shiftKey) {

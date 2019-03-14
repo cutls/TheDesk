@@ -5,6 +5,7 @@
 localStorage.removeItem("kirishima")
 localStorage.removeItem("imas")
 localStorage.removeItem("image");
+localStorage.removeItem("stable")
 localStorage.setItem("mode_misskey.xyz","misskey")
 function ck() {
 	var main = localStorage.getItem("main");

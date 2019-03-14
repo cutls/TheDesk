@@ -22,6 +22,7 @@ var lang={
     "lang_version_usever":"No update is found({{ver}})",
     "lang_version_skipver":"Update was ignored.",
     "lang_version_platform":"Was this software installed at Microsoft Store? When select 'yes', any update was ignored.",
+    "lang_version_platform_linux":"Was this software installed at Snapcraft(snapd)? When select 'yes', any update was ignored.",
     //login
     //login/login.js
     "lang_login_noauth":"Show TL of unlogined accounts",
@@ -100,7 +101,8 @@ var lang={
     "lang_tags_always":"Always toots with ",
     "lang_tags_realtime":"Tag-stream toot",
     "lang_tags_tagunpin":"Unpin {{tag}}",
-    "lang_tags_tagwarn":"When you toot without {{tag}}, tag-streaming mode will be off.",
+    "lang_tags_unrealtime":"Disable TsT",
+    "lang_tags_tagwarn":"Auto complete {{tag}}, if toot without {{tag}}",
     //tl/tl.js
     "lang_tl_media":"Media",
     "lang_tl_reconnect":"Reconnect to streaming API",
@@ -120,6 +122,9 @@ var lang={
     "lang_layout_webviewmode":"Prefer WebView",
     "lang_excluded":"Excluded type of notification",
     "lang_layout_excludingbt":"Show BT mode(OFF/Exclude BT/Only BT)",
+    //ui/sort.js
+    "lang_sort_gothis":"Go to this column",
+    "lang_sort_remthis":"Delete this column",
     //ui/spotify.js
     "lang_spotify_img":"Attach an album artwork",
     "lang_spotify_imgno":"Not attach an album artwork",

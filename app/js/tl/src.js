@@ -1,10 +1,10 @@
 //検索
 //検索ボックストグル
-function srcToggle() {
-	$("#src-box").toggleClass("hide");
-	$("#src-box").toggleClass("show");
-	$("#src-box").css("bottom","40px");
-	$("#src-box").css("left",$('#src-tgl').offset().left-$('#src-box').width()/2+"px");
+function searchMenu() {
+	$("#left-menu div").removeClass("active");
+	$("#searchMenu").addClass("active");
+	$(".menu-content").addClass("hide");
+    $("#src-box").removeClass("hide");
 	$('ul.tabs').tabs('select_tab', 'src-sta');
 	$("#src-contents").html("");
 }

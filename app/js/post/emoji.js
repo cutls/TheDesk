@@ -15,6 +15,7 @@ function emojiToggle() {
 	if ($("#emoji").hasClass("hide")) {
 		$("#emoji").removeClass("hide")
 		$("#right-side").show()
+		$("#suggest").html("");
 		if (!localStorage.getItem("emoji_" + acct_id)) {
 			var html =
 				'<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="emojiGet(\'true\');">'+lang.lang_emoji_get+'</button>';
@@ -25,6 +26,7 @@ function emojiToggle() {
 	} else {
 		$("#poll").addClass("hide")
 		$("#emoji").addClass("hide")
+		$("#suggest").html("");
 		$("#right-side").hide()
 	}
 

@@ -130,7 +130,11 @@ function udg(user, acct_id) {
 			$('#his-data').css('background-image', 'url(' + json.header + ')');
 			$("#his-sta").text(json.statuses_count);
 			$("#his-follow").text(json.following_count);
-			$("#his-follower").text(json.followers_count);
+			var flerc=json.followers_count;
+			if(flerc<0){
+				flerc="-";
+			}
+			$("#his-follower").text(flerc);
 			$("#his-since").text(crat(json.created_at));
 			$("#his-openin").attr("data-href", json.url);
 			if(json.fields){

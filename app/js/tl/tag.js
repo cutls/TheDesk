@@ -54,10 +54,19 @@ function favTag(){
         var obj = JSON.parse(tagarr);
     }
     var tags="";
+    var nowPT=localStorage.getItem("stable")
     Object.keys(obj).forEach(function(key) {
         var tag = obj[key];
-        tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="' +lang.lang_parse_tagTL.replace("{{tag}}" ,'#'+tag)+ '">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer" title="' + lang.lang_parse_tagtoot.replace("{{tag}}" ,'#'+tag) + '">Toot</a>　'+
-            '<a onclick="autoToot(\'#' + tag + ' \');brInsert(\'#' + tag + ' \')" class="pointer" title="'+lang.lang_tags_always + lang.lang_parse_tagtoot.replace("{{tag}}" ,'#'+tag) + '">'+lang.lang_tags_realtime+'</a>　<a onclick="tagRemove(\'' + key + '\')" class="pointer" title="' +lang.lang_tags_tagunpin.replace("{{tag}}" ,'#'+tag)+ '">'+lang.lang_del+'</a></span> ';
+        if(nowPT!=tag){
+            console.log(nowPT+"/"+tag);
+            var ptt=lang.lang_tags_realtime;
+            var nowon="";
+        }else{
+            var ptt=lang.lang_tags_unrealtime;
+            var nowon="("+lang.lang_tags_realtime+")";
+        }
+        tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a>'+nowon+'<span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="' +lang.lang_parse_tagTL.replace("{{tag}}" ,'#'+tag)+ '">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer" title="' + lang.lang_parse_tagtoot.replace("{{tag}}" ,'#'+tag) + '">Toot</a>　'+
+            '<a onclick="autoToot(\'' + tag + '\');" class="pointer" title="'+lang.lang_tags_always + lang.lang_parse_tagtoot.replace("{{tag}}" ,'#'+tag) + '">'+ptt+'</a>　<a onclick="tagRemove(\'' + key + '\')" class="pointer" title="' +lang.lang_tags_tagunpin.replace("{{tag}}" ,'#'+tag)+ '">'+lang.lang_del+'</a></span> ';
     });
     if(obj.length>0){
         $("#taglist").append("My Tags:" + tags);
@@ -106,6 +115,14 @@ function tagTL(a,b,c,d){
     tl(a,b,acct_id,d);
 }
 function autoToot(tag){
-    localStorage.setItem("stable",tag);
-    Materialize.toast(lang.lang_tags_tagwarn +replace("{{tag}}" ,tag).replace("{{tag}}" ,tag),3000);
+    var nowPT=localStorage.getItem("stable")
+    if(nowPT==tag){
+        localStorage.removeItem("stable");
+        Materialize.toast(lang.lang_tags_unrealtime,3000);
+    }else{
+        localStorage.setItem("stable",tag);
+        Materialize.toast(lang.lang_tags_tagwarn.replace("{{tag}}" ,tag).replace("{{tag}}" ,tag),3000);
+        brInsert('#' + tag+" ")
+    }
+    favTag();
 }

@@ -1,7 +1,6 @@
     //commonError
 var lang={
     "language":"ja",
-    //commonError
     "lang_toot":"トゥート",
     "lang_there":"あり",
     "lang_nothing":"なし",
@@ -23,6 +22,7 @@ var lang={
     "lang_version_usever":"お使いのバージョン{{ver}}は最新です。",
     "lang_version_skipver":"アップデートはスキップされました。",
     "lang_version_platform":"このソフトウェアはMicrosoft Storeからダウンロードされましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
+    "lang_version_platform_linux":"このソフトウェアはSnapcraft(snapd)からインストールしましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
 //login
 //login/login.js
     "lang_login_noauth":"認証せずに見る",
@@ -101,7 +101,8 @@ var lang={
     "lang_tags_always":"常に",
     "lang_tags_realtime":"実況",
     "lang_tags_tagunpin":"{{tag}}をよく使うタグから削除",
-    "lang_tags_tagwarn":"次に{{tag}}なしでトゥートするまで全てのトゥートに{{tag}}が付与されます。",
+    "lang_tags_unrealtime":"実況解除",
+    "lang_tags_tagwarn":"{{tag}}がない場合自動で補完されます。",
 //tl/tl.js
     "lang_tl_media":"メディア",
     "lang_tl_reconnect":"Streamingに再接続しました",
@@ -121,6 +122,9 @@ var lang={
     "lang_layout_webviewmode":"WebView優先",
     "lang_excluded":"除外する通知",
     "lang_layout_excludingbt":"BT表示(OFF/BT除外/BTのみ)",
+//ui/sort.js
+    "lang_sort_gothis":"このカラムへ",
+    "lang_sort_remthis":"このカラムを削除",
 //ui/spotify.js
     "lang_spotify_img":"アルバムアートワークを添付します。",
     "lang_spotify_imgno":"アルバムアートワークを添付しません。",

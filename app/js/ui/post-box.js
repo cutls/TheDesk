@@ -1,6 +1,7 @@
 /*ささやきボックス(Cr民並感)*/
 //✕隠す
 function hide() {
+	$("#right-side").hide()
 	$('#post-box').fadeOut()
 	$("#post-box").removeClass("appear")
 	$("#emoji").addClass("hide")
@@ -19,17 +20,40 @@ function show() {
 	$("#post-box").addClass("appear")
 	$("#textarea").focus();
 	console.log("show"+localStorage.getItem("postbox-left"));
-	$('#post-box').css("left",localStorage.getItem("postbox-left")+"px")
-	$('#post-box').css("top",localStorage.getItem("postbox-top")+"px")
+	var left=localStorage.getItem("postbox-left");
+	if(left>$('body').width()-$('#post-box').width()){
+	  left=$('body').width()-$('#post-box').width();
+	}else if(left<0){
+		left=0;
+	}
+	var top=localStorage.getItem("postbox-top");
+	if(top>$('body').height()-$('#post-box').height()){
+		top=$('body').height()-$('#post-box').height();
+	}else if(top<0){
+		top=0;
+	}
+	$('#post-box').css("left",left+"px")
+	$('#post-box').css("top",top+"px")
 	$('#post-box').fadeIn();
 }
 
 $(function() {
   $( "#post-box" ).draggable({handle: "#post-bar",
 	stop: function() {
-		console.log("stopped");
-	  localStorage.setItem("postbox-left",$('#post-box').offset().left);
-	  localStorage.setItem("postbox-top",$('#post-box').offset().top);
+	var left=$('#post-box').offset().left;
+	if(left>$('body').width()-$('#post-box').width()){
+	  left=$('body').width()-$('#post-box').width();
+	}else if(left<0){
+		left=0;
+	}
+	var top=$('#post-box').offset().top;
+	if(top>$('body').height()-$('#post-box').height()){
+		top=$('body').height()-$('#post-box').height();
+	}else if(top<0){
+		top=0;
+	}
+	  localStorage.setItem("postbox-left",left);
+	  localStorage.setItem("postbox-top",top);
 	}
   });
 });
@@ -71,23 +95,4 @@ $('#textarea,#cw-text').focusout(function(e) {
 		localStorage.removeItem("nohide")
 	} 
 	//setTimeout(remove, 100);
-});
-
-$("#timeline-container").click(function(e) {
-	if(!$('#list-box').hasClass("hide")){
-		$("#list-box").removeClass("show");
-		$("#list-box").addClass("hide")
-	}
-	if(!$('#src-box').hasClass("hide")){
-		$("#src-box").removeClass("show");
-		$("#src-box").addClass("hide")
-	}
-	if(!$('#filter-box').hasClass("hide")){
-		$("#filter-box").removeClass("show");
-		$("#filter-box").addClass("hide")
-	}
-	if(!$('#add-box').hasClass("hide")){
-		$("#add-box").removeClass("show");
-		$("#add-box").addClass("hide")
-	}
 });

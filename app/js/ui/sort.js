@@ -32,9 +32,9 @@ function sortload(){
 				var acctdata=user+"@"+domain;
 			}
 			
-			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'"'+insert+'><a onclick="goColumn(' + key +
-			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムへ">forward</i></a> <a onclick="removeColumn(' + key +
-			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a><br>'+acctdata+" "+cap(acct.type, acct.data,acct.domain)+'</li>';
+			var html='<li class="drag-content" data-id="'+key+'" data-flag="'+flag+'"'+insert+'><div class="sorticon"><i class="material-icons">'+icon(acct.type)+'</i></div><div class="sorttitle">'+cap(acct.type, acct.data,acct.domain)+'</div><div class="sortaction"><a onclick="goColumn(' + key +
+			')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_sort_gothis+'">forward</i></a> <a onclick="removeColumn(' + key +
+			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a></div><div class="sortacct">'+acctdata+'</div></li>';
 			$("#sort").append(html);
 		});
 		drag();
@@ -104,18 +104,14 @@ function sort(){
 	Materialize.toast("並べ替え完了。", 3000);
 	sortload();
 	parseColumn();
-	sortToggle()
+	sortMenu()
 }
 //ソートボタントグル
-function sortToggle(){
+function sortMenu(){
+	$("#left-menu div").removeClass("active");
+	$("#sortMenu").addClass("active");
+	$(".menu-content").addClass("hide");
+    $("#sort-box").removeClass("hide");
 	$("#sort").html("");
-	if ($("#sort-box").hasClass("hide")) {
-		$("#sort-box").removeClass("hide");
-		$("#sort-box").addClass("show");
-		//並べ替え
-		sortload();
-	} else {
-		$("#sort-box").addClass("hide");
-		$("#sort-box").removeClass("show");
-	}
+	sortload();
 }

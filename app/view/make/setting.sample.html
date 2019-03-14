@@ -79,6 +79,14 @@
 		{{savefolderwarn}}<br>
 		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">{{change}}</button>
 		<br>
+		<h5>{{hardwareAcceleration}}</h5>
+		{{hardwareAccelerationWarn}}
+		<br>
+		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_true" value="true" />
+		<label for="ha_true">{{yes}}</label>
+		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_false" value="false" />
+		<label for="ha_false">{{no}}</label>
+		<br>
 	</div>
 	</li>
 	<li>
@@ -312,8 +320,9 @@
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
 		<label for="q_mention">{{mention}}</label>
 		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
-		<label for="q_full">{{full}}
-		</label>
+		<label for="q_full">{{full}}</label>
+		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_nothing" value="nothing" />
+		<label for="q_nothing">{{notqt}}</label>
 		<br>
 		<h5>{{main}}</h5>
 		{{mainwarn}}<br>
@@ -454,6 +463,7 @@
 <li>X:{{keytoggle}}</li>
 <li>Ctrl+Enter:{{keypost}}</li>
 <li>Ctrl+Enter+Shift:{{keysecpost}}</li>
+<li>Alt+Enter:{{secondary}}</li>
 <li>Ctrl+E:{{keyunread}}</li>
 <li>Esc:{{keyesc}}</li>
 <li>F5:{{keyf5}}</li>

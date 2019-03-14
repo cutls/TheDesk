@@ -7,12 +7,12 @@ var websocketLocal = [];
 var websocketNotf = [];
 
 //カラム追加ボックストグル
-function addToggle() {
-	$("#add-box").toggleClass("hide");
+function addColumnMenu() {
+	$("#left-menu div").removeClass("active");
+	$("#addColumnMenu").addClass("active");
+	$(".menu-content").addClass("hide");
+    $("#add-box").removeClass("hide");
 	addselCk()
-	$("#add-box").css("bottom","40px");
-	$("#add-box").css("left",$('#add-tgl').offset().left-$('#add-box').width()/2+"px");
-	$("#add-box").toggleClass("show");
 }
 //最初、カラム変更時に発火
 function parseColumn() {

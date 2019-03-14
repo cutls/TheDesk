@@ -13,13 +13,13 @@
 	<link href='../../css/sort.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
 	<meta charset="utf-8">
-	{{comment-start}}
+	
 	<script type="text/javascript">
 		var _jipt = [];
 		_jipt.push(['project', 'thedesk']);
 	</script>
 	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-	{{comment-end}}
+	
 </head>
 <body>
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
@@ -32,7 +32,7 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Miria (17.2.0)";
+var ver="Miria (17.3.0)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -54,7 +54,7 @@ var tlid=0;
 </div>
 </div>
 <div id="post-box" class="z-depth-5">
-<div id="post-bar">crwdns2402:0crwdne2402:0</div>
+<div id="post-bar" class="drag-bar">crwdns2402:0crwdne2402:0</div>
 <!--トゥートボックス-->
 <div id="left-side">
 <div class="row" style="margin-bottom:0;">
@@ -125,7 +125,6 @@ var tlid=0;
 <span class="sml gray pointer anti-markdown mize">
 <a onclick="mdToggle()">Markdownエディタを表示</a>
 </span>
-<span id="suggest"></span>
 </div>
 <div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
 		<i class="waves-effect gray material-icons" id="nsfw" title="crwdns389:0crwdne389:0" onclick="nsfw()">visibility_off</i>
@@ -202,6 +201,7 @@ var tlid=0;
 </div>
 </div>
 <div id="right-side">
+<div id="suggest"></div>
 <!--絵文字ピッカー-->
 <div id="emoji" class="hide">
 		<span class="gray sml">crwdns409:0crwdne409:0
@@ -582,17 +582,19 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Miria_17-2-0" class="release-do" style="display:none; ">
+			<div id="release-Miria_17-2-1" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Miria (17.2.0)</h5>
-					カスタムテーマを実装。Misskeyのテーマとの一定の互換性あり。<a href="https://assets.msky.cafe/" target="_blank">MiAS</a>から80を超えるテーマを入手。
-					<a href="https://thedesk.top/mias.html">注意点</a><br>
-					Misskeyのログイン方法変更につき、いちいちDevCenterに行かなくてもよくなりました。<br>
-					日本語でベタ書きしていたダイアログを一部多言語対応に変更。<br>
-					
+					<h5>Release Note Miria (17.2.1)</h5>
+					多くの機能を「メニュー」に集約。結局何のボタンかわからないアイコンの羅列から解放。<br>
+					Alt+Enterでセカンダリートゥートボタン<br>
+					引用ボタンを表示しない設定(引用形式設定を「使用しない」)<br>
+					実況機能をまともに書き直した。<br>
+					サジェストをトゥートボックスの右に<br>
+					ハードウェアアクセラレーションを無効化するオプション。(設定の表示などが乱れるときに設定)<br>
+					返信時に「@」が複数含まれない仕様を訂正<br>
 					<img class="emoji" draggable="false" alt="⚠" src="https://twemoji.maxcdn.com/2/72x72/26a0.png">TheDeskのMisskeyについての機能追加は終了しています。<br>
 			</div>
 			<br><br>
@@ -623,125 +625,147 @@ var tlid=0;
 		<i class="material-icons pointer" onclick="endPip()">close</i>
 		<div id="pip-content">
 		</div>
-    </div>
-<!--カラム追加-->
-<div id="add-box" class="hide z-depth-4 notf-box">
-<div class="input-field"><span data-trans="your_acct">crwdns494:0crwdne494:0</span>
-<br>
-<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
-<label></label>
-</div>
-<div class="input-field">
-<div id="auth">
-<select id="type-sel" style="color:black">
-	<option value="local" data-trans="local">crwdns480:0crwdne480:0</option>
-	<option value="local-media" data-trans="local-media">crwdns481:0crwdne481:0</option>
-	<option value="home" data-trans="home">crwdns482:0crwdne482:0</option>
-	<option value="pub" data-trans="public">crwdns483:0crwdne483:0</option>
-	<option value="pub-media" data-trans="public-media">crwdns484:0crwdne484:0</option>
-	<option value="dm" data-trans="dm">crwdns485:0crwdne485:0</option>
-	<option value="mix" data-trans="integrated">crwdns486:0crwdne486:0</option>
-	<option value="plus" data-trans="plus">crwdns487:0crwdne487:0</option>
-	<option value="notf" data-trans="notification">crwdns488:0crwdne488:0</option>
-</select>
-<label data-trans="show_tl">crwdns489:0crwdne489:0</label>
-</div>
-<div id="noauth" class="hide">crwdns489:0crwdne489:0
-	<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);" placeholder="e.g:mstdn.jp">
-</div>
-<div id="webview-add" class="hide">crwdns490:0crwdne490:0
-</div>
-</div>
-<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()" data-trans-i="add">
-	<i class="material-icons left">add</i>crwdns491:0crwdne491:0
-</button>
-<br>
-<br>
-</div>
-<!--検索-->
-<div id="src-box" class="hide notf-box z-depth-4" style="width:500px">
-		<div class="input-field">
-		<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
-</div><div class="input-field">
-<i class="material-icons prefix">search</i>
-<input id="src" type="text" class="validate" style="width:calc( 60% - 40px);">
-<label for="src" data-trans="src">crwdns492:0crwdne492:0</label>
-<button class="btn waves-effect indigo" style="width:calc( 40% - 40px);" onclick="src()" data-trans-i="src">
-	<i class="material-icons left">search</i>crwdns492:0crwdne492:0
-</button>
-<br>
-<br>
-</div>
-<div id="search">
-<div id="src-contents">
-</div>
-</div>
-</div>
-<!--並べ替え-->
-<div id="sort-box" class="hide">
-<ul id="sort"></ul>
-<div>
-<button onclick="sort()" class="btn waves-effect nex" style="width:100%; max-width:300px;" data-trans-i="sort">
-	<i class="material-icons left">sort</i>crwdns493:0crwdne493:0
-</button>
-<button onclick="sortToggle()" class="btn waves-effect nex" style="width:100%; max-width:300px;" data-trans-i="close">
-		<i class="material-icons left">close</i>crwdns385:0crwdne385:0
-</button>
-</div>
-</div>
-<!--リスト-->
-<div id="list-box" class="hide notf-box z-depth-4">
-	<div class="input-field" style="width:calc( 100% - 100px);float:left">
-		<select id="list-acct-sel" class="acct-sel"></select>
-		<label>crwdns494:0crwdne494:0</label>
+		</div>
+<!--menu-->
+<div id="menu" class="z-depth-5" style="display:none">
+		<div id="menu-bar" class="drag-bar"></div>
+		<span class="cancel">
+				<i class="material-icons waves-effect" onclick="menu()" title="crwdns412:0crwdne412:0(X)">cancel</i>
+			</span>
+		<div id="menu-wrapper">
+		<div id="left-menu">
+			<div class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu"><i class="material-icons">add</i><span>crwdns512:0crwdne512:0</span></div>
+			<div class="waves-effect" onclick="sortMenu()" id="sortMenu"><i class="material-icons">sort</i><span>crwdns513:0crwdne513:0</span></div>
+			<div class="waves-effect" onclick="searchMenu()" id="searchMenu"><i class="material-icons">search</i><span>crwdns492:0crwdne492:0</span></div>
+			<div class="waves-effect" onclick="listMenu()" id="listMenu"><i class="material-icons">view_headline</i><span>crwdns444:0crwdne444:0</span></div>
+			<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i class="material-icons">filter_list</i><span>crwdns515:0crwdne515:0</span></div>
+			<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>crwdns1894:0crwdne1894:0</span></div>
+		</div>
+		<div id="right-menu">
+				<!--カラム追加-->
+<div id="add-box" class="hide menu-content">
+	<div class="input-field"><span data-trans="your_acct">crwdns494:0crwdne494:0</span>
+	<br>
+	<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
+	<label></label>
 	</div>
-	<div style="float:left; padding-top:8px; padding-bottom:28px;">
-		<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
-			crwdns495:0crwdne495:0
-		</button>
+	<div class="input-field">
+	<div id="auth">
+	<select id="type-sel" style="color:black">
+		<option value="local" data-trans="local">crwdns480:0crwdne480:0</option>
+		<option value="local-media" data-trans="local-media">crwdns481:0crwdne481:0</option>
+		<option value="home" data-trans="home">crwdns482:0crwdne482:0</option>
+		<option value="pub" data-trans="public">crwdns483:0crwdne483:0</option>
+		<option value="pub-media" data-trans="public-media">crwdns484:0crwdne484:0</option>
+		<option value="dm" data-trans="dm">crwdns485:0crwdne485:0</option>
+		<option value="mix" data-trans="integrated">crwdns486:0crwdne486:0</option>
+		<option value="plus" data-trans="plus">crwdns487:0crwdne487:0</option>
+		<option value="notf" data-trans="notification">crwdns488:0crwdne488:0</option>
+	</select>
+	<label data-trans="show_tl">crwdns489:0crwdne489:0</label>
 	</div>
-	<br><br>
-	<div id="lists"></div>
-	<div id="lists-user"></div>
-	<input type="text" style="width:150px" id="list-add" placeholder="crwdns465:0crwdne465:0">
-		<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">crwdns445:0crwdne445:0</button>
+	<div id="noauth" class="hide">crwdns489:0crwdne489:0
+		<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);" placeholder="e.g:mstdn.jp">
+	</div>
+	<div id="webview-add" class="hide">crwdns490:0crwdne490:0
+	</div>
+	</div>
+	<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()" data-trans-i="add">
+		<i class="material-icons left">add</i>crwdns491:0crwdne491:0
+	</button>
+	<br>
+	<br>
+	</div>
+	<!--検索-->
+	<div id="src-box" class="hide menu-content">
+			<div class="input-field">
+			<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
+	</div><div class="input-field">
+	<i class="material-icons prefix">search</i>
+	<input id="src" type="text" class="validate" style="width:calc( 60% - 40px);">
+	<label for="src" data-trans="src">crwdns492:0crwdne492:0</label>
+	<button class="btn waves-effect indigo" style="width:calc( 40% - 40px);" onclick="src()" data-trans-i="src">
+		<i class="material-icons left">search</i>crwdns492:0crwdne492:0
+	</button>
+	<br>
+	<br>
+	</div>
+	<div id="search">
+	<div id="src-contents">
+	</div>
+	</div>
+	</div>
+	<!--並べ替え-->
+	<div id="sort-box" class="hide menu-content">
+	<ul id="sort"></ul>
+	<div>
+	<button onclick="sort()" class="btn waves-effect nex" style="width:100%; max-width:300px;" data-trans-i="sort">
+		<i class="material-icons left">sort</i>crwdns493:0crwdne493:0
+	</button>
+	</div>
+	</div>
+	<!--リスト-->
+	<div id="list-box" class="hide menu-content">
+		<div class="input-field" style="width:calc( 100% - 100px);float:left">
+			<select id="list-acct-sel" class="acct-sel"></select>
+			<label>crwdns494:0crwdne494:0</label>
+		</div>
+		<div style="float:left; padding-top:8px; padding-bottom:28px;">
+			<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
+				crwdns495:0crwdne495:0
+			</button>
+		</div>
+		<br><br>
+		<div id="lists"></div>
+		<div id="lists-user"></div>
+		<input type="text" style="width:150px" id="list-add" placeholder="crwdns465:0crwdne465:0">
+			<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">crwdns445:0crwdne445:0</button>
+	</div>
+	<!--フィルター-->
+	<div id="filter-box" class="hide menu-content">
+		<div class="input-field" style="width:calc( 100% - 100px);float:left">
+			<select id="filter-acct-sel" class="acct-sel"></select>
+			<label>crwdns494:0crwdne494:0</label>
+		</div>
+		<div style="float:left; padding-top:8px; padding-bottom:28px;">
+			<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
+				crwdns495:0crwdne495:0
+			</button>
+		</div>
+		<div id="filtered-words"></div>
+		<input type="hidden" id="filter-edit-id">
+		<input type="text" style="width:150px" id="filter-add-word" placeholder="crwdns496:0crwdne496:0"><br>
+		crwdns497:0crwdne497:0<br>
+		<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+			<label for="home_filter">crwdns482:0crwdne482:0</label>
+		<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+			<label for="local_filter">crwdns480:0crwdne480:0</label>
+		<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+			<label for="notf_filter">crwdns488:0crwdne488:0</label>
+		<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+			<label for="conv_filter">crwdns498:0crwdne498:0</label><br>
+			crwdns499:0crwdne499:0<br>
+		<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+			<label for="wholeword_filter">crwdns500:0crwdne500:0</label><br>
+		<span class="sml">crwdns501:0crwdne501:0</span><br>
+		<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+			<label for="except_filter">crwdns502:0crwdne502:0</label><br>
+		<span class="sml">crwdns503:0crwdne503:0</span><br>
+		crwdns504:0crwdne504:0<span class="sml">crwdns505:0crwdne505:0<b>crwdns506:0crwdne506:0</b></span><br><br>
+		<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">crwdns507:0crwdne507:0
+		<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">crwdns508:0crwdne508:0
+		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">crwdns509:0crwdne509:0
+		<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">crwdns491:0crwdne491:0</button><br>
+		<span class="sml">crwdns510:0crwdne510:0</span>
+	</div>
 </div>
-<!--フィルター-->
-<div id="filter-box" class="hide notf-box z-depth-4">
-	<div class="input-field" style="width:calc( 100% - 100px);float:left">
-		<select id="filter-acct-sel" class="acct-sel"></select>
-		<label>crwdns494:0crwdne494:0</label>
-	</div>
-	<div style="float:left; padding-top:8px; padding-bottom:28px;">
-		<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
-			crwdns495:0crwdne495:0
-		</button>
-	</div>
-	<div id="filtered-words"></div>
-	<input type="hidden" id="filter-edit-id">
-	<input type="text" style="width:150px" id="filter-add-word" placeholder="crwdns496:0crwdne496:0"><br>
-	crwdns497:0crwdne497:0<br>
-	<input type="checkbox" class="filled-in" id="home_filter" value="home" />
-	  <label for="home_filter">crwdns482:0crwdne482:0</label>
-	<input type="checkbox" class="filled-in" id="local_filter" value="public" />
-	  <label for="local_filter">crwdns480:0crwdne480:0</label>
-	<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
-	  <label for="notf_filter">crwdns488:0crwdne488:0</label>
-	<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
-	  <label for="conv_filter">crwdns498:0crwdne498:0</label><br>
-	  crwdns499:0crwdne499:0<br>
-	<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
-	  <label for="wholeword_filter">crwdns500:0crwdne500:0</label><br>
-	<span class="sml">crwdns501:0crwdne501:0</span><br>
-	<input type="checkbox" class="filled-in" id="except_filter" value="1" />
-	  <label for="except_filter">crwdns502:0crwdne502:0</label><br>
-	<span class="sml">crwdns503:0crwdne503:0</span><br>
-	crwdns504:0crwdne504:0<span class="sml">crwdns505:0crwdne505:0<b>crwdns506:0crwdne506:0</b></span><br><br>
-	<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">crwdns507:0crwdne507:0
-	<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">crwdns508:0crwdne508:0
-	<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">crwdns509:0crwdne509:0
-	<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">crwdns491:0crwdne491:0</button><br>
-	<span class="sml">crwdns510:0crwdne510:0</span>
+		</div>
+		<a href="index.html" class="waves-effect">
+				<i class="material-icons" style="font-size: 1rem;">refresh</i>crwdns518:0crwdne518:0
+		</a>&nbsp;|&nbsp;
+		<a onclick="bottomReverse()" class="nex waves-effect">
+				<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>crwdns517:0crwdne517:0
+		</a>
 </div>
 <div id="main">
 <!--TLのTL-->
@@ -757,52 +781,23 @@ var tlid=0;
 								<button id="posttgl" class="btn waves-effect indigo" style="width: 100%;height: 2.5rem;line-height: 0;margin: 0;">
 									<i class="material-icons" style="position: relative; top: 5px; font-size: 1.5rem; text-align: center; margin-right: 10px;">edit</i>crwdns388:0crwdne388:0
 								</button>
-        </div>
+				</div>
         <div class="leftside reverse" id="group">
-            <div class="btnsgroup"><span class="grouptitle">Columns:</span>
-                <a onclick="addToggle()" class="nex waves-effect" data-trans-i="add" id="add-tgl">
-                    <i class="material-icons nex" title="crwdns512:0crwdne512:0" data-trans-title="column_add">add</i>
-                </a>
-                <a onclick="sortToggle()" class="nex waves-effect">
-                    <i class="material-icons nex big-icon" title="crwdns513:0crwdne513:0" data-trans-title="sort">sort</i>
-                </a>
-            </div>
-            <div class="btnsgroup"><span class="grouptitle">Accounts:</span>
-                <a href="acct.html" class="nex waves-effect">
-                    <i class="material-icons nex big-icon" title="crwdns514:0crwdne514:0(Ctrl+Shift+M)" data-trans-title="manager">account_circle</i>
-                </a>
-                <a onclick="srcToggle()" class="nex waves-effect" id="src-tgl">
-                    <i class="material-icons" title="crwdns492:0crwdne492:0" data-trans-title="src">search</i>
-                </a>
-                <a onclick="listToggle()" class="nex waves-effect" id="list-tgl">
-                    <i class="material-icons" title="crwdns444:0crwdne444:0" data-trans-title="list">view_headline</i>
-                </a>
-                <a onclick="filterToggle()" class="nex waves-effect" id="filter-tgl">
-                    <i class="material-icons" title="crwdns515:0crwdne515:0" data-trans-title="filter">filter_list</i>
-                </a>
-            </div>
-			<div class="btnsgroup"><span class="grouptitle">Preferences:</span>
-				<a onclick="bottomReverse()" class="nex waves-effect">
-                    <i class="material-icons nex" title="crwdns517:0crwdne517:0" data-trans-title="reverse">swap_horiz</i>
-                </a>
-                <a href="setting.html" class="nex waves-effect">
-                    <i class="material-icons nex" title="crwdns516:0crwdne516:0(Ctrl+Shift+S)" data-trans-title="setting">settings</i>
-                </a>
-                <a href="index.html" class="nex mize waves-effect">
-                    <i class="material-icons nex" title="crwdns518:0crwdne518:0(F5/⌘+R)" data-trans-title="reload">refresh</i>
-                </a>
-                <a onclick="nano()" class="nex waves-effect">
-                    <i class="material-icons" title="crwdns519:0crwdne519:0TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
-                </a>
-                <a onclick="window.open('https://astarte.thedesk.top');" class="setting nex waves-effect" target="_blank" id="ranking-btn" style="display:none;">
-                    <i class="material-icons nex" title="アスタルテランキング">timeline</i>
-				</a>
-				<a href="https://docs.thedesk.top" class="setting nex waves-effect" target="_blank">
-                    <i class="material-icons nex" title="crwdns1894:0crwdne1894:0">help_outline</i>
-				</a>
-            </div>
-        </div>
-    </div>
+						<div class="btnsgroup">
+							<a href="acct.html" class="nex waves-effect">
+                    <i class="material-icons nex big-icon" title="crwdns514:0crwdne514:0(Ctrl+Shift+M)">account_circle</i>
+              </a>
+							<a href="setting.html" class="nex waves-effect">
+									<i class="material-icons nex" title="crwdns516:0crwdne516:0(Ctrl+Shift+S)">settings</i>
+							</a>
+							<a onclick="nano()" class="nex waves-effect">
+									<i class="material-icons" title="crwdns519:0crwdne519:0TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
+							</a>
+							<a onclick="menu()" class="nex waves-effect" id="list-tgl">
+									<i class="material-icons" title="crwdns444:0crwdne444:0">apps</i>
+							</a>
+						</div>
+    </div></div>
     <div>
 		<div id="tips-menu">
 			<div class="btnsgroup" style="height:34px"><span class="grouptitle">Tips:</span>
@@ -880,3 +875,4 @@ var tlid=0;
 <script type="text/javascript" src="../../js/emoji/emojipack.js"></script>
 <script type="text/javascript" src="../../js/emoji/default-emoji.js"></script>
 <script type="text/javascript" src="../../js/platform/end.js"></script>
+<script type="text/javascript" src="../../js/ui/menu.js"></script>

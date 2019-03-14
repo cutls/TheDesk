@@ -27,8 +27,15 @@ var info_path = join(app.getPath("userData"), "window-size.json");
 var max_info_path = join(app.getPath("userData"), "max-window-size.json");
 var lang_path=join(app.getPath("userData"), "language");
 var customcss=join(app.getPath("userData"), "custom.css");
-
 var tmp_img = join(app.getPath("userData"), "tmp.png");
+var ha_path=join(app.getPath("userData"), "hardwareAcceleration");
+try{
+	fs.readFileSync(ha_path, 'utf8');
+	app.disableHardwareAcceleration()
+	console.log("disabled: HA");
+}catch{
+	console.log("enabled: HA");
+}
 var window_size;
 try {
 	window_size = JSON.parse(fs.readFileSync(info_path, 'utf8'));
@@ -76,7 +83,9 @@ function createWindow() {
 	var bit=process.arch;
 	if(platform=="linux"){
 		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,icon: __dirname + '/desk.png'}
-	}else{
+	}else if(platform=="win32"){
+		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,simpleFullscreen:true}
+	}else if(platform=="darwin"){
 		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,simpleFullscreen:true}
 	}
 	mainWindow = new BrowserWindow(arg);
@@ -136,8 +145,13 @@ app.on('ready', createWindow);
 var onError = function(err,response){
     console.error(err,response);
 };
-
 var ipc = electron.ipcMain;
+ipc.on('minimize', function(e, args) {
+	mainWindow.minimize();
+});
+ipc.on('maximize', function(e, args) {
+	mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize();
+});
 ipc.on('native-notf', function(e, args) {
 	var platform=process.platform;
 	var bit=process.arch;
@@ -259,7 +273,16 @@ ipc.on('theme-json-list', function(e, arg) {
 		mainWindow.webContents.send('theme-json-list-response', themes);
 	});
 })
-
+//ハードウェアアクセラレーションの無効化
+ipc.on('ha', function(e, arg) {
+	if(arg=="true"){
+		fs.writeFileSync(ha_path,arg);
+	}else{
+		fs.unlink(ha_path, function (err) {});
+	}
+	app.relaunch()
+	app.exit()
+})
 
 ipc.on('update', function(e, x, y) {
 	var platform=process.platform;
@@ -527,7 +550,7 @@ ipc.on('nano', function (e, x, y) {
 	window_pos = [0,0]; // デフォルトバリュー
 	}
 	var nanowindow = new BrowserWindow({width: 350, height: 200,
-	"transparent": false,    // ウィンドウの背景を透過
+		"transparent": false,    // ウィンドウの背景を透過
 		 "frame": false,     // 枠の無いウィンドウ
 		 "resizable": false });
 	nanowindow.loadURL('file://' + __dirname + '/nano.html');
