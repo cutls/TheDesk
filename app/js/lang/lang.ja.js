@@ -122,6 +122,9 @@ var lang={
     "lang_layout_webviewmode":"WebView優先",
     "lang_excluded":"除外する通知",
     "lang_layout_excludingbt":"BT表示(OFF/BT除外/BTのみ)",
+//ui/sort.js
+    "lang_sort_gothis":"このカラムへ",
+    "lang_sort_remthis":"このカラムを削除",
 //ui/spotify.js
     "lang_spotify_img":"アルバムアートワークを添付します。",
     "lang_spotify_imgno":"アルバムアートワークを添付しません。",

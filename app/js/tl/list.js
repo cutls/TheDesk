@@ -1,14 +1,10 @@
-function listToggle(){
-    if ($("#list-box").hasClass("hide")) {
-        $("#list-box").removeClass("hide");
-        $("#list-box").addClass("show");
-		$("#list-box").css("bottom","40px");
-		$("#list-box").css("left",$('#list-tgl').offset().left-$('#list-box').width()/2+"px");
-		//リストロード
-	} else {
-        $("#list-box").removeClass("show");
-		$("#list-box").addClass("hide")
-	}
+function listMenu(){
+    $("#left-menu div").removeClass("active");
+	$("#listMenu").addClass("active");
+	$(".menu-content").addClass("hide");
+    $("#list-box").removeClass("hide");
+	$('ul.tabs').tabs('select_tab', 'src-sta');
+	$("#src-contents").html("");
 }
 
 

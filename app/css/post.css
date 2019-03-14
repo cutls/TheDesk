@@ -10,18 +10,9 @@
   min-width:300px;
   max-width:100%;
   padding: 5px;
+  border-radius:5px;
 }
-#post-bar{
-  cursor:move;
-  text-align:center;
-  width:calc(100% + 10px);
-  background-color: var(--bg);
-  margin-left:-5px;
-  margin-right:-5px;
-  margin-top:-5px;
-  font-size:16px;
-  padding:4px;
-}
+
 .cancel {
   font-size: 0.5rem;
   color: gray;

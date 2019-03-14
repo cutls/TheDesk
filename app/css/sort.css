@@ -1,7 +1,5 @@
+
 .drag-content{
-	width:300px;
-	max-width:100%;
-	height:300px;
 	text-overflow: ellipsis;
 	cursor:move;
 	user-select: none;
@@ -10,32 +8,25 @@
 	border-radius:5px;
 	color:var(--color);
 	padding:3px;
-	font-family:Open Sans;
-	font-size:20px;
-	flex-grow:1;
-	text-align: center;
-	padding:10px;
+	display:grid;
+	grid-template-columns: 43px 1fr 60px;
+    grid-template-areas: 'sorticon sorttitle sorttitle' 'sorticon sortacct sortaction';
 }
-#sort{
-	display:flex;
-	flex-direction:row;
-	overflow-x:scroll;
-	display: flex;
-	width:100vw;
-  	
+.sorticon {
+	grid-area:sorticon;
 }
-#sort-box{
-	position:absolute;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	width:100vw; 
-	height:calc(100vh - 40px);
-	background-color: rgba(0, 0, 0, 0.8);
-	z-index:10002;
+.sorticon i{
+	font-size:43px;
 }
-#sort-box button{
-	background-color: var(--notfbox);
-	color:var(--color);
+.sorttitle {
+	margin-left:5px;
+	grid-area:sorttitle;
+}
+.sortacct {
+	margin-left:5px;
+	grid-area:sortacct;
+}
+.sortaction {
+	margin-left:5px;
+	grid-area:sortaction;
 }

@@ -101,17 +101,11 @@ function delreset(tlid){
 
 }
 /*ワードフィルター機能*/
-function filterToggle(){
-    if ($("#filter-box").hasClass("hide")) {
-        $("#filter-box").removeClass("hide");
-        $("#filter-box").addClass("show");
-		$("#filter-box").css("bottom","40px");
-		$("#filter-box").css("left",$('#filter-tgl').offset().left-$('#filter-box').width()/2+"px");
-		//フィルターロード
-	} else {
-        $("#filter-box").removeClass("show");
-		$("#filter-box").addClass("hide")
-	}
+function filterMenu(){
+    $("#left-menu div").removeClass("active");
+	$("#filterMenu").addClass("active");
+	$(".menu-content").addClass("hide");
+    $("#filter-box").removeClass("hide");
 }
 function filter(){
 	$("#filtered-words").html("");

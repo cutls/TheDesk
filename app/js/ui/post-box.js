@@ -96,22 +96,3 @@ $('#textarea,#cw-text').focusout(function(e) {
 	} 
 	//setTimeout(remove, 100);
 });
-
-$("#timeline-container").click(function(e) {
-	if(!$('#list-box').hasClass("hide")){
-		$("#list-box").removeClass("show");
-		$("#list-box").addClass("hide")
-	}
-	if(!$('#src-box').hasClass("hide")){
-		$("#src-box").removeClass("show");
-		$("#src-box").addClass("hide")
-	}
-	if(!$('#filter-box').hasClass("hide")){
-		$("#filter-box").removeClass("show");
-		$("#filter-box").addClass("hide")
-	}
-	if(!$('#add-box').hasClass("hide")){
-		$("#add-box").removeClass("show");
-		$("#add-box").addClass("hide")
-	}
-});

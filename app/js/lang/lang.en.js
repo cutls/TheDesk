@@ -122,6 +122,9 @@ var lang={
     "lang_layout_webviewmode":"Prefer WebView",
     "lang_excluded":"Excluded type of notification",
     "lang_layout_excludingbt":"Show BT mode(OFF/Exclude BT/Only BT)",
+    //ui/sort.js
+    "lang_sort_gothis":"Go to this column",
+    "lang_sort_remthis":"Delete this column",
     //ui/spotify.js
     "lang_spotify_img":"Attach an album artwork",
     "lang_spotify_imgno":"Not attach an album artwork",

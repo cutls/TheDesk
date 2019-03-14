@@ -605,22 +605,33 @@ function misskeycom(type, data) {
 //TLのアイコン
 function icon(type) {
 	if (type == "home") {
-		return "home"
-	} else if (type == "local" || type == "noauth" || type == "local-media") {
-		return "people_outline"
-	} else if (type == "pub" || type == "pub-media") {
-		return "language"
+		var response="home";
+	} else if (type == "local") {
+		var response="people_outline";
+	} else if (type == "local-media") {
+		var response="people_outline";
+	} else if (type == "pub") {
+		var response="language";
+	} else if (type == "pub-media") {
+		var response="language";
 	} else if (type == "tag") {
-		return "search"
+		var response="search";
 	} else if (type == "list") {
-		return "view_headline"
-	}else if (type == "list") {
-		return "subject"
-	}else if (type == "dm") {
-		return "mail"
-	}else if (type == "mix") {
-		return "share"
+		var response="view_headline";
+	} else if (type == "notf") {
+		var response="notifications";
+	} else if (type == "noauth") {
+		var response="people_outline";
+	} else if (type == "dm") {
+		var response="mail_outline";
+	} else if (type == "mix") {
+		var response="merge_type";
+	} else if (type == "plus") {
+		var response="merge_type";
+	}else if (type == "webview") {
+		var response="language";
 	}
+	return response;
 }
 function strAlive(){
     var date = new Date() ;

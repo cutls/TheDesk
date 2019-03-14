@@ -32,7 +32,7 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Miria (17.2.1)";
+var ver="Miria (17.3.0)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -54,7 +54,7 @@ var tlid=0;
 </div>
 </div>
 <div id="post-box" class="z-depth-5">
-<div id="post-bar">Post new</div>
+<div id="post-bar" class="drag-bar">Post new</div>
 <!--トゥートボックス-->
 <div id="left-side">
 <div class="row" style="margin-bottom:0;">
@@ -582,17 +582,19 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Miria_17-2-0" class="release-do" style="display:none; ">
+			<div id="release-Miria_17-2-1" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Miria (17.2.0)</h5>
-					カスタムテーマを実装。Misskeyのテーマとの一定の互換性あり。<a href="https://assets.msky.cafe/" target="_blank">MiAS</a>から80を超えるテーマを入手。
-					<a href="https://thedesk.top/mias.html">注意点</a><br>
-					Misskeyのログイン方法変更につき、いちいちDevCenterに行かなくてもよくなりました。<br>
-					日本語でベタ書きしていたダイアログを一部多言語対応に変更。<br>
-					
+					<h5>Release Note Miria (17.2.1)</h5>
+					多くの機能を「メニュー」に集約。結局何のボタンかわからないアイコンの羅列から解放。<br>
+					Alt+Enterでセカンダリートゥートボタン<br>
+					引用ボタンを表示しない設定(引用形式設定を「使用しない」)<br>
+					実況機能をまともに書き直した。<br>
+					サジェストをトゥートボックスの右に<br>
+					ハードウェアアクセラレーションを無効化するオプション。(設定の表示などが乱れるときに設定)<br>
+					返信時に「@」が複数含まれない仕様を訂正<br>
 					<img class="emoji" draggable="false" alt="⚠" src="https://twemoji.maxcdn.com/2/72x72/26a0.png">TheDeskのMisskeyについての機能追加は終了しています。<br>
 			</div>
 			<br><br>
@@ -623,130 +625,152 @@ var tlid=0;
 		<i class="material-icons pointer" onclick="endPip()">close</i>
 		<div id="pip-content">
 		</div>
-    </div>
-<!--カラム追加-->
-<div id="add-box" class="hide z-depth-4 notf-box">
-<div class="input-field"><span data-trans="your_acct">Select an account</span>
-<br>
-<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
-<label></label>
-</div>
-<div class="input-field">
-<div id="auth">
-<select id="type-sel" style="color:black">
-	<option value="local" data-trans="local">Local</option>
-	<option value="local-media" data-trans="local-media">Local(Media)</option>
-	<option value="home" data-trans="home">Home</option>
-	<option value="pub" data-trans="public">Federated</option>
-	<option value="pub-media" data-trans="public-media">Federated(Media)</option>
-	<option value="dm" data-trans="dm">Direct Message</option>
-	<option value="mix" data-trans="integrated">Integrated(Local and Home)</option>
-	<option value="plus" data-trans="plus">Integrated(Local and replies and BT on Home)</option>
-	<option value="notf" data-trans="notification">Notifications</option>
-</select>
-<label data-trans="show_tl">Show this TL:</label>
-</div>
-<div id="noauth" class="hide">Show this TL:
-	<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);" placeholder="e.g:mstdn.jp">
-</div>
-<div id="webview-add" class="hide">TweetDeck with customed TJDeck(<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Code</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>). Keyboard shortcuts will irritate you. When you feel so, you check 'Prefer WebView' on top of the column.
-</div>
-</div>
-<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()" data-trans-i="add">
-	<i class="material-icons left">add</i>Add
-</button>
-<br>
-<br>
-</div>
-<!--検索-->
-<div id="src-box" class="hide notf-box z-depth-4" style="width:500px">
-		<div class="input-field">
-		<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
-</div><div class="input-field">
-<i class="material-icons prefix">search</i>
-<input id="src" type="text" class="validate" style="width:calc( 60% - 40px);">
-<label for="src" data-trans="src">Search</label>
-<button class="btn waves-effect indigo" style="width:calc( 40% - 40px);" onclick="src()" data-trans-i="src">
-	<i class="material-icons left">search</i>Search
-</button>
-<br>
-<br>
-</div>
-<div id="search">
-<div id="src-contents">
-</div>
-</div>
-</div>
-<!--並べ替え-->
-<div id="sort-box" class="hide">
-<ul id="sort"></ul>
-<div>
-<button onclick="sort()" class="btn waves-effect nex" style="width:100%; max-width:300px;" data-trans-i="sort">
-	<i class="material-icons left">sort</i>Sort
-</button>
-<button onclick="sortToggle()" class="btn waves-effect nex" style="width:100%; max-width:300px;" data-trans-i="close">
-		<i class="material-icons left">close</i>Close
-</button>
-</div>
-</div>
-<!--リスト-->
-<div id="list-box" class="hide notf-box z-depth-4">
-	<div class="input-field" style="width:calc( 100% - 100px);float:left">
-		<select id="list-acct-sel" class="acct-sel"></select>
-		<label>Select an account</label>
+		</div>
+<!--menu-->
+<div id="menu" class="z-depth-5" style="display:none">
+		<div id="menu-bar" class="drag-bar"></div>
+		<span class="cancel">
+				<i class="material-icons waves-effect" onclick="menu()" title="Close this box(X)">cancel</i>
+			</span>
+		<div id="menu-wrapper">
+		<div id="left-menu">
+			<div class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu"><i class="material-icons">add</i><span>Add a column</span></div>
+			<div class="waves-effect" onclick="sortMenu()" id="sortMenu"><i class="material-icons">sort</i><span>Sort</span></div>
+			<div class="waves-effect" onclick="searchMenu()" id="searchMenu"><i class="material-icons">search</i><span>Search</span></div>
+			<div class="waves-effect" onclick="listMenu()" id="listMenu"><i class="material-icons">view_headline</i><span>List</span></div>
+			<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i class="material-icons">filter_list</i><span>Filter</span></div>
+			<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>Help</span></div>
+		</div>
+		<div id="right-menu">
+				<!--カラム追加-->
+<div id="add-box" class="hide menu-content">
+	<div class="input-field"><span data-trans="your_acct">Select an account</span>
+	<br>
+	<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
+	<label></label>
 	</div>
-	<div style="float:left; padding-top:8px; padding-bottom:28px;">
-		<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
-			List
-		</button>
+	<div class="input-field">
+	<div id="auth">
+	<select id="type-sel" style="color:black">
+		<option value="local" data-trans="local">Local</option>
+		<option value="local-media" data-trans="local-media">Local(Media)</option>
+		<option value="home" data-trans="home">Home</option>
+		<option value="pub" data-trans="public">Federated</option>
+		<option value="pub-media" data-trans="public-media">Federated(Media)</option>
+		<option value="dm" data-trans="dm">Direct Message</option>
+		<option value="mix" data-trans="integrated">Integrated(Local and Home)</option>
+		<option value="plus" data-trans="plus">Integrated(Local and replies and BT on Home)</option>
+		<option value="notf" data-trans="notification">Notifications</option>
+	</select>
+	<label data-trans="show_tl">Show this TL:</label>
 	</div>
-	<br><br>
-	<div id="lists"></div>
-	<div id="lists-user"></div>
-	<input type="text" style="width:150px" id="list-add" placeholder="Display name">
-		<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">Save</button>
+	<div id="noauth" class="hide">Show this TL:
+		<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);" placeholder="e.g:mstdn.jp">
+	</div>
+	<div id="webview-add" class="hide">TweetDeck with customed TJDeck(<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Code</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>). Keyboard shortcuts will irritate you. When you feel so, you check 'Prefer WebView' on top of the column.
+	</div>
+	</div>
+	<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()" data-trans-i="add">
+		<i class="material-icons left">add</i>Add
+	</button>
+	<br>
+	<br>
+	</div>
+	<!--検索-->
+	<div id="src-box" class="hide menu-content">
+			<div class="input-field">
+			<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
+	</div><div class="input-field">
+	<i class="material-icons prefix">search</i>
+	<input id="src" type="text" class="validate" style="width:calc( 60% - 40px);">
+	<label for="src" data-trans="src">Search</label>
+	<button class="btn waves-effect indigo" style="width:calc( 40% - 40px);" onclick="src()" data-trans-i="src">
+		<i class="material-icons left">search</i>Search
+	</button>
+	<br>
+	<br>
+	</div>
+	<div id="search">
+	<div id="src-contents">
+	</div>
+	</div>
+	</div>
+	<!--並べ替え-->
+	<div id="sort-box" class="hide menu-content">
+	<ul id="sort"></ul>
+	<div>
+	<button onclick="sort()" class="btn waves-effect nex" style="width:100%; max-width:300px;" data-trans-i="sort">
+		<i class="material-icons left">sort</i>Sort
+	</button>
+	</div>
+	</div>
+	<!--リスト-->
+	<div id="list-box" class="hide menu-content">
+		<div class="input-field" style="width:calc( 100% - 100px);float:left">
+			<select id="list-acct-sel" class="acct-sel"></select>
+			<label>Select an account</label>
+		</div>
+		<div style="float:left; padding-top:8px; padding-bottom:28px;">
+			<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
+				List
+			</button>
+		</div>
+		<br><br>
+		<div id="lists"></div>
+		<div id="lists-user"></div>
+		<input type="text" style="width:150px" id="list-add" placeholder="Display name">
+			<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">Save</button>
+	</div>
+	<!--フィルター-->
+	<div id="filter-box" class="hide menu-content">
+		<div class="input-field" style="width:calc( 100% - 100px);float:left">
+			<select id="filter-acct-sel" class="acct-sel"></select>
+			<label>Select an account</label>
+		</div>
+		<div style="float:left; padding-top:8px; padding-bottom:28px;">
+			<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
+				List
+			</button>
+		</div>
+		<div id="filtered-words"></div>
+		<input type="hidden" id="filter-edit-id">
+		<input type="text" style="width:150px" id="filter-add-word" placeholder="Filtering words"><br>
+		Filter contexts<br>
+		<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+			<label for="home_filter">Home</label>
+		<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+			<label for="local_filter">Local</label>
+		<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+			<label for="notf_filter">Notifications</label>
+		<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+			<label for="conv_filter">Conversations</label><br>
+			Options<br>
+		<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+			<label for="wholeword_filter">Whole word</label><br>
+		<span class="sml">Nice for Latin language</span><br>
+		<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+			<label for="except_filter">Drop instead of hide</label><br>
+		<span class="sml">Filtered toots will disappear irreversibly, even if filter is later removed</span><br>
+		Expire after<span class="sml">Unset or "0" means "Never"<b>This value may contain some error</b></span><br><br>
+		<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">days
+		<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">hours
+		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">minutes
+		<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">Add</button><br>
+		<span class="sml">Integrated TL/Plus TL will hide both Home-filtering words and Local-filtering words.</span>
+	</div>
 </div>
-<!--フィルター-->
-<div id="filter-box" class="hide notf-box z-depth-4">
-	<div class="input-field" style="width:calc( 100% - 100px);float:left">
-		<select id="filter-acct-sel" class="acct-sel"></select>
-		<label>Select an account</label>
-	</div>
-	<div style="float:left; padding-top:8px; padding-bottom:28px;">
-		<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
-			List
-		</button>
-	</div>
-	<div id="filtered-words"></div>
-	<input type="hidden" id="filter-edit-id">
-	<input type="text" style="width:150px" id="filter-add-word" placeholder="Filtering words"><br>
-	Filter contexts<br>
-	<input type="checkbox" class="filled-in" id="home_filter" value="home" />
-	  <label for="home_filter">Home</label>
-	<input type="checkbox" class="filled-in" id="local_filter" value="public" />
-	  <label for="local_filter">Local</label>
-	<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
-	  <label for="notf_filter">Notifications</label>
-	<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
-	  <label for="conv_filter">Conversations</label><br>
-	  Options<br>
-	<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
-	  <label for="wholeword_filter">Whole word</label><br>
-	<span class="sml">Nice for Latin language</span><br>
-	<input type="checkbox" class="filled-in" id="except_filter" value="1" />
-	  <label for="except_filter">Drop instead of hide</label><br>
-	<span class="sml">Filtered toots will disappear irreversibly, even if filter is later removed</span><br>
-	Expire after<span class="sml">Unset or "0" means "Never"<b>This value may contain some error</b></span><br><br>
-	<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">days
-	<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">hours
-	<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">minutes
-	<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">Add</button><br>
-	<span class="sml">Integrated TL/Plus TL will hide both Home-filtering words and Local-filtering words.</span>
+		</div>
+		<a href="index.html" class="waves-effect">
+				<i class="material-icons" style="font-size: 1rem;">refresh</i>Super Reload
+		</a>&nbsp;|&nbsp;
+		<a onclick="bottomReverse()" class="nex waves-effect">
+				<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>Toot button layout reverse
+		</a>
 </div>
 <div id="main">
 <!--TLのTL-->
 <div id="timeline-container">
-	<h3>Welcome to TheDesk</h3><br><a href="acct.html">Add an account</a> or click <i class="material-icons">add</i> to add a column.
+	<h3>Welcome to TheDesk</h3><br><a href="acct.html">Add an account</a> or click <i class="material-icons">apps</i> to add a column.
 </div>
 </div>
 </div>
@@ -757,52 +781,23 @@ var tlid=0;
 								<button id="posttgl" class="btn waves-effect indigo" style="width: 100%;height: 2.5rem;line-height: 0;margin: 0;">
 									<i class="material-icons" style="position: relative; top: 5px; font-size: 1.5rem; text-align: center; margin-right: 10px;">edit</i>Toot
 								</button>
-        </div>
+				</div>
         <div class="leftside reverse" id="group">
-            <div class="btnsgroup"><span class="grouptitle">Columns:</span>
-                <a onclick="addToggle()" class="nex waves-effect" data-trans-i="add" id="add-tgl">
-                    <i class="material-icons nex" title="Add a column" data-trans-title="column_add">add</i>
-                </a>
-                <a onclick="sortToggle()" class="nex waves-effect">
-                    <i class="material-icons nex big-icon" title="Sort" data-trans-title="sort">sort</i>
-                </a>
-            </div>
-            <div class="btnsgroup"><span class="grouptitle">Accounts:</span>
-                <a href="acct.html" class="nex waves-effect">
-                    <i class="material-icons nex big-icon" title="Account Manager(Ctrl+Shift+M)" data-trans-title="manager">account_circle</i>
-                </a>
-                <a onclick="srcToggle()" class="nex waves-effect" id="src-tgl">
-                    <i class="material-icons" title="Search" data-trans-title="src">search</i>
-                </a>
-                <a onclick="listToggle()" class="nex waves-effect" id="list-tgl">
-                    <i class="material-icons" title="List" data-trans-title="list">view_headline</i>
-                </a>
-                <a onclick="filterToggle()" class="nex waves-effect" id="filter-tgl">
-                    <i class="material-icons" title="Filter" data-trans-title="filter">filter_list</i>
-                </a>
-            </div>
-			<div class="btnsgroup"><span class="grouptitle">Preferences:</span>
-				<a onclick="bottomReverse()" class="nex waves-effect">
-                    <i class="material-icons nex" title="Toot box reverse" data-trans-title="reverse">swap_horiz</i>
-                </a>
-                <a href="setting.html" class="nex waves-effect">
-                    <i class="material-icons nex" title="Preferences(Ctrl+Shift+S)" data-trans-title="setting">settings</i>
-                </a>
-                <a href="index.html" class="nex mize waves-effect">
-                    <i class="material-icons nex" title="Super Reload(F5/⌘+R)" data-trans-title="reload">refresh</i>
-                </a>
-                <a onclick="nano()" class="nex waves-effect">
-                    <i class="material-icons" title="The smallest Mastodon,TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
-                </a>
-                <a onclick="window.open('https://astarte.thedesk.top');" class="setting nex waves-effect" target="_blank" id="ranking-btn" style="display:none;">
-                    <i class="material-icons nex" title="アスタルテランキング">timeline</i>
-				</a>
-				<a href="https://docs.thedesk.top" class="setting nex waves-effect" target="_blank">
-                    <i class="material-icons nex" title="Help">help_outline</i>
-				</a>
-            </div>
-        </div>
-    </div>
+						<div class="btnsgroup">
+							<a href="acct.html" class="nex waves-effect">
+                    <i class="material-icons nex big-icon" title="Account Manager(Ctrl+Shift+M)">account_circle</i>
+              </a>
+							<a href="setting.html" class="nex waves-effect">
+									<i class="material-icons nex" title="Preferences(Ctrl+Shift+S)">settings</i>
+							</a>
+							<a onclick="nano()" class="nex waves-effect">
+									<i class="material-icons" title="The smallest Mastodon,TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
+							</a>
+							<a onclick="menu()" class="nex waves-effect" id="list-tgl">
+									<i class="material-icons" title="List">apps</i>
+							</a>
+						</div>
+    </div></div>
     <div>
 		<div id="tips-menu">
 			<div class="btnsgroup" style="height:34px"><span class="grouptitle">Tips:</span>
@@ -880,4 +875,4 @@ var tlid=0;
 <script type="text/javascript" src="../../js/emoji/emojipack.js"></script>
 <script type="text/javascript" src="../../js/emoji/default-emoji.js"></script>
 <script type="text/javascript" src="../../js/platform/end.js"></script>
-<script type="text/javascript" src="../../js/ui/menubar.js"></script>
+<script type="text/javascript" src="../../js/ui/menu.js"></script>

@@ -86,7 +86,7 @@
   font-family:Open Sans;
   font-size:15px;
 }
-@media screen and (max-width: 1344px) {
+@media screen and (max-width: 890px) {
   .btnsgroup .grouptitle{ display: none; }
   #tips,#tips-menu{ display: none; }
 }
