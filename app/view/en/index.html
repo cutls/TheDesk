@@ -581,12 +581,14 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Usamin_18-0-0" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-0-1" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Usamin (18.0.0)</h5>
+					<h5>Release Note Usamin (18.0.1)</h5>
+・カラム追加時の不具合についてのバグ<br>
+--以下18.0.0--<br>
 ・多くの機能を「メニュー」に集約。結局何のボタンかわからないアイコンの羅列から解放。<br>
 ・Alt+Enterでセカンダリートゥートボタン<br>
 ・引用ボタンを表示しない設定(引用形式設定を「使用しない」)<br>
@@ -642,7 +644,7 @@ var tlid=0;
 			<div class="waves-effect" onclick="listMenu()" id="listMenu"><i class="material-icons">view_headline</i><span>List</span></div>
 			<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i class="material-icons">filter_list</i><span>Filter</span></div>
 			<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>Help</span></div>
-			<div class="waves-effect" onclick="about()"><i class="material-icons">info</i><span>About TheDesk</span></div>
+			<div class="waves-effect" onclick="location.href='index.html'"><i class="material-icons">refresh</i><span>Reload TL</span></div>
 		</div>
 		<div id="right-menu">
 				<!--カラム追加-->
@@ -764,8 +766,8 @@ var tlid=0;
 	</div>
 </div>
 		</div>
-		<a href="index.html" class="waves-effect">
-				<i class="material-icons" style="font-size: 1rem;">refresh</i>Super Reload
+		<a onclick="about()" class="nex waves-effect">
+				<i class="material-icons" style="font-size: 1rem;">info</i>About TheDesk
 		</a>&nbsp;|&nbsp;
 		<a onclick="bottomReverse()" class="nex waves-effect">
 				<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>Toot button layout reverse

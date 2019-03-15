@@ -644,7 +644,7 @@ var tlid=0;
 			<div class="waves-effect" onclick="listMenu()" id="listMenu"><i class="material-icons">view_headline</i><span>{{list}}</span></div>
 			<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i class="material-icons">filter_list</i><span>{{filter}}</span></div>
 			<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>{{help}}</span></div>
-			<div class="waves-effect" onclick="about()"><i class="material-icons">info</i><span>{{about}}</span></div>
+			<div class="waves-effect" onclick="location.href='index.html'"><i class="material-icons">refresh</i><span>{{f5}}</span></div>
 		</div>
 		<div id="right-menu">
 				<!--カラム追加-->
@@ -766,8 +766,8 @@ var tlid=0;
 	</div>
 </div>
 		</div>
-		<a href="index.html" class="waves-effect">
-				<i class="material-icons" style="font-size: 1rem;">refresh</i>{{f5}}
+		<a onclick="about()" class="nex waves-effect">
+				<i class="material-icons" style="font-size: 1rem;">info</i>{{about}}
 		</a>&nbsp;|&nbsp;
 		<a onclick="bottomReverse()" class="nex waves-effect">
 				<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>{{reverse}}
