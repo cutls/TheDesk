@@ -123,7 +123,7 @@
     "add":"追加",
     "search":"検索",
     "sortSet":"並べ替え設定",
-    "selectAcct":"アカウントを選択",
+    "selectAcct":"選択(スクロールで全選択肢表示)",
     "filterWord":"フィルターワード",
     "listLocale":"一覧",
     "degree":"適応範囲",

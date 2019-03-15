@@ -647,7 +647,7 @@ var tlid=0;
 		<div id="right-menu">
 				<!--カラム追加-->
 <div id="add-box" class="hide menu-content">
-	<div class="input-field"><span data-trans="your_acct">アカウントを選択</span>
+	<div class="input-field"><span data-trans="your_acct">選択(スクロールで全選択肢表示)</span>
 	<br>
 	<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
 	<label></label>
@@ -660,8 +660,8 @@ var tlid=0;
 		<div class="type waves-effect active" data-type="local"><div><i class="material-icons">people_outline</i></div><span>ローカル</span></div>
 		<div class="type waves-effect" data-type="local-media"><div><i class="material-icons">people_outline</i><i class="material-icons sub-icon">perm_media</i></div><span>ローカル(メディア)</span></div>
 		<div class="type waves-effect" data-type="home"><div><i class="material-icons">home</i></div><span>ホーム</span></div>
-		<div class="type waves-effect" data-type="public"><div><i class="material-icons">language</i></div><span>連合</span></div>
-		<div class="type waves-effect" data-type="public-media"><div><i class="material-icons">language</i><i class="material-icons sub-icon">perm_media</i></div><span>連合(メディア)</span></div>
+		<div class="type waves-effect" data-type="pub"><div><i class="material-icons">language</i></div><span>連合</span></div>
+		<div class="type waves-effect" data-type="pub-media"><div><i class="material-icons">language</i><i class="material-icons sub-icon">perm_media</i></div><span>連合(メディア)</span></div>
 		<div class="type waves-effect" data-type="dm"><div><i class="material-icons">mail_outline</i></div><span>ダイレクトメッセージ</span></div>
 		<div class="type waves-effect" data-type="mix"><div><i class="material-icons">merge_type</i></div><span>統合(ローカルとホーム)</span></div>
 		<div class="type waves-effect" data-type="plus"><div><i class="material-icons">merge_type</i><i class="material-icons sub-icon">reply</i></div><span>統合(LTL+BT+返信)</span></div>
@@ -712,7 +712,7 @@ var tlid=0;
 	<div id="list-box" class="hide menu-content">
 		<div class="input-field" style="width:calc( 100% - 100px);float:left">
 			<select id="list-acct-sel" class="acct-sel"></select>
-			<label>アカウントを選択</label>
+			<label>選択(スクロールで全選択肢表示)</label>
 		</div>
 		<div style="float:left; padding-top:8px; padding-bottom:28px;">
 			<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
@@ -729,7 +729,7 @@ var tlid=0;
 	<div id="filter-box" class="hide menu-content">
 		<div class="input-field" style="width:calc( 100% - 100px);float:left">
 			<select id="filter-acct-sel" class="acct-sel"></select>
-			<label>アカウントを選択</label>
+			<label>選択(スクロールで全選択肢表示)</label>
 		</div>
 		<div style="float:left; padding-top:8px; padding-bottom:28px;">
 			<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
