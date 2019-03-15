@@ -15,11 +15,9 @@ function addColumnMenu() {
 	addselCk()
 }
 $('.type').click(function() {
-	if(this.hasClass("active")){
-
-	}else{
-		
-	}
+	$(".type").removeClass("active");
+	$(this).addClass("active");
+	$("#type-sel").val($(this).attr("data-type"))
 })
 //最初、カラム変更時に発火
 function parseColumn() {
