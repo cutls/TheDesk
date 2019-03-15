@@ -247,7 +247,7 @@ ipc.on('theme-css-request', function(e, arg) {
 		var css=".customtheme {--bg:"+secondary+";--drag:"+drag+";"+
 			"--color:"+text+";--beforehover:"+beforehover+";--modal:"+secondary+";--subcolor:"+primary+";--box:"+primary+";--sidebar:"+primary+";--shared:"+emphasized+";"+
 			"--notfbox:"+secondary+";--emphasized:"+primary+";--his-data:"+secondary+
-			+"--active:"+primary+";--postbox:"+primary+";--modalfooter:"+primary+";}.blacktheme #imagemodal{background: url(\"../img/pixel.svg\");}";
+			";--active:"+primary+";--postbox:"+primary+";--modalfooter:"+primary+";}.blacktheme #imagemodal{background: url(\"../img/pixel.svg\");}";
 			mainWindow.webContents.send('theme-css-response', css);
 	} catch (e) {
 		var css="";
