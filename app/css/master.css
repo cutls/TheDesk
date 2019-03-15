@@ -52,6 +52,7 @@ option {
 }
 #imagemodal .modal-content {
   overflow: hidden;
+  padding:0;
 }
 #imagemodal .modal-footer{
   overflow-x:scroll;
@@ -309,7 +310,7 @@ blockquote:before, .quote:before {
   position:fixed;
   z-index:9999;
   background-color: var(--box);
-  width:520px;
+  width:540px;
   top:calc(50% - 150px);
   left:calc(50% - 250px);
   padding: 5px;
@@ -341,11 +342,40 @@ blockquote:before, .quote:before {
   background-color: var(--emphasized);
 }
 #right-menu{
-  width:350px;
-  max-height:325px;
+  width:380px;
+  max-height:375px;
   overflow-y:scroll;
   overflow-x:hidden;
   padding:5px;
+}
+#tltype{
+  display:flex;
+  flex-wrap: wrap;
+  
+}
+#tltype .type{
+  display:flex;
+  flex-wrap: wrap;
+  align-items:center;
+  width:170px;
+  height:40px;
+  cursor:pointer;
+}
+#tltype .type:hover {
+  background-color: var(--beforehover);
+}
+#tltype .active{
+  background-color: var(--emphasized);
+}
+#tltype i{
+  font-size:30px;
+}
+#tltype i.sub-icon{
+  font-size: 20px;
+  position: relative;
+  color: var(--beforehover);
+  left: -15px;
+
 }
 .drag-bar{
   cursor:move;

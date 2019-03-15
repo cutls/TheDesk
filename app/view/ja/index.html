@@ -32,15 +32,14 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Miria (17.3.0)";
+var ver="Usamin (18.0.0)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
 //WinstoreではバージョンCK・言語・Misskeyトークンの機能が排除
-var winstore=false;
 var acct_id=0;
 var tlid=0;
-  verck(ver,winstore);
+  verck(ver);
  </script>
 <textarea id="copy" style="top:-100px; position:fixed;"></textarea>
 <div id="tl">
@@ -643,6 +642,7 @@ var tlid=0;
 			<div class="waves-effect" onclick="listMenu()" id="listMenu"><i class="material-icons">view_headline</i><span>リスト</span></div>
 			<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i class="material-icons">filter_list</i><span>フィルター</span></div>
 			<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>ヘルプ</span></div>
+			<div class="waves-effect" onclick="about()"><i class="material-icons">info</i><span>このソフトについて</span></div>
 		</div>
 		<div id="right-menu">
 				<!--カラム追加-->
@@ -654,18 +654,19 @@ var tlid=0;
 	</div>
 	<div class="input-field">
 	<div id="auth">
-	<select id="type-sel" style="color:black">
-		<option value="local" data-trans="local">ローカル</option>
-		<option value="local-media" data-trans="local-media">ローカル(メディア)</option>
-		<option value="home" data-trans="home">ホーム</option>
-		<option value="pub" data-trans="public">連合</option>
-		<option value="pub-media" data-trans="public-media">連合(メディア)</option>
-		<option value="dm" data-trans="dm">ダイレクトメッセージ</option>
-		<option value="mix" data-trans="integrated">統合(ローカルとホーム)</option>
-		<option value="plus" data-trans="plus">統合(ローカルとブースト・リプライ)</option>
-		<option value="notf" data-trans="notification">通知</option>
-	</select>
-	<label data-trans="show_tl">表示するタイムライン</label>
+	<input type="hidden" value="local" id="type-sel">
+	表示するタイムライン
+	<div id="tltype">
+		<div class="type waves-effect active" data-type="local"><div><i class="material-icons">people_outline</i></div><span>ローカル</span></div>
+		<div class="type waves-effect" data-type="local-media"><div><i class="material-icons">people_outline</i><i class="material-icons sub-icon">perm_media</i></div><span>ローカル(メディア)</span></div>
+		<div class="type waves-effect" data-type="home"><div><i class="material-icons">home</i></div><span>ホーム</span></div>
+		<div class="type waves-effect" data-type="public"><div><i class="material-icons">language</i></div><span>連合</span></div>
+		<div class="type waves-effect" data-type="public-media"><div><i class="material-icons">language</i><i class="material-icons sub-icon">perm_media</i></div><span>連合(メディア)</span></div>
+		<div class="type waves-effect" data-type="dm"><div><i class="material-icons">mail_outline</i></div><span>ダイレクトメッセージ</span></div>
+		<div class="type waves-effect" data-type="mix"><div><i class="material-icons">merge_type</i></div><span>統合(ローカルとホーム)</span></div>
+		<div class="type waves-effect" data-type="plus"><div><i class="material-icons">merge_type</i><i class="material-icons sub-icon">reply</i></div><span>統合(LTL+BT+返信)</span></div>
+		<div class="type waves-effect" data-type="notf"><div><i class="material-icons">notifications</i></div><span>通知</span></div>
+	</div>
 	</div>
 	<div id="noauth" class="hide">表示するタイムライン
 		<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);" placeholder="e.g:mstdn.jp">

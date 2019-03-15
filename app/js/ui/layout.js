@@ -14,6 +14,13 @@ function addColumnMenu() {
     $("#add-box").removeClass("hide");
 	addselCk()
 }
+$('.type').click(function() {
+	if(this.hasClass("active")){
+
+	}else{
+		
+	}
+})
 //最初、カラム変更時に発火
 function parseColumn() {
 	console.log("parse");

@@ -116,7 +116,7 @@
     "fedMedia":"連合(メディア)",
     "dm":"ダイレクトメッセージ",
     "integratedTLDes":"統合(ローカルとホーム)",
-    "localPlusDes":"統合(ローカルとブースト・リプライ)",
+    "localPlusDes":"統合(LTL+BT+返信)",
     "notf":"通知",
     "showThisTL":"表示するタイムライン",
     "webviewWarn":"TweetDeckを表示します。TJDeckをカスタムしたものが読み込まれます(<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Code</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>)。キーボードショートカットが邪魔をするので、文字入力時はカラムの「WebView優先」にチェックを入れてください。",
@@ -154,5 +154,6 @@
     "clockTips":"時計",
     "ramTips":"システムメモリ容量",
     "changeTips":"Tips変更",
-    "help":"ヘルプ"
+    "help":"ヘルプ",
+    "about":"このソフトについて"
 }
