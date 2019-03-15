@@ -22,7 +22,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}
 	}
 	var qt = localStorage.getItem("quote");
-	if(qt=="nothing"){
+	if(qt=="nothing" || !qt){
 		var qtClass="hide";
 	}else{
 		var qtClass="";

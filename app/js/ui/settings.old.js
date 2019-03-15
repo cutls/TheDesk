@@ -1,45 +1,23 @@
 //設定(setting.html)で読む
 var envView = new Vue({
-	el: '#envView',
-	data: {config:envConstruction},
-	methods: {
-		complete: function (i,val) {
-			var ls=envView.config[i].storage;
-			Materialize.toast("Complete", 3000);
-			localStorage.setItem(ls,val)
-			if(ls=="ha"){
-				hardwareAcceleration(val)
-			}
+	el: '#env-view',
+	data: {config:envConstruction,value:envValue},
+	method: {
+		settings: function (index) {
 			return true
 		}
 	}
 });
-var tlView = new Vue({
-	el: '#tlView',
-	data: {config:tlConstruction},
-	methods: {
-		complete: function (i,val) {
-			var ls=tlView.config[i].storage;
-			Materialize.toast("Complete", 3000);
-			localStorage.setItem(ls,val)
-			return true
-		}
-	}
-});
-var postView = new Vue({
-	el: '#postView',
-	data: {config:postConstruction,kirishima:localStorage.getItem('kirishima')},
-	methods: {
-		complete: function (i,val) {
-			var ls=postView.config[i].storage;
-			Materialize.toast("Complete", 3000);
-			localStorage.setItem(ls,val)
-			return true
-		}
-	}
-});
+
 //設定ボタン押した。
 function settings() {
+	var dd = $("[name=time]:checked").val();
+	var dt = $("[for="+dd+"]").text();
+		if (dd != localStorage.getItem("datetype")) {
+		Materialize.toast(lang.lang_setting_time.replace("{{set}}" ,dt), 3000);
+	}
+	localStorage.setItem("datetype", dd);
+
 	var cd = $("[name=theme]:checked").val();
 	var ct = $("[for="+cd+"]").html();
 	if(cd=="custom" && !$("#custom-sel-sel").val()){
@@ -56,6 +34,98 @@ function settings() {
 		themes(cd);
 		localStorage.setItem("theme", cd);
 	}
+
+	var nd = $("[name=nsfw]:checked").val();
+	var nt = $("[for=n_"+nd+"]").text();
+	if (nd != localStorage.getItem("nsfw")) {
+		Materialize.toast(lang.lang_setting_nsfw.replace("{{set}}" ,nt), 3000);
+	}
+	localStorage.setItem("nsfw", nd);
+
+	var cwd = $("[name=cw]:checked").val();
+	var cwt = $("[for=c_"+cwd+"]").text();
+	if (cwd != localStorage.getItem("cw")) {
+		Materialize.toast(lang.lang_setting_cw.replace("{{set}}" ,cwt), 3000);
+	}
+	localStorage.setItem("cw", cwd);
+
+	var cwtd = $("#cw-text").val();
+	if (cwtd != localStorage.getItem("cw-text")) {
+		Materialize.toast(lang.lang_setting_cwtext.replace("{{set}}" ,cwtd), 3000);
+	}
+	localStorage.setItem("cw-text", cwtd);
+
+	var cwsd = $("[name=cws]:checked").val();
+	var cwst = $("[for=cws_"+cwsd+"]").text();
+	if (cwsd != localStorage.getItem("always-cw")) {
+		Materialize.toast(lang.lang_setting_cws.replace("{{set}}" ,cwst), 3000);
+	}
+	localStorage.setItem("always-cw", cwsd);
+
+	var rpd = $("[name=rp]:checked").val();
+	var rpt = $("[for=c_"+cwd+"]").text();
+	if (rpd != localStorage.getItem("replyct")) {
+		Materialize.toast(lang.lang_setting_rp.replace("{{set}}" ,rpt), 3000);
+	}
+	localStorage.setItem("replyct", rpd);
+
+	var visd = $("[name=vis]:checked").val();
+	var vist = $("[for="+visd+"]").text();
+	if (visd != localStorage.getItem("vis")) {
+		Materialize.toast(lang.lang_setting_vis.replace("{{set}}" ,vist), 3000);
+	}
+	localStorage.setItem("vis", visd);
+
+	var popd = $("#popup").val();
+	if (popd > 0 && popd != localStorage.getItem("popup")) {
+		Materialize.toast(lang.lang_setting_popup.replace("{{set}}" ,popd+lang.lang_setting_s), 3000);
+	} else if (popd != localStorage.getItem("popup")) {
+		Materialize.toast(lang.lang_setting_popup.replace("{{set}}" ,lang.lang_setting_off), 3000);
+	}
+	localStorage.setItem("popup", popd);
+
+	var gifd = $("[name=gif]:checked").val();
+	var gift = $("[for=g_"+gifd+"]").text();
+	if (gifd != localStorage.getItem("gif")) {
+		Materialize.toast(lang.lang_setting_gif.replace("{{set}}" ,gift), 3000);
+	}
+	localStorage.setItem("gif", gifd);
+
+	var sentd = $("#sentence").val();
+	var ltrd = $("#letters").val();
+	if (sentd != localStorage.getItem("sentence") || ltrd != localStorage.getItem("letters")) {
+		Materialize.toast(lang.lang_setting_selt.replace("{{set1}}" ,sentd).replace("{{set2}}" ,ltrd), 3000);
+	}
+	localStorage.setItem("sentence", sentd);
+	localStorage.setItem("letters", ltrd);
+
+	var csentd = $("#cw_sentence").val();
+	var cltrd = $("#cw_letters").val();
+	if (csentd != localStorage.getItem("cw_sentence") || cltrd != localStorage.getItem("cw_letters")) {
+		Materialize.toast(lang.lang_setting_autocw.replace("{{set1}}" ,csentd).replace("{{set2}}" ,cltrd), 3000);
+	}
+	localStorage.setItem("cw_sentence", csentd);
+	localStorage.setItem("cw_letters", cltrd);
+
+	var widthd = $("#width").val();
+	if (widthd != localStorage.getItem("width")) {
+		Materialize.toast(lang.lang_setting_width.replace("{{set}}" ,widthd), 3000);
+	}
+	localStorage.setItem("width", widthd);
+
+	var fwidthd = $("#fixwidth").val();
+	if (fwidthd != localStorage.getItem("fixwidth")) {
+		Materialize.toast(lang.lang_setting_fixwidth.replace("{{set}}" ,fwidthd), 3000);
+	}
+	localStorage.setItem("fixwidth", fwidthd);
+
+	var imgd = $("[name=img]:checked").val();
+	var imgt = $("[for=i_"+imgd+"]").text();
+	if (imgd != localStorage.getItem("img")) {
+		Materialize.toast(lang.lang_setting_img.replace("{{set}}" ,imgt), 3000);
+	}
+	localStorage.setItem("img", imgd);
+
 	var fontd = $("#font").val();
 	if(fontd){
 		if (fontd != localStorage.getItem("font")) {
@@ -70,41 +140,326 @@ function settings() {
 			themes();
 		}
 	}
+	
+
+	var sized = $("#size").val();
+	if (sized != localStorage.getItem("size")) {
+		Materialize.toast(lang.lang_setting_size.replace("{{set}}" ,sized), 3000);
+	}
+	localStorage.setItem("size", sized);
+
+	var heid = $("#img-height").val();
+	if (heid != localStorage.getItem("img-height")) {
+		Materialize.toast(lang.lang_setting_imgheight.replace("{{set}}" ,heid), 3000);
+	}
+	localStorage.setItem("img-height", heid);
+
+	var tckrd = $("[name=ticker]:checked").val();
+	var tckrt = $("[for=ticker_"+tckrd+"]").text();
+	if (tckrd != localStorage.getItem("ticker_ok")) {
+		Materialize.toast(lang.lang_setting_ticker.replace("{{set}}" ,tckrt), 3000);
+	}
+	localStorage.setItem("ticker_ok", tckrd);
+
+	var animed = $("[name=anime]:checked").val();
+	var animet = $("[for=anime_"+animed+"]").text();
+	if (animed != localStorage.getItem("animation")) {
+		Materialize.toast(lang.lang_setting_animation.replace("{{set}}" ,animet), 3000);
+	}
+	localStorage.setItem("animation", animed);
+
+	var boxd = $("[name=box]:checked").val();
+	var boxt = $("[for=bx_"+boxd+"]").text();
+	if (boxd != localStorage.getItem("box")) {
+		Materialize.toast(lang.lang_setting_boxConfirm.replace("{{set}}" ,boxt), 3000);
+	}
+	localStorage.setItem("box", boxd);
+
+	var tagd = $("[name=tag]:checked").val();
+	var tagt = $("[for=t_"+tagd+"]").text();
+	if (tagd != localStorage.getItem("tag-range")) {
+		Materialize.toast(lang.lang_setting_tag.replace("{{set}}" ,tagt), 3000);
+	}
+	localStorage.setItem("tag-range", tagd);
+
+	var uld = $("[name=ul]:checked").val();
+	var ult = $("[for=ul_"+uld+"]").text();
+	if (uld != localStorage.getItem("locale")) {
+		Materialize.toast(lang.lang_setting_ul.replace("{{set}}" ,ult), 3000);
+	}
+	localStorage.setItem("locale", uld);
+
+	var ntd = $("[name=notf]:checked").val();
+	var ntt = $("[for=ntf_"+ntd+"]").text();
+	if (ntd != localStorage.getItem("nativenotf")) {
+		Materialize.toast(lang.lang_setting_notf.replace("{{set}}" ,ntt), 3000);
+	}
+	localStorage.setItem("nativenotf", ntd);
+
+	var qtd = $("[name=quote]:checked").val();
+	var qtt = $("[for=q_"+qtd+"]").text();
+	if (qtd != localStorage.getItem("quote")) {
+		Materialize.toast(lang.lang_setting_quote.replace("{{set}}" ,qtt), 3000);
+	}
+	localStorage.setItem("quote", qtd);
+	
+	var viad = $("[name=via]:checked").val();
+	var viat = $("[for=via_"+viad+"]").text();
+	if (viad != localStorage.getItem("viashow")) {
+		Materialize.toast(lang.lang_setting_via.replace("{{set}}" ,viat), 3000);
+	}
+	localStorage.setItem("viashow", viad);
+
+	var notfmd = $("[name=notfm]:checked").val();
+	var notfmt = $("[for=notfm_"+notfmd+"]").text();
+	if (notfmd != localStorage.getItem("setasread")) {
+		Materialize.toast(lang.lang_setting_setasread.replace("{{set}}" ,notfmt), 3000);
+	}
+	localStorage.setItem("setasread", notfmd);
+
+	var movd = $("[name=mov]:checked").val();
+	var movt = $("[for=mov_"+movd+"]").text();
+	if (movd != localStorage.getItem("mouseover")) {
+		Materialize.toast(lang.lang_setting_mov.replace("{{set}}" ,movt), 3000);
+	}
+	localStorage.setItem("mouseover", movd);
+
+	var maind = $("[name=main]:checked").val();
+	var maint = $("[for=mn_"+maind+"]").text();
+	if (maind != localStorage.getItem("mainuse")) {
+		Materialize.toast(lang.lang_setting_main.replace("{{set}}" ,maint), 3000);
+	}
+	localStorage.setItem("mainuse", maind);
+
+	var secd = $("[name=sec]:checked").val();
+	var sect = $("[for=sec-"+secd+"]").text();
+	if (secd != localStorage.getItem("sec")) {
+		Materialize.toast(lang.lang_setting_sec.replace("{{set}}" ,sect), 3000);
+	}
+	localStorage.setItem("sec", secd);
 }
 
 //読み込み時の設定ロード
 function load() {
-	var max=envView.config.length;
-	for(var i=0;i<max;i++){
-		var ls=envView.config[i].storage;
-		envView.config[i].setValue=localStorage.getItem(ls)
-	}
-	var max=tlView.config.length;
-	for(var i=0;i<max;i++){
-		var ls=tlView.config[i].storage;
-		tlView.config[i].setValue=localStorage.getItem(ls)
-	}
-	var max=postView.config.length;
-	for(var i=0;i<max;i++){
-		var ls=postView.config[i].storage;
-		postView.config[i].setValue=localStorage.getItem(ls)
-	}
 	if(localStorage.getItem("imas")){
 		$(".imas").removeClass("hide");
 	}
 	if(localStorage.getItem("kirishima")){
 		$(".kirishima").removeClass("hide");
 	}
+	var prof = localStorage.getItem("prof");
+	$("#my-prof").attr("src", prof);
+	var datetype = localStorage.getItem("datetype");
+	if (!datetype) {
+		var datetype = "absolute";
+	}
+	$("#" + datetype).prop("checked", true);
+
 	var theme = localStorage.getItem("theme");
 	if (!theme) {
 		var theme = "white";
 	}
 	$("#" + theme).prop("checked", true);
+
+	var ha = localStorage.getItem("ha");
+	if (!ha) {
+		var ha = "false";
+	}
+	$("#ha_" + ha).prop("checked", true);
+
+	var nsfw = localStorage.getItem("nsfw");
+	if (!nsfw) {
+		var nsfw = "yes";
+	}
+	$("#n_" + nsfw).prop("checked", true);
+
+	var cw = localStorage.getItem("cw");
+	if (!cw) {
+		var cw = "yes";
+	}
+	$("#c_" + cw).prop("checked", true);
+
+	var cws = localStorage.getItem("always-cw");
+	if (!cws) {
+		var cws = "no";
+	}
+	$("#cws_" + cws).prop("checked", true);
+
+	var popup = localStorage.getItem("popup");
+	if (!popup) {
+		var popup = "0";
+	}
+	$("#popup").val(popup);
+
+	var box = localStorage.getItem("box");
+	if (!box) {
+		var box = "no";
+	}
+	if(box=="absolute"){
+		var box = "abs";
+	}
+	$("#bx_" + box).prop("checked", true);
+
+	var gif = localStorage.getItem("gif");
+	if (!gif) {
+		var gif = "yes";
+	}
+	$("#g_" + gif).prop("checked", true);
+
+	var sent = localStorage.getItem("sentence");
+	if (!sent) {
+		var sent = "500";
+	}
+	$("#sentence").val(sent);
+	var ltrs = localStorage.getItem("letters");
+	if (!ltrs) {
+		var ltrs = "500";
+	}
+	$("#letters").val(ltrs);
+
+	var csent = localStorage.getItem("cw_sentence");
+	if (!csent) {
+		var csent = "500";
+	}
+	$("#cw_sentence").val(csent);
+	var cltrs = localStorage.getItem("cw_letters");
+	if (!cltrs) {
+		var cltrs = "500";
+	}
+	$("#cw_letters").val(cltrs);
+
+	var width = localStorage.getItem("width");
+	if (!width) {
+		var width = "300";
+	}
+	$("#width").val(width);
+
+	var fwidth = localStorage.getItem("fixwidth");
+	if (!fwidth) {
+		var fwidth = "300";
+	}
+	$("#fixwidth").val(fwidth);
+
+	var cwt = localStorage.getItem("cw-text");
+	if (!cwt) {
+		var cwt = "";
+	}
+	$("#cw-text").val(cwt);
+
+	var cws = localStorage.getItem("always-cw");
+	if (!cws) {
+		var cws = "no";
+	}
+	$("#cws_" + cws).prop("checked", true);
+
+	var rps = localStorage.getItem("replyct");
+	if (!rps) {
+		var rps = "hidden";
+	}
+	$("#rp_" + rps).prop("checked", true);
+
+	var vis = localStorage.getItem("vis");
+	if (!vis) {
+		var vis = "public";
+	}
+	$("#" + vis).prop("checked", true);
+
+	var img = localStorage.getItem("img");
+	if (!img) {
+		var img = "no-act";
+	}
+	$("#i_" + img).prop("checked", true);
+	
 	var font = localStorage.getItem("font");
 	if (!font) {
 		var font = "";
 	}
 	$("#font").val(font);
+
+	var size = localStorage.getItem("size");
+	if (!size) {
+		var size = "13";
+	}
+	$("#size").val(size);
+
+	var imh = localStorage.getItem("img-height");
+	if (!imh) {
+		var imh = "200";
+	}
+	$("#img-height").val(imh);
+
+	var ticker = localStorage.getItem("ticker_ok");
+	if (!ticker) {
+		var ticker = "no";
+	}
+	$("#ticker_" + ticker).prop("checked", true);
+
+	var animation = localStorage.getItem("animation");
+	if (!animation) {
+		var animation = "yes";
+	}
+	$("#anime_" + animation).prop("checked", true);
+
+	var tag = localStorage.getItem("tag-range");
+	if (!tag) {
+		var tag = "all";
+	}
+	$("#t_" + tag).prop("checked", true);
+
+	var box = localStorage.getItem("box");
+	if (!box) {
+		var box = "yes";
+	}
+	$("#bx_" + box).prop("checked", true);
+
+	var uld = localStorage.getItem("locale");
+	if (!uld) {
+		var uld = "yes";
+	}
+	$("#ul_" + uld).prop("checked", true);
+
+	var nnd = localStorage.getItem("nativenotf");
+	if (!nnd) {
+		var nnd = "yes";
+	}
+	$("#ntf_" + nnd).prop("checked", true);
+
+	var qt = localStorage.getItem("quote");
+	if (!qt) {
+		var qt = "simple";
+	}
+	$("#q_" + qt).prop("checked", true);
+
+	var viat = localStorage.getItem("viashow");
+	if (!viat) {
+		var viat = "hide";
+	}
+	$("#via_" + viat).prop("checked", true);
+
+	var movt = localStorage.getItem("mouseover");
+	if (!movt) {
+		var movt = "no";
+	}
+	$("#mov_" + movt).prop("checked", true);
+
+	var notfmt = localStorage.getItem("setasread");
+	if (!notfmt) {
+		var notfmt = "yes";
+	}
+	$("#notfm_" + notfmt).prop("checked", true);
+
+	var maint = localStorage.getItem("mainuse");
+	if (!maint) {
+		var maint = "remain";
+	}
+	$("#mn_" + maint).prop("checked", true);
+
+	var sect = localStorage.getItem("sec");
+	if (!sect) {
+		var sect = "nothing";
+	}
+	$("#sec-" + sect).prop("checked", true);
+	
 }
 
 function climute(){
@@ -208,7 +563,7 @@ function exportSettings(){
 	dialog.showSaveDialog(null, {
 		title: 'Export',
 		properties: ['openFile', 'createDirectory'],
-		defaultPath: "export.thedeskconfigv2"
+		defaultPath: "export.thedeskconfig"
 	}, (savedFiles) => {
 		console.log(savedFiles);
 		if(!savedFiles){
@@ -224,27 +579,20 @@ function exportSettings(){
 		var column = JSON.parse(multi);
 		exp.columns=column;
 		//Themes
-		var config={};
-		config.theme=localStorage.getItem("theme");
-		//Other configs
-		var max=envView.config.length;
-		for(var i=0;i<max;i++){
-			var ls=envView.config[i].storage;
-			config[ls]=localStorage.getItem(ls)
-		}
-		var max=tlView.config.length;
-		for(var i=0;i<max;i++){
-			var ls=tlView.config[i].storage;
-			config[ls]=localStorage.getItem(ls)
-		}
-		var max=postView.config.length;
-		for(var i=0;i<max;i++){
-			var ls=postView.config[i].storage;
-			config[ls]=localStorage.getItem(ls)
-		}
+		exp.theme=localStorage.getItem("theme");
+		//Min width
+		exp.minwidth=localStorage.getItem("width");
 		//Font
-		config.font=localStorage.getItem("font");
-		exp.config=config;
+		exp.font=localStorage.getItem("font");
+		exp.size=localStorage.getItem("size");
+		//Img height
+		exp.imgheight=localStorage.getItem("img-height");
+		//Main
+		exp.mainuse=localStorage.getItem("mainuse");
+		//CW text
+		exp.cw=localStorage.getItem("cw-text");
+		//vis
+		exp.vis=localStorage.getItem("vis");
 		//keysc
 		exp.ksc=[
 			localStorage.getItem("oks-1"),
@@ -290,7 +638,7 @@ function importSettings(){
 		title: 'Import',
 		properties: ['openFile'],
 		filters: [
-			{name: 'TheDesk Config', extensions: ['thedeskconfig','thedeskconfigv2']},
+			{name: 'TheDesk Config', extensions: ['thedeskconfig']},
 		]
 	}, (fileNames) => {
 		console.log(fileNames);
@@ -313,53 +661,26 @@ function importSettings(){
 					localStorage.setItem("acct_"+ key + "_at", acct.at);
 				}
 				localStorage.setItem("column",JSON.stringify(obj.columns));
-				if(obj.config){
-					//Version 2
-					var max=envView.config.length;
-					for(var i=0;i<max;i++){
-						var ls=envView.config[i].storage;
-						if(obj.config[ls]){
-							localStorage.setItem(ls,obj.config[ls])
-						}
-					}
-					var max=tlView.config.length;
-					for(var i=0;i<max;i++){
-						var ls=tlView.config[i].storage;
-						if(obj.config[ls]){
-							localStorage.setItem(ls,obj.config[ls])
-						}
-					}
-					var max=postView.config.length;
-					for(var i=0;i<max;i++){
-						var ls=postView.config[i].storage;
-						if(obj.config[ls]){
-							localStorage.setItem(ls,obj.config[ls])
-						}
-					}
-				}else{
-					//Version 1
-					localStorage.setItem("theme",obj.theme);
-					if(obj.width){
-						console.log(obj.width)
-						localStorage.setItem("width",obj.width);
-					}
-					if(obj.font){
-						localStorage.setItem("font",obj.font);
-					}
-					if(obj.size){
-						localStorage.setItem("size",obj.size);
-					}
-					themes(obj.theme);
-					if(obj.imgheight){
-						localStorage.setItem("img-height",obj.imgheight);
-					}
-					localStorage.setItem("mainuse",obj.mainuse);
-					if(obj.cw){
-						localStorage.setItem("cwtext",obj.cw);
-					}
-					localStorage.setItem("vis",obj.vis);
-					//End
+				localStorage.setItem("theme",obj.theme);
+				if(obj.width){
+					console.log(obj.width)
+					localStorage.setItem("width",obj.width);
 				}
+				if(obj.font){
+					localStorage.setItem("font",obj.font);
+				}
+				if(obj.size){
+					localStorage.setItem("size",obj.size);
+				}
+				themes(obj.theme);
+				if(obj.imgheight){
+					localStorage.setItem("img-height",obj.imgheight);
+				}
+				localStorage.setItem("mainuse",obj.mainuse);
+				if(obj.cw){
+					localStorage.setItem("cwtext",obj.cw);
+				}
+				localStorage.setItem("vis",obj.vis);
 				if(obj.ksc[0]){
 					localStorage.setItem("oks-1",obj.ksc[0]);
 				}
@@ -609,7 +930,9 @@ function customImp(){
 		alert("Error")
 	}
 }
-function hardwareAcceleration(had){
+function hardwareAcceleration(){
+	var had = $("[name=ha]:checked").val();
+	localStorage.setItem("ha", had);
 	console.log("ha");
 	ipc.send('ha', had);
 }
@@ -618,8 +941,7 @@ ipc.on('theme-json-create-complete', function (event, args) {
 	$("#custom_import").val("");
 	ctLoad()
 });
-window.onload = function() {
-	//最初に読む
+//最初に読む
 load();
 climute();
 wordmute();
@@ -629,4 +951,3 @@ voiceSettingLoad();
 oksload();
 npprovider();
 ctLoad()
-  };

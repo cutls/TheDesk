@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "17.3.0",
+  "version": "18.0.0",
   "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {
@@ -39,7 +39,8 @@
     "jimp": "^0.2.28",
     "json5": "^2.1.0",
     "node-notifier": "^5.2.1",
-    "sumchecker": "^2.0.2"
+    "sumchecker": "^2.0.2",
+    "vue": "^2.6.9"
   },
   "optionalDependencies": {
     "itunes-nowplaying-mac": "^0.2.3",

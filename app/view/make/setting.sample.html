@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="{{lang}}">
+<html lang="@@lang@@">
 <head>
 	<title>Settings - TheDesk</title>
-	{{comment-start}}
+	@@comment-start@@
 	<script type="text/javascript">
 		var _jipt = [];
 		_jipt.push(['project', 'thedesk']);
 	</script>
 	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-	{{comment-end}}
+	@@comment-end@@
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
@@ -23,78 +23,68 @@
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.{{lang}}.js"></script>
+<script type="text/javascript" src="../../js/lang/lang.@@lang@@.js"></script>
 <script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript" src="setting.vue.js"></script>
 
-<h4>{{setting}}</h4>
+<h4>@@setting@@</h4>
 <ul class="collapsible" data-collapsible="accordion">
 	<li>
 	<div class="collapsible-header">
-			<i class="material-icons">desktop_windows</i>{{env}}
+			<i class="material-icons">desktop_windows</i>@@env@@
 	</div>
 	<div class="collapsible-body">
-		<h5>{{setlang}}</h5>
+		<h5>@@setlang@@</h5>
 		To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
-		{{langlist}}
-		<h5>{{backup}}</h5>
-		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">{{export}}</button>
-		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">{{import}}</button>
-		<br>
-		<h5>{{popup}}</h5>{{popupwarn}}
-		<br>
-		<input type="text" style="width:50px" id="popup">{{s}}
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
-		<br>
-		<h5>{{nativenotf}}</h5>
-		{{nnwarn}}<br><a onclick="notftest()" class="pointer">{{nntest}}</a>
-		<br>
-		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_yes" value="yes" />
-		<label for="ntf_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_no" value="no" />
-		<label for="ntf_no">{{no}}</label>
-		<br>
-		<h5>{{minwidth}}</h5>{{minwidthwarn}}
-		<br>
-		<input type="text" style="width:50px" id="width">px{{above}}
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
-		<br>
-		<h5>{{fixwidth}}</h5>{{fixwidthwarn}}
-		<input type="text" style="width:50px" id="fixwidth">px{{above}}
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
-		<br>
-		<h5>{{font}}</h5>
-		{{fontwarn}}<br>
-		<button class="btn waves-effect" style="width:100px;" onclick="font()">{{select}}</button><br>
+		@@langlist@@
+		<h5>@@backup@@</h5>
+		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">@@export@@</button>
+		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">@@import@@</button>
+		<div id="envView">
+            <template v-for="(item, i) in config">
+				<h5>{{item.text.head}}</h5>
+				{{item.text.desc}}<br>
+				<template v-if="item.id=='notf'"><a onclick="notftest()" class="pointer">@@nntest@@</a><br></template>
+                <template v-if="item.checkbox">
+                        <template v-for="(check, j) in item.text.checkbox">
+                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
+                        </template>
+				</template>
+				<template v-else>
+					<template v-if="item.doubleText">
+						<template v-for="(textbox, j) in item.data">
+                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                        </template>
+					</template>
+					<template v-else>
+							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+					</template>
+					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">@@change@@</button> 
+				</template>
+			</template>
+        </div>
+        <h5>@@font@@</h5>
+		@@fontwarn@@<br>
+		<button class="btn waves-effect" style="width:100px;" onclick="font()">@@select@@</button><br>
 		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
 		<br>
 		<input type="text" style="width:150px" id="font">
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
+		<button class="btn waves-effect" style="width:100px;" onclick="settings()">@@set@@</button>
 		<br>
-		<h5>{{fontsize}}</h5>
-		<span style="font-size:15px">15px({{absolute}})</span>
-		<br>
-		<input type="text" style="width:50px" id="size">px 
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button><br>
-		<h5>{{savefolder}}</h5>
-		{{savefolderwarn}}<br>
-		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">{{change}}</button>
-		<br>
-		<h5>{{hardwareAcceleration}}</h5>
-		{{hardwareAccelerationWarn}}
-		<br>
-		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_true" value="true" />
-		<label for="ha_true">{{yes}}</label>
-		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_false" value="false" />
-		<label for="ha_false">{{no}}</label>
+        <h5>@@savefolder@@</h5>
+		@@savefolderwarn@@<br>
+		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">@@change@@</button>
 		<br>
 	</div>
 	</li>
 	<li>
 	<div class="collapsible-header">
-			<i class="material-icons">color_lens</i>{{theme}}
+			<i class="material-icons">color_lens</i>@@theme@@
 	</div>
 	<div class="collapsible-body">
-		<h4>{{themeSel}}</h4>
+		<h4>@@themeSel@@</h4>
 		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
 		<label for="black">Black</label>
 		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
@@ -110,289 +100,159 @@
 		<div style="width:300px" id="sel-selector">
 			<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
 		</div>
-		<h4>{{customtheme}}</h4>
-		<div style="width:300px" id="edit-selector" data-add="{{add_new}}">
+		<h4>@@customtheme@@</h4>
+		<div style="width:300px" id="edit-selector" data-add="@@add_new@@">
 			<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
-				<option value="add_new">{{add_new}}</option>
+				<option value="add_new">@@add_new@@</option>
 			</select>
 		</div>
-		<h5>{{name}}</h5>
-		<input type="text" style="width:300px" id="custom_name" placeholder="{{name}}...">
-		<h5>{{desc}}</h5>
-		<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea" placeholder="{{desc}}..."></textarea></div>
-		<h5>{{customthemeDirection}}</h5>
+		<h5>@@name@@</h5>
+		<input type="text" style="width:300px" id="custom_name" placeholder="@@name@@...">
+		<h5>@@desc@@</h5>
+		<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea" placeholder="@@desc@@..."></textarea></div>
+		<h5>@@customthemeDirection@@</h5>
 		<input class="with-gap" name="derection" type="radio" id="dark" value="dark" checked="true" />
 		<label for="dark">Dark</label>
 		<input class="with-gap" name="derection" type="radio" id="light" value="light" />
 		<label for="light">Light</label>
 		<div id="pickers">
 		<div>
-			<h5>Primary</h5>{{secondarycolor}}
+			<h5>Primary</h5>@@secondarycolor@@
 			<div id="color-picker0-wrap"><div class="color-picker" id="color-picker0"></div></div>
 			<input type="hidden" id="color-picker0_value">
 		</div>
 		<div>
-			<h5>Secondary</h5>{{primary}}
+			<h5>Secondary</h5>@@primary@@
 			<div id="color-picker1-wrap"><div class="color-picker" id="color-picker1"></div></div>
 			<input type="hidden" id="color-picker1_value">
 		</div>
 		<div>
-			<h5>Texts</h5>{{text}}
+			<h5>Texts</h5>@@text@@
 			<div id="color-picker2-wrap"><div class="color-picker" id="color-picker2"></div></div>
 			<input type="hidden" id="color-picker2_value">
 		</div>
 		<div>
-			<h5>Accent</h5>{{accent}}
+			<h5>Accent</h5>@@accent@@
 			<div id="color-picker3-wrap"><div class="color-picker" id="color-picker3"></div></div>
 			<input type="hidden" id="color-picker3_value">
 		</div>
 		</div>
-		<button class="btn-large waves-effect" onclick="customComp()">{{change}}</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">{{delete}}</button><br><br>
+		<button class="btn-large waves-effect" onclick="customComp()">@@change@@</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">@@delete@@</button><br><br>
 		<input type="text" style="width:300px" id="custom_json" class="materialize-textarea" placeholder="JSON style" readonly><br>
-		{{customShare}}
-		<h4>{{customImport}}</h4>
-		{{cImpWarn}}<br>
+		@@customShare@@
+		<h4>@@customImport@@</h4>
+		@@cImpWarn@@<br>
 		<input type="text" style="width:300px" id="custom_import" class="materialize-textarea" placeholder="JSON/JSON5 style">
-		<button class="btn waves-effect" onclick="customImp()">{{import}}</button><br>
+		<button class="btn waves-effect" onclick="customImp()">@@import@@</button><br>
 	</li>
 	<li>
 	<div class="collapsible-header">
-			<i class="material-icons">reorder</i>{{timeline}}
+			<i class="material-icons">reorder</i>@@timeline@@
 	</div>
 	<div class="collapsible-body">
-		<h5>{{timemode}}</h5>{{relativetime}}
-		<br>{{absolutetime}}
-		<br>{{mixtime}}
-		<br>
-		<input class="with-gap" onchange="settings()" onchange="settings()" name="time" type="radio" id="relative" value="relative" />
-		<label for="relative">{{relativesel}}</label>
-		<input class="with-gap" onchange="settings()" name="time" type="radio" id="absolute" value="absolute" />
-		<label for="absolute">{{absolutesel}}</label>
-		<input class="with-gap" onchange="settings()" name="time" type="radio" id="double" value="double" />
-		<label for="double">{{doublesel}}</label>
-		<input class="with-gap" onchange="settings()" name="time" type="radio" id="medium" value="medium" />
-		<label for="medium">{{mixsel}}</label>
-		<h5>{{locale}}</h5>{{localewarn}}
-		<br>
-		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_yes" value="yes" />
-		<label for="ul_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_no" value="no" />
-		<label for="ul_no">{{no}}</label>
-		<br>
-		<h5>{{nswf}}</h5>{{nsfwwarn}}
-		<br>
-		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_yes" value="yes" />
-		<label for="n_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_no" value="no" />
-		<label for="n_no">{{no}}</label>
-		<br>
-		<h5>{{cw}}</h5>
-		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_yes" value="yes" />
-		<label for="c_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_no" value="no" />
-		<label for="c_no">{{no}}</label>
-		<br>
-		<h5>{{replyct}}</h5>
-		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_hidden" value="hidden" />
-		<label for="rp_hidden">{{replyct_hidden}}</label>
-		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_all" value="all" />
-		<label for="rp_all">{{replyct_full}}</label>
-		<br>
-		<h5>{{gif}}</h5>
-		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_yes" value="yes" />
-		<label for="g_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_no" value="no" />
-		<label for="g_no">{{no}}</label>
-		<br>
-		<h5>{{tag}}</h5>
-		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_all" value="all" />
-		<label for="t_all">{{tagfed}}</label>
-		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_local" value="local" />
-		<label for="t_local">{{taglocal}}</label>
-		<br>
-		<h5>{{via}}</h5>
-		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_yes" value="yes" />
-		<label for="via_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_hide" value="hide" />
-		<label for="via_hide">{{no}}</label>
-		<br>
-		<h5>{{mouseover}}</h5>
-		{{mouseoverwarn}}<br>
-		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_yes" value="yes" />
-		<label for="mov_yes">{{mv}}</label>
-		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_click" value="click" />
-		<label for="mov_click">{{mvclick}}</label>
-		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_no" value="no" />
-		<label for="mov_no">{{no}}</label>
-		<br>
-		<h5>{{notfmarker}}</h5>
-		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_yes" value="yes" />
-		<label for="notfm_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_no" value="no" />
-		<label for="notfm_no">{{no}}</label>
-		<br>
-		<h5>{{autofold}}</h5>
-		{{autofoldwarn}}
-		<br>
-		<input type="text" style="width:50px" id="sentence">{{lines}} {{above}} {{or}}
-		<input type="text" style="width:50px" id="letters">{{letters}} {{above}}
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
-		<br>
-		<h5>{{imgheight}}
-        </h5>
-		<input type="text" style="width:50px" id="img-height">px
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
-		<br>
-		<h5>{{ticker}}</h5>
-		{{tickerwarn}}<br>
-		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_yes" value="yes" />
-		<label for="ticker_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
-		<label for="ticker_no">{{no}}</label>
-		<br>
-		<h5>{{animation}}</h5>
-		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_yes" value="yes" />
-		<label for="anime_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
-		<label for="anime_no">{{no}}</label>
+		<div id="tlView">
+            <template v-for="(item, i) in config">
+				<h5>{{item.text.head}}</h5>
+				{{item.text.desc}}<br>
+                <template v-if="item.checkbox">
+                        <template v-for="(check, j) in item.text.checkbox">
+                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
+                        </template>
+				</template>
+				<template v-else>
+					<template v-if="item.doubleText">
+						<template v-for="(textbox, j) in item.data">
+                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                        </template>
+					</template>
+					<template v-else>
+							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+					</template>
+					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">@@change@@</button> 
+				</template>
+			</template>
+        </div>
 	</div>
 	</li>
 	<li>
 	<div class="collapsible-header">
-			<i class="material-icons">send</i>{{post}}
+			<i class="material-icons">send</i>@@post@@
 	</div>
 	<div class="collapsible-body">
-		<h5>{{defaultcw}}</h5>
-		<input type="text" style="width:150px" id="cw-text">
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
-		<br>
-		<h5>{{autocw}}</h5>
-		{{autocwwarn}}
-		<br>
-		<input type="text" style="width:50px" id="cw_sentence">{{lines}} {{above}} {{or}}
-		<input type="text" style="width:50px" id="cw_letters">{{letters}} {{above}}
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">{{set}}</button>
-		<br>
-		<h5>{{cws}}</h5>
-		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_yes" value="yes" />
-		<label for="cws_yes">{{yes}}</label>
-		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_no" value="no" />
-		<label for="cws_no">{{no}}
-		</label>
-		<br>
-		<h5>{{defaultvis}}</h5>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="public" value="public" />
-		<label for="public">{{public}}</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="unlisted" value="unlisted" />
-		<label for="unlisted">{{unlisted}}</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="private" value="private" />
-		<label for="private">{{private}}</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="direct" value="direct" />
-		<label for="direct">{{direct}}</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="memory" value="memory" />
-		<label for="memory">{{memory}}</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="server" value="server" />
-		<label for="server">{{useapi}}</label>
-		<br>
-		<h5>{{postimg}}</h5>
-		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_url" value="url" />
-		<label for="i_url">{{showurl}}</label>
-		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_no-act" value="no-act" />
-		<label for="i_no-act">{{nourl}}</label>
-		<br>
-		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_inline" value="inline" disabled />
-		<label for="i_inline">{{disabled}} 
-			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
-		</label>
-		<br>
-		<h5>{{box}}</h5>
-		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_yes" value="yes" />
-		<label for="bx_yes">{{boxyes}}</label>
-		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_no" value="no" />
-		<label for="bx_no">{{boxno}}
-		</label>
-		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_abs" value="absolute" />
-		<label for="bx_abs">{{boxabs}}</label>
-		<br>
-		<h5>{{quote}}</h5>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_simple" value="simple" />
-		<label for="q_simple">{{simple}}</label>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
-		<label for="q_mention">{{mention}}</label>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
-		<label for="q_full">{{full}}</label>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_nothing" value="nothing" />
-		<label for="q_nothing">{{notqt}}</label>
-		<br>
-		<h5>{{main}}</h5>
-		{{mainwarn}}<br>
-		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_remain" value="remain" />
-		<label for="mn_remain">{{lastacct}}</label>
-		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_main" value="main" />
-		<label for="mn_main">{{usemainacct}}</label>
-		</label>
-		<h5>{{secondary}}</h5>
-		{{secwarn}}<br>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-nothing" value="nothing" />
-		<label for="sec-nothing">{{nothing}}</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-public" value="public" />
-		<label for="sec-public">{{public}}</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-unlisted" value="unlisted" />
-		<label for="sec-unlisted">{{unlisted}}</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-private" value="private" />
-		<label for="sec-private">{{private}}</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-direct" value="direct" />
-		<label for="sec-direct">{{direct}}</label>
-		<input class="with-gap hide kirishima" onchange="settings()" name="sec" type="radio" id="sec-local" value="local" />
-		<label for="sec-local">{{localonly}}</label><span class="hide kirishima">非対応インスタンスでは「未収載」になります。</span>
-		<br>
+		<div id="postView">
+            <template v-for="(item, i) in config">
+				<h5>{{item.text.head}}</h5>
+				{{item.text.desc}}<br>
+                <template v-if="item.checkbox">
+                        <template v-for="(check, j) in item.text.checkbox">
+							<template v-if="!check.kirishima || (check.kirishima && kirishima)">
+                            	<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+								<label v-bind:for="item.id+check.value">{{check.text}}</label>
+								<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
+							</template>
+                        </template>
+				</template>
+				<template v-else>
+					<template v-if="item.doubleText">
+						<template v-for="(textbox, j) in item.data">
+                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                        </template>
+					</template>
+					<template v-else>
+							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+					</template>
+					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">@@change@@</button> 
+				</template>
+			</template>
+        </div>
 	</div>
 	</li>
 	<li>
 		<div class="collapsible-header">
-				<i class="material-icons">keyboard</i>{{keysc}}
+				<i class="material-icons">keyboard</i>@@keysc@@
 		</div>
 		<div class="collapsible-body">
-			<h5>{{iks}}</h5>
-			{{okswarn}}<br>
+			<h5>@@iks@@</h5>
+			@@okswarn@@<br>
 			Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
-			<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">{{set}}</button><br><br>
+			<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">@@set@@</button><br><br>
 			Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
-			<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">{{set}}</button><br><br>
+			<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">@@set@@</button><br><br>
 			Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
-			<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">{{set}}</button><br><br>
+			<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">@@set@@</button><br><br>
 
 		</div>
 	</li>
 	<li>
 		<div class="collapsible-header">
-				<i class="material-icons">bookmark</i>{{muteemp}}
+				<i class="material-icons">bookmark</i>@@muteemp@@
 		</div>
 		<div class="collapsible-body">
-			<h5>{{climute}}</h5>
+			<h5>@@climute@@</h5>
 			<div id="mute-cli"></div>
-			<h5>{{cliemp}}</h5>
-			{{cliwarn}}
-			<h5>{{wordmute}}</h5>
-			{{enter}}<br>
+			<h5>@@cliemp@@</h5>
+			@@cliwarn@@
+			<h5>@@wordmute@@</h5>
+			@@enter@@<br>
 			<div class="chips" id="wordmute" style="background-color:gray;"></div>
-			<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">{{set}}</button>
-			<h5>{{wordemp}}</h5>
-			{{enter}}<br>
+			<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">@@set@@</button>
+			<h5>@@wordemp@@</h5>
+			@@enter@@<br>
 			<div class="chips" id="wordemp" style="background-color:gray;"></div>
-			<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">{{set}}</button>
-			<h5>{{useremp}}</h5>
-			{{useerempwarn}}
-			<span class="emphasized">　{{empcolorwarn}}　</span>
+			<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">@@set@@</button>
+			<h5>@@useremp@@</h5>
+			@@useerempwarn@@
+			<span class="emphasized">　@@empcolorwarn@@　</span>
 		</div>
 	</li>
 	<li>
 		<div class="collapsible-header">
-			<i class="fa fa-spotify"></i>{{spotify}}
+			<i class="fa fa-spotify"></i>@@spotify@@
 		</div>
 		<div class="collapsible-body">
-			<h5>{{npProvider}}</h5>
-			{{npPeoviderWarn}}<br>
+			<h5>@@npProvider@@</h5>
+			@@npPeoviderWarn@@<br>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
 			<label for="aimp">AIMP</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
@@ -407,73 +267,73 @@
 			<label for="wlm">WLM</label>
 			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
 			<label for="cad">CAD</label><br><br>
-			{{spotifynote1}}<i class="material-icons" style="font-size:24px;">music_note</i>{{spotifynote2}}<br>
-			<h5>{{link}}</h5>
-			{{linkwarn}}<br>
-			<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">{{set}}</button></div>
-			<a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i class="fa fa-spotify left"></i>{{connect}}</a>
-			<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i class="fa fa-spotify left"></i>{{disconnect}}</a>
-			<h5>{{templeteedit}}</h5>
-			{{templeteeditwarn}}<br>
+			@@spotifynote1@@<i class="material-icons" style="font-size:24px;">music_note</i>@@spotifynote2@@<br>
+			<h5>@@link@@</h5>
+			@@linkwarn@@<br>
+			<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">@@set@@</button></div>
+			<a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i class="fa fa-spotify left"></i>@@connect@@</a>
+			<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i class="fa fa-spotify left"></i>@@disconnect@@</a>
+			<h5>@@templeteedit@@</h5>
+			@@templeteeditwarn@@<br>
 			<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
-				{{templete1}}<br>
-				{{templete2}}<br>
-				{{templete3}}<br>
+				@@templete1@@<br>
+				@@templete2@@<br>
+				@@templete3@@<br>
 				<span class="imas hide">CINDERELLA NowPlaying(imastodon.net限定)では作曲家{composer}/作詞家{lyricist}/BPM{bpm}が有効です。<br>
                     CINDERELLA NowPlayingはimastodon.netにログインしているとき、トゥート欄に「//」を入力し、その後に曲名を入れることで可能です。</span><br>
-			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">{{set}}</button>
-			<h5>{{postartwork}}</h5>
+			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">@@set@@</button>
+			<h5>@@postartwork@@</h5>
 			<span class="imas hide">この設定はCINDERELLA NowPlaying(imastodon.net限定)にも適用されます。</span><br>
 			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
-			<label for="awk_yes">{{yes}}</label>
+			<label for="awk_yes">@@yes@@</label>
 			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
-			<label for="awk_no">{{no}}</label>
+			<label for="awk_no">@@no@@</label>
 			<br>
 		</div>
 	</li>
 	<li>
 		<div class="collapsible-header">
-			<i class="material-icons">hearing</i>{{tts}}
+			<i class="material-icons">hearing</i>@@tts@@
 		</div>
 		<div class="collapsible-body">
-			<h5>{{speed}}</h5>
-			{{speedwarn}}<br>
+			<h5>@@speed@@</h5>
+			@@speedwarn@@<br>
 			<p class="range-field"><input type="range" id="voicespeed" min="1" max="100" value="10" style="width:500px; max-width:100%"/></p>
-			<h5>{{pitch}}</h5>
-			{{pitchwarn}}<br>
+			<h5>@@pitch@@</h5>
+			@@pitchwarn@@<br>
 			<p class="range-field"><input type="range" id="voicepitch" min="0" max="100" value="50" style="width:500px; max-width:100%"/></p>
-			<h5>{{vol}}</h5>
-			{{volwarn}}<br>
+			<h5>@@vol@@</h5>
+			@@volwarn@@<br>
 			<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100" style="width:500px; max-width:100%"/></p>
-			<h5>{{test}}</h5>
-			<input type="text" style="width:350px" id="voicetxt" value="{{sample}}">
-			<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()" id="testplay">{{playstop}}</button><br>
+			<h5>@@test@@</h5>
+			<input type="text" style="width:350px" id="voicetxt" value="@@sample@@">
+			<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()" id="testplay">@@playstop@@</button><br>
 			<br>
-			<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">{{set}}</button>
+			<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">@@set@@</button>
 		</div>
 	</li>
 </ul>
 <br>
-<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>{{back}}</a>
+<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>@@back@@</a>
 <br>
-<br>{{keyscs}}
-<li>Ctrl+1-9:{{keyscr}}</li>
-<li>N:{{keynew}}</li>
-<li>X:{{keytoggle}}</li>
-<li>Ctrl+Enter:{{keypost}}</li>
-<li>Ctrl+Enter+Shift:{{keysecpost}}</li>
-<li>Alt+Enter:{{secondary}}</li>
-<li>Ctrl+E:{{keyunread}}</li>
-<li>Esc:{{keyesc}}</li>
-<li>F5:{{keyf5}}</li>
-<li>Ctrl+Shift+C:{{keyclear}}</li>
-<li>Ctrl+Shift+S:{{setting}}</li>
-<li>Ctrl+Shift+M:{{keyacctman}}</li>
+<br>@@keyscs@@
+<li>Ctrl+1-9:@@keyscr@@</li>
+<li>N:@@keynew@@</li>
+<li>X:@@keytoggle@@</li>
+<li>Ctrl+Enter:@@keypost@@</li>
+<li>Ctrl+Enter+Shift:@@keysecpost@@</li>
+<li>Alt+Enter:@@secondary@@</li>
+<li>Ctrl+E:@@keyunread@@</li>
+<li>Esc:@@keyesc@@</li>
+<li>F5:@@keyf5@@</li>
+<li>Ctrl+Shift+C:@@keyclear@@</li>
+<li>Ctrl+Shift+S:@@setting@@</li>
+<li>Ctrl+Shift+M:@@keyacctman@@</li>
 <li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
-<li>Ctrl+Shift+P:{{keyshowprof}}</li>
-<li>←/→:{{keyrow}}</li>
-<li>{{keyzoom}}</li>
+<li>Ctrl+Shift+P:@@keyshowprof@@</li>
+<li>←/→:@@keyrow@@</li>
+<li>@@keyzoom@@</li>
 <div class="hide kirishima">
 以下Markdownに対応したインスタンスのみ。
 <br>
@@ -486,19 +346,19 @@
 <a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
 </li><br>
 </div>
-<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('{{resetconfirm}}')){ localStorage.clear(); location.href='index.html'; }"><i class="material-icons left">delete</i>{{reset}}</button><br><br>
-<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i class="material-icons left">info</i>{{about}}</button>
-<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">web</i>{{hp}}</a>
-<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>{{support}}(Enty)</a>
-<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>{{help}}/Docs(Constructing)</a>
+<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('@@resetconfirm@@')){ localStorage.clear(); location.href='index.html'; }"><i class="material-icons left">delete</i>@@reset@@</button><br><br>
+<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i class="material-icons left">info</i>@@about@@</button>
+<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">web</i>@@hp@@</a>
+<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>@@support@@(Enty)</a>
+<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>@@help@@/Docs(Constructing)</a>
 <a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
 <a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
-<a class="btn waves-effect red lighten-2" href="https://osushi.love/Cutls_P" target="_blank" style="width:100%; max-width:500px;"><img src="../../img/sushi.svg" class="left" width="25" style="padding-top:5px;">{{sushi}}</a>
+<a class="btn waves-effect red lighten-2" href="https://osushi.love/Cutls_P" target="_blank" style="width:100%; max-width:500px;"><img src="../../img/sushi.svg" class="left" width="25" style="padding-top:5px;">@@sushi@@</a>
 <br>
 Kyash<br>
 			<img src="../../img/kyash.png" width="100"><br>
-<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">{{checkup}}</a><br>
-<a href="oss.html">OSS License{{ossJP}}</a><br>
+<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">@@checkup@@</a><br>
+<a href="oss.html">OSS License@@ossJP@@</a><br>
 <span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved. 
 	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy Policy</a>
 	<br>Developer: Cutls P( 
@@ -510,7 +370,6 @@ TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のため
 <script type="text/javascript" src="../../js/common/about.js"></script>
 <script type="text/javascript" src="../../js/platform/end.js"></script>
 <script type="text/javascript" src="../../js/login/logout.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.js"></script>
 <script type="text/javascript" src="../../js/ui/spotify.js"></script>
 <script type="text/javascript" src="../../js/tl/speech.js"></script>
 <script type="text/javascript" src="../../js/platform/pickr.js"></script>

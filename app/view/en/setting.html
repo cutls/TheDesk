@@ -25,6 +25,8 @@
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
 <script type="text/javascript" src="../../js/lang/lang.en.js"></script>
 <script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript" src="setting.vue.js"></script>
 
 <h4>Preferences</h4>
 <ul class="collapsible" data-collapsible="accordion">
@@ -39,30 +41,31 @@
 		<h5>Import and export of preferences</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">Export</button>
 		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">Import</button>
-		<br>
-		<h5>Popup notification(on Windows)</h5>Hide to set "0"
-		<br>
-		<input type="text" style="width:50px" id="popup">sec
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
-		<br>
-		<h5>Native notification</h5>
-		This does not work on Windows Portable ver.<br><a onclick="notftest()" class="pointer">Notification test</a>
-		<br>
-		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_yes" value="yes" />
-		<label for="ntf_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_no" value="no" />
-		<label for="ntf_no">No</label>
-		<br>
-		<h5>Minimum width of columns</h5>Scroll bar will be shown when your window size is more than ammounts of columns.
-		<br>
-		<input type="text" style="width:50px" id="width">pxabove
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
-		<br>
-		<h5>Minimum width of TweetDeck browser</h5>
-		<input type="text" style="width:50px" id="fixwidth">pxabove
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
-		<br>
-		<h5>Font</h5>
+		<div id="envView">
+            <template v-for="(item, i) in config">
+				<h5>{{item.text.head}}</h5>
+				{{item.text.desc}}<br>
+				<template v-if="item.id=='notf'"><a onclick="notftest()" class="pointer">Notification test</a><br></template>
+                <template v-if="item.checkbox">
+                        <template v-for="(check, j) in item.text.checkbox">
+                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
+                        </template>
+				</template>
+				<template v-else>
+					<template v-if="item.doubleText">
+						<template v-for="(textbox, j) in item.data">
+                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                        </template>
+					</template>
+					<template v-else>
+							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+					</template>
+					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">Change</button> 
+				</template>
+			</template>
+        </div>
+        <h5>Font</h5>
 		Select your favorite font to 'Select'<br>
 		<button class="btn waves-effect" style="width:100px;" onclick="font()">Select</button><br>
 		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
@@ -70,22 +73,9 @@
 		<input type="text" style="width:150px" id="font">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
 		<br>
-		<h5>Font size</h5>
-		<span style="font-size:15px">15px(absolute value)</span>
-		<br>
-		<input type="text" style="width:50px" id="size">px 
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button><br>
-		<h5>Folder to save</h5>
+        <h5>Folder to save</h5>
 		TheDesk uses this value when it try to save pictures or take screenshots.<br>
 		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">Change</button>
-		<br>
-		<h5>Disable hardware acceleration</h5>
-		Auto restarted
-		<br>
-		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_true" value="true" />
-		<label for="ha_true">Yes</label>
-		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_false" value="false" />
-		<label for="ha_false">No</label>
 		<br>
 	</div>
 	</li>
@@ -160,101 +150,29 @@
 			<i class="material-icons">reorder</i>Timeline Preferences
 	</div>
 	<div class="collapsible-body">
-		<h5>Time format</h5>Relative format:"1 minutes ago","3 days ago"
-		<br>Absolute format:"23:25:21","2017/12/30 23:59:00"
-		<br>Mixed format:toots posted today are relative-format, others are absolute-format.
-		<br>
-		<input class="with-gap" onchange="settings()" onchange="settings()" name="time" type="radio" id="relative" value="relative" />
-		<label for="relative">Relative</label>
-		<input class="with-gap" onchange="settings()" name="time" type="radio" id="absolute" value="absolute" />
-		<label for="absolute">Absolute</label>
-		<input class="with-gap" onchange="settings()" name="time" type="radio" id="double" value="double" />
-		<label for="double">Both relative and absolute</label>
-		<input class="with-gap" onchange="settings()" name="time" type="radio" id="medium" value="medium" />
-		<label for="medium">Mixed</label>
-		<h5>Server's unique locale</h5>This value is available on some Japanese servers
-		<br>
-		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_yes" value="yes" />
-		<label for="ul_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_no" value="no" />
-		<label for="ul_no">No</label>
-		<br>
-		<h5>Hide NSFW pictures</h5>Strong blur effect
-		<br>
-		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_yes" value="yes" />
-		<label for="n_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_no" value="no" />
-		<label for="n_no">No</label>
-		<br>
-		<h5>Hide CW contents</h5>
-		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_yes" value="yes" />
-		<label for="c_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_no" value="no" />
-		<label for="c_no">No</label>
-		<br>
-		<h5>Reply counter style</h5>
-		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_hidden" value="hidden" />
-		<label for="rp_hidden">Show 1+ if the replies are more than 1.</label>
-		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_all" value="all" />
-		<label for="rp_all">Show full count(1,2...)</label>
-		<br>
-		<h5>Animated GIF images animation</h5>
-		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_yes" value="yes" />
-		<label for="g_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_no" value="no" />
-		<label for="g_no">No</label>
-		<br>
-		<h5>Tag TL Search</h5>
-		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_all" value="all" />
-		<label for="t_all">Use federated network</label>
-		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_local" value="local" />
-		<label for="t_local">Use local network</label>
-		<br>
-		<h5>Show via</h5>
-		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_yes" value="yes" />
-		<label for="via_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_hide" value="hide" />
-		<label for="via_hide">No</label>
-		<br>
-		<h5>Hide action buttons without mouseover</h5>
-		You may feel 'mouseover' is unconfortable:(<br>
-		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_yes" value="yes" />
-		<label for="mov_yes">Mouseover to show</label>
-		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_click" value="click" />
-		<label for="mov_click">Click to show</label>
-		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_no" value="no" />
-		<label for="mov_no">No</label>
-		<br>
-		<h5>Show Notification marker, red colored bell and counter(if you show a notification column.)</h5>
-		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_yes" value="yes" />
-		<label for="notfm_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_no" value="no" />
-		<label for="notfm_no">No</label>
-		<br>
-		<h5>Auto folding</h5>
-		TheDesk does not collapse totes of 5 characters or less. Also, when collapsing, newlines are not shown. TheDesk count only newlines as the number of lines.
-		<br>
-		<input type="text" style="width:50px" id="sentence">lines above or
-		<input type="text" style="width:50px" id="letters">letters above
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
-		<br>
-		<h5>Height of images
-        </h5>
-		<input type="text" style="width:50px" id="img-height">px
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
-		<br>
-		<h5>Enable #InstanceTicker</h5>
-		Show colorful stickers about tooters' server. <a href="https://cdn.weep.me/mastodon/">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.<br>
-		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_yes" value="yes" />
-		<label for="ticker_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
-		<label for="ticker_no">No</label>
-		<br>
-		<h5>Animation of timelines</h5>
-		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_yes" value="yes" />
-		<label for="anime_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
-		<label for="anime_no">No</label>
+		<div id="tlView">
+            <template v-for="(item, i) in config">
+				<h5>{{item.text.head}}</h5>
+				{{item.text.desc}}<br>
+                <template v-if="item.checkbox">
+                        <template v-for="(check, j) in item.text.checkbox">
+                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
+                        </template>
+				</template>
+				<template v-else>
+					<template v-if="item.doubleText">
+						<template v-for="(textbox, j) in item.data">
+                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                        </template>
+					</template>
+					<template v-else>
+							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+					</template>
+					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">Change</button> 
+				</template>
+			</template>
+        </div>
 	</div>
 	</li>
 	<li>
@@ -262,90 +180,32 @@
 			<i class="material-icons">send</i>Posting Preferences
 	</div>
 	<div class="collapsible-body">
-		<h5>Default warining text</h5>
-		<input type="text" style="width:150px" id="cw-text">
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
-		<br>
-		<h5>Alert before posting a long toot.</h5>
-		Show dialog whether you make too-long text hidden.
-		<br>
-		<input type="text" style="width:50px" id="cw_sentence">lines above or
-		<input type="text" style="width:50px" id="cw_letters">letters above
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">Save</button>
-		<br>
-		<h5>Always CW set</h5>
-		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_yes" value="yes" />
-		<label for="cws_yes">Yes</label>
-		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_no" value="no" />
-		<label for="cws_no">No
-		</label>
-		<br>
-		<h5>Default visibility</h5>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="public" value="public" />
-		<label for="public">Public</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="unlisted" value="unlisted" />
-		<label for="unlisted">Unlisted</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="private" value="private" />
-		<label for="private">Private</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="direct" value="direct" />
-		<label for="direct">Direct</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="memory" value="memory" />
-		<label for="memory">Memory(memorized as each server)</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="server" value="server" />
-		<label for="server">Default of your visibility(Set on preferences of Mastodon server)</label>
-		<br>
-		<h5>Posting images preferences</h5>
-		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_url" value="url" />
-		<label for="i_url">Insert media URL</label>
-		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_no-act" value="no-act" />
-		<label for="i_no-act">Insert nothig</label>
-		<br>
-		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_inline" value="inline" disabled />
-		<label for="i_inline">Disabled 
-			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
-		</label>
-		<br>
-		<h5>Action of posting-box</h5>
-		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_yes" value="yes" />
-		<label for="bx_yes">Folding</label>
-		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_no" value="no" />
-		<label for="bx_no">Open after posting
-		</label>
-		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_abs" value="absolute" />
-		<label for="bx_abs">Absolutely open</label>
-		<br>
-		<h5>Quote format</h5>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_simple" value="simple" />
-		<label for="q_simple">Only URL</label>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
-		<label for="q_mention">URL and acct(mention to the user)</label>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
-		<label for="q_full">URL, text and acct(mention to the user)</label>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_nothing" value="nothing" />
-		<label for="q_nothing">Disabled(Hide buttons on TLs)</label>
-		<br>
-		<h5>Default accounts of actions</h5>
-		Main account can be set on Account Manager.<br>
-		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_remain" value="remain" />
-		<label for="mn_remain">Account you used recently</label>
-		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_main" value="main" />
-		<label for="mn_main">Main account</label>
-		</label>
-		<h5>Secondary Toot Button</h5>
-		Toot with other visibility setting<br>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-nothing" value="nothing" />
-		<label for="sec-nothing">Hidden</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-public" value="public" />
-		<label for="sec-public">Public</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-unlisted" value="unlisted" />
-		<label for="sec-unlisted">Unlisted</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-private" value="private" />
-		<label for="sec-private">Private</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-direct" value="direct" />
-		<label for="sec-direct">Direct</label>
-		<input class="with-gap hide kirishima" onchange="settings()" name="sec" type="radio" id="sec-local" value="local" />
-		<label for="sec-local">Local Only</label><span class="hide kirishima">非対応インスタンスでは「未収載」になります。</span>
-		<br>
+		<div id="postView">
+            <template v-for="(item, i) in config">
+				<h5>{{item.text.head}}</h5>
+				{{item.text.desc}}<br>
+                <template v-if="item.checkbox">
+                        <template v-for="(check, j) in item.text.checkbox">
+							<template v-if="!check.kirishima || (check.kirishima && kirishima)">
+                            	<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+								<label v-bind:for="item.id+check.value">{{check.text}}</label>
+								<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
+							</template>
+                        </template>
+				</template>
+				<template v-else>
+					<template v-if="item.doubleText">
+						<template v-for="(textbox, j) in item.data">
+                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                        </template>
+					</template>
+					<template v-else>
+							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+					</template>
+					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">Change</button> 
+				</template>
+			</template>
+        </div>
 	</div>
 	</li>
 	<li>
@@ -510,7 +370,6 @@ TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のため
 <script type="text/javascript" src="../../js/common/about.js"></script>
 <script type="text/javascript" src="../../js/platform/end.js"></script>
 <script type="text/javascript" src="../../js/login/logout.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.js"></script>
 <script type="text/javascript" src="../../js/ui/spotify.js"></script>
 <script type="text/javascript" src="../../js/tl/speech.js"></script>
 <script type="text/javascript" src="../../js/platform/pickr.js"></script>
