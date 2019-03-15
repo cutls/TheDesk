@@ -1,5 +1,6 @@
 //バージョンチェッカー
-function verck(ver,winstore) {
+function verck(ver) {
+	console.log("Welcome")
 	if(localStorage.getItem("ver")!=ver){
 		localStorage.setItem("ver", ver);
 		console.log("Thank you for your update");
@@ -27,7 +28,6 @@ function verck(ver,winstore) {
 			message: lang.lang_version_platform,
 			buttons: [lang.lang_no,lang.lang_yesno]
 		  }
-		  console.log(localStorage.getItem("winstore"))
 		  if(!localStorage.getItem("winstore")){
 			  
 				dialog.showMessageBox(options, function(arg) {
@@ -42,7 +42,6 @@ function verck(ver,winstore) {
 		if(localStorage.getItem("winstore")=="unix"){
 			localStorage.removeItem("winstore")
 		}
-		console.log(localStorage.getItem("winstore"))
 		if(!localStorage.getItem("winstore")){
 			const options = {
 				type: 'info',
@@ -60,6 +59,11 @@ function verck(ver,winstore) {
 		}
 	}else{
 		  localStorage.setItem("winstore","unix")
+	  }
+	  if(localStorage.getItem("winstore")=="snapcraft" || localStorage.getItem("winstore")=="winstore"){
+		var winstore=true;
+	  }else{
+		  var winstore=false;
 	  }
 	var l = 5;
 	// 生成する文字列に含める文字セット
@@ -90,7 +94,7 @@ function verck(ver,winstore) {
 			}
 			if (newest == ver) {
 				todo(lang.lang_version_usever.replace("{{ver}}" ,mess.desk));
-				//betaかWInstoreならアプデチェックしない
+				//betaかWinstoreならアプデチェックしない
 			} else if (ver.indexOf("beta")!=-1 || winstore) {
 				
 			}else{
@@ -100,6 +104,7 @@ function verck(ver,winstore) {
 						var ipc = electron.ipcRenderer;
 						ipc.send('update', "true");
 					}else{
+						console.log(lang.lang_version_skipver);
 						todo(lang.lang_version_skipver);
 					}
 				}else{

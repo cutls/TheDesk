@@ -32,15 +32,14 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Miria (17.3.0)";
+var ver="Usamin (18.0.0)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
 //WinstoreではバージョンCK・言語・Misskeyトークンの機能が排除
-var winstore=false;
 var acct_id=0;
 var tlid=0;
-  verck(ver,winstore);
+  verck(ver);
  </script>
 <textarea id="copy" style="top:-100px; position:fixed;"></textarea>
 <div id="tl">
@@ -582,19 +581,22 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Miria_17-2-1" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-0-0" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Miria (17.2.1)</h5>
-					多くの機能を「メニュー」に集約。結局何のボタンかわからないアイコンの羅列から解放。<br>
-					Alt+Enterでセカンダリートゥートボタン<br>
-					引用ボタンを表示しない設定(引用形式設定を「使用しない」)<br>
-					実況機能をまともに書き直した。<br>
-					サジェストをトゥートボックスの右に<br>
-					ハードウェアアクセラレーションを無効化するオプション。(設定の表示などが乱れるときに設定)<br>
-					返信時に「@」が複数含まれない仕様を訂正<br>
+					<h5>Release Note Usamin (18.0.0)</h5>
+・多くの機能を「メニュー」に集約。結局何のボタンかわからないアイコンの羅列から解放。<br>
+・Alt+Enterでセカンダリートゥートボタン<br>
+・引用ボタンを表示しない設定(引用形式設定を「使用しない」)<br>
+・実況機能をまともに書き直した。<br>
+・サジェストをトゥートボックスの右に<br>
+・ハードウェアアクセラレーションを無効化するオプション。(設定の表示などが乱れるときに設定)<br>
+・返信時に「@」が複数含まれない仕様を訂正<br>
+・一部のデフォルト値を修正。<br>
+・設定のエクスポート(バックアップ)がバージョン2に。ほとんどの設定をエクスポートします。<br>
+・イメージビューワーの修正<br>
 					<img class="emoji" draggable="false" alt="⚠" src="https://twemoji.maxcdn.com/2/72x72/26a0.png">TheDeskのMisskeyについての機能追加は終了しています。<br>
 			</div>
 			<br><br>
@@ -640,29 +642,31 @@ var tlid=0;
 			<div class="waves-effect" onclick="listMenu()" id="listMenu"><i class="material-icons">view_headline</i><span>List</span></div>
 			<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i class="material-icons">filter_list</i><span>Filter</span></div>
 			<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>Help</span></div>
+			<div class="waves-effect" onclick="about()"><i class="material-icons">info</i><span>About TheDesk</span></div>
 		</div>
 		<div id="right-menu">
 				<!--カラム追加-->
 <div id="add-box" class="hide menu-content">
-	<div class="input-field"><span data-trans="your_acct">Select an account</span>
+	<div class="input-field"><span data-trans="your_acct">Account(Scroll to show all)</span>
 	<br>
 	<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
 	<label></label>
 	</div>
 	<div class="input-field">
 	<div id="auth">
-	<select id="type-sel" style="color:black">
-		<option value="local" data-trans="local">Local</option>
-		<option value="local-media" data-trans="local-media">Local(Media)</option>
-		<option value="home" data-trans="home">Home</option>
-		<option value="pub" data-trans="public">Federated</option>
-		<option value="pub-media" data-trans="public-media">Federated(Media)</option>
-		<option value="dm" data-trans="dm">Direct Message</option>
-		<option value="mix" data-trans="integrated">Integrated(Local and Home)</option>
-		<option value="plus" data-trans="plus">Integrated(Local and replies and BT on Home)</option>
-		<option value="notf" data-trans="notification">Notifications</option>
-	</select>
-	<label data-trans="show_tl">Show this TL:</label>
+	<input type="hidden" value="local" id="type-sel">
+	Show this TL:
+	<div id="tltype">
+		<div class="type waves-effect active" data-type="local"><div><i class="material-icons">people_outline</i></div><span>Local</span></div>
+		<div class="type waves-effect" data-type="local-media"><div><i class="material-icons">people_outline</i><i class="material-icons sub-icon">perm_media</i></div><span>Local(Media)</span></div>
+		<div class="type waves-effect" data-type="home"><div><i class="material-icons">home</i></div><span>Home</span></div>
+		<div class="type waves-effect" data-type="pub"><div><i class="material-icons">language</i></div><span>Federated</span></div>
+		<div class="type waves-effect" data-type="pub-media"><div><i class="material-icons">language</i><i class="material-icons sub-icon">perm_media</i></div><span>Federated(Media)</span></div>
+		<div class="type waves-effect" data-type="dm"><div><i class="material-icons">mail_outline</i></div><span>Direct Message</span></div>
+		<div class="type waves-effect" data-type="mix"><div><i class="material-icons">merge_type</i></div><span>Integrated(Local/Home)</span></div>
+		<div class="type waves-effect" data-type="plus"><div><i class="material-icons">merge_type</i><i class="material-icons sub-icon">reply</i></div><span>LTL+Reply+BT</span></div>
+		<div class="type waves-effect" data-type="notf"><div><i class="material-icons">notifications</i></div><span>Notifications</span></div>
+	</div>
 	</div>
 	<div id="noauth" class="hide">Show this TL:
 		<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);" placeholder="e.g:mstdn.jp">
@@ -708,7 +712,7 @@ var tlid=0;
 	<div id="list-box" class="hide menu-content">
 		<div class="input-field" style="width:calc( 100% - 100px);float:left">
 			<select id="list-acct-sel" class="acct-sel"></select>
-			<label>Select an account</label>
+			<label>Account(Scroll to show all)</label>
 		</div>
 		<div style="float:left; padding-top:8px; padding-bottom:28px;">
 			<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
@@ -725,7 +729,7 @@ var tlid=0;
 	<div id="filter-box" class="hide menu-content">
 		<div class="input-field" style="width:calc( 100% - 100px);float:left">
 			<select id="filter-acct-sel" class="acct-sel"></select>
-			<label>Select an account</label>
+			<label>Account(Scroll to show all)</label>
 		</div>
 		<div style="float:left; padding-top:8px; padding-bottom:28px;">
 			<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">

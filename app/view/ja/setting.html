@@ -25,6 +25,8 @@
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
 <script type="text/javascript" src="../../js/lang/lang.ja.js"></script>
 <script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
+<script src="../../node_modules/vue/dist/vue.min.js"></script>
+<script type="text/javascript" src="setting.vue.js"></script>
 
 <h4>設定</h4>
 <ul class="collapsible" data-collapsible="accordion">
@@ -39,30 +41,31 @@
 		<h5>設定のインポートとエクスポート</h5>
 		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">エクスポート</button>
 		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">インポート</button>
-		<br>
-		<h5>新規通知のポップアップお知らせの表示秒数</h5>0に設定すると表示されません
-		<br>
-		<input type="text" style="width:50px" id="popup">秒
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
-		<h5>ネイティブ通知設定</h5>
-		Portableバージョンでは表示できません。<br><a onclick="notftest()" class="pointer">通知テスト</a>
-		<br>
-		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_yes" value="yes" />
-		<label for="ntf_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="notf" type="radio" id="ntf_no" value="no" />
-		<label for="ntf_no">いいえ</label>
-		<br>
-		<h5>マルチカラムの最低横幅</h5>画面全体の横幅÷コラム数がこの値を超えた時、横スクロールとなります。
-		<br>
-		<input type="text" style="width:50px" id="width">px以上
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
-		<h5>TweetDeckの限定の最低横幅</h5>
-		<input type="text" style="width:50px" id="fixwidth">px以上
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
-		<h5>フォント</h5>
+		<div id="envView">
+            <template v-for="(item, i) in config">
+				<h5>{{item.text.head}}</h5>
+				{{item.text.desc}}<br>
+				<template v-if="item.id=='notf'"><a onclick="notftest()" class="pointer">通知テスト</a><br></template>
+                <template v-if="item.checkbox">
+                        <template v-for="(check, j) in item.text.checkbox">
+                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
+                        </template>
+				</template>
+				<template v-else>
+					<template v-if="item.doubleText">
+						<template v-for="(textbox, j) in item.data">
+                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                        </template>
+					</template>
+					<template v-else>
+							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+					</template>
+					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">変更</button> 
+				</template>
+			</template>
+        </div>
+        <h5>フォント</h5>
 		「選択」を押してフォントを選んでください。<br>
 		<button class="btn waves-effect" style="width:100px;" onclick="font()">選択</button><br>
 		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
@@ -70,22 +73,9 @@
 		<input type="text" style="width:150px" id="font">
 		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
 		<br>
-		<h5>フォントサイズ</h5>
-		<span style="font-size:15px">15px(絶対指定)</span>
-		<br>
-		<input type="text" style="width:50px" id="size">px 
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button><br>
-		<h5>デフォルトの保存先</h5>
+        <h5>デフォルトの保存先</h5>
 		画像ダウンロードやスクリーンショットに影響します。<br>
 		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">変更</button>
-		<br>
-		<h5>ハードウェアアクセラレーションの無効化</h5>
-		表示(特に設定画面)が乱れる場合に「はい」を選択してください。自動で再起動します。
-		<br>
-		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_true" value="true" />
-		<label for="ha_true">はい</label>
-		<input class="with-gap" onchange="hardwareAcceleration()" name="ha" type="radio" id="ha_false" value="false" />
-		<label for="ha_false">いいえ</label>
 		<br>
 	</div>
 	</li>
@@ -160,101 +150,29 @@
 			<i class="material-icons">reorder</i>タイムラインの設定
 	</div>
 	<div class="collapsible-body">
-		<h5>時間表記設定</h5>相対時間の例:"1分前","3日前"
-		<br>絶対時間の例"23:25:21","2017年12月30日 23:59:00"
-		<br>混合表示は、当日のトゥートのみ相対、それ以外は絶対で表示 
-		<br>
-		<input class="with-gap" onchange="settings()" onchange="settings()" name="time" type="radio" id="relative" value="relative" />
-		<label for="relative">相対時間</label>
-		<input class="with-gap" onchange="settings()" name="time" type="radio" id="absolute" value="absolute" />
-		<label for="absolute">絶対時間</label>
-		<input class="with-gap" onchange="settings()" name="time" type="radio" id="double" value="double" />
-		<label for="double">両方表示</label>
-		<input class="with-gap" onchange="settings()" name="time" type="radio" id="medium" value="medium" />
-		<label for="medium">混合表示</label>
-		<h5>独自ロケールを使用</h5>対応サーバーではそのサーバーにあわせた言語表示ができます。
-		<br>
-		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_yes" value="yes" />
-		<label for="ul_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="ul" type="radio" id="ul_no" value="no" />
-		<label for="ul_no">いいえ</label>
-		<br>
-		<h5>非表示設定の画像(NSFW)を隠す</h5>きつめのぼかしがかかります。
-		<br>
-		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_yes" value="yes" />
-		<label for="n_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="nsfw" type="radio" id="n_no" value="no" />
-		<label for="n_no">いいえ</label>
-		<br>
-		<h5>非表示設定のテキスト(CW)を隠す</h5>
-		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_yes" value="yes" />
-		<label for="c_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="cw" type="radio" id="c_no" value="no" />
-		<label for="c_no">いいえ</label>
-		<br>
-		<h5>リプライ数表示</h5>
-		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_hidden" value="hidden" />
-		<label for="rp_hidden">2以上のとき1+と表示</label>
-		<input class="with-gap" onchange="settings()" name="rp" type="radio" id="rp_all" value="all" />
-		<label for="rp_all">完全に表示</label>
-		<br>
-		<h5>アイコンのアニメーションを再生する</h5>
-		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_yes" value="yes" />
-		<label for="g_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="gif" type="radio" id="g_no" value="no" />
-		<label for="g_no">いいえ</label>
-		<br>
-		<h5>タグタイムラインの表示範囲</h5>
-		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_all" value="all" />
-		<label for="t_all">接続しているサーバー</label>
-		<input class="with-gap" onchange="settings()" name="tag" type="radio" id="t_local" value="local" />
-		<label for="t_local">検索対象のサーバーのみ</label>
-		<br>
-		<h5>viaを表示する</h5>
-		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_yes" value="yes" />
-		<label for="via_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="via" type="radio" id="via_hide" value="hide" />
-		<label for="via_hide">いいえ</label>
-		<br>
-		<h5>アクションメニューを非表示</h5>
-		「マウスオーバー」はすこし鬱陶しいと思うかもしれません。<br>
-		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_yes" value="yes" />
-		<label for="mov_yes">マウスオーバーで表示</label>
-		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_click" value="click" />
-		<label for="mov_click">クリックで表示</label>
-		<input class="with-gap" onchange="settings()" name="mov" type="radio" id="mov_no" value="no" />
-		<label for="mov_no">いいえ</label>
-		<br>
-		<h5>通知を開いているとき、通知新着お知らせを表示する</h5>
-		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_yes" value="yes" />
-		<label for="notfm_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="notfm" type="radio" id="notfm_no" value="no" />
-		<label for="notfm_no">いいえ</label>
-		<br>
-		<h5>指定行数以上を折りたたむ</h5>
-		5文字以下のトゥートは折りたたみません。また、折りたたみ時は改行が描画されません。改行のみを行数とカウントします。
-		<br>
-		<input type="text" style="width:50px" id="sentence">行 以上 または
-		<input type="text" style="width:50px" id="letters">文字 以上
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
-		<h5>画像の高さ
-        </h5>
-		<input type="text" style="width:50px" id="img-height">px
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
-		<h5>#InstanceTickerを使う</h5>
-		トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href="https://cdn.weep.me/mastodon/">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.<br>
-		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_yes" value="yes" />
-		<label for="ticker_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="ticker" type="radio" id="ticker_no" value="no" />
-		<label for="ticker_no">いいえ</label>
-		<br>
-		<h5>タイムラインのアニメーション</h5>
-		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_yes" value="yes" />
-		<label for="anime_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="anime" type="radio" id="anime_no" value="no" />
-		<label for="anime_no">いいえ</label>
+		<div id="tlView">
+            <template v-for="(item, i) in config">
+				<h5>{{item.text.head}}</h5>
+				{{item.text.desc}}<br>
+                <template v-if="item.checkbox">
+                        <template v-for="(check, j) in item.text.checkbox">
+                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
+                        </template>
+				</template>
+				<template v-else>
+					<template v-if="item.doubleText">
+						<template v-for="(textbox, j) in item.data">
+                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                        </template>
+					</template>
+					<template v-else>
+							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+					</template>
+					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">変更</button> 
+				</template>
+			</template>
+        </div>
 	</div>
 	</li>
 	<li>
@@ -262,90 +180,32 @@
 			<i class="material-icons">send</i>投稿設定
 	</div>
 	<div class="collapsible-body">
-		<h5>デフォルトの警告文</h5>
-		<input type="text" style="width:150px" id="cw-text">
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
-		<h5>長文投稿時に警告</h5>
-		下で指定した以上のトゥートを投稿するときにCWするかのダイアログを表示します。
-		<br>
-		<input type="text" style="width:50px" id="cw_sentence">行 以上 または
-		<input type="text" style="width:50px" id="cw_letters">文字 以上
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
-		<h5>標準でCWを設定</h5>
-		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_yes" value="yes" />
-		<label for="cws_yes">はい</label>
-		<input class="with-gap" onchange="settings()" name="cws" type="radio" id="cws_no" value="no" />
-		<label for="cws_no">いいえ
-		</label>
-		<br>
-		<h5>デフォルトの公開設定</h5>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="public" value="public" />
-		<label for="public">公開(Public)</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="unlisted" value="unlisted" />
-		<label for="unlisted">未収載(Unlisted)</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="private" value="private" />
-		<label for="private">非公開(Private)</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="direct" value="direct" />
-		<label for="direct">ダイレクト(Direct)</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="memory" value="memory" />
-		<label for="memory">前回の投稿設定を記憶する(サーバーごとに記憶されます)</label>
-		<input class="with-gap" onchange="settings()" name="vis" type="radio" id="server" value="server" />
-		<label for="server">マストドンアカウント設定の既定値</label>
-		<br>
-		<h5>画像投稿設定</h5>
-		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_url" value="url" />
-		<label for="i_url">画像を投稿し、画像のURLを最後に表示</label>
-		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_no-act" value="no-act" />
-		<label for="i_no-act">画像を投稿するがURLは表示しない</label>
-		<br>
-		<input class="with-gap" onchange="settings()" name="img" type="radio" id="i_inline" value="inline" disabled />
-		<label for="i_inline">現在利用できません。 
-			<!--画像を投稿し、インラインで表示(Markdownに対応したインスタンスのみ。マルチアカウント環境では非推奨。)-->
-		</label>
-		<br>
-		<h5>投稿ボックスの挙動</h5>
-		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_yes" value="yes" />
-		<label for="bx_yes">たたむ</label>
-		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_no" value="no" />
-		<label for="bx_no">投稿後も隠さない
-		</label>
-		<input class="with-gap" onchange="settings()" name="box" type="radio" id="bx_abs" value="absolute" />
-		<label for="bx_abs">枠外クリックで閉じない(起動時に展開)</label>
-		<br>
-		<h5>引用形式</h5>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_simple" value="simple" />
-		<label for="q_simple">URLのみ</label>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_mention" value="mention" />
-		<label for="q_mention">URLとアカウント名(相手に通知)</label>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_full" value="full" />
-		<label for="q_full">本文・URL・アカウント名</label>
-		<input class="with-gap" onchange="settings()" name="quote" type="radio" id="q_nothing" value="nothing" />
-		<label for="q_nothing">使わない(TL上にボタンも表示されません)</label>
-		<br>
-		<h5>投稿後や起動時のアカウント</h5>
-		メインアカウントはアカウント設定で指定できます。投稿以外のアカウント選択にも影響します。<br>
-		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_remain" value="remain" />
-		<label for="mn_remain">最後に使用したアカウント</label>
-		<input class="with-gap" onchange="settings()" name="main" type="radio" id="mn_main" value="main" />
-		<label for="mn_main">メインアカウント</label>
-		</label>
-		<h5>セカンダリートゥートボタン</h5>
-		公開範囲の変更とトゥートを一発でできます。<br>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-nothing" value="nothing" />
-		<label for="sec-nothing">表示しない</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-public" value="public" />
-		<label for="sec-public">公開(Public)</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-unlisted" value="unlisted" />
-		<label for="sec-unlisted">未収載(Unlisted)</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-private" value="private" />
-		<label for="sec-private">非公開(Private)</label>
-		<input class="with-gap" onchange="settings()" name="sec" type="radio" id="sec-direct" value="direct" />
-		<label for="sec-direct">ダイレクト(Direct)</label>
-		<input class="with-gap hide kirishima" onchange="settings()" name="sec" type="radio" id="sec-local" value="local" />
-		<label for="sec-local">ローカル限定</label><span class="hide kirishima">非対応インスタンスでは「未収載」になります。</span>
-		<br>
+		<div id="postView">
+            <template v-for="(item, i) in config">
+				<h5>{{item.text.head}}</h5>
+				{{item.text.desc}}<br>
+                <template v-if="item.checkbox">
+                        <template v-for="(check, j) in item.text.checkbox">
+							<template v-if="!check.kirishima || (check.kirishima && kirishima)">
+                            	<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+								<label v-bind:for="item.id+check.value">{{check.text}}</label>
+								<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
+							</template>
+                        </template>
+				</template>
+				<template v-else>
+					<template v-if="item.doubleText">
+						<template v-for="(textbox, j) in item.data">
+                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                        </template>
+					</template>
+					<template v-else>
+							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+					</template>
+					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">変更</button> 
+				</template>
+			</template>
+        </div>
 	</div>
 	</li>
 	<li>
@@ -510,7 +370,6 @@ TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のため
 <script type="text/javascript" src="../../js/common/about.js"></script>
 <script type="text/javascript" src="../../js/platform/end.js"></script>
 <script type="text/javascript" src="../../js/login/logout.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.js"></script>
 <script type="text/javascript" src="../../js/ui/spotify.js"></script>
 <script type="text/javascript" src="../../js/tl/speech.js"></script>
 <script type="text/javascript" src="../../js/platform/pickr.js"></script>
