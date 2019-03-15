@@ -298,10 +298,8 @@ function addselCk(){
 	}
 	if(domain=="knzk.me" || domain=="mstdn.y-zu.org"){
 		$("#type-sel").append('<option value="dm" data-trans="dm" id="direct-add">'+lang.layout_dm +'</option>');
-		$('#type-sel').material_select('update');
 	}else{
 		$("#direct-add").remove();
-		$('#type-sel').material_select('update');
 	}
 }
 //カラム削除
