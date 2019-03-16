@@ -16,7 +16,7 @@ function dm(acct_id, tlid, type,delc,voice) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-        var templete = dmParse(json, type, acct_id, tlid, "", mute);
+        var templete = '<div id="convList'+tlid+'">'+dmListParse(json, type, acct_id, tlid, "", mute)+'</div>';
         localStorage.setItem("lastobj_"+ tlid,json[0].id)
         $("#timeline_" + tlid).html(templete);
 	    additional(acct_id, tlid);
@@ -27,9 +27,37 @@ function dm(acct_id, tlid, type,delc,voice) {
     });
     
 }
+function dmmore(tlid){
+	var multi = localStorage.getItem("column");
+	var obj = JSON.parse(multi);
+	var acct_id = obj[tlid].domain;
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var sid = $("#timeline_" + tlid + " .cvo").last().attr("unique-id");
+	var start = "https://" + domain + "/api/v1/conversations?max_id="+sid;
+	var type="dm";
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		var templete = '<div id="convList'+tlid+'">'+dmListParse(json, type, acct_id, tlid, "", mute)+'</div>';
+        $("#timeline_" + tlid).append(templete);
+			additional(acct_id, tlid);
+			jQuery("time.timeago").timeago();
+			moreloading=false;
+	})
+}
 //DMオブジェクトパーサー(トゥート)
-function dmParse(obj, mix, acct_id, tlid, popup, mutefilter) {
-    console.log(obj);
+function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
+	console.log(obj);
 	var templete = '';
 	if(obj[0]){
 		localStorage.setItem("lastunix_"+ tlid,date(obj[0].created_at, 'unix'));
@@ -172,6 +200,7 @@ function dmParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var local = [];
 	var times=[];
 	Object.keys(obj).forEach(function(key) {
+		var conv_id=obj[key].id;
 		var toot = obj[key].last_status;
 		var dis_name=escapeHTML(toot.account.display_name);
 		if(toot.account.emojis){
@@ -373,60 +402,6 @@ function dmParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			});
 			tags = '<div style="float:right">' + tags + '</div>';
 		}
-		//リプ数
-		if(toot.replies_count || toot.replies_count===0){
-			var replyct=toot.replies_count;
-		}else{
-			var replyct="";
-        }
-		//公開範囲を取得
-		var vis = "";
-		var visen = toot.visibility;
-		if (visen == "public") {
-			var vis =
-				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="'+lang.lang_parse_public+'('+lang.lang_parse_clickcopy+')" data-vis="public" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">public</i>';
-			var can_rt = "";
-		} else if (visen == "unlisted") {
-			var vis =
-				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="'+lang.lang_parse_unlisted+'('+lang.lang_parse_clickcopy+')" data-vis="unlisted" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock_open</i>';
-			var can_rt = "";
-		} else if (visen == "private") {
-			var vis =
-				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="'+lang.lang_parse_private+'('+lang.lang_parse_clickcopy+')" data-vis="private" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">lock</i>';
-			var can_rt = "hide";
-		} else if (visen == "direct") {
-			var vis =
-				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="'+lang.lang_parse_direct+'('+lang.lang_parse_clickcopy+')" data-vis="direct" onclick="staCopy(\''+id+'\')" style="font-size:1rem;">mail</i>';
-			var can_rt = "hide";
-		}
-		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
-			var if_mine = "";
-			var mine_via="type-b";
-		} else {
-			var if_mine = "hide";
-			var mine_via="";
-		}
-		if (toot.favourited) {
-			var if_fav = " yellow-text";
-			var fav_app = "faved";
-		} else {
-			var if_fav = "";
-			var fav_app = "";
-		}
-		if (toot.reblogged) {
-			var if_rt = "teal-text";
-			var rt_app = "rted";
-		} else {
-			var if_rt = "";
-			var rt_app = "";
-		}
-		if (toot.pinned) {
-			var if_pin = "blue-text";
-			var pin_app = "pinned";
-		} else {
-			var if_pin = "";
-			var pin_app = "";
-		}
 		//アニメ再生
 		if (gif == "yes") {
 			var avatar = toot.account.avatar;
@@ -466,6 +441,13 @@ function dmParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var trans='<div class="action pin"><a onclick="trans(\''+toot.language+'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_trans+'"><i class="material-icons">g_translate</i></a></div>';
 		}else{
 			var trans="";
+		}
+		if (toot.favourited) {
+			var if_fav = " yellow-text";
+			var fav_app = "faved";
+		} else {
+			var if_fav = "";
+			var fav_app = "";
 		}
 		//Cards
 		if (!card && toot.card) {
@@ -508,7 +490,7 @@ function dmParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
-			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
+			boostback + ' ' + fav_app + 
 			' ' + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
 				key].created_at, 'unix') + '" '+if_notf+' onclick="dmStatus()">' +
 			'<div class="area-notice"><span class="gray sharesta">' + notice + home +
@@ -532,7 +514,8 @@ function dmParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'</span><span class="toot ' + spoiler + '">' + content +
 			'</span>' +
 			'' + viewer + '' +
-			'</div>'+
+			'<br><a onclick="details(\'' + toot.id + '\',' + acct_id +
+			',\''+tlid+'\',\'dm\')" class="pointer waves-effect">'+lang.lang_parse_thread+'</a></div>'+
 			'<div class="area-vis"></div>'+
 			'</div></div>';
 	});

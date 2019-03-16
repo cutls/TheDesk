@@ -54,13 +54,12 @@ function mixtl(acct_id, tlid, type,delc,voice) {
 							var mute=[];
 						}
 						if(type=="integrated"){
-							templete = templete+parse([timeline[key]], '', acct_id, tlid, "", mute);
+							templete = templete+parse([timeline[key]], '', acct_id, tlid, "", mute, "mix");
 						}else if(type=="plus"){
 							if(timeline[key].account.acct==timeline[key].account.username){
-								templete = templete+parse([timeline[key]], '', acct_id, tlid, "", mute);
+								templete = templete+parse([timeline[key]], '', acct_id, tlid, "", mute, "plus");
 							}
 						}
-                        
                     }
                 }
 
@@ -124,7 +123,7 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 				if(voice){
 					say(obj.content)
 				}	
-				var templete = parse([obj], type, acct_id, tlid,"",mute);
+				var templete = parse([obj], type, acct_id, tlid,"",mute, "mix");
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
 					pool = templete + pool;
@@ -168,7 +167,7 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 				var templete = parse([obj], '', acct_id, tlid);
 			}else if(TLtype=="plus"){
 				if(obj.account.acct==obj.account.username){
-					var templete = parse([obj], '', acct_id, tlid,"",mute);
+					var templete = parse([obj], '', acct_id, tlid,"",mute, "mix");
 				}else{
 					var templete="";
 				}
@@ -177,7 +176,7 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 				if(voice){
 					say(obj.content)
 				}	
-				var templete = parse([obj], type, acct_id, tlid,"",mute);
+				var templete = parse([obj], type, acct_id, tlid,"",mute,"mix");
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
 					pool = templete + pool;
@@ -291,10 +290,10 @@ function mixmore(tlid,type) {
 							var mute=[];
 						}
                         if(type=="integrated"){
-							templete = templete+parse([timeline[key]], '', acct_id, tlid,"",mute);
+							templete = templete+parse([timeline[key]], '', acct_id, tlid,"",mute,"mix");
 						}else if(type=="plus"){
 							if(timeline[key].account.acct==timeline[key].account.username){
-								templete = templete+parse([timeline[key]], '', acct_id, tlid,"",mute);
+								templete = templete+parse([timeline[key]], '', acct_id, tlid,"",mute,"mix");
 							}
 						}
                     }

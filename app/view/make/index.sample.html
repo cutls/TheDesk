@@ -307,14 +307,14 @@ var tlid=0;
 		<div class="collapsible-body toot-reset" id="toot-after">
 		</div>
 	</li>
-	<li>
+	<li class="dm-hide">
 		<div class="collapsible-header">
 		<i class="material-icons">people_outline</i>{{beforeLTL}}
 		</div>
 		<div class="collapsible-body toot-reset" id="toot-before">
 		</div>
 	</li>
-	<li>
+	<li class="dm-hide">
 		<div class="collapsible-header">
 		<i class="material-icons">person_outline</i>{{beforeUTL}}
 		</div>
@@ -328,7 +328,7 @@ var tlid=0;
 		<div class="collapsible-body toot-reset" id="toot-fav">
 		</div>
 	</li>
-	<li>
+	<li class="dm-hide">
 		<div class="collapsible-header">
 		<i class="text-darken-3 fa fa-retweet"></i>{{btedPeople}}
 		</div>
@@ -336,6 +336,7 @@ var tlid=0;
 		</div>
 	</li>
 	</ul>
+	<div class="dm-hide">
 	{{useOtherAcct1}}(<i class="fa fa-retweet"></i>/<i class="fa fa-star"></i>{{useOtherAcct2}})<br>
 	<div class="row">
 		<div class="col s6">
@@ -356,11 +357,12 @@ var tlid=0;
 	<div id="toot-after">
 	</div>
 	</div>
+</div>
 	<div class="modal-footer">
-	<a href="#!" class="waves-effect waves-green btn-flat" onclick="brws()">{{openBrowser}}</a>
-	<a href="#!" class="waves-effect waves-green btn-flat" onclick="shot()">{{screenshot}}</a>
-	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy()">{{copyURL}}</a>
-	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy('emb')">{{embed}}</a>
+	<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="brws()">{{openBrowser}}</a>
+	<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="shot()">{{screenshot}}</a>
+	<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy()">{{copyURL}}</a>
+	<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy('emb')">{{embed}}</a>
 	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">{{close}}</a>
 	</div>
 	</div>
