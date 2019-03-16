@@ -137,7 +137,7 @@ function createWindow() {
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="darwin"){
-		Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang)));
+		Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang,mainWindow)));
 	}
 }
 // Electronの初期化完了後に実行

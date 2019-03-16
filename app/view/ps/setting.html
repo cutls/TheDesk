@@ -44,7 +44,7 @@
 		<div id="envView">
             <template v-for="(item, i) in config">
 				<h5>{{item.text.head}}</h5>
-				{{item.text.desc}}<br>
+				<templete v-html=item.text.desc></templete><br>
 				<template v-if="item.id=='notf'"><a onclick="notftest()" class="pointer">crwdns540:0crwdne540:0</a><br></template>
                 <template v-if="item.checkbox">
                         <template v-for="(check, j) in item.text.checkbox">

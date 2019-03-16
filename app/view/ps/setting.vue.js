@@ -63,7 +63,7 @@ var envConstruction=[
         setValue:13,
         text:{
             head:"crwdns546:0crwdne546:0",
-            desc:'<span style="font-size:15px">15px(crwdns549:0crwdne549:0)</span>',
+            desc:'<span style="font-size:13px">13px(crwdns549:0crwdne549:0)</span>',
             after:"px"
         }
     },{

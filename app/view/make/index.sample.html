@@ -581,13 +581,15 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Usamin_18-0-1" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-0-2" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Usamin (18.0.1)</h5>
-・カラム追加時の不具合についてのバグ<br>
+					<h5>Release Note Usamin (18.0.2)</h5>
+・設定の値が保存できなくなるバグ<br>
+・画像送りしたときに進化したメディアビューが適用されない問題<br>
+・設定の表記がおかしい問題<br>
 --以下18.0.0--<br>
 ・多くの機能を「メニュー」に集約。結局何のボタンかわからないアイコンの羅列から解放。<br>
 ・Alt+Enterでセカンダリートゥートボタン<br>
@@ -599,7 +601,10 @@ var tlid=0;
 ・一部のデフォルト値を修正。<br>
 ・設定のエクスポート(バックアップ)がバージョン2に。ほとんどの設定をエクスポートします。<br>
 ・イメージビューワーの修正<br>
-					<img class="emoji" draggable="false" alt="⚠" src="https://twemoji.maxcdn.com/2/72x72/26a0.png">TheDeskのMisskeyについての機能追加は終了しています。<br>
+			</div>
+			<div id="release-en">
+				<h5>Let's make it native!</h5>
+				<a href="https://translate.thedesk.top">Crowdin translation project</a>
 			</div>
 			<br><br>
 			<h3>{{supportme}}</h3>
@@ -644,7 +649,7 @@ var tlid=0;
 			<div class="waves-effect" onclick="listMenu()" id="listMenu"><i class="material-icons">view_headline</i><span>{{list}}</span></div>
 			<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i class="material-icons">filter_list</i><span>{{filter}}</span></div>
 			<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>{{help}}</span></div>
-			<div class="waves-effect" onclick="about()"><i class="material-icons">info</i><span>{{about}}</span></div>
+			<div class="waves-effect" onclick="location.href='index.html'"><i class="material-icons">refresh</i><span>{{f5}}</span></div>
 		</div>
 		<div id="right-menu">
 				<!--カラム追加-->
@@ -766,8 +771,8 @@ var tlid=0;
 	</div>
 </div>
 		</div>
-		<a href="index.html" class="waves-effect">
-				<i class="material-icons" style="font-size: 1rem;">refresh</i>{{f5}}
+		<a onclick="about()" class="nex waves-effect">
+				<i class="material-icons" style="font-size: 1rem;">info</i>{{about}}
 		</a>&nbsp;|&nbsp;
 		<a onclick="bottomReverse()" class="nex waves-effect">
 				<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>{{reverse}}

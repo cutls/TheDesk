@@ -1,5 +1,5 @@
 // Create the Application's main menu
-function templete(lang){
+function templete(lang,mainWindow){
     const electron = require("electron");
     const app = electron.app;
     const BrowserWindow = electron.BrowserWindow;
