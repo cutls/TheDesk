@@ -63,7 +63,7 @@ var envConstruction=[
         setValue:13,
         text:{
             head:"Font size",
-            desc:'<span style="font-size:15px">15px(absolute value)</span>',
+            desc:'<span style="font-size:13px">13px(absolute value)</span>',
             after:"px"
         }
     },{

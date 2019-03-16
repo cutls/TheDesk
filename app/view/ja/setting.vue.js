@@ -63,7 +63,7 @@ var envConstruction=[
         setValue:13,
         text:{
             head:"フォントサイズ",
-            desc:'<span style="font-size:15px">15px(絶対指定)</span>',
+            desc:'<span style="font-size:13px">13px(絶対指定)</span>',
             after:"px"
         }
     },{

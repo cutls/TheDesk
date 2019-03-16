@@ -14,7 +14,12 @@ function verck(ver) {
 			verp=verp.replace( ')', '');
 			verp=verp.replace( ' ', '_');
 			console.log(verp);
-			$("#release-"+verp).show();
+			if(lang.language=="ja"){
+				$("#release-"+verp).show();
+			}else{
+				$("#release-en").show();
+			}
+			
 		  });
 	}
 	var electron = require("electron");

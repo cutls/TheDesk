@@ -6,6 +6,10 @@ var envView = new Vue({
 		complete: function (i,val) {
 			var ls=envView.config[i].storage;
 			Materialize.toast("Complete", 3000);
+			if(!val){
+				var id=envView.config[i].id;
+				var val=$("#"+id).val()
+			}
 			localStorage.setItem(ls,val)
 			if(ls=="ha"){
 				hardwareAcceleration(val)
@@ -20,6 +24,10 @@ var tlView = new Vue({
 	methods: {
 		complete: function (i,val) {
 			var ls=tlView.config[i].storage;
+			if(!val){
+				var id=tlView.config[i].id;
+				var val=$("#"+id).val()
+			}
 			Materialize.toast("Complete", 3000);
 			localStorage.setItem(ls,val)
 			return true
@@ -33,6 +41,10 @@ var postView = new Vue({
 		complete: function (i,val) {
 			var ls=postView.config[i].storage;
 			Materialize.toast("Complete", 3000);
+			if(!val){
+				var id=postView.config[i].id;
+				var val=$("#"+id).val()
+			}
 			localStorage.setItem(ls,val)
 			return true
 		}
