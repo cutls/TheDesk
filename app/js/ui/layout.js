@@ -54,7 +54,8 @@ function parseColumn() {
 	}
 	var acctlist=obj;
 	console.log(obj);
-	/*var xed=localStorage.getItem("xed");
+	/*
+var xed=localStorage.getItem("xed");
 	if(xed){
 		xpand();
 	}*/

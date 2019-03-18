@@ -17,7 +17,7 @@ var envConstruction=[
         width:50,
         text:{
             head:"新規通知のポップアップお知らせの表示秒数",
-            desc:"0に設定すると表示されません",
+            desc:'0に設定すると表示されません',
             after:"秒"
         }
     },{
