@@ -17,7 +17,7 @@ var envConstruction=[
         width:50,
         text:{
             head:"Popup notification(on Windows)",
-            desc:"Hide to set "0"",
+            desc:'Hide to set "0"',
             after:"sec"
         }
     },{

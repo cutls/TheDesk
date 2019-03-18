@@ -419,10 +419,6 @@ p:not(:last-child){
   max-height: 190px;
   overflow-y: scroll;
 }
-.u-url {
-  color: var(--color);
-  cursor: text;
-}
 .type-b{
   display:none;
 }

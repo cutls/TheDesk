@@ -32,7 +32,7 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Usamin (18.0.2)";
+var ver="Usamin (18.0.3)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -307,14 +307,14 @@ var tlid=0;
 		<div class="collapsible-body toot-reset" id="toot-after">
 		</div>
 	</li>
-	<li>
+	<li class="dm-hide">
 		<div class="collapsible-header">
 		<i class="material-icons">people_outline</i>これより前のLocal TL(エアリプソース確認)
 		</div>
 		<div class="collapsible-body toot-reset" id="toot-before">
 		</div>
 	</li>
-	<li>
+	<li class="dm-hide">
 		<div class="collapsible-header">
 		<i class="material-icons">person_outline</i>これより前のユーザーTL(BTソース確認)
 		</div>
@@ -328,7 +328,7 @@ var tlid=0;
 		<div class="collapsible-body toot-reset" id="toot-fav">
 		</div>
 	</li>
-	<li>
+	<li class="dm-hide">
 		<div class="collapsible-header">
 		<i class="text-darken-3 fa fa-retweet"></i>このトゥートをブーストした人
 		</div>
@@ -336,6 +336,7 @@ var tlid=0;
 		</div>
 	</li>
 	</ul>
+	<div class="dm-hide">
 	他のアカウントを使用(<i class="fa fa-retweet"></i>/<i class="fa fa-star"></i>の解除はできません)<br>
 	<div class="row">
 		<div class="col s6">
@@ -356,11 +357,12 @@ var tlid=0;
 	<div id="toot-after">
 	</div>
 	</div>
+</div>
 	<div class="modal-footer">
-	<a href="#!" class="waves-effect waves-green btn-flat" onclick="brws()">ブラウザで開く</a>
-	<a href="#!" class="waves-effect waves-green btn-flat" onclick="shot()">スクリーンショット</a>
-	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy()">URLをコピー</a>
-	<a href="#!" class="waves-effect waves-green btn-flat" onclick="cbCopy('emb')">埋め込む</a>
+	<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="brws()">ブラウザで開く</a>
+	<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="shot()">スクリーンショット</a>
+	<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy()">URLをコピー</a>
+	<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy('emb')">埋め込む</a>
 	<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
 	</div>
 	</div>
@@ -581,15 +583,13 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Usamin_18-0-2" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-0-3" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Usamin (18.0.2)</h5>
-・設定の値が保存できなくなるバグ<br>
-・画像送りしたときに進化したメディアビューが適用されない問題<br>
-・設定の表記がおかしい問題<br>
+					<h5>Release Note Usamin (18.0.3)</h5>
+・初期段階でカラムが追加できない可能性を修正。<br>
 --以下18.0.0--<br>
 ・多くの機能を「メニュー」に集約。結局何のボタンかわからないアイコンの羅列から解放。<br>
 ・Alt+Enterでセカンダリートゥートボタン<br>

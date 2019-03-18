@@ -17,7 +17,7 @@ var envConstruction=[
         width:50,
         text:{
             head:"@@popup@@",
-            desc:"@@popupwarn@@",
+            desc:'@@popupwarn@@',
             after:"@@s@@"
         }
     },{

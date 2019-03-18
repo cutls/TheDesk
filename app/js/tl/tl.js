@@ -58,7 +58,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		dm(acct_id, tlid, "plus",delc,voice);
 		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
 			"user_" + acct_id) + "@" + domain + ")");
-			$("#notice_icon_" + tlid).text("notifications");
+			$("#notice_icon_" + tlid).text("mail_outline");
 		return;
 	}*/
 	localStorage.setItem("now", type);
@@ -113,7 +113,11 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 					url=url+"local=true";
 				}
 			}
-			var start = "https://" + domain + "/api/v1/timelines/" + url;
+			if(type=="dm"){
+				var start = "https://" + domain + "/api/v1/conversations";
+			}else{
+				var start = "https://" + domain + "/api/v1/timelines/" + url;
+			}
 			var method="GET";
 			var i={
 				method: method,
@@ -138,7 +142,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		if(misskey){
 			var templete = misskeyParse(json, type, acct_id, tlid, "", mute);
 		}else{
-			var templete = parse(json, type, acct_id, tlid, "", mute);
+			var templete = parse(json, type, acct_id, tlid, "", mute, type);
 			localStorage.setItem("lastobj_"+ tlid,json[0].id)
 		}
 		$("#timeline_" + tlid).html(templete);
@@ -288,7 +292,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 					if(voice){
 						say(obj.content)
 					}	
-					var templete = parse([obj], type, acct_id, tlid,"",mute);
+					var templete = parse([obj], type, acct_id, tlid,"",mute, type);
 					if ($("timeline_box_"+tlid+"_box .tl-box").scrollTop() === 0) {
 						$("#timeline_" + tlid).prepend(templete);
 					}else{
@@ -427,6 +431,10 @@ function moreload(type, tlid) {
 			var misskey=false;
 			var start = "https://" + domain + "/api/v1/timelines/" + com(type,data) +
 			"max_id=" + sid;
+			if(type=="dm"){
+				var start = "https://" + domain + "/api/v1/conversations?" +
+					"max_id=" + sid;
+			}
 			var method="GET";
 			var i={
 				method: method,
@@ -441,10 +449,11 @@ function moreload(type, tlid) {
 			todo(error);
 			console.error(error);
 		}).then(function(json) {
+			console.log(json);
 			if(misskey){
 				var templete = misskeyParse(json, '', acct_id, tlid,"",mute);
 			}else{
-				var templete = parse(json, '', acct_id, tlid,"",mute);
+				var templete = parse(json, '', acct_id, tlid,"",mute, type);
 			}
 			$("#timeline_" + tlid).append(templete);
 			additional(acct_id, tlid);

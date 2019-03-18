@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "18.0.2",
+  "version": "18.0.3",
   "description": "TheDesk is a Mastodon client for PC.",
   "main": "main.js",
   "scripts": {
@@ -53,12 +53,19 @@
       "output": "../build"
     },
     "win": {
-      "icon": "thedesk.ico",
+      "icon": "build/thedesk.ico",
       "target": [
         "nsis",
         "portable",
         "appx"
       ]
+    },
+    "appx": {
+      "identityName":"53491Cutls.TheDesk",
+      "applicationId":"Cutls.TheDesk",
+      "publisherDisplayName":"Cutls",
+      "publisher":"CN=629757F5-A5EE-474F-9562-B304A89A9FD1",
+      "languages":["JA-JP","EN-US"]
     },
     "nsis": {
       "oneClick": false,
