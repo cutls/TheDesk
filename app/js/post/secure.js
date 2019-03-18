@@ -60,7 +60,7 @@ function loadVis(){
 					memory = "public";
 				}
 				vis(memory);
-			} else if(vist == "server") {
+			} else if(vist == "useapi") {
 				var acct_id = $("#post-acct-sel").val();
 				var multi = localStorage.getItem("multi");
 				var obj = JSON.parse(multi);

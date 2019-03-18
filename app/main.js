@@ -60,14 +60,15 @@ try {
 try {
 	var lang = fs.readFileSync(lang_path, 'utf8');
 } catch (e) {
-	var lang=app.getLocale();
-	if(~lang.indexOf("ja")){
+	var langs=app.getLocale();
+	if(~langs.indexOf("ja")){
 		lang="ja";
 	}else{
 		lang="en";
 	}
 	fs.writeFileSync(lang_path,lang);
 }
+console.log(app.getLocale());
 console.log("launch:"+lang);
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {

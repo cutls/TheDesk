@@ -89,17 +89,23 @@ function load() {
 	var max=envView.config.length;
 	for(var i=0;i<max;i++){
 		var ls=envView.config[i].storage;
-		envView.config[i].setValue=localStorage.getItem(ls)
+		if(localStorage.getItem(ls)){
+			envView.config[i].setValue=localStorage.getItem(ls)
+		}
 	}
 	var max=tlView.config.length;
 	for(var i=0;i<max;i++){
 		var ls=tlView.config[i].storage;
-		tlView.config[i].setValue=localStorage.getItem(ls)
+		if(localStorage.getItem(ls)){
+			tlView.config[i].setValue=localStorage.getItem(ls)
+		}
 	}
 	var max=postView.config.length;
 	for(var i=0;i<max;i++){
 		var ls=postView.config[i].storage;
-		postView.config[i].setValue=localStorage.getItem(ls)
+		if(localStorage.getItem(ls)){
+			postView.config[i].setValue=localStorage.getItem(ls)
+		}
 	}
 	if(localStorage.getItem("imas")){
 		$(".imas").removeClass("hide");
