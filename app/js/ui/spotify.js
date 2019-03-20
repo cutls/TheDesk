@@ -124,7 +124,7 @@ function nowplaying(mode){
         var electron = require("electron");
 	    var ipc = electron.ipcRenderer;
 	    ipc.send('itunes', "");
-	    ipc.on('itunes-np', function (event, arg) {
+	    ipc.once('itunes-np', function (event, arg) {
             console.log(arg);
             var content=localStorage.getItem("np-temp");
             if(!content || content=="" || content=="null"){
@@ -151,11 +151,11 @@ function nowplaying(mode){
             var regExp = new RegExp("{composer}", "g");
             content = content.replace(regExp, arg.composer);
             var regExp = new RegExp("{hz}", "g");
+            content = content.replace(regExp, arg.sampleRate/1000+"kHz");
             var regExp = new RegExp("{lyricist}", "g");
             content = content.replace(regExp, "");
             var regExp = new RegExp("{bpm}", "g");
             content = content.replace(regExp, "");
-            content = content.replace(regExp, arg.sampleRate/1000+"kHz");
             var regExp = new RegExp("{bitRate}", "g");
             content = content.replace(regExp, arg.bitRate+"kbps");
             var regExp = new RegExp("{genre}", "g");
