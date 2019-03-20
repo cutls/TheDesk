@@ -124,7 +124,7 @@ function nowplaying(mode){
         var electron = require("electron");
 	    var ipc = electron.ipcRenderer;
 	    ipc.send('itunes', "");
-	    ipc.on('itunes-np', function (event, arg) {
+	    ipc.once('itunes-np', function (event, arg) {
             console.log(arg);
             var content=localStorage.getItem("np-temp");
             if(!content || content=="" || content=="null"){
