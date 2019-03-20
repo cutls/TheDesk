@@ -30,6 +30,11 @@
       "name": "ぽぷんじゃ",
       "url": "https://popon.pptdn.jp/@popn_ja",
       "email": "popn.ja@gmail.com"
+    },
+    {
+      "name": "kPherox",
+      "url": "https://www.kr-kp.com/",
+      "email": "admin@mail.kr-kp.com"
     }
   ],
   "license": "GPL-3.0",
@@ -43,7 +48,7 @@
     "vue": "^2.6.9"
   },
   "optionalDependencies": {
-    "itunes-nowplaying-mac": "^0.2.3",
+    "itunes-nowplaying-mac": "github:rinsuki/itunes-nowplaying-mac#pull/1/head",
     "nowplaying-node": "^0.1.3"
   },
   "build": {
