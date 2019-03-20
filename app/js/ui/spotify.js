@@ -134,6 +134,9 @@ function nowplaying(mode){
             if(flag && arg.path){
                 media(arg.path,"image/png","new");
             }
+            if(flag && arg.artworks[0].path){
+                ipc.send('bmp-image', [arg.artworks[0].path,0]);
+            }
             var regExp = new RegExp("{song}", "g");
             content = content.replace(regExp, arg.name);
             var regExp = new RegExp("{album}", "g");
