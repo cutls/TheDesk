@@ -122,6 +122,8 @@ var lang={
     "lang_layout_webviewmode":"Prefer WebView",
     "lang_excluded":"Excluded type of notification",
     "lang_layout_excludingbt":"Show BT mode(OFF/Exclude BT/Only BT)",
+    "lang_layout_leftFold":"Stack to the left",
+    "lang_layout_leftUnfold":"Dock on the right",
     //ui/sort.js
     "lang_sort_gothis":"Go to this column",
     "lang_sort_remthis":"Delete this column",
