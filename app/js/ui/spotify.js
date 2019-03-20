@@ -131,11 +131,14 @@ function nowplaying(mode){
                 var content="#NowPlaying {song} / {album} / {artist}\n{url}";
             }
             var flag=localStorage.getItem("artwork");
-            if(flag && arg.path){
-                media(arg.path,"image/png","new");
-            }
-            if(flag && arg.artworks[0].path){
-                ipc.send('bmp-image', [arg.artworks[0].path,0]);
+            if(arg.win){
+                if(flag && arg.path){
+                    media(arg.path,"image/png","new");
+                }
+            }else{
+                if(flag && arg.artworks[0].path){
+                    ipc.send('bmp-image', [arg.artworks[0].path,0]);
+                }
             }
             var regExp = new RegExp("{song}", "g");
             content = content.replace(regExp, arg.name);

@@ -492,6 +492,7 @@ ipc.on('itunes', (e, args) => {
 			}
 			
 			var value={
+				win:true,
 				name:myAIMP.getTitle(),
 				artist:myAIMP.getArtist(),
 				album:myAIMP.getAlbum(),
