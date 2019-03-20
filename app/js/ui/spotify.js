@@ -63,6 +63,7 @@ function spotifyFlagSave(){
         Materialize.toast(lang.lang_spotify_imgno, 3000);
     }
 }
+var uploadnow=false;
 function nowplaying(mode){
     if(mode=="spotify"){
         var start = "https://thedesk.top/now-playing?at="+localStorage.getItem("spotify")+"&rt="+localStorage.getItem("spotify-refresh");
@@ -132,11 +133,13 @@ function nowplaying(mode){
             }
             var flag=localStorage.getItem("artwork");
             if(arg.win){
-                if(flag && arg.path){
+                if(!uploadnow && flag && arg.path){
+                    uploadnow=true;
                     media(arg.path,"image/png","new");
                 }
             }else{
-                if(flag && arg.artworks[0].path){
+                if(!uploadnow && flag && arg.artworks[0].path){
+                    uploadnow=true;
                     ipc.send('bmp-image', [arg.artworks[0].path,0]);
                 }
             }

@@ -68,6 +68,15 @@
 #preview-field {
   display: none;
 }
+.preview-img{
+  width:50px;
+  max-height:100px;
+}
+.pi-wrap{
+  display:inline-block;
+  width:50px;
+  max-height:100px;
+}
 #default-emoji a{
   color:white;
   margin-right:2px;

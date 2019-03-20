@@ -131,7 +131,7 @@ function media(b64, type, no) {
 			console.log(json);
 			var img = localStorage.getItem("img");
 			if (json.type.indexOf("image")!=-1) {
-				var html = '<img src="' + json[previewer] + '" style="width:50px; max-height:100px;">';
+				var html = '<div class="pi-wrap"><img src="' + json[previewer] + '" class="preview-img pointer" data-media="'+json["id"]+'" onclick="deleteImage(\''+json["id"]+'\')"></div>';
 				$('#preview').append(html);
 			} else {
 				$('#preview').append(lang.lang_postimg_previewdis);
@@ -156,6 +156,7 @@ function media(b64, type, no) {
 			Materialize.toast(lang.lang_postimg_aftupload, 1000);
 			$("#imgup").text("");
 			$("#imgsel").show();
+			uploadnow=false;
 			localStorage.removeItem("image");
 		}
 	}
@@ -222,4 +223,20 @@ function adobe(){
 }
 ipc.on('adobeagree', function (event, arg) {
 	localStorage.setItem("adobeagree",arg);
-  });
+	});
+function deleteImage(key){
+	console.log(key);
+	if(!confirm("Delete it?")){
+		return false;
+	}
+	var media = $("#media").val();
+	var arr=media.split(",");
+	for(var i=0;i<media.length;i++){
+		if(arr[i]==key){
+				arr.splice(i, 1);
+				break;
+		}
+	}
+	$("#media").val(arr.join(","));
+	$('#preview [data-media='+key+']').remove();
+}
