@@ -156,7 +156,6 @@ function media(b64, type, no) {
 			Materialize.toast(lang.lang_postimg_aftupload, 1000);
 			$("#imgup").text("");
 			$("#imgsel").show();
-			uploadnow=false;
 			localStorage.removeItem("image");
 		}
 	}
