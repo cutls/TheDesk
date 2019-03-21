@@ -62,10 +62,29 @@ function verck(ver) {
 				  }
 			});
 		}
+	  }else if(platform=="darwin"){
+		if(localStorage.getItem("winstore")=="unix"){
+			localStorage.removeItem("winstore")
+		}
+		if(!localStorage.getItem("winstore")){
+			const options = {
+				type: 'info',
+				title: "Select your platform",
+				message: lang.lang_version_platform_mac,
+				buttons: [lang.lang_no,lang.lang_yesno]
+			  }
+			  dialog.showMessageBox(options, function(arg) {
+				if(arg==1){
+					localStorage.setItem("winstore","brewcask")
+				  }else{
+					localStorage.setItem("winstore","localinstall")
+				  }
+			});
+		}
 	}else{
 		  localStorage.setItem("winstore","unix")
 	  }
-	  if(localStorage.getItem("winstore")=="snapcraft" || localStorage.getItem("winstore")=="winstore"){
+	  if(localStorage.getItem("winstore")=="brewcask" || localStorage.getItem("winstore")=="snapcraft" || localStorage.getItem("winstore")=="winstore"){
 		var winstore=true;
 	  }else{
 		  var winstore=false;

@@ -23,6 +23,7 @@ var lang={
     "lang_version_skipver":"アップデートはスキップされました。",
     "lang_version_platform":"このソフトウェアはMicrosoft Storeからダウンロードされましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
     "lang_version_platform_linux":"このソフトウェアはSnapcraft(snapd)からインストールしましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
+    "lang_version_platform_mac":"このソフトウェアはHomebrew Caskからインストールしましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
 //login
 //login/login.js
     "lang_login_noauth":"認証せずに見る",
