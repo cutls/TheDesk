@@ -63,7 +63,6 @@ function spotifyFlagSave(){
         Materialize.toast(lang.lang_spotify_imgno, 3000);
     }
 }
-var uploadnow=false;
 function nowplaying(mode){
     if(mode=="spotify"){
         var start = "https://thedesk.top/now-playing?at="+localStorage.getItem("spotify")+"&rt="+localStorage.getItem("spotify-refresh");
@@ -124,6 +123,10 @@ function nowplaying(mode){
     }else if(mode=="itunes"){
         var electron = require("electron");
 	    var ipc = electron.ipcRenderer;
+        if (ipc.listenerCount('itunes-np') > 0) {
+            return false;
+        }
+
 	    ipc.send('itunes', "");
 	    ipc.once('itunes-np', function (event, arg) {
             console.log(arg);
@@ -135,13 +138,11 @@ function nowplaying(mode){
             var remote=electron.remote;
             var platform=remote.process.platform;
             if(platform=="win32"){
-                if(!uploadnow && flag && arg.path){
-                    uploadnow=true;
+                if(flag && arg.path){
                     media(arg.path,"image/png","new");
                 }
             }else if(platform=="darwin"){
-                if(!uploadnow && flag && arg.artworks[0]){
-                    uploadnow=true;
+                if(flag && arg.artworks[0]){
                     ipc.send('bmp-image', [arg.artworks[0].path,0]);
                 }
             }
