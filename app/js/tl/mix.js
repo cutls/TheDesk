@@ -303,7 +303,6 @@ function mixmore(tlid,type) {
             });
             
              $("#timeline_" + tlid).append(templete);
-            mixre(acct_id, tlid);
 			additional(acct_id, tlid);
 			jQuery("time.timeago").timeago();
 			moreloading=false;
