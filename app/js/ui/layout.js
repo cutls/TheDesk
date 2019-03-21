@@ -128,7 +128,7 @@ function parseColumn() {
 			}else{
 				var css="";
 			}
-			var html =webview("https://tweetdeck.twitter.com",key,insert,icnsert,css);
+			var html =webviewParse("https://tweetdeck.twitter.com",key,insert,icnsert,css);
 			$("#timeline-container").append(html);
 		}else{
 			var width = localStorage.getItem("width");
@@ -421,7 +421,7 @@ function coloradd(key,bg,txt){
 	}
 }
 //禁断のTwitter
-function webview(url,key,insert,icnsert,css){
+function webviewParse(url,key,insert,icnsert,css){
 	var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" style="'+css+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
 			'<div class="area-notice"><i class="fa fa-twitter waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
