@@ -132,12 +132,14 @@ function nowplaying(mode){
                 var content="#NowPlaying {song} / {album} / {artist}\n{url}";
             }
             var flag=localStorage.getItem("artwork");
-            if(arg.win){
+            var remote=electron.remote;
+            var platform=remote.process.platform;
+            if(platform=="win32"){
                 if(!uploadnow && flag && arg.path){
                     uploadnow=true;
                     media(arg.path,"image/png","new");
                 }
-            }else{
+            }else if(platform=="darwin"){
                 if(!uploadnow && flag && arg.artworks[0].path){
                     uploadnow=true;
                     ipc.send('bmp-image', [arg.artworks[0].path,0]);

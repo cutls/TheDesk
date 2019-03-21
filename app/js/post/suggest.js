@@ -115,7 +115,7 @@ input.addEventListener("focus", function() {
 							}
 						});
 						$("#right-side").show()
-						$("#suggest").html("@:<br>" + accts);
+						$("#suggest").html(accts);
 						$("#poll").addClass("hide")
 						$("#emoji").addClass("hide")
 					} else {

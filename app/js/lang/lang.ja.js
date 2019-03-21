@@ -45,6 +45,7 @@ var lang={
 //post/img.js
     "lang_postimg_previewdis":"プレビューできません。",
     "lang_postimg_aftupload":"アップロード後はアカウントを切り替えられません。",
+    "lang_postimg_delete":"この画像を削除します",
 //post/post.js
     "lang_post_tagTL":"デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。",
     "lang_post_tagVis":"公開範囲が「公開」以外だと、タグTLに表示されません。(一部インスタンスを除く)",

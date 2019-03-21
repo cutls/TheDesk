@@ -131,7 +131,7 @@ function media(b64, type, no) {
 			console.log(json);
 			var img = localStorage.getItem("img");
 			if (json.type.indexOf("image")!=-1) {
-				var html = '<div class="pi-wrap"><img src="' + json[previewer] + '" class="preview-img pointer" data-media="'+json["id"]+'" onclick="deleteImage(\''+json["id"]+'\')"></div>';
+				var html = '<img src="' + json[previewer] + '" class="preview-img pointer" data-media="'+json["id"]+'" onclick="deleteImage(\''+json["id"]+'\')" title="'+lang.lang_postimg_delete+'">';
 				$('#preview').append(html);
 			} else {
 				$('#preview').append(lang.lang_postimg_previewdis);
@@ -226,7 +226,7 @@ ipc.on('adobeagree', function (event, arg) {
 	});
 function deleteImage(key){
 	console.log(key);
-	if(!confirm("Delete it?")){
+	if(!confirm(lang.lang_postimg_delete)){
 		return false;
 	}
 	var media = $("#media").val();
