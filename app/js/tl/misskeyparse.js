@@ -606,7 +606,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			});
 			poll='<div class="vote_'+toot.id+'">'+poll+'</div>';
 		}
-        //Reactions
+		//Reactions
         if(toot.reactionCounts){
         if(toot.reactionCounts.like){
             var like=toot.reactionCounts.like;

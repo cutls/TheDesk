@@ -45,6 +45,7 @@ var lang={
     //post/img.js
     "lang_postimg_previewdis":"cannot preview",
     "lang_postimg_aftupload":"You cannot change accounts after uploading.",
+    "lang_postimg_delete":"Delete this image.",
     //post/post.js
     "lang_post_tagTL":"This toot does not contain a default tag. This toot will not be shown on Local TL. Continue?",
     "lang_post_tagVis":"This toot(not 'public' toot) is not shown on this tag's TL.",
@@ -122,6 +123,8 @@ var lang={
     "lang_layout_webviewmode":"Prefer WebView",
     "lang_excluded":"Excluded type of notification",
     "lang_layout_excludingbt":"Show BT mode(OFF/Exclude BT/Only BT)",
+    "lang_layout_leftFold":"Stack to the left",
+    "lang_layout_leftUnfold":"Dock on the right",
     //ui/sort.js
     "lang_sort_gothis":"Go to this column",
     "lang_sort_remthis":"Delete this column",

@@ -63,6 +63,7 @@ function spotifyFlagSave(){
         Materialize.toast(lang.lang_spotify_imgno, 3000);
     }
 }
+var uploadnow=false;
 function nowplaying(mode){
     if(mode=="spotify"){
         var start = "https://thedesk.top/now-playing?at="+localStorage.getItem("spotify")+"&rt="+localStorage.getItem("spotify-refresh");
@@ -124,15 +125,25 @@ function nowplaying(mode){
         var electron = require("electron");
 	    var ipc = electron.ipcRenderer;
 	    ipc.send('itunes', "");
-	    ipc.on('itunes-np', function (event, arg) {
+	    ipc.once('itunes-np', function (event, arg) {
             console.log(arg);
             var content=localStorage.getItem("np-temp");
             if(!content || content=="" || content=="null"){
                 var content="#NowPlaying {song} / {album} / {artist}\n{url}";
             }
             var flag=localStorage.getItem("artwork");
-            if(flag && arg.path){
-                media(arg.path,"image/png","new");
+            var remote=electron.remote;
+            var platform=remote.process.platform;
+            if(platform=="win32"){
+                if(!uploadnow && flag && arg.path){
+                    uploadnow=true;
+                    media(arg.path,"image/png","new");
+                }
+            }else if(platform=="darwin"){
+                if(!uploadnow && flag && arg.artworks[0]){
+                    uploadnow=true;
+                    ipc.send('bmp-image', [arg.artworks[0].path,0]);
+                }
             }
             var regExp = new RegExp("{song}", "g");
             content = content.replace(regExp, arg.name);
@@ -145,11 +156,11 @@ function nowplaying(mode){
             var regExp = new RegExp("{composer}", "g");
             content = content.replace(regExp, arg.composer);
             var regExp = new RegExp("{hz}", "g");
+            content = content.replace(regExp, arg.sampleRate/1000+"kHz");
             var regExp = new RegExp("{lyricist}", "g");
             content = content.replace(regExp, "");
             var regExp = new RegExp("{bpm}", "g");
             content = content.replace(regExp, "");
-            content = content.replace(regExp, arg.sampleRate/1000+"kHz");
             var regExp = new RegExp("{bitRate}", "g");
             content = content.replace(regExp, arg.bitRate+"kbps");
             var regExp = new RegExp("{genre}", "g");

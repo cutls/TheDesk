@@ -8,7 +8,9 @@ function re(id,ats_cm,acct_id,mode){
 	for(var i=0;i<ats.length;i++){
 		var at=ats[i];
 		var te=$("#textarea").val();
-		$("#textarea").val("@"+at+" "+te);
+		if(at!=localStorage.getItem("user_"+acct_id)){
+			$("#textarea").val("@"+at+" "+te);
+		}
 	}
 	$("#rec").text(lang.lang_yesno);
 	$("#post-acct-sel").val(acct_id);

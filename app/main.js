@@ -465,7 +465,7 @@ ipc.on('itunes', (e, args) => {
 		if(platform=="darwin"){
 		const nowplaying = require("itunes-nowplaying-mac")
 		nowplaying.getRawData().then(function (value) {
-		mainWindow.webContents.send('itunes-np', value);
+			mainWindow.webContents.send('itunes-np', value);
 		}).catch(function (error) {
 			// 非同期処理失敗。呼ばれない
 			console.log(error);
@@ -492,6 +492,7 @@ ipc.on('itunes', (e, args) => {
 			}
 			
 			var value={
+				win:true,
 				name:myAIMP.getTitle(),
 				artist:myAIMP.getArtist(),
 				album:myAIMP.getAlbum(),

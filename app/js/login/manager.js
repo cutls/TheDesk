@@ -335,7 +335,29 @@ function misskeyLogin(url) {
 	httpreq.send(JSON.stringify({
 			name: "TheDesk(PC)",
 			description: "Mastodon client for PC",
-			permission: ["read","write","follow"]
+			permission: [
+				"account-read",
+				"account-write",
+				"account/read",
+				"account/write",
+				"drive-read",
+				"drive-write",
+				"favorite-read",
+				"favorite-write",
+				"favorites-read",
+				"following-read",
+				"following-write",
+				"messaging-read",
+				"messaging-write",
+				"note-read",
+				"note-write",
+				"notification-read",
+				"notification-write",
+				"reaction-read",
+				"reaction-write",
+				"vote-read",
+				"vote-write"
+			]
 	}));
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {

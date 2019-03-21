@@ -108,10 +108,15 @@ iframe {
 .box {
   overflow: hidden;
   min-width: 300px;
-  height: 100vh;
   flex: 1;
-  border: thin solid gray;
   border-top:none;
+  display:flex;
+  flex-direction: column;
+}
+.boxIn{
+  height:100%;
+  border: thin solid gray;
+  overflow: hidden;
 }
 .box .pin,#his-data .pin{
   display:none;
@@ -131,7 +136,11 @@ iframe {
 .faicon_FTL{
   display:none;
 }
-.tl-box{ height:calc(100% - 40px); overflow-y:scroll; overflow-x:hidden }
+.tl-box{
+  position:relative;
+  height:calc(100% - 40px);
+  overflow-y:scroll;
+  overflow-x:hidden }
 .additional {
   overflow-x: scroll;
   width: 100%;

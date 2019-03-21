@@ -72,7 +72,9 @@ function parseColumn() {
 	if ($("#timeline-container").length) {
 		$("#timeline-container").html("");
 	}
-	Object.keys(obj).forEach(function(key) {
+	var basekey=0;
+	for(var key=0;key<obj.length;key++){
+		var next=key+1;
 		var acct = obj[key];
 		if(acct.type=="notf"){
 			var notf_attr=' data-notf='+acct.domain;
@@ -108,7 +110,7 @@ function parseColumn() {
 			icnsert=' style="color: #'+ichex+'" ';
 			}
 		}
-		console.log(acct.domain);
+		console.log(acct);
 		if(acctlist[acct.domain]){
 			if(acctlist[acct.domain].background!="def"){
 				insert=insert+" border-bottom:medium solid #"+acctlist[acct.domain].background+";";
@@ -126,7 +128,7 @@ function parseColumn() {
 			}else{
 				var css="";
 			}
-			var html =webview("https://tweetdeck.twitter.com",key,insert,icnsert,css);
+			var html =webviewParse("https://tweetdeck.twitter.com",key,insert,icnsert,css);
 			$("#timeline-container").append(html);
 		}else{
 			var width = localStorage.getItem("width");
@@ -152,7 +154,18 @@ function parseColumn() {
 		}else{
 			var exclude="";
 		}
-		var html = '<div style="'+css+'" class="box '+animecss+'" id="timeline_box_' + key + '_box" tlid="' + key +
+			if(!acct.left_fold){
+				basekey=key;
+				var basehtml = '<div style="'+css+'" class="box '+animecss+'" id="timeline_box_' + basekey + '_parentBox"></div>';
+				$("#timeline-container").append(basehtml);
+				var left_hold='<a onclick="leftFoldSet(' + key +')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_leftFold+'">view_agenda</i></a>'+lang.lang_layout_leftFold+'</span><br>';
+			}else{
+				var left_hold='<a onclick="leftFoldRemove(' + key +')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_leftUnfold+'">view_column</i></a>'+lang.lang_layout_leftUnfold+'</span><br>';
+			}
+			if(key===0){
+				left_hold='';
+			}
+			var html='<div class="boxIn" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+' ">'+
 			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang.lang_layout_gotop +'"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
@@ -166,7 +179,7 @@ function parseColumn() {
 		  '<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"><div id="notifications_' + key +
 		  '" data-notf="' + acct.domain + '" data-type="notf"></div></div><div class="column-hide notf-indv-box" id="util-box_' + key +
-		  '" style="padding:5px;">'+exclude+'<a onclick="mediaToggle(' + key +
+		  '" style="padding:5px;">'+exclude+left_hold+'<a onclick="mediaToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_mediafil +'">perm_media</i><span id="sta-media-' +
 		  key + '">On</span></a>'+lang.lang_layout_mediafil +'<br><a onclick="cardToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_linkanades +'">link</i><span id="sta-card-' +
@@ -174,8 +187,8 @@ function parseColumn() {
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_tts +'">hearing</i><span id="sta-voice-' +
 		  key + '">On</span></a>'+lang.lang_layout_tts +'TL<br><a onclick="reconnector(' + key +
 		  ',\''+acct.type+'\',\''+acct.domain+'\',\''+acct.data+'\')" class="setting nex '+if_notf+'"><i class="material-icons waves-effect nex '+if_notf+'" title="'+lang.lang_layout_reconnect+'">low_priority</i></a><span class="'+if_notf+'">'+lang.lang_layout_reconnect+'</span><br>'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
-			'" class="tl '+acct.type+'-timeline " tlid="' + key + '" data-type="' + acct.type + '" data-acct="'+acct.domain+'"><div id="landing_'+key+'" style="text-align:center">'+lang.lang_layout_nodata +'</div></div></div></div>';
-		$("#timeline-container").append(html);
+			'" class="tl '+acct.type+'-timeline " tlid="' + key + '" data-type="' + acct.type + '" data-acct="'+acct.domain+'"><div id="landing_'+key+'" style="text-align:center">'+lang.lang_layout_nodata +'</div></div></div>'
+			$('#timeline_box_' + basekey + '_parentBox').append(html);
 		localStorage.removeItem("pool_" + key);
 		if (acct.data) {
 			var data = acct.data;
@@ -200,7 +213,7 @@ function parseColumn() {
 		catchCheck(key);
 		voiceCheck(key);
 		}
-	});
+	}
 	var box = localStorage.getItem("box");
 	if (box == "absolute") {
 		setTimeout(show, 1000);
@@ -408,7 +421,7 @@ function coloradd(key,bg,txt){
 	}
 }
 //禁断のTwitter
-function webview(url,key,insert,icnsert,css){
+function webviewParse(url,key,insert,icnsert,css){
 	var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" style="'+css+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
 			'<div class="area-notice"><i class="fa fa-twitter waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
@@ -424,4 +437,20 @@ function webview(url,key,insert,icnsert,css){
 			'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="'+url+'" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview></div></div></div>';
 	
 	return html;
+}
+function leftFoldSet(key){
+	var multi = localStorage.getItem("column");
+	var obj = JSON.parse(multi);
+	obj[key].left_fold=true;
+	var json = JSON.stringify(obj);
+	localStorage.setItem("column", json);
+	parseColumn();
+}
+function leftFoldRemove(key){
+	var multi = localStorage.getItem("column");
+	var obj = JSON.parse(multi);
+	obj[key].left_fold=false;
+	var json = JSON.stringify(obj);
+	localStorage.setItem("column", json);
+	parseColumn();
 }

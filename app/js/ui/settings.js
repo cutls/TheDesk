@@ -402,7 +402,7 @@ function importSettings(){
 					localStorage.setItem("card_" + i,"true");
 					localStorage.removeItem("catch_" + i);
 				}
-				location.href="language.html";
+				location.href="index.html";
 			}else{
 				alert("Error.")
 			}

@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)  
-[![Server-up time](https://status.cutls.com/badge/?site=thedesk.top)](https://status.cutls.com/)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのWindows/Linuxクライアント  
 Download:[TheDesk](https://thedesk.top)  
@@ -57,7 +56,7 @@ Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.
 * sumchecker(in package.json)
 * Ability to read unformated files!(install yourself)
 
-## Contributors/コントリビューター
+## Contributors/主なコントリビューター
 
 macOSビルダー  
 
@@ -66,6 +65,10 @@ macOSビルダー
 Linuxビルダー  
 
 * [ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja)
+
+iTunes NowPlayingにアルバムアートワークを付けてくれた人
+
+* [kPherox](https://www.kr-kp.com/)
 
 ## Build/ビルド
 
