@@ -91,12 +91,12 @@
       "target": "dmg"
     },
     "electronDownload": {
-      "version": "4.0.5"
+      "version": "4.0.6"
     },
-    "electronVersion": "4.0.5"
+    "electronVersion": "4.0.6"
   },
   "devDependencies": {
-    "electron": "^4.0.5",
+    "electron": "^4.0.6",
     "electron-packager": "^13.0.1",
     "electron-prebuilt": "^1.4.13",
     "electron-rebuild": "^1.8.4"
