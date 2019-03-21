@@ -33,6 +33,11 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 	var ltr = localStorage.getItem("letters");
 	var gif = localStorage.getItem("gif");
 	var imh = localStorage.getItem("img-height");
+	if(imh=="full"){
+		imh="auto";
+	}else{
+		imh=imh+"px";
+	}
 	//独自ロケール
 	var locale = localStorage.getItem("locale");
 	if(locale=="yes"){
@@ -510,7 +515,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					acct_id + '\')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 					'" data-type="' + media.type + '" class="img-parsed"><img draggable="false" src="' +
 					purl + '" class="' + sense +
-					' toot-img pointer" style="width:' + cwdt + '%; height:'+imh+'px;"></a></span>';
+					' toot-img pointer" style="width:calc(' + cwdt + '% - 1px); height:'+imh+';"></a></span>';
 			});
 			media_ids = media_ids.slice(0, -1) ;
 		} else {
