@@ -801,7 +801,7 @@ function reconnector(tlid,type,acct_id,data,mode){
 		}
 		var wssh=localStorage.getItem("wssH_" + tlid);
 		websocketHome[wssh].close();
-		var wssh=localStorage.getItem("wssL_" + tlid);
+		var wssl=localStorage.getItem("wssL_" + tlid);
 		websocketLocal[wssl].close();
 		mixre(acct_id, tlid, type, mute,"",voice,mode);
 	}else if(type=="notf"){
