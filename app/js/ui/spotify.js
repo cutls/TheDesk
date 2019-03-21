@@ -140,7 +140,7 @@ function nowplaying(mode){
                     media(arg.path,"image/png","new");
                 }
             }else if(platform=="darwin"){
-                if(!uploadnow && flag && arg.artworks[0].path){
+                if(!uploadnow && flag && arg.artworks[0]){
                     uploadnow=true;
                     ipc.send('bmp-image', [arg.artworks[0].path,0]);
                 }
