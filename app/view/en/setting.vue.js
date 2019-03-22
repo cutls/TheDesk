@@ -263,7 +263,7 @@ var tlConstruction=[
         setValue:200,
         text:{
             head:"Height of images",
-            desc:"",
+            desc:'Option:Set "full" to uncrop.',
             after:"px"
         }
     },{

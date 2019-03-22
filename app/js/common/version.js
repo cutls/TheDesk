@@ -197,10 +197,14 @@ function verck(ver) {
 		}
 	}
 	});
+}
+var infostreaming=false;
+function infowebsocket(){
 	infows = new WebSocket("wss://thedesk.top/ws/");
 	infows.onopen = function(mess) {
 		console.log(tlid + ":Connect Streaming Info:");
 		console.log(mess);
+		infostreaming=true;
 	}
 	infows.onmessage = function(mess) {
 		console.log(":Receive Streaming:");
@@ -246,11 +250,19 @@ function verck(ver) {
 	}
 	}
 	infows.onerror = function(error) {
+		infostreaming=false;
 		console.error("Error closing:info");
 		console.error(error);
 		return false;
 	};
 	infows.onclose = function() {
+		infostreaming=false;
 		console.error("Closing:info");
 	};
 }
+setInterval(function(){
+    if(!infostreaming){
+		console.log("try to connect")
+		infowebsocket();
+	}
+}, 10000);
