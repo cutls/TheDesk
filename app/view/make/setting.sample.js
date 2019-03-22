@@ -263,7 +263,7 @@ var tlConstruction=[
         setValue:200,
         text:{
             head:"@@imgheight@@",
-            desc:"",
+            desc:'@@imgheightwarn@@',
             after:"px"
         }
     },{

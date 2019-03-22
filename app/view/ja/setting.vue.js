@@ -263,7 +263,7 @@ var tlConstruction=[
         setValue:200,
         text:{
             head:"画像の高さ",
-            desc:"",
+            desc:'オプション:「full」と指定すると全ての画像をクロップしません。',
             after:"px"
         }
     },{

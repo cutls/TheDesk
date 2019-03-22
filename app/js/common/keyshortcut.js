@@ -92,6 +92,7 @@ $(function($) {
 			if (e.keyCode === 88) {
 				if (!$("#post-box").hasClass("appear")) {
 					show();
+					$('textarea').focus();
 				} else {
 					hide();
 				}

@@ -239,6 +239,7 @@ function mixmore(tlid,type) {
 	var multi = localStorage.getItem("column");
 	var obj = JSON.parse(multi);
 	var acct_id = obj[tlid].domain;
+	moreloading=true;
 	todo("Integrated TL MoreLoading...(Local)");
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
@@ -302,9 +303,9 @@ function mixmore(tlid,type) {
             });
             
              $("#timeline_" + tlid).append(templete);
-            mixre(acct_id, tlid);
 			additional(acct_id, tlid);
 			jQuery("time.timeago").timeago();
+			moreloading=false;
 			todc();
         });
 	});

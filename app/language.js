@@ -1,5 +1,5 @@
 // Create the Application's main menu
-function templete(lang,mainWindow){
+function templete(lang,mainWindow,packaged){
     const electron = require("electron");
     const app = electron.app;
     const BrowserWindow = electron.BrowserWindow;
@@ -95,7 +95,7 @@ function templete(lang,mainWindow){
             {
                 label: 'Toggle Developer Tools',
                 accelerator: 'Alt+Command+I',
-                click: function() { mainWindow.toggleDevTools(); }
+                click: function() { if(!packaged){mainWindow.toggleDevTools();} }
               },
           {
             label: dict.reload[lang],

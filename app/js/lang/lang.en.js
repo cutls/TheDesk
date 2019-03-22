@@ -23,6 +23,7 @@ var lang={
     "lang_version_skipver":"Update was ignored.",
     "lang_version_platform":"Was this software installed at Microsoft Store? When select 'yes', any update was ignored.",
     "lang_version_platform_linux":"Was this software installed at Snapcraft(snapd)? When select 'yes', any update was ignored.",
+    "lang_version_platform_mac":"Was this software installed at Homebrew Cask? When select 'yes', any update was ignored.",
     //login
     //login/login.js
     "lang_login_noauth":"Show TL of unlogined accounts",
