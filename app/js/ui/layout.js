@@ -433,7 +433,7 @@ function webviewParse(url,key,insert,icnsert,css){
 		  ')" class="setting nex" title="'+lang.lang_layout_setthis +'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
 		  '<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"></div><div class="column-hide notf-indv-box" id="util-box_' + key +
-		  '" style="padding:5px;">'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:calc(100% - 110px);"><div id="timeline_' + key +
+		  '" style="padding:5px;">'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:100%;"><div id="timeline_' + key +
 			'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="'+url+'" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview></div></div></div>';
 	
 	return html;
