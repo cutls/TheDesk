@@ -146,6 +146,7 @@ function parseColumn() {
 			'<input type="checkbox" class="filled-in" id="exc-fav-'+key+'"  '+excludeCk(key,"favourite")+' /><label for="exc-fav-'+key+'" class="exc-chb"><i class="fa fa-star exc-icons"></i></label> '+
 			'<input type="checkbox" class="filled-in" id="exc-bt-'+key+'" '+excludeCk(key,"reblog")+' /><label for="exc-bt-'+key+'" class="exc-chb" ><i class="fa fa-retweet exc-icons"></i></label> '+
 			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"follow")+' /><label for="exc-follow-'+key+'" class="exc-chb" ><i class="fa fa-users exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"poll")+' /><label for="exc-poll-'+key+'" class="exc-chb" ><i class="fa fa-tasks exc-icons"></i></label> '+
 			'<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude('+key+')">Filter</button><br>';
 		}else if(acct.type=="home"){
 			var exclude='<a onclick="ebtToggle(' + key +
@@ -433,7 +434,7 @@ function webviewParse(url,key,insert,icnsert,css){
 		  ')" class="setting nex" title="'+lang.lang_layout_setthis +'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
 		  '<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"></div><div class="column-hide notf-indv-box" id="util-box_' + key +
-		  '" style="padding:5px;">'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:calc(100% - 110px);"><div id="timeline_' + key +
+		  '" style="padding:5px;">'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:100%;"><div id="timeline_' + key +
 			'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="'+url+'" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview></div></div></div>';
 	
 	return html;

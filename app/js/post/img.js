@@ -183,22 +183,20 @@ function toBlob(base64, type) {
 var element =  document.querySelector("#textarea");
 element.addEventListener("paste", function(e){
 	console.log(e)
-    // 画像の場合
-    // e.clipboardData.types.length == 0
-    // かつ
-    // e.clipboardData.types[0] == "Files"
-    // となっているので、それ以外を弾く
-    if (!e.clipboardData 
-            || !e.clipboardData.types
-            || (e.clipboardData.types.length != 1)
-            || (e.clipboardData.types[0] != "Files")) {
-				console.log("not image")
-            return true;
+    if (!e.clipboardData || !e.clipboardData.items) {
+        return true;
+    }
+    // DataTransferItemList に画像が含まれいない場合は終了する
+	var imageItems = [...e.clipboardData.items].filter(i => i.type.startsWith('image'));
+    if (imageItems.length == 0) {
+		console.log("not image")
+        return true;
     }
 
     // ファイルとして得る
-    // (なぜかgetAsStringでは上手くいかなかった)
-    var imageFile = e.clipboardData.items[0].getAsFile();
+    // DataTransferItem の kind は file なので getAsString ではなく getAsFile を呼ぶ
+    var imageFile = imageItems[0].getAsFile();
+    var imageType = imageItems[0].type;
 
     // FileReaderで読み込む
     var fr = new FileReader();
@@ -209,7 +207,8 @@ element.addEventListener("paste", function(e){
 		if(mediav){
 			var i=mediav.split(",").length;
 		}
-		media(base64, "image/png", i)
+        // DataTransferItem の type に mime tipes があるのでそれを使う
+		media(base64, imageType, i)
     };
     fr.readAsDataURL(imageFile);
 

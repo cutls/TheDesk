@@ -62,9 +62,6 @@ a,button,input,label,i{
 #prog{
     font-size:200%;
 }
-.linux, .mac{
-    display:none;
-}
 </style>
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
@@ -78,11 +75,10 @@ a,button,input,label,i{
         <p>{{updatehere}}</p>
         <span id="now"></span>→<b id="ver"></b><br>
         <span id="det"></span><br>
-        <button class="waves-effect btn windows" onclick="update('install')" style="margin-left:15px;">{{installer}}</button>
-        <button class="waves-effect btn windows" onclick="update('portable')" style="margin-left:15px;">{{portable}}</button>
-        <span class="linux">{{snap}}<br></span>
-        <button class="waves-effect btn linux" onclick="update('linux')" style="margin-left:15px;">{{download}}</button>
-        <button class="waves-effect btn mac" onclick="update('mac')" style="margin-left:15px;">{{download}}</button>
+        <button class="waves-effect btn windows hide" onclick="update('install')" style="margin-left:15px;">{{installer}}</button>
+        <button class="waves-effect btn windows hide" onclick="update('portable')" style="margin-left:15px;">{{portable}}</button>
+        <button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left:15px;">{{download}}</button>
+        <button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left:15px;">{{download}}</button>
         <br>
         {{problem1}}<br>{{problem2}}
     </div>
@@ -184,12 +180,12 @@ function verck(){
     var remote=electron.remote;
     var platform=remote.process.platform;
     var bit=process.arch;
-	if(platform=="linux"){
-        $('.windows').hide()
-        $('.linux').show()
-	}else if(platform=="mac"){
-        $('.windows').hide()
-        $('.mac').show()
+	if(platform=="win32"){
+        $('.windows').removeClass("hide")
+	}else if(platform=="linux"){
+        $('.linux').removeClass("hide")
+	}else if(platform=="darwin"){
+        $('.mac').removeClass("hide")
 	}
 	var start="https://thedesk.top/ver.json";
 	fetch(start, {

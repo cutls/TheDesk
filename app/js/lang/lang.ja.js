@@ -153,6 +153,7 @@ var lang={
     "lang_parse_faved":"がお気に入り登録しました",
     "lang_parse_bted":"がブーストしました",
     "lang_parse_btedsimple":"がブースト",
+    "lang_parse_polled":"のアンケート",
     "lang_parse_notftime":"通知された時間",
     "lang_parse_cwshow":"見る",
     "lang_parse_fulltext":"以下全文",
