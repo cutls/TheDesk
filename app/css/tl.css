@@ -114,6 +114,12 @@ iframe {
   flex-direction: column;
   margin-bottom: -10px;
 }
+.img_FTL{
+  display:none;
+}
+.bbcode_FTL{
+  display:none;
+}
 .boxIn{
   height:100%;
   border: thin solid gray;

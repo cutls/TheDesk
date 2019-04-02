@@ -153,6 +153,7 @@ var lang={
     "lang_parse_faved":" favourited your toot",
     "lang_parse_bted":" boosted your toot",
     "lang_parse_btedsimple":" boosted",
+    "lang_parse_polled":"'s poll",
     "lang_parse_notftime":"Actioned at",
     "lang_parse_cwshow":"Show",
     "lang_parse_fulltext":"Full size text:",

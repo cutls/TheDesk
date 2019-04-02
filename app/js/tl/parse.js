@@ -228,6 +228,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				if(!locale && localStorage.getItem("fav_" + acct_id)){
 					what = localStorage.getItem("fav_" + acct_id);
 				}
+			} else if (toot.type == "poll") {
+				var what = lang.lang_parse_polled;
+				var icon = "fa-tasks  purple-text";
 			}
 			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.created_at,
 				'absolute') + '('+lang.lang_parse_notftime+')"><i class="fa fa-clock-o"></i>' + date(toot.created_at,

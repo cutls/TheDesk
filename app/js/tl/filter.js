@@ -421,6 +421,16 @@ function exclude(key){
 		}else{
 			excludetxt="?exclude_types[]=follow"
 		}
+		var follow=true;
+	}else{
+		var follow=false;
+	}
+	if($('#exc-poll-'+key+':checked').val()){
+		if(reply || bt || fav || follow){
+			excludetxt=excludetxt+"&exclude_types[]=poll"
+		}else{
+			excludetxt="?exclude_types[]=poll"
+		}
 	}else{
 	}
 	localStorage.setItem("exclude-"+key,excludetxt)
