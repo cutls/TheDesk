@@ -412,62 +412,6 @@ function staCopy(id){
 	}
 	
 }
-//魚拓
-function shot(){
-	var title=$("#tootmodal").attr("data-id");
-	var off = $('#toot-this').offset();
-	var w=$("#toot-this").width()+50;
-	var h=$("#toot-this").height()+50;
-	var electron = require("electron");
-	const fs = require("fs");
-	const os = require('os')
-	const shell = electron.shell;
-	const path = require('path')
-	var ipc = electron.ipcRenderer;
-	let options = {
-        types: ['screen'],
-        thumbnailSize: {
-            width: window.parent.screen.width,
-            height: window.parent.screen.height
-          }
-	}
-	const desktopCapturer = electron.desktopCapturer;
-	desktopCapturer.getSources(options, function(error, sources) {
-		if (error) return console.log(error)
-
-		sources.forEach(function(source) {
-			if (source.name === 'Screen 1' || source.name === 'TheDesk') {
-                var durl=source.thumbnail.toDataURL();
-                var b64 = durl.match(
-                    /data:image\/png;base64,(.+)/
-                );
-                const screenshotPath = path.join(os.tmpdir(), 'screenshot.png');
-                const savePath = path.join(os.tmpdir(), 'screenshot.png');
-					var ipc = electron.ipcRenderer;
-					if(localStorage.getItem("savefolder")){
-						var save=localStorage.getItem("savefolder");
-					}else{
-						var save="";
-					}
-                    ipc.send('shot', ['file://' + screenshotPath,w,h,b64[1],title,off.top+50,off.left,save]);
-                    if($("#toot-this .img-parsed").length>0){
-                        for(i=0;i<$("#toot-this .img-parsed").length;i++){
-							var url=$("#toot-this .img-parsed").eq(i).attr("data-url");
-							if(localStorage.getItem("savefolder")){
-								var save=localStorage.getItem("savefolder");
-							}else{
-								var save="";
-							}
-                            ipc.send('shot-img-dl', [url,title+"_img"+i+".png",save]);
-                        }
-                    }
-                    return;
-					const message = `Saved screenshot to: ${screenshotPath}`
-					//screenshotMsg.textContent = message
-			}
-		})
-	})
-}
 //翻訳
 function trans(tar,to){
 	var html=$("#toot-this .toot").html();

@@ -108,6 +108,8 @@ var lang={
 //tl/tl.js
     "lang_tl_media":"メディア",
     "lang_tl_reconnect":"Streamingに再接続しました",
+//ui/img.js
+    "lang_img_DLDone":"ダウンロード先:",
 //ui/layout.js
     "lang_layout_gotop":"一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。",
     "lang_layout_thisacct":"このアカウントの{{notf}}",

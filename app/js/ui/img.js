@@ -287,6 +287,10 @@ function dlImg(){
 		console.log(arg);
 	})
 	ipc.on('general-dl-message', function (event, arg) {
-		console.log(arg);
+		var argC=arg.replace(/\\/g,"\\\\")+"\\\\.";
+		Materialize.toast(lang.lang_img_DLDone+arg+'<button class="btn-flat toast-action" onclick="openFinder(\''+argC+'\')">Show</button>', 5000);
 	})
+}
+function openFinder(dir){
+	ipc.send('open-finder', dir);
 }
