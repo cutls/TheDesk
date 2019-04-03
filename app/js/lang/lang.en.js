@@ -148,6 +148,7 @@ var lang={
     "lang_showontl_notf":"Notification ",
     "lang_showontl_domain":"Domain ",
     "lang_showontl_listwarn":"Follow to add this user to lists.",
+    "lang_showontl_verified":"This website is verified by owner at ",
 //parse
     "lang_parse_mentioned":" replied to you",
     "lang_parse_faved":" favourited your toot",

@@ -334,6 +334,7 @@ p:not(:last-child){
 .notice-box {
   top: 0;
   background-color:var(--notfbox);
+  filter: brightness(110%);
   position: relative;
   margin-right: 10px;
   width:100%;

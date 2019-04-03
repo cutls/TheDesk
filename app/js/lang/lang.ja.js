@@ -150,6 +150,7 @@ var lang={
     "lang_showontl_notf":"通知",
     "lang_showontl_domain":"ドメイン",
     "lang_showontl_listwarn":"リストに追加するためにはフォローが必要です。",
+    "lang_showontl_verified":"このユーザーの所持するWebサイトであると証明されています。",
 //parse
    "lang_parse_mentioned":"が返信しました",
     "lang_parse_faved":"がお気に入り登録しました",
