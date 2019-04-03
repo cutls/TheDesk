@@ -131,7 +131,7 @@ function createWindow() {
 	var platform=process.platform;
 	var bit=process.arch;
 	if(platform=="darwin"){
-		Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang,mainWindow,false)));
+		Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang,mainWindow,false,dir)));
 	}
 	//CSS
 	css.css(mainWindow);
