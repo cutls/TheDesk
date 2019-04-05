@@ -1,4 +1,4 @@
-'use strict';
+
 var dir='file://' + __dirname;
 var base=dir + '/view/';
 // Electronのモジュール
@@ -68,6 +68,12 @@ app.on('window-all-closed', function() {
 	if (process.platform != 'darwin') {
 		electron.session.defaultSession.clearCache(() => {})
 		app.quit();
+	}
+});
+// macOSでウィンドウを閉じた後に再度開けるようにする
+app.on('activate', function() {
+	if (mainWindow == null) {
+		createWindow();
 	}
 });
 
