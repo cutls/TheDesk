@@ -4,7 +4,9 @@
   "description": "TheDesk is a Mastodon client for PC.",
   "private": true,
   "license": "GPL-3.0",
-  "repository": "https://github.com/kPherox/TheDesk-Vue",
+  "repository": {
+    "url": "https://github.com/kPherox/TheDesk-Vue"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -47,14 +49,7 @@
       "parser": "babel-eslint"
     }
   },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
+    "electron >= 4.0.0"
   ]
 }
