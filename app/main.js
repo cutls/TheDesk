@@ -1,4 +1,4 @@
-'use strict';
+
 var dir='file://' + __dirname;
 var base=dir + '/view/';
 // Electronのモジュール
@@ -70,6 +70,12 @@ app.on('window-all-closed', function() {
 		app.quit();
 	}
 });
+// macOSでウィンドウを閉じた後に再度開けるようにする
+app.on('activate', function() {
+	if (mainWindow == null) {
+		createWindow();
+	}
+});
 
 function createWindow() {
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
@@ -109,6 +115,7 @@ function createWindow() {
 	}
 	// ウィンドウが閉じられたらアプリも終了
 	mainWindow.on('closed', function() {
+		electron.ipcMain.removeAllListeners();
 		mainWindow = null;
 	});
 	mainWindow.on('close', function() {
