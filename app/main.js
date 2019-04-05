@@ -115,6 +115,7 @@ function createWindow() {
 	}
 	// ウィンドウが閉じられたらアプリも終了
 	mainWindow.on('closed', function() {
+		electron.ipcMain.removeAllListeners();
 		mainWindow = null;
 	});
 	mainWindow.on('close', function() {
