@@ -1,12 +1,19 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
-import contextMenu from 'electron-context-menu'
 import path from 'path'
+import {
+  app,
+  protocol,
+  shell,
+  BrowserWindow,
+  Menu
+} from 'electron'
+import ContextMenu from 'electron-context-menu'
 import {
   createProtocol,
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
+import PackageJson from "../package.json"
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -14,10 +21,11 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 // be closed automatically when the JavaScript object is garbage collected.
 let win
 
-contextMenu()
+ContextMenu()
 
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true })
+
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
@@ -25,6 +33,8 @@ function createWindow () {
       height: 600,
       icon: path.join(__static, 'icon.png')
     })
+
+  win.setMenuBarVisibility(true)
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -87,3 +97,91 @@ if (isDevelopment) {
     })
   }
 }
+
+const template = [
+  {
+    label: app.getName(),
+    submenu: [
+      { role: 'about' },
+    ]
+  },
+  {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      { role: 'pasteandmatchstyle' },
+      { role: 'delete' },
+      { role: 'selectall' }
+    ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forcereload' },
+      { role: 'toggledevtools' },
+      { type: 'separator' },
+      { role: 'togglefullscreen' }
+    ]
+  },
+  {
+    role: 'Window',
+    submenu: [
+      { role: 'minimize' },
+      { role: 'close' }
+    ]
+  },
+  {
+    role: 'help',
+    submenu: [
+      {
+        label: 'Report an issue',
+        click () { shell.openExternal(`${PackageJson.bugs.url}/new`) }
+      },
+      {
+        label: 'Learn More',
+        click () { shell.openExternal(PackageJson.dev_kpherox.document) }
+      }
+    ]
+  }
+]
+
+if (process.platform === 'darwin') {
+  template[0].submenu.push(
+    { type: 'separator' },
+    { role: 'services' },
+    { type: 'separator' },
+    { role: 'hide' },
+    { role: 'hideothers' },
+    { role: 'unhide' },
+    { type: 'separator' },
+    { role: 'quit' }
+  )
+
+  template[1].submenu.push(
+    { type: 'separator' },
+    {
+      label: 'Speech',
+      submenu: [
+        { role: 'startspeaking' },
+        { role: 'stopspeaking' }
+      ]
+    }
+  )
+
+  template[3].submenu = [
+    { role: 'close' },
+    { role: 'minimize' },
+    { role: 'zoom' },
+    { type: 'separator' },
+    { role: 'front' }
+  ]
+}
+
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)

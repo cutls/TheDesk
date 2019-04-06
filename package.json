@@ -1,12 +1,27 @@
 {
   "name": "thedesk-vue",
+  "productName": "TheDesk Vue",
   "version": "0.1.0",
   "description": "TheDesk is a Mastodon client for PC.",
   "private": true,
   "license": "GPL-3.0",
-  "repository": {
-    "url": "https://github.com/kPherox/TheDesk-Vue"
+  "repository": "github:kPherox/TheDesk-Vue",
+  "bugs": {
+    "url": "https://github.com/kPherox/TheDesk-Vue/issues"
   },
+  "homepage": "https://github.com/kPherox/TheDesk-Vue",
+  "author": {
+    "name": "Cutls",
+    "url": "https://kirishima.clooud/@Cutls",
+    "email": "web-pro@cutls.com"
+  },
+  "contributors": [
+    {
+      "name": "kPherox",
+      "url": "https://www.kr-kp.com/",
+      "email": "admin@mail.kr-kp.com"
+    }
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -34,6 +49,9 @@
     "eslint-plugin-vue": "^5.0.0",
     "vue-cli-plugin-electron-builder": "^1.2.0",
     "vue-template-compiler": "^2.5.21"
+  },
+  "dev_kpherox": {
+    "document": "https://github.com/kPherox/TheDesk-Vue#readme"
   },
   "eslintConfig": {
     "root": true,

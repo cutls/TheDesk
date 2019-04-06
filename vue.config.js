@@ -12,7 +12,6 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        productName: "TheDesk Vue",
         appId: "dev.kpherox.thedesk-vue",
         win: {
           "target": [
