@@ -1,5 +1,15 @@
 
+const { productName } = require("./package.json")
+
 module.exports = {
+  pages: {
+    index: {
+      entry: 'src/index/main.js',
+      template: 'public/index.html',
+      filename: 'index.html',
+      title: productName,
+    },
+  },
   css: {
     loaderOptions: {
       postcss: {

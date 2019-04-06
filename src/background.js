@@ -116,7 +116,7 @@ const template = [
       { role: 'paste' },
       { role: 'pasteandmatchstyle' },
       { role: 'delete' },
-      { role: 'selectall' }
+      { role: 'selectall' },
     ]
   },
   {
@@ -126,14 +126,14 @@ const template = [
       { role: 'forcereload' },
       { role: 'toggledevtools' },
       { type: 'separator' },
-      { role: 'togglefullscreen' }
+      { role: 'togglefullscreen' },
     ]
   },
   {
     role: 'Window',
     submenu: [
       { role: 'minimize' },
-      { role: 'close' }
+      { role: 'close' },
     ]
   },
   {
@@ -160,7 +160,7 @@ if (process.platform === 'darwin') {
     { role: 'hideothers' },
     { role: 'unhide' },
     { type: 'separator' },
-    { role: 'quit' }
+    { role: 'quit' },
   )
 
   template[1].submenu.push(
@@ -169,7 +169,7 @@ if (process.platform === 'darwin') {
       label: 'Speech',
       submenu: [
         { role: 'startspeaking' },
-        { role: 'stopspeaking' }
+        { role: 'stopspeaking' },
       ]
     }
   )
@@ -179,7 +179,7 @@ if (process.platform === 'darwin') {
     { role: 'minimize' },
     { role: 'zoom' },
     { type: 'separator' },
-    { role: 'front' }
+    { role: 'front' },
   ]
 }
 
