@@ -28,6 +28,8 @@ module.exports = {
   },
   pluginOptions: {
     electronBuilder: {
+      disableMainProcessTypescript: false,
+      mainProcessTypeChecking: true,
       builderOptions: {
         appId: appId,
         copyright: copyright,
