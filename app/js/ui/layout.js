@@ -168,7 +168,7 @@ function parseColumn() {
 			}
 			var html='<div class="boxIn" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+' ">'+
-			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="goTop(' + key + ')" title="'+lang.lang_layout_gotop +'"></i></div>'+
+			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="checkStr(\''+acct.type+'\', \''+data+'\', \''+acct.domain+'\', \''+key+'\', \''+delc+'\',\''+voice+'\',null)" title="'+lang.lang_layout_gotop +'"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
 						  ')" class="setting nex '+if_notf+'" title="'+unique_notf+'"'+icnsert+'><i class="material-icons waves-effect nex notf-icon_' +
@@ -238,6 +238,15 @@ function parseColumn() {
 				$("#cw-text").val(cwt);
 			}
 		}
+	}
+}
+function checkStr(type, data, acct_id, key, delc,voice){
+	if($('#notice_icon_' + key).hasClass("red-text") && type!="notf" && type!="mix"){
+		console.log("sabun-get")
+		goTop(key);
+		tlDiff(type, data, acct_id, key, delc,voice,"");
+	}else{
+		goTop(key);
 	}
 }
 //セカンダリートゥートボタン

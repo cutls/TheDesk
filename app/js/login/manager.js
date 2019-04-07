@@ -57,14 +57,8 @@ function load() {
 		localStorage.setItem("acct", 0);
 		var acctN = 0;
 	}
-	var electron = require("electron");
-          var remote=electron.remote;
-          var platform=remote.process.platform;
-	    if(localStorage.getItem("winstore")!="localinstall"){
-			$("#linux").prop("checked", false);
-        }else{
-			$("#linux").prop("checked", true);
-		}
+	//全部チェックアリでいいと思うの
+	$("#linux").prop("checked", true);
 
 }
 //最初に読む
