@@ -40,7 +40,6 @@ protocol.registerStandardSchemes(['app'], { secure: true })
 async function createWindow(windowName, loadPath, windowOptions, singleton, lastAction, openDevTools) {
   if (typeof windows[windowName] !== 'undefined') {
     windows[windowName].show()
-    windows[windowName].focus()
     return
   }
 
@@ -60,10 +59,23 @@ async function createWindow(windowName, loadPath, windowOptions, singleton, last
     windows[windowName] = undefined
   })
 
+  let openUrl = (event, url) => {
+    if (url === process.env.WEBPACK_DEV_SERVER_URL + loadPath) {
+      return
+    }
+    event.preventDefault()
+    shell.openExternal(url, {
+      activate: false
+    }, (err) => {
+      if (err) console.log(err)
+    })
+  }
+  win.webContents.on('will-navigate', openUrl)
+  win.webContents.on('new-window', openUrl)
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // `electron:serve`で起動した時の読み込み
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL + loadPath)
-    if (openDevTools) win.webContents.openDevTools()
   } else {
     // ビルドしたアプリでの読み込み
     if (!createdAppProtocol) {
@@ -72,6 +84,8 @@ async function createWindow(windowName, loadPath, windowOptions, singleton, last
     }
     win.loadURL(`app://./${loadPath}`)
   }
+
+  if (isDevelopment && openDevTools) win.webContents.openDevTools()
 
   lastAction(win)
 
