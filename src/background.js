@@ -13,43 +13,73 @@ import {
   createProtocol,
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
+import localShortcut from 'electron-localshortcut'
+
 import { bugs } from '../package.json'
 import thedeskInfo from '../info.json'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let win
+// イベントリスナや`createWindow`関数が参照するグローバル変数
+let createdAppProtocol = false
+  , windows = {}
 
 ContextMenu()
 
-// Standard scheme must be registered before the app is ready
+// Standard schemeはreadyの前に登録する必要がある
 protocol.registerStandardSchemes(['app'], { secure: true })
 
-function createWindow () {
-  // Create the browser window.
-  win = new BrowserWindow({
-      width: 800,
-      height: 600,
-      icon: path.join(__static, 'icon.png')
-    })
-
-  win.setMenuBarVisibility(true)
-
-  if (process.env.WEBPACK_DEV_SERVER_URL) {
-    // Load the url of the dev server if in development mode
-    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
-  } else {
-    createProtocol('app')
-    // Load the index.html when not in development
-    win.loadURL('app://./index.html')
+// Windowを作る
+async function createWindow(windowName, loadPath, windowOptions, singleton, lastAction, openDevTools) {
+  if (typeof windows[windowName] !== 'undefined') {
+    windows[windowName].show()
+    windows[windowName].focus()
+    return
   }
 
-  win.on('closed', () => {
-    win = null
+  // 引数のバリデーション
+  if (typeof windowOptions !== 'object') windowOptions = {}
+  if (typeof lastAction !== 'function') lastAction = () => {}
+
+  let win = new BrowserWindow(windowOptions)
+
+  // ページの表示が完了するまで非表示にする
+  win.hide()
+  win.webContents.on('did-finish-load', () => {
+    windows[windowName].show()
   })
+
+  win.on('closed', () => {
+    windows[windowName] = undefined
+  })
+
+  if (process.env.WEBPACK_DEV_SERVER_URL) {
+    // `electron:serve`で起動した時の読み込み
+    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL + loadPath)
+    if (openDevTools) win.webContents.openDevTools()
+  } else {
+    // ビルドしたアプリでの読み込み
+    if (!createdAppProtocol) {
+      createProtocol('app')
+      createdAppProtocol = true
+    }
+    win.loadURL(`app://./${loadPath}`)
+  }
+
+  localShortcut.register(win, 'F5', () => windows[windowName].reload())
+  lastAction(win)
+
+  windows[windowName] = win
+}
+
+function openMainWindow() {
+  const winOpts = {
+    icon: path.join(__static, 'icon.png'),
+    width: 800,
+    height: 600,
+    autoHideMenuBar: true,
+  }
+  createWindow('main', 'index.html', winOpts, true, null, !process.env.IS_TEST)
 }
 
 // Quit when all windows are closed.
@@ -64,8 +94,8 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (win === null) {
-    createWindow()
+  if (typeof windows.main === 'undefined') {
+    openMainWindow()
   }
 })
 
@@ -81,7 +111,7 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString())
     }
   }
-  createWindow()
+  openMainWindow()
 })
 
 // Exit cleanly on request from parent process in development mode.
