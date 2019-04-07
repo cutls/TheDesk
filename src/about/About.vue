@@ -5,6 +5,11 @@
         <img :alt="productName+' logo'" src="@/assets/logo.png" width="194" draggable="false">
       </div>
       <p id="app-name">{{ productName }}</p>
+      <p id="web-site">
+        <a :href="homePage">
+          Web site
+        </a>
+      </p>
     </div>
     <dl class="version">
       <template v-for="(name, idx) in versionInfo">
@@ -31,13 +36,17 @@ body {
   text-align: center;
 }
 #brand {
-  margin-top: 1em;
+  margin-top: .5em;
   & > p {
-    margin-top: 0;
+    margin: 0;
   }
 }
 #app-name {
   font-weight: bold;
+}
+#web-site {
+  -webkit-app-region: no-drag;
+  user-select: auto;
 }
 dl.version {
   margin: 0;
@@ -57,12 +66,11 @@ dl.version {
 
 <script>
 import { remote } from 'electron'
-const appInfo = JSON.parse(remote.getGlobal('TheDeskInfo'))
 
 export default {
   name: 'about',
   data() {
-    return Object.assign(appInfo, {
+    return Object.assign({
       versionName: {
         codeName: "Code Name",
         internal: "Internal Version",
@@ -71,7 +79,7 @@ export default {
         node: "Node.js",
       },
       versionInfo: [ "codeName", "internal", "chrome", "electron", "node" ]
-    })
+    }, JSON.parse(remote.getGlobal('TheDeskInfo')))
   },
 }
 </script>
