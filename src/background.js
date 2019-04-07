@@ -13,7 +13,8 @@ import {
   createProtocol,
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
-import PackageJson from "../package.json"
+import { bugs } from '../package.json'
+import thedeskInfo from '../info.json'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -141,11 +142,11 @@ const template = [
     submenu: [
       {
         label: 'Report an issue',
-        click () { shell.openExternal(`${PackageJson.bugs.url}/new`) }
+        click: () => shell.openExternal(`${bugs.url}/new`),
       },
       {
         label: 'Learn More',
-        click () { shell.openExternal(PackageJson.dev_kpherox.document) }
+        click: () => shell.openExternal(thedeskInfo.documentURL),
       }
     ]
   }

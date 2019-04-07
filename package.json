@@ -50,9 +50,6 @@
     "vue-cli-plugin-electron-builder": "^1.2.0",
     "vue-template-compiler": "^2.5.21"
   },
-  "dev_kpherox": {
-    "document": "https://github.com/kPherox/TheDesk-Vue#readme"
-  },
   "eslintConfig": {
     "root": true,
     "env": {

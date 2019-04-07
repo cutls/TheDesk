@@ -1,5 +1,6 @@
 
 const { productName } = require("./package.json")
+const { appId, copyright } = require("./info.json")
 
 module.exports = {
   pages: {
@@ -22,7 +23,8 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        appId: "dev.kpherox.thedesk-vue",
+        appId: appId,
+        copyright: copyright,
         win: {
           "target": [
             "nsis",
