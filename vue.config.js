@@ -7,15 +7,21 @@ module.exports = {
     index: {
       entry: 'src/index/main.js',
       template: 'public/index.html',
-      filename: 'index.html',
       title: productName,
+    },
+    about: {
+      entry: 'src/about/main.js',
+      template: 'public/index.html',
+      title: `About`,
     },
   },
   css: {
     loaderOptions: {
       postcss: {
         plugins: [
+          require('postcss-nested')(),
           require('autoprefixer')({}),
+          require('CSSWring')(),
         ],
       },
     },

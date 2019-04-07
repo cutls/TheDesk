@@ -1,6 +1,7 @@
 'use strict'
 
 import path from 'path'
+import pick from 'lodash/pick'
 import {
   app,
   protocol,
@@ -15,8 +16,14 @@ import {
 } from 'vue-cli-plugin-electron-builder/lib'
 import localShortcut from 'electron-localshortcut'
 
-import { bugs } from '../package.json'
+import { bugs, homepage } from '../package.json'
 import thedeskInfo from '../info.json'
+
+global.TheDeskInfo = JSON.stringify(Object.assign({
+  productName: app.getName(),
+  homePage: homepage,
+  versions: Object.assign(pick(process.versions, ["chrome","electron","node"]), {internal: app.getVersion()}),
+}, thedeskInfo))
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -66,7 +73,6 @@ async function createWindow(windowName, loadPath, windowOptions, singleton, last
     win.loadURL(`app://./${loadPath}`)
   }
 
-  localShortcut.register(win, 'F5', () => windows[windowName].reload())
   lastAction(win)
 
   windows[windowName] = win
@@ -79,7 +85,9 @@ function openMainWindow() {
     height: 600,
     autoHideMenuBar: true,
   }
-  createWindow('main', 'index.html', winOpts, true, null, !process.env.IS_TEST)
+  createWindow('main', 'index.html', winOpts, true, (win) => {
+    localShortcut.register(win, 'F5', () => windows.main.reload())
+  }, !process.env.IS_TEST)
 }
 
 // Quit when all windows are closed.
@@ -133,7 +141,29 @@ const template = [
   {
     label: app.getName(),
     submenu: [
-      { role: 'about' },
+      {
+        label: process.platform !== 'darwin' ? 'About' : `About ${app.getName()}`,
+        click: () => {
+          const winOpts = {
+            width: 296,
+            height: 432,
+            resizable: false,
+            minimizable: false,
+            maximizable: false,
+            fullscreenable: false,
+            autoHideMenuBar: true,
+            titleBarStyle: 'hiddenInset',
+          }
+          createWindow('about', 'about.html', winOpts, true, (win) => {
+            win.setMenuBarVisibility(false)
+            win.webContents.on('before-input-event', (event, input) => {
+              if (typeof windows.about !== 'undefined')
+                windows.about.webContents.setIgnoreMenuShortcuts(input.key !== "Escape")
+            })
+            localShortcut.register(win, 'Esc', () => windows.about.destroy())
+          })
+        }
+      },
     ]
   },
   {

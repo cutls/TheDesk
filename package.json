@@ -1,34 +1,20 @@
 {
   "name": "thedesk-vue",
-  "productName": "TheDesk Vue",
   "version": "0.1.0",
-  "description": "TheDesk is a Mastodon client for PC.",
   "private": true,
-  "license": "GPL-3.0",
-  "repository": "github:kPherox/TheDesk-Vue",
-  "bugs": {
-    "url": "https://github.com/kPherox/TheDesk-Vue/issues"
-  },
-  "homepage": "https://github.com/kPherox/TheDesk-Vue",
+  "description": "TheDesk is a Mastodon client for PC.",
   "author": {
     "name": "Cutls",
     "url": "https://kirishima.clooud/@Cutls",
     "email": "web-pro@cutls.com"
   },
-  "contributors": [
-    {
-      "name": "kPherox",
-      "url": "https://www.kr-kp.com/",
-      "email": "admin@mail.kr-kp.com"
-    }
-  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
     "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
+    "electron:serve": "vue-cli-service electron:serve",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps"
   },
@@ -42,12 +28,14 @@
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
     "babel-eslint": "^10.0.1",
+    "csswring": "^7.0.0",
     "electron": "^4.0.0",
     "electron-context-menu": "^0.11.0",
     "electron-icon-builder": "^1.0.0",
     "electron-localshortcut": "^3.1.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "postcss-nested": "^4.1.2",
     "vue-cli-plugin-electron-builder": "^1.2.0",
     "vue-template-compiler": "^2.5.21"
   },
@@ -67,5 +55,19 @@
   },
   "browserslist": [
     "electron >= 4.0.0"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/kPherox/TheDesk-Vue/issues"
+  },
+  "contributors": [
+    {
+      "name": "kPherox",
+      "url": "https://www.kr-kp.com/",
+      "email": "admin@mail.kr-kp.com"
+    }
+  ],
+  "homepage": "https://github.com/kPherox/TheDesk-Vue",
+  "license": "GPL-3.0",
+  "productName": "TheDesk Vue",
+  "repository": "github:kPherox/TheDesk-Vue"
 }
