@@ -26,6 +26,7 @@
     "vue-property-decorator": "^7.0.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.123",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
     "@vue/cli-service": "^3.5.0",
