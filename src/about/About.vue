@@ -12,9 +12,9 @@
       </p>
     </div>
     <dl class="version">
-      <template v-for="(name, idx) in versionInfo">
-        <dt :key="'title-'+idx">{{ versionName[name] }}</dt>
-        <dd :key="'desc-'+idx">{{ name !== "codeName" ? versions[name] : codeName }}</dd>
+      <template v-for="(version, i) in versions">
+        <dt :key="'name-'+i">{{ version.name }}</dt>
+        <dd :key="'ver-'+i">{{ version.version }}</dd>
       </template>
     </dl>
     <div id="copyright">
@@ -64,22 +64,51 @@ dl.version {
 }
 </style>
 
-<script>
-import { remote } from 'electron'
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import { ipcRenderer } from 'electron'
 
-export default {
-  name: 'about',
-  data() {
-    return Object.assign({
-      versionName: {
-        codeName: "Code Name",
-        internal: "Internal Version",
-        chrome: "Chromium",
-        electron: "Electron",
-        node: "Node.js",
+interface Version {
+  name: string
+  version: string
+}
+
+@Component
+export default class About extends Vue {
+  public productName: string
+  public homePage: string
+  public copyright: string
+  public versions: Version[]
+
+  constructor() {
+    super()
+    let { productName, homePage, copyright, codeName, versions } = ipcRenderer.sendSync('thedesk-info')
+    console.log(versions)
+    this.productName = productName
+    this.homePage = homePage
+    this.copyright = copyright
+    this.versions = [
+      {
+        name: "Code Name",
+        version: codeName,
       },
-      versionInfo: [ "codeName", "internal", "chrome", "electron", "node" ]
-    }, JSON.parse(remote.getGlobal('TheDeskInfo')))
-  },
+      {
+        name: "Internal Version",
+        version: versions.internal,
+      },
+      {
+        name: "Chromium",
+        version: versions.chrome,
+      },
+      {
+        name: "Electron",
+        version: versions.electron,
+      },
+      {
+        name: "Node.js",
+        version: versions.node,
+      },
+    ]
+  }
 }
 </script>

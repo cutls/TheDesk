@@ -5,12 +5,12 @@ const { appId, copyright } = require("./info.json")
 module.exports = {
   pages: {
     index: {
-      entry: 'src/index/main.js',
+      entry: 'src/index/main.ts',
       template: 'public/index.html',
       title: productName,
     },
     about: {
-      entry: 'src/about/main.js',
+      entry: 'src/about/main.ts',
       template: 'public/index.html',
       title: `About`,
     },
