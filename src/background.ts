@@ -34,10 +34,10 @@ export type TheDeskInfoObject = typeof TheDeskInfo;
 declare const __static: string;
 
 ipcMain.on('thedesk-info', (event: Event) => {
-    event.returnValue =  Object.assign({
+    event.returnValue = Object.assign({
         productName: app.getName(),
         homePage: homepage,
-        versions: Object.assign(pick(process.versions, ["chrome","electron","node"]), {internal: app.getVersion()}),
+        versions: Object.assign(pick(process.versions, ["chrome", "electron", "node"]), { internal: app.getVersion() }),
     }, TheDeskInfo)
 })
 
@@ -168,7 +168,7 @@ class Application {
         })
 
         let openUrl = (event: Event, url: string) => {
-            if (url === process.env.WEBPACK_DEV_SERVER_URL + options.loadPath) {
+            if (isDevelopment && url === process.env.WEBPACK_DEV_SERVER_URL + options.loadPath) {
                 return
             }
             event.preventDefault()
@@ -300,9 +300,9 @@ class ApplicationMenu {
             { type: 'separator' },
             { role: 'front' },
         ] : [
-            { role: 'minimize' },
-            { role: 'close' },
-        ]
+                { role: 'minimize' },
+                { role: 'close' },
+            ]
         return {
             label: 'Window',
             submenu: windowMenu,

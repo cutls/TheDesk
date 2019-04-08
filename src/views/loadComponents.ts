@@ -1,7 +1,8 @@
 'use strict'
 
-import upperFirst from 'lodash/upperFirst'
-import camelCase from 'lodash/camelCase'
+import Vue from 'vue';
+import { upperFirst } from 'lodash'
+import { camelCase } from 'lodash'
 
 const requireComponent = require.context(
   '@/components',
@@ -9,19 +10,14 @@ const requireComponent = require.context(
   /Base[A-Z]\w+\.(vue|js)$/
 )
 
-export default function(Vue) {
-  requireComponent.keys().forEach(fileName => {
-    const componentConfig = requireComponent(fileName)
-
-    const componentName = upperFirst(
-    camelCase(fileName
-      .split('/')
-      .pop()
-      .replace(/\.\w+$/, '')
-    )
-  )
-
-
-  Vue.component(componentName, componentConfig.default || componentConfig)
-})
+export default function() {
+  requireComponent.keys().forEach((fileName: string) => {
+      const componentConfig = requireComponent(fileName)
+      const componentName = upperFirst(
+          camelCase(
+              fileName.replace(/^\.\/(.*)\.\w+$/, '$1')
+          )
+      )
+      Vue.component(componentName, componentConfig.default || componentConfig)
+  })
 }
