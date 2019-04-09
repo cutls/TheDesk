@@ -6,9 +6,9 @@
       </div>
       <p id="app-name">{{ productName }}</p>
       <p id="web-site">
-        <a :href="homePage">
+        <BaseLink :href="homePage">
           Web site
-        </a>
+        </BaseLink>
       </p>
     </div>
     <dl class="version">
@@ -55,7 +55,7 @@ dl.version {
   grid-auto-rows: 1.5em;
   text-align: left;
   -webkit-app-region: no-drag;
-  user-select: all;
+  user-select: text;
   padding: .5em;
   dt, dd {
     margin-left: 0;
@@ -83,7 +83,6 @@ export default class About extends Vue {
   constructor() {
     super()
     let { productName, homePage, copyright, codeName, versions } = ipcRenderer.sendSync('thedesk-info')
-    console.log(versions)
     this.productName = productName
     this.homePage = homePage
     this.copyright = copyright
