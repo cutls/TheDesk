@@ -1,6 +1,6 @@
 {
   "name": "thedesk-vue",
-  "version": "0.1.0",
+  "version": "0.2",
   "private": true,
   "description": "TheDesk is a Mastodon client for PC.",
   "author": {
@@ -22,8 +22,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "vue": "^2.6.6",
-    "vue-class-component": "^6.0.0",
-    "vue-property-decorator": "^7.0.0"
+    "vue-property-decorator": "^8.0.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.123",
@@ -66,13 +65,11 @@
   "bugs": {
     "url": "https://github.com/kPherox/TheDesk-Vue/issues"
   },
-  "contributors": [
-    {
-      "name": "kPherox",
-      "url": "https://www.kr-kp.com/",
-      "email": "admin@mail.kr-kp.com"
-    }
-  ],
+  "contributors": [{
+    "name": "kPherox",
+    "url": "https://www.kr-kp.com/",
+    "email": "admin@mail.kr-kp.com"
+  }],
   "homepage": "https://github.com/kPherox/TheDesk-Vue",
   "license": "GPL-3.0",
   "productName": "TheDesk Vue",

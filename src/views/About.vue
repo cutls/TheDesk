@@ -10,9 +10,9 @@
       </p>
     </div>
     <dl class="version">
-      <template v-for="(version, i) in versions">
-        <dt :key="'name-'+i">{{ version.name }}</dt>
-        <dd :key="'ver-'+i">{{ version.version }}</dd>
+      <template v-for="(version, name, i) in versions">
+        <dt :key="'name-'+i">{{ name }}</dt>
+        <dd :key="'ver-'+i">{{ version }}</dd>
       </template>
     </dl>
     <div id="copyright">
@@ -20,6 +20,36 @@
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator"
+import { ipcRenderer } from "electron"
+
+type Versions = {[key: string]: string}
+
+@Component
+export default class About extends Vue {
+  public productName: string
+  public homePage: string
+  public copyright: string
+  public versions: Versions
+
+  constructor() {
+    super()
+    let { productName, homePage, copyright, codeName, versions } = ipcRenderer.sendSync('thedesk-info')
+    this.productName = productName
+    this.homePage = homePage
+    this.copyright = copyright
+    this.versions = {
+      "Code Name": codeName,
+      "Internal Version": versions.internal,
+      "Chromium": versions.chrome,
+      "Electron": versions.electron,
+      "Node.js": versions.node,
+    }
+  }
+}
+</script>
 
 <style lang="postcss">
 body {
@@ -62,51 +92,3 @@ dl.version {
   }
 }
 </style>
-
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
-import { ipcRenderer } from "electron"
-
-interface Version {
-  name: string
-  version: string
-}
-
-@Component
-export default class About extends Vue {
-  public productName: string
-  public homePage: string
-  public copyright: string
-  public versions: Version[]
-
-  constructor() {
-    super()
-    let { productName, homePage, copyright, codeName, versions } = ipcRenderer.sendSync('thedesk-info')
-    this.productName = productName
-    this.homePage = homePage
-    this.copyright = copyright
-    this.versions = [
-      {
-        name: "Code Name",
-        version: codeName,
-      },
-      {
-        name: "Internal Version",
-        version: versions.internal,
-      },
-      {
-        name: "Chromium",
-        version: versions.chrome,
-      },
-      {
-        name: "Electron",
-        version: versions.electron,
-      },
-      {
-        name: "Node.js",
-        version: versions.node,
-      },
-    ]
-  }
-}
-</script>
