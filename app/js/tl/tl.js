@@ -442,8 +442,6 @@ function moreload(type, tlid) {
 				headers: hdr
 			};
 		}
-		
-		
 		fetch(start, i).then(function(response) {
 			return response.json();
 		}).catch(function(error) {
@@ -677,6 +675,8 @@ function cap(type, data, acct_id) {
 		var response= "Local+"
 	}else if (type == "webview") {
 		var response="Twitter"
+	}else if (type == "tootsearch") {
+		var response="tootsearch(" + data + ")";
 	}
 	return response;
 }
@@ -734,7 +734,7 @@ function icon(type) {
 	} else if (type == "pub-media") {
 		var response="language";
 	} else if (type == "tag") {
-		var response="search";
+		var response="whatshot";
 	} else if (type == "list") {
 		var response="view_headline";
 	} else if (type == "notf") {
@@ -749,6 +749,8 @@ function icon(type) {
 		var response="merge_type";
 	}else if (type == "webview") {
 		var response="language";
+	}else if (type == "tootsearch") {
+		var response="search";
 	}
 	return response;
 }

@@ -130,6 +130,21 @@ function parseColumn() {
 			}
 			var html =webviewParse("https://tweetdeck.twitter.com",key,insert,icnsert,css);
 			$("#timeline-container").append(html);
+		}else if(acct.type=="tootsearch"){
+			if(!acct.left_fold){
+				basekey=key;
+			}
+			var width = localStorage.getItem("width");
+			if (width) {
+				var css=" min-width:"+width+"px;"
+			}
+			var anime = localStorage.getItem("animation");
+			if (anime=="yes" || !anime) {
+				var animecss="box-anime";
+			}else{
+				var animecss="";
+			}
+			unstreamingTL(acct.type,key,basekey,insert,icnsert,acct.left_fold,css,animecss,acct.data);
 		}else{
 			var width = localStorage.getItem("width");
 		if (width) {
@@ -447,6 +462,37 @@ function webviewParse(url,key,insert,icnsert,css){
 			'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="'+url+'" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview></div></div></div>';
 	
 	return html;
+}
+function unstreamingTL(type,key,basekey,insert,icnsert,left_fold,css,animecss,q){
+	if(!left_fold){
+		var basehtml = '<div style="'+css+'" class="box '+animecss+'" id="timeline_box_' + basekey + '_parentBox"></div>';
+		$("#timeline-container").append(basehtml);
+		var left_hold='<a onclick="leftFoldSet(' + key +')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_leftFold+'">view_agenda</i></a>'+lang.lang_layout_leftFold+'</span><br>';
+	}else{
+		var left_hold='<a onclick="leftFoldRemove(' + key +')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_leftUnfold+'">view_column</i></a>'+lang.lang_layout_leftUnfold+'</span><br>';
+	}
+	var html='<div class="boxIn" id="timeline_box_' + key + '_box" tlid="' + key +
+	'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+' ">'+
+	'<div class="area-notice"><i class="material-icons waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;" onclick="reloadTL('+key+')" title="'+lang.lang_layout_gotop +'"></i></div>'+
+	'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
+	'<div class="area-a1"></div><div class="area-sta"></div>'+
+	'<div class="area-a2"><a onclick="removeColumn(' + key +
+					')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_delthis +'"'+icnsert+'>cancel</i></a></div>'+
+	'<div class="area-a3"><a onclick="setToggle(' + key +
+	')" class="setting nex" title="'+lang.lang_layout_setthis +'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
+	'<div class="column-hide notf-indv-box" id="util-box_' + key +
+	'" style="padding:5px;">'+left_hold+'<a onclick="mediaToggle(' + key +
+	')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_mediafil +'">perm_media</i><span id="sta-media-' +
+	key + '">On</span></a>'+lang.lang_layout_mediafil +'<br>'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+	'" class="tl '+type+'-timeline " tlid="' + key + '" data-type="' + type + '" data-acct="nostr"><div id="landing_'+key+'" style="text-align:center">'+lang.lang_layout_nodata +'</div></div></div>'
+	$('#timeline_box_' + basekey + '_parentBox').append(html);
+	tootsearch(key,q);
+	cardCheck(key);
+	ebtCheck(key);
+	mediaCheck(key);
+	catchCheck(key);
+	voiceCheck(key);
+	return true;
 }
 function leftFoldSet(key){
 	var multi = localStorage.getItem("column");

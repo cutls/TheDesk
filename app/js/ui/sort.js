@@ -58,6 +58,8 @@ function Scap(type, data) {
 		return "Integrated"
 	}else if (type == "webview") {
 		return "Twitter"
+	}else if (type == "tootsearch") {
+		return "tootsearch(" + data + ")"
 	}else{
 		console.log(type);
 	}

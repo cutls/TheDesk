@@ -224,7 +224,10 @@ grid-area: toot;
   cursor:text;
   user-select: auto;
   grid-area: additional;
-  }
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 .area-actions {
   padding:0; 

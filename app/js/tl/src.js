@@ -15,7 +15,7 @@ function src(mode) {
 	var q = $("#src").val();
 	var acct_id = $("#src-acct-sel").val();
 	if(acct_id=="tootsearch"){
-		tootsearch(q);
+		tsAdd(q)
 		return false;
 	}
 	localStorage.setItem("last-use", acct_id);
@@ -73,9 +73,26 @@ function src(mode) {
 		jQuery("time.timeago").timeago();
 	});
 }
-function tootsearch(q){
+function tsAdd(q){
+		var add = {
+			domain: acct_id,
+			type: "tootsearch",
+			data: q
+		};
+		var multi = localStorage.getItem("column");
+		var obj = JSON.parse(multi);
+		localStorage.setItem("card_" + obj.length,"true");
+		obj.push(add);
+		console.log(obj);
+		var json = JSON.stringify(obj);
+		localStorage.setItem("column", json);
+		parseColumn();
+}
+function tootsearch(tlid,q){
 	var start = "https://tootsearch.chotto.moe/api/v1/search?from=0&sort=created_at%3Adesc&q=" + q
 	console.log(start)
+	$("#notice_" + tlid).text("tootsearch("+q+")");
+	$("#notice_icon_" + tlid).text("search");
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -90,17 +107,25 @@ function tootsearch(q){
 			var templete="";
 			var json=raw.hits.hits;
 			console.log(json);
-			Object.keys(json).forEach(function(key5) {
-				var toot = json[key5]["_source"];
-				console.log(toot);
-				if(toot && toot.account){
-					templete = templete+parse([toot],'noauth');
+			var max_id = raw["hits"]["total"];
+			for(var i=0;i<json.length;i++){
+				var toot = json[i]["_source"];
+				console.log(lastid)
+				if(lastid!=toot.uri){
+					console.log(toot);
+					if(toot && toot.account){
+						templete = templete+parse([toot], "noauth", null, tlid, 0, [], "tootsearch")
+					}
 				}
-			});
+				var lastid=toot.uri;
+			}
 			if(!templete){
 				templete=lang.lang_details_nodata;
+			}else{
+				templete=templete+'<div class="hide ts-marker" data-maxid="'+max_id+'"></div>';
 			}
-			$("#src-contents").html("Tootsearch("+lang.lang_src_ts+")<br>" + templete);
+			$("#timeline_" + tlid).html(templete);
+
 		jQuery("time.timeago").timeago();
 	});
 }

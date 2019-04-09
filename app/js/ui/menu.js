@@ -19,6 +19,8 @@ function menu(){
         $("#menu-bar").html("TheDesk "+localStorage.getItem("ver"));
         $(".menu-content").addClass("hide");
         $("#add-box").removeClass("hide");
+        $("#left-menu div").removeClass("active");
+	    $("#addColumnMenu").addClass("active");
     }else{
         $('#menu').fadeOut()
         $("#menu").removeClass("appear")
