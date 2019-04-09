@@ -1,6 +1,10 @@
-
-const { productName } = require("./package.json")
-const { appId, copyright } = require("./info.json")
+const {
+  productName
+} = require("./package.json")
+const {
+  appId,
+  copyright
+} = require("./info.json")
 
 module.exports = {
   pages: {

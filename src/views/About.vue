@@ -6,9 +6,7 @@
       </div>
       <p id="app-name">{{ productName }}</p>
       <p id="web-site">
-        <BaseLink :href="homePage">
-          Web site
-        </BaseLink>
+        <a :href="homePage">Web site</a>
       </p>
     </div>
     <dl class="version">
@@ -26,17 +24,17 @@
 <style lang="postcss">
 body {
   margin: 0;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-app-region: drag;
   user-select: none;
 }
 #about {
-  padding: .5em;
+  padding: 0.5em;
   text-align: center;
 }
 #brand {
-  margin-top: .5em;
+  margin-top: 0.5em;
   & > p {
     margin: 0;
   }
@@ -56,8 +54,9 @@ dl.version {
   text-align: left;
   -webkit-app-region: no-drag;
   user-select: text;
-  padding: .5em;
-  dt, dd {
+  padding: 0.5em;
+  dt,
+  dd {
     margin-left: 0;
     line-height: 1.5em;
   }
@@ -65,8 +64,8 @@ dl.version {
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { ipcRenderer } from 'electron'
+import { Component, Vue } from "vue-property-decorator"
+import { ipcRenderer } from "electron"
 
 interface Version {
   name: string
