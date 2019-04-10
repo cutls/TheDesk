@@ -476,5 +476,16 @@ var postConstruction=[
                 }
             ]
         }
+    },{
+        id:"zero",
+        storage:"emoji-zero-width",
+        checkbox:true,
+        setValue:"normal",
+        setValue:"no",
+        text:{
+            head:"Zero-width space when inserting emojis",
+            desc:"",
+            checkbox:yesno
+        }
     }
 ]

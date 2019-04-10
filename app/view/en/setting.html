@@ -44,7 +44,7 @@
 		<div id="envView">
             <template v-for="(item, i) in config">
 				<h5>{{item.text.head}}</h5>
-				<templete v-html=item.text.desc></templete><br>
+				<template v-if=item.text.desc><templete v-html=item.text.desc></templete><br></template>
 				<template v-if="item.id=='notf'"><a onclick="notftest()" class="pointer">Notification test</a><br></template>
                 <template v-if="item.checkbox">
                         <template v-for="(check, j) in item.text.checkbox">
@@ -62,7 +62,7 @@
 							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
 					</template>
 					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">Change</button> 
-				</template>
+				</template><br>
 			</template>
         </div>
         <h5>Font</h5>
@@ -153,7 +153,7 @@
 		<div id="tlView">
             <template v-for="(item, i) in config">
 				<h5>{{item.text.head}}</h5>
-				{{item.text.desc}}<br>
+				<template v-if=item.text.desc><templete v-html=item.text.desc></templete><br></template>
                 <template v-if="item.checkbox">
                         <template v-for="(check, j) in item.text.checkbox">
                             <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
@@ -170,7 +170,7 @@
 							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
 					</template>
 					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">Change</button> 
-				</template>
+				</template><br>
 			</template>
         </div>
 	</div>
@@ -183,7 +183,7 @@
 		<div id="postView">
             <template v-for="(item, i) in config">
 				<h5>{{item.text.head}}</h5>
-				{{item.text.desc}}<br>
+				<template v-if=item.text.desc><templete v-html=item.text.desc></templete><br></template>
                 <template v-if="item.checkbox">
                         <template v-for="(check, j) in item.text.checkbox">
 							<template v-if="!check.kirishima || (check.kirishima && kirishima)">
@@ -203,7 +203,7 @@
 							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
 					</template>
 					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">Change</button> 
-				</template>
+				</template><br>
 			</template>
         </div>
 	</div>

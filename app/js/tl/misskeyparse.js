@@ -160,6 +160,15 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
         }else{
 			disname="";
 		}
+		//絵文字があれば
+		Object.keys(toot.user.emojis).forEach(function(key5) {
+			var emoji = toot.user.emojis[key5];
+			var shortcode = emoji.name;
+			var emoji_url = '<img draggable="false" src="' + emoji.url +
+				'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
+			var regExp = new RegExp(":" + shortcode + ":", "g");
+			dis_name = dis_name.replace(regExp, emoji_url);
+		});
 		if (mix == "notf") {
 			if (gif == "yes") {
 				noticeavatar = toot.user.avatarUrl;
@@ -192,24 +201,25 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					"congrats":"🎉",
 					"amgry":"💢",
 					"confused":"😥",
-					"pudding":"🍮"
+					"pudding":"🍮",
+					"star":"⭐"
 				}
 				var icon=reactions[toot.reaction];
-				var reactions=["like","love","laugh","hmm","surprise","congrats","angry","confused","pudding"];
-                for(var i=0;i<reactions.length;i++){
-                    if(toot.note.reactionCounts[reactions[i]]){
-                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(toot.note.reactionCounts[reactions[i]])
-                        $("#pub_" + id +" .re-"+reactions[i]).removeClass("hide")
-                    }else{
-                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(0)
-                        if($("#pub_" + id +" .reactions").hasClass("fullreact")){
-                            $("#pub_" + id +" .re-"+reactions[i]).addClass("hide")
-                        }else{
-                            $("#pub_" + id +" .re-"+reactions[i]).removeClass("hide")
-                        }
-                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(toot.note.reactionCounts[reactions[i]])
-                    }
-                }
+				var emojisData = JSON.parse(localStorage.getItem("emoji_" + acct_id));
+				if(!icon){
+						if(emojisData){
+							var num = emojisData.length;
+							var ehtml="";
+							for (i = 0; i < num; i++) {
+								var emoji = emojisData[i];
+								if (":"+emoji.shortcode+":"==toot.reaction) {
+									if (emoji) {
+										icon='<img src="'+emoji.url+'" style="width:1rem">';
+									}
+								}
+								}
+						}
+				}
 			}else{
 				var icon = '<i class="big-text material-icons indigo-text" style="font-size:17px">info</i>';
 			}
@@ -250,19 +260,19 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					var ipc = electron.ipcRenderer;
 					var os = electron.remote.process.platform;
 					var options = {
-						body: toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tagstemp(toot.status.content),
-						icon: toot.account.avatar
+						body: toot.user.name+"(" + toot.user.username +")"+what+"\n\n"+$.strip_tagstemp(toot.note.text),
+						icon: toot.user.avatarUrl
 					  };
 					if(os=="darwin"){
 						var n = new Notification('TheDesk:'+domain, options);
 					}else{
 						ipc.send('native-notf', [
 							'TheDesk:'+domain,
-							toot.account.display_name+"(" + toot.account.acct +")"+what+"\n\n"+$.strip_tagstemp(toot.status.content),
-							toot.account.avatar,
+							toot.user.name+"(" + toot.user.username +")"+what+"\n\n"+$.strip_tagstemp(toot.note.text),
+							toot.user.avatarUrl,
 							"toot",
 							acct_id,
-							toot.status.id
+							toot.note.id
 						]);
 					}
 				}
@@ -395,7 +405,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var emojick = toot.emojis[0];
 		}else{
 			var emojick=false;
-        }
+		}
         //デフォ絵文字
         if(content){
 			//MFM
@@ -403,17 +413,35 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			content=content.replace(/`(.+)`/gi, '<code>$1</code>')
 			content=content.replace(/(http(s)?:\/\/[\x21-\x7e]+)/gi, '<a href="$1" target="_blank">$1</a>')
 			content=content.replace(/\(\(\((.+)\)\)\)/gi, '<span class="shake">$1</span>')
-			content=content.replace(/<motion>(.+)<\/motion>/gi, '<span class="shake">$1</span>')
+			content=content.replace(/&lt;motion&gt;(.+)&lt;\/motion&gt;/gi, '<span class="shake">$1</span>')
 			content=content.replace(/\*\*\*([^*]+)\*\*\*/gi, '<span class="shake" style="font-size:200%">$1</span>')
 			content=content.replace(/\*\*([^*]+)\*\*/gi, '<b>$1</b>')
 			content=content.replace(/^(.+)\s(検索|search)$/gmi, '<div class="input-field"><i class="material-icons prefix">search</i><input type="text" style="width:calc( 60% - 80px);" name="q" value="$1" id="srcbox_'+toot.id+'"><label for="src" data-trans="src" class="">検索</label><button class="btn waves-effect indigo" style="width:40%;" data-trans-i="src" onclick="goGoogle(\''+toot.id+'\')">検索</button></div>')
 			content=content.replace(/\[(.+)\]\(<a href="(http(s)?:\/\/[\x21-\x7e]+)".+\)/gi,'<a href="$2" target="_blank">$1</a>');
-			
+			content=content.replace(/&lt;center&gt;/gi, '<div class="center">')
+			content=content.replace(/&lt;\/center&gt;/gi, '</div>')
+			content=content.replace(/&lt;flip&gt;(.+)&lt;\/flip&gt;/gi, '<span class="fa fa-flip-horizontal">$1</span>')
+			content=content.replace(/&lt;small&gt;(.+)&lt;\/small&gt;/gi, '<small>$1</small>')
+			content=content.replace(/&lt;i&gt;(.+)&lt;\/i&gt;/gi, '<i>$1</i>')
+			content=content.replace(/&lt;spin&gt;(.+)&lt;\/spin&gt;/gi, '<span class="fa fa-spin">$1</span>')
+			content=content.replace(/\*\*(.+)\*\*/gi, '<b>$1</b>')
+			content=content.replace(/&lt;jump&gt;(.+)&lt;\/jump&gt;/gi, '<span class="jump">$1</jump>')
             content=twemoji.parse(content);
         }else{
             content="";
         }
-		
+		//絵文字があれば
+		if (emojick) {
+			Object.keys(toot.emojis).forEach(function(key5) {
+				var emoji = toot.emojis[key5];
+				var shortcode = emoji.name;
+				var emoji_url = '<img draggable="false" src="' + emoji.url +
+					'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
+				var regExp = new RegExp(":" + shortcode + ":", "g");
+				content = content.replace(regExp, emoji_url);
+				spoil = spoil.replace(regExp, emoji_url);
+			});
+		}
 		if(dis_name){
 			dis_name=twemoji.parse(dis_name);
 		}else{
@@ -728,6 +756,11 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			content='<span class="gray">This post has no content. It may be media-only, private or deleted.</span>';
 		}
 		var trans="";
+		if(toot.user.emojis){
+			var actemojick = toot.user.emojis[0];
+		}else{
+			var actemojick=false;
+		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + '  ' + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="'+media_ids+' " unixtime="' + date(obj[
 				key].created_at, 'unix') + '" '+if_notf+' onmouseover="mov(\'' + toot.id + '\',\''+tlid+'\',\'mv\')" onclick="mov(\'' + toot.id + '\',\''+tlid+'\',\'cl\')" onmouseout="resetmv(\'mv\')" reacted="'+reacted+'">' +

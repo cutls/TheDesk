@@ -65,7 +65,7 @@ function reactiontoggle(id,acct_id,tlid){
             var json = httpreq.response;
             console.log(json);
             if(json.reactionCounts){
-                var reactions=["like","love","laugh","hmm","surprise","congrats","angry","confused","pudding"];
+                var reactions=["like","love","laugh","hmm","surprise","congrats","angry","confused","pudding","star"];
                 for(var i=0;i<reactions.length;i++){
                     if(json.reactionCounts[reactions[i]]){
                         $("#pub_" + id +" .re-"+reactions[i]+"ct").text(json.reactionCounts[reactions[i]])
@@ -133,8 +133,12 @@ function reactRefresh(acct_id,id){
             return false;
         }
         var poll="";
-        console.log(json);
-        reactRefreshCore(json)
+        if(json.error){
+            $("[toot-id=" + id + "]").hide();
+			$("[toot-id=" + id + "]").remove();
+        }else{
+            reactRefreshCore(json)
+        }
     });
 }
 function reactRefreshCore(json){

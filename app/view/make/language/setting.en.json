@@ -114,6 +114,7 @@
     "secwarn":"Toot with other visibility setting",
     "nothing":"Hidden",
     "localonly":"Local Only",
+    "zeroWidthEmoji":"Zero-width space when inserting emojis",
     "keysc":"Keyboard shortcut Preferences",
     "iks":"Easy inserter",
     "okswarn":"You can insert any letters and emojis with only 3 keys",

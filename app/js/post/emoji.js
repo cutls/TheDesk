@@ -154,11 +154,6 @@ function emojiList(target,reaction) {
 	}
 	$("#emoji-next").removeClass("disabled");
 	$("#emoji-count").text(ct);
-	if(localStorage.getItem("emoji-zero-width")){
-		var brank="​";
-	}else{
-		var brank=" ";
-	}
 	for (i = start; i < start + 126; i++) {
 		var emoji = obj[i];
 		if (emoji) {
@@ -167,7 +162,7 @@ function emojiList(target,reaction) {
 				':\')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
 			}else{
 				html = html + '<a onclick="emojiInsert(\':' + emoji.shortcode +
-				':'+brank+'\')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
+				':\')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
 			}
 			
 		}
@@ -179,14 +174,19 @@ function emojiList(target,reaction) {
 function emojiInsert(code, del) {
 	var now = $("#textarea").val();
 	var selin = localStorage.getItem("cursor");
+	if(localStorage.getItem("emoji-zero-width")=="yes"){
+		var brank="​";
+	}else{
+		var brank=" ";
+	}
 	console.log(selin);
 	var now = $("#textarea").val();
 	if(selin>0){
 		var before   = now.substr(0, selin);
 		var after    = now.substr(selin, now.length);
-		newt = before + " "+ code+" " + after;
+		newt = before + brank+ code+brank + after;
 	}else{
-		newt = code+" ";
+		newt = code+brank;
 	}
 	if (!del) {
 		$("#textarea").val(newt);
@@ -194,7 +194,7 @@ function emojiInsert(code, del) {
 	} else {
 		var regExp = new RegExp(del, "g");
 		var now = now.replace(regExp, "");
-		$("#textarea").val(now + " " + code);
+		$("#textarea").val(now + brank + code);
 	}
 	
 	$("#textarea").focus();
