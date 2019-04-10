@@ -1,6 +1,6 @@
 {
   "name": "thedesk-vue",
-  "version": "0.2",
+  "version": "0.2.0",
   "private": true,
   "description": "TheDesk is a Mastodon client for PC.",
   "author": {
