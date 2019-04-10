@@ -54,6 +54,7 @@ module.exports = {
           category: "Network",
         },
         mac: {
+          darkModeSupport: true,
           target: [
             "dmg",
           ],
