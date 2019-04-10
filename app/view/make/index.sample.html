@@ -39,7 +39,6 @@ var ver="{{versionLetter}}";
 //WinstoreではバージョンCK・言語・Misskeyトークンの機能が排除
 var acct_id=0;
 var tlid=0;
-  verck(ver);
  </script>
 <textarea id="copy" style="top:-100px; position:fixed;"></textarea>
 <div id="tl">
@@ -53,7 +52,7 @@ var tlid=0;
 </div>
 </div>
 <div id="post-box" class="z-depth-5">
-<div id="post-bar" class="drag-bar">{{post-new}}</div>
+<div id="post-bar" class="drag-bar"><span id="unreact">{{post-new}}</span><span id="addreact" class="hide">Reaction</span></div>
 <!--トゥートボックス-->
 <div id="left-side">
 <div class="row" style="margin-bottom:0;">
@@ -205,7 +204,6 @@ var tlid=0;
 <div id="emoji" class="hide">
 		<span class="gray sml">{{emojiWarn}}
 			<a onclick="emojiGet('true')" class="pointer">{{refreshEmoji}}</a>
-			<i class="material-icons waves-effect" onclick="emojiToggle()" title="{{closeThisBox}}" data-trans-title="post_box_close">cancel</i>
 		<br>
 		</span>
 		<div id="emoji-list" class="" style="">
@@ -520,6 +518,9 @@ var tlid=0;
 			</div>
 			</div>
 			</div>
+			<div class="his-float" id="his-float-blocked">
+				<div>{{blocked}}</div>
+			</div>
 			</div>
 			</div>
 			<div class="modal-footer">
@@ -771,7 +772,9 @@ var tlid=0;
 <div id="main">
 <!--TLのTL-->
 <div id="timeline-container">
-	{{helloTheDesk}}
+	<div id="something-wrong">
+		<div>{{helloTheDesk}}</div>
+	</div>
 </div>
 </div>
 </div>
@@ -854,6 +857,7 @@ var tlid=0;
 <script type="text/javascript" src="../../js/tl/speech.js"></script>
 <script type="text/javascript" src="../../js/ui/post-box.js"></script>
 <script type="text/javascript" src="../../js/ui/layout.js"></script>
+<script type="text/javascript" src="../../js/post/emoji.js"></script>
 <script type="text/javascript" src="../../js/login/instance.js"></script>
 <script type="text/javascript" src="../../js/login/login.js"></script>
 <script type="text/javascript" src="../../js/ui/img.js"></script>
@@ -867,7 +871,6 @@ var tlid=0;
 <script type="text/javascript" src="../../js/post/img.js"></script>
 <script type="text/javascript" src="../../js/post/status.js"></script>
 <script type="text/javascript" src="../../js/post/misskeystatus.js"></script>
-<script type="text/javascript" src="../../js/post/emoji.js"></script>
 <script type="text/javascript" src="../../js/post/suggest.js"></script>
 <script type="text/javascript" src="../../js/post/bb-md.js"></script>
 <script type="text/javascript" src="../../js/userdata/showOnTL.js"></script>

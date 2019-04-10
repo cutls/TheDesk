@@ -389,6 +389,9 @@ blockquote:before, .quote:before {
   font-size:16px;
   padding:4px;
 }
+#something-wrong{
+  width:100%; height:100%; position:absolute; display:flex; justify-content: center; align-items:center
+}
 
 /*スクロールバー*/
 ::-webkit-scrollbar {

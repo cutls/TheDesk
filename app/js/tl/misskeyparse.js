@@ -606,8 +606,46 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			});
 			poll='<div class="vote_'+toot.id+'">'+poll+'</div>';
 		}
+		/*
+		
+			*/
+			if(localStorage.getItem("emojiReaction_" + acct_id)=="disabled"){
+				var freeReact="hide";
+			}else{
+				var freeReact="";
+			}
 		//Reactions
         if(toot.reactionCounts){
+			var addReact="";
+			Object.keys(toot.reactionCounts).forEach(function(keye) {
+				var thisReact=toot.reactionCounts[keye];
+					 if(keye=="like"){ var defaultEmoji=true;}
+				else if(keye=="love"){ var defaultEmoji=true; }
+				else if(keye=="laugh"){ var defaultEmoji=true; }
+				else if(keye=="hmm"){ var defaultEmoji=true; }
+				else if(keye=="surprise"){ var defaultEmoji=true; }
+				else if(keye=="congrats"){ var defaultEmoji=true; }
+				else if(keye=="angry"){ var defaultEmoji=true; }
+				else if(keye=="confused"){ var defaultEmoji=true; }
+				else if(keye=="pudding"){ var defaultEmoji=true; }
+				else{
+					var obj = JSON.parse(localStorage.getItem("emoji_" + acct_id));
+				if(obj){
+					var num = obj.length;
+					var ehtml="";
+					for (i = 0; i < num; i++) {
+						var emoji = obj[i];
+						if (":"+emoji.shortcode+":"==keye) {
+							if (emoji) {
+								addReact=addReact+	'<span class="reaction "><a onclick="reaction(\''+keye+'\',\'' + toot.id + '\',' + acct_id +
+								',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;"><img src="'+emoji.url+'" style="width:13px;"></a><span class="re-'+emoji.shortcode+'ct">'+thisReact+
+								'</span></span>';
+							}
+						}
+						}
+				}
+				}
+			});
         if(toot.reactionCounts.like){
             var like=toot.reactionCounts.like;
             var likehide="";
@@ -676,7 +714,10 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             var like=0;var love=0;var laugh=0;var hmm=0;var surprise=0;var congrats=0;var angry=0;var confused=0;var pudding=0;
             var likehide="hide";var lovehide="hide";var laughhide="hide";var hmmhide="hide";var suphide="hide";var conghide="hide";var anghide="hide";var confhide="hide";var pudhide="hide";
             var fullhide="hide";
-        }
+		}
+		if(!addReact && likehide=="hide"&& lovehide=="hide"&& laughhide=="hide"&&  hmmhide=="hide"&&  suphide=="hide"&& conghide=="hide"&&  anghide=="hide"&&  confhide=="hide"&& pudhide=="hide"){
+			var fullhide="hide";
+		}
         if(toot.myReaction){
             var reacted=toot.myReaction;
         }else{
@@ -711,8 +752,8 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			api_spoil + ' cw_text_' + toot.id + '">' + spoil + spoiler_show +
 			'</span>' +
 			'' + viewer + '' +
-            '</div><div class="area-additional"><span class="additional">'+analyze+
-            '<div class="reactions '+fullhide+'" style="height: 25px;"><span class="'+likehide+' reaction re-like"><a onclick="reaction(\'like\',\'' + toot.id + '\',' + acct_id +
+			'</div><div class="area-additional"><span class="additional">'+analyze+
+			'<div class="reactions '+fullhide+'" style="height: 25px;"><span class="'+likehide+' reaction re-like"><a onclick="reaction(\'like\',\'' + toot.id + '\',' + acct_id +
             ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat" style="padding:0;margin-left:3px;">'+twemoji.parse("👍")+'</a><span class="re-likect">'+like+
             '</span></span><span class="'+lovehide+' reaction re-love"><a onclick="reaction(\'love\',\'' + toot.id + '\',' + acct_id +
             ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("💓")+'</a><span class="re-lovect">'+love+
@@ -730,7 +771,9 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("😥")+'</a><span class="re-confusedct">'+confused+
             '</span></span><span class="'+pudhide+' reaction re-pudding"><a onclick="reaction(\'pudding\',\'' + toot.id + '\',' + acct_id +
             ',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">'+twemoji.parse("🍮")+'</a><span class="re-puddingct">'+pudding+
-			'</span></div>'+poll + mentions + tags + '</div>' +
+			'</span></span>'+addReact+
+			'<i class="material-icons pointer hide freeReact '+freeReact+'" style="font-size:1.0rem; padding-left:5px;position: relative;top: 3px;" onclick="reactioncustom(\''+acct_id+'\',\''+id+'\')">add_box</i></div>'
+			+poll + mentions + tags + '</div>' +
 			'<div class="area-vis"></div>'+
 			'<div class="area-actions '+mouseover+'">' +
 			'<div class="action">'+vis+'</div>'+

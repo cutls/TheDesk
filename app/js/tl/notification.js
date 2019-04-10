@@ -482,23 +482,12 @@ function notfCanceler(acct){
 function allNotfRead(){
 	console.log(localStorage.getItem("notf-fav_2"));
 	var multi = localStorage.getItem("multi");
-	if (!multi) {
-		var obj = [{
-			at: localStorage.getItem("acct_0_at"),
-			name: localStorage.getItem("name_0"),
-			domain: localStorage.getItem("domain_0"),
-			user: localStorage.getItem("user_0"),
-			prof: localStorage.getItem("prof_0"),
-			id: localStorage.getItem("user-id_0")
-		}];
-		var json = JSON.stringify(obj);
-		localStorage.setItem("multi", json);
-	} else {
+	if (multi) {
 		var obj = JSON.parse(multi);
-	}
 	Object.keys(obj).forEach(function(key) {
 		console.log(key);
 		notfCanceler(key)
 	});
+}
 }
 allNotfRead()

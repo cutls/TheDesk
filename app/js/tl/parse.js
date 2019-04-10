@@ -33,6 +33,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 	var ltr = localStorage.getItem("letters");
 	var gif = localStorage.getItem("gif");
 	var imh = localStorage.getItem("img-height");
+	if(!imh){
+		imh=200;
+	}
 	if(imh=="full"){
 		imh="auto";
 	}else{

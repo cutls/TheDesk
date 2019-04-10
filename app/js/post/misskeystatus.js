@@ -93,7 +93,21 @@ function reactiontoggle(id,acct_id,tlid){
                 }
             }
 		}
-	}
+    }
+    $("#pub_" + id +" .freeReact").toggleClass("hide");
+}
+//reactioncustom
+function reactioncustom(acct_id,id){
+    $("#reply").val(id);
+    $("#unreact").hide();
+    $("#addreact").removeClass("hide");
+	$("#post-acct-sel").val(acct_id);
+	$('select').material_select();
+    localStorage.setItem("nohide",true);
+    show()
+    emojiToggle(true)
+    $("#left-side").hide();
+    $("#default-emoji").hide();
 }
 function reactRefresh(acct_id,id){
     var domain = localStorage.getItem("domain_" + acct_id);
@@ -126,22 +140,30 @@ function reactRefresh(acct_id,id){
 function reactRefreshCore(json){
     var id=json.id;
     if(json.reactionCounts){
-        var reactions=["like","love","laugh","hmm","surprise","congrats","angry","confused","pudding"];
         $("#pub_" + id +" .reactions").removeClass("hide")
-        for(var i=0;i<reactions.length;i++){
-            if(json.reactionCounts[reactions[i]]){
-                console.log(json.reactionCounts[reactions[i]])
-                $("#pub_" + id +" .re-"+reactions[i]+"ct").text(json.reactionCounts[reactions[i]])
-                $("#pub_" + id +" .re-"+reactions[i]).removeClass("hide")
+        var regExp = new RegExp( ":", "g" ) ;
+        Object.keys(json.reactionCounts).forEach(function(keye) {
+            keyeClass=keye.replace(regExp,'');
+            if(json.reactionCounts[keye]){
+                console.log(json.reactionCounts[keye])
+                $("#pub_" + id +" .re-"+keyeClass+"ct").text(json.reactionCounts[keye])
+                $("#pub_" + id +" .re-"+keyeClass).removeClass("hide")
             }else{
-                $("#pub_" + id +" .re-"+reactions[i]+"ct").text(0)
+                $("#pub_" + id +" .re-"+keyeClass+"ct").text(0)
                 if($("#pub_" + id +" .reactions").hasClass("fullreact")){
-                    $("#pub_" + id +" .re-"+reactions[i]).addClass("hide")
+                    $("#pub_" + id +" .re-"+keyeClass).addClass("hide")
                 }
-                $("#pub_" + id +" .re-"+reactions[i]+"ct").text(json.reactionCounts[reactions[i]])
+                $("#pub_" + id +" .re-"+keyeClass+"ct").text(json.reactionCounts[keye])
             }
-        }
+        });
     }
+}
+function emojiReaction(emoji){
+    var acct_id = $("#post-acct-sel").val();
+    var id = $("#reply").val();
+    reaction(emoji,id,acct_id,null)
+    clear();
+    hide();
 }
 function reaction(mode,id,acct_id,tlid){
     var domain = localStorage.getItem("domain_" + acct_id);

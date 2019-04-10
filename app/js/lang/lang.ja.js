@@ -91,6 +91,7 @@ var lang={
     "lang_list_users":"ユーザー一覧",
     "lang_list_nouser":"ユーザーはいません",
     "lang_list_add":"リストに追加",
+    "lang_list_add_misskey":"(重複追加の可能性があります)",
     "lang_list_remove":"リストから削除",
 //tl/notification.js
     "lang_notf_new":"件の新しい通知",

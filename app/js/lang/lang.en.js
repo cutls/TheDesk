@@ -91,6 +91,7 @@ var lang={
     "lang_list_users":"Users list",
     "lang_list_nouser":"No users in this list.",
     "lang_list_add":"Add to the list",
+    "lang_list_add_misskey":"(perhaps this user has been listed)",
     "lang_list_remove":"Remove from the list",
     //tl/notification.js
     "lang_notf_new":" new notifications",

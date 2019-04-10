@@ -31,7 +31,7 @@ function list(){
 				Object.keys(json).forEach(function(key) {
 					var list = json[key];
 					lists = lists + list.title+':<a onclick="listShow(\'' + list.id + '\',\'' + list.title + '\',\'' + acct_id +
-						'\')" class="pointer">'+lang.lang_list_show+'</a>';
+						'\')" class="pointer">'+lang.lang_list_show+'</a><br>';
 				});
 				$("#lists").html(lists);
 			}else{
@@ -59,7 +59,7 @@ function list(){
 					var list = json[key];
 					lists = lists + list.title+':<a onclick="listShow(\'' + list.id + '\',\'' + list.title + '\',\'' + acct_id +
 						'\')" class="pointer">'+lang.lang_list_show+'</a>/<a onclick="listUser(\'' + list.id + '\',' + acct_id +
-						')" class="pointer">'+lang.lang_list_users+'</a';
+						')" class="pointer">'+lang.lang_list_users+'</a><br>';
 				});
 				$("#lists").html(lists);
 			}else{
@@ -92,7 +92,7 @@ function makeNewList(){
 		}
 	}
 }else{
-	var start = "https://" + domain + "/users/lists/create"
+	var start = "https://" + domain + "/api/users/lists/create"
 	console.log(start)
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -218,7 +218,8 @@ function hisList(user,acct_id){
 				Object.keys(json).forEach(function(key) {
 					var list = json[key];
 					lists = lists + list.title+':<a onclick="listShow(\'' + list.id + '\',\'' + list.title + '\',\'' + acct_id +
-						'\')" class="pointer">'+lang.lang_list_show+'</a>';
+						'\')" class="pointer">'+lang.lang_list_show+'</a>/<a onclick="listAdd(\'' + list.id + '\',\'' + user + '\',\'' + acct_id +
+						'\')" class="pointer">'+lang.lang_list_add+lang.lang_list_add_misskey+'</a><br>';
 				});
 				$("#his-lists-a").html(lists);
 			}else{

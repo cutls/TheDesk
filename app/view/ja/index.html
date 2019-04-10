@@ -32,14 +32,13 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Usamin (18.1.2)";
+var ver="Usamin (18.2.0)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
 //WinstoreではバージョンCK・言語・Misskeyトークンの機能が排除
 var acct_id=0;
 var tlid=0;
-  verck(ver);
  </script>
 <textarea id="copy" style="top:-100px; position:fixed;"></textarea>
 <div id="tl">
@@ -53,7 +52,7 @@ var tlid=0;
 </div>
 </div>
 <div id="post-box" class="z-depth-5">
-<div id="post-bar" class="drag-bar">投稿</div>
+<div id="post-bar" class="drag-bar"><span id="unreact">投稿</span><span id="addreact" class="hide">Reaction</span></div>
 <!--トゥートボックス-->
 <div id="left-side">
 <div class="row" style="margin-bottom:0;">
@@ -205,7 +204,6 @@ var tlid=0;
 <div id="emoji" class="hide">
 		<span class="gray sml">サーバーによって実装が異なります。
 			<a onclick="emojiGet('true')" class="pointer">絵文字更新</a>
-			<i class="material-icons waves-effect" onclick="emojiToggle()" title="このボックスを閉じる" data-trans-title="post_box_close">cancel</i>
 		<br>
 		</span>
 		<div id="emoji-list" class="" style="">
@@ -520,6 +518,9 @@ var tlid=0;
 			</div>
 			</div>
 			</div>
+			<div class="his-float" id="his-float-blocked">
+				<div>ブロックされています。なぜでしょう？</div>
+			</div>
 			</div>
 			</div>
 			<div class="modal-footer">
@@ -771,7 +772,9 @@ var tlid=0;
 <div id="main">
 <!--TLのTL-->
 <div id="timeline-container">
-	<h3>Welcome to TheDesk</h3><br><a href="acct.html">アカウントを追加</a>するか下の<i class="material-icons">apps</i>ボタンよりカラムを追加してください。
+	<div id="something-wrong">
+		<div>内部エラーです。再読込して治らない場合は初期化(全データ削除)をしてください。(事前に設定をエクスポートしておくことをおすすめします。)</div>
+	</div>
 </div>
 </div>
 </div>
@@ -854,6 +857,7 @@ var tlid=0;
 <script type="text/javascript" src="../../js/tl/speech.js"></script>
 <script type="text/javascript" src="../../js/ui/post-box.js"></script>
 <script type="text/javascript" src="../../js/ui/layout.js"></script>
+<script type="text/javascript" src="../../js/post/emoji.js"></script>
 <script type="text/javascript" src="../../js/login/instance.js"></script>
 <script type="text/javascript" src="../../js/login/login.js"></script>
 <script type="text/javascript" src="../../js/ui/img.js"></script>
@@ -867,7 +871,6 @@ var tlid=0;
 <script type="text/javascript" src="../../js/post/img.js"></script>
 <script type="text/javascript" src="../../js/post/status.js"></script>
 <script type="text/javascript" src="../../js/post/misskeystatus.js"></script>
-<script type="text/javascript" src="../../js/post/emoji.js"></script>
 <script type="text/javascript" src="../../js/post/suggest.js"></script>
 <script type="text/javascript" src="../../js/post/bb-md.js"></script>
 <script type="text/javascript" src="../../js/userdata/showOnTL.js"></script>

@@ -30,11 +30,7 @@ function parseColumn() {
 	}
 	tlCloser();
 	var multi = localStorage.getItem("multi");
-	if (!multi) {
-		var obj = [];
-		var json = JSON.stringify(obj);
-		localStorage.setItem("multi", json);
-	} else {
+	if (multi) {
 		var obj = JSON.parse(multi);
 
 		var templete;

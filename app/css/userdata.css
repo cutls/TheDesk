@@ -91,3 +91,10 @@
   color: #039be5;
   cursor: pointer;
 }
+#his-float-blocked{
+  display:flex; justify-content: center; align-items:center;
+  font-size:2rem;
+  width: 90%;
+  height: 100%;
+  position: absolute;
+}

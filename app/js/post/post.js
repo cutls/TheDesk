@@ -307,4 +307,8 @@ function clear() {
 		$("#post-acct-sel").val(localStorage.getItem("main"));
 	}
 	$('select').material_select();
+	$("#left-side").show();
+	$("#default-emoji").show();
+	$("#unreact").show();
+	$("#addreact").addClass("hide");
 }

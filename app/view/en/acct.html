@@ -18,6 +18,14 @@ body,html{overflow-y: scroll;}
 .colorsel{ display:flex; }
 .card .colorsel div:not(.exc){width:20px;height:20px;}
 .card .colorsel div.exc{width:40px;height:20px;}
+.first{
+      display:flex;
+      justify-content: center;
+      align-items:center
+}
+.first .hide-first{
+      display:none;
+}
 </style>
 <meta charset="utf-8">
 <!--
@@ -39,14 +47,17 @@ body,html{overflow-y: scroll;}
 <script type="text/javascript" src="../../js/ui/tips.js"></script>
 <script type="text/javascript" src="../../js/common/time.js"></script>
 <script type="text/javascript" src="../../js/common/modal.js"></script>
-<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">Back</a><br>
-<h5>List of accounts</h5>
-<div id="acct-list"></div>
-<div class="divider"></div>
+<div class="hide-first">
+      <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">Back</a><br>
+      <h5>List of accounts</h5>
+      <div id="acct-list"></div>
+      <div class="divider"></div>
+</div>
+<div>
 <h5>Add an account</h5><br>
 <div id="add">
 <div class="row">
-      <div class="col s6">
+      <div class="col s8">
             <input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp">
             <div id="ins-suggest"></div>
             Uncheck it to skip pasiting code.(login to Mastodon on Windows or macOS) (Recommended: pcheck)<br>
@@ -56,7 +67,7 @@ body,html{overflow-y: scroll;}
                   <label for="misskey">Login as Misskey</label><br>
             <button class="btn waves-effect" onclick="instance()">Login</button><br>
       </div>
-      <div class="col s6">
+      <div class="col s4">
             <span style="font-family:Open Sans;">Supports</span>
             <div id="support" class="collection transparent"></div>
       </div>
@@ -73,6 +84,8 @@ body,html{overflow-y: scroll;}
                   <input type="text" id="misskey-key" placeholder="Code">
                   <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br>
             </div>
+      </div>
+<div class="hide-first">
 <h5>Main an account</h5>
 <div class="input-field" style="width:300px"><span data-trans="your_acct">Select an account</span>
       <br>
@@ -91,6 +104,7 @@ Toots:<span id="ins-toot"></span><br>
 Users:<span id="ins-user"></span>Users<br>
 Connection:<span id="ins-per"></span>%<br>
 Mastodon version:<span id="ins-ver"></span>@<span id="ins-upd"></span><br>
+</div>
 <script type="text/javascript" src="../../js/ui/theme.js"></script>
 <script type="text/javascript" src="../../js/platform/end.js"></script>
 <script type="text/javascript" src="../../js/common/sha256.js"></script>

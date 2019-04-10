@@ -50,19 +50,14 @@ try {
 
 	}; // デフォルトバリュー
 }
-try {
-	var lang = fs.readFileSync(lang_path, 'utf8');
-} catch (e) {
-	var langs=app.getLocale();
-	if(~langs.indexOf("ja")){
-		lang="ja";
-	}else{
-		lang="en";
+function isFile(file){
+	try {
+		fs.statSync(file);
+		return true
+	} catch (err) {
+		if (err.code === 'ENOENT') return false
 	}
-	fs.writeFileSync(lang_path,lang);
 }
-console.log(app.getLocale());
-console.log("launch:"+lang);
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
 	if (process.platform != 'darwin') {
@@ -78,6 +73,23 @@ app.on('activate', function() {
 });
 
 function createWindow() {
+	if(isFile(lang_path)) {
+		console.log("exist");
+		var lang = fs.readFileSync(lang_path, 'utf8');
+	} else {
+		var langs=app.getLocale();
+		console.log(langs);
+		if(~langs.indexOf("ja")){
+			lang="ja";
+		}else{
+			lang="en";
+		}
+		fs.mkdir(app.getPath("userData"), function (err) {
+			fs.writeFileSync(lang_path,lang);
+		});
+	}
+	console.log(app.getLocale());
+	console.log("launch:"+lang);
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
 	var platform=process.platform;
 	var bit=process.arch;

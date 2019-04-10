@@ -189,7 +189,8 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			var start = "wss://" + acct_id +
 			"/local-timeline?i=" + at;
 		} else if (type=="list"){
-			Materialize.toast(lang.lang_misskeyparse_listnostr, 3000);
+			var start = "wss://" + domain +
+			"/user-list?i=" + at+"&listId="+data;
 		}
 	}else{
 		var misskey=false;

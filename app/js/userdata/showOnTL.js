@@ -399,6 +399,12 @@ function relations(user, acct_id) {
 			$("#his-end-btn").removeClass("endorsed");
 			$("#his-end-btn").text(lang.lang_status_endorse)
 		}
+		//Blocked
+		if(json.blocked_by){
+			$("#his-float-timeline").hide();
+			$("#his-float-blocked").show();
+			$("#his-follow-btn").hide()
+		}
 
 	});
 }
@@ -460,6 +466,8 @@ function reset(){
 	$("#his-f4-name").val(""); $("#his-f4-val").val("");
 	$("#his-endorse").html("");
 	$("#his-openin").attr("data-href", "");
+	$("#his-float-timeline").show();
+	$("#his-float-blocked").hide();
 }
 $('#my-data-nav .custom-tab').on('click',function(){
 	var target=$(this).find("a").attr("go");
