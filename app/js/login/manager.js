@@ -2,6 +2,15 @@
 //最初に読むやつ
 function load() {
 	$("#acct-list").html("");
+	if(location.search){
+		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);
+		var mode=m[1];
+		var codex=m[2];
+		if(mode=="first" && codex=="true"){
+			$("body").addClass("first")
+		}else{	
+		}
+	}
 	var prof = localStorage.getItem("prof");
 	$(".my-prof").attr("src", prof);
 	var name = localStorage.getItem("name");
@@ -57,14 +66,8 @@ function load() {
 		localStorage.setItem("acct", 0);
 		var acctN = 0;
 	}
-	var electron = require("electron");
-          var remote=electron.remote;
-          var platform=remote.process.platform;
-	    if(localStorage.getItem("winstore")!="localinstall"){
-			$("#linux").prop("checked", false);
-        }else{
-			$("#linux").prop("checked", true);
-		}
+	//全部チェックアリでいいと思うの
+	$("#linux").prop("checked", true);
 
 }
 //最初に読む
@@ -262,6 +265,10 @@ function support() {
 				templete = '<a onclick="login(\'' + key +
 					'\')" class="collection-item pointer transparent">' + idata[key + "_name"] + '(' + key + ')</a>';
 				$("#support").append(templete);
+			}else if (instance == "misskey") {
+				templete = '<a onclick="misskeyLogin(\'' + key +
+					'\')" class="collection-item pointer transparent">' + idata[key + "_name"] + '(' + key + ')</a>';
+				$("#support").append(templete);
 			}
 		});
 }
@@ -270,7 +277,7 @@ function support() {
 function login(url) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	if($('#misskey:checked').val()=="on" || url=="misskey.xyz"){
+	if($('#misskey:checked').val()=="on"){
 		$("#misskey").prop("checked", true);
 		misskeyLogin(url);
 		return;
@@ -458,7 +465,9 @@ function code(code) {
 				console.log(obj);
 				var json = JSON.stringify(obj);
 				localStorage.setItem("multi", json);
-
+				if($("body").hasClass("first")){
+					location.href="index.html"
+				}
 				load();
 				return;
 			}
@@ -546,6 +555,9 @@ function getdata(domain, at) {
 		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
+		if($("body").hasClass("first")){
+			location.href="index.html"
+		}
 		load();
 	});
 }

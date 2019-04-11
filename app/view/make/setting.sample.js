@@ -476,5 +476,16 @@ var postConstruction=[
                 }
             ]
         }
+    },{
+        id:"zero",
+        storage:"emoji-zero-width",
+        checkbox:true,
+        setValue:"normal",
+        setValue:"no",
+        text:{
+            head:"@@zeroWidthEmoji@@",
+            desc:"",
+            checkbox:yesno
+        }
     }
 ]

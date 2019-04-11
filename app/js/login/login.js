@@ -42,28 +42,23 @@ function ck() {
 		}
 	}
 	var multi = localStorage.getItem("multi");
-	if (!multi) {
-		var obj = [];
-		var json = JSON.stringify(obj);
-		localStorage.setItem("multi", json);
-	} else {
+	if(!multi || multi=="[]"){
+		location.href="acct.html?mode=first&code=true"
+	}else{
 		var obj = JSON.parse(multi);
-	}
 	Object.keys(obj).forEach(function(key) {
 		var acct=obj[key];
 		if(acct.domain){
 			refresh(key,true)
 		}
 	});
-	console.log(obj);
-	if (obj[0].domain) {
+if (obj[0].domain) {
 		$("#tl").show();
 		ticker();
 		multiSelector();
-	} else {
-		$("#tl").show();
-		$("#post-box").hide();
+		verck(ver);
 	}
+}
 }
 ck();
 //ログインポップアップ

@@ -224,7 +224,10 @@ grid-area: toot;
   cursor:text;
   user-select: auto;
   grid-area: additional;
-  }
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 .area-actions {
   padding:0; 
@@ -334,6 +337,7 @@ p:not(:last-child){
 .notice-box {
   top: 0;
   background-color:var(--notfbox);
+  filter: brightness(110%);
   position: relative;
   margin-right: 10px;
   width:100%;
@@ -501,7 +505,26 @@ p:not(:last-child){
 .votebtn:hover{
   background-color:var(--color);
 }
-
+.jump{
+  display: inline-block; animation: jump 0.75s linear infinite;
+}
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+}
+25% {
+  transform: translateY(-16px);
+}
+50% {
+  transform: translateY(0);
+}
+75% {
+  transform: translateY(-8px);
+}
+100% {
+  transform: translateY(0);
+}
+}
 @keyframes fadeInDown {
   from {
     opacity: 0;

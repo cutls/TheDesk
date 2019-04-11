@@ -2,7 +2,7 @@
     "list":"アカウント一覧",
     "back":"戻る",
     "add":"アカウントを追加",
-    "codesetupwarn":"Windows以外でご使用の方やPleromaにログインされる方はチェックを入れて下さい。ログインできない場合、チェックを外してください。",
+    "codesetupwarn":"チェックを外すとコード貼り付けをスキップできます。(<u>Mastodon</u>にWindowsやmacOSからログインする場合)失敗する場合はチェックを入れてください。",
     "codesetup":"コードセットアップ",
     "mainacct":"メインアカウント",
     "selacct":"アカウントを選択",
@@ -17,5 +17,6 @@
     "ver":"Mastodonバージョン",
     "ko":"個",
     "thisismisskey":"Misskeyとしてログイン",
-    "misskeylogin":"<a href=\"https://thedesk.top/how-to-misskey-login.html\">ドキュメント</a>を参照して正しいコードを入れてください。"
+    "misskeylogin":"<a href=\"https://thedesk.top/how-to-misskey-login.html\">ドキュメント</a>を参照して正しいコードを入れてください。",
+    "nodata":"アカウントがありません"
 }

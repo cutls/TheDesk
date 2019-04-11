@@ -91,6 +91,7 @@ var lang={
     "lang_list_users":"ユーザー一覧",
     "lang_list_nouser":"ユーザーはいません",
     "lang_list_add":"リストに追加",
+    "lang_list_add_misskey":"(重複追加の可能性があります)",
     "lang_list_remove":"リストから削除",
 //tl/notification.js
     "lang_notf_new":"件の新しい通知",
@@ -150,6 +151,7 @@ var lang={
     "lang_showontl_notf":"通知",
     "lang_showontl_domain":"ドメイン",
     "lang_showontl_listwarn":"リストに追加するためにはフォローが必要です。",
+    "lang_showontl_verified":"このユーザーの所持するWebサイトであると証明されています。",
 //parse
    "lang_parse_mentioned":"が返信しました",
     "lang_parse_faved":"がお気に入り登録しました",

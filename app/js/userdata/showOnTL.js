@@ -117,7 +117,7 @@ function udg(user, acct_id) {
 					var emoji = json.emojis[key5];
 					var shortcode = emoji.shortcode;
 					var emoji_url = '<img src="' + emoji.url +
-					'" class="emoji-img" data-emoji="'+shortcode+'">';
+					'" class="emoji-img" data-emoji="'+shortcode+'" draggable="false">';
 					var regExp = new RegExp(":" + shortcode + ":", "g");
 					dis_name = dis_name.replace(regExp, emoji_url);
 					note = note.replace(regExp, emoji_url);
@@ -143,8 +143,15 @@ function udg(user, acct_id) {
 					for(var i=0;i<json.fields.length;i++){
 						var fname=json.fields[i].name;
 						var fval=json.fields[i].value;
+						if(json.fields[i].verified_at){
+							var when=lang.lang_showontl_verified+":"+crat(json.fields[i].verified_at);
+							var color="rgba(121,189,154,.25);"
+						}else{
+							var when="";
+							var color="inherit"
+						}
 						fval=twemoji.parse(fval);
-						note=note+'<tr><td class="his-field-title">'+fname+'</td><td class="his-field-content">'+fval+'</td></tr>';
+						note=note+'<tr><td class="his-field-title">'+fname+'</td><td class="his-field-content" title="'+when+'" style="background-color:'+color+'">'+fval+'</td></tr>';
 					}
 					note=note+'</table>'
 					$("#his-des").html(twemoji.parse(note));
@@ -392,6 +399,12 @@ function relations(user, acct_id) {
 			$("#his-end-btn").removeClass("endorsed");
 			$("#his-end-btn").text(lang.lang_status_endorse)
 		}
+		//Blocked
+		if(json.blocked_by){
+			$("#his-float-timeline").hide();
+			$("#his-float-blocked").show();
+			$("#his-follow-btn").hide()
+		}
 
 	});
 }
@@ -453,6 +466,8 @@ function reset(){
 	$("#his-f4-name").val(""); $("#his-f4-val").val("");
 	$("#his-endorse").html("");
 	$("#his-openin").attr("data-href", "");
+	$("#his-float-timeline").show();
+	$("#his-float-blocked").hide();
 }
 $('#my-data-nav .custom-tab').on('click',function(){
 	var target=$(this).find("a").attr("go");

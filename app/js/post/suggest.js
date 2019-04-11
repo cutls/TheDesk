@@ -53,16 +53,7 @@ input.addEventListener("focus", function() {
 			
 			var tag = new_val.match(/#(\S{3,})/);
 			var acct = new_val.match(/@(\S{3,})/);
-			if(localStorage.getItem("imas")){
-				//セルフNP
-				var cpnp = new_val.match(/^(?!.*http)\/\/(\S{1,})/);
-			}else{
-				var cpnp=[];
-			}
-			if (cpnp && cpnp[1]) {
-				var q = cpnp[1];
-				cgNPs(q);
-			} else if (tag && tag[1]) {
+			if (tag && tag[1]) {
 				var q = tag[1];
 			} else if (acct && acct[1]) {
 				var q = acct[1];

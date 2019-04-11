@@ -39,7 +39,6 @@ var ver="{{versionLetter}}";
 //WinstoreではバージョンCK・言語・Misskeyトークンの機能が排除
 var acct_id=0;
 var tlid=0;
-  verck(ver);
  </script>
 <textarea id="copy" style="top:-100px; position:fixed;"></textarea>
 <div id="tl">
@@ -53,7 +52,7 @@ var tlid=0;
 </div>
 </div>
 <div id="post-box" class="z-depth-5">
-<div id="post-bar" class="drag-bar">{{post-new}}</div>
+<div id="post-bar" class="drag-bar"><span id="unreact">{{post-new}}</span><span id="addreact" class="hide">Reaction</span></div>
 <!--トゥートボックス-->
 <div id="left-side">
 <div class="row" style="margin-bottom:0;">
@@ -205,7 +204,6 @@ var tlid=0;
 <div id="emoji" class="hide">
 		<span class="gray sml">{{emojiWarn}}
 			<a onclick="emojiGet('true')" class="pointer">{{refreshEmoji}}</a>
-			<i class="material-icons waves-effect" onclick="emojiToggle()" title="{{closeThisBox}}" data-trans-title="post_box_close">cancel</i>
 		<br>
 		</span>
 		<div id="emoji-list" class="" style="">
@@ -259,12 +257,8 @@ var tlid=0;
 	<div id="poll" class="hide">
 		<select id="poll-sel"  onchange="pollProviderCk()">
 			<option value="nothing">{{pollDdisabled}}</option>
-			<option value="votedon">votedon.</option>
 			<option value="mastodon-poll">Mastodon(2.8~)</option>
 		</select>
-		<div id="votedon" class="poll-provider hide">
-	WIP
-		</div>
 		<div id="mastodon-poll" class="poll-provider hide">
 			<input type="text" class="mastodon-choice" placeholder="{{choice}}1">
 			<input type="text" class="mastodon-choice" placeholder="{{choice}}2">
@@ -371,7 +365,7 @@ var tlid=0;
 			<div id="his-data-show">
 			<div class="his-float" id="his-float-data">
 			<div id="his-basic-prof">
-			<img src="../../img/loading.svg" id="his-prof">
+			<img src="../../img/loading.svg" id="his-prof" draggable="false">
 			<span id="his-name">Loading...</span><span class="gray" id="his-bot"></span>
 			<br>@
 			<span id="his-acct"></span><br>
@@ -524,6 +518,9 @@ var tlid=0;
 			</div>
 			</div>
 			</div>
+			<div class="his-float" id="his-float-blocked">
+				<div>{{blocked}}</div>
+			</div>
 			</div>
 			</div>
 			<div class="modal-footer">
@@ -582,20 +579,22 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Usamin_18-1-1" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-2-0" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Usamin (18.1.1)</h5>
-・お知らせ機能改善<br>
-・Integrated TLで一部挙動改善(Thanks to <a href="https://www.kr-kp.com/">kPherox</a>)<br>
---以下18.1.0--<br>
-・iTunes NowPlaying(macOS)にアルバムアートワークを付ける(Thanks to <a href="https://www.kr-kp.com/">kPherox</a>)<br>
-・カラムを<b>縦に並べられる</b>ように(2つ目以降のカラム毎の設定の「左に重ねる」「右に出す」を押す)<br>
-・画像を個別に削除する(画像をクリックして)<br>
-・何個もアルバムアートワークが投稿されるバグを修正<br>
-・Misskeyでログインしたまま何もできないバグを修正(権限回り)
+					<h5>Release Note Usamin (18.2.0)</h5>
+・tootsearchをひとつのカラムにしてエゴサが捗る<br>
+・イントロダクション(初回起動時)の挙動修正<br>
+・リンクプレビューを最大1行ずつに省略(タイトルと本文)<br>
+・ブロックされたときのプロフィールの動作(Mastodon 2.8~)<br>
+・(Misskey)MFM追加flipやjumpなど<br>
+・(Misskey)リストに対応<br>
+・(Misskey)カスタム絵文字に対応。カスタム絵文字によるリアクションに対応(対応インスタンスに限る)。<br>
+・<b>カスタム絵文字をゼロ幅スペースによる挿入に変更する機能</b><br>
+・一部機能の統廃合とバグの修正<br>
+・best-friends.chatやキュアスタ！、misskey.devをサポートインスタンスに追加
 			</div>
 			<div id="release-en">
 				<h5>Let's make it native!</h5>
@@ -687,11 +686,10 @@ var tlid=0;
 			<div class="input-field">
 			<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
 	</div><div class="input-field">
-	<i class="material-icons prefix">search</i>
-	<input id="src" type="text" class="validate" style="width:calc( 60% - 40px);">
+	<input id="src" type="text" class="validate" style="width:60%">
 	<label for="src" data-trans="src">{{search}}</label>
-	<button class="btn waves-effect indigo" style="width:calc( 40% - 40px);" onclick="src()" data-trans-i="src">
-		<i class="material-icons left">search</i>{{search}}
+	<button class="btn waves-effect indigo" style="width: 36%;padding: 0;padding-left: 15px;" onclick="src()" data-trans-i="src">
+		<i class="material-icons left" style="margin:0">search</i>{{search}}
 	</button>
 	<br>
 	<br>
@@ -705,7 +703,7 @@ var tlid=0;
 	<div id="sort-box" class="hide menu-content">
 	<ul id="sort"></ul>
 	<div>
-	<button onclick="sort()" class="btn waves-effect nex" style="width:100%; max-width:300px;" data-trans-i="sort">
+	<button onclick="sort()" class="btn waves-effect nex" style="width:97.5%;" data-trans-i="sort">
 		<i class="material-icons left">sort</i>{{sortSet}}
 	</button>
 	</div>
@@ -760,7 +758,14 @@ var tlid=0;
 		{{avalableBefore}}<span class="sml">{{warnAvBefore}}<b>{{warnAvBefore2}}</b></span><br><br>
 		<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">{{days}}
 		<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">{{hours}}
-		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">{{mins}}
+		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">{{mins}}<br>
+		Quick:<a onclick="filterTime(0,0,30)" class="pointer">30{{mins}}</a>/
+		<a onclick="filterTime(0,1,0)" class="pointer">1{{hours}}</a>/
+		<a onclick="filterTime(0,6,0)" class="pointer">6{{hours}}</a>/
+		<a onclick="filterTime(0,12,0)" class="pointer">12{{hours}}</a>/
+		<a onclick="filterTime(1,0,0)" class="pointer">1{{days}}</a>/
+		<a onclick="filterTime(7,0,0)" class="pointer">7{{days}}</a>/
+		<a onclick="filterTime(0,0,0)" class="pointer">{{unlimited}}</a><br>
 		<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">{{add}}</button><br>
 		<span class="sml">{{warnOnIntegratedTL}}</span>
 	</div>
@@ -776,7 +781,9 @@ var tlid=0;
 <div id="main">
 <!--TLのTL-->
 <div id="timeline-container">
-	{{helloTheDesk}}
+	<div id="something-wrong">
+		<div>{{helloTheDesk}}</div>
+	</div>
 </div>
 </div>
 </div>
@@ -859,6 +866,7 @@ var tlid=0;
 <script type="text/javascript" src="../../js/tl/speech.js"></script>
 <script type="text/javascript" src="../../js/ui/post-box.js"></script>
 <script type="text/javascript" src="../../js/ui/layout.js"></script>
+<script type="text/javascript" src="../../js/post/emoji.js"></script>
 <script type="text/javascript" src="../../js/login/instance.js"></script>
 <script type="text/javascript" src="../../js/login/login.js"></script>
 <script type="text/javascript" src="../../js/ui/img.js"></script>
@@ -872,7 +880,6 @@ var tlid=0;
 <script type="text/javascript" src="../../js/post/img.js"></script>
 <script type="text/javascript" src="../../js/post/status.js"></script>
 <script type="text/javascript" src="../../js/post/misskeystatus.js"></script>
-<script type="text/javascript" src="../../js/post/emoji.js"></script>
 <script type="text/javascript" src="../../js/post/suggest.js"></script>
 <script type="text/javascript" src="../../js/post/bb-md.js"></script>
 <script type="text/javascript" src="../../js/userdata/showOnTL.js"></script>

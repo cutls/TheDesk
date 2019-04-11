@@ -5,6 +5,10 @@ function hide() {
 	$('#post-box').fadeOut()
 	$("#post-box").removeClass("appear")
 	$("#emoji").addClass("hide")
+	$("#left-side").show();
+	$("#default-emoji").show();
+	$("#unreact").show();
+	$("#addreact").addClass("hide");
 }
 //最小化
 function mini() {

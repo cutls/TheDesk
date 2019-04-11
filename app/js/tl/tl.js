@@ -164,6 +164,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	localStorage.setItem("now", type);
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var misskey=true;
+		console.log(type);
 		if (type == "home") {
 			var start = "wss://" + domain +
 				"/?i=" + at;
@@ -183,12 +184,13 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			var start = "wss://" + domain +
 			"/hybrid-timeline?i=" + at;
 		} else if (type == "tag") {
-			Materialize.toast(lang_misskeyparse_tagnostr[lang], 1000);
+			Materialize.toast(lang.lang_misskeyparse_tagnostr, 3000);
 		} else if (type == "noauth") {
 			var start = "wss://" + acct_id +
 			"/local-timeline?i=" + at;
 		} else if (type=="list"){
-			Materialize.toast(lang_misskeyparse_listnostr[lang], 1000);
+			var start = "wss://" + domain +
+			"/user-list?i=" + at+"&listId="+data;
 		}
 	}else{
 		var misskey=false;
@@ -382,6 +384,10 @@ function moreload(type, tlid) {
 		}else if (type == "notf") {
 			notfmore(tlid);
 			return;
+		}else if (type == "tootsearch") {
+			var data=obj[tlid].data;
+			moreTs(tlid,data);
+			return;
 		}
 		moreloading=true;
 		localStorage.setItem("now", type);
@@ -441,8 +447,6 @@ function moreload(type, tlid) {
 				headers: hdr
 			};
 		}
-		
-		
 		fetch(start, i).then(function(response) {
 			return response.json();
 		}).catch(function(error) {
@@ -462,6 +466,119 @@ function moreload(type, tlid) {
 			todc();
 		});
 	}
+}
+//TL差分取得
+function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
+	console.log("sabun")
+	var multi = localStorage.getItem("column");
+	var obj = JSON.parse(multi);
+	var acct_id = obj[tlid].domain;
+	if (!type) {
+		var type = obj[tlid].type;
+	}else{
+		var data;
+	}
+	if(type=="tag"){
+		var data=obj[tlid].data;
+		var tag = localStorage.getItem("tag-range");
+		if(tag=="local"){
+			data=data+"&local=true";
+		}
+	}else if(type=="list"){
+		var data=obj[tlid].data;
+	}
+	var sid = $("#timeline_" + tlid + " .cvo").first().attr("unique-id");
+	if (sid && !moreloading) {
+		if (type == "mix" && localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct_id))!="misskey") {
+			return;
+		}else if (type == "plus" && localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct_id))!="misskey") {
+			return;
+		}else if (type == "notf") {
+			return;
+		}
+		moreloading=true;
+		localStorage.setItem("now", type);
+		todo(cap(type) + " TL MoreLoading");
+		if(type!="noauth"){
+			var at = localStorage.getItem("acct_"+ acct_id + "_at");
+			var hdr={
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			};
+				var domain = localStorage.getItem("domain_" + acct_id);
+		}else{
+			var hdr={
+				'content-type': 'application/json'
+			};
+			domain=acct_id;
+		}
+		if(localStorage.getItem("mode_" + domain)=="misskey"){
+			var misskey=true;
+			hdr={
+				'content-type': 'application/json'
+			};
+			var url=misskeycom(type, data);
+			var start = "https://" + domain + "/api/notes/"+url;
+			var method="POST";
+			var req={};
+			if(type!="noauth"){
+				req.i=at;
+			}
+			if(type=="local-media"||type=="pub-media"){
+				req.mediaOnly=true;
+			}
+			if(type=="tag"){
+				req.tag=data;
+			}
+			if(type=="list"){
+				req.listId=data;
+			}
+			req.sinceId=sid;
+			req.limit=20;
+			var i={
+				method: method,
+				headers: hdr,
+				body: JSON.stringify(req),
+			}
+		}else{
+			var misskey=false;
+			var start = "https://" + domain + "/api/v1/timelines/" + com(type,data) +
+			"since_id=" + sid;
+			if(type=="dm"){
+				var start = "https://" + domain + "/api/v1/conversations?" +
+					"since_id=" + sid;
+			}
+			var method="GET";
+			var i={
+				method: method,
+				headers: hdr
+			};
+		}
+		
+		
+		fetch(start, i).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			todo(error);
+			console.error(error);
+		}).then(function(json) {
+			console.log(json);
+			if(misskey){
+				var templete = misskeyParse(json, '', acct_id, tlid,"",mute);
+			}else{
+				var templete = parse(json, '', acct_id, tlid,"",mute, type);
+			}
+			$("#timeline_" + tlid).prepend(templete);
+			additional(acct_id, tlid);
+			jQuery("time.timeago").timeago();
+			moreloading=false;
+			todc();
+		});
+	}
+}
+//TL再取得
+function reloadTL(type, data, acct_id, key, delc,voice){
+	tl(type, data, acct_id, key, delc,voice,"");
 }
 
 //WebSocket切断
@@ -567,6 +684,8 @@ function cap(type, data, acct_id) {
 		var response= "Local+"
 	}else if (type == "webview") {
 		var response="Twitter"
+	}else if (type == "tootsearch") {
+		var response="tootsearch(" + data + ")";
 	}
 	return response;
 }
@@ -624,7 +743,7 @@ function icon(type) {
 	} else if (type == "pub-media") {
 		var response="language";
 	} else if (type == "tag") {
-		var response="search";
+		var response="whatshot";
 	} else if (type == "list") {
 		var response="view_headline";
 	} else if (type == "notf") {
@@ -639,6 +758,8 @@ function icon(type) {
 		var response="merge_type";
 	}else if (type == "webview") {
 		var response="language";
+	}else if (type == "tootsearch") {
+		var response="search";
 	}
 	return response;
 }

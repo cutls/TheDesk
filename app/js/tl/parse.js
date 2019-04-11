@@ -33,6 +33,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 	var ltr = localStorage.getItem("letters");
 	var gif = localStorage.getItem("gif");
 	var imh = localStorage.getItem("img-height");
+	if(!imh){
+		imh=200;
+	}
 	if(imh=="full"){
 		imh="auto";
 	}else{
@@ -757,12 +760,12 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="' +
 			api_spoil + ' cw_text_' + toot.id + '"><span class="cw_text">' + spoil + "</span>" + spoiler_show +
-			'</span><span class="toot ' + spoiler + '">' + content +
+			'</span><span class="toot ' + spoiler + '">' + content +poll+
 			'</span>' +
 			'' + viewer + '' +
 			'</div><div class="area-additional"><span class="additional">' + analyze +
 			'</span>' +
-			'' +poll+ mentions + tags + '</div>' +
+			'' + mentions + tags + '</div>' +
 			'<div class="area-vis"></div>'+
 			'<div class="area-actions '+mouseover+'">' +
 			'<div class="action">'+vis+'</div>'+

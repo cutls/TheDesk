@@ -60,13 +60,13 @@ function notfColumn(acct_id, tlid, sys){
 						var ipc = electron.ipcRenderer;
 						var os = electron.remote.process.platform;
 							var options = {
-								body: ct+lang_notf_new[lang],
+								body: ct+lang.lang_notf_new,
 								icon: localStorage.getItem("prof_"+acct_id)
 							  };
 							if(os=="darwin"){
 								var n = new Notification('TheDesk:'+domain, options);
 							}else{
-								ipc.send('native-notf', ['TheDesk:'+domain,ct+lang_notf_new[lang],localStorage.getItem("prof_"+acct_id)]);
+								ipc.send('native-notf', ['TheDesk:'+domain,ct+lang.lang_notf_new,localStorage.getItem("prof_"+acct_id)]);
 							}
 						
 					}
@@ -233,13 +233,13 @@ function notfCommon(acct_id, tlid, sys) {
 				var ipc = electron.ipcRenderer;
 				var os = electron.remote.process.platform;
 					var options = {
-						body: ct+lang_notf_new[lang],
+						body: ct+lang.lang_notf_new[lang],
 						icon: localStorage.getItem("prof_"+acct_id)
 					  };
 					if(os=="darwin"){
 						var n = new Notification('TheDesk:'+domain, options);
 					}else{
-						ipc.send('native-notf', ['TheDesk:'+domain,ct+lang_notf_new[lang],localStorage.getItem("prof_"+acct_id)]);
+						ipc.send('native-notf', ['TheDesk:'+domain,ct+lang.lang_notf_new[lang],localStorage.getItem("prof_"+acct_id)]);
 					}
 				
 			}
@@ -482,23 +482,12 @@ function notfCanceler(acct){
 function allNotfRead(){
 	console.log(localStorage.getItem("notf-fav_2"));
 	var multi = localStorage.getItem("multi");
-	if (!multi) {
-		var obj = [{
-			at: localStorage.getItem("acct_0_at"),
-			name: localStorage.getItem("name_0"),
-			domain: localStorage.getItem("domain_0"),
-			user: localStorage.getItem("user_0"),
-			prof: localStorage.getItem("prof_0"),
-			id: localStorage.getItem("user-id_0")
-		}];
-		var json = JSON.stringify(obj);
-		localStorage.setItem("multi", json);
-	} else {
+	if (multi) {
 		var obj = JSON.parse(multi);
-	}
 	Object.keys(obj).forEach(function(key) {
 		console.log(key);
 		notfCanceler(key)
 	});
+}
 }
 allNotfRead()

@@ -236,6 +236,8 @@ function del(id, acct_id) {
 		httpreq.setRequestHeader('Content-Type', 'application/json');
 		httpreq.responseType = "json";
 		httpreq.send(JSON.stringify({i:at,noteId:id}));
+		$("[toot-id=" + id+ "]").hide();
+					$("[toot-id=" + id + "]").remove();
 	}else{
 		var start = "https://" + domain + "/api/v1/statuses/" + id;
 		var httpreq = new XMLHttpRequest();

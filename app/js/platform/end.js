@@ -19,7 +19,7 @@
 		//メンションっぽかったら
 		var ats=[];
 			ats = url.match(
-				/https:\/\/([-a-zA-Z0-9@.]+)\/@([-_.!~*\'()a-zA-Z0-9;\/?:\&=+\$,%#]+)/
+				/https:\/\/([-a-zA-Z0-9.]+)\/@([-_.!~*\'()a-zA-Z0-9;\/?:\&=+\$,%#@]+)/
 			);
 		console.log(toot);
 		if(toot){
@@ -41,7 +41,8 @@
 		}else if(ats){
 			console.log(ats);
 			if(ats[2]){
-				if(ats[1]!="quesdon.rinsuki.net"){
+				//Quesdon判定
+				if(!~ats[2].indexOf("@")){
 					udgEx(ats[2]+"@"+ats[1],"main");
 					return false
 				}else{

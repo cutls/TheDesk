@@ -476,5 +476,16 @@ var postConstruction=[
                 }
             ]
         }
+    },{
+        id:"zero",
+        storage:"emoji-zero-width",
+        checkbox:true,
+        setValue:"normal",
+        setValue:"no",
+        text:{
+            head:"絵文字にゼロ幅スペースを使う",
+            desc:"",
+            checkbox:yesno
+        }
     }
 ]

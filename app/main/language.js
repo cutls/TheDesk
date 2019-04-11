@@ -1,5 +1,5 @@
 // Create the Application's main menu
-function templete(lang,mainWindow,packaged){
+function templete(lang,mainWindow,packaged,dir){
     const electron = require("electron");
     const app = electron.app;
     const BrowserWindow = electron.BrowserWindow;
@@ -74,7 +74,7 @@ function templete(lang,mainWindow,packaged){
 			        "transparent": false,    // ウィンドウの背景を透過
 			        "frame": false,     // 枠の無いウィンドウ
 			        "resizable": false });
-	             window.loadURL('file://' + __dirname + '/about.html?ver='+ver);
+	             window.loadURL(dir + '/about.html?ver='+ver);
              } },
             { type: "separator" },
             { label: dict.quit[lang], accelerator: "Command+Q", click: function() { app.quit(); }}
