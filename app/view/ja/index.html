@@ -754,10 +754,17 @@ var tlid=0;
 		<input type="checkbox" class="filled-in" id="except_filter" value="1" />
 			<label for="except_filter">除外</label><br>
 		<span class="sml">「除外」時マッチしたトゥートは非可逆的に除外され、削除後も閲覧できません。</span><br>
-		有効期限(あと)<span class="sml">未指定(または0分)で「無制限」になります。<b>仕様上数値の正確性を保証できません。</b></span><br><br>
+		有効期限(あと)<span class="sml">未指定(または0分)で「無期限」になります。<b>仕様上数値の正確性を保証できません。</b></span><br><br>
 		<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">日
 		<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">時間
-		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">分
+		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">分<br>
+		Quick:<a onclick="filterTime(0,0,30)" class="pointer">30分</a>/
+		<a onclick="filterTime(0,1,0)" class="pointer">1時間</a>/
+		<a onclick="filterTime(0,6,0)" class="pointer">6時間</a>/
+		<a onclick="filterTime(0,12,0)" class="pointer">12時間</a>/
+		<a onclick="filterTime(1,0,0)" class="pointer">1日</a>/
+		<a onclick="filterTime(7,0,0)" class="pointer">7日</a>/
+		<a onclick="filterTime(0,0,0)" class="pointer">無期限</a><br>
 		<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">追加</button><br>
 		<span class="sml">Integrated TL/Plus TLは、公開/ホームのフィルターワードが合算されて適応されます。どちらか一方の指定でも非表示になります。</span>
 	</div>

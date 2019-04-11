@@ -384,6 +384,10 @@ function moreload(type, tlid) {
 		}else if (type == "notf") {
 			notfmore(tlid);
 			return;
+		}else if (type == "tootsearch") {
+			var data=obj[tlid].data;
+			moreTs(tlid,data);
+			return;
 		}
 		moreloading=true;
 		localStorage.setItem("now", type);
@@ -571,6 +575,10 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 			todc();
 		});
 	}
+}
+//TL再取得
+function reloadTL(type, data, acct_id, key, delc,voice){
+	tl(type, data, acct_id, key, delc,voice,"");
 }
 
 //WebSocket切断

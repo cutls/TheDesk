@@ -190,7 +190,7 @@ function parseColumn() {
 		  ')" class="setting nex" title="'+lang.lang_layout_setthis +'"'+icnsert+'><i class="material-icons waves-effect nex">settings</i></a></div></div>'+
 		  '<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		  '"><div id="notifications_' + key +
-		  '" data-notf="' + acct.domain + '" data-type="notf"></div></div><div class="column-hide notf-indv-box" id="util-box_' + key +
+		  '" data-notf="' + acct.domain + '" data-type="notf" class="notf-timeline"></div></div><div class="column-hide notf-indv-box" id="util-box_' + key +
 		  '" style="padding:5px;">'+exclude+left_hold+'<a onclick="mediaToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_mediafil +'">perm_media</i><span id="sta-media-' +
 		  key + '">On</span></a>'+lang.lang_layout_mediafil +'<br><a onclick="cardToggle(' + key +
@@ -469,7 +469,7 @@ function unstreamingTL(type,key,basekey,insert,icnsert,left_fold,css,animecss,q)
 	}
 	var html='<div class="boxIn" id="timeline_box_' + key + '_box" tlid="' + key +
 	'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+' ">'+
-	'<div class="area-notice"><i class="material-icons waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;" onclick="reloadTL('+key+')" title="'+lang.lang_layout_gotop +'"></i></div>'+
+	'<div class="area-notice"><i class="material-icons waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;" onclick="tootsearch('+key+',\''+q+'\');" title="'+lang.lang_layout_gotop +'"></i></div>'+
 	'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 	'<div class="area-a1"></div><div class="area-sta"></div>'+
 	'<div class="area-a2"><a onclick="removeColumn(' + key +

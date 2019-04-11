@@ -268,9 +268,9 @@ var tlid=0;
 			<label for="poll-multiple">Multiple select</label><br>
 			<input type="checkbox" class="filled-in" id="poll-until" value="1" />
 			<label for="poll-until">Hide 'votes' count until people vote it.</label><br>
-			<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">days
-			<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">hours
-			<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="0">minutes
+			<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">day(s)
+			<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">hour(s)
+			<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="0">minute(s)
 		</div>
 	</div>
 </div>
@@ -755,9 +755,16 @@ var tlid=0;
 			<label for="except_filter">Drop instead of hide</label><br>
 		<span class="sml">Filtered toots will disappear irreversibly, even if filter is later removed</span><br>
 		Expire after<span class="sml">Unset or "0" means "Never"<b>This value may contain some error</b></span><br><br>
-		<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">days
-		<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">hours
-		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">minutes
+		<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">day(s)
+		<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">hour(s)
+		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">minute(s)<br>
+		Quick:<a onclick="filterTime(0,0,30)" class="pointer">30minute(s)</a>/
+		<a onclick="filterTime(0,1,0)" class="pointer">1hour(s)</a>/
+		<a onclick="filterTime(0,6,0)" class="pointer">6hour(s)</a>/
+		<a onclick="filterTime(0,12,0)" class="pointer">12hour(s)</a>/
+		<a onclick="filterTime(1,0,0)" class="pointer">1day(s)</a>/
+		<a onclick="filterTime(7,0,0)" class="pointer">7day(s)</a>/
+		<a onclick="filterTime(0,0,0)" class="pointer">Never</a><br>
 		<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">Add</button><br>
 		<span class="sml">Integrated TL/Plus TL will hide both Home-filtering words and Local-filtering words.</span>
 	</div>

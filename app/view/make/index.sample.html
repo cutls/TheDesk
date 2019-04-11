@@ -757,7 +757,14 @@ var tlid=0;
 		{{avalableBefore}}<span class="sml">{{warnAvBefore}}<b>{{warnAvBefore2}}</b></span><br><br>
 		<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">{{days}}
 		<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">{{hours}}
-		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">{{mins}}
+		<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">{{mins}}<br>
+		Quick:<a onclick="filterTime(0,0,30)" class="pointer">30{{mins}}</a>/
+		<a onclick="filterTime(0,1,0)" class="pointer">1{{hours}}</a>/
+		<a onclick="filterTime(0,6,0)" class="pointer">6{{hours}}</a>/
+		<a onclick="filterTime(0,12,0)" class="pointer">12{{hours}}</a>/
+		<a onclick="filterTime(1,0,0)" class="pointer">1{{days}}</a>/
+		<a onclick="filterTime(7,0,0)" class="pointer">7{{days}}</a>/
+		<a onclick="filterTime(0,0,0)" class="pointer">{{unlimited}}</a><br>
 		<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">{{add}}</button><br>
 		<span class="sml">{{warnOnIntegratedTL}}</span>
 	</div>

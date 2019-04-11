@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
 	<title>Settings - TheDesk</title>
 	<!--
@@ -17,359 +18,424 @@
 	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 	<meta charset="utf-8">
-	<style>input{max-height:50px!important} .pcr-result{height:1rem !important;}</style>
+	<style>
+		input {
+			max-height: 50px !important
+		}
+
+		.pcr-result {
+			height: 1rem !important;
+		}
+	</style>
 </head>
+
 <body id="mainView" style="overflow-y:scroll">
-<script type="text/javascript" src="../../js/common/jquery.js"></script>
-<script type="text/javascript" src="../../js/platform/first.js"></script>
-<script type="text/javascript" src="../../js/common/materialize.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.ja.js"></script>
-<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
-<script src="../../node_modules/vue/dist/vue.min.js"></script>
-<script type="text/javascript" src="setting.vue.js"></script>
+	<script type="text/javascript" src="../../js/common/jquery.js"></script>
+	<script type="text/javascript" src="../../js/platform/first.js"></script>
+	<script type="text/javascript" src="../../js/common/materialize.js"></script>
+	<script type="text/javascript" src="../../js/lang/lang.ja.js"></script>
+	<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
+	<script src="../../node_modules/vue/dist/vue.min.js"></script>
+	<script type="text/javascript" src="setting.vue.js"></script>
 
-<h4>設定</h4>
-<ul class="collapsible" data-collapsible="accordion">
-	<li>
-	<div class="collapsible-header">
-			<i class="material-icons">desktop_windows</i>環境設定
-	</div>
-	<div class="collapsible-body">
-		<h5>言語</h5>
-		To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
-		<a href="../ja/setting.html" onclick="changelang('ja')">日本語(Japanese)</a>/<a href="../en/setting.html" onclick="changelang('en')">English</a>/<a href="../ps/setting.html" onclick="changelang('ps')">Crowdin web translate</a>/
-		<h5>設定のインポートとエクスポート</h5>
-		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">エクスポート</button>
-		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">インポート</button>
-		<div id="envView">
-            <template v-for="(item, i) in config">
-				<h5>{{item.text.head}}</h5>
-				<template v-if=item.text.desc><templete v-html=item.text.desc></templete><br></template>
-				<template v-if="item.id=='notf'"><a onclick="notftest()" class="pointer">通知テスト</a><br></template>
-                <template v-if="item.checkbox">
-                        <template v-for="(check, j) in item.text.checkbox">
-                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
-                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
-                        </template>
-				</template>
-				<template v-else>
-					<template v-if="item.doubleText">
-						<template v-for="(textbox, j) in item.data">
-                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
-                        </template>
-					</template>
-					<template v-else>
-							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
-					</template>
-					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">変更</button> 
-				</template><br>
-			</template>
-        </div>
-        <h5>フォント</h5>
-		「選択」を押してフォントを選んでください。<br>
-		<button class="btn waves-effect" style="width:100px;" onclick="font()">選択</button><br>
-		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
-		<br>
-		<input type="text" style="width:150px" id="font">
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
-		<br>
-        <h5>デフォルトの保存先</h5>
-		画像ダウンロードやスクリーンショットに影響します。<br>
-		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">変更</button>
-		<br>
-	</div>
-	</li>
-	<li>
-	<div class="collapsible-header">
-			<i class="material-icons">color_lens</i>テーマの設定
-	</div>
-	<div class="collapsible-body">
-		<h4>テーマの選択</h4>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
-		<label for="black">Black</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
-		<label for="white">White</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
-		<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
-		<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
-		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom" value="custom" />
-		<label for="custom">Custom</label>
-		<div style="width:300px" id="sel-selector">
-			<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
-		</div>
-		<h4>カスタムテーマの作成・編集</h4>
-		<div style="width:300px" id="edit-selector" data-add="新規作成">
-			<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
-				<option value="add_new">新規作成</option>
-			</select>
-		</div>
-		<h5>名前</h5>
-		<input type="text" style="width:300px" id="custom_name" placeholder="名前...">
-		<h5>説明</h5>
-		<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea" placeholder="説明..."></textarea></div>
-		<h5>色の系統</h5>
-		<input class="with-gap" name="derection" type="radio" id="dark" value="dark" checked="true" />
-		<label for="dark">Dark</label>
-		<input class="with-gap" name="derection" type="radio" id="light" value="light" />
-		<label for="light">Light</label>
-		<div id="pickers">
-		<div>
-			<h5>Primary</h5>補助要素に使われる背景色
-			<div id="color-picker0-wrap"><div class="color-picker" id="color-picker0"></div></div>
-			<input type="hidden" id="color-picker0_value">
-		</div>
-		<div>
-			<h5>Secondary</h5>全体の背景色など
-			<div id="color-picker1-wrap"><div class="color-picker" id="color-picker1"></div></div>
-			<input type="hidden" id="color-picker1_value">
-		</div>
-		<div>
-			<h5>Texts</h5>テキストの色
-			<div id="color-picker2-wrap"><div class="color-picker" id="color-picker2"></div></div>
-			<input type="hidden" id="color-picker2_value">
-		</div>
-		<div>
-			<h5>Accent</h5>ブーストの背景色など
-			<div id="color-picker3-wrap"><div class="color-picker" id="color-picker3"></div></div>
-			<input type="hidden" id="color-picker3_value">
-		</div>
-		</div>
-		<button class="btn-large waves-effect" onclick="customComp()">変更</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">削除</button><br><br>
-		<input type="text" style="width:300px" id="custom_json" class="materialize-textarea" placeholder="JSON style" readonly><br>
-		このコードは他のTheDeskなどとシェアできます。このコードをMiASに貼ることはご遠慮ください。詳細:<a href="https://thedesk.top/mias.html" target="_blank">テーマ互換性</a>
-		<h4>カスタムテーマのインポート</h4>
-		<a href="https://assets.msky.cafe/" target="_blank">MiAS</a>上の80を超えるテーマを張り付けることもできます。<br>
-		<input type="text" style="width:300px" id="custom_import" class="materialize-textarea" placeholder="JSON/JSON5 style">
-		<button class="btn waves-effect" onclick="customImp()">インポート</button><br>
-	</li>
-	<li>
-	<div class="collapsible-header">
-			<i class="material-icons">reorder</i>タイムラインの設定
-	</div>
-	<div class="collapsible-body">
-		<div id="tlView">
-            <template v-for="(item, i) in config">
-				<h5>{{item.text.head}}</h5>
-				<template v-if=item.text.desc><templete v-html=item.text.desc></templete><br></template>
-                <template v-if="item.checkbox">
-                        <template v-for="(check, j) in item.text.checkbox">
-                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
-                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
-                        </template>
-				</template>
-				<template v-else>
-					<template v-if="item.doubleText">
-						<template v-for="(textbox, j) in item.data">
-                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
-                        </template>
-					</template>
-					<template v-else>
-							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
-					</template>
-					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">変更</button> 
-				</template><br>
-			</template>
-        </div>
-	</div>
-	</li>
-	<li>
-	<div class="collapsible-header">
-			<i class="material-icons">send</i>投稿設定
-	</div>
-	<div class="collapsible-body">
-		<div id="postView">
-            <template v-for="(item, i) in config">
-				<h5>{{item.text.head}}</h5>
-				<template v-if=item.text.desc><templete v-html=item.text.desc></templete><br></template>
-                <template v-if="item.checkbox">
-                        <template v-for="(check, j) in item.text.checkbox">
-							<template v-if="!check.kirishima || (check.kirishima && kirishima)">
-                            	<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+	<h4>設定</h4>
+	<ul class="collapsible" data-collapsible="accordion">
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">desktop_windows</i>環境設定
+			</div>
+			<div class="collapsible-body">
+				<h5>言語</h5>
+				To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
+				<a href="../ja/setting.html" onclick="changelang('ja')">日本語(Japanese)</a>/<a href="../en/setting.html" onclick="changelang('en')">English</a>/<a href="../ps/setting.html" onclick="changelang('ps')">Crowdin web translate</a>/
+				<h5>設定のインポートとエクスポート</h5>
+				<button onclick="exportSettings()" class="btn waves-effect lime darken-3"
+					style="width:100%; max-width:200px;">エクスポート</button>
+				<button onclick="importSettings()" class="btn waves-effect cyan darken-3"
+					style="width:100%; max-width:200px;">インポート</button>
+				<div id="envView">
+					<template v-for="(item, i) in config">
+						<h5>{{item.text.head}}</h5>
+						<template v-if=item.text.desc>
+							<templete v-html=item.text.desc></templete><br>
+						</template>
+						<template v-if="item.id=='notf'"><a onclick="notftest()"
+								class="pointer">通知テスト</a><br></template>
+						<template v-if="item.checkbox">
+							<template v-for="(check, j) in item.text.checkbox">
+								<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+									type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
 								<label v-bind:for="item.id+check.value">{{check.text}}</label>
-								<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
 							</template>
-                        </template>
-				</template>
-				<template v-else>
-					<template v-if="item.doubleText">
-						<template v-for="(textbox, j) in item.data">
-                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
-                        </template>
+						</template>
+						<template v-else>
+							<template v-if="item.doubleText">
+								<template v-for="(textbox, j) in item.data">
+									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+								</template>
+							</template>
+							<template v-else>
+								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+							</template>
+							<button class="btn waves-effect" style="width:100px;"
+								v-on:click="complete(i)">変更</button>
+						</template><br>
 					</template>
-					<template v-else>
-							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+				</div>
+				<h5>フォント</h5>
+				「選択」を押してフォントを選んでください。<br>
+				<button class="btn waves-effect" style="width:100px;" onclick="font()">選択</button><br>
+				<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
+				<br>
+				<input type="text" style="width:150px" id="font">
+				<button class="btn waves-effect" style="width:100px;" onclick="settings()">設定</button>
+				<br>
+				<h5>デフォルトの保存先</h5>
+				画像ダウンロードやスクリーンショットに影響します。<br>
+				<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">変更</button>
+				<br>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">color_lens</i>テーマの設定
+			</div>
+			<div class="collapsible-body">
+				<h4>テーマの選択</h4>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
+				<label for="black">Black</label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
+				<label for="white">White</label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
+				<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
+				<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
+				<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom" value="custom" />
+				<label for="custom">Custom</label>
+				<div style="width:300px" id="sel-selector">
+					<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
+				</div>
+				<h4>カスタムテーマの作成・編集</h4>
+				<div style="width:300px" id="edit-selector" data-add="新規作成">
+					<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
+						<option value="add_new">新規作成</option>
+					</select>
+				</div>
+				<h5>名前</h5>
+				<input type="text" style="width:300px" id="custom_name" placeholder="名前...">
+				<h5>説明</h5>
+				<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea"
+						placeholder="説明..."></textarea></div>
+				<h5>色の系統</h5>
+				<input class="with-gap" name="derection" type="radio" id="dark" value="dark" checked="true" />
+				<label for="dark">Dark</label>
+				<input class="with-gap" name="derection" type="radio" id="light" value="light" />
+				<label for="light">Light</label>
+				<div id="pickers">
+					<div>
+						<h5>Primary</h5>補助要素に使われる背景色
+						<div id="color-picker0-wrap">
+							<div class="color-picker" id="color-picker0"></div>
+						</div>
+						<input type="hidden" id="color-picker0_value">
+					</div>
+					<div>
+						<h5>Secondary</h5>全体の背景色など
+						<div id="color-picker1-wrap">
+							<div class="color-picker" id="color-picker1"></div>
+						</div>
+						<input type="hidden" id="color-picker1_value">
+					</div>
+					<div>
+						<h5>Texts</h5>テキストの色
+						<div id="color-picker2-wrap">
+							<div class="color-picker" id="color-picker2"></div>
+						</div>
+						<input type="hidden" id="color-picker2_value">
+					</div>
+					<div>
+						<h5>Accent</h5>ブーストの背景色など
+						<div id="color-picker3-wrap">
+							<div class="color-picker" id="color-picker3"></div>
+						</div>
+						<input type="hidden" id="color-picker3_value">
+					</div>
+				</div>
+				<button class="btn-large waves-effect" onclick="customComp()">変更</button>&nbsp;<button
+					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">削除</button><br><br>
+				<input type="text" style="width:300px" id="custom_json" class="materialize-textarea"
+					placeholder="JSON style" readonly><br>
+				このコードは他のTheDeskなどとシェアできます。このコードをMiASに貼ることはご遠慮ください。詳細:<a href="https://thedesk.top/mias.html" target="_blank">テーマ互換性</a>
+				<h4>カスタムテーマのインポート</h4>
+				<a href="https://assets.msky.cafe/" target="_blank">MiAS</a>上の80を超えるテーマを張り付けることもできます。<br>
+				<input type="text" style="width:300px" id="custom_import" class="materialize-textarea"
+					placeholder="JSON/JSON5 style">
+				<button class="btn waves-effect" onclick="customImp()">インポート</button><br>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">reorder</i>タイムラインの設定
+			</div>
+			<div class="collapsible-body">
+				<div id="tlView">
+					<template v-for="(item, i) in config">
+						<h5>{{item.text.head}}</h5>
+						<template v-if=item.text.desc>
+							<templete v-html=item.text.desc></templete><br>
+						</template>
+						<template v-if="item.checkbox">
+							<template v-for="(check, j) in item.text.checkbox">
+								<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+									type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+								<label v-bind:for="item.id+check.value">{{check.text}}</label>
+							</template>
+						</template>
+						<template v-else>
+							<template v-if="item.doubleText">
+								<template v-for="(textbox, j) in item.data">
+									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+								</template>
+							</template>
+							<template v-else>
+								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+							</template>
+							<button class="btn waves-effect" style="width:100px;"
+								v-on:click="complete(i)">変更</button>
+						</template><br>
 					</template>
-					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">変更</button> 
-				</template><br>
-			</template>
-        </div>
-	</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
-				<i class="material-icons">keyboard</i>キーボードショートカットの設定
-		</div>
-		<div class="collapsible-body">
-			<h5>簡単文字入力</h5>
-			絵文字やタグ、&gt;BTなどを登録しておくとすぐに入力できます。<br>
-			Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
-			<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
-			Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
-			<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
-			Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
-			<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">send</i>投稿設定
+			</div>
+			<div class="collapsible-body">
+				<div id="postView">
+					<template v-for="(item, i) in config">
+						<h5>{{item.text.head}}</h5>
+						<template v-if=item.text.desc>
+							<templete v-html=item.text.desc></templete><br>
+						</template>
+						<template v-if="item.checkbox">
+							<template v-for="(check, j) in item.text.checkbox">
+								<template v-if="!check.kirishima || (check.kirishima && kirishima)">
+									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+									<label v-bind:for="item.id+check.value">{{check.text}}</label>
+									<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
+								</template>
+							</template>
+						</template>
+						<template v-else>
+							<template v-if="item.doubleText">
+								<template v-for="(textbox, j) in item.data">
+									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+								</template>
+							</template>
+							<template v-else>
+								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+							</template>
+							<button class="btn waves-effect" style="width:100px;"
+								v-on:click="complete(i)">変更</button>
+						</template><br>
+					</template>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">Fkeyboard</i>キーボードショートカットの設定
+			</div>
+			<div class="collapsible-body">
+				<h5>簡単文字入力</h5>
+				絵文字やタグ、&gt;BTなどを登録しておくとすぐに入力できます。<br>
+				Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
+				<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
+				Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
+				<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
+				Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
+				<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">設定</button><br><br>
 
-		</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
 				<i class="material-icons">bookmark</i>ミュート・強調の設定
-		</div>
-		<div class="collapsible-body">
-			<h5>クライアントミュート</h5>
-			<div id="mute-cli"></div>
-			<h5>クライアント強調</h5>
-			各トゥートのクライアントをクリックすると設定できます。
-			<h5>ワードミュート</h5>
-			Enterで確定<br>
-			<div class="chips" id="wordmute" style="background-color:gray;"></div>
-			<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">設定</button>
-			<h5>ワード強調</h5>
-			Enterで確定<br>
-			<div class="chips" id="wordemp" style="background-color:gray;"></div>
-			<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">設定</button>
-			<h5>ユーザー強調</h5>
-			各ユーザーのデータ表示画面で設定できます。
-			<span class="emphasized">　強調色(テーマによって異なります。)　</span>
-		</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
-			<i class="fa fa-spotify"></i>SpotifyとNowPlayingの設定
-		</div>
-		<div class="collapsible-body">
-			<h5>NowPlayingのソース(Windows)</h5>
-			macOSやLinuxでは動作しません。AIMPとiTunes以外未検証です。<br>foobar2000, MusicBee,J. River Media Center, Media JukeboxはCADを、Last.fm Client, TTPlayer, OpenPandora, ZuneはWLMを選んでください。<br>ただし、foobar2000は<a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a>が必要です。MusicBeeもCADを有効にする必要があります。<br>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
-			<label for="aimp">AIMP</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
-			<label for="itunes">iTunes</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="npmm" value="MEDIAMONKEY" />
-			<label for="npmm">MediaMonkey</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="winamp" value="WINAMP" />
-			<label for="winamp">Winamp</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wmp" value="WMP" />
-			<label for="wmp">WMP</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
-			<label for="wlm">WLM</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
-			<label for="cad">CAD</label><br><br>
-			<i class="material-icons" style="font-size:24px;">music_note</i>ボタンから簡単にNowPlayingができます。<br>
-			<h5>アカウントの連携</h5>
-			APIの性質上，thedesk.topへアクセスします。<br>
-			<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">設定</button></div>
-			<a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i class="fa fa-spotify left"></i>接続</a>
-			<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i class="fa fa-spotify left"></i>切断</a>
-			<h5>テンプレートの編集</h5>
-			以下を編集してテンプレートを変更できます。<br>
-			<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
+			</div>
+			<div class="collapsible-body">
+				<h5>クライアントミュート</h5>
+				<div id="mute-cli"></div>
+				<h5>クライアント強調</h5>
+				各トゥートのクライアントをクリックすると設定できます。
+				<h5>ワードミュート</h5>
+				Enterで確定<br>
+				<div class="chips" id="wordmute" style="background-color:gray;"></div>
+				<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">設定</button>
+				<h5>ワード強調</h5>
+				Enterで確定<br>
+				<div class="chips" id="wordemp" style="background-color:gray;"></div>
+				<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">設定</button>
+				<h5>ユーザー強調</h5>
+				各ユーザーのデータ表示画面で設定できます。
+				<span class="emphasized">　強調色(テーマによって異なります。)　</span>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="fa fa-spotify"></i>SpotifyとNowPlayingの設定
+			</div>
+			<div class="collapsible-body">
+				<h5>NowPlayingのソース(Windows)</h5>
+				macOSやLinuxでは動作しません。AIMPとiTunes以外未検証です。<br>foobar2000, MusicBee,J. River Media Center, Media JukeboxはCADを、Last.fm Client, TTPlayer, OpenPandora, ZuneはWLMを選んでください。<br>ただし、foobar2000は<a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a>が必要です。MusicBeeもCADを有効にする必要があります。<br>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
+				<label for="aimp">AIMP</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
+				<label for="itunes">iTunes</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="npmm" value="MEDIAMONKEY" />
+				<label for="npmm">MediaMonkey</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="winamp" value="WINAMP" />
+				<label for="winamp">Winamp</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wmp" value="WMP" />
+				<label for="wmp">WMP</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
+				<label for="wlm">WLM</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
+				<label for="cad">CAD</label><br><br>
+				<i class="material-icons" style="font-size:24px;">music_note</i>ボタンから簡単にNowPlayingができます。<br>
+				<h5>アカウントの連携</h5>
+				APIの性質上，thedesk.topへアクセスします。<br>
+				<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button
+						onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">設定</button></div>
+				<a onclick="spotifyConnect()" class="btn waves-effect nex"
+					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i
+						class="fa fa-spotify left"></i>接続</a>
+				<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled"
+					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i
+						class="fa fa-spotify left"></i>切断</a>
+				<h5>テンプレートの編集</h5>
+				以下を編集してテンプレートを変更できます。<br>
+				<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
 				Spotify:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
 				macOS:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/作曲家{composer}/サンプルレート{hz}/ビットレート{bitRate}/ジャンル{genre}<br>
 				Windows:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名<br>
-			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
-			<h5>アルバムアートワークを添付する(Spotify/Windows)</h5>
-			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
-			<label for="awk_yes">はい</label>
-			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
-			<label for="awk_no">いいえ</label>
-			<br>
-		</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
-			<i class="material-icons">hearing</i>読み上げの設定
-		</div>
-		<div class="collapsible-body">
-			<h5>読み上げの速さ</h5>
-			1-100まで、デフォルトは10。<br>
-			<p class="range-field"><input type="range" id="voicespeed" min="1" max="100" value="10" style="width:500px; max-width:100%"/></p>
-			<h5>読み上げの高さ</h5>
-			0-100まで、デフォルトは50。(大きくなるほど高い)<br>
-			<p class="range-field"><input type="range" id="voicepitch" min="0" max="100" value="50" style="width:500px; max-width:100%"/></p>
-			<h5>読み上げの音量</h5>
-			0-100まで、デフォルトは100。<br>
-			<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100" style="width:500px; max-width:100%"/></p>
-			<h5>テスト</h5>
-			<input type="text" style="width:350px" id="voicetxt" value="これはテスト音声です。TheDeskはオープンソースのPC向けマストドンクライアントです。マルチサーバーやマルチカラムに対応しています。">
-			<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()" id="testplay">再生/停止</button><br>
-			<br>
-			<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">設定</button>
-		</div>
-	</li>
-</ul>
-<br>
-<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>戻る</a>
-<br>
-<br>キーボードショートカット一覧
-<li>Ctrl+1-9:1番目～9番目のTLにスクロール</li>
-<li>N:投稿パネルを開く</li>
-<li>X:投稿パネルを開閉</li>
-<li>Ctrl+Enter:投稿</li>
-<li>Ctrl+Enter+Shift:投稿(セカンダリートゥート)</li>
-<li>Alt+Enter:セカンダリートゥートボタン</li>
-<li>Ctrl+E:全ての通知を既読にする</li>
-<li>Esc:投稿パネルを消す</li>
-<li>F5:スーパーリロード</li>
-<li>Ctrl+Shift+C:入力内容を消す</li>
-<li>Ctrl+Shift+S:設定</li>
-<li>Ctrl+Shift+M:アカウントマネージャ</li>
-<li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
-<li>Ctrl+Shift+P:現在選択中のプロフィール</li>
-<li>←/→:イメージビューワー起動時に画像切り替え</li>
-<li>マウスホイール:イメージビューワー時に拡大縮小</li>
-<div class="hide kirishima">
-以下Markdownに対応したインスタンスのみ。
-<br>
-<li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線</li>
-<li>Shift+Enter:全角スペースを入れて改行</li>
-<li>Shift+Space:ゼロ幅スペース</li>
-以下アスタルテにログインしている場合のみ 
-<br>
-<li>Ctrl+R: 
-<a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
-</li><br>
-</div>
-<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('全てのデータを削除します。この操作は取り消せません。')){ localStorage.clear(); location.href='index.html'; }"><i class="material-icons left">delete</i>初期化</button><br><br>
-<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i class="material-icons left">info</i>このソフトについて</button>
-<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">web</i>公式HP</a>
-<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>支援(Enty)</a>
-<a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>支援(Pixiv FANBOX)</a>
-<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>ヘルプ/Docs(Constructing)</a>
-<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
-<a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
-<br>
-Kyash<br>
-			<img src="../../img/kyash.png" width="100"><br>
-<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">アップデートを確認</a><br>
-<a href="oss.html">OSS License(オープンソースライセンス)</a><br>
-<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved. 
-	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy Policy</a>
-	<br>Developer: Cutls P( 
-	<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
+				<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
+				<h5>アルバムアートワークを添付する(Spotify/Windows)</h5>
+				<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
+				<label for="awk_yes">はい</label>
+				<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
+				<label for="awk_no">いいえ</label>
+				<br>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">hearing</i>読み上げの設定
+			</div>
+			<div class="collapsible-body">
+				<h5>読み上げの速さ</h5>
+				1-100まで、デフォルトは10。<br>
+				<p class="range-field"><input type="range" id="voicespeed" min="1" max="100" value="10"
+						style="width:500px; max-width:100%" /></p>
+				<h5>読み上げの高さ</h5>
+				0-100まで、デフォルトは50。(大きくなるほど高い)<br>
+				<p class="range-field"><input type="range" id="voicepitch" min="0" max="100" value="50"
+						style="width:500px; max-width:100%" /></p>
+				<h5>読み上げの音量</h5>
+				0-100まで、デフォルトは100。<br>
+				<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100"
+						style="width:500px; max-width:100%" /></p>
+				<h5>テスト</h5>
+				<input type="text" style="width:350px" id="voicetxt" value="これはテスト音声です。TheDeskはオープンソースのPC向けマストドンクライアントです。マルチサーバーやマルチカラムに対応しています。">
+				<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()"
+					id="testplay">再生/停止</button><br>
+				<br>
+				<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">設定</button>
+			</div>
+		</li>
+	</ul>
 	<br>
-</span><br>
-TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
-タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
-<script type="text/javascript" src="../../js/common/about.js"></script>
-<script type="text/javascript" src="../../js/platform/end.js"></script>
-<script type="text/javascript" src="../../js/login/logout.js"></script>
-<script type="text/javascript" src="../../js/ui/spotify.js"></script>
-<script type="text/javascript" src="../../js/tl/speech.js"></script>
-<script type="text/javascript" src="../../js/platform/pickr.js"></script>
-<script type="text/javascript" src="../../js/ui/settings.js"></script>
-<script type="text/javascript" src="../../js/ui/theme.js"></script>
-<script type="text/javascript" src="../../js/tl/date.js"></script>
+	<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i
+			class="material-icons left">undo</i>戻る</a>
+	<br>
+	<br>キーボードショートカット一覧
+	<li>Ctrl+1-9:1番目～9番目のTLにスクロール</li>
+	<li>N:投稿パネルを開く</li>
+	<li>X:投稿パネルを開閉</li>
+	<li>Ctrl+Enter:投稿</li>
+	<li>Ctrl+Enter+Shift:投稿(セカンダリートゥート)</li>
+	<li>Alt+Enter:セカンダリートゥートボタン</li>
+	<li>Ctrl+E:全ての通知を既読にする</li>
+	<li>Esc:投稿パネルを消す</li>
+	<li>F5:スーパーリロード</li>
+	<li>Ctrl+Shift+C:入力内容を消す</li>
+	<li>Ctrl+Shift+S:設定</li>
+	<li>Ctrl+Shift+M:アカウントマネージャ</li>
+	<li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
+	<li>Ctrl+Shift+P:現在選択中のプロフィール</li>
+	<li>←/→:イメージビューワー起動時に画像切り替え</li>
+	<li>マウスホイール:イメージビューワー時に拡大縮小</li>
+	<div class="hide kirishima">
+		以下Markdownに対応したインスタンスのみ。
+		<br>
+		<li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線</li>
+		<li>Shift+Enter:全角スペースを入れて改行</li>
+		<li>Shift+Space:ゼロ幅スペース</li>
+		以下アスタルテにログインしている場合のみ
+		<br>
+		<li>Ctrl+R:
+			<a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
+		</li><br>
+	</div>
+	<button class="btn waves-effect red" style="width:100%; max-width:500px;"
+		onclick="if(confirm('全てのデータを削除します。この操作は取り消せません。')){ localStorage.clear(); location.href='index.html'; }"><i
+			class="material-icons left">delete</i>初期化</button><br><br>
+	<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i
+			class="material-icons left">info</i>このソフトについて</button>
+	<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i
+			class="material-icons left">web</i>公式HP</a>
+	<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i
+			class="material-icons left">trending_up</i>支援(Enty)</a>
+	<a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2"
+		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>支援(Pixiv FANBOX)</a>
+	<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i
+			class="material-icons left">list</i>ヘルプ/Docs(Constructing)</a>
+	<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2"
+		style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
+	<a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2"
+		style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25"
+			style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
+	<br>
+	Kyash<br>
+	<img src="../../img/kyash.png" width="100"><br>
+	<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';"
+		class="pointer">アップデートを確認</a><br>
+	<a href="oss.html">OSS License(オープンソースライセンス)</a><br>
+	<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved.
+		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a
+			href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy
+			Policy</a>
+		<br>Developer: Cutls P(
+		<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
+		<br>
+	</span><br>
+	TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
+	タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
+	<script type="text/javascript" src="../../js/common/about.js"></script>
+	<script type="text/javascript" src="../../js/platform/end.js"></script>
+	<script type="text/javascript" src="../../js/login/logout.js"></script>
+	<script type="text/javascript" src="../../js/ui/spotify.js"></script>
+	<script type="text/javascript" src="../../js/tl/speech.js"></script>
+	<script type="text/javascript" src="../../js/platform/pickr.js"></script>
+	<script type="text/javascript" src="../../js/ui/settings.js"></script>
+	<script type="text/javascript" src="../../js/ui/theme.js"></script>
+	<script type="text/javascript" src="../../js/tl/date.js"></script>

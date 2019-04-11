@@ -146,6 +146,11 @@ function filter(){
         }
 	});
 }
+function filterTime(day,hour,min){
+	$("#days_filter").val(day)
+	$("#hours_filter").val(hour)
+	$("#mins_filter").val(min)
+}
 function makeNewFilter(){
 	var acct_id = $("#filter-acct-sel").val();
 	var phr=$("#filter-add-word").val();

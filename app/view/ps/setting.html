@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="ps">
+
 <head>
 	<title>Settings - TheDesk</title>
 	
@@ -17,359 +18,424 @@
 	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 	<meta charset="utf-8">
-	<style>input{max-height:50px!important} .pcr-result{height:1rem !important;}</style>
+	<style>
+		input {
+			max-height: 50px !important
+		}
+
+		.pcr-result {
+			height: 1rem !important;
+		}
+	</style>
 </head>
+
 <body id="mainView" style="overflow-y:scroll">
-<script type="text/javascript" src="../../js/common/jquery.js"></script>
-<script type="text/javascript" src="../../js/platform/first.js"></script>
-<script type="text/javascript" src="../../js/common/materialize.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.ps.js"></script>
-<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
-<script src="../../node_modules/vue/dist/vue.min.js"></script>
-<script type="text/javascript" src="setting.vue.js"></script>
+	<script type="text/javascript" src="../../js/common/jquery.js"></script>
+	<script type="text/javascript" src="../../js/platform/first.js"></script>
+	<script type="text/javascript" src="../../js/common/materialize.js"></script>
+	<script type="text/javascript" src="../../js/lang/lang.ps.js"></script>
+	<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
+	<script src="../../node_modules/vue/dist/vue.min.js"></script>
+	<script type="text/javascript" src="setting.vue.js"></script>
 
-<h4>crwdns524:0crwdne524:0</h4>
-<ul class="collapsible" data-collapsible="accordion">
-	<li>
-	<div class="collapsible-header">
-			<i class="material-icons">desktop_windows</i>crwdns529:0crwdne529:0
-	</div>
-	<div class="collapsible-body">
-		<h5>crwdns530:0crwdne530:0</h5>
-		To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
-		<a href="../ja/setting.html" onclick="changelang('ja')">日本語(Japanese)</a>/<a href="../en/setting.html" onclick="changelang('en')">English</a>/<a href="../ps/setting.html" onclick="changelang('ps')">Crowdin web translate</a>/
-		<h5>crwdns531:0crwdne531:0</h5>
-		<button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:200px;">crwdns533:0crwdne533:0</button>
-		<button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:200px;">crwdns532:0crwdne532:0</button>
-		<div id="envView">
-            <template v-for="(item, i) in config">
-				<h5>{{item.text.head}}</h5>
-				<template v-if=item.text.desc><templete v-html=item.text.desc></templete><br></template>
-				<template v-if="item.id=='notf'"><a onclick="notftest()" class="pointer">crwdns540:0crwdne540:0</a><br></template>
-                <template v-if="item.checkbox">
-                        <template v-for="(check, j) in item.text.checkbox">
-                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
-                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
-                        </template>
-				</template>
-				<template v-else>
-					<template v-if="item.doubleText">
-						<template v-for="(textbox, j) in item.data">
-                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
-                        </template>
-					</template>
-					<template v-else>
-							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
-					</template>
-					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">crwdns528:0crwdne528:0</button> 
-				</template><br>
-			</template>
-        </div>
-        <h5>crwdns544:0crwdne544:0</h5>
-		crwdns1900:0crwdne1900:0<br>
-		<button class="btn waves-effect" style="width:100px;" onclick="font()">crwdns1896:0crwdne1896:0</button><br>
-		<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
-		<br>
-		<input type="text" style="width:150px" id="font">
-		<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
-		<br>
-        <h5>crwdns547:0crwdne547:0</h5>
-		crwdns548:0crwdne548:0<br>
-		<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">crwdns528:0crwdne528:0</button>
-		<br>
-	</div>
-	</li>
-	<li>
-	<div class="collapsible-header">
-			<i class="material-icons">color_lens</i>crwdns534:0crwdne534:0
-	</div>
-	<div class="collapsible-body">
-		<h4>crwdns2422:0crwdne2422:0</h4>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
-		<label for="black">Black</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
-		<label for="white">White</label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
-		<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
-		<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
-		<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
-		<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom" value="custom" />
-		<label for="custom">Custom</label>
-		<div style="width:300px" id="sel-selector">
-			<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
-		</div>
-		<h4>crwdns2424:0crwdne2424:0</h4>
-		<div style="width:300px" id="edit-selector" data-add="crwdns2436:0crwdne2436:0">
-			<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
-				<option value="add_new">crwdns2436:0crwdne2436:0</option>
-			</select>
-		</div>
-		<h5>crwdns2438:0crwdne2438:0</h5>
-		<input type="text" style="width:300px" id="custom_name" placeholder="crwdns2438:0crwdne2438:0...">
-		<h5>crwdns2440:0crwdne2440:0</h5>
-		<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea" placeholder="crwdns2440:0crwdne2440:0..."></textarea></div>
-		<h5>crwdns2426:0crwdne2426:0</h5>
-		<input class="with-gap" name="derection" type="radio" id="dark" value="dark" checked="true" />
-		<label for="dark">Dark</label>
-		<input class="with-gap" name="derection" type="radio" id="light" value="light" />
-		<label for="light">Light</label>
-		<div id="pickers">
-		<div>
-			<h5>Primary</h5>crwdns2430:0crwdne2430:0
-			<div id="color-picker0-wrap"><div class="color-picker" id="color-picker0"></div></div>
-			<input type="hidden" id="color-picker0_value">
-		</div>
-		<div>
-			<h5>Secondary</h5>crwdns2428:0crwdne2428:0
-			<div id="color-picker1-wrap"><div class="color-picker" id="color-picker1"></div></div>
-			<input type="hidden" id="color-picker1_value">
-		</div>
-		<div>
-			<h5>Texts</h5>crwdns2432:0crwdne2432:0
-			<div id="color-picker2-wrap"><div class="color-picker" id="color-picker2"></div></div>
-			<input type="hidden" id="color-picker2_value">
-		</div>
-		<div>
-			<h5>Accent</h5>crwdns2434:0crwdne2434:0
-			<div id="color-picker3-wrap"><div class="color-picker" id="color-picker3"></div></div>
-			<input type="hidden" id="color-picker3_value">
-		</div>
-		</div>
-		<button class="btn-large waves-effect" onclick="customComp()">crwdns528:0crwdne528:0</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">@@delete@@</button><br><br>
-		<input type="text" style="width:300px" id="custom_json" class="materialize-textarea" placeholder="JSON style" readonly><br>
-		crwdns2442:0crwdne2442:0
-		<h4>crwdns2444:0crwdne2444:0</h4>
-		@@cImpWarn@@<br>
-		<input type="text" style="width:300px" id="custom_import" class="materialize-textarea" placeholder="JSON/JSON5 style">
-		<button class="btn waves-effect" onclick="customImp()">crwdns532:0crwdne532:0</button><br>
-	</li>
-	<li>
-	<div class="collapsible-header">
-			<i class="material-icons">reorder</i>crwdns550:0crwdne550:0
-	</div>
-	<div class="collapsible-body">
-		<div id="tlView">
-            <template v-for="(item, i) in config">
-				<h5>{{item.text.head}}</h5>
-				<template v-if=item.text.desc><templete v-html=item.text.desc></templete><br></template>
-                <template v-if="item.checkbox">
-                        <template v-for="(check, j) in item.text.checkbox">
-                            <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
-                            <label v-bind:for="item.id+check.value">{{check.text}}</label>
-                        </template>
-				</template>
-				<template v-else>
-					<template v-if="item.doubleText">
-						<template v-for="(textbox, j) in item.data">
-                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
-                        </template>
-					</template>
-					<template v-else>
-							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
-					</template>
-					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">crwdns528:0crwdne528:0</button> 
-				</template><br>
-			</template>
-        </div>
-	</div>
-	</li>
-	<li>
-	<div class="collapsible-header">
-			<i class="material-icons">send</i>crwdns587:0crwdne587:0
-	</div>
-	<div class="collapsible-body">
-		<div id="postView">
-            <template v-for="(item, i) in config">
-				<h5>{{item.text.head}}</h5>
-				<template v-if=item.text.desc><templete v-html=item.text.desc></templete><br></template>
-                <template v-if="item.checkbox">
-                        <template v-for="(check, j) in item.text.checkbox">
-							<template v-if="!check.kirishima || (check.kirishima && kirishima)">
-                            	<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue" type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+	<h4>crwdns524:0crwdne524:0</h4>
+	<ul class="collapsible" data-collapsible="accordion">
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">desktop_windows</i>crwdns529:0crwdne529:0
+			</div>
+			<div class="collapsible-body">
+				<h5>crwdns530:0crwdne530:0</h5>
+				To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
+				<a href="../ja/setting.html" onclick="changelang('ja')">日本語(Japanese)</a>/<a href="../en/setting.html" onclick="changelang('en')">English</a>/<a href="../ps/setting.html" onclick="changelang('ps')">Crowdin web translate</a>/
+				<h5>crwdns531:0crwdne531:0</h5>
+				<button onclick="exportSettings()" class="btn waves-effect lime darken-3"
+					style="width:100%; max-width:200px;">crwdns533:0crwdne533:0</button>
+				<button onclick="importSettings()" class="btn waves-effect cyan darken-3"
+					style="width:100%; max-width:200px;">crwdns532:0crwdne532:0</button>
+				<div id="envView">
+					<template v-for="(item, i) in config">
+						<h5>{{item.text.head}}</h5>
+						<template v-if=item.text.desc>
+							<templete v-html=item.text.desc></templete><br>
+						</template>
+						<template v-if="item.id=='notf'"><a onclick="notftest()"
+								class="pointer">crwdns540:0crwdne540:0</a><br></template>
+						<template v-if="item.checkbox">
+							<template v-for="(check, j) in item.text.checkbox">
+								<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+									type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
 								<label v-bind:for="item.id+check.value">{{check.text}}</label>
-								<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
 							</template>
-                        </template>
-				</template>
-				<template v-else>
-					<template v-if="item.doubleText">
-						<template v-for="(textbox, j) in item.data">
-                            <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id" v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
-                        </template>
+						</template>
+						<template v-else>
+							<template v-if="item.doubleText">
+								<template v-for="(textbox, j) in item.data">
+									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+								</template>
+							</template>
+							<template v-else>
+								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+							</template>
+							<button class="btn waves-effect" style="width:100px;"
+								v-on:click="complete(i)">crwdns528:0crwdne528:0</button>
+						</template><br>
 					</template>
-					<template v-else>
-							<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id" v-bind:style="{ width: item.width+'px'}"/>{{item.text.after}}
+				</div>
+				<h5>crwdns544:0crwdne544:0</h5>
+				crwdns1900:0crwdne1900:0<br>
+				<button class="btn waves-effect" style="width:100px;" onclick="font()">crwdns1896:0crwdne1896:0</button><br>
+				<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
+				<br>
+				<input type="text" style="width:150px" id="font">
+				<button class="btn waves-effect" style="width:100px;" onclick="settings()">crwdns525:0crwdne525:0</button>
+				<br>
+				<h5>crwdns547:0crwdne547:0</h5>
+				crwdns548:0crwdne548:0<br>
+				<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">crwdns528:0crwdne528:0</button>
+				<br>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">color_lens</i>crwdns534:0crwdne534:0
+			</div>
+			<div class="collapsible-body">
+				<h4>crwdns2422:0crwdne2422:0</h4>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
+				<label for="black">Black</label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
+				<label for="white">White</label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
+				<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
+				<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
+				<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
+				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom" value="custom" />
+				<label for="custom">Custom</label>
+				<div style="width:300px" id="sel-selector">
+					<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
+				</div>
+				<h4>crwdns2424:0crwdne2424:0</h4>
+				<div style="width:300px" id="edit-selector" data-add="crwdns2436:0crwdne2436:0">
+					<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
+						<option value="add_new">crwdns2436:0crwdne2436:0</option>
+					</select>
+				</div>
+				<h5>crwdns2438:0crwdne2438:0</h5>
+				<input type="text" style="width:300px" id="custom_name" placeholder="crwdns2438:0crwdne2438:0...">
+				<h5>crwdns2440:0crwdne2440:0</h5>
+				<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea"
+						placeholder="crwdns2440:0crwdne2440:0..."></textarea></div>
+				<h5>crwdns2426:0crwdne2426:0</h5>
+				<input class="with-gap" name="derection" type="radio" id="dark" value="dark" checked="true" />
+				<label for="dark">Dark</label>
+				<input class="with-gap" name="derection" type="radio" id="light" value="light" />
+				<label for="light">Light</label>
+				<div id="pickers">
+					<div>
+						<h5>Primary</h5>crwdns2430:0crwdne2430:0
+						<div id="color-picker0-wrap">
+							<div class="color-picker" id="color-picker0"></div>
+						</div>
+						<input type="hidden" id="color-picker0_value">
+					</div>
+					<div>
+						<h5>Secondary</h5>crwdns2428:0crwdne2428:0
+						<div id="color-picker1-wrap">
+							<div class="color-picker" id="color-picker1"></div>
+						</div>
+						<input type="hidden" id="color-picker1_value">
+					</div>
+					<div>
+						<h5>Texts</h5>crwdns2432:0crwdne2432:0
+						<div id="color-picker2-wrap">
+							<div class="color-picker" id="color-picker2"></div>
+						</div>
+						<input type="hidden" id="color-picker2_value">
+					</div>
+					<div>
+						<h5>Accent</h5>crwdns2434:0crwdne2434:0
+						<div id="color-picker3-wrap">
+							<div class="color-picker" id="color-picker3"></div>
+						</div>
+						<input type="hidden" id="color-picker3_value">
+					</div>
+				</div>
+				<button class="btn-large waves-effect" onclick="customComp()">crwdns528:0crwdne528:0</button>&nbsp;<button
+					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">@@delete@@</button><br><br>
+				<input type="text" style="width:300px" id="custom_json" class="materialize-textarea"
+					placeholder="JSON style" readonly><br>
+				crwdns2442:0crwdne2442:0
+				<h4>crwdns2444:0crwdne2444:0</h4>
+				@@cImpWarn@@<br>
+				<input type="text" style="width:300px" id="custom_import" class="materialize-textarea"
+					placeholder="JSON/JSON5 style">
+				<button class="btn waves-effect" onclick="customImp()">crwdns532:0crwdne532:0</button><br>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">reorder</i>crwdns550:0crwdne550:0
+			</div>
+			<div class="collapsible-body">
+				<div id="tlView">
+					<template v-for="(item, i) in config">
+						<h5>{{item.text.head}}</h5>
+						<template v-if=item.text.desc>
+							<templete v-html=item.text.desc></templete><br>
+						</template>
+						<template v-if="item.checkbox">
+							<template v-for="(check, j) in item.text.checkbox">
+								<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+									type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+								<label v-bind:for="item.id+check.value">{{check.text}}</label>
+							</template>
+						</template>
+						<template v-else>
+							<template v-if="item.doubleText">
+								<template v-for="(textbox, j) in item.data">
+									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+								</template>
+							</template>
+							<template v-else>
+								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+							</template>
+							<button class="btn waves-effect" style="width:100px;"
+								v-on:click="complete(i)">crwdns528:0crwdne528:0</button>
+						</template><br>
 					</template>
-					<button class="btn waves-effect" style="width:100px;" v-on:click="complete(i)">crwdns528:0crwdne528:0</button> 
-				</template><br>
-			</template>
-        </div>
-	</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
-				<i class="material-icons">keyboard</i>crwdns611:0crwdne611:0
-		</div>
-		<div class="collapsible-body">
-			<h5>crwdns612:0crwdne612:0</h5>
-			crwdns613:0crwdne613:0<br>
-			Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
-			<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button><br><br>
-			Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
-			<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button><br><br>
-			Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
-			<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button><br><br>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">send</i>crwdns587:0crwdne587:0
+			</div>
+			<div class="collapsible-body">
+				<div id="postView">
+					<template v-for="(item, i) in config">
+						<h5>{{item.text.head}}</h5>
+						<template v-if=item.text.desc>
+							<templete v-html=item.text.desc></templete><br>
+						</template>
+						<template v-if="item.checkbox">
+							<template v-for="(check, j) in item.text.checkbox">
+								<template v-if="!check.kirishima || (check.kirishima && kirishima)">
+									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+									<label v-bind:for="item.id+check.value">{{check.text}}</label>
+									<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
+								</template>
+							</template>
+						</template>
+						<template v-else>
+							<template v-if="item.doubleText">
+								<template v-for="(textbox, j) in item.data">
+									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+								</template>
+							</template>
+							<template v-else>
+								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+							</template>
+							<button class="btn waves-effect" style="width:100px;"
+								v-on:click="complete(i)">crwdns528:0crwdne528:0</button>
+						</template><br>
+					</template>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">Fkeyboard</i>crwdns611:0crwdne611:0
+			</div>
+			<div class="collapsible-body">
+				<h5>crwdns612:0crwdne612:0</h5>
+				crwdns613:0crwdne613:0<br>
+				Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
+				<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button><br><br>
+				Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
+				<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button><br><br>
+				Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
+				<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button><br><br>
 
-		</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
 				<i class="material-icons">bookmark</i>crwdns614:0crwdne614:0
-		</div>
-		<div class="collapsible-body">
-			<h5>crwdns615:0crwdne615:0</h5>
-			<div id="mute-cli"></div>
-			<h5>crwdns616:0crwdne616:0</h5>
-			crwdns617:0crwdne617:0
-			<h5>crwdns619:0crwdne619:0</h5>
-			crwdns618:0crwdne618:0<br>
-			<div class="chips" id="wordmute" style="background-color:gray;"></div>
-			<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
-			<h5>crwdns620:0crwdne620:0</h5>
-			crwdns618:0crwdne618:0<br>
-			<div class="chips" id="wordemp" style="background-color:gray;"></div>
-			<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
-			<h5>crwdns621:0crwdne621:0</h5>
-			crwdns622:0crwdne622:0
-			<span class="emphasized">　crwdns623:0crwdne623:0　</span>
-		</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
-			<i class="fa fa-spotify"></i>crwdns624:0crwdne624:0
-		</div>
-		<div class="collapsible-body">
-			<h5>crwdns2354:0crwdne2354:0</h5>
-			crwdns2356:0crwdne2356:0<br>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
-			<label for="aimp">AIMP</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
-			<label for="itunes">iTunes</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="npmm" value="MEDIAMONKEY" />
-			<label for="npmm">MediaMonkey</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="winamp" value="WINAMP" />
-			<label for="winamp">Winamp</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wmp" value="WMP" />
-			<label for="wmp">WMP</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
-			<label for="wlm">WLM</label>
-			<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
-			<label for="cad">CAD</label><br><br>
-			crwdns625:0crwdne625:0<i class="material-icons" style="font-size:24px;">music_note</i>crwdns626:0crwdne626:0<br>
-			<h5>crwdns627:0crwdne627:0</h5>
-			crwdns628:0crwdne628:0<br>
-			<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button></div>
-			<a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i class="fa fa-spotify left"></i>crwdns629:0crwdne629:0</a>
-			<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i class="fa fa-spotify left"></i>crwdns630:0crwdne630:0</a>
-			<h5>crwdns631:0crwdne631:0</h5>
-			crwdns632:0crwdne632:0<br>
-			<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
+			</div>
+			<div class="collapsible-body">
+				<h5>crwdns615:0crwdne615:0</h5>
+				<div id="mute-cli"></div>
+				<h5>crwdns616:0crwdne616:0</h5>
+				crwdns617:0crwdne617:0
+				<h5>crwdns619:0crwdne619:0</h5>
+				crwdns618:0crwdne618:0<br>
+				<div class="chips" id="wordmute" style="background-color:gray;"></div>
+				<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
+				<h5>crwdns620:0crwdne620:0</h5>
+				crwdns618:0crwdne618:0<br>
+				<div class="chips" id="wordemp" style="background-color:gray;"></div>
+				<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
+				<h5>crwdns621:0crwdne621:0</h5>
+				crwdns622:0crwdne622:0
+				<span class="emphasized">　crwdns623:0crwdne623:0　</span>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="fa fa-spotify"></i>crwdns624:0crwdne624:0
+			</div>
+			<div class="collapsible-body">
+				<h5>crwdns2354:0crwdne2354:0</h5>
+				crwdns2356:0crwdne2356:0<br>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
+				<label for="aimp">AIMP</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
+				<label for="itunes">iTunes</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="npmm" value="MEDIAMONKEY" />
+				<label for="npmm">MediaMonkey</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="winamp" value="WINAMP" />
+				<label for="winamp">Winamp</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wmp" value="WMP" />
+				<label for="wmp">WMP</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
+				<label for="wlm">WLM</label>
+				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
+				<label for="cad">CAD</label><br><br>
+				crwdns625:0crwdne625:0<i class="material-icons" style="font-size:24px;">music_note</i>crwdns626:0crwdne626:0<br>
+				<h5>crwdns627:0crwdne627:0</h5>
+				crwdns628:0crwdne628:0<br>
+				<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button
+						onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button></div>
+				<a onclick="spotifyConnect()" class="btn waves-effect nex"
+					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i
+						class="fa fa-spotify left"></i>crwdns629:0crwdne629:0</a>
+				<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled"
+					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i
+						class="fa fa-spotify left"></i>crwdns630:0crwdne630:0</a>
+				<h5>crwdns631:0crwdne631:0</h5>
+				crwdns632:0crwdne632:0<br>
+				<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
 				crwdns2358:0{song}crwdnd2358:0{album}crwdnd2358:0{artist}crwdnd2358:0{url}crwdne2358:0<br>
 				crwdns2360:0{song}crwdnd2360:0{album}crwdnd2360:0{artist}crwdnd2360:0{composer}crwdnd2360:0{hz}crwdnd2360:0{bitRate}crwdnd2360:0{genre}crwdne2360:0<br>
 				crwdns2362:0{song}crwdnd2362:0{album}crwdnd2362:0{artist}crwdne2362:0<br>
-			<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
-			<h5>crwdns635:0crwdne635:0</h5>
-			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
-			<label for="awk_yes">crwdns526:0crwdne526:0</label>
-			<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
-			<label for="awk_no">crwdns527:0crwdne527:0</label>
-			<br>
-		</div>
-	</li>
-	<li>
-		<div class="collapsible-header">
-			<i class="material-icons">hearing</i>crwdns636:0crwdne636:0
-		</div>
-		<div class="collapsible-body">
-			<h5>crwdns637:0crwdne637:0</h5>
-			crwdns638:0crwdne638:0<br>
-			<p class="range-field"><input type="range" id="voicespeed" min="1" max="100" value="10" style="width:500px; max-width:100%"/></p>
-			<h5>crwdns639:0crwdne639:0</h5>
-			crwdns640:0crwdne640:0<br>
-			<p class="range-field"><input type="range" id="voicepitch" min="0" max="100" value="50" style="width:500px; max-width:100%"/></p>
-			<h5>crwdns641:0crwdne641:0</h5>
-			crwdns642:0crwdne642:0<br>
-			<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100" style="width:500px; max-width:100%"/></p>
-			<h5>crwdns643:0crwdne643:0</h5>
-			<input type="text" style="width:350px" id="voicetxt" value="crwdns644:0crwdne644:0">
-			<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()" id="testplay">crwdns645:0crwdne645:0</button><br>
-			<br>
-			<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">crwdns525:0crwdne525:0</button>
-		</div>
-	</li>
-</ul>
-<br>
-<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i class="material-icons left">undo</i>crwdns646:0crwdne646:0</a>
-<br>
-<br>crwdns647:0crwdne647:0
-<li>Ctrl+1-9:crwdns648:0crwdne648:0</li>
-<li>N:crwdns649:0crwdne649:0</li>
-<li>X:crwdns650:0crwdne650:0</li>
-<li>Ctrl+Enter:crwdns651:0crwdne651:0</li>
-<li>Ctrl+Enter+Shift:crwdns1924:0crwdne1924:0</li>
-<li>Alt+Enter:crwdns1916:0crwdne1916:0</li>
-<li>Ctrl+E:crwdns652:0crwdne652:0</li>
-<li>Esc:crwdns653:0crwdne653:0</li>
-<li>F5:crwdns654:0crwdne654:0</li>
-<li>Ctrl+Shift+C:crwdns655:0crwdne655:0</li>
-<li>Ctrl+Shift+S:crwdns524:0crwdne524:0</li>
-<li>Ctrl+Shift+M:crwdns656:0crwdne656:0</li>
-<li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
-<li>Ctrl+Shift+P:crwdns657:0crwdne657:0</li>
-<li>←/→:crwdns658:0crwdne658:0</li>
-<li>crwdns659:0crwdne659:0</li>
-<div class="hide kirishima">
-以下Markdownに対応したインスタンスのみ。
-<br>
-<li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線</li>
-<li>Shift+Enter:全角スペースを入れて改行</li>
-<li>Shift+Space:ゼロ幅スペース</li>
-以下アスタルテにログインしている場合のみ 
-<br>
-<li>Ctrl+R: 
-<a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
-</li><br>
-</div>
-<button class="btn waves-effect red" style="width:100%; max-width:500px;" onclick="if(confirm('crwdns661:0crwdne661:0')){ localStorage.clear(); location.href='index.html'; }"><i class="material-icons left">delete</i>crwdns660:0crwdne660:0</button><br><br>
-<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i class="material-icons left">info</i>crwdns662:0crwdne662:0</button>
-<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">web</i>crwdns663:0crwdne663:0</a>
-<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>crwdns664:0crwdne664:0(Enty)</a>
-<a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2" style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>crwdns664:0crwdne664:0(Pixiv FANBOX)</a>
-<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i class="material-icons left">list</i>crwdns665:0crwdne665:0/Docs(Constructing)</a>
-<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
-<a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2" style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
-<br>
-Kyash<br>
-			<img src="../../img/kyash.png" width="100"><br>
-<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer">crwdns667:0crwdne667:0</a><br>
-<a href="oss.html">OSS Licensecrwdns668:0crwdne668:0</a><br>
-<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved. 
-	Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy Policy</a>
-	<br>Developer: Cutls P( 
-	<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
+				<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">crwdns525:0crwdne525:0</button>
+				<h5>crwdns635:0crwdne635:0</h5>
+				<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
+				<label for="awk_yes">crwdns526:0crwdne526:0</label>
+				<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
+				<label for="awk_no">crwdns527:0crwdne527:0</label>
+				<br>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">hearing</i>crwdns636:0crwdne636:0
+			</div>
+			<div class="collapsible-body">
+				<h5>crwdns637:0crwdne637:0</h5>
+				crwdns638:0crwdne638:0<br>
+				<p class="range-field"><input type="range" id="voicespeed" min="1" max="100" value="10"
+						style="width:500px; max-width:100%" /></p>
+				<h5>crwdns639:0crwdne639:0</h5>
+				crwdns640:0crwdne640:0<br>
+				<p class="range-field"><input type="range" id="voicepitch" min="0" max="100" value="50"
+						style="width:500px; max-width:100%" /></p>
+				<h5>crwdns641:0crwdne641:0</h5>
+				crwdns642:0crwdne642:0<br>
+				<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100"
+						style="width:500px; max-width:100%" /></p>
+				<h5>crwdns643:0crwdne643:0</h5>
+				<input type="text" style="width:350px" id="voicetxt" value="crwdns644:0crwdne644:0">
+				<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()"
+					id="testplay">crwdns645:0crwdne645:0</button><br>
+				<br>
+				<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">crwdns525:0crwdne525:0</button>
+			</div>
+		</li>
+	</ul>
 	<br>
-</span><br>
-TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
-タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
-<script type="text/javascript" src="../../js/common/about.js"></script>
-<script type="text/javascript" src="../../js/platform/end.js"></script>
-<script type="text/javascript" src="../../js/login/logout.js"></script>
-<script type="text/javascript" src="../../js/ui/spotify.js"></script>
-<script type="text/javascript" src="../../js/tl/speech.js"></script>
-<script type="text/javascript" src="../../js/platform/pickr.js"></script>
-<script type="text/javascript" src="../../js/ui/settings.js"></script>
-<script type="text/javascript" src="../../js/ui/theme.js"></script>
-<script type="text/javascript" src="../../js/tl/date.js"></script>
+	<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i
+			class="material-icons left">undo</i>crwdns646:0crwdne646:0</a>
+	<br>
+	<br>crwdns647:0crwdne647:0
+	<li>Ctrl+1-9:crwdns648:0crwdne648:0</li>
+	<li>N:crwdns649:0crwdne649:0</li>
+	<li>X:crwdns650:0crwdne650:0</li>
+	<li>Ctrl+Enter:crwdns651:0crwdne651:0</li>
+	<li>Ctrl+Enter+Shift:crwdns1924:0crwdne1924:0</li>
+	<li>Alt+Enter:crwdns1916:0crwdne1916:0</li>
+	<li>Ctrl+E:crwdns652:0crwdne652:0</li>
+	<li>Esc:crwdns653:0crwdne653:0</li>
+	<li>F5:crwdns654:0crwdne654:0</li>
+	<li>Ctrl+Shift+C:crwdns655:0crwdne655:0</li>
+	<li>Ctrl+Shift+S:crwdns524:0crwdne524:0</li>
+	<li>Ctrl+Shift+M:crwdns656:0crwdne656:0</li>
+	<li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
+	<li>Ctrl+Shift+P:crwdns657:0crwdne657:0</li>
+	<li>←/→:crwdns658:0crwdne658:0</li>
+	<li>crwdns659:0crwdne659:0</li>
+	<div class="hide kirishima">
+		以下Markdownに対応したインスタンスのみ。
+		<br>
+		<li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線</li>
+		<li>Shift+Enter:全角スペースを入れて改行</li>
+		<li>Shift+Space:ゼロ幅スペース</li>
+		以下アスタルテにログインしている場合のみ
+		<br>
+		<li>Ctrl+R:
+			<a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
+		</li><br>
+	</div>
+	<button class="btn waves-effect red" style="width:100%; max-width:500px;"
+		onclick="if(confirm('crwdns661:0crwdne661:0')){ localStorage.clear(); location.href='index.html'; }"><i
+			class="material-icons left">delete</i>crwdns660:0crwdne660:0</button><br><br>
+	<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i
+			class="material-icons left">info</i>crwdns662:0crwdne662:0</button>
+	<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i
+			class="material-icons left">web</i>crwdns663:0crwdne663:0</a>
+	<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i
+			class="material-icons left">trending_up</i>crwdns664:0crwdne664:0(Enty)</a>
+	<a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2"
+		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>crwdns664:0crwdne664:0(Pixiv FANBOX)</a>
+	<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i
+			class="material-icons left">list</i>crwdns665:0crwdne665:0/Docs(Constructing)</a>
+	<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2"
+		style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
+	<a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2"
+		style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25"
+			style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
+	<br>
+	Kyash<br>
+	<img src="../../img/kyash.png" width="100"><br>
+	<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';"
+		class="pointer">crwdns667:0crwdne667:0</a><br>
+	<a href="oss.html">OSS Licensecrwdns668:0crwdne668:0</a><br>
+	<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved.
+		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a
+			href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy
+			Policy</a>
+		<br>Developer: Cutls P(
+		<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
+		<br>
+	</span><br>
+	TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
+	タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
+	<script type="text/javascript" src="../../js/common/about.js"></script>
+	<script type="text/javascript" src="../../js/platform/end.js"></script>
+	<script type="text/javascript" src="../../js/login/logout.js"></script>
+	<script type="text/javascript" src="../../js/ui/spotify.js"></script>
+	<script type="text/javascript" src="../../js/tl/speech.js"></script>
+	<script type="text/javascript" src="../../js/platform/pickr.js"></script>
+	<script type="text/javascript" src="../../js/ui/settings.js"></script>
+	<script type="text/javascript" src="../../js/ui/theme.js"></script>
+	<script type="text/javascript" src="../../js/tl/date.js"></script>
