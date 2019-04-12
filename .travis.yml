@@ -1,8 +1,7 @@
-os: windows
+os: osx
 language: node_js
 node_js:
 - '10.15.2'
-script: node -v
 before_deploy:
   - brew update
   - npm install electron-builder -g
@@ -11,8 +10,6 @@ before_deploy:
   - electron-builder --mac --x64
   - mv ../build/TheDesk*.dmg ../TheDesk.dmg
   - mv ../build/TheDesk*.zip ../TheDesk-darwin-x64.zip
-  - ls ../build/
-  - ls ../
   - cd ../
 deploy:
   provider: releases
@@ -26,3 +23,6 @@ deploy:
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
+branches:
+  only:
+  - master
