@@ -11,6 +11,8 @@ before_deploy:
   - electron-builder --mac --x64
   - mv ../build/TheDesk*.dmg ../TheDesk.dmg
   - mv ../build/TheDesk*.zip ../TheDesk-darwin-x64.zip
+  - ls ../build/
+  - ls ../
   - cd ../
 deploy:
   provider: releases
@@ -20,7 +22,7 @@ deploy:
   # Releases ページにアップロードするファイル
   file:
     - TheDesk.dmg
-    - TheDesk-darwin-x64.dmg
+    - TheDesk-darwin-x64.zip
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
