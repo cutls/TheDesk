@@ -1,20 +1,8 @@
-language: objective-c
-cache:
-  directories:
-    - node_modules
-env:
-  - NODE_VERSION="9.9.0"
-before_install:
-  # nvm をインストールする。Travis の OS X 環境には nvm はデフォルトで入っていない
-  - git clone https://github.com/creationix/nvm.git /tmp/.nvm
-  - source /tmp/.nvm/nvm.sh
-  # 指定バージョンの Node をインストールする
-  - nvm install $NODE_VERSION
-  # 指定バージョンの Node を有効にする
-  - nvm use --delete-prefix $NODE_VERSION
-  - node --version
-script:
-  - node --version
+os: windows
+language: node_js
+node_js:
+- '10.15.2'
+script: node -v
 before_deploy:
   - brew update
   - npm install electron-builder -g
