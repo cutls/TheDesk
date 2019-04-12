@@ -1,8 +1,19 @@
-os: windows
+os: osx
 language: node_js
 node_js:
 - '10.15.2'
 script: node -v
+before_install:
+  # nvm をインストールする。Travis の OS X 環境には nvm はデフォルトで入っていない
+  - git clone https://github.com/creationix/nvm.git /tmp/.nvm
+  - source /tmp/.nvm/nvm.sh
+  # 指定バージョンの Node をインストールする
+  - nvm install $NODE_VERSION
+  # 指定バージョンの Node を有効にする
+  - nvm use --delete-prefix $NODE_VERSION
+  - node --version
+script:
+  - node --version
 before_deploy:
   - brew update
   - npm install electron-builder -g
@@ -11,8 +22,6 @@ before_deploy:
   - electron-builder --mac --x64
   - mv ../build/TheDesk*.dmg ../TheDesk.dmg
   - mv ../build/TheDesk*.zip ../TheDesk-darwin-x64.zip
-  - ls ../build/
-  - ls ../
   - cd ../
 deploy:
   provider: releases
@@ -22,10 +31,6 @@ deploy:
   # Releases ページにアップロードするファイル
   file:
     - TheDesk.dmg
-    - TheDesk-darwin-x64.zip
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
-branches:
-  only:
-  - master
