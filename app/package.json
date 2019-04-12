@@ -91,12 +91,12 @@
       "target": ["dmg","zip"]
     },
     "electronDownload": {
-      "version": "4.1.2"
+      "version": "4.1.4"
     },
-    "electronVersion": "4.1.2"
+    "electronVersion": "4.1.4"
   },
   "devDependencies": {
-    "electron": "^4.1.2",
+    "electron": "^4.1.4",
     "electron-packager": "^13.1.1",
     "electron-rebuild": "^1.8.4"
   }
