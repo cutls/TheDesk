@@ -732,9 +732,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var votesel="";
 					var voteclass="";
 				}
-				poll=poll+'<div class="'+voteclass+' vote vote_'+acct_id+'_'+toot.poll.id+'_'+keyc+'" onclick="'+votesel+'">'+choice.title+'<span class="vote_'+acct_id+'_'+toot.poll.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
+				poll=poll+'<div class="'+voteclass+' vote vote_'+acct_id+'_'+toot.poll.id+'_'+keyc+'" onclick="'+votesel+'">'+escapeHTML(choice.title)+'<span class="vote_'+acct_id+'_'+toot.poll.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
 			});
-			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+strip_tags(poll)+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
+			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
 			'"><i class="fa fa-calendar-times-o"></i>' +
 			 ended+ '</span></div>';
 		}
