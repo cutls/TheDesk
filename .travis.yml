@@ -26,3 +26,6 @@ deploy:
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
+branches:
+  only:
+  - master
