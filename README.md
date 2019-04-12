@@ -91,6 +91,12 @@ WindowsでPython 2.xやVisualC++を一発でインストールできるツール
   
 日本語話者向けですが、macOSビルドにはXCodeが要るとの情報があります。([とねぢ](https://minohdon.jp/@toneji)氏談)  
 
+### electron-builder
+`electron-builder --target`  
+`target`は`win`か`linux`か`mac`を指定してください。  
+Config is all on package.json  
+ビルド設定はすべてpackage.jsonに記載しています。  
+
 ### electron-packager
 
 Windows  
@@ -99,11 +105,6 @@ Linux
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=4.0.5 --overwrite`  
 macOS  
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=4.0.5 --icon=./app/icon.icns --overwrite`  
-
-### electron-builder
-
-Config is all on package.json  
-ビルド設定はすべてpackage.jsonに記載しています。  
 
 ## Pleroma support
 
