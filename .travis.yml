@@ -2,6 +2,7 @@ os: osx
 language: node_js
 node_js:
 - '10.15.2'
+script: node -v
 before_deploy:
   - brew update
   - npm install electron-builder -g
