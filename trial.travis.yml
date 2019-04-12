@@ -1,27 +1,11 @@
-language: objective-c
-cache:
-  directories:
-    - node_modules
-env:
-  - NODE_VERSION="9.9.0"
-before_install:
-  # nvm をインストールする。Travis の OS X 環境には nvm はデフォルトで入っていない
-  - git clone https://github.com/creationix/nvm.git /tmp/.nvm
-  - source /tmp/.nvm/nvm.sh
-  # 指定バージョンの Node をインストールする
-  - nvm install $NODE_VERSION
-  # 指定バージョンの Node を有効にする
-  - nvm use --delete-prefix $NODE_VERSION
-  - node --version
-script:
-  - node --version
+os: windows
+language: node_js
+node_js:
+- '10.15.2'
+script: node -v
 before_deploy:
-  - brew update
-  - brew install wine
-  - wine --version
-  - brew install makensis
-  - npm install electron-builder -g
   - cd app
+  - npm install electron-builder -g
   - npm install
   - electron-builder --win --ia32
   - mv ../build/TheDesk-setup.exe ../TheDesk-setup-ia32.exe
@@ -29,24 +13,22 @@ before_deploy:
   - electron-builder --win --x64
   - mv ../build/TheDesk-setup.exe ../TheDesk-setup.exe
   - mv ../build/TheDesk*.exe ../TheDesk.exe
-  - electron-builder --linux --x64
-  - mv ../build/thedesk*.snap ../TheDesk.snap
-  - electron-builder --mac --x64
-  - mv ../build/TheDesk*.dmg ../TheDesk.dmg
   - cd ../
+  - ls
+after_deploy: ls
 deploy:
+  skip_cleanup: true
   provider: releases
-  # GitHub にリリースするための API KEY を暗号化した値
   api_key:
     secure: jndR02p5KRTtcJk18b3YsXL2cC+yzEf1AOqXdpWciF8f3lO5oY01jlxd17xdHIcK7VywSsLVZpLToSdqAoIEhJ5OxEQ/FmA3FlmbwwD6ou13gLa4VGIvsBHveCmKGjVu0Z++atIy76tZYU1SOWFWv4B0ZhnVz2ca2VZynvLgw3YNsPJH7rHO966GXgRkGYJAJ4UvLg3sj/iztVh2FSfbUj5IGO1e/JHJO63wAo1MSQtRjkutVgl/djnBLC6vbL4YHkM3Ynpkx/YQEcxwrmeY0Ra8D5yYDq4MNIDMmZahWC+k4u2eA2Cj2ifBFNxbZvTN75vLwRBp6DsTNHsiqkXrSPDBdNeet31RbwTQ6LtsK8jqmL4S/59dmLcj7uCU2WxyBLPbJdbdZWlqW2ZQvfQY8QVAYy7S3MiHQWQN0oP5wqXk89jcgR42ig/zsqFNPpXHM4mExR7l/gDLPg0j9c3XEF6sWtk3FmJN1i4+B+9kn09b6UKlV7EFPKp8XcFNrz4ZcE9/I8lKwsqLVG2jAXIk7Z9LwDRcAmK5eG348X5zwFtOY6raKIvRw2cn92bPnEI+55v8A4WANS2647GFTgxHj30D0d/sOZmJ5BS34zpdWTgE0AlKg7sOqkncjqoW5J5zCh5Ow7b3KXvEvlAts44mAag8tZTectxMP4iguXvTnv4=
-  # Releases ページにアップロードするファイル
-  file:
+  file: 
     - TheDesk.exe
     - TheDesk-setup.exe
     - TheDesk-ia32.exe
     - TheDesk-setup-ia32.exe
-    - TheDesk.snap
-    - TheDesk.dmg
-  skip_cleanup: true
   on:
     repo: cutls/TheDesk
+branches:
+  only:
+  - master
+
