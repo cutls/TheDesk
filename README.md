@@ -78,6 +78,14 @@ Misskey(misskey.xyz)のトークンは含まれておりません。
 `npm install electron -g`  
 `cd TheDesk/app`  
 `npm install`  
+
+### electron-builder(推奨)
+`electron-builder --target`  
+`target`は`win`か`linux`か`mac`を指定してください。  
+Config is all on package.json  
+ビルド設定はすべてpackage.jsonに記載しています。  
+
+### electron-packager(非推奨)
 `npm install --save-dev electron-rebuild`  
   
 Linux/macOS  
@@ -90,14 +98,6 @@ WindowsでPython 2.xやVisualC++を一発でインストールできるツール
 `npm install --global windows-build-tools`  
   
 日本語話者向けですが、macOSビルドにはXCodeが要るとの情報があります。([とねぢ](https://minohdon.jp/@toneji)氏談)  
-
-### electron-builder
-`electron-builder --target`  
-`target`は`win`か`linux`か`mac`を指定してください。  
-Config is all on package.json  
-ビルド設定はすべてpackage.jsonに記載しています。  
-
-### electron-packager
 
 Windows  
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=4.0.5 --icon=.\app\thedesk.ico --overwrite`  
