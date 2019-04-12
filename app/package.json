@@ -83,6 +83,7 @@
     "linux": {
       "icon": "build/icons",
       "target": [
+        "zip",
         "snap"
       ],
       "category": "Network"
