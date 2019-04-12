@@ -31,6 +31,10 @@ deploy:
   # Releases ページにアップロードするファイル
   file:
     - TheDesk.dmg
+    - TheDesk-darwin-x64.zip
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
+branches:
+  only:
+  - master
