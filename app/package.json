@@ -1,7 +1,8 @@
 {
   "name": "thedesk",
-  "version": "18.2.1",
+  "version": "18.2.2",
   "description": "TheDesk is a Mastodon client for PC.",
+  "repository": "https://github.com/cutls/TheDesk",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

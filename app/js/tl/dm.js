@@ -243,7 +243,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
         var id = toot.id;
         var home = "";
 		if (toot.account.locked) {
-			var locked = ' <i class="fa fa-lock red-text"></i>';
+			var locked = ' <i class="fas fa-lock red-text"></i>';
 		} else {
 			var locked = "";
 		}
@@ -506,7 +506,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			toot.account.acct + locked + '</span></div>' +
 			'<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'' +
 			toot.url + '\');" title="' + date(toot.created_at, 'absolute') +
-			'('+lang.lang_parse_clickcopyurl+')"><i class="fa fa-clock-o"></i>' +
+			'('+lang.lang_parse_clickcopyurl+')"><i class="far fa-clock-o"></i>' +
 			date(toot.created_at, datetype) + '</span>' +
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="' +

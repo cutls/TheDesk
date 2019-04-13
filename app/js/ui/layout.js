@@ -153,15 +153,15 @@ function parseColumn() {
 			var animecss="";
 		}
 		if(acct.type=="notf"){
-			var exclude=lang.lang_excluded+':<br><input type="checkbox" class="filled-in" id="exc-reply-'+key+'" '+excludeCk(key,"mention")+' /><label for="exc-reply-'+key+'" class="exc-chb"><i class="fa fa-share exc-icons"></i></label> '+
-			'<input type="checkbox" class="filled-in" id="exc-fav-'+key+'"  '+excludeCk(key,"favourite")+' /><label for="exc-fav-'+key+'" class="exc-chb"><i class="fa fa-star exc-icons"></i></label> '+
-			'<input type="checkbox" class="filled-in" id="exc-bt-'+key+'" '+excludeCk(key,"reblog")+' /><label for="exc-bt-'+key+'" class="exc-chb" ><i class="fa fa-retweet exc-icons"></i></label> '+
-			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"follow")+' /><label for="exc-follow-'+key+'" class="exc-chb" ><i class="fa fa-users exc-icons"></i></label> '+
-			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"poll")+' /><label for="exc-poll-'+key+'" class="exc-chb" ><i class="fa fa-tasks exc-icons"></i></label> '+
+			var exclude=lang.lang_excluded+':<br><input type="checkbox" class="filled-in" id="exc-reply-'+key+'" '+excludeCk(key,"mention")+' /><label for="exc-reply-'+key+'" class="exc-chb"><i class="fas fa-share exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-fav-'+key+'"  '+excludeCk(key,"favourite")+' /><label for="exc-fav-'+key+'" class="exc-chb"><i class="fas fa-star exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-bt-'+key+'" '+excludeCk(key,"reblog")+' /><label for="exc-bt-'+key+'" class="exc-chb" ><i class="fas fa-retweet exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"follow")+' /><label for="exc-follow-'+key+'" class="exc-chb" ><i class="fas fa-users exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"poll")+' /><label for="exc-poll-'+key+'" class="exc-chb" ><i class="fas fa-tasks exc-icons"></i></label> '+
 			'<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude('+key+')">Filter</button><br>';
 		}else if(acct.type=="home"){
 			var exclude='<a onclick="ebtToggle(' + key +
-			')" class="setting nex"><i class="fa fa-retweet waves-effect nex" title="'+lang.lang_layout_excludingbt +'" style="font-size:24px"></i><span id="sta-bt-' +
+			')" class="setting nex"><i class="fas fa-retweet waves-effect nex" title="'+lang.lang_layout_excludingbt +'" style="font-size:24px"></i><span id="sta-bt-' +
 			key + '">Off</span></a>'+lang.lang_layout_excludingbt+'<br>';
 		}else{
 			var exclude="";
@@ -445,7 +445,7 @@ function coloradd(key,bg,txt){
 function webviewParse(url,key,insert,icnsert,css){
 	var html = '<div class="box" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" style="'+css+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+'">'+
-			'<div class="area-notice"><i class="fa fa-twitter waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
+			'<div class="area-notice"><i class="fab fa-twitter waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>'+
 			'<div class="area-notice_name tl-title">WebView('+url+')</div>'+
 			'<div class="area-sta"><input type="checkbox" id="webviewsel" value="true" class="filled-in"><label for="webviewsel">'+lang.lang_layout_webviewmode +'</label></div>'+
 			'<div class="area-a2"><a onclick="removeColumn(' + key +

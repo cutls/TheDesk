@@ -32,6 +32,13 @@ function nl2br(str) {
 	str = str.replace(/(\n|\r)/g, "<br />");
     return str;
 }
+function br2nl(str) {
+	if(!str){
+		return "";
+	}
+    str = str.replace(/<br \/>/g, "\r\n");
+    return str;
+}
 function formattime(date){
 	var str=date.getFullYear()+"-";
 	if(date.getMonth()+1<10){
