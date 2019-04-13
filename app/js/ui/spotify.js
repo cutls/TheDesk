@@ -142,8 +142,8 @@ function nowplaying(mode){
                     media(arg.path,"image/png","new");
                 }
             }else if(platform=="darwin"){
-                if(flag && arg.artworks[0]){
-                    ipc.send('bmp-image', [arg.artworks[0].path,0]);
+                if(flag && arg.existsArtwork){
+                    media(arg.artworks[0].data,"image/png","new");
                 }
             }
             var regExp = new RegExp("{song}", "g");
