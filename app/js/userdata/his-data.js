@@ -553,6 +553,36 @@ function showFrl(more, acct_id) {
 
 	});
 }
+//Keybase
+function udAdd(start) {
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json'
+		},
+		//body: JSON.stringify({})
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		var fields=json.attachment;
+		for(var i=0;i<fields.length;i++){
+			if(fields[i].type=="IdentityProof"){
+				if(fields[i].signatureAlgorithm=="keybase"){
+					var html='<a href="https://keybase.io/'+fields[i].name+'" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="'+lang.lang_hisdata_key.replace("{{set}}",fields[i].signatureAlgorithm)+'"><i class="fas fa-key" aria-hidden="true"></i>'+fields[i].signatureAlgorithm+':'+fields[i].name+'</a>';
+				}else{
+					var html='<span class="cbadge teal" style="max-width:200px;" title="'+lang.lang_hisdata_key.replace("{{set}}",fields[i].signatureAlgorithm)+'"><i class="fas fa-key" aria-hidden="true"></i>'+fields[i].signatureAlgorithm+':'+fields[i].name+'</span>';
+				}
+				$("#his-proof-prof").append(html)
+			}
+		}
+	});
+
+
+}
+
 
 //ユーザーマッチングリスト
 function showMat() {

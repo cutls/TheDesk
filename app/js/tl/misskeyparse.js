@@ -161,14 +161,16 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			disname="";
 		}
 		//絵文字があれば
-		Object.keys(toot.user.emojis).forEach(function(key5) {
-			var emoji = toot.user.emojis[key5];
-			var shortcode = emoji.name;
-			var emoji_url = '<img draggable="false" src="' + emoji.url +
-				'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
-			var regExp = new RegExp(":" + shortcode + ":", "g");
-			dis_name = dis_name.replace(regExp, emoji_url);
-		});
+		if(toot.user.emojis){
+			Object.keys(toot.user.emojis).forEach(function(key5) {
+				var emoji = toot.user.emojis[key5];
+				var shortcode = emoji.name;
+				var emoji_url = '<img draggable="false" src="' + emoji.url +
+					'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
+				var regExp = new RegExp(":" + shortcode + ":", "g");
+				dis_name = dis_name.replace(regExp, emoji_url);
+			});
+		}
 		if (mix == "notf") {
 			if (gif == "yes") {
 				noticeavatar = toot.user.avatarUrl;
@@ -182,14 +184,14 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'"></a>';
 			if (toot.type == "reply") {
 				var what = lang.lang_parse_mentioned;
-				var icon = '<i class="big-text fa fa-share teal-text"></i>';
+				var icon = '<i class="big-text fas fa-share teal-text"></i>';
 				noticeavatar="";
 			} else if (toot.type == "renote") {
 				var what = lang.lang_misskeyparse_renoted;
-				var icon = '<i class="big-text fa fa-retweet light-blue-text"></i>';
+				var icon = '<i class="big-text fas fa-retweet light-blue-text"></i>';
 			}  else if (toot.type == "quote") {
 				var what = lang.lang_misskeyparse_quoted;
-				var icon = '<i class="big-text fa fa-quote-right orange-text"></i>';
+				var icon = '<i class="big-text fas fa-quote-right orange-text"></i>';
 			} else if (toot.type == "reaction") {
 				var what = lang.lang_misskeyparse_reacted;
 				var reactions={
@@ -224,7 +226,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				var icon = '<i class="big-text material-icons indigo-text" style="font-size:17px">info</i>';
 			}
 			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.createdAt,
-				'absolute') + '('+lang.lang_parse_notftime+')"><i class="fa fa-clock-o"></i>' + date(toot.createdAt,
+				'absolute') + '('+lang.lang_parse_notftime+')"><i class="far fa-clock"></i>' + date(toot.createdAt,
 				datetype) +
 			'</span>'+icon+'<a onclick="udg(\'' + toot.user.username +
 				'\',\'' + acct_id + '\')" class="pointer grey-text">' + dis_name +
@@ -290,7 +292,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			if (toot.renote) {
 				var rebtxt = lang.lang_parse_btedsimple;
 				var rticon = "fa-retweet light-blue-text";
-				var notice = '<i class="big-text fa '+rticon+'"></i>'+ dis_name + "(@" + toot.user.username +
+				var notice = '<i class="big-text fas '+rticon+'"></i>'+ dis_name + "(@" + toot.user.username +
 					")<br>";
 					var boostback = "shared";
 				var uniqueid=toot.id;
@@ -777,7 +779,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			toot.user.username + '</span></div>' +
 			'<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'https://' +domain+"/notes/"+
 			toot.id + '\');" title="' + date(toot.createdAt, 'absolute') +
-			'('+lang.lang_parse_clickcopyurl+')"><i class="fa fa-clock-o"></i>' +
+			'('+lang.lang_parse_clickcopyurl+')"><i class="far fa-clock"></i>' +
 			date(toot.createdAt, datetype) + '</span>' +
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="toot ' + spoiler + '">' + content +
@@ -814,23 +816,23 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="misskeyreply(\'' + toot.id +
 			'\',\'' + acct_id + '\',' +
 			acct_id + ',\''+visen+
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_replyto+'"><i class="fa fa-share"></i></a></div>' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_replyto+'"><i class="fas fa-share"></i></a></div>' +
 			'<div class="action '+can_rt+' '+disp["rt"]+' '+noauth+'"><a onclick="renote(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_misskeyparse_renote+'"><i class="text-darken-3 fa fa-retweet ' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_misskeyparse_renote+'"><i class="text-darken-3 fas fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct"></span></a></div>' +
 			'<div class="action '+can_rt+' '+disp["qt"]+' '+noauth+'"><a onclick="renoteqt(\'' + toot.id + '\',' + acct_id +
-			',\'misskey.xyz\',\'misskey.xyz\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_misskeyparse_renoteqt+'"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
+			',\'misskey.xyz\',\'misskey.xyz\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_misskeyparse_renoteqt+'"><i class="text-darken-3 fas fa-quote-right"></i></a></div>' +
 			'<div class="action '+disp["fav"]+' '+noauth+'"><a onclick="reactiontoggle(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_misskeyparse_reaction+'"><i class="fa text-darken-3 fa-plus' +
+			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_misskeyparse_reaction+'"><i class="fas text-darken-3 fa-plus' +
 			if_fav + ' fav_' + toot.id + '"></i></div>' +
 			'<div class="' + if_mine + ' action '+disp["del"]+' '+noauth+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="fa fa-trash-o"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="fas fa-trash"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_pin+'"><i class="fa fa-map-pin pin_' + toot.id + '"></i></a></div>' 
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_pin+'"><i class="fas fa-map-pin pin_' + toot.id + '"></i></a></div>' 
 			+'<div class="' + if_mine + ' action '+disp["red"]+' '+noauth+'"><a onclick="redraft(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_redraft+'"><i class="material-icons">redo</i></a></div>'+trans+
@@ -867,7 +869,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 		var ftxt=lang.lang_parse_followed;
 		if(popup > 0 || popup==-1){
 			var notftext='<span class="cbadge"title="' + date(toot.createdAt,
-				'absolute') + '('+lang.lang_parse_notftime+')"><i class="fa fa-clock-o"></i>' + date(toot.createdAt,
+				'absolute') + '('+lang.lang_parse_notftime+')"><i class="far fa-clock"></i>' + date(toot.createdAt,
 				datetype) +
 			'</span>'+ftxt+'<br>';
 			var toot = toot.user;

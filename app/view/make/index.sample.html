@@ -4,13 +4,13 @@
 	<title>TheDesk</title>
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
-	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
-	<link href='../../css/tl.css' rel='stylesheet' type='text/css'>
-	<link href='../../css/userdata.css' rel='stylesheet' type='text/css'>
-	<link href='../../css/post.css' rel='stylesheet' type='text/css'>
+	<link href="../../css/tl.css" rel="stylesheet" type="text/css">
+	<link href="../../css/userdata.css" rel="stylesheet" type="text/css">
+	<link href="../../css/post.css" rel="stylesheet" type="text/css">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
-	<link href='../../css/sort.css' rel='stylesheet' type='text/css'>
+	<link href="../../css/sort.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
 	<meta charset="utf-8">
 	{{comment-start}}
@@ -249,7 +249,7 @@ var tlid=0;
 			<i class="material-icons">flag</i>
 			</a>
 			<a onclick="faicon()" class="pointer waves-effect" title="faicon" id="faicon-btn">
-			<i class="fa fa-fort-awesome"></i>
+			<i class="fab fa-fort-awesome"></i>
 			</a>
 		</div>
 	</div>
@@ -324,26 +324,26 @@ var tlid=0;
 	</li>
 	<li class="dm-hide">
 		<div class="collapsible-header">
-		<i class="text-darken-3 fa fa-retweet"></i>{{btedPeople}}
+		<i class="text-darken-3 false fas fa-retweet"></i>{{btedPeople}}
 		</div>
 		<div class="collapsible-body toot-reset" id="toot-rt">
 		</div>
 	</li>
 	</ul>
 	<div class="dm-hide">
-	{{useOtherAcct1}}(<i class="fa fa-retweet"></i>/<i class="fa fa-star"></i>{{useOtherAcct2}})<br>
+	{{useOtherAcct1}}(<i class="fas fa-retweet"></i>/<i class="fas fa-star"></i>{{useOtherAcct2}})<br>
 	<div class="row">
 		<div class="col s6">
 				<select id="status-acct-sel" class="acct-sel"></select>
 		</div>
 		<div class="col s2">
-			<button class="dropdown-button btn waves-effect" style="width:100%;" onclick="staEx('reply')"><i class="fa fa-share"></i>/button>
+			<button class="dropdown-button btn waves-effect" style="width:100%;" onclick="staEx('reply')"><i class="fas fa-share"></i>/button>
 		</div>
 		<div class="col s2">
-			<button class="dropdown-button btn waves-effect indigo" style="width:100%;" onclick="staEx('rt')"><i class="fa fa-retweet"></i></button>
+			<button class="dropdown-button btn waves-effect indigo" style="width:100%;" onclick="staEx('rt')"><i class="fas fa-retweet"></i></button>
 		</div>
 		<div class="col s2">
-			<button class="dropdown-button btn waves-effect orange" style="width:100%;" onclick="staEx('fav')"><i class="fa fa-star"></i></button>
+			<button class="dropdown-button btn waves-effect orange" style="width:100%;" onclick="staEx('fav')"><i class="fas fa-star"></i></button>
 		</div>
 	</div>
 	<div id="toot-tools">
@@ -383,8 +383,9 @@ var tlid=0;
 			<span class="cbadge" style="max-width:150px; width:150px; ">Since:
 			<span id="his-since"></span>
 			</span>
+			<div id="his-proof-prof"></div>
 			</div>
-			<div id="his-des"></div><br>
+			<div id="his-des" data-acct=""></div><br>
 			<div id="his-plus-action">
 					<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn" onclick="empUser()">{{empUser}}</a>
 					<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data" id="his-end-btn" onclick="pinUser()">{{endorse}}</a><br>
@@ -579,13 +580,13 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Usamin_18-2-1" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-2-3" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Usamin (18.2.0)</h5>
-					・<b>緊急の脆弱性修正</b>
+					<h5>Release Note Usamin (18.2.3)</h5>
+					・バグの修正
 					<h5>Release Note Usamin (18.2.0)</h5>
 ・tootsearchをひとつのカラムにしてエゴサが捗る<br>
 ・イントロダクション(初回起動時)の挙動修正<br>
@@ -829,7 +830,7 @@ var tlid=0;
 						<i class="material-icons nex" title="アイマストドントレンド" data-trans-title="trendtip">whatshot</i>
 				</a>
 				<a onclick="tips('spotify')" class="nex waves-effect">
-					<i class="fa fa-spotify nex" title="Spotify" data-trans-title="spotifytips"></i>
+					<i class="fab fa-spotify nex" title="Spotify" data-trans-title="spotifytips"></i>
 				</a>
 			</div>
 		</div>

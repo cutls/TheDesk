@@ -129,6 +129,10 @@ function nowplaying(mode){
 
 	    ipc.send('itunes', "");
 	    ipc.once('itunes-np', function (event, arg) {
+            if (arg.cmd) {
+              console.error(arg);
+              return;
+            }
             console.log(arg);
             var content=localStorage.getItem("np-temp");
             if(!content || content=="" || content=="null"){
@@ -142,8 +146,8 @@ function nowplaying(mode){
                     media(arg.path,"image/png","new");
                 }
             }else if(platform=="darwin"){
-                if(flag && arg.artworks[0]){
-                    ipc.send('bmp-image', [arg.artworks[0].path,0]);
+                if(flag && arg.existsArtwork){
+                    media(arg.artworks[0].data,"image/png","new");
                 }
             }
             var regExp = new RegExp("{song}", "g");

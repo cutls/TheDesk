@@ -11,7 +11,6 @@ function system(mainWindow, dir, lang) {
 	const BrowserWindow = electron.BrowserWindow;
 	const dialog = electron.dialog;
 	const os = require('os')
-    const fm = require('font-manager');
     const language=require("../main/language.js");
 	ipc.on('native-notf', function(e, args) {
         
@@ -172,6 +171,7 @@ function system(mainWindow, dir, lang) {
 		fn(data); // ソート後の配列を返す
 	}
 	ipc.on('fonts', (e, arg) => {
+		const fm = require('font-manager');
 		var fonts = fm.getAvailableFontsSync();
 		object_array_sort(fonts, 'family', 'asc', function(fonts_sorted) {
 			mainWindow.webContents.send('font-list', fonts_sorted);
