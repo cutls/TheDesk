@@ -4,7 +4,7 @@ function np(mainWindow){
     const app = electron.app;
     const fs = require("fs");
     var ipc = electron.ipcMain;
-    ipc.on('itunes', (e, args) => {
+    ipc.on('itunes', async (e, args) => {
         //Verified on Windows
         console.log("Access");
         if(args[0]=="set"){
@@ -25,14 +25,15 @@ function np(mainWindow){
             var platform=process.platform;
             var bit=process.arch;
             if(platform=="darwin"){
-            const nowplaying = require("itunes-nowplaying-mac")
-            nowplaying.getRawData().then(function (value) {
+              try {
+                const nowplaying = require("itunes-nowplaying-mac");
+                const value = await nowplaying.getRawData();
                 mainWindow.webContents.send('itunes-np', value);
-            }).catch(function (error) {
+              } catch (error) {
                 // エラーを返す
                 console.error(error);
                 mainWindow.webContents.send('itunes-np', error);
-            });
+              }
             }else{
                 var {NowPlaying,PlayerName} = require("nowplaying-node");
                 var nppath=join(app.getPath("userData"), "nowplaying");
