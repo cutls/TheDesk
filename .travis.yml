@@ -7,7 +7,7 @@ before_deploy:
   - npm install electron-builder -g
   - cd app
   - npm install
-  - electron-builder --mac --x64
+  - npm run build
   - mv ../build/TheDesk*.dmg ../TheDesk.dmg
   - mv ../build/TheDesk*.zip ../TheDesk-darwin-x64.zip
   - cd ../
