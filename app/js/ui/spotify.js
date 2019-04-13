@@ -129,6 +129,10 @@ function nowplaying(mode){
 
 	    ipc.send('itunes', "");
 	    ipc.once('itunes-np', function (event, arg) {
+            if (arg.cmd) {
+              console.error(arg);
+              return;
+            }
             console.log(arg);
             var content=localStorage.getItem("np-temp");
             if(!content || content=="" || content=="null"){

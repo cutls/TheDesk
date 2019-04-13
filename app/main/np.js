@@ -29,8 +29,9 @@ function np(mainWindow){
             nowplaying.getRawData().then(function (value) {
                 mainWindow.webContents.send('itunes-np', value);
             }).catch(function (error) {
-                // 非同期処理失敗。呼ばれない
-                console.log(error);
+                // エラーを返す
+                console.error(error);
+                mainWindow.webContents.send('itunes-np', error);
             });
             }else{
                 var {NowPlaying,PlayerName} = require("nowplaying-node");
