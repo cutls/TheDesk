@@ -35,8 +35,11 @@
 			
 		}else if(tags){
 			if(tags[2]){
-				tagShow(tags[2]);
-				Materialize.toast('<a class="btn-flat toast-action" href="detEx(\''+url+'\')">Open in browser</a>', 86400);
+				var acct_id=$a.parent().attr("data-acct");
+				if(!acct_id){
+					acct_id=0;
+				}
+				tl('tag',decodeURI(tags[2]),acct_id,'add')
 			}
 		}else if(ats){
 			console.log(ats);

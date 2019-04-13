@@ -4,9 +4,9 @@ function additional(acct_id, tlid) {
 	//メンション系
 	//$(".mention").attr("href", "");
 	
-	$(".mention").addClass("parsed");
+	$("#timeline-container .mention").addClass("parsed");
 
-	$(".hashtag").each(function(i, elem) {
+	$("#timeline-container .hashtag").each(function(i, elem) {
 		var tags = $(this).attr("href").match(
 			/https?:\/\/([-a-zA-Z0-9@.]+)\/tags\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
 		);
@@ -17,8 +17,6 @@ function additional(acct_id, tlid) {
 			}
 			
 		}
-		
-		
 	});
 	
 	//トゥートサムネ
@@ -34,6 +32,7 @@ function additional(acct_id, tlid) {
 				);
 			}
 		}else{
+			text=""
 			var urls =[]
 		}
 		
