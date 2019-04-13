@@ -161,14 +161,16 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			disname="";
 		}
 		//絵文字があれば
-		Object.keys(toot.user.emojis).forEach(function(key5) {
-			var emoji = toot.user.emojis[key5];
-			var shortcode = emoji.name;
-			var emoji_url = '<img draggable="false" src="' + emoji.url +
-				'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
-			var regExp = new RegExp(":" + shortcode + ":", "g");
-			dis_name = dis_name.replace(regExp, emoji_url);
-		});
+		if(toot.user.emojis){
+			Object.keys(toot.user.emojis).forEach(function(key5) {
+				var emoji = toot.user.emojis[key5];
+				var shortcode = emoji.name;
+				var emoji_url = '<img draggable="false" src="' + emoji.url +
+					'" class="emoji-img" data-emoji="'+shortcode+'" alt=" :'+shortcode+': ">';
+				var regExp = new RegExp(":" + shortcode + ":", "g");
+				dis_name = dis_name.replace(regExp, emoji_url);
+			});
+		}
 		if (mix == "notf") {
 			if (gif == "yes") {
 				noticeavatar = toot.user.avatarUrl;
