@@ -54,6 +54,9 @@
   "build": {
     "productName": "TheDesk",
     "appId": "top.thedesk",
+    "asarUnpack": [
+      "node_modules/itunes-nowplaying-mac"
+    ],
     "directories": {
       "output": "../build"
     },
