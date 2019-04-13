@@ -236,9 +236,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var icon = "fa-tasks  purple-text";
 			}
 			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.created_at,
-				'absolute') + '('+lang.lang_parse_notftime+')"><i class="fa fa-clock-o"></i>' + date(toot.created_at,
+				'absolute') + '('+lang.lang_parse_notftime+')"><i class="far fa-clock"></i>' + date(toot.created_at,
 				datetype) +
-			'</span><i class="big-text fa '+icon+'"></i><a onclick="udg(\'' + toot.account.id +
+			'</span><i class="big-text fas '+icon+'"></i><a onclick="udg(\'' + toot.account.id +
 				'\',\'' + acct_id + '\')" class="pointer grey-text">' + dis_name +
 				"(@" + toot.account.acct +
 				")</a>";
@@ -334,7 +334,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				}else if(localStorage.getItem("domain_" + acct_id)=="mstdn.osaka" && !locale){
 					rebtxt = "がしばいた";
 				}
-				var notice = '<i class="big-text fa '+rticon+'"></i>'+ dis_name + "(@" + toot.account.acct +
+				var notice = '<i class="big-text fas '+rticon+'"></i>'+ dis_name + "(@" + toot.account.acct +
 					")<br>";
 					var boostback = "shared";
 				var uniqueid=toot.id;
@@ -387,7 +387,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			var divider = '<div class="divider"></div>';
 		}
 		if (toot.account.locked) {
-			var locked = ' <i class="fa fa-lock red-text"></i>';
+			var locked = ' <i class="fas fa-lock red-text"></i>';
 		} else {
 			var locked = "";
 		}
@@ -735,7 +735,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				poll=poll+'<div class="'+voteclass+' vote vote_'+acct_id+'_'+toot.poll.id+'_'+keyc+'" onclick="'+votesel+'">'+escapeHTML(choice.title)+'<span class="vote_'+acct_id+'_'+toot.poll.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
 			});
 			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
-			'"><i class="fa fa-calendar-times-o"></i>' +
+			'"><i class="far fa-calendar-times"></i>' +
 			 ended+ '</span></div>';
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
@@ -755,7 +755,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			toot.account.acct + locked + '</span></div>' +
 			'<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'' +
 			toot.url + '\');" title="' + date(toot.created_at, 'absolute') +
-			'('+lang.lang_parse_clickcopyurl+')"><i class="fa fa-clock-o"></i>' +
+			'('+lang.lang_parse_clickcopyurl+')"><i class="far fa-clock"></i>' +
 			date(toot.created_at, datetype) + '</span>' +
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="' +
@@ -774,27 +774,27 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'<div class="action '+disp["re"]+' '+noauth+'"><a onclick="re(\'' + toot.id +
 			'\',\'' + to_mention + '\',' +
 			acct_id + ',\''+visen+
-			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_replyto+'"><i class="fa fa-share"></i><span class="rep_ct">' + replyct +
+			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_replyto+'"><i class="fas fa-share"></i><span class="rep_ct">' + replyct +
 			'</a></span></a></div>' +
 			'<div class="action '+can_rt+' '+disp["rt"]+' '+noauth+'"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_bt+'"><i class="fa fa-retweet ' +
+			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_bt+'"><i class="fas fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
 			'</span></a></div>' +
 			'<div class="action '+can_rt+' '+disp["qt"]+' '+noauth+' '+qtClass+'"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
 			',\'' + toot.account.acct +'\',\''+toot.url+
-			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_quote+'"><i class="text-darken-3 fa fa-quote-right"></i></a></div>' +
+			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_quote+'"><i class="text-darken-3 fas fa-quote-right"></i></a></div>' +
 			'<div class="action '+disp["fav"]+' '+noauth+'"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_fav+'"><i class="fa text-darken-3 fa-star' +
+			'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="'+lang.lang_parse_fav+'"><i class="fas text-darken-3 fa-star' +
 			if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
 			'</a></span></div>' +
 			'<div class="' + if_mine + ' action '+disp["del"]+' '+noauth+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="fa fa-trash-o"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="far fa-trash"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_pin+'"><i class="fa fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_pin+'"><i class="fas fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 
 			+'<div class="' + if_mine + ' action '+disp["red"]+' '+noauth+'"><a onclick="redraft(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_redraft+'"><i class="material-icons">redo</i></a></div>'+trans+
@@ -833,7 +833,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			var notf=false;
 		}
 		if (toot.locked) {
-			var locked = ' <i class="fa fa-lock red-text"></i>';
+			var locked = ' <i class="fas fa-lock red-text"></i>';
 		} else {
 			var locked = "";
 		}

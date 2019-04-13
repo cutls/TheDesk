@@ -111,7 +111,7 @@ function voteMastodonrefresh(acct_id,id){
 				poll=poll+'<div class="pointer vote vote_'+acct_id+'_'+json.id+'_'+keyc+'" onclick="'+votesel+'">'+choice.title+'<span class="vote_'+acct_id+'_'+json.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
 			});
 			poll=poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(json.expires_at, 'absolute') +
-			'"><i class="fa fa-calendar-times-o"></i>' +
+			'"><i class="far fa-calendar-times"></i>' +
             date(json.expires_at, datetype) + '</span>';
             $('.vote_'+acct_id+'_'+json.id).html(poll)
 		}

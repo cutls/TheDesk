@@ -200,6 +200,8 @@ function udg(user, acct_id) {
 				$(".only-his-data").show();
 			}
 		todc();
+		//外部データ取得(死かもしれないので)
+		udAdd(json.url);
 	});
 }
 function misskeyUdg(user, acct_id) {
@@ -468,6 +470,7 @@ function reset(){
 	$("#his-openin").attr("data-href", "");
 	$("#his-float-timeline").show();
 	$("#his-float-blocked").hide();
+	$("#his-proof-prof").html("")
 }
 $('#my-data-nav .custom-tab').on('click',function(){
 	var target=$(this).find("a").attr("go");
