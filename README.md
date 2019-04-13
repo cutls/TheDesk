@@ -73,15 +73,34 @@ iTunes NowPlayingにアルバムアートワークを付けてくれた人
 ## Build/ビルド
 
 Misskey(misskey.xyz) application token is not in cutls/TheDesk  
-Misskey(misskey.xyz)のトークンは含まれておりません。  
-`git clone https://github.com/cutls/TheDesk`  
-`npm install electron -g`  
-`cd TheDesk/app`  
-`npm install`  
+Misskey(misskey.xyz)のトークンは含まれておりません。
+
+```sh
+git clone https://github.com/cutls/TheDesk
+cd TheDesk/app
+npm install
+npm install --only=dev
+```
 
 ### electron-builder(推奨)
-`electron-builder --target`  
-`target`は`win`か`linux`か`mac`を指定してください。  
+Use npm scripts.  
+npm scriptsを利用します
+
+```sh
+# Build for current platform
+# 実行している環境向けにビルド
+npm run build
+
+# Select build target
+# ターゲットを指定してビルド
+## Windows
+npm run build:win
+
+## Windows and Linux (The macOS target should run on macOS. So, this option hasn't include the build for macOS)
+## macOS向けのビルドにはmacOSで実行する必要があるためこのコマンドではビルドされません
+npm run build:all
+```
+
 Config is all on package.json  
 ビルド設定はすべてpackage.jsonに記載しています。  
 

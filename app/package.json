@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dist": "build --linux snap",
+    "build": "electron-builder",
     "build:all": "electron-builder --win --linux",
     "build:win": "electron-builder --win"
   },
@@ -98,7 +99,6 @@
   },
   "devDependencies": {
     "electron": "^4.1.4",
-    "electron-packager": "^13.1.1",
-    "electron-rebuild": "^1.8.4"
+    "electron-builder": "^20.39.0"
   }
 }
