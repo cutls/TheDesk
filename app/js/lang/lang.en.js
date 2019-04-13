@@ -141,6 +141,7 @@ var lang={
     "lang_hisdata_frcwarn":"Unfollow accounts will be shown.",
     "lang_hisdata_taketime":"It will take 30s ~ several minutes",
     "lang_hisdata_notonmisskey":"Misskey is unable to request.",
+    "lang_hisdata_key":"This user is proofed by {{set}}",
     //userdata/showOnTL.js
     "lang_showontl_movetxt":"This account was moved",
     "lang_showontl_movebtn":"Continue on the new account",

@@ -143,6 +143,7 @@ var lang={
     "lang_hisdata_frcwarn":"非フォローだけど絡みがある時に表示されます。",
     "lang_hisdata_taketime":"30秒から数分かかります",
     "lang_hisdata_notonmisskey":"このシステムはMisskeyにはありません。",
+    "lang_hisdata_key":"このユーザーの信頼性は{{set}}によって示されています",
 //userdata/showOnTL.js
     "lang_showontl_movetxt":"このアカウントは移行しています",
     "lang_showontl_movebtn":"移行先を見る",

@@ -571,16 +571,16 @@ function udAdd(start) {
 		for(var i=0;i<fields.length;i++){
 			if(fields[i].type=="IdentityProof"){
 				if(fields[i].signatureAlgorithm=="keybase"){
-					var html='<a href="https://keybase.io/'+fields[i].name+'" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;"><i class="fas fa-key" aria-hidden="true"></i>'+fields[i].signatureAlgorithm+':'+fields[i].name+'</a>';
+					var html='<a href="https://keybase.io/'+fields[i].name+'" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="'+lang.lang_hisdata_key.replace("{{set}}",fields[i].signatureAlgorithm)+'"><i class="fas fa-key" aria-hidden="true"></i>'+fields[i].signatureAlgorithm+':'+fields[i].name+'</a>';
 				}else{
-					var html='<span class="cbadge teal" style="max-width:200px;"><i class="fas fa-key" aria-hidden="true"></i>'+fields[i].signatureAlgorithm+':'+fields[i].name+'</span>';
+					var html='<span class="cbadge teal" style="max-width:200px;" title="'+lang.lang_hisdata_key.replace("{{set}}",fields[i].signatureAlgorithm)+'"><i class="fas fa-key" aria-hidden="true"></i>'+fields[i].signatureAlgorithm+':'+fields[i].name+'</span>';
 				}
 				$("#his-proof-prof").append(html)
 			}
 		}
 	});
 
-	
+
 }
 
 
