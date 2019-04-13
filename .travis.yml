@@ -12,11 +12,10 @@ before_install:
   - node --version
 script: node -v
 before_deploy:
-  - brew update
   - npm install electron-builder -g
   - cd app
   - npm install
-  - electron-builder --mac --x64
+  - electron-builder --mac --x64 p never
   - mv ../build/TheDesk*.dmg ../TheDesk.dmg
   - mv ../build/TheDesk*.zip ../TheDesk-darwin-x64.zip
   - cd ../
