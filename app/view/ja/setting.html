@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" style="overflow:scroll">
 
 <head>
 	<title>Settings - TheDesk</title>
@@ -56,8 +56,8 @@
 				<div id="envView">
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
-						<template v-if=item.text.desc>
-							<templete v-html=item.text.desc></templete><br>
+						<template v-if="item.text.desc">
+							<templete v-html="item.text.desc"></templete><br>
 						</template>
 						<template v-if="item.id=='notf'"><a onclick="notftest()"
 								class="pointer">通知テスト</a><br></template>
@@ -85,7 +85,7 @@
 					</template>
 				</div>
 				<h5>フォント</h5>
-				「選択」を押してフォントを選んでください。<br>
+				「選択」を押してフォントを選んでください。(Linuxでは動きません)<br>
 				<button class="btn waves-effect" style="width:100px;" onclick="font()">選択</button><br>
 				<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
 				<br>
@@ -158,11 +158,11 @@
 						<input type="hidden" id="color-picker2_value">
 					</div>
 					<div>
-						<h5>Accent</h5>ブーストの背景色など
-						<div id="color-picker3-wrap">
-							<div class="color-picker" id="color-picker3"></div>
-						</div>
-						<input type="hidden" id="color-picker3_value">
+					<h5>Accent</h5>ブーストの背景色など
+					<div id="color-picker3-wrap">
+						<div class="color-picker" id="color-picker3"></div>
+					</div>
+					<input type="hidden" id="color-picker3_value">
 					</div>
 				</div>
 				<button class="btn-large waves-effect" onclick="customComp()">変更</button>&nbsp;<button
@@ -184,8 +184,8 @@
 				<div id="tlView">
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
-						<template v-if=item.text.desc>
-							<templete v-html=item.text.desc></templete><br>
+						<template v-if="item.text.desc">
+							<templete v-html="item.text.desc"></templete><br>
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
@@ -210,6 +210,11 @@
 						</template><br>
 					</template>
 				</div>
+				<h5>カスタム通知音</h5>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(1)">Custom 1</button><span id="c1-file"></span><br>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(2)">Custom 2</button><span id="c2-file"></span><br>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(3)">Custom 3</button><span id="c3-file"></span><br>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(4)">Custom 4</button><span id="c4-file"></span><br>
 			</div>
 		</li>
 		<li>
@@ -220,8 +225,8 @@
 				<div id="postView">
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
-						<template v-if=item.text.desc>
-							<templete v-html=item.text.desc></templete><br>
+						<template v-if="item.text.desc">
+							<templete v-html="item.text.desc"></templete><br>
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">

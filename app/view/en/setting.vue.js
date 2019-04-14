@@ -7,6 +7,27 @@ var yesno=[
         value:"no"
     }
 ];
+var sound=[
+    {
+        text:"None",
+        value:"none"
+    },{
+        text:"Default",
+        value:"default"
+    },{
+        text:"Custom 1",
+        value:"c1"
+    },{
+        text:"Custom 2",
+        value:"c2"
+    },{
+        text:"Custom 3",
+        value:"c3"
+    },{
+        text:"Custom 4",
+        value:"c4"
+    }
+];
 var envConstruction=[
     {
         id:"popup",
@@ -285,6 +306,46 @@ var tlConstruction=[
             head:"Animation of timelines",
             desc:"",
             checkbox:yesno
+        }
+    },{
+        id:"replySound",
+        storage:"replySound",
+        checkbox:true,
+        setValue:"default",
+        text:{
+            head:"Sound(Reply)",
+            desc:"",
+            checkbox:sound
+        }
+    },{
+        id:"favSound",
+        storage:"favSound",
+        checkbox:true,
+        setValue:"default",
+        text:{
+            head:"Sound(Fav)",
+            desc:"",
+            checkbox:sound
+        }
+    },{
+        id:"btSound",
+        storage:"btSound",
+        checkbox:true,
+        setValue:"default",
+        text:{
+            head:"Sound(Boost)",
+            desc:"",
+            checkbox:sound
+        }
+    },{
+        id:"followSound",
+        storage:"followSound",
+        checkbox:true,
+        setValue:"default",
+        text:{
+            head:"Sound(Follow)",
+            desc:"",
+            checkbox:sound
         }
     }
 ];

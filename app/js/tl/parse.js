@@ -251,22 +251,44 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						$(".notf-reply_" + acct_id).text(replyct*1-(-1));
 						localStorage.setItem("notf-reply_" + acct_id,replyct*1-(-1))
 						$(".notf-reply_" + acct_id).removeClass("hide")
+						var sound=localStorage.getItem("replySound");
 					}else if (toot.type == "reblog") {
 						var btct=localStorage.getItem("notf-bt_" + acct_id)
 						$(".notf-bt_" + acct_id).text(btct*1-(-1));
 						localStorage.setItem("notf-bt_" + acct_id,btct*1-(-1))
 						$(".notf-bt_" + acct_id).removeClass("hide")
+						var sound=localStorage.getItem("btSound");
 					}else if (toot.type == "favourite") {
 						var favct=localStorage.getItem("notf-fav_" + acct_id)
 						$(".notf-fav_" + acct_id).text(favct*1-(-1));
 						localStorage.setItem("notf-fav_" + acct_id,favct*1-(-1))
 						$(".notf-fav_" + acct_id).removeClass("hide")
+						var sound=localStorage.getItem("favSound");
 					}
 				}
 				
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if(popup>0){
 					Materialize.toast("["+domain+"]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
+				}
+				//通知音
+				if(sound=="default" || !sound){
+					var file="../../source/notif.wav"
+				}else if(sound=="c1"){
+					var file=localStorage.getItem("custom1");
+				}else if(sound=="c2"){
+					var file=localStorage.getItem("custom2");
+				}else if(sound=="c3"){
+					var file=localStorage.getItem("custom3");
+				}else if(sound=="c4"){
+					var file=localStorage.getItem("custom4");
+				}
+				if(file){
+					request = new XMLHttpRequest();
+      				request.open("GET", file, true);
+      				request.responseType = "arraybuffer";
+      				request.onload = playSound;
+      				request.send();
 				}
 				if(native=="yes"){
 					var electron = require("electron");
@@ -737,6 +759,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
 			'"><i class="far fa-calendar-times"></i>' +
 			 ended+ '</span></div>';
+		}
+		//Quote
+		if(toot.quote){
+			poll=poll+'<div class="quote-renote"><div class="renote-icon"><img src="'+toot.quote.account.avatar+'"></div><div class="renote-user">'+escapeHTML(toot.quote.account.display_name)+'</div><div class="renote-text">'+toot.quote.content+'</div></div>'
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +

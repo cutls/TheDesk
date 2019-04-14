@@ -182,3 +182,20 @@ const {
 webviewDom.addEventListener('new-window', function(e) {
     shell.openExternal(e.url);
 });
+function playSound() {
+	window.AudioContext = window.AudioContext || window.webkitAudioContext;
+	context = new AudioContext();
+	context.createBufferSource().start(0);
+	context.decodeAudioData(request.response, function (buf) {
+		console.log(source)
+		source.buffer = buf;
+		source.loop = false;
+	});
+	source = context.createBufferSource();
+	volumeControl = context.createGain();
+	source.connect(volumeControl);
+	volumeControl.connect(context.destination);
+	volumeControl.gain.value=0.8
+	console.log(volumeControl)
+	source.start(0);
+}
