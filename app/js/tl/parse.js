@@ -417,7 +417,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			var via = '';
 			viashow="hide";
 		} else {
-			var via = toot.application.name;
+			var via = escapeHTML(toot.application.name);
 			//強調チェック
 			Object.keys(emp).forEach(function(key6) {
 				var cli = emp[key6];
@@ -474,6 +474,40 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		var viewer = "";
 		var hasmedia = "";
 		var youtube = "";
+		//Poll
+		var poll="";
+		if(toot.poll){
+			var choices=toot.poll.options;
+			if(toot.poll.voted){
+				var myvote=lang.lang_parse_voted;
+				var result_hide="";
+			}else{
+				myvote='<a onclick="voteMastodon(\''+acct_id+'\',\''+toot.poll.id+'\')" class="votebtn">'+lang.lang_parse_vote+'</a><br>';
+				if(choices[0].votes_count===0 || choices[0].votes_count>0){
+					myvote=myvote+'<a onclick="showResult(\''+acct_id+'\',\''+toot.poll.id+'\')" class="pointer">'+lang.lang_parse_unvoted+"</a>";
+				}
+				var result_hide="hide";
+			}
+			if(toot.poll.expired){
+				var ended=lang.lang_parse_endedvote;
+			}else{
+				var ended=date(toot.poll.expires_at, datetype);
+			}
+			Object.keys(choices).forEach(function(keyc) {
+				var choice = choices[keyc];
+				if(!toot.poll.voted && !toot.poll.expired){
+					var votesel='voteSelMastodon(\''+acct_id+'\',\''+toot.poll.id+'\','+keyc+','+toot.poll.multiple+')';
+					var voteclass="pointer waves-effect waves-light";
+				}else{
+					var votesel="";
+					var voteclass="";
+				}
+				poll=poll+'<div class="'+voteclass+' vote vote_'+acct_id+'_'+toot.poll.id+'_'+keyc+'" onclick="'+votesel+'">'+escapeHTML(choice.title)+'<span class="vote_'+acct_id+'_'+toot.poll.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
+			});
+			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
+			'"><i class="far fa-calendar-times"></i>' +
+			 ended+ '</span></div>';
+		}
 		if(toot.emojis){
 			var emojick = toot.emojis[0];
 		}else{
@@ -489,6 +523,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
 				spoil = spoil.replace(regExp, emoji_url);
+				poll = poll.replace(regExp, emoji_url);
 			});
 		}
 		//ニコフレ絵文字
@@ -507,6 +542,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
 				spoil = spoil.replace(regExp, emoji_url);
+				poll = poll.replace(regExp, emoji_url);
 			});
 		}
 		//デフォ絵文字
@@ -522,6 +558,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		}
 		if(notice){
 			notice=twemoji.parse(notice);
+		}
+		if(poll){
+			poll=twemoji.parse(poll);
 		}
 		var mediack = toot.media_attachments[0];
 		//メディアがあれば
@@ -725,40 +764,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				}
 		   }
 		}
-		}
-		//Poll
-		var poll="";
-		if(toot.poll){
-			var choices=toot.poll.options;
-			if(toot.poll.voted){
-				var myvote=lang.lang_parse_voted;
-				var result_hide="";
-			}else{
-				myvote='<a onclick="voteMastodon(\''+acct_id+'\',\''+toot.poll.id+'\')" class="votebtn">'+lang.lang_parse_vote+'</a><br>';
-				if(choices[0].votes_count===0 || choices[0].votes_count>0){
-					myvote=myvote+'<a onclick="showResult(\''+acct_id+'\',\''+toot.poll.id+'\')" class="pointer">'+lang.lang_parse_unvoted+"</a>";
-				}
-				var result_hide="hide";
-			}
-			if(toot.poll.expired){
-				var ended=lang.lang_parse_endedvote;
-			}else{
-				var ended=date(toot.poll.expires_at, datetype);
-			}
-			Object.keys(choices).forEach(function(keyc) {
-				var choice = choices[keyc];
-				if(!toot.poll.voted && !toot.poll.expired){
-					var votesel='voteSelMastodon(\''+acct_id+'\',\''+toot.poll.id+'\','+keyc+','+toot.poll.multiple+')';
-					var voteclass="pointer waves-effect waves-light";
-				}else{
-					var votesel="";
-					var voteclass="";
-				}
-				poll=poll+'<div class="'+voteclass+' vote vote_'+acct_id+'_'+toot.poll.id+'_'+keyc+'" onclick="'+votesel+'">'+escapeHTML(choice.title)+'<span class="vote_'+acct_id+'_'+toot.poll.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
-			});
-			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
-			'"><i class="far fa-calendar-times"></i>' +
-			 ended+ '</span></div>';
 		}
 		//Quote
 		if(toot.quote){

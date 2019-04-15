@@ -311,7 +311,7 @@ var tlConstruction=[
         id:"replySound",
         storage:"replySound",
         checkbox:true,
-        setValue:"default",
+        setValue:"none",
         text:{
             head:"@@replySound@@",
             desc:"",
@@ -321,7 +321,7 @@ var tlConstruction=[
         id:"favSound",
         storage:"favSound",
         checkbox:true,
-        setValue:"default",
+        setValue:"none",
         text:{
             head:"@@favSound@@",
             desc:"",
@@ -331,7 +331,7 @@ var tlConstruction=[
         id:"btSound",
         storage:"btSound",
         checkbox:true,
-        setValue:"default",
+        setValue:"none",
         text:{
             head:"@@btSound@@",
             desc:"",
@@ -341,7 +341,7 @@ var tlConstruction=[
         id:"followSound",
         storage:"followSound",
         checkbox:true,
-        setValue:"default",
+        setValue:"none",
         text:{
             head:"@@followSound@@",
             desc:"",
