@@ -76,7 +76,7 @@ a,button{
 <img src="./img/desk.png" style="max-width:70%;">
 <h5>TheDesk</h5>
 <div class='container'>
-    <div class='area-name1'>External version</div>
+    <div class='area-name1'>Display version</div>
     <div class='area-data1' id="now"></div>
     <div class='area-name2'>Internal version</div>
     <div class='area-data2' id="ver"></div>
@@ -87,13 +87,17 @@ a,button{
     <div class='area-name5'>Node.js</div>
     <div class='area-data5' id="node"></div>
   </div>
-  <div class="cp">Copyright &copy; TheDesk 2018 All rights reserved.<br><a href="https://thedesk.top" target="_blank">Web site</a></div>
+  <div class="cp">Copyright &copy; <a href="https://kirishima.cloud/@Cutls" target="_blank">Cutls P</a> 2018 All rights reserved.<br>
+    Thanks:<a href="https://minohdon.jp/@toneji" target="_blank">toneji</a>/<a href="https://popon.pptdn.jp/@popn_ja" target="_blank">popn_ja</a>/<a href="https://pawoo.net/@kPherox" target="_blank">kPherox</a> and all users
+    <img draggable="false" style="width:0.8rem;top: 1px;margin-left: 1px;position: relative;" alt="❤️" title=":heart:" src="https://twemoji.maxcdn.com/2/72x72/2764.png">
+<br><a href="https://thedesk.top" target="_blank">Web site</a></div>
 <button onclick="window.close()" class="btn waves-effect indigo" style="width:calc(100% - 10px);"><i class="material-icons left">close</i>Close</button>
 <script type="text/javascript" src="./js/ui/theme.js"></script>
 <script>
     $("#now").text(localStorage.getItem("ver"));
     var electron = require("electron");
     var remote=electron.remote;
+    const shell=electron.shell;
     //JSON.parse(fs.readFileSync(info_path, 'utf8'));
     console.log(process.versions);
     $("#node").text(process.version);
@@ -104,6 +108,9 @@ a,button{
         var ver=m[1];
         $("#ver").text(ver);
     }
-    
+$(document).on('click', 'a', e => {
+    var url =  $(e.target).attr('href');
+    shell.openExternal(url);
+    return false;
+});
 </script>
-<script type="text/javascript" src="./js/platform/end.js"></script>
