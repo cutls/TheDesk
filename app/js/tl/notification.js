@@ -112,73 +112,6 @@ function notfColumn(acct_id, tlid, sys){
 		at;
 	}
 
-	console.log(start);
-	var wsid = websocketNotf.length;
-	websocketNotf[acct_id] = new WebSocket(start);
-	console.log(websocketNotf);
-	websocketNotf[acct_id].onopen = function(mess) {
-		console.log("Connect Streaming API(Notf):");
-		console.log(mess);
-		$("i[data-notf=" + acct_id +"]").removeClass("red-text");
-
-	}
-	websocketNotf[acct_id].onmessage = function(mess) {
-		console.log("Receive Streaming API(Notf):"+acct_id);
-		var popup = localStorage.getItem("popup");
-			if (!popup) {
-				popup = 0;
-			}
-			console.log(domain)
-		if(misskey){
-			console.log("misskey")
-			console.log(JSON.parse(mess.data));
-			if (JSON.parse(mess.data).type == "notification") {
-				var obj = JSON.parse(mess.data).body;
-				console.log(obj);
-				if(obj.type!="follow"){
-					
-					templete = misskeyParse([obj], 'notf', acct_id, 'notf', popup);
-				}else{
-					templete = misskeyUserparse([obj], 'notf', acct_id, 'notf', popup);
-				}
-				if(obj.type=="reaction"){
-					console.log("refresh")
-					reactRefresh(acct_id,obj.note.id)
-				}
-				if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
-					$("div[data-notf=" + acct_id +"]").prepend(templete);
-				}
-				jQuery("time.timeago").timeago();
-			}else if(JSON.parse(mess.data).type == "note-updated"){
-				var obj = JSON.parse(mess.data).body.note;
-				reactRefreshCore(obj)
-			}
-		}else{
-		var obj = JSON.parse(JSON.parse(mess.data).payload);
-		console.log(obj);
-		var type = JSON.parse(mess.data).event;
-		if (type == "notification") {
-			var templete="";
-			localStorage.setItem("lastnotf_" + acct_id,obj.id);
-			if(obj.type!="follow"){
-				templete = parse([obj], 'notf', acct_id, 'notf', popup);
-			}else{
-				templete = userparse([obj], 'notf', acct_id, 'notf', popup);
-			}
-			if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
-				$(".tl[data-notf=" + acct_id +"]").prepend(templete);
-			}
-			$(".notf-timeline[data-acct=" + acct_id +"]").prepend(templete);
-			jQuery("time.timeago").timeago();
-		} else if (type == "delete") {
-			$("[toot-id=" + obj + "]").hide();
-			$("[toot-id=" + obj + "]").remove();
-		}
-		}
-	}
-	websocketNotf[acct_id].onerror = function(error) {
-		console.error('WebSocket Error ' + error);
-	};
 }
 function notfCommon(acct_id, tlid, sys) {
 	todo("Notifications Loading...");
@@ -318,6 +251,7 @@ function notfCommon(acct_id, tlid, sys) {
 				}
 				if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
 					$("div[data-notf=" + acct_id +"]").prepend(templete);
+					$("div[data-const=notf_"+acct_id+"]").prepend(templete);
 				}
 				jQuery("time.timeago").timeago();
 			}else if(JSON.parse(mess.data).type == "note-updated"){
@@ -338,6 +272,7 @@ function notfCommon(acct_id, tlid, sys) {
 			}
 			if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
 				$("div[data-notf=" + acct_id +"]").prepend(templete);
+				$("div[data-const=notf_"+acct_id+"]").prepend(templete);
 			}
 			jQuery("time.timeago").timeago();
 		} else if (type == "delete") {
