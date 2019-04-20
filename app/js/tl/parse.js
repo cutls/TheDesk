@@ -252,18 +252,27 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						localStorage.setItem("notf-reply_" + acct_id,replyct*1-(-1))
 						$(".notf-reply_" + acct_id).removeClass("hide")
 						var sound=localStorage.getItem("replySound");
+						if(sound=="default"){
+							var file="../../source/notif3.wav"
+						}
 					}else if (toot.type == "reblog") {
 						var btct=localStorage.getItem("notf-bt_" + acct_id)
 						$(".notf-bt_" + acct_id).text(btct*1-(-1));
 						localStorage.setItem("notf-bt_" + acct_id,btct*1-(-1))
 						$(".notf-bt_" + acct_id).removeClass("hide")
 						var sound=localStorage.getItem("btSound");
+						if(sound=="default"){
+							var file="../../source/notif2.wav"
+						}
 					}else if (toot.type == "favourite") {
 						var favct=localStorage.getItem("notf-fav_" + acct_id)
 						$(".notf-fav_" + acct_id).text(favct*1-(-1));
 						localStorage.setItem("notf-fav_" + acct_id,favct*1-(-1))
 						$(".notf-fav_" + acct_id).removeClass("hide")
 						var sound=localStorage.getItem("favSound");
+						if(sound=="default"){
+							var file="../../source/notif.wav"
+						}
 					}
 				}
 				
@@ -272,9 +281,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					Materialize.toast("["+domain+"]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
 				}
 				//通知音
-				if(sound=="default" || !sound){
-					var file="../../source/notif.wav"
-				}else if(sound=="c1"){
+				if(sound=="c1"){
 					var file=localStorage.getItem("custom1");
 				}else if(sound=="c2"){
 					var file=localStorage.getItem("custom2");
