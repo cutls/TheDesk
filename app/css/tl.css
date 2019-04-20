@@ -249,6 +249,29 @@ grid-area: toot;
   margin:2px;
   grid-area: side;
 }
+
+.quote-renote{
+  display: grid;
+  grid-template-columns: 43px 2fr 1fr;
+  grid-template-areas: 'ricon ruser' 'ricon rtext';
+  border: 1px solid;
+  margin-top: 3px;
+  padding: 1px;
+  border-radius: 3px;
+}
+.renote-icon{
+  grid-area: ricon;
+}
+.renote-icon img{
+  width:43px;
+}
+.renote-user{
+  grid-area: ruser;
+}
+.renote-text{
+  grid-area: rtext;
+}
+
 .btn-flat{
   color:var(--color);
 }

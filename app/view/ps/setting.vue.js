@@ -7,6 +7,27 @@ var yesno=[
         value:"no"
     }
 ];
+var sound=[
+    {
+        text:"@@none@@",
+        value:"none"
+    },{
+        text:"@@default@@",
+        value:"default"
+    },{
+        text:"Custom 1",
+        value:"c1"
+    },{
+        text:"Custom 2",
+        value:"c2"
+    },{
+        text:"Custom 3",
+        value:"c3"
+    },{
+        text:"Custom 4",
+        value:"c4"
+    }
+];
 var envConstruction=[
     {
         id:"popup",
@@ -285,6 +306,46 @@ var tlConstruction=[
             head:"crwdns2446:0crwdne2446:0",
             desc:"",
             checkbox:yesno
+        }
+    },{
+        id:"replySound",
+        storage:"replySound",
+        checkbox:true,
+        setValue:"none",
+        text:{
+            head:"@@replySound@@",
+            desc:"",
+            checkbox:sound
+        }
+    },{
+        id:"favSound",
+        storage:"favSound",
+        checkbox:true,
+        setValue:"none",
+        text:{
+            head:"@@favSound@@",
+            desc:"",
+            checkbox:sound
+        }
+    },{
+        id:"btSound",
+        storage:"btSound",
+        checkbox:true,
+        setValue:"none",
+        text:{
+            head:"@@btSound@@",
+            desc:"",
+            checkbox:sound
+        }
+    },{
+        id:"followSound",
+        storage:"followSound",
+        checkbox:true,
+        setValue:"none",
+        text:{
+            head:"@@followSound@@",
+            desc:"",
+            checkbox:sound
         }
     }
 ];

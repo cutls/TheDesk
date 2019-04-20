@@ -27,6 +27,8 @@ The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.o
 * [ico](https://dl.thedesk.top/press/TheDesk.ico)
 * [icns](https://dl.thedesk.top/press/TheDesk.icns)
 
+The default sound of notifications is provided [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/)
+
 ## Terms of Use/利用規約
 
 * [利用規約(Terms of Use(ja))](https://thedesk.top/tos.html)

@@ -296,7 +296,9 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					")<br>";
 					var boostback = "shared";
 				var uniqueid=toot.id;
-				var toot = toot.renote;
+				if(!toot.text){
+					var toot = toot.renote;
+				}
 				var dis_name=escapeHTMLtemp(toot.user.name);
 			    var uniqueid=toot.id;
 				var actemojick=false
@@ -636,9 +638,11 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			});
 			poll='<div class="vote_'+toot.id+'">'+poll+'</div>';
 		}
-		/*
-		
-			*/
+		//引用Renote
+		if(toot.renote){
+			poll=poll+'<div class="quote-renote"><div class="renote-icon"><a onclick="udg(\'' + toot.renote.user.id +
+			'\',' + acct_id + ');" user="' + toot.renote.user.username + '" class="udg"><img src="'+toot.renote.user.avatarUrl+'"></a></div><div class="renote-user">'+escapeHTML(toot.renote.user.name)+'</div><div class="renote-text">'+escapeHTML(toot.renote.text)+'</div></div>'
+		}
 			if(localStorage.getItem("emojiReaction_" + acct_id)=="disabled"){
 				var freeReact="hide";
 			}else{
@@ -667,7 +671,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 						var emoji = obj[i];
 						if (":"+emoji.shortcode+":"==keye) {
 							if (emoji) {
-								addReact=addReact+	'<span class="reaction "><a onclick="reaction(\''+keye+'\',\'' + toot.id + '\',' + acct_id +
+								addReact=addReact+	'<span class="reaction"><a onclick="reaction(\''+keye+'\',\'' + toot.id + '\',' + acct_id +
 								',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;"><img src="'+emoji.url+'" style="width:13px;"></a><span class="re-'+emoji.shortcode+'ct">'+thisReact+
 								'</span></span>';
 							}

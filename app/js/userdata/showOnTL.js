@@ -157,8 +157,7 @@ function udg(user, acct_id) {
 							var when="";
 							var color="inherit"
 						}
-						fval=twemoji.parse(fval);
-						note=note+'<tr><td class="his-field-title">'+fname+'</td><td class="his-field-content" title="'+when+'" style="background-color:'+color+'">'+fval+'</td></tr>';
+						note=note+'<tr><td class="his-field-title">'+twemoji.parse(escapeHTML(fname))+'</td><td class="his-field-content" title="'+when+'" style="background-color:'+color+'">'+twemoji.parse(fval)+'</td></tr>';
 					}
 					note=note+'</table>'
 					$("#his-des").html(twemoji.parse(note));

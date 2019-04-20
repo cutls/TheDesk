@@ -364,6 +364,28 @@ function misskeyLogin(url) {
 				"reaction-write",
 				"vote-read",
 				"vote-write"
+				/*
+				"read:account",
+				"write:account",
+				"read:drive",
+				"write:drive",
+				"read:blocks",
+				"write:blocks",
+				"read:favorites",
+				"write:favorites",
+				"read:following",
+				"write:following",
+				"read:messaging",
+				"write:messaging",
+				"read:mutes",
+				"write:mutes",
+				"write:notes",
+				"read:notifications",
+				"write:notifications",
+				"read:reactions",
+				"write:reactions",
+				"write:votes"
+				*/
 			]
 	}));
     httpreq.onreadystatechange = function() {

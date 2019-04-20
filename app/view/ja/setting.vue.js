@@ -7,6 +7,27 @@ var yesno=[
         value:"no"
     }
 ];
+var sound=[
+    {
+        text:"なし",
+        value:"none"
+    },{
+        text:"既定",
+        value:"default"
+    },{
+        text:"Custom 1",
+        value:"c1"
+    },{
+        text:"Custom 2",
+        value:"c2"
+    },{
+        text:"Custom 3",
+        value:"c3"
+    },{
+        text:"Custom 4",
+        value:"c4"
+    }
+];
 var envConstruction=[
     {
         id:"popup",
@@ -285,6 +306,46 @@ var tlConstruction=[
             head:"タイムラインのアニメーション",
             desc:"",
             checkbox:yesno
+        }
+    },{
+        id:"replySound",
+        storage:"replySound",
+        checkbox:true,
+        setValue:"none",
+        text:{
+            head:"リプライの通知音",
+            desc:"",
+            checkbox:sound
+        }
+    },{
+        id:"favSound",
+        storage:"favSound",
+        checkbox:true,
+        setValue:"none",
+        text:{
+            head:"お気に入り登録の通知音",
+            desc:"",
+            checkbox:sound
+        }
+    },{
+        id:"btSound",
+        storage:"btSound",
+        checkbox:true,
+        setValue:"none",
+        text:{
+            head:"ブーストの通知音",
+            desc:"",
+            checkbox:sound
+        }
+    },{
+        id:"followSound",
+        storage:"followSound",
+        checkbox:true,
+        setValue:"none",
+        text:{
+            head:"フォローの通知音",
+            desc:"",
+            checkbox:sound
         }
     }
 ];

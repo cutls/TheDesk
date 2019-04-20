@@ -30,6 +30,8 @@ option {
 }
 #mainView {
   padding: 10px;
+  overflow:scroll;
+  height: auto;
 }
 #message {
   display: none;
