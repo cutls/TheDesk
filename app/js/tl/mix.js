@@ -200,7 +200,11 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Error ' + error);
 		}else{
-			reconnector(tlid,TLtype,acct_id,"","error");
+			var errorct=localStorage.getItem("wserror_" + tlid)*1+1;
+			localStorage.setItem("wserror_" + tlid,errorct);
+			if(errorct<3){
+				reconnector(tlid,TLtype,acct_id,"","error");
+			}
 		}
 	};
 	websocketLocal[wslid].onclose = function() {
@@ -209,7 +213,11 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Closed');
 		}else{
-			reconnector(tlid,TLtype,acct_id,"","error");
+			var errorct=localStorage.getItem("wserror_" + tlid)*1+1;
+			localStorage.setItem("wserror_" + tlid,errorct);
+			if(errorct<3){
+				reconnector(tlid,TLtype,acct_id,"","error");
+			}
 		}
 	};
 	websocketHome[wshid].onerror = function(error) {
@@ -218,7 +226,11 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Error ' + error);
 		}else{
-			reconnector(tlid,TLtype,acct_id,"","error");
+			var errorct=localStorage.getItem("wserror_" + tlid)*1+1;
+			localStorage.setItem("wserror_" + tlid,errorct);
+			if(errorct<3){
+				reconnector(tlid,TLtype,acct_id,"","error");
+			}
 		}
 	};
 	websocketHome[wshid].onclose = function() {
@@ -227,7 +239,11 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Closed');
 		}else{
-			reconnector(tlid,TLtype,acct_id,"","error");
+			var errorct=localStorage.getItem("wserror_" + tlid)*1+1;
+			localStorage.setItem("wserror_" + tlid,errorct);
+			if(errorct<3){
+				reconnector(tlid,TLtype,acct_id,"","error");
+			}
 		}
 		
 	};
