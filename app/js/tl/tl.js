@@ -337,8 +337,8 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		return false;
 	};
 	websocket[wsid].onclose = function() {
-		console.error("Closing");
-		console.error(tlid);
+		console.log("Closing");
+		console.log(tlid);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Closed');

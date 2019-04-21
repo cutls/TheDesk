@@ -94,12 +94,14 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 	websocketLocal[wslid] = new WebSocket(startLocal);
 	websocketHome[wshid].onopen = function(mess) {
 		localStorage.setItem("wssH_" + tlid, wshid);
-		console.log("Connect Streaming API(Integrated:Home)");
+		console.log(tlid + ":Connect Streaming API(Integrated:Home)");
+		console.log(mess);
 		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocketLocal[wslid].onopen = function(mess) {
 		localStorage.setItem("wssL_" + tlid, wslid);
-		console.log("Connect Streaming API(Integrated:Local)");
+		console.log(tlid + ":Connect Streaming API(Integrated:Local)");
+		console.log(mess);
 		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocketLocal[wslid].onmessage = function(mess) {
@@ -195,7 +197,8 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 		}
 	}
 	websocketLocal[wslid].onerror = function(error) {
-		console.error('WebSocket Error ' + error);
+		console.error('WebSocketLocal Error')
+		console.error(error);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Error ' + error);
@@ -208,7 +211,7 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 		}
 	};
 	websocketLocal[wslid].onclose = function() {
-		console.error('WebSocketLocal Closing by error:' + tlid);
+		console.log('WebSocketLocal Closing:' + tlid);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Closed');
@@ -221,7 +224,8 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 		}
 	};
 	websocketHome[wshid].onerror = function(error) {
-		console.error('WebSocket Error ' + error);
+		console.error('WebSocketHome Error')
+		console.error(error);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Error ' + error);
@@ -234,7 +238,7 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 		}
 	};
 	websocketHome[wshid].onclose = function() {
-		console.error('WebSocketHome Closing by error:' + tlid);
+		console.log('WebSocketHome Closing:' + tlid);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Closed');
