@@ -788,7 +788,7 @@ function strAliveInt(){
 }
 function reconnector(tlid,type,acct_id,data,mode){
 	console.log("Reconnector:"+mode)
-	if(type=="mix" || type=="plus"){
+	if(type=="mix" || type=="integrated" || type=="plus"){
 		if(localStorage.getItem("voice_" + tlid)){
 			var voice=true;
 		}else{
