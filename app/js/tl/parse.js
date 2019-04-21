@@ -829,7 +829,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'</a></span></div>' +
 			'<div class="' + if_mine + ' action '+disp["del"]+' '+noauth+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="far fa-trash"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="fas fa-trash"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_pin+'"><i class="fas fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 

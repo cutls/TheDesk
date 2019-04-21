@@ -805,6 +805,7 @@ function reconnector(tlid,type,acct_id,data,mode){
 		websocketLocal[wssl].close();
 		mixre(acct_id, tlid, type, mute,"",voice,mode);
 	}else if(type=="notf"){
+		notfColumn(acct_id, tlid, "")
 	}else{
 		var wss=localStorage.getItem("wss_" + tlid);
 		websocket[wss].close();
