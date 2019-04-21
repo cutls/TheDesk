@@ -489,7 +489,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var myvote=lang.lang_parse_voted;
 				var result_hide="";
 			}else{
-				myvote='<a onclick="voteMastodon(\''+acct_id+'\',\''+toot.poll.id+'\')" class="votebtn">'+lang.lang_parse_vote+'</a><br>';
+				var myvote='<a onclick="voteMastodon(\''+acct_id+'\',\''+toot.poll.id+'\')" class="votebtn">'+lang.lang_parse_vote+'</a><br>';
 				if(choices[0].votes_count===0 || choices[0].votes_count>0){
 					myvote=myvote+'<a onclick="showResult(\''+acct_id+'\',\''+toot.poll.id+'\')" class="pointer">'+lang.lang_parse_unvoted+"</a>";
 				}
@@ -798,8 +798,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="' +
 			api_spoil + ' cw_text_' + toot.id + '"><span class="cw_text">' + spoil + "</span>" + spoiler_show +
-			'</span><span class="toot ' + spoiler + '">' + content +poll+
-			'</span>' +
+			'</span><span class="toot ' + spoiler + '">' + content +
+			'</span>' + poll +
 			'' + viewer + '' +
 			'</div><div class="area-additional"><span class="additional">' + analyze +
 			'</span>' +
