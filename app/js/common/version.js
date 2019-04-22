@@ -190,7 +190,7 @@ function verck(ver) {
 					}
 				}
 				if(show){
-					Materialize.toast(obj.Text+toot+'<span class="sml grey-text">(スライドして消去)</span>', 86400);
+					Materialize.toast(escapeHTML(obj.Text)+toot+'<span class="sml grey-text">(スライドして消去)</span>', 86400);
 				}
 			}
 			
@@ -211,9 +211,6 @@ function infowebsocket(){
 		console.log(JSON.parse(mess.data));
 		var obj=JSON.parse(mess.data);
 		if(obj.type!="counter"){
-		if(obj.id*1<=localStorage.getItem("last-notice-id")){
-			
-		}else{
 			localStorage.setItem("last-notice-id",obj.id)
 			var show=true;
 			if(obj.toot!=""){
@@ -242,9 +239,8 @@ function infowebsocket(){
 				}
 			}
 			if(show){
-				Materialize.toast(obj.text+toot+'<span class="sml grey-text">(スライドして消去)</span>', 86400);
+				Materialize.toast(escapeHTML(obj.Text)+toot+'<span class="sml grey-text">(スライドして消去)</span>', 86400);
 			}
-		}
 	}else{
 		$("#persons").text(obj.text);
 	}

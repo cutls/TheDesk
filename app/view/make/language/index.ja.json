@@ -158,5 +158,6 @@
     "ramTips":"システムメモリ容量",
     "changeTips":"Tips変更",
     "help":"ヘルプ",
-    "about":"このソフトについて"
+    "about":"このソフトについて",
+    "hereAddColumns":"←ここからTL追加"
 }

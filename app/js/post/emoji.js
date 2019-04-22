@@ -35,7 +35,7 @@ function emojiToggle(reaction) {
 
 //絵文字リスト挿入
 function emojiGet(parse, started) {
-	$('#emoji-list').html('Loading...');
+	$('#emoji-list').text('Loading...');
 	var acct_id = $("#post-acct-sel").val();
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if (localStorage.getItem("mode_" + domain) != "misskey") {
@@ -52,7 +52,7 @@ function emojiGet(parse, started) {
 			console.error(error);
 		}).then(function (json) {
 			if (parse == "true") {
-				$('#emoji-list').html('Parsing...');
+				$('#emoji-list').text('Parsing...');
 				//絵文字をマストドン公式と同順にソート
 				json.sort(function (a, b) {
 					if (a.shortcode < b.shortcode) return -1;
@@ -96,7 +96,7 @@ function emojiGet(parse, started) {
 				})
 			});
 			if (parse == "true") {
-				$('#emoji-list').html('Parsing...');
+				$('#emoji-list').text('Parsing...');
 				//絵文字をマストドン公式と同順にソート
 				md.sort(function (a, b) {
 					if (a.shortcode < b.shortcode) return -1;

@@ -1,4 +1,6 @@
 function menu(){
+    localStorage.setItem("menu-done",true);
+    $("#fukidashi").addClass("hide")
     if(!$("#menu").hasClass("appear")){
         $("#menu").addClass("appear")
         var left=localStorage.getItem("menu-left");

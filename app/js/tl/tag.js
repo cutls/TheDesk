@@ -65,6 +65,7 @@ function favTag(){
             var ptt=lang.lang_tags_unrealtime;
             var nowon="("+lang.lang_tags_realtime+")";
         }
+        tag=escapeHTML(tag);
         tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a>'+nowon+'<span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="' +lang.lang_parse_tagTL.replace("{{tag}}" ,'#'+tag)+ '">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer" title="' + lang.lang_parse_tagtoot.replace("{{tag}}" ,'#'+tag) + '">Toot</a>　'+
             '<a onclick="autoToot(\'' + tag + '\');" class="pointer" title="'+lang.lang_tags_always + lang.lang_parse_tagtoot.replace("{{tag}}" ,'#'+tag) + '">'+ptt+'</a>　<a onclick="tagRemove(\'' + key + '\')" class="pointer" title="' +lang.lang_tags_tagunpin.replace("{{tag}}" ,'#'+tag)+ '">'+lang.lang_del+'</a></span> ';
     });
@@ -96,6 +97,7 @@ function trendTag(){
             var tags="";
             json=json.score;
             Object.keys(json).forEach(function(tag) {
+                tag=escapeHTML(tag);
                 tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="#' + tag + 'のタイムライン">TL</a>　<a onclick="show();brInsert(\'#' + tag + '\')" class="pointer" title="#' + tag + 'でトゥート">Toot</a></span> ';
              });
              $("#taglist").append('<div class="trendtag">アイマストドントレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' + tags+'</div>');
@@ -115,6 +117,7 @@ function tagTL(a,b,c,d){
     tl(a,b,acct_id,d);
 }
 function autoToot(tag){
+    tag=escapeHTML(tag)
     var nowPT=localStorage.getItem("stable")
     if(nowPT==tag){
         localStorage.removeItem("stable");

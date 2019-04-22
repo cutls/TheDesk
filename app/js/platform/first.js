@@ -62,7 +62,7 @@ function formattime(date){
 	}else{
 		str=str+date.getMinutes()
 	}
-	return str;
+	return escapeHTML(str);
 }
 function formattimeutc(date){
 	var str=date.getUTCFullYear()+"-";
@@ -87,7 +87,7 @@ function formattimeutc(date){
 	}else{
 		str=str+date.getUTCMinutes()
 	}
-	return str;
+	return escapeHTML(str);
 }
 var electron = require("electron");
 var ipc = electron.ipcRenderer;

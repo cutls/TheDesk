@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ps">
 <head>
 <title>Update - TheDesk</title>
 <link href="../../css/materialize.css" type="text/css" rel="stylesheet">
@@ -197,10 +197,24 @@ function verck(){
         todo(error);
 		console.error(error);
     }).then(function(json) {
-		    console.log(json);
-             $("#ver").text(json.desk);
-             localStorage.setItem("next-ver",json.desk);
-			 $("#det").html(json.detail);
+            console.log(json);
+            if(platform=="win32"){
+                $("#ver").text(json.desk);
+                localStorage.setItem("next-ver",json.desk);
+	        }else if(platform=="linux"){
+                $("#ver").text(json.desk_linux);
+                localStorage.setItem("next-ver",json.desk_linux);
+	        }else if(platform=="darwin"){
+                $("#ver").text(json.desk_mac);
+                localStorage.setItem("next-ver",json.desk_mac);
+            }
+            var lang="ps";
+            if(lang=="ja"){
+                $("#det").html(json.detail);
+            }else{
+                $("#det").html(json.detail_en);
+            }
+			 
              $("#now").text(localStorage.getItem("ver"));
              
     });

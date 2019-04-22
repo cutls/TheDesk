@@ -542,7 +542,7 @@ function getdata(domain, at) {
 		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
-			Materialize.toast(lang.lang_fatalerroroccured+"Error:" + json.error,
+			Materialize.toast(lang.lang_fatalerroroccured+"Error:" + escapeHTML(json.error),
 				5000);
 			return;
 		}
@@ -817,7 +817,7 @@ input.addEventListener("focus", function() {
 						Object.keys(json.instances).forEach(function(key) {
 							var url = json.instances[key];
 							urls = urls + '　<a onclick="login(\'' + url.name +
-								'\')" class="pointer">' + url.name + '</a>  ';
+								'\')" class="pointer">' +escapeHTML(url.name)  + '</a>  ';
 						});
 						$("#ins-suggest").html(urls);
 					}

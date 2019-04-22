@@ -32,7 +32,7 @@
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 <script>
-var ver="Usamin (18.3.0)";
+var ver="Usamin (18.3.1)";
 //betaを入れるとバージョンチェックしない
 //GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 //var ver="beta";
@@ -270,7 +270,7 @@ var tlid=0;
 			<label for="poll-until">投票するまで票数を隠す</label><br>
 			<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">日
 			<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">時間
-			<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="0">分
+			<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="6">分
 		</div>
 	</div>
 </div>
@@ -580,19 +580,15 @@ var tlid=0;
 		<a href="https://thedesk.top" target="_blank">HP</a><br>
 		<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 		<br>
-			<div id="release-Usamin_18-3-0" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-3-1" class="release-do" style="display:none; ">
 					<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 					<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 					Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note Usamin (18.3.0)</h5>
-・(既定はオフ)ふぁぼ、フォロー、BTごとの通知音追加(なし/既定/カスタム(4種))<br>
-・(Misskey)引用Renoteの簡易表示<br>
-・(dtp-mstdn.jp他)引用(quote)の簡易表示<br>
+					<h5>Release Note Usamin (18.3.1)</h5>
+・通知音が種別ごとに追加(すべて適当に自分で打ったやつです。)<br>
 ・バグと脆弱性の修正
 <br>
-通知音「Arctic Bleeze in East 7」はクリエイティブコモンズ(CC BY)で利用できます。<br>
-(C) Cutls P 2019<s>GarageBand適当に叩いたらできた音ですのでご自由に変更どうぞ</s>
 			</div>
 			<div id="release-en">
 				<h5>Let's make it native!</h5>
@@ -601,9 +597,6 @@ var tlid=0;
 			<br><br>
 			<h3>ご支援ください。</h3>
 			TheDeskは営利目的ではないため、有料機能や広告は一切ありません。<br>皆様のあたたかいご支援のもとで製作されています。<br>
-			<a class="btn-share btn waves-effect waves-light purple lighten-2" href="https://enty.jp/Cutls" target="_blank">
-  				Entyで支援
-			</a>
 			<a class="btn-share btn waves-effect waves-light red lighten-2" href="https://www.pixiv.net/fanbox/creator/28105985" target="_blank">
 				Pixiv FANBOXで支援
 		</a>
@@ -807,6 +800,7 @@ var tlid=0;
 							<a onclick="menu()" class="nex waves-effect" id="list-tgl">
 									<i class="material-icons" title="リスト">apps</i>
 							</a>
+							<span id="fukidashi">←ここからTL追加</span>
 						</div>
     </div></div>
     <div>

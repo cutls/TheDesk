@@ -278,7 +278,7 @@ function misskeyUdg(user, acct_id) {
 			$("#his-follow").text(json.followingCount);
 			$("#his-follower").text(json.followersCount);
 			$("#his-since").text(crat(json.createdAt));
-			var note=json.description;
+			var note=escapeHTML(json.description);
 			$("#his-des").html(twemoji.parse(note));
 			if(json.isCat){
 				$("#his-bot").html("Cat"+twemoji.parse("😺"));

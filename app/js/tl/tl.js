@@ -660,7 +660,7 @@ function cap(type, data, acct_id) {
 			var response="Federated TL(Media)";
 		}
 	} else if (type == "tag") {
-		var response= "#" + data
+		var response= "#" + escapeHTML(data)
 	} else if (type == "list") {
 		var ltitle=localStorage.getItem("list_"+data+"_"+acct_id);
 		var response= "List(" + ltitle + ")"
@@ -685,7 +685,7 @@ function cap(type, data, acct_id) {
 	}else if (type == "webview") {
 		var response="Twitter"
 	}else if (type == "tootsearch") {
-		var response="tootsearch(" + data + ")";
+		var response="tootsearch(" + escapeHTML(data) + ")";
 	}
 	return response;
 }

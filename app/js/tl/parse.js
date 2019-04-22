@@ -766,7 +766,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			for( var i=0; i<tickerdata.length; i++) {
 				var value=tickerdata[i];
 				if(value.domain==thisdomain){
-					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+value.name+'</span></div>';
+					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+escapeHTML(value.name)+'</span></div>';
 					break;
 				}
 		   }
@@ -1000,7 +1000,7 @@ function client(name) {
 			if(!obj){
 				var obj=[];
 				obj.push(name);
-				Materialize.toast(name+lang.lang_status_emphas, 2000);
+				Materialize.toast(escapeHTML(name)+lang.lang_status_emphas, 2000);
 			}else{
 			var can;
 			Object.keys(obj).forEach(function(key) {
@@ -1010,12 +1010,12 @@ function client(name) {
 				}else{
 					can=true;
 					obj.splice(key, 1);
-					Materialize.toast(name+lang.lang_status_unemphas, 2000);
+					Materialize.toast(escapeHTML(name)+lang.lang_status_unemphas, 2000);
 				}
 			});
 			if(!can){
 				obj.push(name);
-				Materialize.toast(name+lang.lang_status_emphas, 2000);
+				Materialize.toast(escapeHTML(name)+lang.lang_status_emphas, 2000);
 			}else{
 				
 			}
@@ -1031,7 +1031,7 @@ function client(name) {
 			obj.push(name);
 			var json = JSON.stringify(obj);
 			localStorage.setItem("client_mute", json);
-			Materialize.toast(name+lang.lang_parse_mute, 2000);
+			Materialize.toast(escapeHTML(name)+lang.lang_parse_mute, 2000);
 		}else{
 			return;
 		}
