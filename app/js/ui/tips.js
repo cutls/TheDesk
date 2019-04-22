@@ -57,7 +57,7 @@ function startmem(){
 		var use=arg[0];
 		var cpu=arg[1];
 		var total=arg[2]
-		$("#tips-text").html(cpu+"<br>Memory:"+Math.floor(use/1024/1024/102.4)/10+"/"+Math.floor(total/1024/1024/102.4)/10+"GB("+Math.floor(use/total*100)+"%)")
+		$("#tips-text").html(escapeHTML(cpu)+"<br>Memory:"+Math.floor(use/1024/1024/102.4)/10+"/"+Math.floor(total/1024/1024/102.4)/10+"GB("+Math.floor(use/total*100)+"%)")
 	})
 }
 //トレンドタグ
@@ -83,7 +83,7 @@ function trendTagonTip(){
             var tags="";
             json=json.score;
             Object.keys(json).forEach(function(tag) {
-                tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + tag + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="#' + tag + 'のタイムライン">TL</a>　<a onclick="show();brInsert(\'#' + tag + '\')" class="pointer" title="#' + tag + 'でトゥート">Toot</a></span><br>';
+                tags = tags + '<a onclick="tagShow(\'' + tag + '\')" class="pointer">#' + escapeHTML(tag) + '</a><span class="hide" data-tag="' + tag + '">　<a onclick="tagTL(\'tag\',\'' + tag + '\',false,\'add\')" class="pointer" title="#' + tag + 'のタイムライン">TL</a>　<a onclick="show();brInsert(\'#' + tag + '\')" class="pointer" title="#' + tag + 'でトゥート">Toot</a></span><br>';
              });
              $("#tips-text").html('<div class="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTagonTip()" style="font-size:12px">refresh</i>:<br>' + tags+'</div>');
              trendTagonTipInterval()

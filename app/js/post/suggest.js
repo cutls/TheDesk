@@ -169,7 +169,7 @@ function cgNPs(q){
 						var tags = "";
 						Object.keys(json).forEach(function(key4) {
 							var tag = json[key4];
-							tags = tags + '<a onclick="cgNP(\''+json[key4]+'\')" class="pointer">' + json[key4] + '</a>  ';
+							tags = tags + '<a onclick="cgNP(\''+json[key4]+'\')" class="pointer">' + escapeHTML(json[key4]) + '</a>  ';
 						});
 						$("#suggest").html("Cinderella NowPlaying:" + tags);
 					}else{

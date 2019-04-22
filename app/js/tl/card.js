@@ -63,8 +63,8 @@ function additional(acct_id, tlid) {
 				}).then(function(json) {
 					if (json.title) {
 						$("[toot-id=" + id + "] .additional").html(
-							"<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + json.title + "<br>" +
-							json.description + "</span>");
+							"<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + escapeHTML(json.title) + "<br>" +
+							escapeHTML(json.description) + "</span>");
 						$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
 						$("[toot-id=" + id + "]").addClass("parsed");
 					}
@@ -148,8 +148,8 @@ function additionalIndv(tlid, acct_id, id) {
 				}).then(function(json) {
 					if (json.title) {
 						$("[toot-id=" + id + "] .additional").html(
-							"<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + json.title + "<br>" +
-							json.description + "</span>");
+							"<span class=\"gray\">URL"+lang.lang_cards_check+":<br>Title:" + escapeHTML(json.title) + "<br>" +
+							escapeHTML(json.description) + "</span>");
 						$("[toot-id=" + id + "] a:not(.parsed)").addClass("parsed");
 						$("[toot-id=" + id + "]").addClass("parsed");
 					}

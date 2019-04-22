@@ -252,18 +252,27 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						localStorage.setItem("notf-reply_" + acct_id,replyct*1-(-1))
 						$(".notf-reply_" + acct_id).removeClass("hide")
 						var sound=localStorage.getItem("replySound");
+						if(sound=="default"){
+							var file="../../source/notif3.wav"
+						}
 					}else if (toot.type == "reblog") {
 						var btct=localStorage.getItem("notf-bt_" + acct_id)
 						$(".notf-bt_" + acct_id).text(btct*1-(-1));
 						localStorage.setItem("notf-bt_" + acct_id,btct*1-(-1))
 						$(".notf-bt_" + acct_id).removeClass("hide")
 						var sound=localStorage.getItem("btSound");
+						if(sound=="default"){
+							var file="../../source/notif2.wav"
+						}
 					}else if (toot.type == "favourite") {
 						var favct=localStorage.getItem("notf-fav_" + acct_id)
 						$(".notf-fav_" + acct_id).text(favct*1-(-1));
 						localStorage.setItem("notf-fav_" + acct_id,favct*1-(-1))
 						$(".notf-fav_" + acct_id).removeClass("hide")
 						var sound=localStorage.getItem("favSound");
+						if(sound=="default"){
+							var file="../../source/notif.wav"
+						}
 					}
 				}
 				
@@ -272,9 +281,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					Materialize.toast("["+domain+"]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
 				}
 				//通知音
-				if(sound=="default" || !sound){
-					var file="../../source/notif.wav"
-				}else if(sound=="c1"){
+				if(sound=="c1"){
 					var file=localStorage.getItem("custom1");
 				}else if(sound=="c2"){
 					var file=localStorage.getItem("custom2");
@@ -482,7 +489,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var myvote=lang.lang_parse_voted;
 				var result_hide="";
 			}else{
-				myvote='<a onclick="voteMastodon(\''+acct_id+'\',\''+toot.poll.id+'\')" class="votebtn">'+lang.lang_parse_vote+'</a><br>';
+				var myvote='<a onclick="voteMastodon(\''+acct_id+'\',\''+toot.poll.id+'\')" class="votebtn">'+lang.lang_parse_vote+'</a><br>';
 				if(choices[0].votes_count===0 || choices[0].votes_count>0){
 					myvote=myvote+'<a onclick="showResult(\''+acct_id+'\',\''+toot.poll.id+'\')" class="pointer">'+lang.lang_parse_unvoted+"</a>";
 				}
@@ -759,7 +766,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			for( var i=0; i<tickerdata.length; i++) {
 				var value=tickerdata[i];
 				if(value.domain==thisdomain){
-					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+value.name+'</span></div>';
+					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+escapeHTML(value.name)+'</span></div>';
 					break;
 				}
 		   }
@@ -791,8 +798,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="' +
 			api_spoil + ' cw_text_' + toot.id + '"><span class="cw_text">' + spoil + "</span>" + spoiler_show +
-			'</span><span class="toot ' + spoiler + '">' + content +poll+
-			'</span>' +
+			'</span><span class="toot ' + spoiler + '">' + content +
+			'</span>' + poll +
 			'' + viewer + '' +
 			'</div><div class="area-additional"><span class="additional">' + analyze +
 			'</span>' +
@@ -822,7 +829,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'</a></span></div>' +
 			'<div class="' + if_mine + ' action '+disp["del"]+' '+noauth+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="far fa-trash"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="fas fa-trash"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_pin+'"><i class="fas fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 
@@ -993,7 +1000,7 @@ function client(name) {
 			if(!obj){
 				var obj=[];
 				obj.push(name);
-				Materialize.toast(name+lang.lang_status_emphas, 2000);
+				Materialize.toast(escapeHTML(name)+lang.lang_status_emphas, 2000);
 			}else{
 			var can;
 			Object.keys(obj).forEach(function(key) {
@@ -1003,12 +1010,12 @@ function client(name) {
 				}else{
 					can=true;
 					obj.splice(key, 1);
-					Materialize.toast(name+lang.lang_status_unemphas, 2000);
+					Materialize.toast(escapeHTML(name)+lang.lang_status_unemphas, 2000);
 				}
 			});
 			if(!can){
 				obj.push(name);
-				Materialize.toast(name+lang.lang_status_emphas, 2000);
+				Materialize.toast(escapeHTML(name)+lang.lang_status_emphas, 2000);
 			}else{
 				
 			}
@@ -1024,7 +1031,7 @@ function client(name) {
 			obj.push(name);
 			var json = JSON.stringify(obj);
 			localStorage.setItem("client_mute", json);
-			Materialize.toast(name+lang.lang_parse_mute, 2000);
+			Materialize.toast(escapeHTML(name)+lang.lang_parse_mute, 2000);
 		}else{
 			return;
 		}

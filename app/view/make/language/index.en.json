@@ -158,5 +158,6 @@
     "ramTips":"RAM status",
     "changeTips":"Change Tips",
     "help":"Help",
-    "about":"About TheDesk"
+    "about":"About TheDesk",
+    "hereAddColumns":"<- Add TL"
 }

@@ -337,8 +337,8 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		return false;
 	};
 	websocket[wsid].onclose = function() {
-		console.error("Closing");
-		console.error(tlid);
+		console.log("Closing");
+		console.log(tlid);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Closed');
@@ -660,7 +660,7 @@ function cap(type, data, acct_id) {
 			var response="Federated TL(Media)";
 		}
 	} else if (type == "tag") {
-		var response= "#" + data
+		var response= "#" + escapeHTML(data)
 	} else if (type == "list") {
 		var ltitle=localStorage.getItem("list_"+data+"_"+acct_id);
 		var response= "List(" + ltitle + ")"
@@ -685,7 +685,7 @@ function cap(type, data, acct_id) {
 	}else if (type == "webview") {
 		var response="Twitter"
 	}else if (type == "tootsearch") {
-		var response="tootsearch(" + data + ")";
+		var response="tootsearch(" + escapeHTML(data) + ")";
 	}
 	return response;
 }
@@ -788,7 +788,7 @@ function strAliveInt(){
 }
 function reconnector(tlid,type,acct_id,data,mode){
 	console.log("Reconnector:"+mode)
-	if(type=="mix" || type=="plus"){
+	if(type=="mix" || type=="integrated" || type=="plus"){
 		if(localStorage.getItem("voice_" + tlid)){
 			var voice=true;
 		}else{
@@ -801,10 +801,11 @@ function reconnector(tlid,type,acct_id,data,mode){
 		}
 		var wssh=localStorage.getItem("wssH_" + tlid);
 		websocketHome[wssh].close();
-		var wssh=localStorage.getItem("wssL_" + tlid);
+		var wssl=localStorage.getItem("wssL_" + tlid);
 		websocketLocal[wssl].close();
 		mixre(acct_id, tlid, type, mute,"",voice,mode);
 	}else if(type=="notf"){
+		notfColumn(acct_id, tlid, "")
 	}else{
 		var wss=localStorage.getItem("wss_" + tlid);
 		websocket[wss].close();
