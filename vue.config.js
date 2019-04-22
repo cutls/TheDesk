@@ -1,5 +1,5 @@
-const { productName } = require("./package.json");
-const { appId, copyright } = require("./info.json");
+const { productName, author } = require("./package.json");
+const { appId, copyrightYear } = require("./info.json");
 
 module.exports = {
   pages: {
@@ -30,7 +30,7 @@ module.exports = {
       mainProcessTypeChecking: true,
       builderOptions: {
         appId: appId,
-        copyright: copyright,
+        copyright: `Copyright © ${copyrightYear} ${author.name}`,
         win: {
           "target": [
             "nsis",

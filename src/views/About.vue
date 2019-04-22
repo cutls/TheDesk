@@ -15,8 +15,13 @@
         <dd :key="'ver-'+i">{{ version }}</dd>
       </template>
     </dl>
-    <div id="copyright">
-      <small>{{ copyright }}</small>
+    <div id="credits">
+      <p id="copyright">
+        <small>
+          Copyright &copy; {{ copyrightYear }}
+          <a :href="author.url">{{ author.name }}</a>
+        </small>
+      </p>
     </div>
   </div>
 </template>
@@ -25,27 +30,43 @@
 import { Component, Vue } from "vue-property-decorator"
 import { ipcRenderer } from "electron"
 
-type Versions = {[key: string]: string}
+type Versions = { [key: string]: string }
+
+interface Maintainer {
+  name: string
+  url: string
+  email: string
+}
+interface TheDeskInfo {
+  productName: string
+  author: Maintainer
+  homePage: string
+  copyrightYear: string
+  codeName: string
+  versions: Versions
+}
 
 @Component
 export default class About extends Vue {
   public productName: string
+  public author: Maintainer
   public homePage: string
-  public copyright: string
+  public copyrightYear: string
   public versions: Versions
 
   constructor() {
     super()
-    let { productName, homePage, copyright, codeName, versions } = ipcRenderer.sendSync('thedesk-info')
-    this.productName = productName
-    this.homePage = homePage
-    this.copyright = copyright
+    const thedeskInfo: TheDeskInfo = ipcRenderer.sendSync('thedesk-info')
+    this.productName = thedeskInfo.productName
+    this.author = thedeskInfo.author
+    this.homePage = thedeskInfo.homePage
+    this.copyrightYear = thedeskInfo.copyrightYear
     this.versions = {
-      "Code Name": codeName,
-      "Internal Version": versions.internal,
-      "Chromium": versions.chrome,
-      "Electron": versions.electron,
-      "Node.js": versions.node,
+      "Code Name": thedeskInfo.codeName,
+      "Internal Version": thedeskInfo.versions.internal,
+      "Chromium": thedeskInfo.versions.chrome,
+      "Electron": thedeskInfo.versions.electron,
+      "Node.js": thedeskInfo.versions.node,
     }
   }
 }
@@ -75,6 +96,11 @@ body {
 #web-site {
   -webkit-app-region: no-drag;
   user-select: auto;
+}
+#credits {
+  p {
+    margin: 0;
+  }
 }
 dl.version {
   margin: 0;
