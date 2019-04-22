@@ -4,7 +4,9 @@ import {
     Menu,
     MenuItemConstructorOptions
 } from 'electron'
+
 import Window from './Window'
+
 import { bugs } from '../../package.json'
 import { documentURL } from '../../info.json'
 

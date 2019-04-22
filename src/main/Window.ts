@@ -1,14 +1,14 @@
 import { join } from 'path'
 
 import {
-    shell,
     BrowserWindow,
     BrowserWindowConstructorOptions,
     Event,
     Input,
-    app,
 } from 'electron'
 import { register as shortcutRegister } from 'electron-localshortcut'
+
+import Application from './Application'
 
 declare const __static: string
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -91,15 +91,11 @@ export default class Window {
         })
 
         let openUrl = (event: Event, url: string) => {
-            if (url === this.ApplicationURL + options.loadPath) {
+            if (url.startsWith(this.ApplicationURL)) {
                 return
             }
             event.preventDefault()
-            shell.openExternal(url, {
-                activate: false
-            }, (err) => {
-                if (err) console.log(err)
-            })
+            Application.openUrl(event, url)
         }
         win.webContents.on('will-navigate', openUrl)
         win.webContents.on('new-window', openUrl)

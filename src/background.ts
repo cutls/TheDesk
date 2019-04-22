@@ -1,13 +1,13 @@
 'use strict'
 
 import { pick } from 'lodash'
+
 import {
     app,
     ipcMain,
     protocol,
     Event,
 } from 'electron'
-
 import ContextMenu from 'electron-context-menu'
 
 import Application from './main/Application'

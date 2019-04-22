@@ -1,11 +1,13 @@
 import {
     app,
+    shell,
     Menu,
 } from 'electron'
 import {
     createProtocol,
     installVueDevtools,
 } from 'vue-cli-plugin-electron-builder/lib'
+
 import Window from './Window'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -51,5 +53,13 @@ export default class Application {
         if (!Window.single.has('main')) {
             Window.Main()
         }
+    }
+
+    public static openUrl(event: Event, url: string) {
+        shell.openExternal(url, {
+            activate: false
+        }, (err) => {
+            if (err) console.log(err)
+        })
     }
 }
