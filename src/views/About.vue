@@ -22,6 +22,21 @@
           <a :href="author.url">{{ author.name }}</a>
         </small>
       </p>
+      <p id="thank">
+        <small>
+          Thanks
+          <br>
+          <span v-html="ctrHtml"></span>
+          <br>and all users
+          <img
+            alt="❤️"
+            title=":heart:"
+            src="https://twemoji.maxcdn.com/2/72x72/2764.png"
+            width="13"
+            draggable="false"
+          >
+        </small>
+      </p>
     </div>
   </div>
 </template>
@@ -40,6 +55,7 @@ interface Maintainer {
 interface TheDeskInfo {
   productName: string
   author: Maintainer
+  contributors: [Maintainer]
   homePage: string
   copyrightYear: string
   codeName: string
@@ -50,15 +66,23 @@ interface TheDeskInfo {
 export default class About extends Vue {
   public productName: string
   public author: Maintainer
+  public contributors: [Maintainer]
   public homePage: string
   public copyrightYear: string
   public versions: Versions
+
+  public get ctrHtml(): string {
+    return this.contributors.map(contributer => {
+      return `<a href="${contributer.url}" target="_blank">${contributer.name}</a>`
+    }).join(", ")
+  }
 
   constructor() {
     super()
     const thedeskInfo: TheDeskInfo = ipcRenderer.sendSync('thedesk-info')
     this.productName = thedeskInfo.productName
     this.author = thedeskInfo.author
+    this.contributors = thedeskInfo.contributors
     this.homePage = thedeskInfo.homePage
     this.copyrightYear = thedeskInfo.copyrightYear
     this.versions = {
@@ -110,7 +134,7 @@ dl.version {
   text-align: left;
   -webkit-app-region: no-drag;
   user-select: text;
-  padding: 0.5em;
+  padding: 0.5em 1em;
   dt,
   dd {
     margin-left: 0;

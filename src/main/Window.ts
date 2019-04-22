@@ -51,8 +51,8 @@ export default class Window {
             windowName: 'about',
             loadPath: 'about.html',
             windowOptions: {
-                width: 296,
-                height: 432,
+                width: 312,
+                height: 496,
                 resizable: false,
                 minimizable: false,
                 maximizable: false,

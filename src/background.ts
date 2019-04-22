@@ -14,7 +14,7 @@ import Application from './main/Application'
 import ApplicationMenu from "./main/ApplicationMenu";
 
 export type PackageJson = typeof import('../package.json');
-import { author, homepage } from '../package.json'
+import { author, contributors, homepage } from '../package.json'
 import TheDeskInfo from '../info.json'
 export type TheDeskInfoObject = typeof TheDeskInfo;
 
@@ -22,6 +22,7 @@ ipcMain.on('thedesk-info', (event: Event) => {
     event.returnValue = Object.assign({
         productName: app.getName(),
         author: author,
+        contributors: contributors,
         homePage: homepage,
         versions: Object.assign(pick(process.versions, ["chrome", "electron", "node"]), { internal: app.getVersion() }),
     }, TheDeskInfo)
