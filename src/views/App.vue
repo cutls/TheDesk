@@ -15,16 +15,20 @@ import Welcome from '@/components/Welcome.vue'
   },
 })
 export default class App extends Vue {
-  public color: string = '#2c3e50'
-  public backgroundColor: string = 'white'
+  public color: string = this.isDarkMode ? 'white' : 'black'
+  public backgroundColor: string = this.isDarkMode ? '#212121' : 'white'
   public fontSize: string = '16px'
 
   public get styles(): { [key: string]: string } {
     return {
       '--color': this.color,
-      '--background-color': this.backgroundColor,
+      '--bg-color': this.backgroundColor,
       '--font-size': this.fontSize,
     }
+  }
+
+  public get isDarkMode(): boolean {
+    return remote.systemPreferences.isDarkMode()
   }
 }
 </script>
@@ -42,7 +46,7 @@ body {
 }
 #app {
   color: var(--color);
-  background-color: var(--background-color);
+  background-color: var(--bg-color);
   font-size: var(--font-size);
 
   text-align: center;
