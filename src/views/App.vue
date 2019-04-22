@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="@/assets/logo.png">
+  <div id="app" :style="styles">
     <Welcome/>
   </div>
 </template>
 
 <script lang="ts">
+import { remote } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
 import Welcome from '@/components/Welcome.vue'
 
@@ -14,16 +14,38 @@ import Welcome from '@/components/Welcome.vue'
     Welcome,
   },
 })
-export default class App extends Vue { }
+export default class App extends Vue {
+  public color: string = '#2c3e50'
+  public backgroundColor: string = 'white'
+  public fontSize: string = '16px'
+
+  public get styles(): { [key: string]: string } {
+    return {
+      '--color': this.color,
+      '--background-color': this.backgroundColor,
+      '--font-size': this.fontSize,
+    }
+  }
+}
 </script>
 
 <style>
-#app {
+html {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+}
+#app {
+  color: var(--color);
+  background-color: var(--background-color);
+  font-size: var(--font-size);
+
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
 }
 </style>

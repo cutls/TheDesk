@@ -1,5 +1,6 @@
 <template>
-  <div class="welcome">
+  <div id="welcome">
+    <img alt="Vue logo" src="@/assets/logo.png">
     <h1>Welcome TheDesk</h1>
   </div>
 </template>
@@ -8,5 +9,12 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Welcome extends Vue {}
+export default class Welcome extends Vue {
+}
 </script>=
+
+<style lang="postcss">
+#welcome {
+  padding-top: 60px;
+}
+</style>
