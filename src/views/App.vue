@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="@/assets/logo.png" />
-    <Welcome />
+    <img alt="Vue logo" src="@/assets/logo.png">
+    <Welcome/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Welcome from '@/components/Welcome.vue';
+import { Component, Vue } from 'vue-property-decorator'
+import Welcome from '@/components/Welcome.vue'
 
 @Component({
   components: {

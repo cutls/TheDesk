@@ -42,8 +42,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator"
-import { ipcRenderer } from "electron"
+import { Component, Vue } from 'vue-property-decorator'
+import { ipcRenderer } from 'electron'
 
 type Versions = { [key: string]: string }
 
@@ -55,7 +55,7 @@ interface Maintainer {
 interface TheDeskInfo {
   productName: string
   author: Maintainer
-  contributors: [Maintainer]
+  contributors: Maintainer[]
   homePage: string
   copyrightYear: string
   codeName: string
@@ -66,7 +66,7 @@ interface TheDeskInfo {
 export default class About extends Vue {
   public productName: string
   public author: Maintainer
-  public contributors: [Maintainer]
+  public contributors: Maintainer[]
   public homePage: string
   public copyrightYear: string
   public versions: Versions
@@ -74,7 +74,7 @@ export default class About extends Vue {
   public get ctrHtml(): string {
     return this.contributors.map(contributer => {
       return `<a href="${contributer.url}" target="_blank">${contributer.name}</a>`
-    }).join(", ")
+    }).join(', ')
   }
 
   constructor() {

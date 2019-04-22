@@ -1,5 +1,5 @@
-const { productName, author } = require("./package.json");
-const { appId, copyrightYear } = require("./info.json");
+const { productName, author } = require('./package.json')
+const { appId, copyrightYear } = require('./info.json')
 
 module.exports = {
   pages: {
@@ -32,29 +32,29 @@ module.exports = {
         appId: appId,
         copyright: `Copyright © ${copyrightYear} ${author.name}`,
         win: {
-          "target": [
-            "nsis",
-            "portable",
+          'target': [
+            'nsis',
+            'portable',
           ],
         },
         nsis: {
           oneClick: false,
           allowToChangeInstallationDirectory: true,
-          artifactName: "TheDesk-Vue-setup.${ext}",
+          artifactName: 'TheDesk-Vue-setup.${ext}',
         },
         linux: {
           target: [
-            "snap",
+            'snap',
           ],
-          category: "Network",
+          category: 'Network',
         },
         mac: {
           darkModeSupport: true,
           target: [
-            "dmg",
+            'dmg',
           ],
         },
       },
     },
   },
-};
+}

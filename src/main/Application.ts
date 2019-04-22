@@ -11,17 +11,17 @@ import Window from './Window'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 export default class Application {
-    private static _instance: Application;
+    private static _instance: Application
 
     public static get shared() {
         // Do you need arguments? Make it a regular static method instead.
-        return this._instance || (this._instance = new this());
+        return this._instance || (this._instance = new this())
     }
 
     private constructor() {
         app.on('window-all-closed', () => this.onWindowAllClosed())
-        app.on('ready', () => this.onReady());
-        app.on('activate', () => this.onActivated());
+        app.on('ready', () => this.onReady())
+        app.on('activate', () => this.onActivated())
     }
 
     public setApplicationMenu(menu: Menu) {

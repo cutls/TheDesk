@@ -11,12 +11,12 @@ import {
 import ContextMenu from 'electron-context-menu'
 
 import Application from './main/Application'
-import ApplicationMenu from "./main/ApplicationMenu";
+import ApplicationMenu from './main/ApplicationMenu'
 
-export type PackageJson = typeof import('../package.json');
+export type PackageJson = typeof import('../package.json')
 import { author, contributors, homepage } from '../package.json'
 import TheDeskInfo from '../info.json'
-export type TheDeskInfoObject = typeof TheDeskInfo;
+export type TheDeskInfoObject = typeof TheDeskInfo
 
 ipcMain.on('thedesk-info', (event: Event) => {
     event.returnValue = Object.assign({
@@ -24,13 +24,11 @@ ipcMain.on('thedesk-info', (event: Event) => {
         author: author,
         contributors: contributors,
         homePage: homepage,
-        versions: Object.assign(pick(process.versions, ["chrome", "electron", "node"]), { internal: app.getVersion() }),
+        versions: Object.assign(pick(process.versions, ['chrome', 'electron', 'node']), { internal: app.getVersion() }),
     }, TheDeskInfo)
 })
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
-
-if (isDevelopment) {
+if (process.env.NODE_ENV !== 'production') {
     if (process.platform === 'win32') {
         process.on('message', data => {
             if (data === 'graceful-exit') {

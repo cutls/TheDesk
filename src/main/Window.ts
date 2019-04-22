@@ -10,7 +10,7 @@ import {
 } from 'electron'
 import { register as shortcutRegister } from 'electron-localshortcut'
 
-declare const __static: string;
+declare const __static: string
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 export interface CreateWindowOptions {
@@ -23,6 +23,8 @@ export interface CreateWindowOptions {
 }
 
 export default class Window {
+    public static ApplicationURL: string = process.env.WEBPACK_DEV_SERVER_URL /* `electron:serve`で起動した時 */ || 'app://./' /* ビルドしたアプリ */
+
     public static single: Map<string, BrowserWindow> = new Map()
     public static list: BrowserWindow[]
 
@@ -64,7 +66,7 @@ export default class Window {
             lastAction: (win) => {
                 win.setMenuBarVisibility(false)
                 win.webContents.on('before-input-event', (event: Event, input: Input) => {
-                    this.single.get('about')!.webContents.setIgnoreMenuShortcuts((process.platform === 'darwin' ? input.meta : input.control) && input.key === "r")
+                    this.single.get('about')!.webContents.setIgnoreMenuShortcuts((process.platform === 'darwin' ? input.meta : input.control) && input.key === 'r')
                 })
                 shortcutRegister(win, 'Esc', () => this.single.get('about')!.destroy())
             },
@@ -89,7 +91,7 @@ export default class Window {
         })
 
         let openUrl = (event: Event, url: string) => {
-            if (isDevelopment && url === process.env.WEBPACK_DEV_SERVER_URL + options.loadPath) {
+            if (url === this.ApplicationURL + options.loadPath) {
                 return
             }
             event.preventDefault()
@@ -102,13 +104,7 @@ export default class Window {
         win.webContents.on('will-navigate', openUrl)
         win.webContents.on('new-window', openUrl)
 
-        if (process.env.WEBPACK_DEV_SERVER_URL) {
-            // `electron:serve`で起動した時の読み込み
-            win.loadURL(process.env.WEBPACK_DEV_SERVER_URL + options.loadPath)
-        } else {
-            // ビルドしたアプリでの読み込み
-            win.loadURL(`app://./${options.loadPath}`)
-        }
+        win.loadURL(this.ApplicationURL + options.loadPath)
 
         if (isDevelopment && options.openDevTools) win.webContents.openDevTools()
 

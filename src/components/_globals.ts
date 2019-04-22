@@ -1,6 +1,6 @@
 'use strict'
 
-import Vue from 'vue';
+import Vue from 'vue'
 import { upperFirst, camelCase } from 'lodash'
 
 const requireComponent = require.context('./globals', false, /Base[A-Z]\w+\.(vue|js)$/)

@@ -3,10 +3,10 @@ import {
     shell,
     Menu,
     MenuItemConstructorOptions
-} from 'electron';
-import Window from "./Window";
-import { bugs } from '../../package.json';
-import { documentURL } from '../../info.json';
+} from 'electron'
+import Window from './Window'
+import { bugs } from '../../package.json'
+import { documentURL } from '../../info.json'
 
 const isMac = process.platform === 'darwin'
 
@@ -19,7 +19,7 @@ export default class ApplicationMenu {
         { role: 'hide' },
         { role: 'hideOthers' },
         { role: 'unhide' },
-    ];
+    ]
     private static macOnlyEditMenu: MenuItemConstructorOptions[] = [
         { type: 'separator' },
         {
@@ -29,38 +29,38 @@ export default class ApplicationMenu {
                 { role: 'stopspeaking' },
             ]
         }
-    ];
+    ]
     private static aboutMenuItem: MenuItemConstructorOptions = {
-        label: process.platform !== 'darwin' ? 'About' : `About ${app.getName()}`,
+        label: !isMac ? 'About' : `About ${app.getName()}`,
         click: () => Window.About(),
     }
 
     public static get menuConstruct(): MenuItemConstructorOptions[] {
         return [
-            this.AppMenu(isMac),
-            this.EditMenu(isMac),
+            this.AppMenu(),
+            this.EditMenu(),
             this.ViewMenu(),
-            this.WindowMenu(isMac),
+            this.WindowMenu(),
             this.HelpMenu(),
         ]
     }
 
     public static buildTemplate(): Menu {
-        return Menu.buildFromTemplate(this.menuConstruct);
+        return Menu.buildFromTemplate(this.menuConstruct)
     }
-    private static AppMenu(isMac: boolean): MenuItemConstructorOptions {
+    private static AppMenu(): MenuItemConstructorOptions {
         let appMenu: MenuItemConstructorOptions[] = [
             this.aboutMenuItem,
             ...(isMac ? this.macOnlyAppMenu : []),
             { type: 'separator' },
             { role: 'quit' },
-        ];
+        ]
         return {
             label: app.getName(),
             submenu: appMenu,
-        };
+        }
     }
-    private static EditMenu(isMac: boolean): MenuItemConstructorOptions {
+    private static EditMenu(): MenuItemConstructorOptions {
         let editMenu: MenuItemConstructorOptions[] = [
             { role: 'undo' },
             { role: 'redo' },
@@ -72,11 +72,11 @@ export default class ApplicationMenu {
             { role: 'delete' },
             { role: 'selectall' },
             ...(isMac ? this.macOnlyEditMenu : []),
-        ];
+        ]
         return {
             label: 'Edit',
             submenu: editMenu,
-        };
+        }
     }
     private static ViewMenu(): MenuItemConstructorOptions {
         let viewMenu: MenuItemConstructorOptions[] = [
@@ -85,13 +85,13 @@ export default class ApplicationMenu {
             { role: 'toggledevtools' },
             { type: 'separator' },
             { role: 'togglefullscreen' },
-        ];
+        ]
         return {
             label: 'View',
             submenu: viewMenu
-        };
+        }
     }
-    private static WindowMenu(isMac: boolean): MenuItemConstructorOptions {
+    private static WindowMenu(): MenuItemConstructorOptions {
         let windowMenu: MenuItemConstructorOptions[] = isMac ? [
             { role: 'close' },
             { role: 'minimize' },
@@ -101,11 +101,11 @@ export default class ApplicationMenu {
         ] : [
                 { role: 'minimize' },
                 { role: 'close' },
-            ];
+            ]
         return {
             label: 'Window',
             submenu: windowMenu,
-        };
+        }
     }
     private static HelpMenu(): MenuItemConstructorOptions {
         let helpMenu: MenuItemConstructorOptions[] = [
@@ -117,10 +117,10 @@ export default class ApplicationMenu {
                 label: 'Learn More',
                 click: () => shell.openExternal(documentURL),
             }
-        ];
+        ]
         return {
             label: 'Help',
             submenu: helpMenu,
-        };
+        }
     }
 }
