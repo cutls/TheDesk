@@ -47,10 +47,8 @@ button {
   margin: 0 0.5em;
   padding: 0.8em 2em;
 
-  transition-duration: 0.5s;
-
   &:hover:not(:disabled) {
-    filter: brightness(90%);
+    filter: brightness(120%);
   }
 }
 </style>
