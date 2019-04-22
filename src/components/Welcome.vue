@@ -1,7 +1,9 @@
 <template>
   <div id="welcome">
     <img alt="Vue logo" src="@/assets/logo.png">
-    <h1>Welcome TheDesk</h1>
+    <h1>Welcome to TheDesk</h1>
+    <BaseButton class="primary fill" disabled>Login</BaseButton>
+    <BaseButton class="primary">Streaming Public Timeline</BaseButton>
   </div>
 </template>
 
