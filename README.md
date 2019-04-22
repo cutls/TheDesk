@@ -1,6 +1,9 @@
 # TheDesk-Vue
 Vueで[TheDesk][cutls/TheDesk]を書き直してみたもの。ライセンスは元のパッケージのライセンスを継承して[GPL v3](LICENSE)とします
 
+## Version
+現在は本家バージョン18.3.xの仕様をベースに開発しています
+
 ## Development
 開発時の起動
 ```sh

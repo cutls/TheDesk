@@ -65,11 +65,23 @@
   "bugs": {
     "url": "https://github.com/kPherox/TheDesk-Vue/issues"
   },
-  "contributors": [{
-    "name": "kPherox",
-    "url": "https://www.kr-kp.com/",
-    "email": "admin@mail.kr-kp.com"
-  }],
+  "contributors": [
+    {
+      "name": "とねぢ",
+      "url": "https://minohdon.jp/@toneji",
+      "email": "solfa.tono@gmail.com"
+    },
+    {
+      "name": "ぽぷんじゃ",
+      "url": "https://popon.pptdn.jp/@popn_ja",
+      "email": "popn.ja@gmail.com"
+    },
+    {
+      "name": "kPherox",
+      "url": "https://pawoo.net/@kPherox",
+      "email": "admin@mail.kr-kp.com"
+    }
+  ],
   "homepage": "https://github.com/kPherox/TheDesk-Vue",
   "license": "GPL-3.0",
   "productName": "TheDesk Vue",

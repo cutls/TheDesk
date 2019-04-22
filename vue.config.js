@@ -1,10 +1,5 @@
-const {
-  productName
-} = require("./package.json")
-const {
-  appId,
-  copyright
-} = require("./info.json")
+const { productName } = require("./package.json");
+const { appId, copyright } = require("./info.json");
 
 module.exports = {
   pages: {
@@ -15,7 +10,7 @@ module.exports = {
     },
     about: {
       entry: 'src/entries/about.ts',
-      title: `About`,
+      title: 'About',
     },
   },
   css: {
@@ -62,4 +57,4 @@ module.exports = {
       },
     },
   },
-}
+};

@@ -40,7 +40,7 @@ export default class Application {
             try {
                 await installVueDevtools()
             } catch (e) {
-                //console.error('Vue Devtools failed to install:', e.toString())
+                console.error('Vue Devtools failed to install:', e.toString())
             }
         }
         if (!process.env.WEBPACK_DEV_SERVER_URL) createProtocol('app')

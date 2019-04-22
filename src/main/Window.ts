@@ -96,7 +96,7 @@ export default class Window {
             shell.openExternal(url, {
                 activate: false
             }, (err) => {
-                //if (err) console.log(err)
+                if (err) console.log(err)
             })
         }
         win.webContents.on('will-navigate', openUrl)
