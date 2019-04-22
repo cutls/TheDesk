@@ -17,6 +17,9 @@ export default class Welcome extends Vue {
 
 <style lang="postcss">
 #welcome {
-  padding-top: 60px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
 }
 </style>
