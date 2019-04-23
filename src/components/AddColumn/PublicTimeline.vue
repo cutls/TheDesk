@@ -52,6 +52,13 @@ export default class AddColumn extends Vue {
 
     this.pubTL.push({ name: instance, statuses: [] })
     this.timeline()
+
+    ipcRenderer.send('open-streaming', instance, 'no-auth')
+    ipcRenderer.on(`update-${instance}-no-auth`, (_: Event, status: Status) => {
+      this.pubTL.filter(tl => tl.name === instance).forEach(function (tl) {
+        tl.statuses.unshift(status)
+      })
+    })
   }
 
   public timeline() {
@@ -60,7 +67,7 @@ export default class AddColumn extends Vue {
         tl.statuses = statuses
       })
       ipcRenderer.send('no-auth-timeline', tl.name)
-    });
+    })
   }
 }
 </script>=
