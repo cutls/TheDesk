@@ -1,11 +1,24 @@
 <template>
   <div>
-    <input type="text" placeholder="e.g:mstdn.jp">
+    <div v-if="showInput">
+      <input type="text" placeholder="e.g:mstdn.jp" v-model="instance">
+      <BaseButton
+        @click.native="addTL"
+        class="primary fill"
+        style="font-size:.8em;"
+      >Add Column</BaseButton>
+    </div>
+    <div id="timelines">
+      <div v-for="(value, key, index) in pubTL" :key="index" class="tl">
+        {{value}}
+      </div>
+    </div>
     <BaseButton
-      @click.native="status = 'public_timeline'"
-      class="primary fill"
-      style="font-size:.8em;"
-    >Add Column</BaseButton>
+        v-if="!showInput"
+        @click.native="showInput = true"
+        class="primary fill"
+        style="font-size:.8em;"
+      >Show Menu</BaseButton>
   </div>
 </template>
 
@@ -14,10 +27,21 @@ import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
 
 type Status = 'welcome' | 'login' | 'public_timeline'
-
+type Instance = String
+type showInput = boolean
+type Timelines = String[]
 @Component
 export default class AddColumn extends Vue {
   public status: Status = 'welcome'
+  public instance: Instance = ''
+  public showInput : showInput = true
+  public pubTL : Timelines = []
+
+  public addTL() {
+    this.showInput = false
+    this.pubTL.push(this.instance)
+    console.log(this.pubTL)
+  }
 }
 </script>=
 
@@ -39,5 +63,13 @@ input {
   &:focus {
     border-color: #26d69a;
   }
+}
+#timelines{
+  display:flex;
+  width:100%;
+}
+.tl{
+  height:100%;
+  flex-grow: 4;
 }
 </style>
