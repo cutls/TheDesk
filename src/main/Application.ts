@@ -50,7 +50,7 @@ export default class Application {
     }
 
     private onActivated() {
-        if (!Window.single.has('main')) {
+        if (!Window.windowMap.has('main')) {
             Window.Main()
         }
     }
