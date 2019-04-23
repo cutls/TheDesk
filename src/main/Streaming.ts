@@ -29,7 +29,7 @@ export default class Streaming {
 
         switch (type) {
             case 'no-auth':
-                client = Client.getNoAuthClient(name)
+                client = Client.getNoAuthClient(name, 'websocket')
                 stream = 'public:local'
                 break
             default:

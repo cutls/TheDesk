@@ -1,7 +1,7 @@
 
 import Mastodon from 'megalodon'
 
-type Protocol = 'http' | 'ws'
+type Protocol = 'http' | 'websocket'
 
 export default class Clients {
     // Authorized Accounts. keyには`@username@domain`を設定します

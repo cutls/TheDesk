@@ -11,7 +11,8 @@
     </div>
     <div id="timelines">
       <div v-for="(value, key, index) in pubTL" :key="index" class="tl">
-        {{value}}
+        {{value.name}}
+        <div v-for="(status, key, index) in value.statuses" :key="index" class="tl">{{status.id}}</div>
       </div>
     </div>
     <BaseButton
@@ -26,10 +27,15 @@
 <script lang="ts">
 import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
+import { Status } from 'megalodon'
 
 type Instance = string
 type showInput = boolean
-type Timelines = string[]
+type Timeline = {
+  name: string
+  statuses: Status[]
+}
+type Timelines = Timeline[]
 @Component
 export default class AddColumn extends Vue {
   public instance: Instance = ''
@@ -44,13 +50,16 @@ export default class AddColumn extends Vue {
     this.showInput = false
     let instance = this.instance
 
-    this.pubTL.push(instance)
+    this.pubTL.push({ name: instance, statuses: [] })
     this.timeline()
   }
 
   public timeline() {
-    this.pubTL.forEach(function (value) {
-      ipcRenderer.send('no-auth-timeline', value);
+    this.pubTL.forEach(function (tl) {
+      ipcRenderer.on(`timeline-${tl.name}-no-auth`, (_: Event, statuses: Status[]) => {
+        tl.statuses = statuses
+      })
+      ipcRenderer.send('no-auth-timeline', tl.name)
     });
   }
 }
