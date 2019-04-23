@@ -21,6 +21,7 @@
   "main": "background.js",
   "dependencies": {
     "core-js": "^2.6.5",
+    "megalodon": "^0.6.3",
     "vue": "^2.6.6",
     "vue-property-decorator": "^8.0.0"
   },

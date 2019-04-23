@@ -40,7 +40,13 @@ export default class AddColumn extends Vue {
   public addTL() {
     this.showInput = false
     this.pubTL.push(this.instance)
-    console.log(this.pubTL)
+    this.timeline()
+  }
+
+  public timeline(){
+    this.pubTL.forEach(function( value ) {
+     ipcRenderer.send('no-auth-streaming', value);
+    });
   }
 }
 </script>=
