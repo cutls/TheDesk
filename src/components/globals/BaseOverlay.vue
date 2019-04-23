@@ -1,11 +1,13 @@
 <template>
-  <div class="overlay">
-    <button type="button" class="close-button" @click="closeOverlay">x</button>
-    <h1>{{ title }}</h1>
-    <div class="overlay-inner">
-      <slot/>
+  <transition name="fade">
+    <div class="overlay">
+      <button type="button" class="close-button" @click="closeOverlay">x</button>
+      <h1>{{ title }}</h1>
+      <div class="overlay-inner">
+        <slot/>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script lang="ts">
@@ -25,13 +27,21 @@ export default class BaseOverlay extends Vue {
 </script>
 
 <style scoped lang="postcss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 .overlay {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: var(--bg-color);
   width: 100vw;
   height: 100vh;
+  background-color: var(--bg-color);
 }
 .overlay-inner {
   margin: 1em;
