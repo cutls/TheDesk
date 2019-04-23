@@ -1,8 +1,6 @@
-# TheDesk-Vue
-Vueで[TheDesk][cutls/TheDesk]を書き直してみたもの。ライセンスは元のパッケージのライセンスを継承して[GPL v3](LICENSE)とします
+# TheDesk
+頑張ってTheDeskをVueでリライトします。ライセンスは同様に[GPL v3](LICENSE)です。
 
-## Version
-現在は本家バージョン18.3.xの仕様をベースに開発しています
 
 ## Development
 開発時の起動
@@ -22,6 +20,3 @@ _アプリのアイコンは以下のコマンドを実行して生成してく�
 ```sh
 npm run electron:generate-icons
 ```
-
-
-[cutls/TheDesk]: https://github.com/cutls/TheDesk
