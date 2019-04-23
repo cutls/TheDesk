@@ -10,6 +10,7 @@ import {
 
 import Window from './Window'
 import Timeline from './Timeline'
+import Streaming from './Streaming'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -49,6 +50,7 @@ export default class Application {
         if (!process.env.WEBPACK_DEV_SERVER_URL) createProtocol('app')
 
         Timeline.ready()
+        Streaming.ready()
 
         Window.Main()
     }
