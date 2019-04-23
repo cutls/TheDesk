@@ -1,19 +1,20 @@
 import {
     ipcMain
 } from 'electron'
-import Mastodon, { Status, Response } from 'megalodon'
+import { Status, Response } from 'megalodon'
 
 import Client from './Client'
+import Window from './Window'
 
 export default class Timeline {
     public static ready() {
-        ipcMain.on('no-auth-streaming', (event: Event, instance: string) => {
-            const client = Client.getNoAuthClient(instance)
+        ipcMain.on('no-auth-timeline', async (event: Event, name: string) => {
+            const client = Client.getNoAuthClient(name)
+            let res: Response<[Status]> = await client.get<[Status]>('/timelines/public?local=true')
 
-            client.get<[Status]>('/timelines/public?local=true')
-                .then((resp: Response<[Status]>) => {
-                    console.log(resp.data)
-                })
+            if (Window.windowMap.has('main')) {
+                Window.windowMap.get('main')!.webContents.send(`timeline-${name}-no-auth`, res.data)
+            }
         })
     }
 }

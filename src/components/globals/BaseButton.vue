@@ -43,7 +43,7 @@ button {
     --btn-bg-color: var(--bg-color) !important;
   }
 
-  font-size: 1em;
+  font-size: var(--font-size);
   margin: 0 0.5em;
   padding: 0.8em 2em;
 

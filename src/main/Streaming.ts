@@ -12,8 +12,8 @@ export default class Streaming {
     }
 
     public static ready() {
-        ipcMain.on('open-streaming', (_: Event, domain: string, type: string) => {
-            return this.shared.openStreaming(domain, type)
+        ipcMain.on('open-streaming', (_: Event, name: string, type: string) => {
+            return this.shared.openStreaming(name, type)
         })
     }
 
@@ -23,20 +23,20 @@ export default class Streaming {
         this.sockets = new Map()
     }
 
-    private openStreaming(clientName: string, type: string) {
+    private openStreaming(name: string, type: string) {
         let client: Mastodon
         let stream: string
 
         switch (type) {
             case 'no-auth':
-                client = Client.getNoAuthClient(clientName)
+                client = Client.getNoAuthClient(name)
                 stream = 'public:local'
                 break
             default:
                 return
         }
 
-        let socketName = clientName + ':' + type
+        let socketName = name + ':' + type
         if (this.sockets.has(socketName)) {
             return
         }
@@ -49,7 +49,7 @@ export default class Streaming {
 
         socket.on('update', (status: Status) => {
             if (Window.windowMap.has('main')) {
-                Window.windowMap.get('main')!.webContents.send(`update-${clientName}-${type}`, status)
+                Window.windowMap.get('main')!.webContents.send(`update-${name}-${type}`, status)
             }
         })
 
@@ -59,7 +59,7 @@ export default class Streaming {
 
         socket.on('delete', (id: number) => {
             if (Window.windowMap.has('main')) {
-                Window.windowMap.get('main')!.webContents.send(`delete-${clientName}-${type}`, id)
+                Window.windowMap.get('main')!.webContents.send(`delete-${name}-${type}`, id)
             }
         })
 
