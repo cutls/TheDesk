@@ -12,7 +12,6 @@ import ContextMenu from 'electron-context-menu'
 
 import Application from './main/Application'
 import ApplicationMenu from './main/ApplicationMenu'
-import Timeline from './main/Timeline'
 
 export type PackageJson = typeof import('../package.json')
 import { author, contributors, homepage } from '../package.json'
@@ -46,8 +45,6 @@ if (process.env.NODE_ENV !== 'production') {
 protocol.registerStandardSchemes(['app'], { secure: true })
 
 ContextMenu()
-//この書き方がいいのかは知りません。(cutls|main/Timeline.ts)
-Timeline.timelineReady()
 
 const TheDeskVueApp: Application = Application.shared
 TheDeskVueApp.setApplicationMenu(ApplicationMenu.buildTemplate())

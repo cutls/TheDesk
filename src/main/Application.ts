@@ -9,13 +9,14 @@ import {
 } from 'vue-cli-plugin-electron-builder/lib'
 
 import Window from './Window'
+import Timeline from './Timeline'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 export default class Application {
     private static _instance: Application
 
-    public static get shared() {
+    public static get shared(): Application {
         // Do you need arguments? Make it a regular static method instead.
         return this._instance || (this._instance = new this())
     }
@@ -46,6 +47,9 @@ export default class Application {
             }
         }
         if (!process.env.WEBPACK_DEV_SERVER_URL) createProtocol('app')
+
+        Timeline.ready()
+
         Window.Main()
     }
 

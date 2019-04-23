@@ -5,7 +5,8 @@
       <BaseButton
         @click.native="addTL"
         class="primary fill"
-        style="font-size:.8em;"
+        style="--font-size:.8em;"
+        :disabled="!hasDomain"
       >Add Column</BaseButton>
     </div>
     <div id="timelines">
@@ -14,11 +15,11 @@
       </div>
     </div>
     <BaseButton
-        v-if="!showInput"
-        @click.native="showInput = true"
-        class="primary fill"
-        style="font-size:.8em;"
-      >Show Menu</BaseButton>
+      v-if="!showInput"
+      @click.native="showInput = true"
+      class="primary fill"
+      style="--font-size:.8em;"
+    >Show Menu</BaseButton>
   </div>
 </template>
 
@@ -26,16 +27,18 @@
 import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
 
-type Status = 'welcome' | 'login' | 'public_timeline'
-type Instance = String
+type Instance = string
 type showInput = boolean
-type Timelines = String[]
+type Timelines = string[]
 @Component
 export default class AddColumn extends Vue {
-  public status: Status = 'welcome'
   public instance: Instance = ''
-  public showInput : showInput = true
-  public pubTL : Timelines = []
+  public showInput: showInput = true
+  public pubTL: Timelines = []
+
+  public get hasDomain() {
+    return this.instance != ''
+  }
 
   public addTL() {
     this.showInput = false
@@ -43,9 +46,9 @@ export default class AddColumn extends Vue {
     this.timeline()
   }
 
-  public timeline(){
-    this.pubTL.forEach(function( value ) {
-     ipcRenderer.send('no-auth-streaming', value);
+  public timeline() {
+    this.pubTL.forEach(function (value) {
+      ipcRenderer.send('no-auth-streaming', value);
     });
   }
 }
