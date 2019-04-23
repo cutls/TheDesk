@@ -17,7 +17,6 @@ export interface CreateWindowOptions {
     windowName: string
     loadPath: string
     windowOptions?: BrowserWindowConstructorOptions
-    singleton?: boolean
     lastAction?: (win: BrowserWindow) => void
     openDevTools?: boolean
 }
@@ -25,8 +24,7 @@ export interface CreateWindowOptions {
 export default class Window {
     public static ApplicationURL: string = process.env.WEBPACK_DEV_SERVER_URL /* `electron:serve`で起動した時 */ || 'app://./' /* ビルドしたアプリ */
 
-    public static single: Map<string, BrowserWindow> = new Map()
-    public static list: BrowserWindow[]
+    public static windowMap: Map<string, BrowserWindow> = new Map()
 
     public static Main() {
         const opts: CreateWindowOptions = {
@@ -38,9 +36,8 @@ export default class Window {
                 height: 600,
                 autoHideMenuBar: true,
             },
-            singleton: true,
             lastAction: (win) => {
-                shortcutRegister(win, 'F5', () => this.single.get('main')!.reload())
+                shortcutRegister(win, 'F5', () => this.windowMap.get('main')!.reload())
             },
             openDevTools: !process.env.IS_TEST
         }
@@ -62,13 +59,12 @@ export default class Window {
                 autoHideMenuBar: true,
                 titleBarStyle: 'hiddenInset',
             },
-            singleton: true,
             lastAction: (win) => {
                 win.setMenuBarVisibility(false)
                 win.webContents.on('before-input-event', (event: Event, input: Input) => {
-                    this.single.get('about')!.webContents.setIgnoreMenuShortcuts((process.platform === 'darwin' ? input.meta : input.control) && input.key === 'r')
+                    this.windowMap.get('about')!.webContents.setIgnoreMenuShortcuts((process.platform === 'darwin' ? input.meta : input.control) && input.key === 'r')
                 })
-                shortcutRegister(win, 'Esc', () => this.single.get('about')!.destroy())
+                shortcutRegister(win, 'Esc', () => this.windowMap.get('about')!.destroy())
             },
             openDevTools: !process.env.IS_TEST
         }
@@ -76,8 +72,8 @@ export default class Window {
     }
 
     public static async createWindow(options: CreateWindowOptions) {
-        if (options.singleton && this.single.has(options.windowName)) {
-            this.single.get(options.windowName)!.show()
+        if (this.windowMap.has(options.windowName)) {
+            this.windowMap.get(options.windowName)!.show()
             return
         }
         let win = new BrowserWindow(options.windowOptions)
@@ -87,7 +83,7 @@ export default class Window {
         })
 
         win.on('closed', () => {
-            this.single.delete(options.windowName)
+            this.windowMap.delete(options.windowName)
         })
 
         let openUrl = (event: Event, url: string) => {
@@ -106,6 +102,6 @@ export default class Window {
 
         if (typeof options.lastAction === 'function') options.lastAction(win)
 
-        this.single.set(options.windowName, win)
+        this.windowMap.set(options.windowName, win)
     }
 }
