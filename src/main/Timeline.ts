@@ -3,13 +3,12 @@ import {
 } from 'electron'
 import Mastodon, { Status, Response } from 'megalodon'
 
+import Client from './Client'
+
 export default class Timeline {
     public static ready() {
         ipcMain.on('no-auth-streaming', (event: Event, instance: string) => {
-            const client = new Mastodon(
-                '',
-                'https://' + instance + '/api/v1'
-            )
+            const client = Client.getNoAuthClient(instance)
 
             client.get<[Status]>('/timelines/public?local=true')
                 .then((resp: Response<[Status]>) => {

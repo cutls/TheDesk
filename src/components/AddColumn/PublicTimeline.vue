@@ -73,12 +73,12 @@ input {
     border-color: #26d69a;
   }
 }
-#timelines{
-  display:flex;
-  width:100%;
+#timelines {
+  display: flex;
+  width: 100%;
 }
-.tl{
-  height:100%;
+.tl {
+  height: 100%;
   flex-grow: 4;
 }
 </style>
