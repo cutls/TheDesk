@@ -2,7 +2,7 @@
   <div id="welcome">
     <img alt="Vue logo" src="@/assets/logo.png">
     <h1>Welcome to TheDesk</h1>
-    <BaseButton @click.native="status = 'login'" class="primary fill" disabled>{{ loginButton }}</BaseButton>
+    <BaseButton @click.native="status = 'login'" class="primary fill">{{ loginButton }}</BaseButton>
     <BaseButton @click.native="status = 'public_timeline'" class="primary">{{ publicTLButton }}</BaseButton>
 
     <BaseOverlay
@@ -21,12 +21,13 @@ import { Component, Vue } from 'vue-property-decorator'
 
 //import Login from './Accounts/Login.vue'
 import PublicTimeline from './AddColumn/PublicTimeline.vue'
+import Login from './Preference/AccountManager.vue'
 
 type Status = 'welcome' | 'login' | 'public_timeline'
 
 @Component({
   components: {
-    //Login,
+    Login,
     PublicTimeline,
   }
 })

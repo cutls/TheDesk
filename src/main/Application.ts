@@ -14,6 +14,7 @@ import {
 import Window from './Window'
 import Timeline from './Timeline'
 import Streaming from './Streaming'
+import Auth from './Auth'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -65,6 +66,7 @@ export default class Application {
 
         Timeline.ready()
         Streaming.ready()
+        Auth.ready()
 
         ipcMain.on('dark-theme', (e: Event) => e.returnValue = this.isDarkMode)
 
