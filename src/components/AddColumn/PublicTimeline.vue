@@ -31,14 +31,15 @@ import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
 import { Status } from 'megalodon'
 
+type DeleteListener = (e: Event, id: number) => void
 type Instance = string
 type Timeline = {
   name: string
-  statuses: Map<number, Status>
+  statuses?: Map<number, Status>
 }
-type UpdateListener = (e: Event, status: Status) => void
-type DeleteListener = (e: Event, id: number) => void
 type Timelines = Timeline[]
+type UpdateListener = (e: Event, status: Status) => void
+
 @Component
 export default class AddColumn extends Vue {
   public instance: Instance = ''
@@ -61,22 +62,41 @@ export default class AddColumn extends Vue {
   }
 
   public addTL() {
-    let timeline: Timeline = { name: this.instance, statuses: new Map() }
+    let timeline: Timeline = { name: this.instance }
 
     this.showInput = false
     this.instance = ''
 
     this.pubTL.push(timeline)
+    // 最新のTLを取得
     this.loadTL(timeline)
 
+    // streamingを開始
+    this.subscribeStreaming(timeline)
+  }
+
+  public loadTL(timeline: Timeline) {
+    let statuses: Status[] = ipcRenderer.sendSync('no-auth-timeline', timeline.name)
+    timeline.statuses = new Map(statuses.map((status): [number, Status] => [status.id, status]))
+  }
+
+  public async subscribeStreaming(timeline: Timeline) {
+    // updateイベントを購読
     let updateListener = (_: Event, status: Status) => {
+      if (timeline.statuses === undefined) {
+        timeline.statuses = new Map()
+      }
       timeline.statuses.set(status.id, status)
       this.$forceUpdate()
     }
     ipcRenderer.on(`update-${timeline.name}-no-auth`, updateListener)
     this.updateListeners.push([`update-${timeline.name}-no-auth`, updateListener])
 
+    // deleteイベントを購読
     let deleteListener = (_: Event, id: number) => {
+      if (timeline.statuses === undefined) {
+        timeline.statuses = new Map()
+      }
       timeline.statuses.delete(id)
       this.$forceUpdate()
     }
@@ -84,13 +104,6 @@ export default class AddColumn extends Vue {
     this.deleteListeners.push([`delete-${timeline.name}-no-auth`, deleteListener])
 
     ipcRenderer.send('open-streaming', timeline.name, 'no-auth')
-  }
-
-  public loadTL(timeline: Timeline) {
-    ipcRenderer.once(`timeline-${timeline.name}-no-auth`, (_: Event, statuses: Status[]) => {
-      timeline.statuses = new Map(statuses.map((status): [number, Status] => [status.id, status]))
-    })
-    ipcRenderer.send('no-auth-timeline', timeline.name)
   }
 }
 </script>=
