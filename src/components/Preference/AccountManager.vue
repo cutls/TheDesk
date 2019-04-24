@@ -26,6 +26,7 @@ type Instance = string
 export default class Auth extends Vue {
   public instance: Instance = ""
   public inputCode: boolean = false
+  public code: string
   public get hasDomain() {
     return this.instance != ""
   }
@@ -37,7 +38,7 @@ export default class Auth extends Vue {
   public authCode() {
     let code = this.code
     this.inputCode = true
-    ipcRenderer.send(`new-account-setup`, target)
+    ipcRenderer.send(`new-account-auth`, code, this.instance)
   }
 }
 </script>
