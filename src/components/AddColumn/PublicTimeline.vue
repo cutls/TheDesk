@@ -32,17 +32,24 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Status } from 'megalodon'
 
 type Instance = string
-type showInput = boolean
 type Timeline = {
   name: string
   statuses: Status[]
 }
+type UpdateListener = (e: Event, status: Status) => void
 type Timelines = Timeline[]
 @Component
 export default class AddColumn extends Vue {
   public instance: Instance = ''
-  public showInput: showInput = true
+  public showInput: boolean = true
+  public updateListeners: [string, UpdateListener][] = []
   public pubTL: Timelines = []
+
+  beforeDestroy() {
+    this.updateListeners.forEach(([name, listener]) => {
+      ipcRenderer.removeListener(name, listener)
+    })
+  }
 
   public get hasDomain() {
     return this.instance != ''
@@ -55,12 +62,16 @@ export default class AddColumn extends Vue {
     this.pubTL.push({ name: instance, statuses: [] })
     this.timeline()
 
-    ipcRenderer.send('open-streaming', instance, 'no-auth')
-    ipcRenderer.on(`update-${instance}-no-auth`, (_: Event, status: Status) => {
+    let updateListener = (_: Event, status: Status) => {
       this.pubTL.filter(tl => tl.name === instance).forEach(function (tl) {
         tl.statuses.unshift(status)
       })
-    })
+      this.$forceUpdate()
+    }
+    ipcRenderer.on(`update-${instance}-no-auth`, updateListener)
+    this.updateListeners.push([`update-${instance}-no-auth`, updateListener])
+
+    ipcRenderer.send('open-streaming', instance, 'no-auth')
   }
 
   public timeline() {
