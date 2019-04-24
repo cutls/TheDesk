@@ -14,7 +14,7 @@
     <div id="timelines">
       <div v-for="(value, key, index) in pubTL" :key="index" class="tl">
         {{value.name}}
-        <div v-for="[id,status] in Array.from(value.statuses)" :key="id" class="tl">{{status.id}}</div>
+        <div v-for="[id,status] in sortedStatus(value.statuses)" :key="id" class="tl">{{status.id}}</div>
       </div>
     </div>
     <BaseButton
@@ -30,6 +30,8 @@
 import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
 import { Status } from 'megalodon'
+
+import '@/extensions/map-sortbyvalue' // Add sortByValue function to Map prototype
 
 type DeleteListener = (e: Event, id: number) => void
 type Instance = string
@@ -59,6 +61,12 @@ export default class AddColumn extends Vue {
 
   public get hasDomain() {
     return this.instance != ''
+  }
+
+  public sortedStatus(statuses: Map<number, Status>): Map<number, Status> {
+    return statuses.sortByValue((s1, s2): number => {
+      return s1.created_at > s2.created_at ? -1 : 1
+    })
   }
 
   public addTL() {
