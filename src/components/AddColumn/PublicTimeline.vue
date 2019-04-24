@@ -1,13 +1,15 @@
 <template>
   <div>
     <div v-if="showInput">
-      <input type="text" placeholder="e.g:mstdn.jp" v-model="instance">
-      <BaseButton
-        @click.native="addTL"
-        class="primary fill"
-        style="--font-size:.8em;"
-        :disabled="!hasDomain"
-      >Add Column</BaseButton>
+      <form @submit.prevent="addTL">
+        <input type="text" placeholder="e.g:mstdn.jp" v-model="instance">
+        <BaseButton
+          type="submit"
+          class="primary fill"
+          style="--font-size:.8em;"
+          :disabled="!hasDomain"
+        >Add Column</BaseButton>
+      </form>
     </div>
     <div id="timelines">
       <div v-for="(value, key, index) in pubTL" :key="index" class="tl">
