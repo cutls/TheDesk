@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { remote } from 'electron'
+import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
 import Welcome from '@/components/Welcome.vue'
 
@@ -15,20 +15,23 @@ import Welcome from '@/components/Welcome.vue'
   },
 })
 export default class App extends Vue {
-  public color: string = this.isDarkMode ? 'white' : 'black'
-  public backgroundColor: string = this.isDarkMode ? '#212121' : 'white'
+  private isDarkMode: boolean = ipcRenderer.sendSync('dark-theme')
   public fontSize: string = '16px'
 
   public get styles(): { [key: string]: string } {
     return {
-      '--color': this.color,
-      '--bg-color': this.backgroundColor,
+      '--color': this.isDarkMode ? 'white' : 'black',
+      '--bg-color': this.isDarkMode ? '#212121' : 'white',
       '--font-size': this.fontSize,
     }
   }
 
-  public get isDarkMode(): boolean {
-    return remote.systemPreferences.isDarkMode()
+  beforeDestroy() {
+    ipcRenderer.eventNames().forEach(name => ipcRenderer.removeAllListeners(name))
+  }
+
+  mounted() {
+    ipcRenderer.on('change-color-theme', () => this.isDarkMode = ipcRenderer.sendSync('dark-theme'))
   }
 }
 </script>

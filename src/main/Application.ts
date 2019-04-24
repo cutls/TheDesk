@@ -1,6 +1,9 @@
 import {
     app,
+    ipcMain,
     shell,
+    systemPreferences,
+    Event,
     Menu,
 } from 'electron'
 import {
@@ -22,10 +25,21 @@ export default class Application {
         return this._instance || (this._instance = new this())
     }
 
+    public isDarkMode: boolean
+
     private constructor() {
+        this.isDarkMode = systemPreferences.isDarkMode()
+
         app.on('window-all-closed', () => this.onWindowAllClosed())
         app.on('ready', () => this.onReady())
         app.on('activate', () => this.onActivated())
+
+        systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
+            this.isDarkMode = systemPreferences.isDarkMode()
+            Window.windowMap.forEach(win => {
+                win.webContents.send('change-color-theme')
+            })
+        })
     }
 
     public setApplicationMenu(menu: Menu) {
@@ -51,6 +65,8 @@ export default class Application {
 
         Timeline.ready()
         Streaming.ready()
+
+        ipcMain.on('dark-theme', (e: Event) => e.returnValue = this.isDarkMode)
 
         Window.Main()
     }
