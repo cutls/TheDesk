@@ -14,7 +14,7 @@
     <div id="timelines">
       <div v-for="(value, key, index) in pubTL" :key="index" class="tl">
         {{value.name}}
-        <div v-for="(status, key, index) in value.statuses" :key="index" class="tl">{{status.id}}</div>
+        <div v-for="[id,status] in Array.from(value.statuses)" :key="id" class="tl">{{status.id}}</div>
       </div>
     </div>
     <BaseButton
@@ -34,7 +34,7 @@ import { Status } from 'megalodon'
 type Instance = string
 type Timeline = {
   name: string
-  statuses: Status[]
+  statuses: Map<number, Status>
 }
 type UpdateListener = (e: Event, status: Status) => void
 type Timelines = Timeline[]
@@ -59,28 +59,28 @@ export default class AddColumn extends Vue {
     this.showInput = false
     let instance = this.instance
 
-    this.pubTL.push({ name: instance, statuses: [] })
-    this.timeline()
+    let timeline: Timeline = { name: this.instance, statuses: new Map() }
+
+    this.pubTL.push(timeline)
+    this.loadTL(timeline)
 
     let updateListener = (_: Event, status: Status) => {
-      this.pubTL.filter(tl => tl.name === instance).forEach(function (tl) {
-        tl.statuses.unshift(status)
+      this.pubTL.filter(tl => tl.name === timeline.name).forEach(function (tl) {
+        tl.statuses.set(status.id, status)
       })
       this.$forceUpdate()
     }
-    ipcRenderer.on(`update-${instance}-no-auth`, updateListener)
-    this.updateListeners.push([`update-${instance}-no-auth`, updateListener])
+    ipcRenderer.on(`update-${timeline.name}-no-auth`, updateListener)
+    this.updateListeners.push([`update-${timeline.name}-no-auth`, updateListener])
 
     ipcRenderer.send('open-streaming', instance, 'no-auth')
   }
 
-  public timeline() {
-    this.pubTL.forEach(function (tl) {
-      ipcRenderer.on(`timeline-${tl.name}-no-auth`, (_: Event, statuses: Status[]) => {
-        tl.statuses = statuses
-      })
-      ipcRenderer.send('no-auth-timeline', tl.name)
+  public loadTL(timeline: Timeline) {
+    ipcRenderer.once(`timeline-${timeline.name}-no-auth`, (_: Event, statuses: Status[]) => {
+      timeline.statuses = new Map(statuses.map((status): [number, Status] => [status.id, status]))
     })
+    ipcRenderer.send('no-auth-timeline', timeline.name)
   }
 }
 </script>=
