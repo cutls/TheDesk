@@ -1,5 +1,5 @@
 <template>
-  <div id="about">
+  <div id="about" :style="styles">
     <div id="brand">
       <div id="logo">
         <img :alt="productName+' logo'" src="@/assets/logo.png" width="194" draggable="false">
@@ -65,6 +65,7 @@ interface TheDeskInfo {
 @Component
 export default class About extends Vue {
   private thedeskInfo: TheDeskInfo = ipcRenderer.sendSync('thedesk-info')
+  private isDarkMode: boolean = ipcRenderer.sendSync('dark-theme')
 
   public get ctrHtml(): string {
     return this.contributors.map(contributer => {
@@ -96,6 +97,21 @@ export default class About extends Vue {
       "Node.js": this.thedeskInfo.versions.node,
     }
   }
+
+  public get styles(): { [key: string]: string } {
+    return {
+      '--color': this.isDarkMode ? 'white' : 'black',
+      '--bg-color': this.isDarkMode ? '#212121' : 'white',
+    }
+  }
+
+  beforeDestroy() {
+    ipcRenderer.eventNames().forEach(name => ipcRenderer.removeAllListeners(name))
+  }
+
+  mounted() {
+    ipcRenderer.on('change-color-theme', () => this.isDarkMode = ipcRenderer.sendSync('dark-theme'))
+  }
 }
 </script>
 
@@ -107,9 +123,16 @@ body {
   -webkit-app-region: drag;
   user-select: none;
 }
+a {
+  color: #36c;
+  text-decoration: none;
+}
 #about {
   padding: 0.5em;
   text-align: center;
+  height: 100vh;
+  color: var(--color);
+  background-color: var(--bg-color);
 }
 #brand {
   margin-top: 0.5em;
