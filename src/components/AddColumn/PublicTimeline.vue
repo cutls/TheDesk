@@ -37,16 +37,21 @@ type Timeline = {
   statuses: Map<number, Status>
 }
 type UpdateListener = (e: Event, status: Status) => void
+type DeleteListener = (e: Event, id: number) => void
 type Timelines = Timeline[]
 @Component
 export default class AddColumn extends Vue {
   public instance: Instance = ''
   public showInput: boolean = true
   public updateListeners: [string, UpdateListener][] = []
+  public deleteListeners: [string, DeleteListener][] = []
   public pubTL: Timelines = []
 
   beforeDestroy() {
     this.updateListeners.forEach(([name, listener]) => {
+      ipcRenderer.removeListener(name, listener)
+    })
+    this.deleteListeners.forEach(([name, listener]) => {
       ipcRenderer.removeListener(name, listener)
     })
   }
@@ -56,10 +61,10 @@ export default class AddColumn extends Vue {
   }
 
   public addTL() {
-    this.showInput = false
-    let instance = this.instance
-
     let timeline: Timeline = { name: this.instance, statuses: new Map() }
+
+    this.showInput = false
+    this.instance = ''
 
     this.pubTL.push(timeline)
     this.loadTL(timeline)
@@ -71,7 +76,14 @@ export default class AddColumn extends Vue {
     ipcRenderer.on(`update-${timeline.name}-no-auth`, updateListener)
     this.updateListeners.push([`update-${timeline.name}-no-auth`, updateListener])
 
-    ipcRenderer.send('open-streaming', instance, 'no-auth')
+    let deleteListener = (_: Event, id: number) => {
+      timeline.statuses.delete(id)
+      this.$forceUpdate()
+    }
+    ipcRenderer.on(`delete-${timeline.name}-no-auth`, deleteListener)
+    this.deleteListeners.push([`delete-${timeline.name}-no-auth`, deleteListener])
+
+    ipcRenderer.send('open-streaming', timeline.name, 'no-auth')
   }
 
   public loadTL(timeline: Timeline) {
