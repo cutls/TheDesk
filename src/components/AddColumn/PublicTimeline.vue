@@ -65,9 +65,7 @@ export default class AddColumn extends Vue {
     this.loadTL(timeline)
 
     let updateListener = (_: Event, status: Status) => {
-      this.pubTL.filter(tl => tl.name === timeline.name).forEach(function (tl) {
-        tl.statuses.set(status.id, status)
-      })
+      timeline.statuses.set(status.id, status)
       this.$forceUpdate()
     }
     ipcRenderer.on(`update-${timeline.name}-no-auth`, updateListener)
