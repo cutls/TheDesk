@@ -64,12 +64,7 @@ interface TheDeskInfo {
 
 @Component
 export default class About extends Vue {
-  public productName: string
-  public author: Maintainer
-  public contributors: Maintainer[]
-  public homePage: string
-  public copyrightYear: string
-  public versions: Versions
+  private thedeskInfo: TheDeskInfo = ipcRenderer.sendSync('thedesk-info')
 
   public get ctrHtml(): string {
     return this.contributors.map(contributer => {
@@ -77,20 +72,28 @@ export default class About extends Vue {
     }).join(', ')
   }
 
-  constructor() {
-    super()
-    const thedeskInfo: TheDeskInfo = ipcRenderer.sendSync('thedesk-info')
-    this.productName = thedeskInfo.productName
-    this.author = thedeskInfo.author
-    this.contributors = thedeskInfo.contributors
-    this.homePage = thedeskInfo.homePage
-    this.copyrightYear = thedeskInfo.copyrightYear
-    this.versions = {
-      "Code Name": thedeskInfo.codeName,
-      "Internal Version": thedeskInfo.versions.internal,
-      "Chromium": thedeskInfo.versions.chrome,
-      "Electron": thedeskInfo.versions.electron,
-      "Node.js": thedeskInfo.versions.node,
+  public get productName(): string {
+    return this.thedeskInfo.productName
+  }
+  public get author(): Maintainer {
+    return this.thedeskInfo.author
+  }
+  public get contributors(): Maintainer[] {
+    return this.thedeskInfo.contributors
+  }
+  public get homePage(): string {
+    return this.thedeskInfo.homePage
+  }
+  public get copyrightYear(): string {
+    return this.thedeskInfo.copyrightYear
+  }
+  public get versions(): Versions {
+    return {
+      "Code Name": this.thedeskInfo.codeName,
+      "Internal Version": this.thedeskInfo.versions.internal,
+      "Chromium": this.thedeskInfo.versions.chrome,
+      "Electron": this.thedeskInfo.versions.electron,
+      "Node.js": this.thedeskInfo.versions.node,
     }
   }
 }
