@@ -1,5 +1,5 @@
 import { ipcMain, Event, shell, app } from "electron"
-import Mastodon, { Status, Response } from "megalodon"
+import Mastodon, { Response, Account } from "megalodon"
 import { join } from "path"
 import Datastore from "nedb"
 import Window from "./Window"
@@ -33,14 +33,14 @@ export default class Auth {
               }
             )
           } else {
-            Window.windowMap.get("main")!.webContents.send(`error`, {
+            event.sender.send(`error`, {
               id: "ERROR_GET_AUTHURL",
               message: "Failed to get auth URL to login."
             })
           }
         })
         .catch((err: Error) =>
-          Window.windowMap.get("main")!.webContents.send(`error`, {
+          event.sender.send(`error`, {
             id: "ERROR_CONNECTION",
             message: "Connection error",
             meta: err
@@ -60,23 +60,39 @@ export default class Auth {
               )
 
               client
-                .get<[Status]>("/accounts/verify_credentials")
-                .then((resp: Response<[Status]>) => {
-                  console.log(resp.data)
-                  var db = new Datastore({
-                    filename: join(app.getPath("userData"), "account.db")
+                .get<Account>("/accounts/verify_credentials")
+                .then((resp: Response<Account>) => {
+                  let you = resp.data
+                  let db = new Datastore({
+                    filename: join(app.getPath("userData"), "account.db"),
+                    autoload: true
                   })
-                  db.loadDatabase()
+                  let docs = {
+                    acct: you.acct,
+                    avatar: you.avatar,
+                    avatarStatic: you.avatar_static,
+                    accessToken: tokenData.accessToken
+                  }
+                  db.insert(docs, function(err, newDocs) {
+                    if(err){
+                      event.sender.send(`error`, {
+                        id: "ERROR_YOU_TRY_ANOTHER_ACCOUNT",
+                        message: "You cannot login already logined account."
+                      })
+                    }else{
+                      event.sender.send(`login-complete`, newDocs)
+                    }
+                  })
                 })
             } else {
-              Window.windowMap.get("main")!.webContents.send(`error`, {
+              event.sender.send(`error`, {
                 id: "ERROR_GET_TOKEN",
                 message: "Failed to get access token."
               })
             }
           })
           .catch((err: Error) =>
-            Window.windowMap.get("main")!.webContents.send(`error`, {
+            event.sender.send(`error`, {
               id: "ERROR_CONNECTION",
               message: "Connection error",
               meta: err
