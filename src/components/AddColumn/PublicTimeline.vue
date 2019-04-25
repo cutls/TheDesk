@@ -15,37 +15,12 @@
       <div v-for="(value, key, index) in pubTL" :key="index" class="tl">
         {{value.name}}
         <!--とりあえずここに書かせて-->
-        <div v-for="[id,status] in sortedStatus(value.statuses)" :key="id" class="tl">
-          <div class="toot">
-            <div class="tootAvatar">
-              <!--ここは公開TLなので@clickでユーザー情報表示はない-->
-              <img :src="pref.static ? status.account.avatar : status.account.avatar_static">
-            </div>
-            <div class="tootUser">
-              {{status.account.display_name}}
-              <small>@{{status.account.acct}}</small>
-            </div>
-            <div class="tootContent" v-html="status.content"></div>
-            <div class="tootMedia" v-if="status.media_attachments">
-              <div
-                v-for="(media,mediaId) in status.media_attachments"
-                :key="mediaId"
-                class="tootImg"
-              >
-                <img :src="media.preview_url" @click="showImage(media.url, media.type)">
-              </div>
-            </div>
-            <div class="tootCard" v-if="status.card">
-              <template
-                v-if="status.card.description"
-              >{{status.card.title}} - {{status.card.description}}</template>
-              <template v-else-if="status.card.html" v-html="status.card.html"></template>
-            </div>
-            <div class="tootAction">
-              <!--ここは公開TLなのでふぁぼ等はなし-->
-            </div>
-          </div>
-        </div>
+        <TimelineToot
+          v-for="[id,status] in sortedStatus(value.statuses)"
+          :key="id"
+          :status="status"
+          :pref-static="pref.static"
+        />
       </div>
     </div>
     <BaseButton
@@ -62,6 +37,8 @@ import { ipcRenderer } from "electron"
 import { Component, Vue } from "vue-property-decorator"
 import { Status } from "megalodon"
 
+import TimelineToot from '@/components/Timeline/Toot.vue'
+
 import "@/extensions/map-sortbyvalue" // Add sortByValue function to Map prototype
 
 type DeleteListener = (e: Event, id: number) => void
@@ -74,7 +51,11 @@ type Timeline = {
 type Timelines = Timeline[]
 type UpdateListener = (e: Event, status: Status) => void
 
-@Component
+@Component({
+  components: {
+    TimelineToot
+  }
+})
 export default class AddColumn extends Vue {
   public instance: Instance = ""
   public showInput: boolean = true
@@ -175,32 +156,5 @@ export default class AddColumn extends Vue {
 .tl {
   height: 100%;
   flex-grow: 4;
-}
-.toot {
-  text-align: left;
-  display: grid;
-  grid-template-columns: 43px 2fr 1fr;
-  grid-template-areas: "avatar user user" "avatar content content" "avatar media media" "avatar card card" "avatar action action";
-  .tootAvatar {
-    grid-area: avatar;
-    img {
-      width: 100%;
-    }
-  }
-  .tootUser {
-    grid-area: user;
-  }
-  .tootContent {
-    grid-area: content;
-  }
-  .tootMedia {
-    grid-area: media;
-  }
-  .tootCard {
-    grid-area: card;
-  }
-  .tootAction {
-    grid-area: card;
-  }
 }
 </style>

@@ -5,7 +5,6 @@ import {
 import { Status, Response } from 'megalodon'
 
 import Client from './Client'
-import Window from './Window'
 
 export default class Timeline {
     public static ready() {
