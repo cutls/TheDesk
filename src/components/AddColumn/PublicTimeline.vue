@@ -16,7 +16,7 @@
         {{value.name}}
         <!--とりあえずここに書かせて-->
         <TimelineToot
-          v-for="[id,status] in sortedStatus(value.statuses)"
+          v-for="[id,status] in value.statuses"
           :key="id"
           :status="status"
           :pref-static="pref.static"
@@ -120,6 +120,7 @@ export default class AddColumn extends Vue {
     // updateイベントを購読
     let updateListener = (_: Event, status: Status) => {
       timeline.statuses.set(status.id, status)
+      timeline.statuses = this.sortedStatus(timeline.statuses)
       this.$forceUpdate()
     }
     ipcRenderer.on(`update-${timeline.name}-no-auth`, updateListener)
