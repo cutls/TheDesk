@@ -68,7 +68,8 @@ type DeleteListener = (e: Event, id: number) => void
 type Instance = string
 type Timeline = {
   name: string
-  statuses?: Map<number, Status>
+  statuses: Map<number, Status>
+  error?: Error
 }
 type Timelines = Timeline[]
 type UpdateListener = (e: Event, status: Status) => void
@@ -107,35 +108,36 @@ export default class AddColumn extends Vue {
   }
 
   public addTL() {
-    let timeline: Timeline = { name: this.instance }
+    let timeline: Timeline = { name: this.instance, statuses: new Map() }
 
     this.showInput = false
     this.instance = ""
 
     this.pubTL.push(timeline)
     // 最新のTLを取得
-    this.loadTL(timeline)
+    ipcRenderer.once(`timeline-${timeline.name}-no-auth`, (e: Event, statuses: Status[], error?: Error) => {
+      timeline.error = error
+      if (error === undefined) {
+        this.loadTL(timeline, statuses)
+      }
+      this.$forceUpdate()
+    })
+    ipcRenderer.send("no-auth-timeline", timeline.name)
+  }
+
+
+  public loadTL(timeline: Timeline, statuses: Status[]) {
+    timeline.statuses = new Map(
+      statuses.map((status): [number, Status] => [status.id, status])
+    )
 
     // streamingを開始
     this.subscribeStreaming(timeline)
   }
 
-  public loadTL(timeline: Timeline) {
-    let statuses: Status[] = ipcRenderer.sendSync(
-      "no-auth-timeline",
-      timeline.name
-    )
-    timeline.statuses = new Map(
-      statuses.map((status): [number, Status] => [status.id, status])
-    )
-  }
-
   public async subscribeStreaming(timeline: Timeline) {
     // updateイベントを購読
     let updateListener = (_: Event, status: Status) => {
-      if (timeline.statuses === undefined) {
-        timeline.statuses = new Map()
-      }
       timeline.statuses.set(status.id, status)
       this.$forceUpdate()
     }
@@ -147,9 +149,6 @@ export default class AddColumn extends Vue {
 
     // deleteイベントを購読
     let deleteListener = (_: Event, id: number) => {
-      if (timeline.statuses === undefined) {
-        timeline.statuses = new Map()
-      }
       timeline.statuses.delete(id)
       this.$forceUpdate()
     }
