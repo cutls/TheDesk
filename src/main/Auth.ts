@@ -1,5 +1,6 @@
 import { ipcMain, Event, shell } from "electron"
-import Mastodon from "megalodon"
+import Mastodon, { Status, Response } from "megalodon"
+import Window from "./Window"
 
 export default class Auth {
   public static ready() {
@@ -14,32 +15,76 @@ export default class Auth {
           scopes: SCOPES
         },
         "https://" + instance
-      ).then(appData => {
-        clientId = appData.clientId
-        clientSecret = appData.clientSecret
-        url = appData.url
-        if (url) {
-          shell.openExternal(
-            url,
-            {
-              activate: false
-            },
-            err => {
-              if (err) console.log(err)
-            }
-          )
-        } else {
-          console.log(appData)
-        }
-      })
-        .catch((err: Error) => console.error(err))
-    })
-    ipcMain.on("new-account-auth", async (event: Event, code: string, instance: string) => {
-      Mastodon.fetchAccessToken(clientId, clientSecret, code, "https://" + instance)
-        .then((tokenData: Partial<{ accessToken: string }>) => {
-          console.log(tokenData.accessToken)
+      )
+        .then(appData => {
+          clientId = appData.clientId
+          clientSecret = appData.clientSecret
+          url = appData.url
+          if (url) {
+            shell.openExternal(
+              url,
+              {
+                activate: false
+              },
+              err => {
+                if (err) console.log(err)
+              }
+            )
+          } else {
+            Window.windowMap
+              .get("main")!
+              .webContents.send(`error`, {
+                id: "ERROR_GET_AUTHURL",
+                message: "Failed to get auth URL to login."
+              })
+          }
         })
-        .catch((err: Error) => console.error(err))
+        .catch((err: Error) =>
+          Window.windowMap
+            .get("main")!
+            .webContents.send(`error`, {
+              id: "ERROR_CONNECTION",
+              message: "Connection error",
+              meta: err
+            })
+        )
     })
+    ipcMain.on(
+      "new-account-auth",
+      async (event: Event, code: string, instance: string) => {
+        let url: string = "https://" + instance
+        Mastodon.fetchAccessToken(clientId, clientSecret, code, url)
+          .then((tokenData: Partial<{ accessToken: string }>) => {
+            if (tokenData.accessToken) {
+              const client = new Mastodon(
+                tokenData.accessToken,
+                url + "/api/v1"
+              )
+
+              client
+                .get<[Status]>("/accounts/verify_credentials")
+                .then((resp: Response<[Status]>) => {
+                  console.log(resp.data)
+                })
+            } else {
+              Window.windowMap
+                .get("main")!
+                .webContents.send(`error`, {
+                  id: "ERROR_GET_TOKEN",
+                  message: "Failed to get access token."
+                })
+            }
+          })
+          .catch((err: Error) => 
+          Window.windowMap
+            .get("main")!
+            .webContents.send(`error`, {
+              id: "ERROR_CONNECTION",
+              message: "Connection error",
+              meta: err
+            })
+          )
+      }
+    )
   }
 }
