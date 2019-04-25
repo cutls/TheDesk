@@ -32,9 +32,10 @@ export default class Auth {
           console.log(appData)
         }
       })
+        .catch((err: Error) => console.error(err))
     })
     ipcMain.on("new-account-auth", async (event: Event, code: string, instance: string) => {
-      Mastodon.fetchAccessToken(clientId, clientSecret, code, "https://"+instance)
+      Mastodon.fetchAccessToken(clientId, clientSecret, code, "https://" + instance)
         .then((tokenData: Partial<{ accessToken: string }>) => {
           console.log(tokenData.accessToken)
         })

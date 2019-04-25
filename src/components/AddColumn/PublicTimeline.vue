@@ -2,7 +2,7 @@
   <div>
     <div v-if="showInput">
       <form @submit.prevent="addTL">
-        <input type="text" placeholder="e.g:mstdn.jp" v-model="instance">
+        <BaseInputText placeholder="e.g:mstdn.jp" v-model="instance"/>
         <BaseButton
           type="submit"
           class="primary fill"
@@ -169,24 +169,6 @@ export default class AddColumn extends Vue {
 </script>=
 
 <style scoped lang="postcss">
-input {
-  color: var(--color);
-  background-color: transparent;
-  font-size: var(--font-size);
-  border: none;
-  border-bottom: 1px solid #9e9e9e;
-  border-radius: 0;
-  line-height: 3em;
-  width: 80%;
-  outline: none;
-  margin: 1em;
-
-  transition-duration: 0.5s;
-
-  &:focus {
-    border-color: #26d69a;
-  }
-}
 #timelines {
   display: flex;
   width: 100%;

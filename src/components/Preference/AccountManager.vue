@@ -1,20 +1,20 @@
 <template>
   <form @submit.prevent="authCode" v-if="inputCode">
-    <input type="text" placeholder="input code" v-model="code">
+    <BaseInputText placeholder="input code" v-model="code"/>
     <BaseButton
       type="submit"
       class="primary fill"
       style="--font-size:.8em;"
-      :disabled="!hasDomain"
+      :disabled="this.code === ''"
     >Auth</BaseButton>
   </form>
   <form @submit.prevent="addAccount" v-else>
-    <input type="text" placeholder="e.g:mstdn.jp" v-model="instance">
+    <BaseInputText placeholder="e.g:mstdn.jp" v-model="domain"/>
     <BaseButton
       type="submit"
       class="primary fill"
       style="--font-size:.8em;"
-      :disabled="!hasDomain"
+      :disabled="this.domain === ''"
     >Login</BaseButton>
   </form>
 </template>
@@ -24,41 +24,26 @@ import { Component, Vue } from "vue-property-decorator"
 type Instance = string
 @Component
 export default class Auth extends Vue {
-  public instance: Instance = ""
-  public inputCode: boolean = false
-  public code: string
-  public get hasDomain() {
-    return this.instance != ""
+  public instance: Instance = ''
+  public code: string = ''
+  public domain: string = ''
+
+  public get inputCode(): boolean {
+    return this.instance !== ''
   }
+
   public addAccount() {
-    let target = this.instance
-    this.inputCode = true
-    ipcRenderer.send(`new-account-setup`, target)
+    this.instance = this.domain
+    this.domain = ''
+    ipcRenderer.send(`new-account-setup`, this.instance)
   }
   public authCode() {
     let code = this.code
-    this.inputCode = true
     ipcRenderer.send(`new-account-auth`, code, this.instance)
+    this.instance = ''
   }
 }
 </script>
+
 <style scoped lang="postcss">
-input {
-  color: var(--color);
-  background-color: transparent;
-  font-size: var(--font-size);
-  border: none;
-  border-bottom: 1px solid #9e9e9e;
-  border-radius: 0;
-  line-height: 3em;
-  width: 80%;
-  outline: none;
-  margin: 1em;
-
-  transition-duration: 0.5s;
-
-  &:focus {
-    border-color: #26d69a;
-  }
-}
 </style>
