@@ -1,5 +1,6 @@
 import { ipcMain, Event, shell } from "electron"
 import Mastodon, { Status, Response } from "megalodon"
+import Datastore from 'nedb'
 import Window from "./Window"
 
 export default class Auth {

@@ -22,6 +22,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "megalodon": "^0.6.3",
+    "nedb": "^1.8.0",
     "vue": "^2.6.6",
     "vue-property-decorator": "^8.0.0"
   },
