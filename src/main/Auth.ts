@@ -1,6 +1,7 @@
-import { ipcMain, Event, shell } from "electron"
+import { ipcMain, Event, shell, app } from "electron"
 import Mastodon, { Status, Response } from "megalodon"
-import Datastore from 'nedb'
+import { join } from "path"
+import Datastore from "nedb"
 import Window from "./Window"
 
 export default class Auth {
@@ -32,22 +33,18 @@ export default class Auth {
               }
             )
           } else {
-            Window.windowMap
-              .get("main")!
-              .webContents.send(`error`, {
-                id: "ERROR_GET_AUTHURL",
-                message: "Failed to get auth URL to login."
-              })
+            Window.windowMap.get("main")!.webContents.send(`error`, {
+              id: "ERROR_GET_AUTHURL",
+              message: "Failed to get auth URL to login."
+            })
           }
         })
         .catch((err: Error) =>
-          Window.windowMap
-            .get("main")!
-            .webContents.send(`error`, {
-              id: "ERROR_CONNECTION",
-              message: "Connection error",
-              meta: err
-            })
+          Window.windowMap.get("main")!.webContents.send(`error`, {
+            id: "ERROR_CONNECTION",
+            message: "Connection error",
+            meta: err
+          })
         )
     })
     ipcMain.on(
@@ -66,20 +63,20 @@ export default class Auth {
                 .get<[Status]>("/accounts/verify_credentials")
                 .then((resp: Response<[Status]>) => {
                   console.log(resp.data)
+                  var db = new Datastore({
+                    filename: join(app.getPath("userData"), "account.db")
+                  })
+                  db.loadDatabase()
                 })
             } else {
-              Window.windowMap
-                .get("main")!
-                .webContents.send(`error`, {
-                  id: "ERROR_GET_TOKEN",
-                  message: "Failed to get access token."
-                })
+              Window.windowMap.get("main")!.webContents.send(`error`, {
+                id: "ERROR_GET_TOKEN",
+                message: "Failed to get access token."
+              })
             }
           })
-          .catch((err: Error) => 
-          Window.windowMap
-            .get("main")!
-            .webContents.send(`error`, {
+          .catch((err: Error) =>
+            Window.windowMap.get("main")!.webContents.send(`error`, {
               id: "ERROR_CONNECTION",
               message: "Connection error",
               meta: err
