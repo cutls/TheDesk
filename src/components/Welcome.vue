@@ -27,7 +27,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 import Login from './Preferences/AccountAuth.vue'
-import Timeline from './Timeline/Timeline.vue'
+import Timeline from './AddColumn/UserTimeline.vue'
 import PublicTimeline from './AddColumn/PublicTimeline.vue'
 
 type Status = 'welcome' | 'login' | 'public_timeline' | 'select_timeline'
