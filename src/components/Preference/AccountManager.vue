@@ -24,23 +24,29 @@ import { Component, Vue } from "vue-property-decorator"
 type Instance = string
 @Component
 export default class Auth extends Vue {
-  public instance: Instance = ''
-  public code: string = ''
-  public domain: string = ''
+  public instance: Instance = ""
+  public code: string = ""
+  public domain: string = ""
 
   public get inputCode(): boolean {
-    return this.instance !== ''
+    return this.instance !== ""
   }
 
   public addAccount() {
     this.instance = this.domain
-    this.domain = ''
+    this.domain = ""
     ipcRenderer.send(`new-account-setup`, this.instance)
   }
   public authCode() {
     let code = this.code
     ipcRenderer.send(`new-account-auth`, code, this.instance)
-    this.instance = ''
+    this.code = ""
+    ipcRenderer.once(
+      `login-complete`,
+      (e: Event) => {
+        
+      }
+    );
   }
 }
 </script>
