@@ -41,7 +41,7 @@ export default class App extends Vue {
     ipcRenderer.on('change-color-theme', () => this.isDarkMode = ipcRenderer.sendSync('dark-theme'))
     // TODO: アカウントか公開TLの追加を確認する。初回起動時のみ
     if (this.isStartup) {
-      //ipcRenderer.once('add-account-or-timeline', () => this.isStartup = false)
+      //ipcRenderer.once('add-timeline', () => this.isStartup = false)
     }
   }
 

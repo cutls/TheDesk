@@ -4,16 +4,20 @@
     <h1>Welcome to TheDesk</h1>
     <BaseButton @click.native="status = 'login'" class="primary fill">{{ loginButton }}</BaseButton>
     <BaseButton @click.native="status = 'public_timeline'" class="primary">{{ publicTLButton }}</BaseButton>
-    <BaseButton @click.native="status = 'timeline'" class="primary">{{ TLButton }}</BaseButton>
 
     <BaseOverlay
       v-show="status !== 'welcome'"
       @close="status = 'welcome'"
-      :title="status === 'login' ? loginButton : publicTLButton"
+      :title="status === 'login'
+              ? loginButton
+              : status === 'public_timeline'
+              ? publicTLButton
+              : status === 'select_timeline'
+              ? selectTimeline : ''"
     >
-      <Login v-if="status === 'login'"/>
+      <Login v-if="status === 'login'" @login-complete="loggedIn"/>
       <PublicTimeline v-else-if="status === 'public_timeline'"/>
-      <Timeline v-else-if="status === 'timeline'"/>
+      <Timeline v-else-if="status === 'select_timeline'"/>
     </BaseOverlay>
   </div>
 </template>
@@ -21,11 +25,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-import Login from './Preference/AccountManager.vue'
+import Login from './Preferences/AccountAuth.vue'
 import Timeline from './Timeline/Timeline.vue'
 import PublicTimeline from './AddColumn/PublicTimeline.vue'
 
-type Status = 'welcome' | 'login' | 'public_timeline' | 'timeline'
+type Status = 'welcome' | 'login' | 'public_timeline' | 'select_timeline'
 
 @Component({
   components: {
@@ -38,7 +42,11 @@ export default class Welcome extends Vue {
   public status: Status = 'welcome'
   public loginButton: string = 'Login'
   public publicTLButton: string = 'Streaming Public Timeline'
-  public TLButton: string = 'Timeline'
+  public selectTimeline: string = 'Select Timeline'
+
+  public loggedIn() {
+    this.status = 'select_timeline'
+  }
 }
 </script>
 
