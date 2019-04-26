@@ -8,6 +8,7 @@
     <BaseOverlay
       v-show="status !== 'welcome'"
       @close="status = 'welcome'"
+      :disableClose="status === 'select_timeline'"
       :title="status === 'login'
               ? loginButton
               : status === 'public_timeline'

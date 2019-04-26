@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div class="overlay">
-      <button type="button" class="close-button" @click="closeOverlay">X</button>
+      <button type="button" class="close-button" @click="closeOverlay" v-show="!disableClose">X</button>
       <h1>{{ title }}</h1>
       <div class="overlay-inner">
         <slot/>
@@ -19,6 +19,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class BaseOverlay extends Vue {
   @Prop()
   public title?: string
+  @Prop()
+  public disableClose?: boolean
 
   public closeOverlay() {
     this.$emit('close')
