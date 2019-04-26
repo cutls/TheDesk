@@ -18,7 +18,7 @@
     >
       <Login v-if="status === 'login'" @login-complete="loggedIn"/>
       <PublicTimeline v-else-if="status === 'public_timeline'"/>
-      <Timeline v-else-if="status === 'select_timeline'"/>
+      <UserTimeline v-else-if="status === 'select_timeline'" :username="username"/>
     </BaseOverlay>
   </div>
 </template>
@@ -27,25 +27,35 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 import Login from './Preferences/AccountAuth.vue'
-import Timeline from './AddColumn/UserTimeline.vue'
+import UserTimeline from './AddColumn/UserTimeline.vue'
 import PublicTimeline from './AddColumn/PublicTimeline.vue'
 
 type Status = 'welcome' | 'login' | 'public_timeline' | 'select_timeline'
+interface Account {
+  domain: string
+  acct: string
+  avatar: string
+  avatarStatic: string
+  accessToken?: string
+}
 
 @Component({
   components: {
     Login,
-    Timeline,
+    UserTimeline,
     PublicTimeline,
   }
 })
 export default class Welcome extends Vue {
-  public status: Status = 'welcome'
   public loginButton: string = 'Login'
   public publicTLButton: string = 'Streaming Public Timeline'
   public selectTimeline: string = 'Select Timeline'
 
-  public loggedIn() {
+  public username: string = ''
+  public status: Status = 'welcome'
+
+  public loggedIn(account: Account) {
+    this.username = `@${account.acct}@${account.domain}`
     this.status = 'select_timeline'
   }
 }

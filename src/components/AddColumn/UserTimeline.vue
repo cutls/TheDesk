@@ -23,6 +23,8 @@ import { Component, Prop, Vue } from "vue-property-decorator"
 
 @Component
 export default class UserTimeline extends Vue {
+  @Prop() public username!: string
+
   public timelineType: string = 'home'
   public userTimelineTypes: {
     [key: string]: string

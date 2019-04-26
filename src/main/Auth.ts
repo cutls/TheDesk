@@ -68,7 +68,7 @@ export default class Auth {
                     autoload: true
                   })
                   let docs = {
-                    domain: url,
+                    domain: instance,
                     acct: you.acct,
                     avatar: you.avatar,
                     avatarStatic: you.avatar_static,
@@ -82,7 +82,7 @@ export default class Auth {
                         message: "You cannot login already logined account."
                       })
                     } else {
-                      event.sender.send(`login-complete`)
+                      event.sender.send(`login-complete`, newDocs)
                     }
                   })
                 })

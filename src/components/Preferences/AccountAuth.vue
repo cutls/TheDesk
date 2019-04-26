@@ -22,7 +22,16 @@
 <script lang="ts">
 import { ipcRenderer } from "electron"
 import { Component, Vue } from "vue-property-decorator"
+
 type Instance = string
+interface Account {
+  domain: string
+  acct: string
+  avatar: string
+  avatarStatic: string
+  accessToken?: string
+}
+
 @Component
 export default class AccountAuth extends Vue {
   public instance: Instance = ""
@@ -44,8 +53,8 @@ export default class AccountAuth extends Vue {
     this.instance = ''
     ipcRenderer.once(
       `login-complete`,
-      (e: Event) => {
-        this.$emit('login-complete')
+      (e: Event, account: Account) => {
+        this.$emit('login-complete', account)
       }
     )
   }
