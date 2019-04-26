@@ -15,8 +15,8 @@ import Welcome from '@/components/Welcome.vue'
   },
 })
 export default class App extends Vue {
-  public isDarkMode: boolean = ipcRenderer.sendSync('dark-theme')
-  public fontSize: string = '16px'
+  public isDarkMode!: boolean
+  public fontSize!: string
 
   public get styles(): { [key: string]: string } {
     return {
@@ -26,12 +26,17 @@ export default class App extends Vue {
     }
   }
 
-  beforeDestroy() {
-    ipcRenderer.eventNames().forEach(name => ipcRenderer.removeAllListeners(name))
+  created() {
+    this.isDarkMode = ipcRenderer.sendSync('dark-theme')
+    this.fontSize = '16px'
   }
 
   mounted() {
     ipcRenderer.on('change-color-theme', () => this.isDarkMode = ipcRenderer.sendSync('dark-theme'))
+  }
+
+  beforeDestroy() {
+    ipcRenderer.eventNames().forEach(name => ipcRenderer.removeAllListeners(name))
   }
 }
 </script>
