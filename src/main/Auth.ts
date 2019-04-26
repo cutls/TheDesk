@@ -75,7 +75,7 @@ export default class Auth {
                     accessToken: tokenData.accessToken,
                     color: undefined
                   }
-                  db.insert(docs, function(err, newDocs) {
+                  db.insert(docs, function (err, newDocs) {
                     if (err) {
                       event.sender.send(`error`, {
                         id: "ERROR_YOU_TRY_ANOTHER_ACCOUNT",

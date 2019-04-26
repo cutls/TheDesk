@@ -1,21 +1,26 @@
 <template>
   <div id="app" :style="styles">
-    <Welcome/>
+    <Welcome v-if="isStartup"/>
+    <Main v-else/>
   </div>
 </template>
 
 <script lang="ts">
 import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
+
+import Main from '@/components/Main.vue'
 import Welcome from '@/components/Welcome.vue'
 
 @Component({
   components: {
+    Main,
     Welcome,
   },
 })
 export default class App extends Vue {
   public isDarkMode!: boolean
+  public isStartup!: boolean
   public fontSize!: string
 
   public get styles(): { [key: string]: string } {
@@ -28,11 +33,16 @@ export default class App extends Vue {
 
   created() {
     this.isDarkMode = ipcRenderer.sendSync('dark-theme')
+    this.isStartup = true // TODO: ipcで初回起動かのboolean値を取得する
     this.fontSize = '16px'
   }
 
   mounted() {
     ipcRenderer.on('change-color-theme', () => this.isDarkMode = ipcRenderer.sendSync('dark-theme'))
+    // TODO: アカウントか公開TLの追加を確認する。初回起動時のみ
+    if (this.isStartup) {
+      //ipcRenderer.once('add-account-or-timeline', () => this.isStartup = false)
+    }
   }
 
   beforeDestroy() {
