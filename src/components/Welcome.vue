@@ -13,6 +13,7 @@
     >
       <Login v-if="status === 'login'"/>
       <PublicTimeline v-else-if="status === 'public_timeline'"/>
+      <Timeline v-else-if="status === 'timeline'"/>
     </BaseOverlay>
   </div>
 </template>
