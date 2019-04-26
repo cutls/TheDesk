@@ -15,7 +15,7 @@ import Welcome from '@/components/Welcome.vue'
   },
 })
 export default class App extends Vue {
-  private isDarkMode: boolean = ipcRenderer.sendSync('dark-theme')
+  public isDarkMode: boolean = ipcRenderer.sendSync('dark-theme')
   public fontSize: string = '16px'
 
   public get styles(): { [key: string]: string } {

@@ -40,7 +40,7 @@ export default class Welcome extends Vue {
   public publicTLButton: string = 'Streaming Public Timeline'
   public TLButton: string = 'Timeline'
 }
-</script>=
+</script>
 
 <style lang="postcss">
 #welcome {

@@ -147,7 +147,7 @@ export default class AddColumn extends Vue {
     console.log("Account dialog:" + id)
   }
 }
-</script>=
+</script>
 
 <style scoped lang="postcss">
 #timelines {

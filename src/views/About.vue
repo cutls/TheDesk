@@ -64,8 +64,8 @@ interface TheDeskInfo {
 
 @Component
 export default class About extends Vue {
-  private thedeskInfo: TheDeskInfo = ipcRenderer.sendSync('thedesk-info')
-  private isDarkMode: boolean = ipcRenderer.sendSync('dark-theme')
+  public thedeskInfo: TheDeskInfo = ipcRenderer.sendSync('thedesk-info')
+  public isDarkMode: boolean = ipcRenderer.sendSync('dark-theme')
 
   public get ctrHtml(): string {
     return this.contributors.map(contributer => {

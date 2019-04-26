@@ -11,7 +11,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
   inheritAttrs: false,
 })
 export default class BaseButton extends Vue {
-  @Prop() private type?: string
+  @Prop() public type?: string
 }
 </script>
 
