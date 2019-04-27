@@ -2,7 +2,16 @@ import { ipcMain, Event, shell, app } from "electron"
 import Mastodon, { Response, Account } from "megalodon"
 import { join } from "path"
 import Datastore from "nedb"
-import Window from "./Window"
+
+interface AccountDoc {
+  _id?: string
+  domain: string
+  acct: string
+  avatar: string
+  avatarStatic: string
+  accessToken: string
+  color?: string
+}
 
 export default class Auth {
   public static ready() {
@@ -67,13 +76,12 @@ export default class Auth {
                     filename: join(app.getPath("userData"), "account.db"),
                     autoload: true
                   })
-                  let docs = {
+                  let docs: AccountDoc = {
                     domain: instance,
                     acct: you.acct,
                     avatar: you.avatar,
                     avatarStatic: you.avatar_static,
                     accessToken: tokenData.accessToken,
-                    color: undefined
                   }
                   db.insert(docs, function (err, newDocs) {
                     if (err) {
