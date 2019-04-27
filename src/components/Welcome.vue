@@ -9,7 +9,7 @@
     <BaseOverlay
       v-show="status !== 'welcome'"
       @close="status = 'welcome'"
-      :title="status === 'login' ? loginButton : publicTLButton"
+      :title="status === 'login' ? loginButton : status === 'timeline' ? TLButton : publicTLButton"
     >
       <Login v-if="status === 'login'"/>
       <PublicTimeline v-else-if="status === 'public_timeline'"/>
@@ -22,7 +22,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 import Login from './Preference/AccountManager.vue'
-import Timeline from './Timeliine/Timeline.vue'
+import Timeline from './Timeline/Timeline.vue'
 import PublicTimeline from './AddColumn/PublicTimeline.vue'
 
 type Status = 'welcome' | 'login' | 'public_timeline' | 'timeline'

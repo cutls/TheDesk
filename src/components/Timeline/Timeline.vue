@@ -13,12 +13,11 @@
     </div>
     <div id="timelines">
       <div v-for="(value, key, index) in pubTL" :key="index" class="tl">
-        {{value.name}}
-        <!--とりあえずここに書かせて-->
         <TimelineToot
-          v-for="[id,status] in value.statuses"
+          v-for="[id,account,status] in value.statuses"
           :key="id"
           :status="status"
+          :account="account"
           :pref-static="pref.static"
         />
       </div>
@@ -33,23 +32,24 @@
 </template>
 
 <script lang="ts">
-import { ipcRenderer } from "electron"
-import { Component, Vue } from "vue-property-decorator"
-import { Status } from "megalodon"
+import { ipcRenderer } from "electron";
+import { Component, Vue } from "vue-property-decorator";
+import { Status } from "megalodon";
 
-import TimelineToot from '@/components/Timeline/Toot.vue'
+import TimelineToot from "@/components/Timeline/Toot.vue";
 
-import "@/extensions/map-sortbyvalue" // Add sortByValue function to Map prototype
+import "@/extensions/map-sortbyvalue"; // Add sortByValue function to Map prototype
 
-type DeleteListener = (e: Event, id: number) => void
-type Instance = string
+type DeleteListener = (e: Event, id: number) => void;
+type Instance = string;
 type Timeline = {
-  name: string
-  statuses: Map<number, Status>
-  error?: Error
-}
-type Timelines = Timeline[]
-type UpdateListener = (e: Event, status: Status) => void
+  type: string;
+  account: string;
+  statuses: Map<number, Status>;
+  error?: Error;
+};
+type Timelines = Timeline[];
+type UpdateListener = (e: Event, status: Status) => void;
 
 @Component({
   components: {
@@ -57,94 +57,102 @@ type UpdateListener = (e: Event, status: Status) => void
   }
 })
 export default class AddColumn extends Vue {
-  public instance: Instance = ""
-  public showInput: boolean = true
-  public updateListeners: [string, UpdateListener][] = []
-  public deleteListeners: [string, DeleteListener][] = []
-  public pubTL: Timelines = []
+  public instance: Instance = "";
+  public showInput: boolean = true;
+  public type: string = "";
+  public account: string = "";
+  public updateListeners: [string, UpdateListener][] = [];
+  public deleteListeners: [string, DeleteListener][] = [];
+  public TL: Timelines = [];
   //test
   public pref = {
     static: false
-  }
+  };
 
   beforeDestroy() {
     this.updateListeners.forEach(([name, listener]) => {
-      ipcRenderer.removeListener(name, listener)
-    })
+      ipcRenderer.removeListener(name, listener);
+    });
     this.deleteListeners.forEach(([name, listener]) => {
-      ipcRenderer.removeListener(name, listener)
-    })
+      ipcRenderer.removeListener(name, listener);
+    });
   }
 
   public get hasDomain() {
-    return this.instance != ""
+    return this.instance != "";
   }
 
   public sortedStatus(statuses: Map<number, Status>): Map<number, Status> {
     return statuses.sortByValue(
       (s1, s2): number => {
-        return s1.created_at > s2.created_at ? -1 : 1
+        return s1.created_at > s2.created_at ? -1 : 1;
       }
-    )
+    );
   }
 
   public addTL() {
-    let timeline: Timeline = { name: this.instance, statuses: new Map() }
+    let timeline: Timeline = {
+      type: this.type,
+      account: this.account,
+      statuses: new Map()
+    };
 
-    this.showInput = false
-    this.instance = ""
-
-    this.pubTL.push(timeline)
+    this.showInput = false;
+    this.type = "";
+    this.account = "";
+    this.TL.push(timeline);
     // 最新のTLを取得
-    ipcRenderer.once(`timeline-${timeline.name}-no-auth`, (e: Event, statuses: Status[], error?: Error) => {
-      timeline.error = error
-      if (error === undefined) {
-        this.loadTL(timeline, statuses)
+    ipcRenderer.once(
+      `timeline-${timeline.name}-no-auth`,
+      (e: Event, statuses: Status[], error?: Error) => {
+        timeline.error = error;
+        if (error === undefined) {
+          this.loadTL(timeline, statuses);
+        }
+        this.$forceUpdate();
       }
-      this.$forceUpdate()
-    })
-    ipcRenderer.send("no-auth-timeline", timeline.name)
+    );
+    ipcRenderer.send("no-auth-timeline", timeline.name);
   }
-
 
   public loadTL(timeline: Timeline, statuses: Status[]) {
     timeline.statuses = new Map(
       statuses.map((status): [number, Status] => [status.id, status])
-    )
+    );
 
     // streamingを開始
-    this.subscribeStreaming(timeline)
+    this.subscribeStreaming(timeline);
   }
 
   public async subscribeStreaming(timeline: Timeline) {
     // updateイベントを購読
     let updateListener = (_: Event, status: Status) => {
-      timeline.statuses.set(status.id, status)
-      timeline.statuses = this.sortedStatus(timeline.statuses)
-      this.$forceUpdate()
-    }
-    ipcRenderer.on(`update-${timeline.name}-no-auth`, updateListener)
+      timeline.statuses.set(status.id, status);
+      timeline.statuses = this.sortedStatus(timeline.statuses);
+      this.$forceUpdate();
+    };
+    ipcRenderer.on(`update-${timeline.name}-no-auth`, updateListener);
     this.updateListeners.push([
       `update-${timeline.name}-no-auth`,
       updateListener
-    ])
+    ]);
 
     // deleteイベントを購読
     let deleteListener = (_: Event, id: number) => {
-      timeline.statuses.delete(id)
-      this.$forceUpdate()
-    }
-    ipcRenderer.on(`delete-${timeline.name}-no-auth`, deleteListener)
+      timeline.statuses.delete(id);
+      this.$forceUpdate();
+    };
+    ipcRenderer.on(`delete-${timeline.name}-no-auth`, deleteListener);
     this.deleteListeners.push([
       `delete-${timeline.name}-no-auth`,
       deleteListener
-    ])
+    ]);
 
-    ipcRenderer.send("open-streaming", timeline.name, "no-auth")
+    ipcRenderer.send("open-streaming", timeline.name, "no-auth");
   }
 
   public showAccount(id: number) {
-    console.log("Account dialog:" + id)
+    console.log("Account dialog:" + id);
   }
 }
 </script>=

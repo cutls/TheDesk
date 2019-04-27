@@ -44,7 +44,7 @@ export default class Auth extends Vue {
     ipcRenderer.once(
       `login-complete`,
       (e: Event) => {
-        
+        status="timeline"
       }
     );
   }
