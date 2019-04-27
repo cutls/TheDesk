@@ -12,6 +12,22 @@ export default class Clients {
     private static nonAuthorizedHTTP: Map<string, Mastodon> = new Map()
     private static nonAuthorizedWebsocket: Map<string, Mastodon> = new Map()
 
+    public static getAuthClient(username: string, protocol: Protocol = 'http'): Mastodon {
+        let clients = protocol === 'http' ? this.authorizedHTTP : this.authorizedWebSocket
+
+        if (!clients.has(username)) {
+            // usernameからドメインをとトークンをデータベースから取得してクライアントを作る
+            //this.setAuthClient(protocol, username, this.createAuthClient(protocol, domain, accessToken))
+        }
+
+        return clients.get(username)!
+    }
+
+    public static setAuthClient(protocol: Protocol, username: string, client: Mastodon) {
+        let clients = protocol === 'http' ? this.nonAuthorizedHTTP : this.nonAuthorizedWebsocket
+        clients.set(username, client)
+    }
+
     public static createAuthClient(protocol: Protocol, domain: string, accessToken: string): Mastodon {
         let scheme = protocol === 'http' ? 'https://' : 'wss://'
         return new Mastodon(

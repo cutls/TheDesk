@@ -3,6 +3,8 @@ import Mastodon, { Response, Account, OAuth } from "megalodon"
 import { join } from "path"
 import Datastore from "nedb"
 
+import Client from "./Client"
+
 interface AccountDoc {
   _id?: string
   domain: string
@@ -59,9 +61,8 @@ export default class Auth {
     ipcMain.on(
       "new-account-auth",
       async (event: Event, code: string, instance: string) => {
-        let url: string = "https://" + instance
         try {
-          let tokenData: Partial<{ accessToken: string }> = await Mastodon.fetchAccessToken(clientId, clientSecret, code, url)
+          let tokenData: Partial<{ accessToken: string }> = await Mastodon.fetchAccessToken(clientId, clientSecret, code, "https://" + instance)
           if (tokenData.accessToken === undefined) {
             event.sender.send(`error`, {
               id: "ERROR_GET_TOKEN",
@@ -70,10 +71,7 @@ export default class Auth {
             return
           }
 
-          const client = new Mastodon(
-            tokenData.accessToken,
-            url + "/api/v1"
-          )
+          const client = Client.createAuthClient('http', instance, tokenData.accessToken)
 
           let resp: Response<Account> = await client.get<Account>("/accounts/verify_credentials")
           let you = resp.data
@@ -98,6 +96,7 @@ export default class Auth {
                 message: "You cannot login already logined account."
               })
             } else {
+              Client.setAuthClient('http', `@${newDocs.acct}@${newDocs.domain}`, client)
               event.sender.send(`login-complete`, newDocs)
             }
           })
