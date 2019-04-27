@@ -1,22 +1,27 @@
 <template>
   <div id="app" :style="styles">
-    <Welcome/>
+    <Welcome v-if="isStartup"/>
+    <Main v-else/>
   </div>
 </template>
 
 <script lang="ts">
 import { ipcRenderer } from 'electron'
 import { Component, Vue } from 'vue-property-decorator'
+
+import Main from '@/components/Main.vue'
 import Welcome from '@/components/Welcome.vue'
 
 @Component({
   components: {
+    Main,
     Welcome,
   },
 })
 export default class App extends Vue {
-  private isDarkMode: boolean = ipcRenderer.sendSync('dark-theme')
-  public fontSize: string = '16px'
+  public isDarkMode!: boolean
+  public isStartup!: boolean
+  public fontSize!: string
 
   public get styles(): { [key: string]: string } {
     return {
@@ -26,12 +31,22 @@ export default class App extends Vue {
     }
   }
 
-  beforeDestroy() {
-    ipcRenderer.eventNames().forEach(name => ipcRenderer.removeAllListeners(name))
+  created() {
+    this.isDarkMode = ipcRenderer.sendSync('dark-theme')
+    this.isStartup = true // TODO: ipcで初回起動かのboolean値を取得する
+    this.fontSize = '16px'
   }
 
   mounted() {
     ipcRenderer.on('change-color-theme', () => this.isDarkMode = ipcRenderer.sendSync('dark-theme'))
+    // TODO: アカウントか公開TLの追加を確認する。初回起動時のみ
+    if (this.isStartup) {
+      //ipcRenderer.once('add-timeline', () => this.isStartup = false)
+    }
+  }
+
+  beforeDestroy() {
+    ipcRenderer.eventNames().forEach(name => ipcRenderer.removeAllListeners(name))
   }
 }
 </script>

@@ -18,12 +18,22 @@
     >Login</BaseButton>
   </form>
 </template>
+
 <script lang="ts">
 import { ipcRenderer } from "electron"
 import { Component, Vue } from "vue-property-decorator"
+
 type Instance = string
+interface Account {
+  domain: string
+  acct: string
+  avatar: string
+  avatarStatic: string
+  accessToken?: string
+}
+
 @Component
-export default class Auth extends Vue {
+export default class AccountAuth extends Vue {
   public instance: Instance = ""
   public code: string = ""
   public domain: string = ""
@@ -38,15 +48,15 @@ export default class Auth extends Vue {
     ipcRenderer.send(`new-account-setup`, this.instance)
   }
   public authCode() {
-    let code = this.code
-    ipcRenderer.send(`new-account-auth`, code, this.instance)
+    ipcRenderer.send(`new-account-auth`, this.code, this.instance)
     this.code = ""
+    this.instance = ''
     ipcRenderer.once(
       `login-complete`,
-      (e: Event) => {
-        status="timeline"
+      (e: Event, account: Account) => {
+        this.$emit('login-complete', account)
       }
-    );
+    )
   }
 }
 </script>

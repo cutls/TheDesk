@@ -64,8 +64,8 @@ interface TheDeskInfo {
 
 @Component
 export default class About extends Vue {
-  private thedeskInfo: TheDeskInfo = ipcRenderer.sendSync('thedesk-info')
-  private isDarkMode: boolean = ipcRenderer.sendSync('dark-theme')
+  public thedeskInfo!: TheDeskInfo
+  public isDarkMode!: boolean
 
   public get ctrHtml(): string {
     return this.contributors.map(contributer => {
@@ -105,13 +105,19 @@ export default class About extends Vue {
     }
   }
 
-  beforeDestroy() {
-    ipcRenderer.eventNames().forEach(name => ipcRenderer.removeAllListeners(name))
+  created() {
+    this.thedeskInfo = ipcRenderer.sendSync('thedesk-info')
+    this.isDarkMode = ipcRenderer.sendSync('dark-theme')
   }
 
   mounted() {
     ipcRenderer.on('change-color-theme', () => this.isDarkMode = ipcRenderer.sendSync('dark-theme'))
   }
+
+  beforeDestroy() {
+    ipcRenderer.eventNames().forEach(name => ipcRenderer.removeAllListeners(name))
+  }
+
 }
 </script>
 

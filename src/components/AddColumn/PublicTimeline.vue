@@ -55,7 +55,7 @@ type UpdateListener = (e: Event, status: Status) => void
     TimelineToot
   }
 })
-export default class AddColumn extends Vue {
+export default class PublicTimeline extends Vue {
   public instance: Instance = ""
   public showInput: boolean = true
   public updateListeners: [string, UpdateListener][] = []
@@ -105,7 +105,6 @@ export default class AddColumn extends Vue {
     ipcRenderer.send("no-auth-timeline", timeline.name)
   }
 
-
   public loadTL(timeline: Timeline, statuses: Status[]) {
     timeline.statuses = new Map(
       statuses.map((status): [number, Status] => [status.id, status])
@@ -146,7 +145,7 @@ export default class AddColumn extends Vue {
     console.log("Account dialog:" + id)
   }
 }
-</script>=
+</script>
 
 <style scoped lang="postcss">
 #timelines {

@@ -68,21 +68,21 @@ export default class Auth {
                     autoload: true
                   })
                   let docs = {
-                    domain: url,
+                    domain: instance,
                     acct: you.acct,
                     avatar: you.avatar,
                     avatarStatic: you.avatar_static,
                     accessToken: tokenData.accessToken,
                     color: undefined
                   }
-                  db.insert(docs, function(err, newDocs) {
+                  db.insert(docs, function (err, newDocs) {
                     if (err) {
                       event.sender.send(`error`, {
                         id: "ERROR_YOU_TRY_ANOTHER_ACCOUNT",
                         message: "You cannot login already logined account."
                       })
                     } else {
-                      event.sender.send(`login-complete`)
+                      event.sender.send(`login-complete`, newDocs)
                     }
                   })
                 })

@@ -4,16 +4,21 @@
     <h1>Welcome to TheDesk</h1>
     <BaseButton @click.native="status = 'login'" class="primary fill">{{ loginButton }}</BaseButton>
     <BaseButton @click.native="status = 'public_timeline'" class="primary">{{ publicTLButton }}</BaseButton>
-    <BaseButton @click.native="status = 'timeline'" class="primary">{{ TLButton }}</BaseButton>
 
     <BaseOverlay
       v-show="status !== 'welcome'"
       @close="status = 'welcome'"
-      :title="status === 'login' ? loginButton : status === 'timeline' ? TLButton : publicTLButton"
+      :disableClose="status === 'select_timeline'"
+      :title="status === 'login'
+              ? loginButton
+              : status === 'public_timeline'
+              ? publicTLButton
+              : status === 'select_timeline'
+              ? selectTimeline : ''"
     >
-      <Login v-if="status === 'login'"/>
+      <Login v-if="status === 'login'" @login-complete="loggedIn"/>
       <PublicTimeline v-else-if="status === 'public_timeline'"/>
-      <Timeline v-else-if="status === 'timeline'"/>
+      <UserTimeline v-else-if="status === 'select_timeline'" :username="username"/>
     </BaseOverlay>
   </div>
 </template>
@@ -21,26 +26,40 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-import Login from './Preference/AccountManager.vue'
-import Timeline from './Timeline/Timeline.vue'
+import Login from './Preferences/AccountAuth.vue'
+import UserTimeline from './AddColumn/UserTimeline.vue'
 import PublicTimeline from './AddColumn/PublicTimeline.vue'
 
-type Status = 'welcome' | 'login' | 'public_timeline' | 'timeline'
+type Status = 'welcome' | 'login' | 'public_timeline' | 'select_timeline'
+interface Account {
+  domain: string
+  acct: string
+  avatar: string
+  avatarStatic: string
+  accessToken?: string
+}
 
 @Component({
   components: {
     Login,
-    Timeline,
+    UserTimeline,
     PublicTimeline,
   }
 })
 export default class Welcome extends Vue {
-  public status: Status = 'welcome'
   public loginButton: string = 'Login'
   public publicTLButton: string = 'Streaming Public Timeline'
-  public TLButton: string = 'Timeline'
+  public selectTimeline: string = 'Select Timeline'
+
+  public username: string = ''
+  public status: Status = 'welcome'
+
+  public loggedIn(account: Account) {
+    this.username = `@${account.acct}@${account.domain}`
+    this.status = 'select_timeline'
+  }
 }
-</script>=
+</script>
 
 <style lang="postcss">
 #welcome {
