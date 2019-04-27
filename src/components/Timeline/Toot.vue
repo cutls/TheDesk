@@ -80,16 +80,30 @@ export default class Toot extends Vue {
 
 <style scoped lang="postcss">
 .toot {
+  padding: 0.5em;
   text-align: left;
   display: grid;
-  grid-template-columns: 2.7em 2fr 1fr;
+  column-gap: 0.5em;
+  row-gap: 0.3em;
+  grid-template-columns: 2.7em 1fr 98px;
   grid-template-areas:
     "avatar user    date"
     "avatar content content"
     "avatar media   media"
     "avatar card    card"
     "vis    action  subaction";
-  .avatar {
+  border-top: solid 1px;
+  border-bottom: solid 1px;
+
+  & + .toot,
+  &:first-child {
+    border-top: none;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .toot-avatar {
     grid-area: avatar;
     height: 2.7em;
     img {
