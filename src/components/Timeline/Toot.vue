@@ -92,14 +92,9 @@ export default class Toot extends Vue {
     "avatar media   media"
     "avatar card    card"
     "vis    action  subaction";
-  border-top: solid 1px;
-  border-bottom: solid 1px;
 
-  & + .toot,
-  &:first-child {
-    border-top: none;
-  }
-  &:last-child {
+  & + .toot {
+    border-top: solid 1px;
     border-bottom: none;
   }
 
