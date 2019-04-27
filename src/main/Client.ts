@@ -16,21 +16,22 @@ export default class Clients {
         let clients = protocol === 'http' ? this.nonAuthorizedHTTP : this.nonAuthorizedWebsocket
 
         if (!clients.has(domain)) {
-            this.createNoAuthClient(domain)
+            this.setNoAuthClient(protocol, domain, this.createNoAuthClient(protocol, domain))
         }
 
         return clients.get(domain)!
     }
 
-    private static createNoAuthClient(domain: string) {
+    public static setNoAuthClient(protocol: Protocol, domain: string, client: Mastodon) {
+        let clients = protocol === 'http' ? this.nonAuthorizedHTTP : this.nonAuthorizedWebsocket
+        clients.set(domain, client)
+    }
 
-        this.nonAuthorizedHTTP.set(domain, new Mastodon(
+    private static createNoAuthClient(protocol: Protocol, domain: string): Mastodon {
+        let scheme = protocol === 'http' ? 'https://' : 'wss://'
+        return new Mastodon(
             '',
-            'https://' + domain + '/api/v1'
-        ))
-        this.nonAuthorizedWebsocket.set(domain, new Mastodon(
-            '',
-            'wss://' + domain + '/api/v1'
-        ))
+            scheme + domain + '/api/v1'
+        )
     }
 }
