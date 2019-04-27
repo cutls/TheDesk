@@ -14,6 +14,7 @@
     <div id="timelines">
       <div v-for="(value, key, index) in pubTL" :key="index" class="tl">
         {{value.name}}
+        <!--とりあえずここに書かせて-->
         <TimelineToot
           v-for="[id,status] in value.statuses"
           :key="id"
