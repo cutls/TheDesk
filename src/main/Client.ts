@@ -12,6 +12,14 @@ export default class Clients {
     private static nonAuthorizedHTTP: Map<string, Mastodon> = new Map()
     private static nonAuthorizedWebsocket: Map<string, Mastodon> = new Map()
 
+    public static createAuthClient(protocol: Protocol, domain: string, accessToken: string): Mastodon {
+        let scheme = protocol === 'http' ? 'https://' : 'wss://'
+        return new Mastodon(
+            accessToken,
+            scheme + domain + '/api/v1'
+        )
+    }
+
     public static getNoAuthClient(domain: string, protocol: Protocol = 'http'): Mastodon {
         let clients = protocol === 'http' ? this.nonAuthorizedHTTP : this.nonAuthorizedWebsocket
 
