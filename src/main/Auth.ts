@@ -115,7 +115,7 @@ export default class Auth {
           message: "You cannot login already logined account."
         })
       } else {
-        Client.setAuthClient('http', `@${newDocs.acct}@${newDocs.domain}`, client)
+        Client.setAuthClient('http', newDocs.full, client)
         event.sender.send(`login-complete`, newDocs)
       }
     })
