@@ -18,7 +18,7 @@
     </form>
     </div>
     <div id="timelines">
-      <div v-for="(value, key, index) in pubTL" :key="index" class="tl">
+      <div v-for="(value, key, index) in TL" :key="index" class="tl">
         {{value.name}}/{{value.type}}
         <TimelineToot
           v-for="[id,status] in value.statuses"
