@@ -9,6 +9,7 @@ interface AccountDoc {
   _id?: string
   domain: string
   acct: string
+  full: string
   avatar: string
   avatarStatic: string
   accessToken: string
@@ -101,6 +102,7 @@ export default class Auth {
     let docs: AccountDoc = {
       domain: instance,
       acct: you.acct,
+      full: you.acct+"@"+instance,
       avatar: you.avatar,
       avatarStatic: you.avatar_static,
       accessToken: tokenData.accessToken,

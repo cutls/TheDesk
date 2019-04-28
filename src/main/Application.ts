@@ -30,7 +30,6 @@ export default class Application {
 
     private constructor() {
         this.isDarkMode = systemPreferences.isDarkMode()
-
         app.on('window-all-closed', () => this.onWindowAllClosed())
         app.on('ready', () => this.onReady())
         app.on('activate', () => this.onActivated())

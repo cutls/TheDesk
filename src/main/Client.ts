@@ -1,6 +1,7 @@
-
+import { app } from "electron"
 import Mastodon from 'megalodon'
-
+import Datastore from "nedb"
+import { join } from "path"
 type Protocol = 'http' | 'websocket'
 
 export default class Clients {
@@ -17,7 +18,17 @@ export default class Clients {
 
         if (!clients.has(username)) {
             // usernameからドメインをとトークンをデータベースから取得してクライアントを作る
-            //this.setAuthClient(protocol, username, this.createAuthClient(protocol, domain, accessToken))
+            let db = new Datastore({
+                filename: join(app.getPath("userData"), "account.db"),
+                autoload: true
+              })
+            db.find({ full: username }, function(err: any, docs: { domain: string; accessToken: string; }){
+                if (err) {
+                    console.log(err)
+                  } else {
+                    Clients.setAuthClient(protocol, username, Clients.createAuthClient(protocol, docs.domain, docs.accessToken))
+                  }
+            });
         }
 
         return clients.get(username)!
