@@ -30,9 +30,17 @@ export default class Application {
 
     private constructor() {
         this.isDarkMode = systemPreferences.isDarkMode()
+        const gotTheLock = app.requestSingleInstanceLock()
+        if (!gotTheLock) {
+            app.quit()
+            return
+        }
+
+        app.setAsDefaultProtocolClient('thedesk')
         app.on('window-all-closed', () => this.onWindowAllClosed())
-        app.on('ready', () => this.onReady())
-        app.on('activate', () => this.onActivated())
+        app.on('will-finish-launching', () => this.onWillFinishLaunching())
+        app.on('ready', (launchInfo: any) => this.onReady())
+        app.on('activate', (event: Event, hasVisibleWindows: boolean) => this.onActivated())
 
         systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
             this.isDarkMode = systemPreferences.isDarkMode()
@@ -75,6 +83,23 @@ export default class Application {
     private onActivated() {
         if (!Window.windowMap.has('main')) {
             Window.Main()
+        }
+    }
+
+    private onWillFinishLaunching() {
+        app.on('open-url', (event: Event, url: string) => {
+            // On macOS: url = thedesk://login?code=xxx
+            Application.handleOpenURL(event, url)
+        })
+        app.on('second-instance', (event: Event, argv: string[], workingDirectory: string) => {
+            // On Windows/Linux: argv = ここをmacOSに合わせるかこちらに合わせるか
+            Application.handleOpenURL(event, argv[1])
+        })
+    }
+
+    private static handleOpenURL(event: Event, url: string) {
+        if (Window.windowMap.has('main')) {
+            Window.windowMap.get('main')!.webContents.send("open-url-scheme", url)
         }
     }
 
