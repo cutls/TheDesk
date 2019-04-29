@@ -17,20 +17,26 @@ interface AccountDoc {
 }
 
 export default class Auth {
+  private static redirectUri: string = 'thedesk://login'
+
   public static ready() {
-    ipcMain.on("new-account-setup", (event: Event, instance: string) => this.setup(event, instance))
+    ipcMain.on("new-account-setup", (event: Event, instance: string, useURLScheme: boolean = false) => this.setup(event, instance, useURLScheme))
   }
 
-  private static async setup(event: Event, instance: string) {
+  private static async setup(event: Event, instance: string, useURLScheme: boolean) {
     let appData: OAuth.AppData
 
     try {
-      const SCOPES: string = "read write follow"
+      let options: Partial<{ scopes: string, redirect_uris: string, website: string }> = {
+        scopes: "read write follow",
+        website: "https://thedesk.top",
+      }
+      if (useURLScheme) {
+        options.redirect_uris = this.redirectUri
+      }
       appData = await Mastodon.registerApp(
         "TheDesk",
-        {
-          scopes: SCOPES
-        },
+        options,
         "https://" + instance
       )
     } catch (err) {
@@ -63,14 +69,15 @@ export default class Auth {
     )
 
     ipcMain.once("new-account-auth", (event: Event, code: string, instance: string) => {
-      this.auth(event, code, instance, appData.clientId, appData.clientSecret)
+      let redirectUri = useURLScheme ? this.redirectUri : undefined
+      this.auth(event, code, instance, appData.clientId, appData.clientSecret, redirectUri)
     })
   }
 
-  private static async auth(event: Event, code: string, instance: string, clientId: string, clientSecret: string) {
+  private static async auth(event: Event, code: string, instance: string, clientId: string, clientSecret: string, redirectUri?: string) {
     let tokenData: Partial<{ accessToken: string }>
     try {
-      tokenData = await Mastodon.fetchAccessToken(clientId, clientSecret, code, "https://" + instance)
+      tokenData = await Mastodon.fetchAccessToken(clientId, clientSecret, code, "https://" + instance, redirectUri)
     } catch (err) {
       let error: Error = err
       event.sender.send(`error`, {
@@ -102,7 +109,7 @@ export default class Auth {
     let docs: AccountDoc = {
       domain: instance,
       acct: you.acct,
-      full: you.acct+"@"+instance,
+      full: you.acct + "@" + instance,
       avatar: you.avatar,
       avatarStatic: you.avatar_static,
       accessToken: tokenData.accessToken,
