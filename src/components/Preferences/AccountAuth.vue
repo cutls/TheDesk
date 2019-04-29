@@ -48,15 +48,15 @@ export default class AccountAuth extends Vue {
     ipcRenderer.send(`new-account-setup`, this.instance)
   }
   public authCode() {
-    ipcRenderer.send(`new-account-auth`, this.code, this.instance)
-    this.code = ""
-    this.instance = ''
     ipcRenderer.once(
       `login-complete`,
       (e: Event, account: Account) => {
         this.$emit('login-complete', account)
       }
     )
+    ipcRenderer.send(`new-account-auth`, this.code, this.instance)
+    this.code = ""
+    this.instance = ''
   }
 }
 </script>

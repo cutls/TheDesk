@@ -5,7 +5,7 @@ import { join } from "path"
 type Protocol = 'http' | 'websocket'
 
 export default class Clients {
-    // Authorized Accounts. keyには`@username@domain`を設定します
+    // Authorized Accounts. keyには`username@domain`を設定します
     private static authorizedHTTP: Map<string, Mastodon> = new Map()
     private static authorizedWebSocket: Map<string, Mastodon> = new Map()
 
@@ -21,13 +21,13 @@ export default class Clients {
             let db = new Datastore({
                 filename: join(app.getPath("userData"), "account.db"),
                 autoload: true
-              })
-            db.find({ full: username }, function(err: any, docs: { domain: string; accessToken: string; }){
+            })
+            db.find({ full: username }, function (err: any, docs: { domain: string; accessToken: string; }) {
                 if (err) {
                     console.log(err)
-                  } else {
+                } else {
                     Clients.setAuthClient(protocol, username, Clients.createAuthClient(protocol, docs.domain, docs.accessToken))
-                  }
+                }
             });
         }
 

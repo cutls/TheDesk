@@ -55,7 +55,7 @@ export default class Welcome extends Vue {
   public status: Status = 'welcome'
 
   public loggedIn(account: Account) {
-    this.username = `@${account.acct}@${account.domain}`
+    this.username = `${account.acct}@${account.domain}`
     this.status = 'select_timeline'
   }
 }
