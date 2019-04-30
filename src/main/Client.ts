@@ -2,6 +2,7 @@ import { app } from "electron"
 import Mastodon from 'megalodon'
 import Datastore from "nedb"
 import { join } from "path"
+
 type Protocol = 'http' | 'websocket'
 
 export default class Clients {
@@ -11,7 +12,7 @@ export default class Clients {
 
     // Non-authorized Accounts. keyには`domain`を設定します
     private static nonAuthorizedHTTP: Map<string, Mastodon> = new Map()
-    private static nonAuthorizedWebsocket: Map<string, Mastodon> = new Map()
+    private static nonAuthorizedWebSocket: Map<string, Mastodon> = new Map()
 
     public static getAuthClient(username: string, protocol: Protocol = 'http'): Mastodon {
         let clients = protocol === 'http' ? this.authorizedHTTP : this.authorizedWebSocket
@@ -28,14 +29,14 @@ export default class Clients {
                 } else {
                     Clients.setAuthClient(protocol, username, Clients.createAuthClient(protocol, docs.domain, docs.accessToken))
                 }
-            });
+            })
         }
 
         return clients.get(username)!
     }
 
     public static setAuthClient(protocol: Protocol, username: string, client: Mastodon) {
-        let clients = protocol === 'http' ? this.nonAuthorizedHTTP : this.nonAuthorizedWebsocket
+        let clients = protocol === 'http' ? this.authorizedHTTP : this.authorizedWebSocket
         clients.set(username, client)
     }
 
@@ -48,7 +49,7 @@ export default class Clients {
     }
 
     public static getNoAuthClient(domain: string, protocol: Protocol = 'http'): Mastodon {
-        let clients = protocol === 'http' ? this.nonAuthorizedHTTP : this.nonAuthorizedWebsocket
+        let clients = protocol === 'http' ? this.nonAuthorizedHTTP : this.nonAuthorizedWebSocket
 
         if (!clients.has(domain)) {
             this.setNoAuthClient(protocol, domain, this.createNoAuthClient(protocol, domain))
@@ -58,7 +59,7 @@ export default class Clients {
     }
 
     public static setNoAuthClient(protocol: Protocol, domain: string, client: Mastodon) {
-        let clients = protocol === 'http' ? this.nonAuthorizedHTTP : this.nonAuthorizedWebsocket
+        let clients = protocol === 'http' ? this.nonAuthorizedHTTP : this.nonAuthorizedWebSocket
         clients.set(domain, client)
     }
 
