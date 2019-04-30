@@ -1,5 +1,6 @@
 <template>
-  <form @submit.prevent="authCode" v-if="inputCode">
+  <div v-if="useURLScheme && inputCode">Wait Authorize TheDesk.</div>
+  <form @submit.prevent="authCode" v-else-if="inputCode">
     <BaseInputText placeholder="input code" v-model="code"/>
     <BaseButton
       type="submit"
@@ -16,6 +17,9 @@
       style="--font-size:.8em;"
       :disabled="this.domain === ''"
     >Login</BaseButton>
+    <label>
+      <input type="checkbox" v-model="useURLScheme">Use URL Scheme
+    </label>
   </form>
 </template>
 
@@ -37,6 +41,7 @@ export default class AccountAuth extends Vue {
   public instance: Instance = ""
   public code: string = ""
   public domain: string = ""
+  public useURLScheme: boolean = false
 
   public get inputCode(): boolean {
     return this.instance !== ""
@@ -45,7 +50,15 @@ export default class AccountAuth extends Vue {
   public addAccount() {
     this.instance = this.domain
     this.domain = ""
-    ipcRenderer.send(`new-account-setup`, this.instance)
+    if (this.useURLScheme) {
+      ipcRenderer.once('open-url-scheme', (e: Event, urlString: string) => {
+        let url: URL = new URL(urlString)
+        let params: URLSearchParams = url.searchParams
+        this.code = params.get('code') || ''
+        this.authCode()
+      })
+    }
+    ipcRenderer.send(`new-account-setup`, this.instance, this.useURLScheme)
   }
   public authCode() {
     ipcRenderer.once(
