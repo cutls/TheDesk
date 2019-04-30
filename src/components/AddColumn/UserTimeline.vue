@@ -1,21 +1,21 @@
 <template>
   <div>
     <div>
-    <form @submit.prevent="addTL">
-      <label
-        v-for="(types,name) in userTimelineTypes"
-        :key="name"
-        :class="{selected: name === timelineType}"
-      >
-        <input type="radio" :value="name" v-model="timelineType">
-        {{ types }}
-      </label>
-      <BaseButton
-        type="submit"
-        class="primary fill"
-        style="--font-size:.8em;margin-top:1em;"
-      >Add Column</BaseButton>
-    </form>
+      <form @submit.prevent="addTL">
+        <label
+          v-for="(types,name) in userTimelineTypes"
+          :key="name"
+          :class="{selected: name === timelineType}"
+        >
+          <input type="radio" :value="name" v-model="timelineType">
+          {{ types }}
+        </label>
+        <BaseButton
+          type="submit"
+          class="primary fill"
+          style="--font-size:.8em;margin-top:1em;"
+        >Add Column</BaseButton>
+      </form>
     </div>
     <div id="timelines">
       <div v-for="(value, key, index) in TL" :key="index" class="tl">
@@ -56,9 +56,7 @@ export default class UserTimeline extends Vue {
   public deleteListeners: [string, DeleteListener][] = []
   public updateListeners: [string, UpdateListener][] = []
   public timelineType: string = "home"
-  public userTimelineTypes: {
-    [key: string]: string
-  } = {
+  public userTimelineTypes: { [key: string]: string } = {
     home: "Home Timeline",
     notify: "Notifications",
     dm: "Direct Messages",
@@ -68,6 +66,11 @@ export default class UserTimeline extends Vue {
     localPlus: "Integrated Timeline (Local + Boost + Reply)"
   }
   public TL: Timelines = []
+  //test
+  public pref = {
+    static: false
+  }
+
   beforeDestroy() {
     this.updateListeners.forEach(([name, listener]) => {
       ipcRenderer.removeListener(name, listener)
@@ -85,7 +88,7 @@ export default class UserTimeline extends Vue {
   }
   public addTL() {
     let timeline: Timeline = {
-      name: "",
+      name: this.username,
       type: this.timelineType,
       statuses: new Map()
     }
@@ -101,7 +104,7 @@ export default class UserTimeline extends Vue {
         this.$forceUpdate()
       }
     )
-    ipcRenderer.send("timeline", timeline.type, timeline.name)
+    ipcRenderer.send("timeline", timeline.name, timeline.type)
   }
   public loadTL(timeline: Timeline, statuses: Status[]) {
     timeline.statuses = new Map(
