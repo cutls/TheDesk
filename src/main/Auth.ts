@@ -69,12 +69,11 @@ export default class Auth {
     )
 
     ipcMain.once("new-account-auth", (event: Event, code: string, instance: string) => {
-      let redirectUri = useURLScheme ? this.redirectUri : undefined
-      this.auth(event, code, instance, appData.clientId, appData.clientSecret, redirectUri)
+      this.auth(event, code, instance, appData.clientId, appData.clientSecret, appData.redirectUri)
     })
   }
 
-  private static async auth(event: Event, code: string, instance: string, clientId: string, clientSecret: string, redirectUri?: string) {
+  private static async auth(event: Event, code: string, instance: string, clientId: string, clientSecret: string, redirectUri: string) {
     let tokenData: Partial<{ accessToken: string }>
     try {
       tokenData = await Mastodon.fetchAccessToken(clientId, clientSecret, code, "https://" + instance, redirectUri)

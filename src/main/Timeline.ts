@@ -7,6 +7,16 @@ import { Status, Response } from 'megalodon'
 import Client from './Client'
 
 export default class Timeline {
+    private static readonly endpoints: Readonly<{
+        [key: string]: string
+    }> = {
+            home: "/timelines/home",
+            notify: "/timelines/notifications",
+            dm: "/conversations",
+            local: "/timelines/public?local=true",
+            fediverse: "/timelines/public",
+        }
+
     public static ready() {
         ipcMain.on('no-auth-timeline', async (event: Event, name: string) => {
             const client = Client.getNoAuthClient(name)
@@ -18,26 +28,22 @@ export default class Timeline {
             }
         })
         ipcMain.on('timeline', async (event: Event, name: string, type: string) => {
-            const client = Client.getAuthClient(name)
+            // home/notify/dm/local/fediverse/integrated/localPlus
+            // integratedはまだ。dmはAPI構造が違う。notifyはmax_idとかのためにヘッダー取らないといけない。
+            // integratedはレンダラープロセス側でそれぞれ取得させる形で、ここでは考慮しないのがいいのかな
+            if (!(type in this.endpoints)) {
+                event.sender.send(`timeline-${name}-${type}`, [], new Error("Not supported type"))
+                return
+            }
+
+            let url = this.endpoints[type]
             try {
-                let url: string = ""
-                //home/notify/dm/local/fediverse/integrated/localPlus
-                //integratedはまだ。dmはAPI構造が違う。notifyはmax_idとかのためにヘッダー取らないといけない。
-                if(type=="home"){
-                    url="/timelines/home"
-                }else if(type=="notify"){
-                    url="/timelines/notifications"
-                }else if(type=="dm"){
-                    url="/conversations"
-                }else if(type=="local"){
-                    url="/timelines/public?local=true"
-                }else if(type=="fediverse"){
-                    url="/timelines/public"
-                }
+                const client = Client.getAuthClient(name)
                 let res: Response<[Status]> = await client.get<[Status]>(url)
-                event.sender.send(`timeline-${name}-no-auth`, res.data)
+                event.sender.send(`timeline-${name}-${type}`, res.data)
             } catch (error) {
-                event.sender.send(`timeline-${name}-no-auth`, [], error)
+                console.log(error)
+                event.sender.send(`timeline-${name}-${type}`, [], error)
             }
         })
     }
