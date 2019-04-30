@@ -99,7 +99,9 @@ export default class Application {
 
     private static handleOpenURL(event: Event, url: string) {
         if (Window.windowMap.has('main')) {
-            Window.windowMap.get('main')!.webContents.send("open-url-scheme", url)
+            let win = Window.windowMap.get('main')!
+            win.focus()
+            win.webContents.send("open-url-scheme", url)
         }
     }
 
