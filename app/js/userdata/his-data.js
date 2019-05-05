@@ -579,7 +579,22 @@ function udAdd(start) {
 			}
 		}
 	});
-
+	fetch("https://notestock.osa-p.net/api/v1/isstock.json?id="+start.replace("@","users/"), {
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json'
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		if(json.user.public_view){
+			var html='<a href="'+json.user.url+'" target="_blank" class="cbadge purple waves-effect" style="max-width:200px;" title="Notestock">Notestock</a>';
+			$("#his-proof-prof").append(html)
+		}
+	});
 
 }
 
