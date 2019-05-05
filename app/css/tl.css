@@ -138,7 +138,7 @@ iframe {
 .area-toot .emoji,.area-toot .emoji-img{
   width: 20px;
   vertical-align: middle;
-  margin: -3px 0 0;
+  margin:-1px 0;
 }
 .faicon_FTL{
   display:none;
@@ -344,6 +344,7 @@ grid-area: toot;
 p {
   margin: 0;
   margin-bottom: 0px;
+  line-height:20px;
 }
 p:not(:last-child){
   margin-bottom: 10px;
