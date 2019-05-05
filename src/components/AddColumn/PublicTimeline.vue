@@ -89,6 +89,7 @@ export default class PublicTimeline extends Vue {
 
   public addTL() {
     let timeline: Timeline = { name: this.instance, statuses: new Map() }
+    ipcRenderer.send("add-timeline", timeline.name, 'no-auth')
 
     this.showInput = false
     this.instance = ""
