@@ -5,7 +5,7 @@ import { join } from "path"
 
 type Protocol = 'http' | 'websocket'
 
-export default class Clients {
+export default class Client {
     // Authorized Accounts. keyには`username@domain`を設定します
     private static authorizedHTTP: Map<string, Mastodon> = new Map()
     private static authorizedWebSocket: Map<string, Mastodon> = new Map()
@@ -27,7 +27,7 @@ export default class Clients {
                 if (err) {
                     console.log(err)
                 } else {
-                    Clients.setAuthClient(protocol, username, Clients.createAuthClient(protocol, docs.domain, docs.accessToken))
+                    Client.setAuthClient(protocol, username, Client.createAuthClient(protocol, docs.domain, docs.accessToken))
                 }
             })
         }
@@ -66,7 +66,7 @@ export default class Clients {
     private static createNoAuthClient(protocol: Protocol, domain: string): Mastodon {
         let scheme = protocol === 'http' ? 'https://' : 'wss://'
         return new Mastodon(
-            '',
+            '', // pleromaでは空文字ではなくnullを指定しないと毎秒403エラーになるアクセスを繰り返すことになる。TypeScriptではnullを入れられないのでmegalodonの方を修正する必要あり
             scheme + domain + '/api/v1'
         )
     }

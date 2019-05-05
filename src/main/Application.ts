@@ -30,6 +30,7 @@ export default class Application {
 
     private constructor() {
         this.isDarkMode = systemPreferences.isDarkMode()
+
         const gotTheLock = app.requestSingleInstanceLock()
         if (!gotTheLock) {
             app.quit()
@@ -76,6 +77,11 @@ export default class Application {
         Auth.ready()
 
         ipcMain.on('dark-theme', (e: Event) => e.returnValue = this.isDarkMode)
+
+        ipcMain.on('is-startup', (e: Event) => {
+            // 初回起動かどうかをここで判断させる。timeline.dbかaccount.dbがあれば初回起動じゃない扱いでもいいか？
+            e.returnValue = true
+        })
 
         Window.Main()
     }

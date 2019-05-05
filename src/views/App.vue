@@ -19,9 +19,9 @@ import Welcome from '@/components/Welcome.vue'
   },
 })
 export default class App extends Vue {
-  public isDarkMode!: boolean
-  public isStartup!: boolean
-  public fontSize!: string
+  public isDarkMode: boolean = false
+  public isStartup: boolean = true
+  public fontSize: string = '16px'
 
   public get styles(): { [key: string]: string } {
     return {
@@ -33,15 +33,20 @@ export default class App extends Vue {
 
   created() {
     this.isDarkMode = ipcRenderer.sendSync('dark-theme')
-    this.isStartup = true // TODO: ipcで初回起動かのboolean値を取得する
-    this.fontSize = '16px'
+    this.isStartup = ipcRenderer.sendSync('is-startup') // TODO: ipcで初回起動かのboolean値を取得する
   }
 
   mounted() {
     ipcRenderer.on('change-color-theme', () => this.isDarkMode = ipcRenderer.sendSync('dark-theme'))
     // TODO: アカウントか公開TLの追加を確認する。初回起動時のみ
     if (this.isStartup) {
-      //ipcRenderer.once('add-timeline', () => this.isStartup = false)
+      ipcRenderer.once('add-timeline', (_e: Event, _tl: Object, error?: Error) => {
+        if (error) {
+          console.error(error)
+          return
+        }
+        this.isStartup = false
+      })
     }
   }
 
