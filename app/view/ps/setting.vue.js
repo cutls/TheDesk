@@ -1,18 +1,18 @@
 var yesno=[
     {
-        text:"はい",
+        text:"crwdns526:0crwdne526:0",
         value:"yes"
     },{
-        text:"いいえ",
+        text:"crwdns527:0crwdne527:0",
         value:"no"
     }
 ];
 var sound=[
     {
-        text:"なし",
+        text:"@@none@@",
         value:"none"
     },{
-        text:"既定",
+        text:"@@default@@",
         value:"default"
     },{
         text:"Custom 1",
@@ -37,9 +37,9 @@ var envConstruction=[
         setValue:0,
         width:50,
         text:{
-            head:"新規通知のポップアップお知らせの表示秒数",
-            desc:'0に設定すると表示されません',
-            after:"秒"
+            head:"crwdns1898:0crwdne1898:0",
+            desc:'crwdns536:0crwdne536:0',
+            after:"crwdns537:0crwdne537:0"
         }
     },{
         id:"notf",
@@ -47,8 +47,8 @@ var envConstruction=[
         checkbox:true,
         setValue:"yes",
         text:{
-            head:"ネイティブ通知設定",
-            desc:"Portableバージョンでは表示できません。",
+            head:"crwdns538:0crwdne538:0",
+            desc:"crwdns539:0crwdne539:0",
             checkbox:yesno
         }
     },{
@@ -59,9 +59,9 @@ var envConstruction=[
         width:50,
         setValue:300,
         text:{
-            head:"マルチカラムの最低横幅",
-            desc:"画面全体の横幅÷コラム数がこの値を超えた時、横スクロールとなります。",
-            after:"px 以上"
+            head:"crwdns2376:0crwdne2376:0",
+            desc:"crwdns542:0crwdne542:0",
+            after:"px crwdns543:0crwdne543:0"
         }
     },{
         id:"fixwidth",
@@ -71,9 +71,9 @@ var envConstruction=[
         setValue:300,
         width:50,
         text:{
-            head:"TweetDeckの限定の最低横幅",
-            desc:"",
-            after:"px 以上"
+            head:"crwdns2378:0crwdne2378:0",
+            desc:"crwdns2380:0crwdne2380:0",
+            after:"px crwdns543:0crwdne543:0"
         }
     },{
         id:"size",
@@ -83,8 +83,8 @@ var envConstruction=[
         width:50,
         setValue:13,
         text:{
-            head:"フォントサイズ",
-            desc:'<span style="font-size:13px">13px(絶対指定)</span>',
+            head:"crwdns546:0crwdne546:0",
+            desc:'<span style="font-size:13px">13px(crwdns549:0crwdne549:0)</span>',
             after:"px"
         }
     },{
@@ -93,14 +93,14 @@ var envConstruction=[
         checkbox:true,
         setValue:false,
         text:{
-            head:"ハードウェアアクセラレーションの無効化",
-            desc:"表示(特に設定画面)が乱れる場合に「はい」を選択してください。自動で再起動します。",
+            head:"@@hardwareAcceleration@@",
+            desc:"@@hardwareAccelerationWarn@@",
             checkbox:[
                 {
-                    text:"はい",
+                    text:"crwdns526:0crwdne526:0",
                     value:"true"
                 },{
-                    text:"いいえ",
+                    text:"crwdns527:0crwdne527:0",
                     value:"false"
                 }
             ]
@@ -114,20 +114,20 @@ var tlConstruction=[
         checkbox:true,
         setValue:"absolute",
         text:{
-            head:"時間表記設定",
-            desc:'相対時間の例:"1分前","3日前"<br>絶対時間の例"23:25:21","2017年12月30日 23:59:00"<br>混合表示は、当日のトゥートのみ相対、それ以外は絶対で表示 ',
+            head:"crwdns551:0crwdne551:0",
+            desc:'crwdns552:0crwdne552:0<br>crwdns553:0crwdne553:0<br>crwdns554:0crwdne554:0',
             checkbox:[
                 {
-                    text:"相対時間",
+                    text:"crwdns555:0crwdne555:0",
                     value:"relative"
                 },{
-                    text:"絶対時間",
+                    text:"crwdns1902:0crwdne1902:0",
                     value:"absolute"
                 },{
-                    text:"両方表示",
+                    text:"crwdns557:0crwdne557:0",
                     value:"double"
                 },{
-                    text:"混合表示",
+                    text:"crwdns558:0crwdne558:0",
                     value:"medium"
                 }
 
@@ -139,8 +139,8 @@ var tlConstruction=[
         checkbox:true,
         setValue:"yes",
         text:{
-            head:"独自ロケールを使用",
-            desc:"対応サーバーではそのサーバーにあわせた言語表示ができます。",
+            head:"crwdns1904:0crwdne1904:0",
+            desc:"crwdns1906:0crwdne1906:0",
             checkbox:yesno
         }
     },{
@@ -149,8 +149,8 @@ var tlConstruction=[
         checkbox:true,
         setValue:"yes",
         text:{
-            head:"非表示設定の画像(NSFW)を隠す",
-            desc:"きつめのぼかしがかかります。",
+            head:"crwdns561:0crwdne561:0",
+            desc:"crwdns562:0crwdne562:0",
             checkbox:yesno
         }
     },{
@@ -159,7 +159,7 @@ var tlConstruction=[
         checkbox:true,
         setValue:"yes",
         text:{
-            head:"非表示設定のテキスト(CW)を隠す",
+            head:"crwdns563:0crwdne563:0",
             desc:"",
             checkbox:yesno
         }
@@ -169,14 +169,14 @@ var tlConstruction=[
         checkbox:true,
         setValue:"hidden",
         text:{
-            head:"リプライ数表示",
+            head:"crwdns564:0crwdne564:0",
             desc:"",
             checkbox:[
                 {
-                    text:"2以上のとき1+と表示",
+                    text:"crwdns565:0crwdne565:0",
                     value:"hidden"
                 },{
-                    text:"2以上のとき1+と表示",
+                    text:"crwdns565:0crwdne565:0",
                     value:"all"
                 }
 
@@ -188,7 +188,7 @@ var tlConstruction=[
         checkbox:true,
         setValue:"yes",
         text:{
-            head:"アイコンのアニメーションを再生する",
+            head:"crwdns567:0crwdne567:0",
             desc:"",
             checkbox:yesno
         }
@@ -198,14 +198,14 @@ var tlConstruction=[
         checkbox:true,
         setValue:"local",
         text:{
-            head:"タグタイムラインの表示範囲",
+            head:"crwdns572:0crwdne572:0",
             desc:"",
             checkbox:[
                 {
-                    text:"接続しているサーバー",
+                    text:"crwdns573:0crwdne573:0",
                     value:"all"
                 },{
-                    text:"検索対象のサーバーのみ",
+                    text:"crwdns574:0crwdne574:0",
                     value:"local"
                 }
 
@@ -217,7 +217,7 @@ var tlConstruction=[
         checkbox:true,
         setValue:"no",
         text:{
-            head:"viaを表示する",
+            head:"crwdns575:0crwdne575:0",
             desc:"",
             checkbox:yesno
         }
@@ -227,17 +227,17 @@ var tlConstruction=[
         checkbox:true,
         setValue:"no",
         text:{
-            head:"アクションメニューを非表示",
-            desc:"「マウスオーバー」はすこし鬱陶しいと思うかもしれません。",
+            head:"crwdns576:0crwdne576:0",
+            desc:"crwdns577:0crwdne577:0",
             checkbox:[
                 {
-                    text:"マウスオーバーで表示",
+                    text:"crwdns578:0crwdne578:0",
                     value:"yes"
                 },{
-                    text:"クリックで表示",
+                    text:"crwdns579:0crwdne579:0",
                     value:"click"
                 },{
-                    text:"いいえ",
+                    text:"crwdns527:0crwdne527:0",
                     value:"no"
                 }
 
@@ -249,7 +249,7 @@ var tlConstruction=[
         checkbox:true,
         setValue:"yes",
         text:{
-            head:"通知を開いているとき、通知新着お知らせを表示する",
+            head:"crwdns580:0crwdne580:0",
             desc:"",
             checkbox:yesno
         }
@@ -262,18 +262,18 @@ var tlConstruction=[
                 storage:"sentence",
                 width:50,
                 setValue:500,
-                text:{after:"行 以上 または"}
+                text:{after:"crwdns583:0crwdne583:0 crwdns543:0crwdne543:0 crwdns585:0crwdne585:0"}
             },{
                 id:"letters",
                 storage:"letters",
                 width:50,
                 setValue:7000,
-                text:{after:"文字 以上"}
+                text:{after:"crwdns584:0crwdne584:0 crwdns543:0crwdne543:0"}
             }
         ],
         text:{
-            head:"指定行数以上を折りたたむ",
-            desc:"5文字以下のトゥートは折りたたみません。また、折りたたみ時は改行が描画されません。改行のみを行数とカウントします。",
+            head:"crwdns581:0crwdne581:0",
+            desc:"crwdns582:0crwdne582:0",
         }
     },{
         id:"img-height",
@@ -283,8 +283,8 @@ var tlConstruction=[
         width:80,
         setValue:200,
         text:{
-            head:"画像の高さ",
-            desc:'オプション:「full」と指定すると全ての画像をクロップしません。',
+            head:"crwdns586:0crwdne586:0",
+            desc:'@@imgheightwarn@@',
             after:"px"
         }
     },{
@@ -293,8 +293,8 @@ var tlConstruction=[
         checkbox:true,
         setValue:"no",
         text:{
-            head:"#InstanceTickerを使う",
-            desc:'トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href="https://cdn.weep.me/mastodon/">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.',
+            head:"crwdns1908:0crwdne1908:0",
+            desc:'crwdns1910:0crwdne1910:0',
             checkbox:yesno
         }
     },{
@@ -303,7 +303,7 @@ var tlConstruction=[
         checkbox:true,
         setValue:"yes",
         text:{
-            head:"タイムラインのアニメーション",
+            head:"crwdns2446:0crwdne2446:0",
             desc:"",
             checkbox:yesno
         }
@@ -313,7 +313,7 @@ var tlConstruction=[
         checkbox:true,
         setValue:"none",
         text:{
-            head:"リプライの通知音",
+            head:"@@replySound@@",
             desc:"",
             checkbox:sound
         }
@@ -323,7 +323,7 @@ var tlConstruction=[
         checkbox:true,
         setValue:"none",
         text:{
-            head:"お気に入り登録の通知音",
+            head:"@@favSound@@",
             desc:"",
             checkbox:sound
         }
@@ -333,7 +333,7 @@ var tlConstruction=[
         checkbox:true,
         setValue:"none",
         text:{
-            head:"ブーストの通知音",
+            head:"@@btSound@@",
             desc:"",
             checkbox:sound
         }
@@ -343,7 +343,7 @@ var tlConstruction=[
         checkbox:true,
         setValue:"none",
         text:{
-            head:"フォローの通知音",
+            head:"@@followSound@@",
             desc:"",
             checkbox:sound
         }
@@ -358,7 +358,7 @@ var postConstruction=[
         width:150,
         setValue:"",
         text:{
-            head:"デフォルトの警告文",
+            head:"crwdns590:0crwdne590:0",
             desc:"",
             after:""
         }
@@ -371,18 +371,18 @@ var postConstruction=[
                 storage:"cw_sentence",
                 width:50,
                 setValue:500,
-                text:{after:"行 以上 または"}
+                text:{after:"crwdns583:0crwdne583:0 crwdns543:0crwdne543:0 crwdns585:0crwdne585:0"}
             },{
                 id:"cw_letters",
                 storage:"cw_letters",
                 width:50,
                 setValue:7000,
-                text:{after:"文字 以上"}
+                text:{after:"crwdns584:0crwdne584:0 crwdns543:0crwdne543:0"}
             }
         ],
         text:{
-            head:"長文投稿時に警告",
-            desc:"下で指定した以上のトゥートを投稿するときにCWするかのダイアログを表示します。",
+            head:"crwdns588:0crwdne588:0",
+            desc:"crwdns589:0crwdne589:0",
         }
     },{
         id:"cws",
@@ -390,7 +390,7 @@ var postConstruction=[
         checkbox:true,
         setValue:"no",
         text:{
-            head:"標準でCWを設定",
+            head:"crwdns591:0crwdne591:0",
             desc:"",
             checkbox:yesno
         }
@@ -400,26 +400,26 @@ var postConstruction=[
         checkbox:true,
         setValue:"public",
         text:{
-            head:"デフォルトの公開設定",
+            head:"crwdns592:0crwdne592:0",
             desc:"",
             checkbox:[
                 {
-                    text:"公開(Public)",
+                    text:"crwdns593:0crwdne593:0",
                     value:"public"
                 },{
-                    text:"未収載(Unlisted)",
+                    text:"crwdns594:0crwdne594:0",
                     value:"unlisted"
                 },{
-                    text:"非公開(Private)",
+                    text:"crwdns595:0crwdne595:0",
                     value:"private"
                 },{
-                    text:"ダイレクト(Direct)",
+                    text:"crwdns596:0crwdne596:0",
                     value:"direct"
                 },{
-                    text:"前回の投稿設定を記憶する(サーバーごとに記憶されます)",
+                    text:"crwdns1912:0crwdne1912:0",
                     value:"memory"
                 },{
-                    text:"マストドンアカウント設定の既定値",
+                    text:"crwdns1914:0crwdne1914:0",
                     value:"useapi"
                 }
             ]
@@ -430,14 +430,14 @@ var postConstruction=[
         checkbox:true,
         setValue:"no-act",
         text:{
-            head:"画像投稿設定",
+            head:"crwdns599:0crwdne599:0",
             desc:"",
             checkbox:[
                 {
-                    text:"画像を投稿し、画像のURLを最後に表示",
+                    text:"crwdns600:0crwdne600:0",
                     value:"url"
                 },{
-                    text:"画像を投稿するがURLは表示しない",
+                    text:"crwdns601:0crwdne601:0",
                     value:"no-act"
                 }
             ]
@@ -448,17 +448,17 @@ var postConstruction=[
         checkbox:true,
         setValue:"yes",
         text:{
-            head:"投稿ボックスの挙動",
+            head:"crwdns568:0crwdne568:0",
             desc:"",
             checkbox:[
                 {
-                    text:"たたむ",
+                    text:"crwdns569:0crwdne569:0",
                     value:"yes"
                 },{
-                    text:"投稿後も隠さない",
+                    text:"crwdns571:0crwdne571:0",
                     value:"no"
                 },{
-                    text:"枠外クリックで閉じない(起動時に展開)",
+                    text:"crwdns570:0crwdne570:0",
                     value:"absolute"
                 }
             ]
@@ -469,20 +469,20 @@ var postConstruction=[
         checkbox:true,
         setValue:"nothing",
         text:{
-            head:"引用形式",
+            head:"crwdns603:0crwdne603:0",
             desc:"",
             checkbox:[
                 {
-                    text:"URLのみ",
+                    text:"crwdns604:0crwdne604:0",
                     value:"simple"
                 },{
-                    text:"URLとアカウント名(相手に通知)",
+                    text:"crwdns605:0crwdne605:0",
                     value:"mention"
                 },{
-                    text:"本文・URL・アカウント名",
+                    text:"crwdns606:0crwdne606:0",
                     value:"full"
                 },{
-                    text:"使わない(TL上にボタンも表示されません)",
+                    text:"@@notqt@@",
                     value:"nothing"
                 }
             ]
@@ -493,14 +493,14 @@ var postConstruction=[
         checkbox:true,
         setValue:"remain",
         text:{
-            head:"投稿後や起動時のアカウント",
-            desc:"メインアカウントはアカウント設定で指定できます。投稿以外のアカウント選択にも影響します。",
+            head:"crwdns607:0crwdne607:0",
+            desc:"crwdns608:0crwdne608:0",
             checkbox:[
                 {
-                    text:"最後に使用したアカウント",
+                    text:"crwdns609:0crwdne609:0",
                     value:"remain"
                 },{
-                    text:"メインアカウント",
+                    text:"crwdns610:0crwdne610:0",
                     value:"main"
                 }
             ]
@@ -511,26 +511,26 @@ var postConstruction=[
         checkbox:true,
         setValue:"public",
         text:{
-            head:"セカンダリートゥートボタン",
+            head:"crwdns1916:0crwdne1916:0",
             desc:"",
             checkbox:[
                 {
-                    text:"表示しない",
+                    text:"crwdns1920:0crwdne1920:0",
                     value:"nothing"
                 },{
-                    text:"公開(Public)",
+                    text:"crwdns593:0crwdne593:0",
                     value:"public"
                 },{
-                    text:"未収載(Unlisted)",
+                    text:"crwdns594:0crwdne594:0",
                     value:"unlisted"
                 },{
-                    text:"非公開(Private)",
+                    text:"crwdns595:0crwdne595:0",
                     value:"private"
                 },{
-                    text:"ダイレクト(Direct)",
+                    text:"crwdns596:0crwdne596:0",
                     value:"direct"
                 },{
-                    text:"ローカル限定",
+                    text:"crwdns1922:0crwdne1922:0",
                     value:"local",
                     kirishima:true,
                     kirishimaText:"非対応インスタンスでは「未収載」になります。"
@@ -544,7 +544,7 @@ var postConstruction=[
         setValue:"normal",
         setValue:"no",
         text:{
-            head:"絵文字にゼロ幅スペースを使う",
+            head:"@@zeroWidthEmoji@@",
             desc:"",
             checkbox:yesno
         }

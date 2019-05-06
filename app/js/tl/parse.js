@@ -580,16 +580,25 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var purl = media.preview_url;
 				media_ids=media_ids+media.id+",";
 				var url = media.url;
+				var nsfwmes=""
 				if (toot.sensitive && nsfw) {
 					var sense = "sensitive"
+					var blur=media.blurhash
+					if(blur){
+						nsfwmes='<span class="gray">NSFW media</span>'
+						purl=parseBlur(blur)
+						var sense=""
+					}
 				} else {
 					var sense = ""
+					var blur=null
 				}
-				viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',\'' +
+					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',\'' +
 					acct_id + '\')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 					'" data-type="' + media.type + '" class="img-parsed"><img draggable="false" src="' +
 					purl + '" class="' + sense +
-					' toot-img pointer" style="width:calc(' + cwdt + '% - 1px); height:'+imh+';"></a></span>';
+					' toot-img pointer" style="width:calc(' + cwdt + '% - 1px); height:'+imh+';"></a>'+nsfwmes;
+				
 			});
 			media_ids = media_ids.slice(0, -1) ;
 		} else {
