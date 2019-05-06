@@ -123,6 +123,10 @@ function load() {
 		var font = "";
 	}
 	$("#font").val(font);
+	$("#c1-file").text(localStorage.getItem("custom1"))
+	$("#c2-file").text(localStorage.getItem("custom2"));
+	$("#c3-file").text(localStorage.getItem("custom3"));
+	$("#c4-file").text(localStorage.getItem("custom4"));
 }
 
 function climute(){
@@ -636,6 +640,22 @@ ipc.on('theme-json-create-complete', function (event, args) {
 	$("#custom_import").val("");
 	ctLoad()
 });
+function customSound(key){
+	var electron = require("electron");
+	var remote=electron.remote;
+	var dialog=remote.dialog;
+	dialog.showOpenDialog(null, {
+		title: 'Custom sound',
+		properties: ['openFile'],
+		filters: [
+			{name: 'Audio', extensions: ['mp3','aac','wav','flac','m4a']},
+			{name: 'All', extensions: ['*']},
+		]
+	}, (fileNames) => {
+		localStorage.setItem("custom"+key,fileNames[0]);
+		$("#c1-file").text(fileNames[0])
+	});
+}
 window.onload = function() {
 	//最初に読む
 load();

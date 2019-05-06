@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" style="overflow:scroll">
 
 <head>
 	<title>Settings - TheDesk</title>
@@ -22,7 +22,6 @@
 		input {
 			max-height: 50px !important
 		}
-
 		.pcr-result {
 			height: 1rem !important;
 		}
@@ -47,7 +46,7 @@
 			<div class="collapsible-body">
 				<h5>言語</h5>
 				To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
-				<a href="../ja/setting.html" onclick="changelang('ja')">日本語(Japanese)</a>/<a href="../en/setting.html" onclick="changelang('en')">English</a>/<a href="../ps/setting.html" onclick="changelang('ps')">Crowdin web translate</a>/
+				@@langlist@@
 				<h5>設定のインポートとエクスポート</h5>
 				<button onclick="exportSettings()" class="btn waves-effect lime darken-3"
 					style="width:100%; max-width:200px;">エクスポート</button>
@@ -56,8 +55,8 @@
 				<div id="envView">
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
-						<template v-if=item.text.desc>
-							<templete v-html=item.text.desc></templete><br>
+						<template v-if="item.text.desc">
+							<templete v-html="item.text.desc"></templete><br>
 						</template>
 						<template v-if="item.id=='notf'"><a onclick="notftest()"
 								class="pointer">通知テスト</a><br></template>
@@ -85,7 +84,7 @@
 					</template>
 				</div>
 				<h5>フォント</h5>
-				「選択」を押してフォントを選んでください。<br>
+				「選択」を押してフォントを選んでください。(Linuxでは動きません)<br>
 				<button class="btn waves-effect" style="width:100px;" onclick="font()">選択</button><br>
 				<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
 				<br>
@@ -131,9 +130,9 @@
 				<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea"
 						placeholder="説明..."></textarea></div>
 				<h5>色の系統</h5>
-				<input class="with-gap" name="derection" type="radio" id="dark" value="dark" checked="true" />
+				<input class="with-gap" name="direction" type="radio" id="dark" value="dark" checked="true" />
 				<label for="dark">Dark</label>
-				<input class="with-gap" name="derection" type="radio" id="light" value="light" />
+				<input class="with-gap" name="direction" type="radio" id="light" value="light" />
 				<label for="light">Light</label>
 				<div id="pickers">
 					<div>
@@ -158,11 +157,11 @@
 						<input type="hidden" id="color-picker2_value">
 					</div>
 					<div>
-						<h5>Accent</h5>ブーストの背景色など
-						<div id="color-picker3-wrap">
-							<div class="color-picker" id="color-picker3"></div>
-						</div>
-						<input type="hidden" id="color-picker3_value">
+					<h5>Accent</h5>ブーストの背景色など
+					<div id="color-picker3-wrap">
+						<div class="color-picker" id="color-picker3"></div>
+					</div>
+					<input type="hidden" id="color-picker3_value">
 					</div>
 				</div>
 				<button class="btn-large waves-effect" onclick="customComp()">変更</button>&nbsp;<button
@@ -184,8 +183,8 @@
 				<div id="tlView">
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
-						<template v-if=item.text.desc>
-							<templete v-html=item.text.desc></templete><br>
+						<template v-if="item.text.desc">
+							<templete v-html="item.text.desc"></templete><br>
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
@@ -210,6 +209,11 @@
 						</template><br>
 					</template>
 				</div>
+				<h5>カスタム通知音</h5>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(1)">Custom 1</button><span id="c1-file"></span><br>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(2)">Custom 2</button><span id="c2-file"></span><br>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(3)">Custom 3</button><span id="c3-file"></span><br>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(4)">Custom 4</button><span id="c4-file"></span><br>
 			</div>
 		</li>
 		<li>
@@ -220,8 +224,8 @@
 				<div id="postView">
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
-						<template v-if=item.text.desc>
-							<templete v-html=item.text.desc></templete><br>
+						<template v-if="item.text.desc">
+							<templete v-html="item.text.desc"></templete><br>
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
@@ -403,29 +407,27 @@
 			class="material-icons left">info</i>このソフトについて</button>
 	<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i
 			class="material-icons left">web</i>公式HP</a>
-	<a href="https://enty.jp/Cutls" class="btn waves-effect purple lighten-2" style="width:100%; max-width:500px;"><i
-			class="material-icons left">trending_up</i>支援(Enty)</a>
 	<a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2"
 		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>支援(Pixiv FANBOX)</a>
 	<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i
 			class="material-icons left">list</i>ヘルプ/Docs(Constructing)</a>
 	<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2"
 		style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
-	<a href="index.html?mode=user&code=Cutls@kirishima.cloud" class="btn waves-effect blue lighten-2"
+	<a href="index.html?mode=user&code=Cutls@cutls.com" class="btn waves-effect blue lighten-2"
 		style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25"
-			style="padding-top:5px;">Developer: Cutls@kirishima.cloud</a>
+			style="padding-top:5px;">Developer: Cutls@cutls.com</a>
 	<br>
 	Kyash<br>
 	<img src="../../img/kyash.png" width="100"><br>
 	<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';"
 		class="pointer">アップデートを確認</a><br>
 	<a href="oss.html">OSS License(オープンソースライセンス)</a><br>
-	<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018 All Rights Reserved.
+	<span style="font-family:Open Sans;">Copyright &copy; Cutls P 2018 All Rights Reserved.
 		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a
 			href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy
 			Policy</a>
 		<br>Developer: Cutls P(
-		<a href="index.html?mode=user&code=Cutls@kirishima.cloud">@Cutls@kirishima.cloud</a>)
+		<a href="index.html?mode=user&code=Cutls@cutls.com">@Cutls@cutls.com</a>)
 		<br>
 	</span><br>
 	TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>

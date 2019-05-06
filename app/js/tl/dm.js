@@ -251,7 +251,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var via = '';
 			viashow="hide";
 		} else {
-			var via = toot.application.name;
+			var via = escapeHTML(toot.application.name);
 			//強調チェック
 			Object.keys(emp).forEach(function(key6) {
 				var cli = emp[key6];
@@ -432,7 +432,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				if(word){
 					var word=word.tag;
 					var regExp = new RegExp( word, "g" ) ;
-					content=content.replace(regExp,'<span class="emp">'+word+"</span>");
+					content=content.replace(regExp,'<span class="emp">'+escapeHTML(word)+"</span>");
 				}
 			});
 		}
@@ -483,7 +483,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			for( var i=0; i<tickerdata.length; i++) {
 				var value=tickerdata[i];
 				if(value.domain==thisdomain){
-					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+value.name+'</span></div>';
+					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+escapeHTML(value.name)+'</span></div>';
 					break;
 				}
 		   }

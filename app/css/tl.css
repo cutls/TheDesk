@@ -138,7 +138,7 @@ iframe {
 .area-toot .emoji,.area-toot .emoji-img{
   width: 20px;
   vertical-align: middle;
-  margin: -3px 0 0;
+  margin:-1px 0;
 }
 .faicon_FTL{
   display:none;
@@ -249,6 +249,29 @@ grid-area: toot;
   margin:2px;
   grid-area: side;
 }
+
+.quote-renote{
+  display: grid;
+  grid-template-columns: 43px 2fr 1fr;
+  grid-template-areas: 'ricon ruser' 'ricon rtext';
+  border: 1px solid;
+  margin-top: 3px;
+  padding: 1px;
+  border-radius: 3px;
+}
+.renote-icon{
+  grid-area: ricon;
+}
+.renote-icon img{
+  width:43px;
+}
+.renote-user{
+  grid-area: ruser;
+}
+.renote-text{
+  grid-area: rtext;
+}
+
 .btn-flat{
   color:var(--color);
 }
@@ -321,6 +344,7 @@ grid-area: toot;
 p {
   margin: 0;
   margin-bottom: 0px;
+  line-height:20px;
 }
 p:not(:last-child){
   margin-bottom: 10px;

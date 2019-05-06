@@ -298,7 +298,7 @@ function clear() {
 	$("#post-acct-sel").prop("disabled", false);
 	$("#days_poll").val(0);
   $("#hours_poll").val(0);
-	$("#mins_poll").val(0);
+	$("#mins_poll").val(6);
 	$(".mastodon-choice").map(function() {
 		$(this).val("");
 	});

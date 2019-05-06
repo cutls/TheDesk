@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "18.2.3",
+  "version": "18.3.2",
   "description": "TheDesk is a Mastodon client for PC.",
   "repository": "https://github.com/cutls/TheDesk",
   "main": "main.js",
@@ -35,7 +35,7 @@
     },
     {
       "name": "kPherox",
-      "url": "https://www.kr-kp.com/",
+      "url": "https://pawoo.net/@kPherox",
       "email": "admin@mail.kr-kp.com"
     }
   ],
@@ -49,7 +49,7 @@
     "vue": "^2.6.9"
   },
   "optionalDependencies": {
-    "nowplaying-node": "^0.1.3",
+    "nowplaying-node": "git+https://github.com/cutls/nowplaying-node",
     "itunes-nowplaying-mac": "git+https://github.com/rinsuki/itunes-nowplaying-mac#pull/4/head",
     "font-manager": "^0.3.0"
   },
@@ -94,7 +94,10 @@
       "category": "Network"
     },
     "mac": {
-      "target": ["dmg","zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "electronDownload": {
       "version": "4.1.4"

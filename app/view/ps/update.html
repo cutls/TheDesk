@@ -1,18 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
 <title>Update - TheDesk</title>
 <link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 <link href="../../css/master.css" type="text/css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 <meta charset="utf-8">
-
+<!--
 <script type="text/javascript">
 	var _jipt = [];
 	_jipt.push(['project', 'thedesk']);
 </script>
 <script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-
+-->
 </head>
 <body>
 <style>
@@ -72,27 +72,27 @@ a,button,input,label,i{
 <div id="start">
     <div id="box" class="show">
         <h2>TheDesk</h2>
-        <p>crwdns669:0crwdne669:0</p>
+        <p>アップデートがあります</p>
         <span id="now"></span>→<b id="ver"></b><br>
         <span id="det"></span><br>
-        <button class="waves-effect btn windows hide" onclick="update('install')" style="margin-left:15px;">crwdns2382:0crwdne2382:0</button>
-        <button class="waves-effect btn windows hide" onclick="update('portable')" style="margin-left:15px;">crwdns1950:0crwdne1950:0</button>
-        <button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left:15px;">crwdns670:0crwdne670:0</button>
-        <button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left:15px;">crwdns670:0crwdne670:0</button>
+        <button class="waves-effect btn windows hide" onclick="update('install')" style="margin-left:15px;">インストーラー版(推奨)</button>
+        <button class="waves-effect btn windows hide" onclick="update('portable')" style="margin-left:15px;">ポータブル版</button>
+        <button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left:15px;">開始</button>
+        <button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left:15px;">開始</button>
         <br>
-        crwdns678:0crwdne678:0<br>crwdns679:0crwdne679:0
+        問題が発生しますか？<br><a href="https://thedesk.top">公式HP</a>からダウンロードをお試しください。
     </div>
     <div id="skipper" class="hide">
-        <h4>crwdns674:0crwdne674:0</h4>
-        crwdns675:0crwdne675:0<br>
+        <h4>アップデートは必ず行ってください</h4>
+        アップデートをスキップする<br>
         <div id="updskip">
-                <a onclick="window.close();" class="pointer skipbtn waves-effect waves-light"><div>crwdns676:0crwdne676:0</div></a>
-                <a onclick="nextv();" class="pointer skipbtn waves-effect waves-light"><div>crwdns677:0crwdne677:0</div></a>
+                <a onclick="window.close();" class="pointer skipbtn waves-effect waves-light"><div>次回TL表示時まで</div></a>
+                <a onclick="nextv();" class="pointer skipbtn waves-effect waves-light"><div>次のバージョンが出るまで</div></a>
         </div>
-        <a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">crwdns680:0crwdne680:0</a>
+        <a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">アップデートを続行</a>
     </div>
     <div id="dlnow" class="hide">
-        <h4>crwdns681:0crwdne681:0</h4>
+        <h4>ダウンロード中</h4>
         <h4 id="prog"></h4>
     </div>
 </div>
@@ -197,10 +197,24 @@ function verck(){
         todo(error);
 		console.error(error);
     }).then(function(json) {
-		    console.log(json);
-             $("#ver").text(json.desk);
-             localStorage.setItem("next-ver",json.desk);
-			 $("#det").html(json.detail);
+            console.log(json);
+            if(platform=="win32"){
+                $("#ver").text(json.desk);
+                localStorage.setItem("next-ver",json.desk);
+	        }else if(platform=="linux"){
+                $("#ver").text(json.desk_linux);
+                localStorage.setItem("next-ver",json.desk_linux);
+	        }else if(platform=="darwin"){
+                $("#ver").text(json.desk_mac);
+                localStorage.setItem("next-ver",json.desk_mac);
+            }
+            var lang="ja";
+            if(lang=="ja"){
+                $("#det").html(json.detail);
+            }else{
+                $("#det").html(json.detail_en);
+            }
+			 
              $("#now").text(localStorage.getItem("ver"));
              
     });

@@ -91,6 +91,9 @@ function details(id, acct_id, tlid, mode) {
 		}
 		beforeToot(id, acct_id, dom);
 		userToot(id, acct_id, uid);
+		afterToot(id, acct_id, dom);
+		afterUserToot(id, acct_id, uid);
+		afterFTLToot(id, acct_id, dom);
 		faved(id, acct_id);
 		rted(id, acct_id);
 		if($("#toot-this div").hasClass("cvo")){
@@ -99,7 +102,7 @@ function details(id, acct_id, tlid, mode) {
 			$("#toot-this").addClass("cvo");
 		}
 		if(!$("#activator").hasClass("active")){
-			$('#det-col').collapsible('open', 1);
+			$('#det-col').collapsible('open', 4);
 		}
 		
 	});
@@ -331,6 +334,81 @@ function userToot(id, acct_id, user) {
 		});
 	}
 	
+}
+//後のLTL
+function afterToot(id, acct_id, domain) {
+	//var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+		var start = "https://" + domain +
+		"/api/v1/timelines/public?local=true&min_id=" + id;
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+			},
+		}).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			todo(error);
+			console.error(error);
+		}).then(function(json) {
+			var templete = parse(json, 'noauth', acct_id);
+			if(templete!=""){
+				$("#ltl-after .no-data").hide();
+			}
+			$("#ltl-after").html(templete);
+			jQuery("time.timeago").timeago();
+		});
+}
+//後のUTL
+function afterUserToot(id, acct_id, user) {
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+		var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses?min_id=" + id;
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				'Authorization': 'Bearer ' + at
+			},
+		}).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			todo(error);
+			console.error(error);
+		}).then(function(json) {
+			var templete = parse(json, '', acct_id);
+			if(templete!=""){
+				$("#user-after .no-data").hide();
+			}
+			$("#user-after").html(templete);
+			jQuery("time.timeago").timeago();
+		});	
+}
+//後のFTL
+function afterFTLToot(id, acct_id, domain) {
+	//var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+		var start = "https://" + domain +
+		"/api/v1/timelines/public?min_id=" + id;
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+			},
+		}).then(function(response) {
+			return response.json();
+		}).catch(function(error) {
+			todo(error);
+			console.error(error);
+		}).then(function(json) {
+			var templete = parse(json, 'noauth', acct_id);
+			if(templete!=""){
+				$("#ftl-after .no-data").hide();
+			}
+			$("#ftl-after").html(templete);
+			jQuery("time.timeago").timeago();
+		});
 }
 
 //ふぁぼ一覧

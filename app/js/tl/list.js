@@ -30,7 +30,7 @@ function list(){
 				var lists = "";
 				Object.keys(json).forEach(function(key) {
 					var list = json[key];
-					lists = lists + list.title+':<a onclick="listShow(\'' + list.id + '\',\'' + list.title + '\',\'' + acct_id +
+					lists = lists + escapeHTML(list.title)+':<a onclick="listShow(\'' + list.id + '\',\'' + escapeHTML(list.title) + '\',\'' + acct_id +
 						'\')" class="pointer">'+lang.lang_list_show+'</a><br>';
 				});
 				$("#lists").html(lists);
@@ -57,7 +57,7 @@ function list(){
 				var lists = "";
 				Object.keys(json).forEach(function(key) {
 					var list = json[key];
-					lists = lists + list.title+':<a onclick="listShow(\'' + list.id + '\',\'' + list.title + '\',\'' + acct_id +
+					lists = lists + escapeHTML(list.title)+':<a onclick="listShow(\'' + list.id + '\',\'' + escapeHTML(list.title) + '\',\'' + acct_id +
 						'\')" class="pointer">'+lang.lang_list_show+'</a>/<a onclick="listUser(\'' + list.id + '\',' + acct_id +
 						')" class="pointer">'+lang.lang_list_users+'</a><br>';
 				});
@@ -193,7 +193,7 @@ function hisList(user,acct_id){
 			Object.keys(json).forEach(function(key) {
                 var list = json[key];
 				lists = lists + '<a onclick="listRemove(\'' + list.id + '\',\'' + user + '\',\'' + acct_id +
-					'\')" class="pointer">'+list.title+'</a><br> ';
+					'\')" class="pointer">'+escapeHTML(list.title)+'</a><br> ';
 			});
 			$("#his-lists-b").html(lists);
 		}else{
@@ -217,7 +217,7 @@ function hisList(user,acct_id){
 				var lists = "";
 				Object.keys(json).forEach(function(key) {
 					var list = json[key];
-					lists = lists + list.title+':<a onclick="listShow(\'' + list.id + '\',\'' + list.title + '\',\'' + acct_id +
+					lists = lists + list.title+':<a onclick="listShow(\'' + list.id + '\',\'' + escapeHTML(list.title) + '\',\'' + acct_id +
 						'\')" class="pointer">'+lang.lang_list_show+'</a>/<a onclick="listAdd(\'' + list.id + '\',\'' + user + '\',\'' + acct_id +
 						'\')" class="pointer">'+lang.lang_list_add+lang.lang_list_add_misskey+'</a><br>';
 				});

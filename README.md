@@ -1,5 +1,7 @@
 # TheDesk
 
+TheDesk Minami (19)はVueで書き直します(rewrite-vueブランチ参照)。18までのバージョンはTheDesk Kawaii (20)以降で継続します。  
+
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
@@ -26,6 +28,8 @@ The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.o
 * [Monotone SVG](https://dl.thedesk.top/press/TheDesk.svg)
 * [ico](https://dl.thedesk.top/press/TheDesk.ico)
 * [icns](https://dl.thedesk.top/press/TheDesk.icns)
+
+The default sound of notifications is provided [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/)
 
 ## Terms of Use/利用規約
 

@@ -5,8 +5,6 @@
 TheDesk-*
 app/build
 build
-make.js
-make_js.js
 app/.DS_Store
 .DS_Store
 .vs/*

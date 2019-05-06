@@ -189,7 +189,7 @@ var lang={
     "lang_parse_clientmute":"muted",
     "lang_parse_mute":" will be muted. You can remove on preferences.",
     "lang_parse_voted":"Voted",
-    "lang_parse_vote":"Voted",
+    "lang_parse_vote":"Vote",
     "lang_parse_unvoted":"Show the result without voting",
     "lang_parse_endedvote":"Expired",
     "lang_parse_thread":"Show thread",

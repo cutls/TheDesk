@@ -286,7 +286,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			}
 			var if_notf='data-notfIndv="'+acct_id+"_"+toot.id+'"';
 			var toot = toot.note;
-			var dis_name=escapeHTMLtemp(toot.user.name);
+			var dis_name=escapeHTML(toot.user.name);
 		}else{
 			var if_notf="";
 			if (toot.renote) {
@@ -296,8 +296,10 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					")<br>";
 					var boostback = "shared";
 				var uniqueid=toot.id;
-				var toot = toot.renote;
-				var dis_name=escapeHTMLtemp(toot.user.name);
+				if(!toot.text){
+					var toot = toot.renote;
+				}
+				var dis_name=escapeHTML(toot.user.name);
 			    var uniqueid=toot.id;
 				var actemojick=false
 			} else {
@@ -340,7 +342,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             if(toot.viaMobile){
                 var via = '<span style="font-style: italic;">Mobile</span>';
             }else{
-                var via = '<span style="font-style: italic;">Unknown</span>';
+                var via = '';
             }
 		} else {
 			var via = toot.app.name;
@@ -360,7 +362,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			});
 		}
 		if ((toot.cw || toot.cw=="") && cw) {
-			var content = toot.text;
+			var content = escapeHTML(toot.text);
 			var spoil = escapeHTMLtemp(toot.cw);
 			var spoiler = "cw cw_hide_" + toot.id;
 			var api_spoil = "gray";
@@ -616,7 +618,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			for( var i=0; i<tickerdata.length; i++) {
 				var value=tickerdata[i];
 				if(value.domain==thisdomain){
-					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+value.name+'</span></div>';
+					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+escapeHTML(value.name)+'</span></div>';
 					break;
 				}
 		   }
@@ -632,13 +634,15 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				}else{
 					var myvote="";
 				}
-				poll=poll+'<div class="pointer vote" onclick="vote(\''+acct_id+'\',\''+toot.id+'\','+choice.id+')">'+choice.text+'('+choice.votes+''+myvote+')</div>';
+				poll=poll+'<div class="pointer vote" onclick="vote(\''+acct_id+'\',\''+toot.id+'\','+choice.id+')">'+escapeHTML(choice.text)+'('+choice.votes+''+myvote+')</div>';
 			});
 			poll='<div class="vote_'+toot.id+'">'+poll+'</div>';
 		}
-		/*
-		
-			*/
+		//引用Renote
+		if(toot.renote){
+			poll=poll+'<div class="quote-renote"><div class="renote-icon"><a onclick="udg(\'' + toot.renote.user.id +
+			'\',' + acct_id + ');" user="' + toot.renote.user.username + '" class="udg"><img src="'+toot.renote.user.avatarUrl+'"></a></div><div class="renote-user">'+escapeHTML(toot.renote.user.name)+'</div><div class="renote-text">'+escapeHTML(toot.renote.text)+'</div></div>'
+		}
 			if(localStorage.getItem("emojiReaction_" + acct_id)=="disabled"){
 				var freeReact="hide";
 			}else{
@@ -667,7 +671,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 						var emoji = obj[i];
 						if (":"+emoji.shortcode+":"==keye) {
 							if (emoji) {
-								addReact=addReact+	'<span class="reaction "><a onclick="reaction(\''+keye+'\',\'' + toot.id + '\',' + acct_id +
+								addReact=addReact+	'<span class="reaction"><a onclick="reaction(\''+keye+'\',\'' + toot.id + '\',' + acct_id +
 								',\'' + tlid +'\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;"><img src="'+emoji.url+'" style="width:13px;"></a><span class="re-'+emoji.shortcode+'ct">'+thisReact+
 								'</span></span>';
 							}
@@ -837,7 +841,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_redraft+'"><i class="material-icons">redo</i></a></div>'+trans+
 			'<span class="cbadge viabadge waves-effect '+viashow+' '+mine_via+'" onclick="client(\''+$.strip_tagstemp(via)+'\')" title="via ' + $.strip_tagstemp(via) + '">via ' +
-			via +
+			escapeHTML(via) +
 			'</span>'+
 			'</div><div class="area-side '+mouseover+'"><div class="action ' + if_mine + ' '+noauth+'"><a onclick="toggleAction(\'' + toot.id + '\',\''+tlid+'\',\''+acct_id+'\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
 			'<div class="action '+noauth+'"><a onclick="details(\'' + toot.id + '\',' + acct_id +
@@ -913,7 +917,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 				var dis_name=escapeHTMLtemp(toot.name);
 				dis_name=twemoji.parse(dis_name);
 			}else{
-				var dis_name=toot.name;
+				var dis_name=toot.username;
 			}
 		templete = templete +
 			'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +

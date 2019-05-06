@@ -1,18 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="@@lang@@">
 <head>
 <title>Update - TheDesk</title>
 <link href="../../css/materialize.css" type="text/css" rel="stylesheet">
 <link href="../../css/master.css" type="text/css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
 <meta charset="utf-8">
-{{comment-start}}
+@@comment-start@@
 <script type="text/javascript">
 	var _jipt = [];
 	_jipt.push(['project', 'thedesk']);
 </script>
 <script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-{{comment-end}}
+@@comment-end@@
 </head>
 <body>
 <style>
@@ -72,27 +72,27 @@ a,button,input,label,i{
 <div id="start">
     <div id="box" class="show">
         <h2>TheDesk</h2>
-        <p>{{updatehere}}</p>
+        <p>@@updatehere@@</p>
         <span id="now"></span>→<b id="ver"></b><br>
         <span id="det"></span><br>
-        <button class="waves-effect btn windows hide" onclick="update('install')" style="margin-left:15px;">{{installer}}</button>
-        <button class="waves-effect btn windows hide" onclick="update('portable')" style="margin-left:15px;">{{portable}}</button>
-        <button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left:15px;">{{download}}</button>
-        <button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left:15px;">{{download}}</button>
+        <button class="waves-effect btn windows hide" onclick="update('install')" style="margin-left:15px;">@@installer@@</button>
+        <button class="waves-effect btn windows hide" onclick="update('portable')" style="margin-left:15px;">@@portable@@</button>
+        <button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left:15px;">@@download@@</button>
+        <button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left:15px;">@@download@@</button>
         <br>
-        {{problem1}}<br>{{problem2}}
+        @@problem1@@<br>@@problem2@@
     </div>
     <div id="skipper" class="hide">
-        <h4>{{sureupd}}</h4>
-        {{skipupd}}<br>
+        <h4>@@sureupd@@</h4>
+        @@skipupd@@<br>
         <div id="updskip">
-                <a onclick="window.close();" class="pointer skipbtn waves-effect waves-light"><div>{{nexttl}}</div></a>
-                <a onclick="nextv();" class="pointer skipbtn waves-effect waves-light"><div>{{nextver}}</div></a>
+                <a onclick="window.close();" class="pointer skipbtn waves-effect waves-light"><div>@@nexttl@@</div></a>
+                <a onclick="nextv();" class="pointer skipbtn waves-effect waves-light"><div>@@nextver@@</div></a>
         </div>
-        <a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">{{continue}}</a>
+        <a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">@@continue@@</a>
     </div>
     <div id="dlnow" class="hide">
-        <h4>{{dlnow}}</h4>
+        <h4>@@dlnow@@</h4>
         <h4 id="prog"></h4>
     </div>
 </div>
@@ -197,10 +197,24 @@ function verck(){
         todo(error);
 		console.error(error);
     }).then(function(json) {
-		    console.log(json);
-             $("#ver").text(json.desk);
-             localStorage.setItem("next-ver",json.desk);
-			 $("#det").html(json.detail);
+            console.log(json);
+            if(platform=="win32"){
+                $("#ver").text(json.desk);
+                localStorage.setItem("next-ver",json.desk);
+	        }else if(platform=="linux"){
+                $("#ver").text(json.desk_linux);
+                localStorage.setItem("next-ver",json.desk_linux);
+	        }else if(platform=="darwin"){
+                $("#ver").text(json.desk_mac);
+                localStorage.setItem("next-ver",json.desk_mac);
+            }
+            var lang="@@lang@@";
+            if(lang=="ja"){
+                $("#det").html(json.detail);
+            }else{
+                $("#det").html(json.detail_en);
+            }
+			 
              $("#now").text(localStorage.getItem("ver"));
              
     });

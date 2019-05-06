@@ -571,15 +571,30 @@ function udAdd(start) {
 		for(var i=0;i<fields.length;i++){
 			if(fields[i].type=="IdentityProof"){
 				if(fields[i].signatureAlgorithm=="keybase"){
-					var html='<a href="https://keybase.io/'+fields[i].name+'" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="'+lang.lang_hisdata_key.replace("{{set}}",fields[i].signatureAlgorithm)+'"><i class="fas fa-key" aria-hidden="true"></i>'+fields[i].signatureAlgorithm+':'+fields[i].name+'</a>';
+					var html='<a href="https://keybase.io/'+fields[i].name+'" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="'+lang.lang_hisdata_key.replace("{{set}}",escapeHTML(fields[i].signatureAlgorithm))+'"><i class="fas fa-key" aria-hidden="true"></i>'+escapeHTML(fields[i].signatureAlgorithm)+':'+escapeHTML(fields[i].name)+'</a>';
 				}else{
-					var html='<span class="cbadge teal" style="max-width:200px;" title="'+lang.lang_hisdata_key.replace("{{set}}",fields[i].signatureAlgorithm)+'"><i class="fas fa-key" aria-hidden="true"></i>'+fields[i].signatureAlgorithm+':'+fields[i].name+'</span>';
+					var html='<span class="cbadge teal" style="max-width:200px;" title="'+lang.lang_hisdata_key.replace("{{set}}",escapeHTML(fields[i].signatureAlgorithm))+'"><i class="fas fa-key" aria-hidden="true"></i>'+escapeHTML(fields[i].signatureAlgorithm)+':'+escapeHTML(fields[i].name)+'</span>';
 				}
 				$("#his-proof-prof").append(html)
 			}
 		}
 	});
-
+	fetch("https://notestock.osa-p.net/api/v1/isstock.json?id="+start.replace("@","users/"), {
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json'
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		todo(error);
+		console.error(error);
+	}).then(function(json) {
+		if(json.user.public_view){
+			var html='<a href="'+json.user.url+'" target="_blank" class="cbadge purple waves-effect" style="max-width:200px;" title="Notestock">Notestock</a>';
+			$("#his-proof-prof").append(html)
+		}
+	});
 
 }
 

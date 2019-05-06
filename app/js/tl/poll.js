@@ -108,7 +108,7 @@ function voteMastodonrefresh(acct_id,id){
 				if(!json.voted){
 					votesel='voteSelMastodon(\''+acct_id+'\',\''+json.id+'\','+keyc+','+json.multiple+')';
 				}
-				poll=poll+'<div class="pointer vote vote_'+acct_id+'_'+json.id+'_'+keyc+'" onclick="'+votesel+'">'+choice.title+'<span class="vote_'+acct_id+'_'+json.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
+				poll=poll+'<div class="pointer vote vote_'+acct_id+'_'+json.id+'_'+keyc+'" onclick="'+votesel+'">'+escapeHTML(choice.title)+'<span class="vote_'+acct_id+'_'+json.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
 			});
 			poll=poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(json.expires_at, 'absolute') +
 			'"><i class="far fa-calendar-times"></i>' +

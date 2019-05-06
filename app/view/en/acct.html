@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
 <title>Account Manager - TheDesk</title>
 <meta content="width=device-width,initial-scale=1.0" name="viewport">
@@ -40,7 +40,7 @@ body,html{overflow-y: scroll;}
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.en.js"></script>
+<script type="text/javascript" src="../../js/lang/lang.ja.js"></script>
 <script>
       var misskeytoken=false;
 </script>
@@ -48,23 +48,23 @@ body,html{overflow-y: scroll;}
 <script type="text/javascript" src="../../js/common/time.js"></script>
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <div class="hide-first">
-      <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">Back</a><br>
-      <h5>List of accounts</h5>
+      <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">戻る</a><br>
+      <h5>アカウント一覧</h5>
       <div id="acct-list"></div>
       <div class="divider"></div>
 </div>
 <div>
-<h5>Add an account</h5><br>
+<h5>アカウントを追加</h5><br>
 <div id="add">
 <div class="row">
       <div class="col s8">
             <input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp">
             <div id="ins-suggest"></div>
-            Uncheck it to skip pasiting code.(login to Mastodon on Windows or macOS) (Recommended: pcheck)<br>
+            チェックを外すとコード貼り付けをスキップできます。(<u>Mastodon</u>にWindowsやmacOSからログインする場合)失敗する場合はチェックを入れてください。<br>
             <input type="checkbox" class="filled-in" id="linux" />
-                  <label for="linux">Code setup</label><br>
+                  <label for="linux">コードセットアップ</label><br>
             <input type="checkbox" class="filled-in" id="misskey" />
-                  <label for="misskey">Login as Misskey</label><br>
+                  <label for="misskey">Misskeyとしてログイン</label><br>
             <button class="btn waves-effect" onclick="instance()">Login</button><br>
       </div>
       <div class="col s4">
@@ -73,21 +73,21 @@ body,html{overflow-y: scroll;}
       </div>
 </div></div>
 <div id="auth" style="display:none">
-      Paste the code and close browser.<br>
-      <input type="text" id="code" placeholder="Code">
+      指定されたコードを貼り付けてください。ログインウィンドウは閉じていただいて構いません。<br>
+      <input type="text" id="code" placeholder="コードを入力">
       <button class="btn waves-effect" onclick="code()">Auth</button><br>
       </div>
       <div id="misskeylogin" style="display:none">
                   <h5>AppSecret</h5>
-                  Read <a href="https://thedesk.top/how-to-misskey-login.html">Docs(ja)</a> to login Misskey.<br>
+                  <a href="https://thedesk.top/how-to-misskey-login.html">ドキュメント</a>を参照して正しいコードを入れてください。<br>
                   <input type="hidden" id="misskey-url">
-                  <input type="text" id="misskey-key" placeholder="Code">
+                  <input type="text" id="misskey-key" placeholder="コードを入力">
                   <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br>
             </div>
       </div>
 <div class="hide-first">
-<h5>Main an account</h5>
-<div class="input-field" style="width:300px"><span data-trans="your_acct">Select an account</span>
+<h5>メインアカウント</h5>
+<div class="input-field" style="width:300px"><span data-trans="your_acct">アカウントを選択</span>
       <br>
       <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
       <label></label>
@@ -98,12 +98,12 @@ Administered by:<a id="ins-admin"></a><br>
 <span id="ins-desc"></span><br>
 <img src="../../img/loading.svg" id="ins-prof" width="200"><br>
 <br>
-Domain:<span id="ins-name"></span><br>
-Federated servers:<span id="ins-connect"></span><br>
-Toots:<span id="ins-toot"></span><br>
-Users:<span id="ins-user"></span>Users<br>
-Connection:<span id="ins-per"></span>%<br>
-Mastodon version:<span id="ins-ver"></span>@<span id="ins-upd"></span><br>
+ドメイン名:<span id="ins-name"></span><br>
+接続サーバー数:<span id="ins-connect"></span>個<br>
+トゥート数:<span id="ins-toot"></span>個<br>
+ユーザー数:<span id="ins-user"></span>ユーザー数<br>
+コネクション:<span id="ins-per"></span>%<br>
+Mastodonバージョン:<span id="ins-ver"></span>@<span id="ins-upd"></span><br>
 </div>
 <script type="text/javascript" src="../../js/ui/theme.js"></script>
 <script type="text/javascript" src="../../js/platform/end.js"></script>

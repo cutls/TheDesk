@@ -251,22 +251,51 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						$(".notf-reply_" + acct_id).text(replyct*1-(-1));
 						localStorage.setItem("notf-reply_" + acct_id,replyct*1-(-1))
 						$(".notf-reply_" + acct_id).removeClass("hide")
+						var sound=localStorage.getItem("replySound");
+						if(sound=="default"){
+							var file="../../source/notif3.wav"
+						}
 					}else if (toot.type == "reblog") {
 						var btct=localStorage.getItem("notf-bt_" + acct_id)
 						$(".notf-bt_" + acct_id).text(btct*1-(-1));
 						localStorage.setItem("notf-bt_" + acct_id,btct*1-(-1))
 						$(".notf-bt_" + acct_id).removeClass("hide")
+						var sound=localStorage.getItem("btSound");
+						if(sound=="default"){
+							var file="../../source/notif2.wav"
+						}
 					}else if (toot.type == "favourite") {
 						var favct=localStorage.getItem("notf-fav_" + acct_id)
 						$(".notf-fav_" + acct_id).text(favct*1-(-1));
 						localStorage.setItem("notf-fav_" + acct_id,favct*1-(-1))
 						$(".notf-fav_" + acct_id).removeClass("hide")
+						var sound=localStorage.getItem("favSound");
+						if(sound=="default"){
+							var file="../../source/notif.wav"
+						}
 					}
 				}
 				
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if(popup>0){
 					Materialize.toast("["+domain+"]"+escapeHTML(toot.account.display_name)+what, popup * 1000);
+				}
+				//通知音
+				if(sound=="c1"){
+					var file=localStorage.getItem("custom1");
+				}else if(sound=="c2"){
+					var file=localStorage.getItem("custom2");
+				}else if(sound=="c3"){
+					var file=localStorage.getItem("custom3");
+				}else if(sound=="c4"){
+					var file=localStorage.getItem("custom4");
+				}
+				if(file){
+					request = new XMLHttpRequest();
+      				request.open("GET", file, true);
+      				request.responseType = "arraybuffer";
+      				request.onload = playSound;
+      				request.send();
 				}
 				if(native=="yes"){
 					var electron = require("electron");
@@ -395,7 +424,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			var via = '';
 			viashow="hide";
 		} else {
-			var via = toot.application.name;
+			var via = escapeHTML(toot.application.name);
 			//強調チェック
 			Object.keys(emp).forEach(function(key6) {
 				var cli = emp[key6];
@@ -452,6 +481,40 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		var viewer = "";
 		var hasmedia = "";
 		var youtube = "";
+		//Poll
+		var poll="";
+		if(toot.poll){
+			var choices=toot.poll.options;
+			if(toot.poll.voted){
+				var myvote=lang.lang_parse_voted;
+				var result_hide="";
+			}else{
+				var myvote='<a onclick="voteMastodon(\''+acct_id+'\',\''+toot.poll.id+'\')" class="votebtn">'+lang.lang_parse_vote+'</a><br>';
+				if(choices[0].votes_count===0 || choices[0].votes_count>0){
+					myvote=myvote+'<a onclick="showResult(\''+acct_id+'\',\''+toot.poll.id+'\')" class="pointer">'+lang.lang_parse_unvoted+"</a>";
+				}
+				var result_hide="hide";
+			}
+			if(toot.poll.expired){
+				var ended=lang.lang_parse_endedvote;
+			}else{
+				var ended=date(toot.poll.expires_at, datetype);
+			}
+			Object.keys(choices).forEach(function(keyc) {
+				var choice = choices[keyc];
+				if(!toot.poll.voted && !toot.poll.expired){
+					var votesel='voteSelMastodon(\''+acct_id+'\',\''+toot.poll.id+'\','+keyc+','+toot.poll.multiple+')';
+					var voteclass="pointer waves-effect waves-light";
+				}else{
+					var votesel="";
+					var voteclass="";
+				}
+				poll=poll+'<div class="'+voteclass+' vote vote_'+acct_id+'_'+toot.poll.id+'_'+keyc+'" onclick="'+votesel+'">'+escapeHTML(choice.title)+'<span class="vote_'+acct_id+'_'+toot.poll.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
+			});
+			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
+			'"><i class="far fa-calendar-times"></i>' +
+			 ended+ '</span></div>';
+		}
 		if(toot.emojis){
 			var emojick = toot.emojis[0];
 		}else{
@@ -467,6 +530,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
 				spoil = spoil.replace(regExp, emoji_url);
+				poll = poll.replace(regExp, emoji_url);
 			});
 		}
 		//ニコフレ絵文字
@@ -485,6 +549,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				content = content.replace(regExp, emoji_url);
 				spoil = spoil.replace(regExp, emoji_url);
+				poll = poll.replace(regExp, emoji_url);
 			});
 		}
 		//デフォ絵文字
@@ -500,6 +565,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		}
 		if(notice){
 			notice=twemoji.parse(notice);
+		}
+		if(poll){
+			poll=twemoji.parse(poll);
 		}
 		var mediack = toot.media_attachments[0];
 		//メディアがあれば
@@ -698,45 +766,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			for( var i=0; i<tickerdata.length; i++) {
 				var value=tickerdata[i];
 				if(value.domain==thisdomain){
-					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+value.name+'</span></div>';
+					var tickerdom='<div style="background:linear-gradient(to left,transparent, '+value.bg+' 96%) !important; color:'+value.text+';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="'+value.image+'" style="height:100%;"><span style="position:relative; top:-0.2rem;"> '+escapeHTML(value.name)+'</span></div>';
 					break;
 				}
 		   }
 		}
 		}
-		//Poll
-		var poll="";
-		if(toot.poll){
-			var choices=toot.poll.options;
-			if(toot.poll.voted){
-				var myvote=lang.lang_parse_voted;
-				var result_hide="";
-			}else{
-				myvote='<a onclick="voteMastodon(\''+acct_id+'\',\''+toot.poll.id+'\')" class="votebtn">'+lang.lang_parse_vote+'</a><br>';
-				if(choices[0].votes_count===0 || choices[0].votes_count>0){
-					myvote=myvote+'<a onclick="showResult(\''+acct_id+'\',\''+toot.poll.id+'\')" class="pointer">'+lang.lang_parse_unvoted+"</a>";
-				}
-				var result_hide="hide";
-			}
-			if(toot.poll.expired){
-				var ended=lang.lang_parse_endedvote;
-			}else{
-				var ended=date(toot.poll.expires_at, datetype);
-			}
-			Object.keys(choices).forEach(function(keyc) {
-				var choice = choices[keyc];
-				if(!toot.poll.voted && !toot.poll.expired){
-					var votesel='voteSelMastodon(\''+acct_id+'\',\''+toot.poll.id+'\','+keyc+','+toot.poll.multiple+')';
-					var voteclass="pointer waves-effect waves-light";
-				}else{
-					var votesel="";
-					var voteclass="";
-				}
-				poll=poll+'<div class="'+voteclass+' vote vote_'+acct_id+'_'+toot.poll.id+'_'+keyc+'" onclick="'+votesel+'">'+escapeHTML(choice.title)+'<span class="vote_'+acct_id+'_'+toot.poll.id+'_result '+result_hide+'">('+choice.votes_count+')</span></div>';
-			});
-			poll='<div class="vote_'+acct_id+'_'+toot.poll.id+'">'+poll+myvote+'<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
-			'"><i class="far fa-calendar-times"></i>' +
-			 ended+ '</span></div>';
+		//Quote
+		if(toot.quote){
+			poll=poll+'<div class="quote-renote"><div class="renote-icon"><img src="'+toot.quote.account.avatar+'"></div><div class="renote-user">'+escapeHTML(toot.quote.account.display_name)+'</div><div class="renote-text">'+toot.quote.content+'</div></div>'
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +
@@ -760,8 +798,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'</div></div>' +
 			'<div class="area-toot">'+tickerdom+'<span class="' +
 			api_spoil + ' cw_text_' + toot.id + '"><span class="cw_text">' + spoil + "</span>" + spoiler_show +
-			'</span><span class="toot ' + spoiler + '">' + content +poll+
-			'</span>' +
+			'</span><span class="toot ' + spoiler + '">' + content +
+			'</span>' + poll +
 			'' + viewer + '' +
 			'</div><div class="area-additional"><span class="additional">' + analyze +
 			'</span>' +
@@ -791,7 +829,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'</a></span></div>' +
 			'<div class="' + if_mine + ' action '+disp["del"]+' '+noauth+'"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="far fa-trash"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_del+'"><i class="fas fa-trash"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin '+disp["pin"]+' '+noauth+'"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="'+lang.lang_parse_pin+'"><i class="fas fa-map-pin pin_' + toot.id + ' '+if_pin+'"></i></a></div>' 
@@ -962,7 +1000,7 @@ function client(name) {
 			if(!obj){
 				var obj=[];
 				obj.push(name);
-				Materialize.toast(name+lang.lang_status_emphas, 2000);
+				Materialize.toast(escapeHTML(name)+lang.lang_status_emphas, 2000);
 			}else{
 			var can;
 			Object.keys(obj).forEach(function(key) {
@@ -972,12 +1010,12 @@ function client(name) {
 				}else{
 					can=true;
 					obj.splice(key, 1);
-					Materialize.toast(name+lang.lang_status_unemphas, 2000);
+					Materialize.toast(escapeHTML(name)+lang.lang_status_unemphas, 2000);
 				}
 			});
 			if(!can){
 				obj.push(name);
-				Materialize.toast(name+lang.lang_status_emphas, 2000);
+				Materialize.toast(escapeHTML(name)+lang.lang_status_emphas, 2000);
 			}else{
 				
 			}
@@ -993,7 +1031,7 @@ function client(name) {
 			obj.push(name);
 			var json = JSON.stringify(obj);
 			localStorage.setItem("client_mute", json);
-			Materialize.toast(name+lang.lang_parse_mute, 2000);
+			Materialize.toast(escapeHTML(name)+lang.lang_parse_mute, 2000);
 		}else{
 			return;
 		}

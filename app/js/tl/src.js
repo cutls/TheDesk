@@ -52,7 +52,7 @@ function src(mode) {
 				var tag = json.hashtags[key4];
 				if(mode){
 					tags = tags + '<a onclick="tl(\'tag\',\'' + tag + '\',\'' + acct_id +
-					'\',\'add\')" class="pointer">#' + tag + '</a><br> ';
+					'\',\'add\')" class="pointer">#' + escapeHTML(tag) + '</a><br> ';
 				}else{
 					tags=tags+graphDraw(tag);
 				}
@@ -186,13 +186,13 @@ function graphDraw(tag){
 		var zero=50-(his[0].uses/max*50);
 		if(max===0){
 			tags = '<br><br><svg version="1.1" viewbox="0 0 60 50" width="60" height="50">'+
-	'</svg><span style="font-size:200%">'+his[0].uses+'</span>toots&nbsp;<a onclick="tl(\'tag\',\'' + tag.name + '\',\'' + acct_id +
-			'\',\'add\')" class="pointer">#' + tag.name + '</a>&nbsp;'+his[0].accounts+lang.lang_src_people;
+	'</svg><span style="font-size:200%">'+his[0].uses+'</span>toots&nbsp;<a onclick="tl(\'tag\',\'' + escapeHTML(tag.name) + '\',\'' + acct_id +
+			'\',\'add\')" class="pointer">#' + escapeHTML(tag.name) + '</a>&nbsp;'+his[0].accounts+lang.lang_src_people;
 		}else{
 			tags = '<br><br><svg version="1.1" viewbox="0 0 60 50" width="60" height="50">'+
 			'<g><path d="M0,'+six+' L10,'+five+' 20,'+four+' 30,'+three+' 40,'+two+' 50,'+one+' 60,'+zero+'" style="stroke: #9e9e9e; stroke-width: 1;fill: none;"></path></g>'+
-		'</svg><span style="font-size:200%">'+his[0].uses+'</span>toots&nbsp;<a onclick="tl(\'tag\',\'' + tag.name + '\',\'' + acct_id +
-				'\',\'add\')" class="pointer">#' + tag.name + '</a>&nbsp;'+his[0].accounts+lang.lang_src_people;
+		'</svg><span style="font-size:200%">'+his[0].uses+'</span>toots&nbsp;<a onclick="tl(\'tag\',\'' + escapeHTML(tag.name) + '\',\'' + acct_id +
+				'\',\'add\')" class="pointer">#' + escapeHTML(tag.name) + '</a>&nbsp;'+his[0].accounts+lang.lang_src_people;
 		}
 		
 	return tags;

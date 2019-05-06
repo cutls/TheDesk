@@ -157,8 +157,7 @@ function udg(user, acct_id) {
 							var when="";
 							var color="inherit"
 						}
-						fval=twemoji.parse(fval);
-						note=note+'<tr><td class="his-field-title">'+fname+'</td><td class="his-field-content" title="'+when+'" style="background-color:'+color+'">'+fval+'</td></tr>';
+						note=note+'<tr><td class="his-field-title">'+twemoji.parse(escapeHTML(fname))+'</td><td class="his-field-content" title="'+when+'" style="background-color:'+color+'">'+twemoji.parse(fval)+'</td></tr>';
 					}
 					note=note+'</table>'
 					$("#his-des").html(twemoji.parse(note));
@@ -185,10 +184,10 @@ function udg(user, acct_id) {
 				showFrl('', acct_id);
 				$("#his-name-val").val(json.display_name);
 				if(json.fields.length>0){
-					$("#his-f1-name").val(json.fields[0].name); $("#his-f1-val").val($.strip_tags(json.fields[0].value));
-					$("#his-f2-name").val(json.fields[1].name); $("#his-f2-val").val($.strip_tags(json.fields[1].value));
-					$("#his-f3-name").val(json.fields[2].name); $("#his-f3-val").val($.strip_tags(json.fields[2].value));
-					$("#his-f4-name").val(json.fields[3].name); $("#his-f4-val").val($.strip_tags(json.fields[3].value));
+					if(json.fields[0]){$("#his-f1-name").val(json.fields[0].name); $("#his-f1-val").val($.strip_tags(json.fields[0].value));}
+					if(json.fields[1]){$("#his-f2-name").val(json.fields[1].name); $("#his-f2-val").val($.strip_tags(json.fields[1].value));}
+					if(json.fields[2]){$("#his-f3-name").val(json.fields[2].name); $("#his-f3-val").val($.strip_tags(json.fields[2].value));}
+					if(json.fields[3]){$("#his-f4-name").val(json.fields[3].name); $("#his-f4-val").val($.strip_tags(json.fields[3].value));}
 				}
 				var des = json.note;
 				des = des.replace(/<br \/>/g, "\n")
@@ -279,7 +278,7 @@ function misskeyUdg(user, acct_id) {
 			$("#his-follow").text(json.followingCount);
 			$("#his-follower").text(json.followersCount);
 			$("#his-since").text(crat(json.createdAt));
-			var note=json.description;
+			var note=escapeHTML(json.description);
 			$("#his-des").html(twemoji.parse(note));
 			if(json.isCat){
 				$("#his-bot").html("Cat"+twemoji.parse("😺"));

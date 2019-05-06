@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{lang}}">
+<html lang="@@lang@@">
 <head>
 <title>Account Manager - TheDesk</title>
 <meta content="width=device-width,initial-scale=1.0" name="viewport">
@@ -28,19 +28,19 @@ body,html{overflow-y: scroll;}
 }
 </style>
 <meta charset="utf-8">
-{{comment-start}}
+@@comment-start@@
 <script type="text/javascript">
 	var _jipt = [];
 	_jipt.push(['project', 'thedesk']);
 </script>
 <script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-{{comment-end}}
+@@comment-end@@
 </head>
 <body id="mainView">
 <script type="text/javascript" src="../../js/common/jquery.js"></script>
 <script type="text/javascript" src="../../js/platform/first.js"></script>
 <script type="text/javascript" src="../../js/common/materialize.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.{{lang}}.js"></script>
+<script type="text/javascript" src="../../js/lang/lang.@@lang@@.js"></script>
 <script>
       var misskeytoken=false;
 </script>
@@ -48,23 +48,23 @@ body,html{overflow-y: scroll;}
 <script type="text/javascript" src="../../js/common/time.js"></script>
 <script type="text/javascript" src="../../js/common/modal.js"></script>
 <div class="hide-first">
-      <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">{{back}}</a><br>
-      <h5>{{list}}</h5>
+      <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">@@back@@</a><br>
+      <h5>@@list@@</h5>
       <div id="acct-list"></div>
       <div class="divider"></div>
 </div>
 <div>
-<h5>{{add}}</h5><br>
+<h5>@@add@@</h5><br>
 <div id="add">
 <div class="row">
       <div class="col s8">
             <input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp">
             <div id="ins-suggest"></div>
-            {{codesetupwarn}}<br>
+            @@codesetupwarn@@<br>
             <input type="checkbox" class="filled-in" id="linux" />
-                  <label for="linux">{{codesetup}}</label><br>
+                  <label for="linux">@@codesetup@@</label><br>
             <input type="checkbox" class="filled-in" id="misskey" />
-                  <label for="misskey">{{thisismisskey}}</label><br>
+                  <label for="misskey">@@thisismisskey@@</label><br>
             <button class="btn waves-effect" onclick="instance()">Login</button><br>
       </div>
       <div class="col s4">
@@ -73,21 +73,21 @@ body,html{overflow-y: scroll;}
       </div>
 </div></div>
 <div id="auth" style="display:none">
-      {{codepastewarn}}<br>
-      <input type="text" id="code" placeholder="{{codepaste}}">
+      @@codepastewarn@@<br>
+      <input type="text" id="code" placeholder="@@codepaste@@">
       <button class="btn waves-effect" onclick="code()">Auth</button><br>
       </div>
       <div id="misskeylogin" style="display:none">
                   <h5>AppSecret</h5>
-                  {{misskeylogin}}<br>
+                  @@misskeylogin@@<br>
                   <input type="hidden" id="misskey-url">
-                  <input type="text" id="misskey-key" placeholder="{{codepaste}}">
+                  <input type="text" id="misskey-key" placeholder="@@codepaste@@">
                   <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br>
             </div>
       </div>
 <div class="hide-first">
-<h5>{{mainacct}}</h5>
-<div class="input-field" style="width:300px"><span data-trans="your_acct">{{selacct}}</span>
+<h5>@@mainacct@@</h5>
+<div class="input-field" style="width:300px"><span data-trans="your_acct">@@selacct@@</span>
       <br>
       <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
       <label></label>
@@ -98,12 +98,12 @@ Administered by:<a id="ins-admin"></a><br>
 <span id="ins-desc"></span><br>
 <img src="../../img/loading.svg" id="ins-prof" width="200"><br>
 <br>
-{{domain}}:<span id="ins-name"></span><br>
-{{connect}}:<span id="ins-connect"></span>{{ko}}<br>
-{{toots}}:<span id="ins-toot"></span>{{ko}}<br>
-{{users}}:<span id="ins-user"></span>{{users}}<br>
-{{safety}}:<span id="ins-per"></span>%<br>
-{{ver}}:<span id="ins-ver"></span>@<span id="ins-upd"></span><br>
+@@domain@@:<span id="ins-name"></span><br>
+@@connect@@:<span id="ins-connect"></span>@@ko@@<br>
+@@toots@@:<span id="ins-toot"></span>@@ko@@<br>
+@@users@@:<span id="ins-user"></span>@@users@@<br>
+@@safety@@:<span id="ins-per"></span>%<br>
+@@ver@@:<span id="ins-ver"></span>@<span id="ins-upd"></span><br>
 </div>
 <script type="text/javascript" src="../../js/ui/theme.js"></script>
 <script type="text/javascript" src="../../js/platform/end.js"></script>

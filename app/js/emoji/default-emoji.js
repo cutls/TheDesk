@@ -54,7 +54,13 @@ function defEmoji(target){
     var emojiraw = newpack.filter(function(item, index){
      if (item.short_name == target) return true;
     });
-    emoji=twemoji.convert.fromCodePoint(emojiraw[0].unified);
+    var hex=emojiraw[0].unified.split("-");
+    if(hex.length===2){
+        emoji=twemoji.convert.fromCodePoint(hex[0])+twemoji.convert.fromCodePoint(hex[1]);
+    }else{
+        emoji=twemoji.convert.fromCodePoint(hex[0]);
+    }
+    console.log(emoji)
     var now = $("#textarea").val();
     var selin = localStorage.getItem("cursor");
     var now = $("#textarea").val();

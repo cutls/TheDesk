@@ -56,6 +56,9 @@
     "contextAfter":"Context after this toot",
     "beforeLTL":"Local TL before this toot",
     "beforeUTL":"User TL before this toot",
+    "afterLTL":"Local TL after this toot)",
+    "afterUTL":"User TL before this toot",
+    "afterFTL":"Federated TL after this toot",
     "favedPeople":"People who favourited it",
     "btedPeople":"People who boosted it",
     "useOtherAcct1":"Use other account",
@@ -158,5 +161,6 @@
     "ramTips":"RAM status",
     "changeTips":"Change Tips",
     "help":"Help",
-    "about":"About TheDesk"
+    "about":"About TheDesk",
+    "hereAddColumns":"<- Add TL"
 }
