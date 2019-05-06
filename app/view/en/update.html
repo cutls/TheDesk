@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 <head>
 <title>Update - TheDesk</title>
 <link href="../../css/materialize.css" type="text/css" rel="stylesheet">
@@ -72,27 +72,27 @@ a,button,input,label,i{
 <div id="start">
     <div id="box" class="show">
         <h2>TheDesk</h2>
-        <p>アップデートがあります</p>
+        <p>Get latest TheDesk</p>
         <span id="now"></span>→<b id="ver"></b><br>
         <span id="det"></span><br>
-        <button class="waves-effect btn windows hide" onclick="update('install')" style="margin-left:15px;">インストーラー版(推奨)</button>
-        <button class="waves-effect btn windows hide" onclick="update('portable')" style="margin-left:15px;">ポータブル版</button>
-        <button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left:15px;">開始</button>
-        <button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left:15px;">開始</button>
+        <button class="waves-effect btn windows hide" onclick="update('install')" style="margin-left:15px;">Installer ver.</button>
+        <button class="waves-effect btn windows hide" onclick="update('portable')" style="margin-left:15px;">Portable ver.</button>
+        <button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left:15px;">Start</button>
+        <button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left:15px;">Start</button>
         <br>
-        問題が発生しますか？<br><a href="https://thedesk.top">公式HP</a>からダウンロードをお試しください。
+        Some problems?<br>Please download on <a href="https://thedesk.top">Oficial HP</a>.
     </div>
     <div id="skipper" class="hide">
-        <h4>アップデートは必ず行ってください</h4>
-        アップデートをスキップする<br>
+        <h4>You may lose a cool experience!</h4>
+        Skip this update<br>
         <div id="updskip">
-                <a onclick="window.close();" class="pointer skipbtn waves-effect waves-light"><div>次回TL表示時まで</div></a>
-                <a onclick="nextv();" class="pointer skipbtn waves-effect waves-light"><div>次のバージョンが出るまで</div></a>
+                <a onclick="window.close();" class="pointer skipbtn waves-effect waves-light"><div>Until next TL loading</div></a>
+                <a onclick="nextv();" class="pointer skipbtn waves-effect waves-light"><div>Until next version</div></a>
         </div>
-        <a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">アップデートを続行</a>
+        <a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">Continue updating</a>
     </div>
     <div id="dlnow" class="hide">
-        <h4>ダウンロード中</h4>
+        <h4>Downloading...</h4>
         <h4 id="prog"></h4>
     </div>
 </div>
@@ -208,7 +208,7 @@ function verck(){
                 $("#ver").text(json.desk_mac);
                 localStorage.setItem("next-ver",json.desk_mac);
             }
-            var lang="ja";
+            var lang="en";
             if(lang=="ja"){
                 $("#det").html(json.detail);
             }else{

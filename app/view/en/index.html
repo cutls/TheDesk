@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 
 <head>
 	<title>TheDesk</title>
@@ -28,14 +28,15 @@
 	<script type="text/javascript" src="../../js/common/jquery.js"></script>
 	<script type="text/javascript" src="../../js/platform/first.js"></script>
 	<script type="text/javascript" src="../../js/common/materialize.js"></script>
-	<script type="text/javascript" src="../../js/lang/lang.ja.js"></script>
+	<script type="text/javascript" src="../../js/lang/lang.en.js"></script>
 	<script type="text/javascript" src="../../js/common/time.js"></script>
+	<script type="text/javascript" src="../../js/common/blurhash.js"></script>
 	<script type="text/javascript" src="../../js/common/version.js"></script>
 	<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
 	<script type="text/javascript" src="../../js/common/modal.js"></script>
 	<script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 	<script>
-		var ver = "Usamin (18.3.2)";
+		var ver = "Usamin (18.3.3)";
 		//betaを入れるとバージョンチェックしない
 		//GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 		//var ver="beta";
@@ -44,18 +45,19 @@
 		var tlid = 0;
 	</script>
 	<textarea id="copy" style="top:-100px; position:fixed;"></textarea>
+	<canvas id="canvas" style="top:-100px; position:fixed;width:32px;height:32px" width="32" height="32"></canvas>
 	<div id="tl">
 		<!--TL-->
 		<!--ドラッグハンドラ-->
 		<div id="drag">
-			<div id="drag-content" data-trans="drag_here">ここにドラッグして添付(ドラッグと同時にアップロードされます)
+			<div id="drag-content" data-trans="drag_here">Drag here to upload
 				<br>
 				<button class="btn waves-effect" onclick="closedrop()" data-trans="close">Close</button>
 			</div>
 		</div>
 	</div>
 	<div id="post-box" class="z-depth-5">
-		<div id="post-bar" class="drag-bar"><span id="unreact">投稿</span><span id="addreact"
+		<div id="post-bar" class="drag-bar"><span id="unreact">Post new</span><span id="addreact"
 				class="hide">Reaction</span></div>
 		<!--トゥートボックス-->
 		<div id="left-side">
@@ -63,7 +65,7 @@
 				</span>
 				<div class="" style="float:left;">
 					<a onclick="profShow()" style="vertical-align:-2.5rem;" class="pointer mize">
-						<img src="../../img/missing.svg" id="acct-sel-prof" title="選択したアカウントのプロフィールを表示(Ctrl+Shift+P)"
+						<img src="../../img/missing.svg" id="acct-sel-prof" title="Show profile of the selecting account(Ctrl+Shift+P)"
 							data-trans-title="post_box_prof" width="24px">
 					</a>
 				</div>
@@ -71,7 +73,7 @@
 					<select id="post-acct-sel" class="acct-sel" onchange="mdCheck()"></select>
 				</div>
 				<span class="cancel">
-					<i class="material-icons waves-effect" onclick="hide()" title="このボックスを閉じる(X)"
+					<i class="material-icons waves-effect" onclick="hide()" title="Close this box(X)"
 						data-trans-title="post_box_close">cancel</i>
 				</span>
 				<!--Markdown-->
@@ -140,7 +142,7 @@
 
 						<textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;"
 							data-length="500"></textarea>
-						<label for="textarea" data-trans="toot">トゥート</label>
+						<label for="textarea" data-trans="toot">Toot</label>
 						<br>
 						<span class="sml gray pointer markdown mize" id="preview-btn">
 							<a onclick="preview()">Preview</a>
@@ -150,60 +152,60 @@
 						</span>
 					</div>
 					<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
-						<i class="waves-effect gray material-icons" id="nsfw" title="画像に制限を付与"
+						<i class="waves-effect gray material-icons" id="nsfw" title="Mark media as sensitive"
 							onclick="nsfw()">visibility_off</i>
 						<i class="waves-effect gray material-icons purple-text dropdown-button" data-activates='dropdown1'
 							id="vis-icon">public</i>
-						<a class="waves-effect gray" id="cw" onclick="cw()" title="コンテンツワーニング(トゥートを表示する前にメッセージで隠す)">CW</a>
+						<a class="waves-effect gray" id="cw" onclick="cw()" title="Hide text behind warning">CW</a>
 						<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray"
-									onclick="fileselect()" title="ファイルを選択">photo_library</i></span></span>
+									onclick="fileselect()" title="Attach..">photo_library</i></span></span>
 						<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn"
-							title="絵文字を挿入">tag_faces</i>
+							title="Emojis">tag_faces</i>
 						<i class="waves-effect gray material-icons dropdown-button" data-activates='dropdown2'>more_vert</i>
-						<i class="material-icons nex gray waves-effect" title="トゥートボックスのクリア(Ctrl+Shit+C)"
+						<i class="material-icons nex gray waves-effect" title="Clear toot box(Ctrl+Shit+C)"
 							data-trans-title="post_box_clear" id="clear">clear</i>
 					</div>
 					<div class="col s12 mize" style="margin-bottom:5px; padding:0;">
 						<div id="taglist"></div>
 						<div id="preview" class="mize"></div>
-						<span class=" sml mize"><span data-trans="reply">返信モード</span>:
-							<span id="rec">いいえ</span>/<span data-trans="file">添付ファイル</span>:
-							<span id="mec">なし</span>/<span data-trans="vis">公開範囲</span>:
+						<span class=" sml mize"><span data-trans="reply">Reply</span>:
+							<span id="rec">No</span>/<span data-trans="file">Attaching files</span>:
+							<span id="mec">None</span>/<span data-trans="vis">Adjust status privacy</span>:
 							<span id="vis">public</span>
 						</span>
 						<br>
-						<input type="text" id="cw-text" placeholder="警告文" class="mize" style="margin:0">
-						<div id="sch-box">時間指定投稿<br><span class="sml">2.7.0~ 5分以内には投稿できません。サーバーの時計が正確とは限りません。</span><br>
-							<input type="datetime-local" id="sch-date" placeholder="時間指定投稿" class="datepicker" style="margin:0">
+						<input type="text" id="cw-text" placeholder="Warning text" class="mize" style="margin:0">
+						<div id="sch-box">Post at<br><span class="sml">2.7.0~ Minimum time gap:5min(clock on the server may not be accurate.)</span><br>
+							<input type="datetime-local" id="sch-date" placeholder="Scheduled toot" class="datepicker" style="margin:0">
 						</div>
 					</div>
 				</div>
 				<!-- 公開範囲 Dropdown Structure -->
 				<ul id='dropdown1' class='dropdown-content'>
-					<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">公開範囲指定</li>
+					<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">Adjust status privacy</li>
 					<li>
-						<a onclick="vis('public')">公開(Public)</a>
+						<a onclick="vis('public')">(Public)</a>
 					</li>
 					<li>
-						<a onclick="vis('unlisted')">未収載(Unlisted)</a>
+						<a onclick="vis('unlisted')">(Unlisted)</a>
 					</li>
 					<li>
-						<a onclick="vis('private')" id="private-button">非公開(Private)</a>
+						<a onclick="vis('private')" id="private-button">(Private)</a>
 					</li>
 					<li id="limited-button" class="hide">
 						<a onclick="vis('limited')">限定公開(Limited)</a>
 					</li>
 					<li id="local-button" class="hide">
-						<a onclick="vis('local')">ローカル限定(Local)</a>
+						<a onclick="vis('local')">Local only(Local)</a>
 					</li>
 					<li>
-						<a onclick="vis('direct')" class="disabled direct">ダイレクト(Direct)</a>
+						<a onclick="vis('direct')" class="disabled direct">(Direct)</a>
 					</li>
 				</ul>
 				<!-- その他 Dropdown Structure -->
 				<ul id='dropdown2' class='dropdown-content'>
 					<li>
-						<a onclick="adobe()">Adobeフォトエディタ</a>
+						<a onclick="adobe()">Adobe Photo Editor</a>
 					</li>
 					<li>
 						<a onclick="nowplaying('spotify');">NowPlaying(Spotify)</a>
@@ -212,10 +214,10 @@
 						<a onclick="nowplaying('itunes');">NowPlaying</a>
 					</li>
 					<li>
-						<a onclick="schedule();">時間指定投稿</a>
+						<a onclick="schedule();">Scheduled toot</a>
 					</li>
 					<li>
-						<a onclick="pollToggle();">アンケート</a>
+						<a onclick="pollToggle();">Poll</a>
 					</li>
 				</ul>
 				<!--hidden area-->
@@ -225,17 +227,17 @@
 			</div>
 			<div id="toot-btn-field">
 				<button class="btn waves-effect indigo unmize toot-btn-group" onclick="post()"
-					id="toot-post-btn">トゥート</button>
+					id="toot-post-btn">Toot</button>
 				<button class="btn waves-effect indigo darken-3 unmize hide toot-btn-group" onclick="sec()" id="toot-sec-btn"><i
-						class="material-icons" id="toot-sec-icon" title="セカンダリートゥート">lock_open</i></button>
+						class="material-icons" id="toot-sec-icon" title="Secondary Toot">lock_open</i></button>
 			</div>
 		</div>
 		<div id="right-side">
 			<div id="suggest"></div>
 			<!--絵文字ピッカー-->
 			<div id="emoji" class="hide">
-				<span class="gray sml">サーバーによって実装が異なります。
-					<a onclick="emojiGet('true')" class="pointer">絵文字更新</a>
+				<span class="gray sml">
+					<a onclick="emojiGet('true')" class="pointer">Refresh emojis list</a>
 					<br>
 				</span>
 				<div id="emoji-list" class="" style="">
@@ -253,33 +255,33 @@
 					</button>
 				</div>
 				<div id="default-emoji">
-					<span id="now-emoji"></span>一覧を表示中<br><span class="gray sml">一部絵文字は入力できません。</span>
+					<span id="now-emoji"></span> are shown.<br><span class="gray sml">Some emojis are not able to be inserted.</span>
 					<br>
-					<a onclick="customEmoji()" class="pointer waves-effect" title="カスタム絵文字">
+					<a onclick="customEmoji()" class="pointer waves-effect" title="Custom emojis">
 						<i class="material-icons">add</i>
 					</a>
-					<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="ひと">
+					<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="Emojis of people">
 						<i class="material-icons">people</i>
 					</a>
-					<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="自然">
+					<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="Emojis of nature">
 						<i class="material-icons">local_florist</i>
 					</a>
-					<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="食べ物">
+					<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="Emojis of foods">
 						<i class="material-icons">restaurant</i>
 					</a>
-					<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="活動">
+					<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="Emojis of activities">
 						<i class="material-icons">directions_run</i>
 					</a>
-					<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="場所">
+					<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="Emojis of places">
 						<i class="material-icons">directions_car</i>
 					</a>
-					<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="もの">
+					<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="Emojis of tools">
 						<i class="material-icons">attach_file</i>
 					</a>
-					<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="記号">
+					<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="Emojis of symbols">
 						<i class="material-icons">gesture</i>
 					</a>
-					<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="国旗">
+					<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="Emojis of flags">
 						<i class="material-icons">flag</i>
 					</a>
 					<a onclick="faicon()" class="pointer waves-effect" title="faicon" id="faicon-btn">
@@ -290,21 +292,21 @@
 			<!--Poll UI-->
 			<div id="poll" class="hide">
 				<select id="poll-sel" onchange="pollProviderCk()">
-					<option value="nothing">アンケートを使用しない</option>
+					<option value="nothing">Polls: Disabled</option>
 					<option value="mastodon-poll">Mastodon(2.8~)</option>
 				</select>
 				<div id="mastodon-poll" class="poll-provider hide">
-					<input type="text" class="mastodon-choice" placeholder="選択肢1">
-					<input type="text" class="mastodon-choice" placeholder="選択肢2">
-					<input type="text" class="mastodon-choice" placeholder="選択肢3">
-					<input type="text" class="mastodon-choice" placeholder="選択肢4">
+					<input type="text" class="mastodon-choice" placeholder="Choice1">
+					<input type="text" class="mastodon-choice" placeholder="Choice2">
+					<input type="text" class="mastodon-choice" placeholder="Choice3">
+					<input type="text" class="mastodon-choice" placeholder="Choice4">
 					<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
-					<label for="poll-multiple">複数選択を許可</label><br>
+					<label for="poll-multiple">Multiple select</label><br>
 					<input type="checkbox" class="filled-in" id="poll-until" value="1" />
-					<label for="poll-until">投票するまで票数を隠す</label><br>
-					<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">日
-					<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">時間
-					<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="6">分
+					<label for="poll-until">Hide 'votes' count until people vote it.</label><br>
+					<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">day(s)
+					<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">hour(s)
+					<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="6">minute(s)
 				</div>
 			</div>
 		</div>
@@ -315,35 +317,35 @@
 			<ul class="collapsible" data-collapsible="accordion" id="det-col">
 				<li class="dm-hide">
 					<div class="collapsible-header">
-						<i class="material-icons">people_outline</i>これより後のLocal TL(言及確認)
+						<i class="material-icons">people_outline</i>Local TL after this toot)
 					</div>
 					<div class="collapsible-body toot-reset" id="ltl-after">
 					</div>
 				</li>
 				<li class="dm-hide">
 					<div class="collapsible-header">
-						<i class="material-icons">person_outline</i>これより後のユーザーTL(言及確認)
+						<i class="material-icons">person_outline</i>User TL before this toot
 					</div>
 					<div class="collapsible-body toot-reset" id="user-after">
 					</div>
 				</li>
 				<li class="dm-hide">
 					<div class="collapsible-header">
-						<i class="material-icons">language</i>これより後の連合TL(言及確認)
+						<i class="material-icons">language</i>Federated TL after this toot
 					</div>
 					<div class="collapsible-body toot-reset" id="ftl-after">
 					</div>
 				</li>
 				<li>
 					<div class="collapsible-header">
-						<i class="material-icons">arrow_upward</i>これより前の会話
+						<i class="material-icons">arrow_upward</i>Context before this toot
 					</div>
 					<div class="collapsible-body toot-reset" id="toot-reply">
 					</div>
 				</li>
 				<li>
 					<div class="collapsible-header" id="activator">
-						<i class="material-icons">more_horiz</i>対象のトゥート
+						<i class="material-icons">more_horiz</i>This toot
 					</div>
 					<div class="collapsible-body">
 						<div class="toot-reset" id="toot-this"></div>
@@ -351,42 +353,42 @@
 				</li>
 				<li>
 					<div class="collapsible-header">
-						<i class="material-icons">arrow_downward</i>これより後の会話
+						<i class="material-icons">arrow_downward</i>Context after this toot
 					</div>
 					<div class="collapsible-body toot-reset" id="toot-after">
 					</div>
 				</li>
 				<li class="dm-hide">
 					<div class="collapsible-header">
-						<i class="material-icons">people_outline</i>これより前のLocal TL(エアリプソース確認)
+						<i class="material-icons">people_outline</i>Local TL before this toot
 					</div>
 					<div class="collapsible-body toot-reset" id="toot-before">
 					</div>
 				</li>
 				<li class="dm-hide">
 					<div class="collapsible-header">
-						<i class="material-icons">person_outline</i>これより前のユーザーTL(BTソース確認)
+						<i class="material-icons">person_outline</i>User TL before this toot
 					</div>
 					<div class="collapsible-body toot-reset" id="user-before">
 					</div>
 				</li>
 				<li>
 					<div class="collapsible-header">
-						<i class="material-icons">star</i>このトゥートをお気に入りに登録した人
+						<i class="material-icons">star</i>People who favourited it
 					</div>
 					<div class="collapsible-body toot-reset" id="toot-fav">
 					</div>
 				</li>
 				<li class="dm-hide">
 					<div class="collapsible-header">
-						<i class="text-darken-3 false fas fa-retweet"></i>このトゥートをブーストした人
+						<i class="text-darken-3 false fas fa-retweet"></i>People who boosted it
 					</div>
 					<div class="collapsible-body toot-reset" id="toot-rt">
 					</div>
 				</li>
 			</ul>
 			<div class="dm-hide">
-				他のアカウントを使用(<i class="fas fa-retweet"></i>/<i class="fas fa-star"></i>の解除はできません)<br>
+				Use other account(<i class="fas fa-retweet"></i>/<i class="fas fa-star"></i>:unfav and unBT are disabled.)<br>
 				<div class="row">
 					<div class="col s6">
 						<select id="status-acct-sel" class="acct-sel"></select>
@@ -411,9 +413,9 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="brws()">ブラウザで開く</a>
-			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy()">URLをコピー</a>
-			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy('emb')">埋め込む</a>
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="brws()">Open in browser</a>
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy()">Copy URL of this toot</a>
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy('emb')">Embed</a>
 			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
 		</div>
 	</div>
@@ -430,12 +432,12 @@
 						<span class="gray" id="his-relation"></span>
 						<br>
 						<span class="cbadge">
-							<span id="his-sta"></span>トゥート
+							<span id="his-sta"></span>Toots
 						</span>
-						<span class="cbadge">フォロー:
+						<span class="cbadge">Follow:
 							<span id="his-follow"></span>
 						</span>
-						<span class="cbadge">フォロワー:
+						<span class="cbadge">Follower:
 							<span id="his-follower"></span>
 						</span><br>
 						<span class="cbadge" style="max-width:150px; width:150px; ">Since:
@@ -446,58 +448,58 @@
 					<div id="his-des" data-acct=""></div><br>
 					<div id="his-plus-action">
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
-							onclick="empUser()">ユーザー強調</a>
+							onclick="empUser()">Emphasize this user</a>
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data" id="his-end-btn"
-							onclick="pinUser()">紹介する</a><br>
+							onclick="pinUser()">Feature on profile</a><br>
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
-							onclick="profbrws()">ブラウザで開く</a><br>
+							onclick="profbrws()">Open in browser</a><br>
 					</div><br>
 					<div id="his-matching-list">
-						似ているユーザーを取得できます。<br>
+						Get people resembling this user.<br>
 						Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User Matching</a><br>
 						<div id="his-matching-list-contents" class="cont-series"></div>
-						<button class="btn waves-effect " onclick="showMat()" style="width:100%;">取得</button>
+						<button class="btn waves-effect " onclick="showMat()" style="width:100%;">Get</button>
 					</div>
 				</div>
 				<div class="his-float" id="his-float-timeline">
 					<div id="my-data-nav">
 						<ul class="custom-tabs transparent">
 							<li class="custom-tab col my-data-width active-back column-first">
-								<a go="#his-tl" title="タイムライン"><i class="material-icons">timeline</i></a>
+								<a go="#his-tl" title="Timeline"><i class="material-icons">timeline</i></a>
 							</li>
 							<li class="custom-tab col my-data-width">
-								<a go="#his-follow-list" title="フォロー"><i class="material-icons">people</i>→</a>
+								<a go="#his-follow-list" title="Follow"><i class="material-icons">people</i>→</a>
 							</li>
 							<li class="custom-tab col my-data-width">
-								<a go="#his-follower-list" title="フォロワー"><i class="material-icons">people</i>←</a>
+								<a go="#his-follower-list" title="Follower"><i class="material-icons">people</i>←</a>
 							</li>
 							<li class="custom-tab col my-data-width only-his-data">
-								<a go="#his-action" title="他のアカウントで操作"><i class="material-icons">account_box</i></a>
+								<a go="#his-action" title="Cross-account"><i class="material-icons">account_box</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-his-data">
-								<a go="#his-list" title="リスト"><i class="material-icons">list</i></a>
+								<a go="#his-list" title="List"><i class="material-icons">list</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-fav-list" title="お気に入り登録"><i class="material-icons">star</i></a>
+								<a go="#his-fav-list" title="Favourite"><i class="material-icons">star</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-blocking-list" title="ブロック"><i class="material-icons">block</i></a>
+								<a go="#his-blocking-list" title="Blocks"><i class="material-icons">block</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-blocking-list" title="ブロック"><i class="material-icons">voice_over_off</i></a>
+								<a go="#his-blocking-list" title="Blocks"><i class="material-icons">voice_over_off</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-domain-list" title="ドメインブロック"><i class="material-icons">language</i><i
+								<a go="#his-domain-list" title="Domain block"><i class="material-icons">language</i><i
 										class="material-icons">block</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-prof-list" title="プロフィール編集"><i class="material-icons">create</i></a>
+								<a go="#his-prof-list" title="Edit profile"><i class="material-icons">create</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-request-list" title="フォローリクエスト"><i class="material-icons">how_to_reg</i></a>
+								<a go="#his-request-list" title="Follow requests"><i class="material-icons">how_to_reg</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-follow-recom-list" title="おすすめ"><i class="material-icons">recent_actors</i></a>
+								<a go="#his-follow-recom-list" title="Suggest"><i class="material-icons">recent_actors</i></a>
 							</li>
 						</ul>
 					</div>
@@ -505,72 +507,72 @@
 						<div id="his-tl-contents" class="cont-series">
 						</div>
 						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="utl('--now','more')">もっと</button>
+							onclick="utl('--now','more')">More</button>
 					</div>
 					<div id="his-follow-list" class="tab-content">
 						<div id="his-follow-list-contents" class="cont-series">
 						</div>
 						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="flw('--now','more')">もっと</button>
+							onclick="flw('--now','more')">More</button>
 					</div>
 					<div id="his-follower-list" class="tab-content">
 						<div id="his-follower-list-contents" class="cont-series">
 						</div>
 						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="fer('--now','more')">もっと</button>
+							onclick="fer('--now','more')">More</button>
 					</div>
 					<div id="his-action" class="tab-content">
-						他のアカウントを使用するフォロー((解除はできません。))<br>
-						<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>で
-						<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">フォロー</a><br>
-						または<br>
-						<a href="#!" class="waves-effect btn" onclick="udgEx('selector', 'selector')">プロフィールを表示</a><br>
+						Use other account to Follow((Unable to unfollow))<br>
+						<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>
+						<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">Follow</a><br>
+						or<br>
+						<a href="#!" class="waves-effect btn" onclick="udgEx('selector', 'selector')">Show profile</a><br>
 					</div>
 					<div id="his-list" class="tab-content">
-						<div id="his-lists-a">リストに追加するためにはフォローが必要です。</div>
+						<div id="his-lists-a">Follow to add this user to lists.</div>
 
 						<div id="his-lists-b"></div>
 					</div>
 					<div id="his-fav-list" class="tab-content">
 						<div id="his-fav-list-contents" class="cont-series">
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;" onclick="showFav('more')">もっと</button>
+						<button class="btn waves-effect" style="width:100%; padding:0;" onclick="showFav('more')">More</button>
 					</div>
 					<div id="his-blocking-list" class="tab-content">
 						<div id="his-blocking-list-contents" class="cont-series">
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showBlo('more')">もっと</button>
+						<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showBlo('more')">More</button>
 					</div>
 					<div id="his-muting-list" class="tab-content">
 						<div id="his-muting-list-contents" class="cont-series">
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showMut('more')">もっと</button>
+						<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showMut('more')">More</button>
 					</div>
 					<div id="his-domain-list" class="tab-content">
 						<div id="his-domain-list-contents" class="cont-series">
 						</div>
 						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showDom('more')">もっと</button>ブロックするドメイン
+							onclick="showDom('more')">More</button>Add blocking domain
 						<br>
 						<input type="text" placeholder="example.com" id="domainblock">
-						<button class="btn waves-effect" onclick="addDomainblock()">追加</button>
+						<button class="btn waves-effect" onclick="addDomainblock()">Add</button>
 						<br>
 					</div>
-					<div id="his-prof-list" class="tab-content">名前
+					<div id="his-prof-list" class="tab-content">Display name
 						<br>
-						<input type="text" placeholder="名前" id="his-name-val" style="max-width:250px;">
-						<br>自己紹介
+						<input type="text" placeholder="Display name" id="his-name-val" style="max-width:250px;">
+						<br>Note
 						<br>
 						<div class="input-field col s12">
-							<textarea placeholder="自己紹介" id="his-des-val" class="materialize-textarea"></textarea>
-							<label for="his-des-val">自己紹介</label>
+							<textarea placeholder="Note" id="his-des-val" class="materialize-textarea"></textarea>
+							<label for="his-des-val">Note</label>
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;" onclick="profedit()">変更</button>
-						<br>アバターを変更:
+						<button class="btn waves-effect" style="width:100%; padding:0;" onclick="profedit()">Save</button>
+						<br>Change avataor:
 						<span id="prof-change">
 							<input type="file" onchange="imgChange(this,'avatar')">
 						</span>
-						<br>ヘッダーを変更:
+						<br>Change header image:
 						<span id="header-change">
 							<input type="file" onchange="imgChange(this,'header')">
 						</span>
@@ -578,7 +580,7 @@
 					<div id="his-request-list" class="tab-content">
 						<div id="his-request-list-contents" class="cont-series">
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">もっと</button>
+						<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">More</button>
 					</div>
 					<div id="his-follow-recom-list" class="tab-content">
 						<div id="his-follow-recom-contents" class="cont-series">
@@ -586,19 +588,19 @@
 					</div>
 				</div>
 				<div class="his-float" id="his-float-blocked">
-					<div>ブロックされています。なぜでしょう？</div>
+					<div>You are blocked. Why?</div>
 				</div>
 			</div>
 		</div>
 		<div class="modal-footer">
 			<button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn"
-				onclick="historyShow()">一つ前のユーザーデータ</button>
+				onclick="historyShow()">Back</button>
 			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn"
-				onclick="follow()">フォロー</a>
+				onclick="follow()">Follow</a>
 			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn"
-				onclick="mute()">ミュート</a>
+				onclick="mute()">Mute</a>
 			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn"
-				onclick="block()">ブロック</a>
+				onclick="block()">Block</a>
 			<a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Close</a>
 		</div>
 	</div>
@@ -622,7 +624,7 @@
 			<button class="btn waves-effect purple" onclick="dlImg()">
 				<i class="material-icons">file_download</i>
 			</button>
-			<button class="btn waves-effect brown" onclick="detFromImg()">対象のトゥート</button>
+			<button class="btn waves-effect brown" onclick="detFromImg()">This toot</button>
 			<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">
 				<i class="material-icons">keyboard_arrow_left</i>
 			</button>
@@ -650,12 +652,15 @@
 			<a href="https://thedesk.top" target="_blank">HP</a><br>
 			<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 			<br>
-			<div id="release-Usamin_18-3-2" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-3-3" class="release-do" style="display:none; ">
 				<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 				<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 				Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 				困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-				<h5>Release Note Usamin (18.3.2)</h5>
+				<h5>Release Note Usamin (18.3.3)</h5>
+				・不具合修正<br>
+				・blurhashに対応(2.8.1~)<br>
+				18.3.2<br>
 				・絵文字の描画修正<br>
 				・旗系絵文字の入力修正<br>
 				・このトゥートより後ローカルタイムライン<br>
@@ -669,18 +674,18 @@
 				<a href="https://translate.thedesk.top">Crowdin translation project</a>
 			</div>
 			<br><br>
-			<h3>ご支援ください。</h3>
-			TheDeskは営利目的ではないため、有料機能や広告は一切ありません。<br>皆様のあたたかいご支援のもとで製作されています。<br>
+			<h3>Support TheDesk!</h3>
+			TheDesk has no ad, you need no charge to unlock premium features. We need your friendly support!<br>
 			<a class="btn-share btn waves-effect waves-light red lighten-2"
 				href="https://www.pixiv.net/fanbox/creator/28105985" target="_blank">
-				Pixiv FANBOXで支援
+				Support on Pixiv FANBOX
 			</a>
 			<a class="btn-share btn waves-effect waves-light blue"
 				href="https://www.amazon.co.jp/registry/wishlist/2TV35ZHHJPDSB" target="_blank">
-				Amazonほしいものリスト
+				Amazon Wish List
 			</a>
 			<br>
-			<a href="mailto:mstdn@thedesk.top" target="_blank">mstdn@thedesk.top</a>にAmazonギフトカードを送る<br>
+			Give me Amazon Gift Card:<a href="mailto:mstdn@thedesk.top" target="_blank">mstdn@thedesk.top</a><br>
 			Kyash<br>
 			<img src="../../img/kyash.png" width="100"><br>
 		</div>
@@ -700,28 +705,28 @@
 	<div id="menu" class="z-depth-5" style="display:none">
 		<div id="menu-bar" class="drag-bar"></div>
 		<span class="cancel">
-			<i class="material-icons waves-effect" onclick="menu()" title="このボックスを閉じる(X)">cancel</i>
+			<i class="material-icons waves-effect" onclick="menu()" title="Close this box(X)">cancel</i>
 		</span>
 		<div id="menu-wrapper">
 			<div id="left-menu">
 				<div class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu"><i
-						class="material-icons">add</i><span>カラム追加</span></div>
+						class="material-icons">add</i><span>Add a column</span></div>
 				<div class="waves-effect" onclick="sortMenu()" id="sortMenu"><i
-						class="material-icons">sort</i><span>カラム一覧/並べ替え</span></div>
+						class="material-icons">sort</i><span>Sort</span></div>
 				<div class="waves-effect" onclick="searchMenu()" id="searchMenu"><i
-						class="material-icons">search</i><span>検索</span></div>
+						class="material-icons">search</i><span>Search</span></div>
 				<div class="waves-effect" onclick="listMenu()" id="listMenu"><i
-						class="material-icons">view_headline</i><span>リスト</span></div>
+						class="material-icons">view_headline</i><span>List</span></div>
 				<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i
-						class="material-icons">filter_list</i><span>フィルター</span></div>
-				<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>ヘルプ</span></div>
+						class="material-icons">filter_list</i><span>Filter</span></div>
+				<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>Help</span></div>
 				<div class="waves-effect" onclick="location.href='index.html'"><i
-						class="material-icons">refresh</i><span>TL再読込</span></div>
+						class="material-icons">refresh</i><span>Reload TL</span></div>
 			</div>
 			<div id="right-menu">
 				<!--カラム追加-->
 				<div id="add-box" class="hide menu-content">
-					<div class="input-field"><span data-trans="your_acct">選択(スクロールで全選択肢表示)</span>
+					<div class="input-field"><span data-trans="your_acct">Account(Scroll to show all)</span>
 						<br>
 						<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
 						<label></label>
@@ -729,50 +734,50 @@
 					<div class="input-field">
 						<div id="auth">
 							<input type="hidden" value="local" id="type-sel">
-							表示するタイムライン
+							Show this TL:
 							<div id="tltype">
 								<div class="type waves-effect active" data-type="local">
-									<div><i class="material-icons">people_outline</i></div><span>ローカル</span>
+									<div><i class="material-icons">people_outline</i></div><span>Local</span>
 								</div>
 								<div class="type waves-effect" data-type="local-media">
 									<div><i class="material-icons">people_outline</i><i class="material-icons sub-icon">perm_media</i>
-									</div><span>ローカル(メディア)</span>
+									</div><span>Local(Media)</span>
 								</div>
 								<div class="type waves-effect" data-type="home">
-									<div><i class="material-icons">home</i></div><span>ホーム</span>
+									<div><i class="material-icons">home</i></div><span>Home</span>
 								</div>
 								<div class="type waves-effect" data-type="pub">
-									<div><i class="material-icons">language</i></div><span>連合</span>
+									<div><i class="material-icons">language</i></div><span>Federated</span>
 								</div>
 								<div class="type waves-effect" data-type="pub-media">
 									<div><i class="material-icons">language</i><i class="material-icons sub-icon">perm_media</i></div>
-									<span>連合(メディア)</span>
+									<span>Federated(Media)</span>
 								</div>
 								<div class="type waves-effect" data-type="dm">
-									<div><i class="material-icons">mail_outline</i></div><span>ダイレクトメッセージ</span>
+									<div><i class="material-icons">mail_outline</i></div><span>Direct Message</span>
 								</div>
 								<div class="type waves-effect" data-type="mix">
-									<div><i class="material-icons">merge_type</i></div><span>統合(ローカルとホーム)</span>
+									<div><i class="material-icons">merge_type</i></div><span>Integrated(Local/Home)</span>
 								</div>
 								<div class="type waves-effect" data-type="plus">
 									<div><i class="material-icons">merge_type</i><i class="material-icons sub-icon">reply</i></div>
-									<span>統合(LTL+BT+返信)</span>
+									<span>LTL+Reply+BT</span>
 								</div>
 								<div class="type waves-effect" data-type="notf">
-									<div><i class="material-icons">notifications</i></div><span>通知</span>
+									<div><i class="material-icons">notifications</i></div><span>Notifications</span>
 								</div>
 							</div>
 						</div>
-						<div id="noauth" class="hide">表示するタイムライン
+						<div id="noauth" class="hide">Show this TL:
 							<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);"
 								placeholder="e.g:mstdn.jp">
 						</div>
-						<div id="webview-add" class="hide">TweetDeckを表示します。TJDeckをカスタムしたものが読み込まれます(<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Code</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>)。キーボードショートカットが邪魔をするので、文字入力時はカラムの「WebView優先」にチェックを入れてください。
+						<div id="webview-add" class="hide">TweetDeck with customed TJDeck(<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Code</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>). Keyboard shortcuts will irritate you. When you feel so, you check 'Prefer WebView' on top of the column.
 						</div>
 					</div>
 					<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()"
 						data-trans-i="add">
-						<i class="material-icons left">add</i>追加
+						<i class="material-icons left">add</i>Add
 					</button>
 					<br>
 					<br>
@@ -784,10 +789,10 @@
 					</div>
 					<div class="input-field">
 						<input id="src" type="text" class="validate" style="width:60%">
-						<label for="src" data-trans="src">検索</label>
+						<label for="src" data-trans="src">Search</label>
 						<button class="btn waves-effect indigo" style="width: 36%;padding: 0;padding-left: 15px;" onclick="src()"
 							data-trans-i="src">
-							<i class="material-icons left" style="margin:0">search</i>検索
+							<i class="material-icons left" style="margin:0">search</i>Search
 						</button>
 						<br>
 						<br>
@@ -802,7 +807,7 @@
 					<ul id="sort"></ul>
 					<div>
 						<button onclick="sort()" class="btn waves-effect nex" style="width:97.5%;" data-trans-i="sort">
-							<i class="material-icons left">sort</i>並べ替え設定
+							<i class="material-icons left">sort</i>Sort
 						</button>
 					</div>
 				</div>
@@ -810,78 +815,78 @@
 				<div id="list-box" class="hide menu-content">
 					<div class="input-field" style="width:calc( 100% - 100px);float:left">
 						<select id="list-acct-sel" class="acct-sel"></select>
-						<label>選択(スクロールで全選択肢表示)</label>
+						<label>Account(Scroll to show all)</label>
 					</div>
 					<div style="float:left; padding-top:8px; padding-bottom:28px;">
 						<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
-							一覧
+							List
 						</button>
 					</div>
 					<br><br>
 					<div id="lists"></div>
 					<div id="lists-user"></div>
-					<input type="text" style="width:150px" id="list-add" placeholder="名前">
-					<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">新規作成</button>
+					<input type="text" style="width:150px" id="list-add" placeholder="Display name">
+					<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">Save</button>
 				</div>
 				<!--フィルター-->
 				<div id="filter-box" class="hide menu-content">
 					<div class="input-field" style="width:calc( 100% - 100px);float:left">
 						<select id="filter-acct-sel" class="acct-sel"></select>
-						<label>選択(スクロールで全選択肢表示)</label>
+						<label>Account(Scroll to show all)</label>
 					</div>
 					<div style="float:left; padding-top:8px; padding-bottom:28px;">
 						<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
-							一覧
+							List
 						</button>
 					</div>
 					<div id="filtered-words"></div>
 					<input type="hidden" id="filter-edit-id">
-					<input type="text" style="width:150px" id="filter-add-word" placeholder="フィルターワード"><br>
-					適応範囲<br>
+					<input type="text" style="width:150px" id="filter-add-word" placeholder="Filtering words"><br>
+					Filter contexts<br>
 					<input type="checkbox" class="filled-in" id="home_filter" value="home" />
-					<label for="home_filter">ホーム</label>
+					<label for="home_filter">Home</label>
 					<input type="checkbox" class="filled-in" id="local_filter" value="public" />
-					<label for="local_filter">ローカル</label>
+					<label for="local_filter">Local</label>
 					<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
-					<label for="notf_filter">通知</label>
+					<label for="notf_filter">Notifications</label>
 					<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
-					<label for="conv_filter">会話</label><br>
-					オプション<br>
+					<label for="conv_filter">Conversations</label><br>
+					Options<br>
 					<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
-					<label for="wholeword_filter">単語マッチ</label><br>
-					<span class="sml">非ラテン系の文字列では「単語マッチ」は推奨されません。</span><br>
+					<label for="wholeword_filter">Whole word</label><br>
+					<span class="sml">Nice for Latin language</span><br>
 					<input type="checkbox" class="filled-in" id="except_filter" value="1" />
-					<label for="except_filter">除外</label><br>
-					<span class="sml">「除外」時マッチしたトゥートは非可逆的に除外され、削除後も閲覧できません。</span><br>
-					有効期限(あと)<span class="sml">未指定(または0分)で「無期限」になります。<b>仕様上数値の正確性を保証できません。</b></span><br><br>
-					<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">日
-					<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">時間
-					<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">分<br>
-					Quick:<a onclick="filterTime(0,0,30)" class="pointer">30分</a>/
-					<a onclick="filterTime(0,1,0)" class="pointer">1時間</a>/
-					<a onclick="filterTime(0,6,0)" class="pointer">6時間</a>/
-					<a onclick="filterTime(0,12,0)" class="pointer">12時間</a>/
-					<a onclick="filterTime(1,0,0)" class="pointer">1日</a>/
-					<a onclick="filterTime(7,0,0)" class="pointer">7日</a>/
-					<a onclick="filterTime(0,0,0)" class="pointer">無期限</a><br>
+					<label for="except_filter">Drop instead of hide</label><br>
+					<span class="sml">Filtered toots will disappear irreversibly, even if filter is later removed</span><br>
+					Expire after<span class="sml">Unset or "0" means "Never"<b>This value may contain some error</b></span><br><br>
+					<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">day(s)
+					<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">hour(s)
+					<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">minute(s)<br>
+					Quick:<a onclick="filterTime(0,0,30)" class="pointer">30minute(s)</a>/
+					<a onclick="filterTime(0,1,0)" class="pointer">1hour(s)</a>/
+					<a onclick="filterTime(0,6,0)" class="pointer">6hour(s)</a>/
+					<a onclick="filterTime(0,12,0)" class="pointer">12hour(s)</a>/
+					<a onclick="filterTime(1,0,0)" class="pointer">1day(s)</a>/
+					<a onclick="filterTime(7,0,0)" class="pointer">7day(s)</a>/
+					<a onclick="filterTime(0,0,0)" class="pointer">Never</a><br>
 					<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()"
-						id="add-filter-btn">追加</button><br>
-					<span class="sml">Integrated TL/Plus TLは、公開/ホームのフィルターワードが合算されて適応されます。どちらか一方の指定でも非表示になります。</span>
+						id="add-filter-btn">Add</button><br>
+					<span class="sml">Integrated TL/Plus TL will hide both Home-filtering words and Local-filtering words.</span>
 				</div>
 			</div>
 		</div>
 		<a onclick="about()" class="nex waves-effect">
-			<i class="material-icons" style="font-size: 1rem;">info</i>このソフトについて
+			<i class="material-icons" style="font-size: 1rem;">info</i>About TheDesk
 		</a>&nbsp;|&nbsp;
 		<a onclick="bottomReverse()" class="nex waves-effect">
-			<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>トゥートボタンの左右入れ替え
+			<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>Toot button layout reverse
 		</a>
 	</div>
 	<div id="main">
 		<!--TLのTL-->
 		<div id="timeline-container">
 			<div id="something-wrong">
-				<div>内部エラーです。再読込して治らない場合は初期化(全データ削除)をしてください。(事前に設定をエクスポートしておくことをおすすめします。)</div>
+				<div>Internal error: please clear all data(at setting page) <b>All data will be deleted.</b></div>
 			</div>
 		</div>
 	</div>
@@ -893,24 +898,24 @@
 				<button id="posttgl" class="btn waves-effect indigo"
 					style="width: 100%;height: 2.5rem;line-height: 0;margin: 0;">
 					<i class="material-icons"
-						style="position: relative; top: 5px; font-size: 1.5rem; text-align: center; margin-right: 10px;">edit</i>トゥート
+						style="position: relative; top: 5px; font-size: 1.5rem; text-align: center; margin-right: 10px;">edit</i>Toot
 				</button>
 			</div>
 			<div class="leftside reverse" id="group">
 				<div class="btnsgroup">
 					<a href="acct.html" class="nex waves-effect">
-						<i class="material-icons nex big-icon" title="アカウントマネージャー(Ctrl+Shift+M)">account_circle</i>
+						<i class="material-icons nex big-icon" title="Account Manager(Ctrl+Shift+M)">account_circle</i>
 					</a>
 					<a href="setting.html" class="nex waves-effect">
-						<i class="material-icons nex" title="設定(Ctrl+Shift+S)">settings</i>
+						<i class="material-icons nex" title="Preferences(Ctrl+Shift+S)">settings</i>
 					</a>
 					<a onclick="nano()" class="nex waves-effect">
-						<i class="material-icons" title="最小のマストドン。TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
+						<i class="material-icons" title="The smallest Mastodon,TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
 					</a>
 					<a onclick="menu()" class="nex waves-effect" id="list-tgl">
-						<i class="material-icons" title="リスト">apps</i>
+						<i class="material-icons" title="List">apps</i>
 					</a>
-					<span id="fukidashi">←ここからTL追加</span>
+					<span id="fukidashi"><- Add TL</span>
 				</div>
 			</div>
 		</div>
@@ -918,13 +923,13 @@
 			<div id="tips-menu">
 				<div class="btnsgroup" style="height:34px"><span class="grouptitle">Tips:</span>
 					<a onclick="tips('ver')" class="nex waves-effect">
-						<i class="material-icons nex" title="バージョン" data-trans-title="ver">info</i>
+						<i class="material-icons nex" title="Version" data-trans-title="ver">info</i>
 					</a>
 					<a onclick="tips('clock')" class="nex waves-effect">
-						<i class="material-icons nex" title="時計" data-trans-title="clock">access_time</i>
+						<i class="material-icons nex" title="Clock" data-trans-title="clock">access_time</i>
 					</a>
 					<a onclick="tips('memory')" class="nex waves-effect">
-						<i class="material-icons nex" title="システムメモリ容量" data-trans-title="memory">memory</i>
+						<i class="material-icons nex" title="RAM status" data-trans-title="memory">memory</i>
 					</a>
 					<a onclick="tips('trend')" class="nex waves-effect imasonly" style="display:none;">
 						<i class="material-icons nex" title="アイマストドントレンド" data-trans-title="trendtip">whatshot</i>
@@ -936,7 +941,7 @@
 			</div>
 			<div id="tips" class="hide">
 				<a onclick="tipsToggle()" class="nex waves-effect" style="float:left">
-					<i class="material-icons nex" title="Tips変更" data-trans-title="tips">bubble_chart</i>
+					<i class="material-icons nex" title="Change Tips" data-trans-title="tips">bubble_chart</i>
 				</a>
 				<div id="tips-text" style="float:left; width:300px;"></div>
 			</div>

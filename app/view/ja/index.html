@@ -30,12 +30,13 @@
 	<script type="text/javascript" src="../../js/common/materialize.js"></script>
 	<script type="text/javascript" src="../../js/lang/lang.ja.js"></script>
 	<script type="text/javascript" src="../../js/common/time.js"></script>
+	<script type="text/javascript" src="../../js/common/blurhash.js"></script>
 	<script type="text/javascript" src="../../js/common/version.js"></script>
 	<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
 	<script type="text/javascript" src="../../js/common/modal.js"></script>
 	<script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 	<script>
-		var ver = "Usamin (18.3.2)";
+		var ver = "Usamin (18.3.3)";
 		//betaを入れるとバージョンチェックしない
 		//GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 		//var ver="beta";
@@ -44,6 +45,7 @@
 		var tlid = 0;
 	</script>
 	<textarea id="copy" style="top:-100px; position:fixed;"></textarea>
+	<canvas id="canvas" style="top:-100px; position:fixed;width:32px;height:32px" width="32" height="32"></canvas>
 	<div id="tl">
 		<!--TL-->
 		<!--ドラッグハンドラ-->
@@ -650,12 +652,15 @@
 			<a href="https://thedesk.top" target="_blank">HP</a><br>
 			<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 			<br>
-			<div id="release-Usamin_18-3-2" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-3-3" class="release-do" style="display:none; ">
 				<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 				<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 				Entyでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。<br>
 				困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-				<h5>Release Note Usamin (18.3.2)</h5>
+				<h5>Release Note Usamin (18.3.3)</h5>
+				・不具合修正<br>
+				・blurhashに対応(2.8.1~)<br>
+				18.3.2<br>
 				・絵文字の描画修正<br>
 				・旗系絵文字の入力修正<br>
 				・このトゥートより後ローカルタイムライン<br>
