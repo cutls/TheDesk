@@ -164,33 +164,13 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	localStorage.setItem("now", type);
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var misskey=true;
-		console.log(type);
-		if (type == "home") {
-			var start = "wss://" + domain +
-				"/?i=" + at;
-		} else if (type == "pub") {
-			var start = "wss://" + domain +
-				"/global-timeline?i=" + at;
-		} else if (type == "pub-media") {
-			var start = "wss://" + domain +
-			"/global-timeline?i=" + at;
-		} else if (type == "local") {
-			var start = "wss://" + domain +
-			"/local-timeline?i=" + at;
-		} else if (type == "local-media") {
-			var start = "wss://" + domain +
-			"/local-timeline?i=" + at;
-		} else if (type == "mix") {
-			var start = "wss://" + domain +
-			"/hybrid-timeline?i=" + at;
-		} else if (type == "tag") {
-			Materialize.toast(lang.lang_misskeyparse_tagnostr, 3000);
-		} else if (type == "noauth") {
-			var start = "wss://" + acct_id +
-			"/local-timeline?i=" + at;
-		} else if (type=="list"){
-			var start = "wss://" + domain +
-			"/user-list?i=" + at+"&listId="+data;
+		var key=localStorage.getItem("misskey_wss_" + acct_id)
+		var send='{"type":"connect","body":{"channel":"'+typePs(type)+'","id":"'+tlid+'"}}'
+		while(1){
+			if(misskeywsstate[key]){
+				misskeyws[key].send(send)
+				break
+			}
 		}
 	}else{
 		var misskey=false;
@@ -233,8 +213,6 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			var start = wss +
 				"/api/v1/streaming/?stream=direct&access_token=" + at;
 		}
-	}
-	
 	console.log(start);
 	var wsid = websocket.length;
 	localStorage.setItem("wss_" + tlid, wsid);
@@ -351,7 +329,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		}
 		return false;
 	};
-
+	}
 }
 
 //一定のスクロールで発火
@@ -708,6 +686,24 @@ function com(type, data) {
 		return "list/" + data + "?"
 	}else if (type=="dm") {
 		return "direct?"
+	}
+}
+//Misskey
+function typePs(type){
+	if (type == "home") {
+		return "homeTimeline"
+	} else if (type == "local" || type == "noauth") {
+		return "localTimeline"
+	} else if (type == "local-media") {
+		return "localTimeline"
+	} else if (type == "pub") {
+		return "globalTimeline"
+	} else if (type == "mix") {
+		return "hybridTimeline"
+	} else if (type == "tag") {
+		return "hashtag"
+	}else if (type == "list") {
+		return "userList"
 	}
 }
 function misskeycom(type, data) {

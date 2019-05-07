@@ -180,9 +180,17 @@ function parseColumn() {
 			if(key===0){
 				left_hold='';
 			}
+			if(localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct.domain))=="misskey"){
+				var isMisRed=""
+				exclude=""
+				var if_misskey_hide="hide"
+			}else{
+				var isMisRed="red-text"
+				var if_misskey_hide=""
+			}
 			var html='<div class="boxIn" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+' ">'+
-			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="checkStr(\''+acct.type+'\', \''+data+'\', \''+acct.domain+'\', \''+key+'\', \''+delc+'\',\''+voice+'\',null)" title="'+lang.lang_layout_gotop +'"></i></div>'+
+			'<div class="area-notice"><i class="material-icons waves-effect '+isMisRed+'" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="checkStr(\''+acct.type+'\', \''+data+'\', \''+acct.domain+'\', \''+key+'\', \''+delc+'\',\''+voice+'\',null)" title="'+lang.lang_layout_gotop +'"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
 						  ')" class="setting nex '+if_notf+'" title="'+unique_notf+'"'+icnsert+'><i class="material-icons waves-effect nex notf-icon_' +
@@ -201,7 +209,7 @@ function parseColumn() {
 		  key + '">On</span></a>'+lang.lang_layout_linkana +'<br><a onclick="voiceToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_tts +'">hearing</i><span id="sta-voice-' +
 		  key + '">On</span></a>'+lang.lang_layout_tts +'TL<br><a onclick="reconnector(' + key +
-		  ',\''+acct.type+'\',\''+acct.domain+'\',\''+escapeHTML(acct.data)+'\')" class="setting nex '+if_notf+'"><i class="material-icons waves-effect nex '+if_notf+'" title="'+lang.lang_layout_reconnect+'">low_priority</i></a><span class="'+if_notf+'">'+lang.lang_layout_reconnect+'</span><br>'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+		  ',\''+acct.type+'\',\''+acct.domain+'\',\''+escapeHTML(acct.data)+'\')" class="setting nex '+if_notf+' '+if_misskey_hide+'"><i class="material-icons waves-effect nex '+if_notf+'" title="'+lang.lang_layout_reconnect+'">low_priority</i></a><span class="'+if_notf+'">'+lang.lang_layout_reconnect+'</span><br>'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
 			'" class="tl '+acct.type+'-timeline " tlid="' + key + '" data-type="' + acct.type + '" data-acct="'+acct.domain+'" data-const="' + acct.type + '_'+acct.domain+'"><div id="landing_'+key+'" style="text-align:center">'+lang.lang_layout_nodata +'</div></div></div>'
 			$('#timeline_box_' + basekey + '_parentBox').append(html);
 		localStorage.removeItem("pool_" + key);

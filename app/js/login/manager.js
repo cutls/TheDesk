@@ -363,8 +363,7 @@ function misskeyLogin(url) {
 				"reaction-read",
 				"reaction-write",
 				"vote-read",
-				"vote-write"
-				/*
+				"vote-write",
 				"read:account",
 				"write:account",
 				"read:drive",
@@ -385,7 +384,6 @@ function misskeyLogin(url) {
 				"read:reactions",
 				"write:reactions",
 				"write:votes"
-				*/
 			]
 	}));
     httpreq.onreadystatechange = function() {

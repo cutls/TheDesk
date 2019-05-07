@@ -14,23 +14,6 @@ function ck() {
 	}
 	var domainz = localStorage.getItem("domain_0");
 	var at = localStorage.getItem("acct_0_at");
-	var oldat = localStorage.getItem(domainz + "_at");
-	if(oldat){
-		console.log("Move to New Account Management System")
-		var multi = localStorage.getItem("multi");
-		if (!multi) {
-			var acctlen=1;
-		} else {
-			var obj = JSON.parse(multi);
-			var acctlen=obj.length;
-		}
-		for(i=0;acctlen>i;i++){
-			var domain = localStorage.getItem("domain_"+i);
-			var oldat = localStorage.getItem(domain + "_at");
-			var newat = localStorage.setItem("acct_"+ i + "_at",oldat);
-			localStorage.removeItem(domain + "_at");
-		}
-	}
 	//コード受信
 	if(location.search){
 		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);
@@ -50,6 +33,11 @@ function ck() {
 		var acct=obj[key];
 		if(acct.domain){
 			refresh(key,true)
+			var domain = localStorage.getItem("domain_" + key);
+			if(localStorage.getItem("mode_" + domain)=="misskey"){
+				localStorage.removeItem("misskey_wss_" + key)
+				connectMisskey(key)
+			}
 		}
 	});
 if (obj[0].domain) {

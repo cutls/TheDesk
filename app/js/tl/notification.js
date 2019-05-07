@@ -20,7 +20,7 @@ function notfColumn(acct_id, tlid, sys){
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var misskey=true;
 		var start = "https://" + domain + "/api/i/notifications";
-		httpreq.open(POST, start, true);
+		httpreq.open("POST", start, true);
 		httpreq.setRequestHeader('Content-Type', 'application/json');
 		var body=JSON.stringify({
 			i:at
@@ -44,7 +44,10 @@ function notfColumn(acct_id, tlid, sys){
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			var max_id = httpreq.getResponseHeader("link").match(/[?&]{1}max_id=([0-9]+)/)[1];
+			var max_id = httpreq.getResponseHeader("link");
+			if(max_id){
+				max_id=max_id.match(/[?&]{1}max_id=([0-9]+)/)[1]
+			}
 			if(json[0]){
 				var templete="";
 				var lastnotf=localStorage.getItem("lastnotf_" + acct_id);
@@ -211,10 +214,6 @@ function notfCommon(acct_id, tlid, sys) {
 		}
 		var start = wss + "/api/v1/streaming/?stream=user&access_token=" +
 		at;
-	}else{
-		var start = "wss://" + domain + "/?i=" +
-		at;
-	}
 
 	console.log(start);
 	var wsid = websocketNotf.length;
@@ -233,32 +232,6 @@ function notfCommon(acct_id, tlid, sys) {
 				popup = 0;
 			}
 			console.log(domain)
-		if(misskey){
-			console.log("misskey")
-			console.log(JSON.parse(mess.data));
-			if (JSON.parse(mess.data).type == "notification") {
-				var obj = JSON.parse(mess.data).body;
-				console.log(obj);
-				if(obj.type!="follow"){
-					
-					templete = misskeyParse([obj], 'notf', acct_id, 'notf', popup);
-				}else{
-					templete = misskeyUserparse([obj], 'notf', acct_id, 'notf', popup);
-				}
-				if(obj.type=="reaction"){
-					console.log("refresh")
-					reactRefresh(acct_id,obj.note.id)
-				}
-				if(!$("div[data-notfIndv=" + acct_id +"_"+obj.id+"]").length){
-					$("div[data-notf=" + acct_id +"]").prepend(templete);
-					$("div[data-const=notf_"+acct_id+"]").prepend(templete);
-				}
-				jQuery("time.timeago").timeago();
-			}else if(JSON.parse(mess.data).type == "note-updated"){
-				var obj = JSON.parse(mess.data).body.note;
-				reactRefreshCore(obj)
-			}
-		}else{
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
 		console.log(obj);
 		var type = JSON.parse(mess.data).event;
@@ -279,11 +252,11 @@ function notfCommon(acct_id, tlid, sys) {
 			$("[toot-id=" + obj + "]").hide();
 			$("[toot-id=" + obj + "]").remove();
 		}
-		}
 	}
 	websocketNotf[acct_id].onerror = function(error) {
 		console.error('WebSocket Error ' + error);
 	};
+}
 }
 //一定のスクロールで発火
 function notfmore(tlid) {
