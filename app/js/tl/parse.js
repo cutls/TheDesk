@@ -585,7 +585,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var sense = "sensitive"
 					var blur=media.blurhash
 					if(blur){
-						nsfwmes='<span class="gray">NSFW media</span>'
+						nsfwmes='<div class="nsfw-media">NSFW media</div>'
 						purl=parseBlur(blur)
 						var sense=""
 					}
@@ -595,9 +595,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				}
 					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',\'' +
 					acct_id + '\')" id="' + id + '-image-' + key2 + '" data-url="' + url +
-					'" data-type="' + media.type + '" class="img-parsed"><img draggable="false" src="' +
+					'" data-type="' + media.type + '" class="img-parsed img-link" style="width:calc(' + cwdt + '% - 1px); height:'+imh+';"><img draggable="false" src="' +
 					purl + '" class="' + sense +
-					' toot-img pointer" style="width:calc(' + cwdt + '% - 1px); height:'+imh+';"></a>'+nsfwmes;
+					' toot-img pointer">'+nsfwmes+'</a>';
 				
 			});
 			media_ids = media_ids.slice(0, -1) ;
@@ -992,7 +992,6 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 function client(name) {
 	if(name!="Unknown"){
 	//聞く
-	localStorage.removeItem("client_mute");
 	var electron = require("electron");
 	var remote=electron.remote;
 	var dialog=remote.dialog;
@@ -1035,7 +1034,7 @@ function client(name) {
 			var cli = localStorage.getItem("client_mute");
 			var obj = JSON.parse(cli);
 			if(!obj){
-				var obj=[];
+				obj=[];
 			}
 			obj.push(name);
 			var json = JSON.stringify(obj);

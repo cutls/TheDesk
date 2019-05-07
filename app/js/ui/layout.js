@@ -160,7 +160,7 @@ function parseColumn() {
 			'<input type="checkbox" class="filled-in" id="exc-fav-'+key+'"  '+excludeCk(key,"favourite")+' /><label for="exc-fav-'+key+'" class="exc-chb"><i class="fas fa-star exc-icons"></i></label> '+
 			'<input type="checkbox" class="filled-in" id="exc-bt-'+key+'" '+excludeCk(key,"reblog")+' /><label for="exc-bt-'+key+'" class="exc-chb" ><i class="fas fa-retweet exc-icons"></i></label> '+
 			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"follow")+' /><label for="exc-follow-'+key+'" class="exc-chb" ><i class="fas fa-users exc-icons"></i></label> '+
-			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"poll")+' /><label for="exc-poll-'+key+'" class="exc-chb" ><i class="fas fa-tasks exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-poll-'+key+'" '+excludeCk(key,"poll")+' /><label for="exc-poll-'+key+'" class="exc-chb" ><i class="fas fa-tasks exc-icons"></i></label> '+
 			'<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude('+key+')">Filter</button><br>';
 		}else if(acct.type=="home"){
 			var exclude='<a onclick="ebtToggle(' + key +

@@ -141,12 +141,13 @@ function climute(){
 			return;
 		}
 	var templete;
+	console.log(obj)
 	Object.keys(obj).forEach(function(key) {
 		var cli = obj[key];
 		var list = key * 1 + 1;
 		templete = '<div class="acct" id="acct_' + key + '">' + list +
 			'.' +
-			cli + '<button class="btn waves-effect red disTar" onclick="cliMuteDel(' +
+			escapeHTML(cli) + '<button class="btn waves-effect red disTar" onclick="cliMuteDel(' +
 			key + ')">'+lang.lang_del+'</button><br></div>';
 		$("#mute-cli").append(templete);
 	});
@@ -158,7 +159,7 @@ function cliMuteDel(key){
 	obj.splice(key, 1);
 	var json = JSON.stringify(obj);
 	localStorage.setItem("client_mute", json);
-	mute();
+	climute();
 }
 
 function wordmute(){

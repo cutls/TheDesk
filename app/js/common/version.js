@@ -239,7 +239,7 @@ function infowebsocket(){
 				}
 			}
 			if(show){
-				Materialize.toast(escapeHTML(obj.Text)+toot+'<span class="sml grey-text">(スライドして消去)</span>', 86400);
+				Materialize.toast(escapeHTML(obj.text)+toot+'<span class="sml grey-text">(スライドして消去)</span>', 86400);
 			}
 	}else{
 		$("#persons").text(obj.text);
