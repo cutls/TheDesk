@@ -64,11 +64,11 @@ function reactiontoggle(id,acct_id,tlid){
 		if (httpreq.readyState === 4) {
             var json = httpreq.response;
             console.log(json);
-            if(json.reactionCounts){
-                var reactions=["like","love","laugh","hmm","surprise","congrats","angry","confused","pudding","star"];
+            if(json.reactions){
+                var reactions=["like","love","laugh","hmm","surprise","congrats","angry","confused","pudding","rip"];
                 for(var i=0;i<reactions.length;i++){
-                    if(json.reactionCounts[reactions[i]]){
-                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(json.reactionCounts[reactions[i]])
+                    if(json.reactions[reactions[i]]){
+                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(json.reactions[reactions[i]])
                         $("#pub_" + id +" .re-"+reactions[i]).removeClass("hide")
                     }else{
                         $("#pub_" + id +" .re-"+reactions[i]+"ct").text(0)
@@ -77,7 +77,7 @@ function reactiontoggle(id,acct_id,tlid){
                         }else{
                             $("#pub_" + id +" .re-"+reactions[i]).removeClass("hide")
                         }
-                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(json.reactionCounts[reactions[i]])
+                        $("#pub_" + id +" .re-"+reactions[i]+"ct").text(json.reactions[reactions[i]])
                     }
                 }
                 $("#pub_" + id +" .reactions").removeClass("hide");
@@ -143,21 +143,21 @@ function reactRefresh(acct_id,id){
 }
 function reactRefreshCore(json){
     var id=json.id;
-    if(json.reactionCounts){
+    if(json.reactions){
         $("#pub_" + id +" .reactions").removeClass("hide")
         var regExp = new RegExp( ":", "g" ) ;
-        Object.keys(json.reactionCounts).forEach(function(keye) {
+        Object.keys(json.reactions).forEach(function(keye) {
             keyeClass=keye.replace(regExp,'');
-            if(json.reactionCounts[keye]){
-                console.log(json.reactionCounts[keye])
-                $("#pub_" + id +" .re-"+keyeClass+"ct").text(json.reactionCounts[keye])
+            if(json.reactions[keye]){
+                console.log(json.reactions[keye])
+                $("#pub_" + id +" .re-"+keyeClass+"ct").text(json.reactions[keye])
                 $("#pub_" + id +" .re-"+keyeClass).removeClass("hide")
             }else{
                 $("#pub_" + id +" .re-"+keyeClass+"ct").text(0)
                 if($("#pub_" + id +" .reactions").hasClass("fullreact")){
                     $("#pub_" + id +" .re-"+keyeClass).addClass("hide")
                 }
-                $("#pub_" + id +" .re-"+keyeClass+"ct").text(json.reactionCounts[keye])
+                $("#pub_" + id +" .re-"+keyeClass+"ct").text(json.reactions[keye])
             }
         });
     }

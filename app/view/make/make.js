@@ -1,5 +1,5 @@
 const fs = require("fs")
-const ver="Usamin (18.3.3)"
+const ver="Usamin (18.3.4)"
 const langs=["ja","en","ps"]
 const langsh=["日本語","English","Crowdin translate system(beta)"]
 const simples=["acct","index","setting","update","setting"]

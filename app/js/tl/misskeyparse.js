@@ -203,8 +203,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					"congrats": "🎉",
 					"amgry": "💢",
 					"confused": "😥",
-					"pudding": "🍮",
-					"star": "⭐"
+					"rip": "😇"
 				}
 				var icon = reactions[toot.reaction];
 				var emojisData = JSON.parse(localStorage.getItem("emoji_" + acct_id));
@@ -653,10 +652,10 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var freeReact = "";
 		}
 		//Reactions
-		if (toot.reactionCounts) {
-			var addReact = "";
-			Object.keys(toot.reactionCounts).forEach(function (keye) {
-				var thisReact = toot.reactionCounts[keye];
+		var addReact = "";
+		if (toot.reactions) {
+			Object.keys(toot.reactions).forEach(function (keye) {
+				var thisReact = toot.reactions[keye];
 				if (keye == "like") { var defaultEmoji = true; }
 				else if (keye == "love") { var defaultEmoji = true; }
 				else if (keye == "laugh") { var defaultEmoji = true; }
@@ -665,7 +664,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				else if (keye == "congrats") { var defaultEmoji = true; }
 				else if (keye == "angry") { var defaultEmoji = true; }
 				else if (keye == "confused") { var defaultEmoji = true; }
-				else if (keye == "pudding") { var defaultEmoji = true; }
+				else if (keye == "star") { var defaultEmoji = true; }
 				else {
 					var obj = JSON.parse(localStorage.getItem("emoji_" + acct_id));
 					if (obj) {
@@ -684,76 +683,76 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					}
 				}
 			});
-			if (toot.reactionCounts.like) {
-				var like = toot.reactionCounts.like;
+			if (toot.reactions.like) {
+				var like = toot.reactions.like;
 				var likehide = "";
 			} else {
 				var like = 0;
 				var likehide = "hide";
 			}
-			if (toot.reactionCounts.love) {
-				var love = toot.reactionCounts.love;
+			if (toot.reactions.love) {
+				var love = toot.reactions.love;
 				var lovehide = "";
 			} else {
 				var love = 0;
 				var lovehide = "hide";
 			}
-			if (toot.reactionCounts.laugh) {
-				var laugh = toot.reactionCounts.laugh;
+			if (toot.reactions.laugh) {
+				var laugh = toot.reactions.laugh;
 				var laughhide = "";
 			} else {
 				var laugh = 0;
 				var laughhide = "hide";
 			}
-			if (toot.reactionCounts.hmm) {
-				var hmm = toot.reactionCounts.hmm;
+			if (toot.reactions.hmm) {
+				var hmm = toot.reactions.hmm;
 				var hmmhide = "";
 			} else {
 				var hmm = 0;
 				var hmmhide = "hide";
 			}
-			if (toot.reactionCounts.surprise) {
-				var surprise = toot.reactionCounts.surprise;
+			if (toot.reactions.surprise) {
+				var surprise = toot.reactions.surprise;
 				var suphide = "";
 			} else {
 				var suphide = "hide";
 				var surprise = 0;
 			}
-			if (toot.reactionCounts.congrats) {
-				var congrats = toot.reactionCounts.congrats;
+			if (toot.reactions.congrats) {
+				var congrats = toot.reactions.congrats;
 				var conghide = "";
 			} else {
 				var congrats = 0;
 				var conghide = "hide";
 			}
-			if (toot.reactionCounts.angry) {
-				var angry = toot.reactionCounts.angry;
+			if (toot.reactions.angry) {
+				var angry = toot.reactions.angry;
 				var anghide = "";
 			} else {
 				var angry = 0;
 				var anghide = "hide";
 			}
-			if (toot.reactionCounts.confused) {
+			if (toot.reactions.confused) {
 				var confhide = "";
-				var confused = toot.reactionCounts.confused;
+				var confused = toot.reactions.confused;
 			} else {
 				var confused = 0;
 				var confhide = "hide";
 			}
-			if (toot.reactionCounts.pudding) {
-				var pudding = toot.reactionCounts.pudding;
-				var pudhide = "";
+			if (toot.reactions.rip) {
+				var riphide = "";
+				var rip = toot.reactions.rip;
 			} else {
-				var pudding = 0;
-				var pudhide = "hide";
+				var rip = 0;
+				var riphide = "hide";
 			}
 			var fullhide = "";
 		} else {
 			var like = 0; var love = 0; var laugh = 0; var hmm = 0; var surprise = 0; var congrats = 0; var angry = 0; var confused = 0; var pudding = 0;
-			var likehide = "hide"; var lovehide = "hide"; var laughhide = "hide"; var hmmhide = "hide"; var suphide = "hide"; var conghide = "hide"; var anghide = "hide"; var confhide = "hide"; var pudhide = "hide";
+			var likehide = "hide"; var lovehide = "hide"; var laughhide = "hide"; var hmmhide = "hide"; var suphide = "hide"; var conghide = "hide"; var anghide = "hide"; var confhide = "hide"; var riphide="hide"
 			var fullhide = "hide";
 		}
-		if (!addReact && likehide == "hide" && lovehide == "hide" && laughhide == "hide" && hmmhide == "hide" && suphide == "hide" && conghide == "hide" && anghide == "hide" && confhide == "hide" && pudhide == "hide") {
+		if (!addReact && likehide == "hide" && lovehide == "hide" && laughhide == "hide" && hmmhide == "hide" && suphide == "hide" && conghide == "hide" && anghide == "hide" && confhide == "hide" && riphide=="hide") {
 			var fullhide = "hide";
 		}
 		if (toot.myReaction) {
@@ -812,8 +811,8 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			',\'' + tlid + '\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">' + twemoji.parse("💢") + '</a><span class="re-angryct">' + angry +
 			'</span></span><span class="' + confhide + ' reaction re-confused"><a onclick="reaction(\'confused\',\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid + '\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">' + twemoji.parse("😥") + '</a><span class="re-confusedct">' + confused +
-			'</span></span><span class="' + pudhide + ' reaction re-pudding"><a onclick="reaction(\'pudding\',\'' + toot.id + '\',' + acct_id +
-			',\'' + tlid + '\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">' + twemoji.parse("🍮") + '</a><span class="re-puddingct">' + pudding +
+			'</span></span><span class="' + riphide + ' reaction re-confused"><a onclick="reaction(\'confused\',\'' + toot.id + '\',' + acct_id +
+			',\'' + tlid + '\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">' + twemoji.parse("😇") + '</a><span class="re-confusedct">' + rip +
 			'</span></span>' + addReact +
 			'<i class="material-icons pointer hide freeReact ' + freeReact + '" style="font-size:1.0rem; padding-left:5px;position: relative;top: 3px;" onclick="reactioncustom(\'' + acct_id + '\',\'' + id + '\')">add_box</i></div>'
 			+ poll + mentions + tags + '</div>' +
@@ -870,6 +869,11 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 	var datetype = localStorage.getItem("datetype");
 	Object.keys(obj).forEach(function (key) {
 		var toot = obj[key];
+		if(toot.followee){
+			toot=toot.followee
+		}else if(toot.follower){
+			toot=toot.follower
+		}
 		var locked = "";
 		if (auth) {
 			var auth = '<i class="material-icons gray pointer" onclick="misskeyRequest(\'' +
@@ -926,6 +930,16 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 		} else {
 			var dis_name = toot.username;
 		}
+		if(toot.followersCount){
+			var ferct=toot.followersCount
+		}else{
+			var ferct="unknown"
+		}
+		if(toot.followingCount){
+			var fingct=toot.followingCount
+		}else{
+			var fingct="unknown"
+		}
 		templete = templete +
 			'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +
 			notftext +
@@ -940,8 +954,8 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 			'</div>' +
 			'</div>' +
 			'<div style="justify-content:space-around" class="area-toot"> <div class="cbadge" style="width:100px;">Follows:' +
-			toot.followingCount +
-			'</div><div class="cbadge" style="width:100px;">Followers:' + toot.followersCount +
+			fingct +
+			'</div><div class="cbadge" style="width:100px;">Followers:' + ferct +
 			'</div>' +
 			'</div>' +
 			'</div>' +
