@@ -438,10 +438,11 @@ function showReq(more, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		if(localStorage.getItem("mode_" + domain)=="misskey"){
-			var templete = userparse(json, 'true',acct_id);
+		
+		if(localStorage.getItem("mode_" + domain)!="misskey"){
+			var templete = userparse(json, true,acct_id);
 		}else{
-			var templete = misskeyUserparse(json, 'true',acct_id);
+			var templete = misskeyUserparse(json, true,acct_id);
 		}
 		
 		if(!json[0]){

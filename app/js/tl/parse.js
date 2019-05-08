@@ -872,6 +872,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	var datetype = localStorage.getItem("datetype");
 	Object.keys(obj).forEach(function(key) {
 		var toot = obj[key];
+		console.log(toot)
 		if(!toot.username){
 			var raw=toot;
 			toot=toot.account;
@@ -885,10 +886,11 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			var locked = "";
 		}
 		if (auth) {
-			var auth = '<i class="material-icons gray pointer" onclick="request(\'' +
-				toot.id + '\',\'authorize\',' + acct_id + ')">person_add</i>';
+			var authhtml = '<i class="material-icons gray pointer" onclick="request(\'' +
+				toot.id + '\',\'authorize\',' + acct_id + ')">person_add</i>　<i class="material-icons gray pointer" onclick="request(\'' +
+				toot.id + '\',\'reject\',' + acct_id + ')">person_add_disabled</i>';
 		} else {
-			var auth = "";
+			var authhtml = "";
 		}
 		var ftxt=lang.lang_parse_followed;
 		if(!locale && localStorage.getItem("followlocale_" + acct_id)){
@@ -974,13 +976,13 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			'<div class="area-display_name"><div class="flex-name"><span class="user">' +
 			dis_name + '</span>' +
 			'<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
-			toot.acct + locked + auth +'</span>' +
+			toot.acct + locked  +'</span>' +
 			'</div>' +
 			'</div>' +
 			'<div style="justify-content:space-around" class="area-toot"> <div class="cbadge" style="width:100px;">Follows:' +
 			toot.following_count +
 			'</div><div class="cbadge" style="width:100px;">Followers:' + toot.followers_count +
-			'</div>' +
+			'</div>' + authhtml+
 			'</div>' +
 			'</div>' +
 			'</div>';
