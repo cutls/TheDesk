@@ -169,9 +169,13 @@ label {
 #timelines {
   display: flex;
   width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
 }
 .tl {
   height: 100%;
   flex-grow: 4;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>
