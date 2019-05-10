@@ -73,7 +73,7 @@ function system(mainWindow, dir, lang) {
 		var ver = app.getVersion()
 		var window = new BrowserWindow({
 			width: 300,
-			height: 460,
+			height: 480,
 			"transparent": false, // ウィンドウの背景を透過
 			"frame": false, // 枠の無いウィンドウ
 			"resizable": false

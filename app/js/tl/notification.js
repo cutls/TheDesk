@@ -15,7 +15,6 @@ function notfColumn(acct_id, tlid, sys){
 		native="yes";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	console.log(start)
 	var httpreq = new XMLHttpRequest();
 	if(localStorage.getItem("mode_" + domain)=="misskey"){
 		var misskey=true;
@@ -205,7 +204,11 @@ function notfCommon(acct_id, tlid, sys) {
 		}
 		$("#notf-box").addClass("fetched");
 		todc();
+		notfWS(misskey,acct_id,tlid,domain,at)
 	});
+	
+}
+function notfWS(misskey,acct_id,tlid,domain,at){
 	if(!misskey){
 		if(localStorage.getItem("streaming_" + acct_id)){
 			var wss=localStorage.getItem("streaming_" + acct_id)
@@ -255,6 +258,7 @@ function notfCommon(acct_id, tlid, sys) {
 	}
 	websocketNotf[acct_id].onerror = function(error) {
 		console.error('WebSocket Error ' + error);
+		notfWS(misskey,acct_id,tlid,domain,at)
 	};
 }
 }

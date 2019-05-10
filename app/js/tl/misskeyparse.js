@@ -976,9 +976,6 @@ function goGoogle(id) {
 var misskeyws=[]
 var misskeywsstate=[]
 function connectMisskey(acct_id) {
-	console.log("C Msky:"+acct_id)
-	
-
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "wss://" + domain +
@@ -1034,6 +1031,12 @@ function connectMisskey(acct_id) {
 					say(obj.text)
 				}
 				var templete = misskeyParse([obj], col.type, acct_id, tlid, "", mute);
+				misskeyws[wsid].send(JSON.stringify({
+					type: 'sn',
+					body: {
+						id: obj.id
+					}
+				}))
 				var pool = localStorage.getItem("pool_" + tlid);
 				if (pool) {
 					pool = templete + pool;
@@ -1043,38 +1046,29 @@ function connectMisskey(acct_id) {
 				localStorage.setItem("pool_" + tlid, pool);
 				scrollck();
 				jQuery("time.timeago").timeago();
+			}else if (data.type == "noteUpdated") {
+				if(data.body.type=="reacted"){
+					console.log(data.body.id)
+					reactRefresh(acct_id,data.body.id)
+				}else if(data.body.type=="deleted"){
+					$("#pub_"+data.body.id).hide();
+					$("#pub_"+data.body.id).remove();
+				}
+				
 			}
 	}
 	misskeyws[wsid].onerror = function (error) {
 		console.error("Error closing");
 		console.error(error);
 		misskeywsstate[wsid]=false
-		if (mode == "error") {
-			$("#notice_icon_" + tlid).addClass("red-text");
-			todo('WebSocket Error ' + error);
-		} else {
-			var errorct = localStorage.getItem("wserror_" + tlid) * 1 + 1;
-			localStorage.setItem("wserror_" + tlid, errorct);
-			if (errorct < 3) {
-				//reconnector(tlid, type, acct_id, data, "error");
-			}
-		}
+		connectMisskey(acct_id)
 		return false;
 	};
 	misskeyws[wsid].onclose = function () {
 		console.log("Closing");
 		console.log(tlid);
 		misskeywsstate[wsid]=false
-		if (mode == "error") {
-			$("#notice_icon_" + tlid).addClass("red-text");
-			todo('WebSocket Closed');
-		} else {
-			var errorct = localStorage.getItem("wserror_" + tlid) * 1 + 1;
-			localStorage.setItem("wserror_" + tlid, errorct);
-			if (errorct < 3) {
-				//reconnector(tlid, type, acct_id, data, "error");
-			}
-		}
+		connectMisskey(acct_id)
 		return false;
 	};
 

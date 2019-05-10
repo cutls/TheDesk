@@ -20,7 +20,7 @@ $('.type').click(function() {
 	$("#type-sel").val($(this).attr("data-type"))
 })
 //最初、カラム変更時に発火
-function parseColumn() {
+function parseColumn(dontclose) {
 	console.log("parse");
 	var size = localStorage.getItem("size");
 	if (size) {
@@ -31,11 +31,14 @@ function parseColumn() {
 	if(localStorage.getItem("menu-done")){
 		$("#fukidashi").addClass("hide")
 	}
-	tlCloser();
+	if(!dontclose){
+		tlCloser();
+	}
+
 	var multi = localStorage.getItem("multi");
 	if (multi) {
 		var obj = JSON.parse(multi);
-
+		
 		var templete;
 		Object.keys(obj).forEach(function(key) {
 			var acct = obj[key];
@@ -49,6 +52,11 @@ function parseColumn() {
 			ckdb(key);
 			//フィルターデータ読もう
 			getFilter(key);
+			var domain = localStorage.getItem("domain_" + key);
+			if(localStorage.getItem("mode_" + domain)=="misskey"){
+				localStorage.removeItem("misskey_wss_" + key)
+				connectMisskey(key)
+			}
 		});
 	}
 	var acctlist=obj;

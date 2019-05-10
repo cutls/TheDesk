@@ -33,11 +33,6 @@ function ck() {
 		var acct=obj[key];
 		if(acct.domain){
 			refresh(key,true)
-			var domain = localStorage.getItem("domain_" + key);
-			if(localStorage.getItem("mode_" + domain)=="misskey"){
-				localStorage.removeItem("misskey_wss_" + key)
-				connectMisskey(key)
-			}
 		}
 	});
 if (obj[0].domain) {
@@ -48,7 +43,9 @@ if (obj[0].domain) {
 	}
 }
 }
-ck();
+	ck();
+
+
 //ログインポップアップ
 function login(url) {
 	if($('#linux:checked').val()=="on"){
@@ -505,7 +502,7 @@ function multiSelector() {
 		$("#add-acct-sel").append('<option value="noauth">'+lang.lang_login_noauth+'</option><option value="webview">Twitter</option>');
 	}
 	$('select').material_select('update');
-	parseColumn();
+	parseColumn(true);
 }
 
 //バージョンエンコ
