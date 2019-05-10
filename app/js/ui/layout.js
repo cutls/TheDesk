@@ -20,7 +20,7 @@ $('.type').click(function() {
 	$("#type-sel").val($(this).attr("data-type"))
 })
 //最初、カラム変更時に発火
-function parseColumn() {
+function parseColumn(dontclose) {
 	console.log("parse");
 	var size = localStorage.getItem("size");
 	if (size) {
@@ -31,11 +31,14 @@ function parseColumn() {
 	if(localStorage.getItem("menu-done")){
 		$("#fukidashi").addClass("hide")
 	}
-	tlCloser();
+	if(!dontclose){
+		tlCloser();
+	}
+
 	var multi = localStorage.getItem("multi");
 	if (multi) {
 		var obj = JSON.parse(multi);
-
+		
 		var templete;
 		Object.keys(obj).forEach(function(key) {
 			var acct = obj[key];
@@ -49,6 +52,11 @@ function parseColumn() {
 			ckdb(key);
 			//フィルターデータ読もう
 			getFilter(key);
+			var domain = localStorage.getItem("domain_" + key);
+			if(localStorage.getItem("mode_" + domain)=="misskey"){
+				localStorage.removeItem("misskey_wss_" + key)
+				connectMisskey(key)
+			}
 		});
 	}
 	var acctlist=obj;
@@ -160,7 +168,7 @@ function parseColumn() {
 			'<input type="checkbox" class="filled-in" id="exc-fav-'+key+'"  '+excludeCk(key,"favourite")+' /><label for="exc-fav-'+key+'" class="exc-chb"><i class="fas fa-star exc-icons"></i></label> '+
 			'<input type="checkbox" class="filled-in" id="exc-bt-'+key+'" '+excludeCk(key,"reblog")+' /><label for="exc-bt-'+key+'" class="exc-chb" ><i class="fas fa-retweet exc-icons"></i></label> '+
 			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"follow")+' /><label for="exc-follow-'+key+'" class="exc-chb" ><i class="fas fa-users exc-icons"></i></label> '+
-			'<input type="checkbox" class="filled-in" id="exc-follow-'+key+'" '+excludeCk(key,"poll")+' /><label for="exc-poll-'+key+'" class="exc-chb" ><i class="fas fa-tasks exc-icons"></i></label> '+
+			'<input type="checkbox" class="filled-in" id="exc-poll-'+key+'" '+excludeCk(key,"poll")+' /><label for="exc-poll-'+key+'" class="exc-chb" ><i class="fas fa-tasks exc-icons"></i></label> '+
 			'<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude('+key+')">Filter</button><br>';
 		}else if(acct.type=="home"){
 			var exclude='<a onclick="ebtToggle(' + key +
@@ -180,9 +188,17 @@ function parseColumn() {
 			if(key===0){
 				left_hold='';
 			}
+			if(localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct.domain))=="misskey"){
+				var isMisRed=""
+				exclude=""
+				var if_misskey_hide="hide"
+			}else{
+				var isMisRed="red-text"
+				var if_misskey_hide=""
+			}
 			var html='<div class="boxIn" id="timeline_box_' + key + '_box" tlid="' + key +
 			'" data-acct="'+acct.domain+'"><div class="notice-box z-depth-2" id="menu_'+key+'" style="'+insert+' ">'+
-			'<div class="area-notice"><i class="material-icons waves-effect red-text" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="checkStr(\''+acct.type+'\', \''+data+'\', \''+acct.domain+'\', \''+key+'\', \''+delc+'\',\''+voice+'\',null)" title="'+lang.lang_layout_gotop +'"></i></div>'+
+			'<div class="area-notice"><i class="material-icons waves-effect '+isMisRed+'" id="notice_icon_' + key + '"'+notf_attr+' style="font-size:40px; padding-top:25%;" onclick="checkStr(\''+acct.type+'\', \''+data+'\', \''+acct.domain+'\', \''+key+'\', \''+delc+'\',\''+voice+'\',null)" title="'+lang.lang_layout_gotop +'"></i></div>'+
 			'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>'+
 			'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
 						  ')" class="setting nex '+if_notf+'" title="'+unique_notf+'"'+icnsert+'><i class="material-icons waves-effect nex notf-icon_' +
@@ -201,7 +217,7 @@ function parseColumn() {
 		  key + '">On</span></a>'+lang.lang_layout_linkana +'<br><a onclick="voiceToggle(' + key +
 		  ')" class="setting nex"><i class="material-icons waves-effect nex" title="'+lang.lang_layout_tts +'">hearing</i><span id="sta-voice-' +
 		  key + '">On</span></a>'+lang.lang_layout_tts +'TL<br><a onclick="reconnector(' + key +
-		  ',\''+acct.type+'\',\''+acct.domain+'\',\''+escapeHTML(acct.data)+'\')" class="setting nex '+if_notf+'"><i class="material-icons waves-effect nex '+if_notf+'" title="'+lang.lang_layout_reconnect+'">low_priority</i></a><span class="'+if_notf+'">'+lang.lang_layout_reconnect+'</span><br>'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+		  ',\''+acct.type+'\',\''+acct.domain+'\',\''+escapeHTML(acct.data)+'\')" class="setting nex '+if_notf+' '+if_misskey_hide+'"><i class="material-icons waves-effect nex '+if_notf+'" title="'+lang.lang_layout_reconnect+'">low_priority</i></a><span class="'+if_notf+'">'+lang.lang_layout_reconnect+'</span><br>'+lang.lang_layout_headercolor +'<br><div id="picker_'+key+'" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
 			'" class="tl '+acct.type+'-timeline " tlid="' + key + '" data-type="' + acct.type + '" data-acct="'+acct.domain+'" data-const="' + acct.type + '_'+acct.domain+'"><div id="landing_'+key+'" style="text-align:center">'+lang.lang_layout_nodata +'</div></div></div>'
 			$('#timeline_box_' + basekey + '_parentBox').append(html);
 		localStorage.removeItem("pool_" + key);

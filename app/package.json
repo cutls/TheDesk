@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "18.3.3",
+  "version": "18.4.0",
   "description": "TheDesk is a Mastodon client for PC.",
   "repository": "https://github.com/cutls/TheDesk",
   "main": "main.js",
@@ -11,15 +11,15 @@
     "build:all": "electron-builder --win --linux",
     "build:win": "electron-builder --win"
   },
-  "keywords": [],
+  "keywords": ["mastodon","client","electron","thedesk"],
   "bugs": {
     "url": "https://github.com/cutls/TheDesk/issues",
-    "email": "mstdn@thedesk.top"
+    "email": "web-pro@cutls.com"
   },
   "homepage": "https://thedesk.top",
   "author": {
     "name": "Cutls",
-    "url": "https://kirishima.clooud/@Cutls",
+    "url": "https://cutls.com/@Cutls",
     "email": "web-pro@cutls.com"
   },
   "contributor": [
@@ -99,12 +99,12 @@
       ]
     },
     "electronDownload": {
-      "version": "4.1.4"
+      "version": "4.2.0"
     },
-    "electronVersion": "4.1.4"
+    "electronVersion": "4.2.0"
   },
   "devDependencies": {
-    "electron": "^4.1.4",
+    "electron": "^4.2.0",
     "electron-builder": "^20.39.0"
   }
 }
