@@ -1,7 +1,7 @@
 <template>
   <div id="app" :style="styles">
     <Welcome v-if="isStartup"/>
-    <Main v-else/>
+    <Main :init-timeline="initTimeline" v-else/>
   </div>
 </template>
 
@@ -11,6 +11,12 @@ import { Component, Vue } from 'vue-property-decorator'
 
 import Main from '@/components/Main.vue'
 import Welcome from '@/components/Welcome.vue'
+
+interface TimelineDoc {
+  _id: string
+  name: string
+  type: string
+}
 
 @Component({
   components: {
@@ -22,6 +28,7 @@ export default class App extends Vue {
   public isDarkMode: boolean = false
   public isStartup: boolean = true
   public fontSize: string = '16px'
+  public initTimeline?: TimelineDoc
 
   public get styles(): { [key: string]: string } {
     return {
@@ -40,11 +47,12 @@ export default class App extends Vue {
     ipcRenderer.on('change-color-theme', () => this.isDarkMode = ipcRenderer.sendSync('dark-theme'))
     // TODO: アカウントか公開TLの追加を確認する。初回起動時のみ
     if (this.isStartup) {
-      ipcRenderer.once('add-timeline', (_e: Event, _tl: Object, error?: Error) => {
-        if (error) {
+      ipcRenderer.once('add-timeline', (_e: Event, tl?: TimelineDoc, error?: Error) => {
+        if (error === undefined || tl === undefined) {
           console.error(error)
           return
         }
+        this.initTimeline = tl
         this.isStartup = false
       })
     }

@@ -36,7 +36,7 @@ export default class Timeline {
 
     private static async onAddTimeline(event: Event, name: string, type: string) {
         if (!(type in this.endpoints) && type !== 'no-auth') {
-            event.sender.send(`add-timeline`, {}, new Error("Not supported type"))
+            event.sender.send(`add-timeline`, undefined, new Error("Not supported type"))
             return
         }
 
@@ -54,7 +54,7 @@ export default class Timeline {
             if (err) {
                 let error = new Error("You cannot login already logined account.")
                 error.name = "ERROR_YOU_TRY_ANOTHER_ACCOUNT"
-                event.sender.send(`add-timeline`, {}, error)
+                event.sender.send(`add-timeline`, undefined, error)
             } else {
                 event.sender.send(`add-timeline`, newDocs)
             }
