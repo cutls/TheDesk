@@ -5,12 +5,11 @@ import {
 } from 'electron'
 import { Status, Response } from 'megalodon'
 import { join } from "path"
-import Datastore from "nedb"
+import Datastore from "nedb-promises"
 
 import Client from './Client'
 
 interface TimelineDoc {
-    _id?: string
     name: string
     type: string
 }
@@ -50,15 +49,14 @@ export default class Timeline {
             type: type,
         }
 
-        db.insert(docs, function (err, newDocs) {
-            if (err) {
-                let error = new Error("You cannot login already logined account.")
-                error.name = "ERROR_YOU_TRY_ANOTHER_ACCOUNT"
-                event.sender.send(`add-timeline`, undefined, error)
-            } else {
-                event.sender.send(`add-timeline`, newDocs)
-            }
-        })
+        try {
+            let newDoc = await db.insert(docs)
+            event.sender.send(`add-timeline`, newDoc)
+        } catch (err) {
+            let error = new Error("You cannot login already logined account.")
+            error.name = "ERROR_YOU_TRY_ANOTHER_ACCOUNT"
+            event.sender.send(`add-timeline`, undefined, error)
+        }
     }
 
     private static async onNoAuthTimeline(event: Event, name: string) {
@@ -82,7 +80,7 @@ export default class Timeline {
 
         let url = this.endpoints[type]
         try {
-            const client = Client.getAuthClient(name)
+            const client = await Client.getAuthClient(name)
             let res: Response<[Status]> = await client.get<[Status]>(url)
             event.sender.send(`timeline-${name}-${type}`, res.data)
         } catch (error) {

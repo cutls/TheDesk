@@ -1,6 +1,6 @@
 import { app } from "electron"
 import Mastodon from 'megalodon'
-import Datastore from "nedb"
+import Datastore from "nedb-promises"
 import { join } from "path"
 
 type Protocol = 'http' | 'websocket'
@@ -14,7 +14,7 @@ export default class Client {
     private static nonAuthorizedHTTP: Map<string, Mastodon> = new Map()
     private static nonAuthorizedWebSocket: Map<string, Mastodon> = new Map()
 
-    public static getAuthClient(username: string, protocol: Protocol = 'http'): Mastodon {
+    public static async getAuthClient(username: string, protocol: Protocol = 'http'): Promise<Mastodon> {
         let clients = protocol === 'http' ? this.authorizedHTTP : this.authorizedWebSocket
 
         if (!clients.has(username)) {
@@ -23,13 +23,12 @@ export default class Client {
                 filename: join(app.getPath("userData"), "account.db"),
                 autoload: true
             })
-            db.find({ full: username }, function (err: any, docs: { domain: string; accessToken: string; }) {
-                if (err) {
-                    console.log(err)
-                } else {
-                    Client.setAuthClient(protocol, username, Client.createAuthClient(protocol, docs.domain, docs.accessToken))
-                }
-            })
+            try {
+                let doc = await db.findOne<{ domain: string; accessToken: string; }>({ full: username })
+                Client.setAuthClient(protocol, username, Client.createAuthClient(protocol, doc.domain, doc.accessToken))
+            } catch (err) {
+                throw err
+            }
         }
 
         return clients.get(username)!
@@ -66,7 +65,7 @@ export default class Client {
     private static createNoAuthClient(protocol: Protocol, domain: string): Mastodon {
         let scheme = protocol === 'http' ? 'https://' : 'wss://'
         return new Mastodon(
-            '', // pleromaでは空文字ではなくnullを指定しないと毎秒403エラーになるアクセスを繰り返すことになる。TypeScriptではnullを入れられないのでmegalodonの方を修正する必要あり
+            null, // pleromaでは空文字ではなくnullを指定しないと毎秒403エラーになるアクセスを繰り返すことになる。TypeScriptではnullを入れられないのでmegalodonの方を修正する必要あり
             scheme + domain + '/api/v1'
         )
     }

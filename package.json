@@ -20,8 +20,6 @@
   },
   "main": "background.js",
   "dependencies": {
-    "megalodon": "^0.6.4",
-    "nedb": "^1.8.0",
     "vue": "^2.6.6",
     "vue-class-component": "^7.0.2",
     "vue-material-design-icons": "^3.2.0",
@@ -29,7 +27,6 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.123",
-    "@types/nedb": "^1.8.7",
     "@vue/cli-plugin-eslint": "^3.7.0",
     "@vue/cli-plugin-typescript": "^3.7.0",
     "@vue/cli-service": "^3.7.0",
@@ -42,6 +39,8 @@
     "electron-localshortcut": "^3.1.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "megalodon": "^0.6.4",
+    "nedb-promises": "git://github.com/bajankristof/nedb-promises.git#bbc45f5",
     "postcss-nested": "^4.1.2",
     "typescript": "^3.4.3",
     "vue-cli-plugin-electron-builder": "^1.3.1",
