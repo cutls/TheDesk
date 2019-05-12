@@ -39,7 +39,7 @@ export default class Timeline {
             return
         }
 
-        let db = new Datastore({
+        let db = Datastore.create({
             filename: join(app.getPath("userData"), "timeline.db"),
             autoload: true
         })

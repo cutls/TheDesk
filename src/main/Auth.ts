@@ -1,12 +1,11 @@
 import { ipcMain, Event, shell, app } from "electron"
 import Mastodon, { Response, Account, OAuth } from "megalodon"
 import { join } from "path"
-import Datastore from "nedb"
+import Datastore from "nedb-promises"
 
 import Client from "./Client"
 
 interface AccountDoc {
-  _id?: string
   domain: string
   acct: string
   full: string
@@ -100,7 +99,7 @@ export default class Auth {
     let resp: Response<Account> = await client.get<Account>("/accounts/verify_credentials")
     let you = resp.data
 
-    let db = new Datastore({
+    let db = Datastore.create({
       filename: join(app.getPath("userData"), "account.db"),
       autoload: true
     })
@@ -114,16 +113,15 @@ export default class Auth {
       accessToken: tokenData.accessToken,
     }
 
-    db.insert(docs, function (err, newDocs) {
-      if (err) {
-        event.sender.send(`error`, {
-          id: "ERROR_YOU_TRY_ANOTHER_ACCOUNT",
-          message: "You cannot login already logined account."
-        })
-      } else {
-        Client.setAuthClient('http', newDocs.full, client)
-        event.sender.send(`login-complete`, newDocs)
-      }
-    })
+    try {
+      let newDoc = await db.insert(docs)
+      Client.setAuthClient('http', newDoc.full, client)
+      event.sender.send(`login-complete`, newDoc)
+    } catch (error) {
+      event.sender.send(`error`, {
+        id: "ERROR_YOU_TRY_ANOTHER_ACCOUNT",
+        message: "You cannot login already logined account."
+      })
+    }
   }
 }

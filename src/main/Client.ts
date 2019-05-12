@@ -19,7 +19,7 @@ export default class Client {
 
         if (!clients.has(username)) {
             // usernameからドメインをとトークンをデータベースから取得してクライアントを作る
-            let db = new Datastore({
+            let db = Datastore.create({
                 filename: join(app.getPath("userData"), "account.db"),
                 autoload: true
             })
