@@ -440,7 +440,7 @@ function showReq(more, acct_id) {
 	}).then(function(json) {
 		
 		if(localStorage.getItem("mode_" + domain)!="misskey"){
-			var templete = userparse(json, true,acct_id);
+			var templete = userparse(json, "request",acct_id);
 		}else{
 			var templete = misskeyUserparse(json, true,acct_id);
 		}

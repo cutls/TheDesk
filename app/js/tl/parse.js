@@ -885,7 +885,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 		} else {
 			var locked = "";
 		}
-		if (auth) {
+		if (auth=="request") {
 			var authhtml = '<i class="material-icons gray pointer" onclick="request(\'' +
 				toot.id + '\',\'authorize\',' + acct_id + ')" title="Accept">person_add</i>　<i class="material-icons gray pointer" onclick="request(\'' +
 				toot.id + '\',\'reject\',' + acct_id + ')" title="Reject">person_add_disabled</i>';
