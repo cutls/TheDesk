@@ -593,15 +593,26 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var sense = ""
 					var blur=null
 				}
-				if(media.type=="unknown"){
-					viewer = viewer +'<a href="'+media.remote_url+'">['+lang.lang_parse_unknown+']</a> '
+				if(media.pleroma){
+					if(media.pleroma.mime_type.indexOf("video") !== -1){
+						viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
+						acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
+						'" data-type="video" class="img-parsed"><video src="' +
+						purl + '" class="' + sense +
+						' toot-img pointer" style="max-width:100%;"></a></span>';
+					}
 				}else{
-					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',\'' +
-					acct_id + '\')" id="' + id + '-image-' + key2 + '" data-url="' + url +
-					'" data-type="' + media.type + '" class="img-parsed img-link" style="width:calc(' + cwdt + '% - 1px); height:'+imh+';"><img draggable="false" src="' +
-					purl + '" class="' + sense +
-					' toot-img pointer">'+nsfwmes+'</a>';
-				}				
+					if(media.type=="unknown"){
+						viewer = viewer +'<a href="'+media.remote_url+'">['+lang.lang_parse_unknown+']</a> '
+					}else{
+						viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',\'' +
+						acct_id + '\')" id="' + id + '-image-' + key2 + '" data-url="' + url +
+						'" data-type="' + media.type + '" class="img-parsed img-link" style="width:calc(' + cwdt + '% - 1px); height:'+imh+';"><img draggable="false" src="' +
+						purl + '" class="' + sense +
+						' toot-img pointer">'+nsfwmes+'</a>';
+					}	
+				}
+							
 			});
 			media_ids = media_ids.slice(0, -1) ;
 		} else {
