@@ -585,7 +585,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var sense = "sensitive"
 					var blur=media.blurhash
 					if(blur){
-						nsfwmes='<div class="nsfw-media">NSFW media</div>'
+						nsfwmes='<div class="nsfw-media">'+lang.lang_parse_nsfw+'</div>'
 						purl=parseBlur(blur)
 						var sense=""
 					}
@@ -593,12 +593,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var sense = ""
 					var blur=null
 				}
+				if(media.type=="unknown"){
+					viewer = viewer +'<a href="'+media.remote_url+'">['+lang.lang_parse_unknown+']</a> '
+				}else{
 					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',\'' +
 					acct_id + '\')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 					'" data-type="' + media.type + '" class="img-parsed img-link" style="width:calc(' + cwdt + '% - 1px); height:'+imh+';"><img draggable="false" src="' +
 					purl + '" class="' + sense +
 					' toot-img pointer">'+nsfwmes+'</a>';
-				
+				}				
 			});
 			media_ids = media_ids.slice(0, -1) ;
 		} else {

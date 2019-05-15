@@ -193,6 +193,8 @@ var lang={
     "lang_parse_unvoted":"Show the result without voting",
     "lang_parse_endedvote":"Expired",
     "lang_parse_thread":"Show thread",
+    "lang_parse_unknown":"Attached file",
+    "lang_parse_nsfw":"NSFW media",
     //misskey
     "lang_misskeyparse_renote":"Repost",
     "lang_misskeyparse_renoteqt":"Renote",

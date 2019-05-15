@@ -195,6 +195,8 @@ var lang={
     "lang_parse_unvoted":"結果だけ見る",
     "lang_parse_endedvote":"終了済み",
     "lang_parse_thread":"会話を表示",
+    "lang_parse_unknown":"添付ファイル",
+    "lang_parse_nsfw":"閲覧注意",
     //misskey
     "lang_misskeyparse_renote":"再投稿",
     "lang_misskeyparse_renoteqt":"引用",
