@@ -46,12 +46,12 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
-    "electron-dl": "^1.11.0",
+    "electron-dl": "^1.14.0",
     "jimp": "^0.2.28",
     "json5": "^2.1.0",
     "node-notifier": "^5.4.0",
     "sumchecker": "^3.0.0",
-    "vue": "^2.6.9"
+    "vue": "^2.6.10"
   },
   "optionalDependencies": {
     "nowplaying-node": "git+https://github.com/cutls/nowplaying-node",
