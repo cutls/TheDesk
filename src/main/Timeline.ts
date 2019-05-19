@@ -27,6 +27,7 @@ export default class Timeline {
 
     public static ready() {
         ipcMain.on('add-timeline', (event: Event, name: string, type: string) => this.onAddTimeline(event, name, type))
+        ipcMain.on('get-timeline', (event: Event, id: string) => event.returnValue = this.getTimeline(id))
 
         ipcMain.on('no-auth-timeline', (event: Event, name: string) => this.onNoAuthTimeline(event, name))
 
@@ -56,6 +57,19 @@ export default class Timeline {
             let error = new Error("You cannot login already logined account.")
             error.name = "ERROR_YOU_TRY_ANOTHER_ACCOUNT"
             event.sender.send(`add-timeline`, undefined, error)
+        }
+    }
+
+    private static async getTimeline(id: string): Promise<TimelineDoc> {
+        let db = Datastore.create({
+            filename: join(app.getPath("userData"), "timeline.db"),
+            autoload: true
+        })
+
+        try {
+            return db.findOne<TimelineDoc>({ _id: id })
+        } catch (err) {
+            throw err
         }
     }
 
