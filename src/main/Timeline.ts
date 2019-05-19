@@ -27,7 +27,7 @@ export default class Timeline {
 
     public static ready() {
         ipcMain.on('add-timeline', (event: Event, name: string, type: string) => this.onAddTimeline(event, name, type))
-        ipcMain.on('get-timeline', (event: Event, id: string) => event.returnValue = this.getTimeline(id))
+        ipcMain.on('get-timeline', async (event: Event, id: string) => event.returnValue = await this.getTimeline(id))
 
         ipcMain.on('no-auth-timeline', (event: Event, name: string) => this.onNoAuthTimeline(event, name))
 
