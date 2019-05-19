@@ -170,9 +170,7 @@ function additionalIndv(tlid, acct_id, id) {
 					todo(error);
 					console.error(error);
 				}).then(function(json) {
-					console.log(json);
 					//このリンク鳥やんけ、ってとき
-					console.log(json.provider_name);
 					if (json.provider_name=="Twitter"){
 						if(json.image){
 							var twiImg='<br><img src="'+json.image+'" style="max-width:100%" onclick="imgv(\'twi_'+id+'\', 0, \'twitter\');" id="twi_'+id+'-image-0" data-url="'+json.image+'" data-type="image">';
@@ -243,7 +241,6 @@ function mov(id,tlid,type){
 	}else{
 		var tlide="[tlid="+tlid+"]";
 	}
-	console.log(tlid)
 	var mouseover=localStorage.getItem("mouseover");
 	if(!mouseover){
 		mouseover="";

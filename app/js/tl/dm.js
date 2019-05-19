@@ -57,7 +57,6 @@ function dmmore(tlid){
 }
 //DMオブジェクトパーサー(トゥート)
 function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
-	console.log(obj);
 	var templete = '';
 	if(obj[0]){
 		localStorage.setItem("lastunix_"+ tlid,date(obj[0].created_at, 'unix'));

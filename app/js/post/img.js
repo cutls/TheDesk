@@ -36,7 +36,7 @@ $("#drag").on('dragleave', function(e) {
 
 //複数アップ
 function pimg(files) {
-	console.log(files);
+	console.table(files);
 	for (i = 0; i < files.length; i++) {
 		var dot=files[i].path.match(/\.(.+)$/)[1];
 		if(dot=="bmp" || dot=="BMP"){
@@ -95,7 +95,6 @@ function media(b64, type, no) {
 	localStorage.setItem("image","busy");
 	todo("Image Upload...");
 	var media = toBlob(b64, type);
-	console.log(media);
 	var fd = new FormData();
 	fd.append('file', media);
 	var acct_id = $("#post-acct-sel").val();
@@ -128,7 +127,6 @@ function media(b64, type, no) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
 			var img = localStorage.getItem("img");
 			if (json.type.indexOf("image")!=-1) {
 				var html = '<img src="' + json[previewer] + '" class="preview-img pointer" data-media="'+json["id"]+'" onclick="deleteImage(\''+json["id"]+'\')" title="'+lang.lang_postimg_delete+'">';
@@ -182,14 +180,13 @@ function toBlob(base64, type) {
 //画像を貼り付けたら…
 var element =  document.querySelector("#textarea");
 element.addEventListener("paste", function(e){
-	console.log(e)
     if (!e.clipboardData || !e.clipboardData.items) {
         return true;
     }
     // DataTransferItemList に画像が含まれいない場合は終了する
 	var imageItems = [...e.clipboardData.items].filter(i => i.type.startsWith('image'));
     if (imageItems.length == 0) {
-		console.log("not image")
+		console.warn("it is not image")
         return true;
     }
 
@@ -223,7 +220,6 @@ ipc.on('adobeagree', function (event, arg) {
 	localStorage.setItem("adobeagree",arg);
 	});
 function deleteImage(key){
-	console.log(key);
 	if(!confirm(lang.lang_postimg_delete)){
 		return false;
 	}

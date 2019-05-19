@@ -40,7 +40,6 @@ function list(){
 		});
     }else{
 		var start = "https://" + domain + "/api/v1/lists"
-		console.log(start)
 		fetch(start, {
 			method: 'GET',
 			headers: {
@@ -75,7 +74,6 @@ function makeNewList(){
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if(localStorage.getItem("mode_" + domain)!="misskey"){
     var start = "https://" + domain + "/api/v1/lists"
-	console.log(start)
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
@@ -93,7 +91,6 @@ function makeNewList(){
 	}
 }else{
 	var start = "https://" + domain + "/api/users/lists/create"
-	console.log(start)
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
@@ -119,7 +116,6 @@ function listUser(id,acct_id){
     var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/lists/"+id+"/accounts"
-	console.log(start)
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -149,7 +145,6 @@ function hisList(user,acct_id){
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if(localStorage.getItem("mode_" + domain)!="misskey"){
     var start = "https://" + domain + "/api/v1/lists"
-	console.log(start)
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -175,7 +170,6 @@ function hisList(user,acct_id){
         }
     });
     var start = "https://" + domain + "/api/v1/accounts/"+user+"/lists"
-	console.log(start)
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -245,7 +239,6 @@ function listAdd(id,user,acct_id){
 			account_ids: [user]
 		}
 	}
-	console.log(start)
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
@@ -277,7 +270,6 @@ function listRemove(id,user,acct_id){
 			account_ids: [user]
 		}
 	}
-	console.log(start)
 	var httpreq = new XMLHttpRequest();
 	httpreq.open(method, start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');

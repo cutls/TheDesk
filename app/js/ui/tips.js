@@ -66,7 +66,6 @@ function trendTagonTip(){
     var domain="imastodon.net"
     var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/trend_tags"
-	console.log(start)
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -109,7 +108,6 @@ function spotifytips(){
             todo(error);
             console.error(error);
         }).then(function(json) {
-            console.log(json);
             var ms=json.progress_ms;
 			var last=1000-ms%1000;
 			var item=json.item;

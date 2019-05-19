@@ -33,7 +33,6 @@ $repeat  = setInterval(function() {
             var obj = JSON.parse(voice);
             if(obj[0]){
                 $synthes.text  = obj[0];
-                console.log($synthes);
                 speechSynthesis.speak($synthes);
                 obj.splice(0, 1);
                 var json = JSON.stringify(obj);

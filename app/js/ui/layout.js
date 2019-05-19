@@ -21,7 +21,7 @@ $('.type').click(function() {
 })
 //最初、カラム変更時に発火
 function parseColumn(dontclose) {
-	console.log("parse");
+	console.log("%c Parse column","color:red;font-size:125%");
 	var size = localStorage.getItem("size");
 	if (size) {
 		$("#timeline-container").css("font-size", size + "px");
@@ -60,7 +60,7 @@ function parseColumn(dontclose) {
 		});
 	}
 	var acctlist=obj;
-	console.log(obj);
+	console.table(obj);
 	/*var xed=localStorage.getItem("xed");
 	if(xed){
 		xpand();
@@ -272,7 +272,6 @@ function parseColumn(dontclose) {
 }
 function checkStr(type, data, acct_id, key, delc,voice){
 	if($('#notice_icon_' + key).hasClass("red-text") && type!="notf" && type!="mix"){
-		console.log("sabun-get")
 		goTop(key);
 		tlDiff(type, data, acct_id, key, delc,voice,"");
 	}else{
@@ -366,7 +365,6 @@ function removeColumn(tlid) {
 	var ipc = electron.ipcRenderer;
 	ipc.send('column-del', "");
 	ipc.on('column-del-reply', function (event, arg) {
-		console.log(arg);
 		if(arg===1){
 			localStorage.removeItem("card_" + tlid);
 			obj.splice(tlid, 1);

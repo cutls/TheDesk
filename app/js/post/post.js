@@ -129,7 +129,7 @@ function post(mode,postvis) {
 	}
 	if ($("#sch-box").hasClass("sch-avail")) {
 		var scheduled=formattimeutc(new Date(Date.parse($("#sch-date").val())))
-		console.log(scheduled)
+		console.log("This toot will be posted at:"+scheduled)
 		schedule();
 		toot.scheduled_at=scheduled;
 	} else {
@@ -164,7 +164,7 @@ function post(mode,postvis) {
 			hide_totals: htt
 		}
 	}
-	console.log(toot);
+	console.table(toot);
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
@@ -245,7 +245,7 @@ function misskeyPost(){
 				localStorage.removeItem("stable")
 			}
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: toot",json]);
 			var box = localStorage.getItem("box");
 			if (box == "yes") {
 				hide();

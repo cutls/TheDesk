@@ -32,7 +32,7 @@ function load() {
 		}
 	}
 	
-	console.log(obj);
+	console.table(obj);
 	var templete;
 	Object.keys(obj).forEach(function(key) {
 		var acct = obj[key];
@@ -99,7 +99,6 @@ function data(domain) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if (!json.error) {
 			$("#ins-name").text(json.name);
 			$("#ins-upd").text(date(json.checked_at, 'full'));
@@ -110,6 +109,8 @@ function data(domain) {
 			$("#ins-per").text(json.uptime * 100);
 			$("#ins-user").text(json.users);
 			$("#ins-ver").text(json.version);
+		}else{
+			console.error(json.error);
 		}
 	});
 	var start = "https://" + domain +"/api/v1/instance";
@@ -124,7 +125,6 @@ function data(domain) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if (!json.error) {
 			$("#ins-title").text(json.title);
 			$("#ins-desc").html(json.description);
@@ -135,6 +135,8 @@ function data(domain) {
 			$("#ins-prof").attr('src', json.thumbnail);
 			$("#ins-admin").text(escapeHTML(json.contact_account.display_name)+"("+json.contact_account.acct+")");
 			$("#ins-admin").attr("href","index.html?mode=user&code="+json.contact_account.username+"@"+domain);
+		}else{
+			console.error(json.error);
 		}
 	});
 }
@@ -150,7 +152,6 @@ function multiDel(target) {
 			//公開範囲(差分のみ)
 			if(key>=target){
 				var oldvis=localStorage.getItem("vis-memory-"+key);
-				console.log(oldvis);
 				if(oldvis){
 					localStorage.setItem("vis-memory-"+nk,oldvis);
 				}
@@ -175,7 +176,6 @@ function multiDel(target) {
 		});
 		//とりあえず消す
 		obj.splice(target, 1);
-		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
 		load();
@@ -216,7 +216,6 @@ function multiDel2(target) {
 		Object.keys(obj).forEach(function(key) {
 		if(key>=target){
 			var oldvis=localStorage.getItem("vis-memory-"+key);
-			console.log(oldvis);
 			if(oldvis){
 				var nk=key-1;
 				localStorage.setItem("vis-memory-"+nk,oldvis);
@@ -287,7 +286,6 @@ function login(url) {
 	}else{
 		var red = 'thedesk://manager';
 	}
-	console.log(red);
 	localStorage.setItem("redirect", red);
 	var start = "https://" + url + "/api/v1/apps";
 	var httpreq = new XMLHttpRequest();
@@ -303,7 +301,6 @@ function login(url) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
 			localStorage.setItem("msky","false");
 			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 					"client_id"] + "&client_secret=" + json["client_secret"] +
@@ -389,7 +386,6 @@ function misskeyLogin(url) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
 			misskeyAuth(url, json.secret)
 		}
 	}
@@ -411,7 +407,6 @@ function misskeyAuth(url, mkc){
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
 			const {
 				shell
 			} = require('electron');
@@ -445,7 +440,6 @@ function code(code) {
 	}
 	var url = localStorage.getItem("domain_tmp");
 	localStorage.removeItem("domain_tmp");
-	console.log(localStorage.getItem("msky"));
 	if(localStorage.getItem("msky")=="true"){
 		var start = "https://"+url+"/api/auth/session/userkey";
 		var httpreq = new XMLHttpRequest();
@@ -460,7 +454,6 @@ function code(code) {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
 				var i = sha256(json.accessToken + localStorage.getItem("mkc"));
-				console.log(json);
 				var avatar=json["user"]["avatarUrl"];
 				var priv="public";
 				var add = {
@@ -482,7 +475,6 @@ function code(code) {
 				localStorage.setItem("user_" + target, json["user"]["username"]);
 				localStorage.setItem("user-id_" + target, json["user"]["id"]);
 				localStorage.setItem("prof_" + target, avatar);
-				console.log(obj);
 				var json = JSON.stringify(obj);
 				localStorage.setItem("multi", json);
 				if($("body").hasClass("first")){
@@ -511,7 +503,6 @@ function code(code) {
 		httpreq.onreadystatechange = function() {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
-				console.log(json);
 				if (json["access_token"]) {
 					$("#auth").hide();
 					$("#add").show();
@@ -537,7 +528,6 @@ function getdata(domain, at) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
 			Materialize.toast(lang.lang_fatalerroroccured+"Error:" + escapeHTML(json.error),
@@ -572,7 +562,6 @@ function getdata(domain, at) {
 		localStorage.setItem("user_" + target, json["acct"]);
 		localStorage.setItem("user-id_" + target, json["id"]);
 		localStorage.setItem("prof_" + target, avatar);
-		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
 		if($("body").hasClass("first")){
@@ -592,7 +581,6 @@ function refresh(target) {
 	}
 	var start = "https://" + obj[target].domain +
 		"/api/v1/accounts/verify_credentials";
-		console.log(start);
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -605,7 +593,6 @@ function refresh(target) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
 			Materialize.toast(lang.lang_fatalerroroccured+"Error:" + json.error,
@@ -629,8 +616,6 @@ function refresh(target) {
 		localStorage.setItem("name_" + target, json["display_name"]);
 		localStorage.setItem("user_" + target, json["acct"]);
 		localStorage.setItem("user-id_" + target, json["id"]);
-		console.log("user-id_" + target+":"+json["id"])
-		console.log(localStorage.getItem("user-id_"+target));
 		localStorage.setItem("prof_" + target, avatar);
 		obj[target] = ref;
 		var json = JSON.stringify(obj);
@@ -652,7 +637,6 @@ function misskeyRefresh(obj,target,url){
     	httpreq.onreadystatechange = function() {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
-				console.log(json);
 				return;
 				var avatar=json["user"]["avatarURL"];
 				var priv="public";
@@ -673,7 +657,6 @@ function misskeyRefresh(obj,target,url){
 				localStorage.setItem("user_" + target, json["user"]["username"]);
 				localStorage.setItem("user-id_" + target, json["user"]["id"]);
 				localStorage.setItem("prof_" + target, avatar);
-				console.log(obj);
 				var json = JSON.stringify(obj);
 				localStorage.setItem("multi", json);
 				load();
@@ -694,7 +677,6 @@ function multisel() {
 	var templete;
 	var last = localStorage.getItem("main");
 	var sel;
-	console.log(obj.length)
 	if(obj.length<1){
 		$("#src-acct-sel").html('<option value="tootsearch">Tootsearch</option>');
 		$("#add-acct-sel").html('<option value="noauth">'+lang.lang_login_noauth+'</option>');
@@ -808,9 +790,7 @@ input.addEventListener("focus", function() {
 					todo(error);
 					console.error(error);
 				}).then(function(json) {
-					console.log(json);
-					if (!json.error) {
-
+						if (!json.error) {
 						var urls = "Suggest:";
 						Object.keys(json.instances).forEach(function(key) {
 							var url = json.instances[key];
@@ -818,6 +798,8 @@ input.addEventListener("focus", function() {
 								'\')" class="pointer">' +escapeHTML(url.name)  + '</a>  ';
 						});
 						$("#ins-suggest").html(urls);
+					}else{
+						console.error(json.error);
 					}
 				});
 			}

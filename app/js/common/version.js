@@ -1,9 +1,9 @@
 //バージョンチェッカー
 function verck(ver) {
-	console.log("Welcome")
+	console.log("%c Welcome😊", "color: red;font-size:200%;")
 	if(localStorage.getItem("ver")!=ver){
 		localStorage.setItem("ver", ver);
-		console.log("Thank you for your update");
+		console.log("%c Thank you for your update🎉", "color: red;font-size:200%;");
 		$(document).ready(function(){
 			$('#releasenote').modal('open');
 			verp=ver.replace( '(', '');
@@ -13,7 +13,7 @@ function verck(ver) {
 			verp=verp.replace( ']', '');
 			verp=verp.replace( ')', '');
 			verp=verp.replace( ' ', '_');
-			console.log(verp);
+			console.log("%c "+verp, "color: red;font-size:200%;");
 			if(lang.language=="ja"){
 				$("#release-"+verp).show();
 			}else{
@@ -106,7 +106,7 @@ function verck(ver) {
 		todo(error);
 		console.error(error);
 	}).then(function(mess) {
-		console.log(mess);
+		console.table(mess);
 		if (mess) {
 			var electron = require("electron");
 			var remote=electron.remote;
@@ -128,7 +128,7 @@ function verck(ver) {
 						var ipc = electron.ipcRenderer;
 						ipc.send('update', "true");
 					}else{
-						console.log(lang.lang_version_skipver);
+						console.warn(lang.lang_version_skipver);
 						todo(lang.lang_version_skipver);
 					}
 				}else{
@@ -141,9 +141,7 @@ function verck(ver) {
 	if(!localStorage.getItem("last-notice-id")){
 		localStorage.setItem("last-notice-id",0)
 	}
-	console.log(localStorage.getItem("last-notice-id"))
 	var start = "https://thedesk.top/notice?since_id="+localStorage.getItem("last-notice-id");
-	console.log(start);
 	fetch(start, {
 		method: 'GET'
 	}).then(function(response) {
@@ -152,7 +150,6 @@ function verck(ver) {
 		todo(error);
 		console.error(error);
 	}).then(function(mess) {
-		console.log(mess.length);
 		if(mess.length<1){
 			return false;
 		}else{
@@ -202,13 +199,11 @@ var infostreaming=false;
 function infowebsocket(){
 	infows = new WebSocket("wss://thedesk.top/ws/");
 	infows.onopen = function(mess) {
-		console.log(tlid + ":Connect Streaming Info:");
-		console.log(mess);
+		console.log([tlid,":Connect Streaming Info:",mess]);
 		infostreaming=true;
 	}
 	infows.onmessage = function(mess) {
-		console.log(":Receive Streaming:");
-		console.log(JSON.parse(mess.data));
+		console.log([tlid,":Receive Streaming:",JSON.parse(mess.data)]);
 		var obj=JSON.parse(mess.data);
 		if(obj.type!="counter"){
 			localStorage.setItem("last-notice-id",obj.id)
@@ -258,7 +253,22 @@ function infowebsocket(){
 }
 setInterval(function(){
     if(!infostreaming){
-		console.log("try to connect")
+		console.log("try to connect to base-streaming")
 		infowebsocket();
 	}
 }, 10000);
+function openRN(){
+	$('#releasenote').modal('open');
+	if(lang.language=="ja"){
+		verp=ver.replace( '(', '');
+			verp=verp.replace( '.', '-');
+			verp=verp.replace( '.', '-');
+			verp=verp.replace( '[', '-');
+			verp=verp.replace( ']', '');
+			verp=verp.replace( ')', '');
+			verp=verp.replace( ' ', '_');
+		$("#release-"+verp).show();
+	}else{
+		$("#release-en").show();
+	}
+}

@@ -28,7 +28,7 @@ function scrollck() {
 		var scrt = $(this).find(".tl").height() - $(window).height();
 		var scr = $(this).scrollTop();
 		if (scr > scrt) {
-			console.log("kicked");
+			console.log("kicked more loading:"+tlid);
 			moreload('', tlid);
 		}
 	});
@@ -44,7 +44,6 @@ function goColumn(key){
 	$("#sort-box").addClass("hide");
 	$("#sort-box").removeClass("show");
 	if($('[tlid='+key+']').length){
-		console.log($('[tlid='+key+']').offset().left);
 		$("#timeline-container").animate({scrollLeft:$("#timeline-container").scrollLeft()+$('[tlid='+key+']').offset().left});
 	}
 }

@@ -49,7 +49,6 @@ function vis(set){
 }
 function loadVis(){
 		var vist = localStorage.getItem("vis");
-		console.log(vist);
 		if (!vist) {
 			vis("public");
 		} else {
@@ -123,7 +122,6 @@ function schedule(){
 		
 		$("#sch-box").show();
 		$("#sch-date").val(formattime(date));
-		console.log(formattime(date));
 		$("#sch-box").addClass("sch-avail");
 	}
 }

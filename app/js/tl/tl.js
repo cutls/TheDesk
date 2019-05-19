@@ -7,7 +7,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	//タグとかの場合はカラム追加して描画
 	if (tlid == "add") {
-		console.log("add");
+		console.log("add new column");
 		var newtab = $(".box").length;
 		var add = {
 			domain: acct_id,
@@ -18,7 +18,6 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		var obj = JSON.parse(multi);
 		localStorage.setItem("card_" + obj.length, "true");
 		obj.push(add);
-		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("column", json);
 		parseColumn();
@@ -125,14 +124,14 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		};
 	}
 
-	console.log(start);
+	console.log(["Try to get timeline of "+tlid,start])
 	fetch(start, i).then(function (response) {
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
 		console.error(error);
 	}).then(function (json) {
-		console.log(json)
+		console.log(["Result of getting timeline of "+tlid,json])
 		$("#landing_" + tlid).hide();
 		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
 			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
@@ -213,18 +212,15 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			var start = wss +
 				"/api/v1/streaming/?stream=direct&access_token=" + at;
 		}
-		console.log(start);
 		var wsid = websocket.length;
 		localStorage.setItem("wss_" + tlid, wsid);
 		websocket[wsid] = new WebSocket(start);
 		websocket[wsid].onopen = function (mess) {
-			console.log(tlid + ":Connect Streaming API:" + type);
-			console.log(mess);
+			console.table({"tlid":tlid,"type":"Connect Streaming API"+type,"domain":domain,"message":[mess]})
 			$("#notice_icon_" + tlid).removeClass("red-text");
 		}
 		websocket[wsid].onmessage = function (mess) {
-			console.log(tlid + ":Receive Streaming API:");
-			console.log(JSON.parse(mess.data));
+			console.log([tlid + ":Receive Streaming API:",JSON.parse(mess.data)]);
 			if (misskey) {
 				if (JSON.parse(mess.data).type == "note") {
 					var obj = JSON.parse(mess.data).body;
@@ -267,7 +263,6 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 				} else if (typeA == "update" || typeA == "conversation") {
 					localStorage.removeItem("delete");
 					var obj = JSON.parse(JSON.parse(mess.data).payload);
-					console.log(obj);
 					if ($("#timeline_" + tlid + " [toot-id=" + obj.id + "]").length < 1) {
 						if (voice) {
 							say(obj.content)
@@ -315,8 +310,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			return false;
 		};
 		websocket[wsid].onclose = function () {
-			console.log("Closing");
-			console.log(tlid);
+			console.warn("Closing "+tlid);
 			if (mode == "error") {
 				$("#notice_icon_" + tlid).addClass("red-text");
 				todo('WebSocket Closed');
@@ -431,7 +425,6 @@ function moreload(type, tlid) {
 			todo(error);
 			console.error(error);
 		}).then(function (json) {
-			console.log(json);
 			if (misskey) {
 				var templete = misskeyParse(json, '', acct_id, tlid, "", mute);
 			} else {
@@ -447,7 +440,7 @@ function moreload(type, tlid) {
 }
 //TL差分取得
 function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
-	console.log("sabun")
+	console.log("Get diff of TL"+tlid)
 	var multi = localStorage.getItem("column");
 	var obj = JSON.parse(multi);
 	var acct_id = obj[tlid].domain;
@@ -540,7 +533,7 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 			todo(error);
 			console.error(error);
 		}).then(function (json) {
-			console.log(json);
+			console.log(["Result diff of TL"+tlid,json]);
 			if (misskey) {
 				var templete = misskeyParse(json, '', acct_id, tlid, "", mute);
 			} else {
@@ -564,12 +557,12 @@ function tlCloser() {
 	Object.keys(websocket).forEach(function (tlid) {
 		if (websocketOld[tlid]) {
 			websocketOld[tlid].close();
-			console.log("Close Streaming API: Old" + tlid);
+			console.log("%c Close Streaming API: Old" + tlid,"color:blue");
 		}
 		if (websocket[0]) {
 			console.log(websocket[0]);
 			websocket[tlid].close();
-			console.log("Close Streaming API:" + tlid);
+			console.log("%c Close Streaming API:" + tlid,"color:blue");
 		}
 
 	});
@@ -577,7 +570,7 @@ function tlCloser() {
 	Object.keys(websocketHome).forEach(function (tlid) {
 		if (websocketHome[tlid]) {
 			websocketHome[tlid].close();
-			console.log("Close Streaming API:MixHome" + tlid);
+			console.log("%c Close Streaming API:Integrated Home" + tlid,"color:blue");
 		}
 
 	});
@@ -585,7 +578,7 @@ function tlCloser() {
 	Object.keys(websocketLocal).forEach(function (tlid) {
 		if (websocketLocal[tlid]) {
 			websocketLocal[tlid].close();
-			console.log("Close Streaming API:MixLocal" + tlid);
+			console.log("%c Close Streaming API:Integrated Local" + tlid,"color:blue");
 		}
 
 	});
@@ -593,14 +586,14 @@ function tlCloser() {
 	Object.keys(websocketNotf).forEach(function (tlid) {
 		if (websocketNotf[tlid]) {
 			websocketNotf[tlid].close();
-			console.log("Close Streaming API:Notf" + tlid);
+			console.log("%c Close Streaming API:Notf" + tlid,"color:blue");
 		}
 
 	});
 	Object.keys(misskeyws).forEach(function (tlid) {
 		if (misskeyws[tlid]) {
 			misskeyws[tlid].close();
-			console.log("Close Streaming API:Misskey" + tlid);
+			console.log("%c Close Streaming API:Misskey" + tlid,"color:blue");
 		}
 	});
 	misskeyws={}
@@ -789,7 +782,7 @@ function strAliveInt() {
 	setTimeout(strAlive, 10000);
 }
 function reconnector(tlid, type, acct_id, data, mode) {
-	console.log("Reconnector:" + mode)
+	console.log("%c Reconnector:" + mode+"(timeline"+tlid+")","color:pink")
 	if (type == "mix" || type == "integrated" || type == "plus") {
 		if (localStorage.getItem("voice_" + tlid)) {
 			var voice = true;

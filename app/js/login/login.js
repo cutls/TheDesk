@@ -40,6 +40,7 @@ if (obj[0].domain) {
 		ticker();
 		multiSelector();
 		verck(ver);
+		$("#something-wrong img").attr("src","../../img/thinkingdesk.png")
 	}
 }
 }
@@ -68,7 +69,6 @@ function login(url) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
 			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 				"client_id"] + "&client_secret=" + json["client_secret"] +
 			"&response_type=code&redirect_uri="+red+"&scope=read+write+follow";
@@ -162,7 +162,6 @@ function getdata() {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
 			Materialize.toast(lang.lang_fatalerroroccured+"Error:" + json.error,
@@ -184,7 +183,6 @@ function getdata() {
 			vis: json["source"]["privacy"]
 		}];
 		var json = JSON.stringify(obj);
-		console.log(obj);
 		localStorage.setItem("multi", json);
 		localStorage.setItem("name_" + acct_id, json["display_name"]);
 		localStorage.setItem("user_" + acct_id, json["acct"]);
@@ -212,7 +210,6 @@ function getdataAdv(domain, at) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
 			Materialize.toast(lang.lang_fatalerroroccured+"Error:" + json.error,
@@ -246,7 +243,6 @@ function getdataAdv(domain, at) {
 		localStorage.setItem("user_" + target, json["acct"]);
 		localStorage.setItem("user-id_" + target, json["id"]);
 		localStorage.setItem("prof_" + target, avatar);
-		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
 		location.href="index.html";
@@ -261,7 +257,6 @@ function refresh(target,loadskip) {
 	}
 	var start = "https://" + obj[target].domain +
 		"/api/v1/accounts/verify_credentials";
-		console.log(start);
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -274,7 +269,6 @@ function refresh(target,loadskip) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if (json.error) {
 			console.error("Error:" + json.error);
 			Materialize.toast(lang.lang_fatalerroroccured+"Error:" + json.error,
@@ -298,8 +292,6 @@ function refresh(target,loadskip) {
 		localStorage.setItem("name_" + target, json["display_name"]);
 		localStorage.setItem("user_" + target, json["acct"]);
 		localStorage.setItem("user-id_" + target, json["id"]);
-		console.log("user-id_" + target+":"+json["id"])
-		console.log(localStorage.getItem("user-id_"+target));
 		localStorage.setItem("prof_" + target, avatar);
 		localStorage.setItem("follow_" + target, json["following_count"]);
 		obj[target] = ref;
@@ -359,7 +351,6 @@ function ckdb(acct_id) {
 				localStorage.removeItem("bb_" + acct_id);
 			}
 			if(json[domain + "_home"]){
-				console.log("unique name:"+json[domain + "_home"]);
 				localStorage.setItem("home_" + acct_id, json[domain + "_home"]);
 			}
 			if(json[domain + "_local"]){
@@ -396,8 +387,8 @@ function ckdb(acct_id) {
 		}).catch(function(error) {
 			console.error(error);
 		}).then(function(json) {
-			console.log(json);
 			if (json.error) {
+				console.error(json.error);
 				return;
 			}
 			if(json){
@@ -461,12 +452,10 @@ function multiSelector() {
 			}
 			var profimg = acct.prof;
 			localStorage.setItem("prof_" + key, profimg);
-			console.log(profimg);
 			if(!profimg){
 				profimg="../../img/missing.svg";
 			}
 			$("#acct-sel-prof").attr("src",profimg);
-			console.log(domain);
 			if(domain){
 				var cc="("+domain+")";
 			}else{

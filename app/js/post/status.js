@@ -68,7 +68,7 @@ function rt(id, acct_id, remote) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: boost",json]);
 			if (remote != "remote") {
 				$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
 				if (!json.reblog) {
@@ -128,7 +128,6 @@ function follow(acct_id,remote) {
 		var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
 		var ent={}
 	}
-	console.log(ent);
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
@@ -138,7 +137,7 @@ function follow(acct_id,remote) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: folllow",json]);
 			if ($("#his-data").hasClass("following")) {
 				$("#his-data").removeClass("following");
 				$("#his-follow-btn").text(lang.lang_status_follow);
@@ -266,7 +265,7 @@ function redraft(id, acct_id){
 		$("[toot-id="+id+"] img.toot-img").each(function(i, elem) {
 			if(i<ct){
 				var url=$(elem).attr("src");
-				console.log(url);
+				console.log("Play back image data:"+url);
 				$('#preview').append('<img src="' + url + '" style="width:50px; max-height:100px;">');
 			}
 		});
@@ -307,7 +306,7 @@ function pin(id, acct_id) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: pinned",json]);
 			if ($("[toot-id=" + id + "]").hasClass("pined")) {
 				$("[toot-id=" + id + "]").removeClass("pined");
 				$(".pin_" + id).removeClass("blue-text");
@@ -333,7 +332,7 @@ function request(id, flag, acct_id) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: request","type:"+flag,json]);
 			showReq();
 		}
 	}
@@ -356,7 +355,7 @@ function domainblock(add, flag, acct_id) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: domain block",json]);
 			showDom();
 		}
 	}
@@ -371,7 +370,6 @@ function empUser(){
 	var usr = localStorage.getItem("user_emp");
 	var obj = JSON.parse(usr);
 	var id=$("#his-acct").attr("fullname");
-	console.log(id);
 	if(!obj){
 		var obj=[];
 		obj.push(id);
@@ -413,7 +411,6 @@ function pinUser(){
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
 			if ($("#his-end-btn").hasClass("endorsed")) {
 				$("#his-end-btn").removeClass("endorsed")
 				$("#his-end-btn").text(lang.lang_status_endorse)

@@ -3,7 +3,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 	var templete = '';
 	if(obj[0]){
 		if(tlid===1){
-			console.log("testalive:"+"lastunix_"+ tlid+":"+date(obj[0].created_at, 'unix'))
+			
 		}
 		localStorage.setItem("lastunix_"+ tlid,date(obj[0].created_at, 'unix'));
 	}
@@ -886,7 +886,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	var datetype = localStorage.getItem("datetype");
 	Object.keys(obj).forEach(function(key) {
 		var toot = obj[key];
-		console.log(toot)
+		console.log(["Parsing",toot])
 		if(!toot.username){
 			var raw=toot;
 			toot=toot.account;

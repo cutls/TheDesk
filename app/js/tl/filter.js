@@ -114,7 +114,6 @@ function filter(){
     var domain = localStorage.getItem("domain_" + acct_id);
     var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/filters"
-	console.log(start)
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -127,7 +126,6 @@ function filter(){
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if (json) {
 			var filters = "";
 			Object.keys(json).forEach(function(key) {
@@ -167,7 +165,6 @@ function makeNewFilter(){
 	if($("#conv_filter:checked").val()){
 		cont.push("thread");
 	}
-	console.log(cont);
 	if(!cont.length){
 		$("#filtered-words").html('Error:'+lang.lang_filter_errordegree);
 	}
@@ -235,7 +232,6 @@ function filterEdit(id,acct_id){
 	var domain = localStorage.getItem("domain_" + acct_id);
     var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/filters/"+id
-	console.log(start)
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -248,7 +244,6 @@ function filterEdit(id,acct_id){
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if (json) {
 			var now = new Date() ;
 			now = now.getTime() ;
@@ -297,7 +292,6 @@ function getFilter(acct_id){
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	if(localStorage.getItem("mode_" + domain)!="misskey"){
     var start = "https://" + domain + "/api/v1/filters"
-	console.log(start)
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -341,7 +335,6 @@ function filterUpdate(acct_id){
 	var domain = localStorage.getItem("domain_" + acct_id);
     var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/filters"
-	console.log(start)
 	fetch(start, {
 		method: 'GET',
 		headers: {

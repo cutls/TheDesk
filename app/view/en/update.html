@@ -113,6 +113,7 @@ function skipper(){
 }
 var electron = require("electron");
 var ipc = electron.ipcRenderer;
+const shell=electron.shell;
 verck();
 function update(sel){
     $("#box").toggleClass("show");
@@ -158,7 +159,7 @@ function update(sel){
             }
         }else if(sel=="mac"){
             var url=json["mac"];
-            var file="TheDesk-darwin-x64.zip";
+            shell.openExternal(url);
         }
         ipc.send('download-btn', [url,file]);
     });

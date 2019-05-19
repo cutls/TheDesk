@@ -40,7 +40,7 @@ function details(id, acct_id, tlid, mode) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
+		console.log(["Toot data:",json]);
 		if(!$("#timeline_"+tlid+" #pub_" + id).length){
 			var html = parse([json], '', acct_id);
 			$("#toot-this").html(html);
@@ -208,7 +208,6 @@ function context(id, acct_id) {
 	}).then(function(json) {
 		if(localStorage.getItem("mode_" + domain)=="misskey"){
 			json.reverse();
-			console.log(json);
 			var templete = misskeyParse(json, '', acct_id,"","",[]);
 			$("#toot-reply").html(templete);
 			$("#toot-reply .hide").html(lang.lang_details_filtered);
@@ -482,7 +481,7 @@ function staCopy(id){
 	html = html.replace(/<br\s?\/?>/, "\n");
 	html = html.replace(/<p>/, "\n");
 	html = html.replace(/<\/p>/, "\n");
-	console.log(html);
+	console.log("Copy it:\n"+html);
 	html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, "$1");
 	html=$.strip_tags(html);
 	if(execCopy(html)){
@@ -505,7 +504,7 @@ function trans(tar,to){
 	}
 	$("#toot-this .additional").text("Loading...(Powered by Google Translate)");
 	var exec='https://script.google.com/macros/s/AKfycbxhwW5tjjop9Irg-y1zr_WsXlCKEzwWG6KuoOt_vVRDfEbRv0c/exec?format=json&text='+encodeURIComponent(html)+'&source='+tar+'&target='+to
-	console.log(exec);
+	console.log("Try to translate from "+tar+" to "+to+" at "+exec);
 	fetch(exec, {
 		method: 'GET',
 	}).then(function(response) {

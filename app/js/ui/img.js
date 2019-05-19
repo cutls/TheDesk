@@ -59,7 +59,6 @@ function imgv(id, key, acct_id) {
 					$("#imagemodal").css("width",width+"px")
 				}
 			}else{
-				console.log("long")
 				$("#imagemodal img").css("width","auto")
 				var widthS=windowH/height*width;
 				if(widthS<windowW){
@@ -149,7 +148,6 @@ function imgCont(type) {
 					$("#imagemodal").css("width",width+"px")
 				}
 			}else{
-				console.log("long")
 				$("#imagemodal img").css("width","auto")
 				var widthS=windowH/height*width;
 				if(widthS<windowW){
@@ -167,7 +165,6 @@ function imgCont(type) {
 		} else {
 			$("#image-next").prop("disabled", false);
 		}
-		console.log("#" + id + "-image-" + (key * 1 - 1));
 		if ($("#" + id + "-image-" + (key * 1 - 1)).length === 0) {
 			$("#image-prev").prop("disabled", true);
 		} else {
@@ -231,7 +228,6 @@ function zoom(z) {
 		$(this).on('touchmove', function(event) {
 			if ($(target).data('down') === true) {
 				// スクロール
-				console.log($(target).data('x'));
 				target.scrollLeft($(target).data('scrollLeft') + $(target).data('x') -
 					getX(event));
 				target.scrollTop($(target).data('scrollTop') + $(target).data('y') -
@@ -284,7 +280,7 @@ function dlImg(){
 	}
 	ipc.send('general-dl', [url,save,false]);
 	ipc.on('general-dl-prog', function (event, arg) {
-		console.log(arg);
+		console.log("Progress: "+arg);
 	})
 	ipc.on('general-dl-message', function (event, arg) {
 		var argC=arg.replace(/\\/g,"\\\\")+"\\\\.";

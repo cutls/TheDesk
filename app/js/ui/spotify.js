@@ -79,7 +79,7 @@ function nowplaying(mode){
             todo(error);
             console.error(error);
         }).then(function(json) {
-            console.log(json);
+            console.table(json);
             if(json.length<1){
                 return false;
             }
@@ -133,7 +133,7 @@ function nowplaying(mode){
               console.error(arg);
               return;
             }
-            console.log(arg);
+            console.table(arg);
             var content=localStorage.getItem("np-temp");
             if(!content || content=="" || content=="null"){
                 var content="#NowPlaying {song} / {album} / {artist}\n{url}";

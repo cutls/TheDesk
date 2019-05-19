@@ -25,13 +25,12 @@ function pollCalc(){
     var days=$("#days_poll").val();
     var hrs=$("#hours_poll").val();
     var mins=$("#mins_poll").val();
-    console.log(days*86400+hrs*3600+mins*60)
+    console.log("Poll calc:"+days*86400+hrs*3600+mins*60)
     return days*86400+hrs*3600+mins*60;
 
 }
 //Vote
 function voteSelMastodon(acct_id,id,to,mul){
-    console.log('.vote_'+acct_id+'_'+id+'_'+to);
     if($('.vote_'+acct_id+'_'+id+'_'+to).hasClass("sel")){
         $('.vote_'+acct_id+'_'+id+'_'+to).css("background-color","transparent")
         $('.vote_'+acct_id+'_'+id+'_'+to).removeClass("sel");
@@ -95,7 +94,7 @@ function voteMastodonrefresh(acct_id,id){
     httpreqd.onreadystatechange = function() {
 		if (httpreqd.readyState == 4) {
             var json = httpreqd.response;
-            console.log(json);
+            console.log(["Refresh vote",json]);
             if(!json){
                 return false;
             }

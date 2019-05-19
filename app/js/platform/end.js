@@ -21,7 +21,6 @@
 			ats = url.match(
 				/https:\/\/([-a-zA-Z0-9.]+)\/@([-_.!~*\'()a-zA-Z0-9;\/?:\&=+\$,%#@]+)/
 			);
-		console.log(toot);
 		if(toot){
 			if(toot[1]){
 				var acct_id=$a.parent().attr("data-acct");
@@ -42,7 +41,6 @@
 				tl('tag',decodeURI(tags[2]),acct_id,'add')
 			}
 		}else if(ats){
-			console.log(ats);
 			if(ats[2]){
 				//Quesdon判定
 				if(!~ats[2].indexOf("@")){
@@ -81,39 +79,6 @@
   });
   
   //よく使うライブラリ
-  /*マルチバイト用切り出し*/
-  $.isSurrogatePear = function(upper, lower) {
-  	return 0xD800 <= upper && upper <= 0xDBFF && 0xDC00 <= lower && lower <= 0xDFFF;
-  };
-  $.mb_strlen = function(str) {
-  	var ret = 0;
-  	for (var i = 0; i < str.length; i++, ret++) {
-  		var upper = str.charCodeAt(i);
-  		var lower = str.length > (i + 1) ? str.charCodeAt(i + 1) : 0;
-  		if ($.isSurrogatePear(upper, lower)) {
-  			i++;
-  		}
-  	}
-  	return ret;
-  };
-  $.mb_substr = function(str, begin, end) {
-  	var ret = '';
-  	for (var i = 0, len = 0; i < str.length; i++, len++) {
-  		var upper = str.charCodeAt(i);
-  		var lower = str.length > (i + 1) ? str.charCodeAt(i + 1) : 0;
-  		var s = '';
-  		if ($.isSurrogatePear(upper, lower)) {
-  			i++;
-  			s = String.fromCharCode(upper, lower);
-  		} else {
-  			s = String.fromCharCode(upper);
-  		}
-  		if (begin <= len && len < end) {
-  			ret += s;
-  		}
-  	}
-  	return ret;
-  };
 
   //コピー
   function execCopy(string){
@@ -132,7 +97,7 @@ function nano(){
 function progshow(e) {
 	if (e.lengthComputable) {
 	  var percent = e.loaded / e.total;
-	  console.log(percent * 100);
+	  console.log("Progress: "+percent * 100);
 	  $("#imgsel").hide();
 	  if(percent<1){
 		 $("#imgup").text(Math.floor(percent*100)+"%");
@@ -187,7 +152,7 @@ function playSound() {
 	context = new AudioContext();
 	context.createBufferSource().start(0);
 	context.decodeAudioData(request.response, function (buf) {
-		console.log(source)
+		console.log("Playing:"+source)
 		source.buffer = buf;
 		source.loop = false;
 	});
@@ -196,6 +161,5 @@ function playSound() {
 	source.connect(volumeControl);
 	volumeControl.connect(context.destination);
 	volumeControl.gain.value=0.8
-	console.log(volumeControl)
 	source.start(0);
 }

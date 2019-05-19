@@ -857,7 +857,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 
 //オブジェクトパーサー(ユーザーデータ)
 function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
-	console.log(obj)
+	console.log(["Parse them ",obj])
 	if (popup > 0 || popup == -1) {
 
 	} else {
@@ -984,15 +984,14 @@ function connectMisskey(acct_id) {
 	localStorage.setItem("misskey_wss_" + acct_id, wsid);
 	misskeyws[wsid] = new WebSocket(start);
 	misskeyws[wsid].onopen = function (mess) {
-		console.log(tlid + ":Connect Streaming API:"+domain);
-		console.log(mess);
+		console.table({"tlid":tlid,"type":"Connect Streaming API","domain":domain,"message":[mess]})
 		misskeywsstate[wsid]=true
 		//$("#notice_icon_" + tlid).removeClass("red-text");
 		var send='{"type":"connect","body":{"channel":"main","id":"notf:'+acct_id+'"}}'
 		misskeyws[wsid].send(send)
 	}
 	misskeyws[wsid].onmessage = function (mess) {
-		console.log(acct_id + ":Receive Streaming API:");
+		console.log([domain + ":Receive Streaming API:",data]);
 		var data=JSON.parse(mess.data)
 		var obj=data.body.body
 		
@@ -1010,7 +1009,7 @@ function connectMisskey(acct_id) {
 				templete = misskeyUserparse([obj.body], 'notf', acct_id, 'notf', popup);
 			}
 			if(JSON.parse(mess.data).body.type=="reaction"){
-				console.log("refresh")
+				console.log("reaction refresh")
 				reactRefresh(acct_id,obj.body.note.id)
 			}
 			if(!$("div[data-notfIndv=" + acct_id +"_"+obj.body.id+"]").length){
@@ -1048,7 +1047,6 @@ function connectMisskey(acct_id) {
 				jQuery("time.timeago").timeago();
 			}else if (data.type == "noteUpdated") {
 				if(data.body.type=="reacted"){
-					console.log(data.body.id)
 					reactRefresh(acct_id,data.body.id)
 				}else if(data.body.type=="deleted"){
 					$("#pub_"+data.body.id).hide();
@@ -1058,15 +1056,14 @@ function connectMisskey(acct_id) {
 			}
 	}
 	misskeyws[wsid].onerror = function (error) {
-		console.error("Error closing");
+		console.error("Error closing "+tlid);
 		console.error(error);
 		misskeywsstate[wsid]=false
 		connectMisskey(acct_id)
 		return false;
 	};
 	misskeyws[wsid].onclose = function () {
-		console.log("Closing");
-		console.log(tlid);
+		console.warn("Closing "+tlid);
 		misskeywsstate[wsid]=false
 		connectMisskey(acct_id)
 		return false;

@@ -14,7 +14,6 @@ function tl(data) {
 	$("#notice_nano").text(cap(type, data) + " TL(" + localStorage.getItem(
 		"user_" + acct_id) + "@" + domain + ")");
 	var start = "https://" + domain + "/api/v1/timelines/" + com(type, data);
-	console.log(start);
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -46,17 +45,12 @@ var websocket=[];
 		var start = "wss://" + domain +
 			"/api/v1/streaming/?stream=hashtag&tag=" + data +"&access_token=" + at;
 	} 
-	console.log(start);
 	var wsid = websocket.length;
 	websocket[wsid] = new WebSocket(start);
 	websocket[wsid].onopen = function(mess) {
-		console.log(tlid + ":Connect Streaming API:" + type);
-		console.log(mess);
 		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocket[wsid].onmessage = function(mess) {
-		console.log(tlid + ":Receive Streaming API:");
-		console.log(websocket[wsid]);
 		var typeA = JSON.parse(mess.data).event;
 		if (typeA == "delete") {
 			var obj = JSON.parse(mess.data).payload;
@@ -64,12 +58,11 @@ var websocket=[];
 			$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 		} else if (typeA == "update") {
 			var obj = JSON.parse(JSON.parse(mess.data).payload);
-			console.log(obj);
             var templete = parse([obj], '', acct_id, tlid);
             $("#timeline_nano").html(templete);
 		}
 		websocket[wsid].onclose = function(mess) {
-			console.log("Close Streaming API:" + type);
+			console.error("Close Streaming API:" + type);
 		}
 	}
 	websocket[wsid].onerror = function(error) {

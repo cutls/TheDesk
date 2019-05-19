@@ -68,7 +68,7 @@ input.addEventListener("focus", function() {
 			var at = localStorage.getItem("acct_"+ acct_id + "_at");
 			suggest = "https://" + domain + "/api/v1/search?q=" + q
 			if (suggest != oldSuggest) {
-				console.log(suggest)
+				console.log("Try to get suggest at "+suggest)
 				fetch(suggest, {
 					method: 'GET',
 					headers: {
@@ -152,7 +152,7 @@ function tagInsert(code, del) {
 function cgNPs(q){
 	suggest = "https://cg.toot.app/api/v1/search/light?q=" + q
 			if (suggest != oldSuggest) {
-				console.log(suggest)
+				console.log("Try to get suggest at "+suggest)
 				fetch(suggest, {
 					method: 'GET',
 					headers: {
@@ -164,7 +164,6 @@ function cgNPs(q){
 					todo(error);
 					console.error(error);
 				}).then(function(json) {
-					console.log(json);
 					if (json[0]) {
 						var tags = "";
 						Object.keys(json).forEach(function(key4) {

@@ -538,9 +538,8 @@ function showFrl(more, acct_id) {
 		$("#his-follow-recom-contents").html(lang.lang_details_nodata+"("+lang.lang_hisdata_frcreq+")<br>");
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if(!json[0]){
-			console.log("No data");
+			console.warn("No suggestions(recommend) data");
 			templete=lang.lang_details_nodata+"("+lang.lang_hisdata_frcwarn+")<br>";
 		}else{
 			var templete = userparse(json,'',acct_id);
@@ -608,7 +607,6 @@ function showMat() {
 	var acct_id=$("#his-data").attr("use-acct");
 	full=full.split("@");
 	var start = "https://vinayaka.distsn.org/cgi-bin/vinayaka-user-match-filtered-api.cgi?"+full[1]+"+" + full[0];
-	console.log(start);
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -621,7 +619,6 @@ function showMat() {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		var templete="";
 		Object.keys(json).forEach(function(key) {
 			var user = json[key];

@@ -147,7 +147,7 @@ function notfCommon(acct_id, tlid, sys) {
 		}
 	}
 	fetch(start, i).then(function(response) {
-		console.log(response.headers.get('link'));
+		console.log("header to get param:"+response.headers.get('link'));
 		return response.json();
 	}).catch(function(error) {
 		todo(error);
@@ -218,25 +218,20 @@ function notfWS(misskey,acct_id,tlid,domain,at){
 		var start = wss + "/api/v1/streaming/?stream=user&access_token=" +
 		at;
 
-	console.log(start);
 	var wsid = websocketNotf.length;
 	websocketNotf[acct_id] = new WebSocket(start);
-	console.log(websocketNotf);
 	websocketNotf[acct_id].onopen = function(mess) {
-		console.log("Connect Streaming API(Notf):");
-		console.log(mess);
+		console.table({"acct_id":acct_id,"type":"Connect Streaming API(Notf)","domain":domain,"message":[mess]})
 		$("i[data-notf=" + acct_id +"]").removeClass("red-text");
 
 	}
 	websocketNotf[acct_id].onmessage = function(mess) {
-		console.log("Receive Streaming API(Notf):"+acct_id);
+		console.log(["Receive Streaming API(Notf):"+acct_id+"("+domain+")",JSON.parse(JSON.parse(mess.data).payload)]);
 		var popup = localStorage.getItem("popup");
 			if (!popup) {
 				popup = 0;
 			}
-			console.log(domain)
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
-		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "notification") {
 			var templete="";
@@ -264,8 +259,7 @@ function notfWS(misskey,acct_id,tlid,domain,at){
 }
 //一定のスクロールで発火
 function notfmore(tlid) {
-	console.log(moreloading);
-	console.log("kicked");
+	console.log({"status":"kicked","status":moreloading});
 	var multi = localStorage.getItem("column");
 	var obj = JSON.parse(multi);
 	var acct_id = obj[tlid].domain;
@@ -308,7 +302,7 @@ function notfmore(tlid) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["More notifications on "+tlid,json]);
 			var max_id = httpreq.getResponseHeader("link").match(/[?&]{1}max_id=([0-9]+)/)[1];
 			if(json[0]){
 				var templete="";
@@ -392,12 +386,10 @@ function notfCanceler(acct){
 	$(".notf-icon_" + acct).removeClass("red-text");
 }
 function allNotfRead(){
-	console.log(localStorage.getItem("notf-fav_2"));
 	var multi = localStorage.getItem("multi");
 	if (multi) {
 		var obj = JSON.parse(multi);
 	Object.keys(obj).forEach(function(key) {
-		console.log(key);
 		notfCanceler(key)
 	});
 }

@@ -31,7 +31,7 @@ function src(mode) {
 	}else{
 		var start = "https://" + domain + "/api/v1/search?q=" + q
 	}
-	console.log(start)
+	console.log("Try to search at "+start)
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -44,7 +44,7 @@ function src(mode) {
 		src("v1")
 		return false;
 	}).then(function(json) {
-		console.log(json);
+		console.log(["Search",json]);
 		//ハッシュタグ
 		if (json.hashtags[0]) {
 			var tags = "";
@@ -83,14 +83,13 @@ function tsAdd(q){
 		var obj = JSON.parse(multi);
 		localStorage.setItem("card_" + obj.length,"true");
 		obj.push(add);
-		console.log(obj);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("column", json);
 		parseColumn();
 }
 function tootsearch(tlid,q){
 	var start = "https://tootsearch.chotto.moe/api/v1/search?from=0&sort=created_at%3Adesc&q=" + q
-	console.log(start)
+	console.log("Toot srrach at "+start)
 	$("#notice_" + tlid).text("tootsearch("+q+")");
 	$("#notice_icon_" + tlid).text("search");
 	fetch(start, {
@@ -106,13 +105,10 @@ function tootsearch(tlid,q){
 	}).then(function(raw) {
 			var templete="";
 			var json=raw.hits.hits;
-			console.log(json);
 			var max_id = raw["hits"].length;
 			for(var i=0;i<json.length;i++){
 				var toot = json[i]["_source"];
-				console.log(lastid)
 				if(lastid!=toot.uri){
-					console.log(toot);
 					if(toot && toot.account){
 						templete = templete+parse([toot], "noauth", null, tlid, 0, [], "tootsearch")
 					}
@@ -133,7 +129,6 @@ function moreTs(tlid,q){
 	var sid = $("#timeline_" + tlid + " .ts-marker").last().attr("data-maxid");
 	moreloading=true;
 	var start = "https://tootsearch.chotto.moe/api/v1/search?from="+sid+"&sort=created_at%3Adesc&q=" + q
-	console.log(start)
 	$("#notice_" + tlid).text("tootsearch("+q+")");
 	$("#notice_icon_" + tlid).text("search");
 	fetch(start, {
@@ -149,13 +144,10 @@ function moreTs(tlid,q){
 	}).then(function(raw) {
 			var templete="";
 			var json=raw.hits.hits;
-			console.log(json);
 			var max_id = raw["hits"].length;
 			for(var i=0;i<json.length;i++){
 				var toot = json[i]["_source"];
-				console.log(lastid)
 				if(lastid!=toot.uri){
-					console.log(toot);
 					if(toot && toot.account){
 						templete = templete+parse([toot], "noauth", null, tlid, 0, [], "tootsearch")
 					}
@@ -175,7 +167,6 @@ function moreTs(tlid,q){
 function graphDraw(tag){
 	var tags="";
 		var his=tag.history;
-		console.log(his);
 		var max=Math.max.apply(null, [his[0].uses,his[1].uses,his[2].uses,his[3].uses,his[4].uses,his[5].uses,his[6].uses]);
 		var six=50-(his[6].uses/max*50);
 		var five=50-(his[5].uses/max*50);

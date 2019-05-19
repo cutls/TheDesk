@@ -30,7 +30,7 @@ function imgChange(imgfile, target) {
 	var acct_id = $('#his-data').attr("use-acct");
 	todo("アップロードしています")
 	if (!imgfile.files.length) {
-		console.log("No Img");
+		console.warn("No Image to upload");
 		return;
 	}
 	var file = imgfile.files[0];
@@ -52,7 +52,6 @@ function imgChange(imgfile, target) {
    		httpreq.onreadystatechange = function() {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
-				console.log(json);
 				$('#his-data').modal('close');
 				todc();
 				localStorage.removeItem("image");

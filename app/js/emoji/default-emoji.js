@@ -42,7 +42,6 @@ function defaultEmoji(target){
     });
     $("#emoji-list").html(emojis);
     $("#now-emoji").text(lang.lang_defaultemojis_text.replace("{{cat}}" ,defaultemojiname[target]));
-    console.log(target);
     $(".emoji-control").addClass("hide");
 }
 function customEmoji(){
@@ -60,7 +59,6 @@ function defEmoji(target){
     }else{
         emoji=twemoji.convert.fromCodePoint(hex[0]);
     }
-    console.log(emoji)
     var now = $("#textarea").val();
     var selin = localStorage.getItem("cursor");
     var now = $("#textarea").val();
@@ -71,7 +69,6 @@ function defEmoji(target){
             }else{
         newt = emoji+now;
         }
-        console.log(emoji);
         $("#textarea").val(newt);
         $("#textarea").focus();
         var selin = $("#textarea").prop('selectionStart');
@@ -82,7 +79,6 @@ function defEmoji(target){
 }
 function faicon(){
     var json=faicons;
-    console.log(json);
     var emojis="";
     Object.keys(json).forEach(function(key) {
         var emoji = json[key];

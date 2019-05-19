@@ -141,7 +141,6 @@ function climute(){
 			return;
 		}
 	var templete;
-	console.log(obj)
 	Object.keys(obj).forEach(function(key) {
 		var cli = obj[key];
 		var list = key * 1 + 1;
@@ -233,7 +232,6 @@ function exportSettings(){
 		properties: ['openFile', 'createDirectory'],
 		defaultPath: "export.thedeskconfigv2"
 	}, (savedFiles) => {
-		console.log(savedFiles);
 		if(!savedFiles){
 			return false;
 		}
@@ -294,7 +292,6 @@ function exportSettings(){
 		var tagarr = localStorage.getItem("tag");
 		var favtag = JSON.parse(tagarr);
 		exp.favoriteTags=favtag;
-		console.log(exp);
 		ipc.send('export', [savedFiles,JSON.stringify(exp)]);
 		alert("Done.")
 		//cards
@@ -316,7 +313,6 @@ function importSettings(){
 			{name: 'TheDesk Config', extensions: ['thedeskconfig','thedeskconfigv2']},
 		]
 	}, (fileNames) => {
-		console.log(fileNames);
 		if(!fileNames){
 			return false;
 		}
@@ -363,7 +359,6 @@ function importSettings(){
 					//Version 1
 					localStorage.setItem("theme",obj.theme);
 					if(obj.width){
-						console.log(obj.width)
 						localStorage.setItem("width",obj.width);
 					}
 					if(obj.font){
@@ -552,7 +547,6 @@ function deleteIt(){
 function ctLoad(){
 	ipc.send('theme-json-list', "");
 	ipc.on('theme-json-list-response', function (event, args) {
-		console.log(args);
 		var templete="";
 		Object.keys(args).forEach(function(key) {
 			var theme = args[key];
@@ -596,7 +590,6 @@ function custom(){
 		$("#delTheme").removeClass("disabled")
 		ipc.send('theme-json-request', id);
 		ipc.on('theme-json-response', function (event, args) {
-			console.log(args);
 			$("#custom_name").val(args.name);
 			$("#custom_desc").val(args.desc);
 			$("#"+args.base).prop("checked", true);
@@ -633,7 +626,6 @@ function customImp(){
 	}
 }
 function hardwareAcceleration(had){
-	console.log("ha");
 	ipc.send('ha', had);
 }
 

@@ -99,8 +99,6 @@ a,button{
     var electron = require("electron");
     var remote=electron.remote;
     const shell=electron.shell;
-    //JSON.parse(fs.readFileSync(info_path, 'utf8'));
-    console.log(process.versions);
     $("#node").text(process.version);
     $("#chrome").text(process.versions.chrome);
     $("#electron").text(process.versions.electron);

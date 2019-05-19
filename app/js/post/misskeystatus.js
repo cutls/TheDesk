@@ -17,7 +17,7 @@ function renote(id, acct_id, remote) {
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
             var json = httpreq.response;
-            console.log(json);
+            console.log(["Success: renote",json]);
             $("[toot-id=" + id + "]").addClass("rted");
             $(".rt_"+id).toggleClass("teal-text");
 		}
@@ -63,7 +63,7 @@ function reactiontoggle(id,acct_id,tlid){
     httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
             var json = httpreq.response;
-            console.log(json);
+            console.log(["Success: reaction",json]);
             if(json.reactions){
                 var reactions=["like","love","laugh","hmm","surprise","congrats","angry","confused","pudding","rip"];
                 for(var i=0;i<reactions.length;i++){
@@ -121,7 +121,6 @@ function reactRefresh(acct_id,id){
         method: "POST",
         body: JSON.stringify(req),
     }
-    console.log(req)
     fetch(start, i,
     ).then(function(response) {
         return response.json();
@@ -149,7 +148,6 @@ function reactRefreshCore(json){
         Object.keys(json.reactions).forEach(function(keye) {
             keyeClass=keye.replace(regExp,'');
             if(json.reactions[keye]){
-                console.log(json.reactions[keye])
                 $("#pub_" + id +" .re-"+keyeClass+"ct").text(json.reactions[keye])
                 $("#pub_" + id +" .re-"+keyeClass).removeClass("hide")
             }else{

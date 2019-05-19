@@ -61,7 +61,7 @@ function Scap(type, data) {
 	}else if (type == "tootsearch") {
 		return "tootsearch(" + data + ")"
 	}else{
-		console.log(type);
+		console.error("unknown timeline type: "+type);
 	}
 }
 

@@ -1,6 +1,5 @@
 //Integrated TL
 function mixtl(acct_id, tlid, type,delc,voice) {
-	console.log(delc);
 	localStorage.removeItem("morelock")
 	localStorage.setItem("now", type);
 	todo("Integrated TL Loading...(Local)");
@@ -94,21 +93,18 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 	websocketLocal[wslid] = new WebSocket(startLocal);
 	websocketHome[wshid].onopen = function(mess) {
 		localStorage.setItem("wssH_" + tlid, wshid);
-		console.log(tlid + ":Connect Streaming API(Integrated:Home)");
-		console.log(mess);
+		console.table({"tlid":tlid,"type":"Connect Streaming API(Integrated:Home)","domain":domain,"message":mess})
 		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocketLocal[wslid].onopen = function(mess) {
 		localStorage.setItem("wssL_" + tlid, wslid);
-		console.log(tlid + ":Connect Streaming API(Integrated:Local)");
-		console.log(mess);
+		console.table({"tlid":tlid,"type":"Connect Streaming API(Integrated:Local)","domain":domain,"message":mess})
 		$("#notice_icon_" + tlid).removeClass("red-text");
 	}
 	websocketLocal[wslid].onmessage = function(mess) {
-		console.log("Receive Streaming API:(Integrated:Local)");
+		console.log(["Receive Streaming API:(Integrated:Local)",obj]);
 
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
-		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "delete") {
 			if(delc=="true"){
@@ -145,10 +141,8 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 			}
 	}
 	websocketHome[wshid].onmessage = function(mess) {
-		console.log("Receive Streaming API:(Integrated:Home)");
-
+		console.log(["Receive Streaming API:(Integrated:Home)",obj]);
 		var obj = JSON.parse(JSON.parse(mess.data).payload);
-		console.log(obj);
 		var type = JSON.parse(mess.data).event;
 		if (type == "delete") {
 			if(del>10){
@@ -211,7 +205,7 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 		}
 	};
 	websocketLocal[wslid].onclose = function() {
-		console.log('WebSocketLocal Closing:' + tlid);
+		console.warn('WebSocketLocal Closing:' + tlid);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Closed');
@@ -224,8 +218,7 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 		}
 	};
 	websocketHome[wshid].onerror = function(error) {
-		console.error('WebSocketHome Error')
-		console.error(error);
+		console.error(['WebSocketHome Error',error])
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Error ' + error);
@@ -238,7 +231,7 @@ function mixre(acct_id, tlid, TLtype, mute,delc,voice,mode) {
 		}
 	};
 	websocketHome[wshid].onclose = function() {
-		console.log('WebSocketHome Closing:' + tlid);
+		console.warn('WebSocketHome Closing:' + tlid);
 		if(mode=="error"){
 			$("#notice_icon_" + tlid).addClass("red-text");
 			todo('WebSocket Closed');

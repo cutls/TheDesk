@@ -58,7 +58,7 @@ function favTag(){
     Object.keys(obj).forEach(function(key) {
         var tag = obj[key];
         if(nowPT!=tag){
-            console.log(nowPT+"/"+tag);
+            console.log("stable tags:"+nowPT+"/"+tag);
             var ptt=lang.lang_tags_realtime;
             var nowon="";
         }else{
@@ -80,7 +80,6 @@ function trendTag(){
     var domain="imastodon.net"
     var at = localStorage.getItem("acct_"+ acct_id + "_at");
     var start = "https://" + domain + "/api/v1/trend_tags"
-	console.log(start)
 	fetch(start, {
 		method: 'GET',
 		headers: {

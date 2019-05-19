@@ -19,7 +19,7 @@ function udgEx(user,acct_id){
 	if(acct_id=="main"){
 		acct_id = localStorage.getItem("main");
 	}
-	console.log(user);
+	console.log("Get user data of "+user);
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if(localStorage.getItem("mode_" + domain)=="misskey"){ return false; }
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
@@ -36,7 +36,6 @@ function udgEx(user,acct_id){
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		if(json.accounts){
 			var id=json.accounts[0].id;
 			udg(id,acct_id);
@@ -52,7 +51,6 @@ function udg(user, acct_id) {
 	reset();
 	if (!user) {
 		user = localStorage.getItem("user-id_"+acct_id);
-		console.log(user);
 	}
 	todo("User Data Loading...");
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -62,7 +60,6 @@ function udg(user, acct_id) {
 	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + user;
-	console.log(start);
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -75,7 +72,6 @@ function udg(user, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		//一つ前のユーザーデータ
 		if (!localStorage.getItem("history")){
 			$("#his-history-btn").prop("disabled",true);
@@ -128,7 +124,6 @@ function udg(user, acct_id) {
 			//var tags =  '<a onclick="tl(\'tag\',\'$1\',' + acct_id +',\'add\')" class="pointer parsed">#$1</a>';
 			//var mens =  '<a onclick="udgEx(\'$1\',' + acct_id +')" class="pointer parsed">@$1</a>';
 			//note=note.replace(/#(\S+)/gi, tags)
-			console.log(note)
 			//note=note.replace(/\s@([a-zA-Z_0-9@.-]+)/gi, mens)
 			$("#his-name").html(dis_name);
 			$("#his-acct").text(json.acct);
@@ -215,7 +210,6 @@ function misskeyUdg(user, acct_id) {
 	reset();
 	if (!user) {
 		user = localStorage.getItem("user-id_"+acct_id);
-		console.log(user);
 	}
 	todo("User Data Loading...");
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -225,7 +219,6 @@ function misskeyUdg(user, acct_id) {
 	}
 	var at = localStorage.getItem("acct_"+ acct_id + "_at");
 	var start = "https://" + domain + "/api/users/show";
-	console.log(user);
 	fetch(start, {
 		method: 'POST',
 		headers: {
@@ -241,7 +234,6 @@ function misskeyUdg(user, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function(json) {
-		console.log(json);
 		//一つ前のユーザーデータ
 		if (!localStorage.getItem("history")){
 			$("#his-history-btn").prop("disabled",true);
@@ -340,7 +332,6 @@ function historyShow(){
 function profShow(){
 	var acct_id = $("#post-acct-sel").val();
 	var user = localStorage.getItem("user-id_"+acct_id);
-	console.log("user-id_"+acct_id+":"+user);
 	udg(user, acct_id)
 	hide();
 }
