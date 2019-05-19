@@ -42,4 +42,7 @@ export default class Main extends Vue {
 </script>
 
 <style lang="postcss">
+#main {
+  height: 100vh;
+}
 </style>

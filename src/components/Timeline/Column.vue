@@ -113,4 +113,12 @@ export default class Column extends Vue {
 </script>
 
 <style scoped lang="postcss">
+.timeline {
+  height: 100%;
+  overflow-y: scroll;
+  .header {
+    position: sticky;
+    top: 0;
+  }
+}
 </style>
