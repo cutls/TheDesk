@@ -125,6 +125,33 @@ iframe {
 .bbcode_FTL {
   display: none;
 }
+.marquee {
+  width: 100%;
+  padding: .5em 0;
+  overflow: hidden;
+  margin-bottom: 0;
+  position: relative;
+}
+.marquee .bbcode-marq-lateral {
+  margin: 0;
+  padding-left: 100%;
+  display: inline-block;
+  white-space: nowrap;
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+}
+@keyframes marquee {
+0% {
+  -webkit-transform: translate(0);
+  transform: translate(0);
+}
+99%, 100% {
+  -webkit-transform: translate(-100%);
+  transform: translate(-100%);
+}
+}
 .boxIn {
   height: 100%;
   border: thin solid gray;
