@@ -1,6 +1,8 @@
 # TheDesk
- <img src="https://thedesk.top/img/top.png" width="300">
 
+<img src="https://thedesk.top/img/top.png" width="300" align="right">
+<img src="https://thedesk.top/img/desk.png" width="150" align="left">
+ 
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)
 [![code style: prettier](https://flat.badgen.net/badge/code%20style/prettier/pink)](https://github.com/prettier/prettier)
@@ -12,7 +14,9 @@ Mastodon/Misskey client for PC(Windows/Linux/macOS)
 オープンソースSNSマストドン/MisskeyのWindows/Linuxクライアント  
 Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge/?site=thedesk.top)](https://status.cutls.com)    
 
-### Contribute/コントリビュート
+![Screenshots1](https://thedesk.top/img/scr1.png)  
+
+## Contribute/コントリビュート
 
 Please make a pull request to ***WIP(before CI)*** brunch  
 ***WIP(before CI)*** ブランチにプルリクエストをお願いします。
