@@ -72,6 +72,9 @@ function templete(lang, mainWindow, packaged, dir) {
                 label: dict.about[lang], click: function () {
                     var ver = app.getVersion()
                     var window = new BrowserWindow({
+                        webPreferences: {
+                            nodeIntegration:true
+                        },
                         width: 300, height: 460,
                         "transparent": false,    // ウィンドウの背景を透過
                         "frame": false,     // 枠の無いウィンドウ

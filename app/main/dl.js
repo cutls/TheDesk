@@ -15,6 +15,9 @@ function dl(mainWindow, lang_path, base) {
 		var bit = process.arch;
 		if (platform != "others") {
 			updatewin = new BrowserWindow({
+				webPreferences: {
+					nodeIntegration:true
+				},
 				width: 600,
 				height: 400,
 				"transparent": false, // ウィンドウの背景を透過

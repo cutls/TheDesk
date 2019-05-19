@@ -26,6 +26,7 @@ function verck(ver) {
 	var remote = electron.remote;
 	var dialog = remote.dialog;
 	var platform = remote.process.platform;
+	console.log("Your platform:"+remote.process.platform)
 	if (platform == "win32") {
 		const options = {
 			type: 'info',

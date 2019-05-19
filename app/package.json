@@ -104,12 +104,12 @@
       ]
     },
     "electronDownload": {
-      "version": "4.2.0"
+      "version": "5.0.1"
     },
-    "electronVersion": "4.2.0"
+    "electronVersion": "5.0.1"
   },
   "devDependencies": {
-    "electron": "^4.2.0",
+    "electron": "^5.0.1",
     "electron-builder": "^20.39.0"
   }
 }

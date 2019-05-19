@@ -72,6 +72,9 @@ function system(mainWindow, dir, lang) {
 
 		var ver = app.getVersion()
 		var window = new BrowserWindow({
+			webPreferences: {
+				nodeIntegration:true
+			},
 			width: 300,
 			height: 480,
 			"transparent": false, // ウィンドウの背景を透過
@@ -100,6 +103,9 @@ function system(mainWindow, dir, lang) {
 			window_pos = [0, 0]; // デフォルトバリュー
 		}
 		var nanowindow = new BrowserWindow({
+			webPreferences: {
+				nodeIntegration:true
+			},
 			width: 350,
 			height: 200,
 			"transparent": false, // ウィンドウの背景を透過

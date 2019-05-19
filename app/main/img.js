@@ -51,6 +51,9 @@ function img(mainWindow, dir) {
     });
     function adobeWindow() {
         var window = new BrowserWindow({
+            webPreferences: {
+				nodeIntegration:true
+			},
             width: 1000,
             height: 750
         });

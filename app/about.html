@@ -108,9 +108,9 @@
         var electron = require("electron");
         var remote = electron.remote;
         const shell = electron.shell;
-        $("#node").text(process.version);
-        $("#chrome").text(process.versions.chrome);
-        $("#electron").text(process.versions.electron);
+        $("#node").text(remote.process.version);
+        $("#chrome").text(remote.process.versions.chrome);
+        $("#electron").text(remote.process.versions.electron);
         if (location.search) {
             var m = location.search.match(/\?ver=([a-zA-Z-0-9.]+)/);
             var ver = m[1];
