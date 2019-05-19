@@ -48,7 +48,7 @@ export default class App extends Vue {
     // TODO: アカウントか公開TLの追加を確認する。初回起動時のみ
     if (this.isStartup) {
       ipcRenderer.once('add-timeline', (_e: Event, tl?: TimelineDoc, error?: Error) => {
-        if (error === undefined || tl === undefined) {
+        if (error != undefined || tl === undefined) {
           console.error(error)
           return
         }
