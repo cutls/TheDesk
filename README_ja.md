@@ -5,8 +5,6 @@
  
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)
-[![code style: prettier](https://flat.badgen.net/badge/code%20style/prettier/pink)](https://github.com/prettier/prettier)
-[![PRs Welcome](https://flat.badgen.net/badge/PRs/welcome/green)](https://github.com/cutls/TheDesk/pulls)
 [![Version](https://flat.badgen.net/github/release/cutls/TheDesk)](https://github.com/cutls/TheDesk/releases)
 [![Download](https://flat.badgen.net/github/assets-dl/cutls/TheDesk)](https://github.com/cutls/TheDesk/releases)
 ![Contributors](https://flat.badgen.net/github/contributors/cutls/TheDesk)  
