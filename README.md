@@ -1,6 +1,6 @@
 # TheDesk
-
-TheDesk Minami (19)はVueで書き直します(rewrite-vueブランチ参照)。18までのバージョンはTheDesk Kawaii (20)(仮称)以降で継続します。  
+ 
+<img src="https://thedesk.top/img/desk.png" style="width:300px"><img src="https://thedesk.top/img/top.png" style="width:500px">
 
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)
@@ -11,7 +11,7 @@ TheDesk Minami (19)はVueで書き直します(rewrite-vueブランチ参照)。
 ![Contributors](https://flat.badgen.net/github/contributors/cutls/TheDesk)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのWindows/Linuxクライアント  
-Download:[TheDesk](https://thedesk.top)  
+Download:[TheDesk](https://thedesk.top)[![check](https://status.cutls.com/badge/?site=thedesk.top)](https://status.cutls.com)    
 
 ### Contribute/コントリビュート
 
