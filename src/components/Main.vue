@@ -1,7 +1,10 @@
 <template>
   <div id="main">
     <!-- idを渡してそのIDのTL情報をとってきてもらうつもり -->
-    <Column v-for="id in timelines" :key="id" :id="id"/>
+    <div id="timelines">
+      <Column v-for="id in timelines" :key="id" :id="id"/>
+    </div>
+    <div id="toolbar"></div>
   </div>
 </template>
 
@@ -43,6 +46,19 @@ export default class Main extends Vue {
 
 <style lang="postcss">
 #main {
+  width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
+}
+#timelines {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 40px);
+  overflow-x: scroll;
+}
+#toolbar {
+  width: 100vw;
+  height: 40px;
+  background-color: var(--toolbar);
 }
 </style>

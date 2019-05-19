@@ -34,6 +34,7 @@ export default class App extends Vue {
     return {
       '--color': this.isDarkMode ? 'white' : 'black',
       '--bg-color': this.isDarkMode ? '#212121' : 'white',
+      '--toolbar': this.isDarkMode ? '#424242' : '#eeeeee',
       '--font-size': this.fontSize,
     }
   }

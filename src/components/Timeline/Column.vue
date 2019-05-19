@@ -115,7 +115,16 @@ export default class Column extends Vue {
 <style scoped lang="postcss">
 .timeline {
   height: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
   overflow-y: scroll;
+  overflow-x: hidden;
+
+  & + .timeline {
+    border-left: solid 1px;
+    border-right: none;
+  }
+
   .header {
     position: sticky;
     top: 0;
