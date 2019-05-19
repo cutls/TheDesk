@@ -1,39 +1,39 @@
 var r = document.getElementById("radio");
-function Rtoggle(){
-    if($("#radio").hasClass("play")){
+function Rtoggle() {
+    if ($("#radio").hasClass("play")) {
         Rstop();
-    }else{
+    } else {
         $("#radio-view").toggleClass("hide");
         $("#radio-view").toggleClass("show");
         $("#radio-input").addClass("hide");
     }
 }
-function Rplay(url,name){
-    $("#radio").attr('src',url);
+function Rplay(url, name) {
+    $("#radio").attr('src', url);
     r.load();
     r.play();
     $("#radio").addClass("play");
     $("#radio-btn").addClass("teal-text");
-    $("#radio-sta").html("<br>Now Playing:"+name);
+    $("#radio-sta").html("<br>Now Playing:" + name);
 }
-function Rstop(){
-    $("#radio").attr("src","");
+function Rstop() {
+    $("#radio").attr("src", "");
     r.pause();
     $("#radio").removeClass("play");
     $("#radio-btn").removeClass("teal-text");
     $("#radio-sta").html("");
 }
-function Ryourself(){
+function Ryourself() {
     $("#radio-input").removeClass("hide");
     $("#radio-view").addClass("hide");
 }
-function Rselect(){
+function Rselect() {
     $("#radio-input").addClass("hide");
     $("#radio-view").removeClass("hide");
 }
-function Rinput(){
-    var url=$("#radio-url").val();
-    Rplay(url,url)
+function Rinput() {
+    var url = $("#radio-url").val();
+    Rplay(url, url)
 }
 /*
 <span id="radio-sta" class="radio"></span>

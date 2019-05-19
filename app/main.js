@@ -1,6 +1,6 @@
 
-var dir='file://' + __dirname;
-var base=dir + '/view/';
+var dir = 'file://' + __dirname;
+var base = dir + '/view/';
 // Electronのモジュール
 const electron = require("electron");
 const fs = require("fs");
@@ -10,7 +10,7 @@ const dl = require('./main/dl.js');
 const img = require('./main/img.js');
 const np = require('./main/np.js');
 const systemFunc = require('./main/system.js');
-const Menu=electron.Menu
+const Menu = electron.Menu
 const join = require('path').join;
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
@@ -20,13 +20,13 @@ const BrowserWindow = electron.BrowserWindow;
 let mainWindow;
 var info_path = join(app.getPath("userData"), "window-size.json");
 var max_info_path = join(app.getPath("userData"), "max-window-size.json");
-var lang_path=join(app.getPath("userData"), "language");
-var ha_path=join(app.getPath("userData"), "hardwareAcceleration");
-try{
+var lang_path = join(app.getPath("userData"), "language");
+var ha_path = join(app.getPath("userData"), "hardwareAcceleration");
+try {
 	fs.readFileSync(ha_path, 'utf8');
 	app.disableHardwareAcceleration()
 	console.log("disabled: HA");
-}catch{
+} catch{
 	console.log("enabled: HA");
 }
 var window_size;
@@ -50,7 +50,7 @@ try {
 
 	}; // デフォルトバリュー
 }
-function isFile(file){
+function isFile(file) {
 	try {
 		fs.statSync(file);
 		return true
@@ -59,114 +59,114 @@ function isFile(file){
 	}
 }
 // 全てのウィンドウが閉じたら終了
-app.on('window-all-closed', function() {
+app.on('window-all-closed', function () {
 	if (process.platform != 'darwin') {
-		electron.session.defaultSession.clearCache(() => {})
+		electron.session.defaultSession.clearCache(() => { })
 		app.quit();
 	}
 });
 // macOSでウィンドウを閉じた後に再度開けるようにする
-app.on('activate', function() {
+app.on('activate', function () {
 	if (mainWindow == null) {
 		createWindow();
 	}
 });
 
 function createWindow() {
-	if(isFile(lang_path)) {
+	if (isFile(lang_path)) {
 		console.log("exist");
 		var lang = fs.readFileSync(lang_path, 'utf8');
 	} else {
-		var langs=app.getLocale();
+		var langs = app.getLocale();
 		console.log(langs);
-		if(~langs.indexOf("ja")){
-			lang="ja";
-		}else{
-			lang="en";
+		if (~langs.indexOf("ja")) {
+			lang = "ja";
+		} else {
+			lang = "en";
 		}
 		fs.mkdir(app.getPath("userData"), function (err) {
-			fs.writeFileSync(lang_path,lang);
+			fs.writeFileSync(lang_path, lang);
 		});
 	}
 	console.log(app.getLocale());
-	console.log("launch:"+lang);
+	console.log("launch:" + lang);
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
-	var platform=process.platform;
-	var bit=process.arch;
-	if(platform=="linux"){
-		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,icon: __dirname + '/desk.png'}
-	}else if(platform=="win32"){
-		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,simpleFullscreen:true}
-	}else if(platform=="darwin"){
-		var arg={width:window_size.width,height:window_size.height,x:window_size.x,y:window_size.y,simpleFullscreen:true}
+	var platform = process.platform;
+	var bit = process.arch;
+	if (platform == "linux") {
+		var arg = { width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, icon: __dirname + '/desk.png' }
+	} else if (platform == "win32") {
+		var arg = { width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true }
+	} else if (platform == "darwin") {
+		var arg = { width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true }
 	}
 	mainWindow = new BrowserWindow(arg);
-	electron.session.defaultSession.clearCache(() => {})
-	if(process.argv){
-		if(process.argv[1]){
+	electron.session.defaultSession.clearCache(() => { })
+	if (process.argv) {
+		if (process.argv[1]) {
 			var m = process.argv[1].match(/([a-zA-Z0-9]+)\/\?[a-zA-Z-0-9]+=(.+)/);
-			if(m){
-				var mode=m[1];
-				var code=m[2];
-				var plus='?mode='+mode+'&code='+code;
-			}else{
-				var plus="";
+			if (m) {
+				var mode = m[1];
+				var code = m[2];
+				var plus = '?mode=' + mode + '&code=' + code;
+			} else {
+				var plus = "";
 			}
-		}else{
-			var plus="";
+		} else {
+			var plus = "";
 		}
-	}else{
-		var plus="";
+	} else {
+		var plus = "";
 	}
-	mainWindow.loadURL(base+lang+'/index.html'+plus);
-	if(!window_size.x && !window_size.y){
+	mainWindow.loadURL(base + lang + '/index.html' + plus);
+	if (!window_size.x && !window_size.y) {
 		mainWindow.center();
 	}
-	if(window_size.max){
+	if (window_size.max) {
 		mainWindow.maximize();
 	}
 	// ウィンドウが閉じられたらアプリも終了
-	mainWindow.on('closed', function() {
+	mainWindow.on('closed', function () {
 		electron.ipcMain.removeAllListeners();
 		mainWindow = null;
 	});
-	mainWindow.on('close', function() {
-		if(
-			max_window_size.width==mainWindow.getBounds().width && 
-			max_window_size.height==mainWindow.getBounds().height &&
-			max_window_size.x==mainWindow.getBounds().x &&
-		  	max_window_size.y==mainWindow.getBounds().y
-		){
-			var size={width:mainWindow.getBounds().width,height:mainWindow.getBounds().height,x:mainWindow.getBounds().x,y:mainWindow.getBounds().y,max:true}
-		}else{
-			var size={width:mainWindow.getBounds().width,height:mainWindow.getBounds().height,x:mainWindow.getBounds().x,y:mainWindow.getBounds().y}
+	mainWindow.on('close', function () {
+		if (
+			max_window_size.width == mainWindow.getBounds().width &&
+			max_window_size.height == mainWindow.getBounds().height &&
+			max_window_size.x == mainWindow.getBounds().x &&
+			max_window_size.y == mainWindow.getBounds().y
+		) {
+			var size = { width: mainWindow.getBounds().width, height: mainWindow.getBounds().height, x: mainWindow.getBounds().x, y: mainWindow.getBounds().y, max: true }
+		} else {
+			var size = { width: mainWindow.getBounds().width, height: mainWindow.getBounds().height, x: mainWindow.getBounds().x, y: mainWindow.getBounds().y }
 		}
 		fs.writeFileSync(info_path, JSON.stringify(size));
 	});
-	mainWindow.on('maximize', function() {
+	mainWindow.on('maximize', function () {
 		fs.writeFileSync(max_info_path, JSON.stringify(mainWindow.getBounds()));
 	});
-		
-	var platform=process.platform;
-	var bit=process.arch;
-	if(platform=="darwin"){
-		Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang,mainWindow,false,dir)));
+
+	var platform = process.platform;
+	var bit = process.arch;
+	if (platform == "darwin") {
+		Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, false, dir)));
 	}
 	//CSS
 	css.css(mainWindow);
 	//アップデータとダウンロード
-	dl.dl(mainWindow,lang_path,base);
+	dl.dl(mainWindow, lang_path, base);
 	//画像選択と画像処理
-	img.img(mainWindow,dir);
+	img.img(mainWindow, dir);
 	//NowPlaying
 	np.TheDeskNowPlaying(mainWindow);
 	//その他system
-	systemFunc.system(mainWindow,dir,lang);
+	systemFunc.system(mainWindow, dir, lang);
 }
 // Electronの初期化完了後に実行
 app.on('ready', createWindow);
-var onError = function(err,response){
-    console.error(err,response);
+var onError = function (err, response) {
+	console.error(err, response);
 };
 
 app.setAsDefaultProtocolClient('thedesk')

@@ -1,15 +1,16 @@
 /*共通CSS*/
-html,body{
+html,
+body {
   /*transform: translate3d(0,0,0);*/
-  overflow:hidden;
+  overflow: hidden;
   user-select: none;
-  cursor:default;
-  font-size:13px;
+  cursor: default;
+  font-size: 13px;
   height: 100vh;
   background-color: var(--bg);
   color: var(--color);
 }
-body{
+body {
   border: thin solid gray;
 }
 .btn {
@@ -30,7 +31,7 @@ option {
 }
 #mainView {
   padding: 10px;
-  overflow:scroll;
+  overflow: scroll;
   height: auto;
 }
 #message {
@@ -42,23 +43,25 @@ option {
   color: white;
   z-index: 9999;
 }
-#imagemodal, #videomodal {
+#imagemodal,
+#videomodal {
   display: none;
   max-width: 100vw;
   max-height: 100vh;
   position: fixed;
   z-index: 9;
 }
-#videomodal, #tootmodal {
+#videomodal,
+#tootmodal {
   background-color: var(--modal);
 }
 #imagemodal .modal-content {
   overflow: hidden;
-  padding:0;
+  padding: 0;
 }
-#imagemodal .modal-footer{
-  overflow-x:scroll;
-  overflow-y:hidden;
+#imagemodal .modal-footer {
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 #imagewrap {
@@ -68,11 +71,13 @@ option {
 .pointer {
   cursor: pointer;
 }
-.badge{
-   min-width: 0 !important;
-   margin-left: 5px !important;
+.badge {
+  min-width: 0 !important;
+  margin-left: 5px !important;
 }
-.bbcode-pulse-loadings, .bbcode-pulse-loading, .fa-pulse {
+.bbcode-pulse-loadings,
+.bbcode-pulse-loading,
+.fa-pulse {
   display: inline-block;
   animation-duration: 3s;
   animation-fill-mode: both;
@@ -80,10 +85,13 @@ option {
   animation-name: pulse;
 }
 @keyframes pulse {
-  from, 50%, to {
+  from,
+  50%,
+  to {
     opacity: 1;
   }
-  25%, 75% {
+  25%,
+  75% {
     opacity: 0;
   }
 }
@@ -119,7 +127,8 @@ option {
   animation-iteration-count: infinite;
   animation-name: shake;
 }
-code:before, .pre:before {
+code:before,
+.pre:before {
   content: "Code";
   font-size: 1.8rem;
   line-height: 1em;
@@ -129,7 +138,8 @@ code:before, .pre:before {
   right: 0;
   top: 0;
 }
-code, pre {
+code,
+pre {
   color: white;
   display: block;
   border-left: 5px solid;
@@ -145,10 +155,12 @@ code, pre {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-blockquote, .quote p {
+blockquote,
+.quote p {
   margin: 0;
 }
-blockquote, .quote {
+blockquote,
+.quote {
   color: black;
   background-color: #ddd;
   padding: 1em 1em 1em;
@@ -157,7 +169,8 @@ blockquote, .quote {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-blockquote:before, .quote:before {
+blockquote:before,
+.quote:before {
   content: "Quote";
   font-size: 1.8rem;
   line-height: 1em;
@@ -221,184 +234,183 @@ blockquote:before, .quote:before {
 #drag-content {
   font-size: 2rem;
 }
-.radio{
-  font-family:'Baloo Bhai'
+.radio {
+  font-family: "Baloo Bhai";
 }
-#pip{
-  z-index:504;
-  width:418px;
+#pip {
+  z-index: 504;
+  width: 418px;
   background-color: var(--subcolor);
-  position:absolute;
+  position: absolute;
 }
-.pip-bottom{
-  bottom:10px;
+.pip-bottom {
+  bottom: 10px;
 }
-.pip-left{
-  left:10px;
+.pip-left {
+  left: 10px;
 }
-.pip-top{
-  top:10px;
+.pip-top {
+  top: 10px;
 }
-.pip-right{
-  right:10px;
+.pip-right {
+  right: 10px;
 }
-#pip-content .material-icons{
-  display:none;
+#pip-content .material-icons {
+  display: none;
 }
-.big-text{
-  font-size:1.2rem;
+.big-text {
+  font-size: 1.2rem;
 }
 #releasenote {
   background-color: var(--modal);
 }
-#releasenote li{
-  list-style-type: disc
+#releasenote li {
+  list-style-type: disc;
 }
-@media only screen and (min-width: 993px){
-#toast-container {
-    top:auto;
-    right:auto;
+@media only screen and (min-width: 993px) {
+  #toast-container {
+    top: auto;
+    right: auto;
     bottom: 5%;
     left: 4%;
     max-width: 86%;
+  }
 }
-}
-.show{
+.show {
   animation: show 0.2s linear 0s;
 }
-@keyframes show{
-  from{
-      opacity: 0;
+@keyframes show {
+  from {
+    opacity: 0;
   }
-  to{
-      opacity: 1;
+  to {
+    opacity: 1;
   }
 }
-.hide-anime{
+.hide-anime {
   animation: hide 0.2s linear 0s;
-  display:none;
+  display: none;
 }
-@keyframes hide{
-  from{
-      opacity: 1;
+@keyframes hide {
+  from {
+    opacity: 1;
   }
-  to{
-      opacity: 0;
+  to {
+    opacity: 0;
   }
 }
-.collapsible-header,.tabs{
+.collapsible-header,
+.tabs {
   background-color: var(--subcolor);
 }
-.modal-footer{
+.modal-footer {
   background-color: var(--modalfooter) !important;
 }
-.font{
-  font-size:1.5rem;
-  margin-bottom:5px;
+.font {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
 }
-.font:hover{
+.font:hover {
   background-color: #999;
 }
-.release-do{
+.release-do {
   border: solid 2px;
-  border-color:var(--color);
-  padding:5px;
+  border-color: var(--color);
+  padding: 5px;
 }
-#pickers{
-  display:flex;
+#pickers {
+  display: flex;
   flex-wrap: wrap;
 }
-#menu{
-  position:fixed;
-  z-index:9999;
+#menu {
+  position: fixed;
+  z-index: 9999;
   background-color: var(--box);
-  width:540px;
-  top:calc(50% - 150px);
-  left:calc(50% - 250px);
+  width: 540px;
+  top: calc(50% - 150px);
+  left: calc(50% - 250px);
   padding: 5px;
   border: thin solid gray;
-  border-radius:5px;
+  border-radius: 5px;
 }
-#menu-wrapper{
-  margin-left:-5px;
-  display:flex;
+#menu-wrapper {
+  margin-left: -5px;
+  display: flex;
 }
-#left-menu{
-  width:170px;
+#left-menu {
+  width: 170px;
 }
-#left-menu div{
-  padding-left:5px;
-  width:100%;
-  height:50px;
-  display:flex;
-  align-items:center;
-  cursor:pointer;
+#left-menu div {
+  padding-left: 5px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 #left-menu div:hover {
   background-color: var(--beforehover);
 }
-#left-menu span{
-  margin-left:5px;
+#left-menu span {
+  margin-left: 5px;
 }
-#left-menu div.active{
+#left-menu div.active {
   background-color: var(--emphasized);
 }
-#right-menu{
-  width:380px;
-  max-height:375px;
-  overflow-y:scroll;
-  overflow-x:hidden;
-  padding:5px;
+#right-menu {
+  width: 380px;
+  max-height: 375px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 5px;
 }
-#tltype{
-  display:flex;
+#tltype {
+  display: flex;
   flex-wrap: wrap;
-  
 }
-#tltype .type{
-  display:flex;
+#tltype .type {
+  display: flex;
   flex-wrap: wrap;
-  align-items:center;
-  width:170px;
-  height:40px;
-  cursor:pointer;
+  align-items: center;
+  width: 170px;
+  height: 40px;
+  cursor: pointer;
 }
 #tltype .type:hover {
   background-color: var(--beforehover);
 }
-#tltype .active{
+#tltype .active {
   background-color: var(--emphasized);
 }
-#tltype i{
-  font-size:30px;
+#tltype i {
+  font-size: 30px;
 }
-#tltype i.sub-icon{
+#tltype i.sub-icon {
   font-size: 20px;
   position: relative;
   color: var(--beforehover);
   left: -15px;
-
 }
-.drag-bar{
-  cursor:move;
-  text-align:center;
-  width:calc(100% + 10px);
+.drag-bar {
+  cursor: move;
+  text-align: center;
+  width: calc(100% + 10px);
   border-radius: 5px;
   background-color: var(--bg);
-  margin-left:-5px;
-  margin-right:-5px;
-  margin-top:-5px;
-  font-size:16px;
-  padding:4px;
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-top: -5px;
+  font-size: 16px;
+  padding: 4px;
 }
-#something-wrong{
+#something-wrong {
   flex-direction: column;
-  width:100%;
-  height:100%; 
-  position:absolute; 
-  display:flex; 
-  justify-content: center; 
-  align-items:center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /*スクロールバー*/

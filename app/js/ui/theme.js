@@ -2,9 +2,9 @@
 function themes(theme) {
 	if (!theme) {
 		var theme = localStorage.getItem("theme");
-		if(!theme){
-			var theme="black";
-			localStorage.setItem("theme","black");
+		if (!theme) {
+			var theme = "black";
+			localStorage.setItem("theme", "black");
 		}
 	}
 	$("html").removeClass("indigotheme");
@@ -12,15 +12,15 @@ function themes(theme) {
 	$("html").removeClass("browntheme");
 	$("html").removeClass("blacktheme");
 	$("html").removeClass("customtheme");
-	$("html").addClass(theme+"theme");
+	$("html").addClass(theme + "theme");
 	var font = localStorage.getItem("font");
-	if(font){
-		$("html").css("font-family",font);
-	}else{
-		$("html").css("font-family","");
+	if (font) {
+		$("html").css("font-family", font);
+	} else {
+		$("html").css("font-family", "");
 	}
-	if(theme=="custom"){
-		if(localStorage.getItem("customtheme-id")){
+	if (theme == "custom") {
+		if (localStorage.getItem("customtheme-id")) {
 			ipc.send('theme-css-request', localStorage.getItem("customtheme-id"));
 		}
 	}

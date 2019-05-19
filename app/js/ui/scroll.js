@@ -1,13 +1,13 @@
 //スクロールで続きを読む
 function scrollevent() {
-	$(".tl-box").scroll(function() {
+	$(".tl-box").scroll(function () {
 		scrollck();
 	});
 }
 scrollevent();
 
 function scrollck() {
-	$(".tl-box").each(function(i, elem) {
+	$(".tl-box").each(function (i, elem) {
 		var tlid = $(this).attr('tlid');
 		//一番上ならためていた新しいトゥートを表示
 		if ($(this).scrollTop() === 0) {
@@ -18,9 +18,9 @@ function scrollck() {
 				localStorage.removeItem("pool_" + tlid);
 			}
 			//自動リフレッシュ
-			if( $("#timeline_" + tlid+" .cvo").length > 30 ){
-				for(var i=30;i<$("#timeline_" + tlid +" .cvo").length;i++){
-					$("#timeline_" + tlid +" .cvo").eq(i).remove();
+			if ($("#timeline_" + tlid + " .cvo").length > 30) {
+				for (var i = 30; i < $("#timeline_" + tlid + " .cvo").length; i++) {
+					$("#timeline_" + tlid + " .cvo").eq(i).remove();
 				}
 			}
 		}
@@ -28,22 +28,22 @@ function scrollck() {
 		var scrt = $(this).find(".tl").height() - $(window).height();
 		var scr = $(this).scrollTop();
 		if (scr > scrt) {
-			console.log("kicked more loading:"+tlid);
+			console.log("kicked more loading:" + tlid);
 			moreload('', tlid);
 		}
 	});
 }
 
-function goTop(id){
-	if ($("#timeline_box_"+id+"_box .tl-box").scrollTop() > 500){
-		$("#timeline_box_"+id+"_box .tl-box").scrollTop(500)
+function goTop(id) {
+	if ($("#timeline_box_" + id + "_box .tl-box").scrollTop() > 500) {
+		$("#timeline_box_" + id + "_box .tl-box").scrollTop(500)
 	}
-	$("#timeline_box_"+id+"_box .tl-box").animate({scrollTop:0});
+	$("#timeline_box_" + id + "_box .tl-box").animate({ scrollTop: 0 });
 }
-function goColumn(key){
+function goColumn(key) {
 	$("#sort-box").addClass("hide");
 	$("#sort-box").removeClass("show");
-	if($('[tlid='+key+']').length){
-		$("#timeline-container").animate({scrollLeft:$("#timeline-container").scrollLeft()+$('[tlid='+key+']').offset().left});
+	if ($('[tlid=' + key + ']').length) {
+		$("#timeline-container").animate({ scrollLeft: $("#timeline-container").scrollLeft() + $('[tlid=' + key + ']').offset().left });
 	}
 }

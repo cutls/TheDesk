@@ -4,7 +4,7 @@ function profedit() {
 	var acct_id = $('#his-data').attr("use-acct");
 	todo("Updating...");
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/update_credentials";
 	var name = $("#his-name-val").val();
 	var des = $("#his-des-val").val();
@@ -17,7 +17,7 @@ function profedit() {
 		display_name: name,
 		note: des,
 	}));
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			$('#his-data').modal('close');
 			todc();
@@ -35,13 +35,13 @@ function imgChange(imgfile, target) {
 	}
 	var file = imgfile.files[0];
 	var fr = new FileReader();
-	fr.onload = function(evt) {
+	fr.onload = function (evt) {
 		var b64 = this.result;
 		var blob = toBlob(b64, 'image/png');
 		var fd = new FormData();
 		fd.append(target, blob);
 		var domain = localStorage.getItem("domain_" + acct_id);
-		var at = localStorage.getItem("acct_"+ acct_id + "_at");
+		var at = localStorage.getItem("acct_" + acct_id + "_at");
 		var start = "https://" + domain + "/api/v1/accounts/update_credentials";
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('PATCH', start, true);
@@ -49,7 +49,7 @@ function imgChange(imgfile, target) {
 		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 		httpreq.responseType = "json";
 		httpreq.send(fd);
-   		httpreq.onreadystatechange = function() {
+		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
 				$('#his-data').modal('close');

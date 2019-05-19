@@ -8,11 +8,11 @@ function css(mainWindow) {
 	const join = require('path').join;
 	var customcss = join(app.getPath("userData"), "custom.css");
 
-	ipc.on('custom-css-create', function(e, arg) {
+	ipc.on('custom-css-create', function (e, arg) {
 		fs.writeFileSync(customcss, arg);
 		mainWindow.webContents.send('custom-css-create-complete', "");
 	})
-	ipc.on('custom-css-request', function(e, arg) {
+	ipc.on('custom-css-request', function (e, arg) {
 		try {
 			var css = fs.readFileSync(customcss, 'utf8');
 		} catch (e) {
@@ -20,7 +20,7 @@ function css(mainWindow) {
 		}
 		mainWindow.webContents.send('custom-css-response', css);
 	})
-	ipc.on('theme-json-create', function(e, arg) {
+	ipc.on('theme-json-create', function (e, arg) {
 		var themecss = join(app.getPath("userData"), JSON5.parse(arg)["id"] +
 			".thedesktheme");
 		fs.writeFileSync(themecss, JSON.stringify(JSON5.parse(arg)));
@@ -30,19 +30,19 @@ function css(mainWindow) {
 			mainWindow.webContents.send('theme-json-create-complete', "error");
 		}
 	})
-	ipc.on('theme-json-delete', function(e, arg) {
+	ipc.on('theme-json-delete', function (e, arg) {
 		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
 		console.log(themecss);
-		fs.unlink(themecss, function(err) {
+		fs.unlink(themecss, function (err) {
 			mainWindow.webContents.send('theme-json-delete-complete', "");
 		});
 	})
-	ipc.on('theme-json-request', function(e, arg) {
+	ipc.on('theme-json-request', function (e, arg) {
 		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
 		var json = JSON.parse(fs.readFileSync(themecss, 'utf8'));
 		mainWindow.webContents.send('theme-json-response', json);
 	})
-	ipc.on('theme-css-request', function(e, arg) {
+	ipc.on('theme-css-request', function (e, arg) {
 		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
 		try {
 			var json = JSON.parse(fs.readFileSync(themecss, 'utf8'));
@@ -82,10 +82,10 @@ function css(mainWindow) {
 		}
 
 	})
-	ipc.on('theme-json-list', function(e, arg) {
-		fs.readdir(app.getPath("userData"), function(err, files) {
+	ipc.on('theme-json-list', function (e, arg) {
+		fs.readdir(app.getPath("userData"), function (err, files) {
 			if (err) throw err;
-			var fileList = files.filter(function(file) {
+			var fileList = files.filter(function (file) {
 				var tfile = join(app.getPath("userData"), file);
 				return fs.statSync(tfile).isFile() && /.*\.thedesktheme$/.test(tfile); //絞り込み
 			})

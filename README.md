@@ -1,16 +1,17 @@
 # TheDesk
 
-TheDesk Minami (19)はVueで書き直します(rewrite-vueブランチ参照)。18までのバージョンはTheDesk Kawaii (20)以降で継続します。  
+TheDesk Minami (19)はVueで書き直します(rewrite-vueブランチ参照)。18までのバージョンはTheDesk Kawaii (20)(仮称)以降で継続します。  
 
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)  
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)
+[![code style: prettier](https://flat.badgen.net/badge/code%20style/prettier/pink)](https://github.com/prettier/prettier)
+[![PRs Welcome](https://flat.badgen.net/badge/PRs/welcome/green)](https://github.com/cutls/TheDesk/pulls)
+[![Version](https://flat.badgen.net/github/release/cutls/TheDesk)](https://github.com/cutls/TheDesk/releases)
+[![Download](https://flat.badgen.net/github/assets-dl/cutls/TheDesk)](https://github.com/cutls/TheDesk/releases)
+![Contributors](https://flat.badgen.net/github/contributors/cutls/TheDesk)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのWindows/Linuxクライアント  
 Download:[TheDesk](https://thedesk.top)  
-
-Contact me(bug report...):GitHub Issues, mention to [Cutls@kirishima.cloud](https://kirishima.cloud/@Cutls) or toot with #Desk  
-
-バグレポートなど:GitHub Issuesや[Cutls@kirishima.cloud](https://kirishima.cloud/@Cutls)へのリプ,または#Deskでトゥートして下さい.  
 
 ### Contribute/コントリビュート
 

@@ -98,10 +98,12 @@
 								title="箇条書きリスト">format_list_bulleted</i>
 							<i class="material-icons pointer setting waves-effect" onclick="markdown('1. ','yes','yes')"
 								title="番号付きリスト">format_list_numbered</i>
-							<i class="pointer setting fa fa-subscript waves-effect" onclick="markdown('__','yes','no','before')"
-								title="下付き文字　テキストボックス内を選択してから押すと囲みます。" style="font-size:1.5rem"></i>
-							<i class="pointer setting fa fa-superscript waves-effect" onclick="markdown('_','yes','no','before')"
-								title="上付き文字　テキストボックス内を選択してから押すと囲みます。" style="font-size:1.5rem"></i>
+							<i class="pointer setting fa fa-subscript waves-effect"
+								onclick="markdown('__','yes','no','before')" title="下付き文字　テキストボックス内を選択してから押すと囲みます。"
+								style="font-size:1.5rem"></i>
+							<i class="pointer setting fa fa-superscript waves-effect"
+								onclick="markdown('_','yes','no','before')" title="上付き文字　テキストボックス内を選択してから押すと囲みます。"
+								style="font-size:1.5rem"></i>
 							<i class="material-icons pointer setting waves-effect" onclick="tagsel('spin')"
 								title="回転　テキストボックス内を選択してから押すと囲みます。">autorenew</i>
 							<i class="material-icons pointer setting waves-effect" onclick="tagsel('pulse')"
@@ -121,14 +123,19 @@
 								title="文字色変更　テキストボックス内を選択してから押すと囲みます。">color_lens</i>
 							<input id="colorhex" style="width: calc(50% - 50px); margin: 0; height: 24px;" type="color">
 							<br>
-							<i class="material-icons pointer setting waves-effect" onclick="markdownLink()" title="リンク挿入">link</i>
-							<input id="linkt" style="width: calc(50% - 20px); margin: 0; height: 24px;" placeholder="リンクテキスト">&nbsp;
-							<input id="link2" style="width: calc(50% - 20px); margin: 0; height: 24px;" placeholder="リンクアドレス">
+							<i class="material-icons pointer setting waves-effect" onclick="markdownLink()"
+								title="リンク挿入">link</i>
+							<input id="linkt" style="width: calc(50% - 20px); margin: 0; height: 24px;"
+								placeholder="リンクテキスト">&nbsp;
+							<input id="link2" style="width: calc(50% - 20px); margin: 0; height: 24px;"
+								placeholder="リンクアドレス">
 							<br>
 							<i class="material-icons pointer setting waves-effect" onclick="markdownImage()"
 								title="インライン画像挿入">image</i>
-							<input id="image" style="width: calc(50% - 20px); margin: 0; height: 24px;" placeholder="代替テキスト">&nbsp;
-							<input id="image2" style="width: calc(50% - 20px); margin: 0; height: 24px;" placeholder="画像アドレス">
+							<input id="image" style="width: calc(50% - 20px); margin: 0; height: 24px;"
+								placeholder="代替テキスト">&nbsp;
+							<input id="image2" style="width: calc(50% - 20px); margin: 0; height: 24px;"
+								placeholder="画像アドレス">
 						</div>
 					</div>
 					<div class="input-field col s12" id="preview-field" style="margin-top: 0;">
@@ -154,14 +161,15 @@
 					<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
 						<i class="waves-effect gray material-icons" id="nsfw" title="@@nsfwDes@@"
 							onclick="nsfw()">visibility_off</i>
-						<i class="waves-effect gray material-icons purple-text dropdown-button" data-activates='dropdown1'
-							id="vis-icon">public</i>
+						<i class="waves-effect gray material-icons purple-text dropdown-button"
+							data-activates='dropdown1' id="vis-icon">public</i>
 						<a class="waves-effect gray" id="cw" onclick="cw()" title="@@cwDes@@">CW</a>
 						<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray"
 									onclick="fileselect()" title="@@selfile@@">photo_library</i></span></span>
 						<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn"
 							title="@@insertEmoji@@">tag_faces</i>
-						<i class="waves-effect gray material-icons dropdown-button" data-activates='dropdown2'>more_vert</i>
+						<i class="waves-effect gray material-icons dropdown-button"
+							data-activates='dropdown2'>more_vert</i>
 						<i class="material-icons nex gray waves-effect" title="@@clearToot@@(Ctrl+Shit+C)"
 							data-trans-title="post_box_clear" id="clear">clear</i>
 					</div>
@@ -176,13 +184,15 @@
 						<br>
 						<input type="text" id="cw-text" placeholder="@@cwtext@@" class="mize" style="margin:0">
 						<div id="sch-box">@@postat@@<br><span class="sml">@@scheduleWarn@@</span><br>
-							<input type="datetime-local" id="sch-date" placeholder="@@schedule@@" class="datepicker" style="margin:0">
+							<input type="datetime-local" id="sch-date" placeholder="@@schedule@@" class="datepicker"
+								style="margin:0">
 						</div>
 					</div>
 				</div>
 				<!-- 公開範囲 Dropdown Structure -->
 				<ul id='dropdown1' class='dropdown-content'>
-					<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">@@selectVis@@</li>
+					<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">@@selectVis@@
+					</li>
 					<li>
 						<a onclick="vis('public')">@@publicJP@@(Public)</a>
 					</li>
@@ -228,8 +238,9 @@
 			<div id="toot-btn-field">
 				<button class="btn waves-effect indigo unmize toot-btn-group" onclick="post()"
 					id="toot-post-btn">@@toot@@</button>
-				<button class="btn waves-effect indigo darken-3 unmize hide toot-btn-group" onclick="sec()" id="toot-sec-btn"><i
-						class="material-icons" id="toot-sec-icon" title="@@sectoot@@">lock_open</i></button>
+				<button class="btn waves-effect indigo darken-3 unmize hide toot-btn-group" onclick="sec()"
+					id="toot-sec-btn"><i class="material-icons" id="toot-sec-icon"
+						title="@@sectoot@@">lock_open</i></button>
 			</div>
 		</div>
 		<div id="right-side">
@@ -398,12 +409,12 @@
 								class="fas fa-share"></i></button>
 					</div>
 					<div class="col s2">
-						<button class="dropdown-button btn waves-effect indigo" style="width:100%;" onclick="staEx('rt')"><i
-								class="fas fa-retweet"></i></button>
+						<button class="dropdown-button btn waves-effect indigo" style="width:100%;"
+							onclick="staEx('rt')"><i class="fas fa-retweet"></i></button>
 					</div>
 					<div class="col s2">
-						<button class="dropdown-button btn waves-effect orange" style="width:100%;" onclick="staEx('fav')"><i
-								class="fas fa-star"></i></button>
+						<button class="dropdown-button btn waves-effect orange" style="width:100%;"
+							onclick="staEx('fav')"><i class="fas fa-star"></i></button>
 					</div>
 				</div>
 				<div id="toot-tools">
@@ -449,8 +460,8 @@
 					<div id="his-plus-action">
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
 							onclick="empUser()">@@empUser@@</a>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data" id="his-end-btn"
-							onclick="pinUser()">@@endorse@@</a><br>
+						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
+							id="his-end-btn" onclick="pinUser()">@@endorse@@</a><br>
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
 							onclick="profbrws()">@@openinbrowser@@</a><br>
 					</div><br>
@@ -471,10 +482,12 @@
 								<a go="#his-follow-list" title="@@follow@@"><i class="material-icons">people</i>→</a>
 							</li>
 							<li class="custom-tab col my-data-width">
-								<a go="#his-follower-list" title="@@follower@@"><i class="material-icons">people</i>←</a>
+								<a go="#his-follower-list" title="@@follower@@"><i
+										class="material-icons">people</i>←</a>
 							</li>
 							<li class="custom-tab col my-data-width only-his-data">
-								<a go="#his-action" title="@@operateOtherAcct@@"><i class="material-icons">account_box</i></a>
+								<a go="#his-action" title="@@operateOtherAcct@@"><i
+										class="material-icons">account_box</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-his-data">
 								<a go="#his-list" title="@@list@@"><i class="material-icons">list</i></a>
@@ -486,20 +499,23 @@
 								<a go="#his-blocking-list" title="@@blocks@@"><i class="material-icons">block</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-blocking-list" title="@@blocks@@"><i class="material-icons">voice_over_off</i></a>
+								<a go="#his-blocking-list" title="@@blocks@@"><i
+										class="material-icons">voice_over_off</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-domain-list" title="@@domainBlock@@"><i class="material-icons">language</i><i
-										class="material-icons">block</i></a>
+								<a go="#his-domain-list" title="@@domainBlock@@"><i
+										class="material-icons">language</i><i class="material-icons">block</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
 								<a go="#his-prof-list" title="@@editProf@@"><i class="material-icons">create</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-request-list" title="@@followReq@@"><i class="material-icons">how_to_reg</i></a>
+								<a go="#his-request-list" title="@@followReq@@"><i
+										class="material-icons">how_to_reg</i></a>
 							</li>
 							<li class="custom-tab col my-data-width only-my-data">
-								<a go="#his-follow-recom-list" title="@@frc@@"><i class="material-icons">recent_actors</i></a>
+								<a go="#his-follow-recom-list" title="@@frc@@"><i
+										class="material-icons">recent_actors</i></a>
 							</li>
 						</ul>
 					</div>
@@ -523,10 +539,12 @@
 					</div>
 					<div id="his-action" class="tab-content">
 						@@useOtherAcct1@@@@revoverJP@@@@follow@@(@@warnUseOtherAcct@@)<br>
-						<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>@@revoverJPde@@
+						<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>
+						@@revoverJPde@@
 						<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">@@follow@@</a><br>
 						@@or@@<br>
-						<a href="#!" class="waves-effect btn" onclick="udgEx('selector', 'selector')">@@openProf@@</a><br>
+						<a href="#!" class="waves-effect btn"
+							onclick="udgEx('selector', 'selector')">@@openProf@@</a><br>
 					</div>
 					<div id="his-list" class="tab-content">
 						<div id="his-lists-a">@@warnListRegist@@</div>
@@ -536,17 +554,20 @@
 					<div id="his-fav-list" class="tab-content">
 						<div id="his-fav-list-contents" class="cont-series">
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;" onclick="showFav('more')">@@more@@</button>
+						<button class="btn waves-effect" style="width:100%; padding:0;"
+							onclick="showFav('more')">@@more@@</button>
 					</div>
 					<div id="his-blocking-list" class="tab-content">
 						<div id="his-blocking-list-contents" class="cont-series">
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showBlo('more')">@@more@@</button>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="showBlo('more')">@@more@@</button>
 					</div>
 					<div id="his-muting-list" class="tab-content">
 						<div id="his-muting-list-contents" class="cont-series">
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showMut('more')">@@more@@</button>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="showMut('more')">@@more@@</button>
 					</div>
 					<div id="his-domain-list" class="tab-content">
 						<div id="his-domain-list-contents" class="cont-series">
@@ -567,7 +588,8 @@
 							<textarea placeholder="@@note@@" id="his-des-val" class="materialize-textarea"></textarea>
 							<label for="his-des-val">@@note@@</label>
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;" onclick="profedit()">@@change@@</button>
+						<button class="btn waves-effect" style="width:100%; padding:0;"
+							onclick="profedit()">@@change@@</button>
 						<br>@@editProfImg@@:
 						<span id="prof-change">
 							<input type="file" onchange="imgChange(this,'avatar')">
@@ -580,7 +602,8 @@
 					<div id="his-request-list" class="tab-content">
 						<div id="his-request-list-contents" class="cont-series">
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">@@more@@</button>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="showReq('more')">@@more@@</button>
 					</div>
 					<div id="his-follow-recom-list" class="tab-content">
 						<div id="his-follow-recom-contents" class="cont-series">
@@ -686,7 +709,8 @@
 				@@AWLSupport@@
 			</a>
 			<br>
-			@@SendAmazonGift1@@<a href="mailto:web-pro@cutls.com" target="_blank">web-pro@cutls.com</a>@@SendAmazonGift2@@<br>
+			@@SendAmazonGift1@@<a href="mailto:web-pro@cutls.com"
+				target="_blank">web-pro@cutls.com</a>@@SendAmazonGift2@@<br>
 			Kyash<br>
 			<img src="../../img/kyash.png" width="100"><br>
 		</div>
@@ -720,7 +744,8 @@
 						class="material-icons">view_headline</i><span>@@list@@</span></div>
 				<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i
 						class="material-icons">filter_list</i><span>@@filter@@</span></div>
-				<div class="waves-effect" onclick="help()"><i class="material-icons">help_outline</i><span>@@help@@</span></div>
+				<div class="waves-effect" onclick="help()"><i
+						class="material-icons">help_outline</i><span>@@help@@</span></div>
 				<div class="waves-effect" onclick="location.href='index.html'"><i
 						class="material-icons">refresh</i><span>@@f5@@</span></div>
 			</div>
@@ -741,7 +766,8 @@
 									<div><i class="material-icons">people_outline</i></div><span>@@local@@</span>
 								</div>
 								<div class="type waves-effect" data-type="local-media">
-									<div><i class="material-icons">people_outline</i><i class="material-icons sub-icon">perm_media</i>
+									<div><i class="material-icons">people_outline</i><i
+											class="material-icons sub-icon">perm_media</i>
 									</div><span>@@localMedia@@</span>
 								</div>
 								<div class="type waves-effect" data-type="home">
@@ -751,7 +777,8 @@
 									<div><i class="material-icons">language</i></div><span>@@fed@@</span>
 								</div>
 								<div class="type waves-effect" data-type="pub-media">
-									<div><i class="material-icons">language</i><i class="material-icons sub-icon">perm_media</i></div>
+									<div><i class="material-icons">language</i><i
+											class="material-icons sub-icon">perm_media</i></div>
 									<span>@@fedMedia@@</span>
 								</div>
 								<div class="type waves-effect" data-type="dm">
@@ -761,7 +788,8 @@
 									<div><i class="material-icons">merge_type</i></div><span>@@integratedTLDes@@</span>
 								</div>
 								<div class="type waves-effect" data-type="plus">
-									<div><i class="material-icons">merge_type</i><i class="material-icons sub-icon">reply</i></div>
+									<div><i class="material-icons">merge_type</i><i
+											class="material-icons sub-icon">reply</i></div>
 									<span>@@localPlusDes@@</span>
 								</div>
 								<div class="type waves-effect" data-type="notf">
@@ -791,8 +819,8 @@
 					<div class="input-field">
 						<input id="src" type="text" class="validate" style="width:60%">
 						<label for="src" data-trans="src">@@search@@</label>
-						<button class="btn waves-effect indigo" style="width: 36%;padding: 0;padding-left: 15px;" onclick="src()"
-							data-trans-i="src">
+						<button class="btn waves-effect indigo" style="width: 36%;padding: 0;padding-left: 15px;"
+							onclick="src()" data-trans-i="src">
 							<i class="material-icons left" style="margin:0">search</i>@@search@@
 						</button>
 						<br>
@@ -819,7 +847,8 @@
 						<label>@@selectAcct@@</label>
 					</div>
 					<div style="float:left; padding-top:8px; padding-bottom:28px;">
-						<button class="btn waves-effect indigo" style="width:80px;" onclick="list()" data-trans-i="lists">
+						<button class="btn waves-effect indigo" style="width:80px;" onclick="list()"
+							data-trans-i="lists">
 							@@listLocale@@
 						</button>
 					</div>
@@ -836,7 +865,8 @@
 						<label>@@selectAcct@@</label>
 					</div>
 					<div style="float:left; padding-top:8px; padding-bottom:28px;">
-						<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()" data-trans-i="filters">
+						<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()"
+							data-trans-i="filters">
 							@@listLocale@@
 						</button>
 					</div>
@@ -915,7 +945,8 @@
 						<i class="material-icons nex" title="@@setting@@(Ctrl+Shift+S)">settings</i>
 					</a>
 					<a onclick="nano()" class="nex waves-effect">
-						<i class="material-icons" title="@@nanoDes@@TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
+						<i class="material-icons" title="@@nanoDes@@TheDesk Nano"
+							data-trans-title="nano_desp">remove_from_queue</i>
 					</a>
 					<a onclick="menu()" class="nex waves-effect" id="list-tgl">
 						<i class="material-icons" title="@@list@@">apps</i>

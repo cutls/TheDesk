@@ -1,16 +1,16 @@
 /*トゥートボックス向けCSS*/
 #post-box {
-  display:none;
+  display: none;
   position: fixed;
   left: calc(50vw - 150px);
   top: 50vh;
   background-color: var(--postbox);
   border: thin solid gray;
   z-index: 501;
-  min-width:300px;
-  max-width:100%;
+  min-width: 300px;
+  max-width: 100%;
   padding: 5px;
-  border-radius:5px;
+  border-radius: 5px;
 }
 
 .cancel {
@@ -19,8 +19,7 @@
   cursor: pointer;
   position: absolute;
   right: 2px;
-  top:4px;
-
+  top: 4px;
 }
 .more-show {
   display: none;
@@ -42,10 +41,12 @@
   display: none;
 }
 #sch-box input {
-  width:auto;
+  width: auto;
 }
-.picker__close, .picker__today, .picker__clear {
-	color: #26a69a !important;
+.picker__close,
+.picker__today,
+.picker__clear {
+  color: #26a69a !important;
 }
 .cw {
   display: none;
@@ -54,10 +55,9 @@
   filter: blur(50px);
 }
 #emoji {
-  
 }
-#suggest{
-  max-height:300px;
+#suggest {
+  max-height: 300px;
   overflow-y: scroll;
 }
 #emoji-list {
@@ -68,50 +68,53 @@
 #preview-field {
   display: none;
 }
-.preview-img{
-  width:50px;
-  max-height:100px;
+.preview-img {
+  width: 50px;
+  max-height: 100px;
 }
-.pi-wrap{
-  display:inline-block;
-  width:50px;
-  max-height:100px;
+.pi-wrap {
+  display: inline-block;
+  width: 50px;
+  max-height: 100px;
 }
-#default-emoji a{
-  color:white;
-  margin-right:2px;
+#default-emoji a {
+  color: white;
+  margin-right: 2px;
 }
-.character-counter{
+.character-counter {
   position: relative;
   top: -25px;
 }
-.trendtag{
-  overflow-y:scroll;
-  max-height:100px;
+.trendtag {
+  overflow-y: scroll;
+  max-height: 100px;
 }
-#toot-btn-field{
-  display:flex;
+#toot-btn-field {
+  display: flex;
 }
-#toot-post-btn{
-  width:calc(100% - 10px); padding:0; margin-top:10px;
+#toot-post-btn {
+  width: calc(100% - 10px);
+  padding: 0;
+  margin-top: 10px;
 }
-#toot-sec-btn{
-  width:30px; padding:0; margin-top:10px;
+#toot-sec-btn {
+  width: 30px;
+  padding: 0;
+  margin-top: 10px;
 }
-#left-side{
-  float:left;
-  width:300px;
+#left-side {
+  float: left;
+  width: 300px;
 }
-#right-side{
-  display:none;
-  float:left;
-  width:300px;
-  padding:5px;
+#right-side {
+  display: none;
+  float: left;
+  width: 300px;
+  padding: 5px;
 }
-#poll{
-  
+#poll {
 }
-.poll-provider{
+.poll-provider {
   position: absolute;
   height: calc(100% - 90px);
   overflow-y: scroll;
@@ -119,19 +122,19 @@
 }
 
 /*mini*/
-.mini-post .mize{
-  display:none !important;
+.mini-post .mize {
+  display: none !important;
 }
-.mini-post #textarea{
-  padding:0;
+.mini-post #textarea {
+  padding: 0;
 }
-.mini-post #post-box{
-  width:200px;
-  min-width:100px;
+.mini-post #post-box {
+  width: 200px;
+  min-width: 100px;
 }
-.mini-post #toot-field{
-  padding:0;
+.mini-post #toot-field {
+  padding: 0;
 }
-.mini-post #toot-btn-field{
-  padding:0;
+.mini-post #toot-btn-field {
+  padding: 0;
 }

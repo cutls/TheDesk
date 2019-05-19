@@ -1,83 +1,122 @@
 <!doctype html>
 <html lang="ps">
+
 <head>
-<title>Account Manager - TheDesk</title>
-<meta content="width=device-width,initial-scale=1.0" name="viewport">
-<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
-<link href="../../css/themes.css" type="text/css" rel="stylesheet">
-<link href="../../css/master.css" type="text/css" rel="stylesheet">
-<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
-<link href='../../css/tl.css' rel='stylesheet' type='text/css'>
-<link href='../../css/userdata.css' rel='stylesheet' type='text/css'>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
-<style>.acct{display:flex; justify-content:space-around;}
-.card{width:400px; background-color: #9e9e9e; margin:10px; }
-body,html{overflow-y: scroll;}
-#acct-list{display:flex; flex-wrap:wrap; color:white; align-items: flex-start}
-.lts{font-size:150%}
-.colorsel{ display:flex; }
-.card .colorsel div:not(.exc){width:20px;height:20px;}
-.card .colorsel div.exc{width:40px;height:20px;}
-.first{
-      display:flex;
-      justify-content: center;
-      align-items:center
-}
-.first .hide-first{
-      display:none;
-}
-</style>
-<meta charset="utf-8">
+      <title>Account Manager - TheDesk</title>
+      <meta content="width=device-width,initial-scale=1.0" name="viewport">
+      <link href="../../css/materialize.css" type="text/css" rel="stylesheet">
+      <link href="../../css/themes.css" type="text/css" rel="stylesheet">
+      <link href="../../css/master.css" type="text/css" rel="stylesheet">
+      <link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
+      <link href='../../css/tl.css' rel='stylesheet' type='text/css'>
+      <link href='../../css/userdata.css' rel='stylesheet' type='text/css'>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
+      <style>
+            .acct {
+                  display: flex;
+                  justify-content: space-around;
+            }
 
-<script type="text/javascript">
-	var _jipt = [];
-	_jipt.push(['project', 'thedesk']);
-</script>
-<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+            .card {
+                  width: 400px;
+                  background-color: #9e9e9e;
+                  margin: 10px;
+            }
 
+            body,
+            html {
+                  overflow-y: scroll;
+            }
+
+            #acct-list {
+                  display: flex;
+                  flex-wrap: wrap;
+                  color: white;
+                  align-items: flex-start
+            }
+
+            .lts {
+                  font-size: 150%
+            }
+
+            .colorsel {
+                  display: flex;
+            }
+
+            .card .colorsel div:not(.exc) {
+                  width: 20px;
+                  height: 20px;
+            }
+
+            .card .colorsel div.exc {
+                  width: 40px;
+                  height: 20px;
+            }
+
+            .first {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center
+            }
+
+            .first .hide-first {
+                  display: none;
+            }
+      </style>
+      <meta charset="utf-8">
+      
+      <script type="text/javascript">
+            var _jipt = [];
+            _jipt.push(['project', 'thedesk']);
+      </script>
+      <script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+      
 </head>
+
 <body id="mainView">
-<script type="text/javascript" src="../../js/common/jquery.js"></script>
-<script type="text/javascript" src="../../js/platform/first.js"></script>
-<script type="text/javascript" src="../../js/common/materialize.js"></script>
-<script type="text/javascript" src="../../js/lang/lang.ps.js"></script>
-<script>
-      var misskeytoken=false;
-</script>
-<script type="text/javascript" src="../../js/ui/tips.js"></script>
-<script type="text/javascript" src="../../js/common/time.js"></script>
-<script type="text/javascript" src="../../js/common/modal.js"></script>
-<div class="hide-first">
-      <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">crwdns366:0crwdne366:0</a><br>
-      <h5>crwdns365:0crwdne365:0</h5>
-      <div id="acct-list"></div>
-      <div class="divider"></div>
-</div>
-<div>
-<h5>crwdns367:0crwdne367:0</h5><br>
-<div id="add">
-<div class="row">
-      <div class="col s8">
-            <input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp">
-            <div id="ins-suggest"></div>
-            crwdns368:0crwdne368:0<br>
-            <input type="checkbox" class="filled-in" id="linux" />
-                  <label for="linux">crwdns369:0crwdne369:0</label><br>
-            <input type="checkbox" class="filled-in" id="misskey" />
-                  <label for="misskey">crwdns382:0crwdne382:0</label><br>
-            <button class="btn waves-effect" onclick="instance()">Login</button><br>
+      <script type="text/javascript" src="../../js/common/jquery.js"></script>
+      <script type="text/javascript" src="../../js/platform/first.js"></script>
+      <script type="text/javascript" src="../../js/common/materialize.js"></script>
+      <script type="text/javascript" src="../../js/lang/lang.ps.js"></script>
+      <script>
+            var misskeytoken = false;
+      </script>
+      <script type="text/javascript" src="../../js/ui/tips.js"></script>
+      <script type="text/javascript" src="../../js/common/time.js"></script>
+      <script type="text/javascript" src="../../js/common/modal.js"></script>
+      <div class="hide-first">
+            <a href="index.html" class="btn waves-effect orange nex"
+                  style="width:100%; max-width:200px;">crwdns366:0crwdne366:0</a><br>
+            <h5>crwdns365:0crwdne365:0</h5>
+            <div id="acct-list"></div>
+            <div class="divider"></div>
       </div>
-      <div class="col s4">
-            <span style="font-family:Open Sans;">Supports</span>
-            <div id="support" class="collection transparent"></div>
-      </div>
-</div></div>
-<div id="auth" style="display:none">
-      crwdns372:0crwdne372:0<br>
-      <input type="text" id="code" placeholder="crwdns373:0crwdne373:0">
-      <button class="btn waves-effect" onclick="code()">Auth</button><br>
-      </div>
-      <div id="misskeylogin" style="display:none">
+      <div>
+            <h5>crwdns367:0crwdne367:0</h5><br>
+            <div id="add">
+                  <div class="row">
+                        <div class="col s8">
+                              <input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp">
+                              <div id="ins-suggest"></div>
+                              crwdns368:0crwdne368:0<br>
+                              <input type="checkbox" class="filled-in" id="linux" />
+                              <label for="linux">crwdns369:0crwdne369:0</label><br>
+                              <input type="checkbox" class="filled-in" id="misskey" />
+                              <label for="misskey">crwdns382:0crwdne382:0</label><br>
+                              <button class="btn waves-effect" onclick="instance()">Login</button><br>
+                        </div>
+                        <div class="col s4">
+                              <span style="font-family:Open Sans;">Supports</span>
+                              <div id="support" class="collection transparent"></div>
+                        </div>
+                  </div>
+            </div>
+            <div id="auth" style="display:none">
+                  crwdns372:0crwdne372:0<br>
+                  <input type="text" id="code" placeholder="crwdns373:0crwdne373:0">
+                  <button class="btn waves-effect" onclick="code()">Auth</button><br>
+            </div>
+            <div id="misskeylogin" style="display:none">
                   <h5>AppSecret</h5>
                   crwdns383:0crwdne383:0<br>
                   <input type="hidden" id="misskey-url">
@@ -85,30 +124,30 @@ body,html{overflow-y: scroll;}
                   <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br>
             </div>
       </div>
-<div class="hide-first">
-<h5>crwdns370:0crwdne370:0</h5>
-<div class="input-field" style="width:300px"><span data-trans="your_acct">crwdns371:0crwdne371:0</span>
-      <br>
-      <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
-      <label></label>
-</div>
-Some instance data by <a href="https://instances.social" target="_blank">instances.social API</a><br>
-<h5 id="ins-title"></h5>
-Administered by:<a id="ins-admin"></a><br>
-<span id="ins-desc"></span><br>
-<img src="../../img/loading.svg" id="ins-prof" width="200"><br>
-<br>
-crwdns374:0crwdne374:0:<span id="ins-name"></span><br>
-crwdns375:0crwdne375:0:<span id="ins-connect"></span>crwdns381:0crwdne381:0<br>
-crwdns376:0crwdne376:0:<span id="ins-toot"></span>crwdns381:0crwdne381:0<br>
-crwdns377:0crwdne377:0:<span id="ins-user"></span>crwdns377:0crwdne377:0<br>
-crwdns379:0crwdne379:0:<span id="ins-per"></span>%<br>
-crwdns380:0crwdne380:0:<span id="ins-ver"></span>@<span id="ins-upd"></span><br>
-</div>
-<script type="text/javascript" src="../../js/ui/theme.js"></script>
-<script type="text/javascript" src="../../js/platform/end.js"></script>
-<script type="text/javascript" src="../../js/common/sha256.js"></script>
-<script type="text/javascript" src="../../js/login/tkn.js"></script>
-<script type="text/javascript" src="../../js/login/instance.js"></script>
-<script type="text/javascript" src="../../js/login/manager.js"></script>
-<script type="text/javascript" src="../../js/tl/date.js"></script>
+      <div class="hide-first">
+            <h5>crwdns370:0crwdne370:0</h5>
+            <div class="input-field" style="width:300px"><span data-trans="your_acct">crwdns371:0crwdne371:0</span>
+                  <br>
+                  <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
+                  <label></label>
+            </div>
+            Some instance data by <a href="https://instances.social" target="_blank">instances.social API</a><br>
+            <h5 id="ins-title"></h5>
+            Administered by:<a id="ins-admin"></a><br>
+            <span id="ins-desc"></span><br>
+            <img src="../../img/loading.svg" id="ins-prof" width="200"><br>
+            <br>
+            crwdns374:0crwdne374:0:<span id="ins-name"></span><br>
+            crwdns375:0crwdne375:0:<span id="ins-connect"></span>crwdns381:0crwdne381:0<br>
+            crwdns376:0crwdne376:0:<span id="ins-toot"></span>crwdns381:0crwdne381:0<br>
+            crwdns377:0crwdne377:0:<span id="ins-user"></span>crwdns377:0crwdne377:0<br>
+            crwdns379:0crwdne379:0:<span id="ins-per"></span>%<br>
+            crwdns380:0crwdne380:0:<span id="ins-ver"></span>@<span id="ins-upd"></span><br>
+      </div>
+      <script type="text/javascript" src="../../js/ui/theme.js"></script>
+      <script type="text/javascript" src="../../js/platform/end.js"></script>
+      <script type="text/javascript" src="../../js/common/sha256.js"></script>
+      <script type="text/javascript" src="../../js/login/tkn.js"></script>
+      <script type="text/javascript" src="../../js/login/instance.js"></script>
+      <script type="text/javascript" src="../../js/login/manager.js"></script>
+      <script type="text/javascript" src="../../js/tl/date.js"></script>
