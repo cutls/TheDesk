@@ -1,7 +1,7 @@
-# TheDesk
+<img src="https://thedesk.top/img/top.png" width="300" align="left">
+<img src="https://thedesk.top/img/desk.png" width="150" align="right">
 
-<img src="https://thedesk.top/img/top.png" width="300" align="right">
-<img src="https://thedesk.top/img/desk.png" width="150" align="left">
+# TheDesk
  
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)
@@ -11,7 +11,7 @@
 [![Download](https://flat.badgen.net/github/assets-dl/cutls/TheDesk)](https://github.com/cutls/TheDesk/releases)
 ![Contributors](https://flat.badgen.net/github/contributors/cutls/TheDesk)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
-オープンソースSNSマストドン/MisskeyのWindows/Linuxクライアント  
+オープンソースSNSマストドン/MisskeyのPC向けクライアント  
 Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge/?site=thedesk.top)](https://status.cutls.com)    
 
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
