@@ -11,7 +11,12 @@
     "build:all": "electron-builder --win --linux",
     "build:win": "electron-builder --win"
   },
-  "keywords": ["mastodon","client","electron","thedesk"],
+  "keywords": [
+    "mastodon",
+    "client",
+    "electron",
+    "thedesk"
+  ],
   "bugs": {
     "url": "https://github.com/cutls/TheDesk/issues",
     "email": "web-pro@cutls.com"
