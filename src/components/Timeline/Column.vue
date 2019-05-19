@@ -14,6 +14,11 @@ import Toot from '@/components/Timeline/Toot.vue'
 
 import "@/extensions/map-sortbyvalue" // Add sortByValue function to Map prototype
 
+interface TimelineDoc {
+  name: string
+  type: string
+}
+
 type Statuses = Map<number, Status>
 
 @Component({
@@ -22,7 +27,9 @@ type Statuses = Map<number, Status>
   }
 })
 export default class Column extends Vue {
-  @Prop() public id?: string
+  @Prop({
+    required: true
+  }) public id!: string
 
   //test
   public pref = {
@@ -49,8 +56,9 @@ export default class Column extends Vue {
 
   created() {
     // timelineのnameとtypeをthis.idから取得する
-    this.name = ''
-    this.type = ''
+    let doc: TimelineDoc = ipcRenderer.sendSync('get-timeline', this.id)
+    this.name = doc.name
+    this.type = doc.type
     // TODO: このイベントのchannel名、timelineのidがいいか？
     ipcRenderer.once(`timeline-${this.name}-${this.type}`, (e: Event, statuses: Status[], error?: Error) => {
       if (error === undefined) {

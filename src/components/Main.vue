@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-// import Column from '@/components/Timeline/Column.vue'
+import Column from '@/components/Timeline/Column.vue'
 
 interface TimelineDoc {
   _id: string
@@ -18,7 +18,7 @@ interface TimelineDoc {
 
 @Component({
   components: {
-    //Column,
+    Column,
   }
 })
 export default class Main extends Vue {
