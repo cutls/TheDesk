@@ -422,9 +422,13 @@ function multiSelector() {
 		var last = localStorage.getItem("main");
 	} else if (localStorage.getItem("last-use")) {
 		var last = localStorage.getItem("last-use");
+		if (last == "webview" || last == "noauth") {
+			last = "0";
+		}
 	} else {
-		var last = 0;
+		var last = "0";
 	}
+	last = last + "";
 	var sel;
 	if (obj.length < 1) {
 		$("#src-acct-sel").html('<option value="tootsearch">Tootsearch</option>');
@@ -433,7 +437,7 @@ function multiSelector() {
 		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key];
 			var list = key * 1 + 1;
-			if (key == last) {
+			if (key+"" === last) {
 				sel = "selected";
 				var domain = acct.domain;
 				localStorage.setItem("domain_" + key, domain);

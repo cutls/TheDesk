@@ -304,7 +304,9 @@ function secvis(set) {
 //カラム追加
 function addColumn() {
 	var acct = $("#add-acct-sel").val();
-	localStorage.setItem("last-use", acct);
+	if(acct != "webview" && acct != "noauth"){
+		localStorage.setItem("last-use", acct);
+	}
 	var type = $("#type-sel").val();
 	if (acct == "noauth") {
 		acct = $("#noauth-url").val();
