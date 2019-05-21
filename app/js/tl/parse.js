@@ -235,7 +235,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var what = lang.lang_parse_polled;
 				var icon = "fa-tasks  purple-text";
 			}
-			var noticetext = '<span class="cbadge cbadge-hover"title="' + date(toot.created_at,
+			var noticetext = '<i class="fas fa-filter pointer big-text" onclick="notfFilter(\'' + toot.account.id +
+			'\',\'' + tlid + '\');" title="' + lang.lang_parse_notffilter + '"></i><span class="cbadge cbadge-hover"title="' + date(toot.created_at,
 				'absolute') + '(' + lang.lang_parse_notftime + ')"><i class="far fa-clock"></i>' + date(toot.created_at,
 					datetype) +
 				'</span><i class="big-text fas ' + icon + '"></i><a onclick="udg(\'' + toot.account.id +

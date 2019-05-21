@@ -386,45 +386,33 @@ function filterUpdateInternal(json, type) {
 */
 //通知フィルター
 function exclude(key) {
-	var excludetxt = "";
+	var excludetxt = localStorage.getItem("exclude-" + key);
 	if ($('#exc-reply-' + key + ':checked').val()) {
 		excludetxt = "?exclude_types[]=mention"
-		var reply = true
-	} else {
-		var reply = false;
 	}
 	if ($('#exc-fav-' + key + ':checked').val()) {
-		if (reply) {
+		if (!excludetxt || excludetxt !="") {
 			excludetxt = excludetxt + "&exclude_types[]=favourite"
 		} else {
 			excludetxt = "?exclude_types[]=favourite"
 		}
-		var fav = true
-	} else {
-		var fav = false;
 	}
 	if ($('#exc-bt-' + key + ':checked').val()) {
-		if (reply || fav) {
+		if (!excludetxt || excludetxt !="") {
 			excludetxt = excludetxt + "&exclude_types[]=reblog"
 		} else {
 			excludetxt = "?exclude_types[]=reblog"
 		}
-		var bt = true
-	} else {
-		var bt = false;
 	}
 	if ($('#exc-follow-' + key + ':checked').val()) {
-		if (reply || bt || fav) {
+		if (!excludetxt || excludetxt !="") {
 			excludetxt = excludetxt + "&exclude_types[]=follow"
 		} else {
 			excludetxt = "?exclude_types[]=follow"
 		}
-		var follow = true;
-	} else {
-		var follow = false;
 	}
 	if ($('#exc-poll-' + key + ':checked').val()) {
-		if (reply || bt || fav || follow) {
+		if (!excludetxt || excludetxt !="") {
 			excludetxt = excludetxt + "&exclude_types[]=poll"
 		} else {
 			excludetxt = "?exclude_types[]=poll"
@@ -444,4 +432,26 @@ function excludeCk(key, target) {
 	} else {
 		return "";
 	}
+}
+function checkNotfFilter(tlid){
+	var excludetxt = localStorage.getItem("exclude-" + tlid);
+	if(!excludetxt || excludetxt != ""){
+		return true;
+	}else{
+		return false;
+	}
+}
+function resetNotfFilter(tlid){
+	localStorage.setItem("exclude-" + tlid, "")
+	parseColumn();
+}
+function notfFilter(id,tlid){
+	var excludetxt = localStorage.getItem("exclude-" + tlid);
+	if (!excludetxt || excludetxt !="") {
+		excludetxt = excludetxt + "&account_id="+id
+	} else {
+		excludetxt = "?account_id="+id
+	}
+	localStorage.setItem("exclude-" + tlid, excludetxt)
+	parseColumn();
 }

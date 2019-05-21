@@ -195,6 +195,7 @@ var lang = {
     "lang_parse_thread": "Show thread",
     "lang_parse_unknown": "Attached file",
     "lang_parse_nsfw": "NSFW media",
+    "lang_parse_notffilter":"Show this user's notifications",
     //misskey
     "lang_misskeyparse_renote": "Repost",
     "lang_misskeyparse_renoteqt": "Renote",

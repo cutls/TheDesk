@@ -197,6 +197,7 @@ var lang = {
     "lang_parse_thread": "会話を表示",
     "lang_parse_unknown": "添付ファイル",
     "lang_parse_nsfw": "閲覧注意",
+    "lang_parse_notffilter":"このユーザーの通知のみを表示",
     //misskey
     "lang_misskeyparse_renote": "再投稿",
     "lang_misskeyparse_renoteqt": "引用",

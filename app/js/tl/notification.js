@@ -79,15 +79,15 @@ function notfColumn(acct_id, tlid, sys) {
 					}
 					if (obj.type != "follow") {
 						if (misskey) {
-							templete = templete + misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute);
+							templete = templete + misskeyParse([obj], 'notf', acct_id, tlid, -1, mute);
 						} else {
-							templete = templete + parse([obj], 'notf', acct_id, 'notf', -1, mute);
+							templete = templete + parse([obj], 'notf', acct_id, tlid, -1, mute);
 						}
 					} else {
 						if (misskey) {
-							templete = templete + misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute);
+							templete = templete + misskeyUserparse([obj], 'notf', acct_id, tlid, -1, mute);
 						} else {
-							templete = templete + userparse([obj.account], 'notf', acct_id, 'notf', -1);
+							templete = templete + userparse([obj.account], 'notf', acct_id, tlid, -1);
 						}
 
 					}

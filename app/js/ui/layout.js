@@ -169,7 +169,11 @@ function parseColumn(dontclose) {
 					'<input type="checkbox" class="filled-in" id="exc-bt-' + key + '" ' + excludeCk(key, "reblog") + ' /><label for="exc-bt-' + key + '" class="exc-chb" ><i class="fas fa-retweet exc-icons"></i></label> ' +
 					'<input type="checkbox" class="filled-in" id="exc-follow-' + key + '" ' + excludeCk(key, "follow") + ' /><label for="exc-follow-' + key + '" class="exc-chb" ><i class="fas fa-users exc-icons"></i></label> ' +
 					'<input type="checkbox" class="filled-in" id="exc-poll-' + key + '" ' + excludeCk(key, "poll") + ' /><label for="exc-poll-' + key + '" class="exc-chb" ><i class="fas fa-tasks exc-icons"></i></label> ' +
-					'<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude(' + key + ')">Filter</button><br>';
+					'<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude(' + key + ')">Filter</button>';
+					if(checkNotfFilter(key)){
+						exclude=exclude+'<button class="btn red waves-effect" style="width:60px; padding:0;" onclick="resetNotfFilter(' + key + ')">Clear all</button>'
+					}
+					exclude=exclude+"<br>";
 			} else if (acct.type == "home") {
 				var exclude = '<a onclick="ebtToggle(' + key +
 					')" class="setting nex"><i class="fas fa-retweet waves-effect nex" title="' + lang.lang_layout_excludingbt + '" style="font-size:24px"></i><span id="sta-bt-' +
