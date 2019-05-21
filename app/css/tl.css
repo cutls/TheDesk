@@ -1,14 +1,13 @@
 /*TL CSS(ただしBBCode pulse:master.css/spin:font-awesome*/
 #main {
-  display: flex;
   width: 100vw;
+  height: calc(100vh - 40px);
 }
 #timeline-container {
   overflow-x: scroll;
   overflow-y: hidden;
   display: flex;
-  height: calc(100vh - 40px);
-  flex-grow: 4;
+  height: 100%;
 }
 #bottom {
   position: absolute;
@@ -153,6 +152,8 @@ iframe {
 }
 }
 .boxIn {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   border: thin solid gray;
   overflow: hidden;
@@ -180,7 +181,7 @@ iframe {
 }
 .tl-box {
   position: relative;
-  height: calc(100% - 40px);
+  flex: 1;
   overflow-y: scroll;
   overflow-x: hidden;
 }
