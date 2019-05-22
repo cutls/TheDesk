@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts">
+import { ipcRenderer } from 'electron'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 import Column from '@/components/Timeline/Column.vue'
@@ -31,6 +32,7 @@ export default class Main extends Vue {
 
   beforeDestroy() {
     // this.timelines を LocalStorage とかに保持させる
+    ipcRenderer.removeAllListeners('add-timeline')
   }
 
   created() {
@@ -40,6 +42,16 @@ export default class Main extends Vue {
     }
 
     this.timelines.push(this.initTimeline._id)
+  }
+
+  mounted() {
+    ipcRenderer.on('add-timeline', (_e: Event, tl?: TimelineDoc, error?: Error) => {
+      if (error != undefined || tl === undefined) {
+        console.error(error)
+        return
+      }
+      this.timelines.push(tl._id)
+    })
   }
 }
 </script>

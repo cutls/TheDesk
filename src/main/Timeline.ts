@@ -54,8 +54,8 @@ export default class Timeline {
             let newDoc = await db.insert(docs)
             event.sender.send(`add-timeline`, newDoc)
         } catch (err) {
-            let error = new Error("You cannot login already logined account.")
-            error.name = "ERROR_YOU_TRY_ANOTHER_ACCOUNT"
+            let error = new Error("Cannot save timeline.")
+            error.name = "ERROR_ADD_TIMELINE"
             event.sender.send(`add-timeline`, undefined, error)
         }
     }
