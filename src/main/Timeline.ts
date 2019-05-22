@@ -22,7 +22,7 @@ export default class Timeline {
             notify: "/timelines/notifications",
             dm: "/conversations",
             local: "/timelines/public?local=true",
-            fediverse: "/timelines/public",
+            federated: "/timelines/public",
         }
 
     public static ready() {
