@@ -25,8 +25,10 @@
       <template v-else-if="status.card.html" v-html="status.card.html"></template>
     </div>
     <div class="toot-visibility">
-      <!--公開TLなので常にPublic-->
-      <PublicIcon :size="13"/>
+      <PublicIcon :size="13" v-if="status.visibility === 'public'"/>
+      <UnlistedIcon :size="13" v-if="status.visibility === 'unlisted'"/>
+      <PrivateIcon :size="13" v-if="status.visibility === 'private'"/>
+      <DirectIcon :size="13" v-if="status.visibility === 'direct'"/>
     </div>
     <div class="toot-action">
       <!--ここは公開TLなのでふぁぼ等はなし-->
@@ -49,6 +51,9 @@ import ChangeToAlt from 'vue-material-design-icons/ChevronDown.vue'
 import ChangeToNormal from 'vue-material-design-icons/ChevronUp.vue'
 import MoreIcon from 'vue-material-design-icons/DotsVertical.vue'
 import PublicIcon from 'vue-material-design-icons/Earth.vue'
+import UnlistedIcon from 'vue-material-design-icons/LockOpen.vue'
+import PrivateIcon from 'vue-material-design-icons/Lock.vue'
+import DirectIcon from 'vue-material-design-icons/Email.vue'
 
 interface Preferences {
   static?: boolean
@@ -83,6 +88,9 @@ interface MediaMeta {
     ChangeToNormal,
     MoreIcon,
     PublicIcon,
+    UnlistedIcon,
+    PrivateIcon,
+    DirectIcon
   }
 })
 export default class Toot extends Vue {
