@@ -1,7 +1,9 @@
 <template>
   <div class="timeline">
     <div class="header">
+      <TimnelineIcon :tlType="type" iconSize="70"  class="tl-icon" />
       <div class="tl-name">{{name}}</div>
+      <div class="tl-type">{{type}}</div>
     </div>
     <div class="toot-box">
       <Toot v-for="[id,status] in statuses" :key="id" :status="status" :pref-static="pref.static"/>
@@ -14,6 +16,7 @@ import { ipcRenderer } from "electron"
 import { Component, Prop, Vue } from "vue-property-decorator"
 import { Status } from "megalodon"
 
+import TimnelineIcon from '@/components/Timeline/TimelineIcon.vue'
 import Toot from '@/components/Timeline/Toot.vue'
 
 import "@/extensions/map-sortbyvalue" // Add sortByValue function to Map prototype
@@ -27,7 +30,8 @@ type Statuses = Map<number, Status>
 
 @Component({
   components: {
-    Toot
+    Toot,
+    TimnelineIcon
   }
 })
 export default class Column extends Vue {
@@ -135,10 +139,25 @@ export default class Column extends Vue {
 
   .header {
     top: 0;
+    padding:10px;
     background-color: var(--header);
     filter: brightness(110%);
-
+    display: grid;
+    column-gap: 0.5em;
+    row-gap: 0.3em;
+    grid-template-columns: 70px 1fr 1fr;
+    grid-template-areas:
+    "icon name type"
+    "icon spacer spacer";
+    .tl-icon {
+      grid-area: icon;
+    }
     .tl-name {
+      grid-area: name;
+      height: 60px;
+    }
+    .tl-type {
+      grid-area: type;
       height: 60px;
     }
   }
