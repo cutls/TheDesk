@@ -63,7 +63,7 @@ export default class Column extends Vue {
     let doc: TimelineDoc = ipcRenderer.sendSync('get-timeline', this.id)
     this.name = doc.name
     this.type = doc.type
-    // TODO: このイベントのchannel名、timelineのidがいいか？
+
     ipcRenderer.once(`timeline-${this.name}-${this.type}`, (e: Event, statuses: Status[], error?: Error) => {
       if (error === undefined) {
         this.loadTL(statuses)

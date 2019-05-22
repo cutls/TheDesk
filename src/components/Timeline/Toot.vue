@@ -15,6 +15,8 @@
           v-if="media.type === 'image'"
           :src="media.preview_url"
           @click="showImage(media.url, media.type)"
+          :title="media.description"
+          :style="mediaStyles(media)"
         >
       </div>
     </div>
@@ -52,6 +54,29 @@ interface Preferences {
   static?: boolean
 }
 
+interface Attachment {
+  id: string
+  type: 'unknown' | 'image' | 'gifv' | 'video'
+  url: string
+  remote_url?: string
+  preview_url: string
+  text_url?: string
+  meta?: { original: MediaMeta, small: MediaMeta } & { focus?: { x: number, y: number } }
+  description?: string
+  blurhash?: string
+}
+interface MediaMeta {
+  width: number
+  height: number
+
+  size?: string
+  aspect?: number
+
+  frame_rate?: number
+  duration?: number
+  bitrate?: number
+}
+
 @Component({
   components: {
     ChangeToAlt,
@@ -66,7 +91,7 @@ export default class Toot extends Vue {
 
   public isMoreAction: boolean = false
 
-  get pref(): Preferences {
+  public get pref(): Preferences {
     return {
       static: this.prefStatic
     }
@@ -74,6 +99,14 @@ export default class Toot extends Vue {
 
   mounted() {
     console.log(this.status)
+  }
+
+  public mediaStyles(media: Attachment): { [key: string]: string } {
+    if (media.meta === undefined || media.meta.focus === undefined) {
+      return {}
+    }
+
+    return { objectPosition: `${media.meta.focus.x}% ${media.meta.focus.y}%` }
   }
 }
 </script>
@@ -117,6 +150,19 @@ export default class Toot extends Vue {
   }
   .toot-media {
     grid-area: media;
+    display: flex;
+    .media-item {
+      flex: 1;
+      & + .media-item {
+        border-left: var(--bg-color) solid 1px;
+      }
+    }
+    img {
+      object-fit: cover;
+      object-position: 0%;
+      height: 200px;
+      width: 100%;
+    }
   }
   .toot-card {
     grid-area: card;
