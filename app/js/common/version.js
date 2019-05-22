@@ -162,8 +162,8 @@ function verck(ver) {
 					break;
 				} else {
 					var show = true;
-					if (obj.Toot != "") {
-						var toot = '<button class="btn-flat toast-action" onclick="detEx(\'' + obj.Toot + '\',\'main\')">Show</button>';
+					if (obj.toot != "") {
+						var toot = '<button class="btn-flat toast-action" onclick="detEx(\'' + obj.toot + '\',\'main\')">Show</button>';
 					} else {
 						var toot = "";
 					}
