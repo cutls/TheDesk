@@ -46,15 +46,18 @@ export default class Main extends Vue {
 
 <style lang="postcss">
 #main {
+  display: flex;
+  flex-direction: column;
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 #timelines {
   display: flex;
   width: 100%;
-  height: calc(100vh - 40px);
-  overflow-x: scroll;
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 #toolbar {
   width: 100vw;

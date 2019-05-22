@@ -122,23 +122,14 @@ export default class About extends Vue {
 </script>
 
 <style lang="postcss">
-body {
-  margin: 0;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -webkit-app-region: drag;
-  user-select: none;
-}
-a {
-  color: #36c;
-  text-decoration: none;
-}
 #about {
   padding: 0.5em;
   text-align: center;
-  height: 100vh;
+  height: calc(100vh - 1em);
   color: var(--color);
   background-color: var(--bg-color);
+  -webkit-app-region: drag;
+  user-select: none;
 }
 #brand {
   margin-top: 0.5em;
@@ -157,6 +148,10 @@ a {
   p {
     margin: 0;
   }
+}
+a {
+  color: #36c;
+  text-decoration: none;
 }
 dl.version {
   margin: 0;

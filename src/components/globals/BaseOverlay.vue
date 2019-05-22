@@ -38,6 +38,8 @@ export default class BaseOverlay extends Vue {
   opacity: 0;
 }
 .overlay {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -49,9 +51,8 @@ export default class BaseOverlay extends Vue {
 }
 .overlay-inner {
   margin: 0.5em;
-  height: calc(100% - 50px - 1em);
-
-  overflow: scroll;
+  flex: 1;
+  overflow: auto;
 }
 .close-button {
   position: fixed;

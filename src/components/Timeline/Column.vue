@@ -3,7 +3,9 @@
     <div class="header">
       <div class="tl-name">{{name}}</div>
     </div>
-    <Toot v-for="[id,status] in statuses" :key="id" :status="status" :pref-static="pref.static"/>
+    <div class="toot-box">
+      <Toot v-for="[id,status] in statuses" :key="id" :status="status" :pref-static="pref.static"/>
+    </div>
   </div>
 </template>
 
@@ -116,10 +118,11 @@ export default class Column extends Vue {
 
 <style scoped lang="postcss">
 .timeline {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   flex: 1;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
 
   & + .timeline {
     border-left: solid 1px;
@@ -127,7 +130,6 @@ export default class Column extends Vue {
   }
 
   .header {
-    position: sticky;
     top: 0;
     background-color: var(--header);
     filter: brightness(110%);
@@ -135,6 +137,12 @@ export default class Column extends Vue {
     .tl-name {
       height: 60px;
     }
+  }
+
+  .toot-box {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 }
 </style>
