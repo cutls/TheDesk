@@ -60,7 +60,11 @@ export default class Column extends Vue {
 
   created() {
     // timelineのnameとtypeをthis.idから取得する
-    let doc: TimelineDoc = ipcRenderer.sendSync('get-timeline', this.id)
+    let doc: TimelineDoc | null = ipcRenderer.sendSync('get-timeline', this.id)
+    if (doc === null) {
+      this.$destroy()
+      return
+    }
     this.name = doc.name
     this.type = doc.type
 
