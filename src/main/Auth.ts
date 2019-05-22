@@ -78,19 +78,15 @@ export default class Auth {
       tokenData = await Mastodon.fetchAccessToken(clientId, clientSecret, code, "https://" + instance, redirectUri)
     } catch (err) {
       let error: Error = err
-      event.sender.send(`error`, {
-        id: "ERROR_CONNECTION",
-        message: "Connection error",
-        meta: error
-      })
+      error.name = "ERROR_CONNECTION"
+      event.sender.send(`login-complete`, undefined, error)
       return
     }
 
     if (tokenData.accessToken === undefined) {
-      event.sender.send(`error`, {
-        id: "ERROR_GET_TOKEN",
-        message: "Failed to get access token."
-      })
+      let error = new Error("Failed to get access token.")
+      error.name = "ERROR_GET_TOKEN"
+      event.sender.send(`login-complete`, undefined, error)
       return
     }
 
@@ -117,11 +113,10 @@ export default class Auth {
       let newDoc = await db.insert(docs)
       Client.setAuthClient('http', newDoc.full, client)
       event.sender.send(`login-complete`, newDoc)
-    } catch (error) {
-      event.sender.send(`error`, {
-        id: "ERROR_YOU_TRY_ANOTHER_ACCOUNT",
-        message: "You cannot login already logined account."
-      })
+    } catch (err) {
+      let error = new Error("You cannot login already logined account.")
+      error.name = "ERROR_YOU_TRY_ANOTHER_ACCOUNT"
+      event.sender.send(`login-complete`, undefined, error)
     }
   }
 }

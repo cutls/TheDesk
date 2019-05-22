@@ -63,7 +63,11 @@ export default class AccountAuth extends Vue {
   public authCode() {
     ipcRenderer.once(
       `login-complete`,
-      (e: Event, account: Account) => {
+      (e: Event, account?: Account, error?: Error) => {
+        if (error != undefined || account === undefined) {
+          console.error(error)
+          return
+        }
         this.$emit('login-complete', account)
       }
     )
