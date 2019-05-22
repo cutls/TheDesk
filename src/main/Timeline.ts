@@ -58,7 +58,7 @@ export default class Timeline {
 
         try {
             let newDoc = await db.insert(docs)
-            event.sender.send(`add-timeline`, newDoc)
+            event.sender.send(`add-timeline`, newDoc._id)
         } catch (err) {
             let error = new Error("Cannot save timeline.")
             error.name = "ERROR_ADD_TIMELINE"
