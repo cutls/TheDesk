@@ -77,7 +77,9 @@ builder.build({
     config: pref
 })
     .then(() => {
+        console.log("Done on "+os)
         if (os == "win32") {
+            console.log("Windows")
             fs.renameSync('../build/TheDesk ' + version + '.exe', '../build/TheDesk-ia32.exe');
             fs.renameSync('../build/TheDesk Setup ' + version + '.exe', '../build/TheDesk-setup-ia32.exe');
             retry()
@@ -87,6 +89,7 @@ builder.build({
         // handle error
     })
 function retry(){
+    console.log("Windows x64")
     const targetsAlt = new Map();
     const archToTypeAlt = new Map();
     targetsAlt.set(Platform.WINDOWS, archToTypeAlt);
