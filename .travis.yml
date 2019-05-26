@@ -25,5 +25,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
-    tags: true
+    tags: false
     all_branches: true
