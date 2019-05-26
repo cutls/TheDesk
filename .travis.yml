@@ -11,8 +11,9 @@ before_deploy:
   - cd app
   - npm install
   - npm run build
+  - mv ../build/* ../
   - cd ../
-  - ls build
+  - ls
 deploy:
   provider: releases
   # GitHub にリリースするための API KEY を暗号化した値
