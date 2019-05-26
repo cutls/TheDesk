@@ -10,7 +10,8 @@ before_deploy:
   - npm install electron-builder -g
   - cd app
   - npm install
-  - npm build
+  - npm run build
+  - cd ../
 deploy:
   provider: releases
   # GitHub にリリースするための API KEY を暗号化した値
@@ -22,5 +23,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
-    tags: true
+    tags: false
     all_branches: true
