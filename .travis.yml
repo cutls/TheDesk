@@ -12,8 +12,10 @@ before_deploy:
   - npm install
   - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv ../build/thedesk-*-ia32.zip ../build/thedesk-ia32.zip;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv ../build/thedesk-*.zip ../build/thedesk.zip;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../build;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv thedesk-*-ia32.zip thedesk-ia32.zip;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv thedesk-*.zip thedesk.zip;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win --ia32 -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv TheDesk-setup.exe TheDesk-setup-ia32.exe;else :;fi
