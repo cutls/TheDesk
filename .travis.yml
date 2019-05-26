@@ -1,7 +1,7 @@
 os: 
  - windows
- #- linux
- #- osx
+ - linux
+ - osx
 language: node_js
 node_js:
 - '10.15.2'
@@ -43,5 +43,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
-    tags: false
+    tags: true
     all_branches: true
