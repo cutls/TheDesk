@@ -16,10 +16,6 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
 
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
-## コントリビュート
-
-***WIP(before CI)*** ブランチにプルリクエストをお願いします。
-
 ## ライセンス
 
 [GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  

@@ -16,10 +16,6 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
 <a href="https://www.patreon.com/cutls"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" alt="Become a Patron!" width="160"></a>  
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
-## Contribute
-
-Please make a pull request to ***WIP(before CI)*** brunch.
-
 ## License
 
 [GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  
