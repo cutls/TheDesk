@@ -10,7 +10,8 @@ before_deploy:
   - npm install electron-builder -g
   - cd app
   - npm install
-  - if [ "$TRAVIS_OS_NAME" = "osx" ];then npm run build;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];then sudo apt-get install libfontconfig-dev;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p nevelse :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 --ia32;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv ../build/thedesk-*-ia32.zip ../build/thedesk-ia32.zip;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv ../build/thedesk-*.zip ../build/thedesk.zip;else :;fi
