@@ -1,32 +1,31 @@
-
-.drag-content{
-	text-overflow: ellipsis;
-	cursor:move;
-	user-select: none;
-	background-color:var(--modalfooter);
-	margin:5px;
-	border-radius:5px;
-	color:var(--color);
-	padding:3px;
-	display:grid;
-	grid-template-columns: 43px 1fr 60px;
-    grid-template-areas: 'sorticon sorttitle sorttitle' 'sorticon sortacct sortaction';
+.drag-content {
+  text-overflow: ellipsis;
+  cursor: move;
+  user-select: none;
+  background-color: var(--modalfooter);
+  margin: 5px;
+  border-radius: 5px;
+  color: var(--color);
+  padding: 3px;
+  display: grid;
+  grid-template-columns: 43px 1fr 60px;
+  grid-template-areas: "sorticon sorttitle sorttitle" "sorticon sortacct sortaction";
 }
 .sorticon {
-	grid-area:sorticon;
+  grid-area: sorticon;
 }
-.sorticon i{
-	font-size:43px;
+.sorticon i {
+  font-size: 43px;
 }
 .sorttitle {
-	margin-left:5px;
-	grid-area:sorttitle;
+  margin-left: 5px;
+  grid-area: sorttitle;
 }
 .sortacct {
-	margin-left:5px;
-	grid-area:sortacct;
+  margin-left: 5px;
+  grid-area: sortacct;
 }
 .sortaction {
-	margin-left:5px;
-	grid-area:sortaction;
+  margin-left: 5px;
+  grid-area: sortaction;
 }

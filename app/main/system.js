@@ -1,6 +1,6 @@
 function system(mainWindow, dir, lang) {
-    const electron = require("electron");
-    const app = electron.app;
+	const electron = require("electron");
+	const app = electron.app;
 	const join = require('path').join;
 	var Jimp = require("jimp");
 	const fs = require("fs");
@@ -11,15 +11,15 @@ function system(mainWindow, dir, lang) {
 	const BrowserWindow = electron.BrowserWindow;
 	const dialog = electron.dialog;
 	const os = require('os')
-    const language=require("../main/language.js");
-	ipc.on('native-notf', function(e, args) {
-        
+	const language = require("../main/language.js");
+	ipc.on('native-notf', function (e, args) {
+
 		var platform = process.platform;
 		var bit = process.arch;
 		if (platform == "win32") {
 			const notifier = require('node-notifier')
 			var tmp_imge = tmp_img;
-			Jimp.read(args[2], function(err, lenna) {
+			Jimp.read(args[2], function (err, lenna) {
 				if (!err && lenna) {
 					lenna.write(tmp_img);
 					var tmp_imge = tmp_img;
@@ -27,51 +27,54 @@ function system(mainWindow, dir, lang) {
 					var tmp_imge = "";
 				}
 				notifier.notify({
-						appID: "top.thedesk",
-						message: args[1],
-						title: args[0],
-						icon: tmp_imge,
-						sound: false,
-						wait: true,
-					},
-					function(err, response) {
+					appID: "top.thedesk",
+					message: args[1],
+					title: args[0],
+					icon: tmp_imge,
+					sound: false,
+					wait: true,
+				},
+					function (err, response) {
 						console.log(err, response)
 					});
 			});
 		}
 	});
 	//言語
-	ipc.on('lang', function(e, arg) {
-            
-			console.log("set:" + arg);
-			fs.writeFileSync(lang_path, arg);
-			mainWindow.webContents.send('langres', "");
-		})
-		//ハードウェアアクセラレーションの無効化
-	ipc.on('ha', function(e, arg) {
-        
+	ipc.on('lang', function (e, arg) {
+
+		console.log("set:" + arg);
+		fs.writeFileSync(lang_path, arg);
+		mainWindow.webContents.send('langres', "");
+	})
+	//ハードウェアアクセラレーションの無効化
+	ipc.on('ha', function (e, arg) {
+
 		if (arg == "true") {
 			fs.writeFileSync(ha_path, arg);
 		} else {
-			fs.unlink(ha_path, function(err) {});
+			fs.unlink(ha_path, function (err) { });
 		}
 		app.relaunch()
 		app.exit()
 	})
 
 	ipc.on('quit', (e, args) => {
-        
+
 		app.quit();
 	});
 	ipc.on('about', (e, args) => {
-        
+
 		about();
 	});
 
 	function about() {
-        
+
 		var ver = app.getVersion()
 		var window = new BrowserWindow({
+			webPreferences: {
+				nodeIntegration:true
+			},
 			width: 300,
 			height: 480,
 			"transparent": false, // ウィンドウの背景を透過
@@ -82,15 +85,15 @@ function system(mainWindow, dir, lang) {
 		return "true"
 	}
 	ipc.on('column-del', (e, args) => {
-         
+
 		console.log(lang);
 		var options = language.delsel(lang)
-		dialog.showMessageBox(options, function(index) {
+		dialog.showMessageBox(options, function (index) {
 			mainWindow.webContents.send('column-del-reply', index);
 		})
 	});
-	ipc.on('nano', function(e, x, y) {
-        
+	ipc.on('nano', function (e, x, y) {
+
 		var nano_info_path = join(app.getPath("userData"),
 			"nano-window-position.json");
 		var window_pos;
@@ -100,6 +103,9 @@ function system(mainWindow, dir, lang) {
 			window_pos = [0, 0]; // デフォルトバリュー
 		}
 		var nanowindow = new BrowserWindow({
+			webPreferences: {
+				nodeIntegration:true
+			},
 			width: 350,
 			height: 200,
 			"transparent": false, // ウィンドウの背景を透過
@@ -110,7 +116,7 @@ function system(mainWindow, dir, lang) {
 		nanowindow.setAlwaysOnTop(true);
 
 		nanowindow.setPosition(window_pos[0], window_pos[1]);
-		nanowindow.on('close', function() {
+		nanowindow.on('close', function () {
 			fs.writeFileSync(nano_info_path, JSON.stringify(nanowindow.getPosition()));
 		});
 		return true;
@@ -149,7 +155,7 @@ function system(mainWindow, dir, lang) {
 			num_b = -1;
 		}
 
-		data = data.sort(function(a, b) {
+		data = data.sort(function (a, b) {
 			var x = a[key];
 			var y = b[key];
 			if (x > y) return num_a;
@@ -173,7 +179,7 @@ function system(mainWindow, dir, lang) {
 	ipc.on('fonts', (e, arg) => {
 		const fm = require('font-manager');
 		var fonts = fm.getAvailableFontsSync();
-		object_array_sort(fonts, 'family', 'asc', function(fonts_sorted) {
+		object_array_sort(fonts, 'family', 'asc', function (fonts_sorted) {
 			mainWindow.webContents.send('font-list', fonts_sorted);
 		});
 	});

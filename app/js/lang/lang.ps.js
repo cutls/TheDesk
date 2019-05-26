@@ -1,4 +1,4 @@
-var lang={
+var lang = {
     "language": "crwdns1960:0crwdne1960:0",
     "lang_toot": "crwdns1962:0crwdne1962:0",
     "lang_there": "crwdns1964:0crwdne1964:0",

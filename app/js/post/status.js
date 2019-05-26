@@ -7,7 +7,7 @@ function fav(id, acct_id, remote) {
 		var flag = "favourite";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -15,19 +15,19 @@ function fav(id, acct_id, remote) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
 	httpreq.send();
-    httpreq.onreadystatechange = function() {
-        if (httpreq.readyState === 4) {
-            var json = httpreq.response;
-            if(remote!="remote"){
+	httpreq.onreadystatechange = function () {
+		if (httpreq.readyState === 4) {
+			var json = httpreq.response;
+			if (remote != "remote") {
 				//APIのふぁぼカウントがおかしい
-				if ($("[toot-id=" + id + "] .fav_ct").text() == json.favourites_count){
-					if(flag=="unfavourite"){
-						var fav=json.favourites_count - 1;
-					}else{
-						var fav=json.favourites_count + 1;
+				if ($("[toot-id=" + id + "] .fav_ct").text() == json.favourites_count) {
+					if (flag == "unfavourite") {
+						var fav = json.favourites_count - 1;
+					} else {
+						var fav = json.favourites_count + 1;
 						//var fav = json.favourites_count;
 					}
-				}else{
+				} else {
 					var fav = json.favourites_count;
 				}
 				$("[toot-id=" + id + "] .fav_ct").text(fav);
@@ -35,17 +35,17 @@ function fav(id, acct_id, remote) {
 				} else {
 					$("[toot-id=" + id + "] .rt_ct").text(fav);
 				}
-				if ($("[toot-id=" + id +"]").hasClass("faved")) {
-					$("[toot-id=" + id +"]").removeClass("faved");
+				if ($("[toot-id=" + id + "]").hasClass("faved")) {
+					$("[toot-id=" + id + "]").removeClass("faved");
 					$(".fav_" + id).removeClass("yellow-text");
 				} else {
-					$("[toot-id=" + id +"]").addClass("faved");
+					$("[toot-id=" + id + "]").addClass("faved");
 					$(".fav_" + id).addClass("yellow-text");
 				}
-				}else{
-					Materialize.toast(lang.lang_status_favWarn, 1000);
-				}
-        }
+			} else {
+				Materialize.toast(lang.lang_status_favWarn, 1000);
+			}
+		}
 	}
 }
 
@@ -57,7 +57,7 @@ function rt(id, acct_id, remote) {
 		var flag = "reblog";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -65,10 +65,10 @@ function rt(id, acct_id, remote) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
 	httpreq.send();
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: boost", json]);
 			if (remote != "remote") {
 				$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
 				if (!json.reblog) {
@@ -97,10 +97,10 @@ function rt(id, acct_id, remote) {
 }
 
 //フォロー
-function follow(acct_id,remote) {
-	if (!acct_id && acct_id!="selector") {
+function follow(acct_id, remote) {
+	if (!acct_id && acct_id != "selector") {
 		var acct_id = $('#his-data').attr("use-acct");
-	}else if (acct_id=="selector") {
+	} else if (acct_id == "selector") {
 		var acct_id = $("#user-acct-sel").val();
 	}
 	if (!remote && $("#his-data").hasClass("following")) {
@@ -111,34 +111,33 @@ function follow(acct_id,remote) {
 		var flagm = "create";
 	}
 	var id = $("#his-data").attr("user-id");
-	if(!remote){
+	if (!remote) {
 		var remote = $("#his-data").attr("remote");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(localStorage.getItem("mode_" + domain)=="misskey"){
-		var start = "https://" + domain + "/api/following/"+flagm;
-		var user=$("#his-acct").text();
-		var ent={"i":at,"userId":id}
-	}else if(remote=="true" && flag=="follow"){
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	if (localStorage.getItem("mode_" + domain) == "misskey") {
+		var start = "https://" + domain + "/api/following/" + flagm;
+		var user = $("#his-acct").text();
+		var ent = { "i": at, "userId": id }
+	} else if (remote == "true" && flag == "follow") {
 		var start = "https://" + domain + "/api/v1/follows";
-		var user=$("#his-acct").text();
-		var ent={"uri":user}
-	}else{
+		var user = $("#his-acct").text();
+		var ent = { "uri": user }
+	} else {
 		var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
-		var ent={}
+		var ent = {}
 	}
-	console.log(ent);
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
 	httpreq.send(JSON.stringify(ent));
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: folllow", json]);
 			if ($("#his-data").hasClass("following")) {
 				$("#his-data").removeClass("following");
 				$("#his-follow-btn").text(lang.lang_status_follow);
@@ -162,7 +161,7 @@ function block(acct_id) {
 		var flag = "block";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -170,7 +169,7 @@ function block(acct_id) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
 	httpreq.send();
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			if ($("#his-data").hasClass("blocking")) {
 				$("#his-data").removeClass("blocking");
@@ -197,14 +196,14 @@ function mute(acct_id) {
 		var flagm = "create";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(localStorage.getItem("mode_" + domain)=="misskey"){
-		var start = "https://" + domain + "/api/mute/"+flagm;
-		var ent={"i":at,"userId":id}
-		var rq=JSON.stringify(ent);
-	}else{
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	if (localStorage.getItem("mode_" + domain) == "misskey") {
+		var start = "https://" + domain + "/api/mute/" + flagm;
+		var ent = { "i": at, "userId": id }
+		var rq = JSON.stringify(ent);
+	} else {
 		var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
-		var rq="";
+		var rq = "";
 	}
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -212,7 +211,7 @@ function mute(acct_id) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
 	httpreq.send(rq);
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			if ($("#his-data").hasClass("muting")) {
 				$("#his-data").removeClass("muting");
@@ -228,17 +227,17 @@ function mute(acct_id) {
 //投稿削除
 function del(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	if(localStorage.getItem("mode_" + domain)=="misskey"){
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	if (localStorage.getItem("mode_" + domain) == "misskey") {
 		var start = "https://" + domain + "/api/notes/delete";
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('POST', start, true);
 		httpreq.setRequestHeader('Content-Type', 'application/json');
 		httpreq.responseType = "json";
-		httpreq.send(JSON.stringify({i:at,noteId:id}));
-		$("[toot-id=" + id+ "]").hide();
-					$("[toot-id=" + id + "]").remove();
-	}else{
+		httpreq.send(JSON.stringify({ i: at, noteId: id }));
+		$("[toot-id=" + id + "]").hide();
+		$("[toot-id=" + id + "]").remove();
+	} else {
 		var start = "https://" + domain + "/api/v1/statuses/" + id;
 		var httpreq = new XMLHttpRequest();
 		httpreq.open('DELETE', start, true);
@@ -247,42 +246,42 @@ function del(id, acct_id) {
 		httpreq.responseType = "json";
 		httpreq.send();
 	}
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 		}
 	}
 }
 //redraft
-function redraft(id, acct_id){
-	if(confirm(lang.lang_status_redraft)){
+function redraft(id, acct_id) {
+	if (confirm(lang.lang_status_redraft)) {
 		show();
 		del(id, acct_id);
 		$("#post-acct-sel").prop("disabled", true);
-		var medias=$("[toot-id="+id+"]").attr("data-medias");
-		var vismode=$("[toot-id="+id+"] .vis-data").attr("data-vis");
+		var medias = $("[toot-id=" + id + "]").attr("data-medias");
+		var vismode = $("[toot-id=" + id + "] .vis-data").attr("data-vis");
 		vis(vismode);
 		$("#media").val(medias);
-		var ct=medias.split(",").length;
-		$("[toot-id="+id+"] img.toot-img").each(function(i, elem) {
-			if(i<ct){
-				var url=$(elem).attr("src");
-				console.log(url);
+		var ct = medias.split(",").length;
+		$("[toot-id=" + id + "] img.toot-img").each(function (i, elem) {
+			if (i < ct) {
+				var url = $(elem).attr("src");
+				console.log("Play back image data:" + url);
 				$('#preview').append('<img src="' + url + '" style="width:50px; max-height:100px;">');
 			}
 		});
-		var html=$("[toot-id="+id+"] .toot").html();
-		html = html.replace(/^<p>(.+)<\/p>$/,"$1");
+		var html = $("[toot-id=" + id + "] .toot").html();
+		html = html.replace(/^<p>(.+)<\/p>$/, "$1");
 		html = html.replace(/<br\s?\/?>/, "\n");
 		html = html.replace(/<p>/, "\n");
 		html = html.replace(/<\/p>/, "\n");
 		html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, "$1");
-		html=$.strip_tags(html);
-		localStorage.setItem("nohide",true);
+		html = $.strip_tags(html);
+		localStorage.setItem("nohide", true);
 		show();
 		$("#textarea").val(html);
-		var cwtxt=$("[toot-id="+id+"] .cw_text").html();
-		if(cwtxt!=""){
-			cwtxt=$.strip_tags(cwtxt);
+		var cwtxt = $("[toot-id=" + id + "] .cw_text").html();
+		if (cwtxt != "") {
+			cwtxt = $.strip_tags(cwtxt);
 			cw();
 			$("#cw-text").val(cwtxt);
 		}
@@ -296,7 +295,7 @@ function pin(id, acct_id) {
 		var flag = "pin";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/statuses/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -304,10 +303,10 @@ function pin(id, acct_id) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
 	httpreq.send();
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: pinned", json]);
 			if ($("[toot-id=" + id + "]").hasClass("pined")) {
 				$("[toot-id=" + id + "]").removeClass("pined");
 				$(".pin_" + id).removeClass("blue-text");
@@ -322,7 +321,7 @@ function pin(id, acct_id) {
 //フォロリク
 function request(id, flag, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/follow_requests/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -330,10 +329,10 @@ function request(id, flag, acct_id) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
 	httpreq.send();
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: request", "type:" + flag, json]);
 			showReq();
 		}
 	}
@@ -345,7 +344,7 @@ function domainblock(add, flag, acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/domain_blocks"
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -353,10 +352,10 @@ function domainblock(add, flag, acct_id) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
 	httpreq.send();
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
+			console.log(["Success: domain block", json]);
 			showDom();
 		}
 	}
@@ -367,25 +366,24 @@ function addDomainblock() {
 	domainblock(domain, 'POST');
 }
 //ユーザー強調
-function empUser(){
+function empUser() {
 	var usr = localStorage.getItem("user_emp");
 	var obj = JSON.parse(usr);
-	var id=$("#his-acct").attr("fullname");
-	console.log(id);
-	if(!obj){
-		var obj=[];
+	var id = $("#his-acct").attr("fullname");
+	if (!obj) {
+		var obj = [];
 		obj.push(id);
-		Materialize.toast(id+lang.lang_status_emphas, 4000);
-	}else{
+		Materialize.toast(id + lang.lang_status_emphas, 4000);
+	} else {
 		var can;
-		Object.keys(obj).forEach(function(key) {
+		Object.keys(obj).forEach(function (key) {
 			var usT = obj[key];
-			if(usT!=id && !can){
-				can=false;
-			}else{
-				can=true;
+			if (usT != id && !can) {
+				can = false;
+			} else {
+				can = true;
 				obj.splice(key, 1);
-				Materialize.toast(id+lang.lang_status_unemphas, 4000);
+				Materialize.toast(id + lang.lang_status_unemphas, 4000);
 			}
 		});
 	}
@@ -393,16 +391,16 @@ function empUser(){
 	localStorage.setItem("user_emp", json);
 }
 //Endorse
-function pinUser(){
-	var id=$("#his-data").attr("user-id");
-	var acct_id=$("#his-data").attr("use-acct");
+function pinUser() {
+	var id = $("#his-data").attr("user-id");
+	var acct_id = $("#his-data").attr("use-acct");
 	if ($("#his-end-btn").hasClass("endorsed")) {
 		var flag = "unpin";
 	} else {
 		var flag = "pin";
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
 	var httpreq = new XMLHttpRequest();
 	httpreq.open('POST', start, true);
@@ -410,73 +408,72 @@ function pinUser(){
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
 	httpreq.send();
-    httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			console.log(json);
 			if ($("#his-end-btn").hasClass("endorsed")) {
 				$("#his-end-btn").removeClass("endorsed")
 				$("#his-end-btn").text(lang.lang_status_endorse)
 			} else {
 				$("#his-end-btn").addClass("endorsed")
 				$("#his-end-btn").text(lang.lang_status_unendorse)
-				
+
 			}
 		}
 	}
 }
 //URLコピー
-function tootUriCopy(url){
+function tootUriCopy(url) {
 	execCopy(url);
 	Materialize.toast(lang.lang_details_url, 1500);
 }
 
 //他のアカウントで…
-function staEx(mode){
-	var url=$("#tootmodal").attr("data-url");
+function staEx(mode) {
+	var url = $("#tootmodal").attr("data-url");
 	var acct_id = $("#status-acct-sel").val();
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/search?resolve=true&q="+url
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	var start = "https://" + domain + "/api/v1/search?resolve=true&q=" + url
 	fetch(start, {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
 			'Authorization': 'Bearer ' + at
 		}
-	}).then(function(response) {
+	}).then(function (response) {
 		return response.json();
-	}).catch(function(error) {
+	}).catch(function (error) {
 		todo(error);
 		console.error(error);
-	}).then(function(json) {
-		var id=json.statuses[0].id;
-		if(mode=="rt"){
+	}).then(function (json) {
+		var id = json.statuses[0].id;
+		if (mode == "rt") {
 			rt(id, acct_id, 'remote')
-		}else if(mode=="fav"){
+		} else if (mode == "fav") {
 			fav(id, acct_id, 'remote')
-		}else if(mode=="reply"){
+		} else if (mode == "reply") {
 			reEx(id)
 		}
 	});
 	return;
 }
-function toggleAction(id,tlid,acct_id){
-	if(tlid=="notf"){
-		var tlide="[data-notf="+acct_id+"]";
-	}else{
-		var tlide="[tlid="+tlid+"]";
+function toggleAction(id, tlid, acct_id) {
+	if (tlid == "notf") {
+		var tlide = "[data-notf=" + acct_id + "]";
+	} else {
+		var tlide = "[tlid=" + tlid + "]";
 	}
-	if(!$(tlide+" [toot-id="+id+"]").hasClass("ext-mode")){
-		$(tlide+" [toot-id="+id+"] .type-a").hide();
-		$(tlide+" [toot-id="+id+"] .type-b").show();
-		$(tlide+" [toot-id="+id+"]").addClass("ext-mode")
-		$(tlide+" [toot-id="+id+"] .act-icon").text("expand_less");
-	}else{
-		$(tlide+" [toot-id="+id+"] .type-b").hide();
-		$(tlide+" [toot-id="+id+"] .type-a").show();
-		$(tlide+" [toot-id="+id+"]").removeClass("ext-mode")
-		$(tlide+" [toot-id="+id+"] .act-icon").text("expand_more");
+	if (!$(tlide + " [toot-id=" + id + "]").hasClass("ext-mode")) {
+		$(tlide + " [toot-id=" + id + "] .type-a").hide();
+		$(tlide + " [toot-id=" + id + "] .type-b").show();
+		$(tlide + " [toot-id=" + id + "]").addClass("ext-mode")
+		$(tlide + " [toot-id=" + id + "] .act-icon").text("expand_less");
+	} else {
+		$(tlide + " [toot-id=" + id + "] .type-b").hide();
+		$(tlide + " [toot-id=" + id + "] .type-a").show();
+		$(tlide + " [toot-id=" + id + "]").removeClass("ext-mode")
+		$(tlide + " [toot-id=" + id + "] .act-icon").text("expand_more");
 	}
-	
+
 }

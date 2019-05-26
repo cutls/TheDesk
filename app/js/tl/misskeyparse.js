@@ -749,10 +749,10 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var fullhide = "";
 		} else {
 			var like = 0; var love = 0; var laugh = 0; var hmm = 0; var surprise = 0; var congrats = 0; var angry = 0; var confused = 0; var pudding = 0;
-			var likehide = "hide"; var lovehide = "hide"; var laughhide = "hide"; var hmmhide = "hide"; var suphide = "hide"; var conghide = "hide"; var anghide = "hide"; var confhide = "hide"; var riphide="hide"
+			var likehide = "hide"; var lovehide = "hide"; var laughhide = "hide"; var hmmhide = "hide"; var suphide = "hide"; var conghide = "hide"; var anghide = "hide"; var confhide = "hide"; var riphide = "hide"
 			var fullhide = "hide";
 		}
-		if (!addReact && likehide == "hide" && lovehide == "hide" && laughhide == "hide" && hmmhide == "hide" && suphide == "hide" && conghide == "hide" && anghide == "hide" && confhide == "hide" && riphide=="hide") {
+		if (!addReact && likehide == "hide" && lovehide == "hide" && laughhide == "hide" && hmmhide == "hide" && suphide == "hide" && conghide == "hide" && anghide == "hide" && confhide == "hide" && riphide == "hide") {
 			var fullhide = "hide";
 		}
 		if (toot.myReaction) {
@@ -857,11 +857,11 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 
 //オブジェクトパーサー(ユーザーデータ)
 function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
-	console.log(obj)
+	console.log(["Parse them ", obj])
 	if (popup > 0 || popup == -1) {
 
 	} else {
-		if(obj.users){
+		if (obj.users) {
 			var obj = obj.users;
 		}
 	}
@@ -869,10 +869,10 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 	var datetype = localStorage.getItem("datetype");
 	Object.keys(obj).forEach(function (key) {
 		var toot = obj[key];
-		if(toot.followee){
-			toot=toot.followee
-		}else if(toot.follower){
-			toot=toot.follower
+		if (toot.followee) {
+			toot = toot.followee
+		} else if (toot.follower) {
+			toot = toot.follower
 		}
 		var locked = "";
 		if (auth) {
@@ -930,15 +930,15 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 		} else {
 			var dis_name = toot.username;
 		}
-		if(toot.followersCount){
-			var ferct=toot.followersCount
-		}else{
-			var ferct="unknown"
+		if (toot.followersCount) {
+			var ferct = toot.followersCount
+		} else {
+			var ferct = "unknown"
 		}
-		if(toot.followingCount){
-			var fingct=toot.followingCount
-		}else{
-			var fingct="unknown"
+		if (toot.followingCount) {
+			var fingct = toot.followingCount
+		} else {
+			var fingct = "unknown"
 		}
 		templete = templete +
 			'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +
@@ -973,101 +973,98 @@ function goGoogle(id) {
 
 	shell.openExternal(url);
 }
-var misskeyws=[]
-var misskeywsstate=[]
+var misskeyws = []
+var misskeywsstate = []
 function connectMisskey(acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "wss://" + domain +
-		"/streaming?i="+at;
+		"/streaming?i=" + at;
 	var wsid = misskeyws.length;
 	localStorage.setItem("misskey_wss_" + acct_id, wsid);
 	misskeyws[wsid] = new WebSocket(start);
 	misskeyws[wsid].onopen = function (mess) {
-		console.log(tlid + ":Connect Streaming API:"+domain);
-		console.log(mess);
-		misskeywsstate[wsid]=true
+		console.table({ "tlid": tlid, "type": "Connect Streaming API", "domain": domain, "message": [mess] })
+		misskeywsstate[wsid] = true
 		//$("#notice_icon_" + tlid).removeClass("red-text");
-		var send='{"type":"connect","body":{"channel":"main","id":"notf:'+acct_id+'"}}'
+		var send = '{"type":"connect","body":{"channel":"main","id":"notf:' + acct_id + '"}}'
 		misskeyws[wsid].send(send)
 	}
 	misskeyws[wsid].onmessage = function (mess) {
-		console.log(acct_id + ":Receive Streaming API:");
-		var data=JSON.parse(mess.data)
-		var obj=data.body.body
-		
-		if (data.body.id.indexOf("notf:")!== -1) {
+		console.log([domain + ":Receive Streaming API:", data]);
+		var data = JSON.parse(mess.data)
+		var obj = data.body.body
+
+		if (data.body.id.indexOf("notf:") !== -1) {
 			var obj = JSON.parse(mess.data).body;
 			console.log(obj);
 			var popup = localStorage.getItem("popup");
 			if (!popup) {
 				popup = 0;
 			}
-			if(JSON.parse(mess.data).body.type!="follow"){
-				
+			if (JSON.parse(mess.data).body.type != "follow") {
+
 				templete = misskeyParse([obj.body], 'notf', acct_id, 'notf', popup);
-			}else{
+			} else {
 				templete = misskeyUserparse([obj.body], 'notf', acct_id, 'notf', popup);
 			}
-			if(JSON.parse(mess.data).body.type=="reaction"){
-				console.log("refresh")
-				reactRefresh(acct_id,obj.body.note.id)
+			if (JSON.parse(mess.data).body.type == "reaction") {
+				console.log("reaction refresh")
+				reactRefresh(acct_id, obj.body.note.id)
 			}
-			if(!$("div[data-notfIndv=" + acct_id +"_"+obj.body.id+"]").length){
-				$("div[data-notf=" + acct_id +"]").prepend(templete);
-				$("div[data-const=notf_"+acct_id+"]").prepend(templete);
+			if (!$("div[data-notfIndv=" + acct_id + "_" + obj.body.id + "]").length) {
+				$("div[data-notf=" + acct_id + "]").prepend(templete);
+				$("div[data-const=notf_" + acct_id + "]").prepend(templete);
 			}
 			jQuery("time.timeago").timeago();
-		}else if (data.body.type == "note") {
-				var tlid=data.body.id*1
-				var multi = localStorage.getItem("column");
-				var col = JSON.parse(multi)[tlid];
-				if(localStorage.getItem("voice_" + tlid)){
-					var voice=true;
-				}else{
-					var voice=false;
-				}
-				if (voice) {
-					say(obj.text)
-				}
-				var templete = misskeyParse([obj], col.type, acct_id, tlid, "", mute);
-				misskeyws[wsid].send(JSON.stringify({
-					type: 'sn',
-					body: {
-						id: obj.id
-					}
-				}))
-				var pool = localStorage.getItem("pool_" + tlid);
-				if (pool) {
-					pool = templete + pool;
-				} else {
-					pool = templete
-				}
-				localStorage.setItem("pool_" + tlid, pool);
-				scrollck();
-				jQuery("time.timeago").timeago();
-			}else if (data.type == "noteUpdated") {
-				if(data.body.type=="reacted"){
-					console.log(data.body.id)
-					reactRefresh(acct_id,data.body.id)
-				}else if(data.body.type=="deleted"){
-					$("#pub_"+data.body.id).hide();
-					$("#pub_"+data.body.id).remove();
-				}
-				
+		} else if (data.body.type == "note") {
+			var tlid = data.body.id * 1
+			var multi = localStorage.getItem("column");
+			var col = JSON.parse(multi)[tlid];
+			if (localStorage.getItem("voice_" + tlid)) {
+				var voice = true;
+			} else {
+				var voice = false;
 			}
+			if (voice) {
+				say(obj.text)
+			}
+			var templete = misskeyParse([obj], col.type, acct_id, tlid, "", mute);
+			misskeyws[wsid].send(JSON.stringify({
+				type: 'sn',
+				body: {
+					id: obj.id
+				}
+			}))
+			var pool = localStorage.getItem("pool_" + tlid);
+			if (pool) {
+				pool = templete + pool;
+			} else {
+				pool = templete
+			}
+			localStorage.setItem("pool_" + tlid, pool);
+			scrollck();
+			jQuery("time.timeago").timeago();
+		} else if (data.type == "noteUpdated") {
+			if (data.body.type == "reacted") {
+				reactRefresh(acct_id, data.body.id)
+			} else if (data.body.type == "deleted") {
+				$("#pub_" + data.body.id).hide();
+				$("#pub_" + data.body.id).remove();
+			}
+
+		}
 	}
 	misskeyws[wsid].onerror = function (error) {
-		console.error("Error closing");
+		console.error("Error closing " + tlid);
 		console.error(error);
-		misskeywsstate[wsid]=false
+		misskeywsstate[wsid] = false
 		connectMisskey(acct_id)
 		return false;
 	};
 	misskeyws[wsid].onclose = function () {
-		console.log("Closing");
-		console.log(tlid);
-		misskeywsstate[wsid]=false
+		console.warn("Closing " + tlid);
+		misskeywsstate[wsid] = false
 		connectMisskey(acct_id)
 		return false;
 	};

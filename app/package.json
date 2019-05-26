@@ -1,17 +1,20 @@
 {
   "name": "thedesk",
-  "version": "18.4.0",
+  "version": "18.5.0",
   "description": "TheDesk is a Mastodon client for PC.",
   "repository": "https://github.com/cutls/TheDesk",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dist": "build --linux snap",
-    "build": "electron-builder",
-    "build:all": "electron-builder --win --linux",
-    "build:win": "electron-builder --win"
+    "build": "node build.js"
   },
-  "keywords": ["mastodon","client","electron","thedesk"],
+  "keywords": [
+    "mastodon",
+    "client",
+    "electron",
+    "thedesk"
+  ],
   "bugs": {
     "url": "https://github.com/cutls/TheDesk/issues",
     "email": "web-pro@cutls.com"
@@ -41,70 +44,20 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
-    "electron-dl": "^1.11.0",
-    "jimp": "^0.2.28",
+    "electron-dl": "^1.14.0",
+    "jimp": "^0.6.4",
     "json5": "^2.1.0",
-    "node-notifier": "^5.2.1",
-    "sumchecker": "^2.0.2",
-    "vue": "^2.6.9"
+    "node-notifier": "^5.4.0",
+    "sumchecker": "^3.0.0",
+    "vue": "^2.6.10"
   },
   "optionalDependencies": {
     "nowplaying-node": "git+https://github.com/cutls/nowplaying-node",
     "itunes-nowplaying-mac": "git+https://github.com/rinsuki/itunes-nowplaying-mac#pull/4/head",
     "font-manager": "^0.3.0"
   },
-  "build": {
-    "productName": "TheDesk",
-    "appId": "top.thedesk",
-    "asarUnpack": [
-      "node_modules/itunes-nowplaying-mac"
-    ],
-    "directories": {
-      "output": "../build"
-    },
-    "win": {
-      "icon": "build/thedesk.ico",
-      "target": [
-        "nsis",
-        "portable",
-        "appx"
-      ]
-    },
-    "appx": {
-      "identityName": "53491Cutls.TheDesk",
-      "applicationId": "Cutls.TheDesk",
-      "publisherDisplayName": "Cutls",
-      "publisher": "CN=629757F5-A5EE-474F-9562-B304A89A9FD1",
-      "languages": [
-        "JA-JP",
-        "EN-US"
-      ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "artifactName": "TheDesk-setup.${ext}"
-    },
-    "linux": {
-      "icon": "build/icons",
-      "target": [
-        "zip"
-      ],
-      "category": "Network"
-    },
-    "mac": {
-      "target": [
-        "dmg",
-        "zip"
-      ]
-    },
-    "electronDownload": {
-      "version": "4.2.0"
-    },
-    "electronVersion": "4.2.0"
-  },
   "devDependencies": {
-    "electron": "^4.2.0",
-    "electron-builder": "^20.39.0"
+    "electron": "^5.0.1",
+    "electron-builder": "^20.40.2"
   }
 }

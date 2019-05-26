@@ -179,7 +179,6 @@ function emojiInsert(code, del) {
 	} else {
 		var brank = " ";
 	}
-	console.log(selin);
 	var now = $("#textarea").val();
 	if (selin > 0) {
 		var before = now.substr(0, selin);

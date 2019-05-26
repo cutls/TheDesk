@@ -1,16 +1,16 @@
-$(function($) {
+$(function ($) {
 	//キーボードショートカット
-	$(window).keydown(function(e) {
+	$(window).keydown(function (e) {
 		var hasFocus = $('input').is(':focus');
 		var hasFocus2 = $('textarea').is(':focus');
-		if(document.getElementById("webview")){
-			if($("#webviewsel:checked").val()){
-				var wv=false;
-			}else{
-				var wv=true;
+		if (document.getElementById("webview")) {
+			if ($("#webviewsel:checked").val()) {
+				var wv = false;
+			} else {
+				var wv = true;
 			}
-		}else{
-			var wv=true;
+		} else {
+			var wv = true;
 		}
 		//Ctrl+Shift+Enter:Lgen
 		if (event.metaKey || event.ctrlKey && wv) {
@@ -20,7 +20,7 @@ $(function($) {
 					return false;
 				}
 			}
-			
+
 		}
 		//Ctrl+Enter:投稿
 		if (event.metaKey || event.ctrlKey && wv) {
@@ -36,7 +36,7 @@ $(function($) {
 				return false;
 			}
 		}
-		
+
 		//Shift+Space:Markdownゼロ幅スペース
 		if (event.shiftKey) {
 			if (e.keyCode === 32) {
@@ -57,13 +57,13 @@ $(function($) {
 		//Ctrl+R:ランキング
 		if ((event.metaKey || event.ctrlKey) && wv) {
 			if (e.keyCode === 82) {
-				if(localStorage.getItem("kirishima")){
+				if (localStorage.getItem("kirishima")) {
 					window.open("https://astarte.thedesk.top");
 				}
 			}
 		}
 		//Ctrl+Sift+C:全消し
-		if (((event.metaKey || event.ctrlKey) && event.shiftKey )&& wv) {
+		if (((event.metaKey || event.ctrlKey) && event.shiftKey) && wv) {
 			if (e.keyCode === 67) {
 				clear();
 				return false;
@@ -78,8 +78,8 @@ $(function($) {
 			}
 		}
 		//input/textareaにフォーカスなし時
-		if ((!hasFocus && !hasFocus2 ) && wv) {
-			if(!wv){
+		if ((!hasFocus && !hasFocus2) && wv) {
+			if (!wv) {
 				return true;
 			}
 			//Ctrl+V:いつもの
@@ -143,11 +143,11 @@ $(function($) {
 			}
 			//数字:TL
 			if (event.metaKey || event.ctrlKey) {
-			if (e.keyCode >= 49 && e.keyCode <= 57) {
-				var kz=e.keyCode-49;
-				goColumn(kz);
-				return false;
-			}
+				if (e.keyCode >= 49 && e.keyCode <= 57) {
+					var kz = e.keyCode - 49;
+					goColumn(kz);
+					return false;
+				}
 			}
 		}
 		//textareaフォーカス時
@@ -176,15 +176,15 @@ $(function($) {
 				//C+S+(No):ワンクリ
 				if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 					if (e.keyCode >= 49 && e.keyCode <= 51) {
-						var no=e.keyCode-48;
-						if(localStorage.getItem("oks-"+no)){$("#textarea").val($("#textarea").val()+localStorage.getItem("oks-"+no))}
+						var no = e.keyCode - 48;
+						if (localStorage.getItem("oks-" + no)) { $("#textarea").val($("#textarea").val() + localStorage.getItem("oks-" + no)) }
 						return false;
 					}
 				}
 			}
 		}
 		//イメージビューワー切り替え
-		if (e.keyCode === 37 &&wv) {
+		if (e.keyCode === 37 && wv) {
 			if ($("#imagemodal").hasClass("open")) {
 				imgCont('prev');
 				return false;
@@ -198,7 +198,7 @@ $(function($) {
 		}
 	});
 	//クリアボタン
-	$("#clear").click(function() {
+	$("#clear").click(function () {
 		clear();
 	});
 });

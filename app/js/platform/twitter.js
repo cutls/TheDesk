@@ -12,33 +12,33 @@ function _classCallCheck(a, e) {
   if (!(a instanceof e)) throw new TypeError("Cannot call a class as a function")
 }
 var TJScrollTask = function () {
-    function a(e, f, g) {
-      _classCallCheck(this, a), this.tjDeck = e, this.$t = e.$wrap, this.x = f, this.d = g, this.sl = e.wrapL, this.sTime = Date.now(), this.ended = !1, this._bindAnim = this._anim.bind(this);
-      var h = e.getClms();
-      0 > f || f > h[0].offsetWidth * (h.length - 1) ? this.ended = !0 : requestAnimationFrame(this._bindAnim)
+  function a(e, f, g) {
+    _classCallCheck(this, a), this.tjDeck = e, this.$t = e.$wrap, this.x = f, this.d = g, this.sl = e.wrapL, this.sTime = Date.now(), this.ended = !1, this._bindAnim = this._anim.bind(this);
+    var h = e.getClms();
+    0 > f || f > h[0].offsetWidth * (h.length - 1) ? this.ended = !0 : requestAnimationFrame(this._bindAnim)
+  }
+  return _createClass(a, [{
+    key: "stop",
+    value: function stop() {
+      this.ended || (this.ended = !0, cancelAnimationFrame(this._bindAnim))
     }
-    return _createClass(a, [{
-      key: "stop",
-      value: function stop() {
-        this.ended || (this.ended = !0, cancelAnimationFrame(this._bindAnim))
+  }, {
+    key: "_anim",
+    value: function _anim() {
+      if (!this.ended) {
+        var e = (Date.now() - this.sTime) / this.d,
+          f = this.sl,
+          g = this.x - this.sl;
+        1 < e && !this.ended && (this.stop(), e = 1), this.tjDeck.scrollWrap(this._easeOut(e, f, g, 1)), 1 > e && requestAnimationFrame(this._bindAnim)
       }
-    }, {
-      key: "_anim",
-      value: function _anim() {
-        if (!this.ended) {
-          var e = (Date.now() - this.sTime) / this.d,
-            f = this.sl,
-            g = this.x - this.sl;
-          1 < e && !this.ended && (this.stop(), e = 1), this.tjDeck.scrollWrap(this._easeOut(e, f, g, 1)), 1 > e && requestAnimationFrame(this._bindAnim)
-        }
-      }
-    }, {
-      key: "_easeOut",
-      value: function _easeOut(e, f, g, h) {
-        return e /= h, --e, g * (e * e * e + 1) + f
-      }
-    }]), a
-  }(),
+    }
+  }, {
+    key: "_easeOut",
+    value: function _easeOut(e, f, g, h) {
+      return e /= h, --e, g * (e * e * e + 1) + f
+    }
+  }]), a
+}(),
   TJDeck = function () {
     function a() {
       _classCallCheck(this, a), this.version = "0.0.9", this.$wrap = document.querySelector(".js-app-columns"), this.wrapL = 0, this.scrollTask = null, this.options = this.getOptionObj(), this.setOptionFromObj(this.options), this.$options = this.createOptionPanel(), document.body.appendChild(this.$options), this.updateBlur(), this.updateLight()
@@ -117,22 +117,22 @@ var TJScrollTask = function () {
       key: "observeModals",
       value: function observeModals() {
         for (var e = new MutationObserver(function (j) {
-            for (var k, l, m = 0; m < j.length; m++) {
-              k = j[m];
-              for (var o = 0; o < k.addedNodes.length; o++) l = k.addedNodes[m], this.stopAnkerFromModal(l)
-            }
-          }.bind(this)), f = {
-            attributes: !1,
-            characterData: !0,
-            childList: !0
-          }, g = document.querySelectorAll(".js-modals-container, .js-modal"), h = 0; h < g.length; h++) e.observe(g[h], f)
+          for (var k, l, m = 0; m < j.length; m++) {
+            k = j[m];
+            for (var o = 0; o < k.addedNodes.length; o++) l = k.addedNodes[m], this.stopAnkerFromModal(l)
+          }
+        }.bind(this)), f = {
+          attributes: !1,
+          characterData: !0,
+          childList: !0
+        }, g = document.querySelectorAll(".js-modals-container, .js-modal"), h = 0; h < g.length; h++) e.observe(g[h], f)
       }
     }, {
       key: "stopAnkerFromModal",
       value: function stopAnkerFromModal(e) {
         for (var g, f = e.querySelectorAll("a"), h = function (k) {
-            return k.preventDefault(), k.target.removeEventListener("click", h), !1
-          }, j = 0; j < f.length; j++) g = f[j], g.href && g.href.match(/#$/) && g.addEventListener("click", h)
+          return k.preventDefault(), k.target.removeEventListener("click", h), !1
+        }, j = 0; j < f.length; j++) g = f[j], g.href && g.href.match(/#$/) && g.addEventListener("click", h)
       }
     }, {
       key: "observeClms",
@@ -160,7 +160,7 @@ var TJScrollTask = function () {
           if (j) {
             if (0 > j) {
               var l = this._getPosObj(k);
-              if (Math.abs(l.x - e.x) < Math.abs(l.y - e.y)) return void(j = 0);
+              if (Math.abs(l.x - e.x) < Math.abs(l.y - e.y)) return void (j = 0);
               j = 1
             }
             if (1 == j) {
@@ -217,7 +217,7 @@ var TJScrollTask = function () {
       }
     }, {
       key: "showTJSetting",
-      value: function showTJSetting() {}
+      value: function showTJSetting() { }
     }, {
       key: "addTJNav",
       value: function addTJNav() {
@@ -298,7 +298,7 @@ var TJScrollTask = function () {
       }
     }, {
       key: "refreshStyle",
-      value: function refreshStyle() {}
+      value: function refreshStyle() { }
     }, {
       key: "addStyle",
       value: function addStyle() {

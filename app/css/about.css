@@ -1,2 +1,4 @@
 /*このソフトについてを押した時に読み込まれます*/
-body{font-family:Open Sans;}
+body {
+  font-family: Open Sans;
+}

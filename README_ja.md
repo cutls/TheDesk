@@ -9,73 +9,74 @@
 [![Download](https://flat.badgen.net/github/assets-dl/cutls/TheDesk)](https://github.com/cutls/TheDesk/releases)
 ![Contributors](https://flat.badgen.net/github/contributors/cutls/TheDesk)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
-オープンソースSNSマストドン/MisskeyのPC向けクライアント[日本語はこちら](README_ja.md)  
-  
+オープンソースSNSマストドン/MisskeyのPC向けクライアント  
 Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge/?site=thedesk.top)](https://status.cutls.com)    
 
-<a href="https://www.patreon.com/cutls"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" alt="Become a Patron!" width="160"></a>  
+[Pixiv FANBOX](https://www.pixiv.net/fanbox/creator/28105985)
+
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
-## Contribute
+## コントリビュート
 
-Please make a pull request to ***WIP(before CI)*** brunch.
+***WIP(before CI)*** ブランチにプルリクエストをお願いします。
 
-## License
+## ライセンス
 
 [GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  
 
-The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[Press Kit](https://dl.thedesk.top/press/TheDesk+PressKit.zip)  
+アイコンは[クリエイティブ・コモンズ 表示-非営利-継承](https://creativecommons.org/licenses/by-nc-sa/4.0/)で提供されています。  
+[プレスキット](https://dl.thedesk.top/press/TheDesk+PressKit.zip)  
 
 * [PNG](https://dl.thedesk.top/press/TheDesk.png)
 * [Monotone SVG](https://dl.thedesk.top/press/TheDesk.svg)
 * [ico](https://dl.thedesk.top/press/TheDesk.ico)
 * [icns](https://dl.thedesk.top/press/TheDesk.icns)
 
-The default sounds of notifications is provided [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/)
+標準の通知音は [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/) で提供されています。
 
-## Terms of Use
+## 利用規約
 
-* [利用規約(Terms of Use(ja))](https://thedesk.top/tos.html)
-* [プライバシーポリシー(Privacy Policy(ja))](https://thedesk.top/priv.html)
+* [利用規約](https://thedesk.top/tos.html)
+* [プライバシーポリシー](https://thedesk.top/priv.html)
 
-## Language
+## 言語
 
-* 日本語(Japanese)
-* English
+* 日本語
+* English(英語)
 
-### Translation
+### 翻訳
+  
+Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.top  
 
-Crowdin project is available! Visit: https://translate.thedesk.top
+## 環境
 
-## Requirement
-
-* Electron 4.2 or above(install yourself)
+* Electron 4.2以上(自分で入れて)
 * electron-dl(in package.json)
 * Jimp(in package.json)
 * font-manager(in package.json)
-  * Python 2.x(install yourself)
-  * VisualC++(Windows)(install yourself)
-* itunes-nowplaying-mac(for macOS)(in package.json)
+  * Python 2.x(自分で入れて)
+  * VisualC++(Windows)(自分で入れて)
+* itunes-nowplaying-mac(macOS向け)(in package.json)
 * node-notifier(in package.json)
 * sumchecker(in package.json)
-* Ability to read unformated files!(install yourself)
+* Ability to read unformated files!(自分で入れて)
 
-## Contributors
+## 主なコントリビューター
 
-Build for macOS  
+macOSビルダー  
 
-* [toneji](https://minohdon.jp/@toneji)
+* [とねぢ](https://minohdon.jp/@toneji)
 
-Build for Linux  
+Linuxビルダー  
 
-* [popn_ja](https://popon.pptdn.jp/@popn_ja)
+* [ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja)
 
-Fellow coder
+iTunes NowPlayingにアルバムアートワークを付けてくれた人
 
 * [kPherox](https://www.kr-kp.com/)
 
-## Build
+## ビルド
+
 
 ```sh
 git clone https://github.com/cutls/TheDesk
@@ -84,24 +85,24 @@ npm install
 npm install --only=dev
 ```
 
-### electron-builder(Recommended)
-Use npm scripts.  
+### electron-builder(推奨)
+npm scriptsを利用します
 
 ```sh
-# Build for current platform
+# 実行している環境向けにビルド
 npm run build
 
-# Select build target
+# ターゲットを指定してビルド
 ## Windows
 npm run build:win
 
-## Windows and Linux (The macOS target should run on macOS. So, this option hasn't include the build for macOS)
+## macOS向けのビルドにはmacOSで実行する必要があるためこのコマンドではビルドされません
 npm run build:all
 ```
 
-Config is all on package.json  
+ビルド設定はすべてpackage.jsonに記載しています。  
 
-### electron-packager
+### electron-packager(非推奨)
 `npm install --save-dev electron-rebuild`  
   
 Linux/macOS  
@@ -109,8 +110,10 @@ Linux/macOS
 Windows  
 `.\node_modules\.bin\electron-rebuild.cmd`  
   
-To install Python 2.x and Visual C++ for Windows, before running `npm install --save-dev electron-rebuild`  
+WindowsでPython 2.xやVisualC++を一発でインストールできるツールもあります(`npm install --save-dev electron-rebuild`の前に)  
 `npm install --global windows-build-tools`  
+  
+日本語話者向けですが、macOSビルドにはXCodeが要るとの情報があります。([とねぢ](https://minohdon.jp/@toneji)氏談)  
 
 Windows  
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=4.0.5 --icon=.\app\thedesk.ico --overwrite`  
@@ -119,8 +122,11 @@ Linux
 macOS  
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=4.0.5 --icon=./app/icon.icns --overwrite`  
 
-## Pleroma support
+## Pleromaのサポート
 
-Did you find a bug with Pleroma accounts?  
-Pleroma **does not** follow Mastodon API rules completely although Pleroma developers say so.  
-Please write issues to improve TheDesk affinity with Pleroma.  
+Pleromaは、Mastodon APIとの互換性を謳っていますが、実際には様々な差異があり、TheDeskで不具合が発生することがあります。  
+Issuesに書いてある問題についてはなるべく対処しますので、ぜひお知らせください。
+
+## 詳しく
+
+[TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)

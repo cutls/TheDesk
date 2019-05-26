@@ -15,7 +15,7 @@ function date(str, datetype) {
 		} else {
 			var min = date.getMinutes();
 		}
-		var sec=null;
+		var sec = null;
 		if (date.getSeconds() < 10) {
 			sec = "0" + date.getSeconds();
 		} else {
@@ -57,31 +57,31 @@ function date(str, datetype) {
 //特殊フォーマット(インスタンス情報で利用)
 function crat(str) {
 	var date = new Date(str);
-	var mnt=null;
-	if(date.getMonth()<9){
-		mnt="0"+(date.getMonth()+1);
-	}else{
-		mnt=date.getMonth()+1;
+	var mnt = null;
+	if (date.getMonth() < 9) {
+		mnt = "0" + (date.getMonth() + 1);
+	} else {
+		mnt = date.getMonth() + 1;
 	}
-	if(date.getDate()<10){
-		var dat="0"+date.getDate();
-	}else{
-		var dat=date.getDate();
+	if (date.getDate() < 10) {
+		var dat = "0" + date.getDate();
+	} else {
+		var dat = date.getDate();
 	}
-	if(date.getHours()<10){
-		var hrs="0"+date.getHours();
-	}else{
-		var hrs=date.getHours();
+	if (date.getHours() < 10) {
+		var hrs = "0" + date.getHours();
+	} else {
+		var hrs = date.getHours();
 	}
-	if(date.getMinutes()<10){
-		var mns="0"+date.getMinutes();
-	}else{
-		var mns=date.getMinutes();
+	if (date.getMinutes() < 10) {
+		var mns = "0" + date.getMinutes();
+	} else {
+		var mns = date.getMinutes();
 	}
-	if(date.getSeconds()<10){
-		var sec="0"+date.getSeconds();
-	}else{
-		var sec=date.getSeconds();
+	if (date.getSeconds() < 10) {
+		var sec = "0" + date.getSeconds();
+	} else {
+		var sec = date.getSeconds();
 	}
 	format_str = 'YYYY-MM-DD hh:mm:ss';
 	format_str = format_str.replace(/YYYY/g, date.getFullYear());
