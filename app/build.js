@@ -83,6 +83,10 @@ builder.build({
             fs.renameSync('../build/TheDesk ' + version + '.exe', '../build/TheDesk-ia32.exe');
             fs.renameSync('../build/TheDesk Setup ' + version + '.exe', '../build/TheDesk-setup-ia32.exe');
             retry()
+        }else if (os == "linux") {
+            console.log("Linux")
+            fs.renameSync('../build/thedesk-' + version + '.zip', '../build/TheDesk.zip');
+            fs.renameSync('../build/TheDesk Setup ' + version + '.exe', '../build/TheDesk-setup-ia32.exe');
         }
     })
     .catch((error) => {

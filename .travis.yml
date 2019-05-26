@@ -1,6 +1,7 @@
 os: 
- - osx
+ - windows
  - linux
+ - osx
 language: node_js
 node_js:
 - '10.15.2'
@@ -9,7 +10,20 @@ before_deploy:
   - npm install electron-builder -g
   - cd app
   - npm install
-  - npm run build
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; npm run build ; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; electron-builder --linux --x64 --ia32 ; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; mv ../build/thedesk-*-ia32.zip ../build/thedesk-ia32.zip ; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; mv ../build/thedesk-*.zip ../build/thedesk.zip ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; electron-builder --win --ia32 ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; electron-builder --win --ia32 ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; mv ../build/TheDesk-setup.exe ../TheDesk-setup-ia32.exe ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; mv ../build/TheDesk*.exe ../TheDesk-ia32.exe ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; electron-builder --win --ia32 ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; mv ../build/TheDesk-setup.exe ../build/TheDesk-setup-ia32.exe ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; mv ../build/TheDesk*.exe ../build/TheDesk-ia32.exe ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; electron-builder --win --x64 ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; mv ../build/TheDesk-setup.exe ../build/TheDesk-setup.exe ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; mv ../build/TheDesk*.exe ../build/TheDesk.exe ; fi
   - cd ../
   - ls build
 deploy:
