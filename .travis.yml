@@ -24,6 +24,3 @@ deploy:
     repo: cutls/TheDesk
     tags: true
     all_branches: true
-branches:
-  only:
-  - master
