@@ -9,7 +9,7 @@ script: node -v
 before_deploy:
   - npm install electron-builder -g
   - cd app
-  - VERSION=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
+  - VERSION=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
   - npm install
   - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 -p never;else :;fi
