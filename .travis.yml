@@ -1,7 +1,6 @@
 os: 
-# - osx
-# - linux
- - windows
+ - osx
+ - linux
 language: node_js
 node_js:
 - '10.15.2'
@@ -12,7 +11,7 @@ before_deploy:
   - npm install
   - npm run build
   - cd ../
-  - ls
+  - ls build
 deploy:
   provider: releases
   # GitHub にリリースするための API KEY を暗号化した値
@@ -25,5 +24,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
-    tags: false
+    tags: true
     all_branches: true
