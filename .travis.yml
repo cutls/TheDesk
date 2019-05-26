@@ -20,6 +20,7 @@ before_deploy:
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then ls;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv TheDesk-setup.exe TheDesk-setup-ia32.exe;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ];then find TheDesk\ *.exe; else:;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv TheDesk\ *.exe TheDesk-ia32.exe; else:;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../app;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win --x64 -p never;else :;fi
