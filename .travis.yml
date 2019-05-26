@@ -15,7 +15,7 @@ before_deploy:
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../build;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then ls;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv thedesk-*.zip thedesk.zip;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../app;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win --ia32 -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then ls;else :;fi
