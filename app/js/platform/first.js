@@ -193,3 +193,4 @@ $.mb_substr = function (str, begin, end) {
 	}
 	return ret;
 };
+localStorage.removeItem("errors");

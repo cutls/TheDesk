@@ -1,15 +1,13 @@
 {
   "name": "thedesk",
-  "version": "18.4.0",
+  "version": "18.5.0",
   "description": "TheDesk is a Mastodon client for PC.",
   "repository": "https://github.com/cutls/TheDesk",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dist": "build --linux snap",
-    "build": "electron-builder",
-    "build:all": "electron-builder --win --linux",
-    "build:win": "electron-builder --win"
+    "build": "node build.js"
   },
   "keywords": [
     "mastodon",
@@ -57,56 +55,6 @@
     "nowplaying-node": "git+https://github.com/cutls/nowplaying-node",
     "itunes-nowplaying-mac": "git+https://github.com/rinsuki/itunes-nowplaying-mac#pull/4/head",
     "font-manager": "^0.3.0"
-  },
-  "build": {
-    "productName": "TheDesk",
-    "appId": "top.thedesk",
-    "asarUnpack": [
-      "node_modules/itunes-nowplaying-mac"
-    ],
-    "directories": {
-      "output": "../build"
-    },
-    "win": {
-      "icon": "build/thedesk.ico",
-      "target": [
-        "nsis",
-        "portable",
-        "appx"
-      ]
-    },
-    "appx": {
-      "identityName": "53491Cutls.TheDesk",
-      "applicationId": "Cutls.TheDesk",
-      "publisherDisplayName": "Cutls",
-      "publisher": "CN=629757F5-A5EE-474F-9562-B304A89A9FD1",
-      "languages": [
-        "JA-JP",
-        "EN-US"
-      ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "artifactName": "TheDesk-setup.${ext}"
-    },
-    "linux": {
-      "icon": "build/icons",
-      "target": [
-        "zip"
-      ],
-      "category": "Network"
-    },
-    "mac": {
-      "target": [
-        "dmg",
-        "zip"
-      ]
-    },
-    "electronDownload": {
-      "version": "5.0.1"
-    },
-    "electronVersion": "5.0.1"
   },
   "devDependencies": {
     "electron": "^5.0.1",

@@ -127,6 +127,7 @@ function load() {
 	$("#c2-file").text(localStorage.getItem("custom2"));
 	$("#c3-file").text(localStorage.getItem("custom3"));
 	$("#c4-file").text(localStorage.getItem("custom4"));
+	//$("#log").val(localStorage.getItem("errors"))
 }
 
 function climute() {

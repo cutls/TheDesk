@@ -115,6 +115,9 @@
         <div id="dlnow" class="hide">
             <h4>crwdns681:0crwdne681:0</h4>
             <h4 id="prog"></h4>
+            <div class="progress">
+                <div class="determinate" style="width: 0%"></div>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="../../js/common/about.js"></script>
@@ -134,7 +137,7 @@
         }
         var electron = require("electron");
         var ipc = electron.ipcRenderer;
-        const shell = electron.shell;
+        //var shell = electron.shell;
         verck();
         function update(sel) {
             $("#box").toggleClass("show");
@@ -181,6 +184,7 @@
                 } else if (sel == "mac") {
                     var url = json["mac"];
                     shell.openExternal(url);
+                    return false;
                 }
                 ipc.send('download-btn', [url, file]);
             });
@@ -191,7 +195,7 @@
         }
         ipc.on('prog', function (event, arg) {
             console.log(arg);
-            $("body").css('background', 'linear-gradient(#fff 0%,#fff ' + (1 - arg) * 100 + '%, #d7ccc8 ' + (1 - arg) * 100 + '%, #d7ccc8 100%)');
+            $(".determinate").css("width",arg*100+"%");
             $("#prog").text(Math.floor(arg * 100) + "%");
         })
         ipc.on('mess', function (event, arg) {

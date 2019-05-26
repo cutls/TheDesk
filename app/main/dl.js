@@ -79,7 +79,7 @@ function dl(mainWindow, lang_path, base) {
 			},
 			saveAs: false
 		};
-		download(BrowserWindow.getFocusedWindow(),
+		download(updatewin,
 			url, opts)
 			.then(dl => {
 				updatewin.webContents.send('mess', "ダウンロードが完了しました。");
