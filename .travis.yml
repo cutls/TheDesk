@@ -9,7 +9,7 @@ script: node -v
 before_deploy:
   - npm install electron-builder -g
   - cd app
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then VERSION=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json);else :;fi
+  - VERSION=$(sed -nE 's/^\s*"version": "(.*?)",$/\1/p' package.json)
   - npm install
   - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 -p never;else :;fi
