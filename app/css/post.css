@@ -78,7 +78,7 @@
   max-height: 100px;
 }
 #default-emoji a {
-  color: white;
+  color: var(--color);
   margin-right: 2px;
 }
 .character-counter {
