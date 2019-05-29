@@ -523,7 +523,7 @@ p:not(:last-child) {
   content: "...";
 }
 .toot a:not(.mention) span:last-of-type {
-  display: none;
+  /*display: none;*/
 }
 .tl-box .via-hide {
   display: none;
