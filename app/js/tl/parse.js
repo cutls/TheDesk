@@ -236,9 +236,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var icon = "fa-tasks  purple-text";
 			}
 			var noticetext = '<i class="fas fa-filter pointer big-text" onclick="notfFilter(\'' + toot.account.id +
-			'\',\'' + tlid + '\');" title="' + lang.lang_parse_notffilter + '"></i><span class="cbadge cbadge-hover"title="' + date(toot.created_at,
-				'absolute') + '(' + lang.lang_parse_notftime + ')"><i class="far fa-clock"></i>' + date(toot.created_at,
-					datetype) +
+				'\',\'' + tlid + '\');" title="' + lang.lang_parse_notffilter + '"></i><span class="cbadge cbadge-hover"title="' + date(toot.created_at,
+					'absolute') + '(' + lang.lang_parse_notftime + ')"><i class="far fa-clock"></i>' + date(toot.created_at,
+						datetype) +
 				'</span><i class="big-text fas ' + icon + '"></i><a onclick="udg(\'' + toot.account.id +
 				'\',\'' + acct_id + '\')" class="pointer grey-text">' + dis_name +
 				"(@" + toot.account.acct +
@@ -594,14 +594,12 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var sense = ""
 					var blur = null
 				}
-				if (media.pleroma) {
-					if (media.pleroma.mime_type.indexOf("video") !== -1) {
+				if (media.pleroma && media.pleroma.mime_type.indexOf("video") !== -1) {
 						viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
 							acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 							'" data-type="video" class="img-parsed"><video src="' +
 							purl + '" class="' + sense +
 							' toot-img pointer" style="max-width:100%;"></a></span>';
-					}
 				} else {
 					if (media.type == "unknown") {
 						viewer = viewer + '<a href="' + media.remote_url + '" title="' + media.remote_url + '">[' + lang.lang_parse_unknown + ']</a> '
