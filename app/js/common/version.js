@@ -1,8 +1,11 @@
 //バージョンチェッカー
 function verck(ver) {
 	console.log("%c Welcome😊", "color: red;font-size:200%;")
+	var date = new Date();
+	var show = false
 	if (localStorage.getItem("ver") != ver) {
 		localStorage.setItem("ver", ver);
+		show = true
 		console.log("%c Thank you for your update🎉", "color: red;font-size:200%;");
 		$(document).ready(function () {
 			$('#releasenote').modal('open');
@@ -22,11 +25,28 @@ function verck(ver) {
 
 		});
 	}
+	if (!show) {
+		console.log(show)
+		if (date.getMonth() + 1 == localStorage.getItem("showSupportMe") || !localStorage.getItem("showSupportMe")) {
+			if (date.getMonth() == 11) {
+				var nextmonth = 1
+			} else {
+				var nextmonth = date.getMonth() + 2
+			}
+			localStorage.setItem("showSupportMe", nextmonth)
+			$("#support-btm").removeClass("hide")
+			$("#support-btm").animate({
+				'bottom': '0'
+			}, {
+					'duration': 300
+				});
+		}
+	}
 	var electron = require("electron");
 	var remote = electron.remote;
 	var dialog = remote.dialog;
 	var platform = remote.process.platform;
-	console.log("Your platform:"+remote.process.platform)
+	console.log("Your platform:" + remote.process.platform)
 	if (platform == "win32") {
 		const options = {
 			type: 'info',
@@ -272,4 +292,14 @@ function openRN() {
 	} else {
 		$("#release-en").show();
 	}
+}
+function closeSupport() {
+	$("#support-btm").animate({
+		'bottom': '-300px'
+	}, {
+			'duration': 300,
+			'complete': function () {
+				$("#support-btm").addClass("hide")
+			}
+		});
 }

@@ -26,6 +26,8 @@ function ck() {
 	}
 	var multi = localStorage.getItem("multi");
 	if (!multi || multi == "[]") {
+		var date = new Date();
+		localStorage.setItem("showSupportMe", date.getMonth() + 2)
 		location.href = "acct.html?mode=first&code=true"
 	} else {
 		var obj = JSON.parse(multi);
