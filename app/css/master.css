@@ -412,6 +412,31 @@ blockquote:before,
   justify-content: center;
   align-items: center;
 }
+#support-btm {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background-color: var(--box);
+  z-index: 9999;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-rows: 1fr 36px;
+  grid-template-areas: "note middle right" "note close close";
+}
+#support-btm-en,
+#support-btm-ja {
+  grid-area: note;
+}
+#support-btm-middle {
+  grid-area: middle;
+}
+#support-btm-right {
+  grid-area: right;
+}
+#support-btm-close {
+  grid-area: close;
+}
 
 /*スクロールバー*/
 ::-webkit-scrollbar {
