@@ -218,9 +218,9 @@ function misskeyPost() {
 	}
 	var vis = $("#vis").text();
 	if (vis == "unlisted") {
-		vis == "home"
+		vis = "home"
 	} else if (vis == "direct") {
-		vis == "specified";
+		vis = "specified";
 		toot.visibleUserIds = str.match(/@([a-zA-Z0-9_@.-]+)(\s|$)/g).join('').split("@");
 	}
 	if (vis != "inherit") {
