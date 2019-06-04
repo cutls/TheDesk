@@ -27,11 +27,15 @@ function verck(ver) {
 	}
 	if (!show) {
 		console.log(show)
-		if (date.getMonth() + 1 == localStorage.getItem("showSupportMe") || !localStorage.getItem("showSupportMe")) {
+		if (date.getMonth() + 1 >= localStorage.getItem("showSupportMe") || !localStorage.getItem("showSupportMe")) {
 			if (date.getMonth() == 11) {
 				var nextmonth = 1
 			} else {
 				var nextmonth = date.getMonth() + 2
+			}
+			if (lang.language != "ja") {
+				$("#support-btm-ja").addClass("hide");
+				$("#support-btm-en").removeClass("hide");
 			}
 			localStorage.setItem("showSupportMe", nextmonth)
 			$("#support-btm").removeClass("hide")
