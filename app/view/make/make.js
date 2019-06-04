@@ -1,5 +1,10 @@
 const fs = require("fs")
-const ver = "Usamin (18.5.1)"
+const readlineSync = require('readline-sync');
+let ver = readlineSync.question('version string (empty: default string)? ');
+if (!ver) {
+    ver = "Usamin (18.5.1)"
+}
+console.log("Constructing view files " + ver + ": make sure to update package.json")
 const langs = ["ja", "en", "ps"]
 const langsh = ["日本語", "English", "Crowdin translate system(beta)"]
 const simples = ["acct", "index", "setting", "update", "setting"]

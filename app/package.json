@@ -6,6 +6,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "construct": "cd view/make && node make",
     "dist": "build --linux snap",
     "build:js": "node build.js",
     "build": "electron-builder",
@@ -61,7 +62,8 @@
   },
   "devDependencies": {
     "electron": "^5.0.1",
-    "electron-builder": "^20.41.0"
+    "electron-builder": "^20.41.0",
+    "readline-sync": "1.4.9"
   },
   "build": {
     "productName": "TheDesk",
