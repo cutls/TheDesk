@@ -445,7 +445,7 @@ function resetNotfFilter(tlid){
 	localStorage.setItem("exclude-" + tlid, "")
 	parseColumn();
 }
-function notfFilter(id,tlid){
+function notfFilter(id,tlid,acct_id){
 	var excludetxt = localStorage.getItem("exclude-" + tlid);
 	if (excludetxt || excludetxt !="") {
 		excludetxt = excludetxt + "&account_id="+id
