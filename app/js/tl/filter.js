@@ -391,28 +391,28 @@ function exclude(key) {
 		excludetxt = "?exclude_types[]=mention"
 	}
 	if ($('#exc-fav-' + key + ':checked').val()) {
-		if (!excludetxt || excludetxt !="") {
+		if (excludetxt || excludetxt !="") {
 			excludetxt = excludetxt + "&exclude_types[]=favourite"
 		} else {
 			excludetxt = "?exclude_types[]=favourite"
 		}
 	}
 	if ($('#exc-bt-' + key + ':checked').val()) {
-		if (!excludetxt || excludetxt !="") {
+		if (excludetxt || excludetxt !="") {
 			excludetxt = excludetxt + "&exclude_types[]=reblog"
 		} else {
 			excludetxt = "?exclude_types[]=reblog"
 		}
 	}
 	if ($('#exc-follow-' + key + ':checked').val()) {
-		if (!excludetxt || excludetxt !="") {
+		if (excludetxt || excludetxt !="") {
 			excludetxt = excludetxt + "&exclude_types[]=follow"
 		} else {
 			excludetxt = "?exclude_types[]=follow"
 		}
 	}
 	if ($('#exc-poll-' + key + ':checked').val()) {
-		if (!excludetxt || excludetxt !="") {
+		if (excludetxt || excludetxt !="") {
 			excludetxt = excludetxt + "&exclude_types[]=poll"
 		} else {
 			excludetxt = "?exclude_types[]=poll"
@@ -447,7 +447,7 @@ function resetNotfFilter(tlid){
 }
 function notfFilter(id,tlid){
 	var excludetxt = localStorage.getItem("exclude-" + tlid);
-	if (!excludetxt || excludetxt !="") {
+	if (excludetxt || excludetxt !="") {
 		excludetxt = excludetxt + "&account_id="+id
 	} else {
 		excludetxt = "?account_id="+id
