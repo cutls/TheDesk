@@ -816,6 +816,7 @@ function reconnector(tlid, type, acct_id, data, mode) {
 		}
 		reload(type, '', acct_id, tlid, data, mute, "", voice, mode);
 	}
-	Materialize.toast(lang.lang_tl_reconnect, 2000);
+	M.toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
+	
 }
 strAliveInt()

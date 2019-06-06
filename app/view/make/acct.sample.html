@@ -99,10 +99,15 @@
                               <input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp">
                               <div id="ins-suggest"></div>
                               @@codesetupwarn@@<br>
-                              <input type="checkbox" class="filled-in" id="linux" />
-                              <label for="linux">@@codesetup@@</label><br>
-                              <input type="checkbox" class="filled-in" id="misskey" />
-                              <label for="misskey">@@thisismisskey@@</label><br>
+                              <label>
+                                    <input type="checkbox" class="filled-in" id="linux" />
+                                    <span>@@codesetup@@</span>
+                              </label>
+                              <br>
+                              <label>
+                                    <input type="checkbox" class="filled-in" id="misskey" />
+                                    <span>@@thisismisskey@@</span>
+                              </label><br>
                               <button class="btn waves-effect" onclick="instance()">Login</button><br>
                         </div>
                         <div class="col s4">

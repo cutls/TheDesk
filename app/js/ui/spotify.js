@@ -57,10 +57,10 @@ function spotifyFlagSave() {
     var awk = $("[name=awk]:checked").val();
     if (awk == "yes") {
         localStorage.setItem("artwork", "yes");
-        Materialize.toast(lang.lang_spotify_img, 3000);
+        M.toast({ html: lang.lang_spotify_img, displayLength: 3000 })
     } else {
         localStorage.removeItem("artwork");
-        Materialize.toast(lang.lang_spotify_imgno, 3000);
+        M.toast({ html: lang.lang_spotify_imgno, displayLength: 3000 })
     }
 }
 function nowplaying(mode) {
@@ -178,7 +178,7 @@ function nowplaying(mode) {
 function spotifySave() {
     var temp = $("#np-temp").val();
     localStorage.setItem("np-temp", temp);
-    Materialize.toast(lang.lang_spotify_np, 3000);
+    M.toast({ html: lang.lang_spotify_np, displayLength: 3000 })
 }
 function npprovider() {
     var provd = $("[name=npp]:checked").val();
@@ -191,7 +191,7 @@ function npprovider() {
         }
     } else {
         if (provd != localStorage.getItem("np_provider")) {
-            Materialize.toast(lang.lang_setting_npprovide.replace("{{set}}", provd), 3000);
+            M.toast({ html: lang.lang_setting_npprovide.replace("{{set}}", provd), displayLength: 3000 })
         }
         localStorage.setItem("np_provider", provd);
         var electron = require("electron");

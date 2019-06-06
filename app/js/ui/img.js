@@ -284,7 +284,7 @@ function dlImg() {
 	})
 	ipc.on('general-dl-message', function (event, arg) {
 		var argC = arg.replace(/\\/g, "\\\\") + "\\\\.";
-		Materialize.toast(lang.lang_img_DLDone + arg + '<button class="btn-flat toast-action" onclick="openFinder(\'' + argC + '\')">Show</button>', 5000);
+		M.toast({ html: lang.lang_img_DLDone + arg + '<button class="btn-flat toast-action" onclick="openFinder(\'' + argC + '\')">Show</button>', displayLength: 5000 })
 	})
 }
 function openFinder(dir) {

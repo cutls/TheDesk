@@ -43,7 +43,7 @@ function fav(id, acct_id, remote) {
 					$(".fav_" + id).addClass("yellow-text");
 				}
 			} else {
-				Materialize.toast(lang.lang_status_favWarn, 1000);
+				M.toast({ html: lang.lang_status_favWarn, displayLength: 1000 })
 			}
 		}
 	}
@@ -90,7 +90,7 @@ function rt(id, acct_id, remote) {
 					$(".rt_" + id).addClass("teal-text");
 				}
 			} else {
-				Materialize.toast(lang.lang_status_btWarn, 1000);
+				M.toast({ html: lang.lang_status_btWarn, displayLength: 1000 })
 			}
 		}
 	}
@@ -373,7 +373,7 @@ function empUser() {
 	if (!obj) {
 		var obj = [];
 		obj.push(id);
-		Materialize.toast(id + lang.lang_status_emphas, 4000);
+		M.toast({ html: id + lang.lang_status_emphas, displayLength: 4000 })
 	} else {
 		var can;
 		Object.keys(obj).forEach(function (key) {
@@ -383,7 +383,7 @@ function empUser() {
 			} else {
 				can = true;
 				obj.splice(key, 1);
-				Materialize.toast(id + lang.lang_status_unemphas, 4000);
+				M.toast({ html: id + lang.lang_status_unemphas, displayLength: 4000 })
 			}
 		});
 	}
@@ -425,7 +425,7 @@ function pinUser() {
 //URLコピー
 function tootUriCopy(url) {
 	execCopy(url);
-	Materialize.toast(lang.lang_details_url, 1500);
+	M.toast({ html: lang.lang_details_url, displayLength: 1500 })
 }
 
 //他のアカウントで…

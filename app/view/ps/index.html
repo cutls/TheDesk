@@ -161,15 +161,15 @@
 					<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
 						<i class="waves-effect gray material-icons" id="nsfw" title="crwdns389:0crwdne389:0"
 							onclick="nsfw()">visibility_off</i>
-						<i class="waves-effect gray material-icons purple-text dropdown-button"
-							data-activates='dropdown1' id="vis-icon">public</i>
+						<i class="waves-effect gray material-icons purple-text dropdown-trigger"
+							data-target="dropdown1" id="vis-icon">public</i>
 						<a class="waves-effect gray" id="cw" onclick="cw()" title="crwdns390:0crwdne390:0">CW</a>
 						<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray"
 									onclick="fileselect()" title="crwdns391:0crwdne391:0">photo_library</i></span></span>
 						<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn"
 							title="crwdns393:0crwdne393:0">tag_faces</i>
-						<i class="waves-effect gray material-icons dropdown-button"
-							data-activates='dropdown2'>more_vert</i>
+						<i class="waves-effect gray material-icons dropdown-trigger"
+							data-target="dropdown2">more_vert</i>
 						<i class="material-icons nex gray waves-effect" title="crwdns395:0crwdne395:0(Ctrl+Shit+C)"
 							data-trans-title="post_box_clear" id="clear">clear</i>
 					</div>
@@ -190,7 +190,7 @@
 					</div>
 				</div>
 				<!-- 公開範囲 Dropdown Structure -->
-				<ul id='dropdown1' class='dropdown-content'>
+				<ul id="dropdown1" class="dropdown-content">
 					<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">crwdns403:0crwdne403:0
 					</li>
 					<li>
@@ -213,7 +213,7 @@
 					</li>
 				</ul>
 				<!-- その他 Dropdown Structure -->
-				<ul id='dropdown2' class='dropdown-content'>
+				<ul id="dropdown2" class="dropdown-content">
 					<li>
 						<a onclick="adobe()">crwdns392:0crwdne392:0</a>
 					</li>
@@ -311,10 +311,14 @@
 					<input type="text" class="mastodon-choice" placeholder="crwdns2414:0crwdne2414:02">
 					<input type="text" class="mastodon-choice" placeholder="crwdns2414:0crwdne2414:03">
 					<input type="text" class="mastodon-choice" placeholder="crwdns2414:0crwdne2414:04">
-					<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
-					<label for="poll-multiple">crwdns2416:0crwdne2416:0</label><br>
-					<input type="checkbox" class="filled-in" id="poll-until" value="1" />
-					<label for="poll-until">crwdns2412:0crwdne2412:0</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
+						<span>crwdns2416:0crwdne2416:0</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-until" value="1" />
+						<span>crwdns2412:0crwdne2412:0</span>
+					</label>
 					<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">crwdns507:0crwdne507:0
 					<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">crwdns508:0crwdne508:0
 					<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="6">crwdns509:0crwdne509:0
@@ -325,7 +329,7 @@
 	<!-- Modal Structure Tootdata-->
 	<div id="tootmodal" class="modal modal-fixed-footer">
 		<div class="modal-content">
-			<ul class="collapsible" data-collapsible="accordion" id="det-col">
+			<ul class="collapsible"id="det-col">
 				<li class="dm-hide">
 					<div class="collapsible-header">
 						<i class="material-icons">people_outline</i>@@afterLTL@@
@@ -474,46 +478,46 @@
 				</div>
 				<div class="his-float" id="his-float-timeline">
 					<div id="my-data-nav">
-						<ul class="custom-tabs transparent">
-							<li class="custom-tab col my-data-width active-back column-first">
+						<ul class="tabs transparent">
+							<li class="tab col my-data-width active-back column-first">
 								<a go="#his-tl" title="crwdns442:0crwdne442:0"><i class="material-icons">timeline</i></a>
 							</li>
-							<li class="custom-tab col my-data-width">
+							<li class="tab col my-data-width">
 								<a go="#his-follow-list" title="crwdns440:0crwdne440:0"><i class="material-icons">people</i>→</a>
 							</li>
-							<li class="custom-tab col my-data-width">
+							<li class="tab col my-data-width">
 								<a go="#his-follower-list" title="crwdns441:0crwdne441:0"><i
 										class="material-icons">people</i>←</a>
 							</li>
-							<li class="custom-tab col my-data-width only-his-data">
+							<li class="tab col my-data-width only-his-data">
 								<a go="#his-action" title="crwdns443:0crwdne443:0"><i
 										class="material-icons">account_box</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-his-data">
+							<li class="tab col my-data-width only-his-data">
 								<a go="#his-list" title="crwdns444:0crwdne444:0"><i class="material-icons">list</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-fav-list" title="crwdns434:0crwdne434:0"><i class="material-icons">star</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-blocking-list" title="crwdns446:0crwdne446:0"><i class="material-icons">block</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-blocking-list" title="crwdns446:0crwdne446:0"><i
 										class="material-icons">voice_over_off</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-domain-list" title="crwdns450:0crwdne450:0"><i
 										class="material-icons">language</i><i class="material-icons">block</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-prof-list" title="crwdns451:0crwdne451:0"><i class="material-icons">create</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-request-list" title="crwdns452:0crwdne452:0"><i
 										class="material-icons">how_to_reg</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-follow-recom-list" title="crwdns456:0crwdne456:0"><i
 										class="material-icons">recent_actors</i></a>
 							</li>
@@ -877,20 +881,34 @@
 					<input type="hidden" id="filter-edit-id">
 					<input type="text" style="width:150px" id="filter-add-word" placeholder="crwdns496:0crwdne496:0"><br>
 					crwdns497:0crwdne497:0<br>
-					<input type="checkbox" class="filled-in" id="home_filter" value="home" />
-					<label for="home_filter">crwdns482:0crwdne482:0</label>
-					<input type="checkbox" class="filled-in" id="local_filter" value="public" />
-					<label for="local_filter">crwdns480:0crwdne480:0</label>
-					<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
-					<label for="notf_filter">crwdns488:0crwdne488:0</label>
-					<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
-					<label for="conv_filter">crwdns498:0crwdne498:0</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+						<span>crwdns482:0crwdne482:0</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+						<span>crwdns480:0crwdne480:0</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+						<span>crwdns488:0crwdne488:0</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+						<span>crwdns498:0crwdne498:0</span>
+					</label>
 					crwdns499:0crwdne499:0<br>
-					<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
-					<label for="wholeword_filter">crwdns500:0crwdne500:0</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+						<span>crwdns500:0crwdne500:0</span>
+					</label>
+					<br>
 					<span class="sml">crwdns501:0crwdne501:0</span><br>
-					<input type="checkbox" class="filled-in" id="except_filter" value="1" />
-					<label for="except_filter">crwdns502:0crwdne502:0</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+						<span>crwdns502:0crwdne502:0</span>
+					</label>
+					<br>
 					<span class="sml">crwdns503:0crwdne503:0</span><br>
 					crwdns504:0crwdne504:0<span class="sml">crwdns505:0crwdne505:0<b>crwdns506:0crwdne506:0</b></span><br><br>
 					<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">crwdns507:0crwdne507:0
@@ -1032,7 +1050,7 @@
 			<img src="../../img/kyash.png" width="100"><br>
 		</div>
 		<div id="support-btm-close">
-				<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()"
+			<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()"
 				id="add-filter-btn">crwdns385:0crwdne385:0</button>
 		</div>
 	</div>

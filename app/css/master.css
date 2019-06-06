@@ -437,6 +437,13 @@ blockquote:before,
 #support-btm-close {
   grid-area: close;
 }
+.select-wrapper .dropdown-content {
+  width: 250px !important;
+}
+input, textarea {
+  color: var(--color);
+  font-size: 1rem !important;
+}
 
 /*スクロールバー*/
 ::-webkit-scrollbar {

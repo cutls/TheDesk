@@ -151,7 +151,7 @@ function media(b64, type, no) {
 			$(".toot-btn-group").prop("disabled", false);
 			$('select').material_select();
 			$("#mec").text(lang.lang_there);
-			Materialize.toast(lang.lang_postimg_aftupload, 1000);
+			M.toast({ html: lang.lang_postimg_aftupload, displayLength: 1000 })
 			$("#imgup").text("");
 			$("#imgsel").show();
 			localStorage.removeItem("image");

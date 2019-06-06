@@ -90,7 +90,7 @@ function voiceSettings() {
     localStorage.setItem("voice_speed", $("#voicespeed").val() / 10);
     localStorage.setItem("voice_pitch", $("#voicepitch").val() / 50);
     localStorage.setItem("voice_vol", $("#voicevol").val() / 100);
-    Materialize.toast(lang.lang_speech_refresh, 3000);
+    M.toast({ html: lang.lang_speech_refresh, displayLength: 3000 })
 }
 function voiceSettingLoad() {
     var speed = localStorage.getItem("voice_speed");

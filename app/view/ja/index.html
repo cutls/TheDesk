@@ -161,15 +161,15 @@
 					<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
 						<i class="waves-effect gray material-icons" id="nsfw" title="画像に制限を付与"
 							onclick="nsfw()">visibility_off</i>
-						<i class="waves-effect gray material-icons purple-text dropdown-button"
-							data-activates='dropdown1' id="vis-icon">public</i>
+						<i class="waves-effect gray material-icons purple-text dropdown-trigger"
+							data-target="dropdown1" id="vis-icon">public</i>
 						<a class="waves-effect gray" id="cw" onclick="cw()" title="コンテンツワーニング(トゥートを表示する前にメッセージで隠す)">CW</a>
 						<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray"
 									onclick="fileselect()" title="ファイルを選択">photo_library</i></span></span>
 						<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn"
 							title="絵文字を挿入">tag_faces</i>
-						<i class="waves-effect gray material-icons dropdown-button"
-							data-activates='dropdown2'>more_vert</i>
+						<i class="waves-effect gray material-icons dropdown-trigger"
+							data-target="dropdown2">more_vert</i>
 						<i class="material-icons nex gray waves-effect" title="トゥートボックスのクリア(Ctrl+Shit+C)"
 							data-trans-title="post_box_clear" id="clear">clear</i>
 					</div>
@@ -190,7 +190,7 @@
 					</div>
 				</div>
 				<!-- 公開範囲 Dropdown Structure -->
-				<ul id='dropdown1' class='dropdown-content'>
+				<ul id="dropdown1" class="dropdown-content">
 					<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">公開範囲指定
 					</li>
 					<li>
@@ -213,7 +213,7 @@
 					</li>
 				</ul>
 				<!-- その他 Dropdown Structure -->
-				<ul id='dropdown2' class='dropdown-content'>
+				<ul id="dropdown2" class="dropdown-content">
 					<li>
 						<a onclick="adobe()">Adobeフォトエディタ</a>
 					</li>
@@ -311,10 +311,14 @@
 					<input type="text" class="mastodon-choice" placeholder="選択肢2">
 					<input type="text" class="mastodon-choice" placeholder="選択肢3">
 					<input type="text" class="mastodon-choice" placeholder="選択肢4">
-					<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
-					<label for="poll-multiple">複数選択を許可</label><br>
-					<input type="checkbox" class="filled-in" id="poll-until" value="1" />
-					<label for="poll-until">投票するまで票数を隠す</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
+						<span>複数選択を許可</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-until" value="1" />
+						<span>投票するまで票数を隠す</span>
+					</label>
 					<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">日
 					<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">時間
 					<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="6">分
@@ -325,7 +329,7 @@
 	<!-- Modal Structure Tootdata-->
 	<div id="tootmodal" class="modal modal-fixed-footer">
 		<div class="modal-content">
-			<ul class="collapsible" data-collapsible="accordion" id="det-col">
+			<ul class="collapsible"id="det-col">
 				<li class="dm-hide">
 					<div class="collapsible-header">
 						<i class="material-icons">people_outline</i>これより後のLocal TL(言及確認)
@@ -474,46 +478,46 @@
 				</div>
 				<div class="his-float" id="his-float-timeline">
 					<div id="my-data-nav">
-						<ul class="custom-tabs transparent">
-							<li class="custom-tab col my-data-width active-back column-first">
+						<ul class="tabs transparent">
+							<li class="tab col my-data-width active-back column-first">
 								<a go="#his-tl" title="タイムライン"><i class="material-icons">timeline</i></a>
 							</li>
-							<li class="custom-tab col my-data-width">
+							<li class="tab col my-data-width">
 								<a go="#his-follow-list" title="フォロー"><i class="material-icons">people</i>→</a>
 							</li>
-							<li class="custom-tab col my-data-width">
+							<li class="tab col my-data-width">
 								<a go="#his-follower-list" title="フォロワー"><i
 										class="material-icons">people</i>←</a>
 							</li>
-							<li class="custom-tab col my-data-width only-his-data">
+							<li class="tab col my-data-width only-his-data">
 								<a go="#his-action" title="他のアカウントで操作"><i
 										class="material-icons">account_box</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-his-data">
+							<li class="tab col my-data-width only-his-data">
 								<a go="#his-list" title="リスト"><i class="material-icons">list</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-fav-list" title="お気に入り登録"><i class="material-icons">star</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-blocking-list" title="ブロック"><i class="material-icons">block</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-blocking-list" title="ブロック"><i
 										class="material-icons">voice_over_off</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-domain-list" title="ドメインブロック"><i
 										class="material-icons">language</i><i class="material-icons">block</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-prof-list" title="プロフィール編集"><i class="material-icons">create</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-request-list" title="フォローリクエスト"><i
 										class="material-icons">how_to_reg</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-follow-recom-list" title="おすすめ"><i
 										class="material-icons">recent_actors</i></a>
 							</li>
@@ -877,20 +881,34 @@
 					<input type="hidden" id="filter-edit-id">
 					<input type="text" style="width:150px" id="filter-add-word" placeholder="フィルターワード"><br>
 					適応範囲<br>
-					<input type="checkbox" class="filled-in" id="home_filter" value="home" />
-					<label for="home_filter">ホーム</label>
-					<input type="checkbox" class="filled-in" id="local_filter" value="public" />
-					<label for="local_filter">ローカル</label>
-					<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
-					<label for="notf_filter">通知</label>
-					<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
-					<label for="conv_filter">会話</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+						<span>ホーム</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+						<span>ローカル</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+						<span>通知</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+						<span>会話</span>
+					</label>
 					オプション<br>
-					<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
-					<label for="wholeword_filter">単語マッチ</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+						<span>単語マッチ</span>
+					</label>
+					<br>
 					<span class="sml">非ラテン系の文字列では「単語マッチ」は推奨されません。</span><br>
-					<input type="checkbox" class="filled-in" id="except_filter" value="1" />
-					<label for="except_filter">除外</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+						<span>除外</span>
+					</label>
+					<br>
 					<span class="sml">「除外」時マッチしたトゥートは非可逆的に除外され、削除後も閲覧できません。</span><br>
 					有効期限(あと)<span class="sml">未指定(または0分)で「無期限」になります。<b>仕様上数値の正確性を保証できません。</b></span><br><br>
 					<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">日
@@ -1032,7 +1050,7 @@
 			<img src="../../img/kyash.png" width="100"><br>
 		</div>
 		<div id="support-btm-close">
-				<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()"
+			<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()"
 				id="add-filter-btn">Close</button>
 		</div>
 	</div>

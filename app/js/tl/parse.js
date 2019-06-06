@@ -284,7 +284,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if (popup > 0) {
-					Materialize.toast("[" + domain + "]" + escapeHTML(toot.account.display_name) + what, popup * 1000);
+					M.toast({ html: "[" + domain + "]" + escapeHTML(toot.account.display_name) + what, displayLength: popup * 1000 })
 				}
 				//通知音
 				if (sound == "c1") {
@@ -920,7 +920,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 		}
 		var memory = localStorage.getItem("notice-mem");
 		if (popup >= 0 && obj.length < 5 && notftext != memory) {
-			Materialize.toast(escapeHTML(toot.display_name) + ":" + ftxt, popup * 1000);
+			M.toast({ html: escapeHTML(toot.display_name) + ":" + ftxt, displayLength: popup * 1000 })
 			$(".notf-icon_" + tlid).addClass("red-text");
 			localStorage.setItem("notice-mem", notftext);
 			notftext = "";
@@ -1027,7 +1027,7 @@ function client(name) {
 				if (!obj) {
 					var obj = [];
 					obj.push(name);
-					Materialize.toast(escapeHTML(name) + lang.lang_status_emphas, 2000);
+					M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
 				} else {
 					var can;
 					Object.keys(obj).forEach(function (key) {
@@ -1037,12 +1037,12 @@ function client(name) {
 						} else {
 							can = true;
 							obj.splice(key, 1);
-							Materialize.toast(escapeHTML(name) + lang.lang_status_unemphas, 2000);
+							M.toast({ html: escapeHTML(name) + lang.lang_status_unemphas, displayLength: 2000 })
 						}
 					});
 					if (!can) {
 						obj.push(name);
-						Materialize.toast(escapeHTML(name) + lang.lang_status_emphas, 2000);
+						M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
 					} else {
 
 					}
@@ -1058,7 +1058,7 @@ function client(name) {
 				obj.push(name);
 				var json = JSON.stringify(obj);
 				localStorage.setItem("client_mute", json);
-				Materialize.toast(escapeHTML(name) + lang.lang_parse_mute, 2000);
+				M.toast({ html: escapeHTML(name) + lang.lang_parse_mute, displayLength: 2000 })
 			} else {
 				return;
 			}

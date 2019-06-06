@@ -5,7 +5,7 @@ var envView = new Vue({
 	methods: {
 		complete: function (i, val) {
 			var ls = envView.config[i].storage;
-			Materialize.toast("Complete", 3000);
+			M.toast({ html: 'Complete', displayLength: 3000 })
 			if (!val) {
 				var id = envView.config[i].id;
 				var val = $("#" + id).val()
@@ -28,7 +28,7 @@ var tlView = new Vue({
 				var id = tlView.config[i].id;
 				var val = $("#" + id).val()
 			}
-			Materialize.toast("Complete", 3000);
+			M.toast({ html: 'Complete', displayLength: 3000 })
 			localStorage.setItem(ls, val)
 			return true
 		}
@@ -40,7 +40,7 @@ var postView = new Vue({
 	methods: {
 		complete: function (i, val) {
 			var ls = postView.config[i].storage;
-			Materialize.toast("Complete", 3000);
+			M.toast({ html: 'Complete', displayLength: 3000 })
 			if (!val) {
 				var id = postView.config[i].id;
 				var val = $("#" + id).val()
@@ -62,7 +62,7 @@ function settings() {
 		$("#" + theme).prop("checked", true);
 	} else {
 		if (cd != localStorage.getItem("theme")) {
-			Materialize.toast(lang.lang_setting_theme.replace("{{set}}", ct), 3000);
+			M.toast({ html: lang.lang_setting_theme.replace("{{set}}", ct), displayLength: 3000 })
 		}
 		//テーマはこの場で設定
 		themes(cd);
@@ -71,14 +71,14 @@ function settings() {
 	var fontd = $("#font").val();
 	if (fontd) {
 		if (fontd != localStorage.getItem("font")) {
-			Materialize.toast(lang.lang_setting_font.replace("{{set}}", fontd), 3000);
+			M.toast({ html: lang.lang_setting_font.replace("{{set}}", ct), displayLength: 3000 })
 		}
 		localStorage.setItem("font", fontd);
 		themes();
 	} else {
 		if (localStorage.getItem("font")) {
 			localStorage.removeItem("font");
-			Materialize.toast(lang.lang_setting_font.replace("{{set}}", lang.lang_setting_default), 3000);
+			M.toast({ html: lang.lang_setting_font.replace("{{set}}", ct), displayLength: 3000 })
 			themes();
 		}
 	}
@@ -165,7 +165,8 @@ function cliMuteDel(key) {
 function wordmute() {
 	var word = localStorage.getItem("word_mute");
 	var obj = JSON.parse(word);
-	$('#wordmute').material_chip({
+	if (!obj) { obj = [] }
+	$('#wordmute').chips({
 		data: obj,
 	});
 }
@@ -178,7 +179,8 @@ function wordmuteSave() {
 function wordemp() {
 	var word = localStorage.getItem("word_emp");
 	var obj = JSON.parse(word);
-	$('#wordemp').material_chip({
+	if (!obj) { obj = [] }
+	$('#wordemp').chips({
 		data: obj,
 	});
 }
@@ -205,7 +207,7 @@ function notftest() {
 function oks(no) {
 	var txt = $("#oks-" + no).val();
 	localStorage.setItem("oks-" + no, txt);
-	Materialize.toast(lang.lang_setting_ksref, 3000);
+	M.toast({ html: lang.lang_setting_ksref, displayLength: 3000 })
 }
 function oksload() {
 	if (localStorage.getItem("oks-1")) { $("#oks-1").val(localStorage.getItem("oks-1")) }
@@ -560,7 +562,7 @@ function ctLoad() {
 		$("#custom-sel-sel").html(templete);
 		templete = '<option value="add_new">' + $("#edit-selector").attr("data-add") + '</option>' + templete;
 		$("#custom-edit-sel").html(templete);
-		$('select').material_select('update');
+		$('select').formSelect();
 	});
 }
 function customSel() {

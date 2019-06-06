@@ -161,15 +161,15 @@
 					<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
 						<i class="waves-effect gray material-icons" id="nsfw" title="Mark media as sensitive"
 							onclick="nsfw()">visibility_off</i>
-						<i class="waves-effect gray material-icons purple-text dropdown-button"
-							data-activates='dropdown1' id="vis-icon">public</i>
+						<i class="waves-effect gray material-icons purple-text dropdown-trigger"
+							data-target="dropdown1" id="vis-icon">public</i>
 						<a class="waves-effect gray" id="cw" onclick="cw()" title="Hide text behind warning">CW</a>
 						<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray"
 									onclick="fileselect()" title="Attach..">photo_library</i></span></span>
 						<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn"
 							title="Emojis">tag_faces</i>
-						<i class="waves-effect gray material-icons dropdown-button"
-							data-activates='dropdown2'>more_vert</i>
+						<i class="waves-effect gray material-icons dropdown-trigger"
+							data-target="dropdown2">more_vert</i>
 						<i class="material-icons nex gray waves-effect" title="Clear toot box(Ctrl+Shit+C)"
 							data-trans-title="post_box_clear" id="clear">clear</i>
 					</div>
@@ -190,7 +190,7 @@
 					</div>
 				</div>
 				<!-- 公開範囲 Dropdown Structure -->
-				<ul id='dropdown1' class='dropdown-content'>
+				<ul id="dropdown1" class="dropdown-content">
 					<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">Adjust status privacy
 					</li>
 					<li>
@@ -213,7 +213,7 @@
 					</li>
 				</ul>
 				<!-- その他 Dropdown Structure -->
-				<ul id='dropdown2' class='dropdown-content'>
+				<ul id="dropdown2" class="dropdown-content">
 					<li>
 						<a onclick="adobe()">Adobe Photo Editor</a>
 					</li>
@@ -311,10 +311,14 @@
 					<input type="text" class="mastodon-choice" placeholder="Choice2">
 					<input type="text" class="mastodon-choice" placeholder="Choice3">
 					<input type="text" class="mastodon-choice" placeholder="Choice4">
-					<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
-					<label for="poll-multiple">Multiple select</label><br>
-					<input type="checkbox" class="filled-in" id="poll-until" value="1" />
-					<label for="poll-until">Hide 'votes' count until people vote it.</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
+						<span>Multiple select</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-until" value="1" />
+						<span>Hide 'votes' count until people vote it.</span>
+					</label>
 					<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">day(s)
 					<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">hour(s)
 					<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="6">minute(s)
@@ -325,7 +329,7 @@
 	<!-- Modal Structure Tootdata-->
 	<div id="tootmodal" class="modal modal-fixed-footer">
 		<div class="modal-content">
-			<ul class="collapsible" data-collapsible="accordion" id="det-col">
+			<ul class="collapsible"id="det-col">
 				<li class="dm-hide">
 					<div class="collapsible-header">
 						<i class="material-icons">people_outline</i>Local TL after this toot)
@@ -474,46 +478,46 @@
 				</div>
 				<div class="his-float" id="his-float-timeline">
 					<div id="my-data-nav">
-						<ul class="custom-tabs transparent">
-							<li class="custom-tab col my-data-width active-back column-first">
+						<ul class="tabs transparent">
+							<li class="tab col my-data-width active-back column-first">
 								<a go="#his-tl" title="Timeline"><i class="material-icons">timeline</i></a>
 							</li>
-							<li class="custom-tab col my-data-width">
+							<li class="tab col my-data-width">
 								<a go="#his-follow-list" title="Follow"><i class="material-icons">people</i>→</a>
 							</li>
-							<li class="custom-tab col my-data-width">
+							<li class="tab col my-data-width">
 								<a go="#his-follower-list" title="Follower"><i
 										class="material-icons">people</i>←</a>
 							</li>
-							<li class="custom-tab col my-data-width only-his-data">
+							<li class="tab col my-data-width only-his-data">
 								<a go="#his-action" title="Cross-account"><i
 										class="material-icons">account_box</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-his-data">
+							<li class="tab col my-data-width only-his-data">
 								<a go="#his-list" title="List"><i class="material-icons">list</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-fav-list" title="Favourite"><i class="material-icons">star</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-blocking-list" title="Blocks"><i class="material-icons">block</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-blocking-list" title="Blocks"><i
 										class="material-icons">voice_over_off</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-domain-list" title="Domain block"><i
 										class="material-icons">language</i><i class="material-icons">block</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-prof-list" title="Edit profile"><i class="material-icons">create</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-request-list" title="Follow requests"><i
 										class="material-icons">how_to_reg</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-follow-recom-list" title="Suggest"><i
 										class="material-icons">recent_actors</i></a>
 							</li>
@@ -877,20 +881,34 @@
 					<input type="hidden" id="filter-edit-id">
 					<input type="text" style="width:150px" id="filter-add-word" placeholder="Filtering words"><br>
 					Filter contexts<br>
-					<input type="checkbox" class="filled-in" id="home_filter" value="home" />
-					<label for="home_filter">Home</label>
-					<input type="checkbox" class="filled-in" id="local_filter" value="public" />
-					<label for="local_filter">Local</label>
-					<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
-					<label for="notf_filter">Notifications</label>
-					<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
-					<label for="conv_filter">Conversations</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+						<span>Home</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+						<span>Local</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+						<span>Notifications</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+						<span>Conversations</span>
+					</label>
 					Options<br>
-					<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
-					<label for="wholeword_filter">Whole word</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+						<span>Whole word</span>
+					</label>
+					<br>
 					<span class="sml">Nice for Latin language</span><br>
-					<input type="checkbox" class="filled-in" id="except_filter" value="1" />
-					<label for="except_filter">Drop instead of hide</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+						<span>Drop instead of hide</span>
+					</label>
+					<br>
 					<span class="sml">Filtered toots will disappear irreversibly, even if filter is later removed</span><br>
 					Expire after<span class="sml">Unset or "0" means "Never"<b>This value may contain some error</b></span><br><br>
 					<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">day(s)
@@ -1032,7 +1050,7 @@
 			<img src="../../img/kyash.png" width="100"><br>
 		</div>
 		<div id="support-btm-close">
-				<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()"
+			<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()"
 				id="add-filter-btn">Close</button>
 		</div>
 	</div>

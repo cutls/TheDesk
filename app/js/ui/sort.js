@@ -103,7 +103,7 @@ function sort() {
 	var json = JSON.stringify(newobj);
 	localStorage.setItem("column", json);
 	$("#sort").html("");
-	Materialize.toast("Sorted", 3000);
+	M.toast({ html: "Sorted", displayLength: 3000 })
 	sortload();
 	parseColumn();
 	sortMenu()

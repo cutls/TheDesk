@@ -87,10 +87,10 @@
 #his-plus-action .btn {
   width: 170px;
 }
-.custom-tabs {
+.tabs {
   display: flex;
 }
-.custom-tabs .custom-tab a {
+.tabs .tab a {
   padding: 8px 12px;
 }
 #his-des .mention {

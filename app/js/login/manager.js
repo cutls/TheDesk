@@ -530,8 +530,7 @@ function getdata(domain, at) {
 	}).then(function (json) {
 		if (json.error) {
 			console.error("Error:" + json.error);
-			Materialize.toast(lang.lang_fatalerroroccured + "Error:" + escapeHTML(json.error),
-				5000);
+			M.toast({ html: lang.lang_fatalerroroccured + "Error:" + json.error, displayLength: 5000 })
 			return;
 		}
 		var avatar = json["avatar"];
@@ -595,8 +594,7 @@ function refresh(target) {
 	}).then(function (json) {
 		if (json.error) {
 			console.error("Error:" + json.error);
-			Materialize.toast(lang.lang_fatalerroroccured + "Error:" + json.error,
-				5000);
+			M.toast({ html: lang.lang_fatalerroroccured + "Error:" + json.error, displayLength: 5000 })
 			return;
 		}
 		var avatar = json["avatar"];
@@ -704,12 +702,12 @@ function multisel() {
 
 		});
 	}
-	$('select').material_select('update');
+	$('select').formSelect();
 }
 function mainacct() {
 	var acct_id = $("#main-acct-sel").val();
 	localStorage.setItem("main", acct_id);
-	Materialize.toast(lang.lang_manager_mainAcct, 3000);
+	M.toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
 }
 function colorpicker(key) {
 	temp =

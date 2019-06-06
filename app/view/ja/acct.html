@@ -99,10 +99,15 @@
                               <input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp">
                               <div id="ins-suggest"></div>
                               チェックを外すとコード貼り付けをスキップできます。(<u>Mastodon</u>にWindowsやmacOSからログインする場合)失敗する場合はチェックを入れてください。<br>
-                              <input type="checkbox" class="filled-in" id="linux" />
-                              <label for="linux">コードセットアップ</label><br>
-                              <input type="checkbox" class="filled-in" id="misskey" />
-                              <label for="misskey">Misskeyとしてログイン</label><br>
+                              <label>
+                                    <input type="checkbox" class="filled-in" id="linux" />
+                                    <span>コードセットアップ</span>
+                              </label>
+                              <br>
+                              <label>
+                                    <input type="checkbox" class="filled-in" id="misskey" />
+                                    <span>Misskeyとしてログイン</span>
+                              </label><br>
                               <button class="btn waves-effect" onclick="instance()">Login</button><br>
                         </div>
                         <div class="col s4">

@@ -63,9 +63,11 @@
 								class="pointer">通知テスト</a><br></template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
-								<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
-									type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
-								<label v-bind:for="item.id+check.value">{{check.text}}</label>
+								<label>
+									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+									<span>{{check.text}}</span>
+								</label>
 							</template>
 						</template>
 						<template v-else>
@@ -104,18 +106,32 @@
 			</div>
 			<div class="collapsible-body">
 				<h4>テーマの選択</h4>
-				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
-				<label for="black">Black</label>
-				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
-				<label for="white">White</label>
-				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo" value="indigo" />
-				<label for="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></label>
-				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
-				<label for="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></label>
-				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
-				<label for="green">Green<span class="imas hide">(ユースフルロマンス)</span></label>
-				<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom" value="custom" />
-				<label for="custom">Custom</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
+					<span>Black</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
+					<span>White</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo"
+						value="indigo" />
+					<span>Indigo<span class="imas hide">(エンドレスナイト)</span></span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
+					<span>Brown<span class="imas hide">(ビタースイート・タイム)</span></span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
+					<span>Green<span class="imas hide">(ユースフルロマンス)</span></span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom"
+						value="custom" />
+					<span>custom</span>
+				</label>
 				<div style="width:300px" id="sel-selector">
 					<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
 				</div>
@@ -131,10 +147,16 @@
 				<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea"
 						placeholder="説明..."></textarea></div>
 				<h5>色の系統</h5>
-				<input class="with-gap" name="direction" type="radio" id="dark" value="dark" checked="true" />
-				<label for="dark">Dark</label>
-				<input class="with-gap" name="direction" type="radio" id="light" value="light" />
-				<label for="light">Light</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="direction" type="radio" id="dark" value="dark"
+						checked="true" />
+					<span>Dark</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="direction" type="radio" id="light"
+						value="light" />
+					<span>Light</span>
+				</label>
 				<div id="pickers">
 					<div>
 						<h5>Primary</h5>補助要素に使われる背景色
@@ -167,12 +189,12 @@
 				</div>
 				<button class="btn-large waves-effect" onclick="customComp()">変更</button>&nbsp;<button
 					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">削除</button><br><br>
-				<input type="text" style="width:300px" id="custom_json" class="materialize-textarea"
+				<input type="text" style="width:300px;height:40px;" id="custom_json" class="materialize-textarea"
 					placeholder="JSON style" readonly><br>
 				このコードは他のTheDeskなどとシェアできます。このコードをMiASに貼ることはご遠慮ください。詳細:<a href="https://thedesk.top/mias.html" target="_blank">テーマ互換性</a>
 				<h4>カスタムテーマのインポート</h4>
 				<a href="https://assets.msky.cafe/" target="_blank">MiAS</a>上の80を超えるテーマを張り付けることもできます。<br>
-				<input type="text" style="width:300px" id="custom_import" class="materialize-textarea"
+				<input type="text" style="width:300px;height:40px;" id="custom_import" class="materialize-textarea"
 					placeholder="JSON/JSON5 style">
 				<button class="btn waves-effect" onclick="customImp()">インポート</button><br>
 		</li>
@@ -189,9 +211,11 @@
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
-								<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
-									type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
-								<label v-bind:for="item.id+check.value">{{check.text}}</label>
+								<label>
+									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+									<span>{{check.text}}</span>
+								</label>
 							</template>
 						</template>
 						<template v-else>
@@ -235,9 +259,10 @@
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
 								<template v-if="!check.kirishima || (check.kirishima && kirishima)">
-									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
-										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
-									<label v-bind:for="item.id+check.value">{{check.text}}</label>
+									<label><input class="with-gap" v-on:click="complete(i,check.value)"
+											v-model="item.setValue" type="radio" v-bind:id="item.id+check.value"
+											v-bind:value="check.value" />
+										<span>{{check.text}}</span></label>
 									<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
 								</template>
 							</template>
@@ -305,20 +330,36 @@
 			<div class="collapsible-body">
 				<h5>NowPlayingのソース(Windows)</h5>
 				macOSやLinuxでは動作しません。AIMPとiTunes以外未検証です。<br>foobar2000, MusicBee,J. River Media Center, Media JukeboxはCADを、Last.fm Client, TTPlayer, OpenPandora, ZuneはWLMを選んでください。<br>ただし、foobar2000は<a href="http://poiru.github.com/foo-cad/">foo_cad plugin</a>が必要です。MusicBeeもCADを有効にする必要があります。<br>
-				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
-				<label for="aimp">AIMP</label>
-				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes" value="ITUNES" />
-				<label for="itunes">iTunes</label>
-				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="npmm" value="MEDIAMONKEY" />
-				<label for="npmm">MediaMonkey</label>
-				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="winamp" value="WINAMP" />
-				<label for="winamp">Winamp</label>
-				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wmp" value="WMP" />
-				<label for="wmp">WMP</label>
-				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
-				<label for="wlm">WLM</label>
-				<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
-				<label for="cad">CAD</label><br><br>
+				<label>
+					<input class="with-gap" onchange="settings()" name="npp" type="radio" id="aimp" value="AIMP" />
+					<span>AIMP</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="npp" type="radio" id="itunes" value="ITUNES" />
+					<span>iTunes</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="npp" type="radio" id="npmm"
+						value="MEDIAMONKEY" />
+					<span>MediaMonkey</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="npp" type="radio" id="winamp" value="WINAMP" />
+					<span>Winamp</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="npp" type="radio" id="wmp" value="WMP" />
+					<span>WMP</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="npp" type="radio" id="wlm" value="WLM" />
+					<span>WLM</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="npp" type="radio" id="cad" value="CAD" />
+					<span>CAD</span>
+				</label>
+				<br><br>
 				<i class="material-icons" style="font-size:24px;">music_note</i>ボタンから簡単にNowPlayingができます。<br>
 				<h5>アカウントの連携</h5>
 				APIの性質上，thedesk.topへアクセスします。<br>
@@ -339,10 +380,15 @@
 				Windows:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名<br>
 				<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
 				<h5>アルバムアートワークを添付する(Spotify/Windows)</h5>
-				<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes" value="yes" />
-				<label for="awk_yes">はい</label>
-				<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no" value="no" />
-				<label for="awk_no">いいえ</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="awk" type="radio" id="awk_yes" value="yes" />
+					<span>はい</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="awk" type="radio" id="awk_no" value="no" />
+					<span>いいえ</span>
+				</label>
+
 				<br>
 			</div>
 		</li>
@@ -439,6 +485,7 @@
 	</span><br>
 	TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
 	タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
+	<script type="text/javascript" src="../../js/common/modal.js"></script>
 	<script type="text/javascript" src="../../js/common/about.js"></script>
 	<script type="text/javascript" src="../../js/platform/end.js"></script>
 	<script type="text/javascript" src="../../js/login/logout.js"></script>

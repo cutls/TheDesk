@@ -161,15 +161,15 @@
 					<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
 						<i class="waves-effect gray material-icons" id="nsfw" title="@@nsfwDes@@"
 							onclick="nsfw()">visibility_off</i>
-						<i class="waves-effect gray material-icons purple-text dropdown-button"
-							data-activates='dropdown1' id="vis-icon">public</i>
+						<i class="waves-effect gray material-icons purple-text dropdown-trigger"
+							data-target="dropdown1" id="vis-icon">public</i>
 						<a class="waves-effect gray" id="cw" onclick="cw()" title="@@cwDes@@">CW</a>
 						<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray"
 									onclick="fileselect()" title="@@selfile@@">photo_library</i></span></span>
 						<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn"
 							title="@@insertEmoji@@">tag_faces</i>
-						<i class="waves-effect gray material-icons dropdown-button"
-							data-activates='dropdown2'>more_vert</i>
+						<i class="waves-effect gray material-icons dropdown-trigger"
+							data-target="dropdown2">more_vert</i>
 						<i class="material-icons nex gray waves-effect" title="@@clearToot@@(Ctrl+Shit+C)"
 							data-trans-title="post_box_clear" id="clear">clear</i>
 					</div>
@@ -190,7 +190,7 @@
 					</div>
 				</div>
 				<!-- 公開範囲 Dropdown Structure -->
-				<ul id='dropdown1' class='dropdown-content'>
+				<ul id="dropdown1" class="dropdown-content">
 					<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">@@selectVis@@
 					</li>
 					<li>
@@ -213,7 +213,7 @@
 					</li>
 				</ul>
 				<!-- その他 Dropdown Structure -->
-				<ul id='dropdown2' class='dropdown-content'>
+				<ul id="dropdown2" class="dropdown-content">
 					<li>
 						<a onclick="adobe()">@@adobephoto@@</a>
 					</li>
@@ -311,10 +311,14 @@
 					<input type="text" class="mastodon-choice" placeholder="@@choice@@2">
 					<input type="text" class="mastodon-choice" placeholder="@@choice@@3">
 					<input type="text" class="mastodon-choice" placeholder="@@choice@@4">
-					<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
-					<label for="poll-multiple">@@pollmulti@@</label><br>
-					<input type="checkbox" class="filled-in" id="poll-until" value="1" />
-					<label for="poll-until">@@polluntil@@</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
+						<span>@@pollmulti@@</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-until" value="1" />
+						<span>@@polluntil@@</span>
+					</label>
 					<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">@@days@@
 					<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">@@hours@@
 					<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="6">@@mins@@
@@ -325,7 +329,7 @@
 	<!-- Modal Structure Tootdata-->
 	<div id="tootmodal" class="modal modal-fixed-footer">
 		<div class="modal-content">
-			<ul class="collapsible" data-collapsible="accordion" id="det-col">
+			<ul class="collapsible"id="det-col">
 				<li class="dm-hide">
 					<div class="collapsible-header">
 						<i class="material-icons">people_outline</i>@@afterLTL@@
@@ -474,46 +478,46 @@
 				</div>
 				<div class="his-float" id="his-float-timeline">
 					<div id="my-data-nav">
-						<ul class="custom-tabs transparent">
-							<li class="custom-tab col my-data-width active-back column-first">
+						<ul class="tabs transparent">
+							<li class="tab col my-data-width active-back column-first">
 								<a go="#his-tl" title="@@timeline@@"><i class="material-icons">timeline</i></a>
 							</li>
-							<li class="custom-tab col my-data-width">
+							<li class="tab col my-data-width">
 								<a go="#his-follow-list" title="@@follow@@"><i class="material-icons">people</i>→</a>
 							</li>
-							<li class="custom-tab col my-data-width">
+							<li class="tab col my-data-width">
 								<a go="#his-follower-list" title="@@follower@@"><i
 										class="material-icons">people</i>←</a>
 							</li>
-							<li class="custom-tab col my-data-width only-his-data">
+							<li class="tab col my-data-width only-his-data">
 								<a go="#his-action" title="@@operateOtherAcct@@"><i
 										class="material-icons">account_box</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-his-data">
+							<li class="tab col my-data-width only-his-data">
 								<a go="#his-list" title="@@list@@"><i class="material-icons">list</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-fav-list" title="@@favRegist@@"><i class="material-icons">star</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-blocking-list" title="@@blocks@@"><i class="material-icons">block</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-blocking-list" title="@@blocks@@"><i
 										class="material-icons">voice_over_off</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-domain-list" title="@@domainBlock@@"><i
 										class="material-icons">language</i><i class="material-icons">block</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-prof-list" title="@@editProf@@"><i class="material-icons">create</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-request-list" title="@@followReq@@"><i
 										class="material-icons">how_to_reg</i></a>
 							</li>
-							<li class="custom-tab col my-data-width only-my-data">
+							<li class="tab col my-data-width only-my-data">
 								<a go="#his-follow-recom-list" title="@@frc@@"><i
 										class="material-icons">recent_actors</i></a>
 							</li>
@@ -877,20 +881,34 @@
 					<input type="hidden" id="filter-edit-id">
 					<input type="text" style="width:150px" id="filter-add-word" placeholder="@@filterWord@@"><br>
 					@@degree@@<br>
-					<input type="checkbox" class="filled-in" id="home_filter" value="home" />
-					<label for="home_filter">@@home@@</label>
-					<input type="checkbox" class="filled-in" id="local_filter" value="public" />
-					<label for="local_filter">@@local@@</label>
-					<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
-					<label for="notf_filter">@@notf@@</label>
-					<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
-					<label for="conv_filter">@@conver@@</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+						<span>@@home@@</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+						<span>@@local@@</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+						<span>@@notf@@</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+						<span>@@conver@@</span>
+					</label>
 					@@option@@<br>
-					<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
-					<label for="wholeword_filter">@@matchWord@@</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+						<span>@@matchWord@@</span>
+					</label>
+					<br>
 					<span class="sml">@@warnMatchWord@@</span><br>
-					<input type="checkbox" class="filled-in" id="except_filter" value="1" />
-					<label for="except_filter">@@except@@</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+						<span>@@except@@</span>
+					</label>
+					<br>
 					<span class="sml">@@exceptWorn@@</span><br>
 					@@avalableBefore@@<span class="sml">@@warnAvBefore@@<b>@@warnAvBefore2@@</b></span><br><br>
 					<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">@@days@@
@@ -1032,7 +1050,7 @@
 			<img src="../../img/kyash.png" width="100"><br>
 		</div>
 		<div id="support-btm-close">
-				<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()"
+			<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()"
 				id="add-filter-btn">@@close@@</button>
 		</div>
 	</div>

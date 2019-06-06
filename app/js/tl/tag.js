@@ -120,10 +120,10 @@ function autoToot(tag) {
     var nowPT = localStorage.getItem("stable")
     if (nowPT == tag) {
         localStorage.removeItem("stable");
-        Materialize.toast(lang.lang_tags_unrealtime, 3000);
+        M.toast({ html: lang.lang_tags_unrealtime, displayLength: 3000 })
     } else {
         localStorage.setItem("stable", tag);
-        Materialize.toast(lang.lang_tags_tagwarn.replace("{{tag}}", tag).replace("{{tag}}", tag), 3000);
+        M.toast({ html: lang.lang_tags_tagwarn.replace("{{tag}}", tag).replace("{{tag}}", tag), displayLength: 3000 })
         brInsert('#' + tag + " ")
     }
     favTag();

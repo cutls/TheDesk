@@ -81,9 +81,8 @@ function udg(user, acct_id) {
 		}
 		//moved設定時
 		if (json.moved) {
-			Materialize.toast(
-				lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' +
-				json.moved.id + '\',\'' + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>', 4000)
+			M.toast({ html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' +
+			json.moved.id + '\',\'' + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>', displayLength: 4000 })
 		}
 		$('#his-data').modal('open');
 		$('#his-data').attr("user-id", user);
@@ -470,9 +469,9 @@ function reset() {
 	$("#his-float-blocked").hide();
 	$("#his-proof-prof").html("")
 }
-$('#my-data-nav .custom-tab').on('click', function () {
+$('#my-data-nav .tab').on('click', function () {
 	var target = $(this).find("a").attr("go");
-	$("#my-data-nav .custom-tab").removeClass("active-back");
+	$("#my-data-nav .tab").removeClass("active-back");
 	$(this).addClass("active-back");
 	$(target).show();
 	$(".tab-content:not(" + target + ")").hide();
