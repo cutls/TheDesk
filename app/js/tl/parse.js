@@ -494,6 +494,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			if (toot.poll.voted) {
 				var myvote = lang.lang_parse_voted;
 				var result_hide = "";
+			} else if (toot.poll.expired) {
+				var myvote = lang.lang_parse_endedvote;
+				var result_hide = "";
 			} else {
 				var myvote = '<a onclick="voteMastodon(\'' + acct_id + '\',\'' + toot.poll.id + '\')" class="votebtn">' + lang.lang_parse_vote + '</a><br>';
 				if (choices[0].votes_count === 0 || choices[0].votes_count > 0) {
@@ -501,11 +504,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				}
 				var result_hide = "hide";
 			}
-			if (toot.poll.expired) {
-				var ended = lang.lang_parse_endedvote;
-			} else {
-				var ended = date(toot.poll.expires_at, datetype);
-			}
+			var ended = date(toot.poll.expires_at, datetype);
 			Object.keys(choices).forEach(function (keyc) {
 				var choice = choices[keyc];
 				if (!toot.poll.voted && !toot.poll.expired) {
