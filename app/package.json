@@ -100,7 +100,8 @@
     "linux": {
       "icon": "build/icons",
       "target": [
-        "zip"
+        "zip",
+        "snap"
       ],
       "category": "Network"
     },
