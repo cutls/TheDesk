@@ -28,37 +28,6 @@ function img(mainWindow, dir) {
             }
         });
     });
-    ipc.on('adobe', (e, arg) => {
-
-        if (!arg) {
-            const options = {
-                type: 'info',
-                title: 'Adobeフォトエディタ',
-                message: "「許可」または「永続的に許可」をクリックするとTheDeskとAdobeで情報を共有します。\n次のウィンドウを開いている時以外は一切提供しません。",
-                buttons: ['拒否', '許可', '永続的に許可']
-            }
-            dialog.showMessageBox(options, function (index) {
-                if (index === 2) {
-                    e.sender.webContents.send('adobeagree', "true");
-                }
-                if (index > 0) {
-                    adobeWindow();
-                }
-            })
-        } else {
-            adobeWindow();
-        }
-    });
-    function adobeWindow() {
-        var window = new BrowserWindow({
-            webPreferences: {
-				nodeIntegration:true
-			},
-            width: 1000,
-            height: 750
-        });
-        window.loadURL(dir + '/adobe.html');
-    }
     ipc.on('bmp-image', (e, args) => {
 
         var m = args[0].match(/(.+)\\(.+)\.(.+)$/);

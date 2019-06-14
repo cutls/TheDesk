@@ -54,7 +54,7 @@ function closedrop() {
 }
 //ファイル選択
 function fileselect() {
-	ipc.send('file-select', "");
+	postMessage(["sendSinmpleIpc", "file-select"], "*")
 }
 
 //ファイル読み込み
@@ -203,14 +203,6 @@ element.addEventListener("paste", function (e) {
 	fr.readAsDataURL(imageFile);
 
 	// 画像以外がペーストされたときのために、元に戻しておく
-});
-//Adobeフォトエディタ
-function adobe() {
-	var agree = localStorage.getItem("adobeagree");
-	ipc.send('adobe', agree);
-}
-ipc.on('adobeagree', function (event, arg) {
-	localStorage.setItem("adobeagree", arg);
 });
 function deleteImage(key) {
 	if (!confirm(lang.lang_postimg_delete)) {
