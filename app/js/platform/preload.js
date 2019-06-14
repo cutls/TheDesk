@@ -1,9 +1,10 @@
 var electron = require("electron");
+const shell = electron.shell;
 var ipc = electron.ipcRenderer;
 onmessage = function (e) {
     if (e.data[0] == "openUrl") {
-        urls = url.match(/https?:\/\/(.+)/);
-        if(urls){
+        urls = e.data[1].match(/https?:\/\/(.+)/);
+        if (urls) {
             shell.openExternal(e.data[1]);
         }
     } else if (e.data[0] == "sendSinmpleIpc") {
@@ -15,10 +16,10 @@ onmessage = function (e) {
 //version.js
 ipc.send("getPlatform", "")
 ipc.on('platform', function (event, arg) {
-    localStorage.setItem("platform",arg)
+    localStorage.setItem("platform", arg)
 })
 ipc.on('winstore', function (event, arg) {
-    localStorage.setItem("winstore",arg)
+    localStorage.setItem("winstore", arg)
 })
 
 ipc.on('reload', function (event, arg) {

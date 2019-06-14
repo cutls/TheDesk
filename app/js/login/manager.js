@@ -310,15 +310,9 @@ function login(url) {
 			localStorage.setItem("client_secret", json["client_secret"]);
 			$("#auth").show();
 			$("#add").hide();
-			const {
-				shell
-			} = require('electron');
-
-			shell.openExternal(auth);
-			var electron = require("electron");
-			var ipc = electron.ipcRenderer;
+			postMessage(["openUrl", auth], "*")
 			if ($('#linux:checked').val() == "on") { } else {
-				ipc.send('quit', 'go');
+				postMessage(["sendSinmpleIpc", "quit"], "*")
 			}
 		}
 	}
@@ -407,16 +401,13 @@ function misskeyAuth(url, mkc) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			const {
-				shell
-			} = require('electron');
 			var token = json.token;
 			$("#auth").show();
 			$("#code").val(token);
 			$("#add").hide();
 			$("#misskey").prop("checked", false);
 			localStorage.setItem("domain_tmp", url);
-			shell.openExternal(json.url);
+			postMessage(["openUrl", json.url], "*")
 		}
 	}
 }
