@@ -79,15 +79,11 @@ function login(url) {
 			localStorage.setItem("client_secret", json["client_secret"]);
 			$("#auth").show();
 			$("#masara").hide();
-			const { shell } = require('electron');
-
-			shell.openExternal(auth);
+			postMessage(["openUrl", auth], "*")
 
 			if ($('#linux:checked').val() == "on") {
 			} else {
-				var electron = require("electron");
-				var ipc = electron.ipcRenderer;
-				ipc.send('quit', 'go');
+				postMessage(["sendSinmpleIpc", "quit"], "*")
 			}
 		}
 	}

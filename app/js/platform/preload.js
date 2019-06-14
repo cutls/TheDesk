@@ -2,7 +2,10 @@ var electron = require("electron");
 var ipc = electron.ipcRenderer;
 onmessage = function (e) {
     if (e.data[0] == "openUrl") {
-        shell.openExternal(e.data[1]);
+        urls = url.match(/https?:\/\/(.+)/);
+        if(urls){
+            shell.openExternal(e.data[1]);
+        }
     } else if (e.data[0] == "sendSinmpleIpc") {
         ipc.send(e.data[1], "")
     } else if (e.data[0] == "dialogStore") {

@@ -115,9 +115,7 @@ function verck(ver) {
 	}).then(function (mess) {
 		console.table(mess);
 		if (mess) {
-			var electron = require("electron");
-			var remote = electron.remote;
-			var platform = remote.process.platform;
+			var platform = localStorage.getItem("platform");
 			if (platform == "darwin") {
 				var newest = mess.desk_mac;
 			} else {
@@ -132,15 +130,13 @@ function verck(ver) {
 				localStorage.removeItem("instance")
 				if (localStorage.getItem("new-ver-skip")) {
 					if (localStorage.getItem("next-ver") != newest) {
-						var ipc = electron.ipcRenderer;
-						ipc.send('update', "true");
+						postMessage(["sendSinmpleIpc", "update"], "*")
 					} else {
 						console.warn(lang.lang_version_skipver);
 						todo(lang.lang_version_skipver);
 					}
 				} else {
-					var ipc = electron.ipcRenderer;
-					ipc.send('update', "true");
+					postMessage(["sendSinmpleIpc", "update"], "*")
 				}
 			}
 		}
@@ -173,28 +169,28 @@ function verck(ver) {
 					} else {
 						var toot = "";
 					}
-					if (obj.Ver != "") {
-						if (obj.Ver == ver) {
+					if (obj.ver != "") {
+						if (obj.ver == ver) {
 							show = true;
 						} else {
 							show = false;
 						}
 					}
-					if (obj.Domain != "") {
+					if (obj.domain != "") {
 						var multi = localStorage.getItem("multi");
 						if (multi) {
 							show = false;
 							var accts = JSON.parse(multi);
 							Object.keys(accts).forEach(function (key) {
 								var acct = accts[key];
-								if (acct.domain == obj.Domain) {
+								if (acct.domain == obj.domain) {
 									show = true;
 								}
 							});
 						}
 					}
 					if (show) {
-						M.toast({ html: escapeHTML(obj.Text) + toot + '<span class="sml grey-text">(スライドして消去)</span>', displayLength: 86400 })
+						M.toast({ html: escapeHTML(obj.text) + toot + '<span class="sml grey-text">(スライドして消去)</span>', displayLength: 86400 })
 					}
 				}
 

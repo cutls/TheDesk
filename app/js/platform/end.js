@@ -47,11 +47,7 @@ $(document).on('click', 'a', e => {
 					udgEx(ats[2] + "@" + ats[1], "main");
 					return false
 				} else {
-					const {
-						shell
-					} = require('electron');
-
-					shell.openExternal(url);
+					postMessage(["openUrl", url], "*")
 				}
 
 
@@ -64,7 +60,6 @@ $(document).on('click', 'a', e => {
 						//alert("If you recieve this alert, let the developer(Cutls@kirishima.cloud) know it with a screenshot.");
 						url = "https://thedesk.top";
 					}
-					//shell.openExternal(url);
 					postMessage(["openUrl", url], "*")
 				} else {
 
