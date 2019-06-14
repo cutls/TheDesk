@@ -271,22 +271,14 @@ function detFromImg() {
 //画像保存
 function dlImg() {
 	var url = $("#imgmodal").attr("src");
-	var electron = require("electron");
-	var ipc = electron.ipcRenderer;
 	if (localStorage.getItem("savefolder")) {
 		var save = localStorage.getItem("savefolder");
 	} else {
 		var save = "";
 	}
-	ipc.send('general-dl', [url, save, false]);
-	ipc.on('general-dl-prog', function (event, arg) {
-		console.log("Progress: " + arg);
-	})
-	ipc.on('general-dl-message', function (event, arg) {
-		var argC = arg.replace(/\\/g, "\\\\") + "\\\\.";
-		M.toast({ html: lang.lang_img_DLDone + arg + '<button class="btn-flat toast-action" onclick="openFinder(\'' + argC + '\')">Show</button>', displayLength: 5000 })
-	})
+	postMessage(["generalDL", [url, save, false]], "*")
+
 }
 function openFinder(dir) {
-	ipc.send('open-finder', dir);
+	postMessage(["openFinder", dir], "*")
 }

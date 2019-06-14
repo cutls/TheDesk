@@ -73,7 +73,7 @@ function system(mainWindow, dir, lang) {
 			e.sender.webContents.send('dialogClientRender', arg);
 		});
 	})
-	
+
 	//ハードウェアアクセラレーションの無効化
 	ipc.on('ha', function (e, arg) {
 
@@ -100,7 +100,7 @@ function system(mainWindow, dir, lang) {
 		var ver = app.getVersion()
 		var window = new BrowserWindow({
 			webPreferences: {
-				nodeIntegration:true
+				nodeIntegration: true
 			},
 			width: 300,
 			height: 480,
@@ -111,12 +111,12 @@ function system(mainWindow, dir, lang) {
 		window.loadURL(dir + '/about.html?ver=' + ver);
 		return "true"
 	}
-	ipc.on('column-del', (e, args) => {
+	ipc.on('column-del', (e, tlid) => {
 
 		console.log(lang);
 		var options = language.delsel(lang)
 		dialog.showMessageBox(options, function (index) {
-			e.sender.webContents.send('column-del-reply', index);
+			e.sender.webContents.send('column-del-reply', [index, tlid]);
 		})
 	});
 	ipc.on('nano', function (e, x, y) {
@@ -131,7 +131,7 @@ function system(mainWindow, dir, lang) {
 		}
 		var nanowindow = new BrowserWindow({
 			webPreferences: {
-				nodeIntegration:true
+				nodeIntegration: true
 			},
 			width: 350,
 			height: 200,
@@ -165,7 +165,7 @@ function system(mainWindow, dir, lang) {
 		}
 	});
 
-	
+
 	ipc.on('export', (e, args) => {
 		fs.writeFileSync(args[0], args[1]);
 	});

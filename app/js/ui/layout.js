@@ -170,10 +170,10 @@ function parseColumn(dontclose) {
 					'<input type="checkbox" class="filled-in" id="exc-follow-' + key + '" ' + excludeCk(key, "follow") + ' /><label for="exc-follow-' + key + '" class="exc-chb" ><i class="fas fa-users exc-icons"></i></label> ' +
 					'<input type="checkbox" class="filled-in" id="exc-poll-' + key + '" ' + excludeCk(key, "poll") + ' /><label for="exc-poll-' + key + '" class="exc-chb" ><i class="fas fa-tasks exc-icons"></i></label> ' +
 					'<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude(' + key + ')">Filter</button>';
-					if(checkNotfFilter(key)){
-						exclude=exclude+'<button class="btn red waves-effect" style="width:60px; padding:0;" onclick="resetNotfFilter(' + key + ')">Clear all</button>'
-					}
-					exclude=exclude+"<br>";
+				if (checkNotfFilter(key)) {
+					exclude = exclude + '<button class="btn red waves-effect" style="width:60px; padding:0;" onclick="resetNotfFilter(' + key + ')">Clear all</button>'
+				}
+				exclude = exclude + "<br>";
 			} else if (acct.type == "home") {
 				var exclude = '<a onclick="ebtToggle(' + key +
 					')" class="setting nex"><i class="fas fa-retweet waves-effect nex" title="' + lang.lang_layout_excludingbt + '" style="font-size:24px"></i><span id="sta-bt-' +
@@ -308,7 +308,7 @@ function secvis(set) {
 //カラム追加
 function addColumn() {
 	var acct = $("#add-acct-sel").val();
-	if(acct != "webview" && acct != "noauth"){
+	if (acct != "webview" && acct != "noauth") {
 		localStorage.setItem("last-use", acct);
 	}
 	var type = $("#type-sel").val();
@@ -367,23 +367,7 @@ function removeColumn(tlid) {
 	var multi = localStorage.getItem("column");
 	var obj = JSON.parse(multi);
 	//聞く
-	var electron = require("electron");
-	var ipc = electron.ipcRenderer;
-	ipc.send('column-del', "");
-	ipc.on('column-del-reply', function (event, arg) {
-		if (arg === 1) {
-			localStorage.removeItem("card_" + tlid);
-			obj.splice(tlid, 1);
-			for (var i = 0; i < obj.length; i++) {
-				localStorage.setItem("card_" + i, "true");
-				localStorage.removeItem("catch_" + i);
-			}
-			var json = JSON.stringify(obj);
-			localStorage.setItem("column", json);
-			parseColumn();
-			sortload()
-		}
-	})
+	postMessage(["columnDel", tlid], "*")
 }
 
 //設定トグル

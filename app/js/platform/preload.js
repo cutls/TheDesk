@@ -19,6 +19,12 @@ onmessage = function (e) {
         ipc.send('native-notf', e.data[1]);
     } else if (e.data[0] == "dialogClient") {
         ipc.send("dialogClient", e.data[1])
+    } else if (e.data[0] == "generalDL") {
+        ipc.send('general-dl', e.data[1]);
+    } else if (e.data[0] == "openFinder") {
+        ipc.send('open-finder', e.data[1]);
+    } else if (e.data[0] == "columnDel") {
+        ipc.send('column-del', e.data[1]);
     }
 }
 //version.js
@@ -134,6 +140,29 @@ ipc.on('dialogClientRender', function (event, arg) {
     }
     parseColumn();
 });
+//ui,img.js
+ipc.on('general-dl-prog', function (event, arg) {
+    console.log("Progress: " + arg);
+})
+ipc.on('general-dl-message', function (event, arg) {
+    var argC = arg.replace(/\\/g, "\\\\") + "\\\\.";
+    M.toast({ html: lang.lang_img_DLDone + arg + '<button class="btn-flat toast-action" onclick="openFinder(\'' + argC + '\')">Show</button>', displayLength: 5000 })
+})
+//layout.js
+ipc.on('column-del-reply', function (event, args) {
+    if (args[0] === 1) {
+        localStorage.removeItem("card_" + args[1]);
+        obj.splice(args[1], 1);
+        for (var i = 0; i < obj.length; i++) {
+            localStorage.setItem("card_" + i, "true");
+            localStorage.removeItem("catch_" + i);
+        }
+        var json = JSON.stringify(obj);
+        localStorage.setItem("column", json);
+        parseColumn();
+        sortload()
+    }
+})
 /*
 var webviewDom = document.getElementById('webview');
 const {
