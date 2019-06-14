@@ -109,7 +109,7 @@ function templete(lang, mainWindow, packaged, dir) {
             {
                 label: dict.reload[lang],
                 accelerator: 'CmdOrCtrl+R',
-                click: function () { mainWindow.webContents.send('reload', " "); }
+                click: function () { mainWindow.reload(); }
             }
         ]
     },
