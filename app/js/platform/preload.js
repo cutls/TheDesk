@@ -8,6 +8,10 @@ onmessage = function (e) {
 
     }
 }
+ipc.send("getPlatform", "")
+ipc.on('platform', function (event, arg) {
+    localStorage.setItem("platform",arg)
+})
 ipc.on('reload', function (event, arg) {
     location.reload();
 })

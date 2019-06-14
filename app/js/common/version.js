@@ -46,11 +46,9 @@ function verck(ver) {
 				});
 		}
 	}
-	var electron = require("electron");
-	var remote = electron.remote;
 	var dialog = remote.dialog;
-	var platform = remote.process.platform;
-	console.log("Your platform:" + remote.process.platform)
+	var platform = localStorage.getItem("platform");
+	console.log("Your platform:" + platform)
 	if (platform == "win32") {
 		const options = {
 			type: 'info',

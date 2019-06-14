@@ -40,6 +40,10 @@ function system(mainWindow, dir, lang) {
 			});
 		}
 	});
+	//プラットフォーム
+	ipc.on('getPlatform', function (e, arg) {
+		mainWindow.webContents.send('platform', process.platform);
+	})
 	//言語
 	ipc.on('lang', function (e, arg) {
 
