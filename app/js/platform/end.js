@@ -60,12 +60,12 @@ $(document).on('click', 'a', e => {
 			//hrefがhttp/httpsならブラウザで
 			if (urls) {
 				if (urls[0]) {
-					const { shell } = require('electron');
 					if (~url.indexOf("thedeks.top")) {
 						//alert("If you recieve this alert, let the developer(Cutls@kirishima.cloud) know it with a screenshot.");
 						url = "https://thedesk.top";
 					}
-					shell.openExternal(url);
+					//shell.openExternal(url);
+					postMessage(["openUrl", url], "*")
 				} else {
 
 					location.href = url;
@@ -88,12 +88,6 @@ function execCopy(string) {
 	var result = document.execCommand('copy');
 	return result;
 }
-//Nano
-function nano() {
-	var electron = require("electron");
-	var ipc = electron.ipcRenderer;
-	ipc.send('nano', "");
-}
 function progshow(e) {
 	if (e.lengthComputable) {
 		var percent = e.loaded / e.total;
@@ -106,30 +100,6 @@ function progshow(e) {
 		}
 	}
 }
-
-var electron = require("electron");
-var ipc = electron.ipcRenderer;
-ipc.on('reload', function (event, arg) {
-	location.reload();
-})
-ipc.on('mess', function (event, arg) {
-	if (arg == "unzip") {
-		if (lang == "ja") {
-			$("body").text("アップデートを展開中です。");
-		} else {
-			$("body").text("Unzipping...");
-		}
-
-	}
-})
-//Native Notf
-ipc.on('shownotf', function (event, args) {
-	if (args["type"] == "toot") {
-		details(id, acct_id)
-	} else if (args["type"] == "userdata") {
-		udg(user, acct_id)
-	}
-})
 function opendev() {
 	var webview = document.getElementById("webview");
 	webview.openDevTools();
@@ -139,14 +109,6 @@ function opendev() {
 	  });
 	  */
 }
-
-var webviewDom = document.getElementById('webview');
-const {
-	shell
-} = require('electron');
-webviewDom.addEventListener('new-window', function (e) {
-	shell.openExternal(e.url);
-});
 function playSound() {
 	window.AudioContext = window.AudioContext || window.webkitAudioContext;
 	context = new AudioContext();
