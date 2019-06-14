@@ -16,7 +16,7 @@ function dl(mainWindow, lang_path, base) {
 		if (platform != "others") {
 			updatewin = new BrowserWindow({
 				webPreferences: {
-					nodeIntegration:true
+					nodeIntegration: true
 				},
 				width: 600,
 				height: 400,
@@ -35,7 +35,26 @@ function dl(mainWindow, lang_path, base) {
 	})
 	//アプデDL
 	ipc.on('download-btn', (e, args) => {
+		function dl(url, file, dir,e) {
 
+			e.sender.webContents.send('mess', "ダウンロードを開始します。");
+			const opts = {
+				directory: dir,
+				openFolderWhenDone: true,
+				onProgress: function (e) {
+					e.sender.webContents.send('prog', e);
+				},
+				saveAs: false
+			};
+			download(updatewin,
+				url, opts)
+				.then(dl => {
+					e.sender.webContents.send('mess', "ダウンロードが完了しました。");
+					app.quit();
+
+				})
+				.catch(console.error);
+		}
 		var platform = process.platform;
 		var bit = process.arch;
 		dialog.showSaveDialog(null, {
@@ -55,7 +74,7 @@ function dl(mainWindow, lang_path, base) {
 			if (isExistFile(savedFiles)) {
 				fs.unlinkSync(savedFiles);
 			}
-			dl(args[0], args[1], m[1]);
+			dl(args[0], args[1], m[1], e);
 		});
 	});
 
@@ -68,26 +87,7 @@ function dl(mainWindow, lang_path, base) {
 		}
 	}
 
-	function dl(url, file, dir) {
 
-		updatewin.webContents.send('mess', "ダウンロードを開始します。");
-		const opts = {
-			directory: dir,
-			openFolderWhenDone: true,
-			onProgress: function (e) {
-				updatewin.webContents.send('prog', e);
-			},
-			saveAs: false
-		};
-		download(updatewin,
-			url, opts)
-			.then(dl => {
-				updatewin.webContents.send('mess', "ダウンロードが完了しました。");
-				app.quit();
-
-			})
-			.catch(console.error);
-	}
 	ipc.on('general-dl', (e, args) => {
 
 		var name = "";
@@ -107,14 +107,14 @@ function dl(mainWindow, lang_path, base) {
 			filename: name,
 			openFolderWhenDone: false,
 			onProgress: function (e) {
-				mainWindow.webContents.send('general-dl-prog', e);
+				e.sender.webContents.send('general-dl-prog', e);
 			},
 			saveAs: false
 		};
 		download(BrowserWindow.getFocusedWindow(),
 			args[0], opts)
 			.then(dl => {
-				mainWindow.webContents.send('general-dl-message', dir);
+				e.sender.webContents.send('general-dl-message', dir);
 			})
 			.catch(console.error);
 	});

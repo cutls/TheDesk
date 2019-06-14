@@ -8,10 +8,15 @@ onmessage = function (e) {
 
     }
 }
+//version.js
 ipc.send("getPlatform", "")
 ipc.on('platform', function (event, arg) {
     localStorage.setItem("platform",arg)
 })
+ipc.on('winstore', function (event, arg) {
+    localStorage.setItem("winstore",arg)
+})
+
 ipc.on('reload', function (event, arg) {
     location.reload();
 })
@@ -36,7 +41,7 @@ ipc.on('shownotf', function (event, args) {
 function nano() {
     ipc.send('nano', "");
 }
-
+/*
 var webviewDom = document.getElementById('webview');
 const {
     shell
@@ -44,3 +49,4 @@ const {
 webviewDom.addEventListener('new-window', function (e) {
     shell.openExternal(e.url);
 });
+*/

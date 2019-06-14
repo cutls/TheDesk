@@ -46,7 +46,6 @@ function verck(ver) {
 				});
 		}
 	}
-	var dialog = remote.dialog;
 	var platform = localStorage.getItem("platform");
 	console.log("Your platform:" + platform)
 	if (platform == "win32") {
@@ -57,14 +56,7 @@ function verck(ver) {
 			buttons: [lang.lang_no, lang.lang_yesno]
 		}
 		if (!localStorage.getItem("winstore")) {
-
-			dialog.showMessageBox(options, function (arg) {
-				if (arg == 1) {
-					localStorage.setItem("winstore", "winstore")
-				} else {
-					localStorage.setItem("winstore", "localinstall")
-				}
-			});
+			postMessage(["dialogStore", options], "*")
 		}
 	} else if (platform == "linux") {
 		if (localStorage.getItem("winstore") == "unix") {
@@ -77,13 +69,9 @@ function verck(ver) {
 				message: lang.lang_version_platform_linux,
 				buttons: [lang.lang_no, lang.lang_yesno]
 			}
-			dialog.showMessageBox(options, function (arg) {
-				if (arg == 1) {
-					localStorage.setItem("winstore", "snapcraft")
-				} else {
-					localStorage.setItem("winstore", "localinstall")
-				}
-			});
+			if (!localStorage.getItem("winstore")) {
+				postMessage(["dialogStore", options], "*")
+			}
 		}
 	} else if (platform == "darwin") {
 		if (localStorage.getItem("winstore") == "unix") {
@@ -96,13 +84,9 @@ function verck(ver) {
 				message: lang.lang_version_platform_mac,
 				buttons: [lang.lang_no, lang.lang_yesno]
 			}
-			dialog.showMessageBox(options, function (arg) {
-				if (arg == 1) {
-					localStorage.setItem("winstore", "brewcask")
-				} else {
-					localStorage.setItem("winstore", "localinstall")
-				}
-			});
+			if (!localStorage.getItem("winstore")) {
+				postMessage(["dialogStore", options], "*")
+			}
 		}
 	} else {
 		localStorage.setItem("winstore", "unix")

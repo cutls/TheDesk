@@ -24,7 +24,7 @@ function img(mainWindow, dir) {
             for (var i = 0; i < fileNames.length; i++) {
                 var path = fileNames[i];
                 var bin = fs.readFileSync(path, 'base64');
-                mainWindow.webContents.send('bmp-img-comp', [bin, 'new']);
+                e.sender.webContents.send('bmp-img-comp', [bin, 'new']);
             }
         });
     });
@@ -39,7 +39,7 @@ function img(mainWindow, dir) {
             }
             dialog.showMessageBox(options, function (index) {
                 if (index === 2) {
-                    mainWindow.webContents.send('adobeagree', "true");
+                    e.sender.webContents.send('adobeagree', "true");
                 }
                 if (index > 0) {
                     adobeWindow();
@@ -65,7 +65,7 @@ function img(mainWindow, dir) {
         Jimp.read(args[0], function (err, lenna) {
             if (err) throw err;
             lenna.getBase64(Jimp.MIME_PNG, function (err, src) {
-                mainWindow.webContents.send('bmp-img-comp', [src, args[1]]);
+                e.sender.webContents.send('bmp-img-comp', [src, args[1]]);
             });
         });
 

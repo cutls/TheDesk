@@ -28,11 +28,11 @@ function np(mainWindow) {
                 try {
                     const nowplaying = require("itunes-nowplaying-mac");
                     const value = await nowplaying.getRawData();
-                    mainWindow.webContents.send('itunes-np', value);
+                    e.sender.webContents.send('itunes-np', value);
                 } catch (error) {
                     // エラーを返す
                     console.error(error);
-                    mainWindow.webContents.send('itunes-np', error);
+                    e.sender.webContents.send('itunes-np', error);
                 }
             } else {
                 var { NowPlaying, PlayerName } = require("nowplaying-node");
@@ -62,7 +62,7 @@ function np(mainWindow) {
                     album: myAIMP.getAlbum(),
                     path: bin
                 }
-                mainWindow.webContents.send('itunes-np', value);
+                e.sender.webContents.send('itunes-np', value);
             }
         }
 

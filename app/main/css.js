@@ -10,7 +10,7 @@ function css(mainWindow) {
 
 	ipc.on('custom-css-create', function (e, arg) {
 		fs.writeFileSync(customcss, arg);
-		mainWindow.webContents.send('custom-css-create-complete', "");
+		e.sender.webContents.send('custom-css-create-complete', "");
 	})
 	ipc.on('custom-css-request', function (e, arg) {
 		try {
@@ -18,29 +18,29 @@ function css(mainWindow) {
 		} catch (e) {
 			var css = "";
 		}
-		mainWindow.webContents.send('custom-css-response', css);
+		e.sender.webContents.send('custom-css-response', css);
 	})
 	ipc.on('theme-json-create', function (e, arg) {
 		var themecss = join(app.getPath("userData"), JSON5.parse(arg)["id"] +
 			".thedesktheme");
 		fs.writeFileSync(themecss, JSON.stringify(JSON5.parse(arg)));
 		if (JSON5.parse(arg)["id"]) {
-			mainWindow.webContents.send('theme-json-create-complete', "");
+			e.sender.webContents.send('theme-json-create-complete', "");
 		} else {
-			mainWindow.webContents.send('theme-json-create-complete', "error");
+			e.sender.webContents.send('theme-json-create-complete', "error");
 		}
 	})
 	ipc.on('theme-json-delete', function (e, arg) {
 		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
 		console.log(themecss);
 		fs.unlink(themecss, function (err) {
-			mainWindow.webContents.send('theme-json-delete-complete', "");
+			e.sender.webContents.send('theme-json-delete-complete', "");
 		});
 	})
 	ipc.on('theme-json-request', function (e, arg) {
 		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
 		var json = JSON.parse(fs.readFileSync(themecss, 'utf8'));
-		mainWindow.webContents.send('theme-json-response', json);
+		e.sender.webContents.send('theme-json-response', json);
 	})
 	ipc.on('theme-css-request', function (e, arg) {
 		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
@@ -76,7 +76,7 @@ function css(mainWindow) {
 				";--active:" + primary + ";--postbox:" + primary + ";--modalfooter:" +
 				primary +
 				";}.blacktheme #imagemodal{background: url(\"../img/pixel.svg\");}";
-			mainWindow.webContents.send('theme-css-response', css);
+			e.sender.webContents.send('theme-css-response', css);
 		} catch (e) {
 			var css = "";
 		}
@@ -98,7 +98,7 @@ function css(mainWindow) {
 					id: json.id
 				})
 			}
-			mainWindow.webContents.send('theme-json-list-response', themes);
+			e.sender.webContents.send('theme-json-list-response', themes);
 		});
 	})
 }

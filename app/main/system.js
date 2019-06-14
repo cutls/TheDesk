@@ -42,15 +42,26 @@ function system(mainWindow, dir, lang) {
 	});
 	//プラットフォーム
 	ipc.on('getPlatform', function (e, arg) {
-		mainWindow.webContents.send('platform', process.platform);
+		e.sender.webContents.send('platform', process.platform);
 	})
 	//言語
 	ipc.on('lang', function (e, arg) {
 
 		console.log("set:" + arg);
 		fs.writeFileSync(lang_path, arg);
-		mainWindow.webContents.send('langres', "");
+		e.sender.webContents.send('langres', "");
 	})
+	//ストアから入れたかダイアログ
+	ipc.on('dialogStore', function (e, args) {
+		dialog.showMessageBox(args, function (arg) {
+			if (arg == 1) {
+				e.sender.webContents.send('winstore', "winstore");
+			} else {
+				e.sender.webContents.send('winstore', "localinstall");
+			}
+		});
+	})
+	
 	//ハードウェアアクセラレーションの無効化
 	ipc.on('ha', function (e, arg) {
 
@@ -93,7 +104,7 @@ function system(mainWindow, dir, lang) {
 		console.log(lang);
 		var options = language.delsel(lang)
 		dialog.showMessageBox(options, function (index) {
-			mainWindow.webContents.send('column-del-reply', index);
+			e.sender.webContents.send('column-del-reply', index);
 		})
 	});
 	ipc.on('nano', function (e, x, y) {
@@ -128,7 +139,13 @@ function system(mainWindow, dir, lang) {
 
 	var cbTimer1;
 	ipc.on('startmem', (e, arg) => {
-		cbTimer1 = setInterval(mems, 1000);
+		cbTimer1 = setInterval(mems(e), 1000);
+		function mems(e) {
+			var mem = os.totalmem() - os.freemem();
+			if (mainWindow) {
+				e.sender.webContents.send('memory', [mem, os.cpus()[0].model, os.totalmem()]);
+			}
+		}
 	});
 	ipc.on('endmem', (e, arg) => {
 		if (cbTimer1) {
@@ -136,17 +153,12 @@ function system(mainWindow, dir, lang) {
 		}
 	});
 
-	function mems() {
-		var mem = os.totalmem() - os.freemem();
-		if (mainWindow) {
-			mainWindow.webContents.send('memory', [mem, os.cpus()[0].model, os.totalmem()]);
-		}
-	}
+	
 	ipc.on('export', (e, args) => {
 		fs.writeFileSync(args[0], args[1]);
 	});
 	ipc.on('import', (e, arg) => {
-		mainWindow.webContents.send('config', fs.readFileSync(arg, 'utf8'));
+		e.sender.webContents.send('config', fs.readFileSync(arg, 'utf8'));
 	});
 	//フォント
 	function object_array_sort(data, key, order, fn) {
@@ -184,7 +196,7 @@ function system(mainWindow, dir, lang) {
 		const fm = require('font-manager');
 		var fonts = fm.getAvailableFontsSync();
 		object_array_sort(fonts, 'family', 'asc', function (fonts_sorted) {
-			mainWindow.webContents.send('font-list', fonts_sorted);
+			e.sender.webContents.send('font-list', fonts_sorted);
 		});
 	});
 }
