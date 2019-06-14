@@ -13,6 +13,8 @@ onmessage = function (e) {
         ipc.send("dialogStore", e.data[1])
     } else if (e.data[0] == "bmpImage") {
         ipc.send('bmp-image', e.data[1]);
+    } else if (e.data[0] == "dialogCW") {
+        ipc.send("dialogCW", e.data[1])
     }
 }
 //version.js
@@ -50,26 +52,38 @@ function nano() {
 }
 //first.js
 ipc.on('custom-css-response', function (event, arg) {
-	if (arg == "") { return false; }
-	var styleNode = document.createElement("style");
-	styleNode.setAttribute("type", "text/css")
+    if (arg == "") { return false; }
+    var styleNode = document.createElement("style");
+    styleNode.setAttribute("type", "text/css")
 
-	var content = document.createTextNode(arg)
-	styleNode.append(content)
-	document.getElementsByTagName("head")[0].append(styleNode)
+    var content = document.createTextNode(arg)
+    styleNode.append(content)
+    document.getElementsByTagName("head")[0].append(styleNode)
 })
 ipc.on('theme-css-response', function (event, arg) {
-	if (arg == "") { return false; }
-	var styleNode = document.createElement("style");
-	styleNode.setAttribute("type", "text/css")
+    if (arg == "") { return false; }
+    var styleNode = document.createElement("style");
+    styleNode.setAttribute("type", "text/css")
 
-	var content = document.createTextNode(arg)
-	styleNode.append(content)
-	document.getElementsByTagName("head")[0].append(styleNode)
+    var content = document.createTextNode(arg)
+    styleNode.append(content)
+    document.getElementsByTagName("head")[0].append(styleNode)
 })
 //img.js
 ipc.on('bmp-img-comp', function (event, b64) {
-	media(b64[0], "image/png", b64[1]);
+    media(b64[0], "image/png", b64[1]);
+});
+//post.js
+ipc.on('dialogCWRender', function (event, arg) {
+    if (arg === 1) {
+        $("#cw-text").show();
+        $("#cw").addClass("yellow-text");
+        $("#cw").addClass("cw-avail");
+        $("#cw-text").val(plus);
+        post("pass");
+    } else if (arg === 2) {
+        post("pass");
+    }
 });
 /*
 var webviewDom = document.getElementById('webview');

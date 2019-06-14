@@ -61,6 +61,12 @@ function system(mainWindow, dir, lang) {
 			}
 		});
 	})
+	//CWのダイアログ
+	ipc.on('dialogCW', function (e, args) {
+		dialog.showMessageBox(args, function (arg) {
+			e.sender.webContents.send('dialogCWRender', arg);
+		});
+	})
 	
 	//ハードウェアアクセラレーションの無効化
 	ipc.on('ha', function (e, arg) {

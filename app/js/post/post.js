@@ -47,9 +47,6 @@ function post(mode, postvis) {
 	}
 	if (domain != "kirishima.cloud") {
 		if (mode != "pass" && !$("#cw").hasClass("cw-avail") && (str.length > cw_sent || (str.split("\n").length - 1) > cw_ltres)) {
-			var electron = require("electron");
-			var remote = electron.remote;
-			var dialog = remote.dialog;
 			var plus = str.replace(/\n/g, "").slice(0, 10) + "...";
 			const options = {
 				type: 'info',
@@ -57,17 +54,7 @@ function post(mode, postvis) {
 				message: lang.lang_post_cwtxt + plus,
 				buttons: [lang.lang_post_btn1, lang.lang_post_btn2, lang.lang_post_btn3]
 			}
-			dialog.showMessageBox(options, function (arg) {
-				if (arg === 1) {
-					$("#cw-text").show();
-					$("#cw").addClass("yellow-text");
-					$("#cw").addClass("cw-avail");
-					$("#cw-text").val(plus);
-					post("pass");
-				} else if (arg === 2) {
-					post("pass");
-				}
-			})
+			postMessage(["dialogCW", options], "*")
 			return false;
 		}
 	}
