@@ -5,7 +5,8 @@ onmessage = function (e) {
         shell.openExternal(e.data[1]);
     } else if (e.data[0] == "sendSinmpleIpc") {
         ipc.send(e.data[1], "")
-
+    } else if (e.data[0] == "dialogStore") {
+        ipc.send("dialogStore", e.data[1])
     }
 }
 //version.js
