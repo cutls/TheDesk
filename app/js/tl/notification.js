@@ -58,9 +58,7 @@ function notfColumn(acct_id, tlid, sys) {
 						if (key > 14) {
 							ct = "15+";
 						}
-						var electron = require("electron");
-						var ipc = electron.ipcRenderer;
-						var os = electron.remote.process.platform;
+						var os = localStorage.getItem("platform");
 						var options = {
 							body: ct + lang.lang_notf_new,
 							icon: localStorage.getItem("prof_" + acct_id)
@@ -68,7 +66,8 @@ function notfColumn(acct_id, tlid, sys) {
 						if (os == "darwin") {
 							var n = new Notification('TheDesk:' + domain, options);
 						} else {
-							ipc.send('native-notf', ['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]);
+							var nativeNotfOpt=['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]
+							postMessage(["nativeNotf", nativeNotfOpt], "*")
 						}
 
 					}
@@ -164,9 +163,7 @@ function notfCommon(acct_id, tlid, sys) {
 					if (key > 14) {
 						ct = "15+";
 					}
-					var electron = require("electron");
-					var ipc = electron.ipcRenderer;
-					var os = electron.remote.process.platform;
+					var os = localStorage.getItem("platform");
 					var options = {
 						body: ct + lang.lang_notf_new,
 						icon: localStorage.getItem("prof_" + acct_id)
@@ -174,7 +171,8 @@ function notfCommon(acct_id, tlid, sys) {
 					if (os == "darwin") {
 						var n = new Notification('TheDesk:' + domain, options);
 					} else {
-						ipc.send('native-notf', ['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]);
+						var nativeNotfOpt=['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]
+						postMessage(["nativeNotf", nativeNotfOpt], "*")
 					}
 
 				}

@@ -67,6 +67,12 @@ function system(mainWindow, dir, lang) {
 			e.sender.webContents.send('dialogCWRender', arg);
 		});
 	})
+	//クライアントのダイアログ
+	ipc.on('dialogClient', function (e, args) {
+		dialog.showMessageBox(args, function (arg) {
+			e.sender.webContents.send('dialogClientRender', arg);
+		});
+	})
 	
 	//ハードウェアアクセラレーションの無効化
 	ipc.on('ha', function (e, arg) {

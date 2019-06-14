@@ -17,6 +17,8 @@ onmessage = function (e) {
         ipc.send("dialogCW", e.data[1])
     } else if (e.data[0] == "nativeNotf") {
         ipc.send('native-notf', e.data[1]);
+    } else if (e.data[0] == "dialogClient") {
+        ipc.send("dialogClient", e.data[1])
     }
 }
 //version.js
@@ -86,6 +88,51 @@ ipc.on('dialogCWRender', function (event, arg) {
     } else if (arg === 2) {
         post("pass");
     }
+});
+//parse.js
+ipc.on('dialogClientRender', function (event, arg) {
+    if (arg === 1) {
+        var cli = localStorage.getItem("client_emp");
+        var obj = JSON.parse(cli);
+        if (!obj) {
+            var obj = [];
+            obj.push(name);
+            M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
+        } else {
+            var can;
+            Object.keys(obj).forEach(function (key) {
+                var cliT = obj[key];
+                if (cliT != name && !can) {
+                    can = false;
+                } else {
+                    can = true;
+                    obj.splice(key, 1);
+                    M.toast({ html: escapeHTML(name) + lang.lang_status_unemphas, displayLength: 2000 })
+                }
+            });
+            if (!can) {
+                obj.push(name);
+                M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
+            } else {
+
+            }
+        }
+        var json = JSON.stringify(obj);
+        localStorage.setItem("client_emp", json);
+    } else if (arg === 2) {
+        var cli = localStorage.getItem("client_mute");
+        var obj = JSON.parse(cli);
+        if (!obj) {
+            obj = [];
+        }
+        obj.push(name);
+        var json = JSON.stringify(obj);
+        localStorage.setItem("client_mute", json);
+        M.toast({ html: escapeHTML(name) + lang.lang_parse_mute, displayLength: 2000 })
+    } else {
+        return;
+    }
+    parseColumn();
 });
 /*
 var webviewDom = document.getElementById('webview');
