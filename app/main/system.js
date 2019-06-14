@@ -73,6 +73,56 @@ function system(mainWindow, dir, lang) {
 			e.sender.webContents.send('dialogClientRender', arg);
 		});
 	})
+	//エクスポートのダイアログ
+	ipc.on('exportSettings', function (e, args) {
+		dialog.showSaveDialog(null, {
+			title: 'Export',
+			properties: ['openFile', 'createDirectory'],
+			defaultPath: "export.thedeskconfigv2"
+		}, (savedFiles) => {
+			if (!savedFiles) {
+				return false;
+			}
+			e.sender.webContents.send('exportSettingsFile', savedFiles);
+		})
+	})
+	//インポートのダイアログ
+	ipc.on('importSettings', function (e, args) {
+		dialog.showOpenDialog(null, {
+			title: 'Import',
+			properties: ['openFile'],
+			filters: [
+				{ name: 'TheDesk Config', extensions: ['thedeskconfig', 'thedeskconfigv2'] },
+			]
+		}, (fileNames) => {
+			if (!fileNames) {
+				return false;
+			}
+			e.sender.webContents.send('config', fs.readFileSync(arg, 'utf8'));
+		})
+	})
+	//保存フォルダのダイアログ
+	ipc.on('savefolder', function (e, args) {
+		dialog.showOpenDialog(null, {
+			title: 'Save folder',
+			properties: ['openDirectory'],
+		}, (fileNames) => {
+			e.sender.webContents.send('savefolder', fileNames[0]);
+		});
+	})
+	//カスタムサウンドのダイアログ
+	ipc.on('customSound', function (e, arg) {
+		dialog.showOpenDialog(null, {
+			title: 'Custom sound',
+			properties: ['openFile'],
+			filters: [
+				{ name: 'Audio', extensions: ['mp3', 'aac', 'wav', 'flac', 'm4a'] },
+				{ name: 'All', extensions: ['*'] },
+			]
+		}, (fileNames) => {
+			e.sender.webContents.send('customSoundRender', [key, fileNames[0]]);
+		});
+	})
 
 	//ハードウェアアクセラレーションの無効化
 	ipc.on('ha', function (e, arg) {
@@ -168,9 +218,6 @@ function system(mainWindow, dir, lang) {
 
 	ipc.on('export', (e, args) => {
 		fs.writeFileSync(args[0], args[1]);
-	});
-	ipc.on('import', (e, arg) => {
-		e.sender.webContents.send('config', fs.readFileSync(arg, 'utf8'));
 	});
 	//フォント
 	function object_array_sort(data, key, order, fn) {

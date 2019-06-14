@@ -25,6 +25,22 @@ onmessage = function (e) {
         ipc.send('open-finder', e.data[1]);
     } else if (e.data[0] == "columnDel") {
         ipc.send('column-del', e.data[1]);
+    } else if (e.data[0] == "lang") {
+        ipc.send('lang', e.data[1]);
+    } else if (e.data[0] == "exportSettings") {
+        ipc.send('exportSettings', e.data[1]);
+    } else if (e.data[0] == "importSettings") {
+        ipc.send('importSettings', e.data[1]);
+    } else if (e.data[0] == "customSound") {
+        ipc.send('customSound', e.data[1]);
+    } else if (e.data[0] == "themeJsonDelete") {
+        ipc.send('theme-json-delete', e.data[1]);
+    } else if (e.data[0] == "themeJsonCreate") {
+        ipc.send('theme-json-create', e.data[1]);
+    } else if (e.data[0] == "themeJsonRequest") {
+        ipc.send('theme-json-request', id);
+    } else if (e.data[0] == "ha") {
+        ipc.send('ha', had);
     }
 }
 //version.js
@@ -163,6 +179,42 @@ ipc.on('column-del-reply', function (event, args) {
         sortload()
     }
 })
+//setting.js
+ipc.on('langres', function (event, arg) {
+    location.href = "../" + lang + "/setting.html"
+});
+ipc.on('exportSettingsFile', function (event, savedFiles) {
+    var exp = exportSettingsCore()
+    ipc.send('export', [savedFiles, JSON.stringify(exp)]);
+    alert("Done.")
+    //cards
+    //lang
+});
+ipc.on('config', function (event, arg) {
+    importSettingsCore(arg)
+});
+ipc.on('savefolder', function (event, arg) {
+    localStorage.setItem("savefolder", arg);
+});
+ipc.on('font-list', function (event, arg) {
+    fontList(arg)
+});
+ipc.on('customSoundRender', function (event, args) {
+    customSoundSave(args[0], args[1])
+});
+ipc.on('theme-json-list-response', function (event, args) {
+    ctLoadCore(args)
+});
+ipc.on('theme-json-delete-complete', function (event, args) {
+    ctLoad()
+});
+ipc.on('theme-json-response', function (event, args) {
+    customConnect(args)
+});
+ipc.on('theme-json-create-complete', function (event, args) {
+    clearCustomImport()
+	ctLoad()
+});
 /*
 var webviewDom = document.getElementById('webview');
 const {

@@ -51,6 +51,5 @@ $(function () {
   });
 });
 function help() {
-  const { shell } = require('electron');
-  shell.openExternal("https://docs.thedesk.top");
+  postMessage(["openUrl", "https://docs.thedesk.top"], "*")
 }
