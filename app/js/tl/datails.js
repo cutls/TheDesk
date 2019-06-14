@@ -519,11 +519,7 @@ function trans(tar, to) {
 //ブラウザで開く
 function brws() {
 	var url = $("#tootmodal").attr("data-url");
-	const {
-		shell
-	} = require('electron');
-
-	shell.openExternal(url);
+	postMessage(["openUrl", url], "*")
 }
 //外部からトゥート開く
 function detEx(url, acct_id) {
@@ -546,11 +542,7 @@ function detEx(url, acct_id) {
 		console.error(error);
 	}).then(function (json) {
 		if (!json.statuses) {
-			const {
-				shell
-			} = require('electron');
-
-			shell.openExternal(url);
+			postMessage(["openUrl", url], "*")
 		} else {
 			var id = json.statuses[0].id;
 			$(".loadp").text($(".loadp").attr("href"));

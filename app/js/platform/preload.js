@@ -15,6 +15,8 @@ onmessage = function (e) {
         ipc.send('bmp-image', e.data[1]);
     } else if (e.data[0] == "dialogCW") {
         ipc.send("dialogCW", e.data[1])
+    } else if (e.data[0] == "nativeNotf") {
+        ipc.send('native-notf', e.data[1]);
     }
 }
 //version.js

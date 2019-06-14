@@ -257,9 +257,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					M.toast({ html: "[" + domain + "]" + escapeHTMLtemp(toot.user.name) + what, displayLength: popup * 1000 })
 				}
 				if (native == "yes") {
-					var electron = require("electron");
-					var ipc = electron.ipcRenderer;
-					var os = electron.remote.process.platform;
+					var os = localStorage.getItem("platform");
 					var options = {
 						body: toot.user.name + "(" + toot.user.username + ")" + what + "\n\n" + $.strip_tagstemp(toot.note.text),
 						icon: toot.user.avatarUrl
@@ -267,14 +265,15 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					if (os == "darwin") {
 						var n = new Notification('TheDesk:' + domain, options);
 					} else {
-						ipc.send('native-notf', [
+						var nativeNotfOpt=[
 							'TheDesk:' + domain,
 							toot.user.name + "(" + toot.user.username + ")" + what + "\n\n" + $.strip_tagstemp(toot.note.text),
 							toot.user.avatarUrl,
 							"toot",
 							acct_id,
 							toot.note.id
-						]);
+						]
+						postMessage(["nativeNotf", nativeNotfOpt], "*")
 					}
 				}
 				if (localStorage.getItem("hasNotfC_" + acct_id) != "true") {
@@ -902,9 +901,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 				native = "yes";
 			}
 			if (native == "yes") {
-				var electron = require("electron");
-				var ipc = electron.ipcRenderer;
-				var os = electron.remote.process.platform;
+				var os = localStorage.getItem("platform");
 				var options = {
 					body: toot.display_name + "(" + toot.acct + ")" + ftxt,
 					icon: toot.avatar
@@ -913,14 +910,15 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 				if (os == "darwin") {
 					var n = new Notification('TheDesk:' + domain, options);
 				} else {
-					ipc.send('native-notf', [
+					var nativeNotfOpt=[
 						'TheDesk:' + domain,
 						toot.display_name + "(" + toot.acct + ")" + ftxt,
 						toot.avatar,
 						"userdata",
 						acct_id,
 						toot.id
-					]);
+					]
+					postMessage(["nativeNotf", nativeNotfOpt], "*")
 				}
 			}
 		}
@@ -967,11 +965,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 function goGoogle(id) {
 	var val = $("#srcbox_" + id).val();
 	var url = "https://google.com/search?q=" + val;
-	const {
-		shell
-	} = require('electron');
-
-	shell.openExternal(url);
+	postMessage(["openUrl", url], "*")
 }
 var misskeyws = []
 var misskeywsstate = []
