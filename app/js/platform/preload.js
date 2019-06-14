@@ -11,6 +11,8 @@ onmessage = function (e) {
         ipc.send(e.data[1], "")
     } else if (e.data[0] == "dialogStore") {
         ipc.send("dialogStore", e.data[1])
+    } else if (e.data[0] == "bmpImage") {
+        ipc.send('bmp-image', e.data[1]);
     }
 }
 //version.js
@@ -46,6 +48,29 @@ ipc.on('shownotf', function (event, args) {
 function nano() {
     ipc.send('nano', "");
 }
+//first.js
+ipc.on('custom-css-response', function (event, arg) {
+	if (arg == "") { return false; }
+	var styleNode = document.createElement("style");
+	styleNode.setAttribute("type", "text/css")
+
+	var content = document.createTextNode(arg)
+	styleNode.append(content)
+	document.getElementsByTagName("head")[0].append(styleNode)
+})
+ipc.on('theme-css-response', function (event, arg) {
+	if (arg == "") { return false; }
+	var styleNode = document.createElement("style");
+	styleNode.setAttribute("type", "text/css")
+
+	var content = document.createTextNode(arg)
+	styleNode.append(content)
+	document.getElementsByTagName("head")[0].append(styleNode)
+})
+//img.js
+ipc.on('bmp-img-comp', function (event, b64) {
+	media(b64[0], "image/png", b64[1]);
+});
 /*
 var webviewDom = document.getElementById('webview');
 const {

@@ -89,27 +89,7 @@ function formattimeutc(date) {
 	}
 	return escapeHTML(str);
 }
-var electron = require("electron");
-var ipc = electron.ipcRenderer;
-ipc.send('custom-css-request', "");
-ipc.on('custom-css-response', function (event, arg) {
-	if (arg == "") { return false; }
-	var styleNode = document.createElement("style");
-	styleNode.setAttribute("type", "text/css")
-
-	var content = document.createTextNode(arg)
-	styleNode.append(content)
-	document.getElementsByTagName("head")[0].append(styleNode)
-})
-ipc.on('theme-css-response', function (event, arg) {
-	if (arg == "") { return false; }
-	var styleNode = document.createElement("style");
-	styleNode.setAttribute("type", "text/css")
-
-	var content = document.createTextNode(arg)
-	styleNode.append(content)
-	document.getElementsByTagName("head")[0].append(styleNode)
-})
+postMessage(["sendSinmpleIpc", "custom-css-request"], "*")
 function makeCID() {
 	return randomStr(8) + "-" + randomStr(4) + "-" + randomStr(4) + "-" + randomStr(4) + "-" + randomStr(12);
 }

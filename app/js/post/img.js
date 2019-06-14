@@ -40,9 +40,7 @@ function pimg(files) {
 	for (i = 0; i < files.length; i++) {
 		var dot = files[i].path.match(/\.(.+)$/)[1];
 		if (dot == "bmp" || dot == "BMP") {
-			var electron = require("electron");
-			var ipc = electron.ipcRenderer;
-			ipc.send('bmp-image', [files[i].path, i]);
+			postMessage(["bmpImage", [files[i].path, i]], "*")
 			todo(lang.lang_progress);
 
 		} else {
@@ -50,11 +48,6 @@ function pimg(files) {
 		}
 	}
 }
-var electron = require("electron");
-var ipc = electron.ipcRenderer;
-ipc.on('bmp-img-comp', function (event, b64) {
-	media(b64[0], "image/png", b64[1]);
-});
 //ドラッグ・アンド・ドロップを終了
 function closedrop() {
 	$("#drag").css('display', 'none');
