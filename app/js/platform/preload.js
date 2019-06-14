@@ -3,6 +3,9 @@ var ipc = electron.ipcRenderer;
 onmessage = function (e) {
     if (e.data[0] == "openUrl") {
         shell.openExternal(e.data[1]);
+    } else if (e.data[0] == "sendSinmpleIpc") {
+        ipc.send(e.data[1], "")
+
     }
 }
 ipc.on('reload', function (event, arg) {

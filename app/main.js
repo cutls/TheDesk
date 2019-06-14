@@ -99,12 +99,11 @@ function createWindow() {
 				webviewTag: false,
 				nodeIntegration: false,
 				contextIsolation: true,
-				preload: dir + "/js/platform/preload.js"
+				preload: join(__dirname,"js", "platform", "preload.js")
 			},
 			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, icon: __dirname + '/desk.png'
 		}
 	} else if (platform == "win32") {
-		console.log(join(__dirname,"js", "platform", "preload.js"))
 		var arg = {
 			webPreferences: {
 				webviewTag: false,
@@ -120,7 +119,7 @@ function createWindow() {
 				webviewTag: false,
 				nodeIntegration: false,
 				contextIsolation: true,
-				preload: dir + "/js/platform/preload.js"
+				preload: join(__dirname,"js", "platform", "preload.js")
 			},
 			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true
 		}
