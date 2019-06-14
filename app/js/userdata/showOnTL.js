@@ -40,9 +40,7 @@ function udgEx(user, acct_id) {
 			var id = json.accounts[0].id;
 			udg(id, acct_id);
 		} else {
-			var url = "https://" + user.split('@')[1] + "/@" + user.split('@')[0];
-			const { shell } = require('electron');
-			shell.openExternal(url);
+			postMessage(["openUrl", url], "*")
 		}
 	});
 	return true;

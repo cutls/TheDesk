@@ -20,9 +20,7 @@ function bottomReverse() {
 	}
 }
 function tips(mode) {
-	var electron = require("electron");
-	var ipc = electron.ipcRenderer;
-	ipc.send('endmem', "");
+	postMessage(["sendSinmpleIpc", "endmem"], "*")
 	clearInterval(clockint);
 	clearInterval(spotStart);
 	if (mode == "ver") {
@@ -50,15 +48,10 @@ function tips(mode) {
 }
 //メモリ
 function startmem() {
-	var electron = require("electron");
-	var ipc = electron.ipcRenderer;
-	ipc.send('startmem', "");
-	ipc.on('memory', function (event, arg) {
-		var use = arg[0];
-		var cpu = arg[1];
-		var total = arg[2]
-		$("#tips-text").html(escapeHTML(cpu) + "<br>Memory:" + Math.floor(use / 1024 / 1024 / 102.4) / 10 + "/" + Math.floor(total / 1024 / 1024 / 102.4) / 10 + "GB(" + Math.floor(use / total * 100) + "%)")
-	})
+	postMessage(["sendSinmpleIpc", "startmem"], "*")
+}
+function renderMem(use, cpu, total){
+	$("#tips-text").html(escapeHTML(cpu) + "<br>Memory:" + Math.floor(use / 1024 / 1024 / 102.4) / 10 + "/" + Math.floor(total / 1024 / 1024 / 102.4) / 10 + "GB(" + Math.floor(use / total * 100) + "%)")
 }
 //トレンドタグ
 function trendTagonTip() {

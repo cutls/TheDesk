@@ -38,9 +38,15 @@ onmessage = function (e) {
     } else if (e.data[0] == "themeJsonCreate") {
         ipc.send('theme-json-create', e.data[1]);
     } else if (e.data[0] == "themeJsonRequest") {
-        ipc.send('theme-json-request', id);
+        ipc.send('theme-json-request', e.data[1]);
     } else if (e.data[0] == "ha") {
         ipc.send('ha', had);
+    } else if (e.data[0] == "itunes") {
+        if (ipc.listenerCount('itunes-np') > 0) {
+            return false;
+        }else{
+            ipc.send("itunes", e.data[1])
+        }
     }
 }
 //version.js
@@ -215,6 +221,17 @@ ipc.on('theme-json-create-complete', function (event, args) {
     clearCustomImport()
 	ctLoad()
 });
+//spotify.js
+ipc.once('itunes-np', function (event, arg) {
+    npCore(arg)
+})
+//tips.js
+ipc.on('memory', function (event, arg) {
+    var use = arg[0];
+    var cpu = arg[1];
+    var total = arg[2]
+    renderMem(use, cpu, total)
+})
 /*
 var webviewDom = document.getElementById('webview');
 const {
