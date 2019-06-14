@@ -135,9 +135,6 @@
                 $("#skipper").toggleClass("show");
             }
         }
-        var electron = require("electron");
-        var ipc = electron.ipcRenderer;
-        //var shell = electron.shell;
         verck();
         function update(sel) {
             $("#box").toggleClass("show");
@@ -186,22 +183,22 @@
                     shell.openExternal(url);
                     return false;
                 }
-                ipc.send('download-btn', [url, file]);
+                postMessage(["downloadButton", [url, file]], "*")
             });
 
         }
         function quit() {
-            ipc.send('quit', 'go');
+            postMessage(["sendSinmpleIpc", "quit"], "*")
         }
-        ipc.on('prog', function (event, arg) {
+        function updateProg(arg) {
             console.log(arg);
-            $(".determinate").css("width",arg*100+"%");
+            $(".determinate").css("width", arg * 100 + "%");
             $("#prog").text(Math.floor(arg * 100) + "%");
-        })
-        ipc.on('mess', function (event, arg) {
+        }
+        function updateMess(arg) {
             console.log(arg);
             $("#prog").text(arg);
-        })
+        }
         function verck() {
             var remote = electron.remote;
             var platform = remote.process.platform;

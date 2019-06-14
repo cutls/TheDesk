@@ -44,9 +44,13 @@ onmessage = function (e) {
     } else if (e.data[0] == "itunes") {
         if (ipc.listenerCount('itunes-np') > 0) {
             return false;
-        }else{
+        } else {
             ipc.send("itunes", e.data[1])
         }
+    } else if (e.data[0] == "themeCSSRequest") {
+        ipc.send('theme-css-request', e.data[1]);
+    } else if (e.data[0] == "downloadButton") {
+        ipc.send('download-btn', e.data[1]);
     }
 }
 //version.js
@@ -219,7 +223,7 @@ ipc.on('theme-json-response', function (event, args) {
 });
 ipc.on('theme-json-create-complete', function (event, args) {
     clearCustomImport()
-	ctLoad()
+    ctLoad()
 });
 //spotify.js
 ipc.once('itunes-np', function (event, arg) {
@@ -231,6 +235,13 @@ ipc.on('memory', function (event, arg) {
     var cpu = arg[1];
     var total = arg[2]
     renderMem(use, cpu, total)
+})
+//update.html
+ipc.on('prog', function (event, arg) {
+    updateProg(arg)
+})
+ipc.on('mess', function (event, arg) {
+    updateMess(arg)
 })
 /*
 var webviewDom = document.getElementById('webview');

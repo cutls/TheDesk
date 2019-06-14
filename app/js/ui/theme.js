@@ -21,7 +21,7 @@ function themes(theme) {
 	}
 	if (theme == "custom") {
 		if (localStorage.getItem("customtheme-id")) {
-			ipc.send('theme-css-request', localStorage.getItem("customtheme-id"));
+			postMessage(["themeCSSRequest", localStorage.getItem("customtheme-id")], "*")
 		}
 	}
 }
