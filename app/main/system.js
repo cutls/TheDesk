@@ -144,9 +144,10 @@ function system(mainWindow, dir, lang) {
 
 		about();
 	});
-
+	ipc.on('aboutData', (e, args) => {
+		e.sender.webContents.send('aboutDataRender', process);
+	});
 	function about() {
-
 		var ver = app.getVersion()
 		var window = new BrowserWindow({
 			webPreferences: {

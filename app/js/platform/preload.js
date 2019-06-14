@@ -243,12 +243,13 @@ ipc.on('prog', function (event, arg) {
 ipc.on('mess', function (event, arg) {
     updateMess(arg)
 })
-/*
+//about.html
+ipc.on('aboutData', function (event, arg) {
+    renderAbout(arg)
+})
 var webviewDom = document.getElementById('webview');
-const {
-    shell
-} = require('electron');
-webviewDom.addEventListener('new-window', function (e) {
-    shell.openExternal(e.url);
-});
-*/
+if(webviewDom){
+    webviewDom.addEventListener('new-window', function (e) {
+        shell.openExternal(e.url);
+    });
+}

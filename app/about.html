@@ -104,13 +104,13 @@
             class="material-icons left">close</i>Close</button>
     <script type="text/javascript" src="./js/ui/theme.js"></script>
     <script>
-        $("#now").text(localStorage.getItem("ver"));
-        var electron = require("electron");
-        var remote = electron.remote;
-        const shell = electron.shell;
-        $("#node").text(remote.process.version);
-        $("#chrome").text(remote.process.versions.chrome);
-        $("#electron").text(remote.process.versions.electron);
+        postMessage(["sendSinmpleIpc", "aboutData"], "*")
+        function renderAbout(args) {
+            $("#now").text(localStorage.getItem("ver"));
+            $("#node").text(args.version);
+            $("#chrome").text(args.versions.chrome);
+            $("#electron").text(args.versions.electron);
+        }
         if (location.search) {
             var m = location.search.match(/\?ver=([a-zA-Z-0-9.]+)/);
             var ver = m[1];
@@ -118,7 +118,7 @@
         }
         $(document).on('click', 'a', e => {
             var url = $(e.target).attr('href');
-            shell.openExternal(url);
+            postMessage(["openUrl", url], "*")
             return false;
         });
     </script>
