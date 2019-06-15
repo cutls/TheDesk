@@ -452,7 +452,7 @@ function webviewParse(url, key, insert, icnsert, css) {
 		'" style="' + css + '"><div class="notice-box z-depth-2" id="menu_' + key + '" style="' + insert + '">' +
 		'<div class="area-notice"><i class="fab fa-twitter waves-effect" id="notice_icon_' + key + '" style="font-size:40px; padding-top:25%;"></i></div>' +
 		'<div class="area-notice_name tl-title">WebView(' + url + ')</div>' +
-		'<div class="area-sta"><input type="checkbox" id="webviewsel" value="true" class="filled-in"><label for="webviewsel">' + lang.lang_layout_webviewmode + '</label></div>' +
+		'<div class="area-sta"></div>' +
 		'<div class="area-a2"><a onclick="removeColumn(' + key +
 		')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_delthis + '"' + icnsert + '>cancel</i></a></div>' +
 		'<div class="area-a3"><a onclick="setToggle(' + key +
@@ -460,7 +460,7 @@ function webviewParse(url, key, insert, icnsert, css) {
 		'<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		'"></div><div class="column-hide notf-indv-box" id="util-box_' + key +
 		'" style="padding:5px;">' + lang.lang_layout_headercolor + '<br><div id="picker_' + key + '" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:100%;"><div id="timeline_' + key +
-		'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="' + url + '" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js" nodeintegration="true">disabled</webview></div></div></div>';
+		'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="' + url + '" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview></div></div></div>';
 	return html;
 }
 function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, animecss, q) {
