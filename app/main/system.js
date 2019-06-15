@@ -197,17 +197,17 @@ function system(mainWindow, dir, lang, dirname) {
 		});
 		return true;
 	})
-
 	var cbTimer1;
 	ipc.on('startmem', (e, arg) => {
-		cbTimer1 = setInterval(mems(e), 1000);
-		function mems(e) {
-			var mem = os.totalmem() - os.freemem();
-			if (mainWindow) {
-				e.sender.webContents.send('memory', [mem, os.cpus()[0].model, os.totalmem()]);
-			}
-		}
+		event = e.sender
+		cbTimer1 = setInterval(mems, 1000);
 	});
+	function mems() {
+		var mem = os.totalmem() - os.freemem();
+		if (mainWindow) {
+			event.webContents.send('memory', [mem, os.cpus()[0].model, os.totalmem()]);
+		}
+	}
 	ipc.on('endmem', (e, arg) => {
 		if (cbTimer1) {
 			clearInterval(cbTimer1);
