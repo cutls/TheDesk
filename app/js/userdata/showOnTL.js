@@ -406,9 +406,8 @@ function relations(user, acct_id) {
 	});
 }
 function profbrws() {
-	const { shell } = require('electron');
 	var url = $("#his-openin").attr("data-href")
-	shell.openExternal(url);
+	postMessage(["openUrl", url], "*")
 }
 //オールリセット
 function hisclose() {
