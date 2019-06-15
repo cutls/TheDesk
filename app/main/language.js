@@ -73,7 +73,10 @@ function templete(lang, mainWindow, packaged, dir) {
                     var ver = app.getVersion()
                     var window = new BrowserWindow({
                         webPreferences: {
-                            nodeIntegration:true
+                            webviewTag: false,
+                            nodeIntegration: false,
+                            contextIsolation: true,
+                            preload: "../js/platform/preload.js"
                         },
                         width: 300, height: 460,
                         "transparent": false,    // ウィンドウの背景を透過

@@ -1,4 +1,4 @@
-
+var dirname = __dirname;
 var dir = 'file://' + __dirname;
 var base = dir + '/view/';
 // Electronのモジュール
@@ -179,13 +179,13 @@ function createWindow() {
 	//CSS
 	css.css(mainWindow);
 	//アップデータとダウンロード
-	dl.dl(mainWindow, lang_path, base);
+	dl.dl(mainWindow, lang_path, base, dirname);
 	//画像選択と画像処理
 	img.img(mainWindow, dir);
 	//NowPlaying
 	np.TheDeskNowPlaying(mainWindow);
 	//その他system
-	systemFunc.system(mainWindow, dir, lang);
+	systemFunc.system(mainWindow, dir, lang, dirname);
 }
 // Electronの初期化完了後に実行
 app.on('ready', createWindow);

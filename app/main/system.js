@@ -1,4 +1,4 @@
-function system(mainWindow, dir, lang) {
+function system(mainWindow, dir, lang, dirname) {
 	const electron = require("electron");
 	const app = electron.app;
 	const join = require('path').join;
@@ -145,19 +145,22 @@ function system(mainWindow, dir, lang) {
 		about();
 	});
 	ipc.on('aboutData', (e, args) => {
-		e.sender.webContents.send('aboutDataRender', process);
+		e.sender.webContents.send('aboutDataRender', [process.version, process.versions.chrome, process.versions.electron]);
 	});
 	function about() {
 		var ver = app.getVersion()
 		var window = new BrowserWindow({
 			webPreferences: {
-				nodeIntegration: true
+				webviewTag: false,
+				nodeIntegration: false,
+				contextIsolation: false,
+				preload: join(dirname,"js", "platform", "preload.js")
 			},
 			width: 300,
 			height: 480,
 			"transparent": false, // ウィンドウの背景を透過
-			"frame": false, // 枠の無いウィンドウ
-			"resizable": false
+			"frame": true, // 枠の無いウィンドウ
+			"resizable": true
 		});
 		window.loadURL(dir + '/about.html?ver=' + ver);
 		return "true"
@@ -182,7 +185,10 @@ function system(mainWindow, dir, lang) {
 		}
 		var nanowindow = new BrowserWindow({
 			webPreferences: {
-				nodeIntegration: true
+				webviewTag: false,
+				nodeIntegration: false,
+				contextIsolation: true,
+				preload: join(dirname,"js", "platform", "preload.js")
 			},
 			width: 350,
 			height: 200,

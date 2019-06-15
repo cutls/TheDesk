@@ -107,9 +107,9 @@
         postMessage(["sendSinmpleIpc", "aboutData"], "*")
         function renderAbout(args) {
             $("#now").text(localStorage.getItem("ver"));
-            $("#node").text(args.version);
-            $("#chrome").text(args.versions.chrome);
-            $("#electron").text(args.versions.electron);
+            $("#node").text(args[0]);
+            $("#chrome").text(args[1]);
+            $("#electron").text(args[2]);
         }
         if (location.search) {
             var m = location.search.match(/\?ver=([a-zA-Z-0-9.]+)/);

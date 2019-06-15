@@ -1,4 +1,4 @@
-function dl(mainWindow, lang_path, base) {
+function dl(mainWindow, lang_path, base, dirname) {
 	const electron = require("electron");
 	const shell = electron.shell;
 	const fs = require("fs");
@@ -16,7 +16,10 @@ function dl(mainWindow, lang_path, base) {
 		if (platform != "others") {
 			updatewin = new BrowserWindow({
 				webPreferences: {
-					nodeIntegration: true
+					webviewTag: false,
+					nodeIntegration: false,
+					contextIsolation: true,
+					preload: "../js/platform/preload.js"
 				},
 				width: 600,
 				height: 400,
@@ -35,7 +38,7 @@ function dl(mainWindow, lang_path, base) {
 	})
 	//アプデDL
 	ipc.on('download-btn', (e, args) => {
-		function dl(url, file, dir,e) {
+		function dl(url, file, dir, e) {
 
 			e.sender.webContents.send('mess', "ダウンロードを開始します。");
 			const opts = {

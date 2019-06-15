@@ -244,7 +244,7 @@ ipc.on('mess', function (event, arg) {
     updateMess(arg)
 })
 //about.html
-ipc.on('aboutData', function (event, arg) {
+ipc.on('aboutDataRender', function (event, arg) {
     renderAbout(arg)
 })
 var webviewDom = document.getElementById('webview');
