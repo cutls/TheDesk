@@ -42,7 +42,7 @@ function system(mainWindow, dir, lang, dirname) {
 	});
 	//プラットフォーム
 	ipc.on('getPlatform', function (e, arg) {
-		e.sender.webContents.send('platform', process.platform);
+		e.sender.webContents.send('platform', [process.platform, process.arch]);
 	})
 	//言語
 	ipc.on('lang', function (e, arg) {
@@ -120,7 +120,7 @@ function system(mainWindow, dir, lang, dirname) {
 				{ name: 'All', extensions: ['*'] },
 			]
 		}, (fileNames) => {
-			e.sender.webContents.send('customSoundRender', [key, fileNames[0]]);
+			e.sender.webContents.send('customSoundRender', [arg, fileNames[0]]);
 		});
 	})
 
@@ -166,8 +166,7 @@ function system(mainWindow, dir, lang, dirname) {
 		return "true"
 	}
 	ipc.on('column-del', (e, tlid) => {
-
-		console.log(lang);
+		console.log(tlid);
 		var options = language.delsel(lang)
 		dialog.showMessageBox(options, function (index) {
 			e.sender.webContents.send('column-del-reply', [index, tlid]);

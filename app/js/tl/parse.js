@@ -712,7 +712,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		}
 		if (toot.pinned) {
 			var if_pin = "blue-text";
-			var pin_app = "pinned";
+			var pin_app = "pinnedToot";
 		} else {
 			var if_pin = "";
 			var pin_app = "";

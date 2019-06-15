@@ -16,6 +16,7 @@ onmessage = function (e) {
     } else if (e.data[0] == "dialogCW") {
         ipc.send("dialogCW", e.data[1])
     } else if (e.data[0] == "nativeNotf") {
+        console.log(e.data[1])
         ipc.send('native-notf', e.data[1]);
     } else if (e.data[0] == "dialogClient") {
         ipc.send("dialogClient", e.data[1])
@@ -42,7 +43,8 @@ onmessage = function (e) {
     } else if (e.data[0] == "ha") {
         ipc.send('ha', had);
     } else if (e.data[0] == "itunes") {
-        if (ipc.listenerCount('itunes-np') > 0) {
+        console.log("NowPlaying" + ipc.listenerCount('itunes-np'))
+        if (ipc.listenerCount('itunes-np') > 1) {
             return false;
         } else {
             ipc.send("itunes", e.data[1])
@@ -55,8 +57,9 @@ onmessage = function (e) {
 }
 //version.js
 ipc.send("getPlatform", "")
-ipc.on('platform', function (event, arg) {
-    localStorage.setItem("platform", arg)
+ipc.on('platform', function (event, args) {
+    localStorage.setItem("platform", args[0])
+    localStorage.setItem("bit", args[1])
 })
 ipc.on('winstore', function (event, arg) {
     localStorage.setItem("winstore", arg)
@@ -65,22 +68,12 @@ ipc.on('winstore', function (event, arg) {
 ipc.on('reload', function (event, arg) {
     location.reload();
 })
-ipc.on('mess', function (event, arg) {
-    if (arg == "unzip") {
-        if (lang == "ja") {
-            $("body").text("アップデートを展開中です。");
-        } else {
-            $("body").text("Unzipping...");
-        }
-
-    }
-})
 //Native Notf
 ipc.on('shownotf', function (event, args) {
     if (args["type"] == "toot") {
-        details(id, acct_id)
+        postMessage(["details", [id, acct_id]], "*")
     } else if (args["type"] == "userdata") {
-        udg(user, acct_id)
+        postMessage(["udg", [user, acct_id]], "*")
     }
 })
 function nano() {
@@ -107,7 +100,7 @@ ipc.on('theme-css-response', function (event, arg) {
 })
 //img.js
 ipc.on('bmp-img-comp', function (event, b64) {
-    media(b64[0], "image/png", b64[1]);
+    postMessage(["media", [b64[0], "image/png", b64[1]]], "*")
 });
 //post.js
 ipc.on('dialogCWRender', function (event, arg) {
@@ -116,9 +109,9 @@ ipc.on('dialogCWRender', function (event, arg) {
         $("#cw").addClass("yellow-text");
         $("#cw").addClass("cw-avail");
         $("#cw-text").val(plus);
-        post("pass");
+        postMessage(["post", ""], "*")
     } else if (arg === 2) {
-        post("pass");
+        postMessage(["post", ""], "*")
     }
 });
 //parse.js
@@ -129,7 +122,7 @@ ipc.on('dialogClientRender', function (event, arg) {
         if (!obj) {
             var obj = [];
             obj.push(name);
-            M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
+            postMessage(["toastEmp", name], "*")
         } else {
             var can;
             Object.keys(obj).forEach(function (key) {
@@ -139,12 +132,12 @@ ipc.on('dialogClientRender', function (event, arg) {
                 } else {
                     can = true;
                     obj.splice(key, 1);
-                    M.toast({ html: escapeHTML(name) + lang.lang_status_unemphas, displayLength: 2000 })
+                    postMessage(["toastUnEmp", name], "*")
                 }
             });
             if (!can) {
                 obj.push(name);
-                M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
+                postMessage(["toastEmp", name], "*")
             } else {
 
             }
@@ -160,7 +153,7 @@ ipc.on('dialogClientRender', function (event, arg) {
         obj.push(name);
         var json = JSON.stringify(obj);
         localStorage.setItem("client_mute", json);
-        M.toast({ html: escapeHTML(name) + lang.lang_parse_mute, displayLength: 2000 })
+        postMessage(["toastMute", name], "*")
     } else {
         return;
     }
@@ -172,11 +165,14 @@ ipc.on('general-dl-prog', function (event, arg) {
 })
 ipc.on('general-dl-message', function (event, arg) {
     var argC = arg.replace(/\\/g, "\\\\") + "\\\\.";
-    M.toast({ html: lang.lang_img_DLDone + arg + '<button class="btn-flat toast-action" onclick="openFinder(\'' + argC + '\')">Show</button>', displayLength: 5000 })
+    console.log("saved")
+    postMessage(["toastSaved", [arg, argC]], "*")
 })
 //layout.js
 ipc.on('column-del-reply', function (event, args) {
     if (args[0] === 1) {
+        var multi = localStorage.getItem("column");
+        var obj = JSON.parse(multi);
         localStorage.removeItem("card_" + args[1]);
         obj.splice(args[1], 1);
         for (var i = 0; i < obj.length; i++) {
@@ -185,8 +181,8 @@ ipc.on('column-del-reply', function (event, args) {
         }
         var json = JSON.stringify(obj);
         localStorage.setItem("column", json);
-        parseColumn();
-        sortload()
+        postMessage(["parseColumn", ""], "*")
+        postMessage(["sortload", ""], "*")
     }
 })
 //setting.js
@@ -201,54 +197,54 @@ ipc.on('exportSettingsFile', function (event, savedFiles) {
     //lang
 });
 ipc.on('config', function (event, arg) {
-    importSettingsCore(arg)
+    postMessage(["importSettingsCore", arg], "*")
 });
 ipc.on('savefolder', function (event, arg) {
     localStorage.setItem("savefolder", arg);
 });
 ipc.on('font-list', function (event, arg) {
-    fontList(arg)
+    postMessage(["fontList", arg], "*")
 });
 ipc.on('customSoundRender', function (event, args) {
-    customSoundSave(args[0], args[1])
+    postMessage(["customSoundSave", [args[0], args[1]]], "*")
 });
 ipc.on('theme-json-list-response', function (event, args) {
-    ctLoadCore(args)
+    postMessage(["ctLoadCore", args], "*")
 });
 ipc.on('theme-json-delete-complete', function (event, args) {
-    ctLoad()
+    postMessage(["ctLoad", ""], "*")
 });
 ipc.on('theme-json-response', function (event, args) {
-    customConnect(args)
+    postMessage(["customConnect", args], "*")
 });
 ipc.on('theme-json-create-complete', function (event, args) {
-    clearCustomImport()
-    ctLoad()
+    postMessage(["clearCustomImport", ""], "*")
+    postMessage(["ctLoad", ""], "*")
 });
 //spotify.js
 ipc.once('itunes-np', function (event, arg) {
-    npCore(arg)
+    postMessage(["npCore", arg], "*")
 })
 //tips.js
 ipc.on('memory', function (event, arg) {
     var use = arg[0];
     var cpu = arg[1];
     var total = arg[2]
-    renderMem(use, cpu, total)
+    postMessage(["renderMem", [use, cpu, total]], "*")
 })
 //update.html
 ipc.on('prog', function (event, arg) {
-    updateProg(arg)
+    postMessage(["updateProg", arg], "*")
 })
 ipc.on('mess', function (event, arg) {
-    updateMess(arg)
+    postMessage(["updateMess", arg], "*")
 })
 //about.html
 ipc.on('aboutDataRender', function (event, arg) {
-    renderAbout(arg)
+    postMessage(["renderAbout", arg], "*")
 })
 var webviewDom = document.getElementById('webview');
-if(webviewDom){
+if (webviewDom) {
     webviewDom.addEventListener('new-window', function (e) {
         shell.openExternal(e.url);
     });

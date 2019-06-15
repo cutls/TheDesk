@@ -19,13 +19,13 @@ function dl(mainWindow, lang_path, base, dirname) {
 					webviewTag: false,
 					nodeIntegration: false,
 					contextIsolation: true,
-					preload: "../js/platform/preload.js"
+					preload: join(dirname,"js", "platform", "preload.js")
 				},
 				width: 600,
 				height: 400,
 				"transparent": false, // ウィンドウの背景を透過
-				"frame": false, // 枠の無いウィンドウ
-				"resizable": false,
+				"frame": true, // 枠の無いウィンドウ
+				"resizable": true,
 				"modal": true
 			});
 			var lang = fs.readFileSync(lang_path, 'utf8');
@@ -44,7 +44,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 			const opts = {
 				directory: dir,
 				openFolderWhenDone: true,
-				onProgress: function (e) {
+				onProgress: function (event) {
 					e.sender.webContents.send('prog', e);
 				},
 				saveAs: false
@@ -91,7 +91,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 	}
 
 
-	ipc.on('general-dl', (e, args) => {
+	ipc.on('general-dl', (event, args) => {
 
 		var name = "";
 		var platform = process.platform;
@@ -110,14 +110,14 @@ function dl(mainWindow, lang_path, base, dirname) {
 			filename: name,
 			openFolderWhenDone: false,
 			onProgress: function (e) {
-				e.sender.webContents.send('general-dl-prog', e);
+				event.sender.webContents.send('general-dl-prog', e);
 			},
 			saveAs: false
 		};
 		download(BrowserWindow.getFocusedWindow(),
 			args[0], opts)
 			.then(dl => {
-				e.sender.webContents.send('general-dl-message', dir);
+				event.sender.webContents.send('general-dl-message', dir);
 			})
 			.catch(console.error);
 	});

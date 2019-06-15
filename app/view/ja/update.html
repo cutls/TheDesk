@@ -142,8 +142,7 @@
             $("#dlnow").toggleClass("hide");
             $("#dlnow").toggleClass("show");
             $("#prog").text("");
-            var remote = electron.remote;
-            var bit = process.arch;
+            var bit = localStorage.getItem("bit");
             var start = "https://thedesk.top/ver.json";
             fetch(start, {
                 method: 'GET',
@@ -200,9 +199,8 @@
             $("#prog").text(arg);
         }
         function verck() {
-            var remote = electron.remote;
-            var platform = remote.process.platform;
-            var bit = process.arch;
+            var platform = localStorage.getItem("platform");
+            var bit = localStorage.getItem("bit");
             if (platform == "win32") {
                 $('.windows').removeClass("hide")
             } else if (platform == "linux") {

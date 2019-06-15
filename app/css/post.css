@@ -12,6 +12,9 @@
   padding: 5px;
   border-radius: 5px;
 }
+textarea{
+  min-height: 100px !important;
+}
 
 .cancel {
   font-size: 0.5rem;
