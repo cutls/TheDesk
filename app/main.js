@@ -96,30 +96,30 @@ function createWindow() {
 	if (platform == "linux") {
 		var arg = {
 			webPreferences: {
-				webviewTag: false,
+				webviewTag: true,
 				nodeIntegration: false,
 				contextIsolation: true,
-				preload: join(__dirname,"js", "platform", "preload.js")
+				preload: join(__dirname, "js", "platform", "preload.js")
 			},
 			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, icon: __dirname + '/desk.png'
 		}
 	} else if (platform == "win32") {
 		var arg = {
 			webPreferences: {
-				webviewTag: false,
+				webviewTag: true,
 				nodeIntegration: false,
 				contextIsolation: true,
-				preload: join(__dirname,"js", "platform", "preload.js")
+				preload: join(__dirname, "js", "platform", "preload.js")
 			},
 			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true
 		}
 	} else if (platform == "darwin") {
 		var arg = {
 			webPreferences: {
-				webviewTag: false,
+				webviewTag: true,
 				nodeIntegration: false,
 				contextIsolation: true,
-				preload: join(__dirname,"js", "platform", "preload.js")
+				preload: join(__dirname, "js", "platform", "preload.js")
 			},
 			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true
 		}
@@ -173,9 +173,12 @@ function createWindow() {
 
 	var platform = process.platform;
 	var bit = process.arch;
-	if (platform == "darwin") {
-		Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, false, dir)));
+	if (process.argv.indexOf("--dev") === -1) {
+		packaged = true;
+	} else {
+		packaged = false;
 	}
+	Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir)));
 	//CSS
 	css.css(mainWindow);
 	//アップデータとダウンロード

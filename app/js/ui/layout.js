@@ -460,8 +460,7 @@ function webviewParse(url, key, insert, icnsert, css) {
 		'<div class="column-hide notf-indv-box z-depth-4" id="notf-box_' + key +
 		'"></div><div class="column-hide notf-indv-box" id="util-box_' + key +
 		'" style="padding:5px;">' + lang.lang_layout_headercolor + '<br><div id="picker_' + key + '" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '" style="width:100%;height:100%;"><div id="timeline_' + key +
-		'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="' + url + '" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview></div></div></div>';
-
+		'" class="tl" tlid="' + key + '" data-type="webview" style="width:100%;height:100%;"><webview src="' + url + '" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js" nodeintegration="true">disabled</webview></div></div></div>';
 	return html;
 }
 function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, animecss, q) {

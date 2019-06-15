@@ -24,9 +24,8 @@ function dl(mainWindow, lang_path, base, dirname) {
 				width: 600,
 				height: 400,
 				"transparent": false, // ウィンドウの背景を透過
-				"frame": true, // 枠の無いウィンドウ
-				"resizable": true,
-				"modal": true
+				"frame": false, // 枠の無いウィンドウ
+				"resizable": false
 			});
 			var lang = fs.readFileSync(lang_path, 'utf8');
 			updatewin.loadURL(base + lang + '/update.html');

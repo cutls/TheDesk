@@ -42,7 +42,7 @@ function system(mainWindow, dir, lang, dirname) {
 	});
 	//プラットフォーム
 	ipc.on('getPlatform', function (e, arg) {
-		e.sender.webContents.send('platform', [process.platform, process.arch]);
+		e.sender.webContents.send('platform', [process.platform, process.arch, process.version, process.versions.chrome, process.versions.electron]);
 	})
 	//言語
 	ipc.on('lang', function (e, arg) {
@@ -137,30 +137,23 @@ function system(mainWindow, dir, lang, dirname) {
 	})
 
 	ipc.on('quit', (e, args) => {
-
 		app.quit();
 	});
 	ipc.on('about', (e, args) => {
-
 		about();
-	});
-	ipc.on('aboutData', (e, args) => {
-		e.sender.webContents.send('aboutDataRender', [process.version, process.versions.chrome, process.versions.electron]);
 	});
 	function about() {
 		var ver = app.getVersion()
 		var window = new BrowserWindow({
 			webPreferences: {
 				webviewTag: false,
-				nodeIntegration: false,
-				contextIsolation: false,
-				preload: join(dirname,"js", "platform", "preload.js")
+				nodeIntegration: false
 			},
 			width: 300,
 			height: 480,
 			"transparent": false, // ウィンドウの背景を透過
-			"frame": true, // 枠の無いウィンドウ
-			"resizable": true
+			"frame": false, // 枠の無いウィンドウ
+			"resizable": false
 		});
 		window.loadURL(dir + '/about.html?ver=' + ver);
 		return "true"

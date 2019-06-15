@@ -65,6 +65,28 @@ function templete(lang, mainWindow, packaged, dir) {
             "en": "Close"
         }
     }
+    if(packaged){
+        var ifDev = [
+            {
+                label: dict.reload[lang],
+                accelerator: 'CmdOrCtrl+R',
+                click: function () { mainWindow.reload(); }
+            }
+        ]
+    }else{
+        var ifDev = [
+            {
+                label: 'Toggle Developer Tools',
+                accelerator: 'Alt+Command+I',
+                click: function () { if (!packaged) { mainWindow.toggleDevTools(); } }
+            },
+            {
+                label: dict.reload[lang],
+                accelerator: 'CmdOrCtrl+R',
+                click: function () { mainWindow.reload(); }
+            }
+        ]
+    }
     const menu = [{
         label: dict.application[lang],
         submenu: [
@@ -103,18 +125,7 @@ function templete(lang, mainWindow, packaged, dir) {
         ]
     }, {
         label: dict.view[lang],
-        submenu: [
-            {
-                label: 'Toggle Developer Tools',
-                accelerator: 'Alt+Command+I',
-                click: function () { if (!packaged) { mainWindow.toggleDevTools(); } }
-            },
-            {
-                label: dict.reload[lang],
-                accelerator: 'CmdOrCtrl+R',
-                click: function () { mainWindow.reload(); }
-            }
-        ]
+        submenu: ifDev
     },
     {
         label: dict.window[lang],

@@ -41,7 +41,9 @@ onmessage = function (e) {
     } else if (e.data[0] == "themeJsonRequest") {
         ipc.send('theme-json-request', e.data[1]);
     } else if (e.data[0] == "ha") {
-        ipc.send('ha', had);
+        ipc.send('ha', e.data[1]);
+    } else if (e.data[0] == "aboutData") {
+        ipc.send('aboutData', "");
     } else if (e.data[0] == "itunes") {
         console.log("NowPlaying" + ipc.listenerCount('itunes-np'))
         if (ipc.listenerCount('itunes-np') > 1) {
@@ -60,6 +62,7 @@ ipc.send("getPlatform", "")
 ipc.on('platform', function (event, args) {
     localStorage.setItem("platform", args[0])
     localStorage.setItem("bit", args[1])
+    localStorage.setItem("about", JSON.stringify([args[2], args[3], args[4]]))
 })
 ipc.on('winstore', function (event, arg) {
     localStorage.setItem("winstore", arg)
@@ -238,10 +241,6 @@ ipc.on('prog', function (event, arg) {
 })
 ipc.on('mess', function (event, arg) {
     postMessage(["updateMess", arg], "*")
-})
-//about.html
-ipc.on('aboutDataRender', function (event, arg) {
-    postMessage(["renderAbout", arg], "*")
 })
 var webviewDom = document.getElementById('webview');
 if (webviewDom) {
