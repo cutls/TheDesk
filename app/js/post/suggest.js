@@ -131,7 +131,7 @@ function tagInsert(code, del) {
 	var selin = $("#textarea").prop('selectionStart');
 	if (!del) {
 	} else {
-		var regExp = new RegExp(del, "g");
+		var regExp = new RegExp(del.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
 		var now = now.replace(regExp, "");
 		selin = selin - del.length;
 	}

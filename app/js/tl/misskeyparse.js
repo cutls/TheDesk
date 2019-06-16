@@ -590,7 +590,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					} else {
 						var word = worde
 					}
-					var regExp = new RegExp(word, "g");
+					var regExp = new RegExp(word.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
 					if ($.strip_tagstemp(content).match(regExp)) {
 						boostback = "hide by_filter";
 					}
@@ -603,7 +603,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				var word = wordemp[key9];
 				if (word) {
 					var word = word.tag;
-					var regExp = new RegExp(word, "g");
+					var regExp = new RegExp(word.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
 					content = content.replace(regExp, '<span class="emp">' + word + "</span>");
 				}
 			});

@@ -191,7 +191,7 @@ function emojiInsert(code, del) {
 		$("#textarea").val(newt);
 		//emoji();
 	} else {
-		var regExp = new RegExp(del, "g");
+		var regExp = new RegExp(del.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
 		var now = now.replace(regExp, "");
 		$("#textarea").val(now + brank + code);
 	}

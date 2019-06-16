@@ -370,7 +370,7 @@ function filterUpdateInternal(json, type) {
 			var text = $(elem).find('.toot').html();
 			Object.keys(home).forEach(function (key8) {
 				var word = home[key8];
-				var regExp = new RegExp(word, "g");
+				var regExp = new RegExp(word.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
 				if ($.strip_tags(text).match(regExp)) {
 					$("[toot-id=" + id + "]").addClass("hide");
 				}
@@ -386,6 +386,7 @@ function filterUpdateInternal(json, type) {
 */
 //通知フィルター
 function exclude(key) {
+	localStorage.setItem("exclude-" + key, "")
 	var excludetxt = localStorage.getItem("exclude-" + key);
 	if ($('#exc-reply-' + key + ':checked').val()) {
 		excludetxt = "?exclude_types[]=mention"

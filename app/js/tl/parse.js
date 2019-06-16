@@ -733,7 +733,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					} else {
 						var word = worde
 					}
-					var regExp = new RegExp(word, "g");
+					var regExp = new RegExp(word.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
+					console.log(regExp)
 					if ($.strip_tags(content).match(regExp)) {
 						boostback = "hide by_filter";
 					}
@@ -746,7 +747,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var word = wordemp[key9];
 				if (word) {
 					var word = word.tag;
-					var regExp = new RegExp(word, "g");
+					var regExp = new RegExp(word.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
 					content = content.replace(regExp, '<span class="emp">' + word + "</span>");
 				}
 			});

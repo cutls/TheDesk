@@ -171,7 +171,7 @@ function wordmute() {
 	});
 }
 function wordmuteSave() {
-	var word = $('#wordmute').material_chip('data');
+	var word = M.Chips.getInstance($("#wordmute")).chipsData;
 	var json = JSON.stringify(word);
 	localStorage.setItem("word_mute", json);
 }
@@ -185,7 +185,7 @@ function wordemp() {
 	});
 }
 function wordempSave() {
-	var word = $('#wordemp').material_chip('data');
+	var word = M.Chips.getInstance($("#wordemp")).chipsData;
 	var json = JSON.stringify(word);
 	localStorage.setItem("word_emp", json);
 }
