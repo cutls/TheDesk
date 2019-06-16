@@ -42,8 +42,8 @@ function verck(ver) {
 			$("#support-btm").animate({
 				'bottom': '0'
 			}, {
-					'duration': 300
-				});
+				'duration': 300
+			});
 		}
 	}
 	var platform = localStorage.getItem("platform");
