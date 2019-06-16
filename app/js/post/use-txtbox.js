@@ -15,7 +15,7 @@ function re(id, ats_cm, acct_id, mode) {
 	$("#rec").text(lang.lang_yesno);
 	$("#post-acct-sel").val(acct_id);
 	$("#post-acct-sel").prop("disabled", true);
-	$('select').material_select();
+	$('select').formSelect();
 	$("#textarea").attr("placeholder", lang.lang_usetxtbox_reply);
 	$("#textarea").focus();
 	var profimg = localStorage.getItem("prof_" + acct_id);
@@ -60,5 +60,5 @@ function qt(id, acct_id, at, url) {
 	}
 	$("#textarea").focus();
 	$("#post-acct-sel").val(acct_id);
-	$('select').material_select();
+	$('select').formSelect();
 }

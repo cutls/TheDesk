@@ -164,11 +164,11 @@ function parseColumn(dontclose) {
 				var animecss = "";
 			}
 			if (acct.type == "notf") {
-				var exclude = lang.lang_excluded + ':<br><input type="checkbox" class="filled-in" id="exc-reply-' + key + '" ' + excludeCk(key, "mention") + ' /><label for="exc-reply-' + key + '" class="exc-chb"><i class="fas fa-share exc-icons"></i></label> ' +
-					'<input type="checkbox" class="filled-in" id="exc-fav-' + key + '"  ' + excludeCk(key, "favourite") + ' /><label for="exc-fav-' + key + '" class="exc-chb"><i class="fas fa-star exc-icons"></i></label> ' +
-					'<input type="checkbox" class="filled-in" id="exc-bt-' + key + '" ' + excludeCk(key, "reblog") + ' /><label for="exc-bt-' + key + '" class="exc-chb" ><i class="fas fa-retweet exc-icons"></i></label> ' +
-					'<input type="checkbox" class="filled-in" id="exc-follow-' + key + '" ' + excludeCk(key, "follow") + ' /><label for="exc-follow-' + key + '" class="exc-chb" ><i class="fas fa-users exc-icons"></i></label> ' +
-					'<input type="checkbox" class="filled-in" id="exc-poll-' + key + '" ' + excludeCk(key, "poll") + ' /><label for="exc-poll-' + key + '" class="exc-chb" ><i class="fas fa-tasks exc-icons"></i></label> ' +
+				var exclude = lang.lang_excluded + ':<br><label><input type="checkbox" class="filled-in" id="exc-reply-' + key + '" ' + excludeCk(key, "mention") + ' /><span><i class="fas fa-share exc-icons"></i></span></label> ' +
+					'<label><input type="checkbox" class="filled-in" id="exc-fav-' + key + '"  ' + excludeCk(key, "favourite") + ' /><span><i class="fas fa-star exc-icons"></i></span></label> ' +
+					'<label><input type="checkbox" class="filled-in" id="exc-bt-' + key + '" ' + excludeCk(key, "reblog") + ' /><span><i class="fas fa-retweet exc-icons"></i></span></label> ' +
+					'<label><input type="checkbox" class="filled-in" id="exc-follow-' + key + '" ' + excludeCk(key, "follow") + ' /><span><i class="fas fa-users exc-icons"></i></span></label> ' +
+					'<label><input type="checkbox" class="filled-in" id="exc-poll-' + key + '" ' + excludeCk(key, "poll") + ' /><span><i class="fas fa-tasks exc-icons"></i></span></label> ' +
 					'<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude(' + key + ')">Filter</button>';
 				if (checkNotfFilter(key)) {
 					exclude = exclude + '<button class="btn red waves-effect" style="width:60px; padding:0;" onclick="resetNotfFilter(' + key + ')">Clear all</button>'

@@ -45,7 +45,10 @@ function vis(set) {
 		var acct_id = $("#post-acct-sel").val();
 		localStorage.setItem("vis-memory-" + acct_id, set);
 	}
-	M.Dropdown.getInstance($('#dropdown1')).close();
+	var ins = M.Dropdown.getInstance($('#dropdown1'))
+	if(ins){
+		ins.close();
+	}
 }
 function loadVis() {
 	var vist = localStorage.getItem("vis");

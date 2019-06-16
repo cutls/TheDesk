@@ -142,7 +142,7 @@ function media(b64, type, no) {
 			}
 			todc();
 			$(".toot-btn-group").prop("disabled", false);
-			$('select').material_select();
+			$('select').formSelect();
 			$("#mec").text(lang.lang_there);
 			M.toast({ html: lang.lang_postimg_aftupload, displayLength: 1000 })
 			$("#imgup").text("");

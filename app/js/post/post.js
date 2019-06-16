@@ -293,7 +293,7 @@ function clear() {
 	if (localStorage.getItem("mainuse") == "main") {
 		$("#post-acct-sel").val(localStorage.getItem("main"));
 	}
-	$('select').material_select();
+	$('select').formSelect();
 	$("#left-side").show();
 	$("#default-emoji").show();
 	$("#unreact").show();

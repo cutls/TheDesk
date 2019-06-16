@@ -31,7 +31,7 @@ function renoteqt(id, acct_id) {
     $("#rec").text("Renote");
     $("#post-acct-sel").val(acct_id);
     $("#post-acct-sel").prop("disabled", true);
-    $('select').material_select();
+    $('select').formSelect();
     $("#textarea").attr("placeholder", lang.lang_misskeyparse_qt);
     $("#textarea").focus();
 }
@@ -43,7 +43,7 @@ function misskeyreply(id, acct_id) {
     $("#rec").text("Renote");
     $("#post-acct-sel").val(acct_id);
     $("#post-acct-sel").prop("disabled", true);
-    $('select').material_select();
+    $('select').formSelect();
     $("#textarea").attr("placeholder", lang.lang_misskeyparse_qt);
     $("#textarea").focus();
 }
@@ -102,7 +102,7 @@ function reactioncustom(acct_id, id) {
     $("#unreact").hide();
     $("#addreact").removeClass("hide");
     $("#post-acct-sel").val(acct_id);
-    $('select').material_select();
+    $('select').formSelect();
     localStorage.setItem("nohide", true);
     show()
     emojiToggle(true)
