@@ -444,6 +444,7 @@ blockquote:before,
 input, textarea {
   color: var(--color);
   font-size: 1rem !important;
+  font-family: inherit;
 }
 
 /*スクロールバー*/

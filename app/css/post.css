@@ -14,6 +14,7 @@
 }
 textarea{
   min-height: 100px !important;
+  font-family: inherit;
 }
 
 .cancel {
