@@ -44,7 +44,7 @@ The default sounds of notifications is provided [Creative Commons BY](https://cr
 
 Crowdin project is available! Visit: https://translate.thedesk.top
 
-## Requirement
+## Requirement and development
 
 * Electron 4.2 or above(install yourself)
 * electron-dl(in package.json)
@@ -56,6 +56,10 @@ Crowdin project is available! Visit: https://translate.thedesk.top
 * node-notifier(in package.json)
 * sumchecker(in package.json)
 * Ability to read unformated files!(install yourself)
+
+### Run on developer mode
+
+`npm run dev` on `app` folder.
 
 ## Contributors
 

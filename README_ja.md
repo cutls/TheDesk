@@ -57,6 +57,10 @@ Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.
 * sumchecker(in package.json)
 * Ability to read unformated files!(自分で入れて)
 
+### デベロッパーモード
+
+`npm run dev`を`app`フォルダ内で実行
+
 ## 主なコントリビューター
 
 macOSビルダー  
