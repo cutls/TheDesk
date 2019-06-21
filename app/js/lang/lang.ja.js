@@ -37,6 +37,7 @@ var lang = {
     "lang_manager_def": "既定",
     "lang_manager_none": "なし",
     "lang_manager_godev": "MisskeyのDevセンターに移動します。同時に開かれるドキュメントを参考にログインしてください。",
+    "lang_manager_logout": "ログアウト",
     //post/bb-md.js
     "lang_bbmd_misskey": "TheDeskにおけるMisskeyでは、@を返信として扱いますが、全ての@は消去され別パラメータに入力されます。また、「未収載」を「ホーム」として扱います。",
     //post/emoji.js
@@ -64,6 +65,7 @@ var lang = {
     "lang_status_unblock": "ブロック解除",
     "lang_status_mute": "ミュート",
     "lang_status_unmute": "ミュート解除",
+    "lang_status_redraftTitle": "削除して再編集",
     "lang_status_redraft": "削除して再編集しますか？そのトゥートの全てのデータがリセットされます。この機能はベータ版です。画像は~v2.4.1で破棄されます。",
     "lang_status_emphas": "を強調します。リロードしてください。",
     "lang_status_unemphas": "を強調解除します。リロードしてください。",

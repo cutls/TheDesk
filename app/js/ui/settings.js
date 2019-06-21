@@ -217,10 +217,19 @@ function changelang(lang) {
 	postMessage(["lang", lang], "*")
 }
 function exportSettings() {
-	if (!confirm(lang.lang_setting_exportwarn)) {
-		return false;
-	}
-	postMessage(["exportSettings", ""], "*")
+	Swal.fire({
+		title: lang.lang_setting_exportwarn,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: lang.lang_yesno,
+		cancelButtonText: lang.lang_no
+	}).then((result) => {
+		if (result.value) {
+			postMessage(["exportSettings", ""], "*")
+		}
+	})
 }
 function exportSettingsCore() {
 	var exp = {};
@@ -283,10 +292,19 @@ function exportSettingsCore() {
 	return exp;
 }
 function importSettings() {
-	if (!confirm(lang.lang_setting_importwarn)) {
-		return false;
-	}
-	postMessage(["importSettings", ""], "*")
+	Swal.fire({
+		title: lang.lang_setting_importwarn,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: lang.lang_yesno,
+		cancelButtonText: lang.lang_no
+	}).then((result) => {
+		if (result.value) {
+			postMessage(["importSettings", ""], "*")
+		}
+	})	
 }
 function importSettingsCore(arg) {
 	var obj = JSON.parse(arg);
@@ -375,7 +393,10 @@ function importSettingsCore(arg) {
 		}
 		location.href = "index.html";
 	} else {
-		alert("Error.")
+		Swal.fire({
+			type: 'error',
+			title: 'Error'
+		})
 	}
 }
 function savefolder() {
@@ -576,7 +597,10 @@ function customImp() {
 	if (JSON5.parse(json)) {
 		postMessage(["themeJsonCreate", json], "*")
 	} else {
-		alert("Error")
+		Swal.fire({
+			type: 'error',
+			title: 'Error'
+		})
 	}
 }
 function clearCustomImport() {

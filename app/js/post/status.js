@@ -253,39 +253,50 @@ function del(id, acct_id) {
 }
 //redraft
 function redraft(id, acct_id) {
-	if (confirm(lang.lang_status_redraft)) {
-		show();
-		del(id, acct_id);
-		$("#post-acct-sel").prop("disabled", true);
-		var medias = $("[toot-id=" + id + "]").attr("data-medias");
-		var vismode = $("[toot-id=" + id + "] .vis-data").attr("data-vis");
-		vis(vismode);
-		$("#media").val(medias);
-		var ct = medias.split(",").length;
-		$("[toot-id=" + id + "] img.toot-img").each(function (i, elem) {
-			if (i < ct) {
-				var url = $(elem).attr("src");
-				console.log("Play back image data:" + url);
-				$('#preview').append('<img src="' + url + '" style="width:50px; max-height:100px;">');
+	Swal.fire({
+		title: lang.lang_status_redraftTitle,
+		text: lang.lang_status_redraft,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: lang.lang_yesno,
+		cancelButtonText: lang.lang_no
+	}).then((result) => {
+		if (result.value) {
+			show();
+			del(id, acct_id);
+			$("#post-acct-sel").prop("disabled", true);
+			var medias = $("[toot-id=" + id + "]").attr("data-medias");
+			var vismode = $("[toot-id=" + id + "] .vis-data").attr("data-vis");
+			vis(vismode);
+			$("#media").val(medias);
+			var ct = medias.split(",").length;
+			$("[toot-id=" + id + "] img.toot-img").each(function (i, elem) {
+				if (i < ct) {
+					var url = $(elem).attr("src");
+					console.log("Play back image data:" + url);
+					$('#preview').append('<img src="' + url + '" style="width:50px; max-height:100px;">');
+				}
+			});
+			var html = $("[toot-id=" + id + "] .toot").html();
+			html = html.replace(/^<p>(.+)<\/p>$/, "$1");
+			html = html.replace(/<br\s?\/?>/, "\n");
+			html = html.replace(/<p>/, "\n");
+			html = html.replace(/<\/p>/, "\n");
+			html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, "$1");
+			html = $.strip_tags(html);
+			localStorage.setItem("nohide", true);
+			show();
+			$("#textarea").val(html);
+			var cwtxt = $("[toot-id=" + id + "] .cw_text").html();
+			if (cwtxt != "") {
+				cwtxt = $.strip_tags(cwtxt);
+				cw();
+				$("#cw-text").val(cwtxt);
 			}
-		});
-		var html = $("[toot-id=" + id + "] .toot").html();
-		html = html.replace(/^<p>(.+)<\/p>$/, "$1");
-		html = html.replace(/<br\s?\/?>/, "\n");
-		html = html.replace(/<p>/, "\n");
-		html = html.replace(/<\/p>/, "\n");
-		html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, "$1");
-		html = $.strip_tags(html);
-		localStorage.setItem("nohide", true);
-		show();
-		$("#textarea").val(html);
-		var cwtxt = $("[toot-id=" + id + "] .cw_text").html();
-		if (cwtxt != "") {
-			cwtxt = $.strip_tags(cwtxt);
-			cw();
-			$("#cw-text").val(cwtxt);
 		}
-	}
+	})
 }
 //ピン留め
 function pin(id, acct_id) {

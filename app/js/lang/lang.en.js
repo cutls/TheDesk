@@ -37,6 +37,7 @@ var lang = {
     "lang_manager_def": "Default",
     "lang_manager_none": "None",
     "lang_manager_godev": "Open DevCenter of Misskey. We show also an official documents to refer.",
+    "lang_manager_logout": "Logout",
     //post/bb-md.js
     "lang_bbmd_misskey": "TheDesk regards \"@\" as reply, but put other parameter. Unlisted on Mastodon means Home on Misskey.",
     //post/emoji.js
@@ -64,6 +65,7 @@ var lang = {
     "lang_status_unblock": "Unblock",
     "lang_status_mute": "Mute",
     "lang_status_unmute": "Unmute",
+    "lang_status_redraftTitle": "Delete & redraft",
     "lang_status_redraft": "Continue to delete & redraft? You lose statuses of this toot. This fanction may contain some bugs. Images of this toot will be deleted on older than Mastodon 2.4.1.",
     "lang_status_emphas": "'s toots are emphasized. Please reload after this action.",
     "lang_status_unemphas": "'s toots are not emphasized. Please reload after this action.",

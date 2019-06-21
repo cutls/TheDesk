@@ -121,49 +121,54 @@ function playSound() {
 	source.start(0);
 }
 onmessage = function (e) {
-    if (e.data[0] == "details") {
-        details(e.data[1][0], e.data[1][1])
-    } else if (e.data[0] == "udg") {
-        udg(e.data[1][0], e.data[1][1])
-    } else if (e.data[0] == "media") {
-        media(e.data[1][0], e.data[1][1], e.data[1][2])
-    } else if (e.data[0] == "post") {
-        post("pass")
-    } else if (e.data[0] == "toastSaved") {
-		M.toast({ html:  lang.lang_img_DLDone + e.data[1][0] + '<button class="btn-flat toast-action" onclick="openFinder(\'' + e.data[1][1] + '\')">Show</button>', displayLength: 5000 })
-    } else if (e.data[0] == "toastMute") {
-		M.toast({ html:  escapeHTML(e.data[1]) + lang.lang_parse_mute, displayLength: 2000 })
-    } else if (e.data[0] == "toastEmp") {
-		M.toast({ html:  escapeHTML(e.data[1]) + lang.lang_status_emphas, displayLength: 2000 })
-    } else if (e.data[0] == "toastUnEmp") {
-		M.toast({ html:  escapeHTML(e.data[1]) + lang.lang_status_unemphas, displayLength: 2000 })
-    } else if (e.data[0] == "parseColumn") {
-       	parseColumn()
-    } else if (e.data[0] == "sortload") {
-        sortload()
-    } else if (e.data[0] == "exportSettingsCore") {
-        exportSettingsCore()
-    } else if (e.data[0] == "fontList") {
-        fontList(e.data[1])
-    } else if (e.data[0] == "customSoundSave") {
-        customSoundSave(e.data[1][0], e.data[1][1])
-    } else if (e.data[0] == "ctLoadCore") {
-        ctLoadCore(e.data[1])
-    } else if (e.data[0] == "ctLoad") {
-        ctLoad()
-    } else if (e.data[0] == "customConnect") {
-        customConnect(e.data[1])
-    } else if (e.data[0] == "clearCustomImport") {
-        clearCustomImport()
-    } else if (e.data[0] == "npCore") {
-        npCore(e.data[1]);
-    } else if (e.data[0] == "renderMem") {
-        renderMem(e.data[1][0], e.data[1][1], e.data[1][2])
-    } else if (e.data[0] == "updateProg") {
-        updateProg(e.data[1]);
-    } else if (e.data[0] == "updateMess") {
-        updateMess(e.data[1]);
-    } else if (e.data[0] == "renderAbout") {
+	if (e.data[0] == "details") {
+		details(e.data[1][0], e.data[1][1])
+	} else if (e.data[0] == "udg") {
+		udg(e.data[1][0], e.data[1][1])
+	} else if (e.data[0] == "media") {
+		media(e.data[1][0], e.data[1][1], e.data[1][2])
+	} else if (e.data[0] == "post") {
+		post("pass")
+	} else if (e.data[0] == "toastSaved") {
+		M.toast({ html: lang.lang_img_DLDone + e.data[1][0] + '<button class="btn-flat toast-action" onclick="openFinder(\'' + e.data[1][1] + '\')">Show</button>', displayLength: 5000 })
+	} else if (e.data[0] == "toastMute") {
+		M.toast({ html: escapeHTML(e.data[1]) + lang.lang_parse_mute, displayLength: 2000 })
+	} else if (e.data[0] == "toastEmp") {
+		M.toast({ html: escapeHTML(e.data[1]) + lang.lang_status_emphas, displayLength: 2000 })
+	} else if (e.data[0] == "toastUnEmp") {
+		M.toast({ html: escapeHTML(e.data[1]) + lang.lang_status_unemphas, displayLength: 2000 })
+	} else if (e.data[0] == "parseColumn") {
+		parseColumn()
+	} else if (e.data[0] == "sortload") {
+		sortload()
+	} else if (e.data[0] == "exportSettingsCore") {
+		exportSettingsCore()
+	} else if (e.data[0] == "fontList") {
+		fontList(e.data[1])
+	} else if (e.data[0] == "customSoundSave") {
+		customSoundSave(e.data[1][0], e.data[1][1])
+	} else if (e.data[0] == "ctLoadCore") {
+		ctLoadCore(e.data[1])
+	} else if (e.data[0] == "ctLoad") {
+		ctLoad()
+	} else if (e.data[0] == "customConnect") {
+		customConnect(e.data[1])
+	} else if (e.data[0] == "clearCustomImport") {
+		clearCustomImport()
+	} else if (e.data[0] == "npCore") {
+		npCore(e.data[1]);
+	} else if (e.data[0] == "renderMem") {
+		renderMem(e.data[1][0], e.data[1][1], e.data[1][2])
+	} else if (e.data[0] == "updateProg") {
+		updateProg(e.data[1]);
+	} else if (e.data[0] == "updateMess") {
+		updateMess(e.data[1]);
+	} else if (e.data[0] == "renderAbout") {
 		renderAbout(e.data[1]);
-    }
+	} else if (e.data[0] == "alert") {
+		Swal.fire({
+			type: 'info',
+			title: e.data[1]
+		})
+	}
 }

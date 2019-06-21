@@ -195,7 +195,7 @@ ipc.on('langres', function (event, arg) {
 ipc.on('exportSettingsFile', function (event, savedFiles) {
     var exp = exportSettingsCore()
     ipc.send('export', [savedFiles, JSON.stringify(exp)]);
-    alert("Done.")
+    postMessage(["alert", "Done"], "*")
     //cards
     //lang
 });

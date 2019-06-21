@@ -17,24 +17,6 @@ function post(mode, postvis) {
 	var acct_id = $("#post-acct-sel").val();
 	localStorage.setItem("last-use", acct_id);
 	var domain = localStorage.getItem("domain_" + acct_id);
-	if (domain == "theboss.tech") {
-		if (~str.indexOf("#")) {
-			if (str.indexOf("#theboss_tech") == "-1") {
-				if (!confirm(lang.lang_post_tagTL)) {
-					return false;
-				}
-			}
-		}
-	}
-	if (domain == "dtp-mstdn.jp") {
-		if (~str.indexOf("#")) {
-			if (str.indexOf("#dtp") == "-1") {
-				if (!confirm(lang.lang_post_tagTL)) {
-					return false;
-				}
-			}
-		}
-	}
 	if (!localStorage.getItem("cw_sentence")) {
 		var cw_sent = 500;
 	} else {
@@ -91,21 +73,10 @@ function post(mode, postvis) {
 	} else {
 		var vis = $("#vis").text();
 	}
-
 	if (vis != "inherit" && vis != "local") {
 		toot.visibility = vis;
 	} else if (vis == "local") {
 		toot.status = str + "👁️";
-	}
-	//ここに非公開・未収載タグについてwarn
-	if (domain != "kirishima.cloud" && domain != "imastodon.net") {
-		if (~str.indexOf("#")) {
-			if (vis == "local" || vis == "unlisted" || vis == "direct" || vis == "private") {
-				if (!confirm(lang.lang_post_tagVis)) {
-					return false;
-				}
-			}
-		}
 	}
 	if ($("#cw").hasClass("cw-avail")) {
 		var spo = $("#cw-text").val();

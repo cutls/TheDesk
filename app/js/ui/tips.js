@@ -133,7 +133,10 @@ function spotifytips() {
 			spotint = setInterval(spotStart, 1000);
 		});
 	} else {
-		alert(lang.lang_spotify_acct);
+		Swal.fire({
+			type: 'info',
+			title: lang.lang_spotify_acct
+		})
 	}
 }
 function spotStart() {

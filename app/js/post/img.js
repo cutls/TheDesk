@@ -205,17 +205,27 @@ element.addEventListener("paste", function (e) {
 	// 画像以外がペーストされたときのために、元に戻しておく
 });
 function deleteImage(key) {
-	if (!confirm(lang.lang_postimg_delete)) {
-		return false;
-	}
-	var media = $("#media").val();
-	var arr = media.split(",");
-	for (var i = 0; i < media.length; i++) {
-		if (arr[i] == key) {
-			arr.splice(i, 1);
-			break;
+	Swal.fire({
+		title: lang.lang_postimg_delete,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: lang.lang_yesno,
+		cancelButtonText: lang.lang_no
+	}).then((result) => {
+		if (result.value) {
+			var media = $("#media").val();
+			var arr = media.split(",");
+			for (var i = 0; i < media.length; i++) {
+				if (arr[i] == key) {
+					arr.splice(i, 1);
+					break;
+				}
+			}
+			$("#media").val(arr.join(","));
+			$('#preview [data-media=' + key + ']').remove();
 		}
-	}
-	$("#media").val(arr.join(","));
-	$('#preview [data-media=' + key + ']').remove();
+	})
+
 }

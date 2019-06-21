@@ -146,114 +146,136 @@ function multiDel(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
 	//削除確認ダイアログ
-	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] + lang.lang_manager_confirm)) {
-		Object.keys(obj).forEach(function (key) {
-			var nk = key - 1;
-			//公開範囲(差分のみ)
-			if (key >= target) {
-				var oldvis = localStorage.getItem("vis-memory-" + key);
-				if (oldvis) {
-					localStorage.setItem("vis-memory-" + nk, oldvis);
+	Swal.fire({
+		title: lang.lang_manager_logout,
+		text: obj[target]["user"] + "@" + obj[target]["domain"] + lang.lang_manager_confirm,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: lang.lang_yesno,
+		cancelButtonText: lang.lang_no
+	}).then((result) => {
+		if (result.value) {
+			Object.keys(obj).forEach(function (key) {
+				var nk = key - 1;
+				//公開範囲(差分のみ)
+				if (key >= target) {
+					var oldvis = localStorage.getItem("vis-memory-" + key);
+					if (oldvis) {
+						localStorage.setItem("vis-memory-" + nk, oldvis);
+					}
 				}
-			}
-			//独自ロケール
-			localStorage.removeItem("home_" + key);
-			localStorage.removeItem("local_" + key);
-			localStorage.removeItem("public_" + key);
-			localStorage.removeItem("notification_" + key);
-			//アクセストークンとドメイン、プロフ(差分)
-			if (key > target) {
-				var olddom = localStorage.getItem("domain_" + key);
-				localStorage.setItem("domain_" + nk, olddom);
-				var oldat = localStorage.getItem("acct_" + key + "_at");
-				localStorage.setItem("acct_" + nk + "_at", oldat);
-				localStorage.setItem("name_" + nk, localStorage.getItem("name_" + key));
-				localStorage.setItem("user_" + target, localStorage.getItem("user_" + key));
-				localStorage.setItem("user-id_" + target, localStorage.getItem("user-id_" + key));
-				localStorage.setItem("prof_" + target, localStorage.getItem("prof_" + key));
-			}
+				//独自ロケール
+				localStorage.removeItem("home_" + key);
+				localStorage.removeItem("local_" + key);
+				localStorage.removeItem("public_" + key);
+				localStorage.removeItem("notification_" + key);
+				//アクセストークンとドメイン、プロフ(差分)
+				if (key > target) {
+					var olddom = localStorage.getItem("domain_" + key);
+					localStorage.setItem("domain_" + nk, olddom);
+					var oldat = localStorage.getItem("acct_" + key + "_at");
+					localStorage.setItem("acct_" + nk + "_at", oldat);
+					localStorage.setItem("name_" + nk, localStorage.getItem("name_" + key));
+					localStorage.setItem("user_" + target, localStorage.getItem("user_" + key));
+					localStorage.setItem("user-id_" + target, localStorage.getItem("user-id_" + key));
+					localStorage.setItem("prof_" + target, localStorage.getItem("prof_" + key));
+				}
 
-		});
-		//とりあえず消す
-		obj.splice(target, 1);
-		var json = JSON.stringify(obj);
-		localStorage.setItem("multi", json);
-		load();
-		//カラムデータコンフリクト
-		var col = localStorage.getItem("column");
-		var oldcols = JSON.parse(col);
-		var newcols = [];
-		Object.keys(oldcols).forEach(function (key) {
-			var nk = key - 1;
-			var oldcol = oldcols[key];
-			if (target < oldcol.domain) {
-				var newdom = oldcol.domain - 1;
-			} else {
-				var newdom = oldcol.domain;
-			}
-			var type = oldcol.type;
-			//消した垢のコラムじゃないときコピー
-			if (target != oldcol.domain) {
-				var add = {
-					domain: newdom,
-					type: type
-				};
-				newcols.push(add);
-			}
-		});
-		var json = JSON.stringify(newcols);
-		localStorage.setItem("column", json);
+			});
+			//とりあえず消す
+			obj.splice(target, 1);
+			var json = JSON.stringify(obj);
+			localStorage.setItem("multi", json);
+			load();
+			//カラムデータコンフリクト
+			var col = localStorage.getItem("column");
+			var oldcols = JSON.parse(col);
+			var newcols = [];
+			Object.keys(oldcols).forEach(function (key) {
+				var nk = key - 1;
+				var oldcol = oldcols[key];
+				if (target < oldcol.domain) {
+					var newdom = oldcol.domain - 1;
+				} else {
+					var newdom = oldcol.domain;
+				}
+				var type = oldcol.type;
+				//消した垢のコラムじゃないときコピー
+				if (target != oldcol.domain) {
+					var add = {
+						domain: newdom,
+						type: type
+					};
+					newcols.push(add);
+				}
+			});
+			var json = JSON.stringify(newcols);
+			localStorage.setItem("column", json);
 
-	}
+		}
+	})
 }
 function multiDel2(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	if (confirm(obj[target]["user"] + "@" + obj[target]["domain"] + lang.lang_manager_confirm)) {
-		obj.splice(target, 1);
-		var json = JSON.stringify(obj);
-		localStorage.setItem("multi", json);
-		Object.keys(obj).forEach(function (key) {
-			if (key >= target) {
-				var oldvis = localStorage.getItem("vis-memory-" + key);
-				if (oldvis) {
-					var nk = key - 1;
-					localStorage.setItem("vis-memory-" + nk, oldvis);
-				}
-			}
-			localStorage.removeItem("home_" + key);
-			localStorage.removeItem("local_" + key);
-			localStorage.removeItem("public_" + key);
-			localStorage.removeItem("notification_" + key);
-			refresh(key);
-		});
-		var col = localStorage.getItem("column");
-		if (!col) {
-			var obj = [{
-				domain: 0,
-				type: 'local'
-			}];
-			localStorage.setItem("card_0", "true");
+	Swal.fire({
+		title: lang.lang_manager_logout,
+		text: obj[target]["user"] + "@" + obj[target]["domain"] + lang.lang_manager_confirm,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: lang.lang_yesno,
+		cancelButtonText: lang.lang_no
+	}).then((result) => {
+		if (result.value) {
+			obj.splice(target, 1);
 			var json = JSON.stringify(obj);
-			localStorage.setItem("column", json);
-		} else {
-			var cobj = JSON.parse(col);
-		}
-		Object.keys(cobj).forEach(function (key) {
-			var column = cobj[key];
-			if (column.domain > target) {
-				var nk = key - 1;
-				column.domain = nk;
-				cobj[key] = column;
-			} else if (column.domain == target) {
-				localStorage.removeItem("card_" + tlid);
-				cobj.splice(key, 1);
+			localStorage.setItem("multi", json);
+			Object.keys(obj).forEach(function (key) {
+				if (key >= target) {
+					var oldvis = localStorage.getItem("vis-memory-" + key);
+					if (oldvis) {
+						var nk = key - 1;
+						localStorage.setItem("vis-memory-" + nk, oldvis);
+					}
+				}
+				localStorage.removeItem("home_" + key);
+				localStorage.removeItem("local_" + key);
+				localStorage.removeItem("public_" + key);
+				localStorage.removeItem("notification_" + key);
+				refresh(key);
+			});
+			var col = localStorage.getItem("column");
+			if (!col) {
+				var obj = [{
+					domain: 0,
+					type: 'local'
+				}];
+				localStorage.setItem("card_0", "true");
+				var json = JSON.stringify(obj);
+				localStorage.setItem("column", json);
+			} else {
+				var cobj = JSON.parse(col);
 			}
-		});
-		var json = JSON.stringify(column);
-		localStorage.setItem("column", json);
-		load();
-	}
+			Object.keys(cobj).forEach(function (key) {
+				var column = cobj[key];
+				if (column.domain > target) {
+					var nk = key - 1;
+					column.domain = nk;
+					cobj[key] = column;
+				} else if (column.domain == target) {
+					localStorage.removeItem("card_" + tlid);
+					cobj.splice(key, 1);
+				}
+			});
+			var json = JSON.stringify(column);
+			localStorage.setItem("column", json);
+			load();
+		}
+	})
 }
 
 //サポートインスタンス

@@ -108,7 +108,10 @@ function nowplaying(mode) {
                 $("#textarea").val(content);
             });
         } else {
-            alert(lang.lang_spotify_acct);
+            Swal.fire({
+                type: 'info',
+                title: lang.lang_spotify_acct
+            })
         }
     } else if (mode == "itunes") {
         postMessage(["itunes", ""], "*")
