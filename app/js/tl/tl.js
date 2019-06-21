@@ -425,6 +425,11 @@ function moreload(type, tlid) {
 			todo(error);
 			console.error(error);
 		}).then(function (json) {
+			if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+				var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+			} else {
+				var mute = [];
+			}
 			if (misskey) {
 				var templete = misskeyParse(json, '', acct_id, tlid, "", mute);
 			} else {

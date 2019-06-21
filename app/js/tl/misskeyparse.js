@@ -50,14 +50,14 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		native = "yes";
 	}
 	//クライアント強調
-	var emp = localStorage.getItem("client_emp");
-	if (emp) {
-		var emp = JSON.parse(emp);
+	var empCli = localStorage.getItem("client_emp");
+	if (empCli) {
+		var empCli = JSON.parse(empCli);
 	}
 	//クライアントミュート
-	var mute = localStorage.getItem("client_mute");
-	if (mute) {
-		var mute = JSON.parse(mute);
+	var muteCli = localStorage.getItem("client_mute");
+	if (muteCli) {
+		var muteCli = JSON.parse(muteCli);
 	}
 	//ユーザー強調
 	var useremp = localStorage.getItem("user_emp");
@@ -65,17 +65,19 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		var useremp = JSON.parse(useremp);
 	}
 	//ワード強調
-	var wordemp = localStorage.getItem("word_emp");
-	if (wordemp) {
-		var wordemp = JSON.parse(wordemp);
+	var wordempList = localStorage.getItem("word_emp");
+	if (wordempList) {
+		var wordempList = JSON.parse(wordempList);
 	}
 	//ワードミュート
-	var wordmute = localStorage.getItem("word_mute");
-	if (wordmute) {
-		var wordmute = JSON.parse(wordmute);
-		wordmute = wordmute.concat(mutefilter);
+	var wordmuteList = localStorage.getItem("word_mute");
+	if (wordmuteList) {
+		var wordmuteList = JSON.parse(wordmuteList);
+		if (wordmuteList) {
+			wordmuteList = wordmuteList.concat(mutefilter);
+		}
 	} else {
-		wordmute = mutefilter;
+		wordmuteList = mutefilter;
 	}
 	//Ticker
 	var tickerck = localStorage.getItem("ticker_ok");
@@ -349,16 +351,16 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				viashow = "via-hide";
 			}
 			//強調チェック
-			Object.keys(emp).forEach(function (key6) {
-				var cli = emp[key6];
-				if (cli == via) {
+			Object.keys(empCli).forEach(function (key6) {
+				var empCliList = empCli[key6];
+				if (empCliList == via) {
 					boostback = "emphasized";
 				}
 			});
 			//ミュートチェック
-			Object.keys(mute).forEach(function (key7) {
-				var cli = mute[key7];
-				if (cli == via) {
+			Object.keys(muteCli).forEach(function (key7) {
+				var muteCliList = muteCli[key7];
+				if (muteCliList == via) {
 					boostback = "hide";
 				}
 			});
@@ -581,16 +583,16 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		//アバター
 		var avatar = toot.user.avatarUrl;
 		//ワードミュート
-		if (wordmute) {
-			Object.keys(wordmute).forEach(function (key8) {
-				var worde = wordmute[key8];
+		if (wordmuteList) {
+			Object.keys(wordmuteList).forEach(function (key8) {
+				var worde = wordmuteList[key8];
 				if (worde) {
 					if (worde.tag) {
-						var word = worde.tag;
+						var wordList = worde.tag;
 					} else {
-						var word = worde
+						var wordList = worde
 					}
-					var regExp = new RegExp(word.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
+					var regExp = new RegExp(wordList.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
 					if ($.strip_tagstemp(content).match(regExp)) {
 						boostback = "hide by_filter";
 					}
@@ -598,13 +600,13 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			});
 		}
 		//ワード強調
-		if (wordemp) {
-			Object.keys(wordemp).forEach(function (key9) {
-				var word = wordemp[key9];
-				if (word) {
-					var word = word.tag;
-					var regExp = new RegExp(word.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
-					content = content.replace(regExp, '<span class="emp">' + word + "</span>");
+		if (wordempList) {
+			Object.keys(wordempList).forEach(function (key9) {
+				var wordList = wordempList[key9];
+				if (wordList) {
+					var wordList = wordList.tag;
+					var regExp = new RegExp(wordList.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
+					content = content.replace(regExp, '<span class="emp">' + wordList + "</span>");
 				}
 			});
 		}

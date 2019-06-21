@@ -183,7 +183,7 @@ function block(acct_id) {
 }
 
 //ミュート
-function mute(acct_id) {
+function muteDo(acct_id) {
 	if (!acct_id) {
 		var acct_id = $('#his-data').attr("use-acct");
 	}
