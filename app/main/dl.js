@@ -27,6 +27,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 				"frame": false, // 枠の無いウィンドウ
 				"resizable": false
 			});
+			//updatewin.openDevTools()
 			var lang = fs.readFileSync(lang_path, 'utf8');
 			updatewin.loadURL(base + lang + '/update.html');
 
@@ -44,7 +45,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 				directory: dir,
 				openFolderWhenDone: true,
 				onProgress: function (event) {
-					e.sender.webContents.send('prog', e);
+					e.sender.webContents.send('prog', event);
 				},
 				saveAs: false
 			};
@@ -53,7 +54,6 @@ function dl(mainWindow, lang_path, base, dirname) {
 				.then(dl => {
 					e.sender.webContents.send('mess', "ダウンロードが完了しました。");
 					app.quit();
-
 				})
 				.catch(console.error);
 		}

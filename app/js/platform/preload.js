@@ -237,6 +237,7 @@ ipc.on('memory', function (event, arg) {
 })
 //update.html
 ipc.on('prog', function (event, arg) {
+    console.log(arg)
     postMessage(["updateProg", arg], "*")
 })
 ipc.on('mess', function (event, arg) {
