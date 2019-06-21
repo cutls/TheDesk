@@ -66,7 +66,7 @@
   },
   "devDependencies": {
     "electron": "^5.0.4",
-    "electron-builder": "^20.43.0",
+    "electron-builder": "^20.44.4",
     "readline-sync": "1.4.9"
   },
   "build": {
