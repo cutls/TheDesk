@@ -51,7 +51,9 @@
   "dependencies": {
     "electron-dl": "^1.14.0",
     "jimp": "^0.6.4",
+    "jquery": "^3.4.1",
     "json5": "^2.1.0",
+    "materialize-css": "^1.0.0-rc.2",
     "node-notifier": "^5.4.0",
     "sumchecker": "^3.0.0",
     "vue": "^2.6.10"

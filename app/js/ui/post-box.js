@@ -39,6 +39,7 @@ function show() {
 	$('#post-box').css("left", left + "px")
 	$('#post-box').css("top", top + "px")
 	$('#post-box').fadeIn();
+	$('#textarea').characterCounter();
 }
 
 $(function () {

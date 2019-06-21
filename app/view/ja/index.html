@@ -4,7 +4,7 @@
 <head>
 	<title>TheDesk</title>
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
-	<link href="../../css/materialize.css" type="text/css" rel="stylesheet">
+	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
 		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
@@ -25,9 +25,9 @@
 </head>
 
 <body>
-	<script type="text/javascript" src="../../js/common/jquery.js"></script>
+	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="../../js/platform/first.js"></script>
-	<script type="text/javascript" src="../../js/common/materialize.js"></script>
+	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
 	<script type="text/javascript" src="../../js/lang/lang.ja.js"></script>
 	<script type="text/javascript" src="../../js/common/time.js"></script>
 	<script type="text/javascript" src="../../js/common/blurhash.js"></script>
@@ -36,7 +36,7 @@
 	<script type="text/javascript" src="../../js/common/modal.js"></script>
 	<script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
 	<script>
-		var ver = "Usamin (18.6.2)";
+		var ver = "Usamin (18.6.1)";
 		//betaを入れるとバージョンチェックしない
 		//GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 		//var ver="beta";
@@ -161,8 +161,8 @@
 					<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
 						<i class="waves-effect gray material-icons" id="nsfw" title="画像に制限を付与"
 							onclick="nsfw()">visibility_off</i>
-						<i class="waves-effect gray material-icons purple-text dropdown-trigger"
-							data-target="dropdown1" id="vis-icon">public</i>
+						<i class="waves-effect gray material-icons purple-text dropdown-trigger" data-target="dropdown1"
+							id="vis-icon">public</i>
 						<a class="waves-effect gray" id="cw" onclick="cw()" title="コンテンツワーニング(トゥートを表示する前にメッセージで隠す)">CW</a>
 						<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray"
 									onclick="fileselect()" title="ファイルを選択">photo_library</i></span></span>
@@ -326,7 +326,7 @@
 	<!-- Modal Structure Tootdata-->
 	<div id="tootmodal" class="modal modal-fixed-footer">
 		<div class="modal-content">
-			<ul class="collapsible"id="det-col">
+			<ul class="collapsible" id="det-col">
 				<li class="dm-hide">
 					<div class="collapsible-header">
 						<i class="material-icons">people_outline</i>これより後のLocal TL(言及確認)
@@ -689,7 +689,8 @@
 				・アカウント選択のデザイン修正。クリック直後に閉じてしまうバグを修正。<br>
 				・投票済みのアンケートについて修正。<br>
 				・<b>セキュリティの大幅な強化。</b><br>
-				・ご注意<img class="emoji" draggable="false" alt="⚠️" src="https://twemoji.maxcdn.com/2/72x72/26a0.png">: TweetDeck統合は設定で有効にしないと使えなくなりました。<br>
+				・ご注意<img class="emoji" draggable="false" alt="⚠️" src="https://twemoji.maxcdn.com/2/72x72/26a0.png">:
+				TweetDeck統合は設定で有効にしないと使えなくなりました。<br>
 				・Adobeフォトエディタの廃止
 				<br>
 				<h5>ThinkingDeskラベル</h5>
