@@ -497,6 +497,12 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 						'" data-type="video" class="img-parsed"><video src="' +
 						purl + '" class="' + sense +
 						' toot-img pointer" style="max-width:100%;"></a></span>';
+				} else if (media.type.indexOf("audio") !== -1) {
+					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
+						acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
+						'" data-type="video" class="img-parsed"><audio src="' +
+						purl + '" class="' + sense +
+						' toot-img pointer" style="width:100%;" controls></a></span>';
 				} else {
 					viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
 						acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +

@@ -608,6 +608,11 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				} else {
 					if (media.type == "unknown") {
 						viewer = viewer + '<a href="' + media.remote_url + '" title="' + media.remote_url + '">[' + lang.lang_parse_unknown + ']</a> '
+					} else if (media.type == "audio") {
+						viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',' +
+							acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
+							'" data-type="audio" class="img-parsed"><audio src="' +
+							url + '" class="pointer" style="width:100%;" controls></a></span>';
 					} else {
 						viewer = viewer + '<a onclick="imgv(\'' + id + '\',\'' + key2 + '\',\'' +
 							acct_id + '\')" id="' + id + '-image-' + key2 + '" data-url="' + url +
