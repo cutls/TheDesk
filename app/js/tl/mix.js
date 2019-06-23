@@ -43,15 +43,15 @@ function mixtl(acct_id, tlid, type, delc, voice) {
 				timeline.splice(20);
 			}
 			var templete = "";
+			if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+				var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), "mix");
+			} else {
+				var mute = [];
+			}
 			Object.keys(timeline).forEach(function (key) {
 				var pkey = key * 1 + 1;
 				if (pkey < timeline.length) {
 					if (date(timeline[key].created_at, "unix") != date(timeline[pkey].created_at, "unix")) {
-						if (localStorage.getItem("filter_" + acct_id) != "undefined") {
-							var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), "mix");
-						} else {
-							var mute = [];
-						}
 						if (type == "integrated") {
 							templete = templete + parse([timeline[key]], '', acct_id, tlid, "", mute, "mix");
 						} else if (type == "plus") {
