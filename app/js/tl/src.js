@@ -54,7 +54,7 @@ function src(mode) {
 					tags = tags + '<a onclick="tl(\'tag\',\'' + tag + '\',\'' + acct_id +
 						'\',\'add\')" class="pointer">#' + escapeHTML(tag) + '</a><br> ';
 				} else {
-					tags = tags + graphDraw(tag);
+					tags = tags + graphDraw(tag, acct_id);
 				}
 
 			});
@@ -63,12 +63,12 @@ function src(mode) {
 		//トゥート
 		if (json.statuses[0]) {
 			var templete = parse(json.statuses, '', acct_id);
-			$("#src-contents").append("Mentions<br>" + templete);
+			$("#src-contents").append("<br>Mentions<br>" + templete);
 		}
 		//アカウント
 		if (json.accounts[0]) {
 			var templete = userparse(json.accounts, '', acct_id);
-			$("#src-contents").append("Accounts<br>" + templete);
+			$("#src-contents").append("<br>Accounts<br>" + templete);
 		}
 		jQuery("time.timeago").timeago();
 	});
@@ -164,7 +164,7 @@ function moreTs(tlid, q) {
 		jQuery("time.timeago").timeago();
 	});
 }
-function graphDraw(tag) {
+function graphDraw(tag, acct_id) {
 	var tags = "";
 	var his = tag.history;
 	var max = Math.max.apply(null, [his[0].uses, his[1].uses, his[2].uses, his[3].uses, his[4].uses, his[5].uses, his[6].uses]);
