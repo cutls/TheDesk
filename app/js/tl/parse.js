@@ -432,20 +432,24 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			viashow = "hide";
 		} else {
 			var via = escapeHTML(toot.application.name);
-			//強調チェック
-			Object.keys(empCli).forEach(function (key6) {
-				var empCliList = empCli[key6];
-				if (empCliList == via) {
-					boostback = "emphasized";
-				}
-			});
-			//ミュートチェック
-			Object.keys(muteCli).forEach(function (key7) {
-				var muteCliList = muteCli[key7];
-				if (muteCliList == via) {
-					boostback = "hide";
-				}
-			});
+			if (empCli) {
+				//強調チェック
+				Object.keys(empCli).forEach(function (key6) {
+					var empCliList = empCli[key6];
+					if (empCliList == via) {
+						boostback = "emphasized";
+					}
+				});
+			}
+			if (muteCli) {
+				//ミュートチェック
+				Object.keys(muteCli).forEach(function (key7) {
+					var muteCliList = muteCli[key7];
+					if (muteCliList == via) {
+						boostback = "hide";
+					}
+				});
+			}
 		}
 		if (mix == "pinned") {
 			boostback = "emphasized";
