@@ -3,8 +3,7 @@
 *.7z
 *.exe
 TheDesk-*
-app/build
-build
+build/*
 app/.DS_Store
 .DS_Store
 .vs/*
