@@ -20,7 +20,6 @@ $(function ($) {
 					return false;
 				}
 			}
-
 		}
 		//Ctrl+Enter:投稿
 		if (event.metaKey || event.ctrlKey && wv) {
@@ -36,14 +35,6 @@ $(function ($) {
 				return false;
 			}
 		}
-
-		//Shift+Space:Markdownゼロ幅スペース
-		if (event.shiftKey) {
-			if (e.keyCode === 32) {
-				brInsert("​");
-				return false;
-			}
-		}
 		//Esc:消す
 		if (e.keyCode === 27 && wv) {
 			hide();
@@ -53,14 +44,6 @@ $(function ($) {
 		if (e.keyCode === 116 && wv) {
 			location.href = "index.html";
 			return false;
-		}
-		//Ctrl+R:ランキング
-		if ((event.metaKey || event.ctrlKey) && wv) {
-			if (e.keyCode === 82) {
-				if (localStorage.getItem("kirishima")) {
-					window.open("https://astarte.thedesk.top");
-				}
-			}
 		}
 		//Ctrl+Sift+C:全消し
 		if (((event.metaKey || event.ctrlKey) && event.shiftKey) && wv) {
