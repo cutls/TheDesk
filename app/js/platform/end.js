@@ -120,6 +120,9 @@ function playSound() {
 	volumeControl.gain.value = 0.8
 	source.start(0);
 }
+function nano() {
+	postMessage(["nano", null], "*")
+}
 onmessage = function (e) {
 	if (e.data[0] == "details") {
 		details(e.data[1][0], e.data[1][1])

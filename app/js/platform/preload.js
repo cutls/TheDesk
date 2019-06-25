@@ -55,6 +55,8 @@ onmessage = function (e) {
         ipc.send('theme-css-request', e.data[1]);
     } else if (e.data[0] == "downloadButton") {
         ipc.send('download-btn', e.data[1]);
+    } else if (e.data[0] == "nano") {
+        ipc.send('nano', null);
     }
 }
 //version.js
@@ -76,9 +78,7 @@ ipc.on('shownotf', function (event, args) {
         postMessage(["udg", [user, acct_id]], "*")
     }
 })
-function nano() {
-    ipc.send('nano', "");
-}
+
 //first.js
 ipc.on('custom-css-response', function (event, arg) {
     if (arg == "") { return false; }
