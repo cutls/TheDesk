@@ -64,9 +64,6 @@ ipc.on('platform', function (event, args) {
     localStorage.setItem("bit", args[1])
     localStorage.setItem("about", JSON.stringify([args[2], args[3], args[4]]))
 })
-ipc.on('winstore', function (event, arg) {
-    localStorage.setItem("winstore", arg)
-})
 
 ipc.on('reload', function (event, arg) {
     location.reload();

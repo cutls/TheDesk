@@ -304,7 +304,7 @@ function login(url) {
 		return;
 	}
 	if ($('#linux:checked').val() == "on") {
-		var red = "https://thedesk.top/hello.html"
+		var red = "urn:ietf:wg:oauth:2.0:oob"
 	} else {
 		var red = 'thedesk://manager';
 	}
@@ -508,7 +508,7 @@ function code(code) {
 		httpreq.responseType = "json";
 		httpreq.send(JSON.stringify({
 			grant_type: "authorization_code",
-			redirect_uri: "https://thedesk.top/hello.html",
+			redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
 			client_id: id,
 			client_secret: secret,
 			code: code

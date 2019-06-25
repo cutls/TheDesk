@@ -51,22 +51,6 @@ function system(mainWindow, dir, lang, dirname) {
 		fs.writeFileSync(lang_path, arg);
 		e.sender.webContents.send('langres', "");
 	})
-	//ストアから入れたかダイアログ
-	ipc.on('dialogStore', function (e, args) {
-		dialog.showMessageBox(args, function (arg) {
-			if (arg == 1) {
-				e.sender.webContents.send('winstore', "winstore");
-			} else {
-				e.sender.webContents.send('winstore', "localinstall");
-			}
-		});
-	})
-	//CWのダイアログ
-	ipc.on('dialogCW', function (e, args) {
-		dialog.showMessageBox(args, function (arg) {
-			e.sender.webContents.send('dialogCWRender', arg);
-		});
-	})
 	//クライアントのダイアログ
 	ipc.on('dialogClient', function (e, args) {
 		dialog.showMessageBox(args, function (arg) {
