@@ -21,9 +21,9 @@ var lang = {
     //common/version.js
     "lang_version_usever": "No update is found({{ver}})",
     "lang_version_skipver": "Update was ignored.",
-    "lang_version_platform": "Was this software installed at Microsoft Store? Most users select 'No' since they installed from the website. When select 'yes', any update was ignored.",
-    "lang_version_platform_linux": "Was this software installed at Snapcraft(snapd)? Most users select 'No' since they installed from the website. When select 'yes', any update was ignored.",
-    "lang_version_platform_mac": "Was this software installed at Homebrew Cask? Most users select 'No' since they installed from the website. When select 'yes', any update was ignored.",
+    "lang_version_platform": "Do you want auto-updates?(users installed on Microsoft Store select 'No')",
+    "lang_version_platform_linux": "Do you want auto-updates?(users installed on Snapcraft select 'No')",
+    "lang_version_platform_mac": "Do you want auto-updates?(Homebrew Cask users select 'No')",
     //login
     //login/login.js
     "lang_login_noauth": "Show TL of unlogined accounts",
@@ -111,6 +111,8 @@ var lang = {
     //tl/tl.js
     "lang_tl_media": "Media",
     "lang_tl_reconnect": "Reconnect to streaming API",
+    //ui/img.js
+    "lang_img_DLDone": "Downloaded:",
     //ui/layout.js
     "lang_layout_gotop": "Go top of this column. When icon is red, this column cannot connect straming API. Please reload.",
     "lang_layout_thisacct": "{{notf}} of this account",
@@ -129,6 +131,8 @@ var lang = {
     "lang_layout_excludingbt": "Show BT mode(OFF/Exclude BT/Only BT)",
     "lang_layout_leftFold": "Stack to the left",
     "lang_layout_leftUnfold": "Dock on the right",
+    "lang_layout_deleteColumn":"Delete this column",
+    "lang_layout_deleteColumnDesc":"Delete this column",
     //ui/sort.js
     "lang_sort_gothis": "Go to this column",
     "lang_sort_remthis": "Delete this column",

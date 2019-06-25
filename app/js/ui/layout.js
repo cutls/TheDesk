@@ -364,8 +364,26 @@ function addselCk() {
 function removeColumn(tlid) {
 	$("#sort-box").addClass("hide");
 	$("#sort-box").removeClass("show");
-	//聞く
-	postMessage(["columnDel", tlid], "*")
+	Swal.fire({
+		title: lang.lang_layout_deleteColumn,
+		text: lang.lang_layout_deleteColumnDesc,
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: lang.lang_yesno,
+		cancelButtonText: lang.lang_no
+	}).then((result) => {
+		if (result.value) {
+			var multi = localStorage.getItem("column");
+			var obj = JSON.parse(multi);
+			obj.splice(tlid, 1);
+			var json = JSON.stringify(obj);
+			localStorage.setItem("column", json);
+			parseColumn()
+			sortLoad()
+		}
+	});
 }
 
 //設定トグル

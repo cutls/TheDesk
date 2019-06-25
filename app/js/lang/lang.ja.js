@@ -131,6 +131,8 @@ var lang = {
     "lang_layout_excludingbt": "BT表示(OFF/BT除外/BTのみ)",
     "lang_layout_leftFold": "左へ重ねる",
     "lang_layout_leftUnfold": "右へ出す",
+    "lang_layout_deleteColumn":"カラム削除",
+    "lang_layout_deleteColumnDesc":"カラムを削除しますか？",
     //ui/sort.js
     "lang_sort_gothis": "このカラムへ",
     "lang_sort_remthis": "このカラムを削除",

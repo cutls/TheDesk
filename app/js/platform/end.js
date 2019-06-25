@@ -136,8 +136,6 @@ onmessage = function (e) {
 		M.toast({ html: lang.lang_img_DLDone + e.data[1][0] + '<button class="btn-flat toast-action" onclick="openFinder(\'' + e.data[1][1] + '\')">Show</button>', displayLength: 5000 })
 	} else if (e.data[0] == "parseColumn") {
 		parseColumn()
-	} else if (e.data[0] == "sortload") {
-		sortload()
 	} else if (e.data[0] == "exportSettingsCore") {
 		exportSettingsCore()
 	} else if (e.data[0] == "fontList") {

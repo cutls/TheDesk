@@ -146,33 +146,5 @@ function templete(lang, mainWindow, packaged, dir) {
     ];
     return menu;
 }
-function delsel(lang) {
-    const dict = {
-        "delete": {
-            "ja": "カラム削除",
-            "en": "Delete this column"
-        },
-        "mess": {
-            "ja": "カラムを削除しますか？(すべてのカラムのリンク解析がOFFになります。)",
-            "en": "Delete this column(URL analyzes of all windows will be disabled.)"
-        },
-        "yes": {
-            "ja": "はい",
-            "en": "Yes"
-        },
-        "no": {
-            "ja": "いいえ",
-            "en": "No"
-        }
-    }
-    const options = {
-        type: 'info',
-        title: dict.delete[lang],
-        message: dict.mess[lang],
-        buttons: [dict.no[lang], dict.yes[lang]]
-    }
-    return options;
-}
 
 exports.template = templete;
-exports.delsel = delsel;

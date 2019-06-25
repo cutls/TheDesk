@@ -111,23 +111,6 @@ ipc.on('general-dl-message', function (event, arg) {
     console.log("saved")
     postMessage(["toastSaved", [arg, argC]], "*")
 })
-//layout.js
-ipc.on('column-del-reply', function (event, args) {
-    if (args[0] === 1) {
-        var multi = localStorage.getItem("column");
-        var obj = JSON.parse(multi);
-        localStorage.removeItem("card_" + args[1]);
-        obj.splice(args[1], 1);
-        for (var i = 0; i < obj.length; i++) {
-            localStorage.setItem("card_" + i, "true");
-            localStorage.removeItem("catch_" + i);
-        }
-        var json = JSON.stringify(obj);
-        localStorage.setItem("column", json);
-        postMessage(["parseColumn", ""], "*")
-        postMessage(["sortload", ""], "*")
-    }
-})
 //setting.js
 ipc.on('langres', function (event, arg) {
     location.href = "../" + lang + "/setting.html"

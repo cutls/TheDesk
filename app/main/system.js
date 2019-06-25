@@ -136,13 +136,6 @@ function system(mainWindow, dir, lang, dirname) {
 		window.loadURL(dir + '/about.html?ver=' + ver);
 		return "true"
 	}
-	ipc.on('column-del', (e, tlid) => {
-		console.log(tlid);
-		var options = language.delsel(lang)
-		dialog.showMessageBox(options, function (index) {
-			e.sender.webContents.send('column-del-reply', [index, tlid]);
-		})
-	});
 	ipc.on('nano', function (e, x, y) {
 
 		var nano_info_path = join(app.getPath("userData"),
