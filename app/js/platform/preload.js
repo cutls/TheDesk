@@ -102,63 +102,6 @@ ipc.on('theme-css-response', function (event, arg) {
 ipc.on('bmp-img-comp', function (event, b64) {
     postMessage(["media", [b64[0], "image/png", b64[1]]], "*")
 });
-//post.js
-ipc.on('dialogCWRender', function (event, arg) {
-    if (arg === 1) {
-        $("#cw-text").show();
-        $("#cw").addClass("yellow-text");
-        $("#cw").addClass("cw-avail");
-        $("#cw-text").val(plus);
-        postMessage(["post", ""], "*")
-    } else if (arg === 2) {
-        postMessage(["post", ""], "*")
-    }
-});
-//parse.js
-ipc.on('dialogClientRender', function (event, arg) {
-    if (arg === 1) {
-        var cli = localStorage.getItem("client_emp");
-        var obj = JSON.parse(cli);
-        if (!obj) {
-            var obj = [];
-            obj.push(name);
-            postMessage(["toastEmp", name], "*")
-        } else {
-            var can;
-            Object.keys(obj).forEach(function (key) {
-                var cliT = obj[key];
-                if (cliT != name && !can) {
-                    can = false;
-                } else {
-                    can = true;
-                    obj.splice(key, 1);
-                    postMessage(["toastUnEmp", name], "*")
-                }
-            });
-            if (!can) {
-                obj.push(name);
-                postMessage(["toastEmp", name], "*")
-            } else {
-
-            }
-        }
-        var json = JSON.stringify(obj);
-        localStorage.setItem("client_emp", json);
-    } else if (arg === 2) {
-        var cli = localStorage.getItem("client_mute");
-        var obj = JSON.parse(cli);
-        if (!obj) {
-            obj = [];
-        }
-        obj.push(name);
-        var json = JSON.stringify(obj);
-        localStorage.setItem("client_mute", json);
-        postMessage(["toastMute", name], "*")
-    } else {
-        return;
-    }
-    parseColumn();
-});
 //ui,img.js
 ipc.on('general-dl-prog', function (event, arg) {
     console.log("Progress: " + arg);

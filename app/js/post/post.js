@@ -23,20 +23,39 @@ function post(mode, postvis) {
 		var cw_sent = localStorage.getItem("cw_sentence");
 	}
 	if (!localStorage.getItem("cw_letters")) {
-		var cw_ltres = 500;
+		var cw_ltres = 7000;
 	} else {
 		var cw_ltres = localStorage.getItem("cw_letters");
 	}
 	if (domain != "kirishima.cloud") {
 		if (mode != "pass" && !$("#cw").hasClass("cw-avail") && (str.length > cw_sent || (str.split("\n").length - 1) > cw_ltres)) {
+			console.log("out")
 			var plus = str.replace(/\n/g, "").slice(0, 10) + "...";
-			const options = {
-				type: 'info',
+			Swal.fire({
 				title: lang.lang_post_cwtitle,
-				message: lang.lang_post_cwtxt + plus,
-				buttons: [lang.lang_post_btn1, lang.lang_post_btn2, lang.lang_post_btn3]
-			}
-			postMessage(["dialogCW", options], "*")
+				text: lang.lang_post_cwtxt + plus,
+				type: 'info',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#3085d6',
+				confirmButtonText: lang.lang_post_btn2,
+				cancelButtonText: lang.lang_post_btn3,
+				showCloseButton: true,
+				focusConfirm: false,
+			}).then((result) => {
+				console.log(result)
+				if (result.dismiss == "cancel") {
+					//btn3:sonomama
+					post("pass")
+				} else if (result.value) {
+					//btn2:auto-CW
+					$("#cw-text").show();
+					$("#cw").addClass("yellow-text");
+					$("#cw").addClass("cw-avail");
+					$("#cw-text").val(plus);
+					post("pass")
+				}
+			})
 			return false;
 		}
 	}

@@ -1019,13 +1019,62 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 function client(name) {
 	if (name != "Unknown") {
 		//聞く
-		const options = {
-			type: 'info',
+		Swal.fire({
 			title: lang.lang_parse_clientop,
-			message: name + lang.lang_parse_clienttxt,
-			buttons: [lang.lang_parse_clientno, lang.lang_parse_clientemp, lang.lang_parse_clientmute]
-		}
-		postMessage(["dialogClient", options], "*")
+			text: name + lang.lang_parse_clienttxt,
+			type: 'info',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#3085d6',
+			confirmButtonText: lang.lang_parse_clientmute,
+			cancelButtonText: lang.lang_parse_clientemp,
+			showCloseButton: true,
+			focusConfirm: false,
+		}).then((result) => {
+			console.log(result)
+			if (result.dismiss == "cancel") {
+				//Emp
+				var cli = localStorage.getItem("client_emp");
+				var obj = JSON.parse(cli);
+				if (!obj) {
+					var obj = [];
+					obj.push(name);
+					M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
+				} else {
+					var can;
+					Object.keys(obj).forEach(function (key) {
+						var cliT = obj[key];
+						if (cliT != name && !can) {
+							can = false;
+						} else {
+							can = true;
+							obj.splice(key, 1);
+							M.toast({ html: escapeHTML(name) + lang.lang_status_unemphas, displayLength: 2000 })
+						}
+					});
+					if (!can) {
+						obj.push(name);
+						M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
+					} else {
 
+					}
+					var json = JSON.stringify(obj);
+					localStorage.setItem("client_emp", json);
+					parseColumn()
+				}
+			} else if (result.value) {
+				//Mute
+				var cli = localStorage.getItem("client_mute");
+				var obj = JSON.parse(cli);
+				if (!obj) {
+					obj = [];
+				}
+				obj.push(name);
+				var json = JSON.stringify(obj);
+				localStorage.setItem("client_mute", json);
+				M.toast({ html: escapeHTML(name) + lang.lang_parse_mute, displayLength: 2000 })
+				parseColumn()
+			}
+		})
 	}
 }

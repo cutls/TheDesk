@@ -134,12 +134,6 @@ onmessage = function (e) {
 		post("pass")
 	} else if (e.data[0] == "toastSaved") {
 		M.toast({ html: lang.lang_img_DLDone + e.data[1][0] + '<button class="btn-flat toast-action" onclick="openFinder(\'' + e.data[1][1] + '\')">Show</button>', displayLength: 5000 })
-	} else if (e.data[0] == "toastMute") {
-		M.toast({ html: escapeHTML(e.data[1]) + lang.lang_parse_mute, displayLength: 2000 })
-	} else if (e.data[0] == "toastEmp") {
-		M.toast({ html: escapeHTML(e.data[1]) + lang.lang_status_emphas, displayLength: 2000 })
-	} else if (e.data[0] == "toastUnEmp") {
-		M.toast({ html: escapeHTML(e.data[1]) + lang.lang_status_unemphas, displayLength: 2000 })
 	} else if (e.data[0] == "parseColumn") {
 		parseColumn()
 	} else if (e.data[0] == "sortload") {

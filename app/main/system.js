@@ -51,12 +51,6 @@ function system(mainWindow, dir, lang, dirname) {
 		fs.writeFileSync(lang_path, arg);
 		e.sender.webContents.send('langres', "");
 	})
-	//クライアントのダイアログ
-	ipc.on('dialogClient', function (e, args) {
-		dialog.showMessageBox(args, function (arg) {
-			e.sender.webContents.send('dialogClientRender', arg);
-		});
-	})
 	//エクスポートのダイアログ
 	ipc.on('exportSettings', function (e, args) {
 		dialog.showSaveDialog(null, {
