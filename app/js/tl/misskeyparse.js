@@ -998,11 +998,7 @@ function connectMisskey(acct_id) {
 		console.log([domain + ":Receive Streaming API:", data]);
 		var data = JSON.parse(mess.data)
 		var obj = data.body.body
-		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
-			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
-		} else {
-			var mute = [];
-		}
+		var mute = [];
 		if (data.body.id.indexOf("notf:") !== -1) {
 			var obj = JSON.parse(mess.data).body;
 			console.log(obj);
