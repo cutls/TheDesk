@@ -21,9 +21,9 @@ var lang = {
     //common/version.js
     "lang_version_usever": "No update is found({{ver}})",
     "lang_version_skipver": "Update was ignored.",
-    "lang_version_platform": "Was this software installed at Microsoft Store? When select 'yes', any update was ignored.",
-    "lang_version_platform_linux": "Was this software installed at Snapcraft(snapd)? When select 'yes', any update was ignored.",
-    "lang_version_platform_mac": "Was this software installed at Homebrew Cask? When select 'yes', any update was ignored.",
+    "lang_version_platform": "Was this software installed at Microsoft Store? Most users select 'No' since they installed from the website. When select 'yes', any update was ignored.",
+    "lang_version_platform_linux": "Was this software installed at Snapcraft(snapd)? Most users select 'No' since they installed from the website. When select 'yes', any update was ignored.",
+    "lang_version_platform_mac": "Was this software installed at Homebrew Cask? Most users select 'No' since they installed from the website. When select 'yes', any update was ignored.",
     //login
     //login/login.js
     "lang_login_noauth": "Show TL of unlogined accounts",

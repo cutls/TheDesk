@@ -3,7 +3,7 @@ function verck(ver) {
 	console.log("%c Welcome😊", "color: red;font-size:200%;")
 	var date = new Date();
 	var show = false
-	if (localStorage.getItem("ver") != ver) {
+	if (localStorage.getItem("ver") != ver && localStorage.getItem("winstore")) {
 		localStorage.setItem("ver", ver);
 		show = true
 		console.log("%c Thank you for your update🎉", "color: red;font-size:200%;");
@@ -22,7 +22,6 @@ function verck(ver) {
 			} else {
 				$("#release-en").show();
 			}
-
 		});
 	}
 	if (!show) {
@@ -42,54 +41,14 @@ function verck(ver) {
 			$("#support-btm").animate({
 				'bottom': '0'
 			}, {
-				'duration': 300
-			});
+					'duration': 300
+				});
 		}
 	}
 	var platform = localStorage.getItem("platform");
 	console.log("Your platform:" + platform)
-	if (platform == "win32") {
-		const options = {
-			type: 'info',
-			title: "Select your platform",
-			message: lang.lang_version_platform,
-			buttons: [lang.lang_no, lang.lang_yesno]
-		}
-		if (!localStorage.getItem("winstore")) {
-			postMessage(["dialogStore", options], "*")
-		}
-	} else if (platform == "linux") {
-		if (localStorage.getItem("winstore") == "unix") {
-			localStorage.removeItem("winstore")
-		}
-		if (!localStorage.getItem("winstore")) {
-			const options = {
-				type: 'info',
-				title: "Select your platform",
-				message: lang.lang_version_platform_linux,
-				buttons: [lang.lang_no, lang.lang_yesno]
-			}
-			if (!localStorage.getItem("winstore")) {
-				postMessage(["dialogStore", options], "*")
-			}
-		}
-	} else if (platform == "darwin") {
-		if (localStorage.getItem("winstore") == "unix") {
-			localStorage.removeItem("winstore")
-		}
-		if (!localStorage.getItem("winstore")) {
-			const options = {
-				type: 'info',
-				title: "Select your platform",
-				message: lang.lang_version_platform_mac,
-				buttons: [lang.lang_no, lang.lang_yesno]
-			}
-			if (!localStorage.getItem("winstore")) {
-				postMessage(["dialogStore", options], "*")
-			}
-		}
-	} else {
-		localStorage.setItem("winstore", "unix")
+	if (!localStorage.getItem("winstore")) {
+		storeDialog(platform, ver)
 	}
 	if (localStorage.getItem("winstore") == "brewcask" || localStorage.getItem("winstore") == "snapcraft" || localStorage.getItem("winstore") == "winstore") {
 		var winstore = true;
@@ -284,4 +243,49 @@ function closeSupport() {
 				$("#support-btm").addClass("hide")
 			}
 		});
+}
+function storeDialog(platform, ver) {
+	if (platform == "win32") {
+		var mes = lang.lang_version_platform;
+	} else if (platform == "linux") {
+		var mes = lang.lang_version_platform_linux;
+	} else if (platform == "darwin") {
+		var mes = lang.lang_version_platform_mac;
+	}
+	Swal.fire({
+		title: "Select your platform",
+		text: mes,
+		type: 'info',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#3085d6',
+		confirmButtonText: lang.lang_no,
+		cancelButtonText: lang.lang_yesno
+	}).then((result) => {
+		//逆にしてる
+		if (!result.value) {
+			localStorage.setItem("winstore", "winstore")
+		}else{
+			localStorage.setItem("winstore", "localinstall")
+		}
+		localStorage.setItem("ver", ver);
+		show = true
+		console.log("%c Thank you for your update🎉", "color: red;font-size:200%;");
+		$(document).ready(function () {
+			$('#releasenote').modal('open');
+			verp = ver.replace('(', '');
+			verp = verp.replace('.', '-');
+			verp = verp.replace('.', '-');
+			verp = verp.replace('[', '-');
+			verp = verp.replace(']', '');
+			verp = verp.replace(')', '');
+			verp = verp.replace(' ', '_');
+			console.log("%c " + verp, "color: red;font-size:200%;");
+			if (lang.language == "ja") {
+				$("#release-" + verp).show();
+			} else {
+				$("#release-en").show();
+			}
+		});
+	})
 }

@@ -21,9 +21,9 @@ var lang = {
     //common/version.js
     "lang_version_usever": "お使いのバージョン{{ver}}は最新です。",
     "lang_version_skipver": "アップデートはスキップされました。",
-    "lang_version_platform": "このソフトウェアはMicrosoft Storeからダウンロードされましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
-    "lang_version_platform_linux": "このソフトウェアはSnapcraft(snapd)からインストールしましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
-    "lang_version_platform_mac": "このソフトウェアはHomebrew Caskからインストールしましたか？(「はい」を選択すると次回からアップデート通知を無視します。)",
+    "lang_version_platform": "このソフトウェアはMicrosoft Storeからダウンロードされましたか？通常はホームページからインストールするため「いいえ」を選んでください。「はい」を選ぶとMicrosoft Storeからアップデートが提供され、アップデートの通知を出しません。",
+    "lang_version_platform_linux": "このソフトウェアはSnapcraft(snapd)からインストールしましたか？通常はホームページからインストールするため「いいえ」を選んでください。「はい」を選ぶとSnapcraftからアップデートが提供され、アップデートの通知を出しません。",
+    "lang_version_platform_mac": "このソフトウェアはHomebrew Caskからインストールしましたか？通常はホームページからインストールするため「いいえ」を選んでください。「はい」を選ぶとアップデートの通知を出しません。",
     //login
     //login/login.js
     "lang_login_noauth": "認証せずに見る",
