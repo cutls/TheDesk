@@ -4,6 +4,17 @@ function verck(ver) {
 	var date = new Date();
 	var show = false
 	if (localStorage.getItem("ver") != ver && localStorage.getItem("winstore")) {
+		//ちょっと削除とリンク解析の都合上アレ(s)
+		//対象外のアプデ:storageが20の最初まで"Usamin (18.6.5)"
+		if (!localStorage.getItem("usamin_18_6_5_flag")) {
+			localStorage.setItem("usamin_18_6_5_flag", true)
+			var multi = localStorage.getItem("column");
+			var obj = JSON.parse(multi);
+			for (var i = 0; i < obj.length; i++) {
+				localStorage.removeItem("card_" + i);
+			}
+		}
+		//ちょっと削除とリンク解析の都合上アレ(e)
 		localStorage.setItem("ver", ver);
 		show = true
 		console.log("%c Thank you for your update🎉", "color: red;font-size:200%;");
@@ -265,7 +276,7 @@ function storeDialog(platform, ver) {
 		//逆にしてる
 		if (!result.value) {
 			localStorage.setItem("winstore", "winstore")
-		}else{
+		} else {
 			localStorage.setItem("winstore", "localinstall")
 		}
 		localStorage.setItem("ver", ver);
