@@ -23,13 +23,22 @@ var tlView = new Vue({
 	data: { config: tlConstruction },
 	methods: {
 		complete: function (i, val) {
-			var ls = tlView.config[i].storage;
-			if (!val) {
-				var id = tlView.config[i].id;
-				var val = $("#" + id).val()
+			var ls = tlView.config[i];
+			if (val) {
+				localStorage.setItem(ls.storage, val)
+			} else {
+				if (!ls.data) {
+					ls = [ls]
+				} else {
+					ls = ls.data
+				}
+				for (var j = 0; j < ls.length; j++) {
+					M.toast({ html: 'Complete', displayLength: 3000 })
+					var id = ls[j].id;
+					var val = $("#" + id).val()
+					localStorage.setItem(ls[j].storage, val)
+				}
 			}
-			M.toast({ html: 'Complete', displayLength: 3000 })
-			localStorage.setItem(ls, val)
 			return true
 		}
 	}
@@ -39,13 +48,22 @@ var postView = new Vue({
 	data: { config: postConstruction, kirishima: localStorage.getItem('kirishima') },
 	methods: {
 		complete: function (i, val) {
-			var ls = postView.config[i].storage;
-			M.toast({ html: 'Complete', displayLength: 3000 })
-			if (!val) {
-				var id = postView.config[i].id;
-				var val = $("#" + id).val()
+			var ls = postView.config[i];
+			if (val) {
+				localStorage.setItem(ls.storage, val)
+			} else {
+				if (!ls.data) {
+					ls = [ls]
+				} else {
+					ls = ls.data
+				}
+				for (var j = 0; j < ls.length; j++) {
+					M.toast({ html: 'Complete', displayLength: 3000 })
+					var id = ls[j].id;
+					var val = $("#" + id).val()
+					localStorage.setItem(ls[j].storage, val)
+				}
 			}
-			localStorage.setItem(ls, val)
 			return true
 		}
 	}
@@ -95,16 +113,29 @@ function load() {
 	}
 	var max = tlView.config.length;
 	for (var i = 0; i < max; i++) {
-		var ls = tlView.config[i].storage;
-		if (localStorage.getItem(ls)) {
-			tlView.config[i].setValue = localStorage.getItem(ls)
+		if (ls) {
+			if (localStorage.getItem(ls)) {
+				tlView.config[i].setValue = localStorage.getItem(ls)
+			}
+		} else {
+			ls = tlView.config[i].data
+			for (var j = 0; j < ls.length; j++) {
+				tlView.config[i].data[j].setValue = localStorage.getItem(ls[j].storage)
+			}
 		}
 	}
 	var max = postView.config.length;
 	for (var i = 0; i < max; i++) {
 		var ls = postView.config[i].storage;
-		if (localStorage.getItem(ls)) {
-			postView.config[i].setValue = localStorage.getItem(ls)
+		if (ls) {
+			if (localStorage.getItem(ls)) {
+				postView.config[i].setValue = localStorage.getItem(ls)
+			}
+		} else {
+			ls = postView.config[i].data
+			for (var j = 0; j < ls.length; j++) {
+				postView.config[i].data[j].setValue = localStorage.getItem(ls[j].storage)
+			}
 		}
 	}
 	if (localStorage.getItem("imas")) {
@@ -304,7 +335,7 @@ function importSettings() {
 		if (result.value) {
 			postMessage(["importSettings", ""], "*")
 		}
-	})	
+	})
 }
 function importSettingsCore(arg) {
 	var obj = JSON.parse(arg);
