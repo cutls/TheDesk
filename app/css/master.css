@@ -446,6 +446,12 @@ input, textarea {
   font-size: 1rem !important;
   font-family: inherit;
 }
+.swal2-popup{
+  background-color: var(--notfbox) !important;
+}
+.swal2-title, .swal2-content{
+  color: var(--color) !important;
+}
 
 /*スクロールバー*/
 ::-webkit-scrollbar {
