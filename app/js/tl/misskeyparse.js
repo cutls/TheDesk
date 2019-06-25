@@ -53,11 +53,15 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var empCli = localStorage.getItem("client_emp");
 	if (empCli) {
 		var empCli = JSON.parse(empCli);
+	} else {
+		var empCli = [];
 	}
 	//クライアントミュート
 	var muteCli = localStorage.getItem("client_mute");
 	if (muteCli) {
 		var muteCli = JSON.parse(muteCli);
+	} else {
+		var muteCli = [];
 	}
 	//ユーザー強調
 	var useremp = localStorage.getItem("user_emp");
@@ -267,7 +271,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 					if (os == "darwin") {
 						var n = new Notification('TheDesk:' + domain, options);
 					} else {
-						var nativeNotfOpt=[
+						var nativeNotfOpt = [
 							'TheDesk:' + domain,
 							toot.user.name + "(" + toot.user.username + ")" + what + "\n\n" + $.strip_tagstemp(toot.note.text),
 							toot.user.avatarUrl,
@@ -916,7 +920,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 				if (os == "darwin") {
 					var n = new Notification('TheDesk:' + domain, options);
 				} else {
-					var nativeNotfOpt=[
+					var nativeNotfOpt = [
 						'TheDesk:' + domain,
 						toot.display_name + "(" + toot.acct + ")" + ftxt,
 						toot.avatar,
