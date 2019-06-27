@@ -383,6 +383,8 @@ function removeColumn(tlid) {
 			parseColumn()
 			sortLoad()
 		}
+		$("#sort-box").removeClass("hide");
+		$("#sort-box").addClass("show");
 	});
 }
 
