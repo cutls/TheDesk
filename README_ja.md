@@ -72,7 +72,7 @@ Linuxビルダー
 
 iTunes NowPlayingにアルバムアートワークを付けてくれた人
 
-* [kPherox](https://www.kr-kp.com/)
+* [kPherox](https://pl.kpherox.dev/kPherox)
 
 ## ビルド
 
