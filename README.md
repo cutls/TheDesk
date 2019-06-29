@@ -72,7 +72,7 @@ Build for Linux
 
 Fellow coder
 
-* [kPherox](https://www.kr-kp.com/)
+* [kPherox](https://pl.kpherox.dev/kPherox)
 
 ## Build
 
