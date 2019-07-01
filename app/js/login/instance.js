@@ -108,13 +108,7 @@ var idata = {
 	"precure.ml_bbcode": "disabled",
 	"precure.ml_markdown": "disabled",
 	"precure.ml_post": "キュア！",
-	"precure.ml_glitch": "disabled",
-	"best-friends.chat": "instance",
-	"best-friends.chat_name": "Best Friends",
-	"best-friends.chat_letters": "500",
-	"best-friends.chat_bbcode": "disabled",
-	"best-friends.chat_markdown": "disabled",
-	"best-friends.chat_glitch": "disabled",
+	"precure.ml_glitch": "disabled"
 };
 
 localStorage.setItem("instance", JSON.stringify(idata));
