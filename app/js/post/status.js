@@ -84,10 +84,10 @@ function rt(id, acct_id, remote) {
 
 				if ($("[toot-id=" + id + "]").hasClass("rted")) {
 					$("[toot-id=" + id + "]").removeClass("rted");
-					$(".rt_" + id).removeClass("teal-text");
+					$(".rt_" + id).removeClass("light-blue-text");
 				} else {
 					$("[toot-id=" + id + "]").addClass("rted");
-					$(".rt_" + id).addClass("teal-text");
+					$(".rt_" + id).addClass("light-blue-text");
 				}
 			} else {
 				M.toast({ html: lang.lang_status_btWarn, displayLength: 1000 })
