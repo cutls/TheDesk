@@ -12,7 +12,7 @@
   padding: 5px;
   border-radius: 5px;
 }
-textarea{
+textarea {
   min-height: 100px !important;
   font-family: inherit;
 }
@@ -124,7 +124,9 @@ textarea{
   overflow-y: scroll;
   top: 90px;
 }
-
+#posttgl,#toot-post-btn {
+  background-color: var(--accentbtn);
+}
 /*mini*/
 .mini-post .mize {
   display: none !important;
