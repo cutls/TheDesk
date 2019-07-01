@@ -113,6 +113,7 @@ function load() {
 	}
 	var max = tlView.config.length;
 	for (var i = 0; i < max; i++) {
+		var ls = tlView.config[i].storage;
 		if (ls) {
 			if (localStorage.getItem(ls)) {
 				tlView.config[i].setValue = localStorage.getItem(ls)
@@ -120,7 +121,9 @@ function load() {
 		} else {
 			ls = tlView.config[i].data
 			for (var j = 0; j < ls.length; j++) {
-				tlView.config[i].data[j].setValue = localStorage.getItem(ls[j].storage)
+				if(localStorage.getItem(tlView.config[i].data[j].storage)){
+					tlView.config[i].data[j].setValue = localStorage.getItem(tlView.config[i].data[j].storage)
+				}				
 			}
 		}
 	}
