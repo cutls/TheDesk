@@ -692,11 +692,11 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		} else if (visen == "private") {
 			var vis =
 				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="' + lang.lang_parse_private + '(' + lang.lang_parse_clickcopy + ')" data-vis="private" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">lock</i>';
-			var can_rt = "hide";
+			var can_rt = "unvisible";
 		} else if (visen == "direct") {
 			var vis =
 				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="' + lang.lang_parse_direct + '(' + lang.lang_parse_clickcopy + ')" data-vis="direct" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">mail</i>';
-			var can_rt = "hide";
+			var can_rt = "unvisible";
 		}
 		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
 			var if_mine = "";
@@ -713,7 +713,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			var fav_app = "";
 		}
 		if (toot.reblogged) {
-			var if_rt = "teal-text";
+			var if_rt = "light-blue-text";
 			var rt_app = "rted";
 		} else {
 			var if_rt = "";
@@ -871,10 +871,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			+ '<div class="' + if_mine + ' action ' + disp["red"] + ' ' + noauth + '"><a onclick="redraft(\'' + toot.id + '\',' +
 			acct_id +
 			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_parse_redraft + '"><i class="material-icons">redo</i></a></div>' + trans +
-			'<span class="cbadge viabadge waves-effect ' + viashow + ' ' + mine_via + '" onclick="client(\'' + $.strip_tags(via) + '\')" title="via ' + $.strip_tags(via) + '">via ' +
+			'</div><div class="area-side ' + mouseover + '"><span class="cbadge viabadge waves-effect ' + viashow + ' ' + mine_via + '" style="max-width:60px;" onclick="client(\'' + $.strip_tags(via) + '\')" title="via ' + $.strip_tags(via) + '">' +
 			via +
-			'</span>' +
-			'</div><div class="area-side ' + mouseover + '"><div class="action ' + if_mine + ' ' + noauth + '"><a onclick="toggleAction(\'' + toot.id + '\',\'' + tlid + '\',\'' + acct_id + '\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
+			'</span>' + '<div class="action ' + if_mine + ' ' + noauth + '"><a onclick="toggleAction(\'' + toot.id + '\',\'' + tlid + '\',\'' + acct_id + '\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
 			'<div class="action ' + noauth + '"><a onclick="details(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid + '\',\'normal\')" class="waves-effect waves-dark btn-flat details ' + dmHide + '" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div>' +
 			'</div></div>' +

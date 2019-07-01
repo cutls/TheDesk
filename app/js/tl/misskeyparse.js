@@ -581,7 +581,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		var rt_app = "";
         /*
 		if (toot.reblogged) {
-			var if_rt = "teal-text";
+			var if_rt = "light-blue-text";
 			var rt_app = "rted";
 		} else {
 			var if_rt = "";
