@@ -75,7 +75,7 @@ function css(mainWindow) {
 				secondary +
 				";--active:" + primary + ";--postbox:" + primary + ";--modalfooter:" +
 				primary +
-				";}.blacktheme #imagemodal{background: url(\"../img/pixel.svg\");}";
+				";--accentbtn:" + primary + "}.customtheme #imagemodal{background: url(\"../img/pixel.svg\");}";
 			e.sender.webContents.send('theme-css-response', css);
 		} catch (e) {
 			var css = "";

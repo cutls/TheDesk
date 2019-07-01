@@ -58,7 +58,7 @@
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
 						<template v-if="item.text.desc">
-							<templete v-html="item.text.desc"></templete><br>
+							<template v-html="item.text.desc"></template><br>
 						</template>
 						<template v-if="item.id=='notf'"><a onclick="notftest()"
 								class="pointer">通知テスト</a><br></template>
@@ -127,6 +127,10 @@
 				<label>
 					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
 					<span>Green<span class="imas hide">(ユースフルロマンス)</span></span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="blue" value="blue" />
+					<span>Blue<span class="imas hide">(渚の花嫁)</span></span>
 				</label>
 				<label>
 					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom"
@@ -208,7 +212,7 @@
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
 						<template v-if="item.text.desc">
-							<templete v-html="item.text.desc"></templete><br>
+							<template v-html="item.text.desc"></template><br>
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
@@ -255,7 +259,7 @@
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
 						<template v-if="item.text.desc">
-							<templete v-html="item.text.desc"></templete><br>
+							<template v-html="item.text.desc"></template><br>
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
@@ -374,13 +378,13 @@
 				<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled"
 					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i
 						class="fa fa-spotify left"></i>切断</a>
-				<h5>テンプレートの編集</h5>
-				以下を編集してテンプレートを変更できます。<br>
+				<h5>@@templateedit@@</h5>
+				@@templateeditwarn@@<br>
 				<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
-				Spotify:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
-				macOS:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/作曲家{composer}/サンプルレート{hz}/ビットレート{bitRate}/ジャンル{genre}<br>
-				Windows:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名<br>
+				@@template1@@<br>
+				@@template2@@<br>
+				@@template3@@<br>
 				<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
 				<h5>アルバムアートワークを添付する(Spotify/Windows)</h5>
 				<label>
