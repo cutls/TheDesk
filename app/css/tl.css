@@ -597,6 +597,9 @@ p:not(:last-child) {
 audio{
   height: 2rem;
 }
+.translate{
+  white-space: normal;
+}
 @keyframes jump {
   0% {
     transform: translateY(0);

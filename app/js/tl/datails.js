@@ -513,7 +513,7 @@ function trans(tar, to) {
 		todo(error);
 		console.error(error);
 	}).then(function (text) {
-		$("#toot-this .additional").html('<span class="gray">' + text.text + '</span>');
+		$("#toot-this .additional").html('<span class="gray translate">' + text.text + '</span>');
 	});
 }
 //ブラウザで開く
