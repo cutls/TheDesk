@@ -76,6 +76,9 @@ option {
   min-width: 0 !important;
   margin-left: 5px !important;
 }
+.unvisible{
+  opacity: 0;
+}
 .bbcode-pulse-loadings,
 .bbcode-pulse-loading,
 .fa-pulse {
@@ -397,7 +400,8 @@ blockquote:before,
   text-align: center;
   width: calc(100% + 10px);
   border-radius: 5px;
-  background-color: var(--bg);
+  background-color: var(--box);
+  filter: brightness(80%);
   margin-left: -5px;
   margin-right: -5px;
   margin-top: -5px;
