@@ -40,7 +40,7 @@ function ck() {
 		if (obj[0].domain) {
 			$("#tl").show();
 			ticker();
-			multiSelector();
+			multiSelector(false);
 			verck(ver);
 			$("#something-wrong img").attr("src", "../../img/thinkingdesk.png")
 		}
@@ -403,7 +403,7 @@ function ckdb(acct_id) {
 }
 
 //アカウントを選択…を実装
-function multiSelector() {
+function multiSelector(parseC) {
 	var multi = localStorage.getItem("multi");
 	if (!multi) {
 		var obj = [];
@@ -490,7 +490,9 @@ function multiSelector() {
 		$("#add-acct-sel").append('<option value="noauth">' + lang.lang_login_noauth + '</option><option value="webview">Twitter</option>');
 	}
 	$('select').formSelect();
-	parseColumn(true);
+	if(!parseC){
+		parseColumn(true);
+	}
 }
 
 //バージョンエンコ

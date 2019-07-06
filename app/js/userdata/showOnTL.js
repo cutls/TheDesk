@@ -193,6 +193,9 @@ function udg(user, acct_id) {
 			$("#his-emp-btn").hide();
 			$(".only-my-data").show();
 			$(".only-his-data").hide();
+			if(localStorage.getItem("main")==acct_id){
+				$("#his-main-acct").hide();
+			}
 		} else {
 			relations(user, acct_id);
 			$(".only-my-data").hide();
@@ -293,6 +296,9 @@ function misskeyUdg(user, acct_id) {
 			$("#his-emp-btn").hide();
 			$(".only-my-data").show();
 			$(".only-his-data").hide();
+			if(localStorage.getItem("main")==acct_id){
+				$("#his-main-acct").hide();
+			}
 		} else {
 			if (json.isFollowing) {
 				//自分がフォローしている
@@ -409,6 +415,12 @@ function profbrws() {
 	var url = $("#his-openin").attr("data-href")
 	postMessage(["openUrl", url], "*")
 }
+function setMain() {
+	var acct_id = $("#his-data").attr("use-acct")
+	localStorage.setItem("main", acct_id);
+	multiSelector(true)
+	M.toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
+}
 //オールリセット
 function hisclose() {
 	$('#his-data').modal('close');
@@ -464,6 +476,7 @@ function reset() {
 	$("#his-openin").attr("data-href", "");
 	$("#his-float-timeline").show();
 	$("#his-float-blocked").hide();
+	$("#his-main-acct").show();
 	$("#his-proof-prof").html("")
 }
 $('#my-data-nav .tab').on('click', function () {
