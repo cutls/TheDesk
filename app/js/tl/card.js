@@ -155,7 +155,7 @@ function additionalIndv(tlid, acct_id, id) {
 			});
 		} else {
 			var id = $("[toot-id=" + id + "] .toot a").parents('.cvo').attr("toot-id");
-			var start = "https://" + domain + "/api/v1/statuses/" + id + "/card";
+			var start = "https://" + domain + "/api/v1/statuses/" + id;
 			fetch(start, {
 				method: 'GET',
 				headers: {
@@ -169,6 +169,7 @@ function additionalIndv(tlid, acct_id, id) {
 				todo(error);
 				console.error(error);
 			}).then(function (json) {
+				json = json.card;
 				//このリンク鳥やんけ、ってとき
 				if (json.provider_name == "Twitter") {
 					if (json.image) {
