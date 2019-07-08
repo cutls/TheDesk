@@ -763,7 +763,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		}
 		//日本語じゃない
 		if (toot.language != lang.language && toot.language) {
-			var trans = '<div class="action pin"><a onclick="trans(\'' + toot.language + '\',\'' + lang.language + '\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_parse_trans + '"><i class="material-icons">g_translate</i></a></div>';
+			var trans = '<div class="action pin"><a onclick="trans(\'' + toot.language + '\',\'' + lang.language + '\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="' + lang.lang_parse_trans + '"><i class="material-icons">g_translate</i></a></div>';
 		} else {
 			var trans = "";
 		}
@@ -864,13 +864,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'</a></span></div>' +
 			'<div class="' + if_mine + ' action ' + disp["del"] + ' ' + noauth + '"><a onclick="del(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_parse_del + '"><i class="fas fa-trash"></i></a></div>' +
+			')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="' + lang.lang_parse_del + '"><i class="fas fa-trash"></i></a></div>' +
 			'<div class="' + if_mine + ' action pin ' + disp["pin"] + ' ' + noauth + '"><a onclick="pin(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_parse_pin + '"><i class="fas fa-map-pin pin_' + toot.id + ' ' + if_pin + '"></i></a></div>'
+			')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="' + lang.lang_parse_pin + '"><i class="fas fa-map-pin pin_' + toot.id + ' ' + if_pin + '"></i></a></div>'
 			+ '<div class="' + if_mine + ' action ' + disp["red"] + ' ' + noauth + '"><a onclick="redraft(\'' + toot.id + '\',' +
 			acct_id +
-			')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_parse_redraft + '"><i class="material-icons">redo</i></a></div>' + trans +
+			')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="' + lang.lang_parse_redraft + '"><i class="material-icons">redo</i></a></div>' + trans +
 			'</div><div class="area-side ' + mouseover + '"><span class="cbadge viabadge waves-effect ' + viashow + ' ' + mine_via + '" style="max-width:60px;" onclick="client(\'' + $.strip_tags(via) + '\')" title="via ' + $.strip_tags(via) + '">' +
 			via +
 			'</span>' + '<div class="action ' + if_mine + ' ' + noauth + '"><a onclick="toggleAction(\'' + toot.id + '\',\'' + tlid + '\',\'' + acct_id + '\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +
