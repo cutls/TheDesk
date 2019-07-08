@@ -55,7 +55,7 @@ function parseColumn(dontclose) {
 			var domain = localStorage.getItem("domain_" + key);
 			if (localStorage.getItem("mode_" + domain) == "misskey") {
 				localStorage.removeItem("misskey_wss_" + key)
-				connectMisskey(key)
+				connectMisskey(key, false)
 			}
 		});
 	}

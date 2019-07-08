@@ -979,7 +979,7 @@ function goGoogle(id) {
 }
 var misskeyws = []
 var misskeywsstate = []
-function connectMisskey(acct_id) {
+function connectMisskey(acct_id, re) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var start = "wss://" + domain +
@@ -1063,13 +1063,17 @@ function connectMisskey(acct_id) {
 		console.error("Error closing " + tlid);
 		console.error(error);
 		misskeywsstate[wsid] = false
-		connectMisskey(acct_id)
+		if(!re){
+			connectMisskey(acct_id, true)
+		}
 		return false;
 	};
 	misskeyws[wsid].onclose = function () {
 		console.warn("Closing " + tlid);
 		misskeywsstate[wsid] = false
-		connectMisskey(acct_id)
+		if(!re){
+			connectMisskey(acct_id, true)
+		}
 		return false;
 	};
 
