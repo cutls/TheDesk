@@ -58,7 +58,7 @@
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
 						<template v-if="item.text.desc">
-							<template v-html="item.text.desc"></template><br>
+							<span v-html="item.text.desc"></span><br>
 						</template>
 						<template v-if="item.id=='notf'"><a onclick="notftest()"
 								class="pointer">Notification test</a><br></template>
@@ -212,7 +212,7 @@
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
 						<template v-if="item.text.desc">
-							<template v-html="item.text.desc"></template><br>
+							<span v-html="item.text.desc"></span><br>
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
@@ -259,7 +259,7 @@
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
 						<template v-if="item.text.desc">
-							<template v-html="item.text.desc"></template><br>
+							<span v-html="item.text.desc"></span><br>
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
@@ -303,7 +303,6 @@
 				<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">Save</button><br><br>
 				Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
 				<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">Save</button><br><br>
-
 			</div>
 		</li>
 		<li>
