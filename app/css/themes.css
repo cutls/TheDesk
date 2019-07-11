@@ -15,6 +15,8 @@
   --postbox: white;
   --modalfooter: #fafafa;
   --accentbtn: #009688;
+  --selected: #c0c0c0;
+  --selectedWithShare: #b2babd;
 }
 #imagemodal {
   background: url("../img/pixel.white.svg");
@@ -36,6 +38,8 @@
   --postbox: #424242;
   --modalfooter: #212121;
   --accentbtn: #3f51b5;
+  --selected: #3f3f3f;
+  --selectedWithShare: #003a30;
 }
 .blacktheme #imagemodal {
   background: url("../img/pixel.svg");
@@ -57,6 +61,8 @@
   --postbox: #1a237e;
   --modalfooter: #031833;
   --accentbtn: #00acc1;
+  --selected: #214f8a;
+  --selectedWithShare: #003a30;
 }
 .indigotheme #imagemodal {
   background: url("../img/pixel.svg");
@@ -78,6 +84,8 @@
   --postbox: #4e342e;
   --modalfooter: #261411;
   --accentbtn: #827717;
+  --selected: #6d352b;
+  --selectedWithShare: #003a30;
 }
 .browntheme #imagemodal {
   background: url("../img/pixel.svg");
@@ -99,6 +107,8 @@
   --postbox: #a5d6a7;
   --modalfooter: #81c784;
   --accentbtn: #33691e;
+  --selected: #78c17a;
+  --selectedWithShare: #caa266;
 }
 .greentheme #imagemodal {
   background: url("../img/pixel.white.svg");
@@ -120,6 +130,8 @@
   --postbox: #dff1ff;
   --modalfooter: #2196f3;
   --accentbtn: #2f7bb7;
+  --selected: #9dcade;
+  --selectedWithShare: #c1dac4;
 }
 .bluetheme #imagemodal {
   background: url("../img/pixel.white.svg");

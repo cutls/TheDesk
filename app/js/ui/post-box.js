@@ -84,15 +84,20 @@ $('#posttgl').click(function (e) {
 	} else {
 		hide();
 	}
+	$('.cvo').removeClass("selectedToot")
+	selectedColumn = 0
+	selectedToot = 0
 });
 
 $("#timeline-container,#group").click(function (e) {
-
 	if (localStorage.getItem("box") != "absolute") {
 		if ($('#post-box').hasClass("appear") && !localStorage.getItem("nohide")) {
 			hide();
 		}
 	}
+	$('.cvo').removeClass("selectedToot")
+	selectedColumn = 0
+	selectedToot = 0
 	localStorage.removeItem("nohide")
 });
 $('#textarea,#cw-text').focusout(function (e) {
@@ -101,4 +106,7 @@ $('#textarea,#cw-text').focusout(function (e) {
 		localStorage.removeItem("nohide")
 	}
 	//setTimeout(remove, 100);
+	$('.cvo').removeClass("selectedToot")
+	selectedColumn = 0
+	selectedToot = 0
 });

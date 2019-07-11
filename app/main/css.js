@@ -53,9 +53,13 @@ function css(mainWindow) {
 			if (json.base == "light") {
 				var drag = "rgba(255, 255, 255, 0.8)";
 				var beforehover = "#757575";
+				var selected = "#3f3f3f"
+				var selectedWithShare = "#b2babd"
 			} else {
 				var drag = "rgba(0, 0, 0, 0.8)";
 				var beforehover = "#9e9e9e";
+				var selected = "#c0c0c0"
+				var selectedWithShare = "#003a30"
 			}
 			if (json.props) {
 				if (json.props.TheDeskAccent) {
@@ -75,7 +79,7 @@ function css(mainWindow) {
 				secondary +
 				";--active:" + primary + ";--postbox:" + primary + ";--modalfooter:" +
 				primary +
-				";--accentbtn:" + primary + "}.customtheme #imagemodal{background: url(\"../img/pixel.svg\");}";
+				";--accentbtn:" + primary + ";--selected:" + selected + ";--selectedWithShare:" + selectedWithShare + "}.customtheme #imagemodal{background: url(\"../img/pixel.svg\");}";
 			e.sender.webContents.send('theme-css-response', css);
 		} catch (e) {
 			var css = "";

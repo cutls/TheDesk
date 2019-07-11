@@ -1,3 +1,5 @@
+selectedColumn = 0
+selectedToot = 0
 $(function ($) {
 	//キーボードショートカット
 	$(window).keydown(function (e) {
@@ -132,6 +134,55 @@ $(function ($) {
 					return false;
 				}
 			}
+			//矢印:選択
+			if (e.code == "ArrowLeft") {
+				//left
+				if (selectedColumn > 0) {
+					selectedColumn--
+				}
+				tootSelector(selectedColumn, selectedToot)
+				return false;
+			} else if (e.code == "ArrowUp") {
+				//up
+				if (selectedToot > 0) {
+					selectedToot--
+				}
+				tootSelector(selectedColumn, selectedToot)
+				return false;
+			} else if (e.code == "ArrowRight") {
+				//right
+				if (selectedColumn < $(".tl-box").length - 1) {
+					selectedColumn++
+				}
+				tootSelector(selectedColumn, selectedToot)
+				return false;
+			} else if (e.code == "ArrowDown") {
+				//down
+				selectedToot++
+				tootSelector(selectedColumn, selectedToot)
+				return false;
+			}
+			//選択時
+			if (e.keyCode == 70) {
+				var id = $(".selectedToot").attr('unique-id')
+				var acct_id = $('#timeline_' + selectedColumn).attr("data-acct")
+				fav(id, acct_id, false)
+				return false;
+			}
+			if (e.keyCode == 66) {
+				var id = $(".selectedToot").attr('unique-id')
+				var acct_id = $('#timeline_' + selectedColumn).attr("data-acct")
+				rt(id, acct_id, false)
+				return false;
+			}
+			if (e.keyCode == 82) {
+				var id = $(".selectedToot").attr('unique-id')
+				var acct_id = $('#timeline_' + selectedColumn).attr("data-acct")
+				var ats_cm = $('.selectedToot .rep-btn').attr("data-men")
+				var mode = $('.selectedToot .rep-btn').attr("data-visen")
+				re(id, ats_cm, acct_id, mode)
+				return false;
+			}
 		}
 		//textareaフォーカス時
 		if (hasFocus2 && wv) {
@@ -185,3 +236,23 @@ $(function ($) {
 		clear();
 	});
 });
+//選択する
+function tootSelector(column, toot) {
+	$('.cvo').removeClass("selectedToot")
+	$('#timeline_' + column + ' .cvo').eq(toot).addClass("selectedToot")
+	var scr = $('.tl-box[tlid=' + column + ']').scrollTop()
+	var elem = $('.selectedToot').offset().top
+	var top = elem - $('.tl-box').height() + scr
+	console.log(elem, top, scr)
+	if (top > 0) {
+		top = top + $('.selectedToot').height()
+		if(top > scr){
+			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: top})
+		}
+	} else if (elem < 0) {
+		var to = scr + elem - $('.selectedToot').height()
+		if (to < scr) {
+			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: to })
+		}
+	}
+}

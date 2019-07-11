@@ -832,10 +832,10 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<div class="action ' + disp["re"] + ' ' + noauth + '"><a onclick="misskeyreply(\'' + toot.id +
 			'\',\'' + acct_id + '\',' +
 			acct_id + ',\'' + visen +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_parse_replyto + '"><i class="fas fa-share"></i></a></div>' +
+			'\')" class="waves-effect waves-dark btn-flat rep-btn" style="padding:0" title="' + lang.lang_parse_replyto + '"><i class="fas fa-share"></i></a></div>' +
 			'<div class="action ' + can_rt + ' ' + disp["rt"] + ' ' + noauth + '"><a onclick="renote(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +
-			'\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_misskeyparse_renote + '"><i class="text-darken-3 fas fa-retweet ' +
+			'\')" class="waves-effect waves-dark btn-flat bt-btn" style="padding:0" title="' + lang.lang_misskeyparse_renote + '"><i class="text-darken-3 fas fa-retweet ' +
 			if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct"></span></a></div>' +
 			'<div class="action ' + can_rt + ' ' + disp["qt"] + ' ' + noauth + '"><a onclick="renoteqt(\'' + toot.id + '\',' + acct_id +
 			',\'misskey.xyz\',\'misskey.xyz\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_misskeyparse_renoteqt + '"><i class="text-darken-3 fas fa-quote-right"></i></a></div>' +
