@@ -47,6 +47,7 @@ var lang = {
     //post/img.js
     "lang_postimg_previewdis": "cannot preview",
     "lang_postimg_aftupload": "You cannot change accounts after uploading.",
+    "lang_postimg_failupload": "Failed",
     "lang_postimg_delete": "Delete this image.",
     //post/post.js
     "lang_post_tagTL": "This toot does not contain a default tag. This toot will not be shown on Local TL. Continue?",

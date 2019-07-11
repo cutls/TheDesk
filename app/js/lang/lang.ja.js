@@ -47,6 +47,7 @@ var lang = {
     //post/img.js
     "lang_postimg_previewdis": "プレビューできません。",
     "lang_postimg_aftupload": "アップロード後はアカウントを切り替えられません。",
+    "lang_postimg_failupload": "アップロードに失敗しました。",
     "lang_postimg_delete": "この画像を削除します",
     //post/post.js
     "lang_post_tagTL": "デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。",
@@ -131,8 +132,8 @@ var lang = {
     "lang_layout_excludingbt": "BT表示(OFF/BT除外/BTのみ)",
     "lang_layout_leftFold": "左へ重ねる",
     "lang_layout_leftUnfold": "右へ出す",
-    "lang_layout_deleteColumn":"カラム削除",
-    "lang_layout_deleteColumnDesc":"カラムを削除しますか？",
+    "lang_layout_deleteColumn": "カラム削除",
+    "lang_layout_deleteColumnDesc": "カラムを削除しますか？",
     //ui/sort.js
     "lang_sort_gothis": "このカラムへ",
     "lang_sort_remthis": "このカラムを削除",
@@ -201,7 +202,7 @@ var lang = {
     "lang_parse_thread": "会話を表示",
     "lang_parse_unknown": "添付ファイル",
     "lang_parse_nsfw": "閲覧注意",
-    "lang_parse_notffilter":"このユーザーの通知のみを表示",
+    "lang_parse_notffilter": "このユーザーの通知のみを表示",
     //misskey
     "lang_misskeyparse_renote": "再投稿",
     "lang_misskeyparse_renoteqt": "引用",

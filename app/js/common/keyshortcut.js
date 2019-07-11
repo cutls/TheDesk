@@ -243,7 +243,6 @@ function tootSelector(column, toot) {
 	var scr = $('.tl-box[tlid=' + column + ']').scrollTop()
 	var elem = $('.selectedToot').offset().top
 	var top = elem - $('.tl-box').height() + scr
-	console.log(elem, top, scr)
 	if (top > 0) {
 		top = top + $('.selectedToot').height()
 		if(top > scr){

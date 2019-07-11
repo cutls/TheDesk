@@ -120,6 +120,16 @@ function media(b64, type, no) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if (!json.id) {
+				todc();
+				$("#imgup").text("");
+				$(".toot-btn-group").prop("disabled", false);
+				$("#post-acct-sel").prop("disabled", false);
+				$('select').formSelect();
+				$("#imgsel").show();
+				M.toast({ html: lang.lang_postimg_failupload, displayLength: 5000 })
+				return false
+			}
 			var img = localStorage.getItem("img");
 			if (json.type.indexOf("image") != -1) {
 				var html = '<img src="' + json[previewer] + '" class="preview-img pointer" data-media="' + json["id"] + '" onclick="deleteImage(\'' + json["id"] + '\')" title="' + lang.lang_postimg_delete + '">';
