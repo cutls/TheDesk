@@ -99,7 +99,9 @@ function details(id, acct_id, tlid, mode) {
 		if ($("#toot-this div").hasClass("cvo")) {
 			$("#toot-this").removeClass("cvo");
 		} else {
-			$("#toot-this").addClass("cvo");
+			if(!$("#toot-this .cvo").hasClass("cvo")){
+				$("#toot-this").addClass("cvo");
+			}
 		}
 		if (!$("#activator").hasClass("active")) {
 			$('#det-col').collapsible('open', 4);
@@ -125,14 +127,7 @@ function replyTL(id, acct_id) {
 			})
 		}
 	} else {
-		var start = "https://" + domain + "/api/v1/statuses/" + id;
-		var i = {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json',
-				'Authorization': 'Bearer ' + at
-			},
-		}
+		return false
 	}
 	fetch(start, i).then(function (response) {
 		return response.json();
@@ -154,20 +149,6 @@ function replyTL(id, acct_id) {
 			var rep = "_replyIds";
 			if (json[rep]) {
 				replyTL(json[rep][0], acct_id);
-			}
-		} else {
-			var templete = parse([json], '', acct_id, "", "", mute);
-			if (templete != "") {
-				$("#toot-reply .no-data").hide();
-			}
-			$("#toot-reply").prepend(templete);
-			$("#toot-reply .hide").html(lang.lang_details_filtered);
-			$("#toot-reply .by_filter").css("display", "block");
-			$("#toot-reply .by_filter").removeClass("hide");
-			jQuery("time.timeago").timeago();
-			var rep = "in_reply_to_id";
-			if (json[rep]) {
-				replyTL(json[rep], acct_id);
 			}
 		}
 
@@ -228,6 +209,14 @@ function context(id, acct_id) {
 			$("#toot-after .hide").html(lang.lang_details_filtered);
 			$("#toot-after .by_filter").css("display", "block");
 			$("#toot-after .by_filter").removeClass("hide");
+			var templete = parse(json.ancestors, '', acct_id, "", "", mute);
+			if (templete != "") {
+				$("#toot-reply .no-data").hide();
+			}
+			$("#toot-reply").prepend(templete);
+			$("#toot-reply .hide").html(lang.lang_details_filtered);
+			$("#toot-reply .by_filter").css("display", "block");
+			$("#toot-reply .by_filter").removeClass("hide");
 			jQuery("time.timeago").timeago();
 		}
 
