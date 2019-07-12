@@ -120,7 +120,7 @@ $(function ($) {
 				}
 			}
 			//Ctrl+Sift+P:プロフ
-			if ((event.ctrlKey) && event.shiftKey) {
+			if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 				if (e.keyCode === 80) {
 					profShow()
 					return false;
@@ -162,6 +162,15 @@ $(function ($) {
 				tootSelector(selectedColumn, selectedToot)
 				return false;
 			}
+			//Ctrl+U:0,0選択
+			if (event.ctrlKey || event.metaKey) {
+				if (e.keyCode === 85) {
+					selectedToot = 0
+					selectedColumn = 0
+					tootSelector(0, 0)
+					return false;
+				}
+			}
 			//選択時
 			if (e.keyCode == 70) {
 				var id = $(".selectedToot").attr('unique-id')
@@ -187,26 +196,6 @@ $(function ($) {
 		//textareaフォーカス時
 		if (hasFocus2 && wv) {
 			if (event.metaKey || event.ctrlKey) {
-				//Ctrl+B:太字
-				if (e.keyCode === 66) {
-					tagsel('b');
-					return false;
-				}
-				//Ctrl+I:斜字
-				if (e.keyCode === 73) {
-					tagsel('i');
-					return false;
-				}
-				//Ctrl+U:下線
-				if (e.keyCode === 85) {
-					tagsel('u');
-					return false;
-				}
-				//Ctrl+S:取り消し線
-				if (e.keyCode === 83) {
-					tagsel('s');
-					return false;
-				}
 				//C+S+(No):ワンクリ
 				if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 					if (e.keyCode >= 49 && e.keyCode <= 51) {
@@ -245,8 +234,8 @@ function tootSelector(column, toot) {
 	var top = elem - $('.tl-box').height() + scr
 	if (top > 0) {
 		top = top + $('.selectedToot').height()
-		if(top > scr){
-			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: top})
+		if (top > scr) {
+			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: top })
 		}
 	} else if (elem < 0) {
 		var to = scr + elem - $('.selectedToot').height()
