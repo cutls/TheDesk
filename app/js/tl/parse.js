@@ -481,8 +481,26 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 		}
 		var urls = $.strip_tags(content).replace(/\n/g, " ").match(
-			/https?:\/\/([-a-zA-Z0-9@.]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
+			/https?:\/\/([^+_]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
 		);
+		urlsck = content.match(/(https?):\/\/([^<>]*?)\/([^"]*)/g)
+		if (urlsck) {
+			for (var urlct = 0; urlct < urlsck.length; urlct++) {
+				var urlindv = urlsck[urlct]
+				urlCont = urlindv.match(/(https?):\/\/([^a-zA-Z0-9.-]*?)\.(.+?)\/([^"]*)/)
+				if (urlCont) {
+					urlindv = urlindv.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&")
+					var encoded = encodeURI(urlCont[4])
+					var punycoded = "xn--"+punycode.encode(urlCont[2])
+					var eUrl = urlCont[1] + "://" + punycoded + "." + urlCont[3] + "/" + encoded
+					var regExp = new RegExp('href="' + urlindv + '"', "g")
+					console.log(eUrl, regExp)
+					content = content.replace(regExp, 'href="' + eUrl + '"')
+				}
+
+			}
+		}
+
 		if (urls) {
 			var analyze = '<a onclick="additionalIndv(\'' + tlid + '\',' + acct_id +
 				',\'' + id + '\')" class="add-show pointer">' + lang.lang_parse_url + '</a><br>';
@@ -847,7 +865,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'<div class="action ' + disp["re"] + ' ' + noauth + '"><a onclick="re(\'' + toot.id +
 			'\',\'' + to_mention + '\',' +
 			acct_id + ',\'' + visen +
-			'\')" class="waves-effect waves-dark btn-flat actct rep-btn" data-men="' + to_mention +'" data-visen="' + visen +'" style="padding:0" title="' + lang.lang_parse_replyto + '"><i class="fas fa-share"></i><span class="rep_ct">' + replyct +
+			'\')" class="waves-effect waves-dark btn-flat actct rep-btn" data-men="' + to_mention + '" data-visen="' + visen + '" style="padding:0" title="' + lang.lang_parse_replyto + '"><i class="fas fa-share"></i><span class="rep_ct">' + replyct +
 			'</a></span></a></div>' +
 			'<div class="action ' + can_rt + ' ' + disp["rt"] + ' ' + noauth + '"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
 			',\'' + tlid +

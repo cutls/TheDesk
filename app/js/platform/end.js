@@ -10,20 +10,20 @@ $(document).on('click', 'a', e => {
 	if (url) {
 		urls = url.match(/https?:\/\/(.+)/);
 		//トゥートのURLぽかったら
-		toot = url.match(/https:\/\/([a-zA-Z0-9.-]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/);
+		toot = url.match(/https:\/\/([^+_]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/);
 		if(!toot){
 			//Pleroma対策
-			toot = url.match(/https:\/\/([a-zA-Z0-9.-]+)\/users\/([a-zA-Z0-9_]+)\/statuses\/([0-9]+)/);
+			toot = url.match(/https:\/\/([^+_]+)\/users\/([a-zA-Z0-9_]+)\/statuses\/([0-9]+)/);
 		}
 		//タグのURLぽかったら
 		var tags = [];
 		tags = url.match(
-			/https:\/\/([-a-zA-Z0-9@.]+)\/tags\/([-_.!~*\'()a-zA-Z0-9;\/?:\&=+\$,%#]+)/
+			/https:\/\/([^+_]+)\/tags\/([-_.!~*\'()a-zA-Z0-9;\/?:\&=+\$,%#]+)/
 		);
 		//メンションっぽかったら
 		var ats = [];
 		ats = url.match(
-			/https:\/\/([-a-zA-Z0-9.]+)\/@([-_.!~*\'()a-zA-Z0-9;\/?:\&=+\$,%#@]+)/
+			/https:\/\/([^+_]+)\/@([-_.!~*\'()a-zA-Z0-9;\/?:\&=+\$,%#@]+)/
 		);
 		if (toot) {
 			if (toot[1]) {
