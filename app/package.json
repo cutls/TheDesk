@@ -49,20 +49,10 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
-    "electron-dl": "^1.14.0",
-    "jimp": "^0.6.4",
     "jquery": "^3.4.1",
-    "json5": "^2.1.0",
     "materialize-css": "^1.0.0",
-    "node-notifier": "^5.4.0",
-    "sumchecker": "^3.0.0",
     "sweetalert2": "^8.13.0",
     "vue": "^2.6.10"
-  },
-  "optionalDependencies": {
-    "nowplaying-node": "git+https://github.com/cutls/nowplaying-node",
-    "itunes-nowplaying-mac": "git+https://github.com/rinsuki/itunes-nowplaying-mac#pull/4/head",
-    "font-manager": "^0.3.0"
   },
   "devDependencies": {
     "electron": "^5.0.4",

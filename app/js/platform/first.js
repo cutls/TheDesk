@@ -1,4 +1,5 @@
 function postMessage(e){
+	console.log(e)
 	return false;
 }
 $.strip_tags = function (str, allowed) {

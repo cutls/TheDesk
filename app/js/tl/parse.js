@@ -753,7 +753,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		if (wordmuteList) {
 			Object.keys(wordmuteList).forEach(function (key8) {
 				var worde = wordmuteList[key8];
-				console.log(worde)
 				if (worde) {
 					if (worde.tag) {
 						var wordList = worde.tag;
