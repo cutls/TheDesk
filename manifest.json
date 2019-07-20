@@ -4,7 +4,7 @@
   "description": "Mastodonクライアント",
   "icons": [
     {
-      "src": "./app/img/desk.png",
+      "src": "./img/desk.png",
       "sizes": "512x512",
       "type": "image/png"
     }
