@@ -497,7 +497,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					console.log(eUrl, regExp)
 					content = content.replace(regExp, 'href="' + eUrl + '"')
 				}
-
 			}
 		}
 
