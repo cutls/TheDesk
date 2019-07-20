@@ -1,3 +1,6 @@
+function postMessage(e){
+	return false;
+}
 $.strip_tags = function (str, allowed) {
 	if (!str) {
 		return "";
