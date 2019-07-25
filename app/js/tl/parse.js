@@ -612,8 +612,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				if (toot.sensitive && nsfw) {
 					var sense = "sensitive"
 					var blur = media.blurhash
+					nsfwmes = '<div class="nsfw-media">' + lang.lang_parse_nsfw + '</div>'
 					if (blur) {
-						nsfwmes = '<div class="nsfw-media">' + lang.lang_parse_nsfw + '</div>'
 						purl = parseBlur(blur)
 						var sense = ""
 					}
