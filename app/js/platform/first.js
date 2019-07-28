@@ -170,4 +170,29 @@ $.mb_substr = function (str, begin, end) {
 	}
 	return ret;
 };
+//ソートするやつ
+function object_array_sort(data, key, order, fn) {
+	var num_a = -1;
+	var num_b = 1;
+	if (order === 'asc') {
+		num_a = 1;
+		num_b = -1;
+	}
+	data = data.sort(function (a, b) {
+		var x = a[key];
+		var y = b[key];
+		if (x > y) return num_a;
+		if (x < y) return num_b;
+		return 0;
+	});
+	var arrObj = {};
+	for (var i = 0; i < data.length; i++) {
+		arrObj[data[i]['family']] = data[i];
+	}
+	data = [];
+	for (var key in arrObj) {
+		data.push(arrObj[key]);
+	}
+	fn(data);
+}
 localStorage.removeItem("errors");

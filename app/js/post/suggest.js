@@ -85,16 +85,34 @@ input.addEventListener("focus", function () {
 					//ハッシュタグ
 					if (json.hashtags[0] && tag) {
 						if (tag[1]) {
-							var tags = "";
+							var tags = [];
 							Object.keys(json.hashtags).forEach(function (key4) {
 								var tag = json.hashtags[key4];
 								var his = tag.history;
-								var uses = his[0].uses*1+ his[1].uses*1+ his[2].uses*1+ his[3].uses*1+ his[4].uses*1+ his[5].uses*1+ his[6].uses*1;
-								tags = tags + '<br><a onclick="tagInsert(\'#' + escapeHTML(tag.name) + '\',\'#' + q + '\')" class="pointer">#' +
+								var uses = his[0].uses * 1 + his[1].uses * 1 + his[2].uses * 1 + his[3].uses * 1 + his[4].uses * 1 + his[5].uses * 1 + his[6].uses * 1;
+								tagHTML = '<br><a onclick="tagInsert(\'#' + escapeHTML(tag.name) + '\',\'#' + q + '\')" class="pointer">#' +
 									escapeHTML(tag.name) + '</a>&nbsp;' + uses + 'toots'
+								var item = {
+									"uses": uses,
+									"html": tagHTML
+								}
+								tags.push(item)
 							});
+							var num_a = -1;
+							var num_b = 1;
+							tags = tags.sort(function (a, b) {
+								var x = a["uses"];
+								var y = b["uses"];
+								if (x > y) return num_a;
+								if (x < y) return num_b;
+								return 0;
+							});
+							var ins = ""
+							Object.keys(tags).forEach(function (key7) {
+								ins = ins + tags[key7].html
+							});
+							$("#suggest").html(ins);
 							$("#right-side").show()
-							$("#suggest").html(tags);
 							$("#poll").addClass("hide")
 							$("#emoji").addClass("hide")
 						}
