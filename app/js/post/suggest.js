@@ -66,7 +66,7 @@ input.addEventListener("focus", function () {
 			}
 			var domain = localStorage.getItem("domain_" + acct_id);
 			var at = localStorage.getItem("acct_" + acct_id + "_at");
-			suggest = "https://" + domain + "/api/v1/search?q=" + q
+			suggest = "https://" + domain + "/api/v2/search?q=" + q
 			if (suggest != oldSuggest) {
 				console.log("Try to get suggest at " + suggest)
 				fetch(suggest, {
@@ -81,18 +81,20 @@ input.addEventListener("focus", function () {
 					todo(error);
 					console.error(error);
 				}).then(function (json) {
+					console.log(["Search", json]);
+					//ハッシュタグ
 					if (json.hashtags[0] && tag) {
 						if (tag[1]) {
 							var tags = "";
 							Object.keys(json.hashtags).forEach(function (key4) {
 								var tag = json.hashtags[key4];
-								if (tag != q) {
-									tags = tags + '<a onclick="tagInsert(\'#' + tag + '\',\'#' + q +
-										'\')" class="pointer">#' + tag + '</a><br>';
-								}
+								var his = tag.history;
+								var uses = his[0].uses*1+ his[1].uses*1+ his[2].uses*1+ his[3].uses*1+ his[4].uses*1+ his[5].uses*1+ his[6].uses*1;
+								tags = tags + '<br><a onclick="tagInsert(\'#' + escapeHTML(tag.name) + '\',\'#' + q + '\')" class="pointer">#' +
+									escapeHTML(tag.name) + '</a>&nbsp;' + uses + 'toots'
 							});
 							$("#right-side").show()
-							$("#suggest").html("Tags:<br>" + tags);
+							$("#suggest").html(tags);
 							$("#poll").addClass("hide")
 							$("#emoji").addClass("hide")
 						}
