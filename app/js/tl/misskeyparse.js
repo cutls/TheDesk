@@ -1001,7 +1001,6 @@ function connectMisskey(acct_id, re) {
 		var mute = [];
 		if (data.body.id.indexOf("notf:") !== -1) {
 			var obj = JSON.parse(mess.data).body;
-			console.log(obj);
 			var popup = localStorage.getItem("popup");
 			if (!popup) {
 				popup = 0;

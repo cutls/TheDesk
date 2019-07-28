@@ -70,7 +70,6 @@ if (location.search) {
 	var mode = m[1];
 	var codex = m[2];
 	if (mode == "share") {
-		console.log(codex);
 		$('textarea').focus();
 		$("#textarea").val(decodeURI(codex));
 		show();

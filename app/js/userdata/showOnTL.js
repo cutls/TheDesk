@@ -357,7 +357,6 @@ function relations(user, acct_id) {
 		console.error(error);
 	}).then(function (json) {
 		var json = json[0];
-		console.log(json);
 		if (json.following) {
 			//自分がフォローしている
 			$("#his-data").addClass("following");
