@@ -82,7 +82,7 @@ function details(id, acct_id, tlid, mode) {
 		} else {
 			$("#tootmodal").attr("data-user", scn);
 		}
-		context(id, acct_id);
+		getContext(id, acct_id);
 		var dom = null;
 		if (!local) {
 			dom = scn.replace(/.+@/g, '');
@@ -156,7 +156,7 @@ function replyTL(id, acct_id) {
 }
 
 //コンテクストってなんですか
-function context(id, acct_id) {
+function getContext(id, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	if (localStorage.getItem("mode_" + domain) == "misskey") {
