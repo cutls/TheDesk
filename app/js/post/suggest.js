@@ -91,7 +91,7 @@ input.addEventListener("focus", function () {
 								var his = tag.history;
 								var uses = his[0].uses * 1 + his[1].uses * 1 + his[2].uses * 1 + his[3].uses * 1 + his[4].uses * 1 + his[5].uses * 1 + his[6].uses * 1;
 								tagHTML = '<br><a onclick="tagInsert(\'#' + escapeHTML(tag.name) + '\',\'#' + q + '\')" class="pointer">#' +
-									escapeHTML(tag.name) + '</a>&nbsp;' + uses + 'toots'
+									escapeHTML(tag.name) + '</a>&nbsp;' + uses + 'toot(s)'
 								var item = {
 									"uses": uses,
 									"html": tagHTML
@@ -108,8 +108,13 @@ input.addEventListener("focus", function () {
 								return 0;
 							});
 							var ins = ""
+							var nev = false
 							Object.keys(tags).forEach(function (key7) {
 								ins = ins + tags[key7].html
+								if (key7 <= 0 && !nev) {
+									ins = ins + '<br>'
+									nev = true
+								}
 							});
 							$("#suggest").html(ins);
 							$("#right-side").show()
