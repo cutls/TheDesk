@@ -494,7 +494,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var punycoded = "xn--" + punycode.encode(urlCont[2])
 					var eUrl = urlCont[1] + "://" + punycoded + "." + urlCont[3] + "/" + encoded
 					var regExp = new RegExp('href="' + urlindv + '"', "g")
-					console.log(eUrl, regExp)
 					content = content.replace(regExp, 'href="' + eUrl + '"')
 				}
 
@@ -543,60 +542,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				'"><i class="far fa-calendar-times"></i>' +
 				ended + '</span></div>';
 		}
-		if (toot.emojis) {
-			var emojick = toot.emojis[0];
-		} else {
-			var emojick = false;
-		}
-		//絵文字があれば
-		if (emojick) {
-			Object.keys(toot.emojis).forEach(function (key5) {
-				var emoji = toot.emojis[key5];
-				var shortcode = emoji.shortcode;
-				var emoji_url = '<img draggable="false" src="' + emoji.url +
-					'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
-				var regExp = new RegExp(":" + shortcode + ":", "g");
-				content = content.replace(regExp, emoji_url);
-				spoil = spoil.replace(regExp, emoji_url);
-				poll = poll.replace(regExp, emoji_url);
-			});
-		}
-		//ニコフレ絵文字
-		if (toot.profile_emojis) {
-			var nicoemojick = toot.profile_emojis[0];
-		} else {
-			var nicoemojick = false;
-		}
-		//絵文字があれば(nico)
-		if (nicoemojick) {
-			Object.keys(toot.profile_emojis).forEach(function (keynico) {
-				var emoji = toot.profile_emojis[keynico];
-				var shortcode = emoji.shortcode;
-				var emoji_url = '<img draggable="false" src="' + emoji.url +
-					'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
-				var regExp = new RegExp(":" + shortcode + ":", "g");
-				content = content.replace(regExp, emoji_url);
-				spoil = spoil.replace(regExp, emoji_url);
-				poll = poll.replace(regExp, emoji_url);
-			});
-		}
-		//デフォ絵文字
-		content = twemoji.parse(content);
-		if (dis_name) {
-			dis_name = twemoji.parse(dis_name);
-		}
-		if (spoil) {
-			spoil = twemoji.parse(spoil);
-		}
-		if (noticetext) {
-			noticetext = twemoji.parse(noticetext);
-		}
-		if (notice) {
-			notice = twemoji.parse(notice);
-		}
-		if (poll) {
-			poll = twemoji.parse(poll);
-		}
+		
 		var mediack = toot.media_attachments[0];
 		//メディアがあれば
 		var media_ids = "";
@@ -754,7 +700,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		if (wordmuteList) {
 			Object.keys(wordmuteList).forEach(function (key8) {
 				var worde = wordmuteList[key8];
-				console.log(worde)
 				if (worde) {
 					if (worde.tag) {
 						var wordList = worde.tag;
@@ -778,6 +723,60 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					content = content.replace(regExp, '<span class="emp">' + wordList + "</span>");
 				}
 			});
+		}
+		if (toot.emojis) {
+			var emojick = toot.emojis[0];
+		} else {
+			var emojick = false;
+		}
+		//絵文字があれば
+		if (emojick) {
+			Object.keys(toot.emojis).forEach(function (key5) {
+				var emoji = toot.emojis[key5];
+				var shortcode = emoji.shortcode;
+				var emoji_url = '<img draggable="false" src="' + emoji.url +
+					'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
+				var regExp = new RegExp(":" + shortcode + ":", "g");
+				content = content.replace(regExp, emoji_url);
+				spoil = spoil.replace(regExp, emoji_url);
+				poll = poll.replace(regExp, emoji_url);
+			});
+		}
+		//ニコフレ絵文字
+		if (toot.profile_emojis) {
+			var nicoemojick = toot.profile_emojis[0];
+		} else {
+			var nicoemojick = false;
+		}
+		//絵文字があれば(nico)
+		if (nicoemojick) {
+			Object.keys(toot.profile_emojis).forEach(function (keynico) {
+				var emoji = toot.profile_emojis[keynico];
+				var shortcode = emoji.shortcode;
+				var emoji_url = '<img draggable="false" src="' + emoji.url +
+					'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
+				var regExp = new RegExp(":" + shortcode + ":", "g");
+				content = content.replace(regExp, emoji_url);
+				spoil = spoil.replace(regExp, emoji_url);
+				poll = poll.replace(regExp, emoji_url);
+			});
+		}
+		//デフォ絵文字
+		content = twemoji.parse(content);
+		if (dis_name) {
+			dis_name = twemoji.parse(dis_name);
+		}
+		if (spoil) {
+			spoil = twemoji.parse(spoil);
+		}
+		if (noticetext) {
+			noticetext = twemoji.parse(noticetext);
+		}
+		if (notice) {
+			notice = twemoji.parse(notice);
+		}
+		if (poll) {
+			poll = twemoji.parse(poll);
 		}
 		//日本語じゃない
 		if (toot.language != lang.language && toot.language) {
@@ -1051,7 +1050,6 @@ function client(name) {
 			showCloseButton: true,
 			focusConfirm: false,
 		}).then((result) => {
-			console.log(result)
 			if (result.dismiss == "cancel") {
 				//Emp
 				var cli = localStorage.getItem("client_emp");
