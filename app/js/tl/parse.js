@@ -572,7 +572,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 						'" data-type="video" class="img-parsed"><video src="' +
 						purl + '" class="' + sense +
-						' toot-img pointer" style="max-width:100%;"></a></span>';
+						' toot-img pointer" style="max-width:100%;" loop="true"></a></span>';
 				} else {
 					if (media.type == "unknown") {
 						viewer = viewer + '<a href="' + media.remote_url + '" title="' + media.remote_url + '">[' + lang.lang_parse_unknown + ']</a> '
