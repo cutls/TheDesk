@@ -137,6 +137,10 @@ $(function ($) {
 			//矢印:選択
 			if (e.code == "ArrowLeft") {
 				//left
+				if ($("#imagemodal").hasClass("open")) {
+					imgCont('next');
+					return false;
+				}
 				if (selectedColumn > 0) {
 					selectedColumn--
 				}
@@ -144,6 +148,9 @@ $(function ($) {
 				return false;
 			} else if (e.code == "ArrowUp") {
 				//up
+				if ($("#imagemodal").hasClass("open")) {
+					return false;
+				}
 				if (selectedToot > 0) {
 					selectedToot--
 				}
@@ -151,6 +158,10 @@ $(function ($) {
 				return false;
 			} else if (e.code == "ArrowRight") {
 				//right
+				if ($("#imagemodal").hasClass("open")) {
+					imgCont('prev');
+					return false;
+				}
 				if (selectedColumn < $(".tl-box").length - 1) {
 					selectedColumn++
 				}
@@ -158,6 +169,9 @@ $(function ($) {
 				return false;
 			} else if (e.code == "ArrowDown") {
 				//down
+				if ($("#imagemodal").hasClass("open")) {
+					return false;
+				}
 				selectedToot++
 				tootSelector(selectedColumn, selectedToot)
 				return false;
@@ -204,19 +218,6 @@ $(function ($) {
 						return false;
 					}
 				}
-			}
-		}
-		//イメージビューワー切り替え
-		if (e.keyCode === 37 && wv) {
-			if ($("#imagemodal").hasClass("open")) {
-				imgCont('prev');
-				return false;
-			}
-		}
-		if (e.keyCode === 39 && wv) {
-			if ($("#imagemodal").hasClass("open")) {
-				imgCont('next');
-				return false;
 			}
 		}
 	});
