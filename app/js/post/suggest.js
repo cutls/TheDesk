@@ -66,7 +66,7 @@ input.addEventListener("focus", function () {
 			}
 			var domain = localStorage.getItem("domain_" + acct_id);
 			var at = localStorage.getItem("acct_" + acct_id + "_at");
-			suggest = "https://" + domain + "/api/v1/search?q=" + q
+			suggest = "https://" + domain + "/api/v2/search?q=" + q
 			if (suggest != oldSuggest) {
 				console.log("Try to get suggest at " + suggest)
 				fetch(suggest, {
@@ -81,18 +81,43 @@ input.addEventListener("focus", function () {
 					todo(error);
 					console.error(error);
 				}).then(function (json) {
+					console.log(["Search", json]);
+					//ハッシュタグ
 					if (json.hashtags[0] && tag) {
 						if (tag[1]) {
-							var tags = "";
+							var tags = [];
 							Object.keys(json.hashtags).forEach(function (key4) {
 								var tag = json.hashtags[key4];
-								if (tag != q) {
-									tags = tags + '<a onclick="tagInsert(\'#' + tag + '\',\'#' + q +
-										'\')" class="pointer">#' + tag + '</a><br>';
+								var his = tag.history;
+								var uses = his[0].uses * 1 + his[1].uses * 1 + his[2].uses * 1 + his[3].uses * 1 + his[4].uses * 1 + his[5].uses * 1 + his[6].uses * 1;
+								tagHTML = '<br><a onclick="tagInsert(\'#' + escapeHTML(tag.name) + '\',\'#' + q + '\')" class="pointer">#' +
+									escapeHTML(tag.name) + '</a>&nbsp;' + uses + 'toot(s)'
+								var item = {
+									"uses": uses,
+									"html": tagHTML
+								}
+								tags.push(item)
+							});
+							var num_a = -1;
+							var num_b = 1;
+							tags = tags.sort(function (a, b) {
+								var x = a["uses"];
+								var y = b["uses"];
+								if (x > y) return num_a;
+								if (x < y) return num_b;
+								return 0;
+							});
+							var ins = ""
+							var nev = false
+							Object.keys(tags).forEach(function (key7) {
+								ins = ins + tags[key7].html
+								if (key7 <= 0 && !nev) {
+									ins = ins + '<br>'
+									nev = true
 								}
 							});
+							$("#suggest").html(ins);
 							$("#right-side").show()
-							$("#suggest").html("Tags:<br>" + tags);
 							$("#poll").addClass("hide")
 							$("#emoji").addClass("hide")
 						}

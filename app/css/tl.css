@@ -585,6 +585,7 @@ p:not(:last-child) {
   display: block;
   margin-right: 1px;
   float: left;
+  overflow: hidden;
 }
 .nsfw-media {
   position: absolute;

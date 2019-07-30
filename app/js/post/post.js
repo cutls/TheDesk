@@ -29,7 +29,6 @@ function post(mode, postvis) {
 	}
 	if (domain != "kirishima.cloud") {
 		if (mode != "pass" && !$("#cw").hasClass("cw-avail") && (str.length > cw_sent || (str.split("\n").length - 1) > cw_ltres)) {
-			console.log("out")
 			var plus = str.replace(/\n/g, "").slice(0, 10) + "...";
 			Swal.fire({
 				title: lang.lang_post_cwtitle,
@@ -43,7 +42,6 @@ function post(mode, postvis) {
 				showCloseButton: true,
 				focusConfirm: false,
 			}).then((result) => {
-				console.log(result)
 				if (result.dismiss == "cancel") {
 					//btn3:sonomama
 					post("pass")
