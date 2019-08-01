@@ -10,9 +10,6 @@ body {
   background-color: var(--bg);
   color: var(--color);
 }
-body {
-  border: thin solid gray;
-}
 .btn {
   margin: 5px;
   text-transform: none;
@@ -305,6 +302,9 @@ blockquote:before,
 }
 .collapsible-header,
 .tabs {
+  background-color: var(--subcolor);
+}
+.collapsible-header:focus {
   background-color: var(--subcolor);
 }
 .modal-footer {

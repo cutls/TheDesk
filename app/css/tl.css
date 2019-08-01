@@ -158,6 +158,7 @@ iframe {
   height: 100%;
   border: thin solid gray;
   overflow: hidden;
+  border-top: none;
 }
 .box .pin,
 #his-data .pin {

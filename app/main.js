@@ -18,6 +18,27 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow;
+if (process.argv.indexOf("--dev") === -1) {
+	var packaged = true;
+} else {
+	var packaged = false;
+	console.log(
+		"||\\\\\\ \n"+
+		"||||  \\\\\\\\ \n"+
+		"||||     \\\\\\\\ \n"+
+		"|||| Am I a \\\\\\\\ \n"+
+		"|||| cat? ^ ^   \\\\\\\\\\       _____ _          ____            _    \n"+
+		"||||     (.-.)   \\\\\\\\\\      |_   _| |__   ___|  _ \\  ___  ___| | __\n"+
+		"||||  ___>   )    |||||       | | | '_ \\ / _ \\ | | |/ _ \\/ __| |/ /\n"+
+		"|||| <   _  _)   //////       | | | | | |  __/ |_| |  __/\__ \\   < \n"+
+		"||||  |_||_|   /////          |_| |_| |_|\\___|____/ \\___||___/_|\\_\\ \n"+
+		"||||          /////         \n"+
+		"||||       /////\n"+
+		"||||     /////\n"+
+		"||||//////"
+	)
+	console.log("Welcome!")
+}
 var info_path = join(app.getPath("userData"), "window-size.json");
 var max_info_path = join(app.getPath("userData"), "max-window-size.json");
 var lang_path = join(app.getPath("userData"), "language");
@@ -25,9 +46,9 @@ var ha_path = join(app.getPath("userData"), "hardwareAcceleration");
 try {
 	fs.readFileSync(ha_path, 'utf8');
 	app.disableHardwareAcceleration()
-	console.log("disabled: HA");
+	if(!packaged) console.log("disabled: Hardware Acceleration");
 } catch{
-	console.log("enabled: HA");
+	if(!packaged) console.log("enabled: Hardware Acceleration");
 }
 var window_size;
 try {
@@ -74,7 +95,6 @@ app.on('activate', function () {
 
 function createWindow() {
 	if (isFile(lang_path)) {
-		console.log("exist");
 		var lang = fs.readFileSync(lang_path, 'utf8');
 	} else {
 		var langs = app.getLocale();
@@ -88,8 +108,8 @@ function createWindow() {
 			fs.writeFileSync(lang_path, lang);
 		});
 	}
-	console.log(app.getLocale());
-	console.log("launch:" + lang);
+	if(!packaged) console.log("your lang:" + app.getLocale());
+	if(!packaged) console.log("launch:" + lang);
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
 	var platform = process.platform;
 	var bit = process.arch;
@@ -173,11 +193,6 @@ function createWindow() {
 
 	var platform = process.platform;
 	var bit = process.arch;
-	if (process.argv.indexOf("--dev") === -1) {
-		packaged = true;
-	} else {
-		packaged = false;
-	}
 	Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir)));
 	//CSS
 	css.css(mainWindow);
