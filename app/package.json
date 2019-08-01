@@ -67,7 +67,7 @@
   "devDependencies": {
     "electron": "^6.0.0",
     "electron-builder": "^21.1.5",
-    "readline-sync": "1.4.9"
+    "readline-sync": "1.4.10"
   },
   "build": {
     "productName": "TheDesk",
