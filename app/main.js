@@ -94,7 +94,7 @@ app.on('activate', function () {
 });
 
 function createWindow() {
-	if (isFile(lang_path)) {
+	if (isFile(lang_path)) {1
 		var lang = fs.readFileSync(lang_path, 'utf8');
 	} else {
 		var langs = app.getLocale();

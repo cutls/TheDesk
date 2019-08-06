@@ -1,6 +1,7 @@
 //検索
 //検索ボックストグル
 function searchMenu() {
+	trend();
 	$("#left-menu div").removeClass("active");
 	$("#searchMenu").addClass("active");
 	$(".menu-content").addClass("hide");
@@ -193,3 +194,48 @@ function graphDraw(tag, acct_id) {
 	<path d="M0,0 L10,0 20,10 20,50" fill="#3F51B5"></path>
 </svg>
 */
+function trend(){
+	console.log("get trend")
+	$("#src-contents").html("");
+	var acct_id = $("#src-acct-sel").val();
+	if(acct_id=="tootsearch"){
+		return false;
+	}
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_"+ acct_id + "_at");
+	var start = "https://" + domain + "/api/v1/trends"
+	console.log(start)
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function(response) {
+		return response.json();
+	}).catch(function(error) {
+		//todo(error);
+		console.error(error);
+	}).then(function(json) {
+		var tags = "";
+			Object.keys(json).forEach(function(keye) {
+				var tag = json[keye];
+				var his=tag.history;
+				var max=Math.max.apply(null, [his[0].uses,his[1].uses,his[2].uses,his[3].uses,his[4].uses,his[5].uses,his[6].uses]);
+				var six=50-(his[6].uses/max*50);
+				var five=50-(his[5].uses/max*50);
+				var four=50-(his[4].uses/max*50);
+				var three=50-(his[3].uses/max*50);
+				var two=50-(his[2].uses/max*50);
+				var one=50-(his[1].uses/max*50);
+				var zero=50-(his[0].uses/max*50);
+				tags = '<svg version="1.1" viewbox="0 0 60 50" width="60" height="50">'+
+				'<g><path d="M0,'+six+' L10,'+five+' 20,'+four+' 30,'+three+' 40,'+two+' 50,'+one+' 60,'+zero+'" style="stroke: #9e9e9e; stroke-width: 1;fill: none;"></path></g>'+
+			'</svg><span style="font-size:200%">'+his[0].uses+'</span>toots&nbsp;<a onclick="tl(\'tag\',\'' + tag.name + '\',\'' + acct_id +
+					'\',\'add\')" class="pointer">#' + tag.name + '</a>&nbsp;'+his[0].accounts+lang.lang_src_people+"<br><br>";
+
+					$("#src-contents").append(tags);
+			});
+
+	});
+}
