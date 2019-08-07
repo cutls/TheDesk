@@ -38,7 +38,7 @@ var envConstruction = [
         width: 50,
         text: {
             head: "Popup-Benachrichtigung(unter Windows)",
-            desc: 'Bei "0" Ausgeschaltet.',
+            desc: "Bei \"0\" Ausgeschaltet.",
             after: "Sek"
         }
     }, {
@@ -60,8 +60,8 @@ var envConstruction = [
         setValue: 300,
         text: {
             head: "Minimale Breite der Spalten",
-            desc: "Scroll bar will be shown when your window size is more than ammounts of columns.",
-            after: "px above"
+            desc: "Die Scroll-Leiste wird angezeigt, wenn Spalten breiter als das Fenster sind.",
+            after: "px über"
         }
     }, {
         id: "fixwidth",
@@ -73,7 +73,7 @@ var envConstruction = [
         text: {
             head: "Minimale Breite des TweetDeck-Browsers",
             desc: "",
-            after: "px above"
+            after: "px über"
         }
     }, {
         id: "size",
@@ -84,7 +84,7 @@ var envConstruction = [
         setValue: 13,
         text: {
             head: "Schriftgröße",
-            desc: '<span style="font-size:13px">13px(Absoluter Wert)</span>',
+            desc: "<span style=\"font-size:13px\">13px(Absoluter Wert)</span>",
             after: "px"
         }
     }, {
@@ -94,7 +94,7 @@ var envConstruction = [
         setValue: false,
         text: {
             head: "Hardwarebeschleunigung deaktivieren",
-            desc: "Auto restarted",
+            desc: "Automatischer Neustart",
             checkbox: [
                 {
                     text: "Ja",
@@ -115,7 +115,7 @@ var tlConstruction = [
         setValue: "absolute",
         text: {
             head: "Zeitformat",
-            desc: 'Relatives Format:"vor 1 Minuten","vor 3 Tagen"<br>Absolutes Format:"23:25:21","2017/12/30 23:59:00"<br>Gemischtes Format:Die heute geposteten Zahn sind relativ formatiert, andere sind absolut formatiert.',
+            desc: "Relatives Format:\"vor 1 Minuten\",\"vor 3 Tagen\"<br>Absolutes Format:\"23:25:21\",\"2017/12/30 23:59:00\"<br>Gemischtes Format:Die heute geposteten Zahn sind relativ formatiert, andere sind absolut formatiert.",
             checkbox: [
                 {
                     text: "Relativ",
@@ -140,7 +140,7 @@ var tlConstruction = [
         setValue: "yes",
         text: {
             head: "Server's unique locale",
-            desc: "This value is available on some Japanese servers",
+            desc: "Dieser Wert ist auf einigen japanischen Servern verfügbar",
             checkbox: yesno
         }
     }, {
@@ -169,14 +169,14 @@ var tlConstruction = [
         checkbox: true,
         setValue: "hidden",
         text: {
-            head: "Reply counter style",
+            head: "Aussehen der Antwortzähler",
             desc: "",
             checkbox: [
                 {
-                    text: "Show 1+ if the replies are more than 1.",
+                    text: "1+ anzeigen, bei mehr als einer Antworten.",
                     value: "hidden"
                 }, {
-                    text: "Show 1+ if the replies are more than 1.",
+                    text: "1+ anzeigen, bei mehr als einer Antworten.",
                     value: "all"
                 }
 
@@ -188,7 +188,7 @@ var tlConstruction = [
         checkbox: true,
         setValue: "yes",
         text: {
-            head: "Animated GIF images animation",
+            head: "Animierte GIF-Bilder abspielen",
             desc: "",
             checkbox: yesno
         }
@@ -198,14 +198,14 @@ var tlConstruction = [
         checkbox: true,
         setValue: "local",
         text: {
-            head: "Tag TL Search",
+            head: "Suche im Tag-Verlauf",
             desc: "",
             checkbox: [
                 {
-                    text: "Use federated network",
+                    text: "Auch in Verbundenen Netzwerken",
                     value: "all"
                 }, {
-                    text: "Use local network",
+                    text: "Nur im lokalen Netzwerk",
                     value: "local"
                 }
 
@@ -227,14 +227,14 @@ var tlConstruction = [
         checkbox: true,
         setValue: "no",
         text: {
-            head: "Hide action buttons without mouseover",
-            desc: "You may feel 'mouseover' is unconfortable:(",
+            head: "Aktionsbuttons ausblenden wenn der Mauszeiger weg ist.",
+            desc: "Du wirst vielleicht das Gefühl haben, dass \"Mouseover\" unangenehm ist :-(",
             checkbox: [
                 {
-                    text: "Mouseover to show",
+                    text: "Maus drüber zum Anzeigen",
                     value: "yes"
                 }, {
-                    text: "Click to show",
+                    text: "Klicken um anzuzeigen",
                     value: "click"
                 }, {
                     text: "Nein",
@@ -249,7 +249,7 @@ var tlConstruction = [
         checkbox: true,
         setValue: "yes",
         text: {
-            head: "Show Notification marker, red colored bell and counter(if you show a notification column.)",
+            head: "Benachrichtigungs-Markierung, rote Klingel und Zähler anzeigen(wenn Sie eine Benachrichtigungsspalte haben.)",
             desc: "",
             checkbox: yesno
         }
@@ -262,18 +262,18 @@ var tlConstruction = [
                 storage: "sentence",
                 width: 50,
                 setValue: 500,
-                text: { after: "lines above or" }
+                text: { after: "Zeilen über oder" }
             }, {
                 id: "letters",
                 storage: "letters",
                 width: 50,
                 setValue: 7000,
-                text: { after: "letters above" }
+                text: { after: "Buchstaben über" }
             }
         ],
         text: {
-            head: "Auto folding",
-            desc: "TheDesk does not collapse totes of 5 characters or less. Also, when collapsing, newlines are not shown. TheDesk count only newlines as the number of lines.",
+            head: "Automatisches Zusammenfalten",
+            desc: "TheDesk faltet nicht Tröts von 5 Zeichen oder weniger. Zusammengefaltet, werden keine Zeilen angezeigt. TheDesk zählen nur richtige Zeilen. (Zeilenumbrüche nicht.)",
         }
     }, {
         id: "img-height",
@@ -283,8 +283,8 @@ var tlConstruction = [
         width: 80,
         setValue: 200,
         text: {
-            head: "Height of images",
-            desc: 'Option:Set "full" to uncrop.',
+            head: "Höhe der Bilder",
+            desc: "Option:Setze \"full\" für Unbeschnitten.",
             after: "px"
         }
     }, {
@@ -293,8 +293,8 @@ var tlConstruction = [
         checkbox: true,
         setValue: "no",
         text: {
-            head: "Enable #InstanceTicker",
-            desc: 'Show colorful stickers about the server. <a href="https://cdn.weep.me/mastodon/">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.',
+            head: "Aktiviere #InstanceTicker",
+            desc: "Zeigt bunte Sticker über den Server. <a href=\"https://cdn.weep.me/mastodon/\">Über #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
             checkbox: yesno
         }
     }, {
@@ -303,7 +303,7 @@ var tlConstruction = [
         checkbox: true,
         setValue: "yes",
         text: {
-            head: "Animation of timelines",
+            head: "Animation der Verläufe",
             desc: "",
             checkbox: yesno
         }
@@ -313,7 +313,7 @@ var tlConstruction = [
         checkbox: true,
         setValue: "none",
         text: {
-            head: "Sound(Reply)",
+            head: "Ton bei Antwort",
             desc: "",
             checkbox: sound
         }
@@ -323,7 +323,7 @@ var tlConstruction = [
         checkbox: true,
         setValue: "none",
         text: {
-            head: "Sound(Fav)",
+            head: "Ton bei Favorit",
             desc: "",
             checkbox: sound
         }
@@ -333,7 +333,7 @@ var tlConstruction = [
         checkbox: true,
         setValue: "none",
         text: {
-            head: "Sound(Boost)",
+            head: "Ton bei Verstärkung",
             desc: "",
             checkbox: sound
         }
@@ -343,7 +343,7 @@ var tlConstruction = [
         checkbox: true,
         setValue: "none",
         text: {
-            head: "Sound(Follow)",
+            head: "Ton bei Folgen",
             desc: "",
             checkbox: sound
         }
@@ -358,7 +358,7 @@ var postConstruction = [
         width: 150,
         setValue: "",
         text: {
-            head: "Default warining text",
+            head: "Standard Warnung",
             desc: "",
             after: ""
         }
@@ -371,18 +371,18 @@ var postConstruction = [
                 storage: "cw_sentence",
                 width: 50,
                 setValue: 500,
-                text: { after: "lines above or" }
+                text: { after: "Zeilen über oder" }
             }, {
                 id: "cw_letters",
                 storage: "cw_letters",
                 width: 50,
                 setValue: 7000,
-                text: { after: "letters above" }
+                text: { after: "Buchstaben über" }
             }
         ],
         text: {
             head: "Warnung vor dem Versenden eines langen Toots.",
-            desc: "Show dialog whether you make too-long text hidden.",
+            desc: "Dialog anzeigen, ob Sie den zu langen Text verstecken möchten.",
         }
     }, {
         id: "cws",
@@ -400,26 +400,26 @@ var postConstruction = [
         checkbox: true,
         setValue: "public",
         text: {
-            head: "Default visibility",
+            head: "Standardsichtbarkeit",
             desc: "",
             checkbox: [
                 {
-                    text: "Public",
+                    text: "Öffentlich",
                     value: "public"
                 }, {
-                    text: "Unlisted",
+                    text: "Nicht aufgeführt",
                     value: "unlisted"
                 }, {
-                    text: "Private",
+                    text: "Privat",
                     value: "private"
                 }, {
-                    text: "Direct",
+                    text: "Direkt",
                     value: "direct"
                 }, {
-                    text: "Memory(memorized as each server)",
+                    text: "Merken (bei jeden Server gespeichert)",
                     value: "memory"
                 }, {
-                    text: "Default of your visibility(Set on preferences of Mastodon server)",
+                    text: "Ihrer Standard-Sichtbarkeit (Einstellungen des Mastodon-Servers setzen)",
                     value: "useapi"
                 }
             ]
@@ -430,14 +430,14 @@ var postConstruction = [
         checkbox: true,
         setValue: "no-act",
         text: {
-            head: "Posting images preferences",
+            head: "Bilder-Einstellungen fürs Senden",
             desc: "",
             checkbox: [
                 {
-                    text: "Insert media URL",
+                    text: "MedienURL einfügen",
                     value: "url"
                 }, {
-                    text: "Insert nothig",
+                    text: "Nichts einfügen",
                     value: "no-act"
                 }
             ]
@@ -448,17 +448,17 @@ var postConstruction = [
         checkbox: true,
         setValue: "yes",
         text: {
-            head: "Action of posting-box",
+            head: "Verhalten der Posting-Box",
             desc: "",
             checkbox: [
                 {
-                    text: "Folding",
+                    text: "Zusammengeklappt",
                     value: "yes"
                 }, {
-                    text: "Open after posting",
+                    text: "Nach dem Posting offen",
                     value: "no"
                 }, {
-                    text: "Absolutely open",
+                    text: "Alles geöffnet",
                     value: "absolute"
                 }
             ]
@@ -469,20 +469,20 @@ var postConstruction = [
         checkbox: true,
         setValue: "nothing",
         text: {
-            head: "Quote format",
+            head: "Zitierformat",
             desc: "",
             checkbox: [
                 {
                     text: "Nur URL",
                     value: "simple"
                 }, {
-                    text: "URL and acct(mention to the user)",
+                    text: "URL und Name (Hinweis auf den Benutzer)",
                     value: "mention"
                 }, {
-                    text: "URL, text and acct(mention to the user)",
+                    text: "URL, Text und Name(Hinweis auf den Benutzer)",
                     value: "full"
                 }, {
-                    text: "Disabled(Hide buttons on TLs)",
+                    text: "Deaktiviert (Taste in Verlauf ausgeblendet)",
                     value: "nothing"
                 }
             ]
@@ -493,14 +493,14 @@ var postConstruction = [
         checkbox: true,
         setValue: "remain",
         text: {
-            head: "Default accounts of actions",
-            desc: "Main account can be set on Account Manager.",
+            head: "Standard-Konto für Aktionen",
+            desc: "Das Hauptkonto kann in der Kontoverwaltung gestellt werden.",
             checkbox: [
                 {
-                    text: "Account you used recently",
+                    text: "Konto, das Sie kürzlich verwendet haben",
                     value: "remain"
                 }, {
-                    text: "Main account",
+                    text: "Hauptkonto",
                     value: "main"
                 }
             ]
@@ -511,26 +511,26 @@ var postConstruction = [
         checkbox: true,
         setValue: "public",
         text: {
-            head: "Secondary Toot Button",
+            head: "Zweite Tröt-Tasten",
             desc: "",
             checkbox: [
                 {
-                    text: "Hidden",
+                    text: "Versteckt",
                     value: "nothing"
                 }, {
-                    text: "Public",
+                    text: "Öffentlich",
                     value: "public"
                 }, {
-                    text: "Unlisted",
+                    text: "Nicht aufgeführt",
                     value: "unlisted"
                 }, {
-                    text: "Private",
+                    text: "Privat",
                     value: "private"
                 }, {
-                    text: "Direct",
+                    text: "Direkt",
                     value: "direct"
                 }, {
-                    text: "Local Only",
+                    text: "Nur lokal",
                     value: "local",
                     kirishima: true,
                     kirishimaText: "非対応インスタンスでは「未収載」になります。"
@@ -544,7 +544,7 @@ var postConstruction = [
         setValue: "normal",
         setValue: "no",
         text: {
-            head: "Zero-width space when inserting emojis",
+            head: "Emojis ohne Abstand Einfügen",
             desc: "",
             checkbox: yesno
         }

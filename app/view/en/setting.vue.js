@@ -38,7 +38,7 @@ var envConstruction = [
         width: 50,
         text: {
             head: "Popup notification(on Windows)",
-            desc: 'Hide to set "0"',
+            desc: "Hide to set \"0\"",
             after: "sec"
         }
     }, {
@@ -84,7 +84,7 @@ var envConstruction = [
         setValue: 13,
         text: {
             head: "Font size",
-            desc: '<span style="font-size:13px">13px(absolute value)</span>',
+            desc: "<span style=\"font-size:13px\">13px(absolute value)</span>",
             after: "px"
         }
     }, {
@@ -115,7 +115,7 @@ var tlConstruction = [
         setValue: "absolute",
         text: {
             head: "Time format",
-            desc: 'Relative format:"1 minutes ago","3 days ago"<br>Absolute format:"23:25:21","2017/12/30 23:59:00"<br>Mixed format:toots posted today are relative-format, others are absolute-format.',
+            desc: "Relative format:\"1 minutes ago\",\"3 days ago\"<br>Absolute format:\"23:25:21\",\"2017/12/30 23:59:00\"<br>Mixed format:toots posted today are relative-format, others are absolute-format.",
             checkbox: [
                 {
                     text: "Relative",
@@ -284,7 +284,7 @@ var tlConstruction = [
         setValue: 200,
         text: {
             head: "Height of images",
-            desc: 'Option:Set "full" to uncrop.',
+            desc: "Option:Set \"full\" to uncrop.",
             after: "px"
         }
     }, {
@@ -294,7 +294,7 @@ var tlConstruction = [
         setValue: "no",
         text: {
             head: "Enable #InstanceTicker",
-            desc: 'Show colorful stickers about the server. <a href="https://cdn.weep.me/mastodon/">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.',
+            desc: "Show colorful stickers about the server. <a href=\"https://cdn.weep.me/mastodon/\">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
             checkbox: yesno
         }
     }, {

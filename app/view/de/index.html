@@ -185,7 +185,7 @@
 						</span>
 						<br>
 						<input type="text" id="cw-text" placeholder="Warntext" class="mize" style="margin:0">
-						<div id="sch-box">Senden um<br><span class="sml">2.7.0~ Minimum time gap:5min(clock on the server may not be accurate.)</span><br>
+						<div id="sch-box">Senden um<br><span class="sml">2.7.0~ Mindestzeitraum: von 5min(Uhr auf dem Server ist möglicherweise ungenau.)</span><br>
 							<input type="datetime-local" id="sch-date" placeholder="Geplanter Tröt" class="datepicker"
 								style="margin:0">
 						</div>
@@ -239,7 +239,7 @@
 					id="toot-post-btn">Tröt</button>
 				<button class="btn waves-effect darken-3 unmize hide toot-btn-group" onclick="sec()"
 					id="toot-sec-btn"><i class="material-icons" id="toot-sec-icon"
-						title="Secondary Toot">lock_open</i></button>
+						title="Zweiter Tröt">lock_open</i></button>
 			</div>
 		</div>
 		<div id="right-side">
@@ -316,7 +316,7 @@
 					</label>
 					<label>
 						<input type="checkbox" class="filled-in" id="poll-until" value="1" />
-						<span>Hide 'votes' count until people vote it.</span>
+						<span>Verstecke Ergebnis bis die Leute abgestimmt haben.</span>
 					</label>
 					<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">Tag(e)
 					<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">Stunde(n)
@@ -429,7 +429,7 @@
 		<div class="modal-footer">
 			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="brws()">Im Browser öffnen</a>
 			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy()">URL dieses Tröts kopieren</a>
-			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy('emb')">Embed</a>
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy('emb')">Einbinden</a>
 			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Schließen</a>
 		</div>
 	</div>
@@ -462,13 +462,13 @@
 					<div id="his-des" data-acct=""></div><br>
 					<div id="his-plus-action">
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
-							onclick="empUser()">Emphasize this user</a>
+							onclick="empUser()">Diesen Benutzer hervorheben</a>
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
 							id="his-end-btn" onclick="pinUser()">Auf dem Profil zeigen</a><br>
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
 							onclick="profbrws()">Im Browser öffnen</a>
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data" id="his-main-acct"
-							onclick="setMain()" style="width: calc(100% - 10px)">Set it an main account</a><br>
+							onclick="setMain()" style="width: calc(100% - 10px)">Im Hauptkonto einstellen</a><br>
 					</div><br>
 					<div id="his-matching-list">
 						Get people resembling this user.<br>
@@ -491,7 +491,7 @@
 										class="material-icons">people</i>←</a>
 							</li>
 							<li class="tab col my-data-width only-his-data">
-								<a go="#his-action" title="Cross-account"><i
+								<a go="#his-action" title="Cross-Account"><i
 										class="material-icons">account_box</i></a>
 							</li>
 							<li class="tab col my-data-width only-his-data">
@@ -616,7 +616,7 @@
 					</div>
 				</div>
 				<div class="his-float" id="his-float-blocked">
-					<div>You are blocked. Why?</div>
+					<div>Sie sind blockiert. Warum?</div>
 				</div>
 			</div>
 		</div>
@@ -910,7 +910,7 @@
 					</label>
 					<br>
 					<span class="sml">Gefilterte Toots verschwinden unwiderruflich, auch wenn der Filter später entfernt wird</span><br>
-					Verfällt nach<span class="sml">Nicht gesetzt oder "0" bedeutet "Nie"<b>This value may contain some error</b></span><br><br>
+					Verfällt nach<span class="sml">Nicht gesetzt oder \"0\" bedeutet \"Nie\"<b>This value may contain some error</b></span><br><br>
 					<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">Tag(e)
 					<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">Stunde(n)
 					<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">Minute(n)<br>
@@ -998,7 +998,7 @@
 			</div>
 			<div id="tips" class="hide">
 				<a onclick="tipsToggle()" class="nex waves-effect" style="float:left">
-					<i class="material-icons nex" title="Change Tips" data-trans-title="tips">bubble_chart</i>
+					<i class="material-icons nex" title="Tipps ändern" data-trans-title="tips">bubble_chart</i>
 				</a>
 				<div id="tips-text" style="float:left; width:300px;"></div>
 			</div>

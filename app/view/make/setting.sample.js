@@ -38,7 +38,7 @@ var envConstruction = [
         width: 50,
         text: {
             head: "@@popup@@",
-            desc: '@@popupwarn@@',
+            desc: "@@popupwarn@@",
             after: "@@s@@"
         }
     }, {
@@ -84,7 +84,7 @@ var envConstruction = [
         setValue: 13,
         text: {
             head: "@@fontsize@@",
-            desc: '<span style="font-size:13px">13px(@@absolute@@)</span>',
+            desc: "<span style=\"font-size:13px\">13px(@@absolute@@)</span>",
             after: "px"
         }
     }, {
@@ -115,7 +115,7 @@ var tlConstruction = [
         setValue: "absolute",
         text: {
             head: "@@timemode@@",
-            desc: '@@relativetime@@<br>@@absolutetime@@<br>@@mixtime@@',
+            desc: "@@relativetime@@<br>@@absolutetime@@<br>@@mixtime@@",
             checkbox: [
                 {
                     text: "@@relativesel@@",
@@ -284,7 +284,7 @@ var tlConstruction = [
         setValue: 200,
         text: {
             head: "@@imgheight@@",
-            desc: '@@imgheightwarn@@',
+            desc: "@@imgheightwarn@@",
             after: "px"
         }
     }, {
@@ -294,7 +294,7 @@ var tlConstruction = [
         setValue: "no",
         text: {
             head: "@@ticker@@",
-            desc: '@@tickerwarn@@',
+            desc: "@@tickerwarn@@",
             checkbox: yesno
         }
     }, {

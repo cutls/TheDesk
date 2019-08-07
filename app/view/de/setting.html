@@ -89,7 +89,7 @@
 				</div>
 				<h5>Schriftart</h5>
 				Wählen Sie Ihre Lieblingsschrift. 'Select'(nur Windows/ macOS)<br>
-				<button class="btn waves-effect" style="width:100px;" onclick="font()">Select</button><br>
+				<button class="btn waves-effect" style="width:100px;" onclick="font()">Auswahl</button><br>
 				<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
 				<br>
 				<input type="text" style="width:150px" id="font">
@@ -164,7 +164,7 @@
 				</label>
 				<div id="pickers">
 					<div>
-						<h5>Primary</h5>Background of components
+						<h5>Primary</h5>Hintergrund der Komponenten
 						<div id="color-picker0-wrap">
 							<div class="color-picker" id="color-picker0"></div>
 						</div>
@@ -185,7 +185,7 @@
 						<input type="hidden" id="color-picker2_value">
 					</div>
 					<div>
-						<h5>Accent</h5>Background of boosts
+						<h5>Accent</h5>Hintergrund des Boosts
 						<div id="color-picker3-wrap">
 							<div class="color-picker" id="color-picker3"></div>
 						</div>
@@ -196,16 +196,16 @@
 					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">Löschen</button><br><br>
 				<input type="text" style="width:300px;height:40px;" id="custom_json" class="materialize-textarea"
 					placeholder="JSON style" readonly><br>
-				Share this code with other TheDesk. Do not share this code with MiAS.
+				Teilen Sie diesen Code mit anderen TheDesk. Teilen Sie diesen Code nicht mit MiAS.
 				<h4>Import von eigenen Designs</h4>
-				Mehr Designs auf: <a href="https://assets.msky.cafe/" target="_blank">MiAS</a><br>
+				Mehr Designs auf: <a href=\"https://assets.msky.cafe/\" target=\"_blank\">MiAS</a><br>
 				<input type="text" style="width:300px;height:40px;" id="custom_import" class="materialize-textarea"
 					placeholder="JSON/JSON5 style">
 				<button class="btn waves-effect" onclick="customImp()">Import</button><br>
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="material-icons">reorder</i>Timeline Preferences
+				<i class="material-icons">reorder</i>Verlaufseinstellungen
 			</div>
 			<div class="collapsible-body">
 				<div id="tlView">
@@ -239,7 +239,7 @@
 						</template><br>
 					</template>
 				</div>
-				<h5>Custom sound</h5>
+				<h5>Eigener Ton</h5>
 				<button class="btn waves-effect" style="width:120px;" onclick="customSound(1)">Custom 1</button><span
 					id="c1-file"></span><br>
 				<button class="btn waves-effect" style="width:120px;" onclick="customSound(2)">Custom 2</button><span
@@ -252,7 +252,7 @@
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="material-icons">send</i>Posting Preferences
+				<i class="material-icons">send</i>Einstellungen für Tröts Senden
 			</div>
 			<div class="collapsible-body">
 				<div id="postView">
@@ -295,8 +295,8 @@
 				<i class="material-icons">keyboard</i>Tastaturkürzel Einstellungen
 			</div>
 			<div class="collapsible-body">
-				<h5>Easy inserter</h5>
-				You can insert any letters and emojis with only 3 keys<br>
+				<h5>Schnell Einfügen</h5>
+				Sie können Buchstaben und Emojis mit 3-Tasten-Kombination einfügen<br>
 				Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
 				<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">Speichern</button><br><br>
 				Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
@@ -307,24 +307,24 @@
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="material-icons">bookmark</i>Mute & Emphasis Preferences
+				<i class="material-icons">bookmark</i>Einstellungen für Stumm & Hervorheben
 			</div>
 			<div class="collapsible-body">
-				<h5>Client Mute</h5>
+				<h5>Client Stumm</h5>
 				<div id="mute-cli"></div>
-				<h5>Client Emphasis</h5>
-				Click client name on toots to toggle mute and emphasis.
-				<h5>Words Mute</h5>
-				Enter to set<br>
+				<h5>Client Hervorheben</h5>
+				Klicken Sie auf den Client-Namen des Tröts, um Ausblenden oder Hervorheben umzuschalten.
+				<h5>Wörter Ausblenden</h5>
+				\"Enter\" zum setzen<br>
 				<div class="chips" id="wordmute" style="background-color:gray;"></div>
 				<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">Speichern</button>
-				<h5>Words Emphasis</h5>
-				Enter to set<br>
+				<h5>Wörter Hervorheben</h5>
+				\"Enter\" zum setzen<br>
 				<div class="chips" id="wordemp" style="background-color:gray;"></div>
 				<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">Speichern</button>
-				<h5>Users Emphasis</h5>
+				<h5>Benutzer Hervorheben</h5>
 				Set on users data modals.
-				<span class="emphasized">　Use this color to emphasis　</span>
+				<span class="emphasized">　Diese Farbe zum Hervorheben verwenden　</span>
 			</div>
 		</li>
 		<li>
@@ -333,7 +333,7 @@
 			</div>
 			<div class="collapsible-body">
 				<h5>NowPlaying Provider(Windows)</h5>
-				macOS und Linux werden nicht unterstützt. AIMP und iTunes wurden von Entwicklern überprüft. <br>CAD:foobar2000, MusicBee,J. River Media Center, Media Jukebox<br>WLM:Last.fm Client, TTPlayer, OpenPandora, Zune.<br> Für foobar2000 ist <a href="http://poiru.github.com/foo-cad/">foo_cad Plugin</a> erforderlich. MusicBee benötigt CAD.<br>
+				macOS und Linux werden nicht unterstützt. AIMP und iTunes wurden von Entwicklern überprüft. <br>CAD:foobar2000, MusicBee,J. River Media Center, Media Jukebox<br>WLM:Last.fm Client, TTPlayer, OpenPandora, Zune.<br> Für foobar2000 ist <a href=\"http://poiru.github.com/foo-cad/\">foo_cad Plugin</a> erforderlich. MusicBee benötigt CAD.<br>
 				<label>
 					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
 					<span>AIMP</span>
@@ -385,7 +385,7 @@
 				@@template2@@<br>
 				@@template3@@<br>
 				<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">Speichern</button>
-				<h5>Attach an Artwork of Spotify</h5>
+				<h5>Das Artwork von Spotify anhängen</h5>
 				<label>
 					<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes"
 						value="yes" />
@@ -435,17 +435,17 @@
 	<li>N:Tröt-Box öffnen</li>
 	<li>X:Tröt-Box umschalten</li>
 	<li>Ctrl+Enter:Senden</li>
-	<li>Ctrl+Enter+Shift:Post(secondary toot)</li>
-	<li>Alt+Enter:Secondary Toot Button</li>
+	<li>Ctrl+Enter+Shift:Senden (Zweit-Tröt)</li>
+	<li>Alt+Enter:Zweite Tröt-Tasten</li>
 	<li>Ctrl+E:Markiere alle Benachrichtigungen als gelesen.</li>
-	<li>Ctrl+U:@@keyselecttop@@</li>
+	<li>Ctrl+U:Select the top & left(No.1 column) toot</li>
 	<li>Esc:Tröt-Box ausblenden</li>
-	<li>F5:Super Reload</li>
+	<li>F5:Alles neu laden</li>
 	<li>Ctrl+Shift+C:Eingabe löschen</li>
 	<li>Ctrl+Shift+S:Einstellungen</li>
-	<li>Ctrl+Shift+M:Account Manager</li>
+	<li>Ctrl+Shift+M:Kontenverwaltung</li>
 	<li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
-	<li>Ctrl+Shift+P:Show profile of selecting</li>
+	<li>Ctrl+Shift+P:Ausgewähltes Profil anzeigen</li>
 	<li>←/→:Nächstes oder vorheriges Bild anzeigen</li>
 	<li>Mousewheel:Zoom a image</li>
 	<div class="hide kirishima">
@@ -457,10 +457,10 @@
 		<li>Ctrl+R:
 			<a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
 		</li><br>
-	@@whenSelected@@
-	<li>F:@@fav@@</li>
-	<li>B:@@bt@@</li>
-	<li>R:@@reply@@</li>
+	Wenn ein Tröt ausgewählt ist: 
+	<li>F:Diesen Tröt favorisieren</li>
+	<li>B:Diesen Tröt verstärken</li>
+	<li>R:Auf diesen Tröt antworten</li>
 	</div>
 	<button class="btn waves-effect red" style="width:100%; max-width:500px;"
 		onclick="if(confirm('Alle Daten löschen. Kein Rückgängig mehr möglich! Fortfahren?')){ localStorage.clear(); location.href='index.html'; }"><i

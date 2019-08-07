@@ -38,7 +38,7 @@ var envConstruction = [
         width: 50,
         text: {
             head: "新規通知のポップアップお知らせの表示秒数",
-            desc: '0に設定すると表示されません',
+            desc: "0に設定すると表示されません",
             after: "秒"
         }
     }, {
@@ -84,7 +84,7 @@ var envConstruction = [
         setValue: 13,
         text: {
             head: "フォントサイズ",
-            desc: '<span style="font-size:13px">13px(絶対指定)</span>',
+            desc: "<span style=\"font-size:13px\">13px(絶対指定)</span>",
             after: "px"
         }
     }, {
@@ -115,7 +115,7 @@ var tlConstruction = [
         setValue: "absolute",
         text: {
             head: "時間表記設定",
-            desc: '相対時間の例:"1分前","3日前"<br>絶対時間の例"23:25:21","2017年12月30日 23:59:00"<br>混合表示は、当日のトゥートのみ相対、それ以外は絶対で表示 ',
+            desc: "相対時間の例:\"1分前\",\"3日前\"<br>絶対時間の例\"23:25:21\",\"2017年12月30日 23:59:00\"<br>混合表示は、当日のトゥートのみ相対、それ以外は絶対で表示 ",
             checkbox: [
                 {
                     text: "相対時間",
@@ -284,7 +284,7 @@ var tlConstruction = [
         setValue: 200,
         text: {
             head: "画像の高さ",
-            desc: 'オプション:「full」と指定すると全ての画像をクロップしません。',
+            desc: "オプション:「full」と指定すると全ての画像をクロップしません。",
             after: "px"
         }
     }, {
@@ -294,7 +294,7 @@ var tlConstruction = [
         setValue: "no",
         text: {
             head: "#InstanceTickerを使う",
-            desc: 'トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href="https://cdn.weep.me/mastodon/">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.',
+            desc: "トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href=\"https://cdn.weep.me/mastodon/\">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.",
             checkbox: yesno
         }
     }, {

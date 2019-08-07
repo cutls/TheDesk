@@ -38,7 +38,7 @@ var envConstruction = [
         width: 50,
         text: {
             head: "Popupová oznámení (na Windows)",
-            desc: 'Hide to set "0"',
+            desc: "Hide to set \"0\"",
             after: "sec"
         }
     }, {
@@ -84,7 +84,7 @@ var envConstruction = [
         setValue: 13,
         text: {
             head: "Velikost písma",
-            desc: '<span style="font-size:13px">13px(absolutní hodnota)</span>',
+            desc: "<span style=\"font-size:13px\">13px(absolutní hodnota)</span>",
             after: "px"
         }
     }, {
@@ -115,7 +115,7 @@ var tlConstruction = [
         setValue: "absolute",
         text: {
             head: "Časový formát",
-            desc: 'Relativní formát: „před 1 minutou“, „před 3 dny“<br>Absolutní formát: „23:25:21“, „2017/12/30 23:59:00“<br>Smíšený formát: tooty publikované dnes jsou v relativním formátu, ostatní jsou v absolutním formátu.',
+            desc: "Relativní formát: „před 1 minutou“, „před 3 dny“<br>Absolutní formát: „23:25:21“, „2017/12/30 23:59:00“<br>Smíšený formát: tooty publikované dnes jsou v relativním formátu, ostatní jsou v absolutním formátu.",
             checkbox: [
                 {
                     text: "Relativní",
@@ -284,7 +284,7 @@ var tlConstruction = [
         setValue: 200,
         text: {
             head: "Height of images",
-            desc: 'Option:Set "full" to uncrop.',
+            desc: "Option:Set \"full\" to uncrop.",
             after: "px"
         }
     }, {
@@ -294,7 +294,7 @@ var tlConstruction = [
         setValue: "no",
         text: {
             head: "Enable #InstanceTicker",
-            desc: 'Show colorful stickers about the server. <a href="https://cdn.weep.me/mastodon/">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.',
+            desc: "Show colorful stickers about the server. <a href=\"https://cdn.weep.me/mastodon/\">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
             checkbox: yesno
         }
     }, {

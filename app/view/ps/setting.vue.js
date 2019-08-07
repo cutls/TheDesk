@@ -38,7 +38,7 @@ var envConstruction = [
         width: 50,
         text: {
             head: "crwdns1898:0crwdne1898:0",
-            desc: 'crwdns536:0crwdne536:0',
+            desc: "crwdns536:0crwdne536:0",
             after: "crwdns537:0crwdne537:0"
         }
     }, {
@@ -84,7 +84,7 @@ var envConstruction = [
         setValue: 13,
         text: {
             head: "crwdns546:0crwdne546:0",
-            desc: '<span style="font-size:13px">13px(crwdns549:0crwdne549:0)</span>',
+            desc: "<span style=\"font-size:13px\">13px(crwdns549:0crwdne549:0)</span>",
             after: "px"
         }
     }, {
@@ -115,7 +115,7 @@ var tlConstruction = [
         setValue: "absolute",
         text: {
             head: "crwdns551:0crwdne551:0",
-            desc: 'crwdns552:0crwdne552:0<br>crwdns553:0crwdne553:0<br>crwdns554:0crwdne554:0',
+            desc: "crwdns552:0crwdne552:0<br>crwdns553:0crwdne553:0<br>crwdns554:0crwdne554:0",
             checkbox: [
                 {
                     text: "crwdns555:0crwdne555:0",
@@ -284,7 +284,7 @@ var tlConstruction = [
         setValue: 200,
         text: {
             head: "crwdns586:0crwdne586:0",
-            desc: '@@imgheightwarn@@',
+            desc: "@@imgheightwarn@@",
             after: "px"
         }
     }, {
@@ -294,7 +294,7 @@ var tlConstruction = [
         setValue: "no",
         text: {
             head: "crwdns1908:0crwdne1908:0",
-            desc: 'crwdns1910:0crwdne1910:0',
+            desc: "crwdns1910:0crwdne1910:0",
             checkbox: yesno
         }
     }, {

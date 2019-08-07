@@ -24,6 +24,7 @@ for (let i = 0; i < samples.length; i++) {
         let target = JSON.parse(fs.readFileSync("language/" + lang + "/"  + simples[i] + ".json", 'utf8'))
         Object.keys(target).forEach(function (key) {
             let str = target[key]
+            str = str.replace(/"/g, '\\"')
             var regExp = new RegExp("@@" + key + "@@", "g")
             source = source.replace(regExp, str)
         })

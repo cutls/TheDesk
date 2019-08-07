@@ -1,13 +1,13 @@
 //検索
 //検索ボックストグル
 function searchMenu() {
+	$("#src-contents").html("");
 	trend();
 	$("#left-menu div").removeClass("active");
 	$("#searchMenu").addClass("active");
 	$(".menu-content").addClass("hide");
 	$("#src-box").removeClass("hide");
-	$('ul.tabs').tabs('select_tab', 'src-sta');
-	$("#src-contents").html("");
+	//$('ul.tabs').tabs('select_tab', 'src-sta');
 }
 
 //検索取得

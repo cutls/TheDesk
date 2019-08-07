@@ -305,7 +305,7 @@ blockquote:before,
   background-color: var(--subcolor);
 }
 .collapsible-header:focus {
-  background-color: var(--subcolor);
+  background-color: var(--subcolor) !important;
 }
 .modal-footer {
   background-color: var(--modalfooter) !important;

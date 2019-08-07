@@ -207,7 +207,9 @@ function infowebsocket() {
 				}
 			}
 			if (show) {
-				M.toast({ html: escapeHTML(obj.Text) + toot + '<span class="sml grey-text">(スライドして消去)</span>', displayLength: 86400 })
+				console.log(obj.text)
+				console.log(escapeHTML(obj.text))
+				M.toast({ html: escapeHTML(obj.text) + toot + '<span class="sml grey-text">(スライドして消去)</span>', displayLength: 86400 })
 			}
 		} else {
 			$("#persons").text(obj.text);

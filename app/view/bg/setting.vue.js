@@ -38,7 +38,7 @@ var envConstruction = [
         width: 50,
         text: {
             head: "Известие с изскачащ прозорец (за Windows)",
-            desc: 'Скрито ако е зададено на „0“',
+            desc: "Скрито ако е зададено на „0“",
             after: "сек"
         }
     }, {
@@ -84,7 +84,7 @@ var envConstruction = [
         setValue: 13,
         text: {
             head: "Размер на шрифта",
-            desc: '<span style="font-size:13px">13px(абсолютна стойност)</span>',
+            desc: "<span style=\"font-size:13px\">13px(абсолютна стойност)</span>",
             after: "px"
         }
     }, {
@@ -115,7 +115,7 @@ var tlConstruction = [
         setValue: "absolute",
         text: {
             head: "Времеви формат",
-            desc: 'Относителен формат: „преди 1 минута“, „преди 3 дни“<br>Абсолютен формат:"23:25:21","2017/12/30 23:59:00"<br>Смесен формат: някои от раздумките са с относителен-формат, други са с абсолютен формат.',
+            desc: "Относителен формат: „преди 1 минута“, „преди 3 дни“<br>Абсолютен формат:\"23:25:21\",\"2017/12/30 23:59:00\"<br>Смесен формат: някои от раздумките са с относителен-формат, други са с абсолютен формат.",
             checkbox: [
                 {
                     text: "Относителен",
@@ -284,7 +284,7 @@ var tlConstruction = [
         setValue: 200,
         text: {
             head: "Height of images",
-            desc: 'Option:Set "full" to uncrop.',
+            desc: "Option:Set \"full\" to uncrop.",
             after: "px"
         }
     }, {
@@ -294,7 +294,7 @@ var tlConstruction = [
         setValue: "no",
         text: {
             head: "Enable #InstanceTicker",
-            desc: 'Show colorful stickers about the server. <a href="https://cdn.weep.me/mastodon/">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.',
+            desc: "Show colorful stickers about the server. <a href=\"https://cdn.weep.me/mastodon/\">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
             checkbox: yesno
         }
     }, {
