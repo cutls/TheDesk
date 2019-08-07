@@ -13,6 +13,7 @@ Mastodon/Misskey client for PC(Windows/Linux/macOS)
 Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge/?site=thedesk.top)](https://status.cutls.com)    
 
 <a href="https://www.patreon.com/cutls"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" alt="Become a Patron!" width="160"></a>  
+<a href="https://liberapay.com/cutls/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
 ## License
