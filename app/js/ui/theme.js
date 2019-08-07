@@ -11,6 +11,7 @@ function themes(theme) {
 	$("html").removeClass("greentheme");
 	$("html").removeClass("browntheme");
 	$("html").removeClass("blacktheme");
+	$("html").removeClass("bluetheme");
 	$("html").removeClass("customtheme");
 	$("html").addClass(theme + "theme");
 	var font = localStorage.getItem("font");
