@@ -133,6 +133,59 @@ function verck(ver) {
 				if (obj.ID * 1 <= last) {
 					break;
 				} else {
+					if (obj.type == "textv2") {
+						if (~obj.languages.indexOf(lang.language)) {
+							var show = true;
+							if (obj.toot != "") {
+								var toot = '<button class="btn-flat toast-action" onclick="detEx(\'' + obj.toot + '\',\'main\')">Show</button>';
+							} else {
+								var toot = "";
+							}
+							if (obj.ver != "") {
+								if (obj.ver == ver) {
+									show = true;
+								} else {
+									show = false;
+								}
+							}
+							if (obj.domain != "") {
+								var multi = localStorage.getItem("multi");
+								if (multi) {
+									show = false;
+									var accts = JSON.parse(multi);
+									Object.keys(accts).forEach(function (key) {
+										var acct = accts[key];
+										if (acct.domain == obj.domain) {
+											show = true;
+										}
+									});
+								}
+							}
+							if (show) {
+								M.toast({ html: escapeHTML(obj.text) + toot + '<span class="sml grey-text">(スライドして消去)</span>', displayLength: 86400 })
+							}
+						}
+					}
+				}
+
+			}
+		}
+	});
+}
+var infostreaming = false;
+function infowebsocket() {
+	infows = new WebSocket("wss://thedesk.top/ws/");
+	infows.onopen = function (mess) {
+		console.log([tlid, ":Connect Streaming Info:", mess]);
+		infostreaming = true;
+	}
+	infows.onmessage = function (mess) {
+		console.log([tlid, ":Receive Streaming:", JSON.parse(mess.data)]);
+		var obj = JSON.parse(mess.data);
+		if (obj.type != "counter") {
+			if (obj.type == "textv2") {
+				if (~obj.languages.indexOf(lang.language)) {
+					localStorage.setItem("last-notice-id", obj.id)
 					var show = true;
 					if (obj.toot != "") {
 						var toot = '<button class="btn-flat toast-action" onclick="detEx(\'' + obj.toot + '\',\'main\')">Show</button>';
@@ -160,56 +213,11 @@ function verck(ver) {
 						}
 					}
 					if (show) {
+						console.log(obj.text)
+						console.log(escapeHTML(obj.text))
 						M.toast({ html: escapeHTML(obj.text) + toot + '<span class="sml grey-text">(スライドして消去)</span>', displayLength: 86400 })
 					}
 				}
-
-			}
-		}
-	});
-}
-var infostreaming = false;
-function infowebsocket() {
-	infows = new WebSocket("wss://thedesk.top/ws/");
-	infows.onopen = function (mess) {
-		console.log([tlid, ":Connect Streaming Info:", mess]);
-		infostreaming = true;
-	}
-	infows.onmessage = function (mess) {
-		console.log([tlid, ":Receive Streaming:", JSON.parse(mess.data)]);
-		var obj = JSON.parse(mess.data);
-		if (obj.type != "counter") {
-			localStorage.setItem("last-notice-id", obj.id)
-			var show = true;
-			if (obj.toot != "") {
-				var toot = '<button class="btn-flat toast-action" onclick="detEx(\'' + obj.toot + '\',\'main\')">Show</button>';
-			} else {
-				var toot = "";
-			}
-			if (obj.ver != "") {
-				if (obj.ver == ver) {
-					show = true;
-				} else {
-					show = false;
-				}
-			}
-			if (obj.domain != "") {
-				var multi = localStorage.getItem("multi");
-				if (multi) {
-					show = false;
-					var accts = JSON.parse(multi);
-					Object.keys(accts).forEach(function (key) {
-						var acct = accts[key];
-						if (acct.domain == obj.domain) {
-							show = true;
-						}
-					});
-				}
-			}
-			if (show) {
-				console.log(obj.text)
-				console.log(escapeHTML(obj.text))
-				M.toast({ html: escapeHTML(obj.text) + toot + '<span class="sml grey-text">(スライドして消去)</span>', displayLength: 86400 })
 			}
 		} else {
 			$("#persons").text(obj.text);
