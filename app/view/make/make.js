@@ -5,8 +5,8 @@ if (!ver) {
     ver = "Usamin (18.7.1)"
 }
 console.log("Constructing view files " + ver + ": make sure to update package.json")
-const langs = ["ja", "en", "ps"]
-const langsh = ["日本語", "English", "Crowdin translate system(beta)"]
+const langs = ["ja", "en", "ps", "bg", "cs", "de"]
+const langsh = ["日本語", "English", "Crowdin translate system(beta)", "български", "Česky", "Deutsch"]
 const simples = ["acct", "index", "setting", "update", "setting"]
 const samples = ["acct.sample.html", "index.sample.html", "setting.sample.html", "update.sample.html", "setting.sample.js"]
 const pages = ["acct.html", "index.html", "setting.html", "update.html", "setting.vue.js"]
@@ -21,7 +21,7 @@ for (let i = 0; i < samples.length; i++) {
     for (let j = 0; j < langs.length; j++) {
         let source = sourceParent
         let lang = langs[j]
-        let target = JSON.parse(fs.readFileSync("language/" + simples[i] + "." + lang + ".json", 'utf8'))
+        let target = JSON.parse(fs.readFileSync("language/" + lang + "/"  + simples[i] + ".json", 'utf8'))
         Object.keys(target).forEach(function (key) {
             let str = target[key]
             var regExp = new RegExp("@@" + key + "@@", "g")

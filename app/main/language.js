@@ -1,5 +1,8 @@
 // Create the Application's main menu
 function templete(lang, mainWindow, packaged, dir) {
+    if(lang !="ja" && lang != "en"){
+        lang = "en"
+    }
     const electron = require("electron");
     const app = electron.app;
     const BrowserWindow = electron.BrowserWindow;

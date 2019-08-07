@@ -1,0 +1,1106 @@
+<!doctype html>
+<html lang="bg">
+
+<head>
+	<title>TheDesk</title>
+	<meta content="width=device-width,initial-scale=1.0" name="viewport">
+	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<link href="../../css/tl.css" rel="stylesheet" type="text/css">
+	<link href="../../css/userdata.css" rel="stylesheet" type="text/css">
+	<link href="../../css/post.css" rel="stylesheet" type="text/css">
+	<link href="../../css/master.css" type="text/css" rel="stylesheet">
+	<link href="../../css/sort.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
+	<meta charset="utf-8">
+	<!--
+	<script type="text/javascript">
+		var _jipt = [];
+		_jipt.push(['project', 'thedesk']);
+	</script>
+	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+	-->
+</head>
+
+<body>
+	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../../js/platform/first.js"></script>
+	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
+	<script type="text/javascript" src="../../js/lang/lang.bg.js"></script>
+	<script type="text/javascript" src="../../js/common/time.js"></script>
+	<script type="text/javascript" src="../../js/common/blurhash.js"></script>
+	<script type="text/javascript" src="../../js/common/version.js"></script>
+	<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
+	<script type="text/javascript" src="../../js/common/modal.js"></script>
+	<script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script type="text/javascript" src="../../js/platform/punycode.js"></script>
+	<script>
+		var ver = "Usamin (18.7.1)";
+		//betaを入れるとバージョンチェックしない
+		//GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
+		//var ver="beta";
+		//WinstoreではバージョンCK・言語・Misskeyトークンの機能が排除
+		var acct_id = 0;
+		var tlid = 0;
+	</script>
+	<textarea id="copy" style="top:-100px; position:fixed;"></textarea>
+	<canvas id="canvas" style="top:-100px; position:fixed;width:32px;height:32px" width="32" height="32"></canvas>
+	<div id="tl">
+		<!--TL-->
+		<!--ドラッグハンドラ-->
+		<div id="drag">
+			<div id="drag-content" data-trans="drag_here">Плъзнете тук за да качите
+				<br>
+				<button class="btn waves-effect" onclick="closedrop()" data-trans="close">Затвори</button>
+			</div>
+		</div>
+	</div>
+	<div id="post-box" class="z-depth-5">
+		<div id="post-bar" class="drag-bar"><span id="unreact">Нова публикация</span><span id="addreact"
+				class="hide">Reaction</span></div>
+		<!--トゥートボックス-->
+		<div id="left-side">
+			<div class="row" style="margin-bottom:0;">
+				</span>
+				<div class="" style="float:left;">
+					<a onclick="profShow()" style="vertical-align:-2.5rem;" class="pointer mize">
+						<img src="../../img/missing.svg" id="acct-sel-prof" title="Показване на профила на избрания акаунт(Ctrl+Shift+P)"
+							data-trans-title="post_box_prof" width="24px">
+					</a>
+				</div>
+				<div class="input-field mize" style="float:left; width:calc(100% - 24px)">
+					<select id="post-acct-sel" class="acct-sel" onchange="mdCheck()"></select>
+				</div>
+				<span class="cancel">
+					<i class="material-icons waves-effect" onclick="hide()" title="Затвори полето(X)"
+						data-trans-title="post_box_close">cancel</i>
+				</span>
+				<!--Markdown-->
+				<div class="row" style="margin-bottom:0">
+					<div class="markdown mize hide">
+						<div class="col s12">
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('b')"
+								title="太字(Ctrl+B)テキストボックス内を選択してから押すと囲みます。">format_bold</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('i')"
+								title="斜字(Ctrl+I)テキストボックス内を選択してから押すと囲みます。">format_italic</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('u')"
+								title="下線(Ctrl+U)テキストボックス内を選択してから押すと囲みます。">format_underlined</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('s')"
+								title="取り消し(Ctrl+S)テキストボックス内を選択してから押すと囲みます。">strikethrough_s</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('>','no','yes')"
+								title="引用">format_quote</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('#','no','yes')"
+								title="見出し">short_text</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('`','yes','no')"
+								title="コード挿入　テキストボックス内を選択してから押すと囲みます。">code</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('- ','yes','yes')"
+								title="箇条書きリスト">format_list_bulleted</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('1. ','yes','yes')"
+								title="番号付きリスト">format_list_numbered</i>
+							<i class="pointer setting fa fa-subscript waves-effect"
+								onclick="markdown('__','yes','no','before')" title="下付き文字　テキストボックス内を選択してから押すと囲みます。"
+								style="font-size:1.5rem"></i>
+							<i class="pointer setting fa fa-superscript waves-effect"
+								onclick="markdown('_','yes','no','before')" title="上付き文字　テキストボックス内を選択してから押すと囲みます。"
+								style="font-size:1.5rem"></i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('spin')"
+								title="回転　テキストボックス内を選択してから押すと囲みます。">autorenew</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('pulse')"
+								title="点滅　テキストボックス内を選択してから押すと囲みます。">flare</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('flip=vertical')"
+								title="上下反転　テキストボックス内を選択してから押すと囲みます。">swap_vert</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('flip=horizontal')"
+								title="左右反転　テキストボックス内を選択してから押すと囲みます。">swap_horiz</i>
+							<span class="sml gray pointer waves-effect">
+								<a onclick="mdToggle()">Markdownエディタを隠す</a>
+							</span>
+							<br>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('size')"
+								title="文字サイズ変更　テキストボックス内を選択してから押すと囲みます。">format_size</i>
+							<input id="size" style="width: calc(50% - 20px); margin: 0; height: 24px;" value="12">px
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('colorhex')"
+								title="文字色変更　テキストボックス内を選択してから押すと囲みます。">color_lens</i>
+							<input id="colorhex" style="width: calc(50% - 50px); margin: 0; height: 24px;" type="color">
+							<br>
+							<i class="material-icons pointer setting waves-effect" onclick="markdownLink()"
+								title="リンク挿入">link</i>
+							<input id="linkt" style="width: calc(50% - 20px); margin: 0; height: 24px;"
+								placeholder="リンクテキスト">&nbsp;
+							<input id="link2" style="width: calc(50% - 20px); margin: 0; height: 24px;"
+								placeholder="リンクアドレス">
+							<br>
+							<i class="material-icons pointer setting waves-effect" onclick="markdownImage()"
+								title="インライン画像挿入">image</i>
+							<input id="image" style="width: calc(50% - 20px); margin: 0; height: 24px;"
+								placeholder="代替テキスト">&nbsp;
+							<input id="image2" style="width: calc(50% - 20px); margin: 0; height: 24px;"
+								placeholder="画像アドレス">
+						</div>
+					</div>
+					<div class="input-field col s12" id="preview-field" style="margin-top: 0;">
+						<div id="md-preview">
+						</div>
+						<span class="sml gray pointer">
+							<a onclick="previewEdit()">Edit</a>
+						</span>
+					</div>
+					<div class="input-field col s12" id="toot-field" style="margin-top: 10px;">
+
+						<textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;"
+							data-length="500"></textarea>
+						<label for="textarea" data-trans="toot">Тоот</label>
+						<br>
+						<span class="sml gray pointer markdown mize" id="preview-btn">
+							<a onclick="preview()">Preview</a>
+						</span>
+						<span class="sml gray pointer anti-markdown mize">
+							<a onclick="mdToggle()">Markdownエディタを表示</a>
+						</span>
+					</div>
+					<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
+						<i class="waves-effect gray material-icons" id="nsfw" title="Маркирайте медията като чувствителна"
+							onclick="nsfw()">visibility_off</i>
+						<i class="waves-effect gray material-icons purple-text dropdown-trigger" data-target="dropdown1"
+							id="vis-icon">public</i>
+						<a class="waves-effect gray" id="cw" onclick="cw()" title="Скриване на текста зад предупреждение">CW</a>
+						<span><span id="imgup"></span><span id="imgsel"><i class="waves-effect material-icons gray"
+									onclick="fileselect()" title="Прикачи..">photo_library</i></span></span>
+						<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn"
+							title="Емотикони">tag_faces</i>
+						<i class="waves-effect gray material-icons dropdown-trigger"
+							data-target="dropdown2">more_vert</i>
+						<i class="material-icons nex gray waves-effect" title="Изчисти тоот кутията(Ctrl+Shit+C)"
+							data-trans-title="post_box_clear" id="clear">clear</i>
+					</div>
+					<div class="col s12 mize" style="margin-bottom:5px; padding:0;">
+						<div id="taglist"></div>
+						<div id="preview" class="mize"></div>
+						<span class=" sml mize"><span data-trans="reply">Отговор</span>:
+							<span id="rec">Не</span>/<span data-trans="file">Прикачени файлове</span>:
+							<span id="mec">Няма</span>/<span data-trans="vis">Регулирайте поверителността на състоянието</span>:
+							<span id="vis">public</span>
+						</span>
+						<br>
+						<input type="text" id="cw-text" placeholder="Текст за предупреждение" class="mize" style="margin:0">
+						<div id="sch-box">Публикация в<br><span class="sml">2.7.0 ~ Минимален интервал от време:5мин. (часовникът на сървъра може да не е точен.)</span><br>
+							<input type="datetime-local" id="sch-date" placeholder="Планиран тоот" class="datepicker"
+								style="margin:0">
+						</div>
+					</div>
+				</div>
+				<!-- 公開範囲 Dropdown Structure -->
+				<ul id="dropdown1" class="dropdown-content">
+					<li style="font-size: 16px; display: block; line-height: 22px; padding: 14px 16px;">Регулирайте поверителността на състоянието
+					</li>
+					<li>
+						<a onclick="vis('public')">(Public)</a>
+					</li>
+					<li>
+						<a onclick="vis('unlisted')">(Unlisted)</a>
+					</li>
+					<li>
+						<a onclick="vis('private')" id="private-button">(Private)</a>
+					</li>
+					<li id="limited-button" class="hide">
+						<a onclick="vis('limited')">限定公開(Limited)</a>
+					</li>
+					<li id="local-button" class="hide">
+						<a onclick="vis('local')">Само местно(Local)</a>
+					</li>
+					<li>
+						<a onclick="vis('direct')" class="disabled direct">(Direct)</a>
+					</li>
+				</ul>
+				<!-- その他 Dropdown Structure -->
+				<ul id="dropdown2" class="dropdown-content">
+					<li>
+						<a onclick="nowplaying('spotify');">Възпроизвеждане сега (Spotify)</a>
+					</li>
+					<li>
+						<a onclick="nowplaying('itunes');">Възпроизвеждане сега</a>
+					</li>
+					<li>
+						<a onclick="schedule();">Планиран тоот</a>
+					</li>
+					<li>
+						<a onclick="pollToggle();">Анкета</a>
+					</li>
+				</ul>
+				<!--hidden area-->
+				<input type="hidden" id="reply">
+				<input type="hidden" id="media">
+				<!--END hidden area-->
+			</div>
+			<div id="toot-btn-field">
+				<button class="btn waves-effect unmize toot-btn-group" onclick="post()"
+					id="toot-post-btn">Тоот</button>
+				<button class="btn waves-effect darken-3 unmize hide toot-btn-group" onclick="sec()"
+					id="toot-sec-btn"><i class="material-icons" id="toot-sec-icon"
+						title="Втори Тоот">lock_open</i></button>
+			</div>
+		</div>
+		<div id="right-side">
+			<div id="suggest"></div>
+			<!--絵文字ピッカー-->
+			<div id="emoji" class="hide">
+				<span class="gray sml">
+					<a onclick="emojiGet('true')" class="pointer">Обнови списъка с емотиконите</a>
+					<br>
+				</span>
+				<div id="emoji-list" class="" style="">
+				</div>
+				<div class="emoji-control center">
+					<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('before')"
+						id="emoji-before">
+						<i class="material-icons">navigate_before</i>
+					</button>
+					<span id="emoji-count"></span>/
+					<span id="emoji-sum"></span>
+					<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('next')"
+						id="emoji-next">
+						<i class="material-icons">navigate_next</i>
+					</button>
+				</div>
+				<div id="default-emoji">
+					<span id="now-emoji"></span> са показани.<br><span class="gray sml">Някои емотикони не могат да бъдат вмъкнати.</span>
+					<br>
+					<a onclick="customEmoji()" class="pointer waves-effect" title="Персонализирани емотикони">
+						<i class="material-icons">add</i>
+					</a>
+					<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="Емоти с хора">
+						<i class="material-icons">people</i>
+					</a>
+					<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="Емоти с природа">
+						<i class="material-icons">local_florist</i>
+					</a>
+					<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="Емоти с храни">
+						<i class="material-icons">restaurant</i>
+					</a>
+					<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="Емоти с дейности">
+						<i class="material-icons">directions_run</i>
+					</a>
+					<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="Емоти с места">
+						<i class="material-icons">directions_car</i>
+					</a>
+					<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="Емоти с инструменти">
+						<i class="material-icons">attach_file</i>
+					</a>
+					<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="Емоти със символи">
+						<i class="material-icons">gesture</i>
+					</a>
+					<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="Емоти с флагове">
+						<i class="material-icons">flag</i>
+					</a>
+					<a onclick="faicon()" class="pointer waves-effect" title="faicon" id="faicon-btn">
+						<i class="fab fa-fort-awesome"></i>
+					</a>
+				</div>
+			</div>
+			<!--Poll UI-->
+			<div id="poll" class="hide">
+				<select id="poll-sel" onchange="pollProviderCk()">
+					<option value="nothing">Анкети: Деактивирани</option>
+					<option value="mastodon-poll">Mastodon(2.8~)</option>
+				</select>
+				<div id="mastodon-poll" class="poll-provider hide">
+					<input type="text" class="mastodon-choice" placeholder="Избор1">
+					<input type="text" class="mastodon-choice" placeholder="Избор2">
+					<input type="text" class="mastodon-choice" placeholder="Избор3">
+					<input type="text" class="mastodon-choice" placeholder="Избор4">
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
+						<span>Многоброен избор</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-until" value="1" />
+						<span>Скриване на броя на гласовете, докато хората гласуват.</span>
+					</label>
+					<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0">ден(а)
+					<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0">час(а)
+					<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="6">минута(и)
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Structure Tootdata-->
+	<div id="tootmodal" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<ul class="collapsible" id="det-col">
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="material-icons">people_outline</i>Локален TL след този тоот)
+					</div>
+					<div class="collapsible-body toot-reset" id="ltl-after">
+					</div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="material-icons">person_outline</i>Потребителски TL преди този тоот
+					</div>
+					<div class="collapsible-body toot-reset" id="user-after">
+					</div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="material-icons">language</i>Федерализиран TL след този тоот
+					</div>
+					<div class="collapsible-body toot-reset" id="ftl-after">
+					</div>
+				</li>
+				<li>
+					<div class="collapsible-header">
+						<i class="material-icons">arrow_upward</i>Контекст преди този тоот
+					</div>
+					<div class="collapsible-body toot-reset" id="toot-reply">
+					</div>
+				</li>
+				<li>
+					<div class="collapsible-header" id="activator">
+						<i class="material-icons">more_horiz</i>Този тоот
+					</div>
+					<div class="collapsible-body">
+						<div class="toot-reset" id="toot-this"></div>
+					</div>
+				</li>
+				<li>
+					<div class="collapsible-header">
+						<i class="material-icons">arrow_downward</i>Контекст след този тоот
+					</div>
+					<div class="collapsible-body toot-reset" id="toot-after">
+					</div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="material-icons">people_outline</i>Локален TL преди тоот
+					</div>
+					<div class="collapsible-body toot-reset" id="toot-before">
+					</div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="material-icons">person_outline</i>Потребителски TL преди тоот
+					</div>
+					<div class="collapsible-body toot-reset" id="user-before">
+					</div>
+				</li>
+				<li>
+					<div class="collapsible-header">
+						<i class="material-icons">star</i>Хора, които го харесват
+					</div>
+					<div class="collapsible-body toot-reset" id="toot-fav">
+					</div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="text-darken-3 false fas fa-retweet"></i>Хората, които го подсилиха
+					</div>
+					<div class="collapsible-body toot-reset" id="toot-rt">
+					</div>
+				</li>
+			</ul>
+			<div class="dm-hide">
+				Използване на друг профил(<i class="fas fa-retweet"></i>/<i class="fas fa-star"></i>:unfav и unBT са деактивирани.)<br>
+				<div class="row">
+					<div class="col s6">
+						<select id="status-acct-sel" class="acct-sel"></select>
+					</div>
+					<div class="col s2">
+						<button class="dropdown-button btn waves-effect" style="width:100%;" onclick="staEx('reply')"><i
+								class="fas fa-share"></i></button>
+					</div>
+					<div class="col s2">
+						<button class="dropdown-button btn waves-effect indigo" style="width:100%;"
+							onclick="staEx('rt')"><i class="fas fa-retweet"></i></button>
+					</div>
+					<div class="col s2">
+						<button class="dropdown-button btn waves-effect orange" style="width:100%;"
+							onclick="staEx('fav')"><i class="fas fa-star"></i></button>
+					</div>
+				</div>
+				<div id="toot-tools">
+				</div>
+				<div id="toot-after">
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="brws()">Отваряне в браузъра</a>
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy()">Копирай URL адреса на този тоот</a>
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy('emb')">Закрепи</a>
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Затвори</a>
+		</div>
+	</div>
+	<!-- Modal Structure Userdata -->
+	<div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
+		<div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
+			<div id="his-data-show">
+				<div class="his-float" id="his-float-data">
+					<div id="his-basic-prof">
+						<img src="../../img/loading.svg" id="his-prof" draggable="false">
+						<span id="his-name">Loading...</span><span class="gray" id="his-bot"></span>
+						<br>@
+						<span id="his-acct"></span><br>
+						<span class="gray" id="his-relation"></span>
+						<br>
+						<span class="cbadge">
+							<span id="his-sta"></span>Тоот
+						</span>
+						<span class="cbadge">Следвам:
+							<span id="his-follow"></span>
+						</span>
+						<span class="cbadge">Последователи:
+							<span id="his-follower"></span>
+						</span><br>
+						<span class="cbadge" style="max-width:150px; width:150px; ">Since:
+							<span id="his-since"></span>
+						</span>
+						<div id="his-proof-prof"></div>
+					</div>
+					<div id="his-des" data-acct=""></div><br>
+					<div id="his-plus-action">
+						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
+							onclick="empUser()">Подчертайте този потребител</a>
+						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
+							id="his-end-btn" onclick="pinUser()">Функция в профила</a><br>
+						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
+							onclick="profbrws()">Отваряне в браузъра</a>
+						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data" id="his-main-acct"
+							onclick="setMain()" style="width: calc(100% - 10px)">Set it an main account</a><br>
+					</div><br>
+					<div id="his-matching-list">
+						Намерете хора подобни на този потребител.<br>
+						Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User Matching</a><br>
+						<div id="his-matching-list-contents" class="cont-series"></div>
+						<button class="btn waves-effect " onclick="showMat()" style="width:100%;">Намери</button>
+					</div>
+				</div>
+				<div class="his-float" id="his-float-timeline">
+					<div id="my-data-nav">
+						<ul class="tabs transparent">
+							<li class="tab col my-data-width active-back column-first">
+								<a go="#his-tl" title="Времева линия"><i class="material-icons">timeline</i></a>
+							</li>
+							<li class="tab col my-data-width">
+								<a go="#his-follow-list" title="Следвам"><i class="material-icons">people</i>→</a>
+							</li>
+							<li class="tab col my-data-width">
+								<a go="#his-follower-list" title="Последователи"><i
+										class="material-icons">people</i>←</a>
+							</li>
+							<li class="tab col my-data-width only-his-data">
+								<a go="#his-action" title="Свързан-профил"><i
+										class="material-icons">account_box</i></a>
+							</li>
+							<li class="tab col my-data-width only-his-data">
+								<a go="#his-list" title="Списък"><i class="material-icons">list</i></a>
+							</li>
+							<li class="tab col my-data-width only-my-data">
+								<a go="#his-fav-list" title="Любими"><i class="material-icons">star</i></a>
+							</li>
+							<li class="tab col my-data-width only-my-data">
+								<a go="#his-blocking-list" title="Блокове"><i class="material-icons">block</i></a>
+							</li>
+							<li class="tab col my-data-width only-my-data">
+								<a go="#his-blocking-list" title="Блокове"><i
+										class="material-icons">voice_over_off</i></a>
+							</li>
+							<li class="tab col my-data-width only-my-data">
+								<a go="#his-domain-list" title="Блок домейн"><i
+										class="material-icons">language</i><i class="material-icons">block</i></a>
+							</li>
+							<li class="tab col my-data-width only-my-data">
+								<a go="#his-prof-list" title="Редактиране на профила"><i class="material-icons">create</i></a>
+							</li>
+							<li class="tab col my-data-width only-my-data">
+								<a go="#his-request-list" title="Следвайте исканията"><i
+										class="material-icons">how_to_reg</i></a>
+							</li>
+							<li class="tab col my-data-width only-my-data">
+								<a go="#his-follow-recom-list" title="Предложени"><i
+										class="material-icons">recent_actors</i></a>
+							</li>
+						</ul>
+					</div>
+					<div id="his-tl" class="tab-content">
+						<div id="his-tl-contents" class="cont-series">
+						</div>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="utl('--now','more')">Още</button>
+					</div>
+					<div id="his-follow-list" class="tab-content">
+						<div id="his-follow-list-contents" class="cont-series">
+						</div>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="flw('--now','more')">Още</button>
+					</div>
+					<div id="his-follower-list" class="tab-content">
+						<div id="his-follower-list-contents" class="cont-series">
+						</div>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="fer('--now','more')">Още</button>
+					</div>
+					<div id="his-action" class="tab-content">
+						Използване на друг профил да се Следвам((Невъзможно да се спре на следването))<br>
+						<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>
+						
+						<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">Следвам</a><br>
+						или<br>
+						<a href="#!" class="waves-effect btn"
+							onclick="udgEx('selector', 'selector')">Показване на профила</a><br>
+					</div>
+					<div id="his-list" class="tab-content">
+						<div id="his-lists-a">Следвайте, за да добавите този потребител към списъците.</div>
+
+						<div id="his-lists-b"></div>
+					</div>
+					<div id="his-fav-list" class="tab-content">
+						<div id="his-fav-list-contents" class="cont-series">
+						</div>
+						<button class="btn waves-effect" style="width:100%; padding:0;"
+							onclick="showFav('more')">Още</button>
+					</div>
+					<div id="his-blocking-list" class="tab-content">
+						<div id="his-blocking-list-contents" class="cont-series">
+						</div>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="showBlo('more')">Още</button>
+					</div>
+					<div id="his-muting-list" class="tab-content">
+						<div id="his-muting-list-contents" class="cont-series">
+						</div>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="showMut('more')">Още</button>
+					</div>
+					<div id="his-domain-list" class="tab-content">
+						<div id="his-domain-list-contents" class="cont-series">
+						</div>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="showDom('more')">Още</button>Добавете домейн за блокиране
+						<br>
+						<input type="text" placeholder="example.com" id="domainblock">
+						<button class="btn waves-effect" onclick="addDomainblock()">Добави</button>
+						<br>
+					</div>
+					<div id="his-prof-list" class="tab-content">Показвано име
+						<br>
+						<input type="text" placeholder="Показвано име" id="his-name-val" style="max-width:250px;">
+						<br>Бележка
+						<br>
+						<div class="input-field col s12">
+							<textarea placeholder="Бележка" id="his-des-val" class="materialize-textarea"></textarea>
+							<label for="his-des-val">Бележка</label>
+						</div>
+						<button class="btn waves-effect" style="width:100%; padding:0;"
+							onclick="profedit()">Запази</button>
+						<br>Промяна на аватар:
+						<span id="prof-change">
+							<input type="file" onchange="imgChange(this,'avatar')">
+						</span>
+						<br>Промяна на снимката в заглавието:
+						<span id="header-change">
+							<input type="file" onchange="imgChange(this,'header')">
+						</span>
+					</div>
+					<div id="his-request-list" class="tab-content">
+						<div id="his-request-list-contents" class="cont-series">
+						</div>
+						<button class="btn waves-effect " style="width:100%; padding:0;"
+							onclick="showReq('more')">Още</button>
+					</div>
+					<div id="his-follow-recom-list" class="tab-content">
+						<div id="his-follow-recom-contents" class="cont-series">
+						</div>
+					</div>
+				</div>
+				<div class="his-float" id="his-float-blocked">
+					<div>Вие сте блокирани. Защо?</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn"
+				onclick="historyShow()">Назад</button>
+			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn"
+				onclick="follow()">Следвам</a>
+			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn"
+				onclick="muteDo()">Заглуши</a>
+			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn"
+				onclick="block()">Блокове</a>
+			<a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Затвори</a>
+		</div>
+	</div>
+	<!-- Modal Structure Image-->
+	<div id="imagemodal" class="modal modal-fixed-footer" style="min-width:550px">
+		<div class="modal-content">
+			<div id="imagewrap">
+				<img src="" id="imgmodal">
+			</div>
+
+			<br>
+		</div>
+		<div class="modal-footer">
+			DL:<span id="imgprog"></span>%
+			<a class="waves-effect white-text" onclick="zoom(2)">
+				<i class="material-icons">zoom_in</i>
+			</a>
+			<a class="waves-effect white-text" onclick="zoom(0.5)">
+				<i class="material-icons">zoom_out</i>
+			</a>
+			<button class="btn waves-effect purple" onclick="dlImg()">
+				<i class="material-icons">file_download</i>
+			</button>
+			<button class="btn waves-effect brown" onclick="detFromImg()">Този тоот</button>
+			<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">
+				<i class="material-icons">keyboard_arrow_left</i>
+			</button>
+			<button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next">
+				<i class="material-icons">keyboard_arrow_right</i>
+			</button>
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">
+				<i class="material-icons">close</i>
+			</a>
+		</div>
+	</div>
+	<!-- Modal Structure Video-->
+	<div id="videomodal" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<video src="" id="video" style="max-width:100%; max-height:100%;" controls loop="true" autoplay="true">
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Затвори</a>
+		</div>
+	</div>
+	<!-- Modal Structure Release Note-->
+	<div id="releasenote" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<h3>TheDesk</h3>
+			<a href="https://thedesk.top" target="_blank">HP</a><br>
+			<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
+			<br>
+			<div id="release-Usamin_18-7-1" class="release-do" style="display:none; ">
+				<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
+				<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
+				Pixiv Fanboxでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。最低月一更新。<br>
+				困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
+				<h5>Release Note Usamin (18.7.1)</h5>
+				・Electron 6.0.0。<br>
+				・画像ビューアーを開いているときに画像を矢印キーで切り替えられないバグを修正。<br>
+				・コンテキストを上手く取得できないバグを修正。<br>
+				・タグサジェストがパワーアップ。<br>
+				・動画が自動再生(モーダル表示時)、ループ(モーダル, Pleroma, MisskeyのTL上)する<br>
+				・絵文字(カスタム絵文字/Twemoji)をミュートワードに追加できるように。<br>
+				・絵文字が入ったURLに関する不具合を修正。<br>
+				・blurhash非対応インスタンスでのNSFW画像のblurを改修。<br>
+				・Pleroma等でアカウント情報が無い時があるため、それに関して修正。<br>
+			</div>
+			<div id="release-en" style="display:none">
+				<h5>Let's make it native!</h5>
+				<a href="https://translate.thedesk.top">Crowdin translation project</a>
+			</div>
+			<br><br>
+			<h3>Подкрепете TheDesk!</h3>
+			TheDesk няма реклама, няма нужда от такса за отключване на премиум функции. Нуждаем се от вашата приятелска подкрепа!<br>
+			<a class="btn-share btn waves-effect waves-light red lighten-2"
+				href="https://www.pixiv.net/fanbox/creator/28105985" target="_blank">
+				Подкрепете в Pixiv FANBOX
+			</a>
+			<a class="btn-share btn waves-effect waves-light red darken-2" href="https://www.patreon.com/cutls"
+				target="_blank">
+				Support on Patreon
+			</a>
+			<a class="btn-share btn waves-effect waves-light blue"
+				href="https://www.amazon.co.jp/registry/wishlist/2TV35ZHHJPDSB" target="_blank">
+				Списък с желания от Amazon
+			</a>
+			<br>
+			Дай ми Amazon Gift Card:<a href="mailto:web-pro@cutls.com"
+				target="_blank">web-pro@cutls.com</a><br>
+			Kyash<br>
+			<img src="../../img/kyash.png" width="100"><br>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Затвори</a>
+		</div>
+	</div>
+	<!--PiP-->
+	<div id="pip" class="hide pip-bottom pip-left">
+		<i class="material-icons pip-horiz pointer" onclick="pipHoriz()">chevron_right</i>　
+		<i class="material-icons pip-vert pointer" onclick="pipVert()">expand_less</i>　
+		<i class="material-icons pointer" onclick="endPip()">close</i>
+		<div id="pip-content">
+		</div>
+	</div>
+	<!--menu-->
+	<div id="menu" class="z-depth-5" style="display:none">
+		<div id="menu-bar" class="drag-bar"></div>
+		<span class="cancel">
+			<i class="material-icons waves-effect" onclick="menu()" title="Затвори полето(X)">cancel</i>
+		</span>
+		<div id="menu-wrapper">
+			<div id="left-menu">
+				<div class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu"><i
+						class="material-icons">add</i><span>Добавете колона</span></div>
+				<div class="waves-effect" onclick="sortMenu()" id="sortMenu"><i
+						class="material-icons">sort</i><span>Подредба</span></div>
+				<div class="waves-effect" onclick="searchMenu()" id="searchMenu"><i
+						class="material-icons">search</i><span>Търсене</span></div>
+				<div class="waves-effect" onclick="listMenu()" id="listMenu"><i
+						class="material-icons">view_headline</i><span>Списък</span></div>
+				<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i
+						class="material-icons">filter_list</i><span>Филтър</span></div>
+				<div class="waves-effect" onclick="help()"><i
+						class="material-icons">help_outline</i><span>Помощ</span></div>
+				<div class="waves-effect" onclick="location.href='index.html'"><i
+						class="material-icons">refresh</i><span>Презареди TL</span></div>
+			</div>
+			<div id="right-menu">
+				<!--カラム追加-->
+				<div id="add-box" class="hide menu-content">
+					<div class="input-field"><span data-trans="your_acct">Профил (превъртете, за да покажете всички)</span>
+						<br>
+						<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
+						<label></label>
+					</div>
+					<div class="input-field">
+						<div id="auth">
+							<input type="hidden" value="local" id="type-sel">
+							Показване на този TL:
+							<div id="tltype">
+								<div class="type waves-effect active" data-type="local">
+									<div><i class="material-icons">people_outline</i></div><span>Местно</span>
+								</div>
+								<div class="type waves-effect" data-type="local-media">
+									<div><i class="material-icons">people_outline</i><i
+											class="material-icons sub-icon">perm_media</i>
+									</div><span>Местна (медия)</span>
+								</div>
+								<div class="type waves-effect" data-type="home">
+									<div><i class="material-icons">home</i></div><span>Начало</span>
+								</div>
+								<div class="type waves-effect" data-type="pub">
+									<div><i class="material-icons">language</i></div><span>Федерални</span>
+								</div>
+								<div class="type waves-effect" data-type="pub-media">
+									<div><i class="material-icons">language</i><i
+											class="material-icons sub-icon">perm_media</i></div>
+									<span>Федерални (Медии)</span>
+								</div>
+								<div class="type waves-effect" data-type="dm">
+									<div><i class="material-icons">mail_outline</i></div><span>Директни съобщения</span>
+								</div>
+								<div class="type waves-effect" data-type="mix">
+									<div><i class="material-icons">merge_type</i></div><span>Интегриране (Местно/Начало)</span>
+								</div>
+								<div class="type waves-effect" data-type="plus">
+									<div><i class="material-icons">merge_type</i><i
+											class="material-icons sub-icon">reply</i></div>
+									<span>LTL+Отговор+BT</span>
+								</div>
+								<div class="type waves-effect" data-type="notf">
+									<div><i class="material-icons">notifications</i></div><span>Известия</span>
+								</div>
+							</div>
+						</div>
+						<div id="noauth" class="hide">Показване на този TL:
+							<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 40px);"
+								placeholder="e.g:mstdn.jp">
+						</div>
+						<div id="webview-add" class="hide">TweetDeck с потребителски TJDeck(<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Код</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>). Клавишните комбинации ще ви дразнят. Когато се почувствате така, маркирате „Предпочитам WebView“ в горната част на колоната.
+						</div>
+					</div>
+					<button class="btn waves-effect blue " style="width:calc( 100% - 10px);" onclick="addColumn()"
+						data-trans-i="add">
+						<i class="material-icons left">add</i>Добави
+					</button>
+					<br>
+					<br>
+				</div>
+				<!--検索-->
+				<div id="src-box" class="hide menu-content">
+					<div class="input-field">
+						<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
+					</div>
+					<div class="input-field">
+						<input id="src" type="text" class="validate" style="width:60%">
+						<label for="src" data-trans="src">Търсене</label>
+						<button class="btn waves-effect indigo" style="width: 36%;padding: 0;padding-left: 15px;"
+							onclick="src()" data-trans-i="src">
+							<i class="material-icons left" style="margin:0">search</i>Търсене
+						</button>
+						<br>
+						<br>
+					</div>
+					<div id="search">
+						<div id="src-contents">
+						</div>
+					</div>
+				</div>
+				<!--並べ替え-->
+				<div id="sort-box" class="hide menu-content">
+					<ul id="sort"></ul>
+					<div>
+						<button onclick="sort()" class="btn waves-effect nex" style="width:97.5%;" data-trans-i="sort">
+							<i class="material-icons left">sort</i>Подредба
+						</button>
+					</div>
+				</div>
+				<!--リスト-->
+				<div id="list-box" class="hide menu-content">
+					<div class="input-field" style="width:calc( 100% - 100px);float:left">
+						<select id="list-acct-sel" class="acct-sel"></select>
+						<label>Профил (превъртете, за да покажете всички)</label>
+					</div>
+					<div style="float:left; padding-top:8px; padding-bottom:28px;">
+						<button class="btn waves-effect indigo" style="width:80px;" onclick="list()"
+							data-trans-i="lists">
+							Списък
+						</button>
+					</div>
+					<br><br>
+					<div id="lists"></div>
+					<div id="lists-user"></div>
+					<input type="text" style="width:150px" id="list-add" placeholder="Показвано име">
+					<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">Запази</button>
+				</div>
+				<!--フィルター-->
+				<div id="filter-box" class="hide menu-content">
+					<div class="input-field" style="width:calc( 100% - 100px);float:left">
+						<select id="filter-acct-sel" class="acct-sel"></select>
+						<label>Профил (превъртете, за да покажете всички)</label>
+					</div>
+					<div style="float:left; padding-top:8px; padding-bottom:28px;">
+						<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()"
+							data-trans-i="filters">
+							Списък
+						</button>
+					</div>
+					<div id="filtered-words"></div>
+					<input type="hidden" id="filter-edit-id">
+					<input type="text" style="width:150px" id="filter-add-word" placeholder="Филтриране на думи"><br>
+					Контекстно филтриране<br>
+					<label>
+						<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+						<span>Начало</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+						<span>Местно</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+						<span>Известия</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+						<span>Разговори</span>
+					</label>
+					Настройки<br>
+					<label>
+						<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+						<span>Цяла дума</span>
+					</label>
+					<br>
+					<span class="sml">Ница на латински език</span><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+						<span>Пусни вместо да е скрито</span>
+					</label>
+					<br>
+					<span class="sml">Филтрираните тоот ще изчезнат необратимо, дори ако по-късно филтърът бъде премахнат</span><br>
+					Изтича след<span class="sml">Изключване или „0“ означава „Никога“<b>Тази стойност може да съдържа някои грешки</b></span><br><br>
+					<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0">ден(а)
+					<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0">час(а)
+					<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0">минута(и)<br>
+					Quick:<a onclick="filterTime(0,0,30)" class="pointer">30минута(и)</a>/
+					<a onclick="filterTime(0,1,0)" class="pointer">1час(а)</a>/
+					<a onclick="filterTime(0,6,0)" class="pointer">6час(а)</a>/
+					<a onclick="filterTime(0,12,0)" class="pointer">12час(а)</a>/
+					<a onclick="filterTime(1,0,0)" class="pointer">1ден(а)</a>/
+					<a onclick="filterTime(7,0,0)" class="pointer">7ден(а)</a>/
+					<a onclick="filterTime(0,0,0)" class="pointer">Никога</a><br>
+					<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()"
+						id="add-filter-btn">Добави</button><br>
+					<span class="sml">Интегрираният TL/Plus TL ще скрие думите за и двете: Местно-филтриране и за Локално-филтриране.</span>
+				</div>
+			</div>
+		</div>
+		<a onclick="about()" class="nex waves-effect">
+			<i class="material-icons" style="font-size: 1rem;">info</i>За TheDesk
+		</a>&nbsp;|&nbsp;
+		<a onclick="bottomReverse()" class="nex waves-effect">
+			<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>Обръщане на Тоот бутона
+		</a>&nbsp;|&nbsp;
+		<a onclick="openRN()" class="nex waves-effect">
+			<i class="material-icons" style="font-size: 1rem;">new_releases</i>Release Note
+		</a>
+	</div>
+	<div id="main">
+		<!--TLのTL-->
+		<div id="timeline-container">
+			<div id="something-wrong">
+				<img src="" style="width:150px;margin:5px;display:none;" draggable="false">
+				<div>Вътрешна грешка: моля изчистете всички данни (в страницата с настройки) <b> Всички данни ще бъдат изтрити.</b></div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!--bottom-->
+	<div id="bottom" class="reverse">
+		<div class="leftside reverse">
+			<div id="dambox">
+				<button id="posttgl" class="btn waves-effect"
+					style="width: 100%;height: 2.5rem;line-height: 0;margin: 0;">
+					<i class="material-icons"
+						style="position: relative; top: 5px; font-size: 1.5rem; text-align: center; margin-right: 10px;">edit</i>Тоот
+				</button>
+			</div>
+			<div class="leftside reverse" id="group">
+				<div class="btnsgroup">
+					<a href="acct.html" class="nex waves-effect">
+						<i class="material-icons nex big-icon" title="Мениджър на профила(Ctrl+Shift+M)">account_circle</i>
+					</a>
+					<a href="setting.html" class="nex waves-effect">
+						<i class="material-icons nex" title="Настройки(Ctrl+Shift+S)">settings</i>
+					</a>
+					<a onclick="nano()" class="nex waves-effect">
+						<i class="material-icons" title="Най-малкият Мастодон,TheDesk Nano"
+							data-trans-title="nano_desp">remove_from_queue</i>
+					</a>
+					<a onclick="menu()" class="nex waves-effect" id="list-tgl">
+						<i class="material-icons" title="Списък">apps</i>
+					</a>
+					<span id="fukidashi"><- Добави ТЛ</span>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div id="tips-menu">
+				<div class="btnsgroup" style="height:34px"><span class="grouptitle">Tips:</span>
+					<a onclick="tips('ver')" class="nex waves-effect">
+						<i class="material-icons nex" title="Версия" data-trans-title="ver">info</i>
+					</a>
+					<a onclick="tips('clock')" class="nex waves-effect">
+						<i class="material-icons nex" title="Часовник" data-trans-title="clock">access_time</i>
+					</a>
+					<a onclick="tips('memory')" class="nex waves-effect">
+						<i class="material-icons nex" title="Състояние на RAM" data-trans-title="memory">memory</i>
+					</a>
+					<a onclick="tips('trend')" class="nex waves-effect imasonly" style="display:none;">
+						<i class="material-icons nex" title="アイマストドントレンド" data-trans-title="trendtip">whatshot</i>
+					</a>
+					<a onclick="tips('spotify')" class="nex waves-effect">
+						<i class="fab fa-spotify nex" title="Spotify" data-trans-title="spotifytips"></i>
+					</a>
+				</div>
+			</div>
+			<div id="tips" class="hide">
+				<a onclick="tipsToggle()" class="nex waves-effect" style="float:left">
+					<i class="material-icons nex" title="Промени Обърни" data-trans-title="tips">bubble_chart</i>
+				</a>
+				<div id="tips-text" style="float:left; width:300px;"></div>
+			</div>
+		</div>
+	</div>
+	<!--Support me-->
+	<div id="support-btm" class="z-depth-4 hide">
+		<div id="support-btm-ja">
+			<h5>ご支援いただけませんか？</h5>
+			(これは支援の有無に関わらず定期的に出ます。)<br>
+			あなたのMastodon, Misskeyライフを邪魔してしまって申し訳ありません。<br>
+			乞食のようなマネをしてご支援をお願いするのもどうかと思いますが、少々お時間をください。<br>
+			<br>
+			あなたはMastodon, MisskeyクライアントにTheDeskを選びました。これは奇跡的なことです。今考えればブラウザからアクセスした方が良かったのではと感じることかと存じます。<br>
+			それでも、あなたはTheDeskを使っています。<br>
+			TheDeskは2018年1月13日に最初のバージョンが出ました。それから圧倒的な機能数でゴリ押しするクライアントになっています。<br>
+			新機能に追従を図るためのモチベーションもさることながら、安全対策上TheDeskは開発者の緊急メッセージを表示できる機能が備わっており、開発者が送信ボタンを押すとすべてのTheDeskユーザーに通知が行くようになっています。<br>
+			かつてこれによってバグ報告を行い、使用を自粛していただくこともありました。<br>
+			そのような機能を実装するために、Mastodonなどのインスタンスを運営するのと同じく有料のサーバーを運用しています。<br>
+			<b>全てのユーザーが安心してTheDeskを使っていただける環境のため</b>にも、ぜひご支援をご検討ください。<br>
+			<b>TheDesk няма реклама, няма нужда от такса за отключване на премиум функции. Нуждаем се от вашата приятелска подкрепа!</b>
+		</div>
+		<div id="support-btm-en" class="hide">
+			<h5>Support me</h5>
+			It may disturb your Mastodon life, but your support is required to keep TheDesk awesome!<br>
+			<b>TheDesk няма реклама, няма нужда от такса за отключване на премиум функции. Нуждаем се от вашата приятелска подкрепа!</b>
+		</div>
+		<div id="support-btm-middle">
+			<h5>Monthly</h5>
+			<a class="btn-share btn waves-effect waves-light red lighten-2"
+				href="https://www.pixiv.net/fanbox/creator/28105985" target="_blank">
+				Подкрепете в Pixiv FANBOX
+			</a>
+			<a class="btn-share btn waves-effect waves-light red darken-2" href="https://www.patreon.com/cutls"
+				target="_blank">
+				Support on Patreon
+			</a>
+		</div>
+		<div id="support-btm-right">
+			<h5>Once</h5>
+			<a class="btn-share btn waves-effect waves-light blue"
+				href="https://www.amazon.co.jp/registry/wishlist/2TV35ZHHJPDSB" target="_blank">
+				Списък с желания от Amazon
+			</a>
+			<br>
+			Дай ми Amazon Gift Card:<a href="mailto:web-pro@cutls.com"
+				target="_blank">web-pro@cutls.com</a><br>
+			Kyash<br>
+			<img src="../../img/kyash.png" width="100"><br>
+		</div>
+		<div id="support-btm-close">
+			<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()"
+				id="add-filter-btn">Затвори</button>
+		</div>
+	</div>
+	<!--左下メッセージ-->
+	<div id="message">
+	</div>
+	<!--Radio Happy(Yui) Taku Inoue-->
+	<audio src="" id="radio"></audio>
+	<!--JS-->
+	<script type="text/javascript" src="../../js/ui/tips.js"></script>
+	<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
+	<script type="text/javascript" src="../../js/common/about.js"></script>
+	<script type="text/javascript" src="../../js/tl/parse.js"></script>
+	<script type="text/javascript" src="../../js/tl/misskeyparse.js"></script>
+	<script type="text/javascript" src="../../js/tl/dm.js"></script>
+	<script type="text/javascript" src="../../js/ui/scroll.js"></script>
+	<script type="text/javascript" src="../../js/tl/tl.js"></script>
+	<script type="text/javascript" src="../../js/tl/card.js"></script>
+	<script type="text/javascript" src="../../js/tl/poll.js"></script>
+	<script type="text/javascript" src="../../js/tl/date.js"></script>
+	<script type="text/javascript" src="../../js/tl/notification.js"></script>
+	<script type="text/javascript" src="../../js/tl/datails.js"></script>
+	<script type="text/javascript" src="../../js/tl/mix.js"></script>
+	<script type="text/javascript" src="../../js/tl/src.js"></script>
+	<script type="text/javascript" src="../../js/tl/filter.js"></script>
+	<script type="text/javascript" src="../../js/tl/tag.js"></script>
+	<script type="text/javascript" src="../../js/tl/list.js"></script>
+	<script type="text/javascript" src="../../js/tl/speech.js"></script>
+	<script type="text/javascript" src="../../js/ui/post-box.js"></script>
+	<script type="text/javascript" src="../../js/ui/layout.js"></script>
+	<script type="text/javascript" src="../../js/post/emoji.js"></script>
+	<script type="text/javascript" src="../../js/login/instance.js"></script>
+	<script type="text/javascript" src="../../js/login/login.js"></script>
+	<script type="text/javascript" src="../../js/ui/img.js"></script>
+	<script type="text/javascript" src="../../js/ui/theme.js"></script>
+	<script type="text/javascript" src="../../js/ui/pip.js"></script>
+	<script type="text/javascript" src="../../js/ui/sort.js"></script>
+	<script type="text/javascript" src="../../js/ui/spotify.js"></script>
+	<script type="text/javascript" src="../../js/post/post.js"></script>
+	<script type="text/javascript" src="../../js/post/use-txtbox.js"></script>
+	<script type="text/javascript" src="../../js/post/secure.js"></script>
+	<script type="text/javascript" src="../../js/post/img.js"></script>
+	<script type="text/javascript" src="../../js/post/status.js"></script>
+	<script type="text/javascript" src="../../js/post/misskeystatus.js"></script>
+	<script type="text/javascript" src="../../js/post/suggest.js"></script>
+	<script type="text/javascript" src="../../js/post/bb-md.js"></script>
+	<script type="text/javascript" src="../../js/userdata/showOnTL.js"></script>
+	<script type="text/javascript" src="../../js/userdata/his-data.js"></script>
+	<script type="text/javascript" src="../../js/userdata/prof-edit.js"></script>
+	<script type="text/javascript" src="../../js/emoji/emojipack.js"></script>
+	<script type="text/javascript" src="../../js/emoji/default-emoji.js"></script>
+	<script type="text/javascript" src="../../js/platform/end.js"></script>
+	<script type="text/javascript" src="../../js/ui/menu.js"></script>

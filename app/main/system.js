@@ -49,7 +49,7 @@ function system(mainWindow, dir, lang, dirname) {
 
 		console.log("set:" + arg);
 		fs.writeFileSync(lang_path, arg);
-		e.sender.webContents.send('langres', "");
+		e.sender.webContents.send('langres', arg);
 	})
 	//エクスポートのダイアログ
 	ipc.on('exportSettings', function (e, args) {

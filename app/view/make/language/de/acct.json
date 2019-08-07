@@ -1,0 +1,22 @@
+{
+    "list": "Konten",
+    "back": "Zurück",
+    "add": "Konto hinzufügen",
+    "codesetupwarn": "Uncheck it to skip pasiting code.(login to Mastodon on Windows or macOS) (Recommended: pcheck)",
+    "codesetup": "Code setup",
+    "mainacct": "Hauptkonto",
+    "selacct": "Konto auswählen",
+    "codepastewarn": "Fügen Sie den Code ein und schließen Sie den Browser.",
+    "codepaste": "Code",
+    "domain": "Domain",
+    "connect": "Föderierte Server",
+    "toots": "Toots",
+    "users": "Nutzer",
+    "users2": "Nutzer",
+    "safety": "Verbindung",
+    "ver": "Mastodon Version",
+    "ko": "",
+    "thisismisskey": "Login as Misskey",
+    "misskeylogin": "Lies die <a href=\"https://thedesk.top/how-to-misskey-login.html\">Doku (japanisch)</a> um dich bei Misskey einzuloggen.",
+    "nodata": "Keine Daten"
+}

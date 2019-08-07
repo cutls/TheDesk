@@ -113,7 +113,7 @@ ipc.on('general-dl-message', function (event, arg) {
 })
 //setting.js
 ipc.on('langres', function (event, arg) {
-    location.href = "../" + lang + "/setting.html"
+    location.href = "../" + arg + "/setting.html"
 });
 ipc.on('exportSettingsFile', function (event, savedFiles) {
     var exp = exportSettingsCore()
