@@ -94,13 +94,19 @@ app.on('activate', function () {
 });
 
 function createWindow() {
-	if (isFile(lang_path)) {1
+	if (isFile(lang_path)) {
 		var lang = fs.readFileSync(lang_path, 'utf8');
 	} else {
 		var langs = app.getLocale();
 		console.log(langs);
 		if (~langs.indexOf("ja")) {
 			lang = "ja";
+		} else if (~langs.indexOf("de")) {
+			lang = "de";
+		} else if (~langs.indexOf("cs")) {
+			lang = "cs";
+		} else if (~langs.indexOf("bg")) {
+			lang = "bg";
 		} else {
 			lang = "en";
 		}
