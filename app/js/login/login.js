@@ -42,7 +42,8 @@ function ck() {
 			ticker();
 			multiSelector(false);
 			verck(ver);
-			$("#something-wrong img").attr("src", "../../img/thinkingdesk.png")
+			$(".stw").show()
+			$("#something-wrong img").attr("src", "../../img/thinking.svg")
 		}
 	}
 }

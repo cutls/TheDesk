@@ -4,12 +4,12 @@
 	 viewBox="0 0 4096 4096" style="enable-background:new 0 0 4096 4096;" xml:space="preserve">
 <style type="text/css">
 	.st0{display:none;}
-	.st1{fill:none;}
-	.st2{fill:#FFFFFF;}
-	.st3{fill:#FFFFFF;}
-	.st4{fill:#FFFFFF;}
-	.st5{fill:#none;}
-	.st6{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:#545251;stroke:#040000;stroke-miterlimit:10;}
+	.st3{fill:#F0842E;}
+	.st4{fill:#364C9F;}
+	.st5{fill:#FFFFFF;stroke:#040000;stroke-miterlimit:10;}
+	.st6{fill-rule:evenodd;clip-rule:evenodd;fill:#040000;}
 	.st7{fill-rule:evenodd;clip-rule:evenodd;fill:none;}
 </style>
 <g id="レイヤー_1" class="st0">

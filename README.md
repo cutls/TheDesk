@@ -23,10 +23,11 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
 The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [Press Kit](https://dl.thedesk.top/press/TheDesk+PressKit.zip)  
 
-* [PNG](https://dl.thedesk.top/press/TheDesk.png)
-* [Monotone SVG](https://dl.thedesk.top/press/TheDesk.svg)
-* [ico](https://dl.thedesk.top/press/TheDesk.ico)
-* [icns](https://dl.thedesk.top/press/TheDesk.icns)
+* [PNG 512x512](https://dl.thedesk.top/press/thedesk.png)
+* [SVG 4095x4096](https://dl.thedesk.top/press/thedesk-fullcolor.svg)
+* [ico 256x256](https://dl.thedesk.top/press/thedesk.ico)
+* [icns old](https://dl.thedesk.top/press/thedesk.icns)
+* [Illustrator .ai](https://dl.thedesk.top/press/thedesk.ai)
 
 The default sounds of notifications is provided [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/)
 
