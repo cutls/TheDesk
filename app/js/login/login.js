@@ -290,7 +290,7 @@ function refresh(target, loadskip) {
 		localStorage.setItem("user-id_" + target, json["id"]);
 		localStorage.setItem("prof_" + target, avatar);
 		localStorage.setItem("follow_" + target, json["following_count"]);
-		obj[target] = ref;
+		console.log(obj)
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
 		if (!loadskip) {
@@ -451,7 +451,7 @@ function multiSelector(parseC) {
 					$("#local-button").removeClass("hide")
 				}
 				var profimg = acct.prof;
-				localStorage.setItem("prof_" + key, profimg);
+				//localStorage.setItem("prof_" + key, profimg);
 				if (!profimg) {
 					profimg = "../../img/missing.svg";
 				}

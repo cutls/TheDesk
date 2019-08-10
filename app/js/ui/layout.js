@@ -257,6 +257,7 @@ function parseColumn(dontclose) {
 		$("#bottom").removeClass("reverse");
 		$(".leftside").removeClass("reverse");
 	}
+	$("#bottom").removeClass("hide");
 	if (localStorage.getItem("sec") && localStorage.getItem("sec") != "nothing") {
 		secvis(localStorage.getItem("sec"));
 	}

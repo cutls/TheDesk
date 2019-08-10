@@ -2,18 +2,16 @@
 <html lang="en">
 
 <head>
-	<title>TheDesk</title>
+	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="../../js/ui/theme.js"></script>
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
 	<link href="../../css/tl.css" rel="stylesheet" type="text/css">
 	<link href="../../css/userdata.css" rel="stylesheet" type="text/css">
 	<link href="../../css/post.css" rel="stylesheet" type="text/css">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
 	<link href="../../css/sort.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
+	<link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
 	<meta charset="utf-8">
 	<!--
 	<script type="text/javascript">
@@ -25,18 +23,6 @@
 </head>
 
 <body>
-	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="../../js/platform/first.js"></script>
-	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
-	<script type="text/javascript" src="../../js/lang/lang.en.js"></script>
-	<script type="text/javascript" src="../../js/common/time.js"></script>
-	<script type="text/javascript" src="../../js/common/blurhash.js"></script>
-	<script type="text/javascript" src="../../js/common/version.js"></script>
-	<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
-	<script type="text/javascript" src="../../js/common/modal.js"></script>
-	<script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
-	<script type="text/javascript" src="../../js/platform/punycode.js"></script>
 	<script>
 		var ver = "Usamin (18.7.1)";
 		//betaを入れるとバージョンチェックしない
@@ -467,8 +453,8 @@
 							id="his-end-btn" onclick="pinUser()">Feature on profile</a><br>
 						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
 							onclick="profbrws()">Open in browser</a>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data" id="his-main-acct"
-							onclick="setMain()" style="width: calc(100% - 10px)">Set it an main account</a><br>
+						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data"
+							id="his-main-acct" onclick="setMain()" style="width: calc(100% - 10px)">Set it an main account</a><br>
 					</div><br>
 					<div id="his-matching-list">
 						Get people resembling this user.<br>
@@ -952,7 +938,7 @@
 	</div>
 	</div>
 	<!--bottom-->
-	<div id="bottom" class="reverse">
+	<div id="bottom" class="reverse hide">
 		<div class="leftside reverse">
 			<div id="dambox">
 				<button id="posttgl" class="btn waves-effect"
@@ -1068,6 +1054,20 @@
 	<!--Radio Happy(Yui) Taku Inoue-->
 	<audio src="" id="radio"></audio>
 	<!--JS-->
+	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../../js/platform/first.js"></script>
+	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
+	<script type="text/javascript" src="../../js/lang/lang.en.js"></script>
+	<script type="text/javascript" src="../../js/common/time.js"></script>
+	<script type="text/javascript" src="../../js/common/blurhash.js"></script>
+	<script type="text/javascript" src="../../js/common/version.js"></script>
+	<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
+	<script type="text/javascript" src="../../js/common/modal.js"></script>
+	<script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script type="text/javascript" src="../../js/platform/punycode.js"></script>
+
+
 	<script type="text/javascript" src="../../js/ui/tips.js"></script>
 	<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
 	<script type="text/javascript" src="../../js/common/about.js"></script>
@@ -1093,7 +1093,6 @@
 	<script type="text/javascript" src="../../js/login/instance.js"></script>
 	<script type="text/javascript" src="../../js/login/login.js"></script>
 	<script type="text/javascript" src="../../js/ui/img.js"></script>
-	<script type="text/javascript" src="../../js/ui/theme.js"></script>
 	<script type="text/javascript" src="../../js/ui/pip.js"></script>
 	<script type="text/javascript" src="../../js/ui/sort.js"></script>
 	<script type="text/javascript" src="../../js/ui/spotify.js"></script>

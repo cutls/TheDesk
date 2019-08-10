@@ -65,6 +65,7 @@
     "font-manager": "^0.3.0"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.10.1",
     "electron": "^6.0.0",
     "electron-builder": "^21.1.5",
     "readline-sync": "1.4.10"

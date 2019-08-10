@@ -127,7 +127,7 @@ function createWindow() {
 				contextIsolation: true,
 				preload: join(__dirname, "js", "platform", "preload.js")
 			},
-			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, icon: __dirname + '/desk.png'
+			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, icon: __dirname + '/desk.png', show: false
 		}
 	} else if (platform == "win32") {
 		var arg = {
@@ -137,7 +137,7 @@ function createWindow() {
 				contextIsolation: true,
 				preload: join(__dirname, "js", "platform", "preload.js")
 			},
-			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true
+			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true, show: false
 		}
 	} else if (platform == "darwin") {
 		var arg = {
@@ -147,10 +147,16 @@ function createWindow() {
 				contextIsolation: true,
 				preload: join(__dirname, "js", "platform", "preload.js")
 			},
-			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true
+			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true, show: false
 		}
 	}
 	mainWindow = new BrowserWindow(arg);
+	mainWindow.once('page-title-updated', () => {
+		mainWindow.show()
+		if (window_size.max) {
+			mainWindow.maximize();
+		}
+	  })
 	electron.session.defaultSession.clearCache(() => { })
 	if (process.argv) {
 		if (process.argv[1]) {
@@ -171,9 +177,6 @@ function createWindow() {
 	mainWindow.loadURL(base + lang + '/index.html' + plus);
 	if (!window_size.x && !window_size.y) {
 		mainWindow.center();
-	}
-	if (window_size.max) {
-		mainWindow.maximize();
 	}
 	// ウィンドウが閉じられたらアプリも終了
 	mainWindow.on('closed', function () {
