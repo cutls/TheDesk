@@ -85,7 +85,7 @@
   "imgheight": "Höhe der Bilder",
   "imgheightwarn": "Option:Setze \"full\" für Unbeschnitten.",
   "ticker": "Aktiviere #InstanceTicker",
-  "tickerwarn": "Zeigt bunte Sticker über den Server. <a href=\"https://cdn.weep.me/mastodon/\">Über #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
+  "tickerwarn": "Zeigt bunte Sticker über den Server. <a href=\"https://wee.jp/\">Über #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
   "animation": "Animation der Verläufe",
   "replySound": "Ton bei Antwort",
   "favSound": "Ton bei Favorit",

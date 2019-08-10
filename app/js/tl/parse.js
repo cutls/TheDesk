@@ -818,7 +818,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				for (var i = 0; i < tickerdata.length; i++) {
 					var value = tickerdata[i];
 					if (value.domain == thisdomain) {
-						var tickerdom = '<div style="background:linear-gradient(to left,transparent, ' + value.bg + ' 96%) !important; color:' + value.text + ';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="' + value.image + '" style="height:100%;"><span style="position:relative; top:-0.2rem;"> ' + escapeHTML(value.name) + '</span></div>';
+						var tickerdom = '<div style="background:linear-gradient(90deg, ' + value.bg + ', transparent 96%) !important; color:' + value.text + ';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="' + value.image + '" style="height:100%;"><span style="position:relative; top:-0.2rem;"> ' + escapeHTML(value.name) + '</span></div>';
 						break;
 					}
 				}

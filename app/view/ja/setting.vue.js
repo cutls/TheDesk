@@ -294,7 +294,7 @@ var tlConstruction = [
         setValue: "no",
         text: {
             head: "#InstanceTickerを使う",
-            desc: "トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href=\"https://cdn.weep.me/mastodon/\">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.",
+            desc: "トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href=\"https://https://wee.jp/\">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.",
             checkbox: yesno
         }
     }, {

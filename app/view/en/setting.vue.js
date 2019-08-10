@@ -294,7 +294,7 @@ var tlConstruction = [
         setValue: "no",
         text: {
             head: "Enable #InstanceTicker",
-            desc: "Show colorful stickers about the server. <a href=\"https://cdn.weep.me/mastodon/\">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
+            desc: "Show colorful stickers about the server. <a href=\"https://wee.jp/\">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
             checkbox: yesno
         }
     }, {

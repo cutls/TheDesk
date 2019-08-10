@@ -85,7 +85,7 @@
   "imgheight": "Height of images",
   "imgheightwarn": "Option:Set \"full\" to uncrop.",
   "ticker": "Enable #InstanceTicker",
-  "tickerwarn": "Show colorful stickers about the server. <a href=\"https://cdn.weep.me/mastodon/\">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
+  "tickerwarn": "Show colorful stickers about the server. <a href=\"https://wee.jp/\">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
   "animation": "Animation of timelines",
   "replySound": "Sound(Reply)",
   "favSound": "Sound(Fav)",

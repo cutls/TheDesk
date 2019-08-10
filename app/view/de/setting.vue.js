@@ -294,7 +294,7 @@ var tlConstruction = [
         setValue: "no",
         text: {
             head: "Aktiviere #InstanceTicker",
-            desc: "Zeigt bunte Sticker über den Server. <a href=\"https://cdn.weep.me/mastodon/\">Über #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
+            desc: "Zeigt bunte Sticker über den Server. <a href=\"https://wee.jp/\">Über #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
             checkbox: yesno
         }
     }, {
