@@ -60,7 +60,7 @@
     "vue": "^2.6.10"
   },
   "optionalDependencies": {
-    "itunes-nowplaying-mac": "git+https://github.com/rinsuki/itunes-nowplaying-mac#pull/4/head",
+    "itunes-nowplaying-mac": "kPherox/itunes-nowplaying-mac#get-artworks-base64",
     "font-manager": "^0.3.0"
   },
   "devDependencies": {
