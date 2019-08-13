@@ -138,7 +138,7 @@ $(function ($) {
 			if (e.code == "ArrowLeft") {
 				//left
 				if ($("#imagemodal").hasClass("open")) {
-					imgCont('next');
+					imgCont('prev');
 					return false;
 				}
 				if (selectedColumn > 0) {
@@ -159,7 +159,7 @@ $(function ($) {
 			} else if (e.code == "ArrowRight") {
 				//right
 				if ($("#imagemodal").hasClass("open")) {
-					imgCont('prev');
+					imgCont('next');
 					return false;
 				}
 				if (selectedColumn < $(".tl-box").length - 1) {
