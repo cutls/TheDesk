@@ -50,6 +50,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "electron-dl": "^1.14.0",
+    "@fortawesome/fontawesome-free": "^5.10.1",
     "jimp": "^0.6.4",
     "jquery": "^3.4.1",
     "json5": "^2.1.0",
@@ -64,7 +65,6 @@
     "font-manager": "^0.3.0"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.1",
     "electron": "^6.0.0",
     "electron-builder": "^21.1.5",
     "readline-sync": "1.4.10"

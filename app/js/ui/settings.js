@@ -659,7 +659,6 @@ window.onload = function () {
 	checkSpotify();
 	voiceSettingLoad();
 	oksload();
-	npprovider();
 	ctLoad()
 };
 
