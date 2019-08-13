@@ -24,7 +24,7 @@
 
 <body>
 	<script>
-		var ver = "Usamin (18.7.1)";
+		var ver = "Usamin (18.8.0)";
 		//betaを入れるとバージョンチェックしない
 		//GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 		//var ver="beta";
@@ -666,21 +666,23 @@
 			<a href="https://thedesk.top" target="_blank">HP</a><br>
 			<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 			<br>
-			<div id="release-Usamin_18-7-1" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-8-0" class="release-do" style="display:none; ">
 				<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 				<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 				Pixiv Fanboxでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。最低月一更新。<br>
 				困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-				<h5>Release Note Usamin (18.7.1)</h5>
-				・Electron 6.0.0。<br>
-				・画像ビューアーを開いているときに画像を矢印キーで切り替えられないバグを修正。<br>
-				・コンテキストを上手く取得できないバグを修正。<br>
-				・タグサジェストがパワーアップ。<br>
-				・動画が自動再生(モーダル表示時)、ループ(モーダル, Pleroma, MisskeyのTL上)する<br>
-				・絵文字(カスタム絵文字/Twemoji)をミュートワードに追加できるように。<br>
-				・絵文字が入ったURLに関する不具合を修正。<br>
-				・blurhash非対応インスタンスでのNSFW画像のblurを改修。<br>
-				・Pleroma等でアカウント情報が無い時があるため、それに関して修正。<br>
+				<h5>Release Note Usamin (18.8.0)</h5>
+				・トレンドタグに対応<br>
+				・チェコ語, ブルガリア語, ドイツ語に対応<br>
+				・TheDeskお知らせ機能の仕様更新<br>
+				・支援手段にLiberapayを追加<br>
+				・アイコンを描きなおした<br>
+				・#InstanceTicker の仕様変更に対応<br>
+				・起動がだいぶ速くなったと思う<br>
+				・一部master追従インスタンスでAPIが削除されたことに対する対応<br>
+				・アンケートの投票時のバグを修正<br>
+				・ストリーミング再接続機能をやめてカラムをリロードする機能を追加<br>
+				・カラムを追加, 削除するときに全体を再読込しないようになった
 			</div>
 			<div id="release-en" style="display:none">
 				<h5>Let's make it native!</h5>
