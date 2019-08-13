@@ -58,7 +58,7 @@ function qt(id, acct_id, at, url) {
 		html = $.strip_tags(html);
 		$("#textarea").val("\n" + "@" + at + " " + html + "\n" + url);
 	}
-	$("#textarea").focus();
 	$("#post-acct-sel").val(acct_id);
 	$('select').formSelect();
+	$("#textarea").focus();
 }

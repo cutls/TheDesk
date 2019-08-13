@@ -20,7 +20,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		obj.push(add);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("column", json);
-		parseColumn();
+		parseColumn('add');
 		return;
 	}
 
@@ -823,5 +823,41 @@ function reconnector(tlid, type, acct_id, data, mode) {
 	}
 	M.toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
 	
+}
+function columnReload(tlid, type){
+	$("#notice_icon_" + tlid).addClass("red-text");
+	if (type == "mix" || type == "integrated" || type == "plus") {
+		if (localStorage.getItem("voice_" + tlid)) {
+			var voice = true;
+		} else {
+			var voice = false;
+		}
+		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+		} else {
+			var mute = [];
+		}
+		var wssh = localStorage.getItem("wssH_" + tlid);
+		websocketHome[wssh].close();
+		var wssl = localStorage.getItem("wssL_" + tlid);
+		websocketLocal[wssl].close();
+		parseColumn(tlid)
+	} else if (type == "notf") {
+		notfColumn(acct_id, tlid, "")
+	} else {
+		var wss = localStorage.getItem("wss_" + tlid);
+		websocket[wss].close();
+		if (localStorage.getItem("voice_" + tlid)) {
+			var voice = true;
+		} else {
+			var voice = false;
+		}
+		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+		} else {
+			var mute = [];
+		}
+		parseColumn(tlid)
+	}
 }
 strAliveInt()

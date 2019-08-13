@@ -86,7 +86,7 @@ function tsAdd(q) {
 	obj.push(add);
 	var json = JSON.stringify(obj);
 	localStorage.setItem("column", json);
-	parseColumn();
+	parseColumn('add');
 }
 function tootsearch(tlid, q) {
 	var start = "https://tootsearch.chotto.moe/api/v1/search?from=0&sort=created_at%3Adesc&q=" + q

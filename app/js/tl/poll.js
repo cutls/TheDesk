@@ -89,8 +89,9 @@ function voteMastodonrefresh(acct_id, id) {
     var start = "https://" + domain + "/api/v1/polls/" + id;
     httpreqd.open('GET', start, true);
     httpreqd.setRequestHeader('Content-Type', 'application/json');
+    httpreqd.setRequestHeader('Authorization', 'Bearer ' + at);
     httpreqd.responseType = 'json';
-    httpreqd.send(JSON.stringify({ i: at, noteId: id }));
+    httpreqd.send();
     httpreqd.onreadystatechange = function () {
         if (httpreqd.readyState == 4) {
             var json = httpreqd.response;
@@ -109,7 +110,7 @@ function voteMastodonrefresh(acct_id, id) {
                 }
                 poll = poll + '<div class="pointer vote vote_' + acct_id + '_' + json.id + '_' + keyc + '" onclick="' + votesel + '">' + escapeHTML(choice.title) + '<span class="vote_' + acct_id + '_' + json.id + '_result ' + result_hide + '">(' + choice.votes_count + ')</span></div>';
             });
-            poll = poll + myvote + '<span class="cbadge cbadge-hover" title="' + date(json.expires_at, 'absolute') +
+            poll = poll + myvote + '<a onclick="voteMastodonrefresh(\'' + acct_id + '\',\'' + json.id + '\')" class="pointer">' + lang.lang_manager_refresh + '</a><span class="cbadge cbadge-hover" title="' + date(json.expires_at, 'absolute') +
                 '"><i class="far fa-calendar-times"></i>' +
                 date(json.expires_at, datetype) + '</span>';
             $('.vote_' + acct_id + '_' + json.id).html(poll)

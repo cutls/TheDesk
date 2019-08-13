@@ -77,12 +77,12 @@ function catchToggle(tlid) {
 		localStorage.removeItem("catch_" + tlid);
 		$("#sta-del-" + tlid).text("Off");
 		$("#sta-del-" + tlid).css("color", 'red');
-		parseColumn();
+		parseColumn(tlid);
 	} else {
 		localStorage.setItem("catch_" + tlid, "true");
 		$("#sta-del-" + tlid).text("On");
 		$("#sta-del-" + tlid).css("color", '#009688');
-		parseColumn();
+		parseColumn(tlid);
 	}
 }
 function catchCheck(tlid) {
@@ -421,7 +421,7 @@ function exclude(key) {
 	} else {
 	}
 	localStorage.setItem("exclude-" + key, excludetxt)
-	parseColumn();
+	parseColumn(key);
 }
 function excludeCk(key, target) {
 	var exc = localStorage.getItem("exclude-" + key);
@@ -444,7 +444,7 @@ function checkNotfFilter(tlid){
 }
 function resetNotfFilter(tlid){
 	localStorage.setItem("exclude-" + tlid, "")
-	parseColumn();
+	parseColumn(tlid);
 }
 function notfFilter(id,tlid,acct_id){
 	var excludetxt = localStorage.getItem("exclude-" + tlid);
@@ -454,5 +454,5 @@ function notfFilter(id,tlid,acct_id){
 		excludetxt = "?account_id="+id
 	}
 	localStorage.setItem("exclude-" + tlid, excludetxt)
-	parseColumn();
+	parseColumn(tlid);
 }

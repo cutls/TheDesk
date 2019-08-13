@@ -56,12 +56,12 @@ function voiceToggle(tlid) {
         speechSynthesis.cancel()
         $("#sta-voice-" + tlid).text("Off");
         $("#sta-voice-" + tlid).css("color", 'red');
-        parseColumn();
+        parseColumn(tlid);
     } else {
         localStorage.setItem("voice_" + tlid, "true");
         $("#sta-voice-" + tlid).text("On");
         $("#sta-voice-" + tlid).css("color", '#009688');
-        parseColumn();
+        parseColumn(tlid);
     }
 }
 function voiceCheck(tlid) {

@@ -1,5 +1,6 @@
 //ソートデータ読み込み
-function sortload() {
+function sortLoad () {
+	$("#sort").html("");
 	var col = localStorage.getItem("column");
 	if (col) {
 		var obj = JSON.parse(col);
@@ -104,7 +105,7 @@ function sort() {
 	localStorage.setItem("column", json);
 	$("#sort").html("");
 	M.toast({ html: "Sorted", displayLength: 3000 })
-	sortload();
+	sortLoad();
 	parseColumn();
 	sortMenu()
 }
@@ -115,5 +116,5 @@ function sortMenu() {
 	$(".menu-content").addClass("hide");
 	$("#sort-box").removeClass("hide");
 	$("#sort").html("");
-	sortload();
+	sortLoad();
 }

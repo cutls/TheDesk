@@ -20,7 +20,11 @@ $('.type').click(function () {
 	$("#type-sel").val($(this).attr("data-type"))
 })
 //最初、カラム変更時に発火
-function parseColumn(dontclose) {
+function parseColumn(target, dontclose) {
+	if (target === 0) {
+		//this is kuso
+		target = "zero"
+	}
 	console.log("%c Parse column", "color:red;font-size:125%");
 	var size = localStorage.getItem("size");
 	if (size) {
@@ -31,7 +35,7 @@ function parseColumn(dontclose) {
 	if (localStorage.getItem("menu-done")) {
 		$("#fukidashi").addClass("hide")
 	}
-	if (!dontclose) {
+	if (!dontclose && !target) {
 		tlCloser();
 	}
 
@@ -76,13 +80,36 @@ function parseColumn(dontclose) {
 	} else {
 		var obj = JSON.parse(col);
 	}
-	if ($("#timeline-container").length) {
-		$("#timeline-container").html("");
+	var numtarget = false
+	if (target == "add") {
+		var tlidtar = obj.length - 1
+		obj = [obj[tlidtar]]
+	} else if (target) {
+		var tlidtar = target
+		if (target == "zero") {
+			target = 0
+		}
+		obj = [obj[target]]
+		numtarget = true
+	} else {
+		var tlidtar = null
+		if ($("#timeline-container").length) {
+			$("#timeline-container").html("");
+		}
 	}
 	var basekey = 0;
 	for (var key = 0; key < obj.length; key++) {
 		var next = key + 1;
+		//acctって言いながらタイムライン
 		var acct = obj[key];
+		if (tlidtar) {
+			if (tlidtar == "zero") {
+				key = 0
+			} else {
+				key = tlidtar
+			}
+
+		}
 		if (acct.type == "notf") {
 			var notf_attr = ' data-notf=' + acct.domain;
 			var if_notf = "hide";
@@ -183,8 +210,10 @@ function parseColumn(dontclose) {
 			}
 			if (!acct.left_fold) {
 				basekey = key;
-				var basehtml = '<div style="' + css + '" class="box ' + animecss + '" id="timeline_box_' + basekey + '_parentBox"></div>';
-				$("#timeline-container").append(basehtml);
+				if (!numtarget) {
+					var basehtml = '<div style="' + css + '" class="box ' + animecss + '" id="timeline_box_' + basekey + '_parentBox"></div>';
+					$("#timeline-container").append(basehtml);
+				}
 				var left_hold = '<a onclick="leftFoldSet(' + key + ')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_leftFold + '">view_agenda</i></a>' + lang.lang_layout_leftFold + '</span><br>';
 			} else {
 				var left_hold = '<a onclick="leftFoldRemove(' + key + ')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_leftUnfold + '">view_column</i></a>' + lang.lang_layout_leftUnfold + '</span><br>';
@@ -220,10 +249,14 @@ function parseColumn(dontclose) {
 				')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_linkanades + '">link</i><span id="sta-card-' +
 				key + '">On</span></a>' + lang.lang_layout_linkana + '<br><a onclick="voiceToggle(' + key +
 				')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_tts + '">hearing</i><span id="sta-voice-' +
-				key + '">On</span></a>' + lang.lang_layout_tts + 'TL<br><a onclick="reconnector(' + key +
-				',\'' + acct.type + '\',\'' + acct.domain + '\',\'' + escapeHTML(acct.data) + '\')" class="setting nex ' + if_notf + ' ' + if_misskey_hide + '"><i class="material-icons waves-effect nex ' + if_notf + '" title="' + lang.lang_layout_reconnect + '">low_priority</i></a><span class="' + if_notf + '">' + lang.lang_layout_reconnect + '</span><br>' + lang.lang_layout_headercolor + '<br><div id="picker_' + key + '" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+				key + ',\'' + acct.type + '\'">On</span></a>' + lang.lang_layout_tts + 'TL<br><a onclick="columnReload(' + key +
+				')" class="setting nex ' + if_notf + ' ' + if_misskey_hide + '"><i class="material-icons waves-effect nex ' + if_notf + '" title="' + lang.lang_layout_reconnect + '">refresh</i></a><span class="' + if_notf + '">' + lang.lang_layout_reconnect + '</span><br>' + lang.lang_layout_headercolor + '<br><div id="picker_' + key + '" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
 				'" class="tl ' + acct.type + '-timeline " tlid="' + key + '" data-type="' + acct.type + '" data-acct="' + acct.domain + '" data-const="' + acct.type + '_' + acct.domain + '"><div id="landing_' + key + '" style="text-align:center">' + lang.lang_layout_nodata + '</div></div></div>'
-			$('#timeline_box_' + basekey + '_parentBox').append(html);
+			if (numtarget) {
+				$('timeline_box_' + key + '_box').html(html)
+			} else {
+				$('#timeline_box_' + basekey + '_parentBox').append(html)
+			}
 			localStorage.removeItem("pool_" + key);
 			if (acct.data) {
 				var data = acct.data;
@@ -337,7 +370,7 @@ function addColumn() {
 		localStorage.setItem("column", json);
 	}
 
-	parseColumn();
+	parseColumn('add');
 }
 function addselCk() {
 	var acct = $("#add-acct-sel").val();
@@ -381,8 +414,8 @@ function removeColumn(tlid) {
 			obj.splice(tlid, 1);
 			var json = JSON.stringify(obj);
 			localStorage.setItem("column", json);
-			parseColumn()
 			sortLoad()
+			$("#timeline_box_" + tlid + "_parentBox").remove()
 		}
 		$("#sort-box").removeClass("hide");
 		$("#sort-box").addClass("show");

@@ -492,7 +492,7 @@ function multiSelector(parseC) {
 	}
 	$('select').formSelect();
 	if(!parseC){
-		parseColumn(true);
+		parseColumn(null, true);
 	}
 }
 
