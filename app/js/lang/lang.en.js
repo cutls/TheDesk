@@ -123,7 +123,7 @@ var lang = {
     "lang_layout_linkana": "Auto Link Analyzer",
     "lang_layout_linkanades": "Auto link analyzer",
     "lang_layout_tts": "Text to speech ",
-    "lang_layout_reconnect": "Reconnect to streaming API",
+    "lang_layout_reconnect": "Reload this column",
     "lang_layout_headercolor": "Header color of this column",
     "lang_layout_nodata": "[No data]<br>F5/⌘+R to reload",
     "lang_layout_dm": "Direct Message",

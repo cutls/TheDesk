@@ -123,7 +123,7 @@ var lang = {
     "lang_layout_linkana": "リンク解析",
     "lang_layout_linkanades": "リンクの解析を切り替え",
     "lang_layout_tts": "読み上げ",
-    "lang_layout_reconnect": "ストリーミング再接続",
+    "lang_layout_reconnect": "カラム再読込",
     "lang_layout_headercolor": "TLヘッダーカラー",
     "lang_layout_nodata": "[ここにトゥートはありません。]<br>F5/⌘+Rで再読込できます。",
     "lang_layout_dm": "ダイレクトメッセージ",
