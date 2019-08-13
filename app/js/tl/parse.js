@@ -538,7 +538,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				}
 				poll = poll + '<div class="' + voteclass + ' vote vote_' + acct_id + '_' + toot.poll.id + '_' + keyc + '" onclick="' + votesel + '">' + escapeHTML(choice.title) + '<span class="vote_' + acct_id + '_' + toot.poll.id + '_result ' + result_hide + '">(' + choice.votes_count + ')</span></div>';
 			});
-			poll = '<div class="vote_' + acct_id + '_' + toot.poll.id + '">' + poll + myvote + '<span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
+			poll = '<div class="vote_' + acct_id + '_' + toot.poll.id + '">' + poll + myvote + '<a onclick="voteMastodonrefresh(\'' + acct_id + '\',\'' + toot.poll.id + '\')" class="pointer">' + lang.lang_manager_refresh + '</a><span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
 				'"><i class="far fa-calendar-times"></i>' +
 				ended + '</span></div>';
 		}
