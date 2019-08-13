@@ -116,15 +116,11 @@ function follow(acct_id, remote) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	var user = $("#his-acct").text();
 	if (localStorage.getItem("mode_" + domain) == "misskey") {
 		var start = "https://" + domain + "/api/following/" + flagm;
-		var user = $("#his-acct").text();
 		var ent = { "i": at, "userId": id }
 	} else if (remote == "true" && flag == "follow") {
-		var start = "https://" + domain + "/api/v1/follows";
-		var user = $("#his-acct").text();
-		var ent = { "uri": user }
-	} else {
 		var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
 		var ent = {}
 	}
