@@ -60,7 +60,6 @@
     "vue": "^2.6.10"
   },
   "optionalDependencies": {
-    "nowplaying-node": "git+https://github.com/cutls/nowplaying-node",
     "itunes-nowplaying-mac": "git+https://github.com/rinsuki/itunes-nowplaying-mac#pull/4/head",
     "font-manager": "^0.3.0"
   },

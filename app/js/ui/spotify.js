@@ -165,24 +165,6 @@ function spotifySave() {
     localStorage.setItem("np-temp", temp);
     M.toast({ html: lang.lang_spotify_np, displayLength: 3000 })
 }
-function npprovider() {
-    var provd = $("[name=npp]:checked").val();
-    if (!provd) {
-        if (localStorage.getItem("np_provider")) {
-            $("[value=" + localStorage.getItem("np_provider") + "]").prop("checked", true);
-        } else {
-            $("[value=AIMP]").prop("checked", true);
-            localStorage.setItem("np_provider", "AIMP");
-        }
-    } else {
-        if (provd != localStorage.getItem("np_provider")) {
-            M.toast({ html: lang.lang_setting_npprovide.replace("{{set}}", provd), displayLength: 3000 })
-        }
-        localStorage.setItem("np_provider", provd);
-        postMessage(["itunes", ["set", provd]], "*")
-
-    }
-}
 if (location.search) {
     var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);
     var mode = m[1];
@@ -196,10 +178,3 @@ if (location.search) {
     }
 
 }
-$("#npbtn").click(function () {
-    nowplaying('spotify');
-});
-$("#npbtn").bind('contextmenu', function () {
-    nowplaying('itunes');
-    return false;
-});

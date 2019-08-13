@@ -332,39 +332,6 @@
 				<i class="fa fa-spotify"></i>SpotifyとNowPlayingの設定
 			</div>
 			<div class="collapsible-body">
-				<h5>NowPlayingのソース(Windows)</h5>
-				macOSやLinuxでは動作しません。AIMPとiTunes以外未検証です。<br>foobar2000, MusicBee,J. River Media Center, Media JukeboxはCADを、Last.fm Client, TTPlayer, OpenPandora, ZuneはWLMを選んでください。<br>ただし、foobar2000は<a href=\"http://poiru.github.com/foo-cad/\">foo_cad plugin</a>が必要です。MusicBeeもCADを有効にする必要があります。<br>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
-					<span>AIMP</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes"
-						value="ITUNES" />
-					<span>iTunes</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="npmm"
-						value="MEDIAMONKEY" />
-					<span>MediaMonkey</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="winamp"
-						value="WINAMP" />
-					<span>Winamp</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wmp" value="WMP" />
-					<span>WMP</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
-					<span>WLM</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
-					<span>CAD</span>
-				</label>
 				<br><br>
 				<i class="material-icons" style="font-size:24px;">music_note</i>ボタンから簡単にNowPlayingができます。<br>
 				<h5>アカウントの連携</h5>
@@ -377,15 +344,15 @@
 				<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled"
 					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i
 						class="fa fa-spotify left"></i>切断</a>
-				<h5>@@templateedit@@</h5>
-				@@templateeditwarn@@<br>
+				<h5>テンプレートの編集</h5>
+				以下を編集してテンプレートを変更できます。<br>
 				<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
-				@@template1@@<br>
-				@@template2@@<br>
-				@@template3@@<br>
+				Spotify:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL<br>
+				macOS:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/作曲家{composer}/サンプルレート{hz}/ビットレート{bitRate}/ジャンル{genre}<br>
+				<br>
 				<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">設定</button>
-				<h5>アルバムアートワークを添付する(Spotify/Windows)</h5>
+				<h5>アルバムアートワークを添付する(Spotify)</h5>
 				<label>
 					<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes"
 						value="yes" />
