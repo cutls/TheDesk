@@ -224,7 +224,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 
 		}
 		websocketNotf[acct_id].onmessage = function (mess) {
-			console.log(["Receive Streaming API(Notf):" + acct_id + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
+			//console.log(["Receive Streaming API(Notf):" + acct_id + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
 			var popup = localStorage.getItem("popup");
 			if (!popup) {
 				popup = 0;
