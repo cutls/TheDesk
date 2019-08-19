@@ -8,6 +8,7 @@ var oldSuggest;
 var suggest;
 
 input.addEventListener("focus", function () {
+	localStorage.removeItem("cursor");
 	var acct_id = $("#post-acct-sel").val();
 	$("#suggest").html("");
 	window.clearInterval(timer);

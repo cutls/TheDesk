@@ -10,8 +10,6 @@ function emojiToggle(reaction) {
 	if (!selin) {
 		selin = 0;
 	}
-	localStorage.setItem("cursor", selin);
-
 	if ($("#emoji").hasClass("hide")) {
 		$("#emoji").removeClass("hide")
 		$("#right-side").show()
@@ -173,35 +171,31 @@ function emojiList(target, reaction) {
 //絵文字など様々なものをテキストボックスに挿入
 function emojiInsert(code, del) {
 	var now = $("#textarea").val();
-	var selin = localStorage.getItem("cursor");
+	var selin = $("#textarea").prop('selectionStart');
 	if (localStorage.getItem("emoji-zero-width") == "yes") {
-		var brank = "​";
+		var blank = "​";
 	} else {
-		var brank = " ";
+		var blank = " ";
 	}
-	var now = $("#textarea").val();
-	if (selin > 0) {
-		var before = now.substr(0, selin);
-		var after = now.substr(selin, now.length);
-		newt = before + brank + code + brank + after;
-	} else {
-		newt = code + brank;
+	var before = now.substr(0, selin);
+	if (before.slice(-1) != " ") {
+		before = before + blank
 	}
+	var after = now.substr(selin, now.length);
+	if (after.slice(-1) != " ") {
+		after = blank + after
+	}
+	newt = before + code + after;
 	if (!del) {
 		$("#textarea").val(newt);
 		//emoji();
 	} else {
 		var regExp = new RegExp(del.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g");
 		var now = now.replace(regExp, "");
-		$("#textarea").val(now + brank + code);
+		$("#textarea").val(now + blank + code);
 	}
 
 	$("#textarea").focus();
-	var selin = $("#textarea").prop('selectionStart');
-	if (!selin) {
-		selin = 0;
-	}
-	localStorage.setItem("cursor", selin);
 }
 //改行挿入
 function brInsert(code) {
