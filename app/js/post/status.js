@@ -147,77 +147,109 @@ function follow(acct_id, remote) {
 
 //ブロック
 function block(acct_id) {
-	if (!acct_id) {
-		var acct_id = $('#his-data').attr("use-acct");
-	}
-	var id = $("#his-data").attr("user-id");
 	if ($("#his-data").hasClass("blocking")) {
 		var flag = "unblock";
+		var txt = lang.lang_status_unmute
 	} else {
 		var flag = "block";
+		var txt = lang.lang_status_block
 	}
-	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_" + acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
-	var httpreq = new XMLHttpRequest();
-	httpreq.open('POST', start, true);
-	httpreq.setRequestHeader('Content-Type', 'application/json');
-	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = "json";
-	httpreq.send();
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			if ($("#his-data").hasClass("blocking")) {
-				$("#his-data").removeClass("blocking");
-				$("#his-block-btn").text(lang.lang_status_block);
-			} else {
-				$("#his-data").addClass("blocking");
-				$("#his-block-btn").text(lang.lang_status_unblock);
+	Swal.fire({
+		title: txt,
+		text: "",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: lang.lang_yesno,
+		cancelButtonText: lang.lang_no
+	}).then((result) => {
+		if (result.value) {
+			if (!acct_id) {
+				var acct_id = $('#his-data').attr("use-acct");
+			}
+			var id = $("#his-data").attr("user-id");
+			var domain = localStorage.getItem("domain_" + acct_id);
+			var at = localStorage.getItem("acct_" + acct_id + "_at");
+			var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
+			var httpreq = new XMLHttpRequest();
+			httpreq.open('POST', start, true);
+			httpreq.setRequestHeader('Content-Type', 'application/json');
+			httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+			httpreq.responseType = "json";
+			httpreq.send();
+			httpreq.onreadystatechange = function () {
+				if (httpreq.readyState === 4) {
+					if ($("#his-data").hasClass("blocking")) {
+						$("#his-data").removeClass("blocking");
+						$("#his-block-btn").text(lang.lang_status_block);
+					} else {
+						$("#his-data").addClass("blocking");
+						$("#his-block-btn").text(lang.lang_status_unblock);
+					}
+				}
 			}
 		}
-	}
+	});
+	
 }
 
 //ミュート
 function muteDo(acct_id) {
-	if (!acct_id) {
-		var acct_id = $('#his-data').attr("use-acct");
-	}
-	var id = $("#his-data").attr("user-id");
 	if ($("#his-data").hasClass("muting")) {
 		var flag = "unmute";
 		var flagm = "delete";
+		var txt = lang.lang_status_unmute
 	} else {
 		var flag = "mute";
 		var flagm = "create";
+		var txt = lang.lang_status_mute
 	}
-	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_" + acct_id + "_at");
-	if (localStorage.getItem("mode_" + domain) == "misskey") {
-		var start = "https://" + domain + "/api/mute/" + flagm;
-		var ent = { "i": at, "userId": id }
-		var rq = JSON.stringify(ent);
-	} else {
-		var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
-		var rq = "";
-	}
-	var httpreq = new XMLHttpRequest();
-	httpreq.open('POST', start, true);
-	httpreq.setRequestHeader('Content-Type', 'application/json');
-	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = "json";
-	httpreq.send(rq);
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			if ($("#his-data").hasClass("muting")) {
-				$("#his-data").removeClass("muting");
-				$("#his-mute-btn").text(lang.lang_status_mute);
+	Swal.fire({
+		title: txt,
+		text: "",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: lang.lang_yesno,
+		cancelButtonText: lang.lang_no
+	}).then((result) => {
+		if (result.value) {
+			if (!acct_id) {
+				var acct_id = $('#his-data').attr("use-acct");
+			}
+			var id = $("#his-data").attr("user-id");
+			var domain = localStorage.getItem("domain_" + acct_id);
+			var at = localStorage.getItem("acct_" + acct_id + "_at");
+			if (localStorage.getItem("mode_" + domain) == "misskey") {
+				var start = "https://" + domain + "/api/mute/" + flagm;
+				var ent = { "i": at, "userId": id }
+				var rq = JSON.stringify(ent);
 			} else {
-				$("#his-data").addClass("muting");
-				$("#his-mute-btn").text(lang.lang_status_unmute);
+				var start = "https://" + domain + "/api/v1/accounts/" + id + "/" + flag;
+				var rq = "";
+			}
+			var httpreq = new XMLHttpRequest();
+			httpreq.open('POST', start, true);
+			httpreq.setRequestHeader('Content-Type', 'application/json');
+			httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+			httpreq.responseType = "json";
+			httpreq.send(rq);
+			httpreq.onreadystatechange = function () {
+				if (httpreq.readyState === 4) {
+					if ($("#his-data").hasClass("muting")) {
+						$("#his-data").removeClass("muting");
+						$("#his-mute-btn").text(lang.lang_status_mute);
+					} else {
+						$("#his-data").addClass("muting");
+						$("#his-mute-btn").text(lang.lang_status_unmute);
+					}
+				}
 			}
 		}
-	}
+	});
+	
 }
 
 //投稿削除
