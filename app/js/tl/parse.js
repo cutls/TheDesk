@@ -359,9 +359,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					noticeavatar = toot.account.avatar_static;
 				}
 				noticeavatar = '<a onclick="udg(\'' + toot.account.id +
-					'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
+					'\',' + acct_id + ');" user="' + toot.account.acct + '" class="notf-icon udg">' +
 					'<img draggable="false" src="' + noticeavatar +
-					'" width="20" class="notf-icon prof-img" user="' + toot.account.acct +
+					'" width="20" class="prof-img" user="' + toot.account.acct +
 					'"></a>';
 				var rebtxt = lang.lang_parse_btedsimple;
 				var rticon = "fa-retweet light-blue-text";
@@ -376,6 +376,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var uniqueid = toot.id;
 				var toot = toot.reblog;
 				var dis_name = escapeHTML(toot.account.display_name);
+				if(!dis_name){
+					dis_name = toot.account.acct
+				}
 				if (toot.account.emojis) {
 					var actemojick = toot.account.emojis[0];
 				} else {
@@ -460,7 +463,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			var spoiler = "cw cw_hide_" + toot.id;
 			var api_spoil = "gray";
 			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-				'\')" class="nex parsed">' + lang.lang_parse_cwshow + '</a><br>';
+				'\')" class="nex parsed cw_btn">' + lang.lang_parse_cwshow + '</a><br>';
 		} else {
 			var ct1 = toot.content.split('</p>').length + toot.content.split('<br />').length - 2;
 			var ct2 = toot.content.split('</p>').length + toot.content.split('<br>').length - 2;
@@ -472,7 +475,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					'</span><span class="gray">' + lang.lang_parse_autofold + '</span>';
 				var spoiler = "cw cw_hide_" + toot.id;
 				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-					'\')" class="nex parsed">' + lang.lang_parse_more + '</a><br>';
+					'\')" class="nex parsed cw_btn">' + lang.lang_parse_more + '</a><br>';
 			} else {
 				var content = toot.content;
 				var spoil = escapeHTML(toot.spoiler_text);
@@ -647,19 +650,19 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		var visen = toot.visibility;
 		if (visen == "public") {
 			var vis =
-				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="' + lang.lang_parse_public + '(' + lang.lang_parse_clickcopy + ')" data-vis="public" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">public</i>';
+				'<i class="text-darken-3 material-icons gray sml vis-data pointer" title="' + lang.lang_parse_public + '(' + lang.lang_parse_clickcopy + ')" data-vis="public" onclick="staCopy(\'' + id + '\')">public</i>';
 			var can_rt = "";
 		} else if (visen == "unlisted") {
 			var vis =
-				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="' + lang.lang_parse_unlisted + '(' + lang.lang_parse_clickcopy + ')" data-vis="unlisted" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">lock_open</i>';
+				'<i class="text-darken-3 material-icons blue-text vis-data pointer" title="' + lang.lang_parse_unlisted + '(' + lang.lang_parse_clickcopy + ')" data-vis="unlisted" onclick="staCopy(\'' + id + '\')">lock_open</i>';
 			var can_rt = "";
 		} else if (visen == "private") {
 			var vis =
-				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="' + lang.lang_parse_private + '(' + lang.lang_parse_clickcopy + ')" data-vis="private" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">lock</i>';
+				'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="' + lang.lang_parse_private + '(' + lang.lang_parse_clickcopy + ')" data-vis="private" onclick="staCopy(\'' + id + '\')">lock</i>';
 			var can_rt = "unvisible";
 		} else if (visen == "direct") {
 			var vis =
-				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="' + lang.lang_parse_direct + '(' + lang.lang_parse_clickcopy + ')" data-vis="direct" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">mail</i>';
+				'<i class="text-darken-3 material-icons red-text vis-data pointer" title="' + lang.lang_parse_direct + '(' + lang.lang_parse_clickcopy + ')" data-vis="direct" onclick="staCopy(\'' + id + '\')">mail</i>';
 			var can_rt = "unvisible";
 		}
 		if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
@@ -856,9 +859,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'</div><div class="area-additional"><span class="additional">' + analyze +
 			'</span>' +
 			'' + mentions + tags + '</div>' +
-			'<div class="area-vis"></div>' +
+			'<div class="area-vis">' + vis + '</div>' +
 			'<div class="area-actions ' + mouseover + '">' +
-			'<div class="action">' + vis + '</div>' +
 			'<div class="action ' + antinoauth + '"><a onclick="detEx(\'' + toot.url + '\',\'main\')" class="waves-effect waves-dark details" style="padding:0">' + lang.lang_parse_det + '</a></div>' +
 			'<div class="action ' + antidmHide + '"><a onclick="details(\'' + toot.id + '\',' + acct_id + ',\'' + tlid + '\',\'normal\')" class="waves-effect waves-dark details" style="padding:0">' + lang.lang_parse_thread + '</a></div>' +
 			'<div class="action ' + disp["re"] + ' ' + noauth + '"><a onclick="re(\'' + toot.id +

@@ -94,7 +94,8 @@
     display: none;
   }
 }
-iframe, .cvo video {
+iframe,
+.cvo video {
   max-width: 100%;
   max-height: 300px;
 }
@@ -127,7 +128,7 @@ iframe, .cvo video {
 }
 .marquee {
   width: 100%;
-  padding: .5em 0;
+  padding: 0.5em 0;
   overflow: hidden;
   margin-bottom: 0;
   position: relative;
@@ -143,14 +144,15 @@ iframe, .cvo video {
   animation-iteration-count: infinite;
 }
 @keyframes marquee {
-0% {
-  -webkit-transform: translate(0);
-  transform: translate(0);
-}
-99%, 100% {
-  -webkit-transform: translate(-100%);
-  transform: translate(-100%);
-}
+  0% {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+  }
+  99%,
+  100% {
+    -webkit-transform: translate(-100%);
+    transform: translate(-100%);
+  }
 }
 .boxIn {
   display: flex;
@@ -209,7 +211,8 @@ iframe, .cvo video {
   width: 100%;
   display: grid;
   grid-template-columns: 43px 2fr 1fr;
-  grid-template-areas: "notice notice notice" "icon display_name display_name" "icon toot toot" "vis additional additional" "actions actions side";
+  grid-template-rows: auto 1.6rem 1fr auto 2.5rem;
+  grid-template-areas: "notice notice notice" "icon display_name display_name" "space toot toot" "space additional additional" "vis actions side";
 }
 .cvo h1,
 .cvo h2,
@@ -254,7 +257,8 @@ iframe, .cvo video {
 .area-toot {
   cursor: text;
   user-select: auto;
-  margin: 2px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   margin-left: 5px;
   grid-area: toot;
 }
@@ -276,7 +280,8 @@ iframe, .cvo video {
 .area-actions {
   padding: 0;
   margin: 0;
-  top: -20px;
+  top: -5px;
+  position: relative;
   display: flex;
   justify-content: space-around;
   width: 250px;
@@ -286,9 +291,12 @@ iframe, .cvo video {
 .area-vis {
   margin: 2px;
   grid-area: vis;
+  text-align: center;
 }
 .area-side {
   display: flex;
+  top: -5px;
+  position: relative;
   justify-content: flex-end;
   margin: 2px;
   grid-area: side;
@@ -341,7 +349,7 @@ iframe, .cvo video {
 }
 
 .gray {
-  color: gray;
+  color: #cccccc;
 }
 .sml {
   font-size: 0.8em;
@@ -600,17 +608,30 @@ p:not(:last-child) {
   width: 100%;
   height: 100%;
 }
-.shared.selectedToot{
+.shared.selectedToot {
   background-color: var(--selectedWithShare);
 }
-.selectedToot{
+.selectedToot {
   background-color: var(--selected);
 }
-audio{
+audio {
   height: 2rem;
 }
-.translate{
+.translate {
   white-space: normal;
+}
+.cw_btn {
+  margin: 3px;
+  background-color: var(--emphasized);
+  color: var(--color);
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 3px;
+  border: 1px solid var(--color);
+}
+.vis-data {
+  font-size: 1rem !important;
+  margin: 5px;
 }
 @keyframes jump {
   0% {
