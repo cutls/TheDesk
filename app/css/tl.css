@@ -349,7 +349,7 @@ iframe,
 }
 
 .gray {
-  color: #cccccc;
+  color: var(--gray);
 }
 .sml {
   font-size: 0.8em;

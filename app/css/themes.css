@@ -17,6 +17,7 @@
   --accentbtn: #009688;
   --selected: #c0c0c0;
   --selectedWithShare: #b2babd;
+  --gray: #757575;
 }
 #imagemodal {
   background: url("../img/pixel.white.svg");
@@ -40,6 +41,7 @@
   --accentbtn: #3f51b5;
   --selected: #3f3f3f;
   --selectedWithShare: #003a30;
+  --gray: #cccccc;
 }
 .blacktheme #imagemodal {
   background: url("../img/pixel.svg");
@@ -63,6 +65,7 @@
   --accentbtn: #00acc1;
   --selected: #214f8a;
   --selectedWithShare: #003a30;
+  --gray: #cccccc ;
 }
 .indigotheme #imagemodal {
   background: url("../img/pixel.svg");
@@ -86,6 +89,7 @@
   --accentbtn: #827717;
   --selected: #6d352b;
   --selectedWithShare: #003a30;
+  --gray: #cccccc;
 }
 .browntheme #imagemodal {
   background: url("../img/pixel.svg");
@@ -109,6 +113,7 @@
   --accentbtn: #33691e;
   --selected: #78c17a;
   --selectedWithShare: #caa266;
+  --gray: #757575;
 }
 .greentheme #imagemodal {
   background: url("../img/pixel.white.svg");
@@ -132,6 +137,7 @@
   --accentbtn: #2f7bb7;
   --selected: #9dcade;
   --selectedWithShare: #c1dac4;
+  --gray: #757575;
 }
 .bluetheme #imagemodal {
   background: url("../img/pixel.white.svg");

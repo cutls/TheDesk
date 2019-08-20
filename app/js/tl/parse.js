@@ -362,7 +362,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					'\',' + acct_id + ');" user="' + toot.account.acct + '" class="notf-icon udg">' +
 					'<img draggable="false" src="' + noticeavatar +
 					'" width="20" class="prof-img" user="' + toot.account.acct +
-					'"></a>';
+					'" onerror="this.src=\'../../img/loading.svg\'"></a>';
 				var rebtxt = lang.lang_parse_btedsimple;
 				var rticon = "fa-retweet light-blue-text";
 				if (localStorage.getItem("domain_" + acct_id) == "imastodon.net" && !locale) {
@@ -587,7 +587,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							acct_id + '\')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 							'" data-type="' + media.type + '" class="img-parsed img-link" style="width:calc(' + cwdt + '% - 1px); height:' + imh + ';"><img draggable="false" src="' +
 							purl + '" class="' + sense +
-							' toot-img pointer">' + nsfwmes + '</a>';
+							' toot-img pointer" onerror="this.src=\'../../img/loading.svg\'">' + nsfwmes + '</a>';
 					}
 				}
 
@@ -821,7 +821,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				for (var i = 0; i < tickerdata.length; i++) {
 					var value = tickerdata[i];
 					if (value.domain == thisdomain) {
-						var tickerdom = '<div style="background:linear-gradient(90deg, ' + value.bg + ', transparent 96%) !important; color:' + value.text + ';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="' + value.image + '" style="height:100%;"><span style="position:relative; top:-0.2rem;"> ' + escapeHTML(value.name) + '</span></div>';
+						var tickerdom = '<div style="background:linear-gradient(90deg, ' + value.bg + ', transparent 96%) !important; color:' + value.text + ';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="' + value.image + '" style="height:100%;" onerror="this.src=\'../../img/loading.svg\'"><span style="position:relative; top:-0.2rem;"> ' + escapeHTML(value.name) + '</span></div>';
 						break;
 					}
 				}
@@ -841,7 +841,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			'\',' + acct_id + ');" user="' + toot.account.acct + '" class="udg">' +
 			'<img draggable="false" src="' + avatar +
 			'" width="40" class="prof-img" user="' + toot.account.acct +
-			'"></a>' + noticeavatar + '</div>' +
+			'" onerror="this.src=\'../../img/loading.svg\'"></a>' + noticeavatar + '</div>' +
 			'<div class="area-display_name"><div class="flex-name"><span class="user">' +
 			dis_name +
 			'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"> @' +
@@ -1016,14 +1016,14 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				'</div><div class="area-icon"><a onclick="udg(\'' + toot.id + '\',' +
 				acct_id + ');" user="' + toot.acct + '" class="udg">' +
 				'<img draggable="false" src="' + avatar + '" width="40" class="prof-img" user="' + toot
-					.acct + '"></a></div>' +
+					.acct + '" onerror="this.src=\'../../img/loading.svg\'"></a></div>' +
 				'<div class="area-display_name"><div class="flex-name"><span class="user">' +
 				dis_name + '</span>' +
 				'<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
 				toot.acct + locked + '</span>' +
 				'</div>' +
 				'</div>' +
-				'<div style="justify-content:space-around" class="area-toot"> <div class="cbadge" style="width:100px;">Follows:' +
+				'<div style="justify-content:space-around;top:5px" class="area-actions"> <div class="cbadge" style="width:100px;">Follows:' +
 				toot.following_count +
 				'</div><div class="cbadge" style="width:100px;">Followers:' + toot.followers_count +
 				'</div>' + authhtml +

@@ -510,7 +510,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 						acct_id + ')" id="' + id + '-image-' + key2 + '" data-url="' + url +
 						'" data-type="image" class="img-parsed"><img src="' +
 						purl + '" class="' + sense +
-						' toot-img pointer" style="width:' + cwdt + '%; height:' + imh + 'px;"></a></span>';
+						' toot-img pointer" style="width:' + cwdt + '%; height:' + imh + 'px;" onerror="this.src=\'../../img/loading.svg\'"></a></span>';
 				}
 
 			});
@@ -788,7 +788,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'\',' + acct_id + ');" user="' + toot.user.username + '" class="udg">' +
 			'<img src="' + avatar +
 			'" width="40" class="prof-img" user="' + toot.user.username +
-			'"></a></div>' +
+			'" onerror="this.src=\'../../img/loading.svg\'"></a></div>' +
 			'<div class="area-display_name"><div class="flex-name"><span class="user">' +
 			dis_name +
 			'</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"> @' +
