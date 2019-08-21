@@ -57,7 +57,7 @@
   "mixsel": "Mixed",
   "locale": "Server's unique locale",
   "localewarn": "This value is available on some Japanese servers",
-  "nswf": "Hide NSFW pictures",
+  "nswf": "Hide Mark sensitive pictures",
   "nsfwwarn": "Strong blur effect",
   "cw": "Hide CW contents",
   "replyct": "Reply counter style",

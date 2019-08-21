@@ -201,7 +201,7 @@ var lang = {
     "lang_parse_endedvote": "Expired",
     "lang_parse_thread": "Show thread",
     "lang_parse_unknown": "Attached file",
-    "lang_parse_nsfw": "NSFW media",
+    "lang_parse_nsfw": "sensitive media",
     "lang_parse_notffilter":"Show this user's notifications",
     //misskey
     "lang_misskeyparse_renote": "Repost",
@@ -219,7 +219,7 @@ var lang = {
     //setting
     "lang_setting_time": "Time format:{{set}}",
     "lang_setting_theme": "Theme:{{set}}",
-    "lang_setting_nsfw": "NSFW:{{set}}",
+    "lang_setting_nsfw": "Sensitive media:{{set}}",
     "lang_setting_cw": "CW:{{set}}",
     "lang_setting_cwtext": "Default CW text:{{set}}",
     "lang_setting_cws": "Always CW on:{{set}}",
