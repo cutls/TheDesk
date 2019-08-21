@@ -149,7 +149,7 @@ var tlConstruction = [
         checkbox: true,
         setValue: "yes",
         text: {
-            head: "非表示設定の画像(NSFW)を隠す",
+            head: "非表示設定の画像を隠す",
             desc: "きつめのぼかしがかかります。",
             checkbox: yesno
         }

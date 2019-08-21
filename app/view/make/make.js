@@ -1,8 +1,9 @@
 const fs = require("fs")
 const readlineSync = require('readline-sync');
-let ver = readlineSync.question('version string (empty: default string)? ');
-if (!ver) {
-    ver = "Usamin (18.8.1)"
+let ver = "Usamin (18.8.2)"
+let input = readlineSync.question('version string [empty: '+ ver +' (default)]? ');
+if (input){
+    ver = input
 }
 console.log("Constructing view files " + ver + ": make sure to update package.json")
 const langs = ["ja", "en", "ps", "bg", "cs", "de"]

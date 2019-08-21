@@ -149,7 +149,7 @@ var tlConstruction = [
         checkbox: true,
         setValue: "yes",
         text: {
-            head: "Hide NSFW pictures",
+            head: "Hide Mark sensitive pictures",
             desc: "Strong blur effect",
             checkbox: yesno
         }
