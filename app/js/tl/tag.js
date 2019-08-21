@@ -10,7 +10,7 @@ if (location.search) {
 }
 //よく使うタグ
 function tagShow(tag) {
-    $("[data-tag=" + decodeURI(tag) + "]").toggleClass("hide");
+    $("[data-tag=" + decodeURI(tag).toLowerCase() + "]").toggleClass("hide");
 }
 //タグ追加
 function tagPin(tag) {
