@@ -284,7 +284,6 @@ iframe,
   position: relative;
   display: flex;
   justify-content: space-around;
-  width: 250px;
   max-width: 100%;
   grid-area: actions;
 }
