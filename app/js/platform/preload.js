@@ -45,12 +45,8 @@ onmessage = function (e) {
     } else if (e.data[0] == "aboutData") {
         ipc.send('aboutData', "");
     } else if (e.data[0] == "itunes") {
-        console.log("NowPlaying" + ipc.listenerCount('itunes-np'))
-        if (ipc.listenerCount('itunes-np') > 1) {
-            return false;
-        } else {
-            ipc.send("itunes", e.data[1])
-        }
+        console.log("NowPlaying")
+        ipc.send("itunes", e.data[1])
     } else if (e.data[0] == "themeCSSRequest") {
         ipc.send('theme-css-request', e.data[1]);
     } else if (e.data[0] == "downloadButton") {
@@ -148,7 +144,7 @@ ipc.on('theme-json-create-complete', function (event, args) {
     postMessage(["ctLoad", ""], "*")
 });
 //spotify.js
-ipc.once('itunes-np', function (event, arg) {
+ipc.on('itunes-np', function (event, arg) {
     postMessage(["npCore", arg], "*")
 })
 //tips.js
