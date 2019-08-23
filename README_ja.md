@@ -131,3 +131,8 @@ Issuesに書いてある問題についてはなるべく対処しますので�
 ## 詳しく
 
 [TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
+
+## `npm i`したら脆弱性あるって言われた
+
+materialize-cssの脆弱性(CVE-2019-11002/3/4)については[こちら](https://github.com/Dogfalo/materialize/issues/6286)で本当に脆弱性かどうか議論しています。  
+実際には害が無いものと思われます。

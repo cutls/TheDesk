@@ -125,4 +125,9 @@ macOS
 
 Did you find a bug with Pleroma accounts?  
 Pleroma **does not** follow Mastodon API rules completely although Pleroma developers say so.  
-Please write issues to improve TheDesk affinity with Pleroma.  
+Please write issues to improve TheDesk affinity with Pleroma.
+
+## Vulnerabilities when `npm i`???
+
+No, if your npm says materialize-css has vulnerabilities(CVE-2019-11002/3/4), look at [here](https://github.com/Dogfalo/materialize/issues/6286) under discussion.
+
