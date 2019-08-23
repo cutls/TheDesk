@@ -499,7 +499,9 @@ function staEx(mode) {
 }
 function toggleAction(id, tlid, acct_id) {
 	if (tlid == "notf") {
-		var tlide = "[data-notf=" + acct_id + "]";
+		var tlide = "[data-acct=" + acct_id + "] .notf-timeline";
+	} else if (tlid == "user") {
+		var tlide = "#his-tl-contents";
 	} else {
 		var tlide = "[tlid=" + tlid + "]";
 	}
