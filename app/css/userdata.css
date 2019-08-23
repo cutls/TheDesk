@@ -4,6 +4,10 @@
   background-image: url("../../loading.svg");
   overflow-y: hidden;
 }
+#his-data-content {
+  display: flex;
+  justify-content: center;
+}
 #his-name {
   font-size: 1.5rem;
 }
@@ -13,16 +17,17 @@
   margin-right: 5px;
 }
 .his-float {
-  float: left;
   overflow-y: scroll;
   padding: 5px;
 }
 #his-float-data {
-  width: 400px;
   height: 100%;
 }
+#his-leftside {
+  width: 500px;
+}
 #his-float-timeline {
-  width: calc(100% - 400px);
+  max-width: 775px;
   height: 100%;
   overflow-y: hidden;
 }
@@ -61,21 +66,30 @@
 #his-data a:not(.mention) span:last-of-type {
   display: none;
 }
+#his-data a .rep_ct,
+#his-data a .rt_ct,
+#his-data a .fav_ct {
+  display: inline !important;
+}
 #his-data-show {
   margin: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
   background-color: var(--his-data);
-  width: calc(100% - 20px);
   height: calc(100% - 20px);
   margin-bottom: 0;
   padding: 5px;
 }
-.tab-content {
+#his-data-wrap {
+  display: flex;
+}
+.his-var-content {
   overflow-y: scroll;
   overflow-x: hidden;
-  height: calc(100% - 240px);
+  height: calc(100% - 45px);
 }
-.my-data-width {
-  width: 10%;
+#my-data-nav .btn {
+  width: 140px;
 }
 .active-back {
   background-color: var(--active);

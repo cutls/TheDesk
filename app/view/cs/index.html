@@ -423,186 +423,194 @@
 	<div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
 		<div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
 			<div id="his-data-show">
-				<div class="his-float" id="his-float-data">
-					<div id="his-basic-prof">
-						<img src="../../img/loading.svg" id="his-prof" draggable="false">
-						<span id="his-name">Loading...</span><span class="gray" id="his-bot"></span>
-						<br>@
-						<span id="his-acct"></span><br>
-						<span class="gray" id="his-relation"></span>
-						<br>
-						<span class="cbadge">
-							<span id="his-sta"></span>Tooty
-						</span>
-						<span class="cbadge">Sledovat:
-							<span id="his-follow"></span>
-						</span>
-						<span class="cbadge">Sledující:
-							<span id="his-follower"></span>
-						</span><br>
-						<span class="cbadge" style="max-width:150px; width:150px; ">Since:
-							<span id="his-since"></span>
-						</span>
-						<div id="his-proof-prof"></div>
-					</div>
-					<div id="his-des" data-acct=""></div><br>
-					<div id="his-plus-action">
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
-							onclick="empUser()">Zdůraznit tohoto uživatele</a>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
-							id="his-end-btn" onclick="pinUser()">Feature on profile</a><br>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
-							onclick="profbrws()">Open in browser</a>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data"
-							id="his-main-acct" onclick="setMain()" style="width: calc(100% - 10px)">Set it an main account</a><br>
-					</div><br>
-					<div id="his-matching-list">
-						Get people resembling this user.<br>
-						Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User Matching</a><br>
-						<div id="his-matching-list-contents" class="cont-series"></div>
-						<button class="btn waves-effect " onclick="showMat()" style="width:100%;">Get</button>
-					</div>
-				</div>
-				<div class="his-float" id="his-float-timeline">
-					<div id="my-data-nav">
-						<ul class="tabs transparent">
-							<li class="tab col my-data-width active-back column-first">
-								<a go="#his-tl" title="Časová osa"><i class="material-icons">timeline</i></a>
-							</li>
-							<li class="tab col my-data-width">
-								<a go="#his-follow-list" title="Sledovat"><i class="material-icons">people</i>→</a>
-							</li>
-							<li class="tab col my-data-width">
-								<a go="#his-follower-list" title="Sledující"><i
-										class="material-icons">people</i>←</a>
-							</li>
-							<li class="tab col my-data-width only-his-data">
-								<a go="#his-action" title="Cross-account"><i
-										class="material-icons">account_box</i></a>
-							</li>
-							<li class="tab col my-data-width only-his-data">
-								<a go="#his-list" title="Seznam"><i class="material-icons">list</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-fav-list" title="Oblíbit"><i class="material-icons">star</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-blocking-list" title="Blocks"><i class="material-icons">block</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-muting-list" title="Mute"><i
-										class="material-icons">voice_over_off</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-domain-list" title="Domain block"><i
-										class="material-icons">language</i><i class="material-icons">block</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-prof-list" title="Edit profile"><i class="material-icons">create</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-request-list" title="Follow requests"><i
-										class="material-icons">how_to_reg</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-follow-recom-list" title="Suggest"><i
-										class="material-icons">recent_actors</i></a>
-							</li>
-						</ul>
-					</div>
-					<div id="his-tl" class="tab-content">
-						<div id="his-tl-contents" class="cont-series">
+				<div id="his-data-wrap">
+					<div class="his-float" id="his-float-data">
+						<div id="his-leftside">
+							<div id="his-basic-prof">
+								<img src="../../img/loading.svg" id="his-prof" draggable="false">
+								<span id="his-name">Loading...</span><span class="gray" id="his-bot"></span>
+								<br>@
+								<span id="his-acct"></span><br>
+								<span class="gray" id="his-relation"></span>
+								<br>
+								<span class="cbadge">
+									<span id="his-sta"></span>Tooty
+								</span>
+								<span class="cbadge">Sledovat:
+									<span id="his-follow"></span>
+								</span>
+								<span class="cbadge">Sledující:
+									<span id="his-follower"></span>
+								</span><br>
+								<span class="cbadge" style="max-width:150px; width:150px; ">Since:
+									<span id="his-since"></span>
+								</span>
+								<div id="his-proof-prof"></div>
+							</div>
+							<div id="his-des" data-acct=""></div><br>
+							<div id="his-plus-action">
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
+									onclick="empUser()">Zdůraznit tohoto uživatele</a>
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
+									id="his-end-btn" onclick="pinUser()">Feature on profile</a><br>
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
+									onclick="profbrws()">Open in browser</a>
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data"
+									id="his-main-acct" onclick="setMain()"
+									style="width: calc(100% - 10px)">Set it an main account</a><br>
+							</div><br>
+							<div id="his-matching-list">
+								Get people resembling this user.<br>
+								Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User
+									Matching</a><br>
+								<div id="his-matching-list-contents" class="cont-series"></div>
+								<button class="btn waves-effect " onclick="showMat()"
+									style="width:100%;">Get</button>
+							</div>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="utl('--now','more')">More</button>
 					</div>
-					<div id="his-follow-list" class="tab-content">
-						<div id="his-follow-list-contents" class="cont-series">
+					<div class="his-float" id="his-float-timeline">
+						<div id="my-data-nav">
+							<a go="#his-tl" title="Časová osa" class="btn active-back column-first anc-link"><i
+									class="material-icons">timeline</i>Časová osa</a>
+							<a go="#his-follow-list" title="Sledovat" class="btn anc-link"><i
+									class="material-icons">people</i>→Sledovat</a>
+							<a go="#his-follower-list" title="Sledující" class="btn anc-link"><i
+									class="material-icons">people</i>←Sledující</a>
+							<a go="#his-list" title="Seznam" class="btn only-his-data anc-link"><i
+									class="material-icons">list</i>Seznam</a>
+							<a go="#his-fav-list" title="Oblíbit" class="btn only-my-data anc-link"><i
+									class="material-icons">star</i>Oblíbit</a>
+							<a class="dropdown-trigger btn" href="#" data-target="hisdropdown"><i
+									class="material-icons">more_vert</i>More</a>
+							<!-- Dropdown Structure -->
+							<ul id="hisdropdown" class="dropdown-content">
+								<li class="anc-link only-my-data" go="#his-blocking-list">
+									<a href="#" title="Blocks"><i class="material-icons">block</i>Blocks</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-muting-list">
+									<a href="#" title="Mute"><i
+											class="material-icons">voice_over_off</i>Mute</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-domain-list">
+									<a href="#" title="Domain block"><i
+											class="material-icons">language</i>Domain block</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-prof-list">
+									<a href="#" title="Edit profile"><i
+											class="material-icons">create</i>Edit profile</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-request-list">
+									<a href="#" title="Follow requests"><i
+											class="material-icons">how_to_reg</i>Follow requests</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-follow-recom-list">
+									<a href="#" title="Suggest"><i class="material-icons">recent_actors</i>Suggest</a>
+								</li>
+								<li class="anc-link only-his-data" go="#his-action">
+									<a href="#" title="Cross-account"><i
+											class="material-icons">account_box</i>Cross-account</a>
+								</li>
+								<li class="only-his-data">
+									<a href="#">Coming soon...</a>
+								</li>
+							</ul>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="flw('--now','more')">More</button>
-					</div>
-					<div id="his-follower-list" class="tab-content">
-						<div id="his-follower-list-contents" class="cont-series">
+						<div id="his-tl" class="his-var-content">
+							<div id="his-tl-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="utl('--now','more')">More</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="fer('--now','more')">More</button>
-					</div>
-					<div id="his-action" class="tab-content">
-						Použít jiný účet to Sledovat((Unable to unfollow))<br>
-						<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>
-						
-						<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">Sledovat</a><br>
-						or<br>
-						<a href="#!" class="waves-effect btn"
-							onclick="udgEx('selector', 'selector')">Show profile</a><br>
-					</div>
-					<div id="his-list" class="tab-content">
-						<div id="his-lists-a">Follow to add this user to lists.</div>
+						<div id="his-follow-list" class="his-var-content">
+							<div id="his-follow-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="flw('--now','more')">More</button>
+						</div>
+						<div id="his-follower-list" class="his-var-content">
+							<div id="his-follower-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="fer('--now','more')">More</button>
+						</div>
+						<div id="his-action" class="his-var-content">
+							Použít jiný účet to Sledovat((Unable to unfollow))<br>
+							<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>
+							
+							<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">Sledovat</a><br>
+							or<br>
+							<a href="#!" class="waves-effect btn"
+								onclick="udgEx('selector', 'selector')">Show profile</a><br>
+						</div>
+						<div id="his-list" class="his-var-content">
+							<div id="his-lists-a">Follow to add this user to lists.</div>
 
-						<div id="his-lists-b"></div>
-					</div>
-					<div id="his-fav-list" class="tab-content">
-						<div id="his-fav-list-contents" class="cont-series">
+							<div id="his-lists-b"></div>
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;"
-							onclick="showFav('more')">More</button>
-					</div>
-					<div id="his-blocking-list" class="tab-content">
-						<div id="his-blocking-list-contents" class="cont-series">
+						<div id="his-fav-list" class="his-var-content">
+							<div id="his-fav-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect" style="width:100%; padding:0;"
+								onclick="showFav('more')">More</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showBlo('more')">More</button>
-					</div>
-					<div id="his-muting-list" class="tab-content">
-						<div id="his-muting-list-contents" class="cont-series">
+						<div id="his-blocking-list" class="his-var-content">
+							<div id="his-blocking-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showBlo('more')">More</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showMut('more')">More</button>
-					</div>
-					<div id="his-domain-list" class="tab-content">
-						<div id="his-domain-list-contents" class="cont-series">
+						<div id="his-muting-list" class="his-var-content">
+							<div id="his-muting-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showMut('more')">More</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showDom('more')">More</button>Add blocking domain
-						<br>
-						<input type="text" placeholder="example.com" id="domainblock">
-						<button class="btn waves-effect" onclick="addDomainblock()">Přidat</button>
-						<br>
-					</div>
-					<div id="his-prof-list" class="tab-content">Display name
-						<br>
-						<input type="text" placeholder="Display name" id="his-name-val" style="max-width:250px;">
-						<br>Note
-						<br>
-						<div class="input-field col s12">
-							<textarea placeholder="Note" id="his-des-val" class="materialize-textarea"></textarea>
-							<label for="his-des-val">Note</label>
+						<div id="his-domain-list" class="his-var-content">
+							<div id="his-domain-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showDom('more')">More</button>Add blocking domain
+							<br>
+							<input type="text" placeholder="example.com" id="domainblock">
+							<button class="btn waves-effect" onclick="addDomainblock()">Přidat</button>
+							<br>
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;"
-							onclick="profedit()">Uložit</button>
-						<br>Změnit avatar:
-						<span id="prof-change">
-							<input type="file" onchange="imgChange(this,'avatar')">
-						</span>
-						<br>Změnit obrázek záhlaví:
-						<span id="header-change">
-							<input type="file" onchange="imgChange(this,'header')">
-						</span>
-					</div>
-					<div id="his-request-list" class="tab-content">
-						<div id="his-request-list-contents" class="cont-series">
+						<div id="his-prof-list" class="his-var-content">Display name
+							<br>
+							<input type="text" placeholder="Display name" id="his-name-val" style="max-width:250px;">
+							<br>Note
+							<br>
+							<div class="input-field col s12">
+								<textarea placeholder="Note" id="his-des-val"
+									class="materialize-textarea"></textarea>
+								<label for="his-des-val">Note</label>
+							</div>
+							<button class="btn waves-effect" style="width:100%; padding:0;"
+								onclick="profedit()">Uložit</button>
+							<br>Změnit avatar:
+							<span id="prof-change">
+								<input type="file" onchange="imgChange(this,'avatar')">
+							</span>
+							<br>Změnit obrázek záhlaví:
+							<span id="header-change">
+								<input type="file" onchange="imgChange(this,'header')">
+							</span>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showReq('more')">More</button>
-					</div>
-					<div id="his-follow-recom-list" class="tab-content">
-						<div id="his-follow-recom-contents" class="cont-series">
+						<div id="his-request-list" class="his-var-content">
+							<div id="his-request-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showReq('more')">More</button>
+						</div>
+						<div id="his-follow-recom-list" class="his-var-content">
+							<div id="his-follow-recom-contents" class="cont-series">
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="his-float" id="his-float-blocked">
-					<div>You are blocked. Why?</div>
+					<div class="his-float" id="his-float-blocked">
+						<div>You are blocked. Why?</div>
+					</div>
 				</div>
 			</div>
 		</div>

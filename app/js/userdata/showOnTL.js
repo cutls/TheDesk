@@ -164,7 +164,7 @@ function udg(user, acct_id) {
 		}
 		$("#his-des").attr("data-acct", acct_id);
 		$('#his-data').css('background-size', 'cover');
-		$("#his-data .tab-content").css("height", $("#his-float-timeline").height() - 70 + "px")
+		$("#his-float-timeline").css("height", $("#his-data-show").height() + "px")
 		localStorage.setItem("history", user);
 		//自分の時
 		if (json.acct == localStorage.getItem("user_" + acct_id)) {
@@ -428,8 +428,8 @@ function hisclose() {
 	localStorage.removeItem("history");
 }
 function reset() {
-	$(".tab-content:eq(0)").show();
-	$(".tab-content:gt(0)").hide();
+	$(".his-var-content:eq(0)").show();
+	$(".his-var-content:gt(0)").hide();
 	$(".active-back").removeClass("active-back");
 	$(".column-first").addClass("active-back");
 	$("#his-name").text("Loading");
@@ -478,10 +478,13 @@ function reset() {
 	$("#his-main-acct").show();
 	$("#his-proof-prof").html("")
 }
-$('#my-data-nav .tab').on('click', function () {
-	var target = $(this).find("a").attr("go");
-	$("#my-data-nav .tab").removeClass("active-back");
-	$(this).addClass("active-back");
-	$(target).show();
-	$(".tab-content:not(" + target + ")").hide();
+$('#my-data-nav .anc-link').on('click', function () {
+	var target = $(this).attr("go");
+	if(target){
+		$("#my-data-nav .anc-link").removeClass("active-back");
+		$(this).addClass("active-back");
+		$(target).show();
+		$(".his-var-content:not(" + target + ")").hide();
+	}
+	
 });

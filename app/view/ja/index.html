@@ -423,186 +423,194 @@
 	<div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
 		<div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
 			<div id="his-data-show">
-				<div class="his-float" id="his-float-data">
-					<div id="his-basic-prof">
-						<img src="../../img/loading.svg" id="his-prof" draggable="false">
-						<span id="his-name">Loading...</span><span class="gray" id="his-bot"></span>
-						<br>@
-						<span id="his-acct"></span><br>
-						<span class="gray" id="his-relation"></span>
-						<br>
-						<span class="cbadge">
-							<span id="his-sta"></span>トゥート
-						</span>
-						<span class="cbadge">フォロー:
-							<span id="his-follow"></span>
-						</span>
-						<span class="cbadge">フォロワー:
-							<span id="his-follower"></span>
-						</span><br>
-						<span class="cbadge" style="max-width:150px; width:150px; ">Since:
-							<span id="his-since"></span>
-						</span>
-						<div id="his-proof-prof"></div>
-					</div>
-					<div id="his-des" data-acct=""></div><br>
-					<div id="his-plus-action">
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
-							onclick="empUser()">ユーザー強調</a>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
-							id="his-end-btn" onclick="pinUser()">紹介する</a><br>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
-							onclick="profbrws()">ブラウザで開く</a>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data"
-							id="his-main-acct" onclick="setMain()" style="width: calc(100% - 10px)">メインアカウントに設定</a><br>
-					</div><br>
-					<div id="his-matching-list">
-						似ているユーザーを取得できます。<br>
-						Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User Matching</a><br>
-						<div id="his-matching-list-contents" class="cont-series"></div>
-						<button class="btn waves-effect " onclick="showMat()" style="width:100%;">取得</button>
-					</div>
-				</div>
-				<div class="his-float" id="his-float-timeline">
-					<div id="my-data-nav">
-						<ul class="tabs transparent">
-							<li class="tab col my-data-width active-back column-first">
-								<a go="#his-tl" title="タイムライン"><i class="material-icons">timeline</i></a>
-							</li>
-							<li class="tab col my-data-width">
-								<a go="#his-follow-list" title="フォロー"><i class="material-icons">people</i>→</a>
-							</li>
-							<li class="tab col my-data-width">
-								<a go="#his-follower-list" title="フォロワー"><i
-										class="material-icons">people</i>←</a>
-							</li>
-							<li class="tab col my-data-width only-his-data">
-								<a go="#his-action" title="他のアカウントで操作"><i
-										class="material-icons">account_box</i></a>
-							</li>
-							<li class="tab col my-data-width only-his-data">
-								<a go="#his-list" title="リスト"><i class="material-icons">list</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-fav-list" title="お気に入り登録"><i class="material-icons">star</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-blocking-list" title="ブロック"><i class="material-icons">block</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-muting-list" title="ミュート"><i
-										class="material-icons">voice_over_off</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-domain-list" title="ドメインブロック"><i
-										class="material-icons">language</i><i class="material-icons">block</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-prof-list" title="プロフィール編集"><i class="material-icons">create</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-request-list" title="フォローリクエスト"><i
-										class="material-icons">how_to_reg</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-follow-recom-list" title="おすすめ"><i
-										class="material-icons">recent_actors</i></a>
-							</li>
-						</ul>
-					</div>
-					<div id="his-tl" class="tab-content">
-						<div id="his-tl-contents" class="cont-series">
+				<div id="his-data-wrap">
+					<div class="his-float" id="his-float-data">
+						<div id="his-leftside">
+							<div id="his-basic-prof">
+								<img src="../../img/loading.svg" id="his-prof" draggable="false">
+								<span id="his-name">Loading...</span><span class="gray" id="his-bot"></span>
+								<br>@
+								<span id="his-acct"></span><br>
+								<span class="gray" id="his-relation"></span>
+								<br>
+								<span class="cbadge">
+									<span id="his-sta"></span>トゥート
+								</span>
+								<span class="cbadge">フォロー:
+									<span id="his-follow"></span>
+								</span>
+								<span class="cbadge">フォロワー:
+									<span id="his-follower"></span>
+								</span><br>
+								<span class="cbadge" style="max-width:150px; width:150px; ">Since:
+									<span id="his-since"></span>
+								</span>
+								<div id="his-proof-prof"></div>
+							</div>
+							<div id="his-des" data-acct=""></div><br>
+							<div id="his-plus-action">
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
+									onclick="empUser()">ユーザー強調</a>
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
+									id="his-end-btn" onclick="pinUser()">紹介する</a><br>
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
+									onclick="profbrws()">ブラウザで開く</a>
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data"
+									id="his-main-acct" onclick="setMain()"
+									style="width: calc(100% - 10px)">メインアカウントに設定</a><br>
+							</div><br>
+							<div id="his-matching-list">
+								似ているユーザーを取得できます。<br>
+								Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User
+									Matching</a><br>
+								<div id="his-matching-list-contents" class="cont-series"></div>
+								<button class="btn waves-effect " onclick="showMat()"
+									style="width:100%;">取得</button>
+							</div>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="utl('--now','more')">もっと</button>
 					</div>
-					<div id="his-follow-list" class="tab-content">
-						<div id="his-follow-list-contents" class="cont-series">
+					<div class="his-float" id="his-float-timeline">
+						<div id="my-data-nav">
+							<a go="#his-tl" title="タイムライン" class="btn active-back column-first anc-link"><i
+									class="material-icons">timeline</i>タイムライン</a>
+							<a go="#his-follow-list" title="フォロー" class="btn anc-link"><i
+									class="material-icons">people</i>→フォロー</a>
+							<a go="#his-follower-list" title="フォロワー" class="btn anc-link"><i
+									class="material-icons">people</i>←フォロワー</a>
+							<a go="#his-list" title="リスト" class="btn only-his-data anc-link"><i
+									class="material-icons">list</i>リスト</a>
+							<a go="#his-fav-list" title="お気に入り" class="btn only-my-data anc-link"><i
+									class="material-icons">star</i>お気に入り</a>
+							<a class="dropdown-trigger btn" href="#" data-target="hisdropdown"><i
+									class="material-icons">more_vert</i>もっと</a>
+							<!-- Dropdown Structure -->
+							<ul id="hisdropdown" class="dropdown-content">
+								<li class="anc-link only-my-data" go="#his-blocking-list">
+									<a href="#" title="ブロック"><i class="material-icons">block</i>ブロック</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-muting-list">
+									<a href="#" title="ミュート"><i
+											class="material-icons">voice_over_off</i>ミュート</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-domain-list">
+									<a href="#" title="ドメインブロック"><i
+											class="material-icons">language</i>ドメインブロック</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-prof-list">
+									<a href="#" title="プロフィール編集"><i
+											class="material-icons">create</i>プロフィール編集</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-request-list">
+									<a href="#" title="フォローリクエスト"><i
+											class="material-icons">how_to_reg</i>フォローリクエスト</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-follow-recom-list">
+									<a href="#" title="おすすめ"><i class="material-icons">recent_actors</i>おすすめ</a>
+								</li>
+								<li class="anc-link only-his-data" go="#his-action">
+									<a href="#" title="他のアカウントで操作"><i
+											class="material-icons">account_box</i>他のアカウントで操作</a>
+								</li>
+								<li class="only-his-data">
+									<a href="#">Coming soon...</a>
+								</li>
+							</ul>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="flw('--now','more')">もっと</button>
-					</div>
-					<div id="his-follower-list" class="tab-content">
-						<div id="his-follower-list-contents" class="cont-series">
+						<div id="his-tl" class="his-var-content">
+							<div id="his-tl-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="utl('--now','more')">もっと</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="fer('--now','more')">もっと</button>
-					</div>
-					<div id="his-action" class="tab-content">
-						他のアカウントを使用するフォロー((解除はできません。))<br>
-						<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>
-						で
-						<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">フォロー</a><br>
-						または<br>
-						<a href="#!" class="waves-effect btn"
-							onclick="udgEx('selector', 'selector')">プロフィールを表示</a><br>
-					</div>
-					<div id="his-list" class="tab-content">
-						<div id="his-lists-a">リストに追加するためにはフォローが必要です。</div>
+						<div id="his-follow-list" class="his-var-content">
+							<div id="his-follow-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="flw('--now','more')">もっと</button>
+						</div>
+						<div id="his-follower-list" class="his-var-content">
+							<div id="his-follower-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="fer('--now','more')">もっと</button>
+						</div>
+						<div id="his-action" class="his-var-content">
+							他のアカウントを使用するフォロー((解除はできません。))<br>
+							<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>
+							で
+							<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">フォロー</a><br>
+							または<br>
+							<a href="#!" class="waves-effect btn"
+								onclick="udgEx('selector', 'selector')">プロフィールを表示</a><br>
+						</div>
+						<div id="his-list" class="his-var-content">
+							<div id="his-lists-a">リストに追加するためにはフォローが必要です。</div>
 
-						<div id="his-lists-b"></div>
-					</div>
-					<div id="his-fav-list" class="tab-content">
-						<div id="his-fav-list-contents" class="cont-series">
+							<div id="his-lists-b"></div>
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;"
-							onclick="showFav('more')">もっと</button>
-					</div>
-					<div id="his-blocking-list" class="tab-content">
-						<div id="his-blocking-list-contents" class="cont-series">
+						<div id="his-fav-list" class="his-var-content">
+							<div id="his-fav-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect" style="width:100%; padding:0;"
+								onclick="showFav('more')">もっと</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showBlo('more')">もっと</button>
-					</div>
-					<div id="his-muting-list" class="tab-content">
-						<div id="his-muting-list-contents" class="cont-series">
+						<div id="his-blocking-list" class="his-var-content">
+							<div id="his-blocking-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showBlo('more')">もっと</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showMut('more')">もっと</button>
-					</div>
-					<div id="his-domain-list" class="tab-content">
-						<div id="his-domain-list-contents" class="cont-series">
+						<div id="his-muting-list" class="his-var-content">
+							<div id="his-muting-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showMut('more')">もっと</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showDom('more')">もっと</button>ブロックするドメイン
-						<br>
-						<input type="text" placeholder="example.com" id="domainblock">
-						<button class="btn waves-effect" onclick="addDomainblock()">追加</button>
-						<br>
-					</div>
-					<div id="his-prof-list" class="tab-content">名前
-						<br>
-						<input type="text" placeholder="名前" id="his-name-val" style="max-width:250px;">
-						<br>自己紹介
-						<br>
-						<div class="input-field col s12">
-							<textarea placeholder="自己紹介" id="his-des-val" class="materialize-textarea"></textarea>
-							<label for="his-des-val">自己紹介</label>
+						<div id="his-domain-list" class="his-var-content">
+							<div id="his-domain-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showDom('more')">もっと</button>ブロックするドメイン
+							<br>
+							<input type="text" placeholder="example.com" id="domainblock">
+							<button class="btn waves-effect" onclick="addDomainblock()">追加</button>
+							<br>
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;"
-							onclick="profedit()">変更</button>
-						<br>アバターを変更:
-						<span id="prof-change">
-							<input type="file" onchange="imgChange(this,'avatar')">
-						</span>
-						<br>ヘッダーを変更:
-						<span id="header-change">
-							<input type="file" onchange="imgChange(this,'header')">
-						</span>
-					</div>
-					<div id="his-request-list" class="tab-content">
-						<div id="his-request-list-contents" class="cont-series">
+						<div id="his-prof-list" class="his-var-content">名前
+							<br>
+							<input type="text" placeholder="名前" id="his-name-val" style="max-width:250px;">
+							<br>自己紹介
+							<br>
+							<div class="input-field col s12">
+								<textarea placeholder="自己紹介" id="his-des-val"
+									class="materialize-textarea"></textarea>
+								<label for="his-des-val">自己紹介</label>
+							</div>
+							<button class="btn waves-effect" style="width:100%; padding:0;"
+								onclick="profedit()">変更</button>
+							<br>アバターを変更:
+							<span id="prof-change">
+								<input type="file" onchange="imgChange(this,'avatar')">
+							</span>
+							<br>ヘッダーを変更:
+							<span id="header-change">
+								<input type="file" onchange="imgChange(this,'header')">
+							</span>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showReq('more')">もっと</button>
-					</div>
-					<div id="his-follow-recom-list" class="tab-content">
-						<div id="his-follow-recom-contents" class="cont-series">
+						<div id="his-request-list" class="his-var-content">
+							<div id="his-request-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showReq('more')">もっと</button>
+						</div>
+						<div id="his-follow-recom-list" class="his-var-content">
+							<div id="his-follow-recom-contents" class="cont-series">
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="his-float" id="his-float-blocked">
-					<div>ブロックされています。なぜでしょう？</div>
+					<div class="his-float" id="his-float-blocked">
+						<div>ブロックされています。なぜでしょう？</div>
+					</div>
 				</div>
 			</div>
 		</div>
