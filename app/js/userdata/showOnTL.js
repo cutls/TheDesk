@@ -79,8 +79,10 @@ function udg(user, acct_id) {
 		}
 		//moved設定時
 		if (json.moved) {
-			M.toast({ html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' +
-			json.moved.id + '\',\'' + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>', displayLength: 4000 })
+			M.toast({
+				html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' +
+					json.moved.id + '\',\'' + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>', displayLength: 4000
+			})
 		}
 		$('#his-data').modal('open');
 		$('#his-data').attr("user-id", user);
@@ -193,7 +195,7 @@ function udg(user, acct_id) {
 			$("#his-emp-btn").hide();
 			$(".only-my-data").show();
 			$(".only-his-data").hide();
-			if(localStorage.getItem("main")==acct_id){
+			if (localStorage.getItem("main") == acct_id) {
 				$("#his-main-acct").hide();
 			}
 		} else {
@@ -296,7 +298,7 @@ function misskeyUdg(user, acct_id) {
 			$("#his-emp-btn").hide();
 			$(".only-my-data").show();
 			$(".only-his-data").hide();
-			if(localStorage.getItem("main")==acct_id){
+			if (localStorage.getItem("main") == acct_id) {
 				$("#his-main-acct").hide();
 			}
 		} else {
@@ -403,8 +405,9 @@ function relations(user, acct_id) {
 		}
 		//Blocked
 		if (json.blocked_by) {
-			$("#his-float-timeline").hide();
-			$("#his-float-blocked").show();
+			$("#my-data-nav .btn").addClass("disabled")
+			$(".his-var-content").hide();
+			$("#his-float-blocked").show()
 			$("#his-follow-btn").hide()
 		}
 
@@ -430,6 +433,7 @@ function hisclose() {
 function reset() {
 	$(".his-var-content:eq(0)").show();
 	$(".his-var-content:gt(0)").hide();
+	$("#my-data-nav .btn").removeClass("disabled")
 	$(".active-back").removeClass("active-back");
 	$(".column-first").addClass("active-back");
 	$("#his-name").text("Loading");
@@ -480,11 +484,11 @@ function reset() {
 }
 $('#my-data-nav .anc-link').on('click', function () {
 	var target = $(this).attr("go");
-	if(target){
+	if (target) {
 		$("#my-data-nav .anc-link").removeClass("active-back");
 		$(this).addClass("active-back");
 		$(target).show();
 		$(".his-var-content:not(" + target + ")").hide();
 	}
-	
+
 });

@@ -116,7 +116,11 @@
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  width: 90%;
   height: 100%;
-  position: absolute;
+}
+#hisdropdown{
+  background-color: var(--bg);
+}
+#hisdropdown li:hover{
+  background-color: var(--active);
 }

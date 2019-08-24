@@ -622,12 +622,17 @@ function showMat() {
 		var templete = "";
 		Object.keys(json).forEach(function (key) {
 			var user = json[key];
+			if (user.avatar) {
+				var avatar = user.avatar
+			} else {
+				var avatar = "../../img/loading.svg"
+			}
 			templete = templete +
 				'<div class="" style="padding-top:5px;">' +
 				'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-end;">' +
 				'<div style="flex-basis:40px;"><a onclick="udgEx(\'' + user.user + '\',' +
 				acct_id + ');" user="' + user.user + '" class="udg">' +
-				'<img src="' + user.avatar + '" width="40" class="prof-img" user="' + user.user + '"></a></div>' +
+				'<img src="' + avatar + '" width="40" class="prof-img" user="' + user.user + '"></a></div>' +
 				'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"><big>' +
 				escapeHTML(user.screen_name) + '</big></div>' +
 				'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +

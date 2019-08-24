@@ -458,14 +458,6 @@
 								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data"
 									id="his-main-acct" onclick="setMain()"
 									style="width: calc(100% - 10px)">Set it an main account</a><br>
-							</div><br>
-							<div id="his-matching-list">
-								Get people resembling this user.<br>
-								Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User
-									Matching</a><br>
-								<div id="his-matching-list-contents" class="cont-series"></div>
-								<button class="btn waves-effect " onclick="showMat()"
-									style="width:100%;">Get</button>
 							</div>
 						</div>
 					</div>
@@ -494,7 +486,7 @@
 								</li>
 								<li class="anc-link only-my-data" go="#his-domain-list">
 									<a href="#" title="Domain block"><i
-											class="material-icons">language</i>Domain block</a>
+											class="material-icons">cancel_schedule_send</i>Domain block</a>
 								</li>
 								<li class="anc-link only-my-data" go="#his-prof-list">
 									<a href="#" title="Edit profile"><i
@@ -511,8 +503,9 @@
 									<a href="#" title="Cross-account"><i
 											class="material-icons">account_box</i>Cross-account</a>
 								</li>
-								<li class="only-his-data">
-									<a href="#">Coming soon...</a>
+								<li class="anc-link" go="#his-matching-list">
+									<a href="#" title="Get people resembling this user."><i
+											class="material-icons">group_work</i>User Matching</a>
 								</li>
 							</ul>
 						</div>
@@ -607,9 +600,16 @@
 							<div id="his-follow-recom-contents" class="cont-series">
 							</div>
 						</div>
-					</div>
-					<div class="his-float" id="his-float-blocked">
-						<div>You are blocked. Why?</div>
+						<div id="his-matching-list" class="his-var-content">
+							Get people resembling this user.<br>
+							Powered by <a href="https://distsn.org/" target="_blank">Mastodon User
+								Matching</a><br>
+							<div id="his-matching-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect " onclick="showMat()" style="width:100%; padding:0;">Get</button>
+						</div>
+						<div id="his-float-blocked">
+							<div>You are blocked. Why?</div>
+						</div>
 					</div>
 				</div>
 			</div>

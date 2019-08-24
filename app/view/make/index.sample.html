@@ -458,14 +458,6 @@
 								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data"
 									id="his-main-acct" onclick="setMain()"
 									style="width: calc(100% - 10px)">@@mainacct@@</a><br>
-							</div><br>
-							<div id="his-matching-list">
-								@@likeUserDes@@<br>
-								Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User
-									Matching</a><br>
-								<div id="his-matching-list-contents" class="cont-series"></div>
-								<button class="btn waves-effect " onclick="showMat()"
-									style="width:100%;">@@get@@</button>
 							</div>
 						</div>
 					</div>
@@ -494,7 +486,7 @@
 								</li>
 								<li class="anc-link only-my-data" go="#his-domain-list">
 									<a href="#" title="@@domainBlock@@"><i
-											class="material-icons">language</i>@@domainBlock@@</a>
+											class="material-icons">cancel_schedule_send</i>@@domainBlock@@</a>
 								</li>
 								<li class="anc-link only-my-data" go="#his-prof-list">
 									<a href="#" title="@@editProf@@"><i
@@ -511,8 +503,9 @@
 									<a href="#" title="@@operateOtherAcct@@"><i
 											class="material-icons">account_box</i>@@operateOtherAcct@@</a>
 								</li>
-								<li class="only-his-data">
-									<a href="#">Coming soon...</a>
+								<li class="anc-link" go="#his-matching-list">
+									<a href="#" title="@@likeUserDes@@"><i
+											class="material-icons">group_work</i>User Matching</a>
 								</li>
 							</ul>
 						</div>
@@ -607,9 +600,16 @@
 							<div id="his-follow-recom-contents" class="cont-series">
 							</div>
 						</div>
-					</div>
-					<div class="his-float" id="his-float-blocked">
-						<div>@@blocked@@</div>
+						<div id="his-matching-list" class="his-var-content">
+							@@likeUserDes@@<br>
+							Powered by <a href="https://distsn.org/" target="_blank">Mastodon User
+								Matching</a><br>
+							<div id="his-matching-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect " onclick="showMat()" style="width:100%; padding:0;">@@get@@</button>
+						</div>
+						<div id="his-float-blocked">
+							<div>@@blocked@@</div>
+						</div>
 					</div>
 				</div>
 			</div>
