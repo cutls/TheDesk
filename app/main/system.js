@@ -42,7 +42,12 @@ function system(mainWindow, dir, lang, dirname) {
 	});
 	//プラットフォーム
 	ipc.on('getPlatform', function (e, arg) {
-		e.sender.webContents.send('platform', [process.platform, process.arch, process.version, process.versions.chrome, process.versions.electron]);
+		try {
+			var gitHash = fs.readFileSync("git", 'utf8')
+		} catch{
+			var gitHash = null
+		}
+		e.sender.webContents.send('platform', [process.platform, process.arch, process.version, process.versions.chrome, process.versions.electron, gitHash]);
 	})
 	//言語
 	ipc.on('lang', function (e, arg) {

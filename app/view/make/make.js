@@ -1,9 +1,14 @@
 const fs = require("fs")
-const readlineSync = require('readline-sync');
+const readlineSync = require('readline-sync')
 let ver = "Usamin (18.8.3)"
-let input = readlineSync.question('version string [empty: '+ ver +' (default)]? ');
-if (input){
-    ver = input
+const execSync = require('child_process').execSync;
+let gitHash = execSync("git rev-parse HEAD").toString().trim()
+fs.writeFileSync("../../git", gitHash)
+if (process.argv.indexOf("--automatic") === -1) {
+    let input = readlineSync.question('version string [empty: ' + ver + ' (default)]? ');
+    if (input) {
+        ver = input
+    }
 }
 console.log("Constructing view files " + ver + ": make sure to update package.json")
 const langs = ["ja", "en", "ps", "bg", "cs", "de"]
@@ -22,7 +27,7 @@ for (let i = 0; i < samples.length; i++) {
     for (let j = 0; j < langs.length; j++) {
         let source = sourceParent
         let lang = langs[j]
-        let target = JSON.parse(fs.readFileSync("language/" + lang + "/"  + simples[i] + ".json", 'utf8'))
+        let target = JSON.parse(fs.readFileSync("language/" + lang + "/" + simples[i] + ".json", 'utf8'))
         Object.keys(target).forEach(function (key) {
             let str = target[key]
             str = str.replace(/"/g, '\\"')
@@ -37,6 +42,7 @@ for (let i = 0; i < samples.length; i++) {
             source = source.replace(/@@comment-end@@/g, "-->")
         }
         source = source.replace(/@@versionLetter@@/g, ver)
+        source = source.replace(/@@gitHash@@/g, gitHash)
         source = source.replace(/@@lang@@/g, lang)
         source = source.replace(/@@langlist@@/g, langstr)
         fs.writeFileSync("../" + lang + "/" + pages[i], source)

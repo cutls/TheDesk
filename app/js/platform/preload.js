@@ -60,7 +60,7 @@ ipc.send("getPlatform", "")
 ipc.on('platform', function (event, args) {
     localStorage.setItem("platform", args[0])
     localStorage.setItem("bit", args[1])
-    localStorage.setItem("about", JSON.stringify([args[2], args[3], args[4]]))
+    localStorage.setItem("about", JSON.stringify([args[2], args[3], args[4], args[5]]))
 })
 
 ipc.on('reload', function (event, arg) {

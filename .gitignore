@@ -13,3 +13,10 @@ app/.tkn
 app/node_modules
 app/js/login/tkn.js
 app/package-lock.json
+app/view/en
+app/view/ja
+app/view/de
+app/view/bg
+app/view/cs
+app/view/ps
+app/git

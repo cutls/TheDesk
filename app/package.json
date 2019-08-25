@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "construct": "cd view/make && node make",
+    "construct": "cd view/make && node make --automatic && cd ../../",
     "dev": "electron ./ --dev",
     "dist": "build --linux snap",
     "build:js": "node build.js",
