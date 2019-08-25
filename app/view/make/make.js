@@ -1,6 +1,6 @@
 const fs = require("fs")
 const readlineSync = require('readline-sync');
-let ver = "Usamin (18.8.2)"
+let ver = "Usamin (18.8.3)"
 let input = readlineSync.question('version string [empty: '+ ver +' (default)]? ');
 if (input){
     ver = input
