@@ -18,6 +18,23 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow;
+
+// アプリが多重起動しないようにする
+const gotTheLock = app.requestSingleInstanceLock()
+
+if (!gotTheLock) {
+	app.quit()
+} else {
+	app.on('second-instance', () => {
+		// 多重起動を試みた場合、既に存在するウィンドウにフォーカスを移す
+		// Someone tried to run a second instance, we should focus our window.
+		if (mainWindow) {
+		if (mainWindow.isMinimized()) mainWindow.restore()
+		mainWindow.focus()
+		}
+	})
+}
+
 if (process.argv.indexOf("--dev") === -1) {
 	var packaged = true;
 } else {
