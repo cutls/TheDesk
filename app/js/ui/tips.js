@@ -25,7 +25,7 @@ function tips(mode) {
 	clearInterval(spotStart);
 	if (mode == "ver") {
 		tipsToggle()
-		$("#tips-text").html('<img src="../../img/desk.png" width="20" onclick="todo(\'TheDesk is a nice client!: TheDesk ' + localStorage.getItem("ver") + ' git: '+ gitHash +'\')"><span style="font-size:20px">TheDesk</span> <span title="git: '+ gitHash +'">' + localStorage.getItem("ver") + '</span>[<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]')
+		$("#tips-text").html('<img src="../../img/desk.png" width="20" onclick="todo(\'TheDesk is a nice client!: TheDesk ' + localStorage.getItem("ver") + ' git: '+ gitHash +'\')">TheDesk ' + localStorage.getItem("ver") + ' {'+ gitHash.slice(0, 7) +'} [<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]')
 		localStorage.setItem("tips", "ver")
 	} else if (mode == "clock") {
 		tipsToggle()

@@ -43,6 +43,7 @@ for (let i = 0; i < samples.length; i++) {
         }
         source = source.replace(/@@versionLetter@@/g, ver)
         source = source.replace(/@@gitHash@@/g, gitHash)
+        source = source.replace(/@@gitHashShort@@/g, gitHash.slice(0, 7))
         source = source.replace(/@@lang@@/g, lang)
         source = source.replace(/@@langlist@@/g, langstr)
         fs.writeFileSync("../" + lang + "/" + pages[i], source)

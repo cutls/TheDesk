@@ -2,6 +2,7 @@ var electron = require("electron");
 const shell = electron.shell;
 var ipc = electron.ipcRenderer;
 onmessage = function (e) {
+    console.log(e)
     if (e.data[0] == "openUrl") {
         urls = e.data[1].match(/https?:\/\/(.+)/);
         if (urls) {

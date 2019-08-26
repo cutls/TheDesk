@@ -47,6 +47,10 @@
 #bottom .leftside {
   display: flex;
 }
+#tips{
+  display: flex;
+  align-items: center;
+}
 #bottom #tips img {
   vertical-align: -3px;
 }

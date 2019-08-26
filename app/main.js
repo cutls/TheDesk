@@ -202,7 +202,7 @@ function createWindow() {
 
 	var platform = process.platform;
 	var bit = process.arch;
-	Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir)));
+	Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir, dirname)));
 	//CSS
 	css.css(mainWindow);
 	//アップデータとダウンロード

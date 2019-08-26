@@ -178,7 +178,7 @@
                     }
                 } else if (sel == "mac") {
                     var url = json["mac"];
-                    shell.openExternal(url);
+                    postMessage(["openUrl", url], "*")
                     return false;
                 }
                 postMessage(["downloadButton", [url, file]], "*")

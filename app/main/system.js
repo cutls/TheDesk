@@ -130,10 +130,12 @@ function system(mainWindow, dir, lang, dirname) {
 		var window = new BrowserWindow({
 			webPreferences: {
 				webviewTag: false,
-				nodeIntegration: false
+				nodeIntegration: false,
+				contextIsolation: true,
+				preload: join(dirname, "js", "platform", "preload.js")
 			},
 			width: 300,
-			height: 480,
+			height: 500,
 			"transparent": false, // ウィンドウの背景を透過
 			"frame": false, // 枠の無いウィンドウ
 			"resizable": false
@@ -156,7 +158,7 @@ function system(mainWindow, dir, lang, dirname) {
 				webviewTag: false,
 				nodeIntegration: false,
 				contextIsolation: true,
-				preload: join(dirname,"js", "platform", "preload.js")
+				preload: join(dirname, "js", "platform", "preload.js")
 			},
 			width: 350,
 			height: 200,
