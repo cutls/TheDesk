@@ -141,8 +141,11 @@ onmessage = function (e) {
 	} else if (e.data[0] == "parseColumn") {
 		parseColumn(e.data[1])
 	} else if (e.data[0] == "exportSettingsCore") {
-		exportSettingsCore()
-	} else if (e.data[0] == "fontList") {
+		var exp = exportSettingsCore()
+		postMessage(["exportSettingsCoreComplete", [e.data[1], exp]], "*")
+	} else if (e.data[0] == "importSettingsCore") {
+		importSettingsCore(e.data[1])
+	}else if (e.data[0] == "fontList") {
 		fontList(e.data[1])
 	} else if (e.data[0] == "customSoundSave") {
 		customSoundSave(e.data[1][0], e.data[1][1])

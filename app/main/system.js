@@ -4,6 +4,7 @@ function system(mainWindow, dir, lang, dirname) {
 	const join = require('path').join;
 	var Jimp = require("jimp");
 	const fs = require("fs");
+	var JSON5 = require('json5');
 	var ipc = electron.ipcMain;
 	var tmp_img = join(app.getPath("userData"), "tmp.png");
 	var ha_path = join(app.getPath("userData"), "hardwareAcceleration");
@@ -61,7 +62,7 @@ function system(mainWindow, dir, lang, dirname) {
 		dialog.showSaveDialog(null, {
 			title: 'Export',
 			properties: ['openFile', 'createDirectory'],
-			defaultPath: "export.thedeskconfigv2"
+			defaultPath: "export.thedeskconfig.json5"
 		}, (savedFiles) => {
 			if (!savedFiles) {
 				return false;
@@ -75,13 +76,13 @@ function system(mainWindow, dir, lang, dirname) {
 			title: 'Import',
 			properties: ['openFile'],
 			filters: [
-				{ name: 'TheDesk Config', extensions: ['thedeskconfig', 'thedeskconfigv2'] },
+				{ name: 'TheDesk Config', extensions: ['thedeskconfig', 'thedeskconfigv2', 'json5'] },
 			]
 		}, (fileNames) => {
 			if (!fileNames) {
 				return false;
 			}
-			e.sender.webContents.send('config', fs.readFileSync(arg, 'utf8'));
+			e.sender.webContents.send('config', JSON5.parse(fs.readFileSync(fileNames[0], 'utf8')));
 		})
 	})
 	//保存フォルダのダイアログ
@@ -194,7 +195,7 @@ function system(mainWindow, dir, lang, dirname) {
 
 
 	ipc.on('export', (e, args) => {
-		fs.writeFileSync(args[0], args[1]);
+		fs.writeFileSync(args[0], JSON5.stringify(args[1]));
 	});
 	//フォント
 	function object_array_sort(data, key, order, fn) {

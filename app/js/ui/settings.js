@@ -323,6 +323,7 @@ function exportSettingsCore() {
 	var tagarr = localStorage.getItem("tag");
 	var favtag = JSON.parse(tagarr);
 	exp.favoriteTags = favtag;
+	exp.version = "2.1"
 	return exp;
 }
 function importSettings() {
@@ -340,8 +341,7 @@ function importSettings() {
 		}
 	})
 }
-function importSettingsCore(arg) {
-	var obj = JSON.parse(arg);
+function importSettingsCore(obj) {
 	if (obj) {
 		localStorage.clear();
 		localStorage.setItem("multi", JSON.stringify(obj.accts));
@@ -356,7 +356,7 @@ function importSettingsCore(arg) {
 		}
 		localStorage.setItem("column", JSON.stringify(obj.columns));
 		if (obj.config) {
-			//Version 2
+			//Version 2~
 			var max = envView.config.length;
 			for (var i = 0; i < max; i++) {
 				var ls = envView.config[i].storage;

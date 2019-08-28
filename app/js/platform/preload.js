@@ -2,7 +2,6 @@ var electron = require("electron");
 const shell = electron.shell;
 var ipc = electron.ipcRenderer;
 onmessage = function (e) {
-    console.log(e)
     if (e.data[0] == "openUrl") {
         urls = e.data[1].match(/https?:\/\/(.+)/);
         if (urls) {
@@ -31,6 +30,8 @@ onmessage = function (e) {
         ipc.send('lang', e.data[1]);
     } else if (e.data[0] == "exportSettings") {
         ipc.send('exportSettings', e.data[1]);
+    }  else if (e.data[0] == "exportSettingsCoreComplete") {
+        ipc.send('export', e.data[1]);
     } else if (e.data[0] == "importSettings") {
         ipc.send('importSettings', e.data[1]);
     } else if (e.data[0] == "customSound") {
@@ -112,12 +113,8 @@ ipc.on('general-dl-message', function (event, arg) {
 ipc.on('langres', function (event, arg) {
     location.href = "../" + arg + "/setting.html"
 });
-ipc.on('exportSettingsFile', function (event, savedFiles) {
-    var exp = exportSettingsCore()
-    ipc.send('export', [savedFiles, JSON.stringify(exp)]);
-    postMessage(["alert", "Done"], "*")
-    //cards
-    //lang
+ipc.on('exportSettingsFile', function (event, arg) {
+    postMessage(["exportSettingsCore", arg], "*")
 });
 ipc.on('config', function (event, arg) {
     postMessage(["importSettingsCore", arg], "*")
