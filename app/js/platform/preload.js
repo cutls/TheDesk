@@ -116,6 +116,9 @@ ipc.on('langres', function (event, arg) {
 ipc.on('exportSettingsFile', function (event, arg) {
     postMessage(["exportSettingsCore", arg], "*")
 });
+ipc.on('exportAllComplete', function (event, arg) {
+    postMessage(["alert", "Complete"], "*")
+});
 ipc.on('config', function (event, arg) {
     postMessage(["importSettingsCore", arg], "*")
 });

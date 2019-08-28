@@ -196,6 +196,7 @@ function system(mainWindow, dir, lang, dirname) {
 
 	ipc.on('export', (e, args) => {
 		fs.writeFileSync(args[0], JSON5.stringify(args[1]));
+		e.sender.webContents.send('exportAllComplete', "");
 	});
 	//フォント
 	function object_array_sort(data, key, order, fn) {
