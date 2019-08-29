@@ -49,10 +49,11 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
-    "electron-dl": "^1.14.0",
     "@fortawesome/fontawesome-free": "^5.10.1",
+    "electron-dl": "^1.14.0",
     "jimp": "^0.6.4",
     "jquery": "^3.4.1",
+    "jquery-ui-dist": "^1.12.1",
     "json5": "^2.1.0",
     "materialize-css": "^1.0.0",
     "node-notifier": "^5.4.0",
