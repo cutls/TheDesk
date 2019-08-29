@@ -11,8 +11,14 @@ function searchMenu() {
 }
 
 //検索取得
-function src(mode) {
-	$("#src-contents").html("");
+function src(mode, offset) {
+	if(!offset){
+		$("#src-contents").html("");
+		var add = ""
+	}else{
+		var add = "&type=accounts&offset=" + $("#src-accts .cvo").length
+	}
+	
 	var q = $("#src").val();
 	var acct_id = $("#src-acct-sel").val();
 	if (acct_id == "tootsearch") {
@@ -28,7 +34,7 @@ function src(mode) {
 		var user = $('#his-data').attr("user-id");
 	}
 	if (!mode) {
-		var start = "https://" + domain + "/api/v2/search?q=" + q
+		var start = "https://" + domain + "/api/v2/search?q=" + q + add
 	} else {
 		var start = "https://" + domain + "/api/v1/search?q=" + q
 	}
@@ -69,7 +75,13 @@ function src(mode) {
 		//アカウント
 		if (json.accounts[0]) {
 			var templete = userparse(json.accounts, '', acct_id);
-			$("#src-contents").append("<br>Accounts<br>" + templete);
+			console.log(templete)
+			if(!offset){
+				$("#src-contents").append("<br>Accounts<div id=\"src-accts\">" + templete + '</div><a onclick="src(false,\'more\')" class="pointer">more...</a>');
+			}else{
+				$("#src-accts").append(templete)
+			}
+			
 		}
 		jQuery("time.timeago").timeago();
 	});
