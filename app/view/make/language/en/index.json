@@ -164,5 +164,10 @@
     "changeTips":"Change Tips",
     "help":"Help",
     "about":"About TheDesk",
-    "hereAddColumns":"<- Add TL"
+    "hereAddColumns":"<- Add TL",
+    "show": "Show",
+    "directory": "Directory",
+    "active": "Recently active",
+    "newcomer": "New arrivals",
+    "local_only": "Local only"
 }

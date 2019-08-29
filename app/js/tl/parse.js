@@ -1014,12 +1014,21 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			} else {
 				var avatar = "../../img/missing.svg";
 			}
-
+			if(tlid == "dir" && acct_id == "noauth"){
+				var udg ='<a onclick="udgEx(\'' + toot.url + '\',\'main\');" user="' + toot.acct + '" class="udg">'
+			}else{
+				var udg ='<a onclick="udg(\'' + toot.id + '\',' +
+				acct_id + ');" user="' + toot.acct + '" class="udg">'
+			}
+			if(tlid == "dir"){
+				var latest = date(toot.last_status_at, "relative");
+				var authhtml = '<div class="cbadge" style="width:100px;">Last: ' + latest +
+				'</div>';
+			}
 			templete = templete +
 				'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +
 				notftext +
-				'</div><div class="area-icon"><a onclick="udg(\'' + toot.id + '\',' +
-				acct_id + ');" user="' + toot.acct + '" class="udg">' +
+				'</div><div class="area-icon">' + udg +
 				'<img draggable="false" src="' + avatar + '" width="40" class="prof-img" user="' + toot
 					.acct + '" onerror="this.src=\'../../img/loading.svg\'"></a></div>' +
 				'<div class="area-display_name"><div class="flex-name"><span class="user">' +
@@ -1032,7 +1041,6 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				toot.following_count +
 				'</div><div class="cbadge" style="width:100px;">Followers:' + toot.followers_count +
 				'</div>' + authhtml +
-				'</div>' +
 				'</div>' +
 				'</div>';
 		}

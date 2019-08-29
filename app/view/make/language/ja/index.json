@@ -163,5 +163,10 @@
     "changeTips":"Tips変更",
     "help":"ヘルプ",
     "about":"このソフトについて",
-    "hereAddColumns":"←ここからTL追加"
+    "hereAddColumns":"←ここからTL追加",
+    "show": "表示",
+    "directory": "ディレクトリ",
+    "active": "最新活動順",
+    "newcomer": "新規順",
+    "local_only": "ローカルのみ"
 }

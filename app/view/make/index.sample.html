@@ -6,6 +6,7 @@
 	<script type="text/javascript" src="../../js/ui/theme.js"></script>
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
+	<link href="../../node_modules/jquery-ui-dist/jquery-ui.min.css" type="text/css" rel="stylesheet">
 	<link href="../../css/tl.css" rel="stylesheet" type="text/css">
 	<link href="../../css/userdata.css" rel="stylesheet" type="text/css">
 	<link href="../../css/post.css" rel="stylesheet" type="text/css">
@@ -464,7 +465,8 @@
 					</div>
 					<div class="his-float" id="his-float-timeline">
 						<div id="my-data-nav">
-							<a go="#his-tl" title="@@timeline@@" class="btn active-back column-first anc-link waves-effect"><i
+							<a go="#his-tl" title="@@timeline@@"
+								class="btn active-back column-first anc-link waves-effect"><i
 									class="material-icons">timeline</i>@@timeline@@</a>
 							<a go="#his-follow-list" title="@@follow@@" class="btn anc-link waves-effect"><i
 									class="material-icons">people</i>→@@follow@@</a>
@@ -472,7 +474,8 @@
 									class="material-icons">people</i>←@@follower@@</a>
 							<a go="#his-list" title="@@list@@" class="btn only-his-data anc-link waves-effect"><i
 									class="material-icons">list</i>@@list@@</a>
-							<a go="#his-fav-list" title="@@favRegist@@" class="btn only-my-data anc-link waves-effect"><i
+							<a go="#his-fav-list" title="@@favRegist@@"
+								class="btn only-my-data anc-link waves-effect"><i
 									class="material-icons">star</i>@@favRegist@@</a>
 							<a class="dropdown-trigger btn waves-effect" href="#" data-target="hisdropdown"><i
 									class="material-icons">more_vert</i>@@more@@</a>
@@ -505,8 +508,8 @@
 											class="material-icons">account_box</i>@@operateOtherAcct@@</a>
 								</li>
 								<li class="anc-link" go="#his-matching-list">
-									<a href="#" title="@@likeUserDes@@"><i
-											class="material-icons">group_work</i>User Matching</a>
+									<a href="#" title="@@likeUserDes@@"><i class="material-icons">group_work</i>User
+										Matching</a>
 								</li>
 							</ul>
 						</div>
@@ -606,7 +609,8 @@
 							Powered by <a href="https://distsn.org/" target="_blank">Mastodon User
 								Matching</a><br>
 							<div id="his-matching-list-contents" class="cont-series"></div>
-							<button class="btn waves-effect " onclick="showMat()" style="width:100%; padding:0;">@@get@@</button>
+							<button class="btn waves-effect " onclick="showMat()"
+								style="width:100%; padding:0;">@@get@@</button>
 						</div>
 						<div id="his-float-blocked">
 							<div>@@blocked@@</div>
@@ -747,6 +751,8 @@
 						class="material-icons">search</i><span>@@search@@</span></div>
 				<div class="waves-effect" onclick="listMenu()" id="listMenu"><i
 						class="material-icons">view_headline</i><span>@@list@@</span></div>
+				<div class="waves-effect" onclick="dirMenu()" id="dirMenu"><i
+						class="material-icons">recent_actors</i><span>@@directory@@</span></div>
 				<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i
 						class="material-icons">filter_list</i><span>@@filter@@</span></div>
 				<div class="waves-effect" onclick="help()"><i
@@ -835,6 +841,36 @@
 						<div id="src-contents">
 						</div>
 					</div>
+				</div>
+				<!--ディレクトリ-->
+				<div id="dir-box" class="hide menu-content">
+					<div class="input-field">
+						<select id="dir-acct-sel" class="acct-sel" onchange="dirselCk()"></select>
+					</div>
+					<div id="dirNoAuth" class="hide">
+						<input id="dirNoAuth-url" type="text" class="validate" style="width:calc( 70% - 40px);"
+							placeholder="e.g:mastodon.social">
+						<button class="btn waves-effect indigo" style="width: 120px;padding: 0;padding-left: 15px;"
+							onclick="directory()">
+							<i class="material-icons left" style="margin:0">search</i>@@show@@
+						</button>
+					</div>
+					<label>
+						<input class="with-gap" onchange="directory()" name="sort" type="radio" value="active" checked>
+						<span>@@active@@</span>
+					</label>
+					<label>
+						<input class="with-gap" onchange="directory()" name="sort" type="radio" value="new">
+						<span>@@newcomer@@</span>
+					</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="local_only" value="true" onchange="directory()" />
+						<span>@@local_only@@</span>
+					</label>
+					<div id="dir-contents"></div>
+					<button class="btn waves-effect teal disabled" style="width: 100%" id="moreDir"
+						onclick="directory('more')">@@more@@
+					</button>
 				</div>
 				<!--並べ替え-->
 				<div id="sort-box" class="hide menu-content">
@@ -1071,7 +1107,7 @@
 	<script type="text/javascript" src="../../js/common/version.js"></script>
 	<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
 	<script type="text/javascript" src="../../js/common/modal.js"></script>
-	<script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 	<script type="text/javascript" src="../../js/platform/punycode.js"></script>
 
@@ -1091,6 +1127,7 @@
 	<script type="text/javascript" src="../../js/tl/datails.js"></script>
 	<script type="text/javascript" src="../../js/tl/mix.js"></script>
 	<script type="text/javascript" src="../../js/tl/src.js"></script>
+	<script type="text/javascript" src="../../js/tl/directory.js"></script>
 	<script type="text/javascript" src="../../js/tl/filter.js"></script>
 	<script type="text/javascript" src="../../js/tl/tag.js"></script>
 	<script type="text/javascript" src="../../js/tl/list.js"></script>
