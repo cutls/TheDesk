@@ -332,13 +332,15 @@ blockquote:before,
   padding: 5px;
   border: thin solid gray;
   border-radius: 5px;
+  overflow: hidden;
 }
 #menu-wrapper {
   margin-left: -5px;
   display: flex;
+  height: calc(100% - 3.5rem);
 }
 #left-menu {
-  width: 170px;
+  width: 230px;
 }
 #left-menu div {
   padding-left: 5px;
@@ -358,8 +360,7 @@ blockquote:before,
   background-color: var(--emphasized);
 }
 #right-menu {
-  width: 380px;
-  max-height: 375px;
+  width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 5px;

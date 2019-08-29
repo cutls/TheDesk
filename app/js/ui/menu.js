@@ -17,6 +17,16 @@ function menu() {
     }
     $('#menu').css("left", left + "px")
     $('#menu').css("top", top + "px")
+    var height = localStorage.getItem("menu-height");
+    var width = localStorage.getItem("menu-width");
+    if(height){
+      $('#menu').css("height", height + "px")
+    }else{
+      $('#menu').css("height", "460px")
+    }
+    if(width){
+      $('#menu').css("width", width + "px")
+    }
     $('#menu').fadeIn();
     $("#menu-bar").html("TheDesk " + localStorage.getItem("ver"));
     $(".menu-content").addClass("hide");
@@ -47,6 +57,14 @@ $(function () {
       }
       localStorage.setItem("menu-left", left);
       localStorage.setItem("menu-top", top);
+    }
+  });
+  $("#menu").resizable({
+    minHeight: 150,
+    minWidth: 200,
+    stop: function (event, ui) {
+      localStorage.setItem("menu-height", ui.size.height);
+      localStorage.setItem("menu-width", ui.size.width);
     }
   });
 });
