@@ -51,6 +51,8 @@ onmessage = function (e) {
         ipc.send("itunes", e.data[1])
     } else if (e.data[0] == "themeCSSRequest") {
         ipc.send('theme-css-request', e.data[1]);
+    } else if (e.data[0] == "customCSSRequest") {
+        ipc.send('custom-css-request', e.data[1]);
     } else if (e.data[0] == "downloadButton") {
         ipc.send('download-btn', e.data[1]);
     } else if (e.data[0] == "nano") {
