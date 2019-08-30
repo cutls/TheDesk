@@ -163,5 +163,10 @@
     "changeTips": "Tipps ändern",
     "help": "Hilfe",
     "about": "Über TheDesk",
-    "hereAddColumns": "<- Neuer Verlauf"
+    "hereAddColumns": "<- Neuer Verlauf",
+    "show": "Show",
+    "directory": "Directory",
+    "active": "Recently active",
+    "newcomer": "New arrivals",
+    "local_only": "Local only"
 }

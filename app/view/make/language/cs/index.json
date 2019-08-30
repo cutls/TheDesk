@@ -163,5 +163,10 @@
     "changeTips": "Change Tips",
     "help": "Nápověda",
     "about": "About TheDesk",
-    "hereAddColumns": "<- Add TL"
+    "hereAddColumns": "<- Add TL",
+    "show": "Show",
+    "directory": "Directory",
+    "active": "Recently active",
+    "newcomer": "New arrivals",
+    "local_only": "Local only"
 }

@@ -163,5 +163,10 @@
     "changeTips": "Промени Обърни",
     "help": "Помощ",
     "about": "За TheDesk",
-    "hereAddColumns": "<- Добави ТЛ"
+    "hereAddColumns": "<- Добави ТЛ",
+    "show": "Show",
+    "directory": "Directory",
+    "active": "Recently active",
+    "newcomer": "New arrivals",
+    "local_only": "Local only"
 }
