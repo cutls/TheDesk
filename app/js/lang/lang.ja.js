@@ -18,6 +18,23 @@ var lang = {
     "lang_back": "戻る",
     "lang_set": "設定",
     "lang_langadd": "<a href=\"https://github.com/cutls/TheDesk\" target=\"_blank\">GitHub</a>から翻訳に参加できます。英語の校正(緊急)や他言語に翻訳していただける方を募集しております。",
+    //common/time.js
+    "lang_time_prefixAgo": null,
+    "lang_time_prefixFromNow": "今から",
+    "lang_time_suffixAgo": "",
+    "lang_time_suffixFromNow": "",
+    "lang_time_inPast": '',
+    "lang_time_seconds": "%d秒前",
+    "lang_time_minute": "1分前",
+    "lang_time_minutes": "%d分前",
+    "lang_time_hour": "1時間前",
+    "lang_time_hours": "%d時間前",
+    "lang_time_day": "昨日",
+    "lang_time_days": "%d日前",
+    "lang_time_month": "昨月",
+    "lang_time_months": "%dヶ月前",
+    "lang_time_year": "去年",
+    "lang_time_years": "%d年前",
     //common/version.js
     "lang_version_usever": "お使いのバージョン{{ver}}は最新です。",
     "lang_version_skipver": "アップデートはスキップされました。",
@@ -72,6 +89,8 @@ var lang = {
     "lang_status_unemphas": "を強調解除します。リロードしてください。",
     "lang_status_unendorse": "紹介解除",
     "lang_status_endorse": "プロフで紹介する",
+    "lang_status_followers": "フォロワー",
+    "lang_status_active": "最新トゥート",
     //post/suggest.js
     "lang_suggest_nodata": "サジェストのために絵文字リストを取得してください。",
     //post/use-txtbox.js

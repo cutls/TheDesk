@@ -18,6 +18,23 @@ var lang = {
     "lang_back": "Back",
     "lang_set": "Set",
     "lang_langadd": "Translate TheDesk to other languages or proofread TheDesk on <a href=\"https://github.com/cutls/TheDesk\" target=\"_blank\">GitHub</a>. TheDesk needs your help.",
+    //common/time.js
+    "lang_time_prefixAgo": null,
+    "lang_time_prefixFromNow": null,
+    "lang_time_suffixAgo": null,
+    "lang_time_suffixFromNow": null,
+    "lang_time_inPast": null,
+    "lang_time_seconds": "%d s",
+    "lang_time_minute": "1 m",
+    "lang_time_minutes": "%d m",
+    "lang_time_hour": "1 h",
+    "lang_time_hours": "%d h",
+    "lang_time_day": "1 d",
+    "lang_time_days": "%d d",
+    "lang_time_month": "1 month",
+    "lang_time_months": "%d months",
+    "lang_time_year": "y",
+    "lang_time_years": "%d y",
     //common/version.js
     "lang_version_usever": "No update is found({{ver}})",
     "lang_version_skipver": "Update was ignored.",
@@ -72,6 +89,8 @@ var lang = {
     "lang_status_unemphas": "'s toots are not emphasized. Please reload after this action.",
     "lang_status_unendorse": "Not feature on profile",
     "lang_status_endorse": "Feature on profile",
+    "lang_status_followers": "Followers",
+    "lang_status_active": "Last status",
     //post/suggest.js
     "lang_suggest_nodata": "Please get emojis list in order to show suggestion.",
     //post/use-txtbox.js
@@ -132,8 +151,8 @@ var lang = {
     "lang_layout_excludingbt": "Show BT mode(OFF/Exclude BT/Only BT)",
     "lang_layout_leftFold": "Stack to the left",
     "lang_layout_leftUnfold": "Dock on the right",
-    "lang_layout_deleteColumn":"Delete this column",
-    "lang_layout_deleteColumnDesc":"Delete this column",
+    "lang_layout_deleteColumn": "Delete this column",
+    "lang_layout_deleteColumnDesc": "Delete this column",
     //ui/sort.js
     "lang_sort_gothis": "Go to this column",
     "lang_sort_remthis": "Delete this column",
@@ -202,7 +221,7 @@ var lang = {
     "lang_parse_thread": "Show thread",
     "lang_parse_unknown": "Attached file",
     "lang_parse_nsfw": "sensitive media",
-    "lang_parse_notffilter":"Show this user's notifications",
+    "lang_parse_notffilter": "Show this user's notifications",
     //misskey
     "lang_misskeyparse_renote": "Repost",
     "lang_misskeyparse_renoteqt": "Renote",
