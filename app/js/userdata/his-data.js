@@ -162,7 +162,7 @@ function flw(user, more, acct_id) {
 		} else {
 			$("#his-follow-list-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 
 	});
 }
@@ -228,7 +228,7 @@ function fer(user, more, acct_id) {
 		} else {
 			$("#his-follower-list-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 	});
 }
 
@@ -390,7 +390,7 @@ function showBlo(more, acct_id) {
 		} else {
 			$("#his-blocking-list-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 	});
 }
 
@@ -453,7 +453,7 @@ function showReq(more, acct_id) {
 		} else {
 			$("#his-request-list-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 	});
 }
 
@@ -550,7 +550,7 @@ function showFrl(more, acct_id) {
 		} else {
 			$("#his-follow-recom-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 	});
 }
 //Keybase
