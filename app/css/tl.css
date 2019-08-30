@@ -280,6 +280,17 @@ iframe,
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.acct-note p{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.area-additional.acct-note p:not(:first-child) {
+  display: none;
+}
+.area-additional.acct-note p:first-child:after {
+  content: "...";
+}
 
 .area-actions {
   padding: 0;
@@ -386,6 +397,7 @@ iframe,
   white-space: nowrap;
   text-overflow: ellipsis;
   height: calc(0.8em + 8px);
+  user-select: none;
 }
 .cbadge-hover {
   color: var(--color);

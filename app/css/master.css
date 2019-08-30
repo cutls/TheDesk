@@ -338,6 +338,7 @@ blockquote:before,
   margin-left: -5px;
   display: flex;
   height: calc(100% - 3.5rem);
+  overflow: hidden;
 }
 #left-menu {
   width: 230px;

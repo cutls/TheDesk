@@ -376,7 +376,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var uniqueid = toot.id;
 				var toot = toot.reblog;
 				var dis_name = escapeHTML(toot.account.display_name);
-				if(!dis_name){
+				if (!dis_name) {
 					dis_name = toot.account.acct
 				}
 				if (toot.account.emojis) {
@@ -545,7 +545,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				'"><i class="far fa-calendar-times"></i>' +
 				ended + '</span></div>';
 		}
-		
+
 		var mediack = toot.media_attachments[0];
 		//メディアがあれば
 		var media_ids = "";
@@ -624,9 +624,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		} else {
 			var to_mention = [toot.account.acct];
 			//メンションじゃなくてもlang_parse_thread
-			if(toot.in_reply_to_id){
+			if (toot.in_reply_to_id) {
 				mentions = '<div style="float:right"><a onclick="details(\'' + toot.id + '\',' + acct_id +
-				',\'' + tlid + '\')" class="pointer waves-effect">' + lang.lang_parse_thread + '</a></div>';
+					',\'' + tlid + '\')" class="pointer waves-effect">' + lang.lang_parse_thread + '</a></div>';
 			}
 		}
 		var tagck = toot.tags[0];
@@ -1014,16 +1014,18 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			} else {
 				var avatar = "../../img/missing.svg";
 			}
-			if(tlid == "dir" && acct_id == "noauth"){
-				var udg ='<a onclick="udgEx(\'' + toot.url + '\',\'main\');" user="' + toot.acct + '" class="udg">'
-			}else{
-				var udg ='<a onclick="udg(\'' + toot.id + '\',' +
-				acct_id + ');" user="' + toot.acct + '" class="udg">'
+			if (tlid == "dir" && acct_id == "noauth") {
+				var udg = '<a onclick="udgEx(\'' + toot.url + '\',\'main\');" user="' + toot.acct + '" class="udg">'
+			} else {
+				var udg = '<a onclick="udg(\'' + toot.id + '\',' +
+					acct_id + ');" user="' + toot.acct + '" class="udg">'
 			}
-			if(tlid == "dir"){
-				var latest = date(toot.last_status_at, "relative");
-				var authhtml = '<div class="cbadge" style="width:100px;">Last: ' + latest +
-				'</div>';
+			var latest = date(toot.last_status_at, "relative");
+			if(toot.last_status_at){
+				var latesthtml = '<div class="cbadge" style="width:100px;">Last: ' + latest +
+				'</div>'
+			}else{
+				var latesthtml = ""
 			}
 			templete = templete +
 				'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +
@@ -1037,10 +1039,11 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				toot.acct + locked + '</span>' +
 				'</div>' +
 				'</div>' +
-				'<div style="justify-content:space-around;top:5px" class="area-actions"> <div class="cbadge" style="width:100px;">Follows:' +
+				'<div class="area-additional acct-note">' + toot.note.replace(/<br\s?\/?>.+/g, "...") + '</div>' +
+				'<div style="justify-content:space-around;top:5px" class="area-actions"> <div class="cbadge" style="width:100px;">' + lang.lang_status_follow + ':' +
 				toot.following_count +
-				'</div><div class="cbadge" style="width:100px;">Followers:' + toot.followers_count +
-				'</div>' + authhtml +
+				'</div><div class="cbadge" style="width:100px;">' + lang.lang_status_followers + ':' + toot.followers_count +
+				'</div>' + latesthtml + authhtml +
 				'</div>' +
 				'</div>';
 		}
