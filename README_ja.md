@@ -84,6 +84,7 @@ git clone https://github.com/cutls/TheDesk
 cd TheDesk/app
 npm install
 npm install --only=dev
+npm run construct
 ```
 
 ### electron-builder(推奨)
