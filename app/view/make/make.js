@@ -19,6 +19,10 @@ const pages = ["acct.html", "index.html", "setting.html", "update.html", "settin
 let langstr = ""
 for (let n = 0; n < langs.length; n++) {
     let lang = langs[n]
+    let targetDir = '../' + lang
+    if (!fs.existsSync(targetDir)) {
+        fs.mkdirSync(targetDir);
+    }
     langstr = langstr + '<a onclick="changelang(\'' + lang + '\')" class="pointer" style="margin-right:5px;">' + langsh[n] + '</a>'
 }
 for (let i = 0; i < samples.length; i++) {

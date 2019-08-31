@@ -930,124 +930,126 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 			} else {
 				var notf = false;
 			}
-			if (toot.locked) {
-				var locked = ' <i class="fas fa-lock red-text"></i>';
-			} else {
-				var locked = "";
-			}
-			if (auth == "request") {
-				var authhtml = '<i class="material-icons gray pointer" onclick="request(\'' +
-					toot.id + '\',\'authorize\',' + acct_id + ')" title="Accept">person_add</i>　<i class="material-icons gray pointer" onclick="request(\'' +
-					toot.id + '\',\'reject\',' + acct_id + ')" title="Reject">person_add_disabled</i>';
-			} else {
-				var authhtml = "";
-			}
-			var ftxt = lang.lang_parse_followed;
-			if (!locale && localStorage.getItem("followlocale_" + acct_id)) {
-				ftxt = localStorage.getItem("followlocale_" + acct_id);
-			}
-			if (popup > 0 || popup == -1 || notf) {
-				var notftext = ftxt + '<br>';
-			} else {
-				var notftext = "";
-			}
-			var memory = localStorage.getItem("notice-mem");
-			if (popup >= 0 && obj.length < 5 && notftext != memory) {
-				M.toast({ html: escapeHTML(toot.display_name) + ":" + ftxt, displayLength: popup * 1000 })
-				$(".notf-icon_" + tlid).addClass("red-text");
-				localStorage.setItem("notice-mem", notftext);
-				notftext = "";
-				var native = localStorage.getItem("nativenotf");
-				if (!native) {
-					native = "yes";
+			//Instance Actorって…
+			if (toot.username.indexOf(".") < 0) {
+				if (toot.locked) {
+					var locked = ' <i class="fas fa-lock red-text"></i>';
+				} else {
+					var locked = "";
 				}
-				if (native == "yes") {
-					var os = localStorage.getItem("platform");
-					var options = {
-						body: toot.display_name + "(" + toot.acct + ")" + ftxt,
-						icon: toot.avatar
-					};
-					var domain = localStorage.getItem("domain_" + acct_id);
-					if (os == "darwin") {
-						var n = new Notification('TheDesk:' + domain, options);
-					} else {
-						var nativeNotfOpt = [
-							'TheDesk:' + domain,
-							toot.display_name + "(" + toot.acct + ")" + ftxt,
-							toot.avatar,
-							"userdata",
-							acct_id,
-							toot.id
-						]
-						postMessage(["nativeNotf", nativeNotfOpt], "*")
+				if (auth == "request") {
+					var authhtml = '<i class="material-icons gray pointer" onclick="request(\'' +
+						toot.id + '\',\'authorize\',' + acct_id + ')" title="Accept">person_add</i>　<i class="material-icons gray pointer" onclick="request(\'' +
+						toot.id + '\',\'reject\',' + acct_id + ')" title="Reject">person_add_disabled</i>';
+				} else {
+					var authhtml = "";
+				}
+				var ftxt = lang.lang_parse_followed;
+				if (!locale && localStorage.getItem("followlocale_" + acct_id)) {
+					ftxt = localStorage.getItem("followlocale_" + acct_id);
+				}
+				if (popup > 0 || popup == -1 || notf) {
+					var notftext = ftxt + '<br>';
+				} else {
+					var notftext = "";
+				}
+				var memory = localStorage.getItem("notice-mem");
+				if (popup >= 0 && obj.length < 5 && notftext != memory) {
+					M.toast({ html: escapeHTML(toot.display_name) + ":" + ftxt, displayLength: popup * 1000 })
+					$(".notf-icon_" + tlid).addClass("red-text");
+					localStorage.setItem("notice-mem", notftext);
+					notftext = "";
+					var native = localStorage.getItem("nativenotf");
+					if (!native) {
+						native = "yes";
+					}
+					if (native == "yes") {
+						var os = localStorage.getItem("platform");
+						var options = {
+							body: toot.display_name + "(" + toot.acct + ")" + ftxt,
+							icon: toot.avatar
+						};
+						var domain = localStorage.getItem("domain_" + acct_id);
+						if (os == "darwin") {
+							var n = new Notification('TheDesk:' + domain, options);
+						} else {
+							var nativeNotfOpt = [
+								'TheDesk:' + domain,
+								toot.display_name + "(" + toot.acct + ")" + ftxt,
+								toot.avatar,
+								"userdata",
+								acct_id,
+								toot.id
+							]
+							postMessage(["nativeNotf", nativeNotfOpt], "*")
+						}
 					}
 				}
-			}
-			if (toot.display_name) {
-				var dis_name = escapeHTML(toot.display_name);
-			} else {
-				var dis_name = toot.username;
-			}
-			//ネイティブ通知
+				if (toot.display_name) {
+					var dis_name = escapeHTML(toot.display_name);
+				} else {
+					var dis_name = toot.username;
+				}
+				//ネイティブ通知
 
-			if (toot.emojis) {
-				var actemojick = toot.emojis[0];
-			} else {
-				var actemojick = false;
+				if (toot.emojis) {
+					var actemojick = toot.emojis[0];
+				} else {
+					var actemojick = false;
+				}
+				//絵文字があれば
+				if (actemojick) {
+					Object.keys(toot.emojis).forEach(function (key5) {
+						var emoji = toot.emojis[key5];
+						var shortcode = emoji.shortcode;
+						var emoji_url = '<img draggable="false" src="' + emoji.url +
+							'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
+						var regExp = new RegExp(":" + shortcode + ":", "g");
+						dis_name = dis_name.replace(regExp, emoji_url);
+					});
+				}
+				if (dis_name) {
+					dis_name = twemoji.parse(dis_name);
+				}
+				if (toot.avatar) {
+					var avatar = toot.avatar;
+				} else {
+					var avatar = "../../img/missing.svg";
+				}
+				if (tlid == "dir" && acct_id == "noauth") {
+					var udg = '<a onclick="udgEx(\'' + toot.url + '\',\'main\');" user="' + toot.acct + '" class="udg">'
+				} else {
+					var udg = '<a onclick="udg(\'' + toot.id + '\',' +
+						acct_id + ');" user="' + toot.acct + '" class="udg">'
+				}
+				var latest = date(toot.last_status_at, "relative");
+				if (toot.last_status_at) {
+					var latesthtml = '<div class="cbadge" style="width:100px;">Last: ' + latest +
+						'</div>'
+				} else {
+					var latesthtml = ""
+				}
+				templete = templete +
+					'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +
+					notftext +
+					'</div><div class="area-icon">' + udg +
+					'<img draggable="false" src="' + avatar + '" width="40" class="prof-img" user="' + toot
+						.acct + '" onerror="this.src=\'../../img/loading.svg\'"></a></div>' +
+					'<div class="area-display_name"><div class="flex-name"><span class="user">' +
+					dis_name + '</span>' +
+					'<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
+					toot.acct + locked + '</span>' +
+					'</div>' +
+					'</div>' +
+					'<div class="area-toot acct-note">' + toot.note.replace(/<br\s?\/?>.+/g, '<span class="gray">...</span>') + '</div>' +
+					'<div style="justify-content:space-around;top:5px" class="area-actions"> <div class="cbadge" style="width:100px;">' + lang.lang_status_follow + ':' +
+					toot.following_count +
+					'</div><div class="cbadge" style="width:100px;">' + lang.lang_status_followers + ':' + toot.followers_count +
+					'</div>' + latesthtml + authhtml +
+					'</div>' +
+					'</div>';
 			}
-			//絵文字があれば
-			if (actemojick) {
-				Object.keys(toot.emojis).forEach(function (key5) {
-					var emoji = toot.emojis[key5];
-					var shortcode = emoji.shortcode;
-					var emoji_url = '<img draggable="false" src="' + emoji.url +
-						'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
-					var regExp = new RegExp(":" + shortcode + ":", "g");
-					dis_name = dis_name.replace(regExp, emoji_url);
-				});
-			}
-			if (dis_name) {
-				dis_name = twemoji.parse(dis_name);
-			}
-			if (toot.avatar) {
-				var avatar = toot.avatar;
-			} else {
-				var avatar = "../../img/missing.svg";
-			}
-			if (tlid == "dir" && acct_id == "noauth") {
-				var udg = '<a onclick="udgEx(\'' + toot.url + '\',\'main\');" user="' + toot.acct + '" class="udg">'
-			} else {
-				var udg = '<a onclick="udg(\'' + toot.id + '\',' +
-					acct_id + ');" user="' + toot.acct + '" class="udg">'
-			}
-			var latest = date(toot.last_status_at, "relative");
-			if(toot.last_status_at){
-				var latesthtml = '<div class="cbadge" style="width:100px;">Last: ' + latest +
-				'</div>'
-			}else{
-				var latesthtml = ""
-			}
-			templete = templete +
-				'<div class="cvo" style="padding-top:5px;" user-id="' + toot.id + '"><div class="area-notice">' +
-				notftext +
-				'</div><div class="area-icon">' + udg +
-				'<img draggable="false" src="' + avatar + '" width="40" class="prof-img" user="' + toot
-					.acct + '" onerror="this.src=\'../../img/loading.svg\'"></a></div>' +
-				'<div class="area-display_name"><div class="flex-name"><span class="user">' +
-				dis_name + '</span>' +
-				'<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +
-				toot.acct + locked + '</span>' +
-				'</div>' +
-				'</div>' +
-				'<div class="area-toot acct-note">' + toot.note.replace(/<br\s?\/?>.+/g, '<span class="gray">...</span>') + '</div>' +
-				'<div style="justify-content:space-around;top:5px" class="area-actions"> <div class="cbadge" style="width:100px;">' + lang.lang_status_follow + ':' +
-				toot.following_count +
-				'</div><div class="cbadge" style="width:100px;">' + lang.lang_status_followers + ':' + toot.followers_count +
-				'</div>' + latesthtml + authhtml +
-				'</div>' +
-				'</div>';
 		}
-
 
 	});
 	return templete;

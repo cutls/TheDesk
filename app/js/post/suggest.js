@@ -162,8 +162,11 @@ input.addEventListener("focus", function () {
 						Object.keys(json.accounts).forEach(function (key3) {
 							var acct = json.accounts[key3];
 							if (acct.acct != q) {
-								accts = accts + '<a onclick="tagInsert(\'@' + acct.acct +
-									'\',\'@' + q + '\')" class="pointer">@' + acct.acct + '</a><br>';
+								//Instance Actorって…
+								if (acct.username.indexOf(".") < 0) {
+									accts = accts + '<a onclick="tagInsert(\'@' + acct.acct +
+										'\',\'@' + q + '\')" class="pointer">@' + acct.acct + '</a><br>';
+								}
 							}
 						});
 						$("#right-side").show()

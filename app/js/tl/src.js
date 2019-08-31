@@ -75,7 +75,6 @@ function src(mode, offset) {
 		//アカウント
 		if (json.accounts[0]) {
 			var templete = userparse(json.accounts, '', acct_id);
-			console.log(templete)
 			if(!offset){
 				$("#src-contents").append("<br>Accounts<div id=\"src-accts\">" + templete + '</div><a onclick="src(false,\'more\')" class="pointer">more...</a>');
 			}else{
