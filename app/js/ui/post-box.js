@@ -47,9 +47,6 @@ function show() {
 	$('#post-box').css("top", top + "px")
 	var height = localStorage.getItem("postbox-height");
 	var width = localStorage.getItem("postbox-width");
-	if (height) {
-		$('#post-box').css("height", height + "px")
-	}
 	if (width) {
 		$('#post-box').css("width", width + "px")
 	} else {
@@ -83,7 +80,6 @@ $(function () {
 		minHeight: 150,
 		minWidth: 100,
 		stop: function (event, ui) {
-			localStorage.setItem("postbox-height", ui.size.height);
 			localStorage.setItem("postbox-width", ui.size.width);
 		}
 	});

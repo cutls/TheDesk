@@ -1,6 +1,6 @@
 const fs = require("fs")
 const readlineSync = require('readline-sync')
-let ver = "Usamin (18.9.0)"
+let ver = "Usamin (18.9.1)"
 const execSync = require('child_process').execSync;
 let gitHash = execSync("git rev-parse HEAD").toString().trim()
 fs.writeFileSync("../../git", gitHash)
