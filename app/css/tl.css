@@ -285,11 +285,12 @@ iframe,
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.area-additional.acct-note p:not(:first-child) {
+.area-toot.acct-note p:not(:first-child) {
   display: none;
 }
-.area-additional.acct-note p:first-child:after {
+.area-toot.acct-note p:first-child:after {
   content: "...";
+  color: var(--gray)
 }
 
 .area-actions {

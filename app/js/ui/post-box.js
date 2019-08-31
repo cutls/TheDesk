@@ -2,6 +2,13 @@
 //✕隠す
 function hide() {
 	$("#right-side").hide()
+	$("#right-side").css("width", "300px")
+	$("#left-side").css("width", "100%")
+	var width = localStorage.getItem("postbox-width").replace("px", "") * 1;
+	if (!width) {
+		width = 300
+	}
+	$("#post-box").css("width", width)
 	$('#post-box').fadeOut()
 	$("#post-box").removeClass("appear")
 	$("#emoji").addClass("hide")
@@ -38,6 +45,16 @@ function show() {
 	}
 	$('#post-box').css("left", left + "px")
 	$('#post-box').css("top", top + "px")
+	var height = localStorage.getItem("postbox-height");
+	var width = localStorage.getItem("postbox-width");
+	if (height) {
+		$('#post-box').css("height", height + "px")
+	}
+	if (width) {
+		$('#post-box').css("width", width + "px")
+	} else {
+		$('#post-box').css("width", "300px")
+	}
 	$('#post-box').fadeIn();
 	$('#textarea').characterCounter();
 }
@@ -60,6 +77,14 @@ $(function () {
 			}
 			localStorage.setItem("postbox-left", left);
 			localStorage.setItem("postbox-top", top);
+		}
+	});
+	$("#post-box").resizable({
+		minHeight: 150,
+		minWidth: 100,
+		stop: function (event, ui) {
+			localStorage.setItem("postbox-height", ui.size.height);
+			localStorage.setItem("postbox-width", ui.size.width);
 		}
 	});
 });

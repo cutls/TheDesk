@@ -54,12 +54,12 @@
 			<div class="row" style="margin-bottom:0;">
 				</span>
 				<div class="" style="float:left;">
-					<a onclick="profShow()" style="vertical-align:-2.5rem;" class="pointer mize">
+					<a onclick="profShow()" style="vertical-align:-1.7rem;" class="pointer mize">
 						<img src="../../img/missing.svg" id="acct-sel-prof" title="@@showSelectProf@@(Ctrl+Shift+P)"
 							data-trans-title="post_box_prof" width="24px">
 					</a>
 				</div>
-				<div class="input-field mize" style="float:left; width:calc(100% - 24px)">
+				<div class="input-field mize" style="float:left; width:calc(100% - 24px); margin-top:0;">
 					<select id="post-acct-sel" class="acct-sel" onchange="mdCheck()"></select>
 				</div>
 				<span class="cancel">
@@ -135,7 +135,7 @@
 							<a onclick="previewEdit()">Edit</a>
 						</span>
 					</div>
-					<div class="input-field col s12" id="toot-field" style="margin-top: 10px;">
+					<div class="input-field col s12" id="toot-field" style="margin-top: 0;margin-bottom: 0;">
 
 						<textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;"
 							data-length="500"></textarea>
@@ -679,20 +679,25 @@
 			<a href="https://thedesk.top" target="_blank">HP</a><br>
 			<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 			<br>
-			<div id="release-Usamin_18-8-3" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-9-0" class="release-do" style="display:none; ">
 				<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 				<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 				Pixiv Fanboxでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。最低月一更新。<br>
 				困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-				<h5>Release Note Usamin (18.8.3)</h5>
+				<h5>Release Note Usamin (18.9.0)</h5>
 				・設定エクスポートファイルが変更された<br>
-				.thedeskconfigv2: 17.2.0~18.8.3<br>
-				.thedeskconfig: 16.0.1~17.2.0<br>
-				.json5: 本バージョン以降<br>
-				<u>エクスポート可能な形式</u><br>
-				.json5<br>
-				<u>インポート可能な形式</u><br>
-				.thedeskconfigv2, .thedeskconfig, .json5
+				　.thedeskconfigv2: 17.2.0~18.8.3<br>
+				　.thedeskconfig: 16.0.1~17.2.0<br>
+				　.json5: 本バージョン以降<br>
+				　<u>エクスポート可能な形式</u><br>
+				　.json5<br>
+				　<u>インポート可能な形式</u><br>
+				　.thedeskconfigv2, .thedeskconfig, .json5<br>
+				・カスタムCSSを読み込める(自己責任): macOS: /Users/:user/Library/Application Support/TheDesk | Windows: C:\Users\:user\AppData\Roaming\thedesk<br>
+				・(v3.0|m追従)プロフィールディレクトリ読み込み<br>
+				・(v3.0|m追従)最終アクティブ時間をユーザー一覧表示時に一緒に表示<br>
+				・自己紹介をユーザー一覧表示時に一緒に表示<br>
+				・メニューとトゥートボックスがリサイズ可能になった<br>
 			</div>
 			<div id="release-en" style="display:none">
 				<h5>Let's make it native!</h5>

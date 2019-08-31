@@ -13,6 +13,13 @@ function emojiToggle(reaction) {
 	if ($("#emoji").hasClass("hide")) {
 		$("#emoji").removeClass("hide")
 		$("#right-side").show()
+		$("#right-side").css("width", "300px")
+		$("#left-side").css("width","calc(100% - 300px)")
+		var width = localStorage.getItem("postbox-width").replace("px", "") * 1 + 300;
+        if (!width) {
+            width = 600
+        }
+        $("#post-box").css("width", width + "px")
 		$("#suggest").html("");
 		if (!localStorage.getItem("emoji_" + acct_id)) {
 			var html =
@@ -23,9 +30,16 @@ function emojiToggle(reaction) {
 		}
 	} else {
 		$("#poll").addClass("hide")
+		$("#right-side").hide()
+		$("#right-side").css("width", "300px")
 		$("#emoji").addClass("hide")
 		$("#suggest").html("");
-		$("#right-side").hide()
+		$("#left-side").css("width","100%")
+		var width = localStorage.getItem("postbox-width").replace("px", "") * 1;
+        if (!width) {
+            width = 300
+        }
+        $("#post-box").css("width", width + "px")
 	}
 
 

@@ -7,10 +7,10 @@
   background-color: var(--postbox);
   border: thin solid gray;
   z-index: 501;
-  min-width: 300px;
   max-width: 100%;
   padding: 5px;
   border-radius: 5px;
+  overflow: hidden;
 }
 textarea {
   min-height: 100px !important;
@@ -108,13 +108,18 @@ textarea {
 }
 #left-side {
   float: left;
-  width: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: calc(100% - 32px);
 }
 #right-side {
   display: none;
   float: left;
   width: 300px;
   padding: 5px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: calc(100% - 32px);
 }
 #poll {
 }

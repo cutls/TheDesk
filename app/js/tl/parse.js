@@ -1039,7 +1039,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				toot.acct + locked + '</span>' +
 				'</div>' +
 				'</div>' +
-				'<div class="area-additional acct-note">' + toot.note.replace(/<br\s?\/?>.+/g, "...") + '</div>' +
+				'<div class="area-toot acct-note">' + toot.note.replace(/<br\s?\/?>.+/g, '<span class="gray">...</span>') + '</div>' +
 				'<div style="justify-content:space-around;top:5px" class="area-actions"> <div class="cbadge" style="width:100px;">' + lang.lang_status_follow + ':' +
 				toot.following_count +
 				'</div><div class="cbadge" style="width:100px;">' + lang.lang_status_followers + ':' + toot.followers_count +

@@ -2,9 +2,23 @@
 function pollToggle() {
     if ($("#poll").hasClass("hide")) {
         $("#right-side").show()
+        $("#right-side").css("width", "300px")
+        $("#left-side").css("width", "calc(100% - 300px)")
+        var width = localStorage.getItem("postbox-width").replace("px", "") * 1 + 300;
+        if (!width) {
+            width = 600
+        }
+        $("#post-box").css("width", width + "px")
         $("#poll").removeClass("hide")
     } else {
         $("#right-side").hide()
+        $("#left-side").css("width", "100%")
+        $("#right-side").css("width", "300px")
+        var width = localStorage.getItem("postbox-width").replace("px", "") * 1;
+        if (!width) {
+            width = 300
+        }
+        $("#post-box").css("width", width + "px")
         $("#emoji").addClass("hide")
         $("#poll").addClass("hide")
     }
