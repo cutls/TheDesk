@@ -10,6 +10,7 @@ function pollToggle() {
         }
         $("#post-box").css("width", width + "px")
         $("#poll").removeClass("hide")
+        $("#pollsta").text(lang.lang_yesno)
     } else {
         $("#right-side").hide()
         $("#left-side").css("width", "100%")
@@ -21,6 +22,7 @@ function pollToggle() {
         $("#post-box").css("width", width + "px")
         $("#emoji").addClass("hide")
         $("#poll").addClass("hide")
+        $("#pollsta").text(lang.lang_no)
     }
 }
 function pollProviderCk() {

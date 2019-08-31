@@ -45,7 +45,6 @@ function show() {
 	}
 	$('#post-box').css("left", left + "px")
 	$('#post-box').css("top", top + "px")
-	var height = localStorage.getItem("postbox-height");
 	var width = localStorage.getItem("postbox-width");
 	if (width) {
 		$('#post-box').css("width", width + "px")

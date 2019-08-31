@@ -110,7 +110,7 @@ function post(mode, postvis) {
 	} else {
 		var scheduled = "";
 	}
-	if ($("#poll-sel").val() == "mastodon-poll") {
+	if (!$("#poll").hasClass("hide")) {
 		var options = [];
 		$(".mastodon-choice").map(function () {
 			var choice = $(this).val();
@@ -274,6 +274,8 @@ function clear() {
 	$("#days_poll").val(0);
 	$("#hours_poll").val(0);
 	$("#mins_poll").val(6);
+	$("#poll").addClass("hide")
+	$("#pollsta").text(lang.lang_no)
 	$(".mastodon-choice").map(function () {
 		$(this).val("");
 	});

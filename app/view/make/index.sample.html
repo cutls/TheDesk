@@ -168,8 +168,8 @@
 						<div id="preview" class="mize"></div>
 						<span class=" sml mize"><span data-trans="reply">@@replyMode@@</span>:
 							<span id="rec">@@no@@</span>/<span data-trans="file">@@temp@@</span>:
-							<span id="mec">@@nothing@@</span>/<span data-trans="vis">@@vis@@</span>:
-							<span id="vis">public</span>
+							<span id="mec">@@nothing@@</span>/@@poll@@:<span id="pollsta">@@no@@</span>
+							<span id="vis" class="hide">public</span>
 						</span>
 						<br>
 						<input type="text" id="cw-text" placeholder="@@cwtext@@" class="mize" style="margin:0">
@@ -289,11 +289,7 @@
 			</div>
 			<!--Poll UI-->
 			<div id="poll" class="hide">
-				<select id="poll-sel" onchange="pollProviderCk()">
-					<option value="nothing">@@pollDdisabled@@</option>
-					<option value="mastodon-poll">Mastodon(2.8~)</option>
-				</select>
-				<div id="mastodon-poll" class="poll-provider hide">
+				<div id="mastodon-poll" class="poll-provider">
 					<input type="text" class="mastodon-choice" placeholder="@@choice@@1">
 					<input type="text" class="mastodon-choice" placeholder="@@choice@@2">
 					<input type="text" class="mastodon-choice" placeholder="@@choice@@3">
@@ -685,7 +681,8 @@
 				Pixiv Fanboxでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。最低月一更新。<br>
 				困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
 				<h5>Release Note Usamin (18.9.1)</h5>
-				・トゥートボックスのリサイズを横だけにした
+				・トゥートボックスのリサイズを横だけにした<br>
+				・アンケートが上手く作成できない不具合を修正。
 				<h5>Release Note Usamin (18.9.0)</h5>
 				・設定エクスポートファイルが変更された<br>
 				　.thedeskconfigv2: 17.2.0~18.8.3<br>

@@ -122,14 +122,6 @@ textarea {
   overflow-x: hidden;
   height: calc(100% - 32px);
 }
-#poll {
-}
-.poll-provider {
-  position: absolute;
-  height: calc(100% - 90px);
-  overflow-y: scroll;
-  top: 90px;
-}
 #posttgl,#toot-post-btn {
   background-color: var(--accentbtn);
 }
