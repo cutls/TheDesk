@@ -4,8 +4,10 @@ function pollToggle() {
         $("#right-side").show()
         $("#right-side").css("width", "300px")
         $("#left-side").css("width", "calc(100% - 300px)")
-        var width = localStorage.getItem("postbox-width").replace("px", "") * 1 + 300;
-        if (!width) {
+        var width = localStorage.getItem("postbox-width");
+        if (width) {
+            width = width.replace("px", "") * 1 + 300
+        } else {
             width = 600
         }
         $("#post-box").css("width", width + "px")
@@ -15,8 +17,10 @@ function pollToggle() {
         $("#right-side").hide()
         $("#left-side").css("width", "100%")
         $("#right-side").css("width", "300px")
-        var width = localStorage.getItem("postbox-width").replace("px", "") * 1;
-        if (!width) {
+        var width = localStorage.getItem("postbox-width");
+        if (width) {
+            width = width.replace("px", "") * 1
+        } else {
             width = 300
         }
         $("#post-box").css("width", width + "px")

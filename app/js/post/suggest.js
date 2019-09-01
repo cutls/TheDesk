@@ -20,8 +20,10 @@ input.addEventListener("focus", function () {
 				$("#right-side").hide()
 				$("#right-side").css("width", "300px")
 				$("#left-side").css("width", "100%")
-				var width = localStorage.getItem("postbox-width").replace("px", "") * 1;
-				if (!width) {
+				var width = localStorage.getItem("postbox-width");
+				if (width) {
+					width = width.replace("px", "") * 1
+				} else {
 					width = 300
 				}
 				$("#post-box").css("width", width + "px")
@@ -51,8 +53,10 @@ input.addEventListener("focus", function () {
 					$("#right-side").show()
 					$("#right-side").css("width", "200px")
 					$("#left-side").css("width", "calc(100% - 200px)")
-					var width = localStorage.getItem("postbox-width").replace("px", "") * 1 + 200;
-					if (!width) {
+					var width = localStorage.getItem("postbox-width");
+					if (width) {
+						width = width.replace("px", "") * 1 + 200
+					} else {
 						width = 600
 					}
 					$("#post-box").css("width", width + "px")
@@ -63,8 +67,10 @@ input.addEventListener("focus", function () {
 						$("#right-side").hide()
 						$("#right-side").css("width", "300px")
 						$("#left-side").css("width", "100%")
-						var width = localStorage.getItem("postbox-width").replace("px", "") * 1;
-						if (!width) {
+						var width = localStorage.getItem("postbox-width");
+						if (width) {
+							width = width.replace("px", "") * 1
+						} else {
 							width = 300
 						}
 						$("#post-box").css("width", width + "px")
@@ -85,8 +91,10 @@ input.addEventListener("focus", function () {
 					$("#right-side").hide()
 					$("#right-side").css("width", "300px")
 					$("#left-side").css("width", "100%")
-					var width = localStorage.getItem("postbox-width").replace("px", "") * 1;
-					if (!width) {
+					var width = localStorage.getItem("postbox-width");
+					if (width) {
+						width = width.replace("px", "") * 1
+					} else {
 						width = 300
 					}
 					$("#post-box").css("width", width + "px")
@@ -149,8 +157,10 @@ input.addEventListener("focus", function () {
 							$("#right-side").show()
 							$("#right-side").css("width", "200px")
 							$("#left-side").css("width", "calc(100% - 200px)")
-							var width = localStorage.getItem("postbox-width").replace("px", "") * 1 + 200;
-							if (!width) {
+							var width = localStorage.getItem("postbox-width");
+							if (width) {
+								width = width.replace("px", "") * 1 + 200
+							} else {
 								width = 600
 							}
 							$("#post-box").css("width", width + "px")
@@ -172,8 +182,10 @@ input.addEventListener("focus", function () {
 						$("#right-side").show()
 						$("#right-side").css("width", "200px")
 						$("#left-side").css("width", "calc(100% - 200px)")
-						var width = localStorage.getItem("postbox-width").replace("px", "") * 1 + 200;
-						if (!width) {
+						var width = localStorage.getItem("postbox-width");
+						if (width) {
+							width = width.replace("px", "") * 1 + 200
+						} else {
 							width = 600
 						}
 						$("#post-box").css("width", width + "px")
@@ -185,8 +197,10 @@ input.addEventListener("focus", function () {
 							$("#right-side").hide()
 							$("#right-side").css("width", "300px")
 							$("#left-side").css("width", "100%")
-							var width = localStorage.getItem("postbox-width").replace("px", "") * 1;
-							if (!width) {
+							var width = localStorage.getItem("postbox-width");
+							if (width) {
+								width = width.replace("px", "") * 1
+							} else {
 								width = 300
 							}
 							$("#post-box").css("width", width + "px")
