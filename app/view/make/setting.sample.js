@@ -176,7 +176,7 @@ var tlConstruction = [
                     text: "@@replyct_hidden@@",
                     value: "hidden"
                 }, {
-                    text: "@@replyct_hidden@@",
+                    text: "@@replyct_full@@",
                     value: "all"
                 }
 
