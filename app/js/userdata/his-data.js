@@ -554,11 +554,15 @@ function showFrl(more, acct_id) {
 	});
 }
 //Keybase
-function udAdd(start) {
-	fetch(start, {
+function udAdd(acct_id, id, start) {
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	var proof = "https://" + domain + "/api/v1/accounts/" + id + "/identity_proofs"
+	fetch(proof, {
 		method: 'GET',
 		headers: {
-			'Accept': 'application/json'
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
 		},
 		//body: JSON.stringify({})
 	}).then(function (response) {
@@ -567,16 +571,10 @@ function udAdd(start) {
 		todo(error);
 		console.error(error);
 	}).then(function (json) {
-		var fields = json.attachment;
+		var fields = json;
 		for (var i = 0; i < fields.length; i++) {
-			if (fields[i].type == "IdentityProof") {
-				if (fields[i].signatureAlgorithm == "keybase") {
-					var html = '<a href="https://keybase.io/' + fields[i].name + '" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].signatureAlgorithm)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].signatureAlgorithm) + ':' + escapeHTML(fields[i].name) + '</a>';
-				} else {
-					var html = '<span class="cbadge teal" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].signatureAlgorithm)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].signatureAlgorithm) + ':' + escapeHTML(fields[i].name) + '</span>';
-				}
-				$("#his-proof-prof").append(html)
-			}
+			var html = '<a href="' + fields[i].proof_url + '" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].provider)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].provider) + ':' + escapeHTML(fields[i].provider_username) + '</a>';
+			$("#his-proof-prof").append(html)
 		}
 	});
 	fetch("https://notestock.osa-p.net/api/v1/isstock.json?id=" + start.replace("@", "users/"), {

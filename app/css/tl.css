@@ -643,6 +643,7 @@ audio {
 .vis-data {
   font-size: 1rem !important;
   margin: 5px;
+  user-select: none;
 }
 @keyframes jump {
   0% {

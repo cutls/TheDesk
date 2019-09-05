@@ -205,7 +205,7 @@ function udg(user, acct_id) {
 		}
 		todc();
 		//外部データ取得(死かもしれないので)
-		udAdd(json.url);
+		udAdd(acct_id, user, json.url);
 	});
 }
 function misskeyUdg(user, acct_id) {
