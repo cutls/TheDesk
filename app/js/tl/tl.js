@@ -917,10 +917,10 @@ function getMarker(tlid, type, acct_id) {
 	});
 }
 function showUnread(tlid, type, acct_id) {
-	if($("#unread_" + tlid + " .material-icons").hasClass("teal-text")){
+	if ($("#unread_" + tlid + " .material-icons").hasClass("teal-text")) {
 		$("#unread_" + tlid + " .material-icons").removeClass("teal-text")
 		goTop(tlid)
-		return 
+		return
 	}
 	$("#unread_" + tlid + " .material-icons").addClass("teal-text")
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -944,7 +944,7 @@ function showUnread(tlid, type, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function (json) {
-		if(!json){
+		if (!json) {
 			columnReload(tlid)
 		}
 		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
@@ -963,15 +963,15 @@ function showUnread(tlid, type, acct_id) {
 	});
 }
 var ueloadlock = false
-function ueload(tlid){
-	if(ueloadlock){
+function ueload(tlid) {
+	if (ueloadlock) {
 		return false
 	}
 	ueloadlock = true
 	var multi = localStorage.getItem("column")
 	var obj = JSON.parse(multi)
-	var acct_id = obj[tlid*1].domain
-	var type = obj[tlid*1].type
+	var acct_id = obj[tlid * 1].domain
+	var type = obj[tlid * 1].type
 	var domain = localStorage.getItem("domain_" + acct_id)
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
 	var id = $("#timeline_" + tlid + " .cvo:eq(0)").attr("unique-id")
@@ -993,7 +993,7 @@ function ueload(tlid){
 		todo(error);
 		console.error(error);
 	}).then(function (json) {
-		if(!json){
+		if (!json) {
 			columnReload(tlid)
 		}
 		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
@@ -1012,24 +1012,53 @@ function ueload(tlid){
 		ueloadlock = false
 	});
 }
-function testAsRead(acct_id) {
-	var domain = localStorage.getItem("domain_" + acct_id);
-	var at = localStorage.getItem("acct_" + acct_id + "_at");
-	var httpreq = new XMLHttpRequest();
-	var start = "https://" + domain + "/api/v1/markers"
-	httpreq.open('POST', start, true);
-	httpreq.setRequestHeader('Content-Type', 'application/json');
-	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-	httpreq.responseType = "json";
-	httpreq.send(JSON.stringify({
-		home: {
-			last_read_id: 1
-		}
-	}));
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			var json = httpreq.response;
-			console.log(json)
+function asRead() {
+	//Markers
+	var markers = localStorage.getItem("markers");
+	if (markers == "no") {
+		markers = false;
+	} else {
+		markers = true
+	}
+	if (markers) {
+		var multi = localStorage.getItem("column")
+		var obj = JSON.parse(multi)
+		for (var i = 0; i < obj.length; i++) {
+			var acct_id = obj[i].domain
+			var type = obj[i].type
+			if(type == "home" || type == "notf"){
+				if(type == "home"){
+					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("unique-id")
+					var poster = {
+						home: {
+							last_read_id: id
+						}
+					}
+				}else{
+					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("data-notf")
+					var poster = {
+						notifications: {
+							last_read_id: id
+						}
+					}
+				}
+				var domain = localStorage.getItem("domain_" + acct_id);
+				var at = localStorage.getItem("acct_" + acct_id + "_at");
+				var httpreq = new XMLHttpRequest();
+				var start = "https://" + domain + "/api/v1/markers"
+				httpreq.open('POST', start, true);
+				httpreq.setRequestHeader('Content-Type', 'application/json');
+				httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+				httpreq.responseType = "json";
+				httpreq.send(JSON.stringify(poster));
+				httpreq.onreadystatechange = function () {
+					if (httpreq.readyState === 4) {
+						var json = httpreq.response;
+						console.log(json)
+					}
+				}
+			}
 		}
 	}
 }
+cbTimer1 = setInterval(asRead, 60000);

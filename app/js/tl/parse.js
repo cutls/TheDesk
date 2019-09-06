@@ -331,7 +331,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				localStorage.setItem("notice-mem", noticetext);
 				noticetext = "";
 			}
-			var if_notf = 'data-notfIndv="' + acct_id + "_" + toot.id + '"';
+			var if_notf = 'data-notfIndv="' + acct_id + "_" + toot.id + '" data-notf="' + toot.id + '"';
 			var toot = toot.status;
 			var dis_name = escapeHTML(toot.account.display_name);
 			if (toot.account.emojis) {
