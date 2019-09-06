@@ -127,6 +127,7 @@ var lang={
     "lang_layout_leftUnfold": "Dock on the right",
     "lang_layout_deleteColumn": "Delete this column",
     "lang_layout_deleteColumnDesc": "Delete this column",
+    "lang_layout_unread": "Unread",
     "lang_sort_gothis": "Go to this column",
     "lang_sort_remthis": "Delete this column",
     "lang_spotify_img": "Attach an album artwork",

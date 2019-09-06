@@ -153,6 +153,7 @@ var lang = {
     "lang_layout_leftUnfold": "右へ出す",
     "lang_layout_deleteColumn": "カラム削除",
     "lang_layout_deleteColumnDesc": "カラムを削除しますか？",
+    "lang_layout_unread": "未読",
     //ui/sort.js
     "lang_sort_gothis": "このカラムへ",
     "lang_sort_remthis": "このカラムを削除",

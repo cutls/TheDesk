@@ -190,6 +190,7 @@ function parseColumn(target, dontclose) {
 			} else {
 				var animecss = "";
 			}
+			var unread = '<a id="unread_' + tlid + '" onclick="showUnread(' + key + ',\'' + acct.type + '\',\'' + acct.domain + '\')" class="setting nex" title="' + lang.lang_layout_unread + '"><i class="material-icons waves-effect nex">more</i></a>'
 			if (acct.type == "notf") {
 				var exclude = lang.lang_excluded + ':<br><label><input type="checkbox" class="filled-in" id="exc-reply-' + key + '" ' + excludeCk(key, "mention") + ' /><span><i class="fas fa-share exc-icons"></i></span></label> ' +
 					'<label><input type="checkbox" class="filled-in" id="exc-fav-' + key + '"  ' + excludeCk(key, "favourite") + ' /><span><i class="fas fa-star exc-icons"></i></span></label> ' +
@@ -201,12 +202,15 @@ function parseColumn(target, dontclose) {
 					exclude = exclude + '<button class="btn red waves-effect" style="width:60px; padding:0;" onclick="resetNotfFilter(' + key + ')">Clear all</button>'
 				}
 				exclude = exclude + "<br>";
+
 			} else if (acct.type == "home") {
 				var exclude = '<a onclick="ebtToggle(' + key +
 					')" class="setting nex"><i class="fas fa-retweet waves-effect nex" title="' + lang.lang_layout_excludingbt + '" style="font-size:24px"></i><span id="sta-bt-' +
 					key + '">Off</span></a>' + lang.lang_layout_excludingbt + '<br>';
+
 			} else {
 				var exclude = "";
+				unread = ""
 			}
 			if (!acct.left_fold) {
 				basekey = key;
@@ -235,7 +239,7 @@ function parseColumn(target, dontclose) {
 				'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>' +
 				'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
 				')" class="setting nex ' + if_notf + '" title="' + unique_notf + '"' + icnsert + '><i class="material-icons waves-effect nex notf-icon_' +
-				acct.domain + '">notifications</i></div><div class="area-sta"><span class="new badge teal notf-reply_' + acct.domain + ' hide" data-badge-caption="Reply">0</span><span class="new badge yellow black-text notf-fav_' + acct.domain + ' hide" data-badge-caption="Fav">0</span><span class="new badge blue notf-bt_' + acct.domain + ' hide" data-badge-caption="BT">0</span><span class="new badge orange notf-follow_' + acct.domain + ' hide" data-badge-caption="Follow">0</span></a></div>' +
+				acct.domain + '">notifications</i></a>' + unread + '</div><div class="area-sta"><span class="new badge teal notf-reply_' + acct.domain + ' hide" data-badge-caption="Reply">0</span><span class="new badge yellow black-text notf-fav_' + acct.domain + ' hide" data-badge-caption="Fav">0</span><span class="new badge blue notf-bt_' + acct.domain + ' hide" data-badge-caption="BT">0</span><span class="new badge orange notf-follow_' + acct.domain + ' hide" data-badge-caption="Follow">0</span></div>' +
 				'<div class="area-a2"><a onclick="removeColumn(' + key +
 				')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_delthis + '"' + icnsert + '>cancel</i></a></div>' +
 				'<div class="area-a3"><a onclick="setToggle(' + key +

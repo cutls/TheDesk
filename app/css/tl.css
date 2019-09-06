@@ -436,7 +436,7 @@ p:not(:last-child) {
   z-index: 500;
   padding: 5px;
   display: grid;
-  grid-template-columns: 40px 48px 1fr 24px;
+  grid-template-columns: 40px 1fr 1fr 24px;
   grid-template-rows: 30px 30px;
   grid-template-areas: "notice notice_name notice_name a2" "notice a1 sta a3" "notf-box notf-box notf-box notf-box";
 }
@@ -461,7 +461,6 @@ p:not(:last-child) {
 }
 
 .area-a1 {
-  text-align: center;
   grid-area: a1;
 }
 .area-sta {
@@ -696,4 +695,10 @@ audio {
 .cvo-anime {
   animation-duration: 0.1s;
   animation-name: fadeInDown;
+}
+.urbadge{
+  line-height: normal;
+  height: 2rem;
+  font-size: 1rem;
+  background-color: #009688;
 }

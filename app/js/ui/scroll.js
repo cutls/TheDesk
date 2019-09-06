@@ -9,13 +9,17 @@ scrollevent();
 function scrollck() {
 	$(".tl-box").each(function (i, elem) {
 		var tlid = $(this).attr('tlid');
-		//一番上ならためていた新しいトゥートを表示
+		//一番上ならためていた新しいトゥートを表示ないしtealなら未読管理モード
 		if ($(this).scrollTop() === 0) {
-			var pool = localStorage.getItem("pool_" + tlid);
-			if (pool) {
-				$("#timeline_" + tlid).prepend(pool);
-				jQuery("time.timeago").timeago();
-				localStorage.removeItem("pool_" + tlid);
+			if (!$("#unread_" + tlid + " .material-icons").hasClass("teal-text")) {
+				var pool = localStorage.getItem("pool_" + tlid);
+				if (pool) {
+					$("#timeline_" + tlid).prepend(pool);
+					jQuery("time.timeago").timeago();
+					localStorage.removeItem("pool_" + tlid);
+				}
+			} else {
+				ueload(tlid)
 			}
 			//自動リフレッシュ
 			if ($("#timeline_" + tlid + " .cvo").length > 30) {
@@ -35,6 +39,10 @@ function scrollck() {
 }
 
 function goTop(id) {
+	if ($("#unread_" + id + " .material-icons").hasClass("teal-text")) {
+		$("#unread_" + id + " .material-icons").removeClass("teal-text")
+		columnReload(id)
+	}
 	if ($("#timeline_box_" + id + "_box .tl-box").scrollTop() > 500) {
 		$("#timeline_box_" + id + "_box .tl-box").scrollTop(500)
 	}

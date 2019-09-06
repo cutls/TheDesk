@@ -121,6 +121,7 @@ var lang={
     "lang_layout_nodata": "[No data]<br>F5/⌘+R to reload",
     "lang_layout_dm": "Direct Message",
     "lang_layout_webviewmode": "Prefer WebView",
+    "lang_layout_unread": "Unread",
     "lang_excluded": "Excluded type of notification",
     "lang_layout_excludingbt": "Показване в BT режим (ИЗКЛ./Изключване BT/ Само в BT)",
     "lang_layout_leftFold": "Стъпка наляво",

@@ -127,6 +127,7 @@ var lang={
     "lang_layout_leftUnfold": "Rechts Anheften",
     "lang_layout_deleteColumn": "Diese Spalte löschen",
     "lang_layout_deleteColumnDesc": "Diese Spalte löschen",
+    "lang_layout_unread": "Unread",
     "lang_sort_gothis": "Gehe zu dieser Spalte",
     "lang_sort_remthis": "Diese Spalte löschen",
     "lang_spotify_img": "Albumcover anhängen",
