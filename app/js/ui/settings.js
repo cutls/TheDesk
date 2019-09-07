@@ -45,7 +45,7 @@ var tlView = new Vue({
 });
 var postView = new Vue({
 	el: '#postView',
-	data: { config: postConstruction, kirishima: localStorage.getItem('kirishima') },
+	data: { config: postConstruction, kirishima: localStorage.getItem('kirishima'), quoters: localStorage.getItem('quoters') },
 	methods: {
 		complete: function (i, val) {
 			var ls = postView.config[i];

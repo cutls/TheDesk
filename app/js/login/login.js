@@ -3,6 +3,7 @@
 //アスタルテ判定初期化
 
 localStorage.removeItem("kirishima")
+localStorage.removeItem("quoters")
 localStorage.removeItem("imas")
 localStorage.removeItem("image");
 localStorage.removeItem("stable")
@@ -314,7 +315,6 @@ function ckdb(acct_id) {
 	localStorage.removeItem("followlocale_" + acct_id);
 	if (domain == "kirishima.cloud") {
 		localStorage.setItem("kirishima", "true");
-		$("#ranking-btn").show();
 	} else if (domain == "imastodon.net") {
 		localStorage.setItem("imas", "true");
 		$(".imasonly").show();
@@ -322,8 +322,13 @@ function ckdb(acct_id) {
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var bbcode = domain + "_bbcode";
 	var letters = domain + "_letters";
+	var quoteMarker = domain + "_quote";
 	if (localStorage.getItem("instance")) {
 		var json = JSON.parse(localStorage.getItem("instance"));
+		if (json[quoteMarker] == "enabled") {
+			localStorage.setItem("quoters", "true");
+			localStorage.setItem("quote_" + acct_id, "true");
+		}
 		if (json[bbcode]) {
 			if (json[bbcode] == "enabled") {
 				localStorage.setItem("bb_" + acct_id, "true");

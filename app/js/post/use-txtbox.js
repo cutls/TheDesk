@@ -57,6 +57,21 @@ function qt(id, acct_id, at, url) {
 		html = html.replace(/<\/p>/, "\n");
 		html = $.strip_tags(html);
 		$("#textarea").val("\n" + "@" + at + " " + html + "\n" + url);
+	} else if (qt == "apiQuote") {
+		clear();
+		localStorage.setItem("nohide", true);
+		show();
+		$("#quote").val(id);
+		$("#post-acct-sel").val(acct_id);
+		$("#post-acct-sel").prop("disabled", true);
+		$('select').formSelect();
+		$("#textarea").attr("placeholder", lang.lang_usetxtbox_reply);
+		$("#textarea").focus();
+		var profimg = localStorage.getItem("prof_" + acct_id);
+		if (!profimg) {
+			profimg = "../../img/missing.svg";
+		}
+		$("#acct-sel-prof").attr("src", profimg);
 	}
 	$("#post-acct-sel").val(acct_id);
 	$('select').formSelect();

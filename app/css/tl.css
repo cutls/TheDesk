@@ -47,7 +47,7 @@
 #bottom .leftside {
   display: flex;
 }
-#tips{
+#tips {
   display: flex;
   align-items: center;
 }
@@ -280,7 +280,7 @@ iframe,
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.acct-note p{
+.acct-note p {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -290,7 +290,7 @@ iframe,
 }
 .area-toot.acct-note p:first-child:after {
   content: "...";
-  color: var(--gray)
+  color: var(--gray);
 }
 
 .area-actions {
@@ -316,11 +316,13 @@ iframe,
   margin: 2px;
   grid-area: side;
 }
-
+.quote-inline {
+  display: none;
+}
 .quote-renote {
   display: grid;
-  grid-template-columns: 43px 2fr 1fr;
-  grid-template-areas: "ricon ruser" "ricon rtext";
+  grid-template-columns: 43px 2fr 25px;
+  grid-template-areas: "ricon ruser rdet" "ricon rtext rdet";
   border: 1px solid;
   margin-top: 3px;
   padding: 1px;
@@ -328,9 +330,13 @@ iframe,
 }
 .renote-icon {
   grid-area: ricon;
+  padding: 5px;
+}
+.renote-details {
+  grid-area: rdet;
 }
 .renote-icon img {
-  width: 43px;
+  width: 100%;
 }
 .renote-user {
   grid-area: ruser;
@@ -696,7 +702,7 @@ audio {
   animation-duration: 0.1s;
   animation-name: fadeInDown;
 }
-.urbadge{
+.urbadge {
   line-height: normal;
   height: 2rem;
   font-size: 1rem;

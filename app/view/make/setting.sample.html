@@ -262,7 +262,7 @@
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
-								<template v-if="!check.kirishima || (check.kirishima && kirishima)">
+								<template v-if="(!check.kirishima || (check.kirishima && kirishima) )&& (!check.quote || (check.quote && quoters))">
 									<label><input class="with-gap" v-on:click="complete(i,check.value)"
 											v-model="item.setValue" type="radio" v-bind:id="item.id+check.value"
 											v-bind:value="check.value" />

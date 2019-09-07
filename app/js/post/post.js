@@ -79,6 +79,10 @@ function post(mode, postvis) {
 	if (media) {
 		toot.media_ids = media.split(",");
 	}
+	var quote = $("#quote").val();
+	if (quote) {
+		toot.quote_id = quote;
+	}
 	if ($("#nsfw").hasClass("nsfw-avail")) {
 		var nsfw = "true";
 		toot.sensitive = nsfw;
@@ -243,6 +247,7 @@ function clear() {
 	}
 	$("#textarea").attr("placeholder", lang.lang_toot);
 	$("#reply").val("");
+	$("#quote").val("");
 	$("#media").val("");
 	var cwt = localStorage.getItem("cw-text");
 	if (cwt) {

@@ -25,7 +25,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 	if (qt == "nothing" || !qt) {
 		var qtClass = "hide";
 	} else {
-		var qtClass = "";
+		if (qt == "apiQuote") {
+			if (localStorage.getItem("quote_" + acct_id)) {
+				var qtClass = "";
+			} else {
+				var qtClass = "hide";
+			}
+		} else {
+			var qtClass = "";
+		}
 	}
 	var datetype = localStorage.getItem("datetype");
 	var nsfwtype = localStorage.getItem("nsfw");
@@ -826,7 +834,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				for (var i = 0; i < tickerdata.length; i++) {
 					var value = tickerdata[i];
 					if (value.domain == thisdomain) {
-						var tickerdom = '<div style="background:linear-gradient(90deg, ' + value.bg + ', transparent 96%) !important; color:' + value.text + ';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="' + value.image + '" style="height:100%;" onerror="this.src=\'../../img/loading.svg\'"><span style="position:relative; top:-0.2rem;"> ' + escapeHTML(value.name) + '</span></div>';
+						var tickerdom = '<div style="user-select:none;cursor:default;background:linear-gradient(90deg, ' + value.bg + ', transparent 96%) !important; color:' + value.text + ';width:100%; height:0.9rem; font-size:0.8rem;"><img draggable="false" src="' + value.image + '" style="height:100%;" onerror="this.src=\'../../img/loading.svg\'"><span style="position:relative; top:-0.2rem;"> ' + escapeHTML(value.name) + '</span></div>';
 						break;
 					}
 				}
@@ -834,7 +842,14 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		}
 		//Quote
 		if (toot.quote) {
-			poll = poll + '<div class="quote-renote"><div class="renote-icon"><img src="' + toot.quote.account.avatar + '"></div><div class="renote-user">' + escapeHTML(toot.quote.account.display_name) + '</div><div class="renote-text">' + toot.quote.content + '</div></div>'
+			var quoteUser = toot.quote.account.display_name
+			if(!quoteUser){
+				quoteUser = toot.quote.account.acct
+			}
+			poll = poll + '<div class="quote-renote"><div class="renote-icon"><a onclick="udg(\'' + toot.quote.account.id +
+			'\',' + acct_id + ');" user="' + toot.quote.account.acct + '" class="udg"><img draggable="false" src="' + toot.quote.account.avatar + '"></a>'+
+			'</div><div class="renote-user">' + escapeHTML(quoteUser) + '</div><div class="renote-text">' + toot.quote.content + '</div><div class="renote-details"><a onclick="details(\'' + toot.quote.id + '\',' + acct_id +
+			',\'' + tlid + '\',\'normal\')" class="waves-effect waves-dark btn-flat details" style="padding:0"><i class="text-darken-3 material-icons">more_vert</i></a></div></div>'
 		}
 		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' +
 			boostback + ' ' + fav_app + ' ' + rt_app + ' ' + pin_app +

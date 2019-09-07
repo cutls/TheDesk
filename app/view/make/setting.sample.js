@@ -482,6 +482,10 @@ var postConstruction = [
                     text: "@@full@@",
                     value: "full"
                 }, {
+                    text: "@@apiQuote@@",
+                    value: "apiQuote",
+                    quote: true
+                }, {
                     text: "@@notqt@@",
                     value: "nothing"
                 }
