@@ -860,6 +860,7 @@ function columnReload(tlid, type) {
 		websocketLocal[wssl].close();
 		parseColumn(tlid)
 	} else if (type == "notf") {
+		$("#notice_icon_" + tlid).removeClass("red-text");
 		notfColumn(acct_id, tlid, "")
 	} else {
 		var wss = localStorage.getItem("wss_" + tlid);
@@ -945,7 +946,7 @@ function showUnread(tlid, type, acct_id) {
 		console.error(error);
 	}).then(function (json) {
 		if (!json) {
-			columnReload(tlid)
+			columnReload(tlid, type)
 		}
 		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
 			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
@@ -994,7 +995,7 @@ function ueload(tlid) {
 		console.error(error);
 	}).then(function (json) {
 		if (!json) {
-			columnReload(tlid)
+			columnReload(tlid, type)
 		}
 		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
 			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);

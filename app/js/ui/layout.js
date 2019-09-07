@@ -190,7 +190,7 @@ function parseColumn(target, dontclose) {
 			} else {
 				var animecss = "";
 			}
-			var unread = '<a id="unread_' + tlid + '" onclick="showUnread(' + key + ',\'' + acct.type + '\',\'' + acct.domain + '\')" class="setting nex" title="' + lang.lang_layout_unread + '"><i class="material-icons waves-effect nex">more</i></a>'
+			var unread = '<a id="unread_' + key + '" onclick="showUnread(' + key + ',\'' + acct.type + '\',\'' + acct.domain + '\')" class="setting nex" title="' + lang.lang_layout_unread + '"><i class="material-icons waves-effect nex">more</i></a>'
 			if (acct.type == "notf") {
 				var exclude = lang.lang_excluded + ':<br><label><input type="checkbox" class="filled-in" id="exc-reply-' + key + '" ' + excludeCk(key, "mention") + ' /><span><i class="fas fa-share exc-icons"></i></span></label> ' +
 					'<label><input type="checkbox" class="filled-in" id="exc-fav-' + key + '"  ' + excludeCk(key, "favourite") + ' /><span><i class="fas fa-star exc-icons"></i></span></label> ' +
@@ -254,7 +254,7 @@ function parseColumn(target, dontclose) {
 				key + '">On</span></a>' + lang.lang_layout_linkana + '<br><a onclick="voiceToggle(' + key +
 				')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_tts + '">hearing</i><span id="sta-voice-' +
 				key + ',\'' + acct.type + '\'">On</span></a>' + lang.lang_layout_tts + 'TL<br><a onclick="columnReload(' + key +
-				')" class="setting nex ' + if_notf + ' ' + if_misskey_hide + '"><i class="material-icons waves-effect nex ' + if_notf + '" title="' + lang.lang_layout_reconnect + '">refresh</i></a><span class="' + if_notf + '">' + lang.lang_layout_reconnect + '</span><br>' + lang.lang_layout_headercolor + '<br><div id="picker_' + key + '" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
+				',\'' + acct.type + '\')" class="setting nex ' + if_misskey_hide + '"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_reconnect + '">refresh</i></a><span>' + lang.lang_layout_reconnect + '</span><br>' + lang.lang_layout_headercolor + '<br><div id="picker_' + key + '" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
 				'" class="tl ' + acct.type + '-timeline " tlid="' + key + '" data-type="' + acct.type + '" data-acct="' + acct.domain + '" data-const="' + acct.type + '_' + acct.domain + '"><div id="landing_' + key + '" style="text-align:center">' + lang.lang_layout_nodata + '</div></div></div>'
 			if (numtarget) {
 				$('timeline_box_' + key + '_box').html(html)
@@ -434,23 +434,23 @@ function setToggle(tlid) {
 		$("#util-box_" + tlid).animate({
 			'height': '200px'
 		}, {
-				'duration': 300,
-				'complete': function () {
-					$("#util-box_" + tlid).css("overflow-y", "scroll")
-					$("#util-box_" + tlid).removeClass("column-hide")
-				}
-			});
+			'duration': 300,
+			'complete': function () {
+				$("#util-box_" + tlid).css("overflow-y", "scroll")
+				$("#util-box_" + tlid).removeClass("column-hide")
+			}
+		});
 	} else {
 		$("#util-box_" + tlid).css("overflow-y", "hidden")
 		$("#util-box_" + tlid).animate({
 			'height': '0'
 		}, {
-				'duration': 300,
-				'complete': function () {
-					$("#util-box_" + tlid).addClass("column-hide")
-					$("#util-box_" + tlid).css("display", "none")
-				}
-			});
+			'duration': 300,
+			'complete': function () {
+				$("#util-box_" + tlid).addClass("column-hide")
+				$("#util-box_" + tlid).css("display", "none")
+			}
+		});
 	}
 }
 function colorpicker(key) {

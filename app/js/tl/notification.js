@@ -98,6 +98,16 @@ function notfColumn(acct_id, tlid, sys) {
 			}
 			$("#notf-box").addClass("fetched");
 			todc();
+			//Markers
+			var markers = localStorage.getItem("markers");
+			if (markers == "no") {
+				markers = false;
+			} else {
+				markers = true
+			}
+			if (markers) {
+				getMarker(tlid, "notf", acct_id)
+			}
 		}
 	}
 	if (!misskey) {

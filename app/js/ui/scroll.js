@@ -41,7 +41,7 @@ function scrollck() {
 function goTop(id) {
 	if ($("#unread_" + id + " .material-icons").hasClass("teal-text")) {
 		$("#unread_" + id + " .material-icons").removeClass("teal-text")
-		columnReload(id)
+		columnReload(id, type)
 	}
 	if ($("#timeline_box_" + id + "_box .tl-box").scrollTop() > 500) {
 		$("#timeline_box_" + id + "_box .tl-box").scrollTop(500)
