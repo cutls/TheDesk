@@ -919,7 +919,6 @@ function getMarker(tlid, type, acct_id) {
 }
 function showUnread(tlid, type, acct_id) {
 	if ($("#unread_" + tlid + " .material-icons").hasClass("teal-text")) {
-		$("#unread_" + tlid + " .material-icons").removeClass("teal-text")
 		goTop(tlid)
 		return
 	}
@@ -945,7 +944,7 @@ function showUnread(tlid, type, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function (json) {
-		if (!json) {
+		if (!json || !json.length) {
 			columnReload(tlid, type)
 		}
 		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
@@ -953,11 +952,13 @@ function showUnread(tlid, type, acct_id) {
 		} else {
 			var mute = [];
 		}
-		var templete = parse(json, '', acct_id, tlid, "", mute, type);
+		var templete = parse(json, type, acct_id, tlid, "", mute, type);
 		var len = json.length - 1
 		$("#timeline_" + tlid).html(templete);
-		var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top
-		$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to)
+		if ($("#timeline_" + tlid + " .cvo:eq(" + len + ")").length) {
+			var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top
+			$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to)
+		}
 		additional(acct_id, tlid);
 		jQuery("time.timeago").timeago();
 		todc();
@@ -1005,8 +1006,10 @@ function ueload(tlid) {
 		var templete = parse(json, '', acct_id, tlid, "", mute, type);
 		var len = json.length - 1
 		$("#timeline_" + tlid).prepend(templete);
-		var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top
-		$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to)
+		if ($("#timeline_" + tlid + " .cvo:eq(" + len + ")").length) {
+			var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top
+			$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to)
+		}
 		additional(acct_id, tlid);
 		jQuery("time.timeago").timeago();
 		todc();
@@ -1027,15 +1030,15 @@ function asRead() {
 		for (var i = 0; i < obj.length; i++) {
 			var acct_id = obj[i].domain
 			var type = obj[i].type
-			if(type == "home" || type == "notf"){
-				if(type == "home"){
+			if (type == "home" || type == "notf") {
+				if (type == "home") {
 					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("unique-id")
 					var poster = {
 						home: {
 							last_read_id: id
 						}
 					}
-				}else{
+				} else {
 					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("data-notf")
 					var poster = {
 						notifications: {

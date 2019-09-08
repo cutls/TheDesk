@@ -87,6 +87,8 @@
   "ticker": "Aktiviere #InstanceTicker",
   "tickerwarn": "Zeigt bunte Sticker über den Server. <a href=\"https://wee.jp/\">Über #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
   "animation": "Animation der Verläufe",
+  "markers": "Markers(mark as read) on HTL and notifications",
+  "markerswarn": "Mastodon 3.0~. Shared on WebUI and third-party supported clients.",
   "replySound": "Ton bei Antwort",
   "favSound": "Ton bei Favorit",
   "btSound": "Ton bei Verstärkung",

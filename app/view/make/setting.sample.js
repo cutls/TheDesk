@@ -308,6 +308,16 @@ var tlConstruction = [
             checkbox: yesno
         }
     }, {
+        id: "markers",
+        storage: "markers",
+        checkbox: true,
+        setValue: "yes",
+        text: {
+            head: "@@markers@@",
+            desc: "@@markerswarn@@",
+            checkbox: yesno
+        }
+    }, {
         id: "replySound",
         storage: "replySound",
         checkbox: true,

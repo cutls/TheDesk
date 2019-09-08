@@ -212,6 +212,15 @@ function parseColumn(target, dontclose) {
 				var exclude = "";
 				unread = ""
 			}
+			var markers = localStorage.getItem("markers");
+			if (markers == "no") {
+				markers = false;
+			} else {
+				markers = true
+			}
+			if (!markers) {
+				unread = ""
+			}
 			if (!acct.left_fold) {
 				basekey = key;
 				if (!numtarget) {

@@ -87,6 +87,8 @@
   "ticker": "#InstanceTickerを使う",
   "tickerwarn": "トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href=\"https://https://wee.jp/\">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.",
   "animation": "タイムラインのアニメーション",
+  "markers": "ホームと通知の未読管理",
+  "markerswarn": "Mastodon 3.0相当以上。WebUIと対応クライアントで共有されます。",
   "replySound": "リプライの通知音",
   "favSound": "お気に入り登録の通知音",
   "btSound": "ブーストの通知音",

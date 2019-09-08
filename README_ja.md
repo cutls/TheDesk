@@ -40,6 +40,7 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
 
 * 日本語
 * English(英語)
+* ドイツ語, チェコ語, ブルガリア語(from Crowdin)
 
 ### 翻訳
   
@@ -72,7 +73,7 @@ Linuxビルダー
 
 * [ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja)
 
-iTunes NowPlayingにアルバムアートワークを付けてくれた人
+コーダー
 
 * [kPherox](https://pl.kpherox.dev/kPherox)
 

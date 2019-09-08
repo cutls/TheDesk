@@ -41,6 +41,7 @@ The default sounds of notifications is provided [Creative Commons BY](https://cr
 
 * 日本語(Japanese)
 * English
+* de, cs, bg(from Crowdin)
 
 ### Translation
 
