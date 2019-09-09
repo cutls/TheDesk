@@ -650,9 +650,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			if (tagck) {
 				Object.keys(toot.tags).forEach(function (key4) {
 					var tag = toot.tags[key4];
+					var featured = '　<a onclick="tagFeature(\'' + tag.name + '\',' + acct_id +')" class="pointer" title="add it to Featured tags">Feature</a>　'
 					tags = tags + '<span class="hide" data-tag="' + tag.name + '">#' + tag.name + ':<a onclick="tl(\'tag\',\'' + tag.name + '\',' + acct_id +
 						',\'add\')" class="pointer" title="' + lang.lang_parse_tagTL.replace("{{tag}}", '#' + tag.name) + '">TL</a>　<a onclick="brInsert(\'#' + tag.name + '\')" class="pointer" title="' + lang.lang_parse_tagtoot.replace("{{tag}}", '#' + tag.name) + '">Toot</a>　' +
-						'<a onclick="tagPin(\'' + tag.name + '\')" class="pointer" title="' + lang.lang_parse_tagpin.replace("{{tag}}", '#' + tag.name) + '">Pin</a></span> ';
+						'<a onclick="tagPin(\'' + tag.name + '\')" class="pointer" title="' + lang.lang_parse_tagpin.replace("{{tag}}", '#' + tag.name) + '">Pin</a>' + featured + '</span> ';
 				});
 				tags = '<div style="float:right">' + tags + '</div>';
 			}

@@ -66,7 +66,7 @@ var idata = {
 	"misskey.io_post": "Post",
 	"misskey.io_fav": " reacted your post.",
 	"misskey.io_bt": " reposted your post.",
-	"misskey.dev": "misskey.dev",
+	"misskey.dev": "misskey",
 	"misskey.dev_name": "misskey.dev",
 	"misskey.dev_letters": "1024",
 	"misskey.dev_bbcode": "disabled",
