@@ -168,5 +168,11 @@
     "directory": "Directory",
     "active": "Recently active",
     "newcomer": "New arrivals",
-    "local_only": "Local only"
+    "local_only": "Local only",
+    "demoBottomBtns": "Welcome guide",
+    "lookAtBottom": "Look at the bottom of this window. Here is some tips about it.",
+    "acctManDesc": "Add more accounts and logout them.",
+    "settingDesc": "Many and many preferences here. You will couldn't check it all!",
+    "nanoDescPlus": "Mini window client(experimental)",
+    "listDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
 }

@@ -220,6 +220,17 @@ blockquote:before,
   right: 0;
   top: 0;
 }
+#start {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: calc(100vh - 40px);
+  background-color: var(--bg);
+  color: var(--color);
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+}
 #drag {
   display: none;
   position: fixed;

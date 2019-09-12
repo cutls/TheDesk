@@ -1,5 +1,6 @@
 //バージョンチェッカー
 function verck(ver) {
+	localStorage.setItem("ver", ver);
 	console.log("%c Welcome😊", "color: red;font-size:200%;")
 	var date = new Date();
 	var show = false
@@ -15,11 +16,12 @@ function verck(ver) {
 			}
 		}
 		//ちょっと削除とリンク解析の都合上アレ(e)
-		localStorage.setItem("ver", ver);
 		show = true
 		console.log("%c Thank you for your update🎉", "color: red;font-size:200%;");
 		$(document).ready(function () {
-			$('#releasenote').modal('open');
+			if (localStorage.getItem("winstore")) {
+				$('#releasenote').modal('open');
+			}
 			verp = ver.replace('(', '');
 			verp = verp.replace('.', '-');
 			verp = verp.replace('.', '-');
@@ -59,7 +61,7 @@ function verck(ver) {
 	var platform = localStorage.getItem("platform");
 	console.log("Your platform:" + platform)
 	if (!localStorage.getItem("winstore")) {
-		storeDialog(platform, ver)
+		$("#start").css('display', 'flex');
 	}
 	if (localStorage.getItem("winstore") == "brewcask" || localStorage.getItem("winstore") == "snapcraft" || localStorage.getItem("winstore") == "winstore") {
 		var winstore = true;
@@ -116,7 +118,6 @@ function verck(ver) {
 	}
 	var start = "https://thedesk.top/notice?since_id=" + localStorage.getItem("last-notice-id");
 	fetch(start, {
-		mode: 'no-cors',
 		method: 'GET'
 	}).then(function (response) {
 		return response.json();
@@ -310,4 +311,10 @@ function storeDialog(platform, ver) {
 			}
 		});
 	})
+}
+function closeStart() {
+	$("#start").css('display', 'none');
+	var platform = localStorage.getItem("platform");
+	var ver = localStorage.getItem("ver");
+	storeDialog(platform, ver)
 }

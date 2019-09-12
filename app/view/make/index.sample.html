@@ -28,9 +28,7 @@
 		var ver = "@@versionLetter@@";
 		var gitHash = "@@gitHash@@"
 		//betaを入れるとバージョンチェックしない
-		//GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 		//var ver="beta";
-		//WinstoreではバージョンCK・言語・Misskeyトークンの機能が排除
 		var acct_id = 0;
 		var tlid = 0;
 	</script>
@@ -38,11 +36,46 @@
 	<canvas id="canvas" style="top:-100px; position:fixed;width:32px;height:32px" width="32" height="32"></canvas>
 	<div id="tl">
 		<!--TL-->
+		<!--スターター-->
+		<div id="start">
+			<div id="start-content"><h3 class="center">@@demoBottomBtns@@</h3>
+				@@lookAtBottom@@
+				<div id="demobottom">
+						<button class="btn waves-effect"
+						style="width: 300px;height: 2.5rem;line-height: 0;margin: 0; background-color: var(--accentbtn);">
+						<i class="material-icons"
+							style="position: relative; top: 5px; font-size: 1.5rem; text-align: center; margin-right: 10px;">edit</i>@@toot@@
+					</button>
+				<div class="leftside reverse" id="demogroup">
+					<div class="btnsgroup" style="margin-left: 5px;">
+						<a href="#" class="nex waves-effect">
+							<i class="material-icons nex big-icon" title="@@acctMan@@(Ctrl+Shift+M)">account_circle</i>
+						</a>
+						<a href="#" class="nex waves-effect">
+							<i class="material-icons nex" title="@@setting@@(Ctrl+Shift+S)">settings</i>
+						</a>
+						<a class="nex waves-effect">
+							<i class="material-icons" title="@@nanoDes@@TheDesk Nano">remove_from_queue</i>
+						</a>
+						<aside class="nex waves-effect" id="list-tgl">
+							<i class="material-icons" title="@@menu@@">apps</i>
+						</a>
+					</div>
+				</div>
+				</div><br>
+				<i class="material-icons nex big-icon">account_circle</i>: @@acctMan@@<br>　　@@acctManDesc@@<hr>
+				<i class="material-icons nex">settings</i>: @@setting@@<br>　　@@settingDesc@@<hr>
+				<i class="material-icons nex">remove_from_queue</i>: TheDesk Nano @@nanoDes@@<br>　　@@nanoDescPlus@@<hr>
+				<i class="material-icons nex">apps</i>: @@menu@@<br>　　@@menuDesc@@<br>
+				<br>
+				<button class="btn waves-effect" onclick="closeStart()" style="width: 300px;">@@close@@</button>
+			</div>
+		</div>
 		<!--ドラッグハンドラ-->
 		<div id="drag">
-			<div id="drag-content" data-trans="drag_here">@@draghere@@
+			<div id="drag-content">@@draghere@@
 				<br>
-				<button class="btn waves-effect" onclick="closedrop()" data-trans="close">@@close@@</button>
+				<button class="btn waves-effect" onclick="closedrop()">@@close@@</button>
 			</div>
 		</div>
 	</div>
@@ -1010,8 +1043,8 @@
 						<i class="material-icons" title="@@nanoDes@@TheDesk Nano"
 							data-trans-title="nano_desp">remove_from_queue</i>
 					</a>
-					<a onclick="menu()" class="nex waves-effect" id="list-tgl">
-						<i class="material-icons" title="@@list@@">apps</i>
+					<a onclick="menu()" class="nex waves-effect">
+						<i class="material-icons" title="@@menu@@">apps</i>
 					</a>
 					<span id="fukidashi">@@hereAddColumns@@</span>
 				</div>

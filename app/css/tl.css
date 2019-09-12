@@ -24,6 +24,10 @@
   z-index: 500;
   box-shadow: 10px 0 10px 10px rgba(0, 0, 0, 0.2);
 }
+#demobottom {
+  width: 500px;
+  display: flex;
+}
 #bottom.reverse {
   padding-left: 0;
   padding-right: 40px;
@@ -41,7 +45,7 @@
 #bottom .trendtag {
   height: 40px;
 }
-#bottom #group {
+#bottom #group, #demogroup {
   margin-right: 40px;
 }
 #bottom .leftside {
@@ -54,7 +58,7 @@
 #bottom #tips img {
   vertical-align: -3px;
 }
-#bottom a {
+#bottom a, #demogroup a {
   color: var(--color);
 }
 #bottom i {
@@ -66,7 +70,7 @@
 .exc-chb {
   padding-left: 24px !important;
 }
-#bottom .btnsgroup {
+.btnsgroup {
   border: 1px solid;
   padding-top: 1px;
   padding-left: 5px;
