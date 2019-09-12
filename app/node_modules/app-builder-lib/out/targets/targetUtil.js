@@ -1,0 +1,76 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createStageDir = createStageDir;
+exports.createStageDirPath = createStageDirPath;
+exports.getWindowsInstallationDirName = getWindowsInstallationDirName;
+exports.StageDir = void 0;
+
+function _fsExtra() {
+  const data = require("fs-extra");
+
+  _fsExtra = function () {
+    return data;
+  };
+
+  return data;
+}
+
+var path = _interopRequireWildcard(require("path"));
+
+function _builderUtil() {
+  const data = require("builder-util");
+
+  _builderUtil = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+class StageDir {
+  constructor(dir) {
+    this.dir = dir;
+  }
+
+  getTempFile(name) {
+    return this.dir + path.sep + name;
+  }
+
+  cleanup() {
+    if (!_builderUtil().debug.enabled || process.env.ELECTRON_BUILDER_REMOVE_STAGE_EVEN_IF_DEBUG === "true") {
+      return (0, _fsExtra().remove)(this.dir);
+    }
+
+    return Promise.resolve();
+  }
+
+  toString() {
+    return this.dir;
+  }
+
+}
+
+exports.StageDir = StageDir;
+
+async function createStageDir(target, packager, arch) {
+  return new StageDir((await createStageDirPath(target, packager, arch)));
+}
+
+async function createStageDirPath(target, packager, arch) {
+  const tempDir = packager.info.stageDirPathCustomizer(target, packager, arch);
+  await (0, _fsExtra().emptyDir)(tempDir);
+  return tempDir;
+} // https://github.com/electron-userland/electron-builder/issues/3100
+// https://github.com/electron-userland/electron-builder/commit/2539cfba20dc639128e75c5b786651b652bb4b78
+
+
+function getWindowsInstallationDirName(appInfo, isTryToUseProductName) {
+  return isTryToUseProductName && /^[-_+0-9a-zA-Z .]+$/.test(appInfo.productFilename) ? appInfo.productFilename : appInfo.sanitizedName;
+} 
+// __ts-babel@6.0.4
+//# sourceMappingURL=targetUtil.js.map

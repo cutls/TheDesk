@@ -10,7 +10,6 @@ app/.DS_Store
 .vscode/*
 enq.md
 app/.tkn
-app/node_modules
 app/js/login/tkn.js
 app/package-lock.json
 app/view/en
