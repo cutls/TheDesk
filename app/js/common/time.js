@@ -37,7 +37,6 @@
     }
   };
   var $t = $.timeago;
-
   $.extend($.timeago, {
     settings: {
       refreshMillis: 60000,
@@ -47,22 +46,22 @@
       cutoff: 0,
       autoDispose: true,
       strings: {
-        prefixAgo: null,
-        prefixFromNow: "今から",
-        suffixAgo: "",
-        suffixFromNow: "",
-        inPast: '',
-        seconds: "%d秒前",
-        minute: "1分前",
-        minutes: "%d分前",
-        hour: "1時間前",
-        hours: "%d時間前",
-        day: "昨日",
-        days: "%d日前",
-        month: "昨月",
-        months: "%dヶ月前",
-        year: "去年",
-        years: "%d年前",
+        prefixAgo: lang.lang_time_prefixAgo,
+        prefixFromNow: lang.lang_time_prefixFromNow,
+        suffixAgo: lang.lang_time_suffixAgo,
+        suffixFromNow: lang.lang_time_suffixFromNow,
+        inPast: lang.lang_time_inPast,
+        seconds: lang.lang_time_seconds,
+        minute: lang.lang_time_minute,
+        minutes: lang.lang_time_minutes,
+        hour: lang.lang_time_hour,
+        hours: lang.lang_time_hours,
+        day: lang.lang_time_day,
+        days: lang.lang_time_days,
+        month: lang.lang_time_month,
+        months: lang.lang_time_months,
+        year: lang.lang_time_year,
+        years: lang.lang_time_years,
         wordSeparator: " ",
         numbers: []
       }

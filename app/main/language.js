@@ -1,8 +1,12 @@
 // Create the Application's main menu
-function templete(lang, mainWindow, packaged, dir) {
+function templete(lang, mainWindow, packaged, dir, dirname) {
+    if(lang !="ja" && lang != "en"){
+        lang = "en"
+    }
     const electron = require("electron");
     const app = electron.app;
     const BrowserWindow = electron.BrowserWindow;
+    const join = require('path').join;
     const dict = {
         "application": {
             "ja": "アプリケーション",
@@ -98,9 +102,9 @@ function templete(lang, mainWindow, packaged, dir) {
                             webviewTag: false,
                             nodeIntegration: false,
                             contextIsolation: true,
-                            preload: "../js/platform/preload.js"
+                            preload: join(dirname , "js", "platform", "preload.js")
                         },
-                        width: 300, height: 460,
+                        width: 300, height: 500,
                         "transparent": false,    // ウィンドウの背景を透過
                         "frame": false,     // 枠の無いウィンドウ
                         "resizable": false

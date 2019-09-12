@@ -2,6 +2,15 @@
 //✕隠す
 function hide() {
 	$("#right-side").hide()
+	$("#right-side").css("width", "300px")
+	$("#left-side").css("width", "100%")
+	var width = localStorage.getItem("postbox-width");
+	if(width){
+		width = width.replace("px", "") * 1
+	} else {
+		width = 300
+	}
+	$("#post-box").css("width", width)
 	$('#post-box').fadeOut()
 	$("#post-box").removeClass("appear")
 	$("#emoji").addClass("hide")
@@ -38,6 +47,12 @@ function show() {
 	}
 	$('#post-box').css("left", left + "px")
 	$('#post-box').css("top", top + "px")
+	var width = localStorage.getItem("postbox-width");
+	if (width) {
+		$('#post-box').css("width", width + "px")
+	} else {
+		$('#post-box').css("width", "300px")
+	}
 	$('#post-box').fadeIn();
 	$('#textarea').characterCounter();
 }
@@ -60,6 +75,14 @@ $(function () {
 			}
 			localStorage.setItem("postbox-left", left);
 			localStorage.setItem("postbox-top", top);
+		}
+	});
+	$("#post-box").resizable({
+		minHeight: 150,
+		minWidth: 100,
+		stop: function (event, ui) {
+			$("#textarea").blur()
+			localStorage.setItem("postbox-width", ui.size.width);
 		}
 	});
 });

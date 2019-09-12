@@ -2,18 +2,17 @@
 <html lang="@@lang@@">
 
 <head>
-	<title>TheDesk</title>
+	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="../../js/ui/theme.js"></script>
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-		integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<link href="../../node_modules/jquery-ui-dist/jquery-ui.min.css" type="text/css" rel="stylesheet">
 	<link href="../../css/tl.css" rel="stylesheet" type="text/css">
 	<link href="../../css/userdata.css" rel="stylesheet" type="text/css">
 	<link href="../../css/post.css" rel="stylesheet" type="text/css">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
 	<link href="../../css/sort.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300|Baloo+Bhai" rel="stylesheet">
+	<link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
 	<meta charset="utf-8">
 	@@comment-start@@
 	<script type="text/javascript">
@@ -26,20 +25,9 @@
 </head>
 
 <body>
-	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="../../js/platform/first.js"></script>
-	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
-	<script type="text/javascript" src="../../js/lang/lang.@@lang@@.js"></script>
-	<script type="text/javascript" src="../../js/common/time.js"></script>
-	<script type="text/javascript" src="../../js/common/blurhash.js"></script>
-	<script type="text/javascript" src="../../js/common/version.js"></script>
-	<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
-	<script type="text/javascript" src="../../js/common/modal.js"></script>
-	<script type="text/javascript" src="../../js/ui/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
-	<script type="text/javascript" src="../../js/platform/punycode.js"></script>
 	<script>
 		var ver = "@@versionLetter@@";
+		var gitHash = "@@gitHash@@"
 		//betaを入れるとバージョンチェックしない
 		//GitHubに上げるときはindex.htmlをちゃんとする。(index.start.html)
 		//var ver="beta";
@@ -67,12 +55,12 @@
 			<div class="row" style="margin-bottom:0;">
 				</span>
 				<div class="" style="float:left;">
-					<a onclick="profShow()" style="vertical-align:-2.5rem;" class="pointer mize">
+					<a onclick="profShow()" style="vertical-align:-1.7rem;" class="pointer mize">
 						<img src="../../img/missing.svg" id="acct-sel-prof" title="@@showSelectProf@@(Ctrl+Shift+P)"
 							data-trans-title="post_box_prof" width="24px">
 					</a>
 				</div>
-				<div class="input-field mize" style="float:left; width:calc(100% - 24px)">
+				<div class="input-field mize" style="float:left; width:calc(100% - 24px); margin-top:0;">
 					<select id="post-acct-sel" class="acct-sel" onchange="mdCheck()"></select>
 				</div>
 				<span class="cancel">
@@ -148,7 +136,7 @@
 							<a onclick="previewEdit()">Edit</a>
 						</span>
 					</div>
-					<div class="input-field col s12" id="toot-field" style="margin-top: 10px;">
+					<div class="input-field col s12" id="toot-field" style="margin-top: 0;margin-bottom: 0;">
 
 						<textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;"
 							data-length="500"></textarea>
@@ -181,8 +169,8 @@
 						<div id="preview" class="mize"></div>
 						<span class=" sml mize"><span data-trans="reply">@@replyMode@@</span>:
 							<span id="rec">@@no@@</span>/<span data-trans="file">@@temp@@</span>:
-							<span id="mec">@@nothing@@</span>/<span data-trans="vis">@@vis@@</span>:
-							<span id="vis">public</span>
+							<span id="mec">@@nothing@@</span>/@@poll@@:<span id="pollsta">@@no@@</span>
+							<span id="vis" class="hide">public</span>
 						</span>
 						<br>
 						<input type="text" id="cw-text" placeholder="@@cwtext@@" class="mize" style="margin:0">
@@ -232,6 +220,7 @@
 				</ul>
 				<!--hidden area-->
 				<input type="hidden" id="reply">
+				<input type="hidden" id="quote">
 				<input type="hidden" id="media">
 				<!--END hidden area-->
 			</div>
@@ -244,9 +233,9 @@
 			</div>
 		</div>
 		<div id="right-side">
-			<div id="suggest"></div>
+			<div id="suggest" class="right-side-content"></div>
 			<!--絵文字ピッカー-->
-			<div id="emoji" class="hide">
+			<div id="emoji" class="hide right-side-content">
 				<span class="gray sml">@@emojiWarn@@
 					<a onclick="emojiGet('true')" class="pointer">@@refreshEmoji@@</a>
 					<br>
@@ -301,12 +290,8 @@
 				</div>
 			</div>
 			<!--Poll UI-->
-			<div id="poll" class="hide">
-				<select id="poll-sel" onchange="pollProviderCk()">
-					<option value="nothing">@@pollDdisabled@@</option>
-					<option value="mastodon-poll">Mastodon(2.8~)</option>
-				</select>
-				<div id="mastodon-poll" class="poll-provider hide">
+			<div id="poll" class="hide right-side-content">
+				<div id="mastodon-poll" class="poll-provider">
 					<input type="text" class="mastodon-choice" placeholder="@@choice@@1">
 					<input type="text" class="mastodon-choice" placeholder="@@choice@@2">
 					<input type="text" class="mastodon-choice" placeholder="@@choice@@3">
@@ -438,186 +423,197 @@
 	<div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
 		<div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
 			<div id="his-data-show">
-				<div class="his-float" id="his-float-data">
-					<div id="his-basic-prof">
-						<img src="../../img/loading.svg" id="his-prof" draggable="false">
-						<span id="his-name">Loading...</span><span class="gray" id="his-bot"></span>
-						<br>@
-						<span id="his-acct"></span><br>
-						<span class="gray" id="his-relation"></span>
-						<br>
-						<span class="cbadge">
-							<span id="his-sta"></span>@@toots@@
-						</span>
-						<span class="cbadge">@@follow@@:
-							<span id="his-follow"></span>
-						</span>
-						<span class="cbadge">@@follower@@:
-							<span id="his-follower"></span>
-						</span><br>
-						<span class="cbadge" style="max-width:150px; width:150px; ">Since:
-							<span id="his-since"></span>
-						</span>
-						<div id="his-proof-prof"></div>
-					</div>
-					<div id="his-des" data-acct=""></div><br>
-					<div id="his-plus-action">
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
-							onclick="empUser()">@@empUser@@</a>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
-							id="his-end-btn" onclick="pinUser()">@@endorse@@</a><br>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
-							onclick="profbrws()">@@openinbrowser@@</a>
-						<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data" id="his-main-acct"
-							onclick="setMain()" style="width: calc(100% - 10px)">@@mainacct@@</a><br>
-					</div><br>
-					<div id="his-matching-list">
-						@@likeUserDes@@<br>
-						Powered by <a href="https://vinayaka.distsn.org/" target="_blank">Mastodon User Matching</a><br>
-						<div id="his-matching-list-contents" class="cont-series"></div>
-						<button class="btn waves-effect " onclick="showMat()" style="width:100%;">@@get@@</button>
-					</div>
-				</div>
-				<div class="his-float" id="his-float-timeline">
-					<div id="my-data-nav">
-						<ul class="tabs transparent">
-							<li class="tab col my-data-width active-back column-first">
-								<a go="#his-tl" title="@@timeline@@"><i class="material-icons">timeline</i></a>
-							</li>
-							<li class="tab col my-data-width">
-								<a go="#his-follow-list" title="@@follow@@"><i class="material-icons">people</i>→</a>
-							</li>
-							<li class="tab col my-data-width">
-								<a go="#his-follower-list" title="@@follower@@"><i
-										class="material-icons">people</i>←</a>
-							</li>
-							<li class="tab col my-data-width only-his-data">
-								<a go="#his-action" title="@@operateOtherAcct@@"><i
-										class="material-icons">account_box</i></a>
-							</li>
-							<li class="tab col my-data-width only-his-data">
-								<a go="#his-list" title="@@list@@"><i class="material-icons">list</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-fav-list" title="@@favRegist@@"><i class="material-icons">star</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-blocking-list" title="@@blocks@@"><i class="material-icons">block</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-blocking-list" title="@@blocks@@"><i
-										class="material-icons">voice_over_off</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-domain-list" title="@@domainBlock@@"><i
-										class="material-icons">language</i><i class="material-icons">block</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-prof-list" title="@@editProf@@"><i class="material-icons">create</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-request-list" title="@@followReq@@"><i
-										class="material-icons">how_to_reg</i></a>
-							</li>
-							<li class="tab col my-data-width only-my-data">
-								<a go="#his-follow-recom-list" title="@@frc@@"><i
-										class="material-icons">recent_actors</i></a>
-							</li>
-						</ul>
-					</div>
-					<div id="his-tl" class="tab-content">
-						<div id="his-tl-contents" class="cont-series">
+				<div id="his-data-wrap">
+					<div class="his-float" id="his-float-data">
+						<div id="his-leftside">
+							<div id="his-basic-prof">
+								<img src="../../img/loading.svg" id="his-prof" draggable="false">
+								<span id="his-name">Loading...</span><span class="gray" id="his-bot"></span>
+								<br>@
+								<span id="his-acct"></span><br>
+								<span class="gray" id="his-relation"></span>
+								<br>
+								<span class="cbadge">
+									<span id="his-sta"></span>@@toots@@
+								</span>
+								<span class="cbadge">@@follow@@:
+									<span id="his-follow"></span>
+								</span>
+								<span class="cbadge">@@follower@@:
+									<span id="his-follower"></span>
+								</span><br>
+								<span class="cbadge" style="max-width:150px; width:150px; ">Since:
+									<span id="his-since"></span>
+								</span>
+								<div id="his-proof-prof"></div>
+							</div>
+							<div id="his-des" data-acct=""></div><br>
+							<div id="his-plus-action">
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
+									onclick="empUser()">@@empUser@@</a>
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
+									id="his-end-btn" onclick="pinUser()">@@endorse@@</a><br>
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
+									onclick="profbrws()">@@openinbrowser@@</a>
+								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data"
+									id="his-main-acct" onclick="setMain()"
+									style="width: calc(100% - 10px)">@@mainacct@@</a><br>
+							</div>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="utl('--now','more')">@@more@@</button>
 					</div>
-					<div id="his-follow-list" class="tab-content">
-						<div id="his-follow-list-contents" class="cont-series">
+					<div class="his-float" id="his-float-timeline">
+						<div id="my-data-nav">
+							<a go="#his-tl" title="@@timeline@@"
+								class="btn active-back column-first anc-link waves-effect"><i
+									class="material-icons">timeline</i>@@timeline@@</a>
+							<a go="#his-follow-list" title="@@follow@@" class="btn anc-link waves-effect"><i
+									class="material-icons">people</i>→@@follow@@</a>
+							<a go="#his-follower-list" title="@@follower@@" class="btn anc-link waves-effect"><i
+									class="material-icons">people</i>←@@follower@@</a>
+							<a go="#his-list" title="@@list@@" class="btn only-his-data anc-link waves-effect"><i
+									class="material-icons">list</i>@@list@@</a>
+							<a go="#his-fav-list" title="@@favRegist@@"
+								class="btn only-my-data anc-link waves-effect"><i
+									class="material-icons">star</i>@@favRegist@@</a>
+							<a class="dropdown-trigger btn waves-effect" href="#" data-target="hisdropdown"><i
+									class="material-icons">more_vert</i>@@more@@</a>
+							<!-- Dropdown Structure -->
+							<ul id="hisdropdown" class="dropdown-content">
+								<li class="anc-link only-my-data" go="#his-blocking-list">
+									<a href="#" title="@@blocks@@"><i class="material-icons">block</i>@@blocks@@</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-muting-list">
+									<a href="#" title="@@mute@@"><i
+											class="material-icons">voice_over_off</i>@@mute@@</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-domain-list">
+									<a href="#" title="@@domainBlock@@"><i
+											class="material-icons">cancel_schedule_send</i>@@domainBlock@@</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-prof-list">
+									<a href="#" title="@@editProf@@"><i
+											class="material-icons">create</i>@@editProf@@</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-request-list">
+									<a href="#" title="@@followReq@@"><i
+											class="material-icons">how_to_reg</i>@@followReq@@</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-follow-recom-list">
+									<a href="#" title="@@frc@@"><i class="material-icons">recent_actors</i>@@frc@@</a>
+								</li>
+								<li class="anc-link only-his-data" go="#his-action">
+									<a href="#" title="@@operateOtherAcct@@"><i
+											class="material-icons">account_box</i>@@operateOtherAcct@@</a>
+								</li>
+								<li class="anc-link" go="#his-matching-list">
+									<a href="#" title="@@likeUserDes@@"><i class="material-icons">group_work</i>User
+										Matching</a>
+								</li>
+							</ul>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="flw('--now','more')">@@more@@</button>
-					</div>
-					<div id="his-follower-list" class="tab-content">
-						<div id="his-follower-list-contents" class="cont-series">
+						<div id="his-tl" class="his-var-content">
+							<div id="his-tl-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="utl('--now','more')">@@more@@</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="fer('--now','more')">@@more@@</button>
-					</div>
-					<div id="his-action" class="tab-content">
-						@@useOtherAcct1@@@@revoverJP@@@@follow@@(@@warnUseOtherAcct@@)<br>
-						<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>
-						@@revoverJPde@@
-						<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">@@follow@@</a><br>
-						@@or@@<br>
-						<a href="#!" class="waves-effect btn"
-							onclick="udgEx('selector', 'selector')">@@openProf@@</a><br>
-					</div>
-					<div id="his-list" class="tab-content">
-						<div id="his-lists-a">@@warnListRegist@@</div>
+						<div id="his-follow-list" class="his-var-content">
+							<div id="his-follow-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="flw('--now','more')">@@more@@</button>
+						</div>
+						<div id="his-follower-list" class="his-var-content">
+							<div id="his-follower-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="fer('--now','more')">@@more@@</button>
+						</div>
+						<div id="his-action" class="his-var-content">
+							@@useOtherAcct1@@@@revoverJP@@@@follow@@(@@warnUseOtherAcct@@)<br>
+							<div style="max-width:500px;"><select id="user-acct-sel" class="acct-sel"></select></div>
+							@@revoverJPde@@
+							<a href="#!" class="waves-effect btn" onclick="follow('selector','true')">@@follow@@</a><br>
+							@@or@@<br>
+							<a href="#!" class="waves-effect btn"
+								onclick="udgEx('selector', 'selector')">@@openProf@@</a><br>
+						</div>
+						<div id="his-list" class="his-var-content">
+							<div id="his-lists-a">@@warnListRegist@@</div>
 
-						<div id="his-lists-b"></div>
-					</div>
-					<div id="his-fav-list" class="tab-content">
-						<div id="his-fav-list-contents" class="cont-series">
+							<div id="his-lists-b"></div>
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;"
-							onclick="showFav('more')">@@more@@</button>
-					</div>
-					<div id="his-blocking-list" class="tab-content">
-						<div id="his-blocking-list-contents" class="cont-series">
+						<div id="his-fav-list" class="his-var-content">
+							<div id="his-fav-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect" style="width:100%; padding:0;"
+								onclick="showFav('more')">@@more@@</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showBlo('more')">@@more@@</button>
-					</div>
-					<div id="his-muting-list" class="tab-content">
-						<div id="his-muting-list-contents" class="cont-series">
+						<div id="his-blocking-list" class="his-var-content">
+							<div id="his-blocking-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showBlo('more')">@@more@@</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showMut('more')">@@more@@</button>
-					</div>
-					<div id="his-domain-list" class="tab-content">
-						<div id="his-domain-list-contents" class="cont-series">
+						<div id="his-muting-list" class="his-var-content">
+							<div id="his-muting-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showMut('more')">@@more@@</button>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showDom('more')">@@more@@</button>@@blockDomain@@
-						<br>
-						<input type="text" placeholder="example.com" id="domainblock">
-						<button class="btn waves-effect" onclick="addDomainblock()">@@add@@</button>
-						<br>
-					</div>
-					<div id="his-prof-list" class="tab-content">@@name@@
-						<br>
-						<input type="text" placeholder="@@name@@" id="his-name-val" style="max-width:250px;">
-						<br>@@note@@
-						<br>
-						<div class="input-field col s12">
-							<textarea placeholder="@@note@@" id="his-des-val" class="materialize-textarea"></textarea>
-							<label for="his-des-val">@@note@@</label>
+						<div id="his-domain-list" class="his-var-content">
+							<div id="his-domain-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showDom('more')">@@more@@</button>@@blockDomain@@
+							<br>
+							<input type="text" placeholder="example.com" id="domainblock">
+							<button class="btn waves-effect" onclick="addDomainblock()">@@add@@</button>
+							<br>
 						</div>
-						<button class="btn waves-effect" style="width:100%; padding:0;"
-							onclick="profedit()">@@change@@</button>
-						<br>@@editProfImg@@:
-						<span id="prof-change">
-							<input type="file" onchange="imgChange(this,'avatar')">
-						</span>
-						<br>@@editHeader@@:
-						<span id="header-change">
-							<input type="file" onchange="imgChange(this,'header')">
-						</span>
-					</div>
-					<div id="his-request-list" class="tab-content">
-						<div id="his-request-list-contents" class="cont-series">
+						<div id="his-prof-list" class="his-var-content">@@name@@
+							<br>
+							<input type="text" placeholder="@@name@@" id="his-name-val" style="max-width:250px;">
+							<br>@@note@@
+							<br>
+							<div class="input-field col s12">
+								<textarea placeholder="@@note@@" id="his-des-val"
+									class="materialize-textarea"></textarea>
+								<label for="his-des-val">@@note@@</label>
+							</div>
+							<button class="btn waves-effect" style="width:100%; padding:0;"
+								onclick="profedit()">@@change@@</button>
+							<br>@@editProfImg@@:
+							<span id="prof-change">
+								<input type="file" onchange="imgChange(this,'avatar')">
+							</span>
+							<br>@@editHeader@@:
+							<span id="header-change">
+								<input type="file" onchange="imgChange(this,'header')">
+							</span>
 						</div>
-						<button class="btn waves-effect " style="width:100%; padding:0;"
-							onclick="showReq('more')">@@more@@</button>
-					</div>
-					<div id="his-follow-recom-list" class="tab-content">
-						<div id="his-follow-recom-contents" class="cont-series">
+						<div id="his-request-list" class="his-var-content">
+							<div id="his-request-list-contents" class="cont-series">
+							</div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="showReq('more')">@@more@@</button>
+						</div>
+						<div id="his-follow-recom-list" class="his-var-content">
+							<div id="his-follow-recom-contents" class="cont-series">
+							</div>
+						</div>
+						<div id="his-matching-list" class="his-var-content">
+							@@likeUserDes@@<br>
+							Powered by <a href="https://distsn.org/" target="_blank">Mastodon User
+								Matching</a><br>
+							<div id="his-matching-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect " onclick="showMat()"
+								style="width:100%; padding:0;">@@get@@</button>
+						</div>
+						<div id="his-float-blocked">
+							<div>@@blocked@@</div>
 						</div>
 					</div>
-				</div>
-				<div class="his-float" id="his-float-blocked">
-					<div>@@blocked@@</div>
 				</div>
 			</div>
 		</div>
@@ -681,21 +677,30 @@
 			<a href="https://thedesk.top" target="_blank">HP</a><br>
 			<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br>
 			<br>
-			<div id="release-Usamin_18-7-0" class="release-do" style="display:none; ">
+			<div id="release-Usamin_18-9-2" class="release-do" style="display:none; ">
 				<a href="https://code.cutls.com/thedesk-log/" target="_blank">開発の経緯</a><br>
 				<a href="https://ja.mstdn.wiki/TheDesk" target="_blank">機能一覧</a><br>
 				Pixiv Fanboxでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。最低月一更新。<br>
 				困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-				<h5>Release Note Usamin (18.7.0)</h5>
-				<span style="font-size :120%">・<u>トゥートを矢印キーで選択してR,B,Fで返信,BT,ふぁぼ</u></span><br>
-				・Pleromaでトゥート内のトゥートへのリンクをクリックしたときの挙動を修正。<br>
-				・アップロードに失敗したときに何もできなくなるバグを修正。<br>
-				・設定画面の詳細説明が表示されないバグを修正。<br>
-				・カラム名がオーバーフローしてしまうバグを修正。<br>
-				・トゥートのリプライ元をたどる挙動を修正。<br>
-				・カードが長くて(特にSpotify)邪魔な問題を修正。<br>
-				・トゥート詳細画面でレイアウトが崩れる不具合を修正。<br>
-				・このクライアントは勝手に特定のドメインをブロックするみたいなことはしていません。
+				<h5>Release Note Usamin (18.9.2)</h5>
+				・トゥートボックスが閉じない、消えない不具合を修正。
+				<h5>Release Note Usamin (18.9.1)</h5>
+				・トゥートボックスのリサイズを横だけにした<br>
+				・アンケートが上手く作成できない不具合を修正。
+				<h5>Release Note Usamin (18.9.0)</h5>
+				・設定エクスポートファイルが変更された<br>
+				　.thedeskconfigv2: 17.2.0~18.8.3<br>
+				　.thedeskconfig: 16.0.1~17.2.0<br>
+				　.json5: 本バージョン以降<br>
+				　<u>エクスポート可能な形式</u><br>
+				　.json5<br>
+				　<u>インポート可能な形式</u><br>
+				　.thedeskconfigv2, .thedeskconfig, .json5<br>
+				・カスタムCSSを読み込める(自己責任): macOS: /Users/:user/Library/Application Support/TheDesk | Windows: C:\Users\:user\AppData\Roaming\thedesk<br>
+				・(v3.0|m追従)プロフィールディレクトリ読み込み<br>
+				・(v3.0|m追従)最終アクティブ時間をユーザー一覧表示時に一緒に表示<br>
+				・自己紹介をユーザー一覧表示時に一緒に表示<br>
+				・メニューとトゥートボックスがリサイズ可能になった<br>
 			</div>
 			<div id="release-en" style="display:none">
 				<h5>Let's make it native!</h5>
@@ -711,6 +716,10 @@
 			<a class="btn-share btn waves-effect waves-light red darken-2" href="https://www.patreon.com/cutls"
 				target="_blank">
 				@@PatreonSupport@@
+			</a>
+			<a class="btn-share btn waves-effect waves-light black-text" href="https://liberapay.com/cutls"
+				target="_blank" style="background-color: #f6c915">
+				Liberapay
 			</a>
 			<a class="btn-share btn waves-effect waves-light blue"
 				href="https://www.amazon.co.jp/registry/wishlist/2TV35ZHHJPDSB" target="_blank">
@@ -750,6 +759,8 @@
 						class="material-icons">search</i><span>@@search@@</span></div>
 				<div class="waves-effect" onclick="listMenu()" id="listMenu"><i
 						class="material-icons">view_headline</i><span>@@list@@</span></div>
+				<div class="waves-effect" onclick="dirMenu()" id="dirMenu"><i
+						class="material-icons">recent_actors</i><span>@@directory@@</span></div>
 				<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i
 						class="material-icons">filter_list</i><span>@@filter@@</span></div>
 				<div class="waves-effect" onclick="help()"><i
@@ -838,6 +849,36 @@
 						<div id="src-contents">
 						</div>
 					</div>
+				</div>
+				<!--ディレクトリ-->
+				<div id="dir-box" class="hide menu-content">
+					<div class="input-field">
+						<select id="dir-acct-sel" class="acct-sel" onchange="dirselCk()"></select>
+					</div>
+					<div id="dirNoAuth" class="hide">
+						<input id="dirNoAuth-url" type="text" class="validate" style="width:calc( 70% - 40px);"
+							placeholder="e.g:mastodon.social">
+						<button class="btn waves-effect indigo" style="width: 120px;padding: 0;padding-left: 15px;"
+							onclick="directory()">
+							<i class="material-icons left" style="margin:0">search</i>@@show@@
+						</button>
+					</div>
+					<label>
+						<input class="with-gap" onchange="directory()" name="sort" type="radio" value="active" checked>
+						<span>@@active@@</span>
+					</label>
+					<label>
+						<input class="with-gap" onchange="directory()" name="sort" type="radio" value="new">
+						<span>@@newcomer@@</span>
+					</label><br>
+					<label>
+						<input type="checkbox" class="filled-in" id="local_only" value="true" onchange="directory()" />
+						<span>@@local_only@@</span>
+					</label>
+					<div id="dir-contents"></div>
+					<button class="btn waves-effect teal disabled" style="width: 100%" id="moreDir"
+						onclick="directory('more')">@@more@@
+					</button>
 				</div>
 				<!--並べ替え-->
 				<div id="sort-box" class="hide menu-content">
@@ -942,14 +983,14 @@
 		<!--TLのTL-->
 		<div id="timeline-container">
 			<div id="something-wrong">
-				<img src="" style="width:150px;margin:5px;display:none;" draggable="false">
-				<div>@@helloTheDesk@@</div>
+				<img src="../../img/desk.svg" style="width:150px;margin:5px;display:none;" draggable="false">
+				<div class="stw" style="display: none">@@helloTheDesk@@</div>
 			</div>
 		</div>
 	</div>
 	</div>
 	<!--bottom-->
-	<div id="bottom" class="reverse">
+	<div id="bottom" class="reverse hide">
 		<div class="leftside reverse">
 			<div id="dambox">
 				<button id="posttgl" class="btn waves-effect"
@@ -998,10 +1039,10 @@
 				</div>
 			</div>
 			<div id="tips" class="hide">
-				<a onclick="tipsToggle()" class="nex waves-effect" style="float:left">
+				<a onclick="tipsToggle()" class="nex waves-effect">
 					<i class="material-icons nex" title="@@changeTips@@" data-trans-title="tips">bubble_chart</i>
 				</a>
-				<div id="tips-text" style="float:left; width:300px;"></div>
+				<div id="tips-text" style="width:300px;"></div>
 			</div>
 		</div>
 	</div>
@@ -1012,7 +1053,7 @@
 			(これは支援の有無に関わらず定期的に出ます。)<br>
 			あなたのMastodon, Misskeyライフを邪魔してしまって申し訳ありません。<br>
 			乞食のようなマネをしてご支援をお願いするのもどうかと思いますが、少々お時間をください。<br>
-			<br>
+			ご安心ください。インターネット上のフリー百科事典のような高圧的支援要求はいたしません。コーヒーも要求いたしません。<br>
 			あなたはMastodon, MisskeyクライアントにTheDeskを選びました。これは奇跡的なことです。今考えればブラウザからアクセスした方が良かったのではと感じることかと存じます。<br>
 			それでも、あなたはTheDeskを使っています。<br>
 			TheDeskは2018年1月13日に最初のバージョンが出ました。それから圧倒的な機能数でゴリ押しするクライアントになっています。<br>
@@ -1036,6 +1077,10 @@
 			<a class="btn-share btn waves-effect waves-light red darken-2" href="https://www.patreon.com/cutls"
 				target="_blank">
 				@@PatreonSupport@@
+			</a>
+			<a class="btn-share btn waves-effect waves-light black-text" href="https://liberapay.com/cutls"
+				target="_blank" style="background-color: #f6c915">
+				Liberapay
 			</a>
 		</div>
 		<div id="support-btm-right">
@@ -1061,6 +1106,20 @@
 	<!--Radio Happy(Yui) Taku Inoue-->
 	<audio src="" id="radio"></audio>
 	<!--JS-->
+	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../../js/platform/first.js"></script>
+	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
+	<script type="text/javascript" src="../../js/lang/lang.@@lang@@.js"></script>
+	<script type="text/javascript" src="../../js/common/time.js"></script>
+	<script type="text/javascript" src="../../js/common/blurhash.js"></script>
+	<script type="text/javascript" src="../../js/common/version.js"></script>
+	<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
+	<script type="text/javascript" src="../../js/common/modal.js"></script>
+	<script type="text/javascript" src="../../node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script type="text/javascript" src="../../js/platform/punycode.js"></script>
+
+
 	<script type="text/javascript" src="../../js/ui/tips.js"></script>
 	<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
 	<script type="text/javascript" src="../../js/common/about.js"></script>
@@ -1076,6 +1135,7 @@
 	<script type="text/javascript" src="../../js/tl/datails.js"></script>
 	<script type="text/javascript" src="../../js/tl/mix.js"></script>
 	<script type="text/javascript" src="../../js/tl/src.js"></script>
+	<script type="text/javascript" src="../../js/tl/directory.js"></script>
 	<script type="text/javascript" src="../../js/tl/filter.js"></script>
 	<script type="text/javascript" src="../../js/tl/tag.js"></script>
 	<script type="text/javascript" src="../../js/tl/list.js"></script>
@@ -1086,7 +1146,6 @@
 	<script type="text/javascript" src="../../js/login/instance.js"></script>
 	<script type="text/javascript" src="../../js/login/login.js"></script>
 	<script type="text/javascript" src="../../js/ui/img.js"></script>
-	<script type="text/javascript" src="../../js/ui/theme.js"></script>
 	<script type="text/javascript" src="../../js/ui/pip.js"></script>
 	<script type="text/javascript" src="../../js/ui/sort.js"></script>
 	<script type="text/javascript" src="../../js/ui/spotify.js"></script>

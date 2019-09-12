@@ -79,6 +79,10 @@ function post(mode, postvis) {
 	if (media) {
 		toot.media_ids = media.split(",");
 	}
+	var quote = $("#quote").val();
+	if (quote) {
+		toot.quote_id = quote;
+	}
 	if ($("#nsfw").hasClass("nsfw-avail")) {
 		var nsfw = "true";
 		toot.sensitive = nsfw;
@@ -110,7 +114,7 @@ function post(mode, postvis) {
 	} else {
 		var scheduled = "";
 	}
-	if ($("#poll-sel").val() == "mastodon-poll") {
+	if (!$("#poll").hasClass("hide")) {
 		var options = [];
 		$(".mastodon-choice").map(function () {
 			var choice = $(this).val();
@@ -243,6 +247,7 @@ function clear() {
 	}
 	$("#textarea").attr("placeholder", lang.lang_toot);
 	$("#reply").val("");
+	$("#quote").val("");
 	$("#media").val("");
 	var cwt = localStorage.getItem("cw-text");
 	if (cwt) {
@@ -274,6 +279,8 @@ function clear() {
 	$("#days_poll").val(0);
 	$("#hours_poll").val(0);
 	$("#mins_poll").val(6);
+	$("#poll").addClass("hide")
+	$("#pollsta").text(lang.lang_no)
 	$(".mastodon-choice").map(function () {
 		$(this).val("");
 	});

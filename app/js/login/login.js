@@ -3,6 +3,7 @@
 //アスタルテ判定初期化
 
 localStorage.removeItem("kirishima")
+localStorage.removeItem("quoters")
 localStorage.removeItem("imas")
 localStorage.removeItem("image");
 localStorage.removeItem("stable")
@@ -42,7 +43,8 @@ function ck() {
 			ticker();
 			multiSelector(false);
 			verck(ver);
-			$("#something-wrong img").attr("src", "../../img/thinkingdesk.png")
+			$(".stw").show()
+			$("#something-wrong img").attr("src", "../../img/thinking.svg")
 		}
 	}
 }
@@ -289,7 +291,7 @@ function refresh(target, loadskip) {
 		localStorage.setItem("user-id_" + target, json["id"]);
 		localStorage.setItem("prof_" + target, avatar);
 		localStorage.setItem("follow_" + target, json["following_count"]);
-		obj[target] = ref;
+		console.log(obj)
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
 		if (!loadskip) {
@@ -313,7 +315,6 @@ function ckdb(acct_id) {
 	localStorage.removeItem("followlocale_" + acct_id);
 	if (domain == "kirishima.cloud") {
 		localStorage.setItem("kirishima", "true");
-		$("#ranking-btn").show();
 	} else if (domain == "imastodon.net") {
 		localStorage.setItem("imas", "true");
 		$(".imasonly").show();
@@ -321,8 +322,13 @@ function ckdb(acct_id) {
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var bbcode = domain + "_bbcode";
 	var letters = domain + "_letters";
+	var quoteMarker = domain + "_quote";
 	if (localStorage.getItem("instance")) {
 		var json = JSON.parse(localStorage.getItem("instance"));
+		if (json[quoteMarker] == "enabled") {
+			localStorage.setItem("quoters", "true");
+			localStorage.setItem("quote_" + acct_id, "true");
+		}
 		if (json[bbcode]) {
 			if (json[bbcode] == "enabled") {
 				localStorage.setItem("bb_" + acct_id, "true");
@@ -450,7 +456,7 @@ function multiSelector(parseC) {
 					$("#local-button").removeClass("hide")
 				}
 				var profimg = acct.prof;
-				localStorage.setItem("prof_" + key, profimg);
+				//localStorage.setItem("prof_" + key, profimg);
 				if (!profimg) {
 					profimg = "../../img/missing.svg";
 				}
@@ -488,10 +494,11 @@ function multiSelector(parseC) {
 		});
 		$("#src-acct-sel").append('<option value="tootsearch">Tootsearch</option>');
 		$("#add-acct-sel").append('<option value="noauth">' + lang.lang_login_noauth + '</option><option value="webview">Twitter</option>');
+		$("#dir-acct-sel").append('<option value="noauth">' + lang.lang_login_noauth + '</option>');
 	}
 	$('select').formSelect();
 	if(!parseC){
-		parseColumn(true);
+		parseColumn(null, true);
 	}
 }
 

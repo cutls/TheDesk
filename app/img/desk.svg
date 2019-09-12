@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 4096 4096" style="enable-background:new 0 0 4096 4096;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:#545251;stroke:#040000;stroke-miterlimit:10;}
+	.st3{fill:#F0842E;}
+	.st4{fill:#364C9F;}
+	.st5{fill:#FFFFFF;stroke:#040000;stroke-miterlimit:10;}
+	.st6{fill-rule:evenodd;clip-rule:evenodd;fill:#040000;}
+	.st7{fill-rule:evenodd;clip-rule:evenodd;fill:none;}
+</style>
+<g id="レイヤー_1" class="st0">
+</g>
+<g id="レイヤー_2">
+	<polyline class="st1" points="1128.5,650.67 3378,1950 3378,2137 1128.5,3432.67 	"/>
+	<rect x="678.5" y="128.48" class="st2" width="450" height="3821.5"/>
+	
+		<rect x="1915.71" y="-583.55" transform="matrix(0.5 -0.866 0.866 0.5 225.753 2341.5386)" class="st3" width="450" height="3117.62"/>
+	
+		<rect x="1915.5" y="1555.41" transform="matrix(0.5 0.866 -0.866 0.5 3762.031 -299.6245)" class="st4" width="450" height="3105.58"/>
+	<path class="st5" d="M714.5,2953.5"/>
+	<path id="path1891" class="st6" d="M1592.47,2584h456.47c0-64.89-4.63-77.76-112.1-77.76c17.17-51.5,86.95-176.11,125.73-176.11
+		c34.31,0,75.24,1.89,75.24,80.17c0,88.87,149.56,232.16,185.82,173.7c54.04-87.12-92.91-60.55-92.91-270.65
+		c0-287.43,167.74-246.51,167.74-407.99c0-80.79-22.32-91.7-22.32-149.46c0-76.34,67.25-71.91,54.17-135.2
+		c-9.04-43.72-16.11-78.78-21.38-131.65c-3.74-37.51-4.93-77.5-43.9-75.89c-45.78,1.89-63.15,82.47-134.31,88.25
+		c-71.02,5.77-131.57-60.46-159.06-51c-27.25,9.38-18.68,83.32-2.52,135.83c25.4,82.54,80.79,189.86-20.2,206.02
+		c-100.99,16.16-274.69,32.32-399.92,197.94s-120.6,359.99-169.66,420.11C1314.72,2612.08,1146,2529.23,1146,2697.11
+		c0,75.16,127.35,129.27,147.55,105.03c20.2-24.24-171.62-96.46,43.01-181.78C1519.91,2547.46,1536.28,2532.58,1592.47,2584z"/>
+	<rect class="st7" width="4096" height="4096"/>
+	<path class="st1" d="M-58,1122"/>
+</g>
+</svg>

@@ -30,6 +30,8 @@ onmessage = function (e) {
         ipc.send('lang', e.data[1]);
     } else if (e.data[0] == "exportSettings") {
         ipc.send('exportSettings', e.data[1]);
+    }  else if (e.data[0] == "exportSettingsCoreComplete") {
+        ipc.send('export', e.data[1]);
     } else if (e.data[0] == "importSettings") {
         ipc.send('importSettings', e.data[1]);
     } else if (e.data[0] == "customSound") {
@@ -45,14 +47,12 @@ onmessage = function (e) {
     } else if (e.data[0] == "aboutData") {
         ipc.send('aboutData', "");
     } else if (e.data[0] == "itunes") {
-        console.log("NowPlaying" + ipc.listenerCount('itunes-np'))
-        if (ipc.listenerCount('itunes-np') > 1) {
-            return false;
-        } else {
-            ipc.send("itunes", e.data[1])
-        }
+        console.log("NowPlaying")
+        ipc.send("itunes", e.data[1])
     } else if (e.data[0] == "themeCSSRequest") {
         ipc.send('theme-css-request', e.data[1]);
+    } else if (e.data[0] == "customCSSRequest") {
+        ipc.send('custom-css-request', e.data[1]);
     } else if (e.data[0] == "downloadButton") {
         ipc.send('download-btn', e.data[1]);
     } else if (e.data[0] == "nano") {
@@ -64,7 +64,7 @@ ipc.send("getPlatform", "")
 ipc.on('platform', function (event, args) {
     localStorage.setItem("platform", args[0])
     localStorage.setItem("bit", args[1])
-    localStorage.setItem("about", JSON.stringify([args[2], args[3], args[4]]))
+    localStorage.setItem("about", JSON.stringify([args[2], args[3], args[4], args[5]]))
 })
 
 ipc.on('reload', function (event, arg) {
@@ -113,14 +113,13 @@ ipc.on('general-dl-message', function (event, arg) {
 })
 //setting.js
 ipc.on('langres', function (event, arg) {
-    location.href = "../" + lang + "/setting.html"
+    location.href = "../" + arg + "/setting.html"
 });
-ipc.on('exportSettingsFile', function (event, savedFiles) {
-    var exp = exportSettingsCore()
-    ipc.send('export', [savedFiles, JSON.stringify(exp)]);
-    postMessage(["alert", "Done"], "*")
-    //cards
-    //lang
+ipc.on('exportSettingsFile', function (event, arg) {
+    postMessage(["exportSettingsCore", arg], "*")
+});
+ipc.on('exportAllComplete', function (event, arg) {
+    postMessage(["alert", "Complete"], "*")
 });
 ipc.on('config', function (event, arg) {
     postMessage(["importSettingsCore", arg], "*")
@@ -148,7 +147,7 @@ ipc.on('theme-json-create-complete', function (event, args) {
     postMessage(["ctLoad", ""], "*")
 });
 //spotify.js
-ipc.once('itunes-np', function (event, arg) {
+ipc.on('itunes-np', function (event, arg) {
     postMessage(["npCore", arg], "*")
 })
 //tips.js

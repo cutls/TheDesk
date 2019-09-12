@@ -139,10 +139,13 @@ onmessage = function (e) {
 	} else if (e.data[0] == "toastSaved") {
 		M.toast({ html: lang.lang_img_DLDone + e.data[1][0] + '<button class="btn-flat toast-action" onclick="openFinder(\'' + e.data[1][1] + '\')">Show</button>', displayLength: 5000 })
 	} else if (e.data[0] == "parseColumn") {
-		parseColumn()
+		parseColumn(e.data[1])
 	} else if (e.data[0] == "exportSettingsCore") {
-		exportSettingsCore()
-	} else if (e.data[0] == "fontList") {
+		var exp = exportSettingsCore()
+		postMessage(["exportSettingsCoreComplete", [e.data[1], exp]], "*")
+	} else if (e.data[0] == "importSettingsCore") {
+		importSettingsCore(e.data[1])
+	}else if (e.data[0] == "fontList") {
 		fontList(e.data[1])
 	} else if (e.data[0] == "customSoundSave") {
 		customSoundSave(e.data[1][0], e.data[1][1])

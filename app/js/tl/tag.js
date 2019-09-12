@@ -10,7 +10,7 @@ if (location.search) {
 }
 //よく使うタグ
 function tagShow(tag) {
-    $("[data-tag=" + decodeURI(tag) + "]").toggleClass("hide");
+    $("[data-tag=" + decodeURI(tag).toLowerCase() + "]").toggleClass("hide");
 }
 //タグ追加
 function tagPin(tag) {
@@ -127,4 +127,27 @@ function autoToot(tag) {
         brInsert('#' + tag + " ")
     }
     favTag();
+}
+//タグをフィーチャー
+function tagFeature(name, acct_id){
+    var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	var start = "https://" + domain + "/api/v1/featured_tags"
+	fetch(start, {
+		method: 'POST',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+        },
+        body: JSON.stringify({
+            name: name
+        })
+	}).then(function (response) {
+		return response.json();
+	}).catch(function (error) {
+		return false;
+	}).then(function (json) {
+        console.log(json)
+		M.toast({ html: "Complete: " + escapeHTML(name), displayLength: 3000 })
+	});
 }

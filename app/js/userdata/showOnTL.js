@@ -79,8 +79,10 @@ function udg(user, acct_id) {
 		}
 		//moved設定時
 		if (json.moved) {
-			M.toast({ html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' +
-			json.moved.id + '\',\'' + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>', displayLength: 4000 })
+			M.toast({
+				html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' +
+					json.moved.id + '\',\'' + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>', displayLength: 4000
+			})
 		}
 		$('#his-data').modal('open');
 		$('#his-data').attr("user-id", user);
@@ -164,7 +166,7 @@ function udg(user, acct_id) {
 		}
 		$("#his-des").attr("data-acct", acct_id);
 		$('#his-data').css('background-size', 'cover');
-		$("#his-data .tab-content").css("height", $("#his-float-timeline").height() - 70 + "px")
+		$("#his-float-timeline").css("height", $("#his-data-show").height() + "px")
 		localStorage.setItem("history", user);
 		//自分の時
 		if (json.acct == localStorage.getItem("user_" + acct_id)) {
@@ -193,7 +195,7 @@ function udg(user, acct_id) {
 			$("#his-emp-btn").hide();
 			$(".only-my-data").show();
 			$(".only-his-data").hide();
-			if(localStorage.getItem("main")==acct_id){
+			if (localStorage.getItem("main") == acct_id) {
 				$("#his-main-acct").hide();
 			}
 		} else {
@@ -203,7 +205,7 @@ function udg(user, acct_id) {
 		}
 		todc();
 		//外部データ取得(死かもしれないので)
-		udAdd(json.url);
+		udAdd(acct_id, user, json.url);
 	});
 }
 function misskeyUdg(user, acct_id) {
@@ -296,7 +298,7 @@ function misskeyUdg(user, acct_id) {
 			$("#his-emp-btn").hide();
 			$(".only-my-data").show();
 			$(".only-his-data").hide();
-			if(localStorage.getItem("main")==acct_id){
+			if (localStorage.getItem("main") == acct_id) {
 				$("#his-main-acct").hide();
 			}
 		} else {
@@ -403,8 +405,9 @@ function relations(user, acct_id) {
 		}
 		//Blocked
 		if (json.blocked_by) {
-			$("#his-float-timeline").hide();
-			$("#his-float-blocked").show();
+			$("#my-data-nav .btn").addClass("disabled")
+			$(".his-var-content").hide();
+			$("#his-float-blocked").show()
 			$("#his-follow-btn").hide()
 		}
 
@@ -428,8 +431,9 @@ function hisclose() {
 	localStorage.removeItem("history");
 }
 function reset() {
-	$(".tab-content:eq(0)").show();
-	$(".tab-content:gt(0)").hide();
+	$(".his-var-content:eq(0)").show();
+	$(".his-var-content:gt(0)").hide();
+	$("#my-data-nav .btn").removeClass("disabled")
 	$(".active-back").removeClass("active-back");
 	$(".column-first").addClass("active-back");
 	$("#his-name").text("Loading");
@@ -478,10 +482,13 @@ function reset() {
 	$("#his-main-acct").show();
 	$("#his-proof-prof").html("")
 }
-$('#my-data-nav .tab').on('click', function () {
-	var target = $(this).find("a").attr("go");
-	$("#my-data-nav .tab").removeClass("active-back");
-	$(this).addClass("active-back");
-	$(target).show();
-	$(".tab-content:not(" + target + ")").hide();
+$('#my-data-nav .anc-link').on('click', function () {
+	var target = $(this).attr("go");
+	if (target) {
+		$("#my-data-nav .anc-link").removeClass("active-back");
+		$(this).addClass("active-back");
+		$(target).show();
+		$(".his-var-content:not(" + target + ")").hide();
+	}
+
 });

@@ -8,6 +8,7 @@ var oldSuggest;
 var suggest;
 
 input.addEventListener("focus", function () {
+	localStorage.removeItem("cursor");
 	var acct_id = $("#post-acct-sel").val();
 	$("#suggest").html("");
 	window.clearInterval(timer);
@@ -17,6 +18,15 @@ input.addEventListener("focus", function () {
 			$("#suggest").html("");
 			if ($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")) {
 				$("#right-side").hide()
+				$("#right-side").css("width", "300px")
+				$("#left-side").css("width", "100%")
+				var width = localStorage.getItem("postbox-width");
+				if (width) {
+					width = width.replace("px", "") * 1
+				} else {
+					width = 300
+				}
+				$("#post-box").css("width", width + "px")
 			}
 			return;
 		}
@@ -41,11 +51,29 @@ input.addEventListener("focus", function () {
 				}
 				if (ehtml != "") {
 					$("#right-side").show()
+					$("#right-side").css("width", "200px")
+					$("#left-side").css("width", "calc(100% - 200px)")
+					var width = localStorage.getItem("postbox-width");
+					if (width) {
+						width = width.replace("px", "") * 1 + 200
+					} else {
+						width = 600
+					}
+					$("#post-box").css("width", width + "px")
 					$("#poll").addClass("hide")
 					$("#emoji").addClass("hide")
 				} else {
 					if ($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")) {
 						$("#right-side").hide()
+						$("#right-side").css("width", "300px")
+						$("#left-side").css("width", "100%")
+						var width = localStorage.getItem("postbox-width");
+						if (width) {
+							width = width.replace("px", "") * 1
+						} else {
+							width = 300
+						}
+						$("#post-box").css("width", width + "px")
 					}
 				}
 				$("#suggest").html(ehtml);
@@ -61,6 +89,15 @@ input.addEventListener("focus", function () {
 				$("#suggest").html("");
 				if ($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")) {
 					$("#right-side").hide()
+					$("#right-side").css("width", "300px")
+					$("#left-side").css("width", "100%")
+					var width = localStorage.getItem("postbox-width");
+					if (width) {
+						width = width.replace("px", "") * 1
+					} else {
+						width = 300
+					}
+					$("#post-box").css("width", width + "px")
 				}
 				return;
 			}
@@ -118,6 +155,15 @@ input.addEventListener("focus", function () {
 							});
 							$("#suggest").html(ins);
 							$("#right-side").show()
+							$("#right-side").css("width", "200px")
+							$("#left-side").css("width", "calc(100% - 200px)")
+							var width = localStorage.getItem("postbox-width");
+							if (width) {
+								width = width.replace("px", "") * 1 + 200
+							} else {
+								width = 600
+							}
+							$("#post-box").css("width", width + "px")
 							$("#poll").addClass("hide")
 							$("#emoji").addClass("hide")
 						}
@@ -126,17 +172,38 @@ input.addEventListener("focus", function () {
 						Object.keys(json.accounts).forEach(function (key3) {
 							var acct = json.accounts[key3];
 							if (acct.acct != q) {
-								accts = accts + '<a onclick="tagInsert(\'@' + acct.acct +
-									'\',\'@' + q + '\')" class="pointer">@' + acct.acct + '</a><br>';
+								//Instance Actorって…
+								if (acct.username.indexOf(".") < 0) {
+									accts = accts + '<a onclick="tagInsert(\'@' + acct.acct +
+										'\',\'@' + q + '\')" class="pointer">@' + acct.acct + '</a><br>';
+								}
 							}
 						});
 						$("#right-side").show()
+						$("#right-side").css("width", "200px")
+						$("#left-side").css("width", "calc(100% - 200px)")
+						var width = localStorage.getItem("postbox-width");
+						if (width) {
+							width = width.replace("px", "") * 1 + 200
+						} else {
+							width = 600
+						}
+						$("#post-box").css("width", width + "px")
 						$("#suggest").html(accts);
 						$("#poll").addClass("hide")
 						$("#emoji").addClass("hide")
 					} else {
 						if ($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")) {
 							$("#right-side").hide()
+							$("#right-side").css("width", "300px")
+							$("#left-side").css("width", "100%")
+							var width = localStorage.getItem("postbox-width");
+							if (width) {
+								width = width.replace("px", "") * 1
+							} else {
+								width = 300
+							}
+							$("#post-box").css("width", width + "px")
 						}
 					}
 				});
@@ -171,6 +238,13 @@ function tagInsert(code, del) {
 	$("#textarea").focus();
 	if ($("#poll").hasClass("hide") && $("#emoji").hasClass("hide")) {
 		$("#right-side").hide()
+		$("#right-side").css("width", "300px")
+		$("#left-side").css("width", "50%")
+		var width = localStorage.getItem("postbox-width").replace("px", "") * 1;
+		if (!width) {
+			width = 300
+		}
+		$("#post-box").css("width", width + "px")
 	}
 	$("#suggest").html("");
 }

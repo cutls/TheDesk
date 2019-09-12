@@ -15,8 +15,7 @@
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
 	<link href="../../css/pickr.css" type="text/css" rel="stylesheet">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
-	<link href='../../css/font-awesome.css' rel='stylesheet' type='text/css'>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Open+Sans:300" rel="stylesheet">
+	<link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
 	<meta charset="utf-8">
 	<style>
 		input {
@@ -263,7 +262,7 @@
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
-								<template v-if="!check.kirishima || (check.kirishima && kirishima)">
+								<template v-if="(!check.kirishima || (check.kirishima && kirishima) )&& (!check.quote || (check.quote && quoters))">
 									<label><input class="with-gap" v-on:click="complete(i,check.value)"
 											v-model="item.setValue" type="radio" v-bind:id="item.id+check.value"
 											v-bind:value="check.value" />
@@ -329,42 +328,9 @@
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="fa fa-spotify"></i>@@spotify@@
+				<i class="fab fa-spotify"></i>@@spotify@@
 			</div>
 			<div class="collapsible-body">
-				<h5>@@npProvider@@</h5>
-				@@npPeoviderWarn@@<br>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="aimp" value="AIMP" />
-					<span>AIMP</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="itunes"
-						value="ITUNES" />
-					<span>iTunes</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="npmm"
-						value="MEDIAMONKEY" />
-					<span>MediaMonkey</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="winamp"
-						value="WINAMP" />
-					<span>Winamp</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wmp" value="WMP" />
-					<span>WMP</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="wlm" value="WLM" />
-					<span>WLM</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="npprovider()" name="npp" type="radio" id="cad" value="CAD" />
-					<span>CAD</span>
-				</label>
 				<br><br>
 				@@spotifynote1@@<i class="material-icons" style="font-size:24px;">music_note</i>@@spotifynote2@@<br>
 				<h5>@@link@@</h5>
@@ -473,25 +439,27 @@
 		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>@@support@@(Pixiv FANBOX)</a>
 	<a href="https://www.patreon.com/cutls" class="btn waves-effect red darken-2"
 		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>@@support@@(Patreon)</a>
+	<a href="https://liberapay.com/cutls" class="btn waves-effect black-text"
+		style="width:100%; max-width:500px; background-color: #f6c915"><i class="material-icons left">trending_up</i>@@support@@(Liberapay)</a>
 	<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i
-			class="material-icons left">list</i>@@help@@/Docs(Constructing)</a>
+			class="material-icons left">list</i>@@help@@/Docs</a>
 	<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2"
-		style="width:100%; max-width:500px;"><i class="fa fa-github left"></i>GitHub</a>
+		style="width:100%; max-width:500px;"><i class="fab fa-github left"></i>GitHub</a>
 	<a href="index.html?mode=user&code=Cutls@cutls.com" class="btn waves-effect blue lighten-2"
 		style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25"
-			style="padding-top:5px;">Developer: Cutls@cutls.com</a>
+			style="padding-top:5px;">Main author: Cutls@cutls.com</a>
+	<br>
+	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/@@gitHash@@">@@gitHash@@</a><br>
 	<br>
 	Kyash<br>
 	<img src="../../img/kyash.png" width="100"><br>
 	<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';"
 		class="pointer">@@checkup@@</a><br>
 	<a href="oss.html">OSS License@@ossJP@@</a><br>
+	<br>
 	<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018
-		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a
-			href="https://thedesk.top/tos.html">Terms of Use</a>/<a href="https://thedesk.top/priv.html">Privacy
+		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://thedesk.top/priv.html">Privacy
 			Policy</a>
-		<br>Developer: Cutls P(
-		<a href="index.html?mode=user&code=Cutls@cutls.com">@Cutls@cutls.com</a>)
 		<br>
 	</span><br>
 	TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>

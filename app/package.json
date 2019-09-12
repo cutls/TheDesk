@@ -1,12 +1,12 @@
 {
   "name": "thedesk",
-  "version": "18.7.0",
+  "version": "18.9.2",
   "description": "TheDesk is a Mastodon client for PC.",
   "repository": "https://github.com/cutls/TheDesk",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "construct": "cd view/make && node make",
+    "construct": "cd view/make && node make --automatic && cd ../../",
     "dev": "electron ./ --dev",
     "dist": "build --linux snap",
     "build:js": "node build.js",
@@ -49,9 +49,11 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.10.1",
     "electron-dl": "^1.14.0",
-    "jimp": "^0.6.4",
+    "jimp": "^0.7.0",
     "jquery": "^3.4.1",
+    "jquery-ui-dist": "^1.12.1",
     "json5": "^2.1.0",
     "materialize-css": "^1.0.0",
     "node-notifier": "^5.4.0",
@@ -60,14 +62,13 @@
     "vue": "^2.6.10"
   },
   "optionalDependencies": {
-    "nowplaying-node": "git+https://github.com/cutls/nowplaying-node",
-    "itunes-nowplaying-mac": "git+https://github.com/rinsuki/itunes-nowplaying-mac#pull/4/head",
+    "itunes-nowplaying-mac": "kPherox/itunes-nowplaying-mac#get-artworks-base64",
     "font-manager": "^0.3.0"
   },
   "devDependencies": {
-    "electron": "^5.0.4",
+    "electron": "^6.0.0",
     "electron-builder": "^21.1.5",
-    "readline-sync": "1.4.9"
+    "readline-sync": "1.4.10"
   },
   "build": {
     "productName": "TheDesk",
@@ -116,8 +117,8 @@
       ]
     },
     "electronDownload": {
-      "version": "5.0.4"
+      "version": "6.0.0"
     },
-    "electronVersion": "5.0.4"
+    "electronVersion": "6.0.0"
   }
 }

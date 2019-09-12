@@ -2,6 +2,7 @@
 moreloading = false;
 function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	scrollevent();
+	$("#unread_" + tlid + " .material-icons").removeClass("teal-text")
 	localStorage.removeItem("morelock");
 	localStorage.removeItem("pool");
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -20,7 +21,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		obj.push(add);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("column", json);
-		parseColumn();
+		parseColumn('add');
 		return;
 	}
 
@@ -149,6 +150,18 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		jQuery("time.timeago").timeago();
 		todc();
 		reload(type, '', acct_id, tlid, data, mute, delc, voice);
+		if (type == "home" || type == "notf") {
+			//Markers
+			var markers = localStorage.getItem("markers");
+			if (markers == "no") {
+				markers = false;
+			} else {
+				markers = true
+			}
+			if (markers) {
+				getMarker(tlid, type, acct_id)
+			}
+		}
 		$(window).scrollTop(0);
 	});
 }
@@ -217,7 +230,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		websocket[wsid] = new WebSocket(start);
 		websocket[wsid].onopen = function (mess) {
 			console.table({ "tlid": tlid, "type": "Connect Streaming API" + type, "domain": domain, "message": [mess] })
-			$("#notice_icon_" + tlid).removeClass("red-text");
+			$("#notice_icon_" + tlid).removeClass("red-text")
 		}
 		websocket[wsid].onmessage = function (mess) {
 			console.log([tlid + ":Receive Streaming API:", JSON.parse(mess.data)]);
@@ -256,37 +269,40 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 						$("#timeline_" + tlid + " [toot-id=" + JSON.parse(mess.data).payload + "]").addClass("emphasized");
 						$("#timeline_" + tlid + " [toot-id=" + JSON.parse(mess.data).payload + "]").addClass("by_delcatch");
 					} else {
-						$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
-						$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
+						$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide()
+						$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove()
 					}
 
 				} else if (typeA == "update" || typeA == "conversation") {
-					localStorage.removeItem("delete");
-					var obj = JSON.parse(JSON.parse(mess.data).payload);
-					if ($("#timeline_" + tlid + " [toot-id=" + obj.id + "]").length < 1) {
-						if (voice) {
-							say(obj.content)
-						}
-						var templete = parse([obj], type, acct_id, tlid, "", mute, type);
-						if ($("timeline_box_" + tlid + "_box .tl-box").scrollTop() === 0) {
-							$("#timeline_" + tlid).prepend(templete);
-						} else {
-							var pool = localStorage.getItem("pool_" + tlid);
-							if (pool) {
-								pool = templete + pool;
-							} else {
-								pool = templete
+					localStorage.removeItem("delete")
+					if (!$("#unread_" + tlid + " .material-icons").hasClass("teal-text")) {
+						//markers show中はダメ
+						var obj = JSON.parse(JSON.parse(mess.data).payload);
+						if ($("#timeline_" + tlid + " [toot-id=" + obj.id + "]").length < 1) {
+							if (voice) {
+								say(obj.content)
 							}
-							localStorage.setItem("pool_" + tlid, pool);
+							var templete = parse([obj], type, acct_id, tlid, "", mute, type);
+							if ($("timeline_box_" + tlid + "_box .tl-box").scrollTop() === 0) {
+								$("#timeline_" + tlid).prepend(templete);
+							} else {
+								var pool = localStorage.getItem("pool_" + tlid);
+								if (pool) {
+									pool = templete + pool;
+								} else {
+									pool = templete
+								}
+								localStorage.setItem("pool_" + tlid, pool);
+							}
+							scrollck();
+							additional(acct_id, tlid);
+							jQuery("time.timeago").timeago();
+						} else {
+							todo("二重取得発生中");
 						}
-						scrollck();
-						additional(acct_id, tlid);
-						jQuery("time.timeago").timeago();
-					} else {
-						todo("二重取得発生中");
-					}
 
-					todc();
+						todc();
+					}
 				} else if (typeA == "filters_changed") {
 					filterUpdate(acct_id);
 				}
@@ -298,7 +314,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			console.error("Error closing");
 			console.error(error);
 			if (mode == "error") {
-				$("#notice_icon_" + tlid).addClass("red-text");
+				$("#notice_icon_" + tlid).addClass("red-text")
 				todo('WebSocket Error ' + error);
 			} else {
 				var errorct = localStorage.getItem("wserror_" + tlid) * 1 + 1;
@@ -312,7 +328,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		websocket[wsid].onclose = function () {
 			console.warn("Closing " + tlid);
 			if (mode == "error") {
-				$("#notice_icon_" + tlid).addClass("red-text");
+				$("#notice_icon_" + tlid).addClass("red-text")
 				todo('WebSocket Closed');
 			} else {
 				var errorct = localStorage.getItem("wserror_" + tlid) * 1 + 1;
@@ -822,6 +838,231 @@ function reconnector(tlid, type, acct_id, data, mode) {
 		reload(type, '', acct_id, tlid, data, mute, "", voice, mode);
 	}
 	M.toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
-	
+
+}
+function columnReload(tlid, type) {
+	$("#notice_icon_" + tlid).addClass("red-text");
+	$("#unread_" + tlid + " .material-icons").removeClass("teal-text")
+	if (type == "mix" || type == "integrated" || type == "plus") {
+		if (localStorage.getItem("voice_" + tlid)) {
+			var voice = true;
+		} else {
+			var voice = false;
+		}
+		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+		} else {
+			var mute = [];
+		}
+		var wssh = localStorage.getItem("wssH_" + tlid);
+		websocketHome[wssh].close();
+		var wssl = localStorage.getItem("wssL_" + tlid);
+		websocketLocal[wssl].close();
+		parseColumn(tlid)
+	} else if (type == "notf") {
+		$("#notice_icon_" + tlid).removeClass("red-text");
+		notfColumn(acct_id, tlid, "")
+	} else {
+		var wss = localStorage.getItem("wss_" + tlid);
+		websocket[wss].close();
+		if (localStorage.getItem("voice_" + tlid)) {
+			var voice = true;
+		} else {
+			var voice = false;
+		}
+		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+		} else {
+			var mute = [];
+		}
+		parseColumn(tlid)
+	}
 }
 strAliveInt()
+//Markers
+function getMarker(tlid, type, acct_id) {
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	if (type == "home") {
+		var add = "home"
+	} else if (type == "notf") {
+		var add = "notifications"
+	}
+	var start = "https://" + domain + "/api/v1/markers?timeline=" + add
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function (response) {
+		return response.json();
+	}).catch(function (error) {
+		$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing)
+		$("#unread_" + tlid).attr("data-id", "")
+		return false;
+	}).then(function (json) {
+		if (json) {
+			if (json[add]) {
+				json = json[add]
+				$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + json.updated_at + ' v' + json.version)
+				$("#unread_" + tlid).attr("data-id", json.last_read_id)
+			} else {
+				$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing)
+				$("#unread_" + tlid).attr("data-id", "")
+			}
+		} else {
+			$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing)
+			$("#unread_" + tlid).attr("data-id", "")
+		}
+	});
+}
+function showUnread(tlid, type, acct_id) {
+	if ($("#unread_" + tlid + " .material-icons").hasClass("teal-text")) {
+		goTop(tlid)
+		return
+	}
+	$("#unread_" + tlid + " .material-icons").addClass("teal-text")
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	var id = $("#unread_" + tlid).attr("data-id")
+	if (type == "home") {
+		var add = "timelines/home?min_id=" + id
+	} else if (type == "notf") {
+		var add = "notifications?min_id=" + id
+	}
+	var start = "https://" + domain + "/api/v1/" + add
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function (response) {
+		return response.json();
+	}).catch(function (error) {
+		todo(error);
+		console.error(error);
+	}).then(function (json) {
+		if (!json || !json.length) {
+			columnReload(tlid, type)
+		}
+		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+		} else {
+			var mute = [];
+		}
+		var templete = parse(json, type, acct_id, tlid, "", mute, type);
+		var len = json.length - 1
+		$("#timeline_" + tlid).html(templete);
+		if ($("#timeline_" + tlid + " .cvo:eq(" + len + ")").length) {
+			var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top
+			$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to)
+		}
+		additional(acct_id, tlid);
+		jQuery("time.timeago").timeago();
+		todc();
+	});
+}
+var ueloadlock = false
+function ueload(tlid) {
+	if (ueloadlock) {
+		return false
+	}
+	ueloadlock = true
+	var multi = localStorage.getItem("column")
+	var obj = JSON.parse(multi)
+	var acct_id = obj[tlid * 1].domain
+	var type = obj[tlid * 1].type
+	var domain = localStorage.getItem("domain_" + acct_id)
+	var at = localStorage.getItem("acct_" + acct_id + "_at")
+	var id = $("#timeline_" + tlid + " .cvo:eq(0)").attr("unique-id")
+	if (type == "home") {
+		var add = "timelines/home?min_id=" + id
+	} else if (type == "notf") {
+		var add = "notifications?min_id=" + id
+	}
+	var start = "https://" + domain + "/api/v1/" + add
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
+		},
+	}).then(function (response) {
+		return response.json();
+	}).catch(function (error) {
+		todo(error);
+		console.error(error);
+	}).then(function (json) {
+		if (!json) {
+			columnReload(tlid, type)
+		}
+		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+		} else {
+			var mute = [];
+		}
+		var templete = parse(json, '', acct_id, tlid, "", mute, type);
+		var len = json.length - 1
+		$("#timeline_" + tlid).prepend(templete);
+		if ($("#timeline_" + tlid + " .cvo:eq(" + len + ")").length) {
+			var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top
+			$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to)
+		}
+		additional(acct_id, tlid);
+		jQuery("time.timeago").timeago();
+		todc();
+		ueloadlock = false
+	});
+}
+function asRead() {
+	//Markers
+	var markers = localStorage.getItem("markers");
+	if (markers == "no") {
+		markers = false;
+	} else {
+		markers = true
+	}
+	if (markers) {
+		var multi = localStorage.getItem("column")
+		var obj = JSON.parse(multi)
+		for (var i = 0; i < obj.length; i++) {
+			var acct_id = obj[i].domain
+			var type = obj[i].type
+			if (type == "home" || type == "notf") {
+				if (type == "home") {
+					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("unique-id")
+					var poster = {
+						home: {
+							last_read_id: id
+						}
+					}
+				} else {
+					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("data-notf")
+					var poster = {
+						notifications: {
+							last_read_id: id
+						}
+					}
+				}
+				var domain = localStorage.getItem("domain_" + acct_id);
+				var at = localStorage.getItem("acct_" + acct_id + "_at");
+				var httpreq = new XMLHttpRequest();
+				var start = "https://" + domain + "/api/v1/markers"
+				httpreq.open('POST', start, true);
+				httpreq.setRequestHeader('Content-Type', 'application/json');
+				httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+				httpreq.responseType = "json";
+				httpreq.send(JSON.stringify(poster));
+				httpreq.onreadystatechange = function () {
+					if (httpreq.readyState === 4) {
+						var json = httpreq.response;
+						console.log(json)
+					}
+				}
+			}
+		}
+	}
+}
+cbTimer1 = setInterval(asRead, 60000);

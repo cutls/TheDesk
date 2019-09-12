@@ -26,11 +26,9 @@ function dl(mainWindow, lang_path, base, dirname) {
 				"transparent": false, // ウィンドウの背景を透過
 				"frame": false, // 枠の無いウィンドウ
 				"resizable": false
-			});
-			//updatewin.openDevTools()
+			})
 			var lang = fs.readFileSync(lang_path, 'utf8');
 			updatewin.loadURL(base + lang + '/update.html');
-
 			return "true"
 		} else {
 			return false;

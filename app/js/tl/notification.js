@@ -66,7 +66,7 @@ function notfColumn(acct_id, tlid, sys) {
 						if (os == "darwin") {
 							var n = new Notification('TheDesk:' + domain, options);
 						} else {
-							var nativeNotfOpt=['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]
+							var nativeNotfOpt = ['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]
 							postMessage(["nativeNotf", nativeNotfOpt], "*")
 						}
 
@@ -98,6 +98,16 @@ function notfColumn(acct_id, tlid, sys) {
 			}
 			$("#notf-box").addClass("fetched");
 			todc();
+			//Markers
+			var markers = localStorage.getItem("markers");
+			if (markers == "no") {
+				markers = false;
+			} else {
+				markers = true
+			}
+			if (markers) {
+				getMarker(tlid, "notf", acct_id)
+			}
 		}
 	}
 	if (!misskey) {
@@ -171,7 +181,7 @@ function notfCommon(acct_id, tlid, sys) {
 					if (os == "darwin") {
 						var n = new Notification('TheDesk:' + domain, options);
 					} else {
-						var nativeNotfOpt=['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]
+						var nativeNotfOpt = ['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]
 						postMessage(["nativeNotf", nativeNotfOpt], "*")
 					}
 
@@ -224,7 +234,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 
 		}
 		websocketNotf[acct_id].onmessage = function (mess) {
-			console.log(["Receive Streaming API(Notf):" + acct_id + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
+			//console.log(["Receive Streaming API(Notf):" + acct_id + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
 			var popup = localStorage.getItem("popup");
 			if (!popup) {
 				popup = 0;
@@ -234,16 +244,19 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 			if (type == "notification") {
 				var templete = "";
 				localStorage.setItem("lastnotf_" + acct_id, obj.id);
-				if (obj.type != "follow") {
-					templete = parse([obj], 'notf', acct_id, 'notf', popup);
-				} else {
-					templete = userparse([obj], 'notf', acct_id, 'notf', popup);
+				if (!$("#unread_" + tlid + " .material-icons").hasClass("teal-text")) {
+					//markers show中はダメ
+					if (obj.type != "follow") {
+						templete = parse([obj], 'notf', acct_id, 'notf', popup);
+					} else {
+						templete = userparse([obj], 'notf', acct_id, 'notf', popup);
+					}
+					if (!$("div[data-notfIndv=" + acct_id + "_" + obj.id + "]").length) {
+						$("div[data-notf=" + acct_id + "]").prepend(templete);
+						$("div[data-const=notf_" + acct_id + "]").prepend(templete);
+					}
+					jQuery("time.timeago").timeago();
 				}
-				if (!$("div[data-notfIndv=" + acct_id + "_" + obj.id + "]").length) {
-					$("div[data-notf=" + acct_id + "]").prepend(templete);
-					$("div[data-const=notf_" + acct_id + "]").prepend(templete);
-				}
-				jQuery("time.timeago").timeago();
 			} else if (type == "delete") {
 				$("[toot-id=" + obj + "]").hide();
 				$("[toot-id=" + obj + "]").remove();

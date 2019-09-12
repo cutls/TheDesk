@@ -1,18 +1,28 @@
 const fs = require("fs")
-const readlineSync = require('readline-sync');
-let ver = readlineSync.question('version string (empty: default string)? ');
-if (!ver) {
-    ver = "Usamin (18.7.0)"
+const readlineSync = require('readline-sync')
+let ver = "Usamin (18.9.2)"
+const execSync = require('child_process').execSync;
+let gitHash = execSync("git rev-parse HEAD").toString().trim()
+fs.writeFileSync("../../git", gitHash)
+if (process.argv.indexOf("--automatic") === -1) {
+    let input = readlineSync.question('version string [empty: ' + ver + ' (default)]? ');
+    if (input) {
+        ver = input
+    }
 }
 console.log("Constructing view files " + ver + ": make sure to update package.json")
-const langs = ["ja", "en", "ps"]
-const langsh = ["日本語", "English", "Crowdin translate system(beta)"]
+const langs = ["ja", "en", "ps", "bg", "cs", "de"]
+const langsh = ["日本語", "English", "Crowdin translate system(beta)", "български", "Česky", "Deutsch"]
 const simples = ["acct", "index", "setting", "update", "setting"]
 const samples = ["acct.sample.html", "index.sample.html", "setting.sample.html", "update.sample.html", "setting.sample.js"]
 const pages = ["acct.html", "index.html", "setting.html", "update.html", "setting.vue.js"]
 let langstr = ""
 for (let n = 0; n < langs.length; n++) {
     let lang = langs[n]
+    let targetDir = '../' + lang
+    if (!fs.existsSync(targetDir)) {
+        fs.mkdirSync(targetDir);
+    }
     langstr = langstr + '<a onclick="changelang(\'' + lang + '\')" class="pointer" style="margin-right:5px;">' + langsh[n] + '</a>'
 }
 for (let i = 0; i < samples.length; i++) {
@@ -21,9 +31,10 @@ for (let i = 0; i < samples.length; i++) {
     for (let j = 0; j < langs.length; j++) {
         let source = sourceParent
         let lang = langs[j]
-        let target = JSON.parse(fs.readFileSync("language/" + simples[i] + "." + lang + ".json", 'utf8'))
+        let target = JSON.parse(fs.readFileSync("language/" + lang + "/" + simples[i] + ".json", 'utf8'))
         Object.keys(target).forEach(function (key) {
             let str = target[key]
+            str = str.replace(/"/g, '\\"')
             var regExp = new RegExp("@@" + key + "@@", "g")
             source = source.replace(regExp, str)
         })
@@ -35,6 +46,8 @@ for (let i = 0; i < samples.length; i++) {
             source = source.replace(/@@comment-end@@/g, "-->")
         }
         source = source.replace(/@@versionLetter@@/g, ver)
+        source = source.replace(/@@gitHash@@/g, gitHash)
+        source = source.replace(/@@gitHashShort@@/g, gitHash.slice(0, 7))
         source = source.replace(/@@lang@@/g, lang)
         source = source.replace(/@@langlist@@/g, langstr)
         fs.writeFileSync("../" + lang + "/" + pages[i], source)

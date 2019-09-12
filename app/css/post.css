@@ -7,14 +7,17 @@
   background-color: var(--postbox);
   border: thin solid gray;
   z-index: 501;
-  min-width: 300px;
   max-width: 100%;
   padding: 5px;
   border-radius: 5px;
+  overflow: hidden;
 }
 textarea {
   min-height: 100px !important;
   font-family: inherit;
+}
+#post-box .ui-resizable-s, #post-box .ui-resizable-se{
+  display: none !important;
 }
 
 .cancel {
@@ -108,21 +111,16 @@ textarea {
 }
 #left-side {
   float: left;
-  width: 300px;
+  overflow-x: hidden;
+  height: calc(100% - 32px);
 }
 #right-side {
   display: none;
   float: left;
   width: 300px;
   padding: 5px;
-}
-#poll {
-}
-.poll-provider {
-  position: absolute;
-  height: calc(100% - 90px);
-  overflow-y: scroll;
-  top: 90px;
+  overflow-x: hidden;
+  height: calc(100% - 32px);
 }
 #posttgl,#toot-post-btn {
   background-color: var(--accentbtn);

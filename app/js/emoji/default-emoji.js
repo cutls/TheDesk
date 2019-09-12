@@ -50,6 +50,10 @@ function customEmoji() {
     emojiList('home')
 }
 function defEmoji(target) {
+    var selin = $("#textarea").prop('selectionStart');
+    if (!selin) {
+        selin = 0;
+    }
     var emojiraw = newpack.filter(function (item, index) {
         if (item.short_name == target) return true;
     });
@@ -60,22 +64,11 @@ function defEmoji(target) {
         emoji = twemoji.convert.fromCodePoint(hex[0]);
     }
     var now = $("#textarea").val();
-    var selin = localStorage.getItem("cursor");
-    var now = $("#textarea").val();
-    if (selin > 0) {
-        var before = now.substr(0, selin);
-        var after = now.substr(selin, now.length);
-        newt = before + emoji + after;
-    } else {
-        newt = emoji + now;
-    }
+    var before = now.substr(0, selin);
+    var after = now.substr(selin, now.length);
+    newt = before + emoji + after;
     $("#textarea").val(newt);
     $("#textarea").focus();
-    var selin = $("#textarea").prop('selectionStart');
-    if (!selin) {
-        selin = 0;
-    }
-    localStorage.setItem("cursor", selin);
 }
 function faicon() {
     var json = faicons;

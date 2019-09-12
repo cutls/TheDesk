@@ -162,7 +162,7 @@ function flw(user, more, acct_id) {
 		} else {
 			$("#his-follow-list-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 
 	});
 }
@@ -228,7 +228,7 @@ function fer(user, more, acct_id) {
 		} else {
 			$("#his-follower-list-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 	});
 }
 
@@ -390,7 +390,7 @@ function showBlo(more, acct_id) {
 		} else {
 			$("#his-blocking-list-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 	});
 }
 
@@ -453,7 +453,7 @@ function showReq(more, acct_id) {
 		} else {
 			$("#his-request-list-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 	});
 }
 
@@ -550,15 +550,19 @@ function showFrl(more, acct_id) {
 		} else {
 			$("#his-follow-recom-contents").html(templete);
 		}
-
+		jQuery("time.timeago").timeago();
 	});
 }
 //Keybase
-function udAdd(start) {
-	fetch(start, {
+function udAdd(acct_id, id, start) {
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	var proof = "https://" + domain + "/api/v1/accounts/" + id + "/identity_proofs"
+	fetch(proof, {
 		method: 'GET',
 		headers: {
-			'Accept': 'application/json'
+			'content-type': 'application/json',
+			'Authorization': 'Bearer ' + at
 		},
 		//body: JSON.stringify({})
 	}).then(function (response) {
@@ -567,16 +571,10 @@ function udAdd(start) {
 		todo(error);
 		console.error(error);
 	}).then(function (json) {
-		var fields = json.attachment;
+		var fields = json;
 		for (var i = 0; i < fields.length; i++) {
-			if (fields[i].type == "IdentityProof") {
-				if (fields[i].signatureAlgorithm == "keybase") {
-					var html = '<a href="https://keybase.io/' + fields[i].name + '" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].signatureAlgorithm)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].signatureAlgorithm) + ':' + escapeHTML(fields[i].name) + '</a>';
-				} else {
-					var html = '<span class="cbadge teal" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].signatureAlgorithm)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].signatureAlgorithm) + ':' + escapeHTML(fields[i].name) + '</span>';
-				}
-				$("#his-proof-prof").append(html)
-			}
+			var html = '<a href="' + fields[i].proof_url + '" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].provider)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].provider) + ':' + escapeHTML(fields[i].provider_username) + '</a>';
+			$("#his-proof-prof").append(html)
 		}
 	});
 	fetch("https://notestock.osa-p.net/api/v1/isstock.json?id=" + start.replace("@", "users/"), {
@@ -622,12 +620,17 @@ function showMat() {
 		var templete = "";
 		Object.keys(json).forEach(function (key) {
 			var user = json[key];
+			if (user.avatar) {
+				var avatar = user.avatar
+			} else {
+				var avatar = "../../img/loading.svg"
+			}
 			templete = templete +
 				'<div class="" style="padding-top:5px;">' +
 				'<div style="padding:0; margin:0; width:400px; max-width:100%; display:flex; align-items:flex-end;">' +
 				'<div style="flex-basis:40px;"><a onclick="udgEx(\'' + user.user + '\',' +
 				acct_id + ');" user="' + user.user + '" class="udg">' +
-				'<img src="' + user.avatar + '" width="40" class="prof-img" user="' + user.user + '"></a></div>' +
+				'<img src="' + avatar + '" width="40" class="prof-img" user="' + user.user + '"></a></div>' +
 				'<div style="flex-grow:3; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"><big>' +
 				escapeHTML(user.screen_name) + '</big></div>' +
 				'<div class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"> @' +

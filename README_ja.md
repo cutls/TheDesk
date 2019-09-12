@@ -5,6 +5,7 @@
  
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)
+[![FOSSA Status](https://bit.ly/2N4cLd1)](https://bit.ly/31zqMmZ)
 [![Version](https://flat.badgen.net/github/release/cutls/TheDesk)](https://github.com/cutls/TheDesk/releases)
 ![Contributors](https://flat.badgen.net/github/contributors/cutls/TheDesk)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
@@ -20,12 +21,13 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
 [GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  
 
 アイコンは[クリエイティブ・コモンズ 表示-非営利-継承](https://creativecommons.org/licenses/by-nc-sa/4.0/)で提供されています。  
-[プレスキット](https://dl.thedesk.top/press/TheDesk+PressKit.zip)  
+[プレスキット](https://d2upiril6ywqp9.cloudfront.net/press/TheDesk+PressKit.zip)  
 
-* [PNG](https://dl.thedesk.top/press/TheDesk.png)
-* [Monotone SVG](https://dl.thedesk.top/press/TheDesk.svg)
-* [ico](https://dl.thedesk.top/press/TheDesk.ico)
-* [icns](https://dl.thedesk.top/press/TheDesk.icns)
+* [PNG 512x512](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.png)
+* [SVG 4095x4096](https://d2upiril6ywqp9.cloudfront.net/press/thedesk-fullcolor.svg)
+* [ico 256x256](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.ico)
+* [icns old](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.icns)
+* [Illustrator .ai](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.ai)
 
 標準の通知音は [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/) で提供されています。
 
@@ -38,6 +40,7 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
 
 * 日本語
 * English(英語)
+* ドイツ語, チェコ語, ブルガリア語(from Crowdin)
 
 ### 翻訳
   
@@ -70,7 +73,7 @@ Linuxビルダー
 
 * [ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja)
 
-iTunes NowPlayingにアルバムアートワークを付けてくれた人
+コーダー
 
 * [kPherox](https://pl.kpherox.dev/kPherox)
 
@@ -82,6 +85,7 @@ git clone https://github.com/cutls/TheDesk
 cd TheDesk/app
 npm install
 npm install --only=dev
+npm run construct
 ```
 
 ### electron-builder(推奨)
@@ -129,3 +133,8 @@ Issuesに書いてある問題についてはなるべく対処しますので�
 ## 詳しく
 
 [TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
+
+## `npm i`したら脆弱性あるって言われた
+
+materialize-cssの脆弱性(CVE-2019-11002/3/4)については[こちら](https://github.com/Dogfalo/materialize/issues/6286)で本当に脆弱性かどうか議論しています。  
+実際には害が無いものと思われます。

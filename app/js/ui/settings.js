@@ -45,7 +45,7 @@ var tlView = new Vue({
 });
 var postView = new Vue({
 	el: '#postView',
-	data: { config: postConstruction, kirishima: localStorage.getItem('kirishima') },
+	data: { config: postConstruction, kirishima: localStorage.getItem('kirishima'), quoters: localStorage.getItem('quoters') },
 	methods: {
 		complete: function (i, val) {
 			var ls = postView.config[i];
@@ -121,9 +121,9 @@ function load() {
 		} else {
 			ls = tlView.config[i].data
 			for (var j = 0; j < ls.length; j++) {
-				if(localStorage.getItem(tlView.config[i].data[j].storage)){
+				if (localStorage.getItem(tlView.config[i].data[j].storage)) {
 					tlView.config[i].data[j].setValue = localStorage.getItem(tlView.config[i].data[j].storage)
-				}				
+				}
 			}
 		}
 	}
@@ -323,6 +323,11 @@ function exportSettingsCore() {
 	var tagarr = localStorage.getItem("tag");
 	var favtag = JSON.parse(tagarr);
 	exp.favoriteTags = favtag;
+	exp.revisons = 2.1
+	exp.meta = {}
+	exp.meta.date = new Date()
+	exp.meta.thedesk = localStorage.getItem("ver")
+	exp.meta.platform = localStorage.getItem("platform")
 	return exp;
 }
 function importSettings() {
@@ -340,8 +345,7 @@ function importSettings() {
 		}
 	})
 }
-function importSettingsCore(arg) {
-	var obj = JSON.parse(arg);
+function importSettingsCore(obj) {
 	if (obj) {
 		localStorage.clear();
 		localStorage.setItem("multi", JSON.stringify(obj.accts));
@@ -356,7 +360,7 @@ function importSettingsCore(arg) {
 		}
 		localStorage.setItem("column", JSON.stringify(obj.columns));
 		if (obj.config) {
-			//Version 2
+			//Version 2~
 			var max = envView.config.length;
 			for (var i = 0; i < max; i++) {
 				var ls = envView.config[i].storage;
@@ -659,7 +663,6 @@ window.onload = function () {
 	checkSpotify();
 	voiceSettingLoad();
 	oksload();
-	npprovider();
 	ctLoad()
 };
 

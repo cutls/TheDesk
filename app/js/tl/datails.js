@@ -422,6 +422,7 @@ function faved(id, acct_id) {
 			$("#toot-fav .no-data").hide();
 		}
 		$("#toot-fav").html(templete);
+		jQuery("time.timeago").timeago();
 	});
 }
 
@@ -445,6 +446,7 @@ function rted(id, acct_id) {
 	}).then(function (json) {
 		var templete = userparse(json, '', acct_id);
 		$("#toot-rt").html(templete);
+		jQuery("time.timeago").timeago();
 	});
 }
 //URL等のコピー

@@ -18,6 +18,44 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow;
+
+// アプリが多重起動しないようにする
+const gotTheLock = app.requestSingleInstanceLock()
+
+if (!gotTheLock) {
+	app.quit()
+} else {
+	app.on('second-instance', () => {
+		// 多重起動を試みた場合、既に存在するウィンドウにフォーカスを移す
+		// Someone tried to run a second instance, we should focus our window.
+		if (mainWindow) {
+		if (mainWindow.isMinimized()) mainWindow.restore()
+		mainWindow.focus()
+		}
+	})
+}
+
+if (process.argv.indexOf("--dev") === -1) {
+	var packaged = true;
+} else {
+	var packaged = false;
+	console.log(
+		"||\\\\\\ \n"+
+		"||||  \\\\\\\\ \n"+
+		"||||     \\\\\\\\ \n"+
+		"|||| Am I a \\\\\\\\ \n"+
+		"|||| cat? ^ ^   \\\\\\\\\\       _____ _          ____            _    \n"+
+		"||||     (.-.)   \\\\\\\\\\      |_   _| |__   ___|  _ \\  ___  ___| | __\n"+
+		"||||  ___>   )    |||||       | | | '_ \\ / _ \\ | | |/ _ \\/ __| |/ /\n"+
+		"|||| <   _  _)   //////       | | | | | |  __/ |_| |  __/\__ \\   < \n"+
+		"||||  |_||_|   /////          |_| |_| |_|\\___|____/ \\___||___/_|\\_\\ \n"+
+		"||||          /////         \n"+
+		"||||       /////\n"+
+		"||||     /////\n"+
+		"||||//////"
+	)
+	console.log("Welcome!")
+}
 var info_path = join(app.getPath("userData"), "window-size.json");
 var max_info_path = join(app.getPath("userData"), "max-window-size.json");
 var lang_path = join(app.getPath("userData"), "language");
@@ -25,9 +63,9 @@ var ha_path = join(app.getPath("userData"), "hardwareAcceleration");
 try {
 	fs.readFileSync(ha_path, 'utf8');
 	app.disableHardwareAcceleration()
-	console.log("disabled: HA");
+	if(!packaged) console.log("disabled: Hardware Acceleration");
 } catch{
-	console.log("enabled: HA");
+	if(!packaged) console.log("enabled: Hardware Acceleration");
 }
 var window_size;
 try {
@@ -74,13 +112,18 @@ app.on('activate', function () {
 
 function createWindow() {
 	if (isFile(lang_path)) {
-		console.log("exist");
 		var lang = fs.readFileSync(lang_path, 'utf8');
 	} else {
 		var langs = app.getLocale();
 		console.log(langs);
 		if (~langs.indexOf("ja")) {
 			lang = "ja";
+		} else if (~langs.indexOf("de")) {
+			lang = "de";
+		} else if (~langs.indexOf("cs")) {
+			lang = "cs";
+		} else if (~langs.indexOf("bg")) {
+			lang = "bg";
 		} else {
 			lang = "en";
 		}
@@ -88,8 +131,8 @@ function createWindow() {
 			fs.writeFileSync(lang_path, lang);
 		});
 	}
-	console.log(app.getLocale());
-	console.log("launch:" + lang);
+	if(!packaged) console.log("your lang:" + app.getLocale());
+	if(!packaged) console.log("launch:" + lang);
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
 	var platform = process.platform;
 	var bit = process.arch;
@@ -101,7 +144,7 @@ function createWindow() {
 				contextIsolation: true,
 				preload: join(__dirname, "js", "platform", "preload.js")
 			},
-			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, icon: __dirname + '/desk.png'
+			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, icon: __dirname + '/desk.png', show: false
 		}
 	} else if (platform == "win32") {
 		var arg = {
@@ -111,7 +154,7 @@ function createWindow() {
 				contextIsolation: true,
 				preload: join(__dirname, "js", "platform", "preload.js")
 			},
-			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true
+			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true, show: false
 		}
 	} else if (platform == "darwin") {
 		var arg = {
@@ -121,10 +164,16 @@ function createWindow() {
 				contextIsolation: true,
 				preload: join(__dirname, "js", "platform", "preload.js")
 			},
-			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true
+			width: window_size.width, height: window_size.height, x: window_size.x, y: window_size.y, simpleFullscreen: true, show: false
 		}
 	}
 	mainWindow = new BrowserWindow(arg);
+	mainWindow.once('page-title-updated', () => {
+		mainWindow.show()
+		if (window_size.max) {
+			mainWindow.maximize();
+		}
+	  })
 	electron.session.defaultSession.clearCache(() => { })
 	if (process.argv) {
 		if (process.argv[1]) {
@@ -145,9 +194,6 @@ function createWindow() {
 	mainWindow.loadURL(base + lang + '/index.html' + plus);
 	if (!window_size.x && !window_size.y) {
 		mainWindow.center();
-	}
-	if (window_size.max) {
-		mainWindow.maximize();
 	}
 	// ウィンドウが閉じられたらアプリも終了
 	mainWindow.on('closed', function () {
@@ -173,12 +219,7 @@ function createWindow() {
 
 	var platform = process.platform;
 	var bit = process.arch;
-	if (process.argv.indexOf("--dev") === -1) {
-		packaged = true;
-	} else {
-		packaged = false;
-	}
-	Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir)));
+	Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir, dirname)));
 	//CSS
 	css.css(mainWindow);
 	//アップデータとダウンロード

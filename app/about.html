@@ -15,6 +15,8 @@
             font-family: 'Open Sans';
             -webkit-app-region: drag;
             cursor: move;
+            padding: 5px;
+            padding-top: 15px;
         }
 
         a,
@@ -27,7 +29,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-            grid-template-areas: 'name1 data1''name2 data2''name3 data3''name4 data4''name5 data5';
+            grid-template-areas: 'name1 data1''name2 data2''name3 data3''name4 data4''name5 data5''name6 data6';
             text-align: left;
             margin: 5px;
         }
@@ -71,6 +73,14 @@
         .area-data5 {
             grid-area: data5;
         }
+
+        .area-name6 {
+            grid-area: name6;
+        }
+
+        .area-data6 {
+            grid-area: data6;
+        }
     </style>
 </head>
 
@@ -78,19 +88,21 @@
     <script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="./js/platform/first-not-view.js"></script>
     <script type="text/javascript" src="./node_modules/materialize-css/dist/js/materialize.js"></script>
-    <img src="./img/desk.png" style="max-width:62%;">
+    <img src="./img/desk.svg" style="max-width:62%;">
     <h5>TheDesk</h5>
     <div class="container">
         <div class="area-name1">Display version</div>
         <div class="area-data1" id="now"></div>
         <div class="area-name2">Internal version</div>
         <div class="area-data2" id="ver"></div>
-        <div class="area-name3">Chromium</div>
-        <div class="area-data3" id="chrome"></div>
-        <div class="area-name4">Electron</div>
-        <div class="area-data4" id="electron"></div>
-        <div class="area-name5">Node.js</div>
-        <div class="area-data5" id="node"></div>
+        <div class="area-name3">Commit(7chars)</div>
+        <div class="area-data3" id="hash"></div>
+        <div class="area-name4">Chromium</div>
+        <div class="area-data4" id="chrome"></div>
+        <div class="area-name5">Electron</div>
+        <div class="area-data5" id="electron"></div>
+        <div class="area-name6">Node.js</div>
+        <div class="area-data6" id="node"></div>
     </div>
     <div class="cp">Copyright &copy; TheDesk 2018<br>
         Main developer(author): <a href="https://cutls.com/@Cutls" target="_blank">Cutls P</a><br>
@@ -114,6 +126,7 @@
             var ver = m[1];
             $("#ver").text(ver);
         }
+        $("#hash").html('<a href="https://github.com/cutls/TheDesk/commits/' + about[3] + '" target="_blank">' + about[3].slice(0, 7) + '</a>');
         $(document).on('click', 'a', e => {
             var url = $(e.target).attr('href');
             postMessage(["openUrl", url], "*")

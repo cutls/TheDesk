@@ -135,6 +135,7 @@ function listUser(id, acct_id) {
 				templete = lang.lang_list_nouser;
 			}
 			$("#lists-user").html(templete);
+			jQuery("time.timeago").timeago();
 		} else {
 			$("#lists-user").html(lang.lang_list_nouser);
 		}

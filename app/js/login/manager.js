@@ -286,10 +286,6 @@ function support() {
 			templete = '<a onclick="login(\'' + key +
 				'\')" class="collection-item pointer transparent">' + idata[key + "_name"] + '(' + key + ')</a>';
 			$("#support").append(templete);
-		} else if (instance == "misskey") {
-			templete = '<a onclick="misskeyLogin(\'' + key +
-				'\')" class="collection-item pointer transparent">' + idata[key + "_name"] + '(' + key + ')</a>';
-			$("#support").append(templete);
 		}
 	});
 }
