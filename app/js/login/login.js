@@ -520,13 +520,12 @@ function ticker() {
 			'content-type': 'application/json'
 		},
 	}).then(function (response) {
+
 		return response.json();
 	}).catch(function (error) {
 		console.error(error);
 	}).then(function (json) {
-		if (json.error) {
-			return;
-		}
+		console.log(json)
 		if (json) {
 			localStorage.setItem("ticker", JSON.stringify(json));
 		}
