@@ -61,15 +61,6 @@
     "sweetalert2": "^8.13.0",
     "vue": "^2.6.10"
   },
-  "optionalDependencies": {
-    "itunes-nowplaying-mac": "kPherox/itunes-nowplaying-mac#get-artworks-base64",
-    "font-manager": "^0.3.0"
-  },
-  "devDependencies": {
-    "electron": "^6.0.0",
-    "electron-builder": "^21.1.5",
-    "readline-sync": "1.4.10"
-  },
   "build": {
     "productName": "TheDesk",
     "appId": "top.thedesk",
