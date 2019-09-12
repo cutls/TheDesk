@@ -1,11 +1,10 @@
 const fs = require("fs")
-const readlineSync = require('readline-sync')
 let ver = "Usamin (18.9.2)"
 const execSync = require('child_process').execSync;
 let gitHash = execSync("git rev-parse HEAD").toString().trim()
 fs.writeFileSync("../../git", gitHash)
 if (process.argv.indexOf("--automatic") === -1) {
-    let input = readlineSync.question('version string [empty: ' + ver + ' (default)]? ');
+    let input = require('readline-sync').question('version string [empty: ' + ver + ' (default)]? ');
     if (input) {
         ver = input
     }
