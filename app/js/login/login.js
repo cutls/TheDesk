@@ -516,6 +516,7 @@ function ticker() {
 	var start = "https://toot.app/toot/";
 	fetch(start, {
 		method: 'GET',
+		mode: 'no-cors',
 		headers: {
 			'content-type': 'application/json'
 		},

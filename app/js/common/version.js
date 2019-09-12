@@ -116,6 +116,7 @@ function verck(ver) {
 	}
 	var start = "https://thedesk.top/notice?since_id=" + localStorage.getItem("last-notice-id");
 	fetch(start, {
+		mode: 'no-cors',
 		method: 'GET'
 	}).then(function (response) {
 		return response.json();
