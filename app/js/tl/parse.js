@@ -426,7 +426,12 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				}
 			}
 		}
-		if (toot.content) {
+		if (toot.content == "") {
+			var content = "　"
+		} else {
+			var content = toot.content
+		}
+		if (content) {
 			var id = toot.id;
 			if (mix == "home") {
 				var home = ""
@@ -468,31 +473,29 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				boostback = "emphasized";
 			}
 			if (toot.spoiler_text && cw) {
-				var content = toot.content;
 				var spoil = escapeHTML(toot.spoiler_text);
 				var spoiler = "cw cw_hide_" + toot.id;
 				var api_spoil = "gray";
 				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
 					'\')" class="nex parsed cw_btn">' + lang.lang_parse_cwshow + '</a><br>';
 			} else {
-				if (toot.content) {
-					var ct1 = toot.content.split('</p>').length + toot.content.split('<br />').length - 2;
-					var ct2 = toot.content.split('</p>').length + toot.content.split('<br>').length - 2;
+				if (content) {
+					var ct1 = content.split('</p>').length + content.split('<br />').length - 2;
+					var ct2 = content.split('</p>').length + content.split('<br>').length - 2;
 				} else {
 					var ct1 = 100;
 					var ct2 = 100;
 				}
 				if (ct1 > ct2) { var ct = ct1; } else { var ct = ct2; }
-				if ((sent < ct && $.mb_strlen($.strip_tags(toot.content)) > 5) || ($.strip_tags(toot.content).length > ltr && $.mb_strlen($.strip_tags(toot.content)) > 5)) {
-					var content = '<span class="gray">' + lang.lang_parse_fulltext + '</span><br>' + toot.content
+				if ((sent < ct && $.mb_strlen($.strip_tags(content)) > 5) || ($.strip_tags(content).length > ltr && $.mb_strlen($.strip_tags(content)) > 5)) {
+					var content = '<span class="gray">' + lang.lang_parse_fulltext + '</span><br>' + content
 					var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tags(
-						toot.content), 0, 100) +
+						content), 0, 100) +
 						'</span><span class="gray">' + lang.lang_parse_autofold + '</span>';
 					var spoiler = "cw cw_hide_" + toot.id;
 					var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
 						'\')" class="nex parsed cw_btn">' + lang.lang_parse_more + '</a><br>';
 				} else {
-					var content = toot.content;
 					var spoil = escapeHTML(toot.spoiler_text);
 					var spoiler = "";
 					var spoiler_show = "";
@@ -650,7 +653,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			if (tagck) {
 				Object.keys(toot.tags).forEach(function (key4) {
 					var tag = toot.tags[key4];
-					var featured = '　<a onclick="tagFeature(\'' + tag.name + '\',' + acct_id +')" class="pointer" title="add it to Featured tags">Feature</a>　'
+					var featured = '　<a onclick="tagFeature(\'' + tag.name + '\',' + acct_id + ')" class="pointer" title="add it to Featured tags">Feature</a>　'
 					tags = tags + '<span class="hide" data-tag="' + tag.name + '">#' + tag.name + ':<a onclick="tl(\'tag\',\'' + tag.name + '\',' + acct_id +
 						',\'add\')" class="pointer" title="' + lang.lang_parse_tagTL.replace("{{tag}}", '#' + tag.name) + '">TL</a>　<a onclick="brInsert(\'#' + tag.name + '\')" class="pointer" title="' + lang.lang_parse_tagtoot.replace("{{tag}}", '#' + tag.name) + '">Toot</a>　' +
 						'<a onclick="tagPin(\'' + tag.name + '\')" class="pointer" title="' + lang.lang_parse_tagpin.replace("{{tag}}", '#' + tag.name) + '">Pin</a>' + featured + '</span> ';
