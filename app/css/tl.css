@@ -698,8 +698,8 @@ audio {
   }
 }
 .box-anime {
-  animation-duration: 1s;
-  animation-name: fadeInLeft;
+  /*animation-duration: 1s;
+  animation-name: fadeInLeft;*/
 }
 
 .cvo-anime {
@@ -711,4 +711,16 @@ audio {
   height: 2rem;
   font-size: 1rem;
   background-color: #009688;
+}
+.box .ui-resizable-s{
+  display: none !important;
+}
+.boxIn .ui-resizable-e{
+  display: none !important;
+}
+.boxIn .ui-resizable-s{
+  display: block !important;
+}
+.box .ui-resizable-se{
+  display: none !important;
 }

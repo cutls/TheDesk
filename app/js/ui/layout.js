@@ -95,6 +95,7 @@ function parseColumn(target, dontclose) {
 		var tlidtar = null
 		if ($("#timeline-container").length) {
 			$("#timeline-container").html("");
+			$(".box, .boxIn").resizable("destroy");
 		}
 	}
 	var basekey = 0;
@@ -155,6 +156,16 @@ function parseColumn(target, dontclose) {
 		} else {
 			localStorage.removeItem("hasNotfC_" + acct.domain);
 		}
+		var width = localStorage.getItem("width");
+		if (width) {
+			var css = " min-width:" + width + "px;"
+		}
+		if(acct.width){
+			var css = " min-width:" + acct.width + "px;max-width:" + acct.width + "px;"
+		}
+		if(!css){
+			var css = ""
+		}
 		if (acct.type == "webview") {
 			if (localStorage.getItem("fixwidth")) {
 				var fixwidth = localStorage.getItem("fixwidth");
@@ -168,10 +179,7 @@ function parseColumn(target, dontclose) {
 			if (!acct.left_fold) {
 				basekey = key;
 			}
-			var width = localStorage.getItem("width");
-			if (width) {
-				var css = " min-width:" + width + "px;"
-			}
+
 			var anime = localStorage.getItem("animation");
 			if (anime == "yes" || !anime) {
 				var animecss = "box-anime";
@@ -180,10 +188,6 @@ function parseColumn(target, dontclose) {
 			}
 			unstreamingTL(acct.type, key, basekey, insert, icnsert, acct.left_fold, css, animecss, acct.data);
 		} else {
-			var width = localStorage.getItem("width");
-			if (width) {
-				var css = " min-width:" + width + "px;"
-			}
 			var anime = localStorage.getItem("animation");
 			if (anime == "yes" || !anime) {
 				var animecss = "box-anime";
@@ -242,8 +246,13 @@ function parseColumn(target, dontclose) {
 				var isMisRed = "red-text"
 				var if_misskey_hide = ""
 			}
+			if(acct.height){
+				var addHeight = " min-height:" + acct.height + "px;max-height:" + acct.height + "px;"
+			}else {
+				var addHeight = ""
+			}
 			var html = '<div class="boxIn" id="timeline_box_' + key + '_box" tlid="' + key +
-				'" data-acct="' + acct.domain + '"><div class="notice-box z-depth-2" id="menu_' + key + '" style="' + insert + ' ">' +
+				'" data-acct="' + acct.domain + '" style="' + addHeight + '"><div class="notice-box z-depth-2" id="menu_' + key + '" style="' + insert + ' ">' +
 				'<div class="area-notice"><i class="material-icons waves-effect ' + isMisRed + '" id="notice_icon_' + key + '"' + notf_attr + ' style="font-size:40px; padding-top:25%;" onclick="checkStr(\'' + acct.type + '\', \'' + data + '\', \'' + acct.domain + '\', \'' + key + '\', \'' + delc + '\',\'' + voice + '\',null)" title="' + lang.lang_layout_gotop + '"></i></div>' +
 				'<div class="area-notice_name"><span id="notice_' + key + '" class="tl-title"></span></div>' +
 				'<div class="area-a1"><a onclick="notfToggle(' + acct.domain + ',' + key +
@@ -293,6 +302,7 @@ function parseColumn(target, dontclose) {
 			mediaCheck(key);
 			catchCheck(key);
 			voiceCheck(key);
+			var css = ""
 		}
 	}
 	var box = localStorage.getItem("box");
@@ -320,6 +330,40 @@ function parseColumn(target, dontclose) {
 			}
 		}
 	}
+	$(".box, .boxIn").resizable({
+		minHeight: 50,
+		minWidth: 50,
+		grid: 50,
+		resize: function (event, ui) {
+			$(this).css("min-width", ui.size.width + "px")
+			$(this).css("max-width", ui.size.width + "px")
+			$(this).css("min-height", ui.size.height + "px")
+			$(this).css("max-height", ui.size.height + "px")
+		},
+		stop: function (event, ui) {
+			var col = localStorage.getItem("column");
+			var o = JSON.parse(col);
+			var width = ui.size.width
+			var height = ui.size.height
+			if ($(this).hasClass("boxIn")) {
+				//縦幅。その縦幅を持つカラムのidは
+				console.log("tate")
+				var key = $(this).attr("tlid")
+				var obj = o[key];
+				obj.height = height;
+				o[key] = obj;
+			} else {
+				//横幅。その縦幅を持つカラムのidは
+				console.log("yoko")
+				var key = $(this).find(".boxIn").attr("tlid")
+				var obj = o[key];
+				obj.width = width;
+				o[key] = obj;
+			}
+			var json = JSON.stringify(o);
+			localStorage.setItem("column", json);
+		}
+	});
 }
 function checkStr(type, data, acct_id, key, delc, voice) {
 	if ($('#notice_icon_' + key).hasClass("red-text") && type != "notf" && type != "mix") {

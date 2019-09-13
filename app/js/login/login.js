@@ -525,7 +525,6 @@ function ticker() {
 	}).catch(function (error) {
 		console.error(error);
 	}).then(function (json) {
-		console.log(json)
 		if (json) {
 			localStorage.setItem("ticker", JSON.stringify(json));
 		}
