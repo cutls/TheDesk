@@ -1,5 +1,7 @@
 function postMessage(e){
-	console.log(e)
+	if(e[0]=="openUrl"){
+		window.open(e[1])
+	}
 	return false;
 }
 document.title="TheDesk"

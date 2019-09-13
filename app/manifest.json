@@ -1,17 +1,21 @@
 {
   "name": "TheDesk",
   "short_name": "TheDesk",
-  "description": "Mastodonクライアント",
   "icons": [
     {
       "src": "./img/desk.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-  "theme_color": "#212121",
-  "background_color": "#212121",
+  "start_url": "/",
   "display": "standalone",
-  "start_url": "./view/ja",
-  "scope": "https://thedesk.github.io"
+  "orientation": "portrait-primary",
+  "background_color": "#212121",
+  "theme_color": "#212121",
+  "description": "TheDesk",
+  "dir": "ltr",
+  "lang": "ja-jp",
+  "related_applications": [],
+  "prefer_related_applications": false
 }
