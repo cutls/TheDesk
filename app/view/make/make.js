@@ -1,5 +1,5 @@
 const fs = require("fs")
-let ver = "Usamin (18.9.2)"
+let ver = "Usamin (18.10.0)"
 const execSync = require('child_process').execSync;
 let gitHash = execSync("git rev-parse HEAD").toString().trim()
 fs.writeFileSync("../../git", gitHash)
