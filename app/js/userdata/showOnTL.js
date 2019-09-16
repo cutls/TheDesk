@@ -23,7 +23,7 @@ function udgEx(user, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if (localStorage.getItem("mode_" + domain) == "misskey") { return false; }
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/search?resolve=true&q=" + user
+	var start = "https://" + domain + "/api/v2/search?resolve=true&q=" + user
 	fetch(start, {
 		method: 'GET',
 		headers: {
