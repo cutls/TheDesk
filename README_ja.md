@@ -79,6 +79,9 @@ Linuxビルダー
 
 ## ビルド
 
+npmでもyarnでも好きな方を選んでください。
+
+### npm
 
 ```sh
 git clone https://github.com/cutls/TheDesk
@@ -88,8 +91,20 @@ npm install --only=dev
 npm run construct
 ```
 
+### yarn
+
+```sh
+git clone https://github.com/cutls/TheDesk
+cd TheDesk/app
+yarn install
+yarn construct
+```
+
 ### electron-builder(推奨)
-npm scriptsを利用します
+
+scriptsを利用します
+
+#### npm
 
 ```sh
 # 実行している環境向けにビルド
@@ -101,6 +116,20 @@ npm run build:win
 
 ## macOS向けのビルドにはmacOSで実行する必要があるためこのコマンドではビルドされません
 npm run build:all
+```
+
+#### yarn
+
+```sh
+# 実行している環境向けにビルド
+yarn build
+
+# ターゲットを指定してビルド
+## Windows
+yarn build:win
+
+## macOS向けのビルドにはmacOSで実行する必要があるためこのコマンドではビルドされません
+yarn build:all
 ```
 
 ビルド設定はすべてpackage.jsonに記載しています。  

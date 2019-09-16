@@ -12,7 +12,6 @@ enq.md
 app/.tkn
 app/node_modules
 app/js/login/tkn.js
-app/package-lock.json
 app/view/en
 app/view/ja
 app/view/de

@@ -5,13 +5,15 @@ os:
 language: node_js
 node_js:
 - '10.15.2'
+cache:
+  yarn: true
 script: node -v
 before_deploy:
-  - npm install electron-builder -g
+  - yarn install electron-builder -g
   - cd app
   - VERSION=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
-  - npm install
-  - npm run construct
+  - yarn install
+  - yarn construct
   - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../build;else :;fi

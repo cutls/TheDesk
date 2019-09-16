@@ -80,6 +80,10 @@ Fellow coder
 
 ## Build
 
+You have to use either **npm** or **yarn**. Whichever you use, it works well.
+
+### npm
+
 ```sh
 git clone https://github.com/cutls/TheDesk
 cd TheDesk/app
@@ -88,8 +92,21 @@ npm install --only=dev
 npm run construct
 ```
 
+### yarn
+
+```sh
+git clone https://github.com/cutls/TheDesk
+cd TheDesk/app
+yarn install
+yarn construct
+```
+
+run `npm run dev` or `yarn dev` to launch developer version with console(click `view`)
+
 ### electron-builder(Recommended)
-Use npm scripts.  
+Use scripts(they can work well with npm, **yarn**).  
+
+#### npm
 
 ```sh
 # Build for current platform
@@ -102,6 +119,21 @@ npm run build:win
 ## Windows and Linux (The macOS target should run on macOS. So, this option hasn't include the build for macOS)
 npm run build:all
 ```
+
+#### yarn
+
+```sh
+# Build for current platform
+yarn build
+
+# Select build target
+## Windows
+yarn build:win
+
+## Windows and Linux (The macOS target should run on macOS. So, this option hasn't include the build for macOS)
+yarn build:all
+```
+
 
 Config is all on package.json  
 
