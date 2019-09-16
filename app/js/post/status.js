@@ -295,6 +295,7 @@ function redraft(id, acct_id) {
 			show();
 			del(id, acct_id);
 			$("#post-acct-sel").prop("disabled", true);
+			$('select').formSelect();
 			var medias = $("[toot-id=" + id + "]").attr("data-medias");
 			var vismode = $("[toot-id=" + id + "] .vis-data").attr("data-vis");
 			vis(vismode);
@@ -473,7 +474,7 @@ function staEx(mode) {
 	var acct_id = $("#status-acct-sel").val();
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/search?resolve=true&q=" + url
+	var start = "https://" + domain + "/api/v2/search?resolve=true&q=" + url
 	fetch(start, {
 		method: 'GET',
 		headers: {
