@@ -596,7 +596,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							' toot-img pointer" style="max-width:100%;" loop="true"></a></span>';
 					} else {
 						if (media.type == "unknown") {
-							viewer = viewer + '<a href="' + media.remote_url + '" title="' + media.remote_url + '">[' + lang.lang_parse_unknown + ']</a> '
+							var mty = media.remote_url.match(/.+(\..+)$/)[1]
+							viewer = viewer + '<a href="' + media.remote_url + '" title="' + media.remote_url + '">[' + lang.lang_parse_unknown + '( ' + mty + ' )]</a> '
 						} else if (media.type == "audio") {
 							viewer = viewer + '<audio src="' +
 								url + '" class="pointer" style="width:100%;" controls></span>';
@@ -623,8 +624,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var to_mention = [];
 				Object.keys(toot.mentions).forEach(function (key3) {
 					var mention = toot.mentions[key3];
-					mentions = mentions + '<a onclick="udg(\'' + mention.id + '\',' +
-						acct_id + ')" class="pointer">@' + mention.acct + '</a> ';
 					//自分は除外
 					//自インスタンスかどうかを確認し、IDの一致
 					if (mention.acct == mention.username && mention.id == localStorage.getItem("user-id_" + acct_id)) {
@@ -632,6 +631,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					} else {
 						//そのトゥの人NG
 						if (toot.account.acct != mention.acct) {
+							mentions = mentions + '<a onclick="udg(\'' + mention.id + '\',' +
+								acct_id + ')" class="pointer">@' + mention.acct + '</a> ';
 							to_mention.push(mention.acct);
 						}
 					}
