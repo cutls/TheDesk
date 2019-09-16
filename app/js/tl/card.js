@@ -6,17 +6,21 @@ function additional(acct_id, tlid) {
 
 	$("#timeline-container .mention").addClass("parsed");
 
-	$("#timeline-container .hashtag").each(function (i, elem) {
+	$("#timeline-container .hashtag, #timeline-container [rel=tag]").each(function (i, elem) {
 		var tags = $(this).attr("href").match(
 			/https?:\/\/([-a-zA-Z0-9@.]+)\/tags\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
 		);
-		$(this).attr("href", "#");
-		if (tags) {
-			if (tags[2]) {
-				$(this).attr("onclick", 'tagShow(\'' + tags[2] + '\')');
-			}
-
+		if(tags){
+			var tagThis = tags[2]
+		}else{
+			var tagThis = $(this).attr("data-tag")
 		}
+		
+		if(tagThis){
+			$(this).attr("onclick", 'tagShow(\'' + tagThis + '\')');
+			$(this).attr("href", "#");
+		}
+		
 	});
 
 	//トゥートサムネ
