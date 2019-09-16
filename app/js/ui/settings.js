@@ -161,7 +161,36 @@ function load() {
 	$("#c2-file").text(localStorage.getItem("custom2"));
 	$("#c3-file").text(localStorage.getItem("custom3"));
 	$("#c4-file").text(localStorage.getItem("custom4"));
+	var cvol = localStorage.getItem("customVol")
+	if (cvol) {
+		$("#soundvol").val(cvol * 100);
+		$("#soundVolVal").text(cvol * 100)
+	}
 	//$("#log").val(localStorage.getItem("errors"))
+}
+function customVol() {
+	var cvol = $("#soundvol").val()
+	$("#soundVolVal").text(cvol)
+	localStorage.setItem("customVol", cvol / 100)
+	var sound = localStorage.getItem("favSound");
+	if (sound == "default") {
+		var file = "../../source/notif.wav"
+	}else{
+		if (sound == "c1") {
+			var file = localStorage.getItem("custom1");
+		} else if (sound == "c2") {
+			var file = localStorage.getItem("custom2");
+		} else if (sound == "c3") {
+			var file = localStorage.getItem("custom3");
+		} else if (sound == "c4") {
+			var file = localStorage.getItem("custom4");
+		}
+	}
+	request = new XMLHttpRequest();
+	request.open("GET", file, true);
+	request.responseType = "arraybuffer";
+	request.onload = playSound;
+	request.send();
 }
 
 function climute() {

@@ -158,6 +158,7 @@
   "pitchwarn": "0-100(default:50)",
   "vol": "Volume",
   "volwarn": "0-100(default:100)",
+  "volwarn80": "0-100(default:80)",
   "test": "Test",
   "sample": "TheDesk is an open-source Mastodon client for PC.",
   "playstop": "Play/Stop",

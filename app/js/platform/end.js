@@ -108,12 +108,16 @@ function opendev() {
 	  });
 	  */
 }
+var soundFile
 function playSound() {
 	window.AudioContext = window.AudioContext || window.webkitAudioContext;
+	if(soundFile){
+		soundFile.stop()
+	}
 	context = new AudioContext();
 	context.createBufferSource().start(0);
 	context.decodeAudioData(request.response, function (buf) {
-		console.log("Playing:" + source)
+		//console.log("Playing:" , source)
 		source.buffer = buf;
 		source.loop = false;
 	});
@@ -121,8 +125,20 @@ function playSound() {
 	volumeControl = context.createGain();
 	source.connect(volumeControl);
 	volumeControl.connect(context.destination);
-	volumeControl.gain.value = 0.8
+	var cvol = localStorage.getItem("customVol")
+	if (cvol) {
+		vol = cvol
+	}else{
+		vol = 0.8
+	}
+	volumeControl.gain.value = vol
 	source.start(0);
+	soundFile = source;
+
+	function newFunction() {
+		var source;
+		return source;
+	}
 }
 function nano() {
 	postMessage(["nano", null], "*")

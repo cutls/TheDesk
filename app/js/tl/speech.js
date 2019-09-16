@@ -98,11 +98,14 @@ function voiceSettingLoad() {
     var vol = localStorage.getItem("voice_vol");
     if (speed) {
         $("#voicespeed").val(speed * 10);
+        $("#voicespeedVal").text(speed * 10);
     }
     if (pitch) {
         $("#voicepitch").val(pitch * 50);
+        $("#voicepitchVal").text(pitch * 50);
     }
     if (vol) {
         $("#voicevol").val(vol * 100);
+        $("#voicevolVal").text(vol * 100);
     }
 }

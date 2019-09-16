@@ -247,6 +247,11 @@
 					id="c3-file"></span><br>
 				<button class="btn waves-effect" style="width:120px;" onclick="customSound(4)">Custom 4</button><span
 					id="c4-file"></span><br>
+					<h5>@@vol@@</h5>
+					@@volwarn80@@<br>
+					<p class="range-field"><span id="soundVolVal">80</span><br>
+						<input type="range" id="soundvol" min="0" max="100" value="80" onchange="customVol()"
+						style="width:500px; max-width:100%" /></p>
 			</div>
 		</li>
 		<li>
@@ -373,15 +378,18 @@
 			<div class="collapsible-body">
 				<h5>@@speed@@</h5>
 				@@speedwarn@@<br>
-				<p class="range-field"><input type="range" id="voicespeed" min="1" max="100" value="10"
+				<p class="range-field"><span id="voicespeedVal">10</span><br>
+					<input type="range" id="voicespeed" min="1" max="100" value="10" onchange="document.getElementById('voicespeedVal').innerText=this.value"
 						style="width:500px; max-width:100%" /></p>
 				<h5>@@pitch@@</h5>
 				@@pitchwarn@@<br>
-				<p class="range-field"><input type="range" id="voicepitch" min="0" max="100" value="50"
+				<p class="range-field"><span id="voicepitchVal">50</span><br>
+					<input type="range" id="voicepitch" min="0" max="100" value="50" onchange="document.getElementById('voicepitchVal').innerText=this.value"
 						style="width:500px; max-width:100%" /></p>
 				<h5>@@vol@@</h5>
 				@@volwarn@@<br>
-				<p class="range-field"><input type="range" id="voicevol" min="0" max="100" value="100"
+				<p class="range-field"><span id="voicevolVal">100</span><br>
+					<input type="range" id="voicevol" min="0" max="100" value="100" onchange="document.getElementById('voicevolVal').innerText=this.value"
 						style="width:500px; max-width:100%" /></p>
 				<h5>@@test@@</h5>
 				<input type="text" style="width:350px" id="voicetxt" value="@@sample@@">
