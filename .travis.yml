@@ -9,7 +9,7 @@ cache:
   yarn: true
 script: node -v
 before_deploy:
-  - yarn install electron-builder -g
+  - yarn global add electron-builder
   - cd app
   - VERSION=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
   - yarn install
