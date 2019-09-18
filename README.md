@@ -101,6 +101,7 @@ cd TheDesk/app
 yarn install --no-lockfile
 # Windows
 yarn install
+
 yarn construct
 ```
 
