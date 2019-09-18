@@ -16,12 +16,13 @@ before_deploy:
   - VERSION=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
   - yarn install --no-lockfile --prod
   - yarn construct
-  - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../build;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then ls;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv thedesk-*.zip thedesk.zip;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../app;else :;fi
+  #- if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
+  #- if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 -p never;else :;fi
+  #- if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../build;else :;fi
+  #- if [ "$TRAVIS_OS_NAME" = "linux" ];then ls;else :;fi
+  #- if [ "$TRAVIS_OS_NAME" = "linux" ];then mv thedesk-*.zip thedesk.zip;else :;fi
+  #- if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../app;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ];then yarn add electron-builder;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win --ia32 -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then ls;else :;fi
@@ -48,5 +49,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
-    tags: true
+    tags: false
     all_branches: true
