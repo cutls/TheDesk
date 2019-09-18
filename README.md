@@ -98,9 +98,9 @@ npm run construct
 git clone https://github.com/cutls/TheDesk
 cd TheDesk/app
 # Linux or macOS
-yarn install  --no-lockfile
+yarn install --no-lockfile
 # Windows
-yarn install  --no-lockfile
+yarn install
 yarn construct
 ```
 
