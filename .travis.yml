@@ -3,6 +3,8 @@ os:
  - linux
  - osx
 language: node_js
+env:
+  - YARN_GPG=no
 node_js:
 - '10.15.2'
 cache:
