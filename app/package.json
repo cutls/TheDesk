@@ -66,7 +66,7 @@
     "font-manager": "^0.3.0"
   },
   "devDependencies": {
-    "electron": "^6.0.0",
+    "electron": "^6.0.10",
     "electron-builder": "^21.1.5",
     "electron-rebuild": "^1.8.6",
     "readline-sync": "1.4.10"
