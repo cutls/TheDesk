@@ -15,10 +15,10 @@
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
-"@fortawesome/fontawesome-free@^5.11.0":
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.11.0.tgz#2509777d69c7d1d226fb1199c3429a03424312b3"
-  integrity sha512-uS4fXP6o33BjmudpUmTj9Ps/h3igl4Kvp+BJi9ieGPlL+MTB2URtIlYjMYNrPLHMmmnMHDJHBAmyUA65cmsDpQ==
+"@fortawesome/fontawesome-free@^5.11.1":
+  version "5.11.1"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.11.1.tgz#cef685a74708cf57b367c32d9f36a931c5a4e894"
+  integrity sha512-DtXLVYAkDU0ce1cFUgLvZaMd1R2J/LviBYih9xr4ZLhQMrgvYX7w2vOxlpKLRALfIj5GyC5zoVrcACOkLcFgvg==
 
 "@jimp/bmp@^0.8.2":
   version "0.8.2"
