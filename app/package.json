@@ -51,7 +51,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.11.1",
     "electron-dl": "^1.14.0",
-    "jimp": "^0.8.3",
+    "jimp": "^0.8.4",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
     "json5": "^2.1.0",
