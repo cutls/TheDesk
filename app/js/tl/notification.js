@@ -100,10 +100,10 @@ function notfColumn(acct_id, tlid, sys) {
 			todc();
 			//Markers
 			var markers = localStorage.getItem("markers");
-			if (markers == "no") {
-				markers = false;
+			if (markers == "yes") {
+				markers = true;
 			} else {
-				markers = true
+				markers = false
 			}
 			if (markers) {
 				getMarker(tlid, "notf", acct_id)

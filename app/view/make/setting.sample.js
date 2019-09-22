@@ -311,7 +311,7 @@ var tlConstruction = [
         id: "markers",
         storage: "markers",
         checkbox: true,
-        setValue: "yes",
+        setValue: "no",
         text: {
             head: "@@markers@@",
             desc: "@@markerswarn@@",

@@ -153,10 +153,10 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		if (type == "home" || type == "notf") {
 			//Markers
 			var markers = localStorage.getItem("markers");
-			if (markers == "no") {
-				markers = false;
+			if (markers == "yes") {
+				markers = true;
 			} else {
-				markers = true
+				markers = false
 			}
 			if (markers) {
 				getMarker(tlid, type, acct_id)

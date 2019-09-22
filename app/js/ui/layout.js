@@ -217,10 +217,10 @@ function parseColumn(target, dontclose) {
 				unread = ""
 			}
 			var markers = localStorage.getItem("markers");
-			if (markers == "no") {
-				markers = false;
+			if (markers == "yes") {
+				markers = true;
 			} else {
-				markers = true
+				markers = false
 			}
 			if (!markers) {
 				unread = ""
