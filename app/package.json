@@ -49,16 +49,16 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.10.1",
+    "@fortawesome/fontawesome-free": "^5.11.1",
     "electron-dl": "^1.14.0",
-    "jimp": "^0.8.2",
+    "jimp": "^0.8.3",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
     "json5": "^2.1.0",
     "materialize-css": "^1.0.0",
     "node-notifier": "^5.4.0",
     "sumchecker": "^3.0.0",
-    "sweetalert2": "^8.13.0",
+    "sweetalert2": "^8.17.6",
     "vue": "^2.6.10"
   },
   "optionalDependencies": {
@@ -66,7 +66,7 @@
     "itunes-nowplaying-mac": "kPherox/itunes-nowplaying-mac#get-artworks-base64"
   },
   "devDependencies": {
-    "electron": "^6.0.0",
+    "electron": "^6.0.10",
     "electron-builder": "^21.1.5",
     "electron-rebuild": "^1.8.6",
     "readline-sync": "1.4.10"
