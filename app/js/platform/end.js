@@ -183,6 +183,10 @@ onmessage = function (e) {
 		updateMess(e.data[1]);
 	} else if (e.data[0] == "renderAbout") {
 		renderAbout(e.data[1]);
+	} else if (e.data[0] == "asRead") {
+		asRead()
+	} else if (e.data[0] == "asReadEnd") {
+		asReadEnd()
 	} else if (e.data[0] == "alert") {
 		Swal.fire({
 			type: 'info',

@@ -131,6 +131,8 @@ var lang = {
     //tl/tl.js
     "lang_tl_media": "Media",
     "lang_tl_reconnect": "Reconnect to streaming API",
+    "lang_tl_postmarkers_title": "Process...",
+    "lang_tl_postmarkers": "POST markers data. Please wait",
     //ui/img.js
     "lang_img_DLDone": "Downloaded:",
     //ui/layout.js

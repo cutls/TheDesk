@@ -57,6 +57,8 @@ onmessage = function (e) {
         ipc.send('download-btn', e.data[1]);
     } else if (e.data[0] == "nano") {
         ipc.send('nano', null);
+    } else if (e.data[0] == "asReadComp") {
+        ipc.send('sendMarkersComplete', null);
     }
 }
 //version.js
@@ -163,6 +165,12 @@ ipc.on('prog', function (event, arg) {
 })
 ipc.on('mess', function (event, arg) {
     postMessage(["updateMess", arg], "*")
+})
+ipc.on('asRead', function (event, arg) {
+    postMessage(["asRead", ""], "*")
+})
+ipc.on('asReadEnd', function (event, arg) {
+    postMessage(["asReadEnd", ""], "*")
 })
 var webviewDom = document.getElementById('webview');
 if (webviewDom) {

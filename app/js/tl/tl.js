@@ -999,24 +999,24 @@ function ueload(tlid) {
 			columnReload(tlid, type)
 		}
 		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
-			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type)
 		} else {
-			var mute = [];
+			var mute = []
 		}
-		var templete = parse(json, '', acct_id, tlid, "", mute, type);
+		var templete = parse(json, '', acct_id, tlid, "", mute, type)
 		var len = json.length - 1
-		$("#timeline_" + tlid).prepend(templete);
+		$("#timeline_" + tlid).prepend(templete)
 		if ($("#timeline_" + tlid + " .cvo:eq(" + len + ")").length) {
 			var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top
 			$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to)
 		}
-		additional(acct_id, tlid);
-		jQuery("time.timeago").timeago();
-		todc();
+		additional(acct_id, tlid)
+		jQuery("time.timeago").timeago()
+		todc()
 		ueloadlock = false
 	});
 }
-function asRead() {
+function asRead(callback) {
 	//Markers
 	var markers = localStorage.getItem("markers");
 	if (markers == "no") {
@@ -1027,7 +1027,9 @@ function asRead() {
 	if (markers) {
 		var multi = localStorage.getItem("column")
 		var obj = JSON.parse(multi)
-		for (var i = 0; i < obj.length; i++) {
+		var obl = obj.length
+		ct = 0
+		for (var i = 0; i < obl; i++) {
 			var acct_id = obj[i].domain
 			var type = obj[i].type
 			if (type == "home" || type == "notf") {
@@ -1046,23 +1048,53 @@ function asRead() {
 						}
 					}
 				}
-				var domain = localStorage.getItem("domain_" + acct_id);
-				var at = localStorage.getItem("acct_" + acct_id + "_at");
-				var httpreq = new XMLHttpRequest();
+
+				var domain = localStorage.getItem("domain_" + acct_id)
+				var at = localStorage.getItem("acct_" + acct_id + "_at")
+				var httpreq = new XMLHttpRequest()
 				var start = "https://" + domain + "/api/v1/markers"
-				httpreq.open('POST', start, true);
-				httpreq.setRequestHeader('Content-Type', 'application/json');
-				httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-				httpreq.responseType = "json";
-				httpreq.send(JSON.stringify(poster));
+				httpreq.open('POST', start, true)
+				httpreq.setRequestHeader('Content-Type', 'application/json')
+				httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+				httpreq.responseType = "json"
+				httpreq.send(JSON.stringify(poster))
 				httpreq.onreadystatechange = function () {
 					if (httpreq.readyState === 4) {
-						var json = httpreq.response;
+						var json = httpreq.response
 						console.log(json)
+						ct++
+						if (ct == obl && callback) {
+							postMessage(["asReadComp", ""], "*")
+						}
 					}
 				}
 			}
 		}
 	}
 }
-cbTimer1 = setInterval(asRead, 60000);
+function asReadEnd() {
+	//Markers
+	var markers = localStorage.getItem("markers");
+	if (markers == "no") {
+		markers = false;
+	} else {
+		markers = true
+	}
+	if (markers) {
+		asRead(true)
+		Swal.fire({
+			title: lang.lang_tl_postmarkers_title,
+			html: lang.lang_tl_postmarkers,
+			timer: 3000,
+			onBeforeOpen: () => {
+				Swal.showLoading()
+			},
+			onClose: () => {
+			}
+		}).then((result) => {
+
+		})
+	} else {
+		postMessage(["asReadComp", ""], "*")
+	}
+}

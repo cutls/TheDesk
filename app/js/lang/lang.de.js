@@ -107,6 +107,8 @@ var lang={
     "lang_tags_tagwarn": "Automatisch {{tag}} anfügen, wenn Tröt ohne {{tag}} ist",
     "lang_tl_media": "Medien",
     "lang_tl_reconnect": "Mit Streaming API erneut verbinden",
+    "lang_tl_postmarkers_title": "Process...",
+    "lang_tl_postmarkers": "POST markers data. Please wait",
     "lang_img_DLDone": "Heruntergeladen:",
     "lang_layout_gotop": "Gehen Sie zum Anfang dieser Spalte. Wenn das Symbol rot ist, kann diese Spalte keine Verbindung zur Streaming-API herstellen. Bitte neu laden.",
     "lang_layout_thisacct": "{{notf}} dieses Kontos",

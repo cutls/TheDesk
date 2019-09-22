@@ -131,6 +131,8 @@ var lang = {
     //tl/tl.js
     "lang_tl_media": "メディア",
     "lang_tl_reconnect": "Streamingに再接続しました",
+    "lang_tl_postmarkers_title": "処理中",
+    "lang_tl_postmarkers": "未読マーカーを送信しています。3秒以内に閉じられます。",
     //ui/img.js
     "lang_img_DLDone": "ダウンロード先:",
     //ui/layout.js

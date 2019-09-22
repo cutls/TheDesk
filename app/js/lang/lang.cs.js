@@ -107,6 +107,8 @@ var lang={
     "lang_tags_tagwarn": "Auto complete {{tag}}, if toot without {{tag}}",
     "lang_tl_media": "Média",
     "lang_tl_reconnect": "Reconnect to streaming API",
+    "lang_tl_postmarkers_title": "Process...",
+    "lang_tl_postmarkers": "POST markers data. Please wait",
     "lang_img_DLDone": "Downloaded:",
     "lang_layout_gotop": "Go top of this column. When icon is red, this column cannot connect straming API. Please reload.",
     "lang_layout_thisacct": "{{notf}} tohoto účtu",

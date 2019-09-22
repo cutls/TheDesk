@@ -12,6 +12,7 @@ const np = require('./main/np.js');
 const systemFunc = require('./main/system.js');
 const Menu = electron.Menu
 const join = require('path').join;
+
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 // ウィンドウを作成するモジュール
@@ -29,8 +30,8 @@ if (!gotTheLock) {
 		// 多重起動を試みた場合、既に存在するウィンドウにフォーカスを移す
 		// Someone tried to run a second instance, we should focus our window.
 		if (mainWindow) {
-		if (mainWindow.isMinimized()) mainWindow.restore()
-		mainWindow.focus()
+			if (mainWindow.isMinimized()) mainWindow.restore()
+			mainWindow.focus()
 		}
 	})
 }
@@ -40,18 +41,18 @@ if (process.argv.indexOf("--dev") === -1) {
 } else {
 	var packaged = false;
 	console.log(
-		"||\\\\\\ \n"+
-		"||||  \\\\\\\\ \n"+
-		"||||     \\\\\\\\ \n"+
-		"|||| Am I a \\\\\\\\ \n"+
-		"|||| cat? ^ ^   \\\\\\\\\\       _____ _          ____            _    \n"+
-		"||||     (.-.)   \\\\\\\\\\      |_   _| |__   ___|  _ \\  ___  ___| | __\n"+
-		"||||  ___>   )    |||||       | | | '_ \\ / _ \\ | | |/ _ \\/ __| |/ /\n"+
-		"|||| <   _  _)   //////       | | | | | |  __/ |_| |  __/\__ \\   < \n"+
-		"||||  |_||_|   /////          |_| |_| |_|\\___|____/ \\___||___/_|\\_\\ \n"+
-		"||||          /////         \n"+
-		"||||       /////\n"+
-		"||||     /////\n"+
+		"||\\\\\\ \n" +
+		"||||  \\\\\\\\ \n" +
+		"||||     \\\\\\\\ \n" +
+		"|||| Am I a \\\\\\\\ \n" +
+		"|||| cat? ^ ^   \\\\\\\\\\       _____ _          ____            _    \n" +
+		"||||     (.-.)   \\\\\\\\\\      |_   _| |__   ___|  _ \\  ___  ___| | __\n" +
+		"||||  ___>   )    |||||       | | | '_ \\ / _ \\ | | |/ _ \\/ __| |/ /\n" +
+		"|||| <   _  _)   //////       | | | | | |  __/ |_| |  __/\__ \\   < \n" +
+		"||||  |_||_|   /////          |_| |_| |_|\\___|____/ \\___||___/_|\\_\\ \n" +
+		"||||          /////         \n" +
+		"||||       /////\n" +
+		"||||     /////\n" +
 		"||||//////"
 	)
 	console.log("Welcome!")
@@ -63,9 +64,9 @@ var ha_path = join(app.getPath("userData"), "hardwareAcceleration");
 try {
 	fs.readFileSync(ha_path, 'utf8');
 	app.disableHardwareAcceleration()
-	if(!packaged) console.log("disabled: Hardware Acceleration");
+	if (!packaged) console.log("disabled: Hardware Acceleration");
 } catch{
-	if(!packaged) console.log("enabled: Hardware Acceleration");
+	if (!packaged) console.log("enabled: Hardware Acceleration");
 }
 var window_size;
 try {
@@ -131,8 +132,8 @@ function createWindow() {
 			fs.writeFileSync(lang_path, lang);
 		});
 	}
-	if(!packaged) console.log("your lang:" + app.getLocale());
-	if(!packaged) console.log("launch:" + lang);
+	if (!packaged) console.log("your lang:" + app.getLocale());
+	if (!packaged) console.log("launch:" + lang);
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
 	var platform = process.platform;
 	var bit = process.arch;
@@ -173,7 +174,7 @@ function createWindow() {
 		if (window_size.max) {
 			mainWindow.maximize();
 		}
-	  })
+	})
 	electron.session.defaultSession.clearCache(() => { })
 	if (process.argv) {
 		if (process.argv[1]) {
@@ -200,7 +201,27 @@ function createWindow() {
 		electron.ipcMain.removeAllListeners();
 		mainWindow = null;
 	});
-	mainWindow.on('close', function () {
+	closeArg = false
+	mainWindow.on('close', function (e, arg) {
+			if(!closeArg){
+				e.preventDefault()
+			}
+			const promise = new Promise(function (resolve) {
+				mainWindow.webContents.send('asReadEnd', "")
+				setTimeout(function () { resolve() }, 3000)
+			})
+			promise.then((function (response) {
+				writePos(mainWindow)
+				closeArg = true
+				mainWindow.close()
+			})
+			);
+	});
+	electron.ipcMain.on('sendMarkersComplete', function (e, arg) {
+		closeArg = true
+		mainWindow.close()
+	})
+	function writePos(mainWindow){
 		if (
 			max_window_size.width == mainWindow.getBounds().width &&
 			max_window_size.height == mainWindow.getBounds().height &&
@@ -211,11 +232,14 @@ function createWindow() {
 		} else {
 			var size = { width: mainWindow.getBounds().width, height: mainWindow.getBounds().height, x: mainWindow.getBounds().x, y: mainWindow.getBounds().y }
 		}
-		fs.writeFileSync(info_path, JSON.stringify(size));
-	});
+		fs.writeFileSync(info_path, JSON.stringify(size))
+	}
 	mainWindow.on('maximize', function () {
 		fs.writeFileSync(max_info_path, JSON.stringify(mainWindow.getBounds()));
 	});
+	mainWindow.on('minimize', function () {
+		mainWindow.webContents.send('asRead', "")
+	})
 
 	var platform = process.platform;
 	var bit = process.arch;
@@ -230,6 +254,29 @@ function createWindow() {
 	np.TheDeskNowPlaying(mainWindow);
 	//その他system
 	systemFunc.system(mainWindow, dir, lang, dirname);
+	setInterval(function () { mouseTrack(mainWindow) }, 1000);
+}
+var x = 0
+var y = 0
+var unchanged = 0
+var locked = false
+function mouseTrack(mainWindow) {
+	let mousePos = electron.screen.getCursorScreenPoint()
+	let xNow = mousePos.x
+	let yNow = mousePos.x
+	if (x != xNow || y != yNow) {
+		unchanged = 0
+		locked = false
+	} else {
+		unchanged++
+		if (unchanged > 60 && !locked) {
+			unchanged = 0
+			locked = true
+			mainWindow.webContents.send('asRead', "")
+		}
+	}
+	x = xNow
+	y = yNow
 }
 // Electronの初期化完了後に実行
 app.on('ready', createWindow);
