@@ -152,6 +152,8 @@
   "template3": "",
   "postartwork": "アルバムアートワークを添付する(Spotify)",
   "tts": "読み上げの設定",
+  "bouyomi": "棒読みちゃん連携",
+  "bouyomiWarn": "「棒読みちゃん用のWebSocket受付プラグイン」が必要です。",
   "speed": "読み上げの速さ",
   "speedwarn": "1-100まで、デフォルトは10。",
   "pitch": "読み上げの高さ",

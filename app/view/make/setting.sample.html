@@ -247,10 +247,10 @@
 					id="c3-file"></span><br>
 				<button class="btn waves-effect" style="width:120px;" onclick="customSound(4)">Custom 4</button><span
 					id="c4-file"></span><br>
-					<h5>@@vol@@</h5>
-					@@volwarn80@@<br>
-					<p class="range-field"><span id="soundVolVal">80</span><br>
-						<input type="range" id="soundvol" min="0" max="100" value="80" onchange="customVol()"
+				<h5>@@vol@@</h5>
+				@@volwarn80@@<br>
+				<p class="range-field"><span id="soundVolVal">80</span><br>
+					<input type="range" id="soundvol" min="0" max="100" value="80" onchange="customVol()"
 						style="width:500px; max-width:100%" /></p>
 			</div>
 		</li>
@@ -267,7 +267,8 @@
 						</template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
-								<template v-if="(!check.kirishima || (check.kirishima && kirishima) )&& (!check.quote || (check.quote && quoters))">
+								<template
+									v-if="(!check.kirishima || (check.kirishima && kirishima) )&& (!check.quote || (check.quote && quoters))">
 									<label><input class="with-gap" v-on:click="complete(i,check.value)"
 											v-model="item.setValue" type="radio" v-bind:id="item.id+check.value"
 											v-bind:value="check.value" />
@@ -376,20 +377,35 @@
 				<i class="material-icons">hearing</i>@@tts@@
 			</div>
 			<div class="collapsible-body">
+				<h5>@@bouyomi@@</h5>
+				@@bouyomiWarn@@<a href="https://github.com/xztaityozx/BouyomiChan-WebSocket-Plugin" target="_blank">GitHub</a><br>
+				<label>
+					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_yes"
+						value="yes" />
+					<span>@@yes@@</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_no"
+						value="no" />
+					<span>@@no@@</span>
+				</label>
 				<h5>@@speed@@</h5>
 				@@speedwarn@@<br>
 				<p class="range-field"><span id="voicespeedVal">10</span><br>
-					<input type="range" id="voicespeed" min="1" max="100" value="10" onchange="document.getElementById('voicespeedVal').innerText=this.value"
+					<input type="range" id="voicespeed" min="1" max="100" value="10"
+						onchange="document.getElementById('voicespeedVal').innerText=this.value"
 						style="width:500px; max-width:100%" /></p>
 				<h5>@@pitch@@</h5>
 				@@pitchwarn@@<br>
 				<p class="range-field"><span id="voicepitchVal">50</span><br>
-					<input type="range" id="voicepitch" min="0" max="100" value="50" onchange="document.getElementById('voicepitchVal').innerText=this.value"
+					<input type="range" id="voicepitch" min="0" max="100" value="50"
+						onchange="document.getElementById('voicepitchVal').innerText=this.value"
 						style="width:500px; max-width:100%" /></p>
 				<h5>@@vol@@</h5>
 				@@volwarn@@<br>
 				<p class="range-field"><span id="voicevolVal">100</span><br>
-					<input type="range" id="voicevol" min="0" max="100" value="100" onchange="document.getElementById('voicevolVal').innerText=this.value"
+					<input type="range" id="voicevol" min="0" max="100" value="100"
+						onchange="document.getElementById('voicevolVal').innerText=this.value"
 						style="width:500px; max-width:100%" /></p>
 				<h5>@@test@@</h5>
 				<input type="text" style="width:350px" id="voicetxt" value="@@sample@@">
@@ -431,10 +447,10 @@
 		<li>Ctrl+R:
 			<a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
 		</li><br>
-	@@whenSelected@@
-	<li>F:@@fav@@</li>
-	<li>B:@@bt@@</li>
-	<li>R:@@reply@@</li>
+		@@whenSelected@@
+		<li>F:@@fav@@</li>
+		<li>B:@@bt@@</li>
+		<li>R:@@reply@@</li>
 	</div>
 	<button class="btn waves-effect red" style="width:100%; max-width:500px;"
 		onclick="if(confirm('@@resetconfirm@@')){ localStorage.clear(); location.href='index.html'; }"><i
@@ -448,7 +464,8 @@
 	<a href="https://www.patreon.com/cutls" class="btn waves-effect red darken-2"
 		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>@@support@@(Patreon)</a>
 	<a href="https://liberapay.com/cutls" class="btn waves-effect black-text"
-		style="width:100%; max-width:500px; background-color: #f6c915"><i class="material-icons left">trending_up</i>@@support@@(Liberapay)</a>
+		style="width:100%; max-width:500px; background-color: #f6c915"><i
+			class="material-icons left">trending_up</i>@@support@@(Liberapay)</a>
 	<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i
 			class="material-icons left">list</i>@@help@@/Docs</a>
 	<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2"
@@ -466,7 +483,8 @@
 	<a href="oss.html">OSS License@@ossJP@@</a><br>
 	<br>
 	<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018
-		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a href="https://thedesk.top/priv.html">Privacy
+		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a
+			href="https://thedesk.top/priv.html">Privacy
 			Policy</a>
 		<br>
 	</span><br>

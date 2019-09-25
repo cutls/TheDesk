@@ -269,9 +269,9 @@ function parseColumn(target, dontclose) {
 				')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_mediafil + '">perm_media</i><span id="sta-media-' +
 				key + '">On</span></a>' + lang.lang_layout_mediafil + '<br><a onclick="cardToggle(' + key +
 				')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_linkanades + '">link</i><span id="sta-card-' +
-				key + '">On</span></a>' + lang.lang_layout_linkana + '<br><a onclick="voiceToggle(' + key +
-				')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_tts + '">hearing</i><span id="sta-voice-' +
-				key + ',\'' + acct.type + '\'">On</span></a>' + lang.lang_layout_tts + 'TL<br><a onclick="columnReload(' + key +
+				key + '">On</span></a>' + lang.lang_layout_linkana + '<br><a onclick="voiceToggle(\'' + key +
+				'\')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_tts + '">hearing</i><span id="sta-voice-' + key + '">' + 
+				'">On</span></a>' + lang.lang_layout_tts + 'TL<br><a onclick="columnReload(' + key +
 				',\'' + acct.type + '\')" class="setting nex ' + if_misskey_hide + '"><i class="material-icons waves-effect nex" title="' + lang.lang_layout_reconnect + '">refresh</i></a><span>' + lang.lang_layout_reconnect + '</span><br>' + lang.lang_layout_headercolor + '<br><div id="picker_' + key + '" class="color-picker"></div></div><div class="tl-box" tlid="' + key + '"><div id="timeline_' + key +
 				'" class="tl ' + acct.type + '-timeline " tlid="' + key + '" data-type="' + acct.type + '" data-acct="' + acct.domain + '" data-const="' + acct.type + '_' + acct.domain + '"><div id="landing_' + key + '" style="text-align:center">' + lang.lang_layout_nodata + '</div></div></div>'
 			if (numtarget) {

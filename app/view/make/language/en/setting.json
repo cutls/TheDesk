@@ -152,6 +152,8 @@
   "templete3": "",
   "postartwork": "Attach an Artwork of Spotify",
   "tts": "TTS(text to speech) Preferences",
+  "bouyomi": "BouyomiChan connect",
+  "bouyomiWarn": "Require: BouyomiChan WebSocket Plugin",
   "speed": "Speed",
   "speedwarn": "1-100(default:10)",
   "pitch": "Pitch",
