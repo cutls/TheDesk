@@ -363,6 +363,11 @@ function versionChecker(url) {
 function versionCompat(url, ver, title, real) {
 	$("#compt-instance").text(title)
 	$("#compt-ver").text(real)
+	if(~real.indexOf("compatible")){
+		$("#compt-warn").show()
+	}else{
+		$("#compt-warn").hide()
+	}
 	$("#compt-list").html("")
 	var start = "../../source/version.json";
 	fetch(start, {
