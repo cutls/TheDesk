@@ -465,6 +465,9 @@ input, textarea {
 .swal2-title, .swal2-content{
   color: var(--color) !important;
 }
+#src-contents svg{
+  margin-right: 5px;
+}
 
 /*スクロールバー*/
 ::-webkit-scrollbar {
