@@ -175,6 +175,7 @@ function createWindow() {
 			mainWindow.maximize();
 		}
 	})
+	if (!packaged) mainWindow.toggleDevTools();
 	electron.session.defaultSession.clearCache(() => { })
 	if (process.argv) {
 		if (process.argv[1]) {
