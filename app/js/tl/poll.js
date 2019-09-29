@@ -119,22 +119,7 @@ function voteMastodonrefresh(acct_id, id) {
             if (!json) {
                 return false;
             }
-            var poll = "";
-            var choices = json.options;
-            var myvote = lang.lang_parse_voted;
-            var result_hide = "";
-            Object.keys(choices).forEach(function (keyc) {
-                var choice = choices[keyc];
-                if (!json.voted) {
-                    votesel = 'voteSelMastodon(\'' + acct_id + '\',\'' + json.id + '\',' + keyc + ',' + json.multiple + ')';
-                }else {
-                    votesel =""
-                }
-                poll = poll + '<div class="pointer vote vote_' + acct_id + '_' + json.id + '_' + keyc + '" onclick="' + votesel + '">' + escapeHTML(choice.title) + '<span class="vote_' + acct_id + '_' + json.id + '_result ' + result_hide + '">(' + choice.votes_count + ')</span></div>';
-            });
-            poll = poll + myvote + '<a onclick="voteMastodonrefresh(\'' + acct_id + '\',\'' + json.id + '\')" class="pointer">' + lang.lang_manager_refresh + '</a><span class="cbadge cbadge-hover" title="' + date(json.expires_at, 'absolute') +
-                '"><i class="far fa-calendar-times"></i>' +
-                date(json.expires_at, datetype) + '</span>';
+            var poll = pollParse(json, acct_id)
             $('.vote_' + acct_id + '_' + json.id).html(poll)
         }
     }

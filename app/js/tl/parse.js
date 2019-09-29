@@ -533,35 +533,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			//Poll
 			var poll = "";
 			if (toot.poll) {
-				var choices = toot.poll.options;
-				if (toot.poll.voted) {
-					var myvote = lang.lang_parse_voted;
-					var result_hide = "";
-				} else if (toot.poll.expired) {
-					var myvote = lang.lang_parse_endedvote;
-					var result_hide = "";
-				} else {
-					var myvote = '<a onclick="voteMastodon(\'' + acct_id + '\',\'' + toot.poll.id + '\')" class="votebtn">' + lang.lang_parse_vote + '</a><br>';
-					if (choices[0].votes_count === 0 || choices[0].votes_count > 0) {
-						myvote = myvote + '<a onclick="showResult(\'' + acct_id + '\',\'' + toot.poll.id + '\')" class="pointer">' + lang.lang_parse_unvoted + "</a>";
-					}
-					var result_hide = "hide";
-				}
-				var ended = date(toot.poll.expires_at, datetype);
-				Object.keys(choices).forEach(function (keyc) {
-					var choice = choices[keyc];
-					if (!toot.poll.voted && !toot.poll.expired) {
-						var votesel = 'voteSelMastodon(\'' + acct_id + '\',\'' + toot.poll.id + '\',' + keyc + ',' + toot.poll.multiple + ')';
-						var voteclass = "pointer waves-effect waves-light";
-					} else {
-						var votesel = "";
-						var voteclass = "";
-					}
-					poll = poll + '<div class="' + voteclass + ' vote vote_' + acct_id + '_' + toot.poll.id + '_' + keyc + '" onclick="' + votesel + '">' + escapeHTML(choice.title) + '<span class="vote_' + acct_id + '_' + toot.poll.id + '_result ' + result_hide + '">(' + choice.votes_count + ')</span></div>';
-				});
-				poll = '<div class="vote_' + acct_id + '_' + toot.poll.id + '">' + poll + myvote + '<a onclick="voteMastodonrefresh(\'' + acct_id + '\',\'' + toot.poll.id + '\')" class="pointer">' + lang.lang_manager_refresh + '</a><span class="cbadge cbadge-hover" title="' + date(toot.poll.expires_at, 'absolute') +
-					'"><i class="far fa-calendar-times"></i>' +
-					ended + '</span></div>';
+				var poll = pollParse(toot.poll, acct_id)
 			}
 
 			var mediack = toot.media_attachments[0];
@@ -1143,4 +1115,53 @@ function client(name) {
 			}
 		})
 	}
+}
+//Poll Parser
+function pollParse(poll, acct_id) {
+	var datetype = localStorage.getItem("datetype");
+	var choices = poll.options;
+	if (poll.own_votes) {
+		var minechoice = poll.own_votes
+	} else {
+		var minechoice = []
+	}
+
+	if (poll.voted) {
+		var myvote = lang.lang_parse_voted;
+		var result_hide = "";
+	} else if (poll.expired) {
+		var myvote = lang.lang_parse_endedvote;
+		var result_hide = "";
+	} else {
+		var myvote = '<a onclick="voteMastodon(\'' + acct_id + '\',\'' + poll.id + '\')" class="votebtn">' + lang.lang_parse_vote + '</a><br>';
+		if (choices[0].votes_count === 0 || choices[0].votes_count > 0) {
+			myvote = myvote + '<a onclick="showResult(\'' + acct_id + '\',\'' + poll.id + '\')" class="pointer">' + lang.lang_parse_unvoted + "</a>";
+		}
+		var result_hide = "hide";
+	}
+	var ended = date(poll.expires_at, datetype);
+	var pollHtml = ""
+	Object.keys(choices).forEach(function (keyc) {
+		var choice = choices[keyc];
+		var voteit = "";
+		for (var i = 0; i < minechoice.length; i++) {
+			var me = minechoice[i]
+			if (me == keyc) {
+				var voteit = "✅";
+				break
+			}
+		}
+		if (!poll.voted && !poll.expired) {
+			var votesel = 'voteSelMastodon(\'' + acct_id + '\',\'' + poll.id + '\',' + keyc + ',' + poll.multiple + ')';
+			var voteclass = "pointer waves-effect waves-light";
+		} else {
+			var votesel = "";
+			var voteclass = "";
+		}
+		pollHtml = pollHtml + '<div class="' + voteclass + ' vote vote_' + acct_id + '_' + poll.id + '_' + keyc + '" onclick="' + votesel + '">' + escapeHTML(choice.title) + '<span class="vote_' + acct_id + '_' + poll.id + '_result ' + result_hide + '">(' + choice.votes_count + ')</span>' + voteit + '</div>';
+	});
+	pollHtml = '<div class="vote_' + acct_id + '_' + poll.id + '">' + pollHtml + myvote + '<a onclick="voteMastodonrefresh(\'' + acct_id + '\',\'' + poll.id + '\')" class="pointer">' + lang.lang_manager_refresh + '</a><span class="cbadge cbadge-hover" title="' + date(poll.expires_at, 'absolute') +
+		'"><i class="far fa-calendar-times"></i>' +
+		ended + '</span></div>';
+	return pollHtml
 }
