@@ -299,6 +299,7 @@ function login(url) {
 		misskeyLogin(url);
 		return;
 	}
+	$("#compt").hide()
 	if ($('#linux:checked').val() == "on") {
 		var red = "urn:ietf:wg:oauth:2.0:oob"
 	} else {
@@ -327,6 +328,7 @@ function login(url) {
 			localStorage.setItem("client_id", json["client_id"]);
 			localStorage.setItem("client_secret", json["client_secret"]);
 			$("#auth").show();
+			versionChecker(url)
 			$("#add").hide();
 			postMessage(["openUrl", auth], "*")
 			if ($('#linux:checked').val() == "on") { } else {
@@ -334,7 +336,71 @@ function login(url) {
 			}
 		}
 	}
-
+}
+function versionChecker(url) {
+	var start = "https://" + url + "/api/v1/instance";
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+		},
+	}).then(function (response) {
+		return response.json();
+	}).catch(function (error) {
+		todo(error);
+		console.error(error);
+	}).then(function (json) {
+		var version = json.version
+		if (version) {
+			var reg = version.match(/^[0-9]\.[0-9]\.[0-9]/u);
+			if (reg) {
+				reg = reg[0]
+				versionCompat(url, reg, json.title, version)
+			}
+		}
+	});
+}
+function versionCompat(url, ver, title, real) {
+	$("#compt-instance").text(title)
+	$("#compt-ver").text(real)
+	$("#compt-list").html("")
+	var start = "../../source/version.json";
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+		},
+	}).then(function (response) {
+		return response.json();
+	}).catch(function (error) {
+		todo(error);
+		console.error(error);
+	}).then(function (json) {
+		var complete = false
+		var ct = 0
+		Object.keys(json).forEach(function (key) {
+			var data = json[key];
+			if (data) {
+				if (key != ver && !complete) {
+					for (var i = 0; i < data.length; i++) {
+						var e = ""
+						if (i == 0) {
+							e = "(" + key + ")"
+						}
+						$("#compt-list").append('<li>' + data[i] + e + '</li>')
+						ct++;
+						e = ""
+					}
+				} else if (!complete) {
+					complete = true
+				}
+			}
+			var lastkey = key
+		});
+		if (lang.language == "ja" && ct > 0) {
+			$("#compt").show()
+		}
+	});
 
 }
 //これが後のMisskeyである。

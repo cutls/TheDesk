@@ -61,6 +61,19 @@
             .first .hide-first {
                   display: none;
             }
+
+            #compt {
+                  margin-top: 20px;
+                  margin-bottom: 50px;
+                  border: 1px solid;
+                  border: 1px solid;
+                  padding: 5px;
+            }
+
+            #compt li {
+                  list-style-type: disc;
+                  margin-left: 20px;
+            }
       </style>
       <meta charset="utf-8">
       @@comment-start@@
@@ -120,6 +133,11 @@
                   @@codepastewarn@@<br>
                   <input type="text" id="code" placeholder="@@codepaste@@">
                   <button class="btn waves-effect" onclick="code()">Auth</button><br>
+                  <div id="compt" style="display:none">
+                        <h5>ログイン前に必ずご確認ください</h5>
+                        <span id="compt-instance"></span>はバージョンが<span id="compt-ver"></span>のため以下の機能がご利用いただけません。
+                        <ul id="compt-list"></ul>
+                  </div>
             </div>
             <div id="misskeylogin" style="display:none">
                   <h5>AppSecret</h5>
