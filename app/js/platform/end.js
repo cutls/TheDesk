@@ -48,7 +48,7 @@ $(document).on('click', 'a', e => {
 			if (ats[2]) {
 				//Quesdon判定
 				if (!~ats[2].indexOf("@")) {
-					udgEx(ats[2] + "@" + ats[1], "main");
+					udgEx(url, "main");
 					return false
 				} else {
 					postMessage(["openUrl", url], "*")
