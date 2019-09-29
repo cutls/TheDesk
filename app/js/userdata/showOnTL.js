@@ -36,11 +36,11 @@ function udgEx(user, acct_id) {
 		todo(error);
 		console.error(error);
 	}).then(function (json) {
-		if (json.accounts) {
+		if (json.accounts[0]) {
 			var id = json.accounts[0].id;
 			udg(id, acct_id);
 		} else {
-			postMessage(["openUrl", url], "*")
+			postMessage(["openUrl", user], "*")
 		}
 	});
 	return true;
