@@ -45,7 +45,8 @@
 #bottom .trendtag {
   height: 40px;
 }
-#bottom #group, #demogroup {
+#bottom #group,
+#demogroup {
   margin-right: 40px;
 }
 #bottom .leftside {
@@ -58,7 +59,8 @@
 #bottom #tips img {
   vertical-align: -3px;
 }
-#bottom a, #demogroup a {
+#bottom a,
+#demogroup a {
   color: var(--color);
 }
 #bottom i {
@@ -187,6 +189,9 @@ iframe,
   width: 20px;
   vertical-align: middle;
   margin: -1px 0;
+}
+.bigemoji {
+  width: 60px !important;
 }
 .faicon_FTL {
   display: none;
@@ -712,15 +717,15 @@ audio {
   font-size: 1rem;
   background-color: #009688;
 }
-.box .ui-resizable-s{
+.box .ui-resizable-s {
   display: none !important;
 }
-.boxIn .ui-resizable-e{
+.boxIn .ui-resizable-e {
   display: none !important;
 }
-.boxIn .ui-resizable-s{
+.boxIn .ui-resizable-s {
   display: block !important;
 }
-.box .ui-resizable-se{
+.box .ui-resizable-se {
   display: none !important;
 }
