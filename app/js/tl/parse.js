@@ -208,7 +208,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var emoji = toot.account.emojis[key5];
 				var shortcode = emoji.shortcode;
 				var emoji_url = '<img draggable="false" src="' + emoji.url +
-					'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
+					'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': "  title="' + shortcode + '" onclick="this.classList.toggle(\'bigemoji\');">';
 				var regExp = new RegExp(":" + shortcode + ":", "g");
 				dis_name = dis_name.replace(regExp, emoji_url);
 
@@ -353,8 +353,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				Object.keys(toot.account.emojis).forEach(function (key5) {
 					var emoji = toot.account.emojis[key5];
 					var shortcode = emoji.shortcode;
-					var emoji_url = '<img src="' + emoji.url +
-						'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
+					var emoji_url = '<img draggable="false" src="' + emoji.url +
+						'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': "  title="' + shortcode + '" onclick="this.classList.toggle(\'bigemoji\');">';
 					var regExp = new RegExp(":" + shortcode + ":", "g");
 					dis_name = dis_name.replace(regExp, emoji_url);
 				});
@@ -400,7 +400,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						var emoji = toot.account.emojis[key5];
 						var shortcode = emoji.shortcode;
 						var emoji_url = '<img draggable="false" src="' + emoji.url +
-							'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
+							'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': "  title="' + shortcode + '" onclick="this.classList.toggle(\'bigemoji\');">';
 						var regExp = new RegExp(":" + shortcode + ":", "g");
 						dis_name = dis_name.replace(regExp, emoji_url);
 					});
@@ -735,7 +735,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var emoji = toot.emojis[key5];
 					var shortcode = emoji.shortcode;
 					var emoji_url = '<img draggable="false" src="' + emoji.url +
-						'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
+						'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': "  title="' + shortcode + '" onclick="this.classList.toggle(\'bigemoji\');">';
 					var regExp = new RegExp(":" + shortcode + ":", "g");
 					content = content.replace(regExp, emoji_url);
 					spoil = spoil.replace(regExp, emoji_url);
@@ -754,7 +754,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var emoji = toot.profile_emojis[keynico];
 					var shortcode = emoji.shortcode;
 					var emoji_url = '<img draggable="false" src="' + emoji.url +
-						'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
+					'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': "  title="' + shortcode + '" onclick="this.classList.toggle(\'bigemoji\');">';
 					var regExp = new RegExp(":" + shortcode + ":", "g");
 					content = content.replace(regExp, emoji_url);
 					spoil = spoil.replace(regExp, emoji_url);
@@ -1003,7 +1003,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 						var emoji = toot.emojis[key5];
 						var shortcode = emoji.shortcode;
 						var emoji_url = '<img draggable="false" src="' + emoji.url +
-							'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': ">';
+							'" class="emoji-img" data-emoji="' + shortcode + '" alt=" :' + shortcode + ': "  title="' + shortcode + '" onclick="this.classList.toggle(\'bigemoji\');">';
 						var regExp = new RegExp(":" + shortcode + ":", "g");
 						dis_name = dis_name.replace(regExp, emoji_url);
 					});

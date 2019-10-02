@@ -61,6 +61,7 @@ var lang = {
     "lang_emoji_get": "絵文字リストを取得",
     "lang_emoji_custom": "カスタム絵文字",
     "lang_defaultemojis_text": "{{cat}}の絵文字",
+    "lang_emoji_uncat": "未分類",
     //post/img.js
     "lang_postimg_previewdis": "プレビューできません。",
     "lang_postimg_aftupload": "アップロード後はアカウントを切り替えられません。",

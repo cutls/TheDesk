@@ -23,7 +23,7 @@ function emojiToggle(reaction) {
 		}
 		$("#post-box").css("width", width + "px")
 		$("#suggest").html("");
-		if (!localStorage.getItem("emoji_" + acct_id)) {
+		if (!localStorage.getItem("emojis_" + acct_id)) {
 			var html =
 				'<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="emojiGet(\'true\');">' + lang.lang_emoji_get + '</button>';
 			$("#emoji-list").html(html);
@@ -69,15 +69,48 @@ function emojiGet(parse, started) {
 		}).then(function (json) {
 			if (parse == "true") {
 				$('#emoji-list').text('Parsing...');
+				var md = {
+					"categorized": {},
+					"uncategorized": []
+				};
+				var if_categorized = false
+				Object.keys(json).forEach(function (key) {
+					var emoji = json[key];
+					if (emoji.visible_in_picker) {
+						var listed = true
+					} else {
+						var listed = false
+					}
+					if (emoji.category) {
+						var cat = emoji.category
+						if (!md["categorized"][cat]) {
+							md["categorized"][cat] = []
+						}
+						md["categorized"][cat].push({
+							"shortcode": emoji.shortcode,
+							"url": emoji.url,
+							"listed": listed
+						})
+						if_categorized = true
+					} else {
+						md["uncategorized"].push({
+							"shortcode": emoji.shortcode,
+							"url": emoji.url,
+							"listed": listed
+						})
+					}
+				});
+				console.log(md)
 				//絵文字をマストドン公式と同順にソート
-				json.sort(function (a, b) {
+				md["uncategorized"].sort(function (a, b) {
 					if (a.shortcode < b.shortcode) return -1;
 					if (a.shortcode > b.shortcode) return 1;
 					return 0;
 				});
-				localStorage.setItem("emoji_" + acct_id, JSON.stringify(json));
+				md["if_categorized"] = if_categorized
+				localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
 			} else {
-				localStorage.setItem("emoji_" + acct_id, JSON.stringify(json));
+				localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
 			}
 			localStorage.setItem("emojiseek", 0);
 			if (!started) {
@@ -103,25 +136,27 @@ function emojiGet(parse, started) {
 				localStorage.setItem("emojiReaction_" + acct_id, "disabled");
 			}
 			var emojis = json.emojis;
-			var md = [];
+			var md = {"uncategorized": []}
 			Object.keys(emojis).forEach(function (key) {
 				var emoji = emojis[key];
-				md.push({
+				md["uncategorized"].push({
 					"shortcode": emoji.name,
-					"url": emoji.url
+					"url": emoji.url,
+					"listed": true
 				})
 			});
+			md["if_categorized"] = false
 			if (parse == "true") {
 				$('#emoji-list').text('Parsing...');
 				//絵文字をマストドン公式と同順にソート
-				md.sort(function (a, b) {
+				md["uncategorized"].sort(function (a, b) {
 					if (a.shortcode < b.shortcode) return -1;
 					if (a.shortcode > b.shortcode) return 1;
 					return 0;
 				});
-				localStorage.setItem("emoji_" + acct_id, JSON.stringify(md));
+				localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
 			} else {
-				localStorage.setItem("emoji_" + acct_id, JSON.stringify(md));
+				localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
 			}
 			localStorage.setItem("emojiseek", 0);
 			if (!started) {
@@ -153,7 +188,28 @@ function emojiList(target, reaction) {
 		localStorage.getItem("emojiseek", 0)
 	}
 	var html = '';
-	var obj = JSON.parse(localStorage.getItem("emoji_" + acct_id));
+	var raw = JSON.parse(localStorage.getItem("emojis_" + acct_id));
+	console.log(raw)
+	if (raw.if_categorized) {
+		var obj = [{
+			"divider": true,
+			"cat": lang.lang_emoji_uncat
+		}]
+		var cats = raw["uncategorized"]
+		obj = obj.concat(cats);
+		Object.keys(raw["categorized"]).forEach(function (key) {
+			var cats = raw["categorized"][key];
+			obj = obj.concat([{
+				"divider": true,
+				"cat": key
+			}]);
+			obj = obj.concat(cats);
+		});
+	} else {
+		var obj = raw["uncategorized"]
+	}
+	console.log(obj)
+
 	var num = obj.length;
 	if (num < start) {
 		var start = 0;
@@ -163,24 +219,36 @@ function emojiList(target, reaction) {
 	$("#emoji-sum").text(page);
 	var ct = Math.ceil(start / 126);
 	if (ct === 0) {
-		var ct = 1;
+		if(num > 0){
+			var ct = 1;
+		}
 		$("#emoji-before").addClass("disabled");
 	} else {
 		$("#emoji-before").removeClass("disabled");
 	}
-	$("#emoji-next").removeClass("disabled");
+	if (page != 1) {
+		$("#emoji-next").removeClass("disabled");
+	} else {
+		$("#emoji-next").addClass("disabled");
+	}
 	$("#emoji-count").text(ct);
 	for (i = start; i < start + 126; i++) {
 		var emoji = obj[i];
 		if (emoji) {
 			if (reaction) {
 				html = html + '<a onclick="emojiReaction(\':' + emoji.shortcode +
-					':\')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
+					':\')" class="pointer"><img src="' + emoji.url + '" width="20" title="' + emoji.shortcode + '"></a>';
 			} else {
-				html = html + '<a onclick="emojiInsert(\':' + emoji.shortcode +
-					':\')" class="pointer"><img src="' + emoji.url + '" width="20"></a>';
+				if(emoji.divider){
+					html = html + '<p style="margin-bottom:0">'+ emoji.cat +'</p>'
+				}else{
+					if (emoji.listed) {
+						html = html + '<a onclick="emojiInsert(\':' + emoji.shortcode +
+							':\')" class="pointer"><img src="' + emoji.url + '" width="20" title="' + emoji.shortcode + '"></a>';
+					}
+				}
+				
 			}
-
 		}
 	}
 	$("#emoji-list").html(html);

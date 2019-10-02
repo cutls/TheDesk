@@ -46,6 +46,7 @@ function parseColumn(target, dontclose) {
 		var templete;
 		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key];
+
 			localStorage.setItem("name_" + key, acct.name);
 			localStorage.setItem("user_" + key, acct.user);
 			localStorage.setItem("user-id_" + key, acct.id);
@@ -61,6 +62,7 @@ function parseColumn(target, dontclose) {
 				localStorage.removeItem("misskey_wss_" + key)
 				connectMisskey(key, false)
 			}
+			localStorage.removeItem("emoji_" + key) //カスタム絵文字カテゴリ分け用旧データ削除
 		});
 	}
 	var acctlist = obj;

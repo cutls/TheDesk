@@ -52,6 +52,7 @@ var lang={
     "lang_emoji_get": "Вземи емотикони",
     "lang_emoji_custom": "Персонализирани емотикони",
     "lang_defaultemojis_text": "Още емотикони {{cat}}",
+    "lang_emoji_uncat": "Uncategorized",
     "lang_postimg_previewdis": "не може да се визуализира",
     "lang_postimg_aftupload": "Не можете да променяте профилите след качването.",
     "lang_postimg_delete": "Изтрийте това изображение.",

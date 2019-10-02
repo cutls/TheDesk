@@ -52,6 +52,7 @@ var lang={
     "lang_emoji_get": "Získat emoji",
     "lang_emoji_custom": "Vlastní emoji",
     "lang_defaultemojis_text": "Emojis about {{cat}}",
+    "lang_emoji_uncat": "Uncategorized",
     "lang_postimg_previewdis": "nelze vytvořit náhled",
     "lang_postimg_aftupload": "Po nahrání nemůžete změnit účty.",
     "lang_postimg_delete": "Delete this image.",

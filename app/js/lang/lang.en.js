@@ -61,6 +61,7 @@ var lang = {
     "lang_emoji_get": "Get emojis",
     "lang_emoji_custom": "Custom emojis",
     "lang_defaultemojis_text": "Emojis about {{cat}}",
+    "lang_emoji_uncat": "Uncategorized",
     //post/img.js
     "lang_postimg_previewdis": "cannot preview",
     "lang_postimg_aftupload": "You cannot change accounts after uploading.",

@@ -52,6 +52,7 @@ var lang={
     "lang_emoji_get": "Hole Emojis",
     "lang_emoji_custom": "Eigene Emojis",
     "lang_defaultemojis_text": "Emojis über {{cat}}",
+    "lang_emoji_uncat": "Uncategorized",
     "lang_postimg_previewdis": "keine Vorschau",
     "lang_postimg_aftupload": "Sie können die Konten nach dem Hochladen nicht mehr ändern.",
     "lang_postimg_delete": "Dieses Bild löschen.",
