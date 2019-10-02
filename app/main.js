@@ -204,6 +204,7 @@ function createWindow() {
 	});
 	closeArg = false
 	mainWindow.on('close', function (e, arg) {
+			writePos(mainWindow)
 			if(!closeArg){
 				e.preventDefault()
 			}
@@ -212,7 +213,6 @@ function createWindow() {
 				setTimeout(function () { resolve() }, 3000)
 			})
 			promise.then((function (response) {
-				writePos(mainWindow)
 				closeArg = true
 				mainWindow.close()
 			})
@@ -236,9 +236,11 @@ function createWindow() {
 		fs.writeFileSync(info_path, JSON.stringify(size))
 	}
 	mainWindow.on('maximize', function () {
+		writePos(mainWindow)
 		fs.writeFileSync(max_info_path, JSON.stringify(mainWindow.getBounds()));
 	});
 	mainWindow.on('minimize', function () {
+		writePos(mainWindow)
 		mainWindow.webContents.send('asRead', "")
 	})
 
