@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="es-AR" style="overflow:scroll">
+
+<head>
+	<title>Settings - TheDesk</title>
+	<!--
+	<script type="text/javascript">
+		var _jipt = [];
+		_jipt.push(['project', 'thedesk']);
+	</script>
+	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+	-->
+	<meta content="width=device-width,initial-scale=1.0" name="viewport">
+	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
+	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<link href="../../css/pickr.css" type="text/css" rel="stylesheet">
+	<link href="../../css/master.css" type="text/css" rel="stylesheet">
+	<link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
+	<meta charset="utf-8">
+	<style>
+		input {
+			max-height: 50px !important
+		}
+
+		.pcr-result {
+			height: 1rem !important;
+		}
+	</style>
+</head>
+
+<body id="mainView" style="overflow-y:scroll">
+	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../../js/platform/first.js"></script>
+	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
+	<script type="text/javascript" src="../../js/lang/lang.es-AR.js"></script>
+	<script src="https://unpkg.com/json5@^2.0.0/dist/index.min.js"></script>
+	<script src="../../node_modules/vue/dist/vue.min.js"></script>
+	<script type="text/javascript" src="setting.vue.js"></script>
+	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
+	<h4>Configuración</h4>
+	<ul class="collapsible" data-collapsible="accordion">
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">desktop_windows</i>Configuración del sistema
+			</div>
+			<div class="collapsible-body">
+				<h5>Idiomas</h5>
+				To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br>
+				<a onclick="changelang('ja')" class="pointer" style="margin-right:5px;">日本語</a><a onclick="changelang('en')" class="pointer" style="margin-right:5px;">English</a><a onclick="changelang('ps')" class="pointer" style="margin-right:5px;">Crowdin translate system(beta)</a><a onclick="changelang('bg')" class="pointer" style="margin-right:5px;">български</a><a onclick="changelang('cs')" class="pointer" style="margin-right:5px;">Česky</a><a onclick="changelang('de')" class="pointer" style="margin-right:5px;">Deutsch</a><a onclick="changelang('es-AR')" class="pointer" style="margin-right:5px;">Spanish, Argentina</a>
+				<h5>Importación y exportación de la configuración</h5>
+				<button onclick="exportSettings()" class="btn waves-effect lime darken-3"
+					style="width:100%; max-width:200px;">Exportar</button>
+				<button onclick="importSettings()" class="btn waves-effect cyan darken-3"
+					style="width:100%; max-width:200px;">Importar</button>
+				<div id="envView">
+					<template v-for="(item, i) in config">
+						<h5>{{item.text.head}}</h5>
+						<template v-if="item.text.desc">
+							<span v-html="item.text.desc"></span><br>
+						</template>
+						<template v-if="item.id=='notf'"><a onclick="notftest()"
+								class="pointer">Prueba de notificación</a><br></template>
+						<template v-if="item.checkbox">
+							<template v-for="(check, j) in item.text.checkbox">
+								<label>
+									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+									<span>{{check.text}}</span>
+								</label>
+							</template>
+						</template>
+						<template v-else>
+							<template v-if="item.doubleText">
+								<template v-for="(textbox, j) in item.data">
+									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+								</template>
+							</template>
+							<template v-else>
+								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+							</template>
+							<button class="btn waves-effect" style="width:100px;"
+								v-on:click="complete(i)">Cambiar</button>
+						</template><br>
+					</template>
+				</div>
+				<h5>Tipografía</h5>
+				Seleccioná tu tipografía favorita (sólo para Windows y macOS)<br>
+				<button class="btn waves-effect" style="width:100px;" onclick="font()">Seleccionar</button><br>
+				<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
+				<br>
+				<input type="text" style="width:150px" id="font">
+				<button class="btn waves-effect" style="width:100px;" onclick="settings()">Guardar</button>
+				<br>
+				<h5>Carpeta para guardar</h5>
+				TheDesk usa esta configuración para guardar imágenes en general y capturas de pantallas.<br>
+				<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">Cambiar</button>
+				<br>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">color_lens</i>Temas
+			</div>
+			<div class="collapsible-body">
+				<h4>Seleccionar tema</h4>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
+					<span>Black</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
+					<span>White</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo"
+						value="indigo" />
+					<span>Indigo<span class="imas hide">(エンドレスナイト)</span></span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
+					<span>Brown<span class="imas hide">(ビタースイート・タイム)</span></span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
+					<span>Green<span class="imas hide">(ユースフルロマンス)</span></span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="blue" value="blue" />
+					<span>Blue<span class="imas hide">(渚の花嫁)</span></span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom"
+						value="custom" />
+					<span>custom</span>
+				</label>
+				<div style="width:300px" id="sel-selector">
+					<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
+				</div>
+				<h4>Editar y agregar temas personalizados</h4>
+				<div style="width:300px" id="edit-selector" data-add="Agregar nuevo">
+					<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
+						<option value="add_new">Agregar nuevo</option>
+					</select>
+				</div>
+				<h5>Nombre</h5>
+				<input type="text" style="width:300px" id="custom_name" placeholder="Nombre...">
+				<h5>Acerca de este tema</h5>
+				<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea"
+						placeholder="Acerca de este tema..."></textarea></div>
+				<h5>Esquema de colores</h5>
+				<label>
+					<input class="with-gap" onchange="settings()" name="direction" type="radio" id="dark" value="dark"
+						checked="true" />
+					<span>Dark</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="settings()" name="direction" type="radio" id="light"
+						value="light" />
+					<span>Light</span>
+				</label>
+				<div id="pickers">
+					<div>
+						<h5>Primary</h5>Fondo de componentes
+						<div id="color-picker0-wrap">
+							<div class="color-picker" id="color-picker0"></div>
+						</div>
+						<input type="hidden" id="color-picker0_value">
+					</div>
+					<div>
+						<h5>Secondary</h5>Color de fondo
+						<div id="color-picker1-wrap">
+							<div class="color-picker" id="color-picker1"></div>
+						</div>
+						<input type="hidden" id="color-picker1_value">
+					</div>
+					<div>
+						<h5>Texts</h5>Color del texto
+						<div id="color-picker2-wrap">
+							<div class="color-picker" id="color-picker2"></div>
+						</div>
+						<input type="hidden" id="color-picker2_value">
+					</div>
+					<div>
+						<h5>Accent</h5>Fondo de retoots
+						<div id="color-picker3-wrap">
+							<div class="color-picker" id="color-picker3"></div>
+						</div>
+						<input type="hidden" id="color-picker3_value">
+					</div>
+				</div>
+				<button class="btn-large waves-effect" onclick="customComp()">Cambiar</button>&nbsp;<button
+					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">Eliminar</button><br><br>
+				<input type="text" style="width:300px;height:40px;" id="custom_json" class="materialize-textarea"
+					placeholder="JSON style" readonly><br>
+				Compartí este código con otros usuarios de TheDesk. No se comparte este código en MiAS.
+				<h4>Importación de temas personalizados</h4>
+				Obtené más temas en<a href=\"https://assets.msky.cafe/\" target=\"_blank\">MiAS</a><br>
+				<input type="text" style="width:300px;height:40px;" id="custom_import" class="materialize-textarea"
+					placeholder="JSON/JSON5 style">
+				<button class="btn waves-effect" onclick="customImp()">Importar</button><br>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">reorder</i>Configuración de la línea temporal
+			</div>
+			<div class="collapsible-body">
+				<div id="tlView">
+					<template v-for="(item, i) in config">
+						<h5>{{item.text.head}}</h5>
+						<template v-if="item.text.desc">
+							<span v-html="item.text.desc"></span><br>
+						</template>
+						<template v-if="item.checkbox">
+							<template v-for="(check, j) in item.text.checkbox">
+								<label>
+									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+									<span>{{check.text}}</span>
+								</label>
+							</template>
+						</template>
+						<template v-else>
+							<template v-if="item.doubleText">
+								<template v-for="(textbox, j) in item.data">
+									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+								</template>
+							</template>
+							<template v-else>
+								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+							</template>
+							<button class="btn waves-effect" style="width:100px;"
+								v-on:click="complete(i)">Cambiar</button>
+						</template><br>
+					</template>
+				</div>
+				<h5>Sonido personalizado</h5>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(1)">Custom 1</button><span
+					id="c1-file"></span><br>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(2)">Custom 2</button><span
+					id="c2-file"></span><br>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(3)">Custom 3</button><span
+					id="c3-file"></span><br>
+				<button class="btn waves-effect" style="width:120px;" onclick="customSound(4)">Custom 4</button><span
+					id="c4-file"></span><br>
+				<h5>Volumen</h5>
+				0-100 (predeterminado: 80)<br>
+				<p class="range-field"><span id="soundVolVal">80</span><br>
+					<input type="range" id="soundvol" min="0" max="100" value="80" onchange="customVol()"
+						style="width:500px; max-width:100%" /></p>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">send</i>Configuración de entradas
+			</div>
+			<div class="collapsible-body">
+				<div id="postView">
+					<template v-for="(item, i) in config">
+						<h5>{{item.text.head}}</h5>
+						<template v-if="item.text.desc">
+							<span v-html="item.text.desc"></span><br>
+						</template>
+						<template v-if="item.checkbox">
+							<template v-for="(check, j) in item.text.checkbox">
+								<template
+									v-if="(!check.kirishima || (check.kirishima && kirishima) )&& (!check.quote || (check.quote && quoters))">
+									<label><input class="with-gap" v-on:click="complete(i,check.value)"
+											v-model="item.setValue" type="radio" v-bind:id="item.id+check.value"
+											v-bind:value="check.value" />
+										<span>{{check.text}}</span></label>
+									<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
+								</template>
+							</template>
+						</template>
+						<template v-else>
+							<template v-if="item.doubleText">
+								<template v-for="(textbox, j) in item.data">
+									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+								</template>
+							</template>
+							<template v-else>
+								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+							</template>
+							<button class="btn waves-effect" style="width:100px;"
+								v-on:click="complete(i)">Cambiar</button>
+						</template><br>
+					</template>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">keyboard</i>Configuración de atajos del teclado
+			</div>
+			<div class="collapsible-body">
+				<h5>Inserción fácil</h5>
+				Podés insertar cualquier letra y emoji con sólo 3 teclas<br>
+				Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
+				<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">Guardar</button><br><br>
+				Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
+				<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">Guardar</button><br><br>
+				Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
+				<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">Guardar</button><br><br>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">bookmark</i>Configuración de silenciado y resaltado
+			</div>
+			<div class="collapsible-body">
+				<h5>Silenciado de usuario</h5>
+				<div id="mute-cli"></div>
+				<h5>Resaltado de usuario</h5>
+				Hacé clic en el nombre de los toots para cambiar entre silenciado y resaltado.
+				<h5>Palabras silenciadas</h5>
+				Establecer con la tecla \"Intro\"<br>
+				<div class="chips" id="wordmute" style="background-color:gray;"></div>
+				<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">Guardar</button>
+				<h5>Resaltado de palabras</h5>
+				Establecer con la tecla \"Intro\"<br>
+				<div class="chips" id="wordemp" style="background-color:gray;"></div>
+				<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">Guardar</button>
+				<h5>Resaltado de usuario</h5>
+				Establecer según usuario.
+				<span class="emphasized">　Usar este color para resaltar　</span>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="fab fa-spotify"></i>Configuración de Spotify y \"Ahora suena\"
+			</div>
+			<div class="collapsible-body">
+				<br><br>
+				Hacé clic en el ícono <i class="material-icons" style="font-size:24px;">music_note</i>para mostrar \"Ahora suena\"<br>
+				<h5>Conexión de cuenta</h5>
+				TheDesk guarda tus datos en el servidor thedesk.top.<br>
+				<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button
+						onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">Guardar</button></div>
+				<a onclick="spotifyConnect()" class="btn waves-effect nex"
+					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i
+						class="fa fa-spotify left"></i>Conectar</a>
+				<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled"
+					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i
+						class="fa fa-spotify left"></i>Desconectar</a>
+				<h5>@@templateedit@@</h5>
+				@@templateeditwarn@@<br>
+				<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
+{url}</textarea><br>
+				@@template1@@<br>
+				@@template2@@<br>
+				@@template3@@<br>
+				<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">Guardar</button>
+				<h5>Adjuntar tapa desde Spotify</h5>
+				<label>
+					<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes"
+						value="yes" />
+					<span>Sí</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no"
+						value="no" />
+					<span>No</span>
+				</label>
+
+				<br>
+			</div>
+		</li>
+		<li>
+			<div class="collapsible-header">
+				<i class="material-icons">hearing</i>Configuración de TTS (texto hablado)
+			</div>
+			<div class="collapsible-body">
+				<h5>Conectar BouyomiChan</h5>
+				Requiere: Plugin WebSocket de BouyomiChan<a href="https://github.com/xztaityozx/BouyomiChan-WebSocket-Plugin" target="_blank">GitHub</a><br>
+				<label>
+					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_yes"
+						value="yes" />
+					<span>Sí</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_no"
+						value="no" />
+					<span>No</span>
+				</label>
+				<h5>Velocidad</h5>
+				1-100 (predeterminado:10)<br>
+				<p class="range-field"><span id="voicespeedVal">10</span><br>
+					<input type="range" id="voicespeed" min="1" max="100" value="10"
+						onchange="document.getElementById('voicespeedVal').innerText=this.value"
+						style="width:500px; max-width:100%" /></p>
+				<h5>Tono</h5>
+				0-100 (predeterminado:50)<br>
+				<p class="range-field"><span id="voicepitchVal">50</span><br>
+					<input type="range" id="voicepitch" min="0" max="100" value="50"
+						onchange="document.getElementById('voicepitchVal').innerText=this.value"
+						style="width:500px; max-width:100%" /></p>
+				<h5>Volumen</h5>
+				0-100 (predeterminado:100)<br>
+				<p class="range-field"><span id="voicevolVal">100</span><br>
+					<input type="range" id="voicevol" min="0" max="100" value="100"
+						onchange="document.getElementById('voicevolVal').innerText=this.value"
+						style="width:500px; max-width:100%" /></p>
+				<h5>Prueba</h5>
+				<input type="text" style="width:350px" id="voicetxt" value="TheDesk s un culiente libre de Mastodon pahrah compootadoras.">
+				<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()"
+					id="testplay">Reproducir/Detener</button><br>
+				<br>
+				<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">Guardar</button>
+			</div>
+		</li>
+	</ul>
+	<br>
+	<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i
+			class="material-icons left">undo</i>Volver</a>
+	<br>
+	<br>Atajos del teclado
+	<li>Ctrl+1-9:Saltar a columna (1 a 9)</li>
+	<li>N:Abrir caja de toot</li>
+	<li>X:Activar caja de toot</li>
+	<li>Ctrl+Enter:Enviar entrada</li>
+	<li>Ctrl+Enter+Shift:Enviar entrada (toot secundario)</li>
+	<li>Alt+Enter:Botón de toot secundario</li>
+	<li>Ctrl+E:Marcar todas las notificaciones como leídas</li>
+	<li>Ctrl+U:Seleccionar el toot de la primera columna</li>
+	<li>Esc:Ocultar caja de toot</li>
+	<li>F5:Refresco masivo</li>
+	<li>Ctrl+Shift+C:Limpiar caja de toot</li>
+	<li>Ctrl+Shift+S:Configuración</li>
+	<li>Ctrl+Shift+M:Administrador de cuentas</li>
+	<li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
+	<li>Ctrl+Shift+P:Mostrar perfil de lo seleccionado</li>
+	<li>←/→:Mostrar imagen siguiente o anterior</li>
+	<li>Ruedadelratón:Acercar o alejar una imagen</li>
+	<div class="hide kirishima">
+		以下Markdownに対応したインスタンスのみ。
+		<br>
+		<li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線</li>
+		以下アスタルテにログインしている場合のみ
+		<br>
+		<li>Ctrl+R:
+			<a href="https://astarte.thedesk.top">アスタルテ暇人ランキング</a>を開く
+		</li><br>
+		Al seleccionar un toot: 
+		<li>F:Marcar como favorito</li>
+		<li>B:Retootear</li>
+		<li>R:Responder a ese toot</li>
+	</div>
+	<button class="btn waves-effect red" style="width:100%; max-width:500px;"
+		onclick="if(confirm('Eliminar todos los datos. Esto no se puede deshacer. ¿Estás seguro?')){ localStorage.clear(); location.href='index.html'; }"><i
+			class="material-icons left">delete</i>Restablecer (peligro)</button><br><br>
+	<button class="btn waves-effect indigo" onclick="about()" style="width:100%; max-width:500px;"><i
+			class="material-icons left">info</i>Acerca de TheDesk</button>
+	<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i
+			class="material-icons left">web</i>Sitio web</a>
+	<a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2"
+		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>Contribuciones (Pixiv FANBOX)</a>
+	<a href="https://www.patreon.com/cutls" class="btn waves-effect red darken-2"
+		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>Contribuciones (Patreon)</a>
+	<a href="https://liberapay.com/cutls" class="btn waves-effect black-text"
+		style="width:100%; max-width:500px; background-color: #f6c915"><i
+			class="material-icons left">trending_up</i>Contribuciones (Liberapay)</a>
+	<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i
+			class="material-icons left">list</i>Ayuda/Docs</a>
+	<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2"
+		style="width:100%; max-width:500px;"><i class="fab fa-github left"></i>GitHub</a>
+	<a href="index.html?mode=user&code=Cutls@cutls.com" class="btn waves-effect blue lighten-2"
+		style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25"
+			style="padding-top:5px;">Main author: Cutls@cutls.com</a>
+	<br>
+	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/47c6454c00bec1d79ec0cd2fbd84cc97988f5c2b">47c6454c00bec1d79ec0cd2fbd84cc97988f5c2b</a><br>
+	<br>
+	Kyash<br>
+	<img src="../../img/kyash.png" width="100"><br>
+	<a onclick="localStorage.removeItem('new-ver-skip'); location.href='index.html';"
+		class="pointer">Buscar actualizaciones</a><br>
+	<a href="oss.html">OSS License</a><br>
+	<br>
+	<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018
+		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a
+			href="https://thedesk.top/priv.html">Privacy
+			Policy</a>
+		<br>
+	</span><br>
+	TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
+	タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
+	<script type="text/javascript" src="../../js/common/modal.js"></script>
+	<script type="text/javascript" src="../../js/common/about.js"></script>
+	<script type="text/javascript" src="../../js/platform/end.js"></script>
+	<script type="text/javascript" src="../../js/login/logout.js"></script>
+	<script type="text/javascript" src="../../js/ui/spotify.js"></script>
+	<script type="text/javascript" src="../../js/tl/speech.js"></script>
+	<script type="text/javascript" src="../../js/platform/pickr.js"></script>
+	<script type="text/javascript" src="../../js/ui/settings.js"></script>
+	<script type="text/javascript" src="../../js/ui/theme.js"></script>
+	<script type="text/javascript" src="../../js/tl/date.js"></script>

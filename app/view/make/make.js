@@ -10,8 +10,8 @@ if (process.argv.indexOf("--automatic") === -1) {
     }
 }
 console.log("Constructing view files " + ver + ": make sure to update package.json")
-const langs = ["ja", "en", "ps", "bg", "cs", "de"]
-const langsh = ["日本語", "English", "Crowdin translate system(beta)", "български", "Česky", "Deutsch"]
+const langs = ["ja", "en", "ps", "bg", "cs", "de","es-AR"]
+const langsh = ["日本語", "English", "Crowdin translate system(beta)", "български", "Česky", "Deutsch", "Spanish, Argentina"]
 const simples = ["acct", "index", "setting", "update", "setting"]
 const samples = ["acct.sample.html", "index.sample.html", "setting.sample.html", "update.sample.html", "setting.sample.js"]
 const pages = ["acct.html", "index.html", "setting.html", "update.html", "setting.vue.js"]

@@ -72,7 +72,7 @@ option {
   min-width: 0 !important;
   margin-left: 5px !important;
 }
-.unvisible{
+.unvisible {
   opacity: 0;
 }
 .bbcode-pulse-loadings,
@@ -389,6 +389,9 @@ blockquote:before,
   height: 40px;
   cursor: pointer;
 }
+#tltype .type span {
+  width: calc(100% - 30px);
+}
 #tltype .type:hover {
   background-color: var(--beforehover);
 }
@@ -400,9 +403,11 @@ blockquote:before,
 }
 #tltype i.sub-icon {
   font-size: 20px;
-  position: relative;
+  position: absolute;
   color: var(--beforehover);
-  left: -15px;
+  left: 10px;
+  bottom: 5px;
+  background-color: #fff;
 }
 .drag-bar {
   cursor: move;
@@ -454,18 +459,20 @@ blockquote:before,
 .select-wrapper .dropdown-content {
   width: 250px !important;
 }
-input, textarea {
+input,
+textarea {
   color: var(--color);
   font-size: 1rem !important;
   font-family: inherit;
 }
-.swal2-popup{
+.swal2-popup {
   background-color: var(--notfbox) !important;
 }
-.swal2-title, .swal2-content{
+.swal2-title,
+.swal2-content {
   color: var(--color) !important;
 }
-#src-contents svg{
+#src-contents svg {
   margin-right: 5px;
 }
 
@@ -488,20 +495,25 @@ input, textarea {
 }
 /* Web Fonts */
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   font-style: normal;
   font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v17/mem5YaGs126MiZpBA-UN_r8OUuhp.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: local("Open Sans Light"), local("OpenSans-Light"),
+    url(https://fonts.gstatic.com/s/opensans/v17/mem5YaGs126MiZpBA-UN_r8OUuhp.woff2)
+      format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
+    format("woff2");
 }
 .material-icons {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -512,6 +524,6 @@ input, textarea {
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
-  -webkit-font-feature-settings: 'liga';
+  -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
 }
