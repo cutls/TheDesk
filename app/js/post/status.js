@@ -295,7 +295,9 @@ function redraft(id, acct_id) {
 			show();
 			del(id, acct_id);
 			$("#post-acct-sel").prop("disabled", true);
+			$("#post-acct-sel").val(acct_id);
 			$('select').formSelect();
+			mdCheck()
 			var medias = $("[toot-id=" + id + "]").attr("data-medias");
 			var vismode = $("[toot-id=" + id + "] .vis-data").attr("data-vis");
 			vis(vismode);
