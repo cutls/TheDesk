@@ -1,6 +1,5 @@
 //バージョンチェッカー
 function verck(ver) {
-	localStorage.setItem("ver", ver);
 	console.log("%c Welcome😊", "color: red;font-size:200%;")
 	var date = new Date();
 	var show = false
@@ -37,6 +36,7 @@ function verck(ver) {
 			}
 		});
 	}
+	localStorage.setItem("ver", ver);
 	if (!show) {
 		console.log(show)
 		if (date.getMonth() + 1 >= localStorage.getItem("showSupportMe") || !localStorage.getItem("showSupportMe")) {
