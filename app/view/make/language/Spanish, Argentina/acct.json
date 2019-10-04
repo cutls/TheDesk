@@ -1,0 +1,22 @@
+{
+    "list": "Lista de cuentas",
+    "back": "Volver",
+    "add": "Agregar una cuenta",
+    "codesetupwarn": "No seleccionar para saltar el pegado de código (iniciá sesión de Mastodon en Windows o macOS) (Recomendado: pcheck)",
+    "codesetup": "Configuración de código",
+    "mainacct": "Establecer una cuenta",
+    "selacct": "Seleccionar una cuenta",
+    "codepastewarn": "Pegar el código y cerrar el navegador web.",
+    "codepaste": "Código",
+    "domain": "Dominio",
+    "connect": "Servidores federados",
+    "toots": "Toots",
+    "users": "Usuarios",
+    "users2": "usuarios",
+    "safety": "Conectividad",
+    "ver": "Versión de Mastodon",
+    "ko": "",
+    "thisismisskey": "Iniciar sesión con Misskey",
+    "misskeylogin": "Leé <a href=\"https://docs.thedesk.top/\">la documentación (en japonés)</a> para usar Misskey.",
+    "nodata": "Sin datos"
+}

@@ -1,0 +1,22 @@
+{
+    "list": "Списък на профилите",
+    "back": "Назад",
+    "add": "Добавяне на профил",
+    "codesetupwarn": "Премахнете отметката за да пропуснете влизането с код. (Вход в Mastodon от Windows или macOS) (Препоръчително: pcheck)",
+    "codesetup": "Настройка на код",
+    "mainacct": "Основен профил",
+    "selacct": "Изберете профил",
+    "codepastewarn": "Поставете кода и затворете браузъра.",
+    "codepaste": "Код",
+    "domain": "Домейн",
+    "connect": "Федерални сървъри",
+    "toots": "Тоот",
+    "users": "Потребители",
+    "users2": "потребители",
+    "safety": "Свързване",
+    "ver": "Mastodon версия",
+    "ko": "",
+    "thisismisskey": "Влезте като Misskey",
+    "misskeylogin": "Прочетете <a href=\"https://thedesk.top/how-to-misskey-login.html\">Документацията</a>, за да влезете в Misskey.",
+    "nodata": "Няма данни"
+}
