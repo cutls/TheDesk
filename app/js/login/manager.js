@@ -890,3 +890,7 @@ input.addEventListener("focus", function () {
 input.addEventListener("blur", function () {
 	window.clearInterval(timer);
 }, false);
+//acctで未読マーカーは要らない
+function asReadEnd() {
+	postMessage(["asReadComp", ""], "*")
+}

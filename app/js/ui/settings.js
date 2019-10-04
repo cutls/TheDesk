@@ -694,4 +694,7 @@ window.onload = function () {
 	oksload();
 	ctLoad()
 };
-
+//設定画面で未読マーカーは要らない
+function asReadEnd() {
+	postMessage(["asReadComp", ""], "*")
+}
