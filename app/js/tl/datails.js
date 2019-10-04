@@ -77,6 +77,7 @@ function details(id, acct_id, tlid, mode) {
 		$("#toot-this .rt_ct").text(json.reblogs_count);
 		$("#tootmodal").attr("data-url", url);
 		$("#tootmodal").attr("data-id", json.id);
+		$("#tootmodal").attr("data-acct", acct_id);
 		if (local) {
 			$("#tootmodal").attr("data-user", scn + "@" + domain);
 		} else {

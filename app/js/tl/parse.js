@@ -656,7 +656,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			} else if (visen == "private") {
 				var vis =
 					'<i class="text-darken-3 material-icons orange-text vis-data pointer" title="' + lang.lang_parse_private + '(' + lang.lang_parse_clickcopy + ')" data-vis="private" onclick="staCopy(\'' + id + '\')">lock</i>';
-				var can_rt = "unvisible";
+				
+					var can_rt = "unvisible";
 			} else if (visen == "direct") {
 				var vis =
 					'<i class="text-darken-3 material-icons red-text vis-data pointer" title="' + lang.lang_parse_direct + '(' + lang.lang_parse_clickcopy + ')" data-vis="direct" onclick="staCopy(\'' + id + '\')">mail</i>';
@@ -665,6 +666,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			if (toot.account.acct == localStorage.getItem("user_" + acct_id)) {
 				var if_mine = "";
 				var mine_via = "type-b";
+				var can_rt = "";
 			} else {
 				var if_mine = "hide";
 				var mine_via = "";

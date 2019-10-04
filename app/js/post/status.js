@@ -50,7 +50,7 @@ function fav(id, acct_id, remote) {
 }
 
 //ブースト
-function rt(id, acct_id, remote) {
+function rt(id, acct_id, remote, vis) {
 	if ($("#pub_" + id).hasClass("rted")) {
 		var flag = "unreblog";
 	} else {
@@ -64,7 +64,11 @@ function rt(id, acct_id, remote) {
 	httpreq.setRequestHeader('Content-Type', 'application/json');
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
 	httpreq.responseType = "json";
-	httpreq.send();
+	if(vis){
+		httpreq.send(JSON.stringify({visibility: vis}));
+	}else{
+		httpreq.send();
+	}
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
@@ -94,6 +98,11 @@ function rt(id, acct_id, remote) {
 			}
 		}
 	}
+}
+function boostWith(vis){
+	var id = $("#tootmodal").attr("data-id");
+	var acct_id = $("#tootmodal").attr("data-acct");
+	rt(id, acct_id, false, vis)
 }
 
 //フォロー
