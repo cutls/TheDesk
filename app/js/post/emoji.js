@@ -107,6 +107,14 @@ function emojiGet(parse, started) {
 					if (a.shortcode > b.shortcode) return 1;
 					return 0;
 				});
+				Object.keys(md["categorized"]).forEach(function (key) {
+					md["categorized"][key].sort(function (a, b) {
+						if (a.shortcode < b.shortcode) return -1;
+						if (a.shortcode > b.shortcode) return 1;
+						return 0;
+					});
+				});
+				
 				md["if_categorized"] = if_categorized
 				localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
 			} else {
