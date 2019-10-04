@@ -151,6 +151,11 @@ function media(b64, type, no) {
 				$("#textarea").val($("#textarea").val() + " " + json["text_url"])
 			}
 			todc();
+			if(localStorage.getItem("nsfw_" + acct_id)){
+				$("#nsfw").addClass("yellow-text");
+				$("#nsfw").html("visibility");
+				$("#nsfw").addClass("nsfw-avail");
+			}
 			$(".toot-btn-group").prop("disabled", false);
 			$('select').formSelect();
 			$("#mec").text(lang.lang_there);

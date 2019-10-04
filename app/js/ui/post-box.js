@@ -55,6 +55,7 @@ function show() {
 	}
 	$('#post-box').fadeIn();
 	$('#textarea').characterCounter();
+	mdCheck()
 }
 
 $(function () {

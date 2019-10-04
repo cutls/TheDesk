@@ -291,7 +291,12 @@ function refresh(target, loadskip) {
 		localStorage.setItem("user-id_" + target, json["id"]);
 		localStorage.setItem("prof_" + target, avatar);
 		localStorage.setItem("follow_" + target, json["following_count"]);
-		console.log(obj)
+		if(json["source"]["sensitive"]){
+			localStorage.setItem("nsfw_" + target, "true");
+		}else{
+			localStorage.removeItem("nsfw_" + target);
+		}
+		obj[target] = ref;
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
 		if (!loadskip) {

@@ -695,6 +695,11 @@ function refresh(target) {
 		localStorage.setItem("user_" + target, json["acct"]);
 		localStorage.setItem("user-id_" + target, json["id"]);
 		localStorage.setItem("prof_" + target, avatar);
+		if(json["source"]["sensitive"]){
+			localStorage.setItem("nsfw_" + target, "true");
+		}else{
+			localStorage.removeItem("nsfw_" + target);
+		}
 		obj[target] = ref;
 		var json = JSON.stringify(obj);
 		localStorage.setItem("multi", json);
