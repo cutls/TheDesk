@@ -264,7 +264,21 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 		}
 		websocketNotf[acct_id].onerror = function (error) {
 			console.error('WebSocket Error ' + error);
-			notfWS(misskey, acct_id, tlid, domain, at)
+			errorct++;
+			console.log(errorct)
+			if (errorct < 3) {
+				notfWS(misskey, acct_id, tlid, domain, at)
+			}
+
+		};
+		websocketNotf[acct_id].onclose = function (error) {
+			console.error('WebSocket Close ' + error);
+			errorct++;
+			console.log(errorct)
+			if (errorct < 3) {
+				notfWS(misskey, acct_id, tlid, domain, at)
+			}
+
 		};
 	}
 }
@@ -361,23 +375,23 @@ function notfToggle(acct, tlid) {
 		$("#notf-box_" + tlid).animate({
 			'height': '400px'
 		}, {
-				'duration': 300,
-				'complete': function () {
-					$("#notf-box_" + tlid).css("overflow-y", "scroll")
-					$("#notf-box_" + tlid).removeClass("column-hide")
-				}
-			});
+			'duration': 300,
+			'complete': function () {
+				$("#notf-box_" + tlid).css("overflow-y", "scroll")
+				$("#notf-box_" + tlid).removeClass("column-hide")
+			}
+		});
 	} else {
 		$("#notf-box_" + tlid).css("overflow-y", "hidden")
 		$("#notf-box_" + tlid).animate({
 			'height': '0'
 		}, {
-				'duration': 300,
-				'complete': function () {
-					$("#notf-box_" + tlid).addClass("column-hide")
-					$("#notf-box_" + tlid).css("display", "none")
-				}
-			});
+			'duration': 300,
+			'complete': function () {
+				$("#notf-box_" + tlid).addClass("column-hide")
+				$("#notf-box_" + tlid).css("display", "none")
+			}
+		});
 	}
 	notfCanceler(acct)
 }
