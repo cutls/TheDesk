@@ -3,10 +3,10 @@
     "back": "Zurück",
     "add": "Konto hinzufügen",
     "codesetupwarn": "Check if TheDesk is not working on Windows, you want to login Pleroma servers, you cannot login when it checked.",
-    "codesetup": "Code setup",
-    "mainacct": "Main an account",
+    "codesetup": "Code-Setup",
+    "mainacct": "Hauptkonto",
     "selacct": "Konto auswählen",
-    "codepastewarn": "Paste the code and close browser.",
+    "codepastewarn": "Fügen Sie den Code ein und schließen Sie den Browser.",
     "codepaste": "Code",
     "domain": "Domain",
     "connect": "Föderierte Server",
@@ -16,7 +16,7 @@
     "safety": "Verbindung",
     "ver": "Mastodon Version",
     "ko": "",
-    "thisismisskey": "Login as Misskey",
-    "misskeylogin": "Lies die <a href=\"https://thedesk.top/how-to-misskey-login.html\">Doku (jap)</a> um dich bei Misskey einzuloggen.",
-    "nodata": "No data"
+    "thisismisskey": "Als Misskey anmelden",
+    "misskeylogin": "Lies die <a href=\"https://thedesk.top/how-to-misskey-login.html\">Doku (japanisch)</a> um dich bei Misskey einzuloggen.",
+    "nodata": "Keine Daten"
 }
