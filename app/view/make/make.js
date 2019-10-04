@@ -23,6 +23,7 @@ for (let n = 0; n < langs.length; n++) {
         fs.mkdirSync(targetDir);
     }
     langstr = langstr + '<a onclick="changelang(\'' + lang + '\')" class="pointer" style="margin-right:5px;">' + langsh[n] + '</a>'
+    fs.writeFileSync("../" + lang + "/main.js", fs.readFileSync("language/" + lang + "/main.json", 'utf8').replace(/^{/, "var lang = {"))
 }
 for (let i = 0; i < samples.length; i++) {
     let sample = samples[i]

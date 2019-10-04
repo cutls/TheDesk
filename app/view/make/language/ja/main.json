@@ -1,5 +1,4 @@
-//commonError
-var lang = {
+{
     "language": "ja",
     "lang_toot": "トゥート",
     "lang_there": "あり",
@@ -12,18 +11,16 @@ var lang = {
     "lang_add": "追加",
     "lang_fatalerroroccured": "エラーが発生しました。しばらく待ってから再起動してください。",
     "lang_speech": "Google 日本語",
-    //language.html
     "lang_lang": "言語",
     "lang_langlocale": "日本語",
     "lang_back": "戻る",
     "lang_set": "設定",
     "lang_langadd": "<a href=\"https://github.com/cutls/TheDesk\" target=\"_blank\">GitHub</a>から翻訳に参加できます。英語の校正(緊急)や他言語に翻訳していただける方を募集しております。",
-    //common/time.js
     "lang_time_prefixAgo": null,
     "lang_time_prefixFromNow": "今から",
     "lang_time_suffixAgo": "",
     "lang_time_suffixFromNow": "",
-    "lang_time_inPast": '',
+    "lang_time_inPast": "",
     "lang_time_seconds": "%d秒前",
     "lang_time_minute": "1分前",
     "lang_time_minutes": "%d分前",
@@ -35,16 +32,12 @@ var lang = {
     "lang_time_months": "%dヶ月前",
     "lang_time_year": "去年",
     "lang_time_years": "%d年前",
-    //common/version.js
     "lang_version_usever": "お使いのバージョン{{ver}}は最新です。",
     "lang_version_skipver": "アップデートはスキップされました。",
     "lang_version_platform": "このソフトウェアはMicrosoft Storeからダウンロードされましたか？通常はホームページからインストールするため「いいえ」を選んでください。「はい」を選ぶとMicrosoft Storeからアップデートが提供され、アップデートの通知を出しません。",
     "lang_version_platform_linux": "このソフトウェアはSnapcraft(snapd)からインストールしましたか？通常はホームページからインストールするため「いいえ」を選んでください。「はい」を選ぶとSnapcraftからアップデートが提供され、アップデートの通知を出しません。",
     "lang_version_platform_mac": "このソフトウェアはHomebrew Caskからインストールしましたか？通常はホームページからインストールするため「いいえ」を選んでください。「はい」を選ぶとアップデートの通知を出しません。",
-    //login
-    //login/login.js
     "lang_login_noauth": "認証せずに見る",
-    //login/manager.js
     "lang_manager_info": "インスタンス情報",
     "lang_manager_refresh": "情報更新",
     "lang_manager_delete": "削除",
@@ -55,19 +48,15 @@ var lang = {
     "lang_manager_none": "なし",
     "lang_manager_godev": "MisskeyのDevセンターに移動します。同時に開かれるドキュメントを参考にログインしてください。",
     "lang_manager_logout": "ログアウト",
-    //post/bb-md.js
     "lang_bbmd_misskey": "TheDeskにおけるMisskeyでは、@を返信として扱いますが、全ての@は消去され別パラメータに入力されます。また、「未収載」を「ホーム」として扱います。",
-    //post/emoji.js
     "lang_emoji_get": "絵文字リストを取得",
     "lang_emoji_custom": "カスタム絵文字",
     "lang_defaultemojis_text": "{{cat}}の絵文字",
     "lang_emoji_uncat": "未分類",
-    //post/img.js
     "lang_postimg_previewdis": "プレビューできません。",
     "lang_postimg_aftupload": "アップロード後はアカウントを切り替えられません。",
     "lang_postimg_failupload": "アップロードに失敗しました。",
     "lang_postimg_delete": "この画像を削除します",
-    //post/post.js
     "lang_post_tagTL": "デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。",
     "lang_post_tagVis": "公開範囲が「公開」以外だと、タグTLに表示されません。(一部インスタンスを除く)",
     "lang_post_cwtitle": "長文投稿の警告",
@@ -75,7 +64,6 @@ var lang = {
     "lang_post_btn1": "キャンセル(投稿しない)",
     "lang_post_btn2": "自動でCWを付ける",
     "lang_post_btn3": "そのまま投稿",
-    //post/status.js
     "lang_status_favWarn": "お気に入り登録しました。インスタンスが違うときは時間がかかる場合があります。",
     "lang_status_btWarn": "ブーストしました。インスタンスが違うときは時間がかかる場合があります。",
     "lang_status_follow": "フォロー",
@@ -92,23 +80,17 @@ var lang = {
     "lang_status_endorse": "プロフで紹介する",
     "lang_status_followers": "フォロワー",
     "lang_status_active": "最新トゥート",
-    //post/suggest.js
     "lang_suggest_nodata": "サジェストのために絵文字リストを取得してください。",
-    //post/use-txtbox.js
     "lang_usetxtbox_reply": "返信モードです。クリアするときはCtrl+Shift+Cを押してください。",
-    //tl/card.js
     "lang_cards_check": "チェック",
     "lang_cards_pip": "ながら観モード",
-    //tl/details.js
     "lang_details_nodata": "データなし",
     "lang_details_filtered": "フィルターされました。",
     "lang_details_embed": "埋め込みHTMLがコピーされました。",
     "lang_details_url": "トゥートURLがコピーされました。",
     "lang_details_txt": "トゥート本文がコピーされました。",
-    //tl/filter.js
     "lang_filter_nodata": "フィルターはありません",
     "lang_filter_errordegree": "適応範囲を最低一つ以上チェックしてください。",
-    //tl/list.js
     "lang_list_nodata": "リストはありません",
     "lang_list_show": "表示",
     "lang_list_users": "ユーザー一覧",
@@ -116,27 +98,20 @@ var lang = {
     "lang_list_add": "リストに追加",
     "lang_list_add_misskey": "(重複追加の可能性があります)",
     "lang_list_remove": "リストから削除",
-    //tl/notification.js
     "lang_notf_new": "件の新しい通知",
-    //tl/speech.js
     "lang_speech_refresh": "音声読み上げ設定を更新しました。",
-    //tl/src.js
     "lang_src_ts": "時系列",
     "lang_src_people": "人がトゥート",
-    //tl/tag.js
     "lang_tags_always": "常に",
     "lang_tags_realtime": "実況",
     "lang_tags_tagunpin": "{{tag}}をよく使うタグから削除",
     "lang_tags_unrealtime": "実況解除",
     "lang_tags_tagwarn": "{{tag}}がない場合自動で補完されます。",
-    //tl/tl.js
     "lang_tl_media": "メディア",
     "lang_tl_reconnect": "Streamingに再接続しました",
     "lang_tl_postmarkers_title": "処理中",
     "lang_tl_postmarkers": "未読マーカーを送信しています。3秒以内に閉じられます。",
-    //ui/img.js
     "lang_img_DLDone": "ダウンロード先:",
-    //ui/layout.js
     "lang_layout_gotop": "一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。",
     "lang_layout_thisacct": "このアカウントの{{notf}}",
     "lang_layout_delthis": "このカラムを削除",
@@ -157,22 +132,18 @@ var lang = {
     "lang_layout_deleteColumn": "カラム削除",
     "lang_layout_deleteColumnDesc": "カラムを削除しますか？",
     "lang_layout_unread": "未読",
-    //ui/sort.js
     "lang_sort_gothis": "このカラムへ",
     "lang_sort_remthis": "このカラムを削除",
-    //ui/spotify.js
     "lang_spotify_img": "アルバムアートワークを添付します。",
     "lang_spotify_imgno": "アルバムアートワークを添付しません。",
     "lang_spotify_acct": "アカウント連携をしてください。",
     "lang_spotify_np": "NowPlaying文書を更新しました。",
     "lang_setting_npprovide": "NowPlayingのソースを{{set}}に設定しました。",
-    //userdata/his-data.js
     "lang_hisdata_frcreq": "Mastodon 2.4.3~が必要です",
     "lang_hisdata_frcwarn": "非フォローだけど絡みがある時に表示されます。",
     "lang_hisdata_taketime": "30秒から数分かかります",
     "lang_hisdata_notonmisskey": "このシステムはMisskeyにはありません。",
     "lang_hisdata_key": "このユーザーの信頼性は{{set}}によって示されています",
-    //userdata/showOnTL.js
     "lang_showontl_movetxt": "このアカウントは移行しています",
     "lang_showontl_movebtn": "移行先を見る",
     "lang_showontl_botacct": "botアカウント",
@@ -181,7 +152,6 @@ var lang = {
     "lang_showontl_domain": "ドメイン",
     "lang_showontl_listwarn": "リストに追加するためにはフォローが必要です。",
     "lang_showontl_verified": "このユーザーの所持するWebサイトであると証明されています。",
-    //parse
     "lang_parse_mentioned": "が返信しました",
     "lang_parse_faved": "がお気に入り登録しました",
     "lang_parse_bted": "がブーストしました",
@@ -226,7 +196,6 @@ var lang = {
     "lang_parse_unknown": "添付ファイル",
     "lang_parse_nsfw": "閲覧注意",
     "lang_parse_notffilter": "このユーザーの通知のみを表示",
-    //misskey
     "lang_misskeyparse_renote": "再投稿",
     "lang_misskeyparse_renoteqt": "引用",
     "lang_misskeyparse_reaction": "リアクション",
@@ -239,7 +208,6 @@ var lang = {
     "lang_misskeyparse_renoted": "がRepost",
     "lang_misskeyparse_quoted": "が引用",
     "lang_misskeyparse_reacted": "がリアクション",
-    //setting
     "lang_setting_time": "時間設定を{{set}}に設定しました。",
     "lang_setting_theme": "テーマ設定を{{set}}に設定しました。",
     "lang_setting_nsfw": "画像表示設定を{{set}}に設定しました。",
