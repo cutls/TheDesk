@@ -10,8 +10,8 @@ if (process.argv.indexOf("--automatic") === -1) {
     }
 }
 console.log("Constructing view files " + ver + ": make sure to update package.json")
-const langs = ["ja", "en", "ps", "bg", "cs", "de", "es-AR"]
-const langsh = ["日本語", "English", "Crowdin translate system(beta)", "български", "Česky", "Deutsch", "Spanish, Argentina"]
+const langs = ["ja", "en", "bg", "cs", "de", "es-AR", "ps"]
+const langsh = ["日本語", "English", "български", "Česky", "Deutsch", "Spanish, Argentina", "Crowdin translate system(beta)"]
 const simples = ["acct", "index", "setting", "update", "setting"]
 const samples = ["acct.sample.html", "index.sample.html", "setting.sample.html", "update.sample.html", "setting.sample.js"]
 const pages = ["acct.html", "index.html", "setting.html", "update.html", "setting.vue.js"]
@@ -23,7 +23,7 @@ for (let n = 0; n < langs.length; n++) {
     if (!fs.existsSync(targetDir)) {
         fs.mkdirSync(targetDir);
     }
-    langstr = langstr + '<a onclick="changelang(\'' + lang + '\')" class="pointer" style="margin-right:5px;">' + langsh[n] + '</a>'
+    langstr = langstr + '<a onclick="changelang(\'' + lang + '\')" class="pointer" style="margin:4px;border: 1px solid var(--color); padding: 3px">' + langsh[n] + '</a>'
     fs.writeFileSync("../" + lang + "/main.js", fs.readFileSync("language/" + lang + "/main.json", 'utf8').replace(/^{/, "var lang = {"))
 }
 for (let i = 0; i < samples.length; i++) {
