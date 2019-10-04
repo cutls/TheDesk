@@ -16,6 +16,7 @@ function re(id, ats_cm, acct_id, mode) {
 	$("#post-acct-sel").val(acct_id);
 	$("#post-acct-sel").prop("disabled", true);
 	$('select').formSelect();
+	mdCheck()
 	$("#textarea").attr("placeholder", lang.lang_usetxtbox_reply);
 	$("#textarea").focus();
 	var profimg = localStorage.getItem("prof_" + acct_id);
@@ -75,5 +76,6 @@ function qt(id, acct_id, at, url) {
 	}
 	$("#post-acct-sel").val(acct_id);
 	$('select').formSelect();
+	mdCheck()
 	$("#textarea").focus();
 }

@@ -1,5 +1,4 @@
-//commonError
-var lang = {
+{
     "language": "en",
     "lang_toot": "Toot",
     "lang_there": "Yes",
@@ -12,13 +11,11 @@ var lang = {
     "lang_add": "Add",
     "lang_fatalerroroccured": "Some errors are occured, please restart TheDesk.",
     "lang_speech": "Google US English",
-    //language.html
     "lang_lang": "Language",
     "lang_langlocale": "English",
     "lang_back": "Back",
     "lang_set": "Set",
     "lang_langadd": "Translate TheDesk to other languages or proofread TheDesk on <a href=\"https://github.com/cutls/TheDesk\" target=\"_blank\">GitHub</a>. TheDesk needs your help.",
-    //common/time.js
     "lang_time_prefixAgo": null,
     "lang_time_prefixFromNow": null,
     "lang_time_suffixAgo": null,
@@ -35,16 +32,12 @@ var lang = {
     "lang_time_months": "%d months",
     "lang_time_year": "y",
     "lang_time_years": "%d y",
-    //common/version.js
     "lang_version_usever": "No update is found({{ver}})",
     "lang_version_skipver": "Update was ignored.",
     "lang_version_platform": "Do you want auto-updates?(users installed on Microsoft Store select 'No')",
     "lang_version_platform_linux": "Do you want auto-updates?(users installed on Snapcraft select 'No')",
     "lang_version_platform_mac": "Do you want auto-updates?(Homebrew Cask users select 'No')",
-    //login
-    //login/login.js
     "lang_login_noauth": "Show TL of unlogined accounts",
-    //login/manager.js
     "lang_manager_info": "About this instance",
     "lang_manager_refresh": "Refresh",
     "lang_manager_delete": "Logout",
@@ -55,19 +48,15 @@ var lang = {
     "lang_manager_none": "None",
     "lang_manager_godev": "Open DevCenter of Misskey. We show also an official documents to refer.",
     "lang_manager_logout": "Logout",
-    //post/bb-md.js
     "lang_bbmd_misskey": "TheDesk regards \"@\" as reply, but put other parameter. Unlisted on Mastodon means Home on Misskey.",
-    //post/emoji.js
     "lang_emoji_get": "Get emojis",
     "lang_emoji_custom": "Custom emojis",
     "lang_defaultemojis_text": "Emojis about {{cat}}",
     "lang_emoji_uncat": "Uncategorized",
-    //post/img.js
     "lang_postimg_previewdis": "cannot preview",
     "lang_postimg_aftupload": "You cannot change accounts after uploading.",
     "lang_postimg_failupload": "Failed",
     "lang_postimg_delete": "Delete this image.",
-    //post/post.js
     "lang_post_tagTL": "This toot does not contain a default tag. This toot will not be shown on Local TL. Continue?",
     "lang_post_tagVis": "This toot(not 'public' toot) is not shown on this tag's TL.",
     "lang_post_cwtitle": "Auto CW Alert",
@@ -75,7 +64,6 @@ var lang = {
     "lang_post_btn1": "Cancel (will not post)",
     "lang_post_btn2": "Make text hidden automatically",
     "lang_post_btn3": "Continue to post",
-    //post/status.js
     "lang_status_favWarn": "It will take a miunte to favourite a remote toot.",
     "lang_status_btWarn": "It will take a miunte to boost a remote toot.",
     "lang_status_follow": "Follow",
@@ -92,23 +80,17 @@ var lang = {
     "lang_status_endorse": "Feature on profile",
     "lang_status_followers": "Followers",
     "lang_status_active": "Last status",
-    //post/suggest.js
     "lang_suggest_nodata": "Please get emojis list in order to show suggestion.",
-    //post/use-txtbox.js
     "lang_usetxtbox_reply": "Reply Mode. Ctrl+Shift+C to clear.",
-    //tl/card.js
     "lang_cards_check": " check",
     "lang_cards_pip": "PiP mode",
-    //tl/details.js
     "lang_details_nodata": "No data",
     "lang_details_filtered": "Filtered toot",
     "lang_details_embed": "Embed HTML is cliped.",
     "lang_details_url": "URL of this toot is cliped.",
     "lang_details_txt": "Content of this toot is cliped.",
-    //tl/filter.js
     "lang_filter_nodata": "No data",
     "lang_filter_errordegree": "Please check a context",
-    //tl/list.js
     "lang_list_nodata": "No data",
     "lang_list_show": "Show",
     "lang_list_users": "Users list",
@@ -116,27 +98,20 @@ var lang = {
     "lang_list_add": "Add to the list",
     "lang_list_add_misskey": "(perhaps this user has been listed)",
     "lang_list_remove": "Remove from the list",
-    //tl/notification.js
     "lang_notf_new": " new notifications",
-    //tl/speech.js
     "lang_speech_refresh": "Save value about TTS config",
-    //tl/src.js
     "lang_src_ts": "chronological order",
     "lang_src_people": " people toot",
-    //tl/tag.js
     "lang_tags_always": "Always toots with ",
     "lang_tags_realtime": "Tag-stream toot",
     "lang_tags_tagunpin": "Unpin {{tag}}",
     "lang_tags_unrealtime": "Disable TsT",
     "lang_tags_tagwarn": "Auto complete {{tag}}, if toot without {{tag}}",
-    //tl/tl.js
     "lang_tl_media": "Media",
     "lang_tl_reconnect": "Reconnect to streaming API",
     "lang_tl_postmarkers_title": "Process...",
     "lang_tl_postmarkers": "POST markers data. Please wait",
-    //ui/img.js
     "lang_img_DLDone": "Downloaded:",
-    //ui/layout.js
     "lang_layout_gotop": "Go top of this column. When icon is red, this column cannot connect straming API. Please reload.",
     "lang_layout_thisacct": "{{notf}} of this account",
     "lang_layout_delthis": "Remove this column",
@@ -157,22 +132,18 @@ var lang = {
     "lang_layout_deleteColumn": "Delete this column",
     "lang_layout_deleteColumnDesc": "Delete this column",
     "lang_layout_unread": "Unread",
-    //ui/sort.js
     "lang_sort_gothis": "Go to this column",
     "lang_sort_remthis": "Delete this column",
-    //ui/spotify.js
     "lang_spotify_img": "Attach an album artwork",
     "lang_spotify_imgno": "Not attach an album artwork",
     "lang_spotify_acct": "Connect TheDesk to Spotify",
     "lang_spotify_np": "Done:templete of NowPlaying",
     "lang_setting_npprovide": "NowPlaying provider:{{set}}",
-    //userdata/his-data.js
     "lang_hisdata_frcreq": "Required Mastodon 2.4.3 and above",
     "lang_hisdata_frcwarn": "Unfollow accounts will be shown.",
     "lang_hisdata_taketime": "It will take 30s ~ several minutes",
     "lang_hisdata_notonmisskey": "Misskey is unable to request.",
     "lang_hisdata_key": "This user is proofed by {{set}}",
-    //userdata/showOnTL.js
     "lang_showontl_movetxt": "This account was moved",
     "lang_showontl_movebtn": "Continue on the new account",
     "lang_showontl_botacct": "[bot]",
@@ -181,7 +152,6 @@ var lang = {
     "lang_showontl_domain": "Domain ",
     "lang_showontl_listwarn": "Follow to add this user to lists.",
     "lang_showontl_verified": "This website is verified by owner at ",
-    //parse
     "lang_parse_mentioned": " replied to you",
     "lang_parse_faved": " favourited your toot",
     "lang_parse_bted": " boosted your toot",
@@ -226,7 +196,6 @@ var lang = {
     "lang_parse_unknown": "Attached file",
     "lang_parse_nsfw": "sensitive media",
     "lang_parse_notffilter": "Show this user's notifications",
-    //misskey
     "lang_misskeyparse_renote": "Repost",
     "lang_misskeyparse_renoteqt": "Renote",
     "lang_misskeyparse_reaction": "Reaction",
@@ -239,7 +208,6 @@ var lang = {
     "lang_misskeyparse_renoted": " renoted your following post.",
     "lang_misskeyparse_quoted": " quoted your following post.",
     "lang_misskeyparse_reacted": " reacted your following post.",
-    //setting
     "lang_setting_time": "Time format:{{set}}",
     "lang_setting_theme": "Theme:{{set}}",
     "lang_setting_nsfw": "Sensitive media:{{set}}",
@@ -279,5 +247,5 @@ var lang = {
     "lang_setting_notftest": " Notification test ",
     "lang_setting_notftestprof": "Your icon is shown.",
     "lang_setting_exportwarn": "Only important data will be exported. You must keep this data secure.",
-    "lang_setting_importwarn": "All data will be deleted.",
+    "lang_setting_importwarn": "All data will be deleted."
 }

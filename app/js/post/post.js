@@ -289,6 +289,7 @@ function clear() {
 		$("#post-acct-sel").val(localStorage.getItem("main"));
 	}
 	$('select').formSelect();
+	mdCheck()
 	$("#left-side").show();
 	$("#default-emoji").show();
 	$("#unreact").show();

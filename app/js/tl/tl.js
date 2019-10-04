@@ -1,5 +1,6 @@
 //TL取得
 moreloading = false;
+var errorct=0;
 function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	scrollevent();
 	$("#unread_" + tlid + " .material-icons").removeClass("teal-text")
@@ -230,6 +231,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		websocket[wsid] = new WebSocket(start);
 		websocket[wsid].onopen = function (mess) {
 			console.table({ "tlid": tlid, "type": "Connect Streaming API" + type, "domain": domain, "message": [mess] })
+			errorct=0
 			$("#notice_icon_" + tlid).removeClass("red-text")
 		}
 		websocket[wsid].onmessage = function (mess) {
@@ -317,8 +319,8 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 				$("#notice_icon_" + tlid).addClass("red-text")
 				todo('WebSocket Error ' + error);
 			} else {
-				var errorct = localStorage.getItem("wserror_" + tlid) * 1 + 1;
-				localStorage.setItem("wserror_" + tlid, errorct);
+				errorct++;
+				console.log(errorct)
 				if (errorct < 3) {
 					reconnector(tlid, type, acct_id, data, "error");
 				}
@@ -331,8 +333,8 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 				$("#notice_icon_" + tlid).addClass("red-text")
 				todo('WebSocket Closed');
 			} else {
-				var errorct = localStorage.getItem("wserror_" + tlid) * 1 + 1;
-				localStorage.setItem("wserror_" + tlid, errorct);
+				errorct++;
+				console.log(errorct)
 				if (errorct < 3) {
 					reconnector(tlid, type, acct_id, data, "error");
 				}
@@ -791,7 +793,6 @@ function strAlive() {
 				var type = obj[key].type;
 				var acct_id = obj[key].domain;
 				var data = obj[key].data;
-				localStorage.removeItem("wserror_" + tlid)
 				reconnector(key, type, acct_id, data, "error");
 			}
 		});

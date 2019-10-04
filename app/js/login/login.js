@@ -398,6 +398,8 @@ function ckdb(acct_id) {
 				}
 				if (json["urls"]["streaming_api"]) {
 					localStorage.setItem("streaming_" + acct_id, json["urls"]["streaming_api"]);
+				}else{
+					localStorage.removeItem("streaming_" + acct_id);
 				}
 			}
 		});
