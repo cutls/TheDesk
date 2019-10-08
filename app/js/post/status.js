@@ -18,23 +18,24 @@ function fav(id, acct_id, remote) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(json.reblog){
+				json = json.reblog
+			}
 			if (remote != "remote") {
 				//APIのふぁぼカウントがおかしい
 				if ($("[toot-id=" + id + "] .fav_ct").text() == json.favourites_count) {
 					if (flag == "unfavourite") {
 						var fav = json.favourites_count - 1;
+						if ( fav * 1 < 0){ fav = 0}
 					} else {
-						var fav = json.favourites_count + 1;
+						var fav = json.favourites_count;
 						//var fav = json.favourites_count;
 					}
 				} else {
 					var fav = json.favourites_count;
 				}
 				$("[toot-id=" + id + "] .fav_ct").text(fav);
-				if (!json.reblog) {
-				} else {
-					$("[toot-id=" + id + "] .rt_ct").text(fav);
-				}
+				$("[toot-id=" + id + "] .rt_ct").text(json.reblogs_count);
 				if ($("[toot-id=" + id + "]").hasClass("faved")) {
 					$("[toot-id=" + id + "]").removeClass("faved");
 					$(".fav_" + id).removeClass("yellow-text");
@@ -72,18 +73,22 @@ function rt(id, acct_id, remote, vis) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(json.reblog){
+				json = json.reblog
+			}
 			console.log(["Success: boost", json]);
 			if (remote != "remote") {
 				$("[toot-id=" + id + "] .fav_ct").text(json.favourites_count);
 				if (!json.reblog) {
 					if (flag == "unreblog") {
 						var rt = json.reblogs_count - 1;
+						if ( rt * 1 < 0){ rt = 0}
 					} else {
-						var rt = json.reblogs_count + 1;
+						var rt = json.reblogs_count;
 					}
 					$("[toot-id=" + id + "] .rt_ct").text(rt);
 				} else {
-					$("[toot-id=" + id + "] .rt_ct").text(json.reblog.reblogs_count);
+					$("[toot-id=" + id + "] .rt_ct").text(json.reblogs_count);
 				}
 
 				if ($("[toot-id=" + id + "]").hasClass("rted")) {

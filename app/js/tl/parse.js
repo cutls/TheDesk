@@ -862,7 +862,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				acct_id + ',\'' + visen +
 				'\')" class="waves-effect waves-dark btn-flat actct rep-btn" data-men="' + to_mention + '" data-visen="' + visen + '" style="padding:0" title="' + lang.lang_parse_replyto + '"><i class="fas fa-share"></i><span class="rep_ct">' + replyct +
 				'</a></span></a></div>' +
-				'<div class="action ' + can_rt + ' ' + disp["rt"] + ' ' + noauth + '"><a onclick="rt(\'' + toot.id + '\',' + acct_id +
+				'<div class="action ' + can_rt + ' ' + disp["rt"] + ' ' + noauth + '"><a onclick="rt(\'' + uniqueid + '\',' + acct_id +
 				',\'' + tlid +
 				'\')" class="waves-effect waves-dark btn-flat actct bt-btn" style="padding:0" title="' + lang.lang_parse_bt + '"><i class="fas fa-retweet ' +
 				if_rt + ' rt_' + toot.id + '"></i><span class="rt_ct">' + toot.reblogs_count +
@@ -870,7 +870,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				'<div class="action ' + can_rt + ' ' + disp["qt"] + ' ' + noauth + ' ' + qtClass + '"><a onclick="qt(\'' + toot.id + '\',' + acct_id +
 				',\'' + toot.account.acct + '\',\'' + toot.url +
 				'\')" class="waves-effect waves-dark btn-flat actct" style="padding:0" title="' + lang.lang_parse_quote + '"><i class="text-darken-3 fas fa-quote-right"></i></a></div>' +
-				'<div class="action ' + disp["fav"] + ' ' + noauth + '"><a onclick="fav(\'' + toot.id + '\',' + acct_id +
+				'<div class="action ' + disp["fav"] + ' ' + noauth + '"><a onclick="fav(\'' + uniqueid + '\',' + acct_id +
 				',\'' + tlid +
 				'\')" class="waves-effect waves-dark btn-flat actct fav-btn" style="padding:0" title="' + lang.lang_parse_fav + '"><i class="fas text-darken-3 fa-star' +
 				if_fav + ' fav_' + toot.id + '"></i><span class="fav_ct">' + toot.favourites_count +
