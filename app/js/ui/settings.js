@@ -258,12 +258,7 @@ function notftest() {
 		body: lang.lang_setting_notftest + '(' + lang.lang_setting_notftestprof + ')',
 		icon: localStorage.getItem("prof_0")
 	};
-	if (os == "darwin") {
-		var n = new Notification('TheDesk' + lang.lang_setting_notftest, options);
-	} else {
-		var nativeNotfOpt = ['TheDesk' + lang.lang_setting_notftest, lang.lang_setting_notftest + '(' + lang.lang_setting_notftestprof + ')', localStorage.getItem('prof_0'), "", ""]
-		postMessage(["nativeNotf", nativeNotfOpt], "*")
-	}
+	var n = new Notification('TheDesk' + lang.lang_setting_notftest, options);
 
 }
 function oks(no) {

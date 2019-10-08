@@ -63,12 +63,7 @@ function notfColumn(acct_id, tlid, sys) {
 							body: ct + lang.lang_notf_new,
 							icon: localStorage.getItem("prof_" + acct_id)
 						};
-						if (os == "darwin") {
-							var n = new Notification('TheDesk:' + domain, options);
-						} else {
-							var nativeNotfOpt = ['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]
-							postMessage(["nativeNotf", nativeNotfOpt], "*")
-						}
+						var n = new Notification('TheDesk:' + domain, options);
 
 					}
 					if (localStorage.getItem("filter_" + acct_id) != "undefined") {
@@ -178,12 +173,7 @@ function notfCommon(acct_id, tlid, sys) {
 						body: ct + lang.lang_notf_new,
 						icon: localStorage.getItem("prof_" + acct_id)
 					};
-					if (os == "darwin") {
-						var n = new Notification('TheDesk:' + domain, options);
-					} else {
-						var nativeNotfOpt = ['TheDesk:' + domain, ct + lang.lang_notf_new, localStorage.getItem("prof_" + acct_id)]
-						postMessage(["nativeNotf", nativeNotfOpt], "*")
-					}
+					var n = new Notification('TheDesk:' + domain, options);
 
 				}
 				if (localStorage.getItem("filter_" + acct_id) != "undefined") {

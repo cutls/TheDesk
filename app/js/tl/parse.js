@@ -320,19 +320,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						body: toot.account.display_name + "(" + toot.account.acct + ")" + what + "\n\n" + $.strip_tags(toot.status.content),
 						icon: toot.account.avatar
 					};
-					if (os == "darwin") {
-						var n = new Notification('TheDesk:' + domain, options);
-					} else {
-						var nativeNotfOpt = [
-							'TheDesk:' + domain,
-							toot.account.display_name + "(" + toot.account.acct + ")" + what + "\n\n" + $.strip_tags(toot.status.content),
-							toot.account.avatar,
-							"toot",
-							acct_id,
-							toot.status.id
-						]
-						postMessage(["nativeNotf", nativeNotfOpt], "*")
-					}
+					var n = new Notification('TheDesk:' + domain, options);
 				}
 				if (localStorage.getItem("hasNotfC_" + acct_id) != "true") {
 					$(".notf-icon_" + acct_id).addClass("red-text");
@@ -972,19 +960,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 							icon: toot.avatar
 						};
 						var domain = localStorage.getItem("domain_" + acct_id);
-						if (os == "darwin") {
-							var n = new Notification('TheDesk:' + domain, options);
-						} else {
-							var nativeNotfOpt = [
-								'TheDesk:' + domain,
-								toot.display_name + "(" + toot.acct + ")" + ftxt,
-								toot.avatar,
-								"userdata",
-								acct_id,
-								toot.id
-							]
-							postMessage(["nativeNotf", nativeNotfOpt], "*")
-						}
+						var n = new Notification('TheDesk:' + domain, options);
 					}
 				}
 				if (toot.display_name) {
