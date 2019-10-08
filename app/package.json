@@ -58,7 +58,7 @@
     "materialize-css": "^1.0.0",
     "node-notifier": "^6.0.0",
     "sumchecker": "^3.0.0",
-    "sweetalert2": "^8.18.0",
+    "sweetalert2": "^8.18.1",
     "vue": "^2.6.10"
   },
   "optionalDependencies": {
