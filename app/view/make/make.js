@@ -38,7 +38,9 @@ for (let i = 0; i < samples.length; i++) {
             Object.keys(target).forEach(function (key) {
                 refKey.push(key)
                 let str = target[key]
-                str = str.replace(/"/g, '\\"')
+                if(pages[i]=="setting.vue.js"){
+                    str = str.replace(/"/g, '\\"')
+                }
                 var regExp = new RegExp("@@" + key + "@@", "g")
                 source = source.replace(regExp, str)
             })
