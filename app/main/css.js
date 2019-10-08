@@ -92,10 +92,14 @@ function css(mainWindow) {
 	})
 	ipc.on('theme-json-list', function (e, arg) {
 		fs.readdir(app.getPath("userData"), function (err, files) {
-			if (err) throw err;
+			if (err || !files) throw err;
 			var fileList = files.filter(function (file) {
-				var tfile = join(app.getPath("userData"), file);
-				return fs.statSync(tfile).isFile() && /.*\.thedesktheme$/.test(tfile); //絞り込み
+				if(file.match(/\.thedesktheme$/)){
+					var tfile = join(app.getPath("userData"), file)
+					return fs.statSync(tfile).isFile() && /.*\.thedesktheme$/.test(tfile)
+				}else{
+					return null
+				}
 			})
 			var themes = [];
 			for (var i = 0; i < fileList.length; i++) {
