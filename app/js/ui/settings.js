@@ -518,14 +518,38 @@ function customComp() {
 	if (!secondaryC) { secondaryC = "rgb(255,255,255)" }
 	var textC = $("#color-picker2_value").val();
 	if (!textC) { textC = "rgb(255,255,255)" }
-	var accentC = $("#color-picker3_value").val();
-	if (!accentC) { accentC = "rgb(255,255,255)" }
 	var multi = localStorage.getItem("multi");
+	if($("#pickers").hasClass("advanceTheme")){
+		var accentC = $("#color-picker3_value").val();
+		if (!accentC) { accentC = null }
+		var activeC = $("#color-picker4_value").val();
+		if (!activeC) { activeC = null }
+		var modalC = $("#color-picker5_value").val();
+		if (!modalC) { modalC = null }
+		var bottomC = $("#color-picker6_value").val();
+		if (!bottomC) { bottomC = null }
+		var postboxC = $("#color-picker7_value").val();
+		if (!postboxC) { postboxC = null }
+		var subcolorC = $("#color-picker8_value").val();
+		if (!subcolorC) { subcolorC = null }
+		var advanceTheme = {
+			"TheDeskAccent": accentC,
+			"TheDeskActive": activeC,
+			"TheDeskModal": modalC,
+			"TheDeskBottom": bottomC,
+			"TheDeskPostbox": postboxC,
+			"TheDeskSubcolor": subcolorC
+		}
+	}else{
+		var advanceTheme = {}
+	}
+	
 	var my = JSON.parse(multi)[0].name;
 	var id = $("#custom-edit-sel").val();
 	if (id == "add_new") {
 		id = makeCID();
 	}
+	localStorage.setItem("customtheme-id", id)
 	var json = {
 		"name": nameC,
 		"author": my,
@@ -536,29 +560,21 @@ function customComp() {
 			"secondary": secondaryC,
 			"text": textC
 		},
-		"props": {
-			"TheDeskAccent": accentC
-		},
+		"props": advanceTheme,
 		"id": id
 	}
 	$("#custom_json").val(JSON.stringify(json));
-	themes();
+	themes("custom");
+	$("#custom").prop("checked", true);
 	$("#custom_name").val("");
 	$("#custom_desc").val("");
 	$("#dark").prop("checked", true);
 	$("#custom_json").val("");
-	$("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>')
-	$("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>')
-	$("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>')
-	$("#color-picker3-wrap").html('<div class="color-picker" id="color-picker3"></div>')
-	$("#color-picker0_value").val("");
-	$("#color-picker1_value").val("");
-	$("#color-picker2_value").val("");
-	$("#color-picker3_value").val("");
-	pickerDefine(0, "fff");
-	pickerDefine(1, "fff");
-	pickerDefine(2, "fff");
-	pickerDefine(3, "fff");
+	for(var i =0;i <= 8; i++){
+		$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>')
+		$("#color-picker" + i + "_value").val("");
+		pickerDefine(i, "fff");
+	}
 	postMessage(["themeJsonCreate", JSON.stringify(json)], "*")
 }
 function deleteIt() {
@@ -567,18 +583,11 @@ function deleteIt() {
 	$("#custom_desc").val("");
 	$("#dark").prop("checked", true);
 	$("#custom_json").val("");
-	$("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>')
-	$("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>')
-	$("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>')
-	$("#color-picker3-wrap").html('<div class="color-picker" id="color-picker3"></div>')
-	$("#color-picker0_value").val("");
-	$("#color-picker1_value").val("");
-	$("#color-picker2_value").val("");
-	$("#color-picker3_value").val("");
-	pickerDefine(0, "fff");
-	pickerDefine(1, "fff");
-	pickerDefine(2, "fff");
-	pickerDefine(3, "fff");
+	for(var i =0;i <= 8; i++){
+		$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>')
+		$("#color-picker" + i + "_value").val("");
+		pickerDefine(i, "fff");
+	}
 	postMessage(["themeJsonDelete", id], "*")
 }
 function ctLoad() {
@@ -610,18 +619,11 @@ function custom() {
 		$("#custom_desc").val("");
 		$("#dark").prop("checked", true);
 		$("#custom_json").val("");
-		$("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>')
-		$("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>')
-		$("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>')
-		$("#color-picker3-wrap").html('<div class="color-picker" id="color-picker3"></div>')
-		$("#color-picker0_value").val("");
-		$("#color-picker1_value").val("");
-		$("#color-picker2_value").val("");
-		$("#color-picker3_value").val("");
-		pickerDefine(0, "fff");
-		pickerDefine(1, "fff");
-		pickerDefine(2, "fff");
-		pickerDefine(3, "fff");
+		for(var i =0;i <= 8; i++){
+			$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>')
+			$("#color-picker" + i + "_value").val("");
+			pickerDefine(i, "fff");
+		}
 		$("#delTheme").addClass("disabled")
 	} else {
 		$("#delTheme").removeClass("disabled")
@@ -632,27 +634,42 @@ function customConnect(args) {
 	$("#custom_name").val(args.name);
 	$("#custom_desc").val(args.desc);
 	$("#" + args.base).prop("checked", true);
+	//Primary
 	$("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>')
 	pickerDefine(0, rgbToHex(args.vars.primary))
 	$("#color-picker0_value").val(args.vars.primary);
+	//Secondary
 	$("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>')
 	pickerDefine(1, rgbToHex(args.vars.secondary))
 	$("#color-picker1_value").val(args.vars.secondary);
+	//Text
 	$("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>')
 	$("#color-picker2_value").val(args.vars.text);
 	pickerDefine(2, rgbToHex(args.vars.text))
+	//TheDesk Only
+	advancedConncet(args, "TheDeskAccent", "secondary", 3)
+	advancedConncet(args, "TheDeskActive", "primary", 4)
+	advancedConncet(args, "TheDeskModal", "secondary", 5)
+	advancedConncet(args, "TheDeskBottom", "primary", 6)
+	advancedConncet(args, "TheDeskPostbox", "primary", 7)
+	advancedConncet(args, "TheDeskSubcolor", "primary", 8)
+	$("#custom_json").val(JSON.stringify(args));
+}
+function advancedConncet(args, tar, sub, i){
 	if (args.props) {
-		if (args.props.TheDeskAccent) {
-			var accent = args.props.TheDeskAccent;
+		if (args.props[tar]) {
+			var color = args.props[tar];
+			$("#pickers").addClass("advanceTheme")
+			$(".advanced").removeClass("hide")
 		} else {
-			var accent = args.vars.secondary;
+			var color = args.vars[sub];
 		}
 	} else {
-		var accent = args.vars.secondary;
+		var color = args.vars[sub];
 	}
-	$("#color-picker3-wrap").html('<div class="color-picker" id="color-picker3"></div>')
-	pickerDefine(3, rgbToHex(accent))
-	$("#custom_json").val(JSON.stringify(args));
+	$("#color-picker"+i+"-wrap").html('<div class="color-picker" id="color-picker'+i+'"></div>')
+	$("#color-picker"+i+"_value").val(color);
+	pickerDefine(i, rgbToHex(color))
 }
 function customImp() {
 	var json = $("#custom_import").val();
@@ -664,6 +681,10 @@ function customImp() {
 			title: 'Error'
 		})
 	}
+}
+function advanced(){
+	$(".advanced").toggleClass("hide")
+	$("#pickers").toggleClass("advanceTheme")
 }
 function clearCustomImport() {
 	$("#custom_import").val("");

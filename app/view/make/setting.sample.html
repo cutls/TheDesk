@@ -160,7 +160,9 @@
 					<input class="with-gap" onchange="settings()" name="direction" type="radio" id="light"
 						value="light" />
 					<span>Light</span>
-				</label>
+				</label><br>
+				<button class="btn waves-effect" onclick="advanced()">@@advanced@@</button>
+				<span class="advanced hide">@@advancedWarn@@</span>
 				<div id="pickers">
 					<div>
 						<h5>Primary</h5>@@secondarycolor@@
@@ -183,12 +185,47 @@
 						</div>
 						<input type="hidden" id="color-picker2_value">
 					</div>
-					<div>
+					<div class="advanced hide">
 						<h5>Accent</h5>@@accent@@
 						<div id="color-picker3-wrap">
 							<div class="color-picker" id="color-picker3"></div>
 						</div>
 						<input type="hidden" id="color-picker3_value">
+					</div>
+					<div class="advanced hide">
+						<h5>Active</h5>@@active@@
+						<div id="color-picker4-wrap">
+							<div class="color-picker" id="color-picker4"></div>
+						</div>
+						<input type="hidden" id="color-picker4_value">
+					</div>
+					<div class="advanced hide">
+						<h5>Modal</h5>@@modal@@
+						<div id="color-picker5-wrap">
+							<div class="color-picker" id="color-picker5"></div>
+						</div>
+						<input type="hidden" id="color-picker5_value">
+					</div>
+					<div class="advanced hide">
+						<h5>Bottom</h5>@@bottom@@
+						<div id="color-picker6-wrap">
+							<div class="color-picker" id="color-picker6"></div>
+						</div>
+						<input type="hidden" id="color-picker6_value">
+					</div>
+					<div class="advanced hide">
+						<h5>Postbox</h5>@@postbox@@
+						<div id="color-picker7-wrap">
+							<div class="color-picker" id="color-picker7"></div>
+						</div>
+						<input type="hidden" id="color-picker7_value">
+					</div>
+					<div class="advanced hide">
+						<h5>Subcolor</h5>@@subcolor@@
+						<div id="color-picker8-wrap">
+							<div class="color-picker" id="color-picker8"></div>
+						</div>
+						<input type="hidden" id="color-picker8_value">
 					</div>
 				</div>
 				<button class="btn-large waves-effect" onclick="customComp()">@@change@@</button>&nbsp;<button

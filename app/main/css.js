@@ -67,21 +67,52 @@ function css(mainWindow) {
 				if (json.props.TheDeskAccent) {
 					var emphasized = json.props.TheDeskAccent
 				} else {
-					var emphasized = secondary;
+					var emphasized = secondary
+				}
+				if (json.props.TheDeskActive) {
+					var active = json.props.TheDeskActive
+				} else {
+					var active = primary
+				}
+				if (json.props.TheDeskModal) {
+					var modal = json.props.TheDeskModal
+				} else {
+					var modal = secondary
+				}
+				if (json.props.TheDeskBottom) {
+					var bottom = json.props.TheDeskBottom
+				} else {
+					var bottom = primary
+				}
+				if (json.props.TheDeskPostbox) {
+					var postbox = json.props.TheDeskPostbox
+				} else {
+					var postbox = primary
+				}
+				if (json.props.TheDeskSubcolor) {
+					var subcolor = json.props.TheDeskSubcolor
+				} else {
+					var subcolor = primary
 				}
 			} else {
-				var emphasized = primary;
+				var emphasized = primary
+				var acs = secondary
+				var active = primary
+				var modal = secondary
+				var bottom = primary
+				var postbox = primary
+				var subcolor = primary
 			}
 
 			var css = ".customtheme {--bg:" + secondary + ";--drag:" + drag + ";" +
 				"--color:" + text + ";--beforehover:" + beforehover + ";--modal:" +
-				secondary + ";--subcolor:" + primary + ";--box:" + primary +
-				";--sidebar:" + primary + ";--shared:" + emphasized + ";" +
-				"--notfbox:" + secondary + ";--emphasized:" + primary + ";--his-data:" +
+				modal + ";--subcolor:" + subcolor + ";--box:" + subcolor +
+				";--sidebar:" + bottom + ";--shared:" + emphasized + ";" +
+				"--notfbox:" + secondary + ";--emphasized:" + active + ";--his-data:" +
 				secondary +
-				";--active:" + primary + ";--postbox:" + primary + ";--modalfooter:" +
+				";--active:" + active + ";--postbox:" + postbox + ";--modalfooter:" +
 				primary +
-				";--accentbtn:" + primary + ";--selected:" + selected + ";--selectedWithShare:" + selectedWithShare + "}"+
+				";--accentbtn:" + subcolor + ";--selected:" + selected + ";--selectedWithShare:" + selectedWithShare + "}"+
 				"--gray:" + gray + ";"+
 				".customtheme #imagemodal{background: url(\"../img/pixel.svg\");}";
 			e.sender.webContents.send('theme-css-response', css);

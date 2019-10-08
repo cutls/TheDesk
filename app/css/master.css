@@ -336,7 +336,7 @@ blockquote:before,
 #menu {
   position: fixed;
   z-index: 9999;
-  background-color: var(--box);
+  background-color: var(--postbox);
   width: 540px;
   top: calc(50% - 150px);
   left: calc(50% - 250px);
