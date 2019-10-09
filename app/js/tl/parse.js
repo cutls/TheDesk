@@ -196,7 +196,12 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			var dmid = toot.id;
 			toot = toot.last_status;
 		}
-		var dis_name = escapeHTML(toot.account.display_name);
+		if(toot.account.display_name){
+			var dis_name = escapeHTML(toot.account.display_name);
+		}else{
+			var dis_name = toot.account.acct;
+		}
+		
 		if (toot.account.emojis) {
 			var actemojick = toot.account.emojis[0];
 		} else {
