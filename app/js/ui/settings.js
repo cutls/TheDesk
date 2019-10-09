@@ -630,7 +630,8 @@ function custom() {
 		postMessage(["themeJsonRequest", id], "*")
 	}
 }
-function customConnect(args) {
+function customConnect(raw) {
+	var args = raw[0]
 	$("#custom_name").val(args.name);
 	$("#custom_desc").val(args.desc);
 	$("#" + args.base).prop("checked", true);
@@ -653,7 +654,7 @@ function customConnect(args) {
 	advancedConncet(args, "TheDeskBottom", "primary", 6)
 	advancedConncet(args, "TheDeskPostbox", "primary", 7)
 	advancedConncet(args, "TheDeskSubcolor", "primary", 8)
-	$("#custom_json").val(JSON.stringify(args));
+	$("#custom_json").val(raw[1]);
 }
 function advancedConncet(args, tar, sub, i){
 	if (args.props) {

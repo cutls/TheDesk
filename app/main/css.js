@@ -23,7 +23,7 @@ function css(mainWindow) {
 	ipc.on('theme-json-create', function (e, arg) {
 		var themecss = join(app.getPath("userData"), JSON5.parse(arg)["id"] +
 			".thedesktheme");
-		fs.writeFileSync(themecss, JSON.stringify(JSON5.parse(arg)));
+		fs.writeFileSync(themecss, JSON5.stringify(JSON5.parse(arg)));
 		if (JSON5.parse(arg)["id"]) {
 			e.sender.webContents.send('theme-json-create-complete', "");
 		} else {
@@ -39,13 +39,14 @@ function css(mainWindow) {
 	})
 	ipc.on('theme-json-request', function (e, arg) {
 		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
-		var json = JSON.parse(fs.readFileSync(themecss, 'utf8'));
-		e.sender.webContents.send('theme-json-response', json);
+		var raw = fs.readFileSync(themecss, 'utf8')
+		var json = JSON5.parse(raw);
+		e.sender.webContents.send('theme-json-response', [json, raw]);
 	})
 	ipc.on('theme-css-request', function (e, arg) {
 		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
 		try {
-			var json = JSON.parse(fs.readFileSync(themecss, 'utf8'));
+			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'));
 
 			var primary = json.vars.primary;
 			var secondary = json.vars.secondary;
@@ -135,7 +136,7 @@ function css(mainWindow) {
 			var themes = [];
 			for (var i = 0; i < fileList.length; i++) {
 				var themecss = join(app.getPath("userData"), fileList[i]);
-				var json = JSON.parse(fs.readFileSync(themecss, 'utf8'));
+				var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'));
 				themes.push({
 					name: json.name,
 					id: json.id
