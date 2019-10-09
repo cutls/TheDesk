@@ -99,16 +99,8 @@ function isFile(file) {
 }
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function () {
-	if (process.platform != 'darwin') {
-		electron.session.defaultSession.clearCache(() => { })
-		app.quit();
-	}
-});
-// macOSでウィンドウを閉じた後に再度開けるようにする
-app.on('activate', function () {
-	if (mainWindow == null) {
-		createWindow();
-	}
+	electron.session.defaultSession.clearCache(() => { })
+	app.quit();
 });
 
 function createWindow() {
