@@ -21,3 +21,4 @@ app/view/ps
 app/view/es-AR
 app/git
 *.code-workspace
+releasenote.md
