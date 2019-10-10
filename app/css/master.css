@@ -475,6 +475,12 @@ textarea {
 #src-contents svg {
   margin-right: 5px;
 }
+.contributor {
+  cursor: pointer;
+}
+.contributor img {
+  width: 1rem;
+}
 
 /*スクロールバー*/
 ::-webkit-scrollbar {
