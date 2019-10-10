@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "18.11.0",
+  "version": "18.11.1",
   "description": "TheDesk is a Mastodon client for PC.",
   "repository": "https://github.com/cutls/TheDesk",
   "main": "main.js",
@@ -107,7 +107,9 @@
       "icon": "build/icons",
       "target": [
         "zip",
-        "snap"
+        "snap",
+        "deb",
+        "rpm"
       ],
       "category": "Network"
     },
