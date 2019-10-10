@@ -63,7 +63,7 @@
   },
   "optionalDependencies": {
     "font-manager": "^0.3.0",
-    "itunes-nowplaying-mac": "kPherox/itunes-nowplaying-mac#get-artworks-base64"
+    "itunes-nowplaying-mac": "cutls/itunes-nowplaying-mac"
   },
   "devDependencies": {
     "electron": "^6.0.11",
