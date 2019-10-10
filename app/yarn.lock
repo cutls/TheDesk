@@ -932,10 +932,10 @@ electron-rebuild@^1.8.6:
     spawn-rx "^3.0.0"
     yargs "^13.2.4"
 
-electron@^6.0.11:
-  version "6.0.11"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-6.0.11.tgz#64effa71397045779a1ddbf51312a41ccf26f491"
-  integrity sha512-mi1oHmeFIQrg+CDQ6lbugZAloOxuWPm/ecEKYe1230PGlDoWND7SYStiWQ2eI4YXAEOL/NvuY88ogemu1qhdBg==
+electron@^6.0.12:
+  version "6.0.12"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-6.0.12.tgz#85bf0061e32f660256cfde95488f1cb75253bc94"
+  integrity sha512-70ODZa1RP6K0gE9IV9YLCXPSyhLjXksCuYSSPb3MljbfwfHo5uE6X0CGxzm+54YuPdE2e7EPnWZxOOsJYrS5iQ==
   dependencies:
     "@types/node" "^10.12.18"
     electron-download "^4.1.0"
@@ -2700,10 +2700,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-sweetalert2@^8.18.0:
-  version "8.18.0"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-8.18.0.tgz#e8536aa0b1a1474ef36e5350ff4ae0cf473478b3"
-  integrity sha512-t8r4oIisUd/fPsd4/YKuiWTKnrxZsolUVk/w7nGhMu5MKsuGh6J5sQ9Jtio+5xKg/w5QOJpH8TUhb5INuVo/YQ==
+sweetalert2@^8.18.3:
+  version "8.18.3"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-8.18.3.tgz#1cb6b5b0f28fe4b125cb7f8a9110315f5458b748"
+  integrity sha512-ptDszEk0q8pUorWAXiVj1aafbG6IAO8kAZepeyfphSwb4vaM5JSXnqek/s8ZyIkPcH9M/l3QaoR2X9V0KD0VHA==
 
 tar@^4.4.8:
   version "4.4.11"

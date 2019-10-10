@@ -58,7 +58,7 @@
     "materialize-css": "^1.0.0",
     "node-notifier": "^6.0.0",
     "sumchecker": "^3.0.0",
-    "sweetalert2": "^8.18.0",
+    "sweetalert2": "^8.18.3",
     "vue": "^2.6.10"
   },
   "optionalDependencies": {
@@ -66,7 +66,7 @@
     "itunes-nowplaying-mac": "cutls/itunes-nowplaying-mac"
   },
   "devDependencies": {
-    "electron": "^6.0.11",
+    "electron": "^6.0.12",
     "electron-builder": "^21.1.5",
     "electron-rebuild": "^1.8.6",
     "readline-sync": "1.4.10"
