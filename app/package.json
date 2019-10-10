@@ -108,8 +108,7 @@
       "target": [
         "zip",
         "snap",
-        "deb",
-        "rpm"
+        "deb"
       ],
       "category": "Network"
     },

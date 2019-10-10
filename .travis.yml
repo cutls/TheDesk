@@ -17,7 +17,6 @@ before_deploy:
   - yarn install --no-lockfile --prod
   - yarn construct
   - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then sudo apt-get install rpm;else :;fi  
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../build;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then ls;else :;fi
