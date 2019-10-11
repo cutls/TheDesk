@@ -141,7 +141,11 @@ function npCore(arg) {
     var regExp = new RegExp("{song}", "g");
     content = content.replace(regExp, arg.name);
     var regExp = new RegExp("{album}", "g");
-    content = content.replace(regExp, arg.album);
+    if(arg.album){
+        if(arg.album.name){
+            content = content.replace(regExp, arg.album.name);
+        }
+    }
     var regExp = new RegExp("{artist}", "g");
     content = content.replace(regExp, arg.artist);
     var regExp = new RegExp("{url}", "g");
