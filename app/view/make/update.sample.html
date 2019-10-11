@@ -92,7 +92,11 @@
             <button class="waves-effect btn windows hide" onclick="update('portable')"
                 style="margin-left:15px;">@@portable@@</button>
             <button class="waves-effect btn linux hide" onclick="update('linux')"
-                style="margin-left:15px;">@@download@@</button>
+                style="margin-left:15px;">@@linux@@</button>
+            <button class="waves-effect btn linux hide" onclick="update('linuxdeb')"
+                style="margin-left:15px;">@@linuxdeb@@</button>
+            <button class="waves-effect btn linux hide" onclick="update('linuxsnap')"
+                style="margin-left:15px;">@@linuxsnap@@</button>
             <button class="waves-effect btn mac hide" onclick="update('mac')"
                 style="margin-left:15px;">@@download@@</button>
             <br>
@@ -169,13 +173,17 @@
                         var file = "TheDesk-ia32.exe";
                     }
                 } else if (sel == "linux") {
-                    if (bit == "x64") {
-                        var url = json["linuxx64"];
-                        var file = "TheDesk-linux-x64.zip";
-                    } else if (bit == "ia32") {
-                        var url = json["linuxia64"];
-                        var file = "TheDesk-linux-ia32.zip";
-                    }
+                    var url = json["linuxx64"];
+                    var file = "thedesk.zip";
+                } else if (sel == "linuxdeb") {
+                    var url = json["linuxdeb"];
+                    var url = json["mac"];
+                    postMessage(["openUrl", url], "*")
+                    return false;
+                } else if (sel == "linuxsnap") {
+                    var url = json["linuxsnap"];
+                    postMessage(["openUrl", url], "*")
+                    return false;
                 } else if (sel == "mac") {
                     var url = json["mac"];
                     postMessage(["openUrl", url], "*")

@@ -1,5 +1,5 @@
 const fs = require("fs")
-let ver = "Usamin (18.11.1)"
+let ver = "Usamin (18.11.2)"
 const execSync = require('child_process').execSync;
 let gitHash = execSync("git rev-parse HEAD").toString().trim()
 fs.writeFileSync("../../git", gitHash)
@@ -51,6 +51,11 @@ for (let i = 0; i < samples.length; i++) {
                     var str = target[tarKey]
                 } else {
                     var str = englishRefer[tarKey]
+                }
+                if(pages[i]=="setting.vue.js"){
+                    if(str){
+                        str = str.replace(/"/g, '\\"')
+                    }
                 }
                 var regExp = new RegExp("@@" + tarKey + "@@", "g")
                 source = source.replace(regExp, str)
