@@ -2,36 +2,35 @@
 var obj = $("body");
 var system;
 //ドラッグスタート
-obj.on('dragstart', function (e) {
-	system = "locked"
+obj.on("dragstart", function(e) {
+	system = "locked";
 });
 //何もなくファイルが通過
-obj.on('dragend', function (e) {
+obj.on("dragend", function(e) {
 	system = "";
 });
 //ドラッグファイルが画面上に
-obj.on('dragenter', function (e) {
+obj.on("dragenter", function(e) {
 	if (system != "locked") {
-		$("#drag").css('display', 'flex');
+		$("#drag").css("display", "flex");
 	}
-
 });
-$("body").on('dragover', function (e) {
+$("body").on("dragover", function(e) {
 	e.stopPropagation();
 	e.preventDefault();
 });
 //ドロップした
-$("body").on('drop', function (e) {
+$("body").on("drop", function(e) {
 	if (system != "locked") {
-		$("#drag").css('display', 'none');
+		$("#drag").css("display", "none");
 		e.preventDefault();
 		var files = e.originalEvent.dataTransfer.files;
 		pimg(files);
 	}
 });
 //何もなくファイルが通過
-$("#drag").on('dragleave', function (e) {
-	$("#drag").css('display', 'none');
+$("#drag").on("dragleave", function(e) {
+	$("#drag").css("display", "none");
 });
 
 //複数アップ
@@ -40,9 +39,8 @@ function pimg(files) {
 	for (i = 0; i < files.length; i++) {
 		var dot = files[i].path.match(/\.(.+)$/)[1];
 		if (dot == "bmp" || dot == "BMP") {
-			postMessage(["bmpImage", [files[i].path, i]], "*")
+			postMessage(["bmpImage", [files[i].path, i]], "*");
 			todo(lang.lang_progress);
-
 		} else {
 			handleFileUpload(files[i], obj, i);
 		}
@@ -50,21 +48,21 @@ function pimg(files) {
 }
 //ドラッグ・アンド・ドロップを終了
 function closedrop() {
-	$("#drag").css('display', 'none');
+	$("#drag").css("display", "none");
 }
 //ファイル選択
 function fileselect() {
-	postMessage(["sendSinmpleIpc", "file-select"], "*")
+	postMessage(["sendSinmpleIpc", "file-select"], "*");
 }
 
 //ファイル読み込み
 function handleFileUpload(files, obj, no) {
 	var fr = new FileReader();
-	fr.onload = function (evt) {
+	fr.onload = function(evt) {
 		var b64 = evt.target.result;
-		$('#b64-box').val(b64);
-		var ret = media(b64, files["type"], no)
-	}
+		$("#b64-box").val(b64);
+		var ret = media(b64, files["type"], no);
+	};
 	fr.readAsDataURL(files);
 	$("#mec").append(files["name"] + "/");
 }
@@ -79,7 +77,7 @@ function media(b64, type, no) {
 		r += c[Math.floor(Math.random() * cl)];
 	}
 	if ($("#media").val()) {
-		$("#media").val($("#media").val() + ',' + "tmp_" + r);
+		$("#media").val($("#media").val() + "," + "tmp_" + r);
 	} else {
 		$("#media").val("tmp_" + r);
 	}
@@ -89,14 +87,14 @@ function media(b64, type, no) {
 	todo("Image Upload...");
 	var media = toBlob(b64, type);
 	var fd = new FormData();
-	fd.append('file', media);
+	fd.append("file", media);
 	var acct_id = $("#post-acct-sel").val();
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var httpreq = new XMLHttpRequest();
 	if (localStorage.getItem("mode_" + domain) == "misskey") {
 		var start = "https://" + domain + "/api/drive/files/create";
-		httpreq.open('POST', start, true);
+		httpreq.open("POST", start, true);
 		httpreq.upload.addEventListener("progress", progshow, false);
 		httpreq.responseType = "json";
 		if ($("#nsfw").hasClass("nsfw-avail")) {
@@ -104,20 +102,20 @@ function media(b64, type, no) {
 		} else {
 			var nsfw = false;
 		}
-		var previewer = "url"
-		fd.append('i', at);
+		var previewer = "url";
+		fd.append("i", at);
 		//fd.append('isSensitive', nsfw);
 		httpreq.send(fd);
 	} else {
-		var previewer = "preview_url"
+		var previewer = "preview_url";
 		var start = "https://" + domain + "/api/v1/media";
-		httpreq.open('POST', start, true);
+		httpreq.open("POST", start, true);
 		httpreq.upload.addEventListener("progress", progshow, false);
 		httpreq.responseType = "json";
-		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+		httpreq.setRequestHeader("Authorization", "Bearer " + at);
 		httpreq.send(fd);
 	}
-	httpreq.onreadystatechange = function () {
+	httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
 			if (!json.id) {
@@ -125,17 +123,17 @@ function media(b64, type, no) {
 				$("#imgup").text("");
 				$(".toot-btn-group").prop("disabled", false);
 				$("#post-acct-sel").prop("disabled", false);
-				$('select').formSelect();
+				$("select").formSelect();
 				$("#imgsel").show();
-				M.toast({ html: lang.lang_postimg_failupload, displayLength: 5000 })
-				return false
+				M.toast({ html: lang.lang_postimg_failupload, displayLength: 5000 });
+				return false;
 			}
 			var img = localStorage.getItem("img");
 			if (json.type.indexOf("image") != -1) {
-				var html = '<img src="' + json[previewer] + '" class="preview-img pointer" data-media="' + json["id"] + '" onclick="deleteImage(\'' + json["id"] + '\')" title="' + lang.lang_postimg_delete + '">';
-				$('#preview').append(html);
+				var html = '<img src="' + json[previewer] + '" class="preview-img pointer" data-media="' + json["id"] + '" oncontextmenu="deleteImage(\'' + json["id"] + "')\" onclick=\"altImage('" + acct_id + "','" + json["id"] + '\')" title="' + lang.lang_postimg_delete + '">';
+				$("#preview").append(html);
 			} else {
-				$('#preview').append(lang.lang_postimg_previewdis);
+				$("#preview").append(lang.lang_postimg_previewdis);
 			}
 			if (!img) {
 				var img = "no-act";
@@ -145,31 +143,30 @@ function media(b64, type, no) {
 				var regExp = new RegExp("tmp_" + r, "g");
 				mediav = mediav.replace(regExp, json["id"]);
 				$("#media").val(mediav);
-
 			}
 			if (img == "url") {
-				$("#textarea").val($("#textarea").val() + " " + json["text_url"])
+				$("#textarea").val($("#textarea").val() + " " + json["text_url"]);
 			}
 			todc();
-			if(localStorage.getItem("nsfw_" + acct_id)){
+			if (localStorage.getItem("nsfw_" + acct_id)) {
 				$("#nsfw").addClass("yellow-text");
 				$("#nsfw").html("visibility");
 				$("#nsfw").addClass("nsfw-avail");
 			}
 			$(".toot-btn-group").prop("disabled", false);
-			$('select').formSelect();
+			$("select").formSelect();
 			$("#mec").text(lang.lang_there);
-			M.toast({ html: lang.lang_postimg_aftupload, displayLength: 1000 })
+			M.toast({ html: lang.lang_postimg_aftupload, displayLength: 1000 });
 			$("#imgup").text("");
 			$("#imgsel").show();
 			localStorage.removeItem("image");
 		}
-	}
+	};
 }
 
 //Base64からBlobへ
 function toBlob(base64, type) {
-	var bin = atob(base64.replace(/^.*,/, ''));
+	var bin = atob(base64.replace(/^.*,/, ""));
 	var buffer = new Uint8Array(bin.length);
 	for (var i = 0; i < bin.length; i++) {
 		buffer[i] = bin.charCodeAt(i);
@@ -187,14 +184,14 @@ function toBlob(base64, type) {
 }
 //画像を貼り付けたら…
 var element = document.querySelector("#textarea");
-element.addEventListener("paste", function (e) {
+element.addEventListener("paste", function(e) {
 	if (!e.clipboardData || !e.clipboardData.items) {
 		return true;
 	}
 	// DataTransferItemList に画像が含まれいない場合は終了する
-	var imageItems = [...e.clipboardData.items].filter(i => i.type.startsWith('image'));
+	var imageItems = [...e.clipboardData.items].filter(i => i.type.startsWith("image"));
 	if (imageItems.length == 0) {
-		console.warn("it is not image")
+		console.warn("it is not image");
 		return true;
 	}
 
@@ -205,7 +202,7 @@ element.addEventListener("paste", function (e) {
 
 	// FileReaderで読み込む
 	var fr = new FileReader();
-	fr.onload = function (e) {
+	fr.onload = function(e) {
 		// onload内ではe.target.resultにbase64が入っているのであとは煮るなり焼くなり
 		var base64 = e.target.result;
 		var mediav = $("#media").val();
@@ -213,7 +210,7 @@ element.addEventListener("paste", function (e) {
 			var i = mediav.split(",").length;
 		}
 		// DataTransferItem の type に mime tipes があるのでそれを使う
-		media(base64, imageType, i)
+		media(base64, imageType, i);
 	};
 	fr.readAsDataURL(imageFile);
 
@@ -222,13 +219,13 @@ element.addEventListener("paste", function (e) {
 function deleteImage(key) {
 	Swal.fire({
 		title: lang.lang_postimg_delete,
-		type: 'warning',
+		type: "warning",
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
-	}).then((result) => {
+	}).then(result => {
 		if (result.value) {
 			var media = $("#media").val();
 			var arr = media.split(",");
@@ -239,8 +236,54 @@ function deleteImage(key) {
 				}
 			}
 			$("#media").val(arr.join(","));
-			$('#preview [data-media=' + key + ']').remove();
+			$("#preview [data-media=" + key + "]").remove();
 		}
-	})
+	});
+}
+function altImage(acct_id, id) {
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	var start = "https://" + domain + "/api/v1/media/" + id;
 
+	Swal.fire({
+		title: lang.lang_postimg_desc,
+		text: lang.lang_postimg_leadContext,
+		input: "text",
+		inputAttributes: {
+			autocapitalize: "off"
+		},
+		showCancelButton: true,
+		confirmButtonText: "Post",
+		showLoaderOnConfirm: true,
+		preConfirm: data => {
+			return fetch(start, {
+				method: "PUT",
+				headers: {
+					"content-type": "application/json",
+					Authorization: "Bearer " + at
+				},
+				body: JSON.stringify({
+					description: data
+				})
+			})
+				.then(function(response) {
+					return response.json();
+				})
+				.catch(function(error) {
+					todo(error);
+					console.error(error);
+				})
+				.then(function(json) {
+					console.log(json)
+					$("[data-media=" + id + "]").attr("title", data);
+				});
+		},
+		allowOutsideClick: () => !Swal.isLoading()
+	}).then(result => {
+		if (result.value) {
+			Swal.fire({
+				title: "Complete",
+			});
+		}
+	});
 }
