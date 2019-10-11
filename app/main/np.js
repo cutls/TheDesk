@@ -16,6 +16,8 @@ function np(mainWindow) {
                 try {
                     const nowplaying = require("itunes-nowplaying-mac");
                     const value = await nowplaying();
+
+                    const artwork = await nowplaying.getThumbnailBuffer(value.databaseID);
                     e.sender.webContents.send('itunes-np', value);
                 } catch (error) {
                     // エラーを返す
