@@ -15,7 +15,7 @@ function np(mainWindow) {
             if (platform == "darwin") {
                 try {
                     const nowplaying = require("itunes-nowplaying-mac");
-                    const value = await nowplaying.getData();
+                    const value = await nowplaying();
                     e.sender.webContents.send('itunes-np', value);
                 } catch (error) {
                     // エラーを返す
