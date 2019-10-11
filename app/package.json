@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "18.11.1",
+  "version": "18.11.2",
   "description": "TheDesk is a Mastodon client for PC.",
   "repository": "https://github.com/cutls/TheDesk",
   "main": "main.js",
@@ -63,7 +63,7 @@
   },
   "optionalDependencies": {
     "font-manager": "^0.3.0",
-    "itunes-nowplaying-mac": "cutls/itunes-nowplaying-mac"
+    "itunes-nowplaying-mac": "0.3.1"
   },
   "devDependencies": {
     "electron": "^6.0.12",
