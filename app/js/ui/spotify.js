@@ -134,8 +134,8 @@ function npCore(arg) {
             media(arg.path, "image/png", "new");
         }
     } else if (platform == "darwin") {
-        if (flag && arg.existsArtwork) {
-            media(arg.artworks[0].data, "image/png", "new");
+        if (flag && arg.artwork) {
+            media(arg.artwork, "image/png", "new");
         }
     }
     var regExp = new RegExp("{song}", "g");

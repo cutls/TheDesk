@@ -15,10 +15,11 @@ function np(mainWindow) {
             if (platform == "darwin") {
                 try {
                     const nowplaying = require("itunes-nowplaying-mac");
-                    const value = await nowplaying();
+                    let value = await nowplaying();
 
                     const artwork = await nowplaying.getThumbnailBuffer(value.databaseID);
-                    console.log(artwork)
+                    const base64 = artwork.toString('base64');
+                    value.artwork = base64
                     e.sender.webContents.send('itunes-np', value);
                 } catch (error) {
                     // エラーを返す
