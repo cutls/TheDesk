@@ -191,7 +191,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 	var times = [];
 	Object.keys(obj).forEach(function (key) {
 		var toot = obj[key];
-
 		if (type == "dm") {
 			var dmid = toot.id;
 			toot = toot.last_status;
@@ -335,6 +334,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			var if_notf = 'data-notfIndv="' + acct_id + "_" + toot.id + '" data-notf="' + toot.id + '"';
 			var toot = toot.status;
+			var uniqueid = toot.id;
 			var dis_name = escapeHTML(toot.account.display_name);
 			if (toot.account.emojis) {
 				var actemojick = toot.account.emojis[0];
@@ -384,7 +384,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				if (toot.account.emojis) {
 					var actemojick = toot.account.emojis[0];
 				} else {
-					var uniqueid = toot.id;
 					var actemojick = false;
 				}
 				//絵文字があれば
