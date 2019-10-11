@@ -18,6 +18,7 @@ function np(mainWindow) {
                     const value = await nowplaying();
 
                     const artwork = await nowplaying.getThumbnailBuffer(value.databaseID);
+                    console.log(artwork)
                     e.sender.webContents.send('itunes-np', value);
                 } catch (error) {
                     // エラーを返す
