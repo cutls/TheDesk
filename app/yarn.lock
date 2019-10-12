@@ -1517,9 +1517,10 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
-itunes-nowplaying-mac@kPherox/itunes-nowplaying-mac#get-artworks-base64:
-  version "0.2.3"
-  resolved "https://codeload.github.com/kPherox/itunes-nowplaying-mac/tar.gz/138ba9851e8fef2cd0015a42637d6203e64fde4e"
+itunes-nowplaying-mac@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/itunes-nowplaying-mac/-/itunes-nowplaying-mac-0.3.1.tgz#3f5ee853aef843e66c20ae10b9439303bc1a4986"
+  integrity sha512-kZ/ef1rMzl/CMc1RBh3z99wqijxQgz5Vn1gLCrE1OqRwj9bq2vbgeIqWjJC8iDWZHRolizdTPfKMAbp8yKYFTQ==
 
 jimp@^0.8.4:
   version "0.8.4"
