@@ -56,7 +56,6 @@
     "jquery-ui-dist": "^1.12.1",
     "json5": "^2.1.1",
     "materialize-css": "^1.0.0",
-    "node-notifier": "^6.0.0",
     "sumchecker": "^3.0.0",
     "sweetalert2": "^8.18.3",
     "vue": "^2.6.10"

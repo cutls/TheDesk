@@ -302,6 +302,9 @@ function login(url) {
 	$("#compt").hide()
 	if ($('#linux:checked').val() == "on") {
 		var red = "urn:ietf:wg:oauth:2.0:oob"
+		if(~url.indexOf("pixelfed")){
+			red = "https://thedesk.top/hello.html"
+		}
 	} else {
 		var red = 'thedesk://manager';
 	}
@@ -352,15 +355,14 @@ function versionChecker(url) {
 	}).then(function (json) {
 		var version = json.version
 		if (version) {
-			var reg = version.match(/^[0-9]\.[0-9]\.[0-9]/u);
+			var reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u);
 			if (reg) {
-				reg = reg[0]
-				versionCompat(url, reg, json.title, version)
+				versionCompat(reg[1], reg, json.title, reg[0])
 			}
 		}
 	});
 }
-function versionCompat(url, ver, title, real) {
+function versionCompat(prefix, ver, title, real) {
 	$("#compt-instance").text(title)
 	$("#compt-ver").text(real)
 	if(~real.indexOf("compatible")){
@@ -383,10 +385,13 @@ function versionCompat(url, ver, title, real) {
 	}).then(function (json) {
 		var complete = false
 		var ct = 0
+		var jl = 0
+		var jl2 = 0
 		Object.keys(json).forEach(function (key) {
 			var data = json[key];
 			if (data) {
-				if (key != ver && !complete) {
+				jl++
+				if (key != real && !complete) {
 					for (var i = 0; i < data.length; i++) {
 						var e = ""
 						if (i == 0) {
@@ -396,14 +401,16 @@ function versionCompat(url, ver, title, real) {
 						ct++;
 						e = ""
 					}
+					jl2++
 				} else if (!complete) {
 					complete = true
 				}
 			}
-			var lastkey = key
 		});
-		if (lang.language == "ja" && ct > 0) {
-			$("#compt").show()
+		if(lang.language == "ja" && ct > 0){
+			if (jl2!=jl && prefix!="1") {
+				$("#compt").show()
+			}
 		}
 	});
 
@@ -566,6 +573,10 @@ function code(code) {
 		}
 		return;
 	} else {
+		var red = "urn:ietf:wg:oauth:2.0:oob"
+		if(~url.indexOf("pixelfed")){
+			red = "https://thedesk.top/hello.html"
+		}
 		var start = "https://" + url + "/oauth/token";
 		var id = localStorage.getItem("client_id");
 		var secret = localStorage.getItem("client_secret");
@@ -575,7 +586,7 @@ function code(code) {
 		httpreq.responseType = "json";
 		httpreq.send(JSON.stringify({
 			grant_type: "authorization_code",
-			redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
+			redirect_uri: red,
 			client_id: id,
 			client_secret: secret,
 			code: code
