@@ -59,6 +59,8 @@ onmessage = function (e) {
         ipc.send('nano', null);
     } else if (e.data[0] == "asReadComp") {
         ipc.send('sendMarkersComplete', null);
+    } else if (e.data[0] == "copy") {
+        ipc.send('copy', e.data[1]);
     }
 }
 //version.js

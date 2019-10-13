@@ -6,6 +6,7 @@ function system(mainWindow, dir, lang, dirname) {
 	const fs = require("fs");
 	var JSON5 = require('json5');
 	var ipc = electron.ipcMain;
+	const clipboard = electron.clipboard;
 	var tmp_img = join(app.getPath("userData"), "tmp.png");
 	var ha_path = join(app.getPath("userData"), "hardwareAcceleration");
 	var lang_path = join(app.getPath("userData"), "language");
@@ -208,6 +209,10 @@ function system(mainWindow, dir, lang, dirname) {
 		object_array_sort(fonts, 'family', 'asc', function (fonts_sorted) {
 			e.sender.webContents.send('font-list', fonts_sorted);
 		});
+	});
+	//コピー
+	ipc.on('copy', (e, arg) => {
+		clipboard.writeText(arg)
 	});
 }
 exports.system = system;

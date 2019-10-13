@@ -81,11 +81,8 @@ $(document).on('click', 'a', e => {
 
 //コピー
 function execCopy(string) {
-	var temp = $("#copy");
-	temp.val(string);
-	temp.select();
-	var result = document.execCommand('copy');
-	return result;
+	postMessage(["copy", string], "*")
+	return true;
 }
 function progshow(e) {
 	if (e.lengthComputable) {
