@@ -71,7 +71,7 @@ var postView = new Vue({
 //設定ボタン押した。
 function settings() {
 	var cd = $("[name=theme]:checked").val();
-	var ct = $("[for=" + cd + "]").html();
+	var ct = $("[data-ct=" + cd + "]").html();
 	if (cd == "custom" && !$("#custom-sel-sel").val()) {
 		var theme = localStorage.getItem("theme");
 		if (!theme) {
