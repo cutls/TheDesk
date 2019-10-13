@@ -13,34 +13,6 @@ function system(mainWindow, dir, lang, dirname) {
 	const dialog = electron.dialog;
 	const os = require('os')
 	const language = require("../main/language.js");
-	ipc.on('native-notf', function (e, args) {
-
-		var platform = process.platform;
-		var bit = process.arch;
-		if (platform == "win32") {
-			const notifier = require('node-notifier')
-			var tmp_imge = tmp_img;
-			Jimp.read(args[2], function (err, lenna) {
-				if (!err && lenna) {
-					lenna.write(tmp_img);
-					var tmp_imge = tmp_img;
-				} else {
-					var tmp_imge = "";
-				}
-				notifier.notify({
-					appID: "top.thedesk",
-					message: args[1],
-					title: args[0],
-					icon: tmp_imge,
-					sound: false,
-					wait: true,
-				},
-					function (err, response) {
-						console.log(err, response)
-					});
-			});
-		}
-	});
 	//プラットフォーム
 	ipc.on('getPlatform', function (e, arg) {
 		try {
@@ -162,14 +134,14 @@ function system(mainWindow, dir, lang, dirname) {
 				preload: join(dirname, "js", "platform", "preload.js")
 			},
 			width: 350,
-			height: 200,
+			height: 140,
 			"transparent": false, // ウィンドウの背景を透過
 			"frame": false, // 枠の無いウィンドウ
 			"resizable": false
 		});
 		nanowindow.loadURL(dir + '/nano.html');
 		nanowindow.setAlwaysOnTop(true);
-
+		//nanowindow.toggleDevTools()
 		nanowindow.setPosition(window_pos[0], window_pos[1]);
 		nanowindow.on('close', function () {
 			fs.writeFileSync(nano_info_path, JSON.stringify(nanowindow.getPosition()));

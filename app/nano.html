@@ -1,240 +1,155 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-	<meta charset="utf-8">
-	<link href="./css/themes.css" type="text/css" rel="stylesheet">
-	<link href="./css/tl.css" type="text/css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<title>TheDesk Nano</title>
-	<style>
-		html {
-			-webkit-app-region: drag !important;
-			cursor: move !important;
-			width: 100vw;
-			height: 100vh;
-			overflow: hidden;
-			font-family: sans-serif;
-		}
-
-		body {
-			background-color: rgba(0, 0, 0, 0.1);
-			font-size: 11px;
-		}
-
-		#timeline_nano {
-			overflow-y: scroll;
-			overflow-x: hidden;
-			-webkit-app-region: no-drag;
-			max-height: 100px;
-		}
-
-		.user {
-			font-size: 12px;
-		}
-
-		select {
-			-webkit-app-region: no-drag;
-		}
-
-		button {
-			-webkit-app-region: no-drag;
-		}
-
-		textarea {
-			-webkit-app-region: no-drag;
-		}
-
-		::-webkit-scrollbar {
-			width: 5px;
-			height: 10px;
-			background: rgba(0, 0, 0, 0.05);
-		}
-
-		::-webkit-scrollbar-track {
-			-webkit-border-radius: 5px;
-			border-radius: 5px;
-		}
-
-		.area-actions {
-			display: none !important;
-		}
-
-		.area-date_via {
-			display: none !important;
-		}
-
-		.area-side {
-			display: none !important;
-		}
-
-		/* Handle */
-		::-webkit-scrollbar-thumb {
-			-webkit-border-radius: 5px;
-			border-radius: 5px;
-			background: rgba(0, 0, 0, 0.8);
-			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-		}
-
-		.blacktheme body {
-			color: white;
-			background-color: #212121;
-		}
-
-		.blacktheme button {
-			background-color: black;
-			color: white;
-		}
-
-		.blacktheme textarea,
-		.blacktheme select {
-			color: white;
-		}
-
-		.blacktheme select,
-		.blacktheme option {
-			background-color: black;
-		}
-	</style>
-</head>
-
-<body>
-	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
-	<script>
-		$.strip_tags = function (str, allowed) {
-			if (!str) {
-				return "";
+	<head>
+		<meta charset="utf-8" />
+		<link href="./css/themes.css" type="text/css" rel="stylesheet" />
+		<link href="./css/tl.css" type="text/css" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+		<link href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
+		<title>TheDesk Nano</title>
+		<style>
+			html {
+				-webkit-app-region: drag !important;
+				cursor: move !important;
+				width: 100vw;
+				height: 100vh;
+				overflow: hidden;
+				font-family: sans-serif;
+				color: var(--color) !important;
 			}
-			allowed = (((allowed || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || [])
-				.join('');
-			var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi,
-				commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
-			return str.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
-				return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
-			});
-		};
-		function escapeHTML(str) {
-			if (!str) {
-				return "";
-			}
-			return str.replace(/&/g, '&amp;')
-				.replace(/</g, '&lt;')
-				.replace(/>/g, '&gt;')
-				.replace(/"/g, '&quot;')
-				.replace(/'/g, '&#039;');
-		}
-	</script>
-	<script type="text/javascript" src="./js/platform/first-not-view.js"></script>
-	<select id="post-acct-sel" style="max-width:150px">
-	</select>
-	<select id="type-sel" style="max-width:60px">
-		<option value="local">Local</option>
-		<option value="home">Home</option>
-	</select><button onclick="tl()">Show</button><button onclick="window.close()">x</button><br>
-	<div id="timeline_nano">
 
-	</div>
-	<br>
-	<textarea id="textarea" style="width:80%; background-color:transparent"></textarea>
-	<button class="btn" onclick="post()">Post</button>
-	<script>
-		if (localStorage.getItem("lang")) {
-			var lang = localStorage.getItem("lang");
-		} else {
-			var lang = "ja";
-		}
-	</script>
-	<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
-	<script type="text/javascript" src="./js/post/post.js"></script>
-	<script type="text/javascript" src="./js/post/use-txtbox.js"></script>
-	<script type="text/javascript" src="./js/tl/parse.js"></script>
-	<script type="text/javascript" src="./js/ui/theme.js"></script>
-	<script type="text/javascript" src="./js/tl/date.js"></script>
-	<script type="text/javascript" src="./js/common/time.js"></script>
-	<script type="text/javascript" src="./js/platform/nano.js"></script>
-	<script type="text/javascript" src="./js/platform/end.js"></script>
-	<script>
-		var multi = localStorage.getItem("multi");
-		if (!multi) {
-			var obj = [{
-				at: localStorage.getItem(localStorage.getItem("domain_" + acct_id) + "_at"),
-				name: localStorage.getItem("name_" + acct_id),
-				domain: localStorage.getItem("domain_" + acct_id),
-				user: localStorage.getItem("user_" + acct_id),
-				prof: localStorage.getItem("prof_" + acct_id)
-			}];
-			var json = JSON.stringify(obj);
-			localStorage.setItem("multi", json);
-		} else {
-			var obj = JSON.parse(multi);
-		}
-		var templete;
-		var last = localStorage.getItem("last-use");
-		var sel;
-		Object.keys(obj).forEach(function (key) {
-			var acct = obj[key];
-			var list = key * 1 + 1;
-			if (key == last) {
-				sel = "selected";
-			} else {
-				sel = "";
+			body {
+				background-color: rgba(0, 0, 0, 0.1);
+				font-size: 11px;
 			}
-			templete = '<option value="' + key + '" ' + sel + '>' + acct.user + '@' + acct.domain +
-				'</option>';
-			$("#post-acct-sel").append(templete);
-		});
-		function mov() {
-			return false;
-		}
-		function resetmv() {
-			return false;
-		}
-		function post() {
-			var acct_id = $("#post-acct-sel").val();
-			var domain = localStorage.getItem("domain_" + acct_id);
-			var at = localStorage.getItem("acct_" + acct_id + "_at");
-			var start = "https://" + domain + "/api/v1/statuses";
-			var str = $("#textarea").val();
-			var toot = {
-				status: str
+
+			#timeline_nano {
+				overflow-y: scroll;
+				overflow-x: hidden;
+				-webkit-app-region: no-drag;
+				max-height: 100px;
 			}
-			var vis = loadVis(acct_id)
-			toot.visibility = vis;
-			var httpreq = new XMLHttpRequest();
-			httpreq.open('POST', start, true);
-			httpreq.setRequestHeader('Content-Type', 'application/json');
-			httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
-			httpreq.responseType = "json";
-			httpreq.send(JSON.stringify(toot));
-			httpreq.onreadystatechange = function () {
-				if (httpreq.readyState === 4) {
-					$("#textarea").val("");
+
+			.user {
+				font-size: 12px;
+			}
+
+			select {
+				-webkit-app-region: no-drag;
+			}
+
+			button {
+				-webkit-app-region: no-drag;
+			}
+
+			textarea {
+				-webkit-app-region: no-drag;
+				color: var(--color) !important;
+			}
+
+			::-webkit-scrollbar {
+				width: 5px;
+				height: 10px;
+				background: rgba(0, 0, 0, 0.05);
+			}
+
+			::-webkit-scrollbar-track {
+				-webkit-border-radius: 5px;
+				border-radius: 5px;
+			}
+
+			.area-date_via {
+				display: none !important;
+			}
+
+			.area-side {
+				display: none !important;
+			}
+
+			/* Handle */
+			::-webkit-scrollbar-thumb {
+				-webkit-border-radius: 5px;
+				border-radius: 5px;
+				background: rgba(0, 0, 0, 0.8);
+				-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+			}
+			.hide, .pin, .rep-btn, .tickers{
+				display: none;
+			}
+			.fas {
+				font-size: 1rem !important;
+			}
+			.cvo {
+				grid-template-rows: auto 1rem 1fr auto 2rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
+		<script>
+			$.strip_tags = function(str, allowed) {
+				if (!str) {
+					return "";
 				}
-			}
-		}
-		function loadVis(acct_id) {
-			var vist = localStorage.getItem("vis");
-			console.log(vist);
-			if (!vist) {
-				return "public";
-			} else {
-				if (vist == "memory") {
-					var memory = localStorage.getItem("vis-memory-" + acct_id);
-					if (!memory) {
-						memory = "public";
-					}
-					return memory;
-				} else if (vist == "server") {
-					var multi = localStorage.getItem("multi");
-					var obj = JSON.parse(multi);
-					var memory = obj[acct_id]["vis"];
-					if (!memory) {
-						memory = "public";
-					}
-					return memory;
-				} else {
-					return vist;
+				allowed = (((allowed || "") + "").toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join("");
+				var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi,
+					commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
+				return str.replace(commentsAndPhpTags, "").replace(tags, function($0, $1) {
+					return allowed.indexOf("<" + $1.toLowerCase() + ">") > -1 ? $0 : "";
+				});
+			};
+			function escapeHTML(str) {
+				if (!str) {
+					return "";
 				}
+				return str
+					.replace(/&/g, "&amp;")
+					.replace(/</g, "&lt;")
+					.replace(/>/g, "&gt;")
+					.replace(/"/g, "&quot;")
+					.replace(/'/g, "&#039;");
 			}
-		}
-	</script>
+		</script>
+		<script type="text/javascript" src="./js/platform/first-not-view.js"></script>
+		<div id="menu" class="hide">
+			TL and posting account<br>
+			<select id="post-acct-sel" style="max-width:150px"> </select><br>
+			TL type<br>
+			<select id="type-sel" style="max-width:60px" onchange="loader()">
+				<option value="local">Local</option>
+				<option value="home">Home</option> </select
+			><button onclick="tl()">Show</button><br>
+			Visibility<br>
+			<select id="vis-sel" style="max-width:60px">
+					<option value="public">Public</option>
+					<option value="unlisted">Unlisted</option>
+					<option value="private">Private</option>
+			</select>
+		</div>
+		<button onclick="set()" id="setting">Setting</button>
+		<textarea id="textarea" style="width:55%; background-color:transparent" placeholder="Post someyhing new"></textarea>
+		<button class="btn" onclick="post()">Post</button>
+		<button onclick="window.close()">x</button><br />
+		<div id="timeline_nano">Click "settings" to show TL</div>
+		<br />
+		<script>
+			if (localStorage.getItem("lang")) {
+				var lang = localStorage.getItem("lang");
+			} else {
+				var lang = "ja";
+			}
+		</script>
+		<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
+		<script type="text/javascript" src="view/en/main.js"></script>
+		<script type="text/javascript" src="./js/post/status.js"></script>
+		<script type="text/javascript" src="./js/post/post.js"></script>
+		<script type="text/javascript" src="./js/post/use-txtbox.js"></script>
+		<script type="text/javascript" src="./js/tl/parse.js"></script>
+		<script type="text/javascript" src="./js/ui/theme.js"></script>
+		<script type="text/javascript" src="./js/tl/date.js"></script>
+		<script type="text/javascript" src="./js/common/time.js"></script>
+		<script type="text/javascript" src="./js/platform/nano.js"></script>
+		<script type="text/javascript" src="./js/platform/end.js"></script>
+	</body>
+</html>
