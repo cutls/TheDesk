@@ -546,6 +546,7 @@ function coloradd(key, bg, txt) {
 	if (txt == "def") {
 		$("#menu_" + key).css("background-color", "");
 		$("#menu_" + key).css("color", "");
+		$("#menu_" + key + " .nex").css("color", "");
 	} else {
 		$("#menu_" + key).css('background-color', '#' + bg);
 		if (txt == "black") {
