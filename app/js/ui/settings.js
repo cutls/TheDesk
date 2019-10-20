@@ -715,3 +715,41 @@ window.onload = function () {
 function asReadEnd() {
 	postMessage(["asReadComp", ""], "*")
 }
+function checkupd(){
+	var ver = localStorage.getItem("ver");
+	var start = "https://thedesk.top/ver.json";
+	fetch(start, {
+		method: 'GET'
+	}).then(function (response) {
+		return response.json();
+	}).catch(function (error) {
+		todo(error);
+		console.error(error);
+	}).then(function (mess) {
+		console.table(mess);
+		if (mess) {
+			var platform = localStorage.getItem("platform");
+			if (platform == "darwin") {
+				var newest = mess.desk_mac;
+			} else {
+				var newest = mess.desk;
+			}
+			if (newest == ver) {
+				Swal.fire({
+					type: 'info',
+					title: lang.lang_setting_noupd,
+					html: ver
+				})
+			} else if (ver.indexOf("beta") != -1 || winstore) {
+				Swal.fire({
+					type: 'info',
+					title: lang.lang_setting_thisisbeta,
+					html: ver
+				})
+			} else {
+				localStorage.removeItem("new-ver-skip")
+				location.href="index.html"
+			}
+		}
+	});
+}

@@ -4,10 +4,13 @@ if (process.argv.indexOf("--automatic") === -1) {
     if (input) {
         ver = input;
     }
-    var basefile="../../"
+    //var basefile="../../"
 } else {
-    var basefile="./"
+    //var basefile="./"
 }
+//const { app } = require('electron');
+const path = require('path');
+const basefile = path.join(__dirname, "../../")
 function main(ver, basefile) {
 	const fs = require("fs");
 	const execSync = require("child_process").execSync;
@@ -23,6 +26,7 @@ function main(ver, basefile) {
 	const pages = ["acct.html", "index.html", "setting.html", "update.html", "setting.vue.js"];
 	let langstr = "";
 	let refKey = [];
+	const enJson=JSON.parse(fs.readFileSync(basefile + "view/make/language/en/main.json", "utf8"))
 	for (let n = 0; n < langs.length; n++) {
 		let lang = langs[n];
 		let targetDir = basefile + "view/" + lang;
@@ -30,7 +34,15 @@ function main(ver, basefile) {
 			fs.mkdirSync(targetDir);
 		}
 		langstr = langstr + "<a onclick=\"changelang('" + lang + '\')" class="pointer" style="margin:4px;border: 1px solid var(--color); padding: 3px">' + langsh[n] + "</a>";
-		fs.writeFileSync(basefile + "view/" + lang + "/main.js", fs.readFileSync(basefile + "view/make/language/" + lang + "/main.json", "utf8").replace(/^{/, "var lang = {"));
+		let mainJson=JSON.parse(fs.readFileSync(basefile + "view/make/language/" + lang + "/main.json", "utf8"))
+		if(lang != "en"){
+			Object.keys(enJson).forEach(function(key) {
+				if(!mainJson[key]){
+					mainJson[key]=enJson[key]
+				}
+			});
+		}
+		fs.writeFileSync(basefile + "view/" + lang + "/main.js", JSON.stringify(mainJson).replace(/^{/, "var lang = {"));
 	}
 	for (let i = 0; i < samples.length; i++) {
 		let sample = samples[i];
