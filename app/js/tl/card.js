@@ -238,6 +238,7 @@ function cardCheck(tlid) {
 }
 
 function mov(id, tlid, type) {
+	var click = false
 	if (tlid == "notf") {
 		var tlide = "[data-notf=" + acct_id + "]";
 	} else if (tlid == "user") {
@@ -257,12 +258,21 @@ function mov(id, tlid, type) {
 		} else {
 			mouseover = "hide";
 		}
+		click=true
 	} else if (mouseover == "no") {
 		mouseover = "";
 	}
 	if (mouseover == "hide") {
-		$(tlide + " [toot-id=" + id + "] .area-actions").toggleClass("hide")
-		$(tlide + " [toot-id=" + id + "] .area-side").toggleClass("hide")
+		if(click){
+			$(tlide + " [toot-id=" + id + "]").toggleClass("hide-actions")
+		}else{
+			$(tlide + " [toot-id=" + id + "]").removeClass("hide-actions")
+		}
+		
+		//$(tlide + " [toot-id=" + id + "] .area-vis").toggleClass("hide")
+		//$(tlide + " [toot-id=" + id + "] .area-actions").toggleClass("hide")
+		//$(tlide + " [toot-id=" + id + "] .area-side").toggleClass("hide")
+	
 	}
 }
 
@@ -278,8 +288,10 @@ function resetmv(type) {
 		mouseover = "hide";
 	}
 	if (mouseover == "hide") {
-		$(".area-actions").addClass("hide");
-		$(".area-side").addClass("hide");
+		$(".cvo").addClass("hide-actions")
+		//$(".area-vis").addClass("hide");
+		//$(".area-actions").addClass("hide");
+		//$(".area-side").addClass("hide");
 	}
 
 }

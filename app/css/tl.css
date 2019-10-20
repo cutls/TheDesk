@@ -227,6 +227,18 @@ iframe,
   grid-template-rows: auto 1.6rem 1fr auto 2.5rem;
   grid-template-areas: "notice notice notice" "icon display_name display_name" "space toot toot" "space additional additional" "vis actions side";
 }
+.hide-actions{
+  grid-template-rows: auto 1.6rem 1fr auto 0;
+}
+.hide-actions .area-actions{
+  display:none;
+}
+.hide-actions .area-vis{
+  display:none;
+}
+.hide-actions .area-side{
+  display:none;
+}
 .cvo h1,
 .cvo h2,
 .cvo h3,
@@ -325,6 +337,7 @@ iframe,
   margin: 2px;
   grid-area: side;
 }
+
 .quote-inline {
   display: none;
 }
