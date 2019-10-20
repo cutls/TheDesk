@@ -35,7 +35,7 @@
   "themeSel": "Seleccionar tema",
   "customtheme": "Editar y agregar temas personalizados",
   "customthemeDirection": "Esquema de colores",
-  "advanced": "Advanced options(6 additional colors)",
+  "advanced": "Configuración avanzada (6 colores adicionales)",
   "advancedWarn": "Advanced options will be <i>null</i> if you set nothing, while basic 3 options will be white(<i>fff</i>). They(adv. options) will be reset if you saved with advanced panel closed.",
   "active": "Background of Show or CW buttons, selected options...",
   "modal": "Background of modals",
