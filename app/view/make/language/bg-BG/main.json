@@ -249,5 +249,7 @@
     "lang_setting_notftest": " Notification test ",
     "lang_setting_notftestprof": "Your icon is shown.",
     "lang_setting_exportwarn": "Only important data will be exported. You must keep this data secure.",
-    "lang_setting_importwarn": "Всички данни ще бъдат изтрити."
+    "lang_setting_importwarn": "Всички данни ще бъдат изтрити.",
+    "lang_setting_noupd": "No available update",
+    "lang_setting_thisisbeta": "This is beta version. You have to update manually."
 }
