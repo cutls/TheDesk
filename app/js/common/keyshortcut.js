@@ -14,6 +14,16 @@ $(function ($) {
 		} else {
 			var wv = true;
 		}
+		//Enter
+		if (e.keyCode === 13) {
+			if($("#src").is(':focus')){
+				src()
+			}
+			if($("#list-add").is(':focus')){
+				makeNewList()
+			}
+			return false;
+		}
 		//Ctrl+Shift+Enter:Lgen
 		if (event.metaKey || event.ctrlKey && wv) {
 			if (event.shiftKey) {

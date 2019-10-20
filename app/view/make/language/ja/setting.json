@@ -27,7 +27,7 @@
   "fixwidthwarn": "",
   "above": "以上",
   "font": "フォント",
-  "fontwarn": "「選択」を押してフォントを選んでください。(Linuxでは動きません)",
+  "fontwarn": "「選択」を押してフォントを選んでください。(Linuxでは動かない場合があります。)",
   "fontsize": "フォントサイズ",
   "savefolder": "デフォルトの保存先",
   "savefolderwarn": "画像ダウンロードやスクリーンショットに影響します。",
