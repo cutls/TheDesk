@@ -90,9 +90,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 	}
 	//Ticker
 	var tickerck = localStorage.getItem("ticker_ok");
-	if (tickerck) {
+	if (tickerck=="yes") {
 		var ticker = true;
-	} else {
+	} else if(!ticker || ticker == "no") {
 		var ticker = false;
 	}
 	//Animation
