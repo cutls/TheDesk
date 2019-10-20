@@ -27,7 +27,7 @@
   "fixwidthwarn": "",
   "above": "над",
   "font": "Шрифт",
-  "fontwarn": "Изберете любимия си шрифт с „Избор“ (само за Windows / macOS)",
+  "fontwarn": "Select your favorite font to 'Select'(On Linux, it may not work.)",
   "fontsize": "Размер на шрифта",
   "savefolder": "Папка за запазване",
   "savefolderwarn": "TheDesk ще използва това местоназначение, когато се опитва да запази снимки или да прави екранни снимки.",
