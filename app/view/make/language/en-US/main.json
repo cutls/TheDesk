@@ -249,5 +249,7 @@
     "lang_setting_notftest": "crwdns3900:0crwdne3900:0",
     "lang_setting_notftestprof": "crwdns3902:0crwdne3902:0",
     "lang_setting_exportwarn": "crwdns3904:0crwdne3904:0",
-    "lang_setting_importwarn": "crwdns3906:0crwdne3906:0"
+    "lang_setting_importwarn": "crwdns3906:0crwdne3906:0",
+    "lang_setting_noupd": "crwdns4356:0crwdne4356:0",
+    "lang_setting_thisisbeta": "crwdns4358:0crwdne4358:0"
 }
