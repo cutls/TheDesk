@@ -27,7 +27,7 @@
   "fixwidthwarn": "",
   "above": "por encima",
   "font": "Tipografía",
-  "fontwarn": "Select your favorite font to 'Select'(On Linux, it may not work.)",
+  "fontwarn": "Seleccioná tu tipografía favorita (sólo para Windows y macOS)",
   "fontsize": "Tamaño de tipografía",
   "savefolder": "Carpeta para guardar",
   "savefolderwarn": "TheDesk usa esta configuración para guardar imágenes en general y capturas de pantallas.",
