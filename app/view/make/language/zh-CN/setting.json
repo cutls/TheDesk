@@ -27,7 +27,7 @@
   "fixwidthwarn": "",
   "above": "above",
   "font": "Font",
-  "fontwarn": "Select your favorite font to 'Select'",
+  "fontwarn": "Select your favorite font to 'Select'(On Linux, it may not work.)",
   "fontsize": "Font size",
   "savefolder": "Folder to save",
   "savefolderwarn": "TheDesk uses this value when it try to save pictures or take screenshots.",
