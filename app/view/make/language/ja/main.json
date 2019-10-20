@@ -249,5 +249,7 @@
     "lang_setting_notftest": "通知テスト",
     "lang_setting_notftestprof": "アイコンはあなたのアカウントのものです。",
     "lang_setting_exportwarn": "重要なデータのみエクスポートされます。エクスポートされたデータは外部に公開しないでください。全ての認証データが含まれています。",
-    "lang_setting_importwarn": "全てのデータがリセットされます。"
+    "lang_setting_importwarn": "全てのデータがリセットされます。",
+    "lang_setting_noupd": "お使いのTheDeskは最新です",
+    "lang_setting_thisisbeta": "お使いのTheDeskはベータ版のため、アップデートは手動で行う必要があります。"
 }

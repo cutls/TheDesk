@@ -282,3 +282,6 @@ function dlImg() {
 function openFinder(dir) {
 	postMessage(["openFinder", dir], "*")
 }
+function stopVideo(){
+	document.getElementById('video').pause()
+}

@@ -489,17 +489,36 @@
 								<div id="his-proof-prof"></div>
 							</div>
 							<div id="his-des" data-acct=""></div><br>
-							<div id="his-plus-action">
-								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-emp-btn"
-									onclick="empUser()">@@empUser@@</a>
-								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-his-data"
-									id="his-end-btn" onclick="pinUser()">@@endorse@@</a><br>
-								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat" id="his-openin"
-									onclick="profbrws()">@@openinbrowser@@</a>
-								<a href="#!" class="btn waves-effect waves-effect blue-grey btn-flat only-my-data"
-									id="his-main-acct" onclick="setMain()"
-									style="width: calc(100% - 10px)">@@mainacct@@</a><br>
-							</div>
+							<div id="his-table"></div><br>
+							<div id="his-sign-action">
+									<a href="#!" class="waves-effect waves-green btn"
+										onclick="follow()" style="flex-basis: 100%" id="his-follow-btn"><i class="material-icons">people</i><span id="his-follow-btn-text">@@follow@@</span></a>
+									<a href="#!" class="waves-effect waves-green btn blue"
+										onclick="muteDo()" id="his-mute-btn"><i class="material-icons">voice_over_off</i><span id="his-mute-btn-text">@@mute@@</span></a>
+									<a href="#!" class="waves-effect waves-g
+									reen btn red"
+										onclick="block()" id="his-block-btn"><i class="material-icons ">block</i><span id="his-block-btn-text">@@block@@</span></a>
+									<a class="dropdown-trigger btn waves-effect grey" href="#" data-target="actiondropdown">
+											<i class="material-icons">more_vert</i>@@more@@</a>
+								</div>
+								<!-- Dropdown Structure -->
+							<ul id="actiondropdown" class="dropdown-content">
+									<li onclick="empUser()">
+										<a title="@@empUser@@"><i class="material-icons">highlight</i>@@empUser@@</a>
+									</li>
+									<li onclick="pinUser()" class="only-his-data">
+										<a title="@@endorse@@"><i
+												class="material-icons">thumb_up</i>@@endorse@@</a>
+									</li>
+									<li onclick="profbrws()" id="his-openin">
+										<a title="@@openinbrowser@@"><i
+												class="material-icons">open_in_browser</i>@@openinbrowser@@</a>
+									</li>
+									<li onclick="setMain()" class="only-my-data" id="his-main-acct">
+										<a title="@@mainacct@@"><i
+												class="material-icons">grade</i>@@mainacct@@</a>
+									</li>
+								</ul>
 						</div>
 					</div>
 					<div class="his-float" id="his-float-timeline">
@@ -661,12 +680,6 @@
 		<div class="modal-footer">
 			<button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn"
 				onclick="historyShow()">@@historyBack@@</button>
-			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-follow-btn"
-				onclick="follow()">@@follow@@</a>
-			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-mute-btn"
-				onclick="muteDo()">@@mute@@</a>
-			<a href="#!" class="modal-action waves-effect waves-green btn-flat" id="his-block-btn"
-				onclick="block()">@@block@@</a>
 			<a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">@@close@@</a>
 		</div>
 	</div>

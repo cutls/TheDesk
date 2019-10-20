@@ -9,6 +9,7 @@
     "construct": "cd view/make && node make --automatic && cd ../../",
     "dev": "electron ./ --dev",
     "dist": "build --linux snap",
+    "watchview": "node view/make/make.js --automatic --watch",
     "build:js": "node build.js",
     "build": "electron-builder",
     "build:all": "electron-builder --win --linux",
@@ -65,6 +66,7 @@
     "itunes-nowplaying-mac": "0.3.1"
   },
   "devDependencies": {
+    "chokidar": "^3.2.2",
     "electron": "^6.0.12",
     "electron-builder": "^21.1.5",
     "electron-rebuild": "^1.8.6",

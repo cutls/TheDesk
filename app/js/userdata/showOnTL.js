@@ -139,8 +139,10 @@ function udg(user, acct_id) {
 		$("#his-since").text(crat(json.created_at));
 		$("#his-openin").attr("data-href", json.url);
 		if (json.fields) {
+			var table =""
 			if (json.fields.length > 0) {
-				note = note + '<table id="his-field">'
+				$("#his-des").css("max-height", "250px");
+				table =  '<table id="his-field">'
 				for (var i = 0; i < json.fields.length; i++) {
 					var fname = json.fields[i].name;
 					var fval = json.fields[i].value;
@@ -151,16 +153,18 @@ function udg(user, acct_id) {
 						var when = "";
 						var color = "inherit"
 					}
-					note = note + '<tr><td class="his-field-title">' + twemoji.parse(escapeHTML(fname)) + '</td><td class="his-field-content" title="' + when + '" style="background-color:' + color + '">' + twemoji.parse(fval) + '</td></tr>';
+					table = table + '<tr><td class="his-field-title">' + escapeHTML(fname) + '</td><td class="his-field-content" title="' + when + '" style="background-color:' + color + '">' + fval + '</td></tr>';
 				}
-				note = note + '</table>'
+				table = table + '</table>'
 				$("#his-des").html(twemoji.parse(note));
 			} else {
-				$("#his-des").html(twemoji.parse(note));
+				$("#his-des").css("max-height", "400px");
 			}
-		} else {
-			$("#his-des").html(twemoji.parse(note));
+			$("#his-table").html(twemoji.parse(table));
+		}else {
+			$("#his-des").css("max-height", "400px");
 		}
+		$("#his-des").html(twemoji.parse(note));
 		if (json.bot) {
 			$("#his-bot").html(lang.lang_showontl_botacct);
 		}
@@ -305,10 +309,10 @@ function misskeyUdg(user, acct_id) {
 			if (json.isFollowing) {
 				//自分がフォローしている
 				$("#his-data").addClass("following");
-				$("#his-follow-btn").text(lang.lang_status_unfollow);
+				$("#his-follow-btn-text").text(lang.lang_status_unfollow);
 				hisList(user, acct_id);
 			} else {
-				$("#his-follow-btn").text(lang.lang_status_follow);
+				$("#his-follow-btn-text").text(lang.lang_status_follow);
 			}
 			if (json.isFollowed) {
 				//フォローされてる
@@ -317,9 +321,9 @@ function misskeyUdg(user, acct_id) {
 			$("#his-block-btn").hide();
 			if (json.isMuted) {
 				$("#his-data").addClass("muting");
-				$("#his-mute-btn").text(lang.lang_status_unmute);
+				$("#his-mute-btn-text").text(lang.lang_status_unmute);
 			} else {
-				$("#his-mute-btn").text(lang.lang_status_mute);
+				$("#his-mute-btn-text").text(lang.lang_status_mute);
 			}
 			$(".only-my-data").hide();
 			$(".only-his-data").show();
@@ -362,10 +366,10 @@ function relations(user, acct_id) {
 		if (json.following) {
 			//自分がフォローしている
 			$("#his-data").addClass("following");
-			$("#his-follow-btn").text(lang.lang_status_unfollow);
+			$("#his-follow-btn-text").text(lang.lang_status_unfollow);
 			hisList(user, acct_id);
 		} else {
-			$("#his-follow-btn").text(lang.lang_status_follow);
+			$("#his-follow-btn-text").text(lang.lang_status_follow);
 		}
 		if (json.followed_by) {
 			//フォローされてる
@@ -373,35 +377,35 @@ function relations(user, acct_id) {
 		}
 		if (json.blocking) {
 			$("#his-data").addClass("blocking");
-			$("#his-block-btn").text(lang.lang_status_unblock);
+			$("#his-block-btn-text").text(lang.lang_status_unblock);
 		} else {
-			$("#his-block-btn").text(lang.lang_status_block);
+			$("#his-block-btn-text").text(lang.lang_status_block);
 		}
 		if (json.muting) {
 			$("#his-data").addClass("muting");
-			$("#his-mute-btn").text(lang.lang_status_unmute);
+			$("#his-mute-btn-text").text(lang.lang_status_unmute);
 		} else {
-			$("#his-mute-btn").text(lang.lang_status_mute);
+			$("#his-mute-btn-text").text(lang.lang_status_mute);
 		}
 		if (json.muting_notifications) {
 			$("#his-data").addClass("mutingNotf");
-			$("#his-notf-btn").text(lang.lang_showontl_notf + lang.lang_status_unmute);
+			$("#his-notf-btn-text").text(lang.lang_showontl_notf + lang.lang_status_unmute);
 		} else {
-			$("#his-notf-btn").text(lang.lang_showontl_notf + lang.lang_status_mute);
+			$("#his-notf-btn-text").text(lang.lang_showontl_notf + lang.lang_status_mute);
 		}
 		if (json.domain_blocking) {
 			$("#his-data").addClass("blockingDom");
-			$("#his-domain-btn").text(lang.lang_showontl_domain + lang.lang_status_unblock);
+			$("#his-domain-btn-text").text(lang.lang_showontl_domain + lang.lang_status_unblock);
 		} else {
-			$("#his-domain-btn").text(lang.lang_showontl_domain + lang.lang_status_block);
+			$("#his-domain-btn-text").text(lang.lang_showontl_domain + lang.lang_status_block);
 		}
 		//Endorsed
 		if (json.endorsed) {
 			$("#his-end-btn").addClass("endorsed");
-			$("#his-end-btn").text(lang.lang_status_unendorse)
+			$("#his-end-btn-text").text(lang.lang_status_unendorse)
 		} else {
 			$("#his-end-btn").removeClass("endorsed");
-			$("#his-end-btn").text(lang.lang_status_endorse)
+			$("#his-end-btn-text").text(lang.lang_status_endorse)
 		}
 		//Blocked
 		if (json.blocked_by) {
@@ -452,6 +456,7 @@ function reset() {
 	$("#his-data").removeClass("mutingNotf");
 	$("#his-data").removeClass("blockingDom");
 	$("#his-end-btn").removeClass("endorsed");
+	$("#his-des").css("max-height", "250px");
 	$("#his-bot").html("");
 	$("#his-follow-btn").show();
 	$("#his-block-btn").show();
@@ -459,9 +464,9 @@ function reset() {
 	$("#his-notf-btn").show();
 	$("#his-domain-btn").show();
 	$("#his-emp-btn").show();
-	$("#his-follow-btn").text(lang.lang_status_follow);
-	$("#his-mute-btn").text(lang.lang_status_mute);
-	$("#his-block-btn").text(lang.lang_status_block);
+	$("#his-follow-btn-text").text(lang.lang_status_follow);
+	$("#his-mute-btn-text").text(lang.lang_status_mute);
+	$("#his-block-btn-text").text(lang.lang_status_block);
 	$("#his-notf-btn").text(lang.lang_showontl_notf + lang.lang_status_mute);
 	$("#his-domain-btn").text(lang.lang_showontl_domain + lang.lang_status_block);
 	$("#his-relation").text("");

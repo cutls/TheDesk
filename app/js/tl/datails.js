@@ -520,7 +520,7 @@ function detEx(url, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
-	var start = "https://" + domain + "/api/v1/search?resolve=true&q=" + url
+	var start = "https://" + domain + "/api/v2/search?resolve=true&q=" + url
 	fetch(start, {
 		method: 'GET',
 		headers: {
