@@ -27,7 +27,7 @@
   "fixwidthwarn": "",
   "above": "über",
   "font": "Schriftart",
-  "fontwarn": "Wählen Sie Ihre Lieblingsschrift. 'Select'(nur Windows/ macOS)",
+  "fontwarn": "Select your favorite font to 'Select'(On Linux, it may not work.)",
   "fontsize": "Schriftgröße",
   "savefolder": "Ordner zum Speichern",
   "savefolderwarn": "TheDesk verwendet diesen Ordner, wenn es versucht Bilder zu speichern oder Screenshots zu machen.",
