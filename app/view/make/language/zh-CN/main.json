@@ -47,7 +47,7 @@
     "lang_manager_def": "默认",
     "lang_manager_none": "无",
     "lang_manager_godev": "Open DevCenter of Misskey. We show also an official documents to refer.",
-    "lang_manager_logout": "Logout",
+    "lang_manager_logout": "注销",
     "lang_bbmd_misskey": "TheDesk regards \"@\" as reply, but put other parameter. Unlisted on Mastodon means Home on Misskey.",
     "lang_emoji_get": "获取表情符号",
     "lang_emoji_custom": "Custom emojis",
