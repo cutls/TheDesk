@@ -27,7 +27,7 @@
   "fixwidthwarn": "",
   "above": "above",
   "font": "Police de caractères",
-  "fontwarn": "Select your favorite font to 'Select'",
+  "fontwarn": "Select your favorite font to 'Select'(On Linux, it may not work.)",
   "fontsize": "Taille de la police de caractères",
   "savefolder": "Folder to save",
   "savefolderwarn": "TheDesk uses this value when it try to save pictures or take screenshots.",
