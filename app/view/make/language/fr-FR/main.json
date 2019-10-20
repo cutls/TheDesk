@@ -47,7 +47,7 @@
     "lang_manager_def": "Par défaut",
     "lang_manager_none": "Aucun",
     "lang_manager_godev": "Open DevCenter of Misskey. We show also an official documents to refer.",
-    "lang_manager_logout": "Logout",
+    "lang_manager_logout": "Se déconnecter",
     "lang_bbmd_misskey": "TheDesk regards \"@\" as reply, but put other parameter. Unlisted on Mastodon means Home on Misskey.",
     "lang_emoji_get": "Téléchargez les émojis",
     "lang_emoji_custom": "Émojis personnalisés",
