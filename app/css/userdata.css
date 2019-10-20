@@ -4,6 +4,9 @@
   background-image: url("../../loading.svg");
   overflow-y: hidden;
 }
+#his-data .btn .material-icons{
+  float:left;
+}
 #his-data-content {
   display: flex;
   justify-content: center;
@@ -22,6 +25,7 @@
 }
 #his-float-data {
   height: 100%;
+  overflow-y: hidden;
 }
 #his-leftside {
   width: 500px;
@@ -60,10 +64,10 @@
   padding: 0;
   padding-left: 5px;
 }
-#his-data a span.ellipsis:after {
+.his-var-content a span.ellipsis:after {
   content: "...";
 }
-#his-data a:not(.mention) span:last-of-type {
+.his-var-content a:not(.mention) span:last-of-type {
   display: none;
 }
 #his-data a .rep_ct,
@@ -99,7 +103,8 @@
   width: 20px;
 }
 #his-plus-action .btn {
-  width: 170px;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 .tabs {
   display: flex;
@@ -107,9 +112,29 @@
 .tabs .tab a {
   padding: 8px 12px;
 }
+#his-des {
+  max-height: 250px;
+  overflow-y: scroll;
+}
+#his-sign-action {
+  border: 1px solid;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  flex-wrap: wrap;
+}
+#his-sign-action .btn {
+  flex-basis: 31.2%;
+}
 #his-des .mention {
   color: #039be5;
   cursor: pointer;
+}
+#his-table{
+  max-height: 150px;
+  overflow-y: scroll;
 }
 #his-float-blocked {
   display: flex;
