@@ -23,4 +23,7 @@ $(document).ready(function () {
   }
   );
   $('.collapsible').collapsible();
+  $('#videomodal').modal({
+    onCloseEnd: stopVideo
+  });
 });
