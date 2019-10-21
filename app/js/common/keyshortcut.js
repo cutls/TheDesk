@@ -18,11 +18,12 @@ $(function ($) {
 		if (e.keyCode === 13) {
 			if($("#src").is(':focus')){
 				src()
+				return false;
 			}
 			if($("#list-add").is(':focus')){
 				makeNewList()
+				return false;
 			}
-			return false;
 		}
 		//Ctrl+Shift+Enter:Lgen
 		if (event.metaKey || event.ctrlKey && wv) {
