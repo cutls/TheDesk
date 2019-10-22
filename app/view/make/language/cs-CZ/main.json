@@ -249,5 +249,7 @@
     "lang_setting_notftest": " Test oznámení ",
     "lang_setting_notftestprof": "Vaše ikona je zobrazena.",
     "lang_setting_exportwarn": "Budou exportována pouze důležitá data. Tato data musíte udržet v bezpečí.",
-    "lang_setting_importwarn": "Všechna data budou smazána."
+    "lang_setting_importwarn": "Všechna data budou smazána.",
+    "lang_setting_noupd": "No available update",
+    "lang_setting_thisisbeta": "This is beta version. You have to update manually."
 }

@@ -249,5 +249,7 @@
     "lang_setting_notftest": " Benachrichtigungen testen ",
     "lang_setting_notftestprof": "Ihr Symbol wird angezeigt.",
     "lang_setting_exportwarn": "Nur wichtige Daten werden exportiert. Sie müssen diese Daten sichern.",
-    "lang_setting_importwarn": "Alle Daten werden gelöscht."
+    "lang_setting_importwarn": "Alle Daten werden gelöscht.",
+    "lang_setting_noupd": "No available update",
+    "lang_setting_thisisbeta": "This is beta version. You have to update manually."
 }

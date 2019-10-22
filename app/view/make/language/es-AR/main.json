@@ -249,5 +249,7 @@
     "lang_setting_notftest": " Prueba de notificación ",
     "lang_setting_notftestprof": "Se muestra el ícono.",
     "lang_setting_exportwarn": "Sólo se exportará los datos importantes. Tenés que guardar esto en un lugar seguro.",
-    "lang_setting_importwarn": "Todos los datos serán eliminados."
+    "lang_setting_importwarn": "Todos los datos serán eliminados.",
+    "lang_setting_noupd": "No hay actualización disponible",
+    "lang_setting_thisisbeta": "Esta es una versión beta. Tenés que actualizar manualmente."
 }
