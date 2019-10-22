@@ -49,5 +49,5 @@ deploy:
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
-    tags: true
-    all_branches: true
+branches:
+  only: "/^v?[0-9\\.]+/"
