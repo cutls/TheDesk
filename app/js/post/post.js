@@ -288,10 +288,20 @@ function clear() {
 	if (localStorage.getItem("mainuse") == "main") {
 		$("#post-acct-sel").val(localStorage.getItem("main"));
 	}
+	$("#emoji").addClass("hide")
 	$('select').formSelect();
-	mdCheck()
-	$("#left-side").show();
 	$("#default-emoji").show();
 	$("#unreact").show();
 	$("#addreact").addClass("hide");
+	$("#right-side").hide()
+	$("#right-side").css("width", "300px")
+	$("#left-side").css("width", "100%")
+	var width = localStorage.getItem("postbox-width");
+	if(width){
+		width = width.replace("px", "") * 1
+	} else {
+		width = 300
+	}
+	$("#post-box").css("width", width)
+	mdCheck()
 }

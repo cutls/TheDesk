@@ -57,7 +57,7 @@ input.addEventListener("focus", function () {
 					if (width) {
 						width = width.replace("px", "") * 1 + 200
 					} else {
-						width = 600
+						width = 500
 					}
 					$("#post-box").css("width", width + "px")
 					$("#poll").addClass("hide")
@@ -161,7 +161,7 @@ input.addEventListener("focus", function () {
 							if (width) {
 								width = width.replace("px", "") * 1 + 200
 							} else {
-								width = 600
+								width = 500
 							}
 							$("#post-box").css("width", width + "px")
 							$("#poll").addClass("hide")
@@ -186,7 +186,7 @@ input.addEventListener("focus", function () {
 						if (width) {
 							width = width.replace("px", "") * 1 + 200
 						} else {
-							width = 600
+							width = 500
 						}
 						$("#post-box").css("width", width + "px")
 						$("#suggest").html(accts);
