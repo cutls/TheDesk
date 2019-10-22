@@ -18,5 +18,6 @@
     "ko":"個",
     "thisismisskey":"Misskeyとしてログイン",
     "misskeylogin":"<a href=\"https://thedesk.top/how-to-misskey-login.html\">ドキュメント</a>を参照して正しいコードを入れてください。",
-    "nodata":"アカウントがありません"
+    "nodata":"アカウントがありません",
+    "accessTokenSetup": "アクセストークンを用いたセットアップ(コードの代わりにアクセストークンを入力してクリックしてください: 上級者向け)"
 }

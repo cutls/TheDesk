@@ -131,8 +131,10 @@
             </div>
             <div id="auth" style="display:none">
                   @@codepastewarn@@<br>
-                  <input type="text" id="code" placeholder="@@codepaste@@">
+                  <input type="text" id="code" placeholder="@@codepaste@@" required>
                   <button class="btn waves-effect" onclick="code()">Auth</button><br>
+                  <br>
+                  <a onclick="atSetup()" class="pointer">@@accessTokenSetup@@</a>
                   <div id="compt" style="display:none">
                         <h5>ログイン前に必ずご確認ください</h5>
                         <span id="compt-instance"></span>はバージョンが<span id="compt-ver"></span>のため以下の機能がご利用いただけません。
@@ -144,8 +146,10 @@
                   <h5>AppSecret</h5>
                   @@misskeylogin@@<br>
                   <input type="hidden" id="misskey-url">
-                  <input type="text" id="misskey-key" placeholder="@@codepaste@@">
+                  <input type="text" id="misskey-key" placeholder="@@codepaste@@" required>
                   <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br>
+                  <br>
+                  <a onclick="atSetup('misskey')" class="pointer">@@accessTokenSetup@@</a>
             </div>
       </div>
       <div class="hide-first">
