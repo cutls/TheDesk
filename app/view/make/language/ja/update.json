@@ -9,10 +9,11 @@
     "snap":"snap版はSnapcraft等よりDLしてください。",
     "sureupd":"アップデートは必ず行ってください",
     "skipupd":"アップデートをスキップする",
-    "nexttl":"次回TL表示時まで",
-    "nextver":"次のバージョンが出るまで",
+    "nexttl":"次回TL表示時までスキップ",
+    "nextver":"次のバージョンが出るまでスキップ",
     "problem1":"問題が発生しますか？",
     "problem2":"<a href='https://thedesk.top'>公式HP</a>からダウンロードをお試しください。",
     "continue":"アップデートを続行",
-    "dlnow":"ダウンロード中"
+    "dlnow":"ダウンロード中",
+    "checkWhatIsNew": "アップデート内容"
 }
