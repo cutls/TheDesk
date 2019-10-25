@@ -3,8 +3,10 @@
     "download": "Začít",
     "portable": "Přenosná verze",
     "installer": "Verze instalátoru",
+    "linux": "zip",
+    "linuxdeb": "deb(Recommended on buntu, Debian)",
+    "linuxsnap": "snap",
     "snap": "Verze Snap může být na Snapcraftu",
-    "unrewrite": "Nepřepisovat",
     "sureupd": "Můžete ztratit úžasné nové funkce!",
     "skipupd": "Přeskočit tuto aktualizaci",
     "nexttl": "Do dalšího načtení časové osy",
@@ -12,5 +14,6 @@
     "problem1": "Máte problémy?",
     "problem2": "Prosím stáhněte si aktualizaci na <a href=\"https://thedesk.top\">oficiální stránce</a>.",
     "continue": "Pokračovat v aktualizaci",
-    "dlnow": "Stahuji..."
+    "dlnow": "Stahuji...",
+    "checkWhatIsNew": "What is new?"
 }
