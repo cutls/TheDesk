@@ -13,8 +13,7 @@ function ck() {
 	if (!main) {
 		localStorage.setItem("main", 0)
 	}
-	var domainz = localStorage.getItem("domain_0");
-	var at = localStorage.getItem("acct_0_at");
+	
 	//コード受信
 	if (location.search) {
 		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/);
@@ -32,17 +31,21 @@ function ck() {
 		location.href = "acct.html?mode=first&code=true"
 	} else {
 		var obj = JSON.parse(multi);
+		var jp=false
 		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key];
 			if (acct.domain) {
 				refresh(key, true)
+			}
+			if(acct.domain=="mstdn.jp"){
+				jp=true
 			}
 		});
 		if (obj[0].domain) {
 			$("#tl").show();
 			ticker();
 			multiSelector(false);
-			verck(ver);
+			verck(ver, jp);
 			$(".stw").show()
 			$("#something-wrong img").attr("src", "../../img/thinking.svg")
 		}
