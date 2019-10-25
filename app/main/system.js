@@ -9,6 +9,7 @@ function system(mainWindow, dir, lang, dirname) {
 	const clipboard = electron.clipboard;
 	var tmp_img = join(app.getPath("userData"), "tmp.png");
 	var ha_path = join(app.getPath("userData"), "hardwareAcceleration");
+	var ua_path = join(app.getPath("userData"), "useragent");
 	var lang_path = join(app.getPath("userData"), "language");
 	const BrowserWindow = electron.BrowserWindow;
 	const dialog = electron.dialog;
@@ -88,6 +89,15 @@ function system(mainWindow, dir, lang, dirname) {
 			fs.writeFileSync(ha_path, arg);
 		} else {
 			fs.unlink(ha_path, function (err) { });
+		}
+		app.relaunch()
+		app.exit()
+	})
+	ipc.on('ua', function (e, arg) {
+		if (arg == "") {
+			fs.unlink(ua_path, function (err) { });
+		} else {
+			fs.writeFileSync(ua_path, arg);
 		}
 		app.relaunch()
 		app.exit()

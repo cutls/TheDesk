@@ -105,6 +105,18 @@ var envConstruction = [
                 }
             ]
         }
+    },
+    {
+        id: "ua",
+        storage: "ua_setting",
+        checkbox: false,
+        doubleText: false,
+        setValue: "",
+        width: 200,
+        text: {
+            head: "@@useragent@@",
+            desc: "@@useragentWarn@@"
+        }
     }
 ];
 var tlConstruction = [

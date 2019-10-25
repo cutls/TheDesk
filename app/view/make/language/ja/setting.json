@@ -31,6 +31,8 @@
   "fontsize": "フォントサイズ",
   "savefolder": "デフォルトの保存先",
   "savefolderwarn": "画像ダウンロードやスクリーンショットに影響します。",
+  "useragent":"ユーザーエージェント",
+  "useragentWarn":"再起動します。",
   "absolute": "絶対指定",
   "themeSel": "テーマの選択",
   "customtheme": "カスタムテーマの作成・編集",

@@ -14,6 +14,9 @@ var envView = new Vue({
 			if (ls == "ha") {
 				hardwareAcceleration(val)
 			}
+			if (ls == "ua_setting") {
+				useragent(val)
+			}
 			return true
 		}
 	}
@@ -692,6 +695,9 @@ function clearCustomImport() {
 }
 function hardwareAcceleration(had) {
 	postMessage(["ha", had], "*")
+}
+function useragent(val){
+	postMessage(["ua", val], "*")
 }
 function customSound(key) {
 	postMessage(["customSound", key], "*")
