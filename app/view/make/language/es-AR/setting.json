@@ -31,6 +31,8 @@
   "fontsize": "Tamaño de tipografía",
   "savefolder": "Carpeta para guardar",
   "savefolderwarn": "TheDesk usa esta configuración para guardar imágenes en general y capturas de pantallas.",
+  "useragent": "User agent",
+  "useragentWarn": "Restart when changed",
   "absolute": "valor absoluto",
   "themeSel": "Seleccionar tema",
   "customtheme": "Editar y agregar temas personalizados",
