@@ -31,6 +31,8 @@
   "fontsize": "Velikost písma",
   "savefolder": "Folder to save",
   "savefolderwarn": "TheDesk uses this value when it try to save pictures or take screenshots.",
+  "useragent": "User agent",
+  "useragentWarn": "Restart when changed",
   "absolute": "absolutní hodnota",
   "themeSel": "Vybrat motiv",
   "customtheme": "Edit and add custom themes",
