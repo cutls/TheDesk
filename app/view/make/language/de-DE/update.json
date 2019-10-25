@@ -3,8 +3,10 @@
     "download": "Start",
     "portable": "Portable Version",
     "installer": "Installer Version",
+    "linux": "zip",
+    "linuxdeb": "deb(Recommended on buntu, Debian)",
+    "linuxsnap": "snap",
     "snap": "Snap-Version kann auf Snapcraft sein",
-    "unrewrite": "Nicht wieder fragen.",
     "sureupd": "Du kannst ein cooles Erlebnis verpassen!",
     "skipupd": "Update überspringen",
     "nexttl": "Bis zur nächsten Verlaufsaktualisierung",
@@ -12,5 +14,6 @@
     "problem1": "Gibt es Probleme?",
     "problem2": "Bitte von <a href=\"https://thedesk.top\">Offizielle Homepage</a> herunterladen.",
     "continue": "Aktualisieren fortsetzen",
-    "dlnow": "Herunterladen..."
+    "dlnow": "Herunterladen...",
+    "checkWhatIsNew": "What is new?"
 }

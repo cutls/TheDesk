@@ -3,8 +3,10 @@
     "download": "Comenzar",
     "portable": "Compilación portátil",
     "installer": "Compilación de instalación",
+    "linux": "zip",
+    "linuxdeb": "deb(Recommended on buntu, Debian)",
+    "linuxsnap": "snap",
     "snap": "La compilación Snap puede encontrarse en Snapcraft",
-    "unrewrite": "No reescribir",
     "sureupd": "¡Podrías perderte una experiencia copada!",
     "skipupd": "Saltar esta actualización",
     "nexttl": "Hasta el próximo refresco de la línea temporal",
@@ -12,5 +14,6 @@
     "problem1": "¿Tenés problemas?",
     "problem2": "Por favor, descargá desde <a href=\"https://thedesk.top/en/\">el sitio web oficial</a>.",
     "continue": "Continuar con la actualización",
-    "dlnow": "Descargando…"
+    "dlnow": "Descargando…",
+    "checkWhatIsNew": "What is new?"
 }

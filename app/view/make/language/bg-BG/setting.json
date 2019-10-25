@@ -31,6 +31,8 @@
   "fontsize": "Размер на шрифта",
   "savefolder": "Папка за запазване",
   "savefolderwarn": "TheDesk ще използва това местоназначение, когато се опитва да запази снимки или да прави екранни снимки.",
+  "useragent": "User agent",
+  "useragentWarn": "Restart when changed",
   "absolute": "абсолютна стойност",
   "themeSel": "Изберете тема",
   "customtheme": "Редактирайте и добавете персонализирани теми",
