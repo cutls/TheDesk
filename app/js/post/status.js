@@ -150,10 +150,10 @@ function follow(acct_id, remote) {
       console.log(["Success: folllow", json]);
       if ($("#his-data").hasClass("following")) {
         $("#his-data").removeClass("following");
-        $("#his-follow-btn").text(lang.lang_status_follow);
+        $("#his-follow-btn-text").text(lang.lang_status_follow);
       } else {
         $("#his-data").addClass("following");
-        $("#his-follow-btn").text(lang.lang_status_unfollow);
+        $("#his-follow-btn-text").text(lang.lang_status_unfollow);
       }
     }
   };
@@ -196,10 +196,10 @@ function block(acct_id) {
         if (httpreq.readyState === 4) {
           if ($("#his-data").hasClass("blocking")) {
             $("#his-data").removeClass("blocking");
-            $("#his-block-btn").text(lang.lang_status_block);
+            $("#his-block-btn-text").text(lang.lang_status_block);
           } else {
             $("#his-data").addClass("blocking");
-            $("#his-block-btn").text(lang.lang_status_unblock);
+            $("#his-block-btn-text").text(lang.lang_status_unblock);
           }
         }
       };
@@ -253,10 +253,10 @@ function muteDo(acct_id) {
         if (httpreq.readyState === 4) {
           if ($("#his-data").hasClass("muting")) {
             $("#his-data").removeClass("muting");
-            $("#his-mute-btn").text(lang.lang_status_mute);
+            $("#his-mute-btn-text").text(lang.lang_status_mute);
           } else {
             $("#his-data").addClass("muting");
-            $("#his-mute-btn").text(lang.lang_status_unmute);
+            $("#his-mute-btn-text").text(lang.lang_status_unmute);
           }
         }
       };
