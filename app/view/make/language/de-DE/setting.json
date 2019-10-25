@@ -31,6 +31,8 @@
   "fontsize": "Schriftgröße",
   "savefolder": "Ordner zum Speichern",
   "savefolderwarn": "TheDesk verwendet diesen Ordner, wenn es versucht Bilder zu speichern oder Screenshots zu machen.",
+  "useragent": "User agent",
+  "useragentWarn": "Restart when changed",
   "absolute": "Absoluter Wert",
   "themeSel": "Design auswählen",
   "customtheme": "Bearbeiten und hinzufügen von eigenen Designs",
