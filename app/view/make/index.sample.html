@@ -724,6 +724,31 @@
 			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">@@close@@</a>
 		</div>
 	</div>
+	<!--mstdn.jp useragent-->
+	<div id="askjp_jp_ua" class="hide" style="z-index:505;width:100vw;height:100vh; background-color: #530f0f;color:white;padding:20px;overflow-y:scroll;position:absolute;">
+		<p style="font-size:300%">【緊急】mstdn.jpへのアクセスについて</p><br>
+		<p style="font-size:200%">問題の概要</p>
+		<p>合同会社分散型ソーシャルネットワーク機構は非公開審査によってユーザーエージェントベースで個々のアプリに対してAPIへのアクセスを許可する方法を取っています。</p>
+		<p>TheDesk開発者はこれに強く反発し、TheDeskのユーザーエージェントをそのアプリからのアクセスであると特定することができない値にすることを決めました。</p>
+		<p>具体的には、"Mastodon client: [起動毎に変わる100文字の英数記号]"と設定しました。</p>
+		<p style="font-size:200%">ユーザーによる対策</p>
+		<p>このバージョンのTheDeskでは任意のユーザーエージェントを適用できます。「設定」内の「環境設定」で設定していただけます。<a href="setting.html">設定</a></p>
+		<p style="font-size:150%">1. 「TheDesk」を含む値に設定する</p>
+		<p>「設定」内の「環境設定」、「ユーザーエージェント」に「TheDesk」を含む値を入れてください。大文字小文字に注意してください。</p>
+		<p><b>懸念点</b></p>
+		<p>TheDesk開発者は合同会社分散型ソーシャルネットワーク機構に対しこの件についてメールで問い合わせを行っています(抗議ではありません)。問い合わせの過程でアプリ許可が取り消され、使用不能になる可能性があります。</p>
+		<p><u>ちなみに</u></p>
+		<p>合同会社分散型ソーシャルネットワーク機構はmstdn.jpのお知らせアカウントに対するリプライに書かれたサードパーティクライアントを「審査」の後許可するとトゥートし、複数ユーザーがTheDeskの名前を挙げました。
+			事実、トゥートの翌日までにTheDeskに対してアクセス許可が出されました。しかし、許可を出す際にTheDeskの標準ユーザーエージェントを機構は一切確認せず、「TheDesk」という文字列が入ったユーザーエージェントを一律で許可する設定にしたようです。
+			結果として実際の標準ユーザーエージェントはそれに合致せず、不許可のままとなっていました。前バージョンまでの標準ユーザーエージェントは、パッケージ名の都合上全て小文字の「thedesk」を採用していました。
+		</p>
+		<p style="font-size:150%">2. 「認定済み」クライアントの名前を含む値に設定する</p>
+		<p>「設定」内の「環境設定」、「ユーザーエージェント」に、<a href="https://mstdn.jp/about">mstdn.jpのトップページ</a>記載のアプリ名を含む値を入れてください。大文字小文字やスペースに注意してください。</p>
+		<p>「Mastodon日本鯖です．」と書かれた以降の一段を全てコピーして記載してもアクセス可能です。<u>これほどまでにユーザーエージェント制限は「抜け道」が多いのです。</u><a href="setting.html">設定</a></p>
+		<p><b>懸念点</b></p>
+		<p>その記載されたアプリと合同会社分散型ソーシャルネットワーク機構になんの関係があるかは知りませんが、どちらにしろ他のクライアントの名を借りてアクセスの許可をいただくというあまり道徳的によろしくない方法です。</p>
+		<button onclick="$('#askjp_jp_ua').addClass('hide')" class="btn waves-effect">閉じる</button>
+	</div>
 	<!-- Modal Structure Release Note-->
 	<div id="releasenote" class="modal modal-fixed-footer">
 		<div class="modal-content">

@@ -1,5 +1,5 @@
 //バージョンチェッカー
-function verck(ver) {
+function verck(ver, jp) {
 	console.log("%c Welcome😊", "color: red;font-size:200%;")
 	var date = new Date();
 	var show = false
@@ -87,6 +87,11 @@ function verck(ver) {
 	}).then(function (mess) {
 		console.table(mess);
 		if (mess) {
+			//askjp_jp_ua: 2019年10月24日、mstdn.jpによるユーザーエージェントアクセス制限
+			if(jp && mess.jp_ua && !localStorage.getItem("askjp_jp_ua")){
+				localStorage.setItem("askjp_jp_ua", true)
+				$("#askjp_jp_ua").removeClass("hide")
+			}
 			var platform = localStorage.getItem("platform");
 			if (platform == "darwin") {
 				var newest = mess.desk_mac;
