@@ -76,6 +76,7 @@ function login(url) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, json); }
 			var auth = "https://" + url + "/oauth/authorize?client_id=" + json[
 				"client_id"] + "&client_secret=" + json["client_secret"] +
 				"&response_type=code&redirect_uri=" + red + "&scope=read+write+follow";
@@ -129,6 +130,11 @@ function code(code, mode) {
 			code: code
 		})
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -160,6 +166,11 @@ function getdata() {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -207,6 +218,11 @@ function getdataAdv(domain, at) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -265,6 +281,11 @@ function refresh(target, loadskip) {
 			'Authorization': 'Bearer ' + obj[target].at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -531,6 +552,11 @@ function ticker() {
 		},
 	}).then(function (response) {
 
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		console.error(error);

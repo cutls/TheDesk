@@ -11,6 +11,11 @@ function dm(acct_id, tlid, type, delc, voice) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -43,6 +48,11 @@ function dmmore(tlid) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);

@@ -25,6 +25,11 @@ function tl(data) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		console.error(error);
@@ -199,6 +204,7 @@ function post() {
 	httpreq.send(JSON.stringify(toot));
 	httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
+			if(this.status!==200){ setLog(start, this.status, this.response); }
 			$("#textarea").val("");
 		}
 	};

@@ -35,6 +35,11 @@ function details(id, acct_id, tlid, mode) {
 	}
 
 	fetch(start, i).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -131,6 +136,11 @@ function replyTL(id, acct_id) {
 		return false
 	}
 	fetch(start, i).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -183,6 +193,11 @@ function getContext(id, acct_id) {
 		}
 	}
 	fetch(start, i).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -241,7 +256,12 @@ function beforeToot(id, acct_id, domain) {
 				untilID: id
 			})
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -259,7 +279,12 @@ function beforeToot(id, acct_id, domain) {
 				'content-type': 'application/json',
 			},
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -291,7 +316,12 @@ function userToot(id, acct_id, user) {
 				userId: user
 			})
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -309,7 +339,12 @@ function userToot(id, acct_id, user) {
 				'Authorization': 'Bearer ' + at
 			},
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -336,6 +371,11 @@ function afterToot(id, acct_id, domain) {
 			'content-type': 'application/json',
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -361,6 +401,11 @@ function afterUserToot(id, acct_id, user) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -386,6 +431,11 @@ function afterFTLToot(id, acct_id, domain) {
 			'content-type': 'application/json',
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -413,6 +463,11 @@ function faved(id, acct_id) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -440,6 +495,11 @@ function rted(id, acct_id) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -500,6 +560,11 @@ function trans(tar, to) {
 	fetch(exec, {
 		method: 'GET',
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -528,6 +593,11 @@ function detEx(url, acct_id) {
 			'Authorization': 'Bearer ' + at
 		}
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);

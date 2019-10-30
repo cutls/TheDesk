@@ -60,7 +60,12 @@ function additional(acct_id, tlid) {
 					},
 					//body: JSON.stringify({})
 				}).then(function (response) {
-					return response.json();
+					if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 				}).catch(function (error) {
 					todo(error);
 					console.error(error);
@@ -88,6 +93,7 @@ function additional(acct_id, tlid) {
 			if (this.readyState === 4 && this.status === 200) {
 				if (this.response) {
 					var json = this.response;
+					if(this.status!==200){ setLog(start, this.status, this.response); }
 					var emojis = json.emojis;
 					for (i = 0; i < emojis.length; i++) {
 						var emojie = emojis[i];
@@ -144,7 +150,12 @@ function additionalIndv(tlid, acct_id, id) {
 				},
 				//body: JSON.stringify({})
 			}).then(function (response) {
-				return response.json();
+				if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 			}).catch(function (error) {
 				todo(error);
 				console.error(error);
@@ -168,7 +179,12 @@ function additionalIndv(tlid, acct_id, id) {
 				},
 				//body: JSON.stringify({})
 			}).then(function (response) {
-				return response.json();
+				if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 			}).catch(function (error) {
 				todo(error);
 				console.error(error);

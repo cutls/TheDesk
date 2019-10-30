@@ -18,6 +18,7 @@ function fav(id, acct_id, remote) {
   httpreq.onreadystatechange = function() {
     if (httpreq.readyState === 4) {
       var json = httpreq.response;
+      if(this.status!==200){ setLog(start, this.status, json); }
       if (json.reblog) {
         json = json.reblog;
       }
@@ -75,6 +76,7 @@ function rt(id, acct_id, remote, vis) {
   httpreq.onreadystatechange = function() {
     if (httpreq.readyState === 4) {
       var json = httpreq.response;
+      if(this.status!==200){ setLog(start, this.status, json); }
       if (json.reblog) {
         json = json.reblog;
       }
@@ -147,6 +149,7 @@ function follow(acct_id, remote) {
   httpreq.onreadystatechange = function() {
     if (httpreq.readyState === 4) {
       var json = httpreq.response;
+      if(this.status!==200){ setLog(start, this.status, json); }
       console.log(["Success: folllow", json]);
       if ($("#his-data").hasClass("following")) {
         $("#his-data").removeClass("following");
@@ -194,6 +197,7 @@ function block(acct_id) {
       httpreq.send();
       httpreq.onreadystatechange = function() {
         if (httpreq.readyState === 4) {
+          if(this.status!==200){ setLog(start, this.status, this.response); }
           if ($("#his-data").hasClass("blocking")) {
             $("#his-data").removeClass("blocking");
             $("#his-block-btn-text").text(lang.lang_status_block);
@@ -251,6 +255,7 @@ function muteDo(acct_id) {
       httpreq.send(rq);
       httpreq.onreadystatechange = function() {
         if (httpreq.readyState === 4) {
+          if(this.status!==200){ setLog(start, this.status, this.response); }
           if ($("#his-data").hasClass("muting")) {
             $("#his-data").removeClass("muting");
             $("#his-mute-btn-text").text(lang.lang_status_mute);
@@ -288,6 +293,7 @@ function del(id, acct_id) {
   }
   httpreq.onreadystatechange = function() {
     if (httpreq.readyState === 4) {
+      if(this.status!==200){ setLog(start, this.status, this.response); }
     }
   };
 }
@@ -362,6 +368,7 @@ function pin(id, acct_id) {
   httpreq.onreadystatechange = function() {
     if (httpreq.readyState === 4) {
       var json = httpreq.response;
+      if(this.status!==200){ setLog(start, this.status, this.response); }
       console.log(["Success: pinned", json]);
       if ($("[toot-id=" + id + "]").hasClass("pined")) {
         $("[toot-id=" + id + "]").removeClass("pined");
@@ -389,6 +396,7 @@ function request(id, flag, acct_id) {
   httpreq.onreadystatechange = function() {
     if (httpreq.readyState === 4) {
       var json = httpreq.response;
+      if(this.status!==200){ setLog(start, this.status, this.response); }
       console.log(["Success: request", "type:" + flag, json]);
       showReq();
     }
@@ -412,6 +420,7 @@ function domainblock(add, flag, acct_id) {
   httpreq.onreadystatechange = function() {
     if (httpreq.readyState === 4) {
       var json = httpreq.response;
+      if(this.status!==200){ setLog(start, this.status, this.response); }
       console.log(["Success: domain block", json]);
       showDom();
     }
@@ -468,6 +477,7 @@ function pinUser() {
   httpreq.onreadystatechange = function() {
     if (httpreq.readyState === 4) {
       var json = httpreq.response;
+      if(this.status!==200){ setLog(start, this.status, this.response); }
       if ($("#his-end-btn").hasClass("endorsed")) {
         $("#his-end-btn").removeClass("endorsed");
         $("#his-end-btn").text(lang.lang_status_endorse);
@@ -499,7 +509,12 @@ function staEx(mode) {
     }
   })
     .then(function(response) {
-      return response.json();
+      if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
     })
     .catch(function(error) {
       todo(error);

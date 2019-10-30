@@ -31,6 +31,11 @@ function udgEx(user, acct_id) {
 			'Authorization': 'Bearer ' + at
 		}
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -65,6 +70,11 @@ function udg(user, acct_id) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -235,6 +245,11 @@ function misskeyUdg(user, acct_id) {
 			userId: user
 		})
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -357,6 +372,11 @@ function relations(user, acct_id) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);

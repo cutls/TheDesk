@@ -17,6 +17,7 @@ function renote(id, acct_id, remote) {
     httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response;
+            if(this.status!==200){ setLog(start, this.status, json); }
             console.log(["Success: renote", json]);
             $("[toot-id=" + id + "]").addClass("rted");
             $(".rt_" + id).toggleClass("teal-text");
@@ -63,6 +64,7 @@ function reactiontoggle(id, acct_id, tlid) {
     httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response;
+            if(this.status!==200){ setLog(start, this.status, json); }
             console.log(["Success: reaction", json]);
             if (json.reactions) {
                 var reactions = ["like", "love", "laugh", "hmm", "surprise", "congrats", "angry", "confused", "pudding", "rip"];
@@ -123,7 +125,12 @@ function reactRefresh(acct_id, id) {
     }
     fetch(start, i,
     ).then(function (response) {
-        return response.json();
+        if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
     }).catch(function (error) {
         todo(error);
         console.error(error);
@@ -186,6 +193,7 @@ function reaction(mode, id, acct_id, tlid) {
     httpreq.send(JSON.stringify({ i: at, noteId: id, reaction: mode }));
     httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
+            if(this.status!==200){ setLog(start, this.status, this.response); }
             $(".fav_" + id).toggleClass("yellow-text");
         }
     }
@@ -219,6 +227,7 @@ function voterefresh(acct_id, id) {
     httpreqd.onreadystatechange = function () {
         if (httpreqd.readyState == 4) {
             var json = httpreqd.response;
+            if(this.status!==200){ setLog(start, this.status, json); }
             if (!json) {
                 return false;
             }

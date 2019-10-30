@@ -121,6 +121,11 @@ function filter() {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -199,6 +204,7 @@ function makeNewFilter() {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, this.response); }
 			filter();
 			filterUpdate(acct_id)
 			$("#filter-add-word").val("");
@@ -239,6 +245,11 @@ function filterEdit(id, acct_id) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -282,6 +293,7 @@ function filterDel(id, acct_id) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, this.response); }
 			filter();
 			filterUpdate(acct_id)
 		}
@@ -299,7 +311,12 @@ function getFilter(acct_id) {
 				'Authorization': 'Bearer ' + at
 			},
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -342,6 +359,11 @@ function filterUpdate(acct_id) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);

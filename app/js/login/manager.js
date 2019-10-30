@@ -85,7 +85,12 @@ function data(domain) {
 		}
 	})
 		.then(function(response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		})
 		.catch(function(error) {
 			todo(error);
@@ -114,7 +119,12 @@ function data(domain) {
 		}
 	})
 		.then(function(response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		})
 		.catch(function(error) {
 			todo(error);
@@ -320,6 +330,7 @@ function login(url) {
 	httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, json); }
 			localStorage.setItem("msky", "false");
 			var auth = "https://" + url + "/oauth/authorize?client_id=" + json["client_id"] + "&client_secret=" + json["client_secret"] + "&response_type=code&scope=read+write+follow&redirect_uri=" + encodeURIComponent(red);
 			localStorage.setItem("domain_tmp", url);
@@ -345,7 +356,12 @@ function versionChecker(url) {
 		}
 	})
 		.then(function(response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		})
 		.catch(function(error) {
 			todo(error);
@@ -378,7 +394,12 @@ function versionCompat(prefix, ver, title, real) {
 		}
 	})
 		.then(function(response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		})
 		.catch(function(error) {
 			todo(error);
@@ -437,6 +458,7 @@ function misskeyLogin(url) {
 	httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, json); }
 			misskeyAuth(url, json.secret);
 		}
 	};
@@ -458,6 +480,7 @@ function misskeyAuth(url, mkc) {
 	httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, json); }
 			var token = json.token;
 			$("#auth").show();
 			$("#code").val(token);
@@ -486,9 +509,9 @@ function code(code) {
 		var code = $("#code").val();
 		$("#code").val("");
 	}
-	if(!code || code==""){
+	if (!code || code == "") {
 		M.toast({ html: lang.lang_fatalerroroccured + "Error: no code", displayLength: 5000 });
-		return false
+		return false;
 	}
 	var url = localStorage.getItem("domain_tmp");
 	localStorage.removeItem("domain_tmp");
@@ -507,6 +530,7 @@ function code(code) {
 		httpreq.onreadystatechange = function() {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
+				if(this.status!==200){ setLog(start, this.status, json); }
 				var i = sha256(json.accessToken + localStorage.getItem("mkc"));
 				var avatar = json["user"]["avatarUrl"];
 				var priv = "public";
@@ -563,6 +587,7 @@ function code(code) {
 		httpreq.onreadystatechange = function() {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
+				if(this.status!==200){ setLog(start, this.status, json); }
 				if (json["access_token"]) {
 					$("#auth").hide();
 					$("#add").show();
@@ -583,7 +608,12 @@ function getdata(domain, at) {
 		}
 	})
 		.then(function(response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		})
 		.catch(function(error) {
 			todo(error);
@@ -664,9 +694,9 @@ function atSetup(type) {
 			mode: ""
 		};
 	}
-	if(!i || i==""){
+	if (!i || i == "") {
 		M.toast({ html: lang.lang_fatalerroroccured + "Error: access token", displayLength: 5000 });
-		return false
+		return false;
 	}
 	var obj = JSON.parse(multi);
 	var target = obj.length;
@@ -684,7 +714,7 @@ function atSetup(type) {
 function refresh(target) {
 	var multi = localStorage.getItem("multi");
 	var obj = JSON.parse(multi);
-	console.log(obj)
+	console.log(obj);
 	if (obj[target].mode == "misskey") {
 		misskeyRefresh(obj, target, obj[target].domain);
 		return;
@@ -698,7 +728,17 @@ function refresh(target) {
 		}
 	})
 		.then(function(response) {
-			return response.json();
+			if (!response.ok) {
+				response.text().then(function(text) {
+					setLog(response.url, response.status, text);
+				});
+			}
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		})
 		.catch(function(error) {
 			todo(error);
@@ -755,6 +795,7 @@ function misskeyRefresh(obj, target, url) {
 	httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, json); }
 			var avatar = json["user"]["avatarUrl"];
 			var priv = "public";
 			var add = {
@@ -879,7 +920,12 @@ input.addEventListener(
 						}
 					})
 						.then(function(response) {
-							return response.json();
+							if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 						})
 						.catch(function(error) {
 							todo(error);

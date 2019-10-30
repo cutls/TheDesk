@@ -52,6 +52,7 @@ function imgChange(imgfile, target) {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
+				if(this.status!==200){ setLog(start, this.status, this.response); }
 				$('#his-data').modal('close');
 				todc();
 				localStorage.removeItem("image");

@@ -196,4 +196,19 @@ function object_array_sort(data, key, order, fn) {
 	}
 	fn(data);
 }
-localStorage.removeItem("errors");
+function setLog(txt1, txt2,txt3){
+	//url,statuscode,responsetext
+	var text = new Date().toUTCString()
+	text=text+","+txt1+","+txt2+","+escapeCsv(txt3)
+	console.error(text)
+	postMessage(["log", text], "*")
+}
+function escapeCsv(str) {
+	if(!str){return str;}
+	var result;
+	result = str.replace(/\"/g, "\"\"");
+	if (result.indexOf(",") >= 0) {
+		result = "\"" + result + "\""
+	}
+	return result;
+}

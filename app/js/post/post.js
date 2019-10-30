@@ -153,6 +153,7 @@ function post(mode, postvis) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, json); }
 			var box = localStorage.getItem("box");
 			if (box == "yes" || !box) {
 				$("#textarea").blur();
@@ -224,6 +225,7 @@ function misskeyPost() {
 				localStorage.removeItem("stable")
 			}
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, json); }
 			console.log(["Success: toot", json]);
 			var box = localStorage.getItem("box");
 			if (box == "yes") {

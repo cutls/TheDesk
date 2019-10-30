@@ -194,10 +194,12 @@ function createWindow() {
 		// Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) thedesk/18.11.3 Chrome/76.0.3809.146 Electron/6.0.12 Safari/537.36
 		const crypto = require("crypto");
 		const N = 100;
-		var ua = "Mastodon client: "+crypto
-			.randomBytes(N)
-			.toString("base64")
-			.substring(0, N);
+		var ua =
+			"Mastodon client: " +
+			crypto
+				.randomBytes(N)
+				.toString("base64")
+				.substring(0, N);
 	}
 	mainWindow.loadURL(base + lang + "/index.html" + plus, { userAgent: ua });
 	if (!window_size.x && !window_size.y) {

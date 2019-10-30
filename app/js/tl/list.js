@@ -21,7 +21,12 @@ function list() {
 				i: at
 			}),
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -47,7 +52,12 @@ function list() {
 				'Authorization': 'Bearer ' + at
 			},
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -85,6 +95,7 @@ function makeNewList() {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
+				if(this.status!==200){ setLog(start, this.status, this.response); }
 				list();
 				$("#list-add").val("")
 			}
@@ -102,6 +113,7 @@ function makeNewList() {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
+				if(this.status!==200){ setLog(start, this.status, this.response); }
 				list();
 				$("#list-add").val("")
 			}
@@ -123,6 +135,11 @@ function listUser(id, acct_id) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -153,7 +170,12 @@ function hisList(user, acct_id) {
 				'Authorization': 'Bearer ' + at
 			},
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -178,7 +200,12 @@ function hisList(user, acct_id) {
 				'Authorization': 'Bearer ' + at
 			},
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -203,7 +230,12 @@ function hisList(user, acct_id) {
 				i: at
 			}),
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -249,6 +281,7 @@ function listAdd(id, user, acct_id) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, this.response); }
 			hisList(user, acct_id)
 		}
 	}
@@ -280,6 +313,7 @@ function listRemove(id, user, acct_id) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, this.response); }
 			hisList(user, acct_id)
 		}
 	}

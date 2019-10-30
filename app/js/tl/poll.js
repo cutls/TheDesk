@@ -114,6 +114,7 @@ function voteMastodonrefresh(acct_id, id) {
     httpreqd.send();
     httpreqd.onreadystatechange = function () {
         if (httpreqd.readyState == 4) {
+            if(this.status!==200){ setLog(start, this.status, this.response); }
             var json = httpreqd.response;
             console.log(["Refresh vote", json]);
             if (!json) {

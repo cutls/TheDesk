@@ -128,6 +128,11 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 
 	console.log(["Try to get timeline of " + tlid, start])
 	fetch(start, i).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -438,7 +443,12 @@ function moreload(type, tlid) {
 			};
 		}
 		fetch(start, i).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -551,7 +561,12 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 
 
 		fetch(start, i).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
@@ -897,6 +912,11 @@ function getMarker(tlid, type, acct_id) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing)
@@ -940,6 +960,11 @@ function showUnread(tlid, type, acct_id) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -991,6 +1016,11 @@ function ueload(tlid) {
 			'Authorization': 'Bearer ' + at
 		},
 	}).then(function (response) {
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -1062,6 +1092,7 @@ function asRead(callback) {
 				httpreq.onreadystatechange = function () {
 					if (httpreq.readyState === 4) {
 						var json = httpreq.response
+						if(this.status!==200){ setLog(start, this.status, this.response); }
 						console.log(json)
 						ct++
 						if (ct == obl && callback) {

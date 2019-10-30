@@ -43,6 +43,7 @@ function notfColumn(acct_id, tlid, sys) {
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
+			if(this.status!==200){ setLog(start, this.status, this.response); }
 			var max_id = httpreq.getResponseHeader("link");
 			if (max_id) {
 				max_id = max_id.match(/[?&]{1}max_id=([0-9]+)/)[1]
@@ -152,6 +153,11 @@ function notfCommon(acct_id, tlid, sys) {
 	}
 	fetch(start, i).then(function (response) {
 		console.log("header to get param:" + response.headers.get('link'));
+		if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
 		return response.json();
 	}).catch(function (error) {
 		todo(error);
@@ -317,6 +323,7 @@ function notfmore(tlid) {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
+				if(this.status!==200){ setLog(start, this.status, this.response); }
 				console.log(["More notifications on " + tlid, json]);
 				var max_id = httpreq.getResponseHeader("link").match(/[?&]{1}max_id=([0-9]+)/)[1];
 				if (json[0]) {

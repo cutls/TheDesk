@@ -113,7 +113,12 @@ input.addEventListener("focus", function () {
 						'Authorization': 'Bearer ' + at
 					},
 				}).then(function (response) {
-					return response.json();
+					if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 				}).catch(function (error) {
 					todo(error);
 					console.error(error);
@@ -258,7 +263,12 @@ function cgNPs(q) {
 				'content-type': 'application/json'
 			},
 		}).then(function (response) {
-			return response.json();
+			if (!response.ok) {
+			response.text().then(function(text) {
+				setLog(response.url, response.status, text);
+			});
+		}
+		return response.json();
 		}).catch(function (error) {
 			todo(error);
 			console.error(error);
