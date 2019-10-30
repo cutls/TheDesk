@@ -842,8 +842,8 @@
 						class="material-icons">recent_actors</i><span>@@directory@@</span></div>
 				<div class="waves-effect" onclick="filterMenu()" id="filterMenu"><i
 						class="material-icons">filter_list</i><span>@@filter@@</span></div>
-				<div class="waves-effect" onclick="help()"><i
-						class="material-icons">help_outline</i><span>@@help@@</span></div>
+				<div class="waves-effect" onclick="help()" id="helpMenu"><i
+						class="material-icons">help_outline</i><span>@@helpAndLogs@@</span></div>
 				<div class="waves-effect" onclick="location.href='index.html'"><i
 						class="material-icons">refresh</i><span>@@f5@@</span></div>
 			</div>
@@ -1041,6 +1041,12 @@
 					<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()"
 						id="add-filter-btn">@@add@@</button><br>
 					<span class="sml">@@warnOnIntegratedTL@@</span>
+				</div>
+				<!--ヘルプとログ-->
+				<div id="help-box" class="hide menu-content">
+					<a href="https://docs.thedesk.top" class="btn waves-effect" style="width:97.5%;">@@help@@</a><br>
+					@@contactwithlog@@<br>
+					<textarea id="logs" style="height:250px;"></textarea><br>
 				</div>
 			</div>
 		</div>

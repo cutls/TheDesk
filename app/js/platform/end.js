@@ -184,6 +184,10 @@ onmessage = function (e) {
 		asRead()
 	} else if (e.data[0] == "asReadEnd") {
 		asReadEnd()
+	} else if (e.data[0] == "logData") {
+		$("#logs").val(e.data[1])
+		var obj = document.getElementById("logs");
+    	obj.scrollTop = obj.scrollHeight;
 	} else if (e.data[0] == "alert") {
 		Swal.fire({
 			type: 'info',

@@ -169,6 +169,10 @@ ipc.on("memory", function(event, arg) {
 	var total = arg[2];
 	postMessage(["renderMem", [use, cpu, total]], "*");
 });
+//log
+ipc.on("logData", function(event, args) {
+	postMessage(["logData", args], "*");
+});
 //update.html
 ipc.on("prog", function(event, arg) {
 	postMessage(["updateProg", arg], "*");

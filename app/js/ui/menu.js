@@ -69,5 +69,9 @@ $(function () {
   });
 });
 function help() {
-  postMessage(["openUrl", "https://docs.thedesk.top"], "*")
+  $("#left-menu div").removeClass("active");
+	$("#helpMenu").addClass("active");
+	$(".menu-content").addClass("hide");
+	$("#help-box").removeClass("hide");
+  postMessage(["sendSinmpleIpc", "getLogs"], "*")
 }

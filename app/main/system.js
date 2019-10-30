@@ -12,6 +12,17 @@ function system(mainWindow, dir, lang, dirname) {
 	var ua_path = join(app.getPath("userData"), "useragent");
 	var lang_path = join(app.getPath("userData"), "language");
 	var log_dir_path = join(app.getPath("userData"), "logs");
+	//ログ
+	var today = new Date();
+	//今日のやつ
+	var todayStr = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate() + ".log";
+	//昨日のやつ
+	today.setDate(today.getDate() - 1);
+	var yestStr = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate() + ".log";
+	//一昨日のやつ
+	today.setDate(today.getDate() - 1);
+	var yest2Str = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate() + ".log";
+
 	const BrowserWindow = electron.BrowserWindow;
 	const dialog = electron.dialog;
 	const os = require("os");
@@ -243,17 +254,20 @@ function system(mainWindow, dir, lang, dirname) {
 			}
 		});
 	});
+	ipc.on("getLogs", (e, arg) => {
+		var logs=""
+		fs.readdir(log_dir_path, function(err, files) {
+			if (err) throw err;
+			files.filter(function(file) {
+				if (file == todayStr || file == yestStr || file == yest2Str) {
+					logs=logs+fs.readFileSync(join(log_dir_path, file), "utf8")
+				}
+			});
+			e.sender.webContents.send("logData", logs);
+		});
+	});
 	//起動時ログディレクトリ存在確認と作成、古ログ削除
 	fs.access(log_dir_path, fs.constants.R_OK | fs.constants.W_OK, error => {
-		var today = new Date();
-		//今日のやつ
-		var todayStr = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate() + ".log";
-		//昨日のやつ
-		today.setDate(today.getDate() - 1);
-		var yestStr = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate() + ".log";
-		//一昨日のやつ
-		today.setDate(today.getDate() - 1);
-		var yest2Str = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate() + ".log";
 		if (error) {
 			if (error.code === "ENOENT") {
 				fs.mkdirSync(log_dir_path);
@@ -265,7 +279,6 @@ function system(mainWindow, dir, lang, dirname) {
 				if (err) throw err;
 				files.filter(function(file) {
 					if (file != todayStr && file != yestStr && file != yest2Str) {
-						console.log(file, todayStr, yest2Str, yest2Str);
 						fs.unlinkSync(join(log_dir_path, file));
 					}
 				});
