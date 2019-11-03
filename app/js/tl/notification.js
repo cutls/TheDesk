@@ -2,9 +2,9 @@
 //取得+Streaming接続
 function notf(acct_id, tlid, sys) {
 	if (sys == "direct") {
-		notfColumn(acct_id, tlid, sys)
+		notfColumn(acct_id, tlid, sys);
 	} else {
-		notfCommon(acct_id, tlid, sys)
+		notfCommon(acct_id, tlid, sys);
 	}
 }
 function notfColumn(acct_id, tlid, sys) {
@@ -20,7 +20,7 @@ function notfColumn(acct_id, tlid, sys) {
 		var misskey = true;
 		var start = "https://" + domain + "/api/i/notifications";
 		httpreq.open("POST", start, true);
-		httpreq.setRequestHeader('Content-Type', 'application/json');
+		httpreq.setRequestHeader("Content-Type", "application/json");
 		var body = JSON.stringify({
 			i: at
 		});
@@ -33,26 +33,28 @@ function notfColumn(acct_id, tlid, sys) {
 		}
 		var start = "https://" + domain + "/api/v1/notifications" + exc;
 		httpreq.open("GET", start, true);
-		httpreq.setRequestHeader('Content-Type', 'application/json');
-		httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+		httpreq.setRequestHeader("Content-Type", "application/json");
+		httpreq.setRequestHeader("Authorization", "Bearer " + at);
 		var body = "";
 	}
 
 	httpreq.responseType = "json";
 	httpreq.send(body);
-	httpreq.onreadystatechange = function () {
+	httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			if(this.status!==200){ setLog(start, this.status, this.response); }
+			if (this.status !== 200) {
+				setLog(start, this.status, this.response);
+			}
 			var max_id = httpreq.getResponseHeader("link");
 			if (max_id) {
-				max_id = max_id.match(/[?&]{1}max_id=([0-9]+)/)[1]
+				max_id = max_id.match(/[?&]{1}max_id=([0-9]+)/)[1];
 			}
 			if (json[0]) {
 				var templete = "";
 				var lastnotf = localStorage.getItem("lastnotf_" + acct_id);
 				localStorage.setItem("lastnotf_" + acct_id, json[0].id);
-				Object.keys(json).forEach(function (key) {
+				Object.keys(json).forEach(function(key) {
 					var obj = json[key];
 					if (lastnotf == obj.id && key > 0 && native == "yes") {
 						var ct = key;
@@ -64,8 +66,7 @@ function notfColumn(acct_id, tlid, sys) {
 							body: ct + lang.lang_notf_new,
 							icon: localStorage.getItem("prof_" + acct_id)
 						};
-						var n = new Notification('TheDesk:' + domain, options);
-
+						var n = new Notification("TheDesk:" + domain, options);
 					}
 					if (localStorage.getItem("filter_" + acct_id) != "undefined") {
 						var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), "notif");
@@ -74,17 +75,16 @@ function notfColumn(acct_id, tlid, sys) {
 					}
 					if (obj.type != "follow") {
 						if (misskey) {
-							templete = templete + misskeyParse([obj], 'notf', acct_id, tlid, -1, mute);
+							templete = templete + misskeyParse([obj], "notf", acct_id, tlid, -1, mute);
 						} else {
-							templete = templete + parse([obj], 'notf', acct_id, tlid, -1, mute);
+							templete = templete + parse([obj], "notf", acct_id, tlid, -1, mute);
 						}
 					} else {
 						if (misskey) {
-							templete = templete + misskeyUserparse([obj], 'notf', acct_id, tlid, -1, mute);
+							templete = templete + misskeyUserparse([obj], "notf", acct_id, tlid, -1, mute);
 						} else {
-							templete = templete + userparse([obj.account], 'notf', acct_id, tlid, -1);
+							templete = templete + userparse([obj.account], "notf", acct_id, tlid, -1);
 						}
-
 					}
 				});
 				templete = templete + '<div class="hide notif-marker" data-maxid="' + max_id + '"></div>';
@@ -99,26 +99,23 @@ function notfColumn(acct_id, tlid, sys) {
 			if (markers == "yes") {
 				markers = true;
 			} else {
-				markers = false
+				markers = false;
 			}
 			if (markers) {
-				getMarker(tlid, "notf", acct_id)
+				getMarker(tlid, "notf", acct_id);
 			}
 		}
-	}
+	};
 	if (!misskey) {
 		if (localStorage.getItem("streaming_" + acct_id)) {
-			var wss = localStorage.getItem("streaming_" + acct_id)
+			var wss = localStorage.getItem("streaming_" + acct_id);
 		} else {
-			var wss = "wss://" + domain
+			var wss = "wss://" + domain;
 		}
-		var start = wss + "/api/v1/streaming/?stream=user&access_token=" +
-			at;
+		var start = wss + "/api/v1/streaming/?stream=user&access_token=" + at;
 	} else {
-		var start = "wss://" + domain + "/?i=" +
-			at;
+		var start = "wss://" + domain + "/?i=" + at;
 	}
-
 }
 function notfCommon(acct_id, tlid, sys) {
 	todo("Notifications Loading...");
@@ -132,104 +129,103 @@ function notfCommon(acct_id, tlid, sys) {
 		var misskey = true;
 		var start = "https://" + domain + "/api/i/notifications";
 		var i = {
-			method: 'POST',
+			method: "POST",
 			headers: {
-				'content-type': 'application/json',
+				"content-type": "application/json"
 			},
 			body: JSON.stringify({
 				i: at
 			})
-		}
+		};
 	} else {
 		var misskey = false;
 		var start = "https://" + domain + "/api/v1/notifications";
 		var i = {
-			method: 'GET',
+			method: "GET",
 			headers: {
-				'content-type': 'application/json',
-				'Authorization': 'Bearer ' + at
-			},
-		}
+				"content-type": "application/json",
+				Authorization: "Bearer " + at
+			}
+		};
 	}
-	fetch(start, i).then(function (response) {
-		console.log("header to get param:" + response.headers.get('link'));
-		if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
-		}
-		return response.json();
-	}).catch(function (error) {
-		todo(error);
-		console.error(error);
-	}).then(function (json) {
-		if (json[0]) {
-			var templete = "";
-			var lastnotf = localStorage.getItem("lastnotf_" + acct_id);
-			localStorage.setItem("lastnotf_" + acct_id, json[0].id);
-			Object.keys(json).forEach(function (key) {
-				var obj = json[key];
-				if (lastnotf == obj.id && key > 0 && native == "yes") {
-					var ct = key;
-					if (key > 14) {
-						ct = "15+";
+	fetch(start, i)
+		.then(function(response) {
+			console.log("header to get param:" + response.headers.get("link"));
+			if (!response.ok) {
+				response.text().then(function(text) {
+					setLog(response.url, response.status, text);
+				});
+			}
+			return response.json();
+		})
+		.catch(function(error) {
+			todo(error);
+			setLog(start, "JSON", error);
+			console.error(error);
+		})
+		.then(function(json) {
+			if (json[0]) {
+				var templete = "";
+				var lastnotf = localStorage.getItem("lastnotf_" + acct_id);
+				localStorage.setItem("lastnotf_" + acct_id, json[0].id);
+				Object.keys(json).forEach(function(key) {
+					var obj = json[key];
+					if (lastnotf == obj.id && key > 0 && native == "yes") {
+						var ct = key;
+						if (key > 14) {
+							ct = "15+";
+						}
+						var os = localStorage.getItem("platform");
+						var options = {
+							body: ct + lang.lang_notf_new,
+							icon: localStorage.getItem("prof_" + acct_id)
+						};
+						var n = new Notification("TheDesk:" + domain, options);
 					}
-					var os = localStorage.getItem("platform");
-					var options = {
-						body: ct + lang.lang_notf_new,
-						icon: localStorage.getItem("prof_" + acct_id)
-					};
-					var n = new Notification('TheDesk:' + domain, options);
-
-				}
-				if (localStorage.getItem("filter_" + acct_id) != "undefined") {
-					var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), "notif");
-				} else {
-					var mute = [];
-				}
-				if (obj.type != "follow") {
-					if (misskey) {
-						templete = templete + misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute);
+					if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+						var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), "notif");
 					} else {
-						templete = templete + parse([obj], 'notf', acct_id, 'notf', -1, mute);
+						var mute = [];
 					}
-				} else {
-					if (misskey) {
-						templete = templete + misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute);
+					if (obj.type != "follow") {
+						if (misskey) {
+							templete = templete + misskeyParse([obj], "notf", acct_id, "notf", -1, mute);
+						} else {
+							templete = templete + parse([obj], "notf", acct_id, "notf", -1, mute);
+						}
 					} else {
-						templete = templete + userparse([obj.account], 'notf', acct_id, 'notf', -1);
+						if (misskey) {
+							templete = templete + misskeyUserparse([obj], "notf", acct_id, "notf", -1, mute);
+						} else {
+							templete = templete + userparse([obj.account], "notf", acct_id, "notf", -1);
+						}
 					}
-
-				}
-			});
-			$("div[data-notf=" + acct_id + "]").html(templete);
-			$("#landing_" + tlid).hide();
-			jQuery("time.timeago").timeago();
-		}
-		$("#notf-box").addClass("fetched");
-		todc();
-		notfWS(misskey, acct_id, tlid, domain, at)
-	});
-
+				});
+				$("div[data-notf=" + acct_id + "]").html(templete);
+				$("#landing_" + tlid).hide();
+				jQuery("time.timeago").timeago();
+			}
+			$("#notf-box").addClass("fetched");
+			todc();
+			notfWS(misskey, acct_id, tlid, domain, at);
+		});
 }
 function notfWS(misskey, acct_id, tlid, domain, at) {
 	if (!misskey) {
 		if (localStorage.getItem("streaming_" + acct_id)) {
-			var wss = localStorage.getItem("streaming_" + acct_id)
+			var wss = localStorage.getItem("streaming_" + acct_id);
 		} else {
-			var wss = "wss://" + domain
+			var wss = "wss://" + domain;
 		}
-		var start = wss + "/api/v1/streaming/?stream=user&access_token=" +
-			at;
+		var start = wss + "/api/v1/streaming/?stream=user&access_token=" + at;
 
 		var wsid = websocketNotf.length;
 		websocketNotf[acct_id] = new WebSocket(start);
-		websocketNotf[acct_id].onopen = function (mess) {
-			console.table({ "acct_id": acct_id, "type": "Connect Streaming API(Notf)", "domain": domain, "message": [mess] })
+		websocketNotf[acct_id].onopen = function(mess) {
+			console.table({ acct_id: acct_id, type: "Connect Streaming API(Notf)", domain: domain, message: [mess] });
 			$("i[data-notf=" + acct_id + "]").removeClass("red-text");
-
-		}
-		websocketNotf[acct_id].onmessage = function (mess) {
+		};
+		websocketNotf[acct_id].onmessage = function(mess) {
 			//console.log(["Receive Streaming API(Notf):" + acct_id + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
 			var popup = localStorage.getItem("popup");
 			if (!popup) {
@@ -243,9 +239,9 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 				if (!$("#unread_" + tlid + " .material-icons").hasClass("teal-text")) {
 					//markers show中はダメ
 					if (obj.type != "follow") {
-						templete = parse([obj], 'notf', acct_id, 'notf', popup);
+						templete = parse([obj], "notf", acct_id, "notf", popup);
 					} else {
-						templete = userparse([obj], 'notf', acct_id, 'notf', popup);
+						templete = userparse([obj], "notf", acct_id, "notf", popup);
 					}
 					if (!$("div[data-notfIndv=" + acct_id + "_" + obj.id + "]").length) {
 						$("div[data-notf=" + acct_id + "]").prepend(templete);
@@ -257,30 +253,28 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 				$("[toot-id=" + obj + "]").hide();
 				$("[toot-id=" + obj + "]").remove();
 			}
-		}
-		websocketNotf[acct_id].onerror = function (error) {
-			console.error('WebSocket Error ' + error);
-			errorct++;
-			console.log(errorct)
-			if (errorct < 3) {
-				notfWS(misskey, acct_id, tlid, domain, at)
-			}
-
 		};
-		websocketNotf[acct_id].onclose = function (error) {
-			console.error('WebSocket Close ' + error);
+		websocketNotf[acct_id].onerror = function(error) {
+			console.error("WebSocket Error " + error);
 			errorct++;
-			console.log(errorct)
+			console.log(errorct);
 			if (errorct < 3) {
-				notfWS(misskey, acct_id, tlid, domain, at)
+				notfWS(misskey, acct_id, tlid, domain, at);
 			}
-
+		};
+		websocketNotf[acct_id].onclose = function(error) {
+			console.error("WebSocket Close " + error);
+			errorct++;
+			console.log(errorct);
+			if (errorct < 3) {
+				notfWS(misskey, acct_id, tlid, domain, at);
+			}
 		};
 	}
 }
 //一定のスクロールで発火
 function notfmore(tlid) {
-	console.log({ "status": "kicked", "status": moreloading });
+	console.log({ status: "kicked", status: moreloading });
 	var multi = localStorage.getItem("column");
 	var obj = JSON.parse(multi);
 	var acct_id = obj[tlid].domain;
@@ -289,7 +283,9 @@ function notfmore(tlid) {
 	} else {
 		var data;
 	}
-	var sid = $("#timeline_" + tlid + " .notif-marker").last().attr("data-maxid");
+	var sid = $("#timeline_" + tlid + " .notif-marker")
+		.last()
+		.attr("data-maxid");
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if (sid && !moreloading) {
@@ -299,7 +295,7 @@ function notfmore(tlid) {
 			var misskey = true;
 			var start = "https://" + domain + "/api/i/notifications";
 			httpreq.open(POST, start, true);
-			httpreq.setRequestHeader('Content-Type', 'application/json');
+			httpreq.setRequestHeader("Content-Type", "application/json");
 			var body = JSON.stringify({
 				i: at,
 				untilID: sid
@@ -313,24 +309,26 @@ function notfmore(tlid) {
 			}
 			var start = "https://" + domain + "/api/v1/notifications" + exc;
 			httpreq.open("GET", start, true);
-			httpreq.setRequestHeader('Content-Type', 'application/json');
-			httpreq.setRequestHeader('Authorization', 'Bearer ' + at);
+			httpreq.setRequestHeader("Content-Type", "application/json");
+			httpreq.setRequestHeader("Authorization", "Bearer " + at);
 			var body = "";
 		}
 
 		httpreq.responseType = "json";
 		httpreq.send(body);
-		httpreq.onreadystatechange = function () {
+		httpreq.onreadystatechange = function() {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response;
-				if(this.status!==200){ setLog(start, this.status, this.response); }
+				if (this.status !== 200) {
+					setLog(start, this.status, this.response);
+				}
 				console.log(["More notifications on " + tlid, json]);
 				var max_id = httpreq.getResponseHeader("link").match(/[?&]{1}max_id=([0-9]+)/)[1];
 				if (json[0]) {
 					var templete = "";
 					var lastnotf = localStorage.getItem("lastnotf_" + acct_id);
 					localStorage.setItem("lastnotf_" + acct_id, json[0].id);
-					Object.keys(json).forEach(function (key) {
+					Object.keys(json).forEach(function(key) {
 						var obj = json[key];
 						if (localStorage.getItem("filter_" + acct_id) != "undefined") {
 							var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), "notif");
@@ -339,17 +337,16 @@ function notfmore(tlid) {
 						}
 						if (obj.type != "follow") {
 							if (misskey) {
-								templete = templete + misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute);
+								templete = templete + misskeyParse([obj], "notf", acct_id, "notf", -1, mute);
 							} else {
-								templete = templete + parse([obj], 'notf', acct_id, 'notf', -1, mute);
+								templete = templete + parse([obj], "notf", acct_id, "notf", -1, mute);
 							}
 						} else {
 							if (misskey) {
-								templete = templete + misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute);
+								templete = templete + misskeyUserparse([obj], "notf", acct_id, "notf", -1, mute);
 							} else {
-								templete = templete + userparse([obj.account], 'notf', acct_id, 'notf', -1);
+								templete = templete + userparse([obj.account], "notf", acct_id, "notf", -1);
 							}
-
 						}
 					});
 					moreloading = false;
@@ -361,49 +358,55 @@ function notfmore(tlid) {
 				$("#notf-box").addClass("fetched");
 				todc();
 			}
-		}
+		};
 	}
 }
 
 //通知トグルボタン
 function notfToggle(acct, tlid) {
 	if ($("#notf-box_" + tlid).hasClass("column-hide")) {
-		$("#notf-box_" + tlid).css("display", "block")
-		$("#notf-box_" + tlid).animate({
-			'height': '400px'
-		}, {
-			'duration': 300,
-			'complete': function () {
-				$("#notf-box_" + tlid).css("overflow-y", "scroll")
-				$("#notf-box_" + tlid).removeClass("column-hide")
+		$("#notf-box_" + tlid).css("display", "block");
+		$("#notf-box_" + tlid).animate(
+			{
+				height: "400px"
+			},
+			{
+				duration: 300,
+				complete: function() {
+					$("#notf-box_" + tlid).css("overflow-y", "scroll");
+					$("#notf-box_" + tlid).removeClass("column-hide");
+				}
 			}
-		});
+		);
 	} else {
-		$("#notf-box_" + tlid).css("overflow-y", "hidden")
-		$("#notf-box_" + tlid).animate({
-			'height': '0'
-		}, {
-			'duration': 300,
-			'complete': function () {
-				$("#notf-box_" + tlid).addClass("column-hide")
-				$("#notf-box_" + tlid).css("display", "none")
+		$("#notf-box_" + tlid).css("overflow-y", "hidden");
+		$("#notf-box_" + tlid).animate(
+			{
+				height: "0"
+			},
+			{
+				duration: 300,
+				complete: function() {
+					$("#notf-box_" + tlid).addClass("column-hide");
+					$("#notf-box_" + tlid).css("display", "none");
+				}
 			}
-		});
+		);
 	}
-	notfCanceler(acct)
+	notfCanceler(acct);
 }
 function notfCanceler(acct) {
 	$(".notf-reply_" + acct).text(0);
-	localStorage.removeItem("notf-reply_" + acct)
+	localStorage.removeItem("notf-reply_" + acct);
 	$(".notf-reply_" + acct).addClass("hide");
 	$(".notf-fav_" + acct).text(0);
-	localStorage.removeItem("notf-fav_" + acct)
+	localStorage.removeItem("notf-fav_" + acct);
 	$(".notf-fav_" + acct).addClass("hide");
 	$(".notf-bt_" + acct).text(0);
-	localStorage.removeItem("notf-bt_" + acct)
+	localStorage.removeItem("notf-bt_" + acct);
 	$(".notf-bt_" + acct).addClass("hide");
 	$(".notf-follow_" + acct).text(0);
-	localStorage.removeItem("notf-follow_" + acct)
+	localStorage.removeItem("notf-follow_" + acct);
 	$(".notf-follow_" + acct).addClass("hide");
 	$(".notf-icon_" + acct).removeClass("red-text");
 }
@@ -411,9 +414,9 @@ function allNotfRead() {
 	var multi = localStorage.getItem("multi");
 	if (multi) {
 		var obj = JSON.parse(multi);
-		Object.keys(obj).forEach(function (key) {
-			notfCanceler(key)
+		Object.keys(obj).forEach(function(key) {
+			notfCanceler(key);
 		});
 	}
 }
-allNotfRead()
+allNotfRead();

@@ -1,9 +1,9 @@
 //TL取得
 moreloading = false;
-var errorct=0;
+var errorct = 0;
 function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	scrollevent();
-	$("#unread_" + tlid + " .material-icons").removeClass("teal-text")
+	$("#unread_" + tlid + " .material-icons").removeClass("teal-text");
 	localStorage.removeItem("morelock");
 	localStorage.removeItem("pool");
 	var domain = localStorage.getItem("domain_" + acct_id);
@@ -22,7 +22,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		obj.push(add);
 		var json = JSON.stringify(obj);
 		localStorage.setItem("column", json);
-		parseColumn('add');
+		parseColumn("add");
 		return;
 	}
 
@@ -35,26 +35,23 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	}
 	if (type == "mix" && localStorage.getItem("mode_" + domain) != "misskey") {
 		//Integratedなら飛ばす
-		$("#notice_" + tlid).text("Integrated TL(" + localStorage.getItem(
-			"user_" + acct_id) + "@" + domain + ")");
+		$("#notice_" + tlid).text("Integrated TL(" + localStorage.getItem("user_" + acct_id) + "@" + domain + ")");
 		$("#notice_icon_" + tlid).text("merge_type");
 		mixtl(acct_id, tlid, "integrated", delc, voice);
 		return;
 	} else if (type == "plus") {
 		//Local+なら飛ばす
-		$("#notice_" + tlid).text("Local+ TL(" + localStorage.getItem(
-			"user_" + acct_id) + "@" + domain + ")");
+		$("#notice_" + tlid).text("Local+ TL(" + localStorage.getItem("user_" + acct_id) + "@" + domain + ")");
 		$("#notice_icon_" + tlid).text("people_outline");
 		mixtl(acct_id, tlid, "plus", delc, voice);
 		return;
 	} else if (type == "notf") {
 		//通知なら飛ばす
-		notf(acct_id, tlid, 'direct');
-		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
-			"user_" + acct_id) + "@" + domain + ")");
+		notf(acct_id, tlid, "direct");
+		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem("user_" + acct_id) + "@" + domain + ")");
 		$("#notice_icon_" + tlid).text("notifications");
 		return;
-	}/*else if (type == "dm") {
+	} /*else if (type == "dm") {
 		//DMなら飛ばす
 		dm(acct_id, tlid, "plus",delc,voice);
 		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
@@ -67,14 +64,13 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	if (type != "noauth") {
 		var hdr = {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
+			"content-type": "application/json",
+			Authorization: "Bearer " + at
 		};
-		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
-			"user_" + acct_id) + "@" + domain + ")");
+		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem("user_" + acct_id) + "@" + domain + ")");
 	} else {
 		var hdr = {
-			'content-type': 'application/json'
+			"content-type": "application/json"
 		};
 		domain = acct_id;
 		$("#notice_" + tlid).text("Glance TL(" + domain + ")");
@@ -103,8 +99,8 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		var i = {
 			method: method,
 			headers: hdr,
-			body: JSON.stringify(req),
-		}
+			body: JSON.stringify(req)
+		};
 	} else {
 		var misskey = false;
 		var url = com(type, data);
@@ -126,50 +122,54 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		};
 	}
 
-	console.log(["Try to get timeline of " + tlid, start])
-	fetch(start, i).then(function (response) {
-		if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
-		}
-		return response.json();
-	}).catch(function (error) {
-		todo(error);
-		console.error(error);
-	}).then(function (json) {
-		console.log(["Result of getting timeline of " + tlid, json])
-		$("#landing_" + tlid).hide();
-		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
-			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
-		} else {
-			var mute = [];
-		}
-		if (misskey) {
-			var templete = misskeyParse(json, type, acct_id, tlid, "", mute);
-		} else {
-			var templete = parse(json, type, acct_id, tlid, "", mute, type);
-			localStorage.setItem("lastobj_" + tlid, json[0].id)
-		}
-		$("#timeline_" + tlid).html(templete);
-		additional(acct_id, tlid);
-		jQuery("time.timeago").timeago();
-		todc();
-		reload(type, '', acct_id, tlid, data, mute, delc, voice);
-		if (type == "home" || type == "notf") {
-			//Markers
-			var markers = localStorage.getItem("markers");
-			if (markers == "yes") {
-				markers = true;
+	console.log(["Try to get timeline of " + tlid, start]);
+	fetch(start, i)
+		.then(function(response) {
+			if (!response.ok) {
+				response.text().then(function(text) {
+					setLog(response.url, response.status, text);
+				});
+			}
+			return response.json();
+		})
+		.catch(function(error) {
+			todo(error);
+			setLog(start, "JSON", error);
+			console.error(error);
+		})
+		.then(function(json) {
+			console.log(["Result of getting timeline of " + tlid, json]);
+			$("#landing_" + tlid).hide();
+			if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+				var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
 			} else {
-				markers = false
+				var mute = [];
 			}
-			if (markers) {
-				getMarker(tlid, type, acct_id)
+			if (misskey) {
+				var templete = misskeyParse(json, type, acct_id, tlid, "", mute);
+			} else {
+				var templete = parse(json, type, acct_id, tlid, "", mute, type);
+				localStorage.setItem("lastobj_" + tlid, json[0].id);
 			}
-		}
-		$(window).scrollTop(0);
-	});
+			$("#timeline_" + tlid).html(templete);
+			additional(acct_id, tlid);
+			jQuery("time.timeago").timeago();
+			todc();
+			reload(type, "", acct_id, tlid, data, mute, delc, voice);
+			if (type == "home" || type == "notf") {
+				//Markers
+				var markers = localStorage.getItem("markers");
+				if (markers == "yes") {
+					markers = true;
+				} else {
+					markers = false;
+				}
+				if (markers) {
+					getMarker(tlid, type, acct_id);
+				}
+			}
+			$(window).scrollTop(0);
+		});
 }
 
 //Streaming接続
@@ -182,36 +182,31 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	localStorage.setItem("now", type);
 	if (localStorage.getItem("mode_" + domain) == "misskey") {
 		var misskey = true;
-		var key = localStorage.getItem("misskey_wss_" + acct_id)
-		var send = '{"type":"connect","body":{"channel":"' + typePs(type) + '","id":"' + tlid + '"}}'
-		var mskyset = setInterval(function () {
+		var key = localStorage.getItem("misskey_wss_" + acct_id);
+		var send = '{"type":"connect","body":{"channel":"' + typePs(type) + '","id":"' + tlid + '"}}';
+		var mskyset = setInterval(function() {
 			if (misskeywsstate[key]) {
-				misskeyws[key].send(send)
-				clearInterval(mskyset)
+				misskeyws[key].send(send);
+				clearInterval(mskyset);
 			}
 		}, 100);
 	} else {
 		var misskey = false;
 		if (localStorage.getItem("streaming_" + acct_id)) {
-			var wss = localStorage.getItem("streaming_" + acct_id)
+			var wss = localStorage.getItem("streaming_" + acct_id);
 		} else {
-			var wss = "wss://" + domain
+			var wss = "wss://" + domain;
 		}
 		if (type == "home") {
-			var start = wss +
-				"/api/v1/streaming/?stream=user&access_token=" + at;
+			var start = wss + "/api/v1/streaming/?stream=user&access_token=" + at;
 		} else if (type == "pub") {
-			var start = wss +
-				"/api/v1/streaming/?stream=public&access_token=" + at;
+			var start = wss + "/api/v1/streaming/?stream=public&access_token=" + at;
 		} else if (type == "pub-media") {
-			var start = wss +
-				"/api/v1/streaming/?stream=public:media&access_token=" + at;
+			var start = wss + "/api/v1/streaming/?stream=public:media&access_token=" + at;
 		} else if (type == "local") {
-			var start = wss +
-				"/api/v1/streaming/?stream=public:local&access_token=" + at;
+			var start = wss + "/api/v1/streaming/?stream=public:local&access_token=" + at;
 		} else if (type == "local-media") {
-			var start = wss +
-				"/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=" + at;
+			var start = wss + "/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=" + at;
 		} else if (type == "tag") {
 			if (type == "tag") {
 				var tag = localStorage.getItem("tag-range");
@@ -219,44 +214,42 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 					data = data + "&local=true";
 				}
 			}
-			var start = wss +
-				"/api/v1/streaming/?stream=hashtag&tag=" + data + "&access_token=" + at;
+			var start = wss + "/api/v1/streaming/?stream=hashtag&tag=" + data + "&access_token=" + at;
 		} else if (type == "noauth") {
-			var start = "wss://" + acct_id +
-				"/api/v1/streaming/?stream=public:local";
+			var start = "wss://" + acct_id + "/api/v1/streaming/?stream=public:local";
 		} else if (type == "list") {
-			var start = wss +
-				"/api/v1/streaming/?stream=list&list=" + data + "&access_token=" + at;
+			var start = wss + "/api/v1/streaming/?stream=list&list=" + data + "&access_token=" + at;
 		} else if (type == "dm") {
-			var start = wss +
-				"/api/v1/streaming/?stream=direct&access_token=" + at;
+			var start = wss + "/api/v1/streaming/?stream=direct&access_token=" + at;
 		}
 		var wsid = websocket.length;
 		localStorage.setItem("wss_" + tlid, wsid);
 		websocket[wsid] = new WebSocket(start);
-		websocket[wsid].onopen = function (mess) {
-			console.table({ "tlid": tlid, "type": "Connect Streaming API" + type, "domain": domain, "message": [mess] })
-			errorct=0
-			$("#notice_icon_" + tlid).removeClass("red-text")
-		}
-		websocket[wsid].onmessage = function (mess) {
+		websocket[wsid].onopen = function(mess) {
+			console.table({ tlid: tlid, type: "Connect Streaming API" + type, domain: domain, message: [mess] });
+			errorct = 0;
+			$("#notice_icon_" + tlid).removeClass("red-text");
+		};
+		websocket[wsid].onmessage = function(mess) {
 			console.log([tlid + ":Receive Streaming API:", JSON.parse(mess.data)]);
 			if (misskey) {
 				if (JSON.parse(mess.data).type == "note") {
 					var obj = JSON.parse(mess.data).body;
 					if (voice) {
-						say(obj.text)
+						say(obj.text);
 					}
-					websocketNotf[acct_id].send(JSON.stringify({
-						type: 'capture',
-						id: obj.id
-					}))
+					websocketNotf[acct_id].send(
+						JSON.stringify({
+							type: "capture",
+							id: obj.id
+						})
+					);
 					var templete = misskeyParse([obj], type, acct_id, tlid, "", mute);
 					var pool = localStorage.getItem("pool_" + tlid);
 					if (pool) {
 						pool = templete + pool;
 					} else {
-						pool = templete
+						pool = templete;
 					}
 					localStorage.setItem("pool_" + tlid, pool);
 					scrollck();
@@ -267,27 +260,26 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 				if (typeA == "delete") {
 					var del = localStorage.getItem("delete");
 					if (del > 10) {
-						reconnector(tlid, type, acct_id, data)
+						reconnector(tlid, type, acct_id, data);
 					} else {
-						localStorage.setItem("delete", del * 1 + 1)
+						localStorage.setItem("delete", del * 1 + 1);
 					}
 					var obj = JSON.parse(mess.data).payload;
 					if (delc == "true") {
 						$("#timeline_" + tlid + " [toot-id=" + JSON.parse(mess.data).payload + "]").addClass("emphasized");
 						$("#timeline_" + tlid + " [toot-id=" + JSON.parse(mess.data).payload + "]").addClass("by_delcatch");
 					} else {
-						$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide()
-						$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove()
+						$("[toot-id=" + JSON.parse(mess.data).payload + "]").hide();
+						$("[toot-id=" + JSON.parse(mess.data).payload + "]").remove();
 					}
-
 				} else if (typeA == "update" || typeA == "conversation") {
-					localStorage.removeItem("delete")
+					localStorage.removeItem("delete");
 					if (!$("#unread_" + tlid + " .material-icons").hasClass("teal-text")) {
 						//markers show中はダメ
 						var obj = JSON.parse(JSON.parse(mess.data).payload);
 						if ($("#timeline_" + tlid + " [toot-id=" + obj.id + "]").length < 1) {
 							if (voice) {
-								say(obj.content)
+								say(obj.content);
 							}
 							var templete = parse([obj], type, acct_id, tlid, "", mute, type);
 							if ($("timeline_box_" + tlid + "_box .tl-box").scrollTop() === 0) {
@@ -297,7 +289,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 								if (pool) {
 									pool = templete + pool;
 								} else {
-									pool = templete
+									pool = templete;
 								}
 								localStorage.setItem("pool_" + tlid, pool);
 							}
@@ -314,32 +306,30 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 					filterUpdate(acct_id);
 				}
 			}
-
-
-		}
-		websocket[wsid].onerror = function (error) {
+		};
+		websocket[wsid].onerror = function(error) {
 			console.error("Error closing");
 			console.error(error);
 			if (mode == "error") {
-				$("#notice_icon_" + tlid).addClass("red-text")
-				todo('WebSocket Error ' + error);
+				$("#notice_icon_" + tlid).addClass("red-text");
+				todo("WebSocket Error " + error);
 			} else {
 				errorct++;
-				console.log(errorct)
+				console.log(errorct);
 				if (errorct < 3) {
 					reconnector(tlid, type, acct_id, data, "error");
 				}
 			}
 			return false;
 		};
-		websocket[wsid].onclose = function () {
+		websocket[wsid].onclose = function() {
 			console.warn("Closing " + tlid);
 			if (mode == "error") {
-				$("#notice_icon_" + tlid).addClass("red-text")
-				todo('WebSocket Closed');
+				$("#notice_icon_" + tlid).addClass("red-text");
+				todo("WebSocket Closed");
 			} else {
 				errorct++;
-				console.log(errorct)
+				console.log(errorct);
 				if (errorct < 3) {
 					reconnector(tlid, type, acct_id, data, "error");
 				}
@@ -368,7 +358,9 @@ function moreload(type, tlid) {
 	} else if (type == "list") {
 		var data = obj[tlid].data;
 	}
-	var sid = $("#timeline_" + tlid + " .cvo").last().attr("unique-id");
+	var sid = $("#timeline_" + tlid + " .cvo")
+		.last()
+		.attr("unique-id");
 	if (sid && !moreloading) {
 		if (type == "mix" && localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct_id)) != "misskey") {
 			mixmore(tlid, "integrated");
@@ -390,20 +382,20 @@ function moreload(type, tlid) {
 		if (type != "noauth") {
 			var at = localStorage.getItem("acct_" + acct_id + "_at");
 			var hdr = {
-				'content-type': 'application/json',
-				'Authorization': 'Bearer ' + at
+				"content-type": "application/json",
+				Authorization: "Bearer " + at
 			};
 			var domain = localStorage.getItem("domain_" + acct_id);
 		} else {
 			var hdr = {
-				'content-type': 'application/json'
+				"content-type": "application/json"
 			};
 			domain = acct_id;
 		}
 		if (localStorage.getItem("mode_" + domain) == "misskey") {
 			var misskey = true;
 			hdr = {
-				'content-type': 'application/json'
+				"content-type": "application/json"
 			};
 			var url = misskeycom(type, data);
 			var start = "https://" + domain + "/api/notes/" + url;
@@ -426,15 +418,13 @@ function moreload(type, tlid) {
 			var i = {
 				method: method,
 				headers: hdr,
-				body: JSON.stringify(req),
-			}
+				body: JSON.stringify(req)
+			};
 		} else {
 			var misskey = false;
-			var start = "https://" + domain + "/api/v1/timelines/" + com(type, data) +
-				"max_id=" + sid;
+			var start = "https://" + domain + "/api/v1/timelines/" + com(type, data) + "max_id=" + sid;
 			if (type == "dm") {
-				var start = "https://" + domain + "/api/v1/conversations?" +
-					"max_id=" + sid;
+				var start = "https://" + domain + "/api/v1/conversations?" + "max_id=" + sid;
 			}
 			var method = "GET";
 			var i = {
@@ -442,38 +432,42 @@ function moreload(type, tlid) {
 				headers: hdr
 			};
 		}
-		fetch(start, i).then(function (response) {
-			if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
+		fetch(start, i)
+			.then(function(response) {
+				if (!response.ok) {
+					response.text().then(function(text) {
+						setLog(response.url, response.status, text);
+					});
+				}
+				return response.json();
+			})
+			.catch(function(error) {
+				todo(error);
+				setLog(start, "JSON", error);
+				console.error(error);
+			})
+			.then(function(json) {
+				if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+					var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+				} else {
+					var mute = [];
+				}
+				if (misskey) {
+					var templete = misskeyParse(json, "", acct_id, tlid, "", mute);
+				} else {
+					var templete = parse(json, "", acct_id, tlid, "", mute, type);
+				}
+				$("#timeline_" + tlid).append(templete);
+				additional(acct_id, tlid);
+				jQuery("time.timeago").timeago();
+				moreloading = false;
+				todc();
 			});
-		}
-		return response.json();
-		}).catch(function (error) {
-			todo(error);
-			console.error(error);
-		}).then(function (json) {
-			if (localStorage.getItem("filter_" + acct_id) != "undefined") {
-				var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
-			} else {
-				var mute = [];
-			}
-			if (misskey) {
-				var templete = misskeyParse(json, '', acct_id, tlid, "", mute);
-			} else {
-				var templete = parse(json, '', acct_id, tlid, "", mute, type);
-			}
-			$("#timeline_" + tlid).append(templete);
-			additional(acct_id, tlid);
-			jQuery("time.timeago").timeago();
-			moreloading = false;
-			todc();
-		});
 	}
 }
 //TL差分取得
 function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
-	console.log("Get diff of TL" + tlid)
+	console.log("Get diff of TL" + tlid);
 	var multi = localStorage.getItem("column");
 	var obj = JSON.parse(multi);
 	var acct_id = obj[tlid].domain;
@@ -491,7 +485,9 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 	} else if (type == "list") {
 		var data = obj[tlid].data;
 	}
-	var sid = $("#timeline_" + tlid + " .cvo").first().attr("unique-id");
+	var sid = $("#timeline_" + tlid + " .cvo")
+		.first()
+		.attr("unique-id");
 	if (sid && !moreloading) {
 		if (type == "mix" && localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct_id)) != "misskey") {
 			return;
@@ -506,20 +502,20 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 		if (type != "noauth") {
 			var at = localStorage.getItem("acct_" + acct_id + "_at");
 			var hdr = {
-				'content-type': 'application/json',
-				'Authorization': 'Bearer ' + at
+				"content-type": "application/json",
+				Authorization: "Bearer " + at
 			};
 			var domain = localStorage.getItem("domain_" + acct_id);
 		} else {
 			var hdr = {
-				'content-type': 'application/json'
+				"content-type": "application/json"
 			};
 			domain = acct_id;
 		}
 		if (localStorage.getItem("mode_" + domain) == "misskey") {
 			var misskey = true;
 			hdr = {
-				'content-type': 'application/json'
+				"content-type": "application/json"
 			};
 			var url = misskeycom(type, data);
 			var start = "https://" + domain + "/api/notes/" + url;
@@ -542,15 +538,13 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 			var i = {
 				method: method,
 				headers: hdr,
-				body: JSON.stringify(req),
-			}
+				body: JSON.stringify(req)
+			};
 		} else {
 			var misskey = false;
-			var start = "https://" + domain + "/api/v1/timelines/" + com(type, data) +
-				"since_id=" + sid;
+			var start = "https://" + domain + "/api/v1/timelines/" + com(type, data) + "since_id=" + sid;
 			if (type == "dm") {
-				var start = "https://" + domain + "/api/v1/conversations?" +
-					"since_id=" + sid;
+				var start = "https://" + domain + "/api/v1/conversations?" + "since_id=" + sid;
 			}
 			var method = "GET";
 			var i = {
@@ -559,30 +553,33 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 			};
 		}
 
-
-		fetch(start, i).then(function (response) {
-			if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
+		fetch(start, i)
+			.then(function(response) {
+				if (!response.ok) {
+					response.text().then(function(text) {
+						setLog(response.url, response.status, text);
+					});
+				}
+				return response.json();
+			})
+			.catch(function(error) {
+				todo(error);
+				setLog(start, "JSON", error);
+				console.error(error);
+			})
+			.then(function(json) {
+				console.log(["Result diff of TL" + tlid, json]);
+				if (misskey) {
+					var templete = misskeyParse(json, "", acct_id, tlid, "", mute);
+				} else {
+					var templete = parse(json, "", acct_id, tlid, "", mute, type);
+				}
+				$("#timeline_" + tlid).prepend(templete);
+				additional(acct_id, tlid);
+				jQuery("time.timeago").timeago();
+				moreloading = false;
+				todc();
 			});
-		}
-		return response.json();
-		}).catch(function (error) {
-			todo(error);
-			console.error(error);
-		}).then(function (json) {
-			console.log(["Result diff of TL" + tlid, json]);
-			if (misskey) {
-				var templete = misskeyParse(json, '', acct_id, tlid, "", mute);
-			} else {
-				var templete = parse(json, '', acct_id, tlid, "", mute, type);
-			}
-			$("#timeline_" + tlid).prepend(templete);
-			additional(acct_id, tlid);
-			jQuery("time.timeago").timeago();
-			moreloading = false;
-			todc();
-		});
 	}
 }
 //TL再取得
@@ -592,7 +589,7 @@ function reloadTL(type, data, acct_id, key, delc, voice) {
 
 //WebSocket切断
 function tlCloser() {
-	Object.keys(websocket).forEach(function (tlid) {
+	Object.keys(websocket).forEach(function(tlid) {
 		if (websocketOld[tlid]) {
 			websocketOld[tlid].close();
 			console.log("%c Close Streaming API: Old" + tlid, "color:blue");
@@ -602,39 +599,35 @@ function tlCloser() {
 			websocket[tlid].close();
 			console.log("%c Close Streaming API:" + tlid, "color:blue");
 		}
-
 	});
 	websocket = [];
-	Object.keys(websocketHome).forEach(function (tlid) {
+	Object.keys(websocketHome).forEach(function(tlid) {
 		if (websocketHome[tlid]) {
 			websocketHome[tlid].close();
 			console.log("%c Close Streaming API:Integrated Home" + tlid, "color:blue");
 		}
-
 	});
 	websocketHome = [];
-	Object.keys(websocketLocal).forEach(function (tlid) {
+	Object.keys(websocketLocal).forEach(function(tlid) {
 		if (websocketLocal[tlid]) {
 			websocketLocal[tlid].close();
 			console.log("%c Close Streaming API:Integrated Local" + tlid, "color:blue");
 		}
-
 	});
 	websocketLocal = [];
-	Object.keys(websocketNotf).forEach(function (tlid) {
+	Object.keys(websocketNotf).forEach(function(tlid) {
 		if (websocketNotf[tlid]) {
 			websocketNotf[tlid].close();
 			console.log("%c Close Streaming API:Notf" + tlid, "color:blue");
 		}
-
 	});
-	Object.keys(misskeyws).forEach(function (tlid) {
+	Object.keys(misskeyws).forEach(function(tlid) {
 		if (misskeyws[tlid]) {
 			misskeyws[tlid].close();
 			console.log("%c Close Streaming API:Misskey" + tlid, "color:blue");
 		}
 	});
-	misskeyws = {}
+	misskeyws = {};
 }
 
 //TLのタイトル
@@ -675,10 +668,10 @@ function cap(type, data, acct_id) {
 			var response = "Federated TL(Media)";
 		}
 	} else if (type == "tag") {
-		var response = "#" + escapeHTML(data)
+		var response = "#" + escapeHTML(data);
 	} else if (type == "list") {
 		var ltitle = localStorage.getItem("list_" + data + "_" + acct_id);
-		var response = "List(" + ltitle + ")"
+		var response = "List(" + ltitle + ")";
 	} else if (type == "notf") {
 		if (localStorage.getItem("notification_" + acct_id) && !locale) {
 			var response = localStorage.getItem("notification_" + acct_id);
@@ -686,19 +679,19 @@ function cap(type, data, acct_id) {
 			var response = "Notification TL";
 		}
 	} else if (type == "noauth") {
-		var response = "Glance TL"
+		var response = "Glance TL";
 	} else if (type == "dm") {
-		var response = "DM"
+		var response = "DM";
 	} else if (type == "mix") {
 		if (localStorage.getItem("mode_" + localStorage.getItem("domain_" + acct_id)) == "misskey") {
-			var response = "Social TL"
+			var response = "Social TL";
 		} else {
-			var response = "Integrated"
+			var response = "Integrated";
 		}
 	} else if (type == "plus") {
-		var response = "Local+"
+		var response = "Local+";
 	} else if (type == "webview") {
-		var response = "Twitter"
+		var response = "Twitter";
 	} else if (type == "tootsearch") {
 		var response = "tootsearch(" + escapeHTML(data) + ")";
 	}
@@ -708,58 +701,58 @@ function cap(type, data, acct_id) {
 //TLのURL
 function com(type, data) {
 	if (type == "home") {
-		return "home?"
+		return "home?";
 	} else if (type == "local" || type == "noauth") {
-		return "public?local=true&"
+		return "public?local=true&";
 	} else if (type == "local-media") {
-		return "public?local=true&only_media=true&"
+		return "public?local=true&only_media=true&";
 	} else if (type == "pub") {
-		return "public?"
+		return "public?";
 	} else if (type == "pub-media") {
-		return "public?only_media=true&"
+		return "public?only_media=true&";
 	} else if (type == "tag") {
-		return "tag/" + data + "?"
+		return "tag/" + data + "?";
 	} else if (type == "list") {
-		return "list/" + data + "?"
+		return "list/" + data + "?";
 	} else if (type == "dm") {
-		return "direct?"
+		return "direct?";
 	}
 }
 //Misskey
 function typePs(type) {
 	if (type == "home") {
-		return "homeTimeline"
+		return "homeTimeline";
 	} else if (type == "local" || type == "noauth") {
-		return "localTimeline"
+		return "localTimeline";
 	} else if (type == "local-media") {
-		return "localTimeline"
+		return "localTimeline";
 	} else if (type == "pub") {
-		return "globalTimeline"
+		return "globalTimeline";
 	} else if (type == "mix") {
-		return "hybridTimeline"
+		return "hybridTimeline";
 	} else if (type == "tag") {
-		return "hashtag"
+		return "hashtag";
 	} else if (type == "list") {
-		return "userList"
+		return "userList";
 	}
 }
 function misskeycom(type, data) {
 	if (type == "home") {
-		return "timeline"
+		return "timeline";
 	} else if (type == "mix") {
-		return "hybrid-timeline"
+		return "hybrid-timeline";
 	} else if (type == "local" || type == "noauth") {
-		return "local-timeline"
+		return "local-timeline";
 	} else if (type == "local-media") {
-		return "local-timeline"
+		return "local-timeline";
 	} else if (type == "pub") {
-		return "global-timeline"
+		return "global-timeline";
 	} else if (type == "pub-media") {
-		return "global-timeline"
+		return "global-timeline";
 	} else if (type == "tag") {
-		return "search_by_tag"
+		return "search_by_tag";
 	} else if (type == "list") {
-		return "user-list-timeline"
+		return "user-list-timeline";
 	}
 }
 
@@ -803,7 +796,7 @@ function strAlive() {
 	var col = localStorage.getItem("column");
 	if (col) {
 		var obj = JSON.parse(col);
-		Object.keys(obj).forEach(function (key) {
+		Object.keys(obj).forEach(function(key) {
 			if ($("#notice_icon_" + key).hasClass("red-text")) {
 				var type = obj[key].type;
 				var acct_id = obj[key].domain;
@@ -819,7 +812,7 @@ function strAliveInt() {
 	setTimeout(strAlive, 10000);
 }
 function reconnector(tlid, type, acct_id, data, mode) {
-	console.log("%c Reconnector:" + mode + "(timeline" + tlid + ")", "color:pink")
+	console.log("%c Reconnector:" + mode + "(timeline" + tlid + ")", "color:pink");
 	if (type == "mix" || type == "integrated" || type == "plus") {
 		if (localStorage.getItem("voice_" + tlid)) {
 			var voice = true;
@@ -837,7 +830,7 @@ function reconnector(tlid, type, acct_id, data, mode) {
 		websocketLocal[wssl].close();
 		mixre(acct_id, tlid, type, mute, "", voice, mode);
 	} else if (type == "notf") {
-		notfColumn(acct_id, tlid, "")
+		notfColumn(acct_id, tlid, "");
 	} else {
 		var wss = localStorage.getItem("wss_" + tlid);
 		websocket[wss].close();
@@ -851,14 +844,13 @@ function reconnector(tlid, type, acct_id, data, mode) {
 		} else {
 			var mute = [];
 		}
-		reload(type, '', acct_id, tlid, data, mute, "", voice, mode);
+		reload(type, "", acct_id, tlid, data, mute, "", voice, mode);
 	}
-	M.toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
-
+	M.toast({ html: lang.lang_tl_reconnect, displayLength: 2000 });
 }
 function columnReload(tlid, type) {
 	$("#notice_icon_" + tlid).addClass("red-text");
-	$("#unread_" + tlid + " .material-icons").removeClass("teal-text")
+	$("#unread_" + tlid + " .material-icons").removeClass("teal-text");
 	if (type == "mix" || type == "integrated" || type == "plus") {
 		if (localStorage.getItem("voice_" + tlid)) {
 			var voice = true;
@@ -874,10 +866,10 @@ function columnReload(tlid, type) {
 		websocketHome[wssh].close();
 		var wssl = localStorage.getItem("wssL_" + tlid);
 		websocketLocal[wssl].close();
-		parseColumn(tlid)
+		parseColumn(tlid);
 	} else if (type == "notf") {
 		$("#notice_icon_" + tlid).removeClass("red-text");
-		notfColumn(acct_id, tlid, "")
+		notfColumn(acct_id, tlid, "");
 	} else {
 		var wss = localStorage.getItem("wss_" + tlid);
 		websocket[wss].close();
@@ -891,161 +883,172 @@ function columnReload(tlid, type) {
 		} else {
 			var mute = [];
 		}
-		parseColumn(tlid)
+		parseColumn(tlid);
 	}
 }
-strAliveInt()
+strAliveInt();
 //Markers
 function getMarker(tlid, type, acct_id) {
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
 	if (type == "home") {
-		var add = "home"
+		var add = "home";
 	} else if (type == "notf") {
-		var add = "notifications"
+		var add = "notifications";
 	}
-	var start = "https://" + domain + "/api/v1/markers?timeline=" + add
+	var start = "https://" + domain + "/api/v1/markers?timeline=" + add;
 	fetch(start, {
-		method: 'GET',
+		method: "GET",
 		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function (response) {
-		if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
+			"content-type": "application/json",
+			Authorization: "Bearer " + at
 		}
-		return response.json();
-	}).catch(function (error) {
-		$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing)
-		$("#unread_" + tlid).attr("data-id", "")
-		return false;
-	}).then(function (json) {
-		if (json) {
-			if (json[add]) {
-				json = json[add]
-				$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + json.updated_at + ' v' + json.version)
-				$("#unread_" + tlid).attr("data-id", json.last_read_id)
-			} else {
-				$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing)
-				$("#unread_" + tlid).attr("data-id", "")
+	})
+		.then(function(response) {
+			if (!response.ok) {
+				response.text().then(function(text) {
+					setLog(response.url, response.status, text);
+				});
 			}
-		} else {
-			$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing)
-			$("#unread_" + tlid).attr("data-id", "")
-		}
-	});
+			return response.json();
+		})
+		.catch(function(error) {
+			$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing);
+			$("#unread_" + tlid).attr("data-id", "");
+			return false;
+		})
+		.then(function(json) {
+			if (json) {
+				if (json[add]) {
+					json = json[add];
+					$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + json.updated_at + " v" + json.version);
+					$("#unread_" + tlid).attr("data-id", json.last_read_id);
+				} else {
+					$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing);
+					$("#unread_" + tlid).attr("data-id", "");
+				}
+			} else {
+				$("#unread_" + tlid).attr("title", lang.lang_layout_unread + ":" + lang.lang_nothing);
+				$("#unread_" + tlid).attr("data-id", "");
+			}
+		});
 }
 function showUnread(tlid, type, acct_id) {
 	if ($("#unread_" + tlid + " .material-icons").hasClass("teal-text")) {
-		goTop(tlid)
-		return
+		goTop(tlid);
+		return;
 	}
-	$("#unread_" + tlid + " .material-icons").addClass("teal-text")
+	$("#unread_" + tlid + " .material-icons").addClass("teal-text");
 	var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
-	var id = $("#unread_" + tlid).attr("data-id")
+	var id = $("#unread_" + tlid).attr("data-id");
 	if (type == "home") {
-		var add = "timelines/home?min_id=" + id
+		var add = "timelines/home?min_id=" + id;
 	} else if (type == "notf") {
-		var add = "notifications?min_id=" + id
+		var add = "notifications?min_id=" + id;
 	}
-	var start = "https://" + domain + "/api/v1/" + add
+	var start = "https://" + domain + "/api/v1/" + add;
 	fetch(start, {
-		method: 'GET',
+		method: "GET",
 		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function (response) {
-		if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
+			"content-type": "application/json",
+			Authorization: "Bearer " + at
 		}
-		return response.json();
-	}).catch(function (error) {
-		todo(error);
-		console.error(error);
-	}).then(function (json) {
-		if (!json || !json.length) {
-			columnReload(tlid, type)
-		}
-		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
-			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
-		} else {
-			var mute = [];
-		}
-		var templete = parse(json, type, acct_id, tlid, "", mute, type);
-		var len = json.length - 1
-		$("#timeline_" + tlid).html(templete);
-		if ($("#timeline_" + tlid + " .cvo:eq(" + len + ")").length) {
-			var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top
-			$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to)
-		}
-		additional(acct_id, tlid);
-		jQuery("time.timeago").timeago();
-		todc();
-	});
+	})
+		.then(function(response) {
+			if (!response.ok) {
+				response.text().then(function(text) {
+					setLog(response.url, response.status, text);
+				});
+			}
+			return response.json();
+		})
+		.catch(function(error) {
+			todo(error);
+			setLog(start, "JSON", error);
+			console.error(error);
+		})
+		.then(function(json) {
+			if (!json || !json.length) {
+				columnReload(tlid, type);
+			}
+			if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+				var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+			} else {
+				var mute = [];
+			}
+			var templete = parse(json, type, acct_id, tlid, "", mute, type);
+			var len = json.length - 1;
+			$("#timeline_" + tlid).html(templete);
+			if ($("#timeline_" + tlid + " .cvo:eq(" + len + ")").length) {
+				var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top;
+				$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to);
+			}
+			additional(acct_id, tlid);
+			jQuery("time.timeago").timeago();
+			todc();
+		});
 }
-var ueloadlock = false
+var ueloadlock = false;
 function ueload(tlid) {
 	if (ueloadlock) {
-		return false
+		return false;
 	}
-	ueloadlock = true
-	var multi = localStorage.getItem("column")
-	var obj = JSON.parse(multi)
-	var acct_id = obj[tlid * 1].domain
-	var type = obj[tlid * 1].type
-	var domain = localStorage.getItem("domain_" + acct_id)
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	var id = $("#timeline_" + tlid + " .cvo:eq(0)").attr("unique-id")
+	ueloadlock = true;
+	var multi = localStorage.getItem("column");
+	var obj = JSON.parse(multi);
+	var acct_id = obj[tlid * 1].domain;
+	var type = obj[tlid * 1].type;
+	var domain = localStorage.getItem("domain_" + acct_id);
+	var at = localStorage.getItem("acct_" + acct_id + "_at");
+	var id = $("#timeline_" + tlid + " .cvo:eq(0)").attr("unique-id");
 	if (type == "home") {
-		var add = "timelines/home?min_id=" + id
+		var add = "timelines/home?min_id=" + id;
 	} else if (type == "notf") {
-		var add = "notifications?min_id=" + id
+		var add = "notifications?min_id=" + id;
 	}
-	var start = "https://" + domain + "/api/v1/" + add
+	var start = "https://" + domain + "/api/v1/" + add;
 	fetch(start, {
-		method: 'GET',
+		method: "GET",
 		headers: {
-			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		},
-	}).then(function (response) {
-		if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
+			"content-type": "application/json",
+			Authorization: "Bearer " + at
 		}
-		return response.json();
-	}).catch(function (error) {
-		todo(error);
-		console.error(error);
-	}).then(function (json) {
-		if (!json) {
-			columnReload(tlid, type)
-		}
-		if (localStorage.getItem("filter_" + acct_id) != "undefined") {
-			var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type)
-		} else {
-			var mute = []
-		}
-		var templete = parse(json, '', acct_id, tlid, "", mute, type)
-		var len = json.length - 1
-		$("#timeline_" + tlid).prepend(templete)
-		if ($("#timeline_" + tlid + " .cvo:eq(" + len + ")").length) {
-			var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top
-			$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to)
-		}
-		additional(acct_id, tlid)
-		jQuery("time.timeago").timeago()
-		todc()
-		ueloadlock = false
-	});
+	})
+		.then(function(response) {
+			if (!response.ok) {
+				response.text().then(function(text) {
+					setLog(response.url, response.status, text);
+				});
+			}
+			return response.json();
+		})
+		.catch(function(error) {
+			todo(error);
+			setLog(start, "JSON", error);
+			console.error(error);
+		})
+		.then(function(json) {
+			if (!json) {
+				columnReload(tlid, type);
+			}
+			if (localStorage.getItem("filter_" + acct_id) != "undefined") {
+				var mute = getFilterType(JSON.parse(localStorage.getItem("filter_" + acct_id)), type);
+			} else {
+				var mute = [];
+			}
+			var templete = parse(json, "", acct_id, tlid, "", mute, type);
+			var len = json.length - 1;
+			$("#timeline_" + tlid).prepend(templete);
+			if ($("#timeline_" + tlid + " .cvo:eq(" + len + ")").length) {
+				var to = $("#timeline_" + tlid + " .cvo:eq(" + len + ")").offset().top;
+				$("#timeline_box_" + tlid + "_box .tl-box").scrollTop(to);
+			}
+			additional(acct_id, tlid);
+			jQuery("time.timeago").timeago();
+			todc();
+			ueloadlock = false;
+		});
 }
 function asRead(callback) {
 	//Markers
@@ -1053,53 +1056,55 @@ function asRead(callback) {
 	if (markers == "no") {
 		markers = false;
 	} else {
-		markers = true
+		markers = true;
 	}
 	if (markers) {
-		var multi = localStorage.getItem("column")
-		var obj = JSON.parse(multi)
-		var obl = obj.length
-		ct = 0
+		var multi = localStorage.getItem("column");
+		var obj = JSON.parse(multi);
+		var obl = obj.length;
+		ct = 0;
 		for (var i = 0; i < obl; i++) {
-			var acct_id = obj[i].domain
-			var type = obj[i].type
+			var acct_id = obj[i].domain;
+			var type = obj[i].type;
 			if (type == "home" || type == "notf") {
 				if (type == "home") {
-					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("unique-id")
+					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("unique-id");
 					var poster = {
 						home: {
 							last_read_id: id
 						}
-					}
+					};
 				} else {
-					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("data-notf")
+					var id = $("#timeline_" + i + " .cvo:eq(0)").attr("data-notf");
 					var poster = {
 						notifications: {
 							last_read_id: id
 						}
-					}
+					};
 				}
 
-				var domain = localStorage.getItem("domain_" + acct_id)
-				var at = localStorage.getItem("acct_" + acct_id + "_at")
-				var httpreq = new XMLHttpRequest()
-				var start = "https://" + domain + "/api/v1/markers"
-				httpreq.open('POST', start, true)
-				httpreq.setRequestHeader('Content-Type', 'application/json')
-				httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
-				httpreq.responseType = "json"
-				httpreq.send(JSON.stringify(poster))
-				httpreq.onreadystatechange = function () {
+				var domain = localStorage.getItem("domain_" + acct_id);
+				var at = localStorage.getItem("acct_" + acct_id + "_at");
+				var httpreq = new XMLHttpRequest();
+				var start = "https://" + domain + "/api/v1/markers";
+				httpreq.open("POST", start, true);
+				httpreq.setRequestHeader("Content-Type", "application/json");
+				httpreq.setRequestHeader("Authorization", "Bearer " + at);
+				httpreq.responseType = "json";
+				httpreq.send(JSON.stringify(poster));
+				httpreq.onreadystatechange = function() {
 					if (httpreq.readyState === 4) {
-						var json = httpreq.response
-						if(this.status!==200){ setLog(start, this.status, this.response); }
-						console.log(json)
-						ct++
+						var json = httpreq.response;
+						if (this.status !== 200) {
+							setLog(start, this.status, this.response);
+						}
+						console.log(json);
+						ct++;
 						if (ct == obl && callback) {
-							postMessage(["asReadComp", ""], "*")
+							postMessage(["asReadComp", ""], "*");
 						}
 					}
-				}
+				};
 			}
 		}
 	}
@@ -1110,23 +1115,20 @@ function asReadEnd() {
 	if (markers == "no") {
 		markers = false;
 	} else {
-		markers = true
+		markers = true;
 	}
 	if (markers) {
-		asRead(true)
+		asRead(true);
 		Swal.fire({
 			title: lang.lang_tl_postmarkers_title,
 			html: lang.lang_tl_postmarkers,
 			timer: 3000,
 			onBeforeOpen: () => {
-				Swal.showLoading()
+				Swal.showLoading();
 			},
-			onClose: () => {
-			}
-		}).then((result) => {
-
-		})
+			onClose: () => {}
+		}).then(result => {});
 	} else {
-		postMessage(["asReadComp", ""], "*")
+		postMessage(["asReadComp", ""], "*");
 	}
 }

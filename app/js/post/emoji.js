@@ -6,181 +6,186 @@ $("#emoji-next").addClass("disabled");
 //絵文字ボタンのトグル
 function emojiToggle(reaction) {
 	var acct_id = $("#post-acct-sel").val();
-	var selin = $("#textarea").prop('selectionStart');
+	var selin = $("#textarea").prop("selectionStart");
 	if (!selin) {
 		selin = 0;
 	}
 	if ($("#emoji").hasClass("hide")) {
-		$("#emoji").removeClass("hide")
-		$("#right-side").show()
-		$("#right-side").css("width", "300px")
-		$("#left-side").css("width", "calc(100% - 300px)")
+		$("#emoji").removeClass("hide");
+		$("#right-side").show();
+		$("#right-side").css("width", "300px");
+		$("#left-side").css("width", "calc(100% - 300px)");
 		var width = localStorage.getItem("postbox-width");
 		if (width) {
-			width = width.replace("px", "") * 1 + 300
+			width = width.replace("px", "") * 1 + 300;
 		} else {
-			width = 600
+			width = 600;
 		}
-		$("#post-box").css("width", width + "px")
+		$("#post-box").css("width", width + "px");
 		$("#suggest").html("");
 		if (!localStorage.getItem("emojis_" + acct_id)) {
-			var html =
-				'<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="emojiGet(\'true\');">' + lang.lang_emoji_get + '</button>';
+			var html = '<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="emojiGet(\'true\');">' + lang.lang_emoji_get + "</button>";
 			$("#emoji-list").html(html);
 		} else {
-			emojiList('home', reaction);
+			emojiList("home", reaction);
 		}
 	} else {
-		$("#poll").addClass("hide")
-		$("#right-side").hide()
-		$("#right-side").css("width", "300px")
-		$("#emoji").addClass("hide")
+		$("#poll").addClass("hide");
+		$("#right-side").hide();
+		$("#right-side").css("width", "300px");
+		$("#emoji").addClass("hide");
 		$("#suggest").html("");
-		$("#left-side").css("width", "100%")
+		$("#left-side").css("width", "100%");
 		var width = localStorage.getItem("postbox-width");
 		if (width) {
-			width = width.replace("px", "") * 1
+			width = width.replace("px", "") * 1;
 		} else {
-			width = 300
+			width = 300;
 		}
-		$("#post-box").css("width", width + "px")
+		$("#post-box").css("width", width + "px");
 	}
-
-
 }
 
 //絵文字リスト挿入
 function emojiGet(parse, started) {
-	$('#emoji-list').text('Loading...');
+	$("#emoji-list").text("Loading...");
 	var acct_id = $("#post-acct-sel").val();
 	var domain = localStorage.getItem("domain_" + acct_id);
 	if (localStorage.getItem("mode_" + domain) != "misskey") {
 		var start = "https://" + domain + "/api/v1/custom_emojis";
 		fetch(start, {
-			method: 'GET',
+			method: "GET",
 			headers: {
-				'content-type': 'application/json'
-			},
-		}).then(function (response) {
-			if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
-		}
-		return response.json();
-		}).catch(function (error) {
-			todo(error);
-			console.error(error);
-		}).then(function (json) {
-			if (parse == "true") {
-				$('#emoji-list').text('Parsing...');
-				var md = {
-					"categorized": {},
-					"uncategorized": []
-				};
-				var if_categorized = false
-				Object.keys(json).forEach(function (key) {
-					var emoji = json[key];
-					if (emoji.visible_in_picker) {
-						var listed = true
-					} else {
-						var listed = false
-					}
-					if (emoji.category) {
-						var cat = emoji.category
-						if (!md["categorized"][cat]) {
-							md["categorized"][cat] = []
+				"content-type": "application/json"
+			}
+		})
+			.then(function(response) {
+				if (!response.ok) {
+					response.text().then(function(text) {
+						setLog(response.url, response.status, text);
+					});
+				}
+				return response.json();
+			})
+			.catch(function(error) {
+				todo(error);
+				setLog(start, "JSON", error);
+				console.error(error);
+			})
+			.then(function(json) {
+				if (parse == "true") {
+					$("#emoji-list").text("Parsing...");
+					var md = {
+						categorized: {},
+						uncategorized: []
+					};
+					var if_categorized = false;
+					Object.keys(json).forEach(function(key) {
+						var emoji = json[key];
+						if (emoji.visible_in_picker) {
+							var listed = true;
+						} else {
+							var listed = false;
 						}
-						md["categorized"][cat].push({
-							"shortcode": emoji.shortcode,
-							"url": emoji.url,
-							"listed": listed
-						})
-						if_categorized = true
-					} else {
-						md["uncategorized"].push({
-							"shortcode": emoji.shortcode,
-							"url": emoji.url,
-							"listed": listed
-						})
-					}
-				});
-				console.log(md)
-				//絵文字をマストドン公式と同順にソート
-				md["uncategorized"].sort(function (a, b) {
-					if (a.shortcode < b.shortcode) return -1;
-					if (a.shortcode > b.shortcode) return 1;
-					return 0;
-				});
-				Object.keys(md["categorized"]).forEach(function (key) {
-					md["categorized"][key].sort(function (a, b) {
+						if (emoji.category) {
+							var cat = emoji.category;
+							if (!md["categorized"][cat]) {
+								md["categorized"][cat] = [];
+							}
+							md["categorized"][cat].push({
+								shortcode: emoji.shortcode,
+								url: emoji.url,
+								listed: listed
+							});
+							if_categorized = true;
+						} else {
+							md["uncategorized"].push({
+								shortcode: emoji.shortcode,
+								url: emoji.url,
+								listed: listed
+							});
+						}
+					});
+					console.log(md);
+					//絵文字をマストドン公式と同順にソート
+					md["uncategorized"].sort(function(a, b) {
 						if (a.shortcode < b.shortcode) return -1;
 						if (a.shortcode > b.shortcode) return 1;
 						return 0;
 					});
-				});
-				
-				md["if_categorized"] = if_categorized
-				localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
-			} else {
-				localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
-			}
-			localStorage.setItem("emojiseek", 0);
-			if (!started) {
-				emojiList('home')
-			}
-		});
+					Object.keys(md["categorized"]).forEach(function(key) {
+						md["categorized"][key].sort(function(a, b) {
+							if (a.shortcode < b.shortcode) return -1;
+							if (a.shortcode > b.shortcode) return 1;
+							return 0;
+						});
+					});
+
+					md["if_categorized"] = if_categorized;
+					localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
+				} else {
+					localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
+				}
+				localStorage.setItem("emojiseek", 0);
+				if (!started) {
+					emojiList("home");
+				}
+			});
 	} else {
 		var start = "https://" + domain + "/api/meta";
 		fetch(start, {
-			method: 'POST',
+			method: "POST",
 			headers: {
-				'content-type': 'application/json'
-			},
-		}).then(function (response) {
-			if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
-		}
-		return response.json();
-		}).catch(function (error) {
-			todo(error);
-			console.error(error);
-		}).then(function (json) {
-			if (json.enableEmojiReaction) {
-				localStorage.setItem("emojiReaction_" + acct_id, "true");
-			} else {
-				localStorage.setItem("emojiReaction_" + acct_id, "disabled");
+				"content-type": "application/json"
 			}
-			var emojis = json.emojis;
-			var md = {"uncategorized": []}
-			Object.keys(emojis).forEach(function (key) {
-				var emoji = emojis[key];
-				md["uncategorized"].push({
-					"shortcode": emoji.name,
-					"url": emoji.url,
-					"listed": true
-				})
-			});
-			md["if_categorized"] = false
-			if (parse == "true") {
-				$('#emoji-list').text('Parsing...');
-				//絵文字をマストドン公式と同順にソート
-				md["uncategorized"].sort(function (a, b) {
-					if (a.shortcode < b.shortcode) return -1;
-					if (a.shortcode > b.shortcode) return 1;
-					return 0;
+		})
+			.then(function(response) {
+				if (!response.ok) {
+					response.text().then(function(text) {
+						setLog(response.url, response.status, text);
+					});
+				}
+				return response.json();
+			})
+			.catch(function(error) {
+				todo(error);
+				setLog(start, "JSON", error);
+				console.error(error);
+			})
+			.then(function(json) {
+				if (json.enableEmojiReaction) {
+					localStorage.setItem("emojiReaction_" + acct_id, "true");
+				} else {
+					localStorage.setItem("emojiReaction_" + acct_id, "disabled");
+				}
+				var emojis = json.emojis;
+				var md = { uncategorized: [] };
+				Object.keys(emojis).forEach(function(key) {
+					var emoji = emojis[key];
+					md["uncategorized"].push({
+						shortcode: emoji.name,
+						url: emoji.url,
+						listed: true
+					});
 				});
-				localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
-			} else {
-				localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
-			}
-			localStorage.setItem("emojiseek", 0);
-			if (!started) {
-				emojiList('home')
-			}
-		});
+				md["if_categorized"] = false;
+				if (parse == "true") {
+					$("#emoji-list").text("Parsing...");
+					//絵文字をマストドン公式と同順にソート
+					md["uncategorized"].sort(function(a, b) {
+						if (a.shortcode < b.shortcode) return -1;
+						if (a.shortcode > b.shortcode) return 1;
+						return 0;
+					});
+					localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
+				} else {
+					localStorage.setItem("emojis_" + acct_id, JSON.stringify(md));
+				}
+				localStorage.setItem("emojiseek", 0);
+				if (!started) {
+					emojiList("home");
+				}
+			});
 	}
 }
 
@@ -189,8 +194,8 @@ function emojiList(target, reaction) {
 	$("#now-emoji").text(lang.lang_emoji_custom);
 	var acct_id = $("#post-acct-sel").val();
 	if (reaction && localStorage.getItem("emojiReaction_" + acct_id) != "true") {
-		console.error("Disabled")
-		clear()
+		console.error("Disabled");
+		clear();
 		hide();
 		return false;
 	}
@@ -203,30 +208,34 @@ function emojiList(target, reaction) {
 		localStorage.setItem("emojiseek", start);
 	} else {
 		var start = 0;
-		localStorage.getItem("emojiseek", 0)
+		localStorage.getItem("emojiseek", 0);
 	}
-	var html = '';
+	var html = "";
 	var raw = JSON.parse(localStorage.getItem("emojis_" + acct_id));
-	console.log(raw)
+	console.log(raw);
 	if (raw.if_categorized) {
-		var obj = [{
-			"divider": true,
-			"cat": lang.lang_emoji_uncat
-		}]
-		var cats = raw["uncategorized"]
+		var obj = [
+			{
+				divider: true,
+				cat: lang.lang_emoji_uncat
+			}
+		];
+		var cats = raw["uncategorized"];
 		obj = obj.concat(cats);
-		Object.keys(raw["categorized"]).forEach(function (key) {
+		Object.keys(raw["categorized"]).forEach(function(key) {
 			var cats = raw["categorized"][key];
-			obj = obj.concat([{
-				"divider": true,
-				"cat": key
-			}]);
+			obj = obj.concat([
+				{
+					divider: true,
+					cat: key
+				}
+			]);
 			obj = obj.concat(cats);
 		});
 	} else {
-		var obj = raw["uncategorized"]
+		var obj = raw["uncategorized"];
 	}
-	console.log(obj)
+	console.log(obj);
 
 	var num = obj.length;
 	if (num < start) {
@@ -237,7 +246,7 @@ function emojiList(target, reaction) {
 	$("#emoji-sum").text(page);
 	var ct = Math.ceil(start / 126);
 	if (ct === 0) {
-		if(num > 0){
+		if (num > 0) {
 			var ct = 1;
 		}
 		$("#emoji-before").addClass("disabled");
@@ -254,18 +263,15 @@ function emojiList(target, reaction) {
 		var emoji = obj[i];
 		if (emoji) {
 			if (reaction) {
-				html = html + '<a onclick="emojiReaction(\':' + emoji.shortcode +
-					':\')" class="pointer"><img src="' + emoji.url + '" width="20" title="' + emoji.shortcode + '"></a>';
+				html = html + "<a onclick=\"emojiReaction(':" + emoji.shortcode + ':\')" class="pointer"><img src="' + emoji.url + '" width="20" title="' + emoji.shortcode + '"></a>';
 			} else {
-				if(emoji.divider){
-					html = html + '<p style="margin-bottom:0">'+ emoji.cat +'</p>'
-				}else{
+				if (emoji.divider) {
+					html = html + '<p style="margin-bottom:0">' + emoji.cat + "</p>";
+				} else {
 					if (emoji.listed) {
-						html = html + '<a onclick="emojiInsert(\':' + emoji.shortcode +
-							':\')" class="pointer"><img src="' + emoji.url + '" width="20" title="' + emoji.shortcode + '"></a>';
+						html = html + "<a onclick=\"emojiInsert(':" + emoji.shortcode + ':\')" class="pointer"><img src="' + emoji.url + '" width="20" title="' + emoji.shortcode + '"></a>';
 					}
 				}
-				
 			}
 		}
 	}
@@ -275,7 +281,7 @@ function emojiList(target, reaction) {
 //絵文字など様々なものをテキストボックスに挿入
 function emojiInsert(code, del) {
 	var now = $("#textarea").val();
-	var selin = $("#textarea").prop('selectionStart');
+	var selin = $("#textarea").prop("selectionStart");
 	if (localStorage.getItem("emoji-zero-width") == "yes") {
 		var blank = "​";
 	} else {
@@ -283,11 +289,11 @@ function emojiInsert(code, del) {
 	}
 	var before = now.substr(0, selin);
 	if (before.slice(-1) != " ") {
-		before = before + blank
+		before = before + blank;
 	}
 	var after = now.substr(selin, now.length);
 	if (after.slice(-1) != " ") {
-		after = blank + after
+		after = blank + after;
 	}
 	newt = before + code + after;
 	if (!del) {
@@ -303,7 +309,7 @@ function emojiInsert(code, del) {
 }
 //改行挿入
 function brInsert(code) {
-	if (!$('#post-box').hasClass("appear")) {
+	if (!$("#post-box").hasClass("appear")) {
 		localStorage.setItem("nohide", true);
 		show();
 	}

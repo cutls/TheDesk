@@ -92,7 +92,8 @@ function verck(ver, jp) {
 			return response.json();
 		})
 		.catch(function(error) {
-			todo(error);
+			todo(error);setLog(start, "JSON", error);
+			setLog(start, "JSON", error);
 			console.error(error);
 		})
 		.then(function(mess) {
@@ -144,7 +145,7 @@ function verck(ver, jp) {
 			return response.json();
 		})
 		.catch(function(error) {
-			todo(error);
+			todo(error);setLog(start, "JSON", error);
 			console.error(error);
 		})
 		.then(function(mess) {

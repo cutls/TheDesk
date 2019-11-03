@@ -256,13 +256,24 @@ function system(mainWindow, dir, lang, dirname) {
 	});
 	ipc.on("getLogs", (e, arg) => {
 		var logs=""
+		var todayLog=""
+		var yestLog=""
+		var yest2Log=""
 		fs.readdir(log_dir_path, function(err, files) {
 			if (err) throw err;
 			files.filter(function(file) {
-				if (file == todayStr || file == yestStr || file == yest2Str) {
-					logs=logs+fs.readFileSync(join(log_dir_path, file), "utf8")
+				if (file == todayStr) {
+					todayLog=fs.readFileSync(join(log_dir_path, file), "utf8")
 				}
+				if (file == yestStr) {
+					yestLog=logs+fs.readFileSync(join(log_dir_path, file), "utf8")
+				}
+				if (file == yest2Str) {
+					yest2Log=fs.readFileSync(join(log_dir_path, file), "utf8")
+				}
+				logs = todayLog + yestLog + yest2Log;
 			});
+			logs = yest2Log + yestLog + todayLog;
 			e.sender.webContents.send("logData", logs);
 		});
 	});

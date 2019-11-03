@@ -118,7 +118,9 @@ function media(b64, type, no) {
 	httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response;
-			if(this.status!==200){ setLog(start, this.status, json); }
+			if (this.status !== 200) {
+				setLog(start, this.status, json);
+			}
 			if (!json.id) {
 				todc();
 				$("#imgup").text("");
@@ -269,18 +271,19 @@ function altImage(acct_id, id) {
 			})
 				.then(function(response) {
 					if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
-		}
-		return response.json();
+						response.text().then(function(text) {
+							setLog(response.url, response.status, text);
+						});
+					}
+					return response.json();
 				})
 				.catch(function(error) {
 					todo(error);
+					setLog(start, "JSON", error);
 					console.error(error);
 				})
 				.then(function(json) {
-					console.log(json)
+					console.log(json);
 					$("[data-media=" + id + "]").attr("title", data);
 				});
 		},
@@ -288,7 +291,7 @@ function altImage(acct_id, id) {
 	}).then(result => {
 		if (result.value) {
 			Swal.fire({
-				title: "Complete",
+				title: "Complete"
 			});
 		}
 	});

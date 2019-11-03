@@ -1,73 +1,73 @@
 //設定(setting.html)で読む
 var envView = new Vue({
-	el: '#envView',
+	el: "#envView",
 	data: { config: envConstruction },
 	methods: {
-		complete: function (i, val) {
+		complete: function(i, val) {
 			var ls = envView.config[i].storage;
-			M.toast({ html: 'Complete', displayLength: 3000 })
+			M.toast({ html: "Complete", displayLength: 3000 });
 			if (!val) {
 				var id = envView.config[i].id;
-				var val = $("#" + id).val()
+				var val = $("#" + id).val();
 			}
-			localStorage.setItem(ls, val)
+			localStorage.setItem(ls, val);
 			if (ls == "ha") {
-				hardwareAcceleration(val)
+				hardwareAcceleration(val);
 			}
 			if (ls == "ua_setting") {
-				useragent(val)
+				useragent(val);
 			}
-			return true
+			return true;
 		}
 	}
 });
 var tlView = new Vue({
-	el: '#tlView',
+	el: "#tlView",
 	data: { config: tlConstruction },
 	methods: {
-		complete: function (i, val) {
+		complete: function(i, val) {
 			var ls = tlView.config[i];
 			if (val) {
-				localStorage.setItem(ls.storage, val)
+				localStorage.setItem(ls.storage, val);
 			} else {
 				if (!ls.data) {
-					ls = [ls]
+					ls = [ls];
 				} else {
-					ls = ls.data
+					ls = ls.data;
 				}
 				for (var j = 0; j < ls.length; j++) {
-					M.toast({ html: 'Complete', displayLength: 3000 })
+					M.toast({ html: "Complete", displayLength: 3000 });
 					var id = ls[j].id;
-					var val = $("#" + id).val()
-					localStorage.setItem(ls[j].storage, val)
+					var val = $("#" + id).val();
+					localStorage.setItem(ls[j].storage, val);
 				}
 			}
-			return true
+			return true;
 		}
 	}
 });
 var postView = new Vue({
-	el: '#postView',
-	data: { config: postConstruction, kirishima: localStorage.getItem('kirishima'), quoters: localStorage.getItem('quoters') },
+	el: "#postView",
+	data: { config: postConstruction, kirishima: localStorage.getItem("kirishima"), quoters: localStorage.getItem("quoters") },
 	methods: {
-		complete: function (i, val) {
+		complete: function(i, val) {
 			var ls = postView.config[i];
 			if (val) {
-				localStorage.setItem(ls.storage, val)
+				localStorage.setItem(ls.storage, val);
 			} else {
 				if (!ls.data) {
-					ls = [ls]
+					ls = [ls];
 				} else {
-					ls = ls.data
+					ls = ls.data;
 				}
 				for (var j = 0; j < ls.length; j++) {
-					M.toast({ html: 'Complete', displayLength: 3000 })
+					M.toast({ html: "Complete", displayLength: 3000 });
 					var id = ls[j].id;
-					var val = $("#" + id).val()
-					localStorage.setItem(ls[j].storage, val)
+					var val = $("#" + id).val();
+					localStorage.setItem(ls[j].storage, val);
 				}
 			}
-			return true
+			return true;
 		}
 	}
 });
@@ -83,7 +83,7 @@ function settings() {
 		$("#" + theme).prop("checked", true);
 	} else {
 		if (cd != localStorage.getItem("theme")) {
-			M.toast({ html: lang.lang_setting_theme.replace("{{set}}", ct), displayLength: 3000 })
+			M.toast({ html: lang.lang_setting_theme.replace("{{set}}", ct), displayLength: 3000 });
 		}
 		//テーマはこの場で設定
 		themes(cd);
@@ -92,14 +92,14 @@ function settings() {
 	var fontd = $("#font").val();
 	if (fontd) {
 		if (fontd != localStorage.getItem("font")) {
-			M.toast({ html: lang.lang_setting_font.replace("{{set}}", ct), displayLength: 3000 })
+			M.toast({ html: lang.lang_setting_font.replace("{{set}}", ct), displayLength: 3000 });
 		}
 		localStorage.setItem("font", fontd);
 		themes();
 	} else {
 		if (localStorage.getItem("font")) {
 			localStorage.removeItem("font");
-			M.toast({ html: lang.lang_setting_font.replace("{{set}}", ct), displayLength: 3000 })
+			M.toast({ html: lang.lang_setting_font.replace("{{set}}", ct), displayLength: 3000 });
 			themes();
 		}
 	}
@@ -111,7 +111,7 @@ function load() {
 	for (var i = 0; i < max; i++) {
 		var ls = envView.config[i].storage;
 		if (localStorage.getItem(ls)) {
-			envView.config[i].setValue = localStorage.getItem(ls)
+			envView.config[i].setValue = localStorage.getItem(ls);
 		}
 	}
 	var max = tlView.config.length;
@@ -119,13 +119,13 @@ function load() {
 		var ls = tlView.config[i].storage;
 		if (ls) {
 			if (localStorage.getItem(ls)) {
-				tlView.config[i].setValue = localStorage.getItem(ls)
+				tlView.config[i].setValue = localStorage.getItem(ls);
 			}
 		} else {
-			ls = tlView.config[i].data
+			ls = tlView.config[i].data;
 			for (var j = 0; j < ls.length; j++) {
 				if (localStorage.getItem(tlView.config[i].data[j].storage)) {
-					tlView.config[i].data[j].setValue = localStorage.getItem(tlView.config[i].data[j].storage)
+					tlView.config[i].data[j].setValue = localStorage.getItem(tlView.config[i].data[j].storage);
 				}
 			}
 		}
@@ -135,12 +135,12 @@ function load() {
 		var ls = postView.config[i].storage;
 		if (ls) {
 			if (localStorage.getItem(ls)) {
-				postView.config[i].setValue = localStorage.getItem(ls)
+				postView.config[i].setValue = localStorage.getItem(ls);
 			}
 		} else {
-			ls = postView.config[i].data
+			ls = postView.config[i].data;
 			for (var j = 0; j < ls.length; j++) {
-				postView.config[i].data[j].setValue = localStorage.getItem(ls[j].storage)
+				postView.config[i].data[j].setValue = localStorage.getItem(ls[j].storage);
 			}
 		}
 	}
@@ -160,25 +160,25 @@ function load() {
 		var font = "";
 	}
 	$("#font").val(font);
-	$("#c1-file").text(localStorage.getItem("custom1"))
+	$("#c1-file").text(localStorage.getItem("custom1"));
 	$("#c2-file").text(localStorage.getItem("custom2"));
 	$("#c3-file").text(localStorage.getItem("custom3"));
 	$("#c4-file").text(localStorage.getItem("custom4"));
-	var cvol = localStorage.getItem("customVol")
+	var cvol = localStorage.getItem("customVol");
 	if (cvol) {
 		$("#soundvol").val(cvol * 100);
-		$("#soundVolVal").text(cvol * 100)
+		$("#soundVolVal").text(cvol * 100);
 	}
 	//$("#log").val(localStorage.getItem("errors"))
 }
 function customVol() {
-	var cvol = $("#soundvol").val()
-	$("#soundVolVal").text(cvol)
-	localStorage.setItem("customVol", cvol / 100)
+	var cvol = $("#soundvol").val();
+	$("#soundVolVal").text(cvol);
+	localStorage.setItem("customVol", cvol / 100);
 	var sound = localStorage.getItem("favSound");
 	if (sound == "default") {
-		var file = "../../source/notif.wav"
-	}else{
+		var file = "../../source/notif.wav";
+	} else {
 		if (sound == "c1") {
 			var file = localStorage.getItem("custom1");
 		} else if (sound == "c2") {
@@ -208,13 +208,10 @@ function climute() {
 			return;
 		}
 		var templete;
-		Object.keys(obj).forEach(function (key) {
+		Object.keys(obj).forEach(function(key) {
 			var cli = obj[key];
 			var list = key * 1 + 1;
-			templete = '<div class="acct" id="acct_' + key + '">' + list +
-				'.' +
-				escapeHTML(cli) + '<button class="btn waves-effect red disTar" onclick="cliMuteDel(' +
-				key + ')">' + lang.lang_del + '</button><br></div>';
+			templete = '<div class="acct" id="acct_' + key + '">' + list + "." + escapeHTML(cli) + '<button class="btn waves-effect red disTar" onclick="cliMuteDel(' + key + ')">' + lang.lang_del + "</button><br></div>";
 			$("#mute-cli").append(templete);
 		});
 	}
@@ -231,9 +228,11 @@ function cliMuteDel(key) {
 function wordmute() {
 	var word = localStorage.getItem("word_mute");
 	var obj = JSON.parse(word);
-	if (!obj) { obj = [] }
-	$('#wordmute').chips({
-		data: obj,
+	if (!obj) {
+		obj = [];
+	}
+	$("#wordmute").chips({
+		data: obj
 	});
 }
 function wordmuteSave() {
@@ -245,9 +244,11 @@ function wordmuteSave() {
 function wordemp() {
 	var word = localStorage.getItem("word_emp");
 	var obj = JSON.parse(word);
-	if (!obj) { obj = [] }
-	$('#wordemp').chips({
-		data: obj,
+	if (!obj) {
+		obj = [];
+	}
+	$("#wordemp").chips({
+		data: obj
 	});
 }
 function wordempSave() {
@@ -258,39 +259,44 @@ function wordempSave() {
 function notftest() {
 	var os = localStorage.getItem("platform");
 	var options = {
-		body: lang.lang_setting_notftest + '(' + lang.lang_setting_notftestprof + ')',
+		body: lang.lang_setting_notftest + "(" + lang.lang_setting_notftestprof + ")",
 		icon: localStorage.getItem("prof_0")
 	};
-	var n = new Notification('TheDesk' + lang.lang_setting_notftest, options);
-
+	var n = new Notification("TheDesk" + lang.lang_setting_notftest, options);
 }
 function oks(no) {
 	var txt = $("#oks-" + no).val();
 	localStorage.setItem("oks-" + no, txt);
-	M.toast({ html: lang.lang_setting_ksref, displayLength: 3000 })
+	M.toast({ html: lang.lang_setting_ksref, displayLength: 3000 });
 }
 function oksload() {
-	if (localStorage.getItem("oks-1")) { $("#oks-1").val(localStorage.getItem("oks-1")) }
-	if (localStorage.getItem("oks-2")) { $("#oks-2").val(localStorage.getItem("oks-2")) }
-	if (localStorage.getItem("oks-3")) { $("#oks-3").val(localStorage.getItem("oks-3")) }
+	if (localStorage.getItem("oks-1")) {
+		$("#oks-1").val(localStorage.getItem("oks-1"));
+	}
+	if (localStorage.getItem("oks-2")) {
+		$("#oks-2").val(localStorage.getItem("oks-2"));
+	}
+	if (localStorage.getItem("oks-3")) {
+		$("#oks-3").val(localStorage.getItem("oks-3"));
+	}
 }
 function changelang(lang) {
-	postMessage(["lang", lang], "*")
+	postMessage(["lang", lang], "*");
 }
 function exportSettings() {
 	Swal.fire({
 		title: lang.lang_setting_exportwarn,
-		type: 'warning',
+		type: "warning",
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
-	}).then((result) => {
+	}).then(result => {
 		if (result.value) {
-			postMessage(["exportSettings", ""], "*")
+			postMessage(["exportSettings", ""], "*");
 		}
-	})
+	});
 }
 function exportSettingsCore() {
 	var exp = {};
@@ -309,27 +315,23 @@ function exportSettingsCore() {
 	var max = envView.config.length;
 	for (var i = 0; i < max; i++) {
 		var ls = envView.config[i].storage;
-		config[ls] = localStorage.getItem(ls)
+		config[ls] = localStorage.getItem(ls);
 	}
 	var max = tlView.config.length;
 	for (var i = 0; i < max; i++) {
 		var ls = tlView.config[i].storage;
-		config[ls] = localStorage.getItem(ls)
+		config[ls] = localStorage.getItem(ls);
 	}
 	var max = postView.config.length;
 	for (var i = 0; i < max; i++) {
 		var ls = postView.config[i].storage;
-		config[ls] = localStorage.getItem(ls)
+		config[ls] = localStorage.getItem(ls);
 	}
 	//Font
 	config.font = localStorage.getItem("font");
 	exp.config = config;
 	//keysc
-	exp.ksc = [
-		localStorage.getItem("oks-1"),
-		localStorage.getItem("oks-2"),
-		localStorage.getItem("oks-3")
-	];
+	exp.ksc = [localStorage.getItem("oks-1"), localStorage.getItem("oks-2"), localStorage.getItem("oks-3")];
 	//climu
 	var cli = localStorage.getItem("client_mute");
 	var climu = JSON.parse(cli);
@@ -339,7 +341,7 @@ function exportSettingsCore() {
 	var wordmu = JSON.parse(wdm);
 	exp.wordMute = wordmu;
 	//spotify
-	exp.spotifyArtwork = localStorage.getItem("artwork")
+	exp.spotifyArtwork = localStorage.getItem("artwork");
 	var content = localStorage.getItem("np-temp");
 	if (content || content == "" || content == "null") {
 		exp.spotifyTemplete = content;
@@ -350,27 +352,27 @@ function exportSettingsCore() {
 	var tagarr = localStorage.getItem("tag");
 	var favtag = JSON.parse(tagarr);
 	exp.favoriteTags = favtag;
-	exp.revisons = 2.1
-	exp.meta = {}
-	exp.meta.date = new Date()
-	exp.meta.thedesk = localStorage.getItem("ver")
-	exp.meta.platform = localStorage.getItem("platform")
+	exp.revisons = 2.1;
+	exp.meta = {};
+	exp.meta.date = new Date();
+	exp.meta.thedesk = localStorage.getItem("ver");
+	exp.meta.platform = localStorage.getItem("platform");
 	return exp;
 }
 function importSettings() {
 	Swal.fire({
 		title: lang.lang_setting_importwarn,
-		type: 'warning',
+		type: "warning",
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
-	}).then((result) => {
+	}).then(result => {
 		if (result.value) {
-			postMessage(["importSettings", ""], "*")
+			postMessage(["importSettings", ""], "*");
 		}
-	})
+	});
 }
 function importSettingsCore(obj) {
 	if (obj) {
@@ -392,21 +394,21 @@ function importSettingsCore(obj) {
 			for (var i = 0; i < max; i++) {
 				var ls = envView.config[i].storage;
 				if (obj.config[ls]) {
-					localStorage.setItem(ls, obj.config[ls])
+					localStorage.setItem(ls, obj.config[ls]);
 				}
 			}
 			var max = tlView.config.length;
 			for (var i = 0; i < max; i++) {
 				var ls = tlView.config[i].storage;
 				if (obj.config[ls]) {
-					localStorage.setItem(ls, obj.config[ls])
+					localStorage.setItem(ls, obj.config[ls]);
 				}
 			}
 			var max = postView.config.length;
 			for (var i = 0; i < max; i++) {
 				var ls = postView.config[i].storage;
 				if (obj.config[ls]) {
-					localStorage.setItem(ls, obj.config[ls])
+					localStorage.setItem(ls, obj.config[ls]);
 				}
 			}
 		} else {
@@ -459,113 +461,133 @@ function importSettingsCore(obj) {
 		location.href = "index.html";
 	} else {
 		Swal.fire({
-			type: 'error',
-			title: 'Error'
-		})
+			type: "error",
+			title: "Error"
+		});
 	}
 }
 function savefolder() {
-	postMessage(["sendSinmpleIpc", "savefolder"], "*")
+	postMessage(["sendSinmpleIpc", "savefolder"], "*");
 }
 
 function font() {
-	postMessage(["sendSinmpleIpc", "fonts"], "*")
+	postMessage(["sendSinmpleIpc", "fonts"], "*");
 }
 function fontList(arg) {
 	$("#fonts").removeClass("hide");
 	for (var i = 0; i < arg.length; i++) {
 		var font = arg[i];
-		$("#fonts").append('<div class="font pointer" style="font-family:' + font.family + '" onclick="insertFont(\'' + font.family + '\')">' + font.family + "</div>")
+		$("#fonts").append('<div class="font pointer" style="font-family:' + font.family + '" onclick="insertFont(\'' + font.family + "')\">" + font.family + "</div>");
 	}
 }
 function insertFont(name) {
 	$("#font").val(name);
 }
-$(".color-picker").each(function (i, elem) {
+$(".color-picker").each(function(i, elem) {
 	pickerDefine(i, "fff");
 });
 function pickerDefine(i, color) {
 	var pickr = new Pickr({
-		el: '#color-picker' + i,
+		el: "#color-picker" + i,
 		default: color,
 		showAlways: true,
 		appendToBody: true,
-		closeWithKey: 'Escape',
+		closeWithKey: "Escape",
 		comparison: false,
 		components: {
 			preview: true, // Left side color comparison
 			opacity: false, // Opacity slider
-			hue: true,     // Hue slider
+			hue: true, // Hue slider
 			interaction: {
 				rgba: false, // rgba option (red green blue and alpha)
-				input: true, // input / output element
+				input: true // input / output element
 			}
 		},
 		strings: {
-			save: 'Save',  // Default for save button
-			clear: 'Clear' // Default for clear button
+			save: "Save", // Default for save button
+			clear: "Clear" // Default for clear button
 		}
 	});
-	pickr.on('change', (...args) => {
-		var rgb = 'rgb(' + args[0].toRGBA()[0] + ',' + args[0].toRGBA()[1] + ',' + args[0].toRGBA()[2] + ')';
-		$("#color-picker" + i + "_value").val(rgb)
+	pickr.on("change", (...args) => {
+		var rgb = "rgb(" + args[0].toRGBA()[0] + "," + args[0].toRGBA()[1] + "," + args[0].toRGBA()[2] + ")";
+		$("#color-picker" + i + "_value").val(rgb);
 	});
 }
 function customComp() {
 	var nameC = $("#custom_name").val();
-	if (!nameC) { return false; }
+	if (!nameC) {
+		return false;
+	}
 	var descC = $("#custom_desc").val();
 	var primaryC = $("#color-picker0_value").val();
-	if (!primaryC) { primaryC = "rgb(255,255,255)" }
-	var secondaryC = $("#color-picker1_value").val();
-	if (!secondaryC) { secondaryC = "rgb(255,255,255)" }
-	var textC = $("#color-picker2_value").val();
-	if (!textC) { textC = "rgb(255,255,255)" }
-	var multi = localStorage.getItem("multi");
-	if($("#pickers").hasClass("advanceTheme")){
-		var accentC = $("#color-picker3_value").val();
-		if (!accentC) { accentC = null }
-		var activeC = $("#color-picker4_value").val();
-		if (!activeC) { activeC = null }
-		var modalC = $("#color-picker5_value").val();
-		if (!modalC) { modalC = null }
-		var bottomC = $("#color-picker6_value").val();
-		if (!bottomC) { bottomC = null }
-		var postboxC = $("#color-picker7_value").val();
-		if (!postboxC) { postboxC = null }
-		var subcolorC = $("#color-picker8_value").val();
-		if (!subcolorC) { subcolorC = null }
-		var advanceTheme = {
-			"TheDeskAccent": accentC,
-			"TheDeskActive": activeC,
-			"TheDeskModal": modalC,
-			"TheDeskBottom": bottomC,
-			"TheDeskPostbox": postboxC,
-			"TheDeskSubcolor": subcolorC
-		}
-	}else{
-		var advanceTheme = {}
+	if (!primaryC) {
+		primaryC = "rgb(255,255,255)";
 	}
-	
+	var secondaryC = $("#color-picker1_value").val();
+	if (!secondaryC) {
+		secondaryC = "rgb(255,255,255)";
+	}
+	var textC = $("#color-picker2_value").val();
+	if (!textC) {
+		textC = "rgb(255,255,255)";
+	}
+	var multi = localStorage.getItem("multi");
+	if ($("#pickers").hasClass("advanceTheme")) {
+		var accentC = $("#color-picker3_value").val();
+		if (!accentC) {
+			accentC = null;
+		}
+		var activeC = $("#color-picker4_value").val();
+		if (!activeC) {
+			activeC = null;
+		}
+		var modalC = $("#color-picker5_value").val();
+		if (!modalC) {
+			modalC = null;
+		}
+		var bottomC = $("#color-picker6_value").val();
+		if (!bottomC) {
+			bottomC = null;
+		}
+		var postboxC = $("#color-picker7_value").val();
+		if (!postboxC) {
+			postboxC = null;
+		}
+		var subcolorC = $("#color-picker8_value").val();
+		if (!subcolorC) {
+			subcolorC = null;
+		}
+		var advanceTheme = {
+			TheDeskAccent: accentC,
+			TheDeskActive: activeC,
+			TheDeskModal: modalC,
+			TheDeskBottom: bottomC,
+			TheDeskPostbox: postboxC,
+			TheDeskSubcolor: subcolorC
+		};
+	} else {
+		var advanceTheme = {};
+	}
+
 	var my = JSON.parse(multi)[0].name;
 	var id = $("#custom-edit-sel").val();
 	if (id == "add_new") {
 		id = makeCID();
 	}
-	localStorage.setItem("customtheme-id", id)
+	localStorage.setItem("customtheme-id", id);
 	var json = {
-		"name": nameC,
-		"author": my,
-		"desc": descC,
-		"base": $("[name=direction]:checked").val(),
-		"vars": {
-			"primary": primaryC,
-			"secondary": secondaryC,
-			"text": textC
+		name: nameC,
+		author: my,
+		desc: descC,
+		base: $("[name=direction]:checked").val(),
+		vars: {
+			primary: primaryC,
+			secondary: secondaryC,
+			text: textC
 		},
-		"props": advanceTheme,
-		"id": id
-	}
+		props: advanceTheme,
+		id: id
+	};
 	$("#custom_json").val(JSON.stringify(json));
 	themes("custom");
 	$("#custom").prop("checked", true);
@@ -573,12 +595,12 @@ function customComp() {
 	$("#custom_desc").val("");
 	$("#dark").prop("checked", true);
 	$("#custom_json").val("");
-	for(var i =0;i <= 8; i++){
-		$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>')
+	for (var i = 0; i <= 8; i++) {
+		$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>');
 		$("#color-picker" + i + "_value").val("");
 		pickerDefine(i, "fff");
 	}
-	postMessage(["themeJsonCreate", JSON.stringify(json)], "*")
+	postMessage(["themeJsonCreate", JSON.stringify(json)], "*");
 }
 function deleteIt() {
 	var id = $("#custom-sel-sel").val();
@@ -586,34 +608,34 @@ function deleteIt() {
 	$("#custom_desc").val("");
 	$("#dark").prop("checked", true);
 	$("#custom_json").val("");
-	for(var i =0;i <= 8; i++){
-		$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>')
+	for (var i = 0; i <= 8; i++) {
+		$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>');
 		$("#color-picker" + i + "_value").val("");
 		pickerDefine(i, "fff");
 	}
-	postMessage(["themeJsonDelete", id], "*")
+	postMessage(["themeJsonDelete", id], "*");
 }
 function ctLoad() {
-	postMessage(["sendSinmpleIpc", "theme-json-list"], "*")
+	postMessage(["sendSinmpleIpc", "theme-json-list"], "*");
 }
 function ctLoadCore(args) {
 	var templete = "";
-	Object.keys(args).forEach(function (key) {
+	Object.keys(args).forEach(function(key) {
 		var theme = args[key];
-		var themeid = theme.id
-		templete = templete + '<option value="' + themeid + '">' + theme.name + '</option>';
+		var themeid = theme.id;
+		templete = templete + '<option value="' + themeid + '">' + theme.name + "</option>";
 	});
 	if (args[0]) {
-		localStorage.setItem("customtheme-id", args[0].id)
+		localStorage.setItem("customtheme-id", args[0].id);
 	}
 	$("#custom-sel-sel").html(templete);
-	templete = '<option value="add_new">' + $("#edit-selector").attr("data-add") + '</option>' + templete;
+	templete = '<option value="add_new">' + $("#edit-selector").attr("data-add") + "</option>" + templete;
 	$("#custom-edit-sel").html(templete);
-	$('select').formSelect();
+	$("select").formSelect();
 }
 function customSel() {
 	var id = $("#custom-sel-sel").val();
-	localStorage.setItem("customtheme-id", id)
+	localStorage.setItem("customtheme-id", id);
 }
 function custom() {
 	var id = $("#custom-edit-sel").val();
@@ -622,91 +644,91 @@ function custom() {
 		$("#custom_desc").val("");
 		$("#dark").prop("checked", true);
 		$("#custom_json").val("");
-		for(var i =0;i <= 8; i++){
-			$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>')
+		for (var i = 0; i <= 8; i++) {
+			$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>');
 			$("#color-picker" + i + "_value").val("");
 			pickerDefine(i, "fff");
 		}
-		$("#delTheme").addClass("disabled")
+		$("#delTheme").addClass("disabled");
 	} else {
-		$("#delTheme").removeClass("disabled")
-		postMessage(["themeJsonRequest", id], "*")
+		$("#delTheme").removeClass("disabled");
+		postMessage(["themeJsonRequest", id], "*");
 	}
 }
 function customConnect(raw) {
-	var args = raw[0]
+	var args = raw[0];
 	$("#custom_name").val(args.name);
 	$("#custom_desc").val(args.desc);
 	$("#" + args.base).prop("checked", true);
 	//Primary
-	$("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>')
-	pickerDefine(0, rgbToHex(args.vars.primary))
+	$("#color-picker0-wrap").html('<div class="color-picker" id="color-picker0"></div>');
+	pickerDefine(0, rgbToHex(args.vars.primary));
 	$("#color-picker0_value").val(args.vars.primary);
 	//Secondary
-	$("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>')
-	pickerDefine(1, rgbToHex(args.vars.secondary))
+	$("#color-picker1-wrap").html('<div class="color-picker" id="color-picker1"></div>');
+	pickerDefine(1, rgbToHex(args.vars.secondary));
 	$("#color-picker1_value").val(args.vars.secondary);
 	//Text
-	$("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>')
+	$("#color-picker2-wrap").html('<div class="color-picker" id="color-picker2"></div>');
 	$("#color-picker2_value").val(args.vars.text);
-	pickerDefine(2, rgbToHex(args.vars.text))
+	pickerDefine(2, rgbToHex(args.vars.text));
 	//TheDesk Only
-	advancedConncet(args, "TheDeskAccent", "secondary", 3)
-	advancedConncet(args, "TheDeskActive", "primary", 4)
-	advancedConncet(args, "TheDeskModal", "secondary", 5)
-	advancedConncet(args, "TheDeskBottom", "primary", 6)
-	advancedConncet(args, "TheDeskPostbox", "primary", 7)
-	advancedConncet(args, "TheDeskSubcolor", "primary", 8)
+	advancedConncet(args, "TheDeskAccent", "secondary", 3);
+	advancedConncet(args, "TheDeskActive", "primary", 4);
+	advancedConncet(args, "TheDeskModal", "secondary", 5);
+	advancedConncet(args, "TheDeskBottom", "primary", 6);
+	advancedConncet(args, "TheDeskPostbox", "primary", 7);
+	advancedConncet(args, "TheDeskSubcolor", "primary", 8);
 	$("#custom_json").val(raw[1]);
 }
-function advancedConncet(args, tar, sub, i){
+function advancedConncet(args, tar, sub, i) {
 	if (args.props) {
 		if (args.props[tar]) {
 			var color = args.props[tar];
-			$("#pickers").addClass("advanceTheme")
-			$(".advanced").removeClass("hide")
+			$("#pickers").addClass("advanceTheme");
+			$(".advanced").removeClass("hide");
 		} else {
 			var color = args.vars[sub];
 		}
 	} else {
 		var color = args.vars[sub];
 	}
-	$("#color-picker"+i+"-wrap").html('<div class="color-picker" id="color-picker'+i+'"></div>')
-	$("#color-picker"+i+"_value").val(color);
-	pickerDefine(i, rgbToHex(color))
+	$("#color-picker" + i + "-wrap").html('<div class="color-picker" id="color-picker' + i + '"></div>');
+	$("#color-picker" + i + "_value").val(color);
+	pickerDefine(i, rgbToHex(color));
 }
 function customImp() {
 	var json = $("#custom_import").val();
 	if (JSON5.parse(json)) {
-		postMessage(["themeJsonCreate", json], "*")
+		postMessage(["themeJsonCreate", json], "*");
 	} else {
 		Swal.fire({
-			type: 'error',
-			title: 'Error'
-		})
+			type: "error",
+			title: "Error"
+		});
 	}
 }
-function advanced(){
-	$(".advanced").toggleClass("hide")
-	$("#pickers").toggleClass("advanceTheme")
+function advanced() {
+	$(".advanced").toggleClass("hide");
+	$("#pickers").toggleClass("advanceTheme");
 }
 function clearCustomImport() {
 	$("#custom_import").val("");
 }
 function hardwareAcceleration(had) {
-	postMessage(["ha", had], "*")
+	postMessage(["ha", had], "*");
 }
-function useragent(val){
-	postMessage(["ua", val], "*")
+function useragent(val) {
+	postMessage(["ua", val], "*");
 }
 function customSound(key) {
-	postMessage(["customSound", key], "*")
+	postMessage(["customSound", key], "*");
 }
 function customSoundSave(key, file) {
 	localStorage.setItem("custom" + key, file);
-	$("#c1-file").text(file)
+	$("#c1-file").text(file);
 }
-window.onload = function () {
+window.onload = function() {
 	//最初に読む
 	load();
 	climute();
@@ -715,52 +737,56 @@ window.onload = function () {
 	checkSpotify();
 	voiceSettingLoad();
 	oksload();
-	ctLoad()
+	ctLoad();
 };
 //設定画面で未読マーカーは要らない
 function asReadEnd() {
-	postMessage(["asReadComp", ""], "*")
+	postMessage(["asReadComp", ""], "*");
 }
-function checkupd(){
+function checkupd() {
 	var ver = localStorage.getItem("ver");
 	var start = "https://thedesk.top/ver.json";
 	fetch(start, {
-		method: 'GET'
-	}).then(function (response) {
-		if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
-		}
-		return response.json();
-	}).catch(function (error) {
-		todo(error);
-		console.error(error);
-	}).then(function (mess) {
-		console.table(mess);
-		if (mess) {
-			var platform = localStorage.getItem("platform");
-			if (platform == "darwin") {
-				var newest = mess.desk_mac;
-			} else {
-				var newest = mess.desk;
+		method: "GET"
+	})
+		.then(function(response) {
+			if (!response.ok) {
+				response.text().then(function(text) {
+					setLog(response.url, response.status, text);
+				});
 			}
-			if (newest == ver) {
-				Swal.fire({
-					type: 'info',
-					title: lang.lang_setting_noupd,
-					html: ver
-				})
-			} else if (ver.indexOf("beta") != -1 || winstore) {
-				Swal.fire({
-					type: 'info',
-					title: lang.lang_setting_thisisbeta,
-					html: ver
-				})
-			} else {
-				localStorage.removeItem("new-ver-skip")
-				location.href="index.html"
+			return response.json();
+		})
+		.catch(function(error) {
+			todo(error);
+			setLog(start, "JSON", error);
+			console.error(error);
+		})
+		.then(function(mess) {
+			console.table(mess);
+			if (mess) {
+				var platform = localStorage.getItem("platform");
+				if (platform == "darwin") {
+					var newest = mess.desk_mac;
+				} else {
+					var newest = mess.desk;
+				}
+				if (newest == ver) {
+					Swal.fire({
+						type: "info",
+						title: lang.lang_setting_noupd,
+						html: ver
+					});
+				} else if (ver.indexOf("beta") != -1 || winstore) {
+					Swal.fire({
+						type: "info",
+						title: lang.lang_setting_thisisbeta,
+						html: ver
+					});
+				} else {
+					localStorage.removeItem("new-ver-skip");
+					location.href = "index.html";
+				}
 			}
-		}
-	});
+		});
 }
