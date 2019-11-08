@@ -569,6 +569,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var purl = media.preview_url
 					media_ids = media_ids + media.id + ','
 					var url = media.url
+					var remote_url = media.remote_url
 					var nsfwmes = ''
 					if (toot.sensitive && nsfw) {
 						var sense = 'sensitive'
@@ -615,7 +616,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							viewer =
 								viewer +
 								`<a onclick="imgv('${id}','${key2}','${acct_id}')" 
-										id="${id}-image-${key2}" data-url="${url}" data-type="${media.type}" 
+										id="${id}-image-${key2}" data-url="${url}" data-original="${remote_url}" data-type="${media.type}" 
 										class="img-parsed img-link" style="width:calc(${cwdt}% - 1px); height:${imh};">
 									<img draggable="false" src="${purl}" class="${sense} toot-img pointer" 
 										onerror="this.src=\'../../img/loading.svg\'" title="${desc}">

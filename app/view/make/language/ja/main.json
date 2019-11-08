@@ -114,6 +114,7 @@
     "lang_tl_postmarkers_title": "処理中",
     "lang_tl_postmarkers": "未読マーカーを送信しています。3秒以内に閉じられます。",
     "lang_img_DLDone": "ダウンロード先:",
+    "lang_img_copyDone": "画像のURLをコピーしました。",
     "lang_layout_gotop": "一番上へ。アイコンが赤のときはストリーミングに接続できていません。F5等で再読込をお試し下さい。",
     "lang_layout_thisacct": "このアカウントの{{notf}}",
     "lang_layout_delthis": "このカラムを削除",
