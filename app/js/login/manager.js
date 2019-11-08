@@ -960,7 +960,7 @@ function multisel() {
 				${acct.user}@${acct.domain}${mainb}
 			</option>
 			`
-			$('.acct-sel').append(templete)
+			$('.acct-sel').append(template)
 		})
 	}
 	$('select').formSelect()
