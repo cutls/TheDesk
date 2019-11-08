@@ -98,6 +98,8 @@
   "animation": "Animación de líneas temporales",
   "markers": "Marcadores (marcar como leído) en línea temporal principal y notificaciones",
   "markerswarn": "Mastodon 3.0~. Compartido en interface web y clientes de terceros soportados.",
+  "remote_img": "Get images from the remote server",
+  "remote_imgWarn": "All previews are got from your loginned cache server.",
   "replySound": "Sonido (respuesta)",
   "favSound": "Sonido (marcado como favorito)",
   "btSound": "Sonido (retoot)",
