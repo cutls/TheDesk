@@ -98,6 +98,8 @@
   "animation": "タイムラインのアニメーション",
   "markers": "ホームと通知の未読管理",
   "markerswarn": "Mastodon 3.0相当以上。WebUIと対応クライアントで共有されます。",
+  "remote_img": "画像をリモートから取得",
+  "remote_imgWarn": "プレビューはログインサーバーのキャッシュから取得されます。ビューワーのみに適用されます。",
   "replySound": "リプライの通知音",
   "favSound": "お気に入り登録の通知音",
   "btSound": "ブーストの通知音",

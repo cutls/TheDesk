@@ -7,6 +7,9 @@ function imgv(id, key, acct_id) {
 	$('#imgmodal').attr('src', '../../img/loading.svg')
 	var murl = $('#' + id + '-image-' + key).attr('data-url')
 	var ourl = $('#' + id + '-image-' + key).attr('data-original')
+	if (!ourl || ourl == 'null') {
+		ourl = murl
+	}
 	var type = $('#' + id + '-image-' + key).attr('data-type')
 	$('#imagemodal').attr('data-id', id)
 	$('#imagemodal').attr('data-acct', acct_id)
@@ -72,7 +75,7 @@ function imgCont(type) {
 	}
 }
 function imageXhr(id, key, murl) {
-	var startTime = new Date();
+	var startTime = new Date()
 	xhr = new XMLHttpRequest()
 	xhr.open('GET', murl, true)
 	xhr.responseType = 'arraybuffer'
@@ -148,7 +151,7 @@ function imageXhr(id, key, murl) {
 					$('#image-prev').prop('disabled', false)
 				}
 				element.src = b64
-				var endTime = new Date();
+				var endTime = new Date()
 				var proctime = endTime.getTime() - startTime.getTime()
 				$('#imgsec').text(proctime)
 				$('#imgmodal').attr('src', b64)

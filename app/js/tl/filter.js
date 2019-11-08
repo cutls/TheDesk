@@ -146,8 +146,8 @@ function filter() {
 						<a onclick="filterEdit('${filterword.id}','${acct_id}')" class="pointer">
 							${lang.lang_edit}
 						</a>/
-						<a onclick="filterDel('${filterword.id}','${acct_id}')" class="pointer">' +
-							${lang.lang_del}'
+						<a onclick="filterDel('${filterword.id}','${acct_id}')" class="pointer">
+							${lang.lang_del}
 						</a><br> `
 				})
 				if (filters == '') {
