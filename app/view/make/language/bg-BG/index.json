@@ -173,9 +173,9 @@
     "newcomer": "Новодошли",
     "local_only": "Само местно",
     "demoBottomBtns": "Ръководство за добре дошли",
-    "lookAtBottom": "Look at the bottom of this window. Here is some tips about it.",
-    "acctManDesc": "Add more accounts and logout them.",
-    "settingDesc": "Many and many preferences here. You will couldn't check it all!",
-    "nanoDescPlus": "Mini window client(experimental)",
+    "lookAtBottom": "Погледнете в края на този прозорец. Ето няколко съвета за това.",
+    "acctManDesc": "Добавете още акаунти и излезте от тях.",
+    "settingDesc": "Много. много предпочитания са тук. Няма да можете да ги проверите всички!",
+    "nanoDescPlus": "Клиент мини прозорец (експериментално)",
     "listDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
 }
