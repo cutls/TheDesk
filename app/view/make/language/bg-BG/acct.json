@@ -19,5 +19,5 @@
     "thisismisskey": "Влезте като Misskey",
     "misskeylogin": "Прочетете <a href=\"https://thedesk.top/how-to-misskey-login.html\">Документацията</a>, за да влезете в Misskey.",
     "nodata": "Няма данни",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)"
+    "accessTokenSetup": "Използвайте маркера за достъп и вход (щракнете след попълване, но не код, а знак за достъп в поле: Разширено)"
 }
