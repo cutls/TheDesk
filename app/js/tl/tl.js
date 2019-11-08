@@ -872,9 +872,9 @@ function columnReload(tlid, type) {
 		}
 		var mute = getFilterTypeByAcct(acct_id, type)
 		var wssh = localStorage.getItem('wssH_' + tlid)
-		websocketHome[wssh].close()
+		wsHome[wssh].close()
 		var wssl = localStorage.getItem('wssL_' + tlid)
-		websocketLocal[wssl].close()
+		wsLocal[wssl].close()
 		parseColumn(tlid)
 	} else if (type == 'notf') {
 		$('#notice_icon_' + tlid).removeClass('red-text')

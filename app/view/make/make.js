@@ -1,4 +1,4 @@
-let ver = "Usamin (18.11.4)";
+let ver = "20.0.0 (Kawaii)";
 if (process.argv.indexOf("--automatic") === -1) {
     let input = require("readline-sync").question("version string [empty: " + ver + " (default)]? ");
     if (input) {
