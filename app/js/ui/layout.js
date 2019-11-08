@@ -2,8 +2,8 @@
 
 var websocketOld = []
 var websocket = []
-var websocketHome = []
-var websocketLocal = []
+var wsHome = []
+var wsLocal = []
 var websocketNotf = []
 
 //カラム追加ボックストグル

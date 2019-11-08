@@ -153,11 +153,7 @@ function replyTL(id, acct_id) {
 			console.error(error)
 		})
 		.then(function(json) {
-			if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-				var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), 'thread')
-			} else {
-				var mute = []
-			}
+			var mute = getFilterTypeByAcct(acct_id, 'thread')
 			if (localStorage.getItem('mode_' + domain) == 'misskey') {
 				var templete = misskeyParse([json], '', acct_id, '', '', mute)
 				$('#toot-after').prepend(templete)
@@ -222,11 +218,7 @@ function getContext(id, acct_id) {
 				$('#toot-reply .by_filter').removeClass('hide')
 				jQuery('time.timeago').timeago()
 			} else {
-				if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-					var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), 'thread')
-				} else {
-					var mute = []
-				}
+				var mute = getFilterTypeByAcct(acct_id, 'thread')
 				var templete = parse(json.descendants, '', acct_id, '', '', mute)
 				if (templete != '') {
 					$('#toot-after .no-data').hide()

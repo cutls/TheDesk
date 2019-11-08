@@ -369,11 +369,24 @@ function getFilterType(json, type) {
 	Object.keys(json).forEach(function(key) {
 		var filterword = json[key]
 		var phrases = filterword.phrase
-		if (filterword.context.join(',').indexOf(type) !== -1) {
+		var arr = filterword.context
+		if (arr.join(',').indexOf(type) !== -1) {
 			mutedfilters.push(phrases)
+		} else if (type == 'mix'){
+			if (arr.indexOf('home') !== -1 || arr.indexOf('public') !== -1) {
+				mutedfilters.push(phrases)
+			}
 		}
 	})
 	return mutedfilters
+}
+function getFilterTypeByAcct(acct_id, type) {
+	if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
+		var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
+	} else {
+		var mute = []
+	}
+	return mute
 }
 function filterUpdate(acct_id) {
 	var domain = localStorage.getItem('domain_' + acct_id)

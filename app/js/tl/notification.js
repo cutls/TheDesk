@@ -68,11 +68,7 @@ function notfColumn(acct_id, tlid, sys) {
 						}
 						var n = new Notification('TheDesk:' + domain, options)
 					}
-					if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-						var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), 'notif')
-					} else {
-						var mute = []
-					}
+					var mute = getFilterTypeByAcct(acct_id, 'notif')
 					if (obj.type != 'follow') {
 						if (misskey) {
 							templete = templete + misskeyParse([obj], 'notf', acct_id, tlid, -1, mute)
@@ -182,11 +178,7 @@ function notfCommon(acct_id, tlid, sys) {
 						}
 						var n = new Notification('TheDesk:' + domain, options)
 					}
-					if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-						var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), 'notif')
-					} else {
-						var mute = []
-					}
+					var mute = getFilterTypeByAcct(acct_id, 'notif')
 					if (obj.type != 'follow') {
 						if (misskey) {
 							templete = templete + misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute)
@@ -335,14 +327,7 @@ function notfmore(tlid) {
 					localStorage.setItem('lastnotf_' + acct_id, json[0].id)
 					Object.keys(json).forEach(function(key) {
 						var obj = json[key]
-						if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-							var mute = getFilterType(
-								JSON.parse(localStorage.getItem('filter_' + acct_id)),
-								'notif'
-							)
-						} else {
-							var mute = []
-						}
+						var mute = getFilterTypeByAcct(acct_id, 'notif')
 						if (obj.type != 'follow') {
 							if (misskey) {
 								templete = templete + misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute)

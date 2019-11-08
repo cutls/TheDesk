@@ -4,7 +4,6 @@ var errorct = 0
 function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	scrollevent()
 	$('#unread_' + tlid + ' .material-icons').removeClass('teal-text')
-	localStorage.removeItem('morelock')
 	localStorage.removeItem('pool')
 	var domain = localStorage.getItem('domain_' + acct_id)
 	//タグとかの場合はカラム追加して描画
@@ -148,11 +147,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		.then(function(json) {
 			console.log(['Result of getting timeline of ' + tlid, json])
 			$('#landing_' + tlid).hide()
-			if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-				var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
-			} else {
-				var mute = []
-			}
+			var mute = getFilterTypeByAcct(acct_id, type)
 			if (misskey) {
 				var templete = misskeyParse(json, type, acct_id, tlid, '', mute)
 			} else {
@@ -471,11 +466,7 @@ function moreload(type, tlid) {
 				console.error(error)
 			})
 			.then(function(json) {
-				if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-					var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
-				} else {
-					var mute = []
-				}
+				var mute = getFilterTypeByAcct(acct_id, type)
 				if (misskey) {
 					var templete = misskeyParse(json, '', acct_id, tlid, '', mute)
 				} else {
@@ -631,20 +622,20 @@ function tlCloser() {
 		}
 	})
 	websocket = []
-	Object.keys(websocketHome).forEach(function(tlid) {
-		if (websocketHome[tlid]) {
-			websocketHome[tlid].close()
+	Object.keys(wsHome).forEach(function(tlid) {
+		if (wsHome[tlid]) {
+			wsHome[tlid].close()
 			console.log('%c Close Streaming API:Integrated Home' + tlid, 'color:blue')
 		}
 	})
-	websocketHome = []
-	Object.keys(websocketLocal).forEach(function(tlid) {
-		if (websocketLocal[tlid]) {
-			websocketLocal[tlid].close()
+	wsHome = []
+	Object.keys(wsLocal).forEach(function(tlid) {
+		if (wsLocal[tlid]) {
+			wsLocal[tlid].close()
 			console.log('%c Close Streaming API:Integrated Local' + tlid, 'color:blue')
 		}
 	})
-	websocketLocal = []
+	wsLocal = []
 	Object.keys(websocketNotf).forEach(function(tlid) {
 		if (websocketNotf[tlid]) {
 			websocketNotf[tlid].close()
@@ -849,15 +840,11 @@ function reconnector(tlid, type, acct_id, data, mode) {
 		} else {
 			var voice = false
 		}
-		if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-			var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
-		} else {
-			var mute = []
-		}
+		var mute = getFilterTypeByAcct(acct_id, type)
 		var wssh = localStorage.getItem('wssH_' + tlid)
-		websocketHome[wssh].close()
+		wsHome[wssh].close()
 		var wssl = localStorage.getItem('wssL_' + tlid)
-		websocketLocal[wssl].close()
+		wsLocal[wssl].close()
 		mixre(acct_id, tlid, type, mute, '', voice, mode)
 	} else if (type == 'notf') {
 		notfColumn(acct_id, tlid, '')
@@ -869,11 +856,7 @@ function reconnector(tlid, type, acct_id, data, mode) {
 		} else {
 			var voice = false
 		}
-		if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-			var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
-		} else {
-			var mute = []
-		}
+		var mute = getFilterTypeByAcct(acct_id, type)
 		reload(type, '', acct_id, tlid, data, mute, '', voice, mode)
 	}
 	M.toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
@@ -887,11 +870,7 @@ function columnReload(tlid, type) {
 		} else {
 			var voice = false
 		}
-		if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-			var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
-		} else {
-			var mute = []
-		}
+		var mute = getFilterTypeByAcct(acct_id, type)
 		var wssh = localStorage.getItem('wssH_' + tlid)
 		websocketHome[wssh].close()
 		var wssl = localStorage.getItem('wssL_' + tlid)
@@ -908,11 +887,7 @@ function columnReload(tlid, type) {
 		} else {
 			var voice = false
 		}
-		if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-			var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
-		} else {
-			var mute = []
-		}
+		var mute = getFilterTypeByAcct(acct_id, type)
 		parseColumn(tlid)
 	}
 }
@@ -1005,11 +980,7 @@ function showUnread(tlid, type, acct_id) {
 			if (!json || !json.length) {
 				columnReload(tlid, type)
 			}
-			if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-				var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
-			} else {
-				var mute = []
-			}
+			var mute = getFilterTypeByAcct(acct_id, type)
 			var templete = parse(json, type, acct_id, tlid, '', mute, type)
 			var len = json.length - 1
 			$('#timeline_' + tlid).html(templete)
@@ -1065,11 +1036,7 @@ function ueload(tlid) {
 			if (!json) {
 				columnReload(tlid, type)
 			}
-			if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
-				var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
-			} else {
-				var mute = []
-			}
+			var mute = getFilterTypeByAcct(acct_id, type)
 			var templete = parse(json, '', acct_id, tlid, '', mute, type)
 			var len = json.length - 1
 			$('#timeline_' + tlid).prepend(templete)
