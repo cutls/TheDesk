@@ -263,7 +263,6 @@ function voterefresh(acct_id, id) {
 					} else {
 						var myvote = ''
 					}
-					//WIP here
 					poll = poll + `<div class="pointer vote" onclick="vote('${acct_id}','${json.id}',"${choice.id}')">${escapeHTML(choice.text)}(${choice.votes})${myvote})</div>`
 				})
 				$('.vote_' + json.id).html(poll)
