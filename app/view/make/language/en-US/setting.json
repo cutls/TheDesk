@@ -98,6 +98,8 @@
   "animation": "crwdns4082:0crwdne4082:0",
   "markers": "crwdns4084:0crwdne4084:0",
   "markerswarn": "crwdns4086:0crwdne4086:0",
+  "remote_img": "crwdns4382:0crwdne4382:0",
+  "remote_imgWarn": "crwdns4384:0crwdne4384:0",
   "replySound": "crwdns4088:0crwdne4088:0",
   "favSound": "crwdns4090:0crwdne4090:0",
   "btSound": "crwdns4092:0crwdne4092:0",
