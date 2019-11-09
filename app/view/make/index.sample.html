@@ -694,7 +694,7 @@
 		</div>
 		<div class="modal-footer">
 			DL:<span id="imgprog"></span>%
-			(<span id="imgsec"></span>ms)
+			(<span id="imgsec"></span>ms, <span id="imgbyte"></span>KB)
 			<a class="waves-effect white-text" onclick="zoom(2)">
 				<i class="material-icons">zoom_in</i>
 			</a>
@@ -1133,7 +1133,7 @@
 					<a onclick="tips('trend')" class="nex waves-effect imasonly" style="display:none;">
 						<i class="material-icons nex" title="アイマストドントレンド" data-trans-title="trendtip">whatshot</i>
 					</a>
-					<a onclick="tips('spotify')" class="nex waves-effect">
+					<a onclick="tips('spotify')" oncontextmenu="tips('itunes')" class="nex waves-effect">
 						<i class="fab fa-spotify nex" title="Spotify" data-trans-title="spotifytips"></i>
 					</a>
 				</div>

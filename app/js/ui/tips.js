@@ -53,6 +53,10 @@ function tips(mode) {
 		tipsToggle()
 		localStorage.setItem('tips', 'spotify')
 		spotifytips()
+	} else if (mode == 'itunes') {
+		tipsToggle()
+		localStorage.setItem('tips', 'itunes')
+		itunestips()
 	}
 }
 //メモリ
@@ -236,7 +240,64 @@ function spotStart() {
 	$('.spotify-prog').attr('data-s', news)
 	$('.spotify-prog').css('width', per + '%')
 }
-
+//iTunes
+function spotifytips() {
+	if (spotint) clearInterval(spotint)
+	var ms = json.progress_ms
+	var last = 1000 - (ms % 1000)
+	var item = json.item
+	var img = item.album.images[0].url
+	var artisttxt = ''
+	for (i = 0; i < item.artists.length; i++) {
+		if (i > 0) {
+			artisttxt = artisttxt + ',' + item.artists[i].name
+		} else {
+			artisttxt = item.artists[0].name
+		}
+	}
+	artisttxt = escapeHTML(artisttxt)
+	sleep(last)
+	var tms = item.duration_ms
+	var per = (ms / item.duration_ms) * 100
+	ms = ms / 1000
+	tms = tms / 1000
+	var s = Math.round(ms) % 60
+	if (s < 10) {
+		s = '0' + s
+	}
+	var m = (Math.round(ms) - (Math.round(ms) % 60)) / 60
+	var ts = Math.round(tms) % 60
+	if (ts < 10) {
+		ts = '0' + ts
+	}
+	var tm = (Math.round(tms) - (Math.round(tms) % 60)) / 60
+	var html = `
+		<div id="spot-box">
+			<div id="spot-refresh">
+				<i class="material-icons pointer" onclick="spotifytips()" style="font-size:20px">refresh</i>
+				<i class="material-icons pointer" onclick="nowplaying('spotify');show()" style="font-size:20px">send</i>
+			</div>
+			<div id="spot-cover">
+				<img src="${img}" id="spot-img">
+			</div>
+			<div id="spot-name">
+				${escapeHTML(item.name)}
+			</div>
+			<div id="spot-artist">
+				<span class="gray sml" id="spot-art">${artisttxt}</span>
+			</div>
+			<div id="spot-time">
+				<span id="spot-m">${m}</span>:<span id="spot-s">${s}</span>/${tm}:${ts}</span>
+			</div>
+			<div class="progress grey">
+			<div class="determinate spotify-prog grey lighten-2"
+			 style="width:${per}%" data-s="${Math.round(ms)}" data-total="${item.duration_ms}">
+			</div>
+		</div>
+		</div>`
+	$('#tips-text').html(html)
+	spotint = setInterval(spotStart, 1000)
+}
 function trendTagonTipInterval() {
 	setTimeout(trendTagonTip, 6000000)
 }

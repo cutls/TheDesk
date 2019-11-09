@@ -95,6 +95,7 @@ function imageXhr(id, key, murl) {
 		'loadend',
 		function(event) {
 			var total = event.total
+			$('#imgbyte').text(Math.floor(total/1024))
 			var now = event.loaded
 			var per = (now / total) * 100
 			$('#imgprog').text(Math.floor(per))
