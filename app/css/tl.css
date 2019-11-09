@@ -1,243 +1,268 @@
 /*TL CSS(ただしBBCode pulse:master.css/spin:font-awesome*/
 #main {
-  width: 100vw;
-  height: calc(100vh - 40px);
+	width: 100vw;
+	height: calc(100vh - 40px);
 }
 #timeline-container {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  display: flex;
-  height: 100%;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	display: flex;
+	height: 100%;
 }
 #bottom {
-  position: absolute;
-  bottom: 0;
-  width: 100vw;
-  height: 40px;
-  padding: 3px;
-  padding-right: 0;
-  padding-left: 40px;
-  background-color: var(--sidebar);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  z-index: 500;
-  box-shadow: 10px 0 10px 10px rgba(0, 0, 0, 0.2);
+	position: absolute;
+	bottom: 0;
+	width: 100vw;
+	height: 40px;
+	padding: 3px;
+	padding-right: 0;
+	padding-left: 40px;
+	background-color: var(--sidebar);
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	z-index: 500;
+	box-shadow: 10px 0 10px 10px rgba(0, 0, 0, 0.2);
 }
 #demobottom {
-  width: 500px;
-  display: flex;
+	width: 500px;
+	display: flex;
 }
 #bottom.reverse {
-  padding-left: 0;
-  padding-right: 40px;
+	padding-left: 0;
+	padding-right: 40px;
 }
 .reverse {
-  flex-direction: row-reverse;
+	flex-direction: row-reverse;
 }
 #bottom #dambox {
-  width: 300px;
-  margin-right: 10px;
+	width: 300px;
+	margin-right: 10px;
 }
 #bottom.reverse #dambox {
-  margin-right: 0;
+	margin-right: 0;
 }
 #bottom .trendtag {
-  height: 40px;
+	height: 40px;
 }
 #bottom #group,
 #demogroup {
-  margin-right: 40px;
+	margin-right: 40px;
 }
 #bottom .leftside {
-  display: flex;
+	display: flex;
 }
 #tips {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 #bottom #tips img {
-  vertical-align: -3px;
+	vertical-align: -3px;
 }
 #bottom a,
 #demogroup a {
-  color: var(--color);
+	color: var(--color);
 }
 #bottom i {
-  font-size: 30px;
+	font-size: 30px;
 }
 .exc-icons {
-  font-size: 20px;
+	font-size: 20px;
 }
 .exc-chb {
-  padding-left: 24px !important;
+	padding-left: 24px !important;
 }
 .btnsgroup {
-  border: 1px solid;
-  padding-top: 1px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-right: 15px;
-  border-radius: 5px;
+	border: 1px solid;
+	padding-top: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-right: 15px;
+	border-radius: 5px;
 }
 #spot-box {
-  white-space: nowrap;
-  text-overflow: ellipsis;
+	display: grid;
+	grid-template-columns: 40px 30px 2.5fr 1fr 60px;
+	grid-template-rows: 22px 20px;
+	grid-template-areas: 'cover name name artist refresh' 'cover progress progress progress time';
+}
+#spot-refresh {
+	grid-area: refresh;
+}
+#spot-cover {
+	grid-area: cover;
+}
+#spot-name {
+	grid-area: name;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	line-height: 25px;
+}
+#spot-artist {
+	grid-area: artist;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	line-height: 25px;
 }
 #spot-img {
-  margin-right: 2px;
+	width: 90%;
 }
-#spot-art {
-  margin-right: 2px;
-  margin-left: 2px;
+#spot-time {
+	grid-area: time;
+}
+.progress {
+	grid-area: progress;
+	width: 100%;
 }
 .btnsgroup .grouptitle {
-  font-family: Open Sans;
-  font-size: 15px;
+	font-family: Open Sans;
+	font-size: 15px;
 }
 @media screen and (max-width: 890px) {
-  .btnsgroup .grouptitle {
-    display: none;
-  }
-  #tips,
-  #tips-menu {
-    display: none;
-  }
+	.btnsgroup .grouptitle {
+		display: none;
+	}
+	#tips,
+	#tips-menu {
+		display: none;
+	}
 }
 iframe,
 .cvo video {
-  max-width: 100%;
-  max-height: 300px;
+	max-width: 100%;
+	max-height: 300px;
 }
 @media screen and (max-width: 600px) {
-  .mobile #timeline-container {
-    display: block;
-    overflow-x: hidden;
-  }
-  .mobile .box {
-    width: 100vw;
-  }
-  .mobile .fixed-action-btn {
-    position: absolute;
-  }
+	.mobile #timeline-container {
+		display: block;
+		overflow-x: hidden;
+	}
+	.mobile .box {
+		width: 100vw;
+	}
+	.mobile .fixed-action-btn {
+		position: absolute;
+	}
 }
 .box {
-  overflow: hidden;
-  min-width: 300px;
-  flex: 1;
-  border-top: none;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: -10px;
+	overflow: hidden;
+	min-width: 300px;
+	flex: 1;
+	border-top: none;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: -10px;
 }
 .img_FTL {
-  display: none;
+	display: none;
 }
 .bbcode_FTL {
-  display: none;
+	display: none;
 }
 .marquee {
-  width: 100%;
-  padding: 0.5em 0;
-  overflow: hidden;
-  margin-bottom: 0;
-  position: relative;
+	width: 100%;
+	padding: 0.5em 0;
+	overflow: hidden;
+	margin-bottom: 0;
+	position: relative;
 }
 .marquee .bbcode-marq-lateral {
-  margin: 0;
-  padding-left: 100%;
-  display: inline-block;
-  white-space: nowrap;
-  animation-name: marquee;
-  animation-timing-function: linear;
-  animation-duration: 10s;
-  animation-iteration-count: infinite;
+	margin: 0;
+	padding-left: 100%;
+	display: inline-block;
+	white-space: nowrap;
+	animation-name: marquee;
+	animation-timing-function: linear;
+	animation-duration: 10s;
+	animation-iteration-count: infinite;
 }
 @keyframes marquee {
-  0% {
-    -webkit-transform: translate(0);
-    transform: translate(0);
-  }
-  99%,
-  100% {
-    -webkit-transform: translate(-100%);
-    transform: translate(-100%);
-  }
+	0% {
+		-webkit-transform: translate(0);
+		transform: translate(0);
+	}
+	99%,
+	100% {
+		-webkit-transform: translate(-100%);
+		transform: translate(-100%);
+	}
 }
 .boxIn {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border: thin solid gray;
-  overflow: hidden;
-  border-top: none;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	border: thin solid gray;
+	overflow: hidden;
+	border-top: none;
 }
 .box .pin,
 #his-data .pin {
-  display: none;
+	display: none;
 }
 .user {
-  cursor: text;
-  font-size: 1.1rem;
+	cursor: text;
+	font-size: 1.1rem;
 }
 .emoji,
 .emoji-img {
-  width: 15px;
+	width: 15px;
 }
 .area-toot .emoji,
 .area-toot .emoji-img {
-  width: 20px;
-  vertical-align: middle;
-  margin: -1px 0;
+	width: 20px;
+	vertical-align: middle;
+	margin: -1px 0;
 }
 .bigemoji {
-  width: 60px !important;
+	width: 60px !important;
 }
 .faicon_FTL {
-  display: none;
+	display: none;
 }
 .tl-box {
-  position: relative;
-  flex: 1;
-  overflow-y: scroll;
-  overflow-x: hidden;
+	position: relative;
+	flex: 1;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 .additional {
-  overflow-x: scroll;
-  width: 100%;
+	overflow-x: scroll;
+	width: 100%;
 }
 .media-filter .nomedia {
-  display: none;
+	display: none;
 }
 .bt-filter .shared {
-  display: none;
+	display: none;
 }
 .except-bt-filter .unshared {
-  display: none;
+	display: none;
 }
 .cvo {
-  user-select: text;
-  padding-left: 5px;
-  border-bottom: 0.5px solid;
-  padding-right: 2px;
-  word-break: break-word;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 43px 2fr 1fr;
-  grid-template-rows: auto 1.6rem 1fr auto 2.5rem;
-  grid-template-areas: "notice notice notice" "icon display_name display_name" "space toot toot" "space additional additional" "vis actions side";
+	user-select: text;
+	padding-left: 5px;
+	border-bottom: 0.5px solid;
+	padding-right: 2px;
+	word-break: break-word;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 43px 2fr 1fr;
+	grid-template-rows: auto 1.6rem 1fr auto 2.5rem;
+	grid-template-areas: 'notice notice notice' 'icon display_name display_name' 'space toot toot' 'space additional additional' 'vis actions side';
 }
-.hide-actions{
-  grid-template-rows: auto 1.6rem 1fr auto 0;
+.hide-actions {
+	grid-template-rows: auto 1.6rem 1fr auto 0;
 }
-.hide-actions .area-actions{
-  display:none;
+.hide-actions .area-actions {
+	display: none;
 }
-.hide-actions .area-vis{
-  display:none;
+.hide-actions .area-vis {
+	display: none;
 }
-.hide-actions .area-side{
-  display:none;
+.hide-actions .area-side {
+	display: none;
 }
 .cvo h1,
 .cvo h2,
@@ -245,500 +270,499 @@ iframe,
 .cvo h4,
 .cvo h5,
 .cvo h6 {
-  margin: 0;
+	margin: 0;
 }
 
 .area-notice {
-  margin: 2px;
-  grid-area: notice;
+	margin: 2px;
+	grid-area: notice;
 }
 
 .area-icon {
-  width: 40px;
-  margin: 2px;
-  grid-area: icon;
+	width: 40px;
+	margin: 2px;
+	grid-area: icon;
 }
 
 .area-display_name {
-  user-select: text;
-  height: 1.5em;
-  margin: 2px;
-  margin-left: 5px;
-  overflow: hidden;
-  grid-area: display_name;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  flex-wrap: nowrap;
+	user-select: text;
+	height: 1.5em;
+	margin: 2px;
+	margin-left: 5px;
+	overflow: hidden;
+	grid-area: display_name;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	flex-wrap: nowrap;
 }
 .flex-name {
-  max-width: calc(100% - 60px);
-  overflow: hidden;
-  text-overflow: ellipsis;
+	max-width: calc(100% - 60px);
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .area-toot {
-  cursor: text;
-  user-select: auto;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  grid-area: toot;
+	cursor: text;
+	user-select: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	grid-area: toot;
 }
 
 .area-date_via {
-  text-align: right;
-  grid-area: date_via;
+	text-align: right;
+	grid-area: date_via;
 }
 
 .area-additional {
-  cursor: text;
-  user-select: auto;
-  grid-area: additional;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+	cursor: text;
+	user-select: auto;
+	grid-area: additional;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 .acct-note p {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 .area-toot.acct-note p:not(:first-child) {
-  display: none;
+	display: none;
 }
 .area-toot.acct-note p:first-child:after {
-  content: "...";
-  color: var(--gray);
+	content: '...';
+	color: var(--gray);
 }
 
 .area-actions {
-  padding: 0;
-  margin: 0;
-  top: -5px;
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-  max-width: 100%;
-  grid-area: actions;
+	padding: 0;
+	margin: 0;
+	top: -5px;
+	position: relative;
+	display: flex;
+	justify-content: space-around;
+	max-width: 100%;
+	grid-area: actions;
 }
 .area-vis {
-  margin: 2px;
-  grid-area: vis;
-  text-align: center;
+	margin: 2px;
+	grid-area: vis;
+	text-align: center;
 }
 .area-side {
-  display: flex;
-  top: -5px;
-  position: relative;
-  justify-content: flex-end;
-  margin: 2px;
-  grid-area: side;
+	display: flex;
+	top: -5px;
+	position: relative;
+	justify-content: flex-end;
+	margin: 2px;
+	grid-area: side;
 }
 
 .quote-inline {
-  display: none;
+	display: none;
 }
 .quote-renote {
-  display: grid;
-  grid-template-columns: 43px 2fr 25px;
-  grid-template-areas: "ricon ruser rdet" "ricon rtext rdet";
-  border: 1px solid;
-  margin-top: 3px;
-  padding: 1px;
-  border-radius: 3px;
+	display: grid;
+	grid-template-columns: 43px 2fr 25px;
+	grid-template-areas: 'ricon ruser rdet' 'ricon rtext rdet';
+	border: 1px solid;
+	margin-top: 3px;
+	padding: 1px;
+	border-radius: 3px;
 }
 .renote-icon {
-  grid-area: ricon;
-  padding: 5px;
+	grid-area: ricon;
+	padding: 5px;
 }
 .renote-details {
-  grid-area: rdet;
+	grid-area: rdet;
 }
 .renote-icon img {
-  width: 100%;
+	width: 100%;
 }
 .renote-user {
-  grid-area: ruser;
+	grid-area: ruser;
 }
 .renote-text {
-  grid-area: rtext;
+	grid-area: rtext;
 }
 
 .btn-flat {
-  color: var(--color);
+	color: var(--color);
 }
 .area-side i {
-  margin-left: 10px;
+	margin-left: 10px;
 }
 .viabadge {
-  margin-top: 10px;
+	margin-top: 10px;
 }
 .action i {
-  font-size: 1.2rem;
-  margin-right: 2px;
+	font-size: 1.2rem;
+	margin-right: 2px;
 }
 .action .fa-quote-right {
-  margin-top: 2px;
+	margin-top: 2px;
 }
 .actct {
-  color: var(--beforehover);
+	color: var(--beforehover);
 }
 .actct:hover {
-  color: var(--color);
-  transition: 0.5s;
+	color: var(--color);
+	transition: 0.5s;
 }
 
 .gray {
-  color: var(--gray);
+	color: var(--gray);
 }
 .sml {
-  font-size: 0.8em;
+	font-size: 0.8em;
 }
 .toot {
-  overflow: hide;
+	overflow: hide;
 }
 .toot-img {
-  object-fit: cover;
-  width: 100%;
+	object-fit: cover;
+	width: 100%;
 }
 .toot img:not(.emoji-img) {
-  max-width: 100%;
-  max-height: 300px;
+	max-width: 100%;
+	max-height: 300px;
 }
 .cbadge {
-  display: inline-block;
-  min-width: 10px;
-  max-width: 100px;
-  padding: 3px 7px;
-  font-size: 0.8em;
-  margin-right: 5px;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  background-color: #777;
-  border-radius: 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  height: calc(0.8em + 8px);
-  user-select: none;
+	display: inline-block;
+	min-width: 10px;
+	max-width: 100px;
+	padding: 3px 7px;
+	font-size: 0.8em;
+	margin-right: 5px;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: #777;
+	border-radius: 10px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	height: calc(0.8em + 8px);
+	user-select: none;
 }
 .cbadge-hover {
-  color: var(--color);
-  background-color: transparent;
+	color: var(--color);
+	background-color: transparent;
 }
 .cbadge-hover:hover {
-  color: #fff;
-  background-color: #777;
+	color: #fff;
+	background-color: #777;
 }
 p {
-  margin: 0;
-  margin-bottom: 0px;
-  line-height: 20px;
+	margin: 0;
+	margin-bottom: 0px;
+	line-height: 20px;
 }
 p:not(:last-child) {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 .shared {
-  background-color: var(--shared);
+	background-color: var(--shared);
 }
 .emphasized {
-  background-color: var(--emphasized);
+	background-color: var(--emphasized);
 }
 .udg {
-  cursor: pointer;
+	cursor: pointer;
 }
 .notice-box {
-  top: 0;
-  background-color: var(--notfbox);
-  filter: brightness(110%);
-  position: relative;
-  margin-right: 10px;
-  width: 100%;
-  min-height: 60px;
-  z-index: 500;
-  padding: 5px;
-  display: grid;
-  grid-template-columns: 40px 1fr 1fr 24px;
-  grid-template-rows: 30px 30px;
-  grid-template-areas: "notice notice_name notice_name a2" "notice a1 sta a3" "notf-box notf-box notf-box notf-box";
+	top: 0;
+	background-color: var(--notfbox);
+	filter: brightness(110%);
+	position: relative;
+	margin-right: 10px;
+	width: 100%;
+	min-height: 60px;
+	z-index: 500;
+	padding: 5px;
+	display: grid;
+	grid-template-columns: 40px 1fr 1fr 24px;
+	grid-template-rows: 30px 30px;
+	grid-template-areas: 'notice notice_name notice_name a2' 'notice a1 sta a3' 'notf-box notf-box notf-box notf-box';
 }
 .emp {
-  font-weight: bold;
-  text-decoration: underline;
+	font-weight: bold;
+	text-decoration: underline;
 }
 
 .area-notice {
-  grid-area: notice;
+	grid-area: notice;
 }
 
 .area-notice_name {
-  grid-area: notice_name;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+	grid-area: notice_name;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .area-notice_acct {
-  grid-area: notice_acct;
+	grid-area: notice_acct;
 }
 
 .area-a1 {
-  grid-area: a1;
+	grid-area: a1;
 }
 .area-sta {
-  text-align: center;
-  grid-area: sta;
+	text-align: center;
+	grid-area: sta;
 }
 .area-a2 {
-  text-align: center;
-  grid-area: a2;
+	text-align: center;
+	grid-area: a2;
 }
 
 .area-a3 {
-  text-align: center;
-  grid-area: a3;
+	text-align: center;
+	grid-area: a3;
 }
 .tl-title {
-  font-family: Open Sans;
+	font-family: Open Sans;
 }
 #tools {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  float: right;
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	float: right;
 }
 .setting {
-  font-size: 0.6rem;
-  color: gray;
-  cursor: pointer;
+	font-size: 0.6rem;
+	color: gray;
+	cursor: pointer;
 }
 #toot-this .details {
-  display: none;
+	display: none;
 }
 .notf-box {
-  position: fixed;
-  right: 70px;
-  background-color: var(--box);
-  border: thin solid gray;
-  z-index: 501;
-  width: 400px;
-  padding: 5px;
-  min-height: 100px;
-  max-height: 500px;
+	position: fixed;
+	right: 70px;
+	background-color: var(--box);
+	border: thin solid gray;
+	z-index: 501;
+	width: 400px;
+	padding: 5px;
+	min-height: 100px;
+	max-height: 500px;
 }
 .column-hide {
-  display: none;
-  overflow: hidden;
-  height: 0;
+	display: none;
+	overflow: hidden;
+	height: 0;
 }
 .prof-img {
-  border-radius: 3px;
+	border-radius: 3px;
 }
 .notf-icon {
-  position: relative;
-  top: -20px;
-  width: 20px;
-  left: 20px;
+	position: relative;
+	top: -20px;
+	width: 20px;
+	left: 20px;
 }
 .notf-indv-box {
-  width: 100%;
-  max-height: 400px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  border: thin solid gray;
-  border-bottom: 2px solid white;
-  grid-area: notf-box;
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3),
-    0px -10px 10px 0px rgba(0, 0, 0, 0.3) inset;
+	width: 100%;
+	max-height: 400px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	border: thin solid gray;
+	border-bottom: 2px solid white;
+	grid-area: notf-box;
+	box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12),
+		0 5px 5px -3px rgba(0, 0, 0, 0.3), 0px -10px 10px 0px rgba(0, 0, 0, 0.3) inset;
 }
 .type-b {
-  display: none;
+	display: none;
 }
 .modal-footer {
-  background-color: var(--box);
+	background-color: var(--box);
 }
 .ballons {
-  background-color: var(--box);
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
+	background-color: var(--box);
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
 }
 .toot a span.ellipsis:after {
-  content: "...";
+	content: '...';
 }
 .toot a:not(.mention) span:last-of-type {
-  /*display: none;*/
+	/*display: none;*/
 }
 .tl-box .via-hide {
-  display: none;
+	display: none;
 }
 .vote {
-  width: 100%;
-  border: 1px solid;
-  margin-top: 3px;
-  padding: 1px;
-  border-radius: 3px;
+	width: 100%;
+	border: 1px solid;
+	margin-top: 3px;
+	padding: 1px;
+	border-radius: 3px;
 }
 .fa-2x > .emoji-img {
-  width: 36px !important;
-  height: 36px !important;
+	width: 36px !important;
+	height: 36px !important;
 }
 .fa-3x > .emoji-img {
-  width: 54px !important;
-  height: 54px !important;
+	width: 54px !important;
+	height: 54px !important;
 }
 .fa-4x > .emoji-img {
-  width: 72px !important;
-  height: 72px !important;
+	width: 72px !important;
+	height: 72px !important;
 }
 .fa-5x > .emoji-img {
-  width: 90px !important;
-  height: 90px !important;
+	width: 90px !important;
+	height: 90px !important;
 }
 #lists-user {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  max-height: 200px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	max-height: 200px;
 }
 .votebtn {
-  border: 1px solid;
-  color: var(--bg);
-  background-color: var(--beforehover);
-  cursor: pointer;
-  width: 50px;
-  padding: 2px;
-  display: inline-block;
-  text-align: center;
-  margin-top: 5px;
-  border-radius: 10px;
-  transition-duration: 0.5s;
+	border: 1px solid;
+	color: var(--bg);
+	background-color: var(--beforehover);
+	cursor: pointer;
+	width: 50px;
+	padding: 2px;
+	display: inline-block;
+	text-align: center;
+	margin-top: 5px;
+	border-radius: 10px;
+	transition-duration: 0.5s;
 }
 .votebtn:hover {
-  background-color: var(--color);
+	background-color: var(--color);
 }
 .jump {
-  display: inline-block;
-  animation: jump 0.75s linear infinite;
+	display: inline-block;
+	animation: jump 0.75s linear infinite;
 }
 .img-link {
-  position: relative;
-  display: block;
-  margin-right: 1px;
-  float: left;
-  overflow: hidden;
+	position: relative;
+	display: block;
+	margin-right: 1px;
+	float: left;
+	overflow: hidden;
 }
 .nsfw-media {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: black;
-  color: white;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: black;
+	color: white;
 }
 .img-link img {
-  display: block;
-  width: 100%;
-  height: 100%;
+	display: block;
+	width: 100%;
+	height: 100%;
 }
 .shared.selectedToot {
-  background-color: var(--selectedWithShare);
+	background-color: var(--selectedWithShare);
 }
 .selectedToot {
-  background-color: var(--selected);
+	background-color: var(--selected);
 }
 audio {
-  height: 2rem;
+	height: 2rem;
 }
 .translate {
-  white-space: normal;
+	white-space: normal;
 }
 .cw_btn {
-  margin: 3px;
-  background-color: var(--emphasized);
-  color: var(--color);
-  padding-left: 3px;
-  padding-right: 3px;
-  border-radius: 3px;
-  border: 1px solid var(--color);
+	margin: 3px;
+	background-color: var(--emphasized);
+	color: var(--color);
+	padding-left: 3px;
+	padding-right: 3px;
+	border-radius: 3px;
+	border: 1px solid var(--color);
 }
 .vis-data {
-  font-size: 1rem !important;
-  margin: 5px;
-  user-select: none;
+	font-size: 1rem !important;
+	margin: 5px;
+	user-select: none;
 }
 @keyframes jump {
-  0% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-16px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-8px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+	0% {
+		transform: translateY(0);
+	}
+	25% {
+		transform: translateY(-16px);
+	}
+	50% {
+		transform: translateY(0);
+	}
+	75% {
+		transform: translateY(-8px);
+	}
+	100% {
+		transform: translateY(0);
+	}
 }
 @keyframes fadeInDown {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(0, -100%, 0);
+		transform: translate3d(0, -100%, 0);
+	}
 
-  to {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
+	to {
+		opacity: 1;
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
 }
 @keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-  }
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(-100%, 0, 0);
+		transform: translate3d(-100%, 0, 0);
+	}
 
-  to {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
+	to {
+		opacity: 1;
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
 }
 .box-anime {
-  /*animation-duration: 1s;
+	/*animation-duration: 1s;
   animation-name: fadeInLeft;*/
 }
 
 .cvo-anime {
-  animation-duration: 0.1s;
-  animation-name: fadeInDown;
+	animation-duration: 0.1s;
+	animation-name: fadeInDown;
 }
 .urbadge {
-  line-height: normal;
-  height: 2rem;
-  font-size: 1rem;
-  background-color: #009688;
+	line-height: normal;
+	height: 2rem;
+	font-size: 1rem;
+	background-color: #009688;
 }
 .box .ui-resizable-s {
-  display: none !important;
+	display: none !important;
 }
 .boxIn .ui-resizable-e {
-  display: none !important;
+	display: none !important;
 }
 .boxIn .ui-resizable-s {
-  display: block !important;
+	display: block !important;
 }
 .box .ui-resizable-se {
-  display: none !important;
+	display: none !important;
 }
