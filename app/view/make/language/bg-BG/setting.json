@@ -98,6 +98,8 @@
   "animation": "Анимация на времевата линия",
   "markers": "Markers(mark as read) on HTL and notifications",
   "markerswarn": "Mastodon 3.0~. Shared on WebUI and third-party supported clients.",
+  "remote_img": "Get images from the remote server",
+  "remote_imgWarn": "All previews are got from your loginned cache server.",
   "replySound": "Звук (Отговор)",
   "favSound": "Звук(Фаворит)",
   "btSound": "Звук(Подсилване)",

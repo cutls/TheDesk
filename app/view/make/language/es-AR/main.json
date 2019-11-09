@@ -114,6 +114,7 @@
     "lang_tl_postmarkers_title": "Procesando…",
     "lang_tl_postmarkers": "Datos de marcadores POST. Por favor, esperá.",
     "lang_img_DLDone": "Descargado:",
+    "lang_img_copyDone": "Copied: URL of this image",
     "lang_layout_gotop": "Ir al comienzo de esta columna. Cuando el ícono está rojo, esta columna no se puede conectar a la API del streaming. En ese caso, por favor, refrescá.",
     "lang_layout_thisacct": "{{notf}} de esta cuenta",
     "lang_layout_delthis": "Quitar esta columna",
