@@ -37,8 +37,6 @@ function imgv(id, key, acct_id) {
 }
 //イメージビューワーの送り
 function imgCont(type) {
-	$('#imgprog').text(0)
-	$('#imgsec').text(0)
 	var key = $('#imagemodal').attr('data-key')
 	var id = $('#imagemodal').attr('data-id')
 	if (type == 'next') {
@@ -59,6 +57,8 @@ function imgCont(type) {
 		murl = ourl
 	}
 	if (murl) {
+		$('#imgprog').text(0)
+		$('#imgsec').text(0)
 		$('#imgmodal').attr('src', '../../img/loading.svg')
 		var type = $('#' + id + '-image-' + key).attr('data-type')
 		$(document).ready(function() {
