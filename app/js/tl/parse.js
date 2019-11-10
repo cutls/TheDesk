@@ -1,5 +1,6 @@
 //オブジェクトパーサー(トゥート)
 function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
+	var splitter = new GraphemeSplitter()
 	var templete = ''
 	if (obj[0]) {
 		if (tlid === 1) {
@@ -500,9 +501,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				} else {
 					var ct = ct2
 				}
+
 				if (
 					(sent < ct && $.mb_strlen($.strip_tags(content)) > 5) ||
-					($.strip_tags(content).length > ltr && $.mb_strlen($.strip_tags(content)) > 5)
+					($.mb_strlen($.strip_tags(content)) > ltr && $.mb_strlen($.strip_tags(content)) > 5)
 				) {
 					var content = `<span class="gray">${lang.lang_parse_fulltext}</span><br>` + content
 					var spoil = `<span class="cw-long-${toot.id}">${$.mb_substr(

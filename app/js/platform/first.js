@@ -152,33 +152,21 @@ $.isSurrogatePear = function(upper, lower) {
 	return 0xd800 <= upper && upper <= 0xdbff && 0xdc00 <= lower && lower <= 0xdfff
 }
 $.mb_strlen = function(str) {
-	var ret = 0
-	for (var i = 0; i < str.length; i++, ret++) {
-		var upper = str.charCodeAt(i)
-		var lower = str.length > i + 1 ? str.charCodeAt(i + 1) : 0
-		if ($.isSurrogatePear(upper, lower)) {
-			i++
-		}
-	}
-	return ret
+	var splitter = new GraphemeSplitter()
+	var arr = splitter.splitGraphemes(str)
+	return arr.length
 }
 $.mb_substr = function(str, begin, end) {
-	var ret = ''
-	for (var i = 0, len = 0; i < str.length; i++, len++) {
-		var upper = str.charCodeAt(i)
-		var lower = str.length > i + 1 ? str.charCodeAt(i + 1) : 0
-		var s = ''
-		if ($.isSurrogatePear(upper, lower)) {
-			i++
-			s = String.fromCharCode(upper, lower)
-		} else {
-			s = String.fromCharCode(upper)
-		}
-		if (begin <= len && len < end) {
-			ret += s
+	//配列にする
+	var splitter = new GraphemeSplitter()
+	var arr = splitter.splitGraphemes(str)
+	var newarr = []
+	for(var i = 0; i < arr.length; i++){
+		if(i >= begin && i <= end){
+			newarr.push(arr[i])
 		}
 	}
-	return ret
+	return newarr.join('')
 }
 //ソートするやつ
 function object_array_sort(data, key, order, fn) {
