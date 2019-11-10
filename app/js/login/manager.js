@@ -862,6 +862,12 @@ function refresh(target) {
 				id: json['id'],
 				vis: json['source']['privacy']
 			}
+			if (obj[target].background) {
+				ref.background = obj[target].background
+			}
+			if (obj[target].text) {
+				ref.text = obj[target].text
+			}
 			localStorage.setItem('name_' + target, json['display_name'])
 			localStorage.setItem('user_' + target, json['acct'])
 			localStorage.setItem('user-id_' + target, json['id'])
