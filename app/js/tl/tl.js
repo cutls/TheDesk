@@ -267,12 +267,6 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			} else {
 				var typeA = JSON.parse(mess.data).event
 				if (typeA == 'delete') {
-					var del = localStorage.getItem('delete')
-					if (del > 10) {
-						reconnector(tlid, type, acct_id, data)
-					} else {
-						localStorage.setItem('delete', del * 1 + 1)
-					}
 					var obj = JSON.parse(mess.data).payload
 					if (delc == 'true') {
 						$('#timeline_' + tlid + ' [toot-id=' + JSON.parse(mess.data).payload + ']').addClass(
@@ -286,7 +280,6 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 						$('[toot-id=' + JSON.parse(mess.data).payload + ']').remove()
 					}
 				} else if (typeA == 'update' || typeA == 'conversation') {
-					localStorage.removeItem('delete')
 					if (!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')) {
 						//markers show中はダメ
 						var obj = JSON.parse(JSON.parse(mess.data).payload)
@@ -810,28 +803,6 @@ function icon(type) {
 	}
 	return response
 }
-function strAlive() {
-	var date = new Date()
-	var a = date.getTime()
-	var unix = Math.floor(a / 1000)
-	var col = localStorage.getItem('column')
-	if (col) {
-		var obj = JSON.parse(col)
-		Object.keys(obj).forEach(function(key) {
-			if ($('#notice_icon_' + key).hasClass('red-text')) {
-				var type = obj[key].type
-				var acct_id = obj[key].domain
-				var data = obj[key].data
-				reconnector(key, type, acct_id, data, 'error')
-			}
-		})
-	}
-	return
-}
-
-function strAliveInt() {
-	setTimeout(strAlive, 10000)
-}
 function reconnector(tlid, type, acct_id, data, mode) {
 	console.log('%c Reconnector:' + mode + '(timeline' + tlid + ')', 'color:pink')
 	if (type == 'mix' || type == 'integrated' || type == 'plus') {
@@ -891,7 +862,6 @@ function columnReload(tlid, type) {
 		parseColumn(tlid)
 	}
 }
-strAliveInt()
 //Markers
 function getMarker(tlid, type, acct_id) {
 	var domain = localStorage.getItem('domain_' + acct_id)
