@@ -86,7 +86,7 @@
     "lang_usetxtbox_reply": "返信モードです。クリアするときはCtrl+Shift+Cを押してください。",
     "lang_cards_check": "チェック",
     "lang_cards_pip": "ながら観モード",
-    "lang_cards_link": "TheDeskが認証した埋め込みHTMLです(Twitter, Pixiv, nicovideo, YouTube, Spotify)",
+    "lang_cards_link": "TheDeskが認証した埋め込みHTMLです(Twitter, nicovideo, YouTube, Spotify, twitcasting)",
     "lang_details_nodata": "データなし",
     "lang_details_filtered": "フィルターされました。",
     "lang_details_embed": "埋め込みHTMLがコピーされました。",

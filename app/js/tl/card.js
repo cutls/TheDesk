@@ -240,23 +240,11 @@ function cardHtml(json, acct_id, id) {
 		"youtube.com",
 		"youtu.be",
 		"m.youtube.com",
-		"nicovideo.jp"
+		"nicovideo.jp",
+		"twitcasting.tv"
 	]
 	var isHad = _.includes(ok, domain);
-	if (json.provider_name == 'Twitter') {
-		var url = json.author_url
-		var status = json.url.match(/^https:\/\/twitter.com\/[_a-zA-Z0-9-]+\/status\/([0-9]+)/);
-		if(status){
-			if(status.length > 0){
-				status = status[1]
-			}
-		}
-		url = url + '/status/' + status
-		analyze = `
-		<blockquote class="twitter-tweet" data-dnt="true"><strong>${json.author_name}</strong><br>${json.description}<a href="${url}">${json.url}</a></blockquote>
-		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
-		`
-	} else if (json.provider_name == 'pixiv') {
+	if (json.provider_name == 'pixiv') {
 		if (json.image) {
 			var pxvImg = `
 			<br><img src="${json.image}" style="max-width:100%" 
@@ -285,7 +273,8 @@ function cardHtml(json, acct_id, id) {
 					${escapeHTML(json.description)}
 					</span>`
 		}
-		if (json.html) {
+
+		if (json.html || json.provider_name == 'Twitter') {
 			if(isHad) {
 				var prved = `<img class="emoji" draggable="false" alt="✅" 
 					src="https://twemoji.maxcdn.com/v/12.1.3/72x72/2705.png">`
@@ -294,11 +283,9 @@ function cardHtml(json, acct_id, id) {
 				var prved = ''
 				var title = ''
 			}
-			analyze =
-				analyze +
-				`<a onclick="cardHtmlShow('${acct_id}','${id}')" class="add-show pointer" title="${title}">
+			analyze =`<a onclick="cardHtmlShow('${acct_id}','${id}')" class="add-show pointer" title="${title}">
 			${lang.lang_parse_html}(${domain})${prved}
-		</a><br>`
+			</a>${analyze}<br>`
 		}
 	}
 	return analyze
@@ -345,6 +332,20 @@ function cardHtmlShow(acct_id, id) {
 								')" title="
 								${lang.lang_cards_pip}
 								">picture_in_picture_alt</i>`
+			}
+			if (json.provider_name == 'Twitter') {
+				var url = json.author_url
+				var status = json.url.match(/^https:\/\/twitter.com\/[_a-zA-Z0-9-]+\/status\/([0-9]+)/);
+				if(status){
+					if(status.length > 0){
+						status = status[1]
+					}
+				}
+				url = url + '/status/' + status
+				analyze = `
+				<blockquote class="twitter-tweet" data-dnt="true"><strong>${json.author_name}</strong><br>${json.description}<a href="${url}">${json.url}</a></blockquote>
+				<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+				`
 			}
 			$('[toot-id=' + id + '] .additional').html(analyze)
 		})
