@@ -2781,10 +2781,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-sweetalert2@^8.18.6:
-  version "8.18.6"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-8.18.6.tgz#9df053369cb2b4ae0b955280505bf0cad0f8c4fe"
-  integrity sha512-6Jio6FH3p5hm+VHYN8mUyGhGozVo+r+eJtkUC/+bvSpXss84hcMRXNqKQs+J1+LWPy2DT7ozdyVXaVY6sMnm+w==
+sweetalert2@^9.3.4:
+  version "9.3.4"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.3.4.tgz#2fc1fcd8538ea6613cbc80bc49e6d13f1b0150f6"
+  integrity sha512-nyW+SAZUkiKpbKSDE33J9nF5UQnc7IGC1eDHeW80HkhsggvkmQN0Clq7PHXb1roLkBLJryb2evVLDc9jZmptRQ==
 
 tar@^4.4.12:
   version "4.4.13"
