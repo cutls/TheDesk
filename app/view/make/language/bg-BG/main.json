@@ -86,7 +86,7 @@
     "lang_usetxtbox_reply": "Reply Mode. Ctrl+Shift+C to clear.",
     "lang_cards_check": " check",
     "lang_cards_pip": "PiP mode",
-    "lang_cards_link": "Trusted embed HTML by TheDesk(Twitter, Pixiv, nicovideo, YouTube, Spotify)",
+    "lang_cards_link": "Trusted embed HTML by TheDesk(Twitter, nicovideo, YouTube, Spotify, twitcasing)",
     "lang_details_nodata": "Няма данни",
     "lang_details_filtered": "Filtered toot",
     "lang_details_embed": "Embed HTML is cliped.",
