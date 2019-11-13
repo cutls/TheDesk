@@ -661,13 +661,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				mentions = '<div style="float:right">' + mentions + '</div>'
 			} else {
 				var to_mention = [toot.account.acct]
-				//メンションじゃなくてもlang_parse_thread
-				if (toot.in_reply_to_id) {
-					mentions = `<div style="float:right">
-							<a onclick="details('${toot.id}','${acct_id}','${tlid}')" class="pointer waves-effect">
-								${lang.lang_parse_thread}
-							</a></div>`
-				}
+			}
+			//メンションじゃなくてもlang_parse_thread
+			if (toot.in_reply_to_id) {
+				mentions = `<div style="float:right">
+						<a onclick="details('${toot.id}','${acct_id}','${tlid}')" class="pointer waves-effect">
+							${lang.lang_parse_thread}
+						</a></div>`
 			}
 			var tagck = toot.tags[0]
 			var tags = ''
