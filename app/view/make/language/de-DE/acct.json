@@ -1,5 +1,5 @@
 {
-    "list": "Konten",
+    "list": "Accountliste",
     "back": "Zurück",
     "add": "Konto hinzufügen",
     "codesetupwarn": "Check if TheDesk is not working on Windows, you want to login Pleroma servers, you cannot login when it checked.",
@@ -8,9 +8,9 @@
     "selacct": "Konto auswählen",
     "codepastewarn": "Fügen Sie den Code ein und schließen Sie den Browser.",
     "codepaste": "Code",
-    "domain": "Domain",
+    "domain": "Domäne",
     "connect": "Föderierte Server",
-    "toots": "Toots",
+    "toots": "Tröts",
     "users": "Nutzer",
     "users2": "Nutzer",
     "safety": "Verbindung",
@@ -19,5 +19,5 @@
     "thisismisskey": "Als Misskey anmelden",
     "misskeylogin": "Lies die <a href=\"https://thedesk.top/how-to-misskey-login.html\">Doku (japanisch)</a> um dich bei Misskey einzuloggen.",
     "nodata": "Keine Daten",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)"
+    "accessTokenSetup": "Benutze Zugangs-Token zum Anmelden (Klicke nach Ausfüllen nicht den Code, sondern den Access-Token im Kästchen: Erweitert)"
 }
