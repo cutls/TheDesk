@@ -218,71 +218,9 @@ function additionalIndv(tlid, acct_id, id) {
 					console.error(error)
 				})
 				.then(function(json) {
-					json = json.card
-					//このリンク鳥やんけ、ってとき
-					if (json.provider_name == 'Twitter') {
-						if (json.image) {
-							var twiImg = `
-								<br><img src="${json.image}" style="max-width:100%" 
-										onclick="imgv('twi_${id}',0,'twitter')" id="twi_${id}-image-0" 
-										data-url="${json.image}" 
-									data-type="image">
-								`
-						} else {
-							var twiImg = ''
-						}
-						$('[toot-id=' + id + '] .additional').html(`
-							<div class="twitter-tweet"><b>
-								${escapeHTML(json.author_name)}
-								</b><br>
-								${escapeHTML(json.description)}
-								${twiImg}
-								</div>
-						`)
-					} else if (json.provider_name == 'pixiv') {
-						if (json.image) {
-							var pxvImg = `
-							<br><img src="${json.image}" style="max-width:100%" 
-									onclick="imgv('pixiv_${id}',0,'pixiv')" id="pixiv_${id}-image-0" 
-									data-url="${json.embed_url}" 
-								data-type="image">
-							`
-						} else {
-							var pxvImg = ''
-						}
-						$('[toot-id=' + id + '] .additional').html(
-							`<div class="pixiv-post"><b><a href="
-								${json.author_url}
-								" target="_blank">
-								${escapeHTML(json.author_name)}
-								</a></b><br>
-								${escapeHTML(json.title)}
-								${pxvImg}
-								</div>`
-						)
-					} else {
-						if (json.title) {
-							$('[toot-id=' + id + '] .additional').html(
-								`<span class="gray">URL
-									${lang.lang_cards_check}
-									:<br>Title:
-									${escapeHTML(json.title)}
-									<br>
-									${escapeHTML(json.description)}
-									</span>`
-							)
-						}
-						if (json.html) {
-							$('[toot-id=' + id + '] .additional').html(
-								json.html +
-									`<i class="material-icons sml pointer" onclick="pip('
-									${id}
-									')" title="
-									${lang.lang_cards_pip}
-									">picture_in_picture_alt</i>`
-							)
-						}
-					}
+					cards = json.card
+					var analyze = cardHtml(cards, acct_id, id)
+					$('[toot-id=' + id + '] .additional').html(analyze)
 					if (json.title) {
 						$('[toot-id=' + id + '] a:not(.parsed)').addClass('parsed')
 						$('[toot-id=' + id + ']').addClass('parsed')
@@ -291,7 +229,126 @@ function additionalIndv(tlid, acct_id, id) {
 		}
 	}
 }
-
+function cardHtml(json, acct_id, id) {
+	var analyze = ''
+	var domain = json.url.match(/^https?:\/{2,}(.*?)(?:\/|\?|#|$)/)[1];
+	var ok = [
+		"pixiv.net",
+		"twitter.com",
+		"mobile.twitter.com",
+		"open.spotify.com",
+		"youtube.com",
+		"youtu.be",
+		"m.youtube.com",
+		"nicovideo.jp"
+	]
+	var isHad = _.includes(ok, domain);
+	if (json.provider_name == 'Twitter') {
+		var url = json.author_url
+		var status = json.url.match(/^https:\/\/twitter.com\/[_a-zA-Z0-9-]+\/status\/([0-9]+)/);
+		if(status){
+			if(status.length > 0){
+				status = status[1]
+			}
+		}
+		url = url + '/status/' + status
+		analyze = `
+		<blockquote class="twitter-tweet" data-dnt="true"><strong>${json.author_name}</strong><br>${json.description}<a href="${url}">${json.url}</a></blockquote>
+		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+		`
+	} else if (json.provider_name == 'pixiv') {
+		if (json.image) {
+			var pxvImg = `
+			<br><img src="${json.image}" style="max-width:100%" 
+					onclick="imgv('pixiv_${id}',0,'pixiv')" id="pixiv_${id}-image-0" 
+					data-url="${json.embed_url}" 
+				data-type="image">
+			`
+		} else {
+			var pxvImg = ''
+		}
+		analyze = `<div class="pixiv-post"><b><a href="
+				${json.author_url}
+				" target="_blank">
+				${escapeHTML(json.author_name)}
+				</a></b><br>
+				${escapeHTML(json.title)}
+				${pxvImg}
+				</div>`
+	} else {
+		if (json.title) {
+			analyze = `<span class="gray">URL
+					${lang.lang_cards_check}
+					:<br>Title:
+					${escapeHTML(json.title)}
+					<br>
+					${escapeHTML(json.description)}
+					</span>`
+		}
+		if (json.html) {
+			if(isHad) {
+				var prved = `<img class="emoji" draggable="false" alt="✅" 
+					src="https://twemoji.maxcdn.com/v/12.1.3/72x72/2705.png">`
+				var title = lang.lang_cards_link
+			}else{
+				var prved = ''
+				var title = ''
+			}
+			analyze =
+				analyze +
+				`<a onclick="cardHtmlShow('${acct_id}','${id}')" class="add-show pointer" title="${title}">
+			${lang.lang_parse_html}(${domain})${prved}
+		</a><br>`
+		}
+	}
+	return analyze
+}
+function cardHtmlShow(acct_id, id) {
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	var text = $('[toot-id=' + id + '] .toot a').attr('href')
+	var urls = text.match(
+		/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
+	)
+	var id = $('[toot-id=' + id + '] .toot a')
+		.parents('.cvo')
+		.attr('toot-id')
+	var start = 'https://' + domain + '/api/v1/statuses/' + id
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			Authorization: 'Bearer ' + at
+		}
+		//body: JSON.stringify({})
+	})
+		.then(function(response) {
+			if (!response.ok) {
+				response.text().then(function(text) {
+					setLog(response.url, response.status, text)
+				})
+			}
+			return response.json()
+		})
+		.catch(function(error) {
+			todo(error)
+			setLog(start, 'JSON', error)
+			console.error(error)
+		})
+		.then(function(json) {
+			json = json.card
+			if (json.html) {
+				analyze =
+					json.html +
+					`<i class="material-icons sml pointer" onclick="pip('
+								${id}
+								')" title="
+								${lang.lang_cards_pip}
+								">picture_in_picture_alt</i>`
+			}
+			$('[toot-id=' + id + '] .additional').html(analyze)
+		})
+}
 //各TL上方のLink[On/Off]
 function cardToggle(tlid) {
 	var card = localStorage.getItem('card_' + tlid)
