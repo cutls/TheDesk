@@ -1,0 +1,23 @@
+{
+    "list":"アカウント一覧",
+    "back":"戻る",
+    "add":"アカウントを追加",
+    "codesetupwarn":"チェック外したらコード貼っ付けんでもよくなる(<u>Mastodon</u>にWindowsやmacOSからログインするとき)失敗する場合は諦めて入れてや",
+    "codesetup":"コードセットアップ",
+    "mainacct":"メインアカウント",
+    "selacct":"アカウントを選択",
+    "codepastewarn":"コードはここに貼っ付けて。ログインウィンドウは閉じてもうてもええで。",
+    "codepaste":"コードを入力",
+    "domain":"ドメイン名",
+    "connect":"接続サーバー数",
+    "toots":"トゥート数",
+    "users":"ユーザー数",
+    "users2":"人",
+    "safety":"コネクション",
+    "ver":"Mastodonバージョン",
+    "ko":"個",
+    "thisismisskey":"これはMisskeyや",
+    "misskeylogin":"",
+    "nodata":"アカウントあらへん",
+    "accessTokenSetup": "アクセストークン使うてもいけるで(コードの代わりにアクセストークンを入れてクリックしてな: 一見さんお断り)"
+}

@@ -1,0 +1,19 @@
+{
+    "updatehere":"アップデートあんで",
+    "download":"開始",
+    "portable":"ポータブル版",
+    "installer":"インストーラー版(推奨)",
+    "linux":"zip版",
+    "linuxdeb":"deb版(対応の場合推奨)",
+    "linuxsnap":"snap版",
+    "snap":"snap版はSnapcraft等よりDLしてな。",
+    "sureupd":"アップデートは必ずしてな",
+    "skipupd":"アップデートをスキップする",
+    "nexttl":"次回TL表示時までスキップ",
+    "nextver":"次のバージョンが出るまでスキップ",
+    "problem1":"あかんか？",
+    "problem2":"<a href='https://thedesk.top'>公式HP</a>からやってみてな。",
+    "continue":"アップデートを続行",
+    "dlnow":"ダウンロード中",
+    "checkWhatIsNew": "アップデート内容"
+}
