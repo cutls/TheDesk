@@ -127,6 +127,7 @@
   "full": "URL, text and acct(mention to the user)",
   "notqt": "Disabled(Hide buttons on TLs)",
   "apiQuote": "API(only some instances)",
+  "showBookmarkAction": "Show a bookmarking toot button",
   "main": "Default accounts of actions",
   "mainwarn": "Main account can be set on Account Manager.",
   "lastacct": "Account you used recently",
