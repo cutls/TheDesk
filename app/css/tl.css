@@ -415,6 +415,38 @@ iframe,
 	color: var(--color);
 	transition: 0.5s;
 }
+#contextWrap {
+	position: fixed;
+	width: 199vw;
+	height: 100vh;
+	z-index: 9998;
+}
+.contextMenu {
+	position: fixed;
+	background-color: var(--box);
+	z-index: 9999;
+	border-radius: 5px;
+	padding: 5px;
+}
+.contextMenu.bottom:before {
+	content: '';
+	position: absolute;
+	top: 100%;
+	right: 27px;
+	border: 15px solid transparent;
+	border-top: 15px solid var(--box);
+}
+.contextMenu.top:before {
+	content: '';
+	position: absolute;
+	top: -30px;
+	right: 27px;
+	border: 15px solid transparent;
+	border-bottom: 15px solid var(--box);
+}
+.contextMenu .btn-flat {
+	text-transform: none !important;
+}
 
 .gray {
 	color: var(--gray);

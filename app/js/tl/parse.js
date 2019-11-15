@@ -8,12 +8,12 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		localStorage.setItem('lastunix_' + tlid, date(obj[0].created_at, 'unix'))
 	}
 
-	var actb = 're,rt,fav,qt,del,pin,red'
+	var actb = 're,rt,fav,qt,bkm'
 	if (actb) {
 		var actb = actb.split(',')
 		var disp = {}
 		for (var k = 0; k < actb.length; k++) {
-			if (k < 4) {
+			if (k < 5) {
 				var tp = 'type-a'
 			} else {
 				var tp = 'type-b'
@@ -34,6 +34,12 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		} else {
 			var qtClass = ''
 		}
+	}
+	var bkm = localStorage.getItem('bookmark')
+	if (bkm == 'no' || !bkm) {
+		var bkmClass = 'hide'
+	} else {
+		var bkmClass = ''
 	}
 	var datetype = localStorage.getItem('datetype')
 	var nsfwtype = localStorage.getItem('nsfw')
@@ -148,13 +154,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		var wordmute = []
 	}
 	//via通知
-	var viashow = localStorage.getItem('viashow')
-	if (!viashow) {
-		viashow = 'via-hide'
+	var viashowVal = localStorage.getItem('viashow')
+	if (viashowVal == 'yes') {
+		var viashowSet = true
+	} else {
+		var viashowSet = false
 	}
-	if (viashow == 'hide') {
-		viashow = 'via-hide'
-	}
+	var viashow = ''
 	//認証なしTL
 	if (mix == 'noauth') {
 		var noauth = 'hide'
@@ -460,6 +466,11 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var via = ''
 				viashow = 'hide'
 			} else {
+				if (viashowSet) {
+					viashow = ''
+				} else {
+					viashow = 'hide'
+				}
 				var via = escapeHTML(toot.application.name)
 				if (empCli) {
 					//強調チェック
@@ -733,7 +744,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			if (toot.account.acct == localStorage.getItem('user_' + acct_id)) {
 				var if_mine = ''
-				var mine_via = 'type-b'
+				var mine_via = ''
 				var can_rt = ''
 			} else {
 				var if_mine = 'hide'
@@ -756,9 +767,20 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			if (toot.pinned) {
 				var if_pin = 'blue-text'
 				var pin_app = 'pinnedToot'
+				var pinStr = lang.lang_parse_unpin
 			} else {
 				var if_pin = ''
 				var pin_app = ''
+				var pinStr = lang.lang_parse_pin
+			}
+			if (toot.bookmarked) {
+				var if_bkm = 'red-text'
+				var bkm_app = 'bkmed'
+				var bkmStr = lang.lang_parse_unbookmark
+			} else {
+				var if_bkm = ''
+				var bkm_app = ''
+				var bkmStr = lang.lang_parse_bookmark
 			}
 			//アニメ再生
 			if (gif == 'yes') {
@@ -851,10 +873,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			//日本語じゃない
 			if (toot.language != lang.language && toot.language) {
-				var trans = `<div class="action pin">
+				var trans = `<div class="">
 						<a onclick="trans('${toot.language}','${lang.language}')" 
-							class="waves-effect waves-dark btn-flat actct" style="padding:0" title="${lang.lang_parse_trans}">
-								<i class="material-icons">g_translate</i>
+							class="waves-effect waves-dark btn-flat actct" style="padding:0">
+								<i class="material-icons">g_translate</i>${lang.lang_parse_trans}
 						</a>
 					</div>`
 			} else {
@@ -925,11 +947,25 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						</div>
 					</div>`
 			}
+			//menuは何個？
+			var menuct = 1
+			if (viashow != 'hide') {
+				menuct++
+			}
+			if (if_mine != 'hide') {
+				menuct = menuct + 3
+			}
+			if (noauth == 'hide') {
+				menuct = 0
+			}
+			if (trans != '') {
+				menuct++
+			}
 			templete =
 				templete +
 				`<div
 					id="pub_${toot.id}"
-					class="cvo ${mouseover} ${boostback} ${fav_app} ${rt_app} ${pin_app} ${hasmedia} ${animecss}"
+					class="cvo ${mouseover} ${boostback} ${fav_app} ${rt_app} ${pin_app} ${bkm_app} ${hasmedia} ${animecss}"
 					toot-id="${id}" unique-id="${uniqueid}" data-medias="${media_ids}" unixtime="${date(
 					obj[key].created_at,
 					'unix'
@@ -939,15 +975,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					onclick="mov('${toot.id}','${tlid}','cl')"
 					onmouseout="resetmv('mv')"
 				>
-				<div class="area-notice"><span class="gray sharesta">${notice}${home}</span></div>
-				<div class="area-icon">
+				<div class="area-notice grid"><span class="gray sharesta">${notice}${home}</span></div>
+				<div class="area-icon grid">
 					<a onclick="udg('${toot.account.id}','${acct_id}');" user="${toot.account.acct}" class="udg">
 						<img draggable="false" src="${avatar}" width="40" class="prof-img"
 							user="${toot.account.acct}" onerror="this.src='../../img/loading.svg'"/>
 					</a>
 					${noticeavatar}
 				</div>
-				<div class="area-display_name">
+				<div class="area-display_name grid">
 					<div class="flex-name">
 						<span class="user">${dis_name}</span>
 						<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;">
@@ -961,7 +997,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						</span>
 					</div>
 				</div>
-				<div class="area-toot">
+				<div class="area-toot grid">
 					${tickerdom}
 					<span class="${api_spoil} cw_text_${toot.id}">
 						<span class="cw_text">${spoil}</span>
@@ -970,12 +1006,12 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					<div class="toot ${spoiler}">${content}</div>
 					${poll}${viewer}
 				</div>
-				<div class="area-additional">
+				<div class="area-additional grid">
 					<span class="additional">${analyze}</span>
 					${mentions}${tags}
 				</div>
-				<div class="area-vis">${vis}</div>
-				<div class="area-actions">
+				<div class="area-vis grid">${vis}</div>
+				<div class="area-actions grid">
 					<div class="action ${antinoauth}">
 						<a onclick="detEx('${toot.url}','main')" class="waves-effect waves-dark details" style="padding:0">
 							${lang.lang_parse_det}
@@ -1008,6 +1044,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							<i class="text-darken-3 fas fa-quote-right"></i>
 						</a>
 					</div>
+					<div class="action ${disp['bkm']} ${noauth} ${bkmClass}">
+						<a onclick="bkm('${toot.id}','${acct_id}','${tlid}')"
+							class="waves-effect waves-dark btn-flat actct bkm-btn" style="padding:0"
+							title="${lang.lang_parse_bookmark}">
+							<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${if_bkm}"></i>
+					</a>
+					</div>
 					<div class="action ${disp['fav']} ${noauth}">
 						<a onclick="fav('${uniqueid}','${acct_id}','${tlid}')"
 							class="waves-effect waves-dark btn-flat actct fav-btn" style="padding:0"
@@ -1016,43 +1059,53 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							<span class="fav_ct">${toot.favourites_count}</span>
 						</a>
 					</div>
-					<div class="${if_mine} action ${disp['del']} ${noauth}">
-						<a onclick="del('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
-							style="padding:0" title="${lang.lang_parse_del}">
-							<i class="fas fa-trash"></i>
-						</a>
-					</div>
-					<div class="${if_mine} action pin ${disp['pin']} ${noauth}">
-							<a onclick="pin('${
-								toot.id
-							}','${acct_id}')" class="waves-effect waves-dark btn-flat actct" style="padding:0"
-								title="${lang.lang_parse_pin}">
-								<i class="fas fa-map-pin pin_${toot.id} ${if_pin}"></i>
-							</a>
-					</div>
-					<div class="${if_mine} action ${disp['red']} ${noauth}">
-							<a onclick="redraft('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
-								style="padding:0" title="${lang.lang_parse_redraft}">
-								<i class="material-icons">redo</i>
-							</a>
-					</div>
-					${trans}
 				</div>
 				<div class="area-side">
-					<span class="cbadge viabadge waves-effect ${viashow} ${mine_via}" style="max-width:60px;"
-						onclick="client('${$.strip_tags(via)}')" title="via ${$.strip_tags(via)}">${via}</span>
-					<div class="action ${if_mine} ${noauth}">
-						<a onclick="toggleAction('${
-							toot.id
-						}','${tlid}','${acct_id}')" class="waves-effect waves-dark btn-flat" style="padding:0">
+					<div class="action ${noauth}">
+						<a onclick="toggleAction($(this), ${menuct * 39 + 6})" 
+							class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0">
 							<i class="text-darken-3 material-icons act-icon">expand_more</i>
 						</a>
 					</div>
 					<div class="action ${noauth}">
-							<a onclick="details('${toot.id}','${acct_id}','${tlid}','normal')"
-								class="waves-effect waves-dark btn-flat details ${dmHide}" style="padding:0">
-								<i class="text-darken-3 material-icons">more_vert</i></a>
+						<a onclick="details('${toot.id}','${acct_id}','${tlid}','normal')"
+							class="waves-effect waves-dark btn-flat details ${dmHide}" style="padding:0">
+						<i class="text-darken-3 material-icons">more_vert</i></a>
 					</div>
+				</div>
+				<div class="contextMenu hide z-depth-4">
+					<div class="${viashow}">
+						via ${escapeHTML(via)}<br>
+						<a onclick="client('${$.strip_tags(via)}')" class="pointer">${lang.lang_parse_clientop}</a>
+					</div>
+					<div>
+					<a onclick="bkm('${toot.id}','${acct_id}','${tlid}')"
+						class="waves-effect waves-dark btn-flat actct bkm-btn" style="padding:0">
+						<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${if_bkm}"></i>
+						<span class="bkmStr_${toot.id}">${bkmStr}</span>
+					</a>
+					</div>
+					<div class="${if_mine}">
+						<a onclick="del('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
+							style="padding:0">
+							<i class="fas fa-trash"></i>${lang.lang_parse_del}
+						</a>
+					</div>
+					<div class="${if_mine}">
+						<a onclick="pin('${
+							toot.id
+						}','${acct_id}')" class="waves-effect waves-dark btn-flat actct" style="padding:0">
+							<i class="fas fa-map-pin pin_${toot.id} ${if_pin}"></i>
+							<span class="pinStr_${toot.id}">${pinStr}</span>
+						</a>
+					</div>
+					<div class="${if_mine}">
+						<a onclick="redraft('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
+							style="padding:0">
+							<i class="material-icons">redo</i>${lang.lang_parse_redraft}
+						</a>
+					</div>
+					${trans}
 				</div>
 			</div>
 			`
@@ -1077,7 +1130,6 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	Object.keys(obj).forEach(function(key) {
 		var toot = obj[key]
 		if (toot) {
-			console.log(['Parsing', toot])
 			if (!toot.username) {
 				var raw = toot
 				toot = toot.account
@@ -1093,8 +1145,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 					var locked = ''
 				}
 				if (auth == 'request') {
-					var authhtml =
-						`<i class="material-icons gray pointer" onclick="request('${toot.id}','authorize','${acct_id}')" title="Accept">
+					var authhtml = `<i class="material-icons gray pointer" onclick="request('${toot.id}','authorize','${acct_id}')" title="Accept">
 							person_add
 						</i>　
 						<i class="material-icons gray pointer" onclick="request('${toot.id}','reject','${acct_id}')" title="Reject">
@@ -1165,11 +1216,9 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 					var avatar = '../../img/missing.svg'
 				}
 				if (tlid == 'dir' && acct_id == 'noauth') {
-					var udg =
-						`<a onclick="udgEx('${toot.url}','main');" user="${toot.acct}" class="udg">`
+					var udg = `<a onclick="udgEx('${toot.url}','main');" user="${toot.acct}" class="udg">`
 				} else {
-					var udg =
-						`<a onclick="udg('${toot.id}','${acct_id}');" user="${toot.acct}" class="udg">`
+					var udg = `<a onclick="udg('${toot.id}','${acct_id}');" user="${toot.acct}" class="udg">`
 				}
 				var latest = date(toot.last_status_at, 'relative')
 				if (toot.last_status_at) {
@@ -1224,6 +1273,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 }
 //クライアントダイアログ
 function client(name) {
+	$('#contextWrap').addClass('hide')
 	if (name != 'Unknown') {
 		//聞く
 		Swal.fire({
@@ -1300,8 +1350,7 @@ function pollParse(poll, acct_id) {
 		var myvote = lang.lang_parse_endedvote
 		var result_hide = ''
 	} else {
-		var myvote =
-			`<a onclick="voteMastodon('${acct_id}','${poll.id}')" class="votebtn">${lang.lang_parse_vote}</a><br>`
+		var myvote = `<a onclick="voteMastodon('${acct_id}','${poll.id}')" class="votebtn">${lang.lang_parse_vote}</a><br>`
 		if (choices[0].votes_count === 0 || choices[0].votes_count > 0) {
 			myvote =
 				myvote +
@@ -1341,10 +1390,9 @@ function pollParse(poll, acct_id) {
 				${voteit}
 			</div>`
 	})
-	pollHtml =
-		`<div class="vote_${acct_id}_${poll.id}">
+	pollHtml = `<div class="vote_${acct_id}_${poll.id}">
 			${pollHtml}${myvote}
-			<a onclick="voteMastodonrefresh(${acct_id}','${poll.id}')" class="pointer">
+			<a onclick="voteMastodonrefresh('${acct_id}','${poll.id}')" class="pointer">
 				${lang.lang_manager_refresh}
 			</a>
 			<span class="cbadge cbadge-hover" title="${date(poll.expires_at, 'absolute')}">

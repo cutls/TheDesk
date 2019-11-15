@@ -214,6 +214,8 @@ function parseColumn(target, dontclose) {
 					 class="setting nex" title="${lang.lang_layout_unread}">
 					<i class="material-icons waves-effect nex">more</i>
 				</a>`
+				var notfDomain = acct.domain
+				var notfKey = key
 			if (acct.type == 'notf') {
 				var exclude =
 					lang.lang_excluded +
@@ -257,6 +259,8 @@ function parseColumn(target, dontclose) {
 						</button>`
 				}
 				exclude = exclude + '<br>'
+				notfDomain = "dummy"
+				notfKey = "dummy"
 			} else if (acct.type == 'home') {
 				var exclude =
 					`<a onclick="ebtToggle('${key}')" class="setting nex">
@@ -353,8 +357,8 @@ function parseColumn(target, dontclose) {
 						</a>
 					</div>
 				</div>
-				<div class="column-hide notf-indv-box z-depth-4" id="notf-box_${key}">
-					<div id="notifications_${key}" data-notf="${acct.domain}" data-type="notf" class="notf-timeline">
+				<div class="column-hide notf-indv-box z-depth-4" id="notf-box_${notfKey}">
+					<div id="notifications_${notfKey}" data-notf="${notfDomain}" data-type="notf" class="notf-timeline">
 					</div>
 				</div>
 				<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:5px;">

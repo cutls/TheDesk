@@ -278,10 +278,10 @@ function cardHtml(json, acct_id, id) {
 			if(isHad) {
 				var prved = `<img class="emoji" draggable="false" alt="✅" 
 					src="https://twemoji.maxcdn.com/v/12.1.3/72x72/2705.png">`
-				var title = lang.lang_cards_link
+				var title = lang.lang_cards_transted
 			}else{
-				var prved = ''
-				var title = ''
+				var prved = '<img class="emoji" draggable="false" alt="⚠️" src="https://twemoji.maxcdn.com/v/12.1.4/72x72/26a0.png">'
+				var title = lang.lang_cards_untransted
 			}
 			analyze =`<a onclick="cardHtmlShow('${acct_id}','${id}')" class="add-show pointer" title="${title}">
 			${lang.lang_parse_html}(${domain})${prved}

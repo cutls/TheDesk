@@ -115,6 +115,50 @@ function boostWith(vis) {
 	var acct_id = $('#tootmodal').attr('data-acct')
 	rt(id, acct_id, false, vis)
 }
+//ブックマーク
+function bkm(id, acct_id, remote) {
+	if ($('#pub_' + id).hasClass('bkmed')) {
+		var flag = 'unbookmark'
+	} else {
+		var flag = 'bookmark'
+	}
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	var start = 'https://' + domain + '/api/v1/statuses/' + id + '/' + flag
+	var httpreq = new XMLHttpRequest()
+	httpreq.open('POST', start, true)
+	httpreq.setRequestHeader('Content-Type', 'application/json')
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+	httpreq.responseType = 'json'
+	httpreq.send()
+	httpreq.onreadystatechange = function() {
+		if (httpreq.readyState === 4) {
+			var json = httpreq.response
+			if (this.status !== 200) {
+				setLog(start, this.status, json)
+			}
+			if (json.reblog) {
+				json = json.reblog
+			}
+			if (remote != 'remote') {
+				var fav = json.favourites_count
+				$('[toot-id=' + id + '] .fav_ct').text(fav)
+				$('[toot-id=' + id + '] .rt_ct').text(json.reblogs_count)
+				if (flag == 'unbookmark') {
+					$('.bkmStr_' + id).text(lang.lang_parse_bookmark)
+					$('.bkm_' + id).removeClass('red-text')
+					$('[toot-id=' + id + ']').removeClass('bkmed')
+				} else {
+					$('.bkmStr_' + id).text(lang.lang_parse_unbookmark)
+					$('.bkm_' + id).addClass('red-text')
+					$('[toot-id=' + id + ']').addClass('bkmed')
+				}
+			} else {
+				M.toast({ html: lang.lang_status_favWarn, displayLength: 1000 })
+			}
+		}
+	}
+}
 
 //フォロー
 async function follow(acct_id, resolve) {
@@ -406,12 +450,14 @@ function pin(id, acct_id) {
 				setLog(start, this.status, this.response)
 			}
 			console.log(['Success: pinned', json])
-			if ($('[toot-id=' + id + ']').hasClass('pined')) {
+			if (flag == 'unpin') {
 				$('[toot-id=' + id + ']').removeClass('pined')
 				$('.pin_' + id).removeClass('blue-text')
+				$('.pinStr_' + id).text(lang.lang_parse_pin)
 			} else {
 				$('[toot-id=' + id + ']').addClass('pined')
 				$('.pin_' + id).addClass('blue-text')
+				$('.pinStr_' + id).text(lang.lang_parse_unpin)
 			}
 		}
 	}
@@ -574,23 +620,30 @@ function staEx(mode) {
 		})
 	return
 }
-function toggleAction(id, tlid, acct_id) {
-	if (tlid == 'notf') {
-		var tlide = '[data-acct=' + acct_id + '] .notf-timeline'
-	} else if (tlid == 'user') {
-		var tlide = '#his-tl-contents'
+function toggleAction(elem, height) {
+	var cont = elem.parents('.cvo').find('.contextMenu')
+	if (cont.hasClass('hide')) {
+		$('#contextWrap').removeClass('hide')
+		var left = elem.offset().left + 60
+		var top = elem.offset().top - height
+		if (top < 75) {
+			top = elem.offset().top + 45
+			cont.removeClass('bottom')
+			cont.addClass('top')
+		} else {
+			cont.removeClass('top')
+			cont.addClass('bottom')
+		}
+		cont.css('top', top + 'px')
+		cont.css('right', `calc(100vw - ${left}px)`)
+		cont.removeClass('hide')
+		elem
+			.parents('.cvo')
+			.find('.act-icon')
+			.text('expand_less')
 	} else {
-		var tlide = '[tlid=' + tlid + ']'
-	}
-	if (!$(tlide + ' [toot-id=' + id + ']').hasClass('ext-mode')) {
-		$(tlide + ' [toot-id=' + id + '] .type-a').hide()
-		$(tlide + ' [toot-id=' + id + '] .type-b').show()
-		$(tlide + ' [toot-id=' + id + ']').addClass('ext-mode')
-		$(tlide + ' [toot-id=' + id + '] .act-icon').text('expand_less')
-	} else {
-		$(tlide + ' [toot-id=' + id + '] .type-b').hide()
-		$(tlide + ' [toot-id=' + id + '] .type-a').show()
-		$(tlide + ' [toot-id=' + id + ']').removeClass('ext-mode')
-		$(tlide + ' [toot-id=' + id + '] .act-icon').text('expand_more')
+		$('#contextWrap').addClass('hide')
+		$('.contextMenu').addClass('hide')
+		$('.act-icon').text('expand_more')
 	}
 }
