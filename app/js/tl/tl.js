@@ -56,14 +56,15 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		)
 		$('#notice_icon_' + tlid).text('notifications')
 		return
-	} /*else if (type == "dm") {
-		//DMなら飛ばす
-		dm(acct_id, tlid, "plus",delc,voice);
-		$("#notice_" + tlid).text(cap(type, data, acct_id) + "(" + localStorage.getItem(
-			"user_" + acct_id) + "@" + domain + ")");
-			$("#notice_icon_" + tlid).text("mail_outline");
-		return;
-	}*/
+	} else if (type == 'bookmark') {
+		//ブックマークなら飛ばす
+		getBookmark(acct_id, tlid)
+		$('#notice_' + tlid).text(
+			cap(type, data, acct_id) + '(' + localStorage.getItem('user_' + acct_id) + '@' + domain + ')'
+		)
+		$('#notice_icon_' + tlid).text('bookmark')
+		return
+	}
 	localStorage.setItem('now', type)
 	todo(cap(type) + ' TL Loading...')
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
@@ -387,6 +388,9 @@ function moreload(type, tlid) {
 			var data = obj[tlid].data
 			moreTs(tlid, data)
 			return
+		} else if (type == 'bookmark') {
+			getBookmark(acct_id, tlid, true)
+			return
 		}
 		moreloading = true
 		localStorage.setItem('now', type)
@@ -708,6 +712,8 @@ function cap(type, data, acct_id) {
 		var response = 'Twitter'
 	} else if (type == 'tootsearch') {
 		var response = 'tootsearch(' + escapeHTML(data) + ')'
+	} else if (type == 'bookmark') {
+		var response = 'Bookmarks'
 	}
 	return response
 }
@@ -730,6 +736,8 @@ function com(type, data) {
 		return 'list/' + data + '?'
 	} else if (type == 'dm') {
 		return 'direct?'
+	} else if (type == 'bookmark') {
+		return 'bookmarks?'
 	}
 }
 //Misskey
@@ -800,6 +808,8 @@ function icon(type) {
 		var response = 'language'
 	} else if (type == 'tootsearch') {
 		var response = 'search'
+	} else if (type == 'bookmark') {
+		var response = 'bookmark'
 	}
 	return response
 }
@@ -835,6 +845,9 @@ function reconnector(tlid, type, acct_id, data, mode) {
 function columnReload(tlid, type) {
 	$('#notice_icon_' + tlid).addClass('red-text')
 	$('#unread_' + tlid + ' .material-icons').removeClass('teal-text')
+	var multi = localStorage.getItem('column')
+	var obj = JSON.parse(multi)
+	var acct_id = obj[tlid].domain
 	if (type == 'mix' || type == 'integrated' || type == 'plus') {
 		if (localStorage.getItem('voice_' + tlid)) {
 			var voice = true
@@ -850,6 +863,9 @@ function columnReload(tlid, type) {
 	} else if (type == 'notf') {
 		$('#notice_icon_' + tlid).removeClass('red-text')
 		notfColumn(acct_id, tlid, '')
+	} else if (type == 'bookmark') {
+		$('#notice_icon_' + tlid).removeClass('red-text')
+		getBookmark(acct_id, tlid, false)
 	} else {
 		var wss = localStorage.getItem('wss_' + tlid)
 		websocket[wss].close()
@@ -1100,5 +1116,54 @@ function asReadEnd() {
 		}).then(result => {})
 	} else {
 		postMessage(['asReadComp', ''], '*')
+	}
+}
+//ブックマーク
+function getBookmark(acct_id, tlid, more) {
+	moreloading = true
+	console.log(acct_id, tlid, more)
+	if (more) {
+		var sid = $('#timeline_' + tlid + ' .notif-marker')
+			.last()
+			.attr('data-maxid')
+		var ad = '?max_id=' + sid
+	} else {
+		var ad = ''
+	}
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var start = 'https://' + domain + '/api/v1/bookmarks' + ad
+	var httpreq = new XMLHttpRequest()
+	httpreq.open('GET', start, true)
+	httpreq.setRequestHeader('Content-Type', 'application/json')
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+	httpreq.responseType = 'json'
+	httpreq.send()
+	httpreq.onreadystatechange = function() {
+		if (httpreq.readyState === 4) {
+			var json = httpreq.response
+			if (this.status !== 200) {
+				setLog(start, this.status, this.response)
+			}
+			var max_ids = httpreq.getResponseHeader('link')
+			var max_id = 0
+			if (max_ids) {
+				max_ids = max_ids.match(/[?&]{1}max_id=([0-9]+)/)
+				if (max_ids) {
+					max_id = max_ids[1]
+				}
+			}
+			var templete = parse(json, 'bookmark', acct_id, tlid, -1, null)
+			templete = templete + '<div class="hide notif-marker" data-maxid="' + max_id + '"></div>'
+			if (more) {
+				$('#timeline_' + tlid).append(templete)
+			} else {
+				$('#timeline_' + tlid).html(templete)
+			}
+			$('#landing_' + tlid).hide()
+			jQuery('time.timeago').timeago()
+			moreloading = false
+			todc()
+		}
 	}
 }

@@ -187,6 +187,7 @@
     "lang_parse_del": "Delete this",
     "lang_parse_pin": "Pin this",
     "lang_parse_unpin": "Unpin this",
+    "lang_parse_link": "Open in a browser",
     "lang_parse_det": "Details via your main account.",
     "lang_parse_redraft": "Delete & re-draft",
     "lang_parse_followed": "Followed you",

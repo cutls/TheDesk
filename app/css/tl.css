@@ -446,6 +446,7 @@ iframe,
 }
 .contextMenu .btn-flat {
 	text-transform: none !important;
+	width: 100%;
 }
 
 .gray {

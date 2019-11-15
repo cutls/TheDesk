@@ -202,7 +202,29 @@ function parseColumn(target, dontclose) {
 				animecss,
 				acct.data
 			)
-		} else {
+		}  else if (acct.type == 'bookmark') {
+			if (!acct.left_fold) {
+				basekey = key
+			}
+
+			var anime = localStorage.getItem('animation')
+			if (anime == 'yes' || !anime) {
+				var animecss = 'box-anime'
+			} else {
+				var animecss = ''
+			}
+			unstreamingTL(
+				acct.type,
+				key,
+				basekey,
+				insert,
+				icnsert,
+				acct.left_fold,
+				css,
+				animecss,
+				acct.domain
+			)
+		}else {
 			var anime = localStorage.getItem('animation')
 			if (anime == 'yes' || !anime) {
 				var animecss = 'box-anime'
@@ -728,111 +750,88 @@ function webviewParse(url, key, insert, icnsert, css) {
 		</div>`
 	return html
 }
-function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, animecss, q) {
+function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, animecss, data) {
+	//type名が関数名
 	if (!left_fold) {
 		var basehtml =
-			'<div style="' +
-			css +
-			'" class="box ' +
-			animecss +
-			'" id="timeline_box_' +
-			basekey +
-			'_parentBox"></div>'
+			`<div style="${css}" class="box ${animecss}" id="timeline_box_${basekey}_parentBox"></div>`
 		$('#timeline-container').append(basehtml)
 		var left_hold =
-			'<a onclick="leftFoldSet(' +
-			key +
-			')" class="setting nex"><i class="material-icons waves-effect nex" title="' +
-			lang.lang_layout_leftFold +
-			'">view_agenda</i></a>' +
-			lang.lang_layout_leftFold +
-			'</span><br>'
+			`<a onclick="leftFoldSet('${key}')" class="setting nex">
+				<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftFold}">view_agenda</i>
+			</a>
+			${lang.lang_layout_leftFold}
+			</span><br>`
 	} else {
 		var left_hold =
-			'<a onclick="leftFoldRemove(' +
-			key +
-			')" class="setting nex"><i class="material-icons waves-effect nex" title="' +
-			lang.lang_layout_leftUnfold +
-			'">view_column</i></a>' +
-			lang.lang_layout_leftUnfold +
-			'</span><br>'
+			`<a onclick="leftFoldRemove('${key}')" class="setting nex">
+				<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i>
+			</a>
+			${lang.lang_layout_leftUnfold}
+			</span><br>`
 	}
 	var html =
-		'<div class="boxIn" id="timeline_box_' +
-		key +
-		'_box" tlid="' +
-		key +
-		'"><div class="notice-box z-depth-2" id="menu_' +
-		key +
-		'" style="' +
-		insert +
-		' ">' +
-		'<div class="area-notice"><i class="material-icons waves-effect" id="notice_icon_' +
-		key +
-		'" style="font-size:40px; padding-top:25%;" onclick="tootsearch(' +
-		key +
-		",'" +
-		q +
-		'\');" title="' +
-		lang.lang_layout_gotop +
-		'"></i></div>' +
-		'<div class="area-notice_name"><span id="notice_' +
-		key +
-		'" class="tl-title"></span></div>' +
-		'<div class="area-a1"></div><div class="area-sta"></div>' +
-		'<div class="area-a2"><a onclick="removeColumn(' +
-		key +
-		')" class="setting nex"><i class="material-icons waves-effect nex" title="' +
-		lang.lang_layout_delthis +
-		'"' +
-		icnsert +
-		'>cancel</i></a></div>' +
-		'<div class="area-a3"><a onclick="setToggle(' +
-		key +
-		')" class="setting nex" title="' +
-		lang.lang_layout_setthis +
-		'"' +
-		icnsert +
-		'><i class="material-icons waves-effect nex">settings</i></a></div></div>' +
-		'<div class="column-hide notf-indv-box" id="util-box_' +
-		key +
-		'" style="padding:5px;">' +
-		left_hold +
-		'<a onclick="mediaToggle(' +
-		key +
-		')" class="setting nex"><i class="material-icons waves-effect nex" title="' +
-		lang.lang_layout_mediafil +
-		'">perm_media</i><span id="sta-media-' +
-		key +
-		'">On</span></a>' +
-		lang.lang_layout_mediafil +
-		'<br>' +
-		lang.lang_layout_headercolor +
-		'<br><div id="picker_' +
-		key +
-		'" class="color-picker"></div></div><div class="tl-box" tlid="' +
-		key +
-		'"><div id="timeline_' +
-		key +
-		'" class="tl ' +
-		type +
-		'-timeline " tlid="' +
-		key +
-		'" data-type="' +
-		type +
-		'" data-acct="nostr"><div id="landing_' +
-		key +
-		'" style="text-align:center">' +
-		lang.lang_layout_nodata +
-		'</div></div></div>'
+		`<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}">
+			<div class="notice-box z-depth-2" id="menu_${key}" style="${insert} ">
+				<div class="area-notice">
+					<i class="material-icons waves-effect" id="notice_icon_${key}" style="font-size:40px; padding-top:25%;" 
+						onclick="${type}('${key}','${data}');" title="${lang.lang_layout_gotop}"></i>
+				</div>
+				<div class="area-notice_name">
+					<span id="notice_${key}" class="tl-title"></span>
+				</div>
+				<div class="area-a1"></div>
+				<div class="area-sta"></div>
+				<div class="area-a2">
+					<a onclick="removeColumn('${key}')" class="setting nex">
+						<i class="material-icons waves-effect nex" title="${lang.lang_layout_delthis}"${icnsert}>cancel</i>
+					</a>
+				</div>
+				<div class="area-a3">
+					<a onclick="setToggle('${key}')" class="setting nex" title="${lang.lang_layout_setthis}" ${icnsert}>
+						<i class="material-icons waves-effect nex">settings</i>
+					</a>
+				</div>
+			</div>
+		<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:5px;">
+			${left_hold}
+			<a onclick="mediaToggle('${key}')" class="setting nex">
+				<i class="material-icons waves-effect nex" title="${lang.lang_layout_mediafil}">perm_media</i>
+				<span id="sta-media-${key}">On</span>
+			</a>
+			${lang.lang_layout_mediafil}<br>
+			${lang.lang_layout_headercolor}<br>
+			<div id="picker_${key}" class="color-picker"></div>
+		</div>
+		<div class="tl-box" tlid="${key}">
+			<div id="timeline_${key}" class="tl ${type}-timeline" tlid="${key}" data-type="${type}" data-acct="${data}">
+				<div id="landing_${key}" style="text-align:center">
+					${lang.lang_layout_nodata}
+				</div>
+			</div>
+		</div>`
 	$('#timeline_box_' + basekey + '_parentBox').append(html)
-	tootsearch(key, q)
+	if(type == 'tootsearch'){
+		tootsearch(key, data)
+	}else if(type == 'bookmark'){
+		console.log(key, data)
+		bookmark(key, data)
+	}
 	cardCheck(key)
 	ebtCheck(key)
 	mediaCheck(key)
 	catchCheck(key)
 	voiceCheck(key)
 	return true
+}
+function bookmark(key, data){
+	console.log(key, data)
+	if (localStorage.getItem('voice_' + key)) {
+		var voice = true
+	} else {
+		var voice = false
+	}
+	tl('bookmark', '', data, key, 'false', voice, '')
 }
 function leftFoldSet(key) {
 	var multi = localStorage.getItem('column')

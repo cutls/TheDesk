@@ -948,7 +948,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					</div>`
 			}
 			//menuは何個？
-			var menuct = 1
+			var menuct = 2
 			if (viashow != 'hide') {
 				menuct++
 			}
@@ -1106,6 +1106,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						</a>
 					</div>
 					${trans}
+					<div>
+					<a onclick="postMessage(['openUrl', '${toot.url}'], '*')"
+						class="waves-effect waves-dark btn-flat actct" style="padding:0">
+						<i class="fas text-darken-3 fa-globe"></i>
+						${lang.lang_parse_link}
+					</a>
+					</div>
 				</div>
 			</div>
 			`

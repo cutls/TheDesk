@@ -116,7 +116,7 @@ function boostWith(vis) {
 	rt(id, acct_id, false, vis)
 }
 //ブックマーク
-function bkm(id, acct_id, remote) {
+function bkm(id, acct_id, tlid) {
 	if ($('#pub_' + id).hasClass('bkmed')) {
 		var flag = 'unbookmark'
 	} else {
@@ -140,8 +140,7 @@ function bkm(id, acct_id, remote) {
 			if (json.reblog) {
 				json = json.reblog
 			}
-			if (remote != 'remote') {
-				var fav = json.favourites_count
+			var fav = json.favourites_count
 				$('[toot-id=' + id + '] .fav_ct').text(fav)
 				$('[toot-id=' + id + '] .rt_ct').text(json.reblogs_count)
 				if (flag == 'unbookmark') {
@@ -153,9 +152,8 @@ function bkm(id, acct_id, remote) {
 					$('.bkm_' + id).addClass('red-text')
 					$('[toot-id=' + id + ']').addClass('bkmed')
 				}
-			} else {
-				M.toast({ html: lang.lang_status_favWarn, displayLength: 1000 })
-			}
+				var tlidTar = $(`.bookmark-timeline[data-acct=${acct_id}]`).attr('tlid')
+				columnReload(tlidTar,'bookmark')
 		}
 	}
 }

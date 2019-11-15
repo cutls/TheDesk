@@ -372,6 +372,17 @@ var tlConstruction = [
 		}
 	},
 	{
+		id: 'bkm',
+		storage: 'bookmark',
+		checkbox: true,
+		setValue: 'no',
+		text: {
+			head: '@@showBookmarkAction@@',
+			desc: '',
+			checkbox: yesno
+		}
+	},
+	{
 		id: 'replySound',
 		storage: 'replySound',
 		checkbox: true,
