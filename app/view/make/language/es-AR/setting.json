@@ -127,6 +127,7 @@
   "full": "Dirección web, texto y cuenta (mención al usuario)",
   "notqt": "Deshabilitado (ocultar botones en las líneas temporales)",
   "apiQuote": "API (sólo algunas instancias)",
+  "showBookmarkAction": "Show a bookmarking toot button",
   "main": "Acciones de cuenta predeterminada",
   "mainwarn": "Se puede establecer la cuenta predeterminada en el Administrador de cuentas.",
   "lastacct": "Cuenta usada recientemente",
