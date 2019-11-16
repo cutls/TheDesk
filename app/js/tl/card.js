@@ -240,6 +240,7 @@ function cardHtml(json, acct_id, id) {
 		"youtube.com",
 		"youtu.be",
 		"m.youtube.com",
+		"www.youtube.com",
 		"nicovideo.jp",
 		"twitcasting.tv"
 	]
