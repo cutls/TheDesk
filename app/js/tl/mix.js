@@ -183,7 +183,7 @@ async function mixmore(tlid, type) {
 	.attr('unique-id')
 	let startLocal = 'https://' + domain + '/api/v1/timelines/public?local=true&max_id=' + sid
 	let local = await getTL(startLocal, acct_id)
-	let startHome = 'https://' + domain + '/api/v1/timelines/home&max_id=' + sid
+	let startHome = 'https://' + domain + '/api/v1/timelines/home?max_id=' + sid
 	let home = await getTL(startHome, acct_id)
 	let concated = _.concat(local, home)
 	let uniqued = _.uniqBy(concated, 'id')
