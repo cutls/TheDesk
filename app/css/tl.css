@@ -419,7 +419,7 @@ iframe,
 	position: fixed;
 	width: 199vw;
 	height: 100vh;
-	z-index: 9998;
+	z-index: 100;
 }
 .contextMenu {
 	position: fixed;
@@ -447,6 +447,7 @@ iframe,
 .contextMenu .btn-flat {
 	text-transform: none !important;
 	width: 100%;
+	text-align: left;
 }
 
 .gray {

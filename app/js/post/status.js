@@ -632,6 +632,11 @@ function toggleAction(elem, height) {
 			cont.removeClass('top')
 			cont.addClass('bottom')
 		}
+		if(elem.parents('.cvo').attr('id') == 'toot-this'){
+			console.log($('#toot-this').offset().top, elem.offset().top)
+			left = $('#toot-this').offset().left + elem.offset().left + 10
+			top = $('#toot-this').offset().top - $('#toot-this').height() -height + 25
+		}
 		cont.css('top', top + 'px')
 		cont.css('right', `calc(100vw - ${left}px)`)
 		cont.removeClass('hide')

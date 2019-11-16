@@ -1070,7 +1070,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					<div class="action ${noauth}">
 						<a onclick="details('${toot.id}','${acct_id}','${tlid}','normal')"
 							class="waves-effect waves-dark btn-flat details ${dmHide}" style="padding:0">
-						<i class="text-darken-3 material-icons">more_vert</i></a>
+						<i class="text-darken-3 material-icons">menu_open</i></a>
 					</div>
 				</div>
 				<div class="contextMenu hide z-depth-4">
@@ -1079,39 +1079,39 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						<a onclick="client('${$.strip_tags(via)}')" class="pointer">${lang.lang_parse_clientop}</a>
 					</div>
 					<div>
-					<a onclick="bkm('${toot.id}','${acct_id}','${tlid}')"
+					<button onclick="bkm('${toot.id}','${acct_id}','${tlid}')"
 						class="waves-effect waves-dark btn-flat actct bkm-btn" style="padding:0">
 						<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${if_bkm}"></i>
 						<span class="bkmStr_${toot.id}">${bkmStr}</span>
-					</a>
+					</button>
 					</div>
 					<div class="${if_mine}">
-						<a onclick="del('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
+						<button onclick="del('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
 							style="padding:0">
 							<i class="fas fa-trash"></i>${lang.lang_parse_del}
-						</a>
+						</button>
 					</div>
 					<div class="${if_mine}">
-						<a onclick="pin('${
+						<button onclick="pin('${
 							toot.id
 						}','${acct_id}')" class="waves-effect waves-dark btn-flat actct" style="padding:0">
 							<i class="fas fa-map-pin pin_${toot.id} ${if_pin}"></i>
 							<span class="pinStr_${toot.id}">${pinStr}</span>
-						</a>
+						</button>
 					</div>
 					<div class="${if_mine}">
-						<a onclick="redraft('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
+						<button onclick="redraft('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
 							style="padding:0">
 							<i class="material-icons">redo</i>${lang.lang_parse_redraft}
-						</a>
+						</button>
 					</div>
 					${trans}
 					<div>
-					<a onclick="postMessage(['openUrl', '${toot.url}'], '*')"
+					<button onclick="postMessage(['openUrl', '${toot.url}'], '*')"
 						class="waves-effect waves-dark btn-flat actct" style="padding:0">
 						<i class="fas text-darken-3 fa-globe"></i>
 						${lang.lang_parse_link}
-					</a>
+					</button>
 					</div>
 				</div>
 			</div>
