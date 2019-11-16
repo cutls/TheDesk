@@ -390,7 +390,7 @@ function parseColumn(target, dontclose) {
 						<span id="sta-media-${key}">On</span>
 					</a>
 					${lang.lang_layout_mediafil}<br>
-					<a onclick="cardToggle(${key}')" class="setting nex">
+					<a onclick="cardToggle('${key}')" class="setting nex">
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_linkanades}">link</i>
 						<span id="sta-card-${key}">On</span>
 					</a>

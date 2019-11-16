@@ -209,7 +209,7 @@ function tagInsert(code, del) {
 	} else {
 		var delLen = 0
 	}
-	var before = sentence.substr(0, pos - del)
+	var before = sentence.substr(0, pos - delLen)
 	var last = before.substr(-1, 1)
 	if (last == ' ') blankBefore = ''
 	var after = sentence.substr(pos, len)
