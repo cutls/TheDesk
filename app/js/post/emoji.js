@@ -284,32 +284,39 @@ function emojiList(target, reaction) {
 
 //絵文字など様々なものをテキストボックスに挿入
 function emojiInsert(code, del) {
-	var now = $('#textarea').val()
-	var selin = $('#textarea').prop('selectionStart')
 	if (localStorage.getItem('emoji-zero-width') == 'yes') {
-		var blank = '​'
+		var blankBefore = '​'
+		var blankAfter = '​'
 	} else {
-		var blank = ' '
+		var blankBefore = ' '
+		var blankAfter = ' '
 	}
-	var before = now.substr(0, selin)
-	if (before.slice(-1) != ' ') {
-		before = before + blank
-	}
-	var after = now.substr(selin, now.length)
-	if (after.slice(-1) != ' ') {
-		after = blank + after
-	}
-	newt = before + code + after
-	if (!del) {
-		$('#textarea').val(newt)
-		//emoji();
+	var textarea = document.querySelector('#textarea')
+	var sentence = textarea.value
+	var len = sentence.length
+	var pos = textarea.selectionStart
+	if (del) {
+		var delLen = del.length
 	} else {
-		var regExp = new RegExp(del.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'), 'g')
-		var now = now.replace(regExp, '')
-		$('#textarea').val(now + blank + code)
+		var delLen = 0
 	}
-
-	$('#textarea').focus()
+	var before = sentence.substr(0, pos - delLen)
+	var last = before.substr(-1, 1)
+	if (last == ' ') blankBefore = ''
+	var after = sentence.substr(pos, len)
+	var start = after.substr(0, 1)
+	if (start == ' ') blankAfter = ''
+	if (len == 0) {
+		var word = code
+	} else if (len == pos) {
+		var word = blankBefore + code
+	} else if (pos == 0) {
+		var word = code + blankAfter
+	} else {
+		var word = blankBefore + code + blankAfter
+	}
+	sentence = before + word + after
+	textarea.value = sentence
 }
 //改行挿入
 function brInsert(code) {

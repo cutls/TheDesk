@@ -97,7 +97,9 @@ input.addEventListener(
 											his[4].uses * 1 +
 											his[5].uses * 1 +
 											his[6].uses * 1
-										tagHTML = `<br><a onclick="tagInsert('#${escapeHTML(tag.name)}','#${escapeHTML(tag.name)}')" class="pointer">#${escapeHTML(tag.name)}</a>&nbsp;${uses}toot(s)`
+										tagHTML = `<br><a onclick="tagInsert('#${escapeHTML(
+											tag.name
+										)}','#${q}')" class="pointer">#${escapeHTML(tag.name)}</a>&nbsp;${uses}toot(s)`
 
 										var item = {
 											uses: uses,
@@ -144,7 +146,9 @@ input.addEventListener(
 									if (acct.acct != q) {
 										//Instance Actorって…
 										if (acct.username.indexOf('.') < 0) {
-											accts = accts + `<a onclick="tagInsert('@${acct.acct}','@${q}')" class="pointer">@${acct.acct}</a><br>`
+											accts =
+												accts +
+												`<a onclick="tagInsert('@${acct.acct}','@${q}')" class="pointer">@${acct.acct}</a><br>`
 										}
 									}
 								})
@@ -194,23 +198,34 @@ input.addEventListener(
 	false
 )
 function tagInsert(code, del) {
-	var now = $('#textarea').val()
-	var selin = $('#textarea').prop('selectionStart')
-	if (!del) {
+	var blankBefore = ' '
+	var blankAfter = ' '
+	var textarea = document.querySelector('#textarea')
+	var sentence = textarea.value
+	var len = sentence.length
+	var pos = textarea.selectionStart
+	if (del) {
+		var delLen = del.length
 	} else {
-		var regExp = new RegExp(del.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'), 'g')
-		var now = now.replace(regExp, '')
-		selin = selin - del.length
+		var delLen = 0
 	}
-	if (selin > 0) {
-		var before = now.substr(0, selin)
-		var after = now.substr(selin, now.length)
-		newt = before + ' ' + code + ' ' + after
+	var before = sentence.substr(0, pos - del)
+	var last = before.substr(-1, 1)
+	if (last == ' ') blankBefore = ''
+	var after = sentence.substr(pos, len)
+	var start = after.substr(0, 1)
+	if (start == ' ') blankAfter = ''
+	if (len == 0) {
+		var word = code
+	} else if (len == pos) {
+		var word = blankBefore + code
+	} else if (pos == 0) {
+		var word = code + blankAfter
 	} else {
-		newt = code + ' ' + now
+		var word = blankBefore + code + blankAfter
 	}
-	$('#textarea').val(newt)
-	$('#textarea').focus()
+	sentence = before + word + after
+	textarea.value = sentence
 	if ($('#poll').hasClass('hide') && $('#emoji').hasClass('hide')) {
 		$('#right-side').hide()
 		$('#right-side').css('width', '300px')
@@ -251,7 +266,9 @@ function cgNPs(q) {
 					var tags = ''
 					Object.keys(json).forEach(function(key4) {
 						var tag = json[key4]
-						tags = tags + `<a onclick="cgNp('${json[key4]}')" class="pointer">${escapeHTML(json[key4])}</a>`
+						tags =
+							tags +
+							`<a onclick="cgNp('${json[key4]}')" class="pointer">${escapeHTML(json[key4])}</a>`
 					})
 					$('#suggest').html('Cinderella NowPlaying:' + tags)
 				} else {
