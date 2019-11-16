@@ -337,16 +337,20 @@ function cardHtmlShow(acct_id, id) {
 			if (json.provider_name == 'Twitter') {
 				var url = json.author_url
 				var status = json.url.match(/^https:\/\/twitter.com\/[_a-zA-Z0-9-]+\/status\/([0-9]+)/);
+				var statusId = false
 				if(status){
 					if(status.length > 0){
-						status = status[1]
+						var statusId = status[1]
 					}
 				}
-				url = url + '/status/' + status
-				analyze = `
-				<blockquote class="twitter-tweet" data-dnt="true"><strong>${json.author_name}</strong><br>${json.description}<a href="${url}">${json.url}</a></blockquote>
-				<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
-				`
+				console.log(statusId)
+				if(statusId){
+					url = json.url
+					analyze = `
+					<blockquote class="twitter-tweet" data-dnt="true"><strong>${json.author_name}</strong><br>${json.description}<a href="${url}">${json.url}</a></blockquote>
+					<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+					`
+				}
 			}
 			$('[toot-id=' + id + '] .additional').html(analyze)
 		})
