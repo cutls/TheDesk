@@ -1069,7 +1069,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					</div>
 					<div class="action ${noauth}">
 						<a onclick="details('${toot.id}','${acct_id}','${tlid}','normal')"
-							class="waves-effect waves-dark btn-flat details ${dmHide}" style="padding:0">
+							class="waves-effect waves-dark btn-flat details ${dmHide}" style="padding:0"
+							title="${lang.lang_parse_detail}">
 						<i class="text-darken-3 material-icons">menu_open</i></a>
 					</div>
 				</div>

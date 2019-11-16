@@ -188,6 +188,7 @@
     "lang_parse_pin": "ピン留めする",
     "lang_parse_unpin": "ピン留めを解除する",
     "lang_parse_link": "ブラウザで開く",
+    "lang_parse_detail": "詳細",
     "lang_parse_det": "詳細(メインアカウント経由)",
     "lang_parse_redraft": "削除して再編集",
     "lang_parse_followed": "フォローされました。",
