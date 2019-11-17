@@ -1,5 +1,5 @@
 {
-  "setting": "Preferences",
+  "setting": "Innstillinger",
   "set": "Lagre",
   "yes": "Ja",
   "no": "Nei",
@@ -198,7 +198,7 @@
   "keyselecttop": "Select the top & left(No.1 column) toot",
   "reset": "Reset(Danger)",
   "resetconfirm": "Slett all data. Kan ikke gjøres om. Fortsette?",
-  "about": "About TheDesk",
+  "about": "Om TheDesk",
   "hp": "Nettsted",
   "support": "Støtte",
   "help": "Hjelp",
