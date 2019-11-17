@@ -700,7 +700,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							'{{tag}}',
 							'#' + tag.name
 						)}
-						">Pin</a>featured</span> `
+						">Pin</a></span> `
 				})
 				tags = '<div style="float:right">' + tags + '</div>'
 			}
@@ -874,7 +874,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			//日本語じゃない
 			if (toot.language != lang.language && toot.language) {
 				var trans = `<div class="">
-						<a onclick="trans('${toot.language}','${lang.language}')" 
+						<a onclick="trans('${toot.language}','${lang.language}', $(this))" 
 							class="waves-effect waves-dark btn-flat actct" style="padding:0">
 								<i class="material-icons">g_translate</i>${lang.lang_parse_trans}
 						</a>
