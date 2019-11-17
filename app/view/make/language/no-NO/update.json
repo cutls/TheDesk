@@ -1,19 +1,19 @@
 {
-    "updatehere": "Get latest TheDesk",
+    "updatehere": "Hent siste TheDesk",
     "download": "Start",
-    "portable": "Portable ver.",
-    "installer": "Installer(Recommended)",
+    "portable": "Bærbar ver.",
+    "installer": "Installerer(Anbefalt)",
     "linux": "zip",
-    "linuxdeb": "deb(Recommended on buntu, Debian)",
+    "linuxdeb": "deb(Anbefalt på Ubuntu, Debian)",
     "linuxsnap": "snap",
-    "snap": "Get it on Snapcraft",
-    "sureupd": "You may lose a cool experience!",
+    "snap": "Hent på Snapcraft",
+    "sureupd": "Du kan gå glipp av en kul opplevelse!",
     "skipupd": "Hopp over denne oppdateringen",
     "nexttl": "Hidden until next TL loading",
     "nextver": "Hidden until next version",
     "problem1": "Problemer?",
     "problem2": "Please download on <a href='https://thedesk.top'>Oficial HP</a>.",
-    "continue": "Continue updating",
+    "continue": "Fortsett oppdatering",
     "dlnow": "Laster ned...",
-    "checkWhatIsNew": "What is new?"
+    "checkWhatIsNew": "Hva er nytt?"
 }
