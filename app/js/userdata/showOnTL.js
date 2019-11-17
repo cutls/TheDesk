@@ -25,7 +25,7 @@ function udgEx(user, acct_id) {
 		return false;
 	}
 	var at = localStorage.getItem("acct_" + acct_id + "_at");
-	var start = "https://" + domain + "/api/v2/search?resolve=true&q=" + user;
+	var start = "https://" + domain + "/api/v2/search?resolve=true&q=" + encodeURIComponent(user);
 	fetch(start, {
 		method: "GET",
 		headers: {
