@@ -1,10 +1,10 @@
 {
-    "list": "List of accounts",
+    "list": "Kontoliste",
     "back": "Tilbake",
     "add": "Legg til en konto",
     "codesetupwarn": "Uncheck it to skip pasiting code.(login to Mastodon on Windows or macOS) (Recommended: pcheck)",
-    "codesetup": "Code setup",
-    "mainacct": "Main an account",
+    "codesetup": "Kodeoppsett",
+    "mainacct": "Sett som hovedkonto",
     "selacct": "Velg en konto",
     "codepastewarn": "Lim inn koden og lukk nettleseren.",
     "codepaste": "Kode",
