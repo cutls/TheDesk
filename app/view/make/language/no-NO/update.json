@@ -8,12 +8,12 @@
     "linuxsnap": "snap",
     "snap": "Get it on Snapcraft",
     "sureupd": "You may lose a cool experience!",
-    "skipupd": "Skip this update",
+    "skipupd": "Hopp over denne oppdateringen",
     "nexttl": "Hidden until next TL loading",
     "nextver": "Hidden until next version",
-    "problem1": "Some problems?",
+    "problem1": "Problemer?",
     "problem2": "Please download on <a href='https://thedesk.top'>Oficial HP</a>.",
     "continue": "Continue updating",
-    "dlnow": "Downloading...",
+    "dlnow": "Laster ned...",
     "checkWhatIsNew": "What is new?"
 }
