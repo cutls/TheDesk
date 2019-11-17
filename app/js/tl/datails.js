@@ -577,8 +577,8 @@ function staCopy(id) {
 	}
 }
 //翻訳
-function trans(tar, to) {
-	var html = $('#toot-this .toot').html()
+function trans(tar, to, elem) {
+	var html = elem.parents('.cvo').find('.toot').html()
 	if (html.match(/^<p>(.+)<\/p>$/)) {
 		html = html.match(/^<p>(.+)<\/p>$/)[1]
 	}
@@ -615,7 +615,7 @@ function trans(tar, to) {
 			console.error(error)
 		})
 		.then(function(text) {
-			$('#toot-this .additional').html('<span class="gray translate">' + text.text + '</span>')
+			elem.parents('.cvo').find('.toot').append('<span class="gray translate">' + text.text + '</span>')
 		})
 }
 //ブラウザで開く
@@ -630,7 +630,7 @@ function detEx(url, acct_id) {
 	}
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	var start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + url
+	var start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + encodeURIComponent(url)
 	fetch(start, {
 		method: 'GET',
 		headers: {
