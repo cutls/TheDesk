@@ -1206,10 +1206,10 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-font-manager@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/font-manager/-/font-manager-0.3.0.tgz#9efdc13e521a3d8752e7ab56c3938818043a311f"
-  integrity sha512-6N3pzO+9kxE3yD9c4VN7reg5fqgFvjcUdxZmwauRzsExaeKRu0APfEi3DOISFakokybgKlZcLFQHawwc2TMpQQ==
+font-manager@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/font-manager/-/font-manager-0.3.1.tgz#f6724b368a61cdc088c4011613fb88626c301eb8"
+  integrity sha512-7dLRyPp0W3OA6d31nHfjE0rdWZcf+iktVim1FuYw7jn+zjqiWylzhXbdv7eLx5B76s/kTUQqKwkVaVdbfXg4Tw==
   dependencies:
     nan ">=2.10.0"
 
