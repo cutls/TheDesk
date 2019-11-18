@@ -1206,7 +1206,7 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-font-manager@^0.3.0:
+font-manager@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/font-manager/-/font-manager-0.3.0.tgz#9efdc13e521a3d8752e7ab56c3938818043a311f"
   integrity sha512-6N3pzO+9kxE3yD9c4VN7reg5fqgFvjcUdxZmwauRzsExaeKRu0APfEi3DOISFakokybgKlZcLFQHawwc2TMpQQ==
@@ -2703,10 +2703,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-sweetalert2@^9.3.10:
-  version "9.3.10"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.3.10.tgz#f627ec789c0984af48f56bf88c06e415a6aa9df5"
-  integrity sha512-vvjWcsFPF//WardUicQOncfkh4QNaCm0yNAm26HlzuprJzb3WzRLsnHHE5o6Pi2SQ/TpfVdhsT8O4B7jPYV4gg==
+sweetalert2@^9.3.12:
+  version "9.3.12"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.3.12.tgz#b88e3c626289891910ae31c25daedf87b733dab6"
+  integrity sha512-OTGhfSDmtmpgTrjFk45OiLDgWjxqNQ3awRZl88tM/ZXjlNEJWR7sQGBD3lJrmSew4ZXpchttGIoDcH/F6o2mMQ==
 
 tar@^4.4.12:
   version "4.4.13"
