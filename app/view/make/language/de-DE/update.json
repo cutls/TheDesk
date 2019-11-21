@@ -1,10 +1,10 @@
 {
-    "updatehere": "Neusten TheDesk holen.",
-    "download": "Start",
+    "updatehere": "Neusten TheDesk holen",
+    "download": "Beginnen",
     "portable": "Portable Version",
     "installer": "Installer Version",
-    "linux": "zip",
-    "linuxdeb": "deb(Recommended on buntu, Debian)",
+    "linux": "Zip",
+    "linuxdeb": "deb(empfohlen auf buntu, Debian)",
     "linuxsnap": "snap",
     "snap": "Snap-Version kann auf Snapcraft sein",
     "sureupd": "Du kannst ein cooles Erlebnis verpassen!",
@@ -15,5 +15,5 @@
     "problem2": "Bitte von <a href=\"https://thedesk.top\">Offizielle Homepage</a> herunterladen.",
     "continue": "Aktualisieren fortsetzen",
     "dlnow": "Herunterladen...",
-    "checkWhatIsNew": "What is new?"
+    "checkWhatIsNew": "Was gibt es neues?"
 }
