@@ -520,7 +520,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		if (tagck) {
 			Object.keys(toot.tags).forEach(function (key4) {
 				var tag = toot.tags[key4];
-				var tags = '<a onclick="tagShow(\'' + tag + '\')" class="pointer parsed">#' + tag + '</a><span class="hide" data-tag="' + tag + '">#' + tag + ':<a onclick="tl(\'tag\',\'' + tag + '\',' + acct_id +
+				var tags = '<a onclick="tagShow(\'' + tag + '\')" class="pointer parsed">#' + tag + '</a><span class="hide" data-tag="' + tag + '" data-regTag="'+tag.toLowerCase()+'">#' + tag + ':<a onclick="tl(\'tag\',\'' + tag + '\',' + acct_id +
 					',\'add\')" class="pointer parsed" title="' + lang.lang_parse_tagTL.replace("{{tag}}", '#' + tag) + '">TL</a>　<a onclick="brInsert(\'#' + tag + '\')" class="pointer parsed" title="' + lang.lang_parse_tagtoot.replace("{{tag}}", '#' + tag) + '">Toot</a>　' +
 					'<a onclick="tagPin(\'' + tag + '\')" class="pointer parsed" title="' + lang.lang_parse_tagpin.replace("{{tag}}", '#' + tag) + '">Pin</a></span> ';
 				content = content.replace("#" + tag, tags);

@@ -9,24 +9,21 @@ function additional(acct_id, tlid) {
 	$('#timeline-container .hashtag, #timeline-container [rel=tag]').each(function(i, elem) {
 		var tags = $(this)
 			.attr('href')
-			.match(/https?:\/\/([-a-zA-Z0-9@.]+)\/tags\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/)
+			.match(/https?:\/\/([-a-zA-Z0-9@.]+)\/tags?\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/)
 		if (tags) {
 			var tagThis = tags[2]
 		} else {
-			var tagThis = $(this).attr('data-tag')
+			var tagThis = $(this).attr('data-regTag')
 		}
 
 		if (tagThis) {
-			$(this).attr('onclick', "tagShow('" + tagThis + "')")
-			$(this).attr('href', '#')
+			$(this).attr('href', "javascript:tagShow('" + tagThis + "')")
+			
 		}
 	})
 
 	//トゥートサムネ
 	$('#timeline_' + tlid + ' .toot a:not(.parsed)').each(function(i, elem) {
-		var domain = localStorage.getItem('domain_' + acct_id)
-		var at = localStorage.getItem('acct_' + acct_id + '_at')
-		var card = localStorage.getItem('card_' + tlid)
 		var text = $(this).attr('href')
 		if (text) {
 			if (text.indexOf('twimg.com') === -1) {
@@ -48,48 +45,6 @@ function additional(acct_id, tlid) {
 		}
 		if (urls) {
 			$(this).remove()
-		} else if (!card) {
-			var id = $(this)
-				.parents('.cvo')
-				.attr('toot-id')
-			if (localStorage.getItem('mode_' + domain) == 'misskey') {
-				var start = 'https://' + domain + '/url?url=' + text
-				fetch(start, {
-					method: 'GET',
-					headers: {
-						'content-type': 'application/json'
-					}
-					//body: JSON.stringify({})
-				})
-					.then(function(response) {
-						if (!response.ok) {
-							response.text().then(function(text) {
-								setLog(response.url, response.status, text)
-							})
-						}
-						return response.json()
-					})
-					.catch(function(error) {
-						todo(error)
-						setLog(start, 'JSON', error)
-						console.error(error)
-					})
-					.then(function(json) {
-						if (json.title) {
-							$('[toot-id=' + id + '] .additional').html(
-								'<span class="gray">URL' +
-									lang.lang_cards_check +
-									':<br>Title:' +
-									escapeHTML(json.title) +
-									'<br>' +
-									escapeHTML(json.description) +
-									'</span>'
-							)
-							$('[toot-id=' + id + '] a:not(.parsed)').addClass('parsed')
-							$('[toot-id=' + id + ']').addClass('parsed')
-						}
-					})
-			}
 		} else {
 			$(this).attr('title', text)
 		}
@@ -139,8 +94,7 @@ function additional(acct_id, tlid) {
 		var id = $(this)
 			.parents('.cvo')
 			.attr('toot-id')
-		$(this).attr('href', '#')
-		$(this).attr('onclick', "imgv('" + id + "','" + i + "')")
+		$(this).attr('href', `javascript:imgv('${id}','${i}')`)
 		$(this).attr('data-type', 'image')
 		$(this).attr('id', id + '-image-' + i)
 		$(this).attr('data-url', ilink)

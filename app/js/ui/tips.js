@@ -111,7 +111,7 @@ function trendTagonTip() {
 						`<a onclick="tagShow('${tag}')" class="pointer">
 							#${escapeHTML(tag)}
 						</a>
-						<span class="hide" data-tag="${tag}">　
+						<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">　
 							<a onclick="tagTL('tag','${tag}',false,'add')" class="pointer" title="#${tag}のタイムライン">TL</a>　
 							<a onclick="show();brInsert('#${tag}')" class="pointer" title="#${tag}でトゥート">Toot</a>
 						</span><br>`

@@ -689,7 +689,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var featured = `　<a onclick="tagFeature('${tag.name}','${acct_id}')" class="pointer" title="add it to Featured tags">Feature</a>　`
 					tags =
 						tags +
-						`<span class="hide" data-tag="${tag.name}">#${tag.name}:
+						`<span class="hide" data-tag="${tag.name}" data-regTag="${tag.name.toLowerCase()}">#${tag.name}:
 							<a onclick="tl('tag','${tag.name}','${acct_id}','add')" class="pointer"
 							 title="${lang.lang_parse_tagTL.replace(
 									'{{tag}}',
@@ -700,7 +700,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							'{{tag}}',
 							'#' + tag.name
 						)}
-						">Pin</a></span> `
+						">Pin</a>${featured}</span> `
 				})
 				tags = '<div style="float:right">' + tags + '</div>'
 			}

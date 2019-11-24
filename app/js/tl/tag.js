@@ -10,7 +10,8 @@ if (location.search) {
 }
 //よく使うタグ
 function tagShow(tag) {
-	$('[data-tag=' + decodeURI(tag).toLowerCase() + ']').toggleClass('hide')
+	console.log('[data-regTag=' + decodeURI(tag).toLowerCase() + ']')
+	$('[data-regTag=' + decodeURI(tag).toLowerCase() + ']').toggleClass('hide')
 }
 //タグ追加
 function tagPin(tag) {
@@ -69,7 +70,7 @@ function favTag() {
 		tags =
 			tags +
 			`<a onclick="tagShow('${tag}')" class="pointer">#${tag}</a>
-			${nowon}<span class="hide" data-tag="${tag}">　
+			${nowon}<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">　
 			<a onclick=\"tagTL('tag','${tag}',false,'add')" class="pointer" title="${lang.lang_parse_tagTL.replace('{{tag}}', '#' + tag)}">
 				TL
 			</a>　
@@ -124,7 +125,7 @@ function trendTag() {
 					tags =
 						tags +
 						`<a onclick="tagShow('${tag}')" class="pointer">#${tag}</a>
-						<span class="hide" data-tag="${tag}">　
+						<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">　
 						<a onclick=\"tagTL('tag','${tag}',false,'add')" class="pointer" title="#${tag}のタイムライン">TL</a>　
 						<a onclick="show();brInsert('#${tag}')" class="pointer" title="#${tag}でトゥート">
 							Toot
