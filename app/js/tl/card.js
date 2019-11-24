@@ -173,7 +173,7 @@ function additionalIndv(tlid, acct_id, id) {
 					console.error(error)
 				})
 				.then(function(json) {
-					cards = json.card
+					var cards = json.card
 					var analyze = cardHtml(cards, acct_id, id)
 					$('[toot-id=' + id + '] .additional').html(analyze)
 					if (json.title) {

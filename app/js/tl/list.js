@@ -1,3 +1,4 @@
+'use strict'
 function listMenu() {
 	$('#left-menu div').removeClass('active')
 	$('#listMenu').addClass('active')

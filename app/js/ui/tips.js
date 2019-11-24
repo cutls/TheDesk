@@ -1,3 +1,4 @@
+'use strict'
 //左下のメッセージ
 var todcTrigger = null
 function todo(mes) {
@@ -128,7 +129,7 @@ function trendTagonTip() {
 		})
 }
 //Spotify
-spotint = null
+var spotint = null
 function spotifytips() {
 	if (spotint) clearInterval(spotint)
 	var start =

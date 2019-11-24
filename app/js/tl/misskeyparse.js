@@ -1,3 +1,4 @@
+'use strict'
 function escapeHTMLtemp(str) {
 	if (!str) {
 		return "";

@@ -1,3 +1,4 @@
+'use strict'
 //Integrated TL
 async function mixtl(acct_id, tlid, type, delc, voice) {
 	localStorage.setItem('now', type)

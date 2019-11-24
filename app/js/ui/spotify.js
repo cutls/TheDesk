@@ -1,3 +1,4 @@
+'use strict'
 function spotifyConnect() {
 	var auth = "https://accounts.spotify.com/authorize?client_id=0f18e54abe0b4aedb4591e353d3aff69&redirect_uri=https://thedesk.top/spotify-connect&response_type=code&scope=user-read-currently-playing";
 	var platform = localStorage.getItem("platform");

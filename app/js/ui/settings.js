@@ -1,3 +1,4 @@
+'use strict'
 //設定(setting.html)で読む
 var envView = new Vue({
 	el: "#envView",

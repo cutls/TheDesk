@@ -1,3 +1,4 @@
+'use strict'
 //ユーザーデータ表示
 localStorage.removeItem("history");
 //コード受信

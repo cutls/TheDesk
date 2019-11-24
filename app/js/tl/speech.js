@@ -1,8 +1,9 @@
-$voise = null
-isBouyomi = localStorage.getItem('voice_bouyomi')
-$voiseName = lang.lang_speech
-$voices = speechSynthesis.getVoices()
-$synthes = new SpeechSynthesisUtterance()
+'use strict'
+var $voise = null
+var isBouyomi = localStorage.getItem('voice_bouyomi')
+var $voiseName = lang.lang_speech
+var $voices = speechSynthesis.getVoices()
+var $synthes = new SpeechSynthesisUtterance()
 $voise = $.grep($voices, function(n, i) {
 	return n.name == $voiseName
 })[0]
@@ -12,14 +13,14 @@ speechSynthesis.cancel()
 if (!localStorage.getItem('voice_vol')) {
 	localStorage.setItem('voice_vol', 1)
 }
-voiceRate = localStorage.getItem('voice_speed')
+var voiceRate = localStorage.getItem('voice_speed')
 $synthes.rate = voiceRate
-voicePitch = localStorage.getItem('voice_pitch')
+var voicePitch = localStorage.getItem('voice_pitch')
 $synthes.pitch = voicePitch
-voiceVol = localStorage.getItem('voice_vol')
+var voiceVol = localStorage.getItem('voice_vol')
 $synthes.volume = voiceVol
 function say(msgr) {
-	msg = voiceParse(msgr)
+	var msg = voiceParse(msgr)
 	var voice = localStorage.getItem('voicebank')
 	var obj = JSON.parse(voice)
 	if (!obj) {
@@ -31,7 +32,7 @@ function say(msgr) {
 		localStorage.setItem('voicebank', json)
 	}
 }
-$repeat = setInterval(function() {
+var $repeat = setInterval(function() {
 	if (!speechSynthesis.speaking) {
 		var voice = localStorage.getItem('voicebank')
 		if (voice) {
@@ -72,7 +73,7 @@ $repeat = setInterval(function() {
 	}
 }, 300)
 function voiceParse(msg) {
-	msg = $.strip_tags(msg)
+	var msg = $.strip_tags(msg)
 	msg = msg.replace(/#/g, '')
 	msg = msg.replace(/'/g, '')
 	msg = msg.replace(/"/g, '')

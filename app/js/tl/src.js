@@ -1,3 +1,4 @@
+'use strict'
 //検索
 //検索ボックストグル
 function searchMenu() {

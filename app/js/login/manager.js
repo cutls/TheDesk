@@ -62,7 +62,7 @@ function load() {
 					<i class="material-icons">refresh</i>${lang.lang_manager_refresh}
 				</a>
 				<a class="waves-effect disTar pointer red-text" onclick="multiDel('${key}')">
-					<i class="material-icons">delete</i>${lang.lang_manager_delete}"
+					<i class="material-icons">delete</i>${lang.lang_manager_delete}
 				</a><br />${lang.lang_manager_color}
 				<div id="colorsel_${key}" class="colorsel"></div>
 			</div>
@@ -317,7 +317,7 @@ function support() {
 	Object.keys(idata).forEach(function(key) {
 		var instance = idata[key]
 		if (instance == 'instance') {
-			templete =
+			var templete =
 				'<a onclick="login(\'' +
 				key +
 				'\')" class="collection-item pointer transparent">' +
@@ -951,7 +951,7 @@ function multisel() {
 			var list = key * 1 + 1
 			if (key == last) {
 				sel = 'selected'
-				mainb = '(' + lang.lang_manager_def + ')'
+				var mainb = '(' + lang.lang_manager_def + ')'
 				var domain = localStorage.getItem('domain_' + key)
 				var profimg = localStorage.getItem('prof_' + key)
 				var domain = localStorage.getItem('domain_' + key)
@@ -962,7 +962,7 @@ function multisel() {
 				sel = ''
 				mainb = ''
 			}
-			template = `
+			var template = `
 			<option value="${key}" data-icon="${acct.prof}" class="left circle" ${sel}>
 				${acct.user}@${acct.domain}${mainb}
 			</option>
@@ -978,7 +978,7 @@ function mainacct() {
 	M.toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
 }
 function colorpicker(key) {
-	temp = `<div onclick="coloradd('${key}','def','def')" class="pointer exc">${lang.lang_manager_none}</div>
+	var temp = `<div onclick="coloradd('${key}','def','def')" class="pointer exc">${lang.lang_manager_none}</div>
 		<div onclick="coloradd('${key}','f44336','white')" class="red white-text pointer"></div>
 		<div onclick="coloradd('${key}','e91e63','white')" class="pink white-text pointer"></div>
 		<div onclick="coloradd('${key}','9c27b0','white')" class="purple white-text pointer"></div>

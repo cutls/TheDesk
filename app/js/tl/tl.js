@@ -1,5 +1,6 @@
+'use strict'
 //TL取得
-moreloading = false
+var moreloading = false
 var errorct = 0
 function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	scrollevent()

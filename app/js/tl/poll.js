@@ -1,3 +1,4 @@
+'use strict'
 //アンケートのトグル
 function pollToggle() {
 	if ($('#poll').hasClass('hide')) {

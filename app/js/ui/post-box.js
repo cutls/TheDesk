@@ -1,3 +1,4 @@
+'use strict'
 /*ささやきボックス(Cr民並感)*/
 //✕隠す
 function hide() {

@@ -1,3 +1,4 @@
+'use strict'
 //スクロールで続きを読む
 function scrollevent() {
 	$('.tl-box').scroll(function() {

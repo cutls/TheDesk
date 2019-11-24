@@ -1,3 +1,4 @@
+'use strict'
 //レイアウトの設定
 
 var websocketOld = []
@@ -706,7 +707,7 @@ function setToggleTag(tlid) {
 	}
 }
 function colorpicker(key) {
-	temp = `<div onclick="coloradd('${key}','def','def')" class="pointer">Default</div>
+	var temp = `<div onclick="coloradd('${key}','def','def')" class="pointer">Default</div>
 		<div onclick="coloradd('${key}','f44336','white')" class="red white-text pointer">Red</div>
 		<div onclick="coloradd('${key}','e91e63','white')" class="pink white-text pointer">Pink</div>
 		<div onclick="coloradd('${key}','9c27b0','white')" class="purple white-text pointer">Purple</div>

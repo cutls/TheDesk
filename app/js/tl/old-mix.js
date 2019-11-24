@@ -1,3 +1,4 @@
+'use strict'
 //Integrated TL
 function mixtl(acct_id, tlid, type, delc, voice) {
 	localStorage.removeItem('morelock')

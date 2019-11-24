@@ -1,3 +1,4 @@
+'use strict'
 //テーマ適用
 function themes(theme) {
 	if (!theme) {

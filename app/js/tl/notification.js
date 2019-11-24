@@ -1,3 +1,4 @@
+'use strict'
 //通知
 //取得+Streaming接続
 function notf(acct_id, tlid, sys) {

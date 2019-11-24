@@ -1,3 +1,4 @@
+'use strict'
 //ソートデータ読み込み
 function sortLoad () {
 	$("#sort").html("");

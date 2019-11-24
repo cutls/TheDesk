@@ -1,3 +1,4 @@
+'use strict'
 //プロフ編集
 //文字系
 function profedit() {

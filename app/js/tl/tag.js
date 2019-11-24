@@ -1,3 +1,4 @@
+'use strict'
 //タグ表示
 if (location.search) {
 	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)

@@ -1,3 +1,4 @@
+'use strict'
 /*メディアフィルター機能*/
 //各TL上方のMedia[On/Off]
 function mediaToggle(tlid) {

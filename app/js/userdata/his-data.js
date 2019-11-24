@@ -1,3 +1,4 @@
+'use strict'
 //ユーザーデータ表示
 //タイムライン
 function utl(user, more, acct_id) {

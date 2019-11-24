@@ -4,7 +4,7 @@ const shell = electron.shell
 var ipc = electron.ipcRenderer
 onmessage = function(e) {
 	if (e.data[0] == 'openUrl') {
-		urls = e.data[1].match(/https?:\/\/(.+)/)
+		var urls = e.data[1].match(/https?:\/\/(.+)/)
 		if (urls) {
 			shell.openExternal(e.data[1])
 		}

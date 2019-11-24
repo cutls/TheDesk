@@ -1,3 +1,4 @@
+'use strict'
 var r = document.getElementById("radio");
 function Rtoggle() {
     if ($("#radio").hasClass("play")) {

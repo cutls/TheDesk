@@ -1,3 +1,4 @@
+'use strict'
 function menu() {
   localStorage.setItem("menu-done", true);
   $("#fukidashi").addClass("hide")

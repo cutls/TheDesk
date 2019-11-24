@@ -1,3 +1,4 @@
+'use strict'
 /*イメージビューワー*/
 //postのimg.jsとは異なります。
 function imgv(id, key, acct_id) {
@@ -76,7 +77,7 @@ function imgCont(type) {
 }
 function imageXhr(id, key, murl) {
 	var startTime = new Date()
-	xhr = new XMLHttpRequest()
+	var xhr = new XMLHttpRequest()
 	xhr.open('GET', murl, true)
 	xhr.responseType = 'arraybuffer'
 	xhr.addEventListener(
@@ -104,7 +105,7 @@ function imageXhr(id, key, murl) {
 	)
 	xhr.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			r = new FileReader()
+			var r = new FileReader()
 			r.readAsDataURL(this.response)
 			r.onload = function() {
 				var b64 = r.result

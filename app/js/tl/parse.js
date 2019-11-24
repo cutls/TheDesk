@@ -1,3 +1,4 @@
+'use strict'
 //オブジェクトパーサー(トゥート)
 function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 	var splitter = new GraphemeSplitter()
@@ -539,11 +540,11 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				.match(
 					/https?:\/\/([^+_]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
 				)
-			urlsck = content.match(/(https?):\/\/([^<>]*?)\/([^"]*)/g)
+			var urlsck = content.match(/(https?):\/\/([^<>]*?)\/([^"]*)/g)
 			if (urlsck) {
 				for (var urlct = 0; urlct < urlsck.length; urlct++) {
 					var urlindv = urlsck[urlct]
-					urlCont = urlindv.match(/(https?):\/\/([^a-zA-Z0-9.-]*?)\.(.+?)\/([^"]*)/)
+					var urlCont = urlindv.match(/(https?):\/\/([^a-zA-Z0-9.-]*?)\.(.+?)\/([^"]*)/)
 					if (urlCont) {
 						urlindv = urlindv.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&')
 						var encoded = encodeURI(urlCont[4])

@@ -11,7 +11,7 @@ $(document).on('click', 'a', e => {
 	if (url) {
 		urls = url.match(/https?:\/\/(.+)/)
 		//トゥートのURLぽかったら
-		toot = url.match(/https:\/\/([^+_]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/)
+		var toot = url.match(/https:\/\/([^+_]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/)
 		if (!toot) {
 			//Pleroma対策
 			toot = url.match(/https:\/\/([^+_]+)\/users\/([a-zA-Z0-9_]+)\/statuses\/([0-9]+)/)

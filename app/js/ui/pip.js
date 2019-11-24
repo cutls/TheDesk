@@ -1,3 +1,4 @@
+'use strict'
 function pip(id) {
     $("#pip-content").html($("[toot-id=" + id + "] .additional").html());
     $("#pip").removeClass("hide");
