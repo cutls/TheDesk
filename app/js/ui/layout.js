@@ -202,7 +202,7 @@ function parseColumn(target, dontclose) {
 				animecss,
 				acct.data
 			)
-		}  else if (acct.type == 'bookmark') {
+		} else if (acct.type == 'bookmark') {
 			if (!acct.left_fold) {
 				basekey = key
 			}
@@ -224,20 +224,21 @@ function parseColumn(target, dontclose) {
 				animecss,
 				acct.domain
 			)
-		}else {
+		} else {
 			var anime = localStorage.getItem('animation')
 			if (anime == 'yes' || !anime) {
 				var animecss = 'box-anime'
 			} else {
 				var animecss = ''
 			}
-			var unread =
-				`<a id="unread_${key}" onclick="showUnread('${key}','${acct.type}','${acct.domain}')"
+			var unread = `<a id="unread_${key}" onclick="showUnread('${key}','${acct.type}','${acct.domain}')"
 					 class="setting nex" title="${lang.lang_layout_unread}">
 					<i class="material-icons waves-effect nex">more</i>
 				</a>`
-				var notfDomain = acct.domain
-				var notfKey = key
+			var notfDomain = acct.domain
+			var notfKey = key
+			var if_tag = ''
+			var if_tag_btn = ''
 			if (acct.type == 'notf') {
 				var exclude =
 					lang.lang_excluded +
@@ -281,20 +282,31 @@ function parseColumn(target, dontclose) {
 						</button>`
 				}
 				exclude = exclude + '<br>'
-				notfDomain = "dummy"
-				notfKey = "dummy"
+				notfDomain = 'dummy'
+				notfKey = 'dummy'
 			} else if (acct.type == 'home') {
-				var exclude =
-					`<a onclick="ebtToggle('${key}')" class="setting nex">
+				var exclude = `<a onclick="ebtToggle('${key}')" class="setting nex">
 						<i class="fas fa-retweet waves-effect nex" title="${lang.lang_layout_excludingbt}" style="font-size:24px"></i>
 						<span id="sta-bt-${key}">Off</span>
 					</a>
 					${lang.lang_layout_excludingbt}
 					<br>`
+			} else if (acct.type == 'tag') {
+				if_tag = `<div class="column-hide notf-indv-box" id="tag-box_${key}" style="padding:5px;">
+					Base: ${acct.data}<br>
+					<div id="tagManager-${key}"></div>
+					<button onclick="addTag('${key}')" class="btn waves-effect" style="width: 100%">Add</button>
+				</div>`
+				if_tag_btn = `<a onclick="setToggleTag('${key}')" class="setting nex" 
+				title="${lang.lang_layout_tagManager}" style="width:30px">
+				<i class="material-icons waves-effect nex">note_add</i>
+				</a>`
+				unread = ''
 			} else {
 				var exclude = ''
 				unread = ''
 			}
+
 			var markers = localStorage.getItem('markers')
 			if (markers == 'yes') {
 				markers = true
@@ -307,18 +319,15 @@ function parseColumn(target, dontclose) {
 			if (!acct.left_fold) {
 				basekey = key
 				if (!numtarget) {
-					var basehtml =
-						`<div style="${css}" class="box ${animecss}" id="timeline_box_${basekey}_parentBox"></div>`
+					var basehtml = `<div style="${css}" class="box ${animecss}" id="timeline_box_${basekey}_parentBox"></div>`
 					$('#timeline-container').append(basehtml)
 				}
-				var left_hold =
-					`<a onclick="leftFoldSet('${key}')" class="setting nex">
+				var left_hold = `<a onclick="leftFoldSet('${key}')" class="setting nex">
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftFold}">view_agenda</i>
 					</a>
 					${lang.lang_layout_leftFold}<br>`
 			} else {
-				var left_hold =
-					`<a onclick="leftFoldRemove('${key}')" class="setting nex">
+				var left_hold = `<a onclick="leftFoldRemove('${key}')" class="setting nex">
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i>
 					</a>
 					${lang.lang_layout_leftUnfold}<br>`
@@ -341,8 +350,7 @@ function parseColumn(target, dontclose) {
 			} else {
 				var addHeight = ''
 			}
-			var html =
-				`
+			var html = `
 				<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}" data-acct="${acct.domain}" style="${addHeight}">
 					<div class="notice-box z-depth-2" id="menu_${key}" style="${insert}">
 						<div class="area-notice">
@@ -361,6 +369,7 @@ function parseColumn(target, dontclose) {
 							<i class="material-icons waves-effect nex notf-icon_${acct.domain}">notifications</i>
 						</a>
 						${unread}
+						${if_tag_btn}
 					</div>
 					<div class="area-sta">
 						<span class="new badge teal notf-reply_${acct.domain} hide" data-badge-caption="Reply">0</span>
@@ -412,7 +421,7 @@ function parseColumn(target, dontclose) {
 					${lang.lang_layout_headercolor}
 					<br>
 					<div id="picker_${key}" class="color-picker"></div>
-				</div>
+				</div>${if_tag}
 				<div class="tl-box" tlid="${key}">
 					<div id="timeline_${key}" class="tl ${acct.type}-timeline " tlid="${key}" 
 						data-type="${acct.type}" data-acct="${acct.domain}" data-const="${acct.type}_${acct.domain}">
@@ -663,9 +672,41 @@ function setToggle(tlid) {
 		)
 	}
 }
+//タグトグル
+//設定トグル
+function setToggleTag(tlid) {
+	if ($('#tag-box_' + tlid).hasClass('column-hide')) {
+		$('#tag-box_' + tlid).css('display', 'block')
+		$('#tag-box_' + tlid).animate(
+			{
+				height: '200px'
+			},
+			{
+				duration: 300,
+				complete: function() {
+					$('#tag-box_' + tlid).css('overflow-y', 'scroll')
+					$('#tag-box_' + tlid).removeClass('column-hide')
+				}
+			}
+		)
+	} else {
+		$('#tag-box_' + tlid).css('overflow-y', 'hidden')
+		$('#tag-box_' + tlid).animate(
+			{
+				height: '0'
+			},
+			{
+				duration: 300,
+				complete: function() {
+					$('#tag-box_' + tlid).addClass('column-hide')
+					$('#tag-box_' + tlid).css('display', 'none')
+				}
+			}
+		)
+	}
+}
 function colorpicker(key) {
-	temp =
-		`<div onclick="coloradd('${key}','def','def')" class="pointer">Default</div>
+	temp = `<div onclick="coloradd('${key}','def','def')" class="pointer">Default</div>
 		<div onclick="coloradd('${key}','f44336','white')" class="red white-text pointer">Red</div>
 		<div onclick="coloradd('${key}','e91e63','white')" class="pink white-text pointer">Pink</div>
 		<div onclick="coloradd('${key}','9c27b0','white')" class="purple white-text pointer">Purple</div>
@@ -717,8 +758,7 @@ function coloradd(key, bg, txt) {
 }
 //禁断のTwitter
 function webviewParse(url, key, insert, icnsert, css) {
-	var html =
-		`<div class="box" id="timeline_box_${key}_box" tlid="${key}" style="${css}">
+	var html = `<div class="box" id="timeline_box_${key}_box" tlid="${key}" style="${css}">
 			<div class="notice-box z-depth-2" id="menu_${key}" style="${insert}">
 				<div class="area-notice">
 					<i class="fab fa-twitter waves-effect" id="notice_icon_${key}" style="font-size:40px; padding-top:25%;"></i>
@@ -753,25 +793,21 @@ function webviewParse(url, key, insert, icnsert, css) {
 function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, animecss, data) {
 	//type名が関数名
 	if (!left_fold) {
-		var basehtml =
-			`<div style="${css}" class="box ${animecss}" id="timeline_box_${basekey}_parentBox"></div>`
+		var basehtml = `<div style="${css}" class="box ${animecss}" id="timeline_box_${basekey}_parentBox"></div>`
 		$('#timeline-container').append(basehtml)
-		var left_hold =
-			`<a onclick="leftFoldSet('${key}')" class="setting nex">
+		var left_hold = `<a onclick="leftFoldSet('${key}')" class="setting nex">
 				<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftFold}">view_agenda</i>
 			</a>
 			${lang.lang_layout_leftFold}
 			</span><br>`
 	} else {
-		var left_hold =
-			`<a onclick="leftFoldRemove('${key}')" class="setting nex">
+		var left_hold = `<a onclick="leftFoldRemove('${key}')" class="setting nex">
 				<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i>
 			</a>
 			${lang.lang_layout_leftUnfold}
 			</span><br>`
 	}
-	var html =
-		`<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}">
+	var html = `<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}">
 			<div class="notice-box z-depth-2" id="menu_${key}" style="${insert} ">
 				<div class="area-notice">
 					<i class="material-icons waves-effect" id="notice_icon_${key}" style="font-size:40px; padding-top:25%;" 
@@ -811,9 +847,9 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 			</div>
 		</div>`
 	$('#timeline_box_' + basekey + '_parentBox').append(html)
-	if(type == 'tootsearch'){
+	if (type == 'tootsearch') {
 		tootsearch(key, data)
-	}else if(type == 'bookmark'){
+	} else if (type == 'bookmark') {
 		console.log(key, data)
 		bookmark(key, data)
 	}
@@ -824,7 +860,7 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 	voiceCheck(key)
 	return true
 }
-function bookmark(key, data){
+function bookmark(key, data) {
 	console.log(key, data)
 	if (localStorage.getItem('voice_' + key)) {
 		var voice = true
