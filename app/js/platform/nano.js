@@ -1,3 +1,4 @@
+'use strict'
 //TL取得
 var websocket
 function tl(data) {

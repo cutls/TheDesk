@@ -1,3 +1,4 @@
+'use strict'
 //日付パーサー
 function date(str, datetype) {
 	if (datetype == "relative") {

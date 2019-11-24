@@ -1,3 +1,4 @@
+'use strict'
 /*リプライ*/
 function re(id, ats_cm, acct_id, mode) {
 	clear()

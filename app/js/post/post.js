@@ -1,3 +1,4 @@
+'use strict'
 /*投稿系*/
 //投稿
 function sec() {

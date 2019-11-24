@@ -1,3 +1,4 @@
+'use strict'
 //お気に入り登録やブースト等、フォローやブロック等
 //お気に入り登録
 function fav(id, acct_id, remote) {

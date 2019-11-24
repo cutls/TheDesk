@@ -1,3 +1,4 @@
+'use strict'
 //バージョンチェッカー
 function verck(ver, jp) {
 	console.log("%c Welcome😊", "color: red;font-size:200%;");
@@ -199,7 +200,7 @@ function verck(ver, jp) {
 }
 var infostreaming = false;
 function infowebsocket() {
-	infows = new WebSocket("wss://thedesk.top/ws/");
+	var infows = new WebSocket("wss://thedesk.top/ws/");
 	infows.onopen = function(mess) {
 		console.log([tlid, ":Connect Streaming Info:", mess]);
 		infostreaming = true;

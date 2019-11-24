@@ -1,3 +1,4 @@
+'use strict'
 //入力時にハッシュタグと@をサジェスト
 var timer = null
 

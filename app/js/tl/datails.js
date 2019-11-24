@@ -1,3 +1,4 @@
+'use strict'
 //トゥートの詳細
 function details(id, acct_id, tlid, mode) {
 	if (mode == 'dm') {

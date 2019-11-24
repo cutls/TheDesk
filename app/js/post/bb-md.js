@@ -1,3 +1,4 @@
+'use strict'
 //BBCodeとMarkdownの入力・パーサー
 //アカウント変えた時にBBとかMDとか
 function mdCheck() {

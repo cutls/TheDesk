@@ -1,3 +1,4 @@
+'use strict'
 //絵文字ピッカー
 //最初に読み込む
 $('#emoji-before').addClass('disabled')

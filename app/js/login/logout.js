@@ -1,3 +1,4 @@
+'use strict'
 //ログアウトします
 function logout() {
 	localStorage.removeItem("acct_" + acct_id + "_at");

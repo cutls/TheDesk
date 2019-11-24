@@ -1,3 +1,4 @@
+'use strict'
 var defaultemojiList = ["activity", "flag", "food", "nature", "object", "people", "place", "symbol"];
 var defaultemoji = {
     activity: activity,

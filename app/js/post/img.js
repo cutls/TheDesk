@@ -1,3 +1,4 @@
+'use strict'
 //ドラッグ・アンド・ドロップからアップロードまで。uiのimg.jsとは異なります。
 var obj = $('body')
 var system

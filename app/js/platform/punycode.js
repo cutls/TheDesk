@@ -1,3 +1,4 @@
+'use strict'
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
 	/** Detect free variables */

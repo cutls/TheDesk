@@ -1,3 +1,4 @@
+'use strict'
 //プラットフォーム別　最後に読むやつ
 //リンクを外部で開くか内部で出すか
 $(document).on('click', 'a', e => {
@@ -103,7 +104,7 @@ function playSound() {
 	if (soundFile) {
 		soundFile.stop()
 	}
-	context = new AudioContext()
+	var context = new AudioContext()
 	context.createBufferSource().start(0)
 	context.decodeAudioData(request.response, function(buf) {
 		//console.log("Playing:" , source)
@@ -123,11 +124,6 @@ function playSound() {
 	volumeControl.gain.value = vol
 	source.start(0)
 	soundFile = source
-
-	function newFunction() {
-		var source
-		return source
-	}
 }
 function nano() {
 	postMessage(['nano', null], '*')

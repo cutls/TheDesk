@@ -1,3 +1,4 @@
+'use strict'
 //Renpost
 function renote(id, acct_id, remote) {
 	if ($('#pub_' + id).hasClass('rted')) {

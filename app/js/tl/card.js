@@ -1,3 +1,4 @@
+'use strict'
 //カード処理やメンション、ハッシュタグの別途表示
 //全てのTL処理で呼び出し
 function additional(acct_id, tlid) {
@@ -40,7 +41,7 @@ function additional(acct_id, tlid) {
 		}
 
 		//トゥートのURLぽかったら
-		toot = text.match(/https:\/\/([a-zA-Z0-9.-]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/)
+		var toot = text.match(/https:\/\/([a-zA-Z0-9.-]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/)
 		if (toot) {
 			if (toot[1]) {
 				$(this).attr('data-acct', acct_id)

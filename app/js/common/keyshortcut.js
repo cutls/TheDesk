@@ -1,5 +1,6 @@
-selectedColumn = 0
-selectedToot = 0
+'use strict'
+var selectedColumn = 0
+var selectedToot = 0
 $(function ($) {
 	//キーボードショートカット
 	$(window).keydown(function (e) {

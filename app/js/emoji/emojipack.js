@@ -1,3 +1,4 @@
+'use strict'
 var activity=[
     {shortcode:"soccer",css:"4.16667% 10.4167%"},
     {shortcode:"basketball",css:"16.6667% 56.25%"},

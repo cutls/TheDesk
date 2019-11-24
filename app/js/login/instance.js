@@ -1,3 +1,4 @@
+'use strict'
 //インスタンスリスト
 var idata = {
 	"kirishima.cloud": "instance",

@@ -1,3 +1,4 @@
+'use strict'
 /*保護系*/
 //画像保護
 function nsfw() {

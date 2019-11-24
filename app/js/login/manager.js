@@ -1,3 +1,4 @@
+'use strict'
 //アカウントマネージャ
 //最初に読むやつ
 function load() {

@@ -1,3 +1,4 @@
+'use strict'
 var electron = require('electron')
 const shell = electron.shell
 var ipc = electron.ipcRenderer

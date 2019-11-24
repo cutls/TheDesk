@@ -1,3 +1,4 @@
+'use strict'
 //ディレクトリ
 //ディレクトリトグル
 function dirMenu() {
