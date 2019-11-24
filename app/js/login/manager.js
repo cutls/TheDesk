@@ -318,13 +318,7 @@ function support() {
 		var instance = idata[key]
 		if (instance == 'instance') {
 			var templete =
-				'<a onclick="login(\'' +
-				key +
-				'\')" class="collection-item pointer transparent">' +
-				idata[key + '_name'] +
-				'(' +
-				key +
-				')</a>'
+				`<a onclick="login('${key}')" class="collection-item pointer transparent">${idata[key + '_name']}(${key})</a>`
 			$('#support').append(templete)
 		}
 	})
@@ -332,8 +326,6 @@ function support() {
 
 //URL指定してポップアップ
 function login(url) {
-	var multi = localStorage.getItem('multi')
-	var obj = JSON.parse(multi)
 	if ($('#misskey:checked').val() == 'on') {
 		$('#misskey').prop('checked', true)
 		misskeyLogin(url)
@@ -939,7 +931,6 @@ function multisel() {
 	} else {
 		var obj = JSON.parse(multi)
 	}
-	var templete
 	var last = localStorage.getItem('main')
 	var sel
 	if (obj.length < 1) {
@@ -948,19 +939,16 @@ function multisel() {
 	} else {
 		Object.keys(obj).forEach(function(key) {
 			var acct = obj[key]
-			var list = key * 1 + 1
 			if (key == last) {
 				sel = 'selected'
 				var mainb = '(' + lang.lang_manager_def + ')'
-				var domain = localStorage.getItem('domain_' + key)
 				var profimg = localStorage.getItem('prof_' + key)
-				var domain = localStorage.getItem('domain_' + key)
 				if (!profimg) {
 					profimg = '../../img/missing.svg'
 				}
 			} else {
 				sel = ''
-				mainb = ''
+				var mainb = ''
 			}
 			var template = `
 			<option value="${key}" data-icon="${acct.prof}" class="left circle" ${sel}>

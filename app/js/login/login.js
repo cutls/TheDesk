@@ -380,9 +380,7 @@ function ckdb(acct_id) {
 		localStorage.setItem('imas', 'true')
 		$('.imasonly').show()
 	}
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	var bbcode = domain + '_bbcode'
-	var letters = domain + '_letters'
 	var quoteMarker = domain + '_quote'
 	if (localStorage.getItem('instance')) {
 		var json = JSON.parse(localStorage.getItem('instance'))
@@ -580,10 +578,10 @@ function multiSelector(parseC) {
 //バージョンエンコ
 function enc(ver) {
 	var ver = ver.replace(/\s/g, '')
-	var ver = ver.replace(/\(/g, '-')
-	var ver = ver.replace(/\)/g, '')
-	var ver = ver.replace(/\[/g, '_')
-	var ver = ver.replace(/\]/g, '')
+	ver = ver.replace(/\(/g, '-')
+	ver = ver.replace(/\)/g, '')
+	ver = ver.replace(/\[/g, '_')
+	ver = ver.replace(/\]/g, '')
 	return ver
 }
 //インスタンスティッカー
