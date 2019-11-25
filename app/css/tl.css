@@ -644,6 +644,7 @@ p:not(:last-child) {
 	padding: 1px;
 	border-radius: 3px;
 	overflow: hidden;
+	position: relative;
 }
 .fa-2x > .emoji-img {
 	width: 36px !important;
@@ -688,11 +689,21 @@ p:not(:last-child) {
 	height: 20px;
 	border-radius: 3px;
 }
+.lpAnime {
+	animation-duration: 1s;
+  	animation-name: fadeInLeft;
+}
 .onPoll {
 	position: relative;
 }
 .maxVoter {
 	background-color: var(--shared);
+}
+.ownMark img {
+	width: 1.2rem !important;
+    position: relative;
+    top: -1px;
+    margin-left: 5px !important;
 }
 .jump {
 	display: inline-block;

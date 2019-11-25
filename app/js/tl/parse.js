@@ -689,7 +689,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var featured = `　<a onclick="tagFeature('${tag.name}','${acct_id}')" class="pointer" title="add it to Featured tags">Feature</a>　`
 					tags =
 						tags +
-						`<span class="hide" data-tag="${tag.name}" data-regTag="${tag.name.toLowerCase()}">#${tag.name}:
+						`<span class="hide" data-tag="${tag.name}" data-regTag="${tag.name.toLowerCase()}">#${
+							tag.name
+						}:
 							<a onclick="tl('tag','${tag.name}','${acct_id}','add')" class="pointer"
 							 title="${lang.lang_parse_tagTL.replace(
 									'{{tag}}',
@@ -1344,6 +1346,12 @@ function client(name) {
 //Poll Parser
 function pollParse(poll, acct_id) {
 	var datetype = localStorage.getItem('datetype')
+	var anime = localStorage.getItem('animation')
+	if (anime == 'yes' || !anime) {
+		var lpAnime = 'lpAnime'
+	} else {
+		var lpAnime = ''
+	}
 	var choices = poll.options
 	if (poll.own_votes) {
 		var minechoice = poll.own_votes
@@ -1355,7 +1363,7 @@ function pollParse(poll, acct_id) {
 	</a>`
 	if (poll.voted) {
 		var myvote = lang.lang_parse_voted
-		if(poll.expired) myvote = myvote + '/' + lang.lang_parse_endedvote
+		if (poll.expired) myvote = myvote + '/' + lang.lang_parse_endedvote
 		var result_hide = ''
 	} else if (poll.expired) {
 		var myvote = lang.lang_parse_endedvote
@@ -1373,14 +1381,19 @@ function pollParse(poll, acct_id) {
 	}
 	var ended = date(poll.expires_at, datetype)
 	var pollHtml = ''
-	var max = _.maxBy(choices, 'votes_count').votes_count;
+	if (choices[0].votes_count) {
+		var max = _.maxBy(choices, 'votes_count').votes_count
+	} else {
+		var max = 0
+	}
+
 	Object.keys(choices).forEach(function(keyc) {
 		var choice = choices[keyc]
 		var voteit = ''
 		for (var i = 0; i < minechoice.length; i++) {
 			var me = minechoice[i]
 			if (me == keyc) {
-				var voteit = '✅'
+				var voteit = '<span class="ownMark">✅</span>'
 				break
 			}
 		}
@@ -1392,21 +1405,27 @@ function pollParse(poll, acct_id) {
 			var votesel = ''
 			var voteclass = ''
 		}
-		var per = Math.ceil(choice.votes_count / poll.votes_count * 100)
-		if(max == choice.votes_count) {
+		var per = Math.ceil((choice.votes_count / poll.votes_count) * 100)
+		if(!per) per = 0
+		if (max == choice.votes_count) {
 			var addPoll = 'maxVoter'
 		} else {
 			var addPoll = ''
 		}
+		var openData = ''
+		if (choice.votes_count !== null) {
+			openData = `<span style="float: right">${choice.votes_count}<span class="sml">(${per}%)</span></span>`
+		} else {
+			openData = `<span style="float: right">?<span class="sml">(-%)</span></span>`
+		}
 		pollHtml =
 			pollHtml +
 			`<div class="${voteclass} vote vote_${acct_id}_${poll.id}_${keyc}" onclick="${votesel}">
-				<span class="leadPoll ${addPoll}" style="width: ${per}%"></span>
-				<span class="onPoll">${escapeHTML(choice.title)}</span>
+				<span class="leadPoll ${addPoll} ${lpAnime}" style="width: ${per}%"></span>
+				<span class="onPoll">${escapeHTML(choice.title)}${voteit}</span>
 				<span class="vote_${acct_id}_${poll.id}_result ${result_hide} onPoll">
-					(${choice.votes_count}/${per}%)
+					${openData}
 				</span>
-				${voteit}
 			</div>`
 	})
 	if (poll.expired) {
