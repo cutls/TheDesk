@@ -125,7 +125,7 @@
     "integratedTLDes": "Интегриране (Местно/Начало)",
     "localPlusDes": "LTL+Отговор+BT",
     "notf": "Известия",
-    "bookmark": "Bookmarks",
+    "bookmark": "Отметки",
     "showThisTL": "Показване на този TL:",
     "webviewWarn": "TweetDeck с потребителски TJDeck(<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Код</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>). Клавишните комбинации ще ви дразнят. Когато се почувствате така, маркирате „Предпочитам WebView“ в горната част на колоната.",
     "add": "Добави",
@@ -178,5 +178,5 @@
     "acctManDesc": "Добавете още акаунти и излезте от тях.",
     "settingDesc": "Много. много предпочитания са тук. Няма да можете да ги проверите всички!",
     "nanoDescPlus": "Клиент мини прозорец (експериментално)",
-    "listDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
+    "listDesc": "Всички настройки на TheDesk и Mastodon, като <b> добавяне и сортиране на колони </b>, <b> списък и проверка на филтрите </b>."
 }
