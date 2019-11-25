@@ -1350,9 +1350,12 @@ function pollParse(poll, acct_id) {
 	} else {
 		var minechoice = []
 	}
-
+	var refresh = `<a onclick="voteMastodonrefresh('${acct_id}','${poll.id}')" class="pointer">
+		${lang.lang_manager_refresh}
+	</a>`
 	if (poll.voted) {
 		var myvote = lang.lang_parse_voted
+		if(poll.expired) myvote = myvote + '/' + lang.lang_parse_endedvote
 		var result_hide = ''
 	} else if (poll.expired) {
 		var myvote = lang.lang_parse_endedvote
@@ -1364,12 +1367,13 @@ function pollParse(poll, acct_id) {
 				myvote +
 				`<a onclick="showResult('${acct_id}','${poll.id}')" class="pointer">
 				${lang.lang_parse_unvoted}
-				</a>`
+				</a>　`
 		}
 		var result_hide = 'hide'
 	}
 	var ended = date(poll.expires_at, datetype)
 	var pollHtml = ''
+	var max = _.maxBy(choices, 'votes_count').votes_count;
 	Object.keys(choices).forEach(function(keyc) {
 		var choice = choices[keyc]
 		var voteit = ''
@@ -1388,25 +1392,33 @@ function pollParse(poll, acct_id) {
 			var votesel = ''
 			var voteclass = ''
 		}
+		var per = Math.ceil(choice.votes_count / poll.votes_count * 100)
+		if(max == choice.votes_count) {
+			var addPoll = 'maxVoter'
+		} else {
+			var addPoll = ''
+		}
 		pollHtml =
 			pollHtml +
 			`<div class="${voteclass} vote vote_${acct_id}_${poll.id}_${keyc}" onclick="${votesel}">
-				${escapeHTML(choice.title)}
-				<span class="vote_${acct_id}_${poll.id}_result ${result_hide}">
-					(${choice.votes_count})
+				<span class="leadPoll ${addPoll}" style="width: ${per}%"></span>
+				<span class="onPoll">${escapeHTML(choice.title)}</span>
+				<span class="vote_${acct_id}_${poll.id}_result ${result_hide} onPoll">
+					(${choice.votes_count}/${per}%)
 				</span>
 				${voteit}
 			</div>`
 	})
+	if (poll.expired) {
+		refresh = ''
+	}
 	pollHtml = `<div class="vote_${acct_id}_${poll.id}">
 			${pollHtml}${myvote}
-			<a onclick="voteMastodonrefresh('${acct_id}','${poll.id}')" class="pointer">
-				${lang.lang_manager_refresh}
-			</a>
+			${refresh}
 			<span class="cbadge cbadge-hover" title="${date(poll.expires_at, 'absolute')}">
 				<i class="far fa-calendar-times"></i>
 				${ended}
-			</span>
+			</span>${poll.voters_count} ${lang.lang_parse_people}
 		</div>`
 	return pollHtml
 }

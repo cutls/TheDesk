@@ -643,6 +643,7 @@ p:not(:last-child) {
 	margin-top: 3px;
 	padding: 1px;
 	border-radius: 3px;
+	overflow: hidden;
 }
 .fa-2x > .emoji-img {
 	width: 36px !important;
@@ -680,6 +681,18 @@ p:not(:last-child) {
 }
 .votebtn:hover {
 	background-color: var(--color);
+}
+.leadPoll {
+	position: absolute;
+	background-color: var(--box);
+	height: 20px;
+	border-radius: 3px;
+}
+.onPoll {
+	position: relative;
+}
+.maxVoter {
+	background-color: var(--shared);
 }
 .jump {
 	display: inline-block;
