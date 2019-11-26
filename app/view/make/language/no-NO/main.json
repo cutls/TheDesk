@@ -200,6 +200,7 @@
     "lang_parse_clientmute": "dempet",
     "lang_parse_mute": " vil bli dempet. Du kan fjerne på preferanser.",
     "lang_parse_voted": "Stemte",
+    "lang_parse_myvote": "(My own poll)",
     "lang_parse_vote": "Stem",
     "lang_parse_unvoted": "Vis resultat uten å stemme",
     "lang_parse_endedvote": "Utløpt",
