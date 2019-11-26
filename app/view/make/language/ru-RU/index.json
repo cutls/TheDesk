@@ -176,7 +176,7 @@
     "demoBottomBtns": "Welcome guide",
     "lookAtBottom": "Посмотрите на нижнюю часть этого окна. Вот несколько советов по этому поводу.",
     "acctManDesc": "Добавьте больше аккаунтов и выйдите из них.",
-    "settingDesc": "Many and many preferences here. You will couldn't check it all!",
-    "nanoDescPlus": "Mini window client(experimental)",
-    "listDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
+    "settingDesc": "Здесь очень много настроек. Вы не сможете проверить все!",
+    "nanoDescPlus": "Клиент мини-окна (экспериментальный)",
+    "listDesc": "Все ежедневные настройки TheDesk и Mastodon, такие как <b>добавить и сортировать столбцы</b>, <b>список и проверка фильтра</b>."
 }
