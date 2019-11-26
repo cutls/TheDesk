@@ -1,6 +1,6 @@
 {
-  "setting": "Preferences",
-  "set": "Save",
+  "setting": "Предпочтения",
+  "set": "Сохранить",
   "yes": "Да",
   "no": "Нет",
   "none": "None",
@@ -198,7 +198,7 @@
   "keyselecttop": "Select the top & left(No.1 column) toot",
   "reset": "Reset(Danger)",
   "resetconfirm": "Delete all data. You cannot undo. Continue?",
-  "about": "About TheDesk",
+  "about": "О TheDesk",
   "hp": "Website",
   "support": "Support",
   "help": "Help",
