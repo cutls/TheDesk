@@ -200,6 +200,7 @@
     "lang_parse_clientmute": "Stumm",
     "lang_parse_mute": " wird stumm gemacht. Kann in den Einstellungen wieder entfernt werden.",
     "lang_parse_voted": "Abgestimmt",
+    "lang_parse_myvote": "(My own poll)",
     "lang_parse_vote": "Abstimmen",
     "lang_parse_unvoted": "Ergebnis ohne Abstimmung anzeigen",
     "lang_parse_endedvote": "Abgelaufen",
