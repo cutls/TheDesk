@@ -1,5 +1,5 @@
 {
-    "list": "List of accounts",
+    "list": "Список аккаунтов",
     "back": "Back",
     "add": "Add an account",
     "codesetupwarn": "Uncheck it to skip pasiting code.(login to Mastodon on Windows or macOS) (Recommended: pcheck)",
