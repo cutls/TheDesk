@@ -200,6 +200,7 @@
     "lang_parse_clientmute": "ztlumena",
     "lang_parse_mute": " bude ztlumena. To můžete odstranit v nastavení.",
     "lang_parse_voted": "Voted",
+    "lang_parse_myvote": "(My own poll)",
     "lang_parse_vote": "Vote",
     "lang_parse_unvoted": "Show the result without voting",
     "lang_parse_endedvote": "Expired",
