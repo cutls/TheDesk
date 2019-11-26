@@ -454,6 +454,9 @@ function redraft(id, acct_id) {
 						$('#nsfw').html('visibility')
 						$('#nsfw').addClass('nsfw-avail')
 					}
+					if(json.in_reply_to_id){
+						$('#reply').val(json.in_reply_to_id)
+					}
 				}
 			}
 		}
