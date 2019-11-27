@@ -58,8 +58,10 @@
     "materialize-css": "git://github.com/cutls/materialize",
     "json5": "^2.1.1",
     "lodash": "^4.17.15",
+    "sumchecker": "^3.0.0",
+    "sweetalert2": "^9.4.0",
     "sumchecker": "^3.0.1",
-    "sweetalert2": "^9.3.16",
+    "sweetalert2": "^9.4.0",
     "vue": "^2.6.10"
   },
   "optionalDependencies": {
