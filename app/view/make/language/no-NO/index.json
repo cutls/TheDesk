@@ -168,6 +168,7 @@
     "contactwithlog": "If you tell me bugs(not working or something) with this log, I can detect what is wrong more easily.",
     "about": "Om TheDesk",
     "hereAddColumns": "<- Legg til tidslinje",
+    "foundBug": "I found a bug",
     "show": "Vis",
     "directory": "Mapper",
     "active": "Nylig aktive",
