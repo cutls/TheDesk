@@ -1,6 +1,6 @@
 {
   "name": "thedesk",
-  "version": "20.0.4",
+  "version": "20.0.5",
   "description": "TheDesk is a Mastodon client for PC.",
   "repository": "https://github.com/cutls/TheDesk",
   "main": "main.js",
