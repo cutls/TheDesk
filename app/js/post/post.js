@@ -17,6 +17,13 @@ function post(mode, postvis) {
 	var acct_id = $('#post-acct-sel').val()
 	localStorage.setItem('last-use', acct_id)
 	var domain = localStorage.getItem('domain_' + acct_id)
+	if ($('#ideKey').val() != '') {
+		var ideKey = $('#ideKey').val()
+	} else {
+		var user = localStorage.getItem('user_' + acct_id)
+		var ideKey = Math.floor(Date.now() / 1000) + '/TheDesk/' + user + '@' + domain
+		$('#ideKey').val(ideKey)
+	}
 	if (!localStorage.getItem('cw_sentence')) {
 		var cw_sent = 500
 	} else {
@@ -148,12 +155,6 @@ function post(mode, postvis) {
 		}
 	}
 	console.table(toot)
-	if($('#ideKey').val() != ''){
-		var ideKey = $('#ideKey').val()
-	} else {
-		var ideKey = Date.now() + '/' + Math.random().toString(32).substring(2)
-		$('#ideKey').val(ideKey)
-	}
 	var httpreq = new XMLHttpRequest()
 	httpreq.open('POST', start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
