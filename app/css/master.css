@@ -461,6 +461,35 @@ textarea {
 .contributor img {
   width: 1rem;
 }
+.tagComp{
+  display: grid;
+  grid-template-columns: 60px 80px 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "svg toot user" "svg toot tag" "svg toots tag";
+  border-top: dotted 0.5px var(--gray);
+  padding: 5px
+}
+.tagCompSvg {
+  grid-area: svg;
+}
+.tagCompToot {
+  grid-area: toot;
+  text-align: center;
+}
+.tagCompToots {
+  grid-area: toots;
+  text-align: center;
+}
+.tagCompUser {
+  grid-area: user;
+}
+.tagCompTag {
+  grid-area: tag;
+  padding-top: 10px;
+  white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
 
 /*スクロールバー*/
 ::-webkit-scrollbar {
