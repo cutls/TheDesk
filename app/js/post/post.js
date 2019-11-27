@@ -148,10 +148,17 @@ function post(mode, postvis) {
 		}
 	}
 	console.table(toot)
+	if($('#ideKey').val() != ''){
+		var ideKey = $('#ideKey').val()
+	} else {
+		var ideKey = Date.now() + '/' + Math.random().toString(32).substring(2)
+		$('#ideKey').val(ideKey)
+	}
 	var httpreq = new XMLHttpRequest()
 	httpreq.open('POST', start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+	httpreq.setRequestHeader('Idempotency-Key', ideKey)
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify(toot))
 	httpreq.onreadystatechange = function() {
@@ -159,6 +166,8 @@ function post(mode, postvis) {
 			var json = httpreq.response
 			if (this.status !== 200) {
 				setLog(start, this.status, json)
+			} else {
+				$('#ideKey').val('')
 			}
 			var box = localStorage.getItem('box')
 			if (box == 'yes' || !box) {
@@ -255,6 +264,7 @@ function misskeyPost() {
 //クリア(Shift+C)
 function clear() {
 	$('#textarea').val('')
+	$('#ideKey').val('')
 	if (localStorage.getItem('stable')) {
 		$('#textarea').val('#' + localStorage.getItem('stable') + ' ')
 	}

@@ -168,6 +168,7 @@
     "contactwithlog":"If you tell me bugs(not working or something) with this log, I can detect what is wrong more easily.",
     "about":"About TheDesk",
     "hereAddColumns":"<- Add TL",
+    "foundBug": "I found a bug",
     "show": "Show",
     "directory": "Directory",
     "active": "Recently active",

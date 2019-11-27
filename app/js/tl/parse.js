@@ -1361,8 +1361,12 @@ function pollParse(poll, acct_id) {
 	var refresh = `<a onclick="voteMastodonrefresh('${acct_id}','${poll.id}')" class="pointer">
 		${lang.lang_manager_refresh}
 	</a>`
-	if (poll.voted) {
+	if (poll.voted && poll.own_votes.length) {
 		var myvote = lang.lang_parse_voted
+		if (poll.expired) myvote = myvote + '/' + lang.lang_parse_endedvote
+		var result_hide = ''
+	} else if (poll.voted && !poll.own_votes.length) {
+		var myvote = lang.lang_parse_myvote
 		if (poll.expired) myvote = myvote + '/' + lang.lang_parse_endedvote
 		var result_hide = ''
 	} else if (poll.expired) {
@@ -1381,7 +1385,7 @@ function pollParse(poll, acct_id) {
 	}
 	var ended = date(poll.expires_at, datetype)
 	var pollHtml = ''
-	if (choices[0].votes_count) {
+	if (choices[0].votes_count === 0 || choices[0].votes_count >0) {
 		var max = _.maxBy(choices, 'votes_count').votes_count
 	} else {
 		var max = 0
@@ -1393,14 +1397,14 @@ function pollParse(poll, acct_id) {
 		for (var i = 0; i < minechoice.length; i++) {
 			var me = minechoice[i]
 			if (me == keyc) {
-				var voteit = '<span class="ownMark">✅</span>'
+				var voteit = '<span class="ownMark"><img class="emoji" draggable="false" src="https://twemoji.maxcdn.com/v/12.1.4/72x72/2705.png"></span>'
 				break
 			}
 		}
 		if (!poll.voted && !poll.expired) {
 			var votesel =
 				"voteSelMastodon('" + acct_id + "','" + poll.id + "'," + keyc + ',' + poll.multiple + ')'
-			var voteclass = 'pointer waves-effect waves-light'
+			var voteclass = 'pointer'
 		} else {
 			var votesel = ''
 			var voteclass = ''
@@ -1421,7 +1425,7 @@ function pollParse(poll, acct_id) {
 		pollHtml =
 			pollHtml +
 			`<div class="${voteclass} vote vote_${acct_id}_${poll.id}_${keyc}" onclick="${votesel}">
-				<span class="leadPoll ${addPoll} ${lpAnime}" style="width: ${per}%"></span>
+				<span class="vote_${acct_id}_${poll.id}_result leadPoll ${result_hide} ${addPoll} ${lpAnime}" style="width: ${per}%"></span>
 				<span class="onPoll">${escapeHTML(choice.title)}${voteit}</span>
 				<span class="vote_${acct_id}_${poll.id}_result ${result_hide} onPoll">
 					${openData}

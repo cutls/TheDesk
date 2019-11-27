@@ -216,6 +216,9 @@ function moreTs(tlid, q) {
 function graphDraw(tag, acct_id) {
 	var tags = ''
 	var his = tag.history
+	return graphDrawCore(his, tag)
+}
+function graphDrawCore(his, tag){
 	var max = Math.max.apply(null, [
 		his[0].uses,
 		his[1].uses,
@@ -232,36 +235,32 @@ function graphDraw(tag, acct_id) {
 	var two = 50 - (his[2].uses / max) * 50
 	var one = 50 - (his[1].uses / max) * 50
 	var zero = 50 - (his[0].uses / max) * 50
-	if (max === 0) {
-		tags =
-			`<br><br><svg version="1.1" viewbox="0 0 60 50" width="60" height="50"></svg>
-			<span style="font-size:200%">${his[0].uses}</span>
-			toot(s)&nbsp;
-			<a onclick=\"tl('tag','${escapeHTML(tag.name)}','${acct_id}','add')" class="pointer">
-				#${escapeHTML(tag.name)}
-			</a>&nbsp;` +
-			his[0].accounts +
-			lang.lang_src_people
-	} else {
-		tags =
-			`<br><br>
-			<svg version="1.1" viewbox="0 0 60 50" width="60" height="50">
-				<g>
-					<path d="M0,${six} L10,${five} 20,${four} 30,${three} 40,${two} 50,${one} 60,${zero}" 
-						style="stroke: #0f8c0c;fill: rgba(13,113,19,.25); stroke-width: 1;">
-					</path>
-				</g>
-			</svg>
-			<span style="font-size:200%">${his[0].uses}</span>
-			toot&nbsp;
-			<a onclick="tl('tag','${escapeHTML(tag.name)}','${acct_id}','add')" class="pointer">
-				#${escapeHTML(tag.name)}
-			</a>&nbsp;` +
-			his[0].accounts +
-			lang.lang_src_people
-	}
-
-	return tags
+	return `<div class="tagComp">
+				<div class="tagCompSvg">
+					<svg version="1.1" viewbox="0 0 60 50" width="60" height="50">
+						<g>
+							<path d="M0,${six} L10,${five} 20,${four} 30,${three} 40,${two} 50,${one} 60,${zero} 61,61 0,61" 
+							style="stroke: #0f8c0c;fill: rgba(13,113,19,.25); stroke-width: 1;">
+								</path>
+						</g>
+					</svg>
+				</div>
+				<div class="tagCompToot">
+					<span style="font-size:200%">${his[0].uses}</span>
+				</div>
+				<div class="tagCompToots">
+					toot
+				</div>
+				<div class="tagCompTag">
+					<a onclick="tl('tag','${escapeHTML(tag.name)}','${acct_id}','add')" class="pointer" title="${escapeHTML(tag.name)}">
+						#${escapeHTML(tag.name)}
+					</a>
+				</div>
+				<div class="tagCompUser">
+					${his[0].accounts}
+					${lang.lang_src_people}
+				</div>
+				</div>`
 }
 /*
 <svg version="1.1" viewbox="0 0 50 300" width="100%" height="50">
@@ -303,38 +302,7 @@ function trend() {
 			Object.keys(json).forEach(function(keye) {
 				var tag = json[keye]
 				var his = tag.history
-				var max = Math.max.apply(null, [
-					his[0].uses,
-					his[1].uses,
-					his[2].uses,
-					his[3].uses,
-					his[4].uses,
-					his[5].uses,
-					his[6].uses
-				])
-				var six = 50 - (his[6].uses / max) * 50
-				var five = 50 - (his[5].uses / max) * 50
-				var four = 50 - (his[4].uses / max) * 50
-				var three = 50 - (his[3].uses / max) * 50
-				var two = 50 - (his[2].uses / max) * 50
-				var one = 50 - (his[1].uses / max) * 50
-				var zero = 50 - (his[0].uses / max) * 50
-				tags =
-				`<svg version="1.1" viewbox="0 0 60 50" width="60" height="50">
-					<g>
-						<path d="M0,${six} L10,${five} 20,${four} 30,${three} 40,${two} 50,${one} 60,${zero}" 
-							style="stroke: #0f8c0c;fill: rgba(13,113,19,.25); stroke-width: 1;">
-						</path>
-					</g>
-				</svg>
-				<span style="font-size:200%">${his[0].uses}</span>
-				toot&nbsp;
-				<a onclick="tl('tag','${escapeHTML(tag.name)}','${acct_id}','add')" class="pointer">
-					#${escapeHTML(tag.name)}
-				</a>&nbsp;` +
-				his[0].accounts +
-				lang.lang_src_people +
-					'<br><br>'
+				tags = graphDrawCore(his, tag)
 
 				$('#src-contents').append(tags)
 			})

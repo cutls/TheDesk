@@ -141,19 +141,19 @@ function bkm(id, acct_id, tlid) {
 				json = json.reblog
 			}
 			var fav = json.favourites_count
-				$('[toot-id=' + id + '] .fav_ct').text(fav)
-				$('[toot-id=' + id + '] .rt_ct').text(json.reblogs_count)
-				if (flag == 'unbookmark') {
-					$('.bkmStr_' + id).text(lang.lang_parse_bookmark)
-					$('.bkm_' + id).removeClass('red-text')
-					$('[toot-id=' + id + ']').removeClass('bkmed')
-				} else {
-					$('.bkmStr_' + id).text(lang.lang_parse_unbookmark)
-					$('.bkm_' + id).addClass('red-text')
-					$('[toot-id=' + id + ']').addClass('bkmed')
-				}
-				var tlidTar = $(`.bookmark-timeline[data-acct=${acct_id}]`).attr('tlid')
-				columnReload(tlidTar,'bookmark')
+			$('[toot-id=' + id + '] .fav_ct').text(fav)
+			$('[toot-id=' + id + '] .rt_ct').text(json.reblogs_count)
+			if (flag == 'unbookmark') {
+				$('.bkmStr_' + id).text(lang.lang_parse_bookmark)
+				$('.bkm_' + id).removeClass('red-text')
+				$('[toot-id=' + id + ']').removeClass('bkmed')
+			} else {
+				$('.bkmStr_' + id).text(lang.lang_parse_unbookmark)
+				$('.bkm_' + id).addClass('red-text')
+				$('[toot-id=' + id + ']').addClass('bkmed')
+			}
+			var tlidTar = $(`.bookmark-timeline[data-acct=${acct_id}]`).attr('tlid')
+			columnReload(tlidTar, 'bookmark')
 		}
 	}
 }
@@ -389,38 +389,75 @@ function redraft(id, acct_id) {
 	}).then(result => {
 		if (result.value) {
 			show()
-			del(id, acct_id)
-			$('#post-acct-sel').prop('disabled', true)
-			$('#post-acct-sel').val(acct_id)
-			$('select').formSelect()
-			mdCheck()
-			var medias = $('[toot-id=' + id + ']').attr('data-medias')
-			var vismode = $('[toot-id=' + id + '] .vis-data').attr('data-vis')
-			vis(vismode)
-			$('#media').val(medias)
-			var ct = medias.split(',').length
-			$('[toot-id=' + id + '] img.toot-img').each(function(i, elem) {
-				if (i < ct) {
-					var url = $(elem).attr('src')
-					console.log('Play back image data:' + url)
-					$('#preview').append('<img src="' + url + '" style="width:50px; max-height:100px;">')
+			var domain = localStorage.getItem('domain_' + acct_id)
+			var at = localStorage.getItem('acct_' + acct_id + '_at')
+			if (localStorage.getItem('mode_' + domain) == 'misskey') {
+				var start = 'https://' + domain + '/api/notes/delete'
+				var httpreq = new XMLHttpRequest()
+				httpreq.open('POST', start, true)
+				httpreq.setRequestHeader('Content-Type', 'application/json')
+				httpreq.responseType = 'json'
+				httpreq.send(JSON.stringify({ i: at, noteId: id }))
+				$('[toot-id=' + id + ']').hide()
+				$('[toot-id=' + id + ']').remove()
+			} else {
+				var start = 'https://' + domain + '/api/v1/statuses/' + id
+				var httpreq = new XMLHttpRequest()
+				httpreq.open('DELETE', start, true)
+				httpreq.setRequestHeader('Content-Type', 'application/json')
+				httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+				httpreq.responseType = 'json'
+				httpreq.send()
+			}
+			httpreq.onreadystatechange = function() {
+				if (httpreq.readyState === 4) {
+					if (this.status !== 200) {
+						setLog(start, this.status, this.response)
+					}
+					var json = httpreq.response
+					$('#post-acct-sel').prop('disabled', true)
+					$('#post-acct-sel').val(acct_id)
+					$('select').formSelect()
+					mdCheck()
+					var medias = $('[toot-id=' + id + ']').attr('data-medias')
+					var vismode = $('[toot-id=' + id + '] .vis-data').attr('data-vis')
+					vis(vismode)
+					$('#media').val(medias)
+					var ct = medias.split(',').length
+					$('[toot-id=' + id + '] img.toot-img').each(function(i, elem) {
+						if (i < ct) {
+							var url = $(elem).attr('src')
+							console.log('Play back image data:' + url)
+							$('#preview').append('<img src="' + url + '" style="width:50px; max-height:100px;">')
+						}
+					})
+					localStorage.setItem('nohide', true)
+					show()
+					if(json.text){
+						var html = json.text
+					} else {
+						var html = $('[toot-id=' + id + '] .toot').html()
+						html = html.replace(/^<p>(.+)<\/p>$/, '$1')
+						html = html.replace(/<br\s?\/?>/, '\n')
+						html = html.replace(/<p>/, '\n')
+						html = html.replace(/<\/p>/, '\n')
+						html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, '$1')
+						html = $.strip_tags(html)
+					}
+					$('#textarea').val(html)
+					if (json.spoiler_text) {
+						cw()
+						$('#cw-text').val(json.spoiler_text)
+					}
+					if (json.sensitive){
+						$('#nsfw').addClass('yellow-text')
+						$('#nsfw').html('visibility')
+						$('#nsfw').addClass('nsfw-avail')
+					}
+					if(json.in_reply_to_id){
+						$('#reply').val(json.in_reply_to_id)
+					}
 				}
-			})
-			var html = $('[toot-id=' + id + '] .toot').html()
-			html = html.replace(/^<p>(.+)<\/p>$/, '$1')
-			html = html.replace(/<br\s?\/?>/, '\n')
-			html = html.replace(/<p>/, '\n')
-			html = html.replace(/<\/p>/, '\n')
-			html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, '$1')
-			html = $.strip_tags(html)
-			localStorage.setItem('nohide', true)
-			show()
-			$('#textarea').val(html)
-			var cwtxt = $('[toot-id=' + id + '] .cw_text').html()
-			if (cwtxt != '') {
-				cwtxt = $.strip_tags(cwtxt)
-				cw()
-				$('#cw-text').val(cwtxt)
 			}
 		}
 	})
@@ -632,10 +669,10 @@ function toggleAction(elem, height) {
 			cont.removeClass('top')
 			cont.addClass('bottom')
 		}
-		if(elem.parents('.cvo').attr('id') == 'toot-this'){
+		if (elem.parents('.cvo').attr('id') == 'toot-this') {
 			console.log($('#toot-this').offset().top, elem.offset().top)
 			left = $('#toot-this').offset().left + elem.offset().left + 10
-			top = $('#toot-this').offset().top - $('#toot-this').height() -height + 25
+			top = $('#toot-this').offset().top - $('#toot-this').height() - height + 25
 		}
 		cont.css('top', top + 'px')
 		cont.css('right', `calc(100vw - ${left}px)`)
