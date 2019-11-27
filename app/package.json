@@ -52,14 +52,16 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
     "electron-dl": "^1.14.0",
-    "jimp": "^0.8.4",
+    "jimp": "^0.9.1",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
     "materialize-css": "git://github.com/cutls/materialize",
     "json5": "^2.1.1",
     "lodash": "^4.17.15",
     "sumchecker": "^3.0.0",
-    "sweetalert2": "^9.3.16",
+    "sweetalert2": "^9.4.0",
+    "sumchecker": "^3.0.1",
+    "sweetalert2": "^9.4.0",
     "vue": "^2.6.10"
   },
   "optionalDependencies": {
