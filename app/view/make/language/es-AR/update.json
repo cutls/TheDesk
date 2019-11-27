@@ -4,7 +4,7 @@
     "portable": "Compilación portátil",
     "installer": "Compilación de instalación",
     "linux": "zip",
-    "linuxdeb": "deb(Recommended on buntu, Debian)",
+    "linuxdeb": "deb (Recomendado para Debian y Ubuntu)",
     "linuxsnap": "snap",
     "snap": "La compilación Snap puede encontrarse en Snapcraft",
     "sureupd": "¡Podrías perderte una experiencia copada!",
@@ -15,5 +15,5 @@
     "problem2": "Por favor, descargá desde <a href=\"https://thedesk.top/en/\">el sitio web oficial</a>.",
     "continue": "Continuar con la actualización",
     "dlnow": "Descargando…",
-    "checkWhatIsNew": "What is new?"
+    "checkWhatIsNew": "¿Qué hay de nuevo?"
 }
