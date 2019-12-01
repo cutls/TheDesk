@@ -227,6 +227,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		}
 		var noticeavatar = ''
 		if (mix == 'notf') {
+			if(!toot.status) {
+				toot.status = statusModel(toot.created_at)
+			}
 			if (gif == 'yes') {
 				noticeavatar = toot.account.avatar
 			} else {

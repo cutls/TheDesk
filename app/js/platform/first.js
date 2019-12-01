@@ -161,8 +161,8 @@ $.mb_substr = function(str, begin, end) {
 	var splitter = new GraphemeSplitter()
 	var arr = splitter.splitGraphemes(str)
 	var newarr = []
-	for(var i = 0; i < arr.length; i++){
-		if(i >= begin && i <= end){
+	for (var i = 0; i < arr.length; i++) {
+		if (i >= begin && i <= end) {
 			newarr.push(arr[i])
 		}
 	}
@@ -210,4 +210,63 @@ function escapeCsv(str) {
 		result = '"' + result + '"'
 	}
 	return result
+}
+function statusModel(now) {
+	if(!now){
+		var now = new Date().toString()
+	}
+	return {
+		id: '',
+		created_at: now,
+		in_reply_to_id: null,
+		in_reply_to_account_id: null,
+		sensitive: false,
+		spoiler_text: '',
+		visibility: 'public',
+		language: 'en',
+		uri: '',
+		url: '',
+		replies_count: 0,
+		reblogs_count: 0,
+		favourites_count: 0,
+		favourited: false,
+		reblogged: false,
+		muted: false,
+		bookmarked: false,
+		pinned: false,
+		content: '<p><i>No status here</i></p>',
+		reblog: null,
+		application: {
+			name: null,
+			website: null
+		},
+		account: {
+			id: '',
+			username: '',
+			acct: '',
+			display_name: '',
+			locked: false,
+			bot: false,
+			created_at: now,
+			note:
+				'',
+			url: '',
+			avatar: '',
+			avatar_static:
+				'',
+			header: '',
+			header_static: '',
+			followers_count: 0,
+			following_count: 0,
+			statuses_count: 0,
+			last_status_at: now,
+			emojis: [],
+			fields: []
+		},
+		media_attachments: [],
+		mentions: [],
+		tags: [],
+		card: null,
+		poll: null
+	}
 }
