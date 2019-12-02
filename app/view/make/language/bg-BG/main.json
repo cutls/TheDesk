@@ -76,7 +76,7 @@
     "lang_status_unmute": "Със звук",
     "lang_status_redraftTitle": "Изтрий & върни",
     "lang_status_redraft": "Продължете да изтривате & преработвате? Ще изгубите статуса на тази раздумка. В тази функция може да се съдържат някои грешки. Снимките от тази раздумка ще бъдат изтрити на по-стари от Mastodon 2.4.1.",
-    "lang_status_emphas": "'s toots are emphasized. Please reload after this action.",
+    "lang_status_emphas": "toots са подчертани. Моля, презаредете след това действие.",
     "lang_status_unemphas": "'s toots are not emphasized. Please reload after this action.",
     "lang_status_unendorse": "Not feature on profile",
     "lang_status_endorse": "Функция в профила",
