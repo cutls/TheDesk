@@ -53,7 +53,7 @@ function imgCont(type) {
 	$('#imagemodal').attr('data-image', murl)
 	//表示はリモートを使うか(どちらにしろコピーはオリジナル)
 	var remote_img = localStorage.getItem('remote_img')
-	if (remote_img == 'yes') {
+	if (remote_img == 'yes' && ourl != 'null') {
 		murl = ourl
 	}
 	if (murl) {
