@@ -423,7 +423,10 @@ function redraft(id, acct_id) {
 					var vismode = $('[toot-id=' + id + '] .vis-data').attr('data-vis')
 					vis(vismode)
 					$('#media').val(medias)
-					var ct = medias.split(',').length
+					var ct = 0
+					if(medias && medias != 'null') {
+						ct = medias.split(',').length
+					}
 					$('[toot-id=' + id + '] img.toot-img').each(function(i, elem) {
 						if (i < ct) {
 							var url = $(elem).attr('src')
