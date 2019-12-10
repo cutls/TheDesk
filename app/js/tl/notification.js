@@ -69,7 +69,8 @@ function notfColumn(acct_id, tlid, sys) {
 						var n = new Notification('TheDesk:' + domain, options)
 					}
 					var mute = getFilterTypeByAcct(acct_id, 'notif')
-					if (obj.type != 'follow') {
+					//Pleromaにはmoveというtypeがあるらしい。何が互換APIじゃ
+					if (obj.type != 'follow' && obj.type != 'move') {
 						if (misskey) {
 							templete = templete + misskeyParse([obj], 'notf', acct_id, tlid, -1, mute)
 						} else {
