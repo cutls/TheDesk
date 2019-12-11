@@ -211,8 +211,23 @@ function escapeCsv(str) {
 	}
 	return result
 }
+function evalAttr(json, attr, lenCk) {
+	if (json[attr]) {
+		if (lenCk) {
+			if (json[attr][0]) {
+				return true
+			} else {
+				return false
+			}
+		} else {
+			return true
+		}
+	} else {
+		return false
+	}
+}
 function statusModel(now) {
-	if(!now){
+	if (!now) {
 		var now = new Date().toString()
 	}
 	return {
@@ -248,12 +263,10 @@ function statusModel(now) {
 			locked: false,
 			bot: false,
 			created_at: now,
-			note:
-				'',
+			note: '',
 			url: '',
 			avatar: '',
-			avatar_static:
-				'',
+			avatar_static: '',
 			header: '',
 			header_static: '',
 			followers_count: 0,

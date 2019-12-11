@@ -151,7 +151,7 @@ function media(b64, type, no) {
 				mediav = mediav.replace(regExp, json['id'])
 				$('#media').val(mediav)
 			}
-			if (img == 'url') {
+			if (img == 'url' && json['text_url']) {
 				$('#textarea').val($('#textarea').val() + ' ' + json['text_url'])
 			}
 			todc()
