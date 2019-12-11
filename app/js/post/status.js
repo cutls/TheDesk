@@ -1,7 +1,7 @@
 //お気に入り登録やブースト等、フォローやブロック等
 //お気に入り登録
 function fav(id, acct_id, remote) {
-	if ($('#pub_' + id).hasClass('faved')) {
+	if ($(`.cvo[unique-id=${id}]`).hasClass('faved')) {
 		var flag = 'unfavourite'
 	} else {
 		var flag = 'favourite'
@@ -57,7 +57,7 @@ function fav(id, acct_id, remote) {
 
 //ブースト
 function rt(id, acct_id, remote, vis) {
-	if ($('#pub_' + id).hasClass('rted')) {
+	if ($(`.cvo[unique-id=${id}]`).hasClass('rted')) {
 		var flag = 'unreblog'
 	} else {
 		var flag = 'reblog'
@@ -117,7 +117,7 @@ function boostWith(vis) {
 }
 //ブックマーク
 function bkm(id, acct_id, tlid) {
-	if ($('#pub_' + id).hasClass('bkmed')) {
+	if ($(`.cvo[unique-id=${id}]`).hasClass('bkmed')) {
 		var flag = 'unbookmark'
 	} else {
 		var flag = 'bookmark'
@@ -424,7 +424,7 @@ function redraft(id, acct_id) {
 					vis(vismode)
 					$('#media').val(medias)
 					var ct = 0
-					if(medias && medias != 'null') {
+					if (medias && medias != 'null') {
 						ct = medias.split(',').length
 					}
 					$('[toot-id=' + id + '] img.toot-img').each(function(i, elem) {
@@ -436,7 +436,7 @@ function redraft(id, acct_id) {
 					})
 					localStorage.setItem('nohide', true)
 					show()
-					if(json.text){
+					if (json.text) {
 						var html = json.text
 					} else {
 						var html = $('[toot-id=' + id + '] .toot').html()
@@ -452,12 +452,12 @@ function redraft(id, acct_id) {
 						cw()
 						$('#cw-text').val(json.spoiler_text)
 					}
-					if (json.sensitive){
+					if (json.sensitive) {
 						$('#nsfw').addClass('yellow-text')
 						$('#nsfw').html('visibility')
 						$('#nsfw').addClass('nsfw-avail')
 					}
-					if(json.in_reply_to_id){
+					if (json.in_reply_to_id) {
 						$('#reply').val(json.in_reply_to_id)
 					}
 				}
@@ -467,7 +467,7 @@ function redraft(id, acct_id) {
 }
 //ピン留め
 function pin(id, acct_id) {
-	if ($('#pub_' + id).hasClass('pined')) {
+	if ($(`.cvo[unique-id=${id}]`).hasClass('pined')) {
 		var flag = 'unpin'
 	} else {
 		var flag = 'pin'
@@ -647,13 +647,17 @@ function staEx(mode) {
 			console.error(error)
 		})
 		.then(function(json) {
-			var id = json.statuses[0].id
-			if (mode == 'rt') {
-				rt(id, acct_id, 'remote')
-			} else if (mode == 'fav') {
-				fav(id, acct_id, 'remote')
-			} else if (mode == 'reply') {
-				reEx(id)
+			if (json.statuses) {
+				if (json.statuses[0]) {
+					var id = json.statuses[0].id
+					if (mode == 'rt') {
+						rt(id, acct_id, 'remote')
+					} else if (mode == 'fav') {
+						fav(id, acct_id, 'remote')
+					} else if (mode == 'reply') {
+						reEx(id)
+					}
+				}
 			}
 		})
 	return
