@@ -193,6 +193,7 @@
     "lang_parse_detail": "Details",
     "lang_parse_redraft": "Supprimer & reformuler",
     "lang_parse_followed": "Vous a suivi",
+    "lang_parse_moved": "Moved to...",
     "lang_parse_clientop": "Operation of this client",
     "lang_parse_clienttxt": " will be",
     "lang_parse_clientno": "done nothing",
