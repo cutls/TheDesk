@@ -95,7 +95,7 @@ function imageXhr(id, key, murl) {
 		'loadend',
 		function(event) {
 			var total = event.total
-			$('#imgbyte').text(Math.floor(total/1024))
+			$('#imgbyte').text(Math.floor(total / 1024))
 			var now = event.loaded
 			var per = (now / total) * 100
 			$('#imgprog').text(Math.floor(per))
@@ -266,9 +266,8 @@ function dlImg() {
 	if (remote_img == 'yes') {
 		murl = ourl
 	}
-	if (localStorage.getItem('savefolder')) {
-		var save = localStorage.getItem('savefolder')
-	} else {
+	var save = localStorage.getItem('savefolder')
+	if (!save || save == 'null') {
 		var save = ''
 	}
 	postMessage(['generalDL', [murl, save, false]], '*')
