@@ -180,7 +180,8 @@ function notfCommon(acct_id, tlid, sys) {
 						var n = new Notification('TheDesk:' + domain, options)
 					}
 					var mute = getFilterTypeByAcct(acct_id, 'notif')
-					if (obj.type != 'follow') {
+					//Pleromaにはmoveというtypeがあるらしい。何が互換APIじゃ
+					if (obj.type != 'follow' && obj.type != 'move') {
 						if (misskey) {
 							templete = templete + misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute)
 						} else {
@@ -190,7 +191,7 @@ function notfCommon(acct_id, tlid, sys) {
 						if (misskey) {
 							templete = templete + misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute)
 						} else {
-							templete = templete + userparse([obj.account], 'notf', acct_id, 'notf', -1)
+							templete = templete + userparse([obj.account], type, acct_id, 'notf', -1)
 						}
 					}
 				})

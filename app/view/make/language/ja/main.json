@@ -193,6 +193,7 @@
     "lang_parse_det": "詳細(メインアカウント経由)",
     "lang_parse_redraft": "削除して再編集",
     "lang_parse_followed": "フォローされました。",
+    "lang_parse_moved": "引っ越ししました。",
     "lang_parse_clientop": "クライアント操作",
     "lang_parse_clienttxt": " に対する処理を選択してください。",
     "lang_parse_clientno": "何もしない",

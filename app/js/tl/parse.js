@@ -1085,28 +1085,28 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						<a onclick="client('${$.strip_tags(via)}')" class="pointer">${lang.lang_parse_clientop}</a>
 					</div>
 					<div>
-					<button onclick="bkm('${toot.id}','${acct_id}','${tlid}')"
+					<button onclick="bkm('${uniqueid}','${acct_id}','${tlid}')"
 						class="waves-effect waves-dark btn-flat actct bkm-btn" style="padding:0">
 						<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${if_bkm}"></i>
-						<span class="bkmStr_${toot.id}">${bkmStr}</span>
+						<span class="bkmStr_${uniqueid}">${bkmStr}</span>
 					</button>
 					</div>
 					<div class="${if_mine}">
-						<button onclick="del('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
+						<button onclick="del('${uniqueid}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
 							style="padding:0">
 							<i class="fas fa-trash"></i>${lang.lang_parse_del}
 						</button>
 					</div>
 					<div class="${if_mine}">
 						<button onclick="pin('${
-							toot.id
+							uniqueid
 						}','${acct_id}')" class="waves-effect waves-dark btn-flat actct" style="padding:0">
-							<i class="fas fa-map-pin pin_${toot.id} ${if_pin}"></i>
-							<span class="pinStr_${toot.id}">${pinStr}</span>
+							<i class="fas fa-map-pin pin_${uniqueid} ${if_pin}"></i>
+							<span class="pinStr_${uniqueid}">${pinStr}</span>
 						</button>
 					</div>
 					<div class="${if_mine}">
-						<button onclick="redraft('${toot.id}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
+						<button onclick="redraft('${uniqueid}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
 							style="padding:0">
 							<i class="material-icons">redo</i>${lang.lang_parse_redraft}
 						</button>
@@ -1167,10 +1167,14 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				} else {
 					var authhtml = ''
 				}
-				var ftxt = lang.lang_parse_followed
-				if (!locale && localStorage.getItem('followlocale_' + acct_id)) {
-					ftxt = localStorage.getItem('followlocale_' + acct_id)
-				}
+				if (auth == 'follow') {
+					var ftxt = lang.lang_parse_followed
+					if (!locale && localStorage.getItem('followlocale_' + acct_id)) {
+						ftxt = localStorage.getItem('followlocale_' + acct_id)
+					}
+				} else if (auth == 'moved') {
+					var ftxt = lang.lang_parse_moved
+				} 
 				if (popup > 0 || popup == -1 || notf) {
 					var notftext = ftxt + '<br>'
 				} else {
