@@ -1175,6 +1175,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				} else if (auth == 'moved') {
 					var ftxt = lang.lang_parse_moved
 				} 
+				console.log(auth, ftxt)
 				if (popup > 0 || popup == -1 || notf) {
 					var notftext = ftxt + '<br>'
 				} else {

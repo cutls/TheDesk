@@ -80,7 +80,7 @@ function notfColumn(acct_id, tlid, sys) {
 						if (misskey) {
 							templete = templete + misskeyUserparse([obj], 'notf', acct_id, tlid, -1, mute)
 						} else {
-							templete = templete + userparse([obj.account], 'notf', acct_id, tlid, -1)
+							templete = templete + userparse([obj.account], obj.type, acct_id, tlid, -1)
 						}
 					}
 				})
@@ -191,7 +191,7 @@ function notfCommon(acct_id, tlid, sys) {
 						if (misskey) {
 							templete = templete + misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute)
 						} else {
-							templete = templete + userparse([obj.account], type, acct_id, 'notf', -1)
+							templete = templete + userparse([obj.account], obj.type, acct_id, 'notf', -1)
 						}
 					}
 				})
@@ -240,7 +240,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 					if (obj.type != 'follow') {
 						templete = parse([obj], 'notf', acct_id, 'notf', popup)
 					} else {
-						templete = userparse([obj], 'notf', acct_id, 'notf', popup)
+						templete = userparse([obj], obj.type, acct_id, 'notf', popup)
 					}
 					if (!$('div[data-notfIndv=' + acct_id + '_' + obj.id + ']').length) {
 						$('div[data-notf=' + acct_id + ']').prepend(templete)
@@ -340,7 +340,7 @@ function notfmore(tlid) {
 							if (misskey) {
 								templete = templete + misskeyUserparse([obj], 'notf', acct_id, 'notf', -1, mute)
 							} else {
-								templete = templete + userparse([obj.account], 'notf', acct_id, 'notf', -1)
+								templete = templete + userparse([obj.account], obj.type, acct_id, 'notf', -1)
 							}
 						}
 					})

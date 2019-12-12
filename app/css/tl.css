@@ -705,7 +705,8 @@ p:not(:last-child) {
 	position: relative;
 }
 .maxVoter {
-	background-color: var(--shared);
+	background-color: var(--emphasized);
+	filter: brightness(120%);
 }
 .ownMark img {
 	width: 1.2rem !important;
