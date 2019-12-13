@@ -45,7 +45,7 @@ function system(mainWindow, dir, lang, dirname) {
 	//エクスポートのダイアログ
 	ipc.on("exportSettings", function(e, args) {
 		dialog.showSaveDialog(
-			null,
+			mainWindow,
 			{
 				title: "Export",
 				properties: ["openFile", "createDirectory"],
@@ -62,13 +62,14 @@ function system(mainWindow, dir, lang, dirname) {
 	//インポートのダイアログ
 	ipc.on("importSettings", function(e, args) {
 		dialog.showOpenDialog(
-			null,
+			mainWindow,
 			{
 				title: "Import",
 				properties: ["openFile"],
 				filters: [{ name: "TheDesk Config", extensions: ["thedeskconfig", "thedeskconfigv2", "json5"] }]
 			},
 			fileNames => {
+				console.log("imported from: ", fileNames)
 				if (!fileNames) {
 					return false;
 				}
@@ -79,7 +80,7 @@ function system(mainWindow, dir, lang, dirname) {
 	//保存フォルダのダイアログ
 	ipc.on("savefolder", function(e, args) {
 		dialog.showOpenDialog(
-			null,
+			mainWindow,
 			{
 				title: "Save folder",
 				properties: ["openDirectory"]
@@ -92,7 +93,7 @@ function system(mainWindow, dir, lang, dirname) {
 	//カスタムサウンドのダイアログ
 	ipc.on("customSound", function(e, arg) {
 		dialog.showOpenDialog(
-			null,
+			mainWindow,
 			{
 				title: "Custom sound",
 				properties: ["openFile"],

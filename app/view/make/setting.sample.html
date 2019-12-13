@@ -52,7 +52,9 @@
 				<button onclick="exportSettings()" class="btn waves-effect lime darken-3"
 					style="width:100%; max-width:200px;">@@export@@</button>
 				<button onclick="importSettings()" class="btn waves-effect cyan darken-3"
-					style="width:100%; max-width:200px;">@@import@@</button>
+					style="width:100%; max-width:200px;">@@import@@</button><br>
+					@@backupWarn@@<br>
+					<input type="text" id="imp-exp" style="width: 300px">
 				<div id="envView">
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>

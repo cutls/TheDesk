@@ -20,6 +20,8 @@
     "yes":"はい",
     "temp":"添付ファイル",
     "nothing":"なし",
+    "stamp": "スタンプ",
+    "stampWarn": "画像右下にアカウント名(aa@bb.cc)テキストを挿入します",
     "vis":"公開範囲",
     "cwtext":"警告文",
     "selectVis":"公開範囲指定",

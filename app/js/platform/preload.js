@@ -13,6 +13,10 @@ onmessage = function(e) {
 		ipc.send('dialogStore', e.data[1])
 	} else if (e.data[0] == 'bmpImage') {
 		ipc.send('bmp-image', e.data[1])
+	} else if (e.data[0] == 'resizeImage') {
+		ipc.send('resize-image', e.data[1])
+	} else if (e.data[0] == 'stampImage') {
+		ipc.send('stamp-image', e.data[1])
 	} else if (e.data[0] == 'dialogCW') {
 		ipc.send('dialogCW', e.data[1])
 	} else if (e.data[0] == 'nativeNotf') {
@@ -112,7 +116,31 @@ ipc.on('theme-css-response', function(event, arg) {
 })
 //img.js
 ipc.on('bmp-img-comp', function(event, b64) {
-	postMessage(['media', [b64[0], 'image/png', b64[1]]], '*')
+	if (b64[2]) {
+		var stamped = true
+	} else {
+		var stamped = false
+	}
+	postMessage(['media', [b64[0], 'image/png', b64[1], stamped]], '*')
+})
+ipc.on('resizeJudgement', function(event, b64) {
+	var resize = localStorage.getItem('uploadCrop') * 1
+	if (resize > 0) {
+		var element = new Image()
+		var width
+		element.onload = function() {
+			var width = element.naturalWidth
+			var height = element.naturalHeight
+			if (width > resize || height > resize) {
+				ipc.send('resize-image', [b64, resize])
+			} else {
+				postMessage(['media', [b64[0], 'image/png', b64[1]]], '*')
+			}
+		}
+		element.src = b64
+	} else {
+		postMessage(['media', [b64[0], 'image/png', b64[1]]], '*')
+	}
 })
 //ui,img.js
 ipc.on('general-dl-prog', function(event, arg) {

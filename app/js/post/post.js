@@ -295,6 +295,8 @@ function clear() {
 	$('#nsfw').removeClass('yellow-text')
 	$('#nsfw').html('visibility_off')
 	$('#nsfw').removeClass('nsfw-avail')
+	$('#stamp').html('Off')
+	$('#stamp').removeClass('stamp-avail')
 	$('#nsc').text(lang.lang_nothing)
 	$('#drag').css('background-color', '#e0e0e0')
 	$('#preview').html('')

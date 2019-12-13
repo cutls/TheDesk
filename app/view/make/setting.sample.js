@@ -658,5 +658,17 @@ var postConstruction = [
 			desc: '',
 			checkbox: yesno
 		}
+	},{
+		id: 'uploadCrop',
+		storage: 'uploadCrop',
+		checkbox: false,
+		doubleText: false,
+		width: 100,
+		setValue: '0',
+		text: {
+			head: '@@uploadCrop@@',
+			desc: '@@uploadCropWarn@@',
+			after: 'px'
+		}
 	}
 ]

@@ -60,6 +60,24 @@ function handleFileUpload(files, obj, no) {
 	var fr = new FileReader()
 	fr.onload = function(evt) {
 		var b64 = evt.target.result
+		var resize = localStorage.getItem('uploadCrop') * 1
+		if (resize > 0) {
+			var element = new Image()
+			var width
+			element.onload = function() {
+				var width = element.naturalWidth
+				var height = element.naturalHeight
+				if (width > resize || height > resize) {
+					postMessage(['resizeImage', [b64, resize]], '*')
+					return false
+				} else {
+					$('#b64-box').val(b64)
+					var ret = media(b64, files['type'], no)
+				}
+			}
+			element.src = b64
+			return false
+		}
 		$('#b64-box').val(b64)
 		var ret = media(b64, files['type'], no)
 	}
@@ -68,7 +86,15 @@ function handleFileUpload(files, obj, no) {
 }
 
 //ファイルアップロード
-function media(b64, type, no) {
+function media(b64, type, no, stamped) {
+	var acct_id = $('#post-acct-sel').val()
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var user = localStorage.getItem('user_' + acct_id)
+	if ($('#stamp').hasClass('stamp-avail') && !stamped) {
+		postMessage(['stampImage', [b64, user + '@' + domain]], '*')
+		return false
+	}
+	console.log(b64)
 	var l = 4
 	var c = 'abcdefghijklmnopqrstuvwxyz0123456789'
 	var cl = c.length
@@ -88,8 +114,6 @@ function media(b64, type, no) {
 	var media = toBlob(b64, type)
 	var fd = new FormData()
 	fd.append('file', media)
-	var acct_id = $('#post-acct-sel').val()
-	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	var httpreq = new XMLHttpRequest()
 	if (localStorage.getItem('mode_' + domain) == 'misskey') {
@@ -104,7 +128,6 @@ function media(b64, type, no) {
 		}
 		var previewer = 'url'
 		fd.append('i', at)
-		//fd.append('isSensitive', nsfw);
 		httpreq.send(fd)
 	} else {
 		var previewer = 'preview_url'
@@ -133,11 +156,7 @@ function media(b64, type, no) {
 			}
 			var img = localStorage.getItem('img')
 			if (json.type.indexOf('image') != -1) {
-				var html = `<img src="${json[previewer]}" class="preview-img pointer" data-media="${
-					json['id']
-				}" oncontextmenu="deleteImage('${json['id']}')" onclick="altImage('${acct_id}','${
-					json['id']
-				}')" title="${lang.lang_postimg_delete}">`
+				var html = `<img src="${json[previewer]}" class="preview-img pointer" data-media="${json['id']}" oncontextmenu="deleteImage('${json['id']}')" onclick="altImage('${acct_id}','${json['id']}')" title="${lang.lang_postimg_delete}">`
 				$('#preview').append(html)
 			} else {
 				$('#preview').append(lang.lang_postimg_previewdis)
@@ -299,4 +318,13 @@ function altImage(acct_id, id) {
 			})
 		}
 	})
+}
+function stamp() {
+	if ($('#stamp').hasClass('stamp-avail')) {
+		$('#stamp').html('Off')
+		$('#stamp').removeClass('stamp-avail')
+	} else {
+		$('#stamp').html('On')
+		$('#stamp').addClass('stamp-avail')
+	}
 }
