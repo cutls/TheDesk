@@ -20,6 +20,8 @@
     "yes": "Да",
     "temp": "Прикачени файлове",
     "nothing": "Няма",
+    "stamp": "Stamp",
+    "stampWarn": "Your acct(aa@bb.cc) is printed on the right-bottom of the uploaded image",
     "vis": "Регулирайте поверителността на състоянието",
     "cwtext": "Текст за предупреждение",
     "selectVis": "Регулирайте поверителността на състоянието",
