@@ -217,8 +217,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			Object.keys(toot.account.emojis).forEach(function(key5) {
 				var emoji = toot.account.emojis[key5]
 				var shortcode = emoji.shortcode
+				if (gif == 'yes') {
+					var emoSource = emoji.url
+				} else {
+					var emoSource = emoji.static_url
+				}
 				var emoji_url = `
-					<img draggable="false" src="${emoji.url}" class="emoji-img" data-emoji="${shortcode}" 
+					<img draggable="false" src="${emoSource}" class="emoji-img" data-emoji="${shortcode}" 
 						alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle('bigemoji');">
 				`
 				var regExp = new RegExp(':' + shortcode + ':', 'g')
@@ -227,7 +232,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		}
 		var noticeavatar = ''
 		if (mix == 'notf') {
-			if(!toot.status) {
+			if (!toot.status) {
 				toot.status = statusModel(toot.created_at)
 			}
 			if (gif == 'yes') {
@@ -367,9 +372,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				Object.keys(toot.account.emojis).forEach(function(key5) {
 					var emoji = toot.account.emojis[key5]
 					var shortcode = emoji.shortcode
+					if (gif == 'yes') {
+						var emoSource = emoji.url
+					} else {
+						var emoSource = emoji.static_url
+					}
 					var emoji_url = `
-						<img draggable="false" src="${emoji.url}" class="emoji-img" data-emoji="${shortcode}" 
-							alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle(\'bigemoji\');">`
+						<img draggable="false" src="${emoSource}" class="emoji-img" data-emoji="${shortcode}" 
+							alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle('bigemoji');">
+					`
 					var regExp = new RegExp(':' + shortcode + ':', 'g')
 					dis_name = dis_name.replace(regExp, emoji_url)
 				})
@@ -418,9 +429,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					Object.keys(toot.account.emojis).forEach(function(key5) {
 						var emoji = toot.account.emojis[key5]
 						var shortcode = emoji.shortcode
+						if (gif == 'yes') {
+							var emoSource = emoji.url
+						} else {
+							var emoSource = emoji.static_url
+						}
 						var emoji_url = `
-						<img draggable="false" src="${emoji.url}" class="emoji-img" data-emoji="${shortcode}" 
-							alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle(\'bigemoji\');">`
+							<img draggable="false" src="${emoSource}" class="emoji-img" data-emoji="${shortcode}" 
+								alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle('bigemoji');">
+						`
 						var regExp = new RegExp(':' + shortcode + ':', 'g')
 						dis_name = dis_name.replace(regExp, emoji_url)
 					})
@@ -571,7 +588,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			//Poll
 			var poll = ''
 			if (toot.poll) {
-				var poll = pollParse(toot.poll, acct_id)
+				var poll = pollParse(toot.poll, acct_id, false)
 			}
 
 			var mediack = toot.media_attachments[0]
@@ -831,9 +848,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				Object.keys(toot.emojis).forEach(function(key5) {
 					var emoji = toot.emojis[key5]
 					var shortcode = emoji.shortcode
+					if (gif == 'yes') {
+						var emoSource = emoji.url
+					} else {
+						var emoSource = emoji.static_url
+					}
 					var emoji_url = `
-						<img draggable="false" src="${emoji.url}" class="emoji-img" data-emoji="${shortcode}" 
-							alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle(\'bigemoji\');">`
+						<img draggable="false" src="${emoSource}" class="emoji-img" data-emoji="${shortcode}" 
+							alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle('bigemoji');">
+					`
 					var regExp = new RegExp(':' + shortcode + ':', 'g')
 					content = content.replace(regExp, emoji_url)
 					spoil = spoil.replace(regExp, emoji_url)
@@ -1098,9 +1121,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						</button>
 					</div>
 					<div class="${if_mine}">
-						<button onclick="pin('${
-							uniqueid
-						}','${acct_id}')" class="waves-effect waves-dark btn-flat actct" style="padding:0">
+						<button onclick="pin('${uniqueid}','${acct_id}')" class="waves-effect waves-dark btn-flat actct" style="padding:0">
 							<i class="fas fa-map-pin pin_${uniqueid} ${if_pin}"></i>
 							<span class="pinStr_${uniqueid}">${pinStr}</span>
 						</button>
@@ -1138,6 +1159,10 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	if (locale == 'yes') {
 		var locale = false
 	}
+	var gif = localStorage.getItem('gif')
+	if (!gif) {
+		gif = 'yes'
+	}
 	var templete = ''
 	var datetype = localStorage.getItem('datetype')
 	Object.keys(obj).forEach(function(key) {
@@ -1174,7 +1199,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 					}
 				} else if (auth == 'moved') {
 					var ftxt = lang.lang_parse_moved
-				} 
+				}
 				console.log(auth, ftxt)
 				if (popup > 0 || popup == -1 || notf) {
 					var notftext = ftxt + '<br>'
@@ -1218,9 +1243,15 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 					Object.keys(toot.emojis).forEach(function(key5) {
 						var emoji = toot.emojis[key5]
 						var shortcode = emoji.shortcode
+						if (gif == 'yes') {
+							var emoSource = emoji.url
+						} else {
+							var emoSource = emoji.static_url
+						}
 						var emoji_url = `
-						<img draggable="false" src="${emoji.url}" class="emoji-img" data-emoji="${shortcode}" 
-							alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle(\'bigemoji\');">`
+							<img draggable="false" src="${emoSource}" class="emoji-img" data-emoji="${shortcode}" 
+								alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle('bigemoji');">
+						`
 						var regExp = new RegExp(':' + shortcode + ':', 'g')
 						dis_name = dis_name.replace(regExp, emoji_url)
 					})
@@ -1229,7 +1260,11 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 					dis_name = twemoji.parse(dis_name)
 				}
 				if (toot.avatar) {
-					var avatar = toot.avatar
+					if (gif == 'yes') {
+						var avatar = toot.avatar
+					} else {
+						var avatar = toot.avatar_static
+					}
 				} else {
 					var avatar = '../../img/missing.svg'
 				}
@@ -1352,13 +1387,17 @@ function client(name) {
 	}
 }
 //Poll Parser
-function pollParse(poll, acct_id) {
+function pollParse(poll, acct_id, emojis) {
 	var datetype = localStorage.getItem('datetype')
 	var anime = localStorage.getItem('animation')
 	if (anime == 'yes' || !anime) {
 		var lpAnime = 'lpAnime'
 	} else {
 		var lpAnime = ''
+	}
+	var gif = localStorage.getItem('gif')
+	if (!gif) {
+		gif = 'yes'
 	}
 	var choices = poll.options
 	if (poll.own_votes) {
@@ -1393,7 +1432,7 @@ function pollParse(poll, acct_id) {
 	}
 	var ended = date(poll.expires_at, datetype)
 	var pollHtml = ''
-	if (choices[0].votes_count === 0 || choices[0].votes_count >0) {
+	if (choices[0].votes_count === 0 || choices[0].votes_count > 0) {
 		var max = _.maxBy(choices, 'votes_count').votes_count
 	} else {
 		var max = 0
@@ -1405,7 +1444,8 @@ function pollParse(poll, acct_id) {
 		for (var i = 0; i < minechoice.length; i++) {
 			var me = minechoice[i]
 			if (me == keyc) {
-				var voteit = '<span class="ownMark"><img class="emoji" draggable="false" src="https://twemoji.maxcdn.com/v/12.1.4/72x72/2705.png"></span>'
+				var voteit =
+					'<span class="ownMark"><img class="emoji" draggable="false" src="https://twemoji.maxcdn.com/v/12.1.4/72x72/2705.png"></span>'
 				break
 			}
 		}
@@ -1418,7 +1458,7 @@ function pollParse(poll, acct_id) {
 			var voteclass = ''
 		}
 		var per = Math.ceil((choice.votes_count / poll.votes_count) * 100)
-		if(!per) per = 0
+		if (!per) per = 0
 		if (max == choice.votes_count) {
 			var addPoll = 'maxVoter'
 		} else {
@@ -1430,11 +1470,31 @@ function pollParse(poll, acct_id) {
 		} else {
 			openData = `<span style="float: right">?<span class="sml">(-%)</span></span>`
 		}
+		var choiceText = escapeHTML(choice.title)
+		if (emojis) {
+			//絵文字があれば
+			Object.keys(emojis).forEach(function(key5) {
+				var emoji = emojis[key5]
+				var shortcode = emoji.shortcode
+				if (gif == 'yes') {
+					var emoSource = emoji.url
+				} else {
+					var emoSource = emoji.static_url
+				}
+				var emoji_url = `
+			<img draggable="false" src="${emoSource}" class="emoji-img" data-emoji="${shortcode}" 
+				alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle('bigemoji');">
+		`
+				var regExp = new RegExp(':' + shortcode + ':', 'g')
+				choiceText = choiceText.replace(regExp, emoji_url)
+			})
+			choiceText = twemoji.parse(choiceText)
+		}
 		pollHtml =
 			pollHtml +
 			`<div class="${voteclass} vote vote_${acct_id}_${poll.id}_${keyc}" onclick="${votesel}">
 				<span class="vote_${acct_id}_${poll.id}_result leadPoll ${result_hide} ${addPoll} ${lpAnime}" style="width: ${per}%"></span>
-				<span class="onPoll">${escapeHTML(choice.title)}${voteit}</span>
+				<span class="onPoll">${choiceText}${voteit}</span>
 				<span class="vote_${acct_id}_${poll.id}_result ${result_hide} onPoll">
 					${openData}
 				</span>

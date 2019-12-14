@@ -120,7 +120,7 @@ function voteMastodonrefresh(acct_id, id) {
 			if (!json) {
 				return false
 			}
-			var poll = pollParse(json, acct_id)
+			var poll = pollParse(json, acct_id, json.emojis)
 			$('.vote_' + acct_id + '_' + json.id).html(poll)
 		}
 	}
