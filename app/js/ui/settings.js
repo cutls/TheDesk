@@ -787,6 +787,15 @@ function asReadEnd() {
 	postMessage(['asReadComp', ''], '*')
 }
 function checkupd() {
+	if (
+		localStorage.getItem('winstore') == 'brewcask' ||
+		localStorage.getItem('winstore') == 'snapcraft' ||
+		localStorage.getItem('winstore') == 'winstore'
+	) {
+		var winstore = true
+	} else {
+		var winstore = false
+	}
 	var ver = localStorage.getItem('ver')
 	var start = 'https://thedesk.top/ver.json'
 	fetch(start, {
