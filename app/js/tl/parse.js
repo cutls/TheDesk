@@ -1060,9 +1060,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						</a>
 					</div>
 					<div class="action ${can_rt} ${disp['rt']} ${noauth}">
-						<a onclick="rt('${uniqueid}','${acct_id}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
+						<a onclick="rt('${toot.id}','${acct_id}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
 							style="padding:0" title="${lang.lang_parse_bt}">
-							<i class="fas fa-retweet ${if_rt} rt_${uniqueid}"></i>
+							<i class="fas fa-retweet ${if_rt} rt_${toot.id}"></i>
 							<span class="rt_ct">${toot.reblogs_count}</span>
 						</a>
 					</div>

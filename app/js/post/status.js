@@ -57,7 +57,7 @@ function fav(id, acct_id, remote) {
 
 //ブースト
 function rt(id, acct_id, remote, vis) {
-	if ($(`.cvo[unique-id=${id}]`).hasClass('rted')) {
+	if ($(`.cvo[toot-id=${id}]`).hasClass('rted')) {
 		var flag = 'unreblog'
 	} else {
 		var flag = 'reblog'
@@ -85,7 +85,7 @@ function rt(id, acct_id, remote, vis) {
 				json = json.reblog
 			}
 			console.log(['Success: boost', json])
-			$('[unique-id=' + id + '] .fav_ct').text(json.favourites_count)
+			$('[toot-id=' + id + '] .fav_ct').text(json.favourites_count)
 			if (!json.reblog) {
 				if (flag == 'unreblog') {
 					var rt = json.reblogs_count - 1
@@ -95,16 +95,16 @@ function rt(id, acct_id, remote, vis) {
 				} else {
 					var rt = json.reblogs_count
 				}
-				$('[unique-id=' + id + '] .rt_ct').text(rt)
+				$('[toot-id=' + id + '] .rt_ct').text(rt)
 			} else {
-				$('[unique-id=' + id + '] .rt_ct').text(json.reblogs_count)
+				$('[toot-id=' + id + '] .rt_ct').text(json.reblogs_count)
 			}
 
-			if ($('[unique-id=' + id + ']').hasClass('rted')) {
-				$('[unique-id=' + id + ']').removeClass('rted')
+			if ($('[toot-id=' + id + ']').hasClass('rted')) {
+				$('[toot-id=' + id + ']').removeClass('rted')
 				$('.rt_' + id).removeClass('light-blue-text')
 			} else {
-				$('[unique-id=' + id + ']').addClass('rted')
+				$('[toot-id=' + id + ']').addClass('rted')
 				$('.rt_' + id).addClass('light-blue-text')
 			}
 		}

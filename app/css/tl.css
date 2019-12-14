@@ -224,7 +224,10 @@ iframe,
 	margin: -1px 0;
 }
 .bigemoji {
-	width: 60px !important;
+	width: 100px !important;
+	height: auto !important;
+	position: relative;
+	z-index: 9999;
 }
 .faicon_FTL {
 	display: none;
