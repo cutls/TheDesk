@@ -420,20 +420,27 @@ function redraft(id, acct_id) {
 					$('select').formSelect()
 					mdCheck()
 					var medias = $('[toot-id=' + id + ']').attr('data-medias')
+					var mediack = json.media_attachments[0]
+					//メディアがあれば
+					var media_ids = []
+					if (mediack) {
+						for (var i = 0; i <= 4; i++) {
+							if (json.media_attachments[i]) {
+								media_ids.push(json.media_attachments[i].id)
+								$('#preview').append(
+									'<img src="' +
+										json.media_attachments[i].preview_url +
+										'" style="width:50px; max-height:100px;">'
+								)
+							} else {
+								break
+							}
+						}
+					}
 					var vismode = $('[toot-id=' + id + '] .vis-data').attr('data-vis')
 					vis(vismode)
+					var medias = media_ids.join(',');
 					$('#media').val(medias)
-					var ct = 0
-					if (medias && medias != 'null') {
-						ct = medias.split(',').length
-					}
-					$('[toot-id=' + id + '] img.toot-img').each(function(i, elem) {
-						if (i < ct) {
-							var url = $(elem).attr('src')
-							console.log('Play back image data:' + url)
-							$('#preview').append('<img src="' + url + '" style="width:50px; max-height:100px;">')
-						}
-					})
 					localStorage.setItem('nohide', true)
 					show()
 					if (json.text) {
