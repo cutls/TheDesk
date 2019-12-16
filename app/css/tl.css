@@ -374,6 +374,31 @@ iframe,
 	grid-area: side;
 }
 
+.cusr {
+	user-select: text;
+	padding-left: 5px;
+	border-bottom: 0.5px solid;
+	padding-right: 2px;
+	word-break: break-word;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 43px 2fr 1fr;
+	grid-template-rows: auto 1.6rem 2fr auto;
+	grid-template-areas: 'notice notice notice' 'icon display_name display_name' 'space status status' 'space actions actions';
+}
+
+.area-status {
+	grid-area: status;
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 5px;
+}
+
+.cusr .cbadge {
+	margin-top: 6px;
+	margin-left: 6px;
+}
+
 .quote-inline {
 	display: none;
 }

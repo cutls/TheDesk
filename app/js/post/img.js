@@ -94,7 +94,6 @@ function media(b64, type, no, stamped) {
 		postMessage(['stampImage', [b64, user + '@' + domain]], '*')
 		return false
 	}
-	console.log(b64)
 	var l = 4
 	var c = 'abcdefghijklmnopqrstuvwxyz0123456789'
 	var cl = c.length

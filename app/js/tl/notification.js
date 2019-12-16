@@ -70,12 +70,14 @@ function notfColumn(acct_id, tlid, sys) {
 					}
 					var mute = getFilterTypeByAcct(acct_id, 'notif')
 					//Pleromaにはmoveというtypeがあるらしい。何が互換APIじゃ
-					if (obj.type != 'follow' && obj.type != 'move') {
+					if (obj.type != 'follow' && obj.type != 'move' && obj.type != 'follow_request') {
 						if (misskey) {
 							templete = templete + misskeyParse([obj], 'notf', acct_id, tlid, -1, mute)
 						} else {
 							templete = templete + parse([obj], 'notf', acct_id, tlid, -1, mute)
 						}
+					} else if (obj.type == 'follow_request') {
+						templete = templete + userparse([obj.account], 'request', acct_id, tlid, -1)
 					} else {
 						if (misskey) {
 							templete = templete + misskeyUserparse([obj], 'notf', acct_id, tlid, -1, mute)
