@@ -1,0 +1,76 @@
+.acct {
+	display: flex;
+	justify-content: space-around;
+}
+
+.card {
+	width: 400px;
+	background-color: #494949;
+	margin: 10px;
+}
+
+body,
+html {
+	overflow-y: scroll;
+}
+
+#acct-list {
+	display: flex;
+	flex-wrap: wrap;
+	color: white;
+	align-items: flex-start;
+}
+
+.lts {
+	font-size: 150%;
+}
+
+.colorsel {
+	display: flex;
+}
+
+.card .colorsel div:not(.exc) {
+	width: 20px;
+	height: 20px;
+}
+
+.card .colorsel div.exc {
+	width: 40px;
+	height: 20px;
+}
+
+.first {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.first .hide-first {
+	display: none;
+}
+
+#compt {
+	margin-top: 20px;
+	margin-bottom: 50px;
+	border: 1px solid;
+	border: 1px solid;
+	padding: 5px;
+}
+
+#compt li {
+	list-style-type: disc;
+	margin-left: 20px;
+}
+
+#domain-list {
+    width: 500px;
+    max-width: 100%;
+}
+
+i.left {
+    margin-right: 5px;
+}
+
+#domain-list .title {
+   font-size: 1.3rem;
+}

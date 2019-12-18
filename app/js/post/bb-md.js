@@ -50,7 +50,12 @@ function mdCheck() {
 	if (idata[domain + '_letters']) {
 		$('#textarea').attr('data-length', idata[domain + '_letters'])
 	} else {
-		$('#textarea').attr('data-length', 500)
+		var maxletters = localStorage.getItem('letters_' + acct_id)
+		if (maxletters > 0) {
+			$('#textarea').attr('data-length', maxletters)
+		} else {
+			$('#textarea').attr('data-length', 500)
+		}
 	}
 	if (idata[domain + '_glitch'] === 'true') {
 		$('#local-button').removeClass('hide')
