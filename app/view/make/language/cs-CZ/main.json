@@ -48,6 +48,7 @@
     "lang_manager_none": "Žádný",
     "lang_manager_godev": "Otevřené vývojářské centrum softwaru Misskey. Zobrazujeme také oficiální dokumentaci.",
     "lang_manager_logout": "Logout",
+    "lang_manager_maxChars": "Max chars of toots",
     "lang_bbmd_misskey": "TheDesk považuje „@“ za odpověď, ale vkládá ho do jiných parametrů. „Neuvedeno“ na Mastodonu znamená „Domů“ na Misskey.",
     "lang_emoji_get": "Získat emoji",
     "lang_emoji_custom": "Vlastní emoji",
