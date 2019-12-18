@@ -48,6 +48,7 @@
     "lang_manager_none": "Nada",
     "lang_manager_godev": "Abrí DevCenter de Misskey. También mostramos documentos oficiales como referencia.",
     "lang_manager_logout": "Cerrar sesión",
+    "lang_manager_maxChars": "Max chars of toots",
     "lang_bbmd_misskey": "TheDesk considera \"@\" como respuesta, pero podés poner otro parámetro. \"No listado\" en Mastodon significa \"Principal\" en Misskey.",
     "lang_emoji_get": "Obtené emojis",
     "lang_emoji_custom": "Emojis personalizados",
