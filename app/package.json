@@ -7,13 +7,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "construct": "cd view/make && node make --automatic && cd ../../",
-    "dev": "electron ./ --dev",
+    "dev": "npx electron ./ --dev",
     "dist": "build --linux snap",
     "watchview": "node view/make/make.js --automatic --watch",
     "build:js": "node build.js",
-    "build": "electron-builder",
-    "build:all": "electron-builder --win --linux",
-    "build:win": "electron-builder --win"
+    "build": "npx electron-builder",
+    "build:all": "npx electron-builder --win --linux",
+    "build:win": "npx electron-builder --win"
   },
   "keywords": [
     "mastodon",
@@ -58,8 +58,6 @@
     "materialize-css": "git://github.com/cutls/materialize",
     "json5": "^2.1.1",
     "lodash": "^4.17.15",
-    "sumchecker": "^3.0.0",
-    "sweetalert2": "^9.5.3",
     "sumchecker": "^3.0.1",
     "sweetalert2": "^9.4.0",
     "vue": "^2.6.10"
