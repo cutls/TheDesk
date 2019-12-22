@@ -52,13 +52,12 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
     "electron-dl": "^1.14.0",
-    "electron-window-state": "^5.0.3",
     "jimp": "^0.9.1",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
+    "materialize-css": "git://github.com/cutls/materialize",
     "json5": "^2.1.1",
     "lodash": "^4.17.15",
-    "materialize-css": "git://github.com/cutls/materialize",
     "sumchecker": "^3.0.1",
     "sweetalert2": "^9.4.0",
     "vue": "^2.6.10"
