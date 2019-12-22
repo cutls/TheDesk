@@ -514,6 +514,7 @@ function resetNotfFilter(tlid) {
 }
 function notfFilter(id, tlid, acct_id) {
 	var excludetxt = localStorage.getItem('exclude-' + tlid)
+	console.log(excludetxt)
 	if (excludetxt || excludetxt != '') {
 		excludetxt = excludetxt + '&account_id=' + id
 	} else {

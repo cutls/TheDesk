@@ -12,6 +12,7 @@ const np = require('./main/np.js')
 const systemFunc = require('./main/system.js')
 const Menu = electron.Menu
 const join = require('path').join
+const windowStateKeeper = require('electron-window-state')
 
 // アプリケーションをコントロールするモジュール
 const app = electron.app
@@ -58,36 +59,16 @@ if (process.argv.indexOf('--dev') === -1) {
 	console.log('Welcome!')
 }
 var info_path = join(app.getPath('userData'), 'window-size.json')
-var max_info_path = join(app.getPath('userData'), 'max-window-size.json')
 var lang_path = join(app.getPath('userData'), 'language')
 var ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
 var ua_path = join(app.getPath('userData'), 'useragent')
+
 try {
 	fs.readFileSync(ha_path, 'utf8')
 	app.disableHardwareAcceleration()
 	if (!packaged) console.log('disabled: Hardware Acceleration')
 } catch {
 	if (!packaged) console.log('enabled: Hardware Acceleration')
-}
-var window_size
-try {
-	window_size = JSON.parse(fs.readFileSync(info_path, 'utf8'))
-} catch (e) {
-	window_size = {
-		width: 1000,
-		height: 750
-	} // デフォルトバリュー
-}
-var max_window_size
-try {
-	max_window_size = JSON.parse(fs.readFileSync(max_info_path, 'utf8'))
-} catch (e) {
-	max_window_size = {
-		width: 'string',
-		height: 'string',
-		x: 'string',
-		y: 'string'
-	} // デフォルトバリュー
 }
 function isFile(file) {
 	try {
@@ -103,6 +84,10 @@ app.on('window-all-closed', function() {
 	app.quit()
 })
 function createWindow() {
+	let window_size = windowStateKeeper({
+		defaultWidth: 1000,
+		defaultHeight: 750
+	  })
 	if (isFile(lang_path)) {
 		var lang = fs.readFileSync(lang_path, 'utf8')
 	} else {
@@ -177,7 +162,7 @@ function createWindow() {
 	mainWindow = new BrowserWindow(arg)
 	mainWindow.once('page-title-updated', () => {
 		mainWindow.show()
-		if (window_size.max) {
+		if (window_size.isMaximized) {
 			mainWindow.maximize()
 		}
 	})
@@ -215,9 +200,7 @@ function createWindow() {
 				.substring(0, N)
 	}
 	mainWindow.loadURL(base + lang + '/index.html' + plus, { userAgent: ua })
-	if (!window_size.x && !window_size.y) {
-		mainWindow.center()
-	}
+	window_size.manage(mainWindow)
 	// ウィンドウが閉じられたらアプリも終了
 	mainWindow.on('closed', function() {
 		electron.ipcMain.removeAllListeners()
@@ -225,7 +208,6 @@ function createWindow() {
 	})
 	closeArg = false
 	mainWindow.on('close', function(e, arg) {
-		writePos(mainWindow)
 		if (!closeArg) {
 			e.preventDefault()
 		}
@@ -244,36 +226,7 @@ function createWindow() {
 		closeArg = true
 		mainWindow.close()
 	})
-	function writePos(mainWindow) {
-		if (
-			max_window_size.width == mainWindow.getBounds().width &&
-			max_window_size.height == mainWindow.getBounds().height &&
-			max_window_size.x == mainWindow.getBounds().x &&
-			max_window_size.y == mainWindow.getBounds().y
-		) {
-			var size = {
-				width: mainWindow.getBounds().width,
-				height: mainWindow.getBounds().height,
-				x: mainWindow.getBounds().x,
-				y: mainWindow.getBounds().y,
-				max: true
-			}
-		} else {
-			var size = {
-				width: mainWindow.getBounds().width,
-				height: mainWindow.getBounds().height,
-				x: mainWindow.getBounds().x,
-				y: mainWindow.getBounds().y
-			}
-		}
-		fs.writeFileSync(info_path, JSON.stringify(size))
-	}
-	mainWindow.on('maximize', function() {
-		writePos(mainWindow)
-		fs.writeFileSync(max_info_path, JSON.stringify(mainWindow.getBounds()))
-	})
 	mainWindow.on('minimize', function() {
-		writePos(mainWindow)
 		mainWindow.webContents.send('asRead', '')
 	})
 
