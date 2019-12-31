@@ -11,13 +11,13 @@
     "domain": "Dominio",
     "connect": "Servidores federados",
     "toots": "Toots",
-    "users": "Users",
-    "users2": "users",
-    "safety": "Connection",
-    "ver": "Mastodon version",
+    "users": "Usuarios",
+    "users2": "usuarios",
+    "safety": "Conexión",
+    "ver": "Versión de Mastodon",
     "ko": "",
-    "thisismisskey": "Login as Misskey",
-    "misskeylogin": "Read <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> to login Misskey.",
-    "nodata": "No data",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)"
+    "thisismisskey": "Iniciar sesión como Misskey",
+    "misskeylogin": "Leer <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> para iniciar sesión en Misskey.",
+    "nodata": "Sin datos",
+    "accessTokenSetup": "Usar el token de acceso para iniciar sesión (haga clic después de completar no el código si no el token de acceso en el casilla: avanzado)"
 }
