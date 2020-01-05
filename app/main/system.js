@@ -309,5 +309,57 @@ function system(mainWindow, dir, lang, dirname) {
 			})
 		}
 	})
+	var $ = require('nodobjc')
+
+	$.framework('Foundation')
+	$.framework('AppKit')
+
+	var GetSongs = $.NSObject.extend('Delegate')
+
+	GetSongs.addMethod('getMySongs:', 'v@:@', function(self, _cmd, notif) {
+		var userInfo = notif('userInfo')
+		var keys = userInfo('keyEnumerator')
+		var key
+		var song = {}
+
+		while ((key = keys('nextObject'))) {
+			var value = userInfo('objectForKey', key)
+			song[key.toString()] = value.toString()
+		}
+		console.log(song)
+	})
+
+	GetSongs.register()
+
+	var gs = GetSongs('alloc')('init')
+	var nc = $.NSDistributedNotificationCenter('defaultCenter')
+	var selector = $.NSSelectorFromString($('getMySongs:'))
+	var notification = $('com.apple.iTunes.playerInfo')
+
+	nc('addObserver', gs, 'selector', 'getMySongs:', 'name', notification, 'object', null)
+
+	var app = $.NSApplication('sharedApplication')
+	function runLoop() {
+		var pool = $.NSAutoreleasePool('alloc')('init')
+		try {
+			app(
+				'nextEventMatchingMask',
+				$.NSAnyEventMask.toString(),
+				'untilDate',
+				$.NSDate('distantFuture'),
+				'inMode',
+				$.NSDefaultRunLoopMode,
+				'dequeue',
+				1
+			)
+		} catch (e) {
+			console.error('run loop error', e.message)
+		}
+		pool('drain')
+		setTimeout(runLoop, 1000)
+		//process.nextTick(runLoop);
+	}
+
+	runLoop()
 }
 exports.system = system
