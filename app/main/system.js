@@ -338,11 +338,11 @@ function system(mainWindow, dir, lang, dirname) {
 
 	nc('addObserver', gs, 'selector', 'getMySongs:', 'name', notification, 'object', null)
 
-	var app = $.NSApplication('sharedApplication')
+	var apps = $.NSApplication('sharedApplication')
 	function runLoop() {
 		var pool = $.NSAutoreleasePool('alloc')('init')
 		try {
-			app(
+			apps(
 				'nextEventMatchingMask',
 				$.NSAnyEventMask.toString(),
 				'untilDate',
