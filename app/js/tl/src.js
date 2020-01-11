@@ -36,7 +36,7 @@ function src(mode, offset) {
 		var user = $('#his-data').attr('user-id')
 	}
 	if (!mode) {
-		var start = 'https://' + domain + '/api/v2/search?q=' + q + add
+		var start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + q + add
 	} else {
 		var start = 'https://' + domain + '/api/v1/search?q=' + q
 	}
