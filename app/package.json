@@ -59,7 +59,7 @@
     "json5": "^2.1.1",
     "lodash": "^4.17.15",
     "sumchecker": "^3.0.1",
-    "sweetalert2": "^9.4.0",
+    "sweetalert2": "^9.5.4",
     "vue": "^2.6.10"
   },
   "optionalDependencies": {
