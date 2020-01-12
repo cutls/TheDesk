@@ -20,6 +20,8 @@
     "yes": "crwdns3094:0crwdne3094:0",
     "temp": "crwdns3096:0crwdne3096:0",
     "nothing": "crwdns3098:0crwdne3098:0",
+    "stamp": "crwdns4435:0crwdne4435:0",
+    "stampWarn": "crwdns4437:0crwdne4437:0",
     "vis": "crwdns3100:0crwdne3100:0",
     "cwtext": "crwdns3102:0crwdne3102:0",
     "selectVis": "crwdns3104:0crwdne3104:0",

@@ -20,6 +20,8 @@
     "yes": "Ja",
     "temp": "Legg til filer",
     "nothing": "Ingen",
+    "stamp": "Stamp",
+    "stampWarn": "Your acct(aa@bb.cc) is printed on the right-bottom of the uploaded image",
     "vis": "Adjust status privacy",
     "cwtext": "Advarselstekst",
     "selectVis": "Adjust status privacy",
