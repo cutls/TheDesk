@@ -16,12 +16,10 @@ function np(mainWindow) {
 				try {
 					const nowplaying = require('itunes-nowplaying-mac')
 					let value = await nowplaying()
-					if (!value && npExec) {
-						const artwork = await nowplaying.getThumbnailBuffer(value.databaseID)
-						const base64 = artwork.toString('base64')
-						value.artwork = base64
-						e.sender.webContents.send('itunes-np', value)
-					}
+					const artwork = await nowplaying.getThumbnailBuffer(value.databaseID)
+					const base64 = artwork.toString('base64')
+					value.artwork = base64
+					e.sender.webContents.send('itunes-np', value)
 				} catch (error) {
 					// エラーを返す
 					console.error(error)
