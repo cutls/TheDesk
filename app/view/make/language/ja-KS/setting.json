@@ -94,7 +94,7 @@
   "imgheight": "画像の高さ",
   "imgheightwarn": "オプション:「full」と指定すると全ての画像をクロップせず全部出すで。",
   "ticker": "#InstanceTickerを使う",
-  "tickerwarn": "トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href=\"https://https://wee.jp/\">#InstanceTickerについて</a> Copyright 2018 weepjp, kyori19.",
+  "tickerwarn": "トゥートした人の所属サーバーをわかりやすく彩ります(自サーバー以外のトゥート向け)。<a href=\"https://github.com/MiyonMiyon/InstanceTicker_List\">#InstanceTickerってなんや？</a> (c)2018-2020 MiyonMiyon. Released under the MIT License.",
   "animation": "タイムラインのアニメーション",
   "markers": "ホームと通知の未読管理",
   "markerswarn": "Mastodon 3.0相当以上。WebUIと対応クライアントで共有するやつや。",
