@@ -51,7 +51,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
-    "electron-dl": "^1.14.0",
+    "electron-dl": "^3.0.0",
     "jimp": "^0.9.1",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
