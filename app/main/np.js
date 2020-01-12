@@ -2,9 +2,11 @@ function np(mainWindow) {
 	const electron = require('electron')
 	const join = require('path').join
 	const app = electron.app
-	const fs = require('fs')
-	const fpath = join(app.getPath('userData'), 'npexec')
+    const fs = require('fs')
+    const fpath = join(app.getPath('userData'), 'npexec')
+    const npExec = fs.readFileSync(fpath, 'utf8')
 	const ipc = electron.ipcMain
+
 	const { exec } = require('child_process')
 	ipc.on('itunes', async (e, args) => {
 		console.log('Access')
@@ -23,16 +25,12 @@ function np(mainWindow) {
 				} catch (error) {
 					// エラーを返す
 					console.error(error)
-					try {
-						const npExec = fs.readFileSync(fpath, 'utf8')
-						exec(npExec, (error, stdout, stderr) => {
-							e.sender.webContents.send('itunes-np', { raw: true, data: stdout })
-						})
-					} catch (e) {}
+					e.sender.webContents.send('itunes-np', error)
 				}
 			} else {
 			}
 		}
-	})
+    })
+    
 }
 exports.TheDeskNowPlaying = np
