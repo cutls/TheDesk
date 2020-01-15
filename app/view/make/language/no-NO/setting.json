@@ -95,7 +95,7 @@
   "imgheight": "Bildehøyder",
   "imgheightwarn": "Option:Set \"full\" to uncrop.",
   "ticker": "Enable #InstanceTicker",
-  "tickerwarn": "Show colorful stickers about the server. <a href=\"https://wee.jp/\">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
+  "tickerwarn": "Show colorful stickers about the server. <a href=\"https://github.com/MiyonMiyon/InstanceTicker_List\">About #InstanceTicker</a> (c)2018-2020 MiyonMiyon. Released under the MIT License.",
   "animation": "Animation of timelines",
   "markers": "Markers(mark as read) on HTL and notifications",
   "markerswarn": "Mastodon 3.0~. Shared on WebUI and third-party supported clients.",
