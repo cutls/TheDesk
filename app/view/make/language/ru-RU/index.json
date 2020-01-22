@@ -20,6 +20,8 @@
     "yes": "Да",
     "temp": "Прикрепить файлы",
     "nothing": "None",
+    "stamp": "Stamp",
+    "stampWarn": "Your acct(aa@bb.cc) is printed on the right-bottom of the uploaded image",
     "vis": "Отрегулировать статус конфиденциальности",
     "cwtext": "Предупреждающий текст",
     "selectVis": "Отрегулировать статус конфиденциальности",
