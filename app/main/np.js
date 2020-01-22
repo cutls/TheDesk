@@ -19,12 +19,12 @@ function np(mainWindow) {
 							e.sender.webContents.send('itunes-np', value)
 						}
 					} catch (error) {
-						console.rrror(error)
+						console.error(error)
 						e.sender.webContents.send('itunes-np', value)
 					}
 					
 				} catch (error) {
-					console.rrror(error)
+					console.error(error)
 				}
 			} else {
 			}
