@@ -11,14 +11,20 @@ function np(mainWindow) {
 				try {
 					const nowplaying = require('itunes-nowplaying-mac')
 					let value = await nowplaying()
-					const artwork = await nowplaying.getThumbnailBuffer(value.databaseID)
-					if(artwork) {
-						const base64 = artwork.toString('base64')
-						value.artwork = base64
+					try {
+						const artwork = await nowplaying.getThumbnailBuffer(value.databaseID)
+						if(artwork) {
+							const base64 = artwork.toString('base64')
+							value.artwork = base64
+							e.sender.webContents.send('itunes-np', value)
+						}
+					} catch (error) {
+						console.rrror(error)
+						e.sender.webContents.send('itunes-np', value)
 					}
-					e.sender.webContents.send('itunes-np', value)
+					
 				} catch (error) {
-				
+					console.rrror(error)
 				}
 			} else {
 			}
