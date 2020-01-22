@@ -652,7 +652,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 										id="${id}-image-${key2}" data-url="${url}" data-original="${remote_url}" data-type="${media.type}" 
 										class="img-parsed img-link" style="width:calc(${cwdt}% - 1px); height:${imh};">
 									<img draggable="false" src="${purl}" class="${sense} toot-img pointer" 
-										onerror="this.src=\'../../img/loading.svg\'" title="${desc}">
+										onerror="this.src=\'../../img/loading.svg\'" title="${escapeHTML(desc)}">
 									${nsfwmes}
 								</a>`
 						}
