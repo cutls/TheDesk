@@ -125,10 +125,6 @@ function nowplaying(mode) {
 	}
 }
 function npCore(arg) {
-	if (arg.cmd) {
-		console.error(arg);
-		return;
-	}
 	console.table(arg);
 	var content = localStorage.getItem("np-temp");
 	if (!content || content == "" || content == "null") {

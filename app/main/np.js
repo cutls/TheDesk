@@ -1,13 +1,6 @@
 function np(mainWindow) {
 	const electron = require('electron')
-	const join = require('path').join
-	const app = electron.app
-    const fs = require('fs')
-    const fpath = join(app.getPath('userData'), 'npexec')
-    const npExec = fs.readFileSync(fpath, 'utf8')
 	const ipc = electron.ipcMain
-
-	const { exec } = require('child_process')
 	ipc.on('itunes', async (e, args) => {
 		console.log('Access')
 		if (args[0] == 'set') {
