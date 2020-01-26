@@ -112,6 +112,9 @@ function imageXhr(id, key, murl) {
 				var width
 				element.onload = function() {
 					var width = element.naturalWidth
+					if(width < 650) {
+						width = 650;
+					}
 					var height = element.naturalHeight
 					var windowH = $(window).height()
 					var windowW = $(window).width()
