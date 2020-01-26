@@ -4,11 +4,7 @@ if (process.argv.indexOf('--automatic') === -1) {
 	if (input) {
 		ver = input
 	}
-	//var basefile="../../"
-} else {
-	//var basefile="./"
 }
-//const { app } = require('electron');
 const path = require('path')
 const basefile = path.join(__dirname, '../../')
 function main(ver, basefile) {
