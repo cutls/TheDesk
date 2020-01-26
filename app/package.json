@@ -11,7 +11,7 @@
     "dist": "build --linux snap",
     "watchview": "node view/make/make.js --automatic --watch",
     "build:js": "node build.js",
-    "build": "npx electron-builder",
+    "build": "node view/make/make.js --automatic && npx electron-builder",
     "build:all": "npx electron-builder --win --linux",
     "build:win": "npx electron-builder --win"
   },
