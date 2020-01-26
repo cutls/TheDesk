@@ -68,7 +68,7 @@
   },
   "devDependencies": {
     "chokidar": "^3.3.0",
-    "electron": "^7.1.8",
+    "electron": "^7.1.10",
     "electron-builder": "^22.1.0",
     "electron-rebuild": "^1.8.8",
     "readline-sync": "1.4.10"
