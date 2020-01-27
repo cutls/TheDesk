@@ -490,6 +490,9 @@ textarea {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+#sabakanMark {
+  background-color: var(--emphasized);
+}
 
 /*スクロールバー*/
 ::-webkit-scrollbar {

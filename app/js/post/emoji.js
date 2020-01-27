@@ -193,7 +193,15 @@ function emojiGet(parse, started) {
 function emojiList(target, reaction) {
 	$('#now-emoji').text(lang.lang_emoji_custom)
 	var acct_id = $('#post-acct-sel').val()
-	if (reaction && localStorage.getItem('emojiReaction_' + acct_id) != 'true') {
+	if(reaction && $('#media').val() == 'misskey') {
+		var misskeyReact = true
+	} else {
+		var misskeyReact = false
+	}
+	if (
+		misskeyReact &&
+		localStorage.getItem('emojiReaction_' + acct_id) != 'true'
+	) {
 		console.error('Disabled')
 		clear()
 		hide()
@@ -263,9 +271,20 @@ function emojiList(target, reaction) {
 		var emoji = obj[i]
 		if (emoji) {
 			if (reaction) {
-				html =
-					html +
-					`<a onclick="emojiReaction(':${emoji.shortcode}:')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
+				if (emoji.divider) {
+					html = html + '<p style="margin-bottom:0">' + emoji.cat + '</p>'
+				} else {
+					if (emoji.listed) {
+						if(misskeyReact) {
+							var shortcode = `:${emoji.shortcode}:`
+						} else {
+							var shortcode = emoji.shortcode
+						}
+						html =
+							html +
+							`<a onclick="emojiReaction('${shortcode}')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
+					}
+				}
 			} else {
 				if (emoji.divider) {
 					html = html + '<p style="margin-bottom:0">' + emoji.cat + '</p>'

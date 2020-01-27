@@ -234,7 +234,7 @@ function parseColumn(target, dontclose) {
 			var unread = `<a id="unread_${key}" onclick="showUnread('${key}','${acct.type}','${acct.domain}')"
 					 class="setting nex" title="${lang.lang_layout_unread}">
 					<i class="material-icons waves-effect nex">more</i>
-				</a>`
+				</a>${lang.lang_layout_unread}<br>`
 			var notfDomain = acct.domain
 			var notfKey = key
 			var if_tag = ''
@@ -368,7 +368,10 @@ function parseColumn(target, dontclose) {
 							title="${unique_notf}" ${icnsert}>
 							<i class="material-icons waves-effect nex notf-icon_${acct.domain}">notifications</i>
 						</a>
-						${unread}
+						<span class="cbadge hide notf-announ_${acct.domain}" style="margin-right:0" onclick="notfToggle('${acct.domain}','${key}')">
+							<i class="fas fa-bullhorn"></i>
+							<span class="notf-announ_${acct.domain}_ct">0</span>
+						</span>
 						${if_tag_btn}
 					</div>
 					<div class="area-sta">
@@ -389,10 +392,12 @@ function parseColumn(target, dontclose) {
 					</div>
 				</div>
 				<div class="column-hide notf-indv-box z-depth-4" id="notf-box_${notfKey}">
+					<div id="announce_${notfKey}" style="border: 1px solid"></div>
 					<div id="notifications_${notfKey}" data-notf="${notfDomain}" data-type="notf" class="notf-timeline">
 					</div>
 				</div>
 				<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:5px;">
+					${unread}
 					${exclude}${left_hold}
 					<a onclick="mediaToggle('${key}')" class="setting nex">
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_mediafil}">perm_media</i>

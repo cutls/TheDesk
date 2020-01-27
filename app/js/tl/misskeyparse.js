@@ -880,7 +880,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 		}
 		var ftxt = lang.lang_parse_followed;
 		if (popup > 0 || popup == -1) {
-			var notftext = '<span class="cbadge"title="' + date(toot.createdAt,
+			var notftext = '<span class="cbadge" title="' + date(toot.createdAt,
 				'absolute') + '(' + lang.lang_parse_notftime + ')"><i class="far fa-clock"></i>' + date(toot.createdAt,
 					datetype) +
 				'</span>' + ftxt + '<br>';

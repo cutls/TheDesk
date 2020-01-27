@@ -64,6 +64,9 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		)
 		$('#notice_icon_' + tlid).text('bookmark')
 		return
+	} else if (type == 'home') {
+		//ホームならお知らせ「も」取りに行く
+		announ(acct_id, tlid);
 	}
 	localStorage.setItem('now', type)
 	todo(cap(type) + ' TL Loading...')
@@ -311,6 +314,8 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 					}
 				} else if (typeA == 'filters_changed') {
 					filterUpdate(acct_id)
+				} else if (~typeA.indexOf('announcement')) {
+					announ(acct_id, tlid)
 				}
 			}
 		}
@@ -1163,6 +1168,36 @@ function getBookmark(acct_id, tlid, more) {
 			$('#landing_' + tlid).hide()
 			jQuery('time.timeago').timeago()
 			moreloading = false
+			todc()
+		}
+	}
+}
+//Announcement
+function announ(acct_id, tlid) {
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var start = 'https://' + domain + '/api/v1/announcements'
+	var httpreq = new XMLHttpRequest()
+	httpreq.open('GET', start, true)
+	httpreq.setRequestHeader('Content-Type', 'application/json')
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+	httpreq.responseType = 'json'
+	httpreq.send()
+	httpreq.onreadystatechange = function() {
+		if (httpreq.readyState === 4) {
+			var json = httpreq.response
+			if (this.status !== 200) {
+				setLog(start, this.status, this.response)
+			}
+			if (json.length > 0) {
+				$('.notf-announ_' + acct_id).removeClass('hide')
+				$('.notf-announ_' + acct_id + '_ct').text(json.length)
+			} else {
+				$('.notf-announ_' + acct_id).addClass('hide')
+			}
+			var templete = announParse(json, acct_id, tlid)
+			$('#announce_' + tlid).html(templete)
+			jQuery('time.timeago').timeago()
 			todc()
 		}
 	}

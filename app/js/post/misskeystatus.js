@@ -116,6 +116,7 @@ function reactiontoggle(id, acct_id, tlid) {
 //reactioncustom
 function reactioncustom(acct_id, id) {
 	$('#reply').val(id)
+	$('#media').val('misskey')
 	$('#unreact').hide()
 	$('#addreact').removeClass('hide')
 	$('#post-acct-sel').val(acct_id)
@@ -186,9 +187,14 @@ function reactRefreshCore(json) {
 	}
 }
 function emojiReaction(emoji) {
+	var media = $('#media').val()
 	var acct_id = $('#post-acct-sel').val()
 	var id = $('#reply').val()
-	reaction(emoji, id, acct_id, null)
+	if(media == 'announcement') {
+		announReaction(id, acct_id, 0, false, emoji)
+	} else {
+		reaction(emoji, id, acct_id, null)
+	}
 	clear()
 	hide()
 }

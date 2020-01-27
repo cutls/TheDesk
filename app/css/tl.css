@@ -559,7 +559,7 @@ p:not(:last-child) {
 	z-index: 500;
 	padding: 5px;
 	display: grid;
-	grid-template-columns: 40px 1fr 1fr 24px;
+	grid-template-columns: 40px 60px 1fr 24px;
 	grid-template-rows: 30px 30px;
 	grid-template-areas: 'notice notice_name notice_name a2' 'notice a1 sta a3' 'notf-box notf-box notf-box notf-box';
 }
@@ -861,4 +861,32 @@ audio {
 }
 .box .ui-resizable-se {
 	display: none !important;
+}
+.announcement {
+	padding: 5px;
+	border-bottom: 1px solid;
+}
+.announReaction {
+	width: 35px;
+	height: 1.7rem;
+	font-size: 1.1rem;
+	margin: 3px;
+	cursor: pointer;
+	border: solid 1px;
+	padding-left: 2px;
+	background-color: var(--notfbox);
+	border-radius: 2px;
+}
+.announReaction img {
+	position: relative;
+	top: 3px;
+}
+.announReaction.reactioned {
+	background-color: var(--emphasized);
+}
+.announReaction.add {
+	width: 19px;
+}
+.reactionsPack {
+	display: flex;
 }
