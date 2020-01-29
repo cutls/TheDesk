@@ -69,7 +69,7 @@ function announParse(obj, acct_id, tlid) {
 			})
 		}
 		if (toot.ends_at) {
-			var ended = `<div class="announReaction" title="${date(poll.expires_at, 'absolute')}" style="width: auto; cursor: default;">
+			var ended = `<div class="announReaction" title="${date(toot.ends_at, 'absolute')}" style="width: auto; cursor: default;">
             <i class="fas fa-arrow-right"></i>
             ${date(toot.ends_at, datetype)}
         </div>`
