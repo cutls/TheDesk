@@ -406,6 +406,11 @@ function notfCanceler(acct) {
 	localStorage.removeItem('notf-follow_' + acct)
 	$('.notf-follow_' + acct).addClass('hide')
 	$('.notf-icon_' + acct).removeClass('red-text')
+	var id = $('#announce_' + acct + ' .announcement').first().attr('data-id')
+	$('.notf-announ_' + acct + '_ct').text("")
+	if(id) {
+		localStorage.setItem('announ_' + acct, id)
+	}
 }
 function allNotfRead() {
 	var multi = localStorage.getItem('multi')

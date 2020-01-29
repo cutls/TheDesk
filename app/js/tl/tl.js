@@ -1191,7 +1191,16 @@ function announ(acct_id, tlid) {
 			}
 			if (json.length > 0) {
 				$('.notf-announ_' + acct_id).removeClass('hide')
-				$('.notf-announ_' + acct_id + '_ct').text(json.length)
+				var ct = 0
+				for (var i = 0; i < json.length; i++) {
+					if (localStorage.getItem('announ_' + acct_id) == json[i].id) {
+						break
+					}
+					ct++
+				}
+				if(ct > 0) {
+					$('.notf-announ_' + acct_id + '_ct').text(ct)
+				}
 			} else {
 				$('.notf-announ_' + acct_id).addClass('hide')
 			}

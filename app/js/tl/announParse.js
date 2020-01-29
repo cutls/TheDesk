@@ -79,7 +79,7 @@ function announParse(obj, acct_id, tlid) {
 
 		template =
 			template +
-			`<div class="announcement">
+			`<div class="announcement" data-id="${toot.id}">
             ${content}
             <div class="reactionsPack">
                 ${reactions}

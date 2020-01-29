@@ -368,9 +368,10 @@ function parseColumn(target, dontclose) {
 							title="${unique_notf}" ${icnsert}>
 							<i class="material-icons waves-effect nex notf-icon_${acct.domain}">notifications</i>
 						</a>
-						<span class="cbadge hide notf-announ_${acct.domain}" style="margin-right:0" onclick="notfToggle('${acct.domain}','${key}')">
+						<span class="cbadge hide notf-announ_${acct.domain}" style="margin-right:0" 
+							onclick="notfToggle('${acct.domain}','${key}')" title="${lang.lang_layout_announ}">
 							<i class="fas fa-bullhorn"></i>
-							<span class="notf-announ_${acct.domain}_ct">0</span>
+							<span class="notf-announ_${acct.domain}_ct"></span>
 						</span>
 						${if_tag_btn}
 					</div>
