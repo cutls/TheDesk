@@ -139,7 +139,7 @@
   "localonly": "Sólo local",
   "zeroWidthEmoji": "No agregar espacio al insertar emojis",
   "uploadCrop": "Escalar automáticamente para ajustar",
-  "uploadCropWarn": "Anchura máxima (píxeles). Las imágenes subidas son convertidas a JPEG (desde JPEG) o PNG (desde otros formatos). Si establecés \"0\" las imágenes no se redimensionarán. Atención a GIFs animados.",
+  "uploadCropWarn": "Anchura máxima (píxeles). Las imágenes subidas son convertidas a JPEG (desde JPEG) o PNG (desde otros formatos). Si establecés \"0\" las imágenes no se redimensionarán. Nota: si subís una imagen animada, como un archivo GIF, se convertirá como imagen estática.",
   "keysc": "Configuración de atajos del teclado",
   "iks": "Inserción fácil",
   "okswarn": "Podés insertar cualquier letra y emoji con sólo 3 teclas",
