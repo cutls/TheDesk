@@ -283,16 +283,3 @@ function statusModel(now) {
 		poll: null
 	}
 }
-/* PWA */
-if(pwa) {
-	function postMessage(e) {
-		if (e[0] == 'openUrl') {
-			urls = e[1].match(/https?:\/\/(.+)/)
-			if (urls) {
-				if(confirm("Open: " + urls)) {
-					window.open(urls)
-				}
-			}
-		}
-	}
-}
