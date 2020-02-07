@@ -139,7 +139,8 @@ function main(ver, basefile, pwa) {
 			source = source.replace(/@@lang@@/g, lang)
 			source = source.replace(/@@langlist@@/g, langstr)
 			if(pwa) {
-				source = source.replace(/@@pwa@@/g, `<script>var pwa = true;"serviceWorker"in navigator&&navigator.serviceWorker.register("/sw.pwa.js").then(e=>{});</script>`)
+				source = source.replace(/@@pwa@@/g, `<link rel="manifest" href="/manifest.json" />
+				<script>var pwa = true;"serviceWorker"in navigator&&navigator.serviceWorker.register("/sw.pwa.js").then(e=>{});</script>`)
 				source = source.replace(/@@node_base@@/g, 'dependencies')
 			} else {
 				source = source.replace(/@@pwa@@/g, '<script>var pwa = false;</script>')
