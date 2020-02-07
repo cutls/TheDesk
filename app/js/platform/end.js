@@ -46,10 +46,17 @@ $(document).on('click', 'a', e => {
 					udgEx(url, 'main')
 					return false
 				} else {
-					postMessage(['openUrl', url], '*')
+					if(pwa) {
+						return true
+					} else {
+						postMessage(['openUrl', url], '*')
+					}
 				}
 			}
 		} else {
+			if(pwa) {
+				return true
+			}
 			//hrefがhttp/httpsならブラウザで
 			if (urls) {
 				if (urls[0]) {
@@ -204,6 +211,7 @@ if(pwa) {
 					showCloseButton: false,
 					showCancelButton: true,
 					focusConfirm: false,
+					confirmButtonText: 'Close'
 				  })
 			}
 		}
