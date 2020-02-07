@@ -2,7 +2,7 @@
 <html lang="@@lang@@">
 	<head>
 		<title>Update - TheDesk</title>
-		<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet" />
+		<link href="../../@@node_base@@/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet" />
 		<link href="../../css/master.css" type="text/css" rel="stylesheet" />
 		<meta charset="utf-8" />
 		@@comment-start@@
@@ -73,13 +73,14 @@
 				font-size: 200%;
 			}
 		</style>
-		<link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet" />
+		<link href="../../@@node_base@@/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet" />
+		@@pwa@@
 	</head>
 
 	<body>
-		<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
 		<script type="text/javascript" src="../../js/platform/first.js"></script>
-		<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
+		<script type="text/javascript" src="../../@@node_base@@/materialize-css/dist/js/materialize.js"></script>
 		<i class="material-icons pointer waves-effect" onclick="about();">info</i>
 		<i class="material-icons pointer waves-effect" onclick="skipper();">clear</i>
 		<!--a href="update.html">Reload</a-->

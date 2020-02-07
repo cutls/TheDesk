@@ -11,11 +11,11 @@
 	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
 	@@comment-end@@
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
-	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
+	<link href="../../@@node_base@@/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
 	<link href="../../css/pickr.css" type="text/css" rel="stylesheet">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
-	<link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
+	<link href="../../@@node_base@@/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
 	<meta charset="utf-8">
 	<style>
 		input {
@@ -26,17 +26,18 @@
 			height: 1rem !important;
 		}
 	</style>
+	@@pwa@@
 </head>
 
 <body id="mainView" style="overflow-y:scroll">
-	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="../../js/platform/first.js"></script>
-	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
+	<script type="text/javascript" src="../../@@node_base@@/materialize-css/dist/js/materialize.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	<script src="../../node_modules/json5/dist/index.min.js"></script> 
-	<script src="../../node_modules/vue/dist/vue.min.js"></script>
+	<script src="../../@@node_base@@/json5/dist/index.min.js"></script> 
+	<script src="../../@@node_base@@/vue/dist/vue.min.js"></script>
 	<script type="text/javascript" src="setting.vue.js"></script>
-	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script type="text/javascript" src="../../@@node_base@@/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
 	<h4>@@setting@@</h4>
 	<ul class="collapsible" data-collapsible="accordion">

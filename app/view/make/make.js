@@ -140,8 +140,10 @@ function main(ver, basefile, pwa) {
 			source = source.replace(/@@langlist@@/g, langstr)
 			if(pwa) {
 				source = source.replace(/@@pwa@@/g, '<script>var pwa = true</script>')
+				source = source.replace(/@@node_base@@/g, 'dependencies')
 			} else {
 				source = source.replace(/@@pwa@@/g, '<script>var pwa = false</script>')
+				source = source.replace(/@@node_base@@/g, 'node_modules')
 			}
 			fs.writeFileSync(basefile + 'view/' + lang + '/' + pages[i], source)
 		}
