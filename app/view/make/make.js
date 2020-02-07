@@ -6,8 +6,8 @@ if (process.argv.indexOf('--automatic') === -1) {
 	}
 }
 var pwa = false
-if (process.argv.indexOf('--pwa') === -1) {
-	pwa = true
+if (process.argv.indexOf('--pwa') > 0) {
+	var pwa = true
 }
 const path = require('path')
 const basefile = path.join(__dirname, '../../')
@@ -139,10 +139,10 @@ function main(ver, basefile, pwa) {
 			source = source.replace(/@@lang@@/g, lang)
 			source = source.replace(/@@langlist@@/g, langstr)
 			if(pwa) {
-				source = source.replace(/@@pwa@@/g, '<script>var pwa = true</script>')
+				source = source.replace(/@@pwa@@/g, '<script>var pwa = true;</script>')
 				source = source.replace(/@@node_base@@/g, 'dependencies')
 			} else {
-				source = source.replace(/@@pwa@@/g, '<script>var pwa = false</script>')
+				source = source.replace(/@@pwa@@/g, '<script>var pwa = false;</script>')
 				source = source.replace(/@@node_base@@/g, 'node_modules')
 			}
 			fs.writeFileSync(basefile + 'view/' + lang + '/' + pages[i], source)
