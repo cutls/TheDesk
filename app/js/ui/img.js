@@ -102,6 +102,13 @@ function imageXhr(id, key, murl) {
 		},
 		false
 	)
+	xhr.addEventListener(
+		'error',
+		function(event) {
+			$('#imgmodal').attr('src', murl)
+		},
+		false
+	)
 	xhr.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			r = new FileReader()
