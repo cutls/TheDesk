@@ -287,7 +287,7 @@ function statusModel(now) {
 if(pwa) {
 	function postMessage(e) {
 		if (e[0] == 'openUrl') {
-			urls = e.data[1].match(/https?:\/\/(.+)/)
+			urls = e[1].match(/https?:\/\/(.+)/)
 			if (urls) {
 				if(confirm("Open: " + url)) {
 					window.open(url)
