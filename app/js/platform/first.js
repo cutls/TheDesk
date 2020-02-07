@@ -289,8 +289,8 @@ if(pwa) {
 		if (e[0] == 'openUrl') {
 			urls = e[1].match(/https?:\/\/(.+)/)
 			if (urls) {
-				if(confirm("Open: " + url)) {
-					window.open(url)
+				if(confirm("Open: " + urls)) {
+					window.open(urls)
 				}
 			}
 		}
