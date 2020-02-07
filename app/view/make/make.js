@@ -5,9 +5,13 @@ if (process.argv.indexOf('--automatic') === -1) {
 		ver = input
 	}
 }
+var pwa = false
+if (process.argv.indexOf('--pwa') === -1) {
+	pwa = true
+}
 const path = require('path')
 const basefile = path.join(__dirname, '../../')
-function main(ver, basefile) {
+function main(ver, basefile, pwa) {
 	const fs = require('fs')
 	const execSync = require('child_process').execSync
 	let gitHash = execSync('git rev-parse HEAD')
@@ -134,11 +138,16 @@ function main(ver, basefile) {
 			source = source.replace(/@@gitHashShort@@/g, gitHash.slice(0, 7))
 			source = source.replace(/@@lang@@/g, lang)
 			source = source.replace(/@@langlist@@/g, langstr)
+			if(pwa) {
+				source = source.replace(/@@pwa@@/g, '<script>var pwa = true</script>')
+			} else {
+				source = source.replace(/@@pwa@@/g, '<script>var pwa = false</script>')
+			}
 			fs.writeFileSync(basefile + 'view/' + lang + '/' + pages[i], source)
 		}
 	}
 }
-main(ver, basefile)
+main(ver, basefile, pwa)
 
 //if --watch, to yarn dev
 if (process.argv.indexOf('--watch') !== -1) {
