@@ -35,6 +35,8 @@
   "useragent": "User agent",
   "useragentWarn": "Restart when changed",
   "absolute": "Absoluter Wert",
+  "srcUrl": "Search engine",
+  "srcUrlWarn": "{q} will be replaced to query.",
   "themeSel": "Design auswählen",
   "customtheme": "Bearbeiten und hinzufügen von eigenen Designs",
   "customthemeDirection": "Farbschema",
