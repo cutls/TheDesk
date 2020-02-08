@@ -34,6 +34,8 @@
   "useragent":"ユーザーエージェント",
   "useragentWarn":"再起動すんで。",
   "absolute": "絶対指定",
+  "srcUrl": "検索エンジン",
+  "srcUrlWarn": "{q}が検索文字列になるで。",
   "themeSel": "テーマの選択",
   "customtheme": "カスタムテーマの作成・編集",
   "customthemeDirection": "色の系統",

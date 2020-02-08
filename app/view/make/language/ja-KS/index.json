@@ -1,6 +1,8 @@
 {
     "draghere":"ドラッグしてみ？(ドラッグしたらすぐアップロードされるで)",
     "close":"Close",
+    "webSrc": "Webでさがす",
+    "tsSrc": "tootsearchでさがす",
     "showSelectProf":"このアカウントのプロフィール出す",
     "closethisbox":"このボックスなおす",
     "post-new":"投稿",

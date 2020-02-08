@@ -129,6 +129,19 @@ var envConstruction = [
 			head: '@@useragent@@',
 			desc: '@@useragentWarn@@'
 		}
+	},
+	{
+		id: 'srcUrl',
+		storage: 'srcUrl',
+		checkbox: false,
+		doubleText: false,
+		width: 200,
+		setValue: 'https://google.com/search?q={q}',
+		text: {
+			head: '@@srcUrl@@',
+			desc: '@@srcUrlWarn@@',
+			after: ''
+		}
 	}
 ]
 var tlConstruction = [

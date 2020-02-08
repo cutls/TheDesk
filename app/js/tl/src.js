@@ -317,6 +317,7 @@ function srcBox(mode) {
 	} else if (mode == 'close') {
 		if(!selectedText) {
 			$('#pageSrc').addClass('hide')
+			$('#pageSrc').removeClass('keep')
 		}
 	} else {
 		$('#pageSrc').toggleClass('hide')
@@ -340,9 +341,16 @@ document.addEventListener('selectionchange', function() {
 	}
 })
 function doSrc(type) {
+	$('#pageSrc').addClass('hide')
+	$('#pageSrc').removeClass('keep')
 	var q = $('#pageSrcInput').val()
 	if(type == 'web') {
-		postMessage(["openUrl", 'https://google.com/search?q=' + q], "*")
+		var start = localStorage.getItem('srcUrl')
+		if(!start) {
+			start = 'https://google.com/search?q={q}'
+		}
+		start = start.replace(/{q}/, q)
+		postMessage(["openUrl", start], "*")
 	} else if(type == 'ts') {
 		tsAdd(q)
 	}

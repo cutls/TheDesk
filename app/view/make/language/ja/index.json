@@ -1,5 +1,7 @@
 {
     "draghere":"ここにドラッグして添付(ドラッグと同時にアップロードされます)",
+    "webSrc": "Webで検索",
+    "tsSrc": "tootsearchで検索",
     "close":"Close",
     "showSelectProf":"選択したアカウントのプロフィールを表示",
     "closethisbox":"このボックスを閉じる",
