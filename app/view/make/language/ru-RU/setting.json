@@ -35,6 +35,8 @@
   "useragent": "User agent",
   "useragentWarn": "Перезапустить, когда изменилось",
   "absolute": "абсолютное значение",
+  "srcUrl": "Search engine",
+  "srcUrlWarn": "{q} will be replaced to query.",
   "themeSel": "Выбрать тему",
   "customtheme": "Редактировать и добавить пользовательские темы",
   "customthemeDirection": "Цветная схема",
