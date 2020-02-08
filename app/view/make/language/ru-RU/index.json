@@ -1,6 +1,8 @@
 {
     "draghere": "Перетащите сюда для загрузки",
     "close": "Закрыть",
+    "webSrc": "Search on Web",
+    "tsSrc": "Search on tootsearch",
     "showSelectProf": "Показать профиль выбранного аккаунта",
     "closethisbox": "Close this box",
     "toot": "Toot",
