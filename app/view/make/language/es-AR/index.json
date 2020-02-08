@@ -1,6 +1,8 @@
 {
     "draghere": "Arrastrá y soltá acá para subir",
     "close": "Cerrar",
+    "webSrc": "Search on Web",
+    "tsSrc": "Search on tootsearch",
     "showSelectProf": "Mostrar perfil de la cuenta seleccionada",
     "closethisbox": "Cerrar esta caja",
     "toot": "Tootear",
