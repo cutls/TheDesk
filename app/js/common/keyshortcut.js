@@ -1,191 +1,197 @@
 selectedColumn = 0
 selectedToot = 0
-$(function ($) {
+$(function($) {
 	//キーボードショートカット
-	$(window).keydown(function (e) {
-		var hasFocus = $('input').is(':focus');
-		var hasFocus2 = $('textarea').is(':focus');
-		if (document.getElementById("webview")) {
-			if ($("#webviewsel:checked").val()) {
-				var wv = false;
+	$(window).keydown(function(e) {
+		var hasFocus = $('input').is(':focus')
+		var hasFocus2 = $('textarea').is(':focus')
+		if (document.getElementById('webview')) {
+			if ($('#webviewsel:checked').val()) {
+				var wv = false
 			} else {
-				var wv = true;
+				var wv = true
 			}
 		} else {
-			var wv = true;
+			var wv = true
 		}
 		//Enter
 		if (e.keyCode === 13) {
-			if($("#src").is(':focus')){
+			if ($('#src').is(':focus')) {
 				src()
-				return false;
+				return false
 			}
-			if($("#list-add").is(':focus')){
+			if ($('#list-add').is(':focus')) {
 				makeNewList()
-				return false;
+				return false
 			}
 		}
 		//Ctrl+Shift+Enter:Lgen
-		if (event.metaKey || event.ctrlKey && wv) {
+		if (event.metaKey || (event.ctrlKey && wv)) {
 			if (event.shiftKey) {
 				if (e.keyCode === 13) {
-					post('local');
-					return false;
+					post('local')
+					return false
 				}
 			}
 		}
 		//Ctrl+Enter:投稿
-		if (event.metaKey || event.ctrlKey && wv) {
+		if (event.metaKey || (event.ctrlKey && wv)) {
 			if (e.keyCode === 13) {
-				post();
-				return false;
+				post()
+				return false
 			}
 		}
 		//Alt+Enter:セカンダリー
-		if (event.metaKey || event.altKey && wv) {
+		if (event.metaKey || (event.altKey && wv)) {
 			if (e.keyCode === 13) {
-				sec();
-				return false;
+				sec()
+				return false
 			}
 		}
 		//Esc:消す
 		if (e.keyCode === 27 && wv) {
-			hide();
-			return false;
+			hide()
+			return false
 		}
 		//F5リロード
 		if (e.keyCode === 116 && wv) {
-			location.href = "index.html";
-			return false;
+			location.href = 'index.html'
+			return false
 		}
 		//Ctrl+Sift+C:全消し
-		if (((event.metaKey || event.ctrlKey) && event.shiftKey) && wv) {
+		if ((event.metaKey || event.ctrlKey) && event.shiftKey && wv) {
 			if (e.keyCode === 67) {
-				clear();
-				return false;
+				clear()
+				return false
 			}
 		}
 		//Ctrl+Sift+N:NowPlaying
-		if (((event.metaKey || event.ctrlKey) && event.shiftKey) && wv) {
+		if ((event.metaKey || event.ctrlKey) && event.shiftKey && wv) {
 			if (e.keyCode === 78) {
-				show();
+				show()
 				nowplaying()
-				return false;
+				return false
 			}
 		}
 		//input/textareaにフォーカスなし時
-		if ((!hasFocus && !hasFocus2) && wv) {
+		if (!hasFocus && !hasFocus2 && wv) {
 			if (!wv) {
-				return true;
+				return true
 			}
 			//Ctrl+V:いつもの
 			if (event.metaKey || event.ctrlKey) {
 				if (e.keyCode === 86) {
-					show();
+					show()
+				}
+			}
+			//Ctrl+F:検索
+			if (event.metaKey || event.ctrlKey) {
+				if (e.keyCode === 70) {
+					srcBox()
 				}
 			}
 			//X:開閉
 			if (e.keyCode === 88) {
-				if (!$("#post-box").hasClass("appear")) {
-					show();
-					$('textarea').focus();
+				if (!$('#post-box').hasClass('appear')) {
+					show()
+					$('textarea').focus()
 				} else {
-					hide();
+					hide()
 				}
-				return false;
+				return false
 			}
 			//N:新トゥート
 			if (e.keyCode === 78) {
-				if (!$("#post-box").hasClass("appear")) {
-					show();
+				if (!$('#post-box').hasClass('appear')) {
+					show()
 				}
-				$('textarea').focus();
-				return false;
+				$('textarea').focus()
+				return false
 			}
 			//Ctrl+E:全ての通知未読を既読にする
 			if (event.metaKey || event.ctrlKey) {
 				if (e.keyCode === 69) {
-					allNotfRead();
-					return false;
+					allNotfRead()
+					return false
 				}
 			}
 			//Ctrl+Space:読み込み
 			if (event.metaKey || event.ctrlKey) {
 				if (e.keyCode === 32) {
-					parseColumn();
-					return false;
+					parseColumn()
+					return false
 				}
 			}
 			//Ctrl+Sift+S:設定
 			if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 				if (e.keyCode === 83) {
-					location.href = "setting.html";
-					return false;
+					location.href = 'setting.html'
+					return false
 				}
 			}
 			//Ctrl+Sift+M:アカマネ
 			if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 				if (e.keyCode === 77) {
-					location.href = "acct.html";
-					return false;
+					location.href = 'acct.html'
+					return false
 				}
 			}
 			//Ctrl+Sift+P:プロフ
 			if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 				if (e.keyCode === 80) {
 					profShow()
-					return false;
+					return false
 				}
 			}
 			//数字:TL
 			if (event.metaKey || event.ctrlKey) {
 				if (e.keyCode >= 49 && e.keyCode <= 57) {
-					var kz = e.keyCode - 49;
-					goColumn(kz);
-					return false;
+					var kz = e.keyCode - 49
+					goColumn(kz)
+					return false
 				}
 			}
 			//矢印:選択
-			if (e.code == "ArrowLeft") {
+			if (e.code == 'ArrowLeft') {
 				//left
-				if ($("#imagemodal").hasClass("open")) {
-					imgCont('prev');
-					return false;
+				if ($('#imagemodal').hasClass('open')) {
+					imgCont('prev')
+					return false
 				}
 				if (selectedColumn > 0) {
 					selectedColumn--
 				}
 				tootSelector(selectedColumn, selectedToot)
-				return false;
-			} else if (e.code == "ArrowUp") {
+				return false
+			} else if (e.code == 'ArrowUp') {
 				//up
-				if ($("#imagemodal").hasClass("open")) {
-					return false;
+				if ($('#imagemodal').hasClass('open')) {
+					return false
 				}
 				if (selectedToot > 0) {
 					selectedToot--
 				}
 				tootSelector(selectedColumn, selectedToot)
-				return false;
-			} else if (e.code == "ArrowRight") {
+				return false
+			} else if (e.code == 'ArrowRight') {
 				//right
-				if ($("#imagemodal").hasClass("open")) {
-					imgCont('next');
-					return false;
+				if ($('#imagemodal').hasClass('open')) {
+					imgCont('next')
+					return false
 				}
-				if (selectedColumn < $(".tl-box").length - 1) {
+				if (selectedColumn < $('.tl-box').length - 1) {
 					selectedColumn++
 				}
 				tootSelector(selectedColumn, selectedToot)
-				return false;
-			} else if (e.code == "ArrowDown") {
+				return false
+			} else if (e.code == 'ArrowDown') {
 				//down
-				if ($("#imagemodal").hasClass("open")) {
-					return false;
+				if ($('#imagemodal').hasClass('open')) {
+					return false
 				}
 				selectedToot++
 				tootSelector(selectedColumn, selectedToot)
-				return false;
+				return false
 			}
 			//Ctrl+U:0,0選択
 			if (event.ctrlKey || event.metaKey) {
@@ -193,29 +199,29 @@ $(function ($) {
 					selectedToot = 0
 					selectedColumn = 0
 					tootSelector(0, 0)
-					return false;
+					return false
 				}
 			}
 			//選択時
 			if (e.keyCode == 70) {
-				var id = $(".selectedToot").attr('unique-id')
-				var acct_id = $('#timeline_' + selectedColumn).attr("data-acct")
+				var id = $('.selectedToot').attr('unique-id')
+				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
 				fav(id, acct_id, false)
-				return false;
+				return false
 			}
 			if (e.keyCode == 66) {
-				var id = $(".selectedToot").attr('unique-id')
-				var acct_id = $('#timeline_' + selectedColumn).attr("data-acct")
+				var id = $('.selectedToot').attr('unique-id')
+				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
 				rt(id, acct_id, false)
-				return false;
+				return false
 			}
 			if (e.keyCode == 82) {
-				var id = $(".selectedToot").attr('unique-id')
-				var acct_id = $('#timeline_' + selectedColumn).attr("data-acct")
-				var ats_cm = $('.selectedToot .rep-btn').attr("data-men")
-				var mode = $('.selectedToot .rep-btn').attr("data-visen")
+				var id = $('.selectedToot').attr('unique-id')
+				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
+				var ats_cm = $('.selectedToot .rep-btn').attr('data-men')
+				var mode = $('.selectedToot .rep-btn').attr('data-visen')
 				re(id, ats_cm, acct_id, mode)
-				return false;
+				return false
 			}
 		}
 		//textareaフォーカス時
@@ -224,23 +230,27 @@ $(function ($) {
 				//C+S+(No):ワンクリ
 				if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 					if (e.keyCode >= 49 && e.keyCode <= 51) {
-						var no = e.keyCode - 48;
-						if (localStorage.getItem("oks-" + no)) { $("#textarea").val($("#textarea").val() + localStorage.getItem("oks-" + no)) }
-						return false;
+						var no = e.keyCode - 48
+						if (localStorage.getItem('oks-' + no)) {
+							$('#textarea').val($('#textarea').val() + localStorage.getItem('oks-' + no))
+						}
+						return false
 					}
 				}
 			}
 		}
-	});
+	})
 	//クリアボタン
-	$("#clear").click(function () {
-		clear();
-	});
-});
+	$('#clear').click(function() {
+		clear()
+	})
+})
 //選択する
 function tootSelector(column, toot) {
-	$('.cvo').removeClass("selectedToot")
-	$('#timeline_' + column + ' .cvo').eq(toot).addClass("selectedToot")
+	$('.cvo').removeClass('selectedToot')
+	$('#timeline_' + column + ' .cvo')
+		.eq(toot)
+		.addClass('selectedToot')
 	var scr = $('.tl-box[tlid=' + column + ']').scrollTop()
 	var elem = $('.selectedToot').offset().top
 	var top = elem - $('.tl-box').height() + scr
