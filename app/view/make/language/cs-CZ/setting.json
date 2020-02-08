@@ -35,6 +35,8 @@
   "useragent": "User agent",
   "useragentWarn": "Restart when changed",
   "absolute": "absolutní hodnota",
+  "srcUrl": "Search engine",
+  "srcUrlWarn": "{q} will be replaced to query.",
   "themeSel": "Vybrat motiv",
   "customtheme": "Edit and add custom themes",
   "customthemeDirection": "Color scheme",
