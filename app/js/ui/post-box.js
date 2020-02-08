@@ -122,6 +122,7 @@ $('#timeline-container,#group').click(function(e) {
 	selectedColumn = 0
 	selectedToot = 0
 	localStorage.removeItem('nohide')
+	srcBox('close')
 })
 $('#contextWrap').click(function(e) {
 	$('#contextWrap').addClass('hide')
