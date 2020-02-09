@@ -53,7 +53,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",
     "electron-dl": "^3.0.0",
-    "jimp": "^0.9.1",
+    "jimp": "^0.9.3",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
     "materialize-css": "git://github.com/cutls/materialize",
