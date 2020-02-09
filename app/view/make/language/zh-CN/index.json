@@ -1,6 +1,8 @@
 {
     "draghere": "拖动到此处上传",
     "close": "关闭",
+    "webSrc": "Search on Web",
+    "tsSrc": "Search on tootsearch",
     "showSelectProf": "Show profile of the selecting account",
     "closethisbox": "Close this box",
     "toot": "Toot",
