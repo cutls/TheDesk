@@ -51,7 +51,7 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2",
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "electron-dl": "^3.0.0",
     "jimp": "^0.9.1",
     "jquery": "^3.4.1",
