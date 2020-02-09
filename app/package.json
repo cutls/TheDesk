@@ -71,7 +71,7 @@
     "chokidar": "^3.3.0",
     "electron": "^7.1.8",
     "electron-builder": "^22.1.0",
-    "electron-rebuild": "^1.8.8",
+    "electron-rebuild": "^1.10.0",
     "readline-sync": "1.4.10"
   },
   "build": {
