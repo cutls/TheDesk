@@ -205,7 +205,7 @@ function escapeCsv(str) {
 		return str
 	}
 	var result
-	result = str.replace(/\"/g, '""')
+	result = str.toString().replace(/\"/g, '""')
 	if (result.indexOf(',') >= 0) {
 		result = '"' + result + '"'
 	}

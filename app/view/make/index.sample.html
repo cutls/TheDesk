@@ -1071,7 +1071,7 @@
 			</div>
 		</div>
 		<!-- Modal Structure Image-->
-		<div id="imagemodal" class="modal modal-fixed-footer" style="min-width:550px">
+		<div id="imagemodal" class="modal modal-fixed-footer">
 			<div class="modal-content">
 				<div id="imagewrap">
 					<img src="" id="imgmodal" />
@@ -1080,20 +1080,25 @@
 				<br />
 			</div>
 			<div class="modal-footer">
-				DL:<span id="imgprog"></span>% (<span id="imgsec"></span>ms, <span id="imgbyte"></span>KB)
+				<div style="float: left;padding-top:3px;line-height: normal;">
+					<span id="imgprog"></span>% <br />
+					<span id="imgsec"></span>ms <br /><span id="imgbyte"></span>KB
+				</div>
 				<a class="waves-effect white-text" onclick="zoom(2)">
 					<i class="material-icons">zoom_in</i>
 				</a>
 				<a class="waves-effect white-text" onclick="zoom(0.5)">
 					<i class="material-icons">zoom_out</i>
 				</a>
-				<button class="btn waves-effect blue" onclick="copyImgUrl()">
-					<i class="material-icons left">link</i>@@copyURL@@
+				<button class="btn waves-effect blue" onclick="copyImgUrl()" title="@@copyURL@@">
+					<i class="material-icons">link</i>
 				</button>
 				<button class="btn waves-effect purple" onclick="dlImg()">
 					<i class="material-icons">file_download</i>
 				</button>
-				<button class="btn waves-effect brown" onclick="detFromImg()">@@thisToot@@</button>
+				<button class="btn waves-effect brown" onclick="detFromImg()" title="@@thisToot@@">
+					<i class="material-icons">pageview</i>
+				</button>
 				<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">
 					<i class="material-icons">keyboard_arrow_left</i>
 				</button>

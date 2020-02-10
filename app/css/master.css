@@ -57,7 +57,7 @@ option {
 	padding: 0;
 }
 #imagemodal .modal-footer {
-	overflow-x: scroll;
+	overflow-x: hidden;
 	overflow-y: hidden;
 }
 
