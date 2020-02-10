@@ -14,6 +14,8 @@ function themes(theme) {
 	el.classList.remove('browntheme')
 	el.classList.remove('blacktheme')
 	el.classList.remove('bluetheme')
+	el.classList.remove('polartheme')
+	el.classList.remove('snowtheme')
 	el.classList.remove('customtheme')
 	el.classList.add(theme + 'theme')
 	var font = localStorage.getItem('font')
