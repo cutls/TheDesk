@@ -51,27 +51,27 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2",
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "electron-dl": "^3.0.0",
-    "jimp": "^0.9.1",
+    "jimp": "^0.9.3",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
     "materialize-css": "git://github.com/cutls/materialize",
     "json5": "^2.1.1",
     "lodash": "^4.17.15",
     "sumchecker": "^3.0.1",
-    "sweetalert2": "^9.5.4",
-    "vue": "^2.6.10"
+    "sweetalert2": "^9.7.2",
+    "vue": "^2.6.11"
   },
   "optionalDependencies": {
     "font-manager": "0.3.0",
     "itunes-nowplaying-mac": "0.3.1"
   },
   "devDependencies": {
-    "chokidar": "^3.3.0",
+    "chokidar": "^3.3.1",
     "electron": "^7.1.8",
     "electron-builder": "^22.1.0",
-    "electron-rebuild": "^1.8.8",
+    "electron-rebuild": "^1.10.0",
     "readline-sync": "1.4.10"
   },
   "build": {

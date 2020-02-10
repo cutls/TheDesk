@@ -1,6 +1,8 @@
 {
     "draghere": "Faites glisser ici pour transférer",
     "close": "Fermer",
+    "webSrc": "Search on Web",
+    "tsSrc": "Search on tootsearch",
     "showSelectProf": "Show profile of the selecting account",
     "closethisbox": "Close this box",
     "toot": "Pouet",
