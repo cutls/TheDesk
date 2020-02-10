@@ -1391,6 +1391,7 @@ function client(name) {
 }
 //Poll Parser
 function pollParse(poll, acct_id, emojis) {
+	var rand = randomStr(8)
 	var datetype = localStorage.getItem('datetype')
 	var anime = localStorage.getItem('animation')
 	if (anime == 'yes' || !anime) {
@@ -1408,7 +1409,7 @@ function pollParse(poll, acct_id, emojis) {
 	} else {
 		var minechoice = []
 	}
-	var refresh = `<a onclick="voteMastodonrefresh('${acct_id}','${poll.id}')" class="pointer">
+	var refresh = `<a onclick="voteMastodonrefresh('${acct_id}','${poll.id}','${rand}')" class="pointer">
 		${lang.lang_manager_refresh}
 	</a>`
 	if (poll.voted && poll.own_votes.length) {
@@ -1423,11 +1424,11 @@ function pollParse(poll, acct_id, emojis) {
 		var myvote = lang.lang_parse_endedvote
 		var result_hide = ''
 	} else {
-		var myvote = `<a onclick="voteMastodon('${acct_id}','${poll.id}')" class="votebtn">${lang.lang_parse_vote}</a><br>`
+		var myvote = `<a onclick="voteMastodon('${acct_id}','${poll.id}','${rand}')" class="votebtn">${lang.lang_parse_vote}</a><br>`
 		if (choices[0].votes_count === 0 || choices[0].votes_count > 0) {
 			myvote =
 				myvote +
-				`<a onclick="showResult('${acct_id}','${poll.id}')" class="pointer">
+				`<a onclick="showResult('${acct_id}','${poll.id}','${rand}')" class="pointer">
 				${lang.lang_parse_unvoted}
 				</a>　`
 		}
@@ -1454,7 +1455,7 @@ function pollParse(poll, acct_id, emojis) {
 		}
 		if (!poll.voted && !poll.expired) {
 			var votesel =
-				"voteSelMastodon('" + acct_id + "','" + poll.id + "'," + keyc + ',' + poll.multiple + ')'
+				`voteSelMastodon('${acct_id}','${poll.id}',${keyc},${poll.multiple}, this)`
 			var voteclass = 'pointer'
 		} else {
 			var votesel = ''
@@ -1469,9 +1470,9 @@ function pollParse(poll, acct_id, emojis) {
 		}
 		var openData = ''
 		if (choice.votes_count !== null) {
-			openData = `<span style="float: right">${choice.votes_count}<span class="sml">(${per}%)</span></span>`
+			openData = `<span style="float: right">${voteit}${choice.votes_count}<span class="sml">(${per}%)</span></span>`
 		} else {
-			openData = `<span style="float: right">?<span class="sml">(-%)</span></span>`
+			openData = `<span style="float: right">${voteit}?<span class="sml">(-%)</span></span>`
 		}
 		var choiceText = escapeHTML(choice.title)
 		if (emojis) {
@@ -1497,7 +1498,7 @@ function pollParse(poll, acct_id, emojis) {
 			pollHtml +
 			`<div class="${voteclass} vote vote_${acct_id}_${poll.id}_${keyc}" onclick="${votesel}">
 				<span class="vote_${acct_id}_${poll.id}_result leadPoll ${result_hide} ${addPoll} ${lpAnime}" style="width: ${per}%"></span>
-				<span class="onPoll">${choiceText}${voteit}</span>
+				<span class="onPoll">${choiceText}</span>
 				<span class="vote_${acct_id}_${poll.id}_result ${result_hide} onPoll">
 					${openData}
 				</span>
@@ -1506,7 +1507,7 @@ function pollParse(poll, acct_id, emojis) {
 	if (poll.expired) {
 		refresh = ''
 	}
-	pollHtml = `<div class="vote_${acct_id}_${poll.id}">
+	pollHtml = `<div class="vote_${acct_id}_${poll.id}" id="vote${rand}">
 			${pollHtml}${myvote}
 			${refresh}
 			<span class="cbadge cbadge-hover" title="${date(poll.expires_at, 'absolute')}">

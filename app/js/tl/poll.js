@@ -49,30 +49,25 @@ function pollCalc() {
 	return days * 86400 + hrs * 3600 + mins * 60
 }
 //Vote
-function voteSelMastodon(acct_id, id, to, mul) {
-	if ($('.vote_' + acct_id + '_' + id + '_' + to).hasClass('sel')) {
-		$('.vote_' + acct_id + '_' + id + '_' + to).css('background-color', 'transparent')
-		$('.vote_' + acct_id + '_' + id + '_' + to).removeClass('sel')
+function voteSelMastodon(acct_id, id, to, mul, elem) {
+	if ($(elem).hasClass('sel')) {
+		$(elem).css('background-color', 'transparent')
+		$(elem).removeClass('sel')
 	} else {
 		if (!mul) {
-			$('.vote_' + acct_id + '_' + id + ' div').each(function(i, elem) {
-				if (i == to) {
-					$(this).css('background-color', 'var(--emphasized)')
-					$(this).addClass('sel')
-				} else {
-					$(this).css('background-color', 'transparent')
-					$(this).removeClass('sel')
-				}
-			})
+			$('.vote_' + acct_id + '_' + id + ' div').css('background-color', 'transparent')
+			$('.vote_' + acct_id + '_' + id + ' div').removeClass('sel')
+			$(elem).css('background-color', 'var(--emphasized)')
+			$(elem).addClass('sel')
 		} else {
-			$('.vote_' + acct_id + '_' + id + '_' + to).css('background-color', 'var(--emphasized)')
-			$('.vote_' + acct_id + '_' + id + '_' + to).addClass('sel')
+			$(elem).css('background-color', 'var(--emphasized)')
+			$(elem).addClass('sel')
 		}
 	}
 }
-function voteMastodon(acct_id, id) {
+function voteMastodon(acct_id, id, target) {
 	var choice = []
-	$('.vote_' + acct_id + '_' + id + ' div').each(function(i, elem) {
+	$(`#vote${target} div`).each(function(i, elem) {
 		if ($(this).hasClass('sel')) {
 			choice.push(i + '')
 		}
@@ -90,13 +85,13 @@ function voteMastodon(acct_id, id) {
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify({ choices: choice }))
 	httpreq.onreadystatechange = function() {
-		voteMastodonrefresh(acct_id, id)
+		voteMastodonrefresh(acct_id, id, target)
 	}
 }
 function showResult(acct_id, id) {
 	$('.vote_' + acct_id + '_' + id + '_result').toggleClass('hide')
 }
-function voteMastodonrefresh(acct_id, id) {
+function voteMastodonrefresh(acct_id, id, target) {
 	var datetype = localStorage.getItem('datetype')
 	if (!datetype) {
 		datetype = 'absolute'
@@ -121,7 +116,7 @@ function voteMastodonrefresh(acct_id, id) {
 				return false
 			}
 			var poll = pollParse(json, acct_id, json.emojis)
-			$('.vote_' + acct_id + '_' + json.id).html(poll)
+			$(`#vote${target}`).html(poll)
 		}
 	}
 }
