@@ -56,7 +56,7 @@
     "jimp": "^0.9.3",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
-    "materialize-css": "git://github.com/cutls/materialize",
+    "materialize-css": "git://github.com/cutls/materialize#v1-dev",
     "json5": "^2.1.1",
     "lodash": "^4.17.15",
     "sumchecker": "^3.0.1",
