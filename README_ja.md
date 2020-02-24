@@ -147,12 +147,10 @@ macOS
 
 ### PWAとして実行
 
-TheDesk is a wed-based app, so you can run it on a browser. Of course, the main stream is as Electron. Some features won't work well as Electron.
 TheDeskはウェブ技術を使用して作られているので、ブラウザで動かすこともできます。もちろん、Electron向けに設計されているので一部機能は動きません。
 
 `npm run build:pwa`でビルドできます。PWAに必要な`manifest.json`やサービスワーカーなども要員されています。
 
-**You have to rename `node_modules` to `dependencies` to run as a web application. (restricted by Netlify)**
 **`node_modules`を`dependencies`にリネームしないと動きません。(Netlifyの制限です)**
 
 ChromeまたはFirefoxでチェック: [こちら](https://app.thedesk.top) (`master`ブランチに追従しています。不安定です。)  
