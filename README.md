@@ -47,19 +47,6 @@ The default sounds of notifications is provided [Creative Commons BY](https://cr
 
 Crowdin project is available! Visit: https://translate.thedesk.top
 
-## Requirement and development
-
-* Electron 4.2 or above(install yourself)
-* electron-dl(in package.json)
-* Jimp(in package.json)
-* font-manager(in package.json)
-  * Python 2.x(install yourself)
-  * VisualC++(Windows)(install yourself)
-* itunes-nowplaying-mac(for macOS)(in package.json)
-* node-notifier(in package.json)
-* sumchecker(in package.json)
-* Ability to read unformated files!(install yourself)
-
 ### Run on developer mode
 
 `npm run dev` on `app` folder.
@@ -158,6 +145,17 @@ Linux
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=4.0.5 --overwrite`  
 macOS  
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=4.0.5 --icon=./app/icon.icns --overwrite`  
+
+### PWA support
+
+TheDesk is a wed-based app, so you can run it on a browser. Of course, the main stream is as Electron. Some features won't work as well as Electron.
+
+You can run `npm run build:pwa` to build as PWA, including `manifest.json` and the ServiceWorker.
+
+**You have to rename `node_modules` to `dependencies` to run as a web application. (restricted by Netlify)**
+
+Check the app on Chrome or Firefox: [Here](https://app.thedesk.top) (it follows the `master` branch, so not stable.)  
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6916503b-2882-43f7-9681-ab814e6d28f9/deploy-status)](https://app.netlify.com/sites/thedesk/deploys)
 
 ## Pleroma support
 

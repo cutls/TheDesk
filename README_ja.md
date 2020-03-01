@@ -46,19 +46,6 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
   
 Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.top  
 
-## 環境
-
-* Electron 4.2以上(自分で入れて)
-* electron-dl(in package.json)
-* Jimp(in package.json)
-* font-manager(in package.json)
-  * Python 2.x(自分で入れて)
-  * VisualC++(Windows)(自分で入れて)
-* itunes-nowplaying-mac(macOS向け)(in package.json)
-* node-notifier(in package.json)
-* sumchecker(in package.json)
-* Ability to read unformated files!(自分で入れて)
-
 ### デベロッパーモード
 
 `npm run dev`を`app`フォルダ内で実行
@@ -157,6 +144,17 @@ Linux
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=4.0.5 --overwrite`  
 macOS  
 `electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=4.0.5 --icon=./app/icon.icns --overwrite`  
+
+### PWAとして実行
+
+TheDeskはウェブ技術を使用して作られているので、ブラウザで動かすこともできます。もちろん、Electron向けに設計されているので一部機能は動きません。
+
+`npm run build:pwa`でビルドできます。PWAに必要な`manifest.json`やサービスワーカーなども要員されています。
+
+**`node_modules`を`dependencies`にリネームしないと動きません。(Netlifyの制限です)**
+
+ChromeまたはFirefoxでチェック: [こちら](https://app.thedesk.top) (`master`ブランチに追従しています。不安定です。)  
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6916503b-2882-43f7-9681-ab814e6d28f9/deploy-status)](https://app.netlify.com/sites/thedesk/deploys)
 
 ## Pleromaのサポート
 
