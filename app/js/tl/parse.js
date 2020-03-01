@@ -1412,11 +1412,11 @@ function pollParse(poll, acct_id, emojis) {
 	var refresh = `<a onclick="voteMastodonrefresh('${acct_id}','${poll.id}','${rand}')" class="pointer">
 		${lang.lang_manager_refresh}
 	</a>`
-	if (poll.voted && poll.own_votes.length) {
+	if (poll.voted && minechoice.length) {
 		var myvote = lang.lang_parse_voted
 		if (poll.expired) myvote = myvote + '/' + lang.lang_parse_endedvote
 		var result_hide = ''
-	} else if (poll.voted && !poll.own_votes.length) {
+	} else if (poll.voted && !minechoice.length) {
 		var myvote = lang.lang_parse_myvote
 		if (poll.expired) myvote = myvote + '/' + lang.lang_parse_endedvote
 		var result_hide = ''
