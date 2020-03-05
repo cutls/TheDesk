@@ -178,10 +178,11 @@
     "active": "Nylig aktive",
     "newcomer": "Nykommere",
     "local_only": "Kun lokalt",
+    "menu": "Menu",
     "demoBottomBtns": "Velkomstguide",
     "lookAtBottom": "Se på bunnen av dette vinduet. Her er noen tips om det.",
     "acctManDesc": "Legg til flere kontoer og logg dem ut.",
     "settingDesc": "Many and many preferences here. You will couldn't check it all!",
     "nanoDescPlus": "Mini window client(experimental)",
-    "listDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
+    "menuDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
 }
