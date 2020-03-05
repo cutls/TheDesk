@@ -141,7 +141,9 @@ function createWindow() {
 			x: window_size.x,
 			y: window_size.y,
 			icon: __dirname + '/desk.png',
-			show: false
+			show: false,
+			frame: false,
+			resizable: true
 		}
 	} else if (platform == 'win32') {
 		var arg = {
@@ -282,6 +284,7 @@ function createWindow() {
 	Menu.setApplicationMenu(
 		Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir, dirname))
 	)
+	mainWindow.setMenu(null)
 	//CSS
 	css.css(mainWindow)
 	//アップデータとダウンロード

@@ -1,6 +1,23 @@
 var electron = require('electron')
 const shell = electron.shell
 var ipc = electron.ipcRenderer
+//title bar
+const customTitlebar = require('custom-electron-titlebar')
+window.addEventListener('DOMContentLoaded', () => {
+	const file = location.href.substr(-10)
+	if (
+		file == 'index.html' ||
+		file == '/acct.html' ||
+		file == 'tting.html'
+	) {
+		new customTitlebar.Titlebar({
+			backgroundColor: customTitlebar.Color.fromHex('#000'),
+			titleHorizontalAlignment: 'right',
+			icon: '../../img/desk.png'
+		})
+	}
+})
+
 onmessage = function(e) {
 	if (e.data[0] == 'openUrl') {
 		urls = e.data[1].match(/https?:\/\/(.+)/)

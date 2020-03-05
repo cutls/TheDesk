@@ -9,6 +9,14 @@ body {
 	height: 100vh;
 	color: var(--color);
 }
+.titlebar, .menubar-menu-container, .action-menu-item {
+	background-color: var(--notfbox) !important;
+	filter: brightness(110%) !important;
+	color: var(--color) !important;
+}
+.action-menu-item:hover {
+	filter: brightness(80%) !important;
+}
 .btn {
 	margin: 5px;
 	text-transform: none;
@@ -494,7 +502,7 @@ textarea {
 	background-color: var(--emphasized);
 }
 #pageSrc {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: calc(50vw - 150px);
 	width: 300px;
