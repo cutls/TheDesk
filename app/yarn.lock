@@ -2755,10 +2755,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-sweetalert2@^9.7.2:
-  version "9.7.2"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.7.2.tgz#ad11a75e765b543792b032c27a5ab981a7c8429e"
-  integrity sha512-VmFmigf+rO20t5fOql21wIZlk60B8M02kXwPLmMA2qaBcVwvDQA+qGXuqtXipx1wsztTOiXgyDiBvdbHbIvQpw==
+sweetalert2@^9.10.2:
+  version "9.10.2"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.10.2.tgz#6cad40638fb65907c38942ea01194a8fd4be1f68"
+  integrity sha512-muth00S/u8739EY3JqaqAAw3mZd8DNldQWBpIq5GTo9V+2C7qMBEh3oZOr9DmO39va5D2zx4T3xq4VU5VAnLmg==
 
 tar@^4.4.12:
   version "4.4.13"
