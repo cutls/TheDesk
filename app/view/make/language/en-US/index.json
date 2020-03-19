@@ -178,10 +178,11 @@
     "active": "crwdns3392:0crwdne3392:0",
     "newcomer": "crwdns3394:0crwdne3394:0",
     "local_only": "crwdns3396:0crwdne3396:0",
+    "menu": "crwdns4466:0crwdne4466:0",
     "demoBottomBtns": "crwdns3398:0crwdne3398:0",
     "lookAtBottom": "crwdns3400:0crwdne3400:0",
     "acctManDesc": "crwdns3402:0crwdne3402:0",
     "settingDesc": "crwdns3404:0crwdne3404:0",
     "nanoDescPlus": "crwdns3406:0crwdne3406:0",
-    "listDesc": "crwdns3408:0crwdne3408:0"
+    "menuDesc": "crwdns4468:0crwdne4468:0"
 }
