@@ -12,6 +12,7 @@ function system(mainWindow, dir, lang, dirname) {
 	var ua_path = join(app.getPath("userData"), "useragent");
 	var lang_path = join(app.getPath("userData"), "language");
 	var log_dir_path = join(app.getPath("userData"), "logs");
+	var frame_path = join(app.getPath("userData"), "frame");
 	//ログ
 	var today = new Date();
 	//今日のやつ
@@ -115,12 +116,19 @@ function system(mainWindow, dir, lang, dirname) {
 		app.relaunch();
 		app.exit();
 	});
+	//ユーザーエージェント
 	ipc.on("ua", function(e, arg) {
 		if (arg == "") {
 			fs.unlink(ua_path, function(err) {});
 		} else {
 			fs.writeFileSync(ua_path, arg);
 		}
+		app.relaunch();
+		app.exit();
+	});
+	//フレームのありなし
+	ipc.on("frameSet", function(e, arg) {
+		fs.writeFileSync(frame_path, arg);
 		app.relaunch();
 		app.exit();
 	});
@@ -278,6 +286,7 @@ function system(mainWindow, dir, lang, dirname) {
 			e.sender.webContents.send("logData", logs);
 		});
 	});
+	
 	//起動時ログディレクトリ存在確認と作成、古ログ削除
 	fs.access(log_dir_path, fs.constants.R_OK | fs.constants.W_OK, error => {
 		if (error) {

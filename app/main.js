@@ -62,6 +62,7 @@ var max_info_path = join(app.getPath('userData'), 'max-window-size.json')
 var lang_path = join(app.getPath('userData'), 'language')
 var ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
 var ua_path = join(app.getPath('userData'), 'useragent')
+var frame_path = join(app.getPath('userData'), 'frame')
 try {
 	fs.readFileSync(ha_path, 'utf8')
 	app.disableHardwareAcceleration()
@@ -96,6 +97,16 @@ function isFile(file) {
 	} catch (err) {
 		if (err.code === 'ENOENT') return false
 	}
+}
+try {
+	var frameRaw = fs.readFileSync(frame_path, 'utf8')
+	if(frameRaw == 'false') {
+		var frame = false
+	} else {
+		var frame = true
+	}
+} catch {
+	var frame = true
 }
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
@@ -142,7 +153,7 @@ function createWindow() {
 			y: window_size.y,
 			icon: __dirname + '/desk.png',
 			show: false,
-			frame: false,
+			frame: frame,
 			resizable: true
 		}
 	} else if (platform == 'win32') {
@@ -158,7 +169,8 @@ function createWindow() {
 			x: window_size.x,
 			y: window_size.y,
 			simpleFullscreen: true,
-			show: false
+			show: false,
+			frame: frame
 		}
 	} else if (platform == 'darwin') {
 		var arg = {
@@ -173,7 +185,8 @@ function createWindow() {
 			x: window_size.x,
 			y: window_size.y,
 			simpleFullscreen: true,
-			show: false
+			show: false,
+			frame: frame,
 		}
 	}
 	mainWindow = new BrowserWindow(arg)
@@ -282,9 +295,11 @@ function createWindow() {
 	var platform = process.platform
 	var bit = process.arch
 	Menu.setApplicationMenu(
-		Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir, dirname))
+		Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir, dirname, frame))
 	)
-	mainWindow.setMenu(null)
+	if(!frame) {
+		mainWindow.setMenu(null)
+	}
 	//CSS
 	css.css(mainWindow)
 	//アップデータとダウンロード
