@@ -55,7 +55,7 @@ if (process.argv.indexOf('--dev') === -1) {
 			'||||     /////\n' +
 			'||||//////'
 	)
-	console.log('Welcome!')
+	console.log('If it does not show the window, you might forget `npm run construct`.')
 }
 var info_path = join(app.getPath('userData'), 'window-size.json')
 var max_info_path = join(app.getPath('userData'), 'max-window-size.json')
