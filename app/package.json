@@ -54,7 +54,7 @@
     "@fortawesome/fontawesome-free": "^5.12.1",
     "custom-electron-titlebar": "^3.2.2-hotfix62",
     "electron-dl": "^3.0.0",
-    "jimp": "^0.9.3",
+    "jimp": "^0.9.6",
     "jquery": "^3.4.1",
     "jquery-ui-dist": "^1.12.1",
     "json5": "^2.1.1",
