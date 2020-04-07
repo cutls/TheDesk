@@ -38,6 +38,7 @@
   "useragentWarn": "Перезапустить, когда изменилось",
   "frame": "Window frame",
   "frameWarn": "If 'off', the window looks cool.",
+  "downloadWin": "Versioning(o Windows downloader)",
   "absolute": "абсолютное значение",
   "srcUrl": "Search engine",
   "srcUrlWarn": "{q} will be replaced to query.",
