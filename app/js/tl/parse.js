@@ -516,9 +516,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			if (toot.spoiler_text && cw) {
 				var spoil = escapeHTML(toot.spoiler_text)
-				var spoiler = 'cw cw_hide_' + toot.id
+				var spoiler = 'cw cw_hide'
 				var api_spoil = 'gray'
-				var spoiler_show = `<a href="#" onclick="cw_show('${toot.id}')" class="nex parsed cw_btn">${lang.lang_parse_cwshow}</a><br>`
+				var spoiler_show = `<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">${lang.lang_parse_cwshow}</a><br>`
 			} else {
 				if (content) {
 					var ct1 = content.split('</p>').length + content.split('<br />').length - 2
@@ -538,14 +538,14 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					($.mb_strlen($.strip_tags(content)) > ltr && $.mb_strlen($.strip_tags(content)) > 5)
 				) {
 					var content = `<span class="gray">${lang.lang_parse_fulltext}</span><br>` + content
-					var spoil = `<span class="cw-long-${toot.id}">${$.mb_substr(
+					var spoil = `<span class="cw_long">${$.mb_substr(
 						$.strip_tags(content),
 						0,
 						100
 					)}</span>
 						<span class="gray">${lang.lang_parse_autofold}</span>`
-					var spoiler = 'cw cw_hide_' + toot.id
-					var spoiler_show = `<a href="#" onclick="cw_show('${toot.id}')" class="nex parsed cw_btn">
+					var spoiler = 'cw cw_hide'
+					var spoiler_show = `<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">
 							${lang.lang_parse_more}
 						</a><br>`
 				} else {
