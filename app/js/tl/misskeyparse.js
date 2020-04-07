@@ -360,22 +360,20 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		if ((toot.cw || toot.cw == "") && cw) {
 			var content = escapeHTML(toot.text);
 			var spoil = escapeHTMLtemp(toot.cw);
-			var spoiler = "cw cw_hide_" + toot.id;
+			var spoiler = "cw cw_hide";
 			var api_spoil = "gray";
-			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-				'\')" class="nex parsed cw_btn">' + lang.lang_parse_cwshow + '</a><br>';
+			var spoiler_show = '<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">' + lang.lang_parse_cwshow + '</a><br>';
 		} else {
 			var ct1 = nl2br(toot.text).split('<br />').length - 2;
 			var ct2 = nl2br(toot.text).split('<br>').length - 2;
 			if (ct1 > ct2) { var ct = ct1; } else { var ct = ct2; }
 			if ((sent < ct && $.mb_strlen($.strip_tagstemp(toot.text)) > 5) || ($.strip_tagstemp(toot.text).length > ltr && $.mb_strlen($.strip_tagstemp(toot.text)) > 5)) {
 				var content = '<span class="gray">' + lang.lang_parse_fulltext + '</span><br>' + escapeHTMLtemp(toot.text)
-				var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tagstemp(
+				var spoil = '<span class="cw_long">' + $.mb_substr($.strip_tagstemp(
 					toot.text), 0, 100) +
 					'</span><span class="gray">' + lang.lang_parse_autofold + '</span>';
-				var spoiler = "cw cw_hide_" + toot.id;
-				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id +
-					'\')" class="nex parsed cw_btn">' + lang.lang_parse_more + '</a><br>';
+				var spoiler = "cw cw_hide";
+				var spoiler_show = '<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">' + lang.lang_parse_more + '</a><br>';
 			} else {
 				var content = escapeHTMLtemp(toot.text);
 				if (toot.cw) {

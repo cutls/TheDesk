@@ -34,11 +34,12 @@ function dl(mainWindow, lang_path, base, dirname) {
 		}
 	})
 	//アプデDL
-	ipc.on('download-btn', (e, args) => {
+	ipc.on('download-btn', async (e, args) => {
 		function dl(url, file, dir, e) {
 			e.sender.webContents.send('mess', 'ダウンロードを開始します。')
 			const opts = {
 				directory: dir,
+				filename: file,
 				openFolderWhenDone: true,
 				onProgress: function(event) {
 					e.sender.webContents.send('prog', event)
@@ -54,29 +55,27 @@ function dl(mainWindow, lang_path, base, dirname) {
 		}
 		var platform = process.platform
 		var bit = process.arch
-		dialog.showSaveDialog(
-			null,
-			{
-				title: 'Save',
-				defaultPath: app.getPath('home') + '/' + args[1]
-			},
-			savedFiles => {
-				console.log(savedFiles)
-				if (!savedFiles) {
-					return false
-				}
-				if (platform == 'win32') {
-					var m = savedFiles.match(/(.+)\\(.+)$/)
-				} else {
-					var m = savedFiles.match(/(.+)\/(.+)$/)
-				}
-				//console.log(m);
-				if (isExistFile(savedFiles)) {
-					fs.unlinkSync(savedFiles)
-				}
-				dl(args[0], args[1], m[1], e)
-			}
-		)
+		var options = {
+			title: 'Save',
+			defaultPath: app.getPath('home') + '/' + args[1]
+		}
+		const file = await dialog.showSaveDialog(null, options)
+		const savedFiles = file.filePath
+		console.log(savedFiles)
+		if (!savedFiles) {
+			return false
+		}
+		if (platform == 'win32') {
+			var m = savedFiles.match(/(.+)\\(.+)$/)
+		} else {
+			var m = savedFiles.match(/(.+)\/(.+)$/)
+		}
+		//console.log(m);
+		if (isExistFile(savedFiles)) {
+			fs.unlinkSync(savedFiles)
+		}
+		console.log(m)
+		dl(args[0], m[2], m[1], e)
 	})
 
 	function isExistFile(file) {

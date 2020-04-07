@@ -507,11 +507,11 @@ function fontList(arg) {
 		var font = arg[i]
 		$('#fonts').append(
 			'<div class="font pointer" style="font-family:' +
-				font.family +
+				font +
 				'" onclick="insertFont(\'' +
-				font.family +
+				font +
 				'\')">' +
-				font.family +
+				font +
 				'</div>'
 		)
 	}

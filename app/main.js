@@ -102,8 +102,10 @@ try {
 	var frameRaw = fs.readFileSync(frame_path, 'utf8')
 	if(frameRaw == 'false') {
 		var frame = false
+		var frameTitle = 'hidden'
 	} else {
 		var frame = true
+		var frameTitle = 'default'
 	}
 } catch {
 	var frame = true
@@ -186,6 +188,7 @@ function createWindow() {
 			y: window_size.y,
 			simpleFullscreen: true,
 			show: false,
+			titleBarStyle: frameTitle,
 			frame: frame,
 		}
 	}
