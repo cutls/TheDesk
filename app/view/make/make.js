@@ -1,4 +1,4 @@
-let ver = '20.1.2 (Kawaii)'
+let ver = '20.2.0 (Kawaii)'
 if (process.argv.indexOf('--automatic') === -1) {
 	let input = require('readline-sync').question('version string [empty: ' + ver + ' (default)]? ')
 	if (input) {

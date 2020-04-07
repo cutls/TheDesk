@@ -178,10 +178,11 @@
     "active": "Kürzlich aktiv",
     "newcomer": "Neu eingetroffen",
     "local_only": "Nur lokal",
+    "menu": "Menu",
     "demoBottomBtns": "Willkommensguide",
     "lookAtBottom": "Schauen Sie sich den unteren Teil des Fensters an. Hier sind einige Tipps darüber.",
     "acctManDesc": "Fügen Sie weitere Konten hinzu und loggen Sie sie aus.",
     "settingDesc": "Many and many preferences here. You will couldn't check it all!",
     "nanoDescPlus": "Mini-Fenster-Klient (experimentell)",
-    "listDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
+    "menuDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
 }

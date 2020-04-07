@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="@@lang@@">
+<html lang="@@lang@@" style="overflow-y:scroll">
 
 <head>
 	<title>Settings - TheDesk</title>
@@ -24,6 +24,9 @@
 
 		.pcr-result {
 			height: 1rem !important;
+		}
+		.container-after-titlebar {
+			padding: 20px;
 		}
 	</style>
 	@@pwa@@
@@ -414,7 +417,18 @@
 						value="no" />
 					<span>@@no@@</span>
 				</label>
-
+				<h5>@@searchArtwork@@</h5>
+				@@searchArtworkWarn@@<br />
+				<label>
+					<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_yes"
+						value="yes" />
+					<span>@@yes@@</span>
+				</label>
+				<label>
+					<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_no"
+						value="no" />
+					<span>@@no@@</span>
+				</label>
 				<br>
 			</div>
 		</li>

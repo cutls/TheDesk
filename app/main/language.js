@@ -1,12 +1,19 @@
 // Create the Application's main menu
-function templete(lang, mainWindow, packaged, dir, dirname) {
+function templete(lang, mainWindow, packaged, dir, dirname, frame) {
+    //フレーム
     if(lang !="ja" && lang != "en"){
         lang = "en"
     }
     const electron = require("electron");
+    const ipc = electron.ipcMain;
     const app = electron.app;
     const BrowserWindow = electron.BrowserWindow;
     const join = require('path').join;
+    ipc.on("frameCheck", function(e, arg) {
+		if(!frame) {
+            e.sender.webContents.send("frame", "");
+        }
+	});
     const dict = {
         "application": {
             "ja": "アプリケーション",

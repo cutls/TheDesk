@@ -53,6 +53,16 @@ function spotifyFlagSave() {
 		M.toast({ html: lang.lang_spotify_imgno, displayLength: 3000 });
 	}
 }
+function aMusicFlagSave() {
+	var awk = $("[name=amw]:checked").val();
+	if (awk == "yes") {
+		localStorage.setItem("complete-artwork", "yes");
+		M.toast({ html: lang.lang_spotify_img, displayLength: 3000 });
+	} else {
+		localStorage.removeItem("complete-artwork");
+		M.toast({ html: lang.lang_spotify_imgno, displayLength: 3000 });
+	}
+}
 function nowplaying(mode) {
 	if (mode == "spotify") {
 		var start = "https://thedesk.top/now-playing?at=" + localStorage.getItem("spotify") + "&rt=" + localStorage.getItem("spotify-refresh");
@@ -124,7 +134,7 @@ function nowplaying(mode) {
 		postMessage(["itunes", ""], "*");
 	}
 }
-function npCore(arg) {
+async function npCore(arg) {
 	console.table(arg);
 	var content = localStorage.getItem("np-temp");
 	if (!content || content == "" || content == "null") {
@@ -139,6 +149,9 @@ function npCore(arg) {
 	} else if (platform == "darwin") {
 		if (flag && arg.artwork) {
 			media(arg.artwork, "image/png", "new");
+		} else if (flag && localStorage.getItem('complete-artwork')) {
+			var q = arg.artist + ' ' + arg.album.name + ' ' + arg.name
+			postMessage(["bmpImage", [await getUnknownAA(q), 0]], "*");
 		}
 	}
 	var regExp = new RegExp("{song}", "g");
@@ -182,4 +195,16 @@ if (location.search) {
 		localStorage.setItem("spotify-refresh", coder[1]);
 	} else {
 	}
+}
+async function getUnknownAA(q) {
+	const start = 'https://itunes.apple.com/search?term=' + q + '&country=JP&entity=song'
+	let promise = await fetch(start, {
+		method: 'GET'
+	})
+	const json = await promise.json()
+	if(!json.resultCount) {
+		return []
+	}
+	const data = json.results
+	return data[0].artworkUrl100
 }

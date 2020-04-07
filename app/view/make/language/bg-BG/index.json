@@ -178,10 +178,11 @@
     "active": "Наскоро активен",
     "newcomer": "Новодошли",
     "local_only": "Само местно",
+    "menu": "Menu",
     "demoBottomBtns": "Ръководство за добре дошли",
     "lookAtBottom": "Погледнете в края на този прозорец. Ето няколко съвета за това.",
     "acctManDesc": "Добавете още акаунти и излезте от тях.",
     "settingDesc": "Много. много предпочитания са тук. Няма да можете да ги проверите всички!",
     "nanoDescPlus": "Клиент мини прозорец (експериментално)",
-    "listDesc": "Всички настройки на TheDesk и Mastodon, като <b> добавяне и сортиране на колони </b>, <b> списък и проверка на филтрите </b>."
+    "menuDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
 }

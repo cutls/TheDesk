@@ -17,6 +17,9 @@ var envView = new Vue({
 			if (ls == 'ua_setting') {
 				useragent(val)
 			}
+			if (ls == 'frame') {
+				frameSet(val)
+			}
 			return true
 		}
 	}
@@ -504,11 +507,11 @@ function fontList(arg) {
 		var font = arg[i]
 		$('#fonts').append(
 			'<div class="font pointer" style="font-family:' +
-				font.family +
+				font +
 				'" onclick="insertFont(\'' +
-				font.family +
+				font +
 				'\')">' +
-				font.family +
+				font +
 				'</div>'
 		)
 	}
@@ -763,6 +766,9 @@ function hardwareAcceleration(had) {
 }
 function useragent(val) {
 	postMessage(['ua', val], '*')
+}
+function frameSet(val) {
+	postMessage(['frameSet', val], '*')
 }
 function customSound(key) {
 	postMessage(['customSound', key], '*')

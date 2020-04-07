@@ -96,9 +96,9 @@ function cw() {
 	}
 }
 //TLでコンテントワーニングを表示トグル
-function cw_show(id) {
-	$('.cw_hide_' + id).toggleClass('cw')
-	$('.cw-long-' + id).toggleClass('hide')
+function cw_show(e) {
+	$(e).parent().parent().find('.cw_hide').toggleClass('cw')
+	$(e).parent().find('.cw_long').toggleClass('hide')
 }
 $(function() {
 	$('#cw-text').on('change', function(event) {
