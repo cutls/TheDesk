@@ -173,6 +173,8 @@
   "template2": "crwdns4346:0{song}crwdnd4346:0{album}crwdnd4346:0{artist}crwdnd4346:0{composer}crwdnd4346:0{hz}crwdnd4346:0{bitRate}crwdnd4346:0{genre}crwdne4346:0",
   "template3": "crwdns4348:0crwdne4348:0",
   "postartwork": "crwdns4210:0crwdne4210:0",
+  "searchArtwork": "crwdns4472:0crwdne4472:0",
+  "searchArtworkWarn": "crwdns4474:0crwdne4474:0",
   "tts": "crwdns4212:0crwdne4212:0",
   "bouyomi": "crwdns4214:0crwdne4214:0",
   "bouyomiWarn": "crwdns4216:0crwdne4216:0",
