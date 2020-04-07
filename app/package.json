@@ -51,7 +51,7 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.12.1",
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "custom-electron-titlebar": "^3.2.2-hotfix62",
     "electron-dl": "^3.0.0",
     "jimp": "^0.10.1",
@@ -61,7 +61,7 @@
     "lodash": "^4.17.15",
     "materialize-css": "git://github.com/cutls/materialize#v1-dev",
     "sumchecker": "^3.0.1",
-    "sweetalert2": "^9.10.3",
+    "sweetalert2": "^9.10.9",
     "system-font-families": "^0.4.1",
     "vue": "^2.6.11"
   },
