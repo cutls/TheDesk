@@ -38,6 +38,7 @@
   "useragentWarn": "Restart when changed",
   "frame": "Window frame",
   "frameWarn": "If 'off', the window looks cool.",
+  "downloadWin": "Versioning(o Windows downloader)",
   "absolute": "абсолютна стойност",
   "srcUrl": "Search engine",
   "srcUrlWarn": "{q} will be replaced to query.",
