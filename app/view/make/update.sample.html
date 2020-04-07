@@ -166,22 +166,42 @@
 						if (sel == "install") {
 							if (bit == "x64") {
 								var url = json["winx64"];
-								var file = "TheDesk-setup.exe";
+								if(localStorage.getItem("dl-win") == "yes") {
+									var file = "TheDesk-" + json.unique + "-setup.exe";
+								} else {
+									var file = "TheDesk-setup.exe";
+								}
 							} else if (bit == "ia32") {
 								var url = json["winia32"];
-								var file = "TheDesk-setup-ia32.exe";
+								if(localStorage.getItem("dl-win") == "yes") {
+									var file = "TheDesk-" + json.unique + "-setup-ia32.exe";
+								} else {
+									var file = "TheDesk-setup-ia32.exe";
+								}
 							}
 						} else if (sel == "portable") {
 							if (bit == "x64") {
 								var url = json["winx64p"];
-								var file = "TheDesk.exe";
+								if(localStorage.getItem("dl-win") == "yes") {
+									var file = "TheDesk-" + json.unique + ".exe";
+								} else {
+									var file = "TheDesk.exe";
+								}
 							} else if (bit == "ia32") {
 								var url = json["winia32p"];
-								var file = "TheDesk-ia32.exe";
+								if(localStorage.getItem("dl-win") == "yes") {
+									var file = "TheDesk-" + json.unique + "-ia32.exe";
+								} else {
+									var file = "TheDesk-ia32.exe";
+								}
 							}
 						} else if (sel == "linux") {
 							var url = json["linuxx64"];
-							var file = "thedesk.zip";
+							if(localStorage.getItem("dl-win") == "yes") {
+								var file = "thedesk-" + json.unique_linux + ".zip";
+							} else {
+								var file = "thedesk.zip";
+							}
 						} else if (sel == "linuxdeb") {
 							var url = json["linuxdeb"];
 							var file = "thedesk_" + json.unique_linux + "_amd64.deb";
@@ -199,9 +219,8 @@
 				postMessage(["sendSinmpleIpc", "quit"], "*");
 			}
 			function updateProg(arg) {
-				console.log(arg);
-				$(".determinate").css("width", arg * 100 + "%");
-				$("#prog").text(Math.floor(arg * 100) + "%");
+				$(".determinate").css("width", arg.percent * 100 + "%");
+				$("#prog").text(Math.floor(arg.percent * 100) + "%");
 			}
 			function updateMess(arg) {
 				console.log(arg);

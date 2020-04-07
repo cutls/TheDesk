@@ -162,6 +162,16 @@ var envConstruction = [
 				}
 			]
 		}
+	},{
+		id: 'download',
+		storage: 'dl-win',
+		checkbox: true,
+		setValue: 'no',
+		text: {
+			head: '@@downloadWin@@',
+			desc: 'ex: TheDesk-1.0.0-setup.exe',
+			checkbox: yesno
+		}
 	}
 ]
 var tlConstruction = [

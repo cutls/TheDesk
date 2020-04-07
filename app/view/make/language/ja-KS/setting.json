@@ -37,6 +37,7 @@
   "useragentWarn":"再起動すんで。",
   "frame": "ウィンドウのフレーム",
   "frameWarn": "フレーム無しやとタイトルバーがシュッとするで。再起動すんで。",
+  "downloadWin": "バージョニングする(Windowsのダウンローダ)",
   "absolute": "絶対指定",
   "srcUrl": "検索エンジン",
   "srcUrlWarn": "{q}が検索文字列になるで。",

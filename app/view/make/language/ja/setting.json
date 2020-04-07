@@ -38,6 +38,7 @@
   "useragentWarn":"再起動します。",
   "frame": "ウィンドウのフレーム",
   "frameWarn": "フレーム無しだと、タイトルバーのデザインがクールになります。再起動します。",
+  "downloadWin": "バージョニングする(Windowsのダウンローダ)",
   "absolute": "絶対指定",
   "srcUrl": "検索エンジン",
   "srcUrlWarn": "{q}が検索文字列に置換されます。",
