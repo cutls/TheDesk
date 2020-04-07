@@ -38,6 +38,7 @@
   "useragentWarn": "Reiniciar cuando se cambie",
   "frame": "Window frame",
   "frameWarn": "If 'off', the window looks cool.",
+  "downloadWin": "Versioning(o Windows downloader)",
   "absolute": "valor absoluto",
   "srcUrl": "Search engine",
   "srcUrlWarn": "{q} will be replaced to query.",
