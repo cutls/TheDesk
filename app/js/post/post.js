@@ -166,18 +166,32 @@ function post(mode, postvis) {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
-				setLog(start, this.status, json)
+				if(media && this.status == 422) {
+					$('#ideKey').val('')
+					$('.toot-btn-group').prop('disabled', false)
+					alertProcessUnfinished()
+				} else {
+					setLog(start, this.status, json)
+					var box = localStorage.getItem('box')
+					if (box == 'yes' || !box) {
+						$('#textarea').blur()
+						hide()
+					}
+					$('.toot-btn-group').prop('disabled', false)
+					todc()
+					clear()
+				}
 			} else {
 				$('#ideKey').val('')
+				var box = localStorage.getItem('box')
+				if (box == 'yes' || !box) {
+					$('#textarea').blur()
+					hide()
+				}
+				$('.toot-btn-group').prop('disabled', false)
+				todc()
+				clear()
 			}
-			var box = localStorage.getItem('box')
-			if (box == 'yes' || !box) {
-				$('#textarea').blur()
-				hide()
-			}
-			$('.toot-btn-group').prop('disabled', false)
-			todc()
-			clear()
 		}
 	}
 }
