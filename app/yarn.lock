@@ -1726,10 +1726,10 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
-itunes-nowplaying-mac@0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/itunes-nowplaying-mac/-/itunes-nowplaying-mac-0.3.1.tgz#3f5ee853aef843e66c20ae10b9439303bc1a4986"
-  integrity sha512-kZ/ef1rMzl/CMc1RBh3z99wqijxQgz5Vn1gLCrE1OqRwj9bq2vbgeIqWjJC8iDWZHRolizdTPfKMAbp8yKYFTQ==
+"itunes-nowplaying-mac@git://github.com/cutls/itunes-nowplaying-mac":
+  version "0.2.3"
+  uid "86e64e528ef4b2afa8f5b4d008d11b967b113758"
+  resolved "git://github.com/cutls/itunes-nowplaying-mac#86e64e528ef4b2afa8f5b4d008d11b967b113758"
 
 jimp@^0.10.1:
   version "0.10.1"
