@@ -242,11 +242,10 @@ function system(mainWindow, dir, lang, dirname) {
 		fn(data); // ソート後の配列を返す
 	}
 	ipc.on("fonts", (e, arg) => {
-		const fm = require("font-manager");
-		var fonts = fm.getAvailableFontsSync();
-		object_array_sort(fonts, "family", "asc", function(fonts_sorted) {
-			e.sender.webContents.send("font-list", fonts_sorted);
-		});
+		var SystemFonts = require('system-font-families').default;
+		var fm = new SystemFonts();
+		const fontList = fm.getFontsSync();
+		e.sender.webContents.send("font-list", fontList);
 	});
 	//コピー
 	ipc.on("copy", (e, arg) => {
