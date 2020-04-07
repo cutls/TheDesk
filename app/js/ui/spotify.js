@@ -53,6 +53,16 @@ function spotifyFlagSave() {
 		M.toast({ html: lang.lang_spotify_imgno, displayLength: 3000 });
 	}
 }
+function aMusicFlagSave() {
+	var awk = $("[name=amw]:checked").val();
+	if (awk == "yes") {
+		localStorage.setItem("complete-artwork", "yes");
+		M.toast({ html: lang.lang_spotify_img, displayLength: 3000 });
+	} else {
+		localStorage.removeItem("complete-artwork");
+		M.toast({ html: lang.lang_spotify_imgno, displayLength: 3000 });
+	}
+}
 function nowplaying(mode) {
 	if (mode == "spotify") {
 		var start = "https://thedesk.top/now-playing?at=" + localStorage.getItem("spotify") + "&rt=" + localStorage.getItem("spotify-refresh");
@@ -139,7 +149,7 @@ async function npCore(arg) {
 	} else if (platform == "darwin") {
 		if (flag && arg.artwork) {
 			media(arg.artwork, "image/png", "new");
-		} else if (flag) {
+		} else if (flag && localStorage.getItem('complete-artwork')) {
 			var q = arg.artist + ' ' + arg.album.name + ' ' + arg.name
 			postMessage(["bmpImage", [await getUnknownAA(q), 0]], "*");
 		}
