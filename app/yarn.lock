@@ -2816,10 +2816,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-sweetalert2@^9.10.3:
-  version "9.10.3"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.10.3.tgz#e2e420173b2dd4133a20023174ad6636a90b6061"
-  integrity sha512-i/lDlar8sSH+/YEQ25NXcs0ASB8Upl4JJqKgFHcDtk62vts2hK6i+iOjyCw02s6feS3Qum+MrOHmZNJPFL/g2g==
+sweetalert2@^9.10.9:
+  version "9.10.9"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.10.9.tgz#a727178ea89a0976d3d1bf6ee9ea94d25cef59d1"
+  integrity sha512-EvCwcS9omZHhxp8XXiWwPMGq2ywGcU0VXeBr3DCibUMmfRkh8f8SxBWFSKMtw57HnK0tKYDhyhQV/vFERtRciQ==
 
 system-font-families@^0.4.1:
   version "0.4.1"
