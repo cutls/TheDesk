@@ -42,6 +42,12 @@ function checkSpotify() {
 	} else {
 		$("#awk_no").prop("checked", true);
 	}
+	var flag2 = localStorage.getItem("complete-artwork");
+	if (flag2) {
+		$("#amw_yes").prop("checked", true);
+	} else {
+		$("#amw_no").prop("checked", true);
+	}
 }
 function spotifyFlagSave() {
 	var awk = $("[name=awk]:checked").val();
