@@ -25,6 +25,7 @@ function np(mainWindow) {
 					
 				} catch (error) {
 					console.error(error)
+					e.sender.webContents.send('itunes-np', error)
 				}
 			} else {
 			}

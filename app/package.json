@@ -66,7 +66,7 @@
     "vue": "^2.6.11"
   },
   "optionalDependencies": {
-    "itunes-nowplaying-mac": "0.3.1"
+    "itunes-nowplaying-mac": "git://github.com/cutls/itunes-nowplaying-mac"
   },
   "devDependencies": {
     "chokidar": "^3.3.1",

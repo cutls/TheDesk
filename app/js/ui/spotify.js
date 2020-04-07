@@ -156,7 +156,7 @@ async function npCore(arg) {
 		if (flag && arg.artwork) {
 			media(arg.artwork, "image/png", "new");
 		} else if (flag && localStorage.getItem('complete-artwork')) {
-			var q = arg.artist + ' ' + arg.album.name + ' ' + arg.name
+			var q = arg.artist + ' ' + arg.album.name + ' ' + arg.name;
 			postMessage(["bmpImage", [await getUnknownAA(q), 0]], "*");
 		}
 	}
@@ -211,6 +211,6 @@ async function getUnknownAA(q) {
 	if(!json.resultCount) {
 		return []
 	}
-	const data = json.results
-	return data[0].artworkUrl100
+	const data = json.results[0].artworkUrl100
+	return data.replace(/100x100/, '512x512')
 }
