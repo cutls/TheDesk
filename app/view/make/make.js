@@ -1,5 +1,7 @@
 const fs = require('fs')
-const package = fs.readFileSync('../../package.json')
+const path = require('path')
+const basefile = path.join(__dirname, '../../')
+const package = fs.readFileSync(basefile + 'package.json')
 const data = JSON.parse(package)
 const version = data.version
 const codename = data.codename
@@ -14,8 +16,7 @@ var pwa = false
 if (process.argv.indexOf('--pwa') > 0) {
 	var pwa = true
 }
-const path = require('path')
-const basefile = path.join(__dirname, '../../')
+
 function main(ver, basefile, pwa) {
 	const execSync = require('child_process').execSync
 	let gitHash = execSync('git rev-parse HEAD')
