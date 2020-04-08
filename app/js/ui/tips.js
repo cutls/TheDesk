@@ -159,6 +159,10 @@ function spotifytips() {
 			})
 			.then(function(json) {
 				var ms = json.progress_ms
+				if(!ms) {
+					tips('ver')
+					return false
+				}
 				var last = 1000 - (ms % 1000)
 				var item = json.item
 				var img = item.album.images[0].url
@@ -218,6 +222,8 @@ function spotifytips() {
 			type: 'info',
 			title: lang.lang_spotify_acct
 		})
+		tips('ver')
+		return false
 	}
 }
 function spotStart() {
@@ -288,6 +294,4 @@ function tipsToggle() {
 	$('#tips').toggleClass('hide')
 	$('#tips-menu').toggleClass('hide')
 }
-if (localStorage.getItem('tips')) {
-	tips(localStorage.getItem('tips'))
-}
+
