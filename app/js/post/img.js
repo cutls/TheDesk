@@ -183,6 +183,10 @@ async function media(b64, type, no, stamped) {
 				M.toast({ html: lang.lang_postimg_failupload, displayLength: 5000 })
 				return false
 			}
+			$('#imgup').text('')
+			$('.toot-btn-group').prop('disabled', false)
+			$('select').formSelect()
+			$('#imgsel').show()
 			var img = localStorage.getItem('img')
 			if (json.type.indexOf('image') != -1) {
 				var html = `<img src="${json[previewer]}" class="preview-img pointer" data-media="${json['id']}" oncontextmenu="deleteImage('${json['id']}')" onclick="altImage('${acct_id}','${json['id']}')" title="${lang.lang_postimg_delete}">`
