@@ -1,4 +1,9 @@
-let ver = '20.3.0 (Kawaii)'
+const fs = require('fs')
+const package = fs.readFileSync('../../package.json')
+const data = JSON.parse(package)
+const version = data.version
+const codename = data.codename
+let ver = `${version} (${codename})`
 if (process.argv.indexOf('--automatic') === -1) {
 	let input = require('readline-sync').question('version string [empty: ' + ver + ' (default)]? ')
 	if (input) {
@@ -12,13 +17,12 @@ if (process.argv.indexOf('--pwa') > 0) {
 const path = require('path')
 const basefile = path.join(__dirname, '../../')
 function main(ver, basefile, pwa) {
-	const fs = require('fs')
 	const execSync = require('child_process').execSync
 	let gitHash = execSync('git rev-parse HEAD')
 		.toString()
 		.trim()
 	fs.writeFileSync(basefile + 'git', gitHash)
-	console.log('Constructing view files ' + ver + ': make sure to update package.json')
+	console.log('Constructing view files ' + ver)
 	const langs = ['ja', 'ja-KS', 'en', 'bg', 'cs', 'de', 'es-AR', 'ps']
 	const langsh = [
 		'日本語',
