@@ -506,7 +506,7 @@ function misskeyLogin(url) {
 	if (!url) {
 		var url = $('#misskey-url').val()
 	}
-	var start = 'http://' + url + '/api/app/create'
+	var start = 'https://' + url + '/api/app/create'
 	var httpreq = new XMLHttpRequest()
 	httpreq.open('POST', start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')

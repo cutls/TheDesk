@@ -47,6 +47,9 @@ function ck() {
 			multiSelector(false)
 			verck(ver, jp)
 			$('.stw').show()
+			if (localStorage.getItem('tips')) {
+				tips(localStorage.getItem('tips'))
+			}
 			$('#something-wrong img').attr('src', '../../img/thinking.svg')
 		}
 	}
