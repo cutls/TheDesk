@@ -273,15 +273,15 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 				if (typeA == 'delete') {
 					var obj = JSON.parse(mess.data).payload
 					if (delc == 'true') {
-						$('#timeline_' + tlid + ' [toot-id=' + JSON.parse(mess.data).payload + ']').addClass(
+						$('#timeline_' + tlid + ' [unique-id=' + JSON.parse(mess.data).payload + ']').addClass(
 							'emphasized'
 						)
-						$('#timeline_' + tlid + ' [toot-id=' + JSON.parse(mess.data).payload + ']').addClass(
+						$('#timeline_' + tlid + ' [unique-id=' + JSON.parse(mess.data).payload + ']').addClass(
 							'by_delcatch'
 						)
 					} else {
-						$('[toot-id=' + JSON.parse(mess.data).payload + ']').hide()
-						$('[toot-id=' + JSON.parse(mess.data).payload + ']').remove()
+						$('[unique-id=' + JSON.parse(mess.data).payload + ']').hide()
+						$('[unique-id=' + JSON.parse(mess.data).payload + ']').remove()
 					}
 				} else if (typeA == 'update' || typeA == 'conversation') {
 					if (!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')) {
