@@ -116,8 +116,11 @@ function tsAdd(q) {
 	parseColumn('add')
 }
 function tootsearch(tlid, q) {
+	if(!q || q=='undefined') {
+		return false
+	}
 	var start = 'https://tootsearch.chotto.moe/api/v1/search?from=0&sort=created_at%3Adesc&q=' + q
-	console.log('Toot srrach at ' + start)
+	console.log('Toot search at ' + start)
 	$('#notice_' + tlid).text('tootsearch(' + q + ')')
 	$('#notice_icon_' + tlid).text('search')
 	fetch(start, {
