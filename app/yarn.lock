@@ -1726,10 +1726,10 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
-itunes-nowplaying-mac@0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/itunes-nowplaying-mac/-/itunes-nowplaying-mac-0.3.1.tgz#3f5ee853aef843e66c20ae10b9439303bc1a4986"
-  integrity sha512-kZ/ef1rMzl/CMc1RBh3z99wqijxQgz5Vn1gLCrE1OqRwj9bq2vbgeIqWjJC8iDWZHRolizdTPfKMAbp8yKYFTQ==
+"itunes-nowplaying-mac@git://github.com/cutls/itunes-nowplaying-mac":
+  version "0.2.3"
+  uid "86e64e528ef4b2afa8f5b4d008d11b967b113758"
+  resolved "git://github.com/cutls/itunes-nowplaying-mac#86e64e528ef4b2afa8f5b4d008d11b967b113758"
 
 jimp@^0.10.1:
   version "0.10.1"
@@ -1753,10 +1753,10 @@ jquery-ui-dist@^1.12.1:
   resolved "https://registry.yarnpkg.com/jquery-ui-dist/-/jquery-ui-dist-1.12.1.tgz#5c0815d3cc6f90ff5faaf5b268a6e23b4ca904fa"
   integrity sha1-XAgV08xvkP9fqvWyaKbiO0ypBPo=
 
-jquery@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
-  integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
+jquery@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.0.tgz#9980b97d9e4194611c36530e7dc46a58d7340fc9"
+  integrity sha512-Xb7SVYMvygPxbFMpTFQiHh1J7HClEaThguL15N/Gg37Lri/qKyhRGZYzHRyLH8Stq3Aow0LsHO2O2ci86fCrNQ==
 
 js-yaml@^3.13.1:
   version "3.13.1"
