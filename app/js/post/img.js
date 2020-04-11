@@ -133,25 +133,34 @@ async function media(b64, type, no, stamped) {
 		//v2/media
 		try {
 			var id = await v2MediaUpload(domain, at, fd)
-			var mediav = $('#media').val()
-			var regExp = new RegExp('tmp_' + r, 'g')
-			mediav = mediav.replace(regExp, id)
-			$('#media').val(mediav)
-			var html = `<img src="../../img/picture.svg" class="preview-img pointer unknown" data-media="${id}" oncontextmenu="deleteImage('${id}')" onclick="altImage('${acct_id}','${id}')" title="${lang.lang_postimg_delete}">`
-			$('#preview').append(html)
-			todc()
-			if (localStorage.getItem('nsfw_' + acct_id)) {
-				$('#nsfw').addClass('yellow-text')
-				$('#nsfw').html('visibility')
-				$('#nsfw').addClass('nsfw-avail')
-			}
-			$('.toot-btn-group').prop('disabled', false)
-			$('select').formSelect()
-			$('#mec').text(lang.lang_there)
-			M.toast({ html: '<span>' + lang.lang_postimg_sync + '</span><button class="btn-flat toast-action" onclick="syncDetail()">Click</button>', displayLength: 3000 })
-			$('#imgup').text('')
-			$('#imgsel').show()
-			localStorage.removeItem('image')
+			if(!id) {
+				var start = 'https://' + domain + '/api/v1/media'
+				httpreq.open('POST', start, true)
+				httpreq.upload.addEventListener('progress', progshow, false)
+				httpreq.responseType = 'json'
+				httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+				httpreq.send(fd)
+			} else {
+				var mediav = $('#media').val()
+				var regExp = new RegExp('tmp_' + r, 'g')
+				mediav = mediav.replace(regExp, id)
+				$('#media').val(mediav)
+				var html = `<img src="../../img/picture.svg" class="preview-img pointer unknown" data-media="${id}" oncontextmenu="deleteImage('${id}')" onclick="altImage('${acct_id}','${id}')" title="${lang.lang_postimg_delete}">`
+				$('#preview').append(html)
+				todc()
+				if (localStorage.getItem('nsfw_' + acct_id)) {
+					$('#nsfw').addClass('yellow-text')
+					$('#nsfw').html('visibility')
+					$('#nsfw').addClass('nsfw-avail')
+				}
+				$('.toot-btn-group').prop('disabled', false)
+				$('select').formSelect()
+				$('#mec').text(lang.lang_there)
+				M.toast({ html: '<span>' + lang.lang_postimg_sync + '</span><button class="btn-flat toast-action" onclick="syncDetail()">Click</button>', displayLength: 3000 })
+				$('#imgup').text('')
+				$('#imgsel').show()
+				localStorage.removeItem('image')
+			} 
 		} catch {
 			var start = 'https://' + domain + '/api/v1/media'
 			httpreq.open('POST', start, true)
