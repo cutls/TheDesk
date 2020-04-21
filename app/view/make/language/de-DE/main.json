@@ -172,6 +172,7 @@
     "lang_parse_polled": "'s Umfrage",
     "lang_parse_notftime": "Bearbeitet am",
     "lang_parse_cwshow": "Anzeigen",
+    "lang_parse_cwshow_acc": "This is a post with content warning. click to show the whole content",
     "lang_parse_fulltext": "Full size text:",
     "lang_parse_autofold": "Automatisches Zusammenfalten",
     "lang_parse_more": "Mehr",
