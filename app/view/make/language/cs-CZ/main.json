@@ -172,6 +172,7 @@
     "lang_parse_polled": "'s poll",
     "lang_parse_notftime": "Provedeno",
     "lang_parse_cwshow": "Zobrazit",
+    "lang_parse_cwshow_acc": "This is a post with content warning. click to show the whole content",
     "lang_parse_fulltext": "Celý text:",
     "lang_parse_autofold": "Auto folded",
     "lang_parse_more": "Více",
