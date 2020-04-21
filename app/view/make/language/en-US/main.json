@@ -172,6 +172,7 @@
     "lang_parse_polled": "crwdns3724:0crwdne3724:0",
     "lang_parse_notftime": "crwdns3726:0crwdne3726:0",
     "lang_parse_cwshow": "crwdns3728:0crwdne3728:0",
+    "lang_parse_cwshow_acc": "crwdns4486:0crwdne4486:0",
     "lang_parse_fulltext": "crwdns3730:0crwdne3730:0",
     "lang_parse_autofold": "crwdns3732:0crwdne3732:0",
     "lang_parse_more": "crwdns3734:0crwdne3734:0",
