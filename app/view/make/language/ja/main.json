@@ -173,6 +173,7 @@
     "lang_parse_polled": "のアンケート",
     "lang_parse_notftime": "通知された時間",
     "lang_parse_cwshow": "見る",
+    "lang_parse_cwshow_acc": "これはコンテントワーニングが付与されたトゥートです。全文を見るにはクリックしてください。",
     "lang_parse_fulltext": "以下全文",
     "lang_parse_autofold": "自動折り畳み",
     "lang_parse_more": "続き...",

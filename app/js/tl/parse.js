@@ -241,7 +241,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				noticeavatar = toot.account.avatar_static
 			}
 			noticeavatar = `<a onclick="udg('${toot.account.id}','${acct_id}');" user="${toot.account.acct}" class="udg">
-					<img draggable="false" src="${noticeavatar}" width="20" class="notf-icon prof-img" user="${toot.account.acct}">
+					<img draggable="false" src="${noticeavatar}" width="20" class="notf-icon prof-img" user="${toot.account.acct}" alt="">
 				</a>`
 			if (toot.type == 'mention') {
 				var what = lang.lang_parse_mentioned
@@ -268,15 +268,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			} else {
 				var notfFilHide = ''
 			}
-			var noticetext = `<i class="fas fa-filter pointer big-text ${notfFilHide}" 
-					onclick="notfFilter('${toot.account.id}','${tlid}');" title="${lang.lang_parse_notffilter}">
-				</i>
+			var noticetext = `<span onclick="notfFilter('${toot.account.id}','${tlid}');" class=" pointer big-text ${notfFilHide}"><i class="fas fa-filter" 
+					 title="${lang.lang_parse_notffilter}">
+				</i><span class="voice">${lang.lang_parse_notffilter}</span></span>
 				<span class="cbadge cbadge-hover" title="${date(toot.created_at, 'absolute')}(${
 				lang.lang_parse_notftime
-			})">
-					<i class="far fa-clock"></i>
+			})" aria-hidden="true"><i class="far fa-clock"></i>
 					${date(toot.created_at, datetype)}
 				</span>
+				<span class="voice">${date(toot.created_at, 'absolute')}(${lang.lang_parse_notftime})</span>
 				<i class="big-text fas ${icon}"></i>
 				<a onclick="udg('${toot.account.id}','${acct_id}')" class="pointer grey-text">
 					${dis_name}(@${toot.account.acct})
@@ -393,7 +393,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				} else {
 					noticeavatar = toot.account.avatar_static
 				}
-				noticeavatar = `<a onclick="udg('${toot.account.id}','${acct_id}');" user="${toot.account.acct}" class="notf-icon udg">
+				noticeavatar = `<a onclick="udg('${toot.account.id}','${acct_id}');" user="${toot.account.acct}" class="notf-icon udg" aria-hidden="true">
 						<img draggable="false" src="${noticeavatar}" width="20" class="prof-img" 
 							user="${toot.account.acct}" onerror="this.src=\'../../img/loading.svg\'">
 					</a>`
@@ -518,7 +518,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var spoil = escapeHTML(toot.spoiler_text)
 				var spoiler = 'cw cw_hide'
 				var api_spoil = 'gray'
-				var spoiler_show = `<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">${lang.lang_parse_cwshow}</a><br>`
+				var spoiler_show = `<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">${lang.lang_parse_cwshow}<span class="voice">${lang.lang_parse_cwshow_acc}</span></a><br>`
 			} else {
 				if (content) {
 					var ct1 = content.split('</p>').length + content.split('<br />').length - 2
@@ -576,7 +576,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 
 			if (urls) {
-				var analyze = `<a onclick="additionalIndv('${tlid}','${acct_id}','${id}')" class="add-show pointer">
+				var analyze = `<a onclick="additionalIndv('${tlid}','${acct_id}','${id}')" class="add-show pointer" aria-hidden="true">
 						${lang.lang_parse_url}
 					</a><br>`
 			} else {
@@ -621,7 +621,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							viewer +
 							`<a onclick="imgv('${id}','${key2}','${acct_id}')" id="${id}'-image-${key2}" 
 								data-url="${url}" data-type="video" class="img-parsed">
-									<video src="${purl}" class="${sense} toot-img pointer" style="max-width:100%;" loop="true">
+									<video src="${purl}" class="${sense} toot-img pointer" style="max-width:100%;" loop="true" alt="attached media">
 							</a></span>`
 					} else {
 						if (media.type == 'unknown') {
@@ -634,7 +634,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 								viewer +
 								'<audio src="' +
 								url +
-								'" class="pointer" style="width:100%;" controls></span>'
+								'" class="pointer" style="width:100%;" controls alt="attached media"></span>'
 						} else {
 							if (media.description) {
 								var desc = media.description
@@ -652,7 +652,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 										id="${id}-image-${key2}" data-url="${url}" data-original="${remote_url}" data-type="${media.type}" 
 										class="img-parsed img-link" style="width:calc(${cwdt}% - 1px); height:${imh};">
 									<img draggable="false" src="${purl}" class="${sense} toot-img pointer" 
-										onerror="this.src=\'../../img/loading.svg\'" title="${escapeHTML(desc)}">
+										onerror="this.src=\'../../img/loading.svg\'" title="${escapeHTML(desc)}" alt="${escapeHTML(desc)}">
 									${nsfwmes}
 								</a>`
 						}
@@ -683,7 +683,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						if (toot.account.acct != mention.acct) {
 							mentions =
 								mentions +
-								`<a onclick="udg('${mention.id}',' ${acct_id}')" class="pointer">@${mention.acct}</a> `
+								`<a onclick="udg('${mention.id}',' ${acct_id}')" class="pointer" aria-hidden="true">@${mention.acct}</a> `
 							to_mention.push(mention.acct)
 						}
 					}
@@ -724,7 +724,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						)}
 						">Pin</a>${featured}</span> `
 				})
-				tags = '<div style="float:right">' + tags + '</div>'
+				tags = '<div style="float:right" aria-hidden="true">' + tags + '</div>'
 			}
 			//リプ数
 			if (toot.replies_count || toot.replies_count === 0) {
@@ -739,29 +739,29 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			var vis = ''
 			var visen = toot.visibility
 			if (visen == 'public') {
-				var vis = `<i class="text-darken-3 material-icons gray sml vis-data pointer" 
-						title="${lang.lang_parse_public}(${lang.lang_parse_clickcopy})" data-vis="public" onclick="staCopy('${id}')">
+				var vis = `<span onclick="staCopy('${id}')"><i class="text-darken-3 material-icons gray sml vis-data pointer" 
+						title="${lang.lang_parse_public}(${lang.lang_parse_clickcopy})" data-vis="public" aria-hidden="true">
 						public
-					</i>`
+					</i><span class="voice">${lang.lang_parse_public} ${lang.lang_toot}(${lang.lang_parse_clickcopy})</span></span>`
 				var can_rt = ''
 			} else if (visen == 'unlisted') {
-				var vis = `<i class="text-darken-3 material-icons blue-text sml vis-data pointer" 
-						title="${lang.lang_parse_unlisted}(${lang.lang_parse_clickcopy})" data-vis="public" onclick="staCopy('${id}')">
+				var vis = `<span onclick="staCopy('${id}')"><i class="text-darken-3 material-icons blue-text sml vis-data pointer" 
+						title="${lang.lang_parse_unlisted}(${lang.lang_parse_clickcopy})" data-vis="public" aria-hidden="true">
 						lock_open
-					</i>`
+					</i><span class="voice">${lang.lang_parse_unlisted} ${lang.lang_toot}(${lang.lang_parse_clickcopy})</span></span>`
 				var can_rt = ''
 			} else if (visen == 'private') {
-				var vis = `<i class="text-darken-3 material-icons orange-text sml vis-data pointer" 
-						title="${lang.lang_parse_private}(${lang.lang_parse_clickcopy})" data-vis="public" onclick="staCopy('${id}')">
+				var vis = `<span onclick="staCopy('${id}')"><i class="text-darken-3 material-icons orange-text sml vis-data pointer" 
+						title="${lang.lang_parse_private}(${lang.lang_parse_clickcopy})" data-vis="public" aria-hidden="true">
 						lock
-					</i>`
+					</i><span class="voice">${lang.lang_parse_private} ${lang.lang_toot}(${lang.lang_parse_clickcopy})</span></span>`
 
 				var can_rt = 'unvisible'
 			} else if (visen == 'direct') {
-				var vis = `<i class="text-darken-3 material-icons red-text sml vis-data pointer" 
-						title="${lang.lang_parse_direct}(${lang.lang_parse_clickcopy})" data-vis="public" onclick="staCopy('${id}')">
+				var vis = `<span onclick="staCopy('${id}')"><i class="text-darken-3 material-icons red-text sml vis-data pointer" 
+						title="${lang.lang_parse_direct}(${lang.lang_parse_clickcopy})" data-vis="public" aria-hidden="true">
 						mail
-					</i>`
+					</i><span class="voice">${lang.lang_parse_direct} ${lang.lang_toot}(${lang.lang_parse_clickcopy})</span></span>`
 				var can_rt = 'unvisible'
 			}
 			if (toot.account.acct == localStorage.getItem('user_' + acct_id)) {
@@ -904,7 +904,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var trans = `<div class="">
 						<a onclick="trans('${toot.language}','${lang.language}', $(this))" 
 							class="waves-effect waves-dark btn-flat actct" style="padding:0">
-								<i class="material-icons">g_translate</i>${lang.lang_parse_trans}
+								<i class="material-icons" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
 						</a>
 					</div>`
 			} else {
@@ -929,7 +929,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					for (var i = 0; i < tickerdata.length; i++) {
 						var value = tickerdata[i]
 						if (value.domain == thisdomain) {
-							var tickerdom = `<div style="user-select:none;cursor:default;background:linear-gradient(90deg, ${
+							var tickerdom = `<div aria-hidden="true" style="user-select:none;cursor:default;background:linear-gradient(90deg, ${
 								value.bg
 							}, transparent 96%) !important; color:${
 								value.text
@@ -1007,7 +1007,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				<div class="area-icon grid">
 					<a onclick="udg('${toot.account.id}','${acct_id}');" user="${toot.account.acct}" class="udg">
 						<img draggable="false" src="${avatar}" width="40" class="prof-img"
-							user="${toot.account.acct}" onerror="this.src='../../img/loading.svg'"/>
+							user="${toot.account.acct}" onerror="this.src='../../img/loading.svg'" alt="" />
 					</a>
 					${noticeavatar}
 				</div>
@@ -1021,7 +1021,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					<div class="flex-time">
 						<span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy('${toot.url}');"
 							title="${date(toot.created_at, 'absolute')}(${lang.lang_parse_clickcopyurl})">
-							<i class="far fa-clock"></i>${date(toot.created_at, datetype)}
+							<i class="far fa-clock"></i><span class="voice">posted at </span>${date(toot.created_at, datetype)}
 						</span>
 					</div>
 				</div>
@@ -1056,6 +1056,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							class="waves-effect waves-dark btn-flat actct rep-btn"
 							data-men="${to_mention}" data-visen="${visen}" style="padding:0" title="${lang.lang_parse_replyto}">
 								<i class="fas fa-share"></i>
+								<span class="voice">${lang.lang_parse_replyto} </span>
 								<span class="rep_ct">${replyct}</span>
 						</a>
 					</div>
@@ -1065,6 +1066,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						}','${acct_id}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
 							style="padding:0" title="${lang.lang_parse_bt}">
 							<i class="fas fa-retweet ${if_rt} rt_${toot.id}"></i>
+							<span class="voice">${lang.lang_parse_bt} </span>
 							<span class="rt_ct">${toot.reblogs_count}</span>
 						</a>
 					</div>
@@ -1072,6 +1074,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						<a onclick="qt('${toot.id}','${acct_id}','${toot.account.acct}','${toot.url}')" 
 							class="waves-effect waves-dark btn-flat actct" style="padding:0" title="${lang.lang_parse_quote}">
 							<i class="text-darken-3 fas fa-quote-right"></i>
+							<span class="voice">${lang.lang_parse_quote} </span>
 						</a>
 					</div>
 					<div class="action ${disp['bkm']} ${noauth} ${bkmClass}">
@@ -1079,6 +1082,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							class="waves-effect waves-dark btn-flat actct bkm-btn" style="padding:0"
 							title="${lang.lang_parse_bookmark}">
 							<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${if_bkm}"></i>
+							<span class="voice">${lang.lang_parse_bookmark} </span>
 					</a>
 					</div>
 					<div class="action ${disp['fav']} ${noauth}">
@@ -1087,6 +1091,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							title="${lang.lang_parse_fav}">
 							<i class="fas text-darken-3 fa-star${if_fav} fav_${uniqueid}"></i>
 							<span class="fav_ct">${toot.favourites_count}</span>
+							<span class="voice">${lang.lang_parse_fav} </span>
 						</a>
 					</div>
 				</div>
@@ -1094,14 +1099,16 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					<div class="action ${noauth}">
 						<a onclick="toggleAction($(this), ${menuct * 39 + 6})" 
 							class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0">
-							<i class="text-darken-3 material-icons act-icon">expand_more</i>
+							<i class="text-darken-3 material-icons act-icon" aria-hidden="true">expand_more</i>
+							<span class="voice">Other actions</span>
 						</a>
 					</div>
 					<div class="action ${noauth}">
 						<a onclick="details('${toot.id}','${acct_id}','${tlid}','normal')"
 							class="waves-effect waves-dark btn-flat details ${dmHide}" style="padding:0"
 							title="${lang.lang_parse_detail}">
-						<i class="text-darken-3 material-icons">menu_open</i></a>
+						<i class="text-darken-3 material-icons" aria-hidden="true">menu_open</i></a>
+						<span class="voice">${lang.lang_parse_detail}</span>
 					</div>
 				</div>
 				<div class="contextMenu hide z-depth-4">
@@ -1131,7 +1138,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					<div class="${if_mine}">
 						<button onclick="redraft('${uniqueid}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
 							style="padding:0">
-							<i class="material-icons">redo</i>${lang.lang_parse_redraft}
+							<i class="material-icons" aria-hidden="true">redo</i>${lang.lang_parse_redraft}
 						</button>
 					</div>
 					${trans}
@@ -1185,10 +1192,10 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 					var locked = ''
 				}
 				if (auth == 'request') {
-					var authhtml = `<i class="material-icons gray pointer" onclick="request('${toot.id}','authorize','${acct_id}')" title="Accept">
+					var authhtml = `<i class="material-icons gray pointer" onclick="request('${toot.id}','authorize','${acct_id}')" title="Accept" aria-hidden="true">
 							person_add
-						</i>　
-						<i class="material-icons gray pointer" onclick="request('${toot.id}','reject','${acct_id}')" title="Reject">
+						</i>
+						<i class="material-icons gray pointer" onclick="request('${toot.id}','reject','${acct_id}')" title="Reject" aria-hidden="true">
 							person_add_disabled
 						</i>`
 				} else {
@@ -1279,7 +1286,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				}
 				var latest = date(toot.last_status_at, 'relative')
 				if (toot.last_status_at) {
-					var latesthtml = `<div class="cbadge" style="width:100px;">Last:${latest}</div>`
+					var latesthtml = `<div class="cbadge" style="width:100px;">Last <span class="voice">toot</span>: ${latest}</div>`
 				} else {
 					var latesthtml = ''
 				}
@@ -1296,6 +1303,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 							class="prof-img"
 							user="${toot.acct}"
 							onerror="this.src='../../img/loading.svg'"
+							alt=""
 						/>
 					</a></div>
 					<div class="area-display_name">

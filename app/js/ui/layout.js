@@ -8,7 +8,7 @@ var websocketNotf = []
 
 //カラム追加ボックストグル
 function addColumnMenu() {
-	$('#left-menu div').removeClass('active')
+	$('#left-menu a').removeClass('active')
 	$('#addColumnMenu').addClass('active')
 	$('.menu-content').addClass('hide')
 	$('#add-box').removeClass('hide')
@@ -357,7 +357,7 @@ function parseColumn(target, dontclose) {
 							<i class="material-icons waves-effect ${isMisRed}" id="notice_icon_${key}" ${notf_attr}
 								 style="font-size:40px; padding-top:25%;" 
 								 onclick="checkStr('${acct.type}','${data}','${acct.domain}', '${key}', '${delc}','${voice}',null)"
-							 	 title="${lang.lang_layout_gotop}">
+							 	 title="${lang.lang_layout_gotop}" aria-hidden="true">
 							</i>
 						</div>
 					<div class="area-notice_name">
@@ -366,29 +366,33 @@ function parseColumn(target, dontclose) {
 					<div class="area-a1">
 						<a onclick="notfToggle('${acct.domain}','${key}')" class="setting nex ${if_notf}" 
 							title="${unique_notf}" ${icnsert}>
-							<i class="material-icons waves-effect nex notf-icon_${acct.domain}">notifications</i>
+							<i class="material-icons waves-effect nex notf-icon_${acct.domain}" aria-hidden="true">notifications</i>
+							<span class="voice">${unique_notf}</span>
 						</a>
 						<span class="cbadge hide notf-announ_${acct.domain}" style="margin-right:0" 
 							onclick="notfToggle('${acct.domain}','${key}')" title="${lang.lang_layout_announ}">
 							<i class="fas fa-bullhorn"></i>
 							<span class="notf-announ_${acct.domain}_ct"></span>
+							<span class="voice">${lang.lang_layout_announ}</span>
 						</span>
 						${if_tag_btn}
 					</div>
 					<div class="area-sta">
-						<span class="new badge teal notf-reply_${acct.domain} hide" data-badge-caption="Reply">0</span>
-						<span class="new badge yellow black-text notf-fav_${acct.domain} hide" data-badge-caption="Fav">0</span>
-						<span class="new badge blue notf-bt_${acct.domain} hide" data-badge-caption="BT">0</span>
-						<span class="new badge orange notf-follow_${acct.domain} hide" data-badge-caption="Follow">0</span>
+						<span class="new badge teal notf-reply_${acct.domain} hide" data-badge-caption="Reply" aria-hidden="true">0</span>
+						<span class="new badge yellow black-text notf-fav_${acct.domain} hide" data-badge-caption="Fav" aria-hidden="true">0</span>
+						<span class="new badge blue notf-bt_${acct.domain} hide" data-badge-caption="BT" aria-hidden="true">0</span>
+						<span class="new badge orange notf-follow_${acct.domain} hide" data-badge-caption="Follow" aria-hidden="true">0</span>
 					</div>
 					<div class="area-a2">
 						<a onclick="removeColumn('${key}')" class="setting nex">
-							<i class="material-icons waves-effect nex" title="${lang.lang_layout_delthis}" ${icnsert}>cancel</i>
+							<i class="material-icons waves-effect nex" title="${lang.lang_layout_delthis}" ${icnsert} aria-hidden="true">cancel</i>
+							<span class="voice">${lang.lang_layout_delthis}</span>
 						</a>
 					</div>
 					<div class="area-a3">
 						<a onclick="setToggle('${key}')" class="setting nex" title="${lang.lang_layout_setthis}" ${icnsert}>
-							<i class="material-icons waves-effect nex">settings</i>
+							<i class="material-icons waves-effect nex" aria-hidden="true">settings</i>
+							<span class="voice">${lang.lang_layout_setthis}</span>
 						</a>
 					</div>
 				</div>

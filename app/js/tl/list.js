@@ -1,5 +1,5 @@
 function listMenu() {
-	$('#left-menu div').removeClass('active')
+	$('#left-menu a').removeClass('active')
 	$('#listMenu').addClass('active')
 	$('.menu-content').addClass('hide')
 	$('#list-box').removeClass('hide')

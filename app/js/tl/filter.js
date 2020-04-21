@@ -101,7 +101,7 @@ function delreset(tlid) {
 }
 /*ワードフィルター機能*/
 function filterMenu() {
-	$('#left-menu div').removeClass('active')
+	$('#left-menu a').removeClass('active')
 	$('#filterMenu').addClass('active')
 	$('.menu-content').addClass('hide')
 	$('#filter-box').removeClass('hide')

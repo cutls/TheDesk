@@ -1264,30 +1264,30 @@
 			</span>
 			<div id="menu-wrapper">
 				<div id="left-menu">
-					<div class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu">
-						<i class="material-icons">add</i><span>@@addColumn@@</span>
-					</div>
-					<div class="waves-effect" onclick="sortMenu()" id="sortMenu">
-						<i class="material-icons">sort</i><span>@@sortColumns@@</span>
-					</div>
-					<div class="waves-effect" onclick="searchMenu()" id="searchMenu">
-						<i class="material-icons">search</i><span>@@search@@</span>
-					</div>
-					<div class="waves-effect" onclick="listMenu()" id="listMenu">
-						<i class="material-icons">view_headline</i><span>@@list@@</span>
-					</div>
-					<div class="waves-effect" onclick="dirMenu()" id="dirMenu">
-						<i class="material-icons">recent_actors</i><span>@@directory@@</span>
-					</div>
-					<div class="waves-effect" onclick="filterMenu()" id="filterMenu">
-						<i class="material-icons">filter_list</i><span>@@filter@@</span>
-					</div>
-					<div class="waves-effect" onclick="help()" id="helpMenu">
-						<i class="material-icons">help_outline</i><span>@@helpAndLogs@@</span>
-					</div>
-					<div class="waves-effect" onclick="location.href='index.html'">
-						<i class="material-icons">refresh</i><span>@@f5@@</span>
-					</div>
+					<a class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu">
+						<i class="material-icons" aria-hidden="true">add</i><span>@@addColumn@@</span>
+					</a>
+					<a class="waves-effect" onclick="sortMenu()" id="sortMenu">
+						<i class="material-icons" aria-hidden="true">sort</i><span>@@sortColumns@@</span>
+					</a>
+					<a class="waves-effect" onclick="searchMenu()" id="searchMenu">
+						<i class="material-icons" aria-hidden="true">search</i><span>@@search@@</span>
+					</a>
+					<a class="waves-effect" onclick="listMenu()" id="listMenu">
+						<i class="material-icons" aria-hidden="true">view_headline</i><span>@@list@@</span>
+					</a>
+					<a class="waves-effect" onclick="dirMenu()" id="dirMenu">
+						<i class="material-icons" aria-hidden="true">recent_actors</i><span>@@directory@@</span>
+					</a>
+					<a class="waves-effect" onclick="filterMenu()" id="filterMenu">
+						<i class="material-icons" aria-hidden="true">filter_list</i><span>@@filter@@</span>
+					</a>
+					<a class="waves-effect" onclick="help()" id="helpMenu">
+						<i class="material-icons" aria-hidden="true">help_outline</i><span>@@helpAndLogs@@</span>
+					</a>
+					<a class="waves-effect" onclick="location.href='index.html'">
+						<i class="material-icons" aria-hidden="true">refresh</i><span>@@f5@@</span>
+					</a>
 				</div>
 				<div id="right-menu">
 					<!--カラム追加-->
@@ -1308,46 +1308,46 @@
 								<input type="hidden" value="local" id="type-sel" />
 								@@showThisTL@@
 								<div id="tltype">
-									<div class="type waves-effect active" data-type="local">
-										<div><i class="material-icons">people_outline</i></div>
+									<a class="type waves-effect active" data-type="local">
+										<div><i class="material-icons" aria-hidden="true">people_outline</i></div>
 										<span>@@local@@</span>
-									</div>
-									<div class="type waves-effect" data-type="local-media">
-										<div><i class="material-icons">perm_media</i></div>
+									</a>
+									<a class="type waves-effect" data-type="local-media">
+										<div><i class="material-icons" aria-hidden="true">perm_media</i></div>
 										<span>@@localMedia@@</span>
-									</div>
-									<div class="type waves-effect" data-type="home">
-										<div><i class="material-icons">home</i></div>
+									</a>
+									<a class="type waves-effect" data-type="home">
+										<div><i class="material-icons" aria-hidden="true">home</i></div>
 										<span>@@home@@</span>
-									</div>
-									<div class="type waves-effect" data-type="pub">
-										<div><i class="material-icons">language</i></div>
+									</a>
+									<a class="type waves-effect" data-type="pub">
+										<div><i class="material-icons" aria-hidden="true">language</i></div>
 										<span>@@fed@@</span>
-									</div>
-									<div class="type waves-effect" data-type="pub-media">
-										<div><i class="material-icons">perm_media</i></div>
+									</a>
+									<a class="type waves-effect" data-type="pub-media">
+										<div><i class="material-icons" aria-hidden="true">perm_media</i></div>
 										<span>@@fedMedia@@</span>
-									</div>
-									<div class="type waves-effect" data-type="dm">
-										<div><i class="material-icons">mail_outline</i></div>
+									</a>
+									<a class="type waves-effect" data-type="dm">
+										<div><i class="material-icons" aria-hidden="true">mail_outline</i></div>
 										<span>@@dm@@</span>
-									</div>
-									<div class="type waves-effect" data-type="mix">
-										<div><i class="material-icons">merge_type</i></div>
+									</a>
+									<a class="type waves-effect" data-type="mix">
+										<div><i class="material-icons" aria-hidden="true">merge_type</i></div>
 										<span>@@integratedTLDes@@</span>
-									</div>
-									<div class="type waves-effect" data-type="plus">
-										<div><i class="material-icons">reply</i></div>
+									</a>
+									<a class="type waves-effect" data-type="plus">
+										<div><i class="material-icons" aria-hidden="true">reply</i></div>
 										<span>@@localPlusDes@@</span>
-									</div>
-									<div class="type waves-effect" data-type="notf">
-										<div><i class="material-icons">notifications</i></div>
+									</a>
+									<a class="type waves-effect" data-type="notf">
+										<div><i class="material-icons" aria-hidden="true">notifications</i></div>
 										<span>@@notf@@</span>
-									</div>
-									<div class="type waves-effect" data-type="bookmark">
-										<div><i class="material-icons">bookmark</i></div>
+									</a>
+									<a class="type waves-effect" data-type="bookmark">
+										<div><i class="material-icons" aria-hidden="true">bookmark</i></div>
 										<span>@@bookmark@@</span>
-									</div>
+									</a>
 								</div>
 							</div>
 							<div id="noauth" class="hide">
