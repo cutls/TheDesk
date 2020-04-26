@@ -180,6 +180,9 @@ function makeNewFilter() {
 	if ($('#conv_filter:checked').val()) {
 		cont.push('thread')
 	}
+	if ($('#prof_filter:checked').val()) {
+		cont.push('profiles')
+	}
 	if (!cont.length) {
 		$('#filtered-words').html('Error:' + lang.lang_filter_errordegree)
 	}
@@ -229,6 +232,7 @@ function makeNewFilter() {
 			$('#local_filter').prop('checked', false)
 			$('#notf_filter').prop('checked', false)
 			$('#conv_filter').prop('checked', false)
+			$('#prof_filter').prop('checked', false)
 			$('#except_filter').prop('checked', false)
 			$('#wholeword_filter').prop('checked', false)
 			$('#days_filter').val('0')

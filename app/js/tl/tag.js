@@ -198,3 +198,28 @@ function tagFeature(name, acct_id) {
 			M.toast({ html: 'Complete: ' + escapeHTML(name), displayLength: 3000 })
 		})
 }
+//タグのフィルタ
+function addTag(id) {
+	var columns = JSON.parse(localStorage.getItem('column'))
+	var column = columns[id]
+	if(!column.data.name) {
+		var name = column.data
+	} else {
+		var name = column.data.name
+	}
+	var col = localStorage.getItem('column')
+	var o = JSON.parse(col)
+	var obj = o[id]
+	obj.data = {
+		'name': name,
+		'all': $(`#all_tm-${id}`).val(),
+		'any': $(`#any_tm-${id}`).val(),
+		'none': $(`#none_tm-${id}`).val(),
+	}
+	o[id] = obj
+	var json = JSON.stringify(o)
+	console.log(json)
+	localStorage.setItem('column',json)
+	columnReload(id, 'tag')
+}
+

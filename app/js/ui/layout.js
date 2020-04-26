@@ -292,16 +292,33 @@ function parseColumn(target, dontclose) {
 					${lang.lang_layout_excludingbt}
 					<br>`
 			} else if (acct.type == 'tag') {
+				if(acct.data.name) {
+					var name = acct.data.name
+					var all = acct.data.all
+					var any = acct.data.any
+					var none = acct.data.none
+				} else {
+					var name = acct.data
+					var all = ''
+					var any = ''
+					var none = ''
+				}
 				if_tag = `<div class="column-hide notf-indv-box" id="tag-box_${key}" style="padding:5px;">
-					Base: ${acct.data}<br>
-					<div id="tagManager-${key}"></div>
-					<button onclick="addTag('${key}')" class="btn waves-effect" style="width: 100%">Add</button>
+					Base: ${name}<br>
+					<div id="tagManager-${key}">
+						all: <input type="text" id="all_tm-${key}"" value="${all}">
+						any: <input type="text" id="any_tm-${key}" value="${any}">
+						none: <input type="text" id="none_tm-${key}"" value="${none}">
+					</div>
+					<button onclick="addTag('${key}')" class="btn waves-effect" style="width: 100%">Refresh</button>
 				</div>`
 				if_tag_btn = `<a onclick="setToggleTag('${key}')" class="setting nex" 
 				title="${lang.lang_layout_tagManager}" style="width:30px">
 				<i class="material-icons waves-effect nex">note_add</i>
 				</a>`
 				unread = ''
+				var exclude = ''
+				var if_notf = 'hide'
 			} else {
 				var exclude = ''
 				unread = ''

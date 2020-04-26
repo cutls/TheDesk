@@ -10,10 +10,18 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	if (tlid == 'add') {
 		console.log('add new column')
 		var newtab = $('.box').length
+		if (type == 'tag') {
+			data = {
+				name: data,
+				any: [],
+				all: [],
+				none: [],
+			}
+		}
 		var add = {
 			domain: acct_id,
 			type: type,
-			data: data
+			data: data,
 		}
 		var multi = localStorage.getItem('column')
 		var obj = JSON.parse(multi)
@@ -35,7 +43,11 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	if (type == 'mix' && localStorage.getItem('mode_' + domain) != 'misskey') {
 		//Integratedなら飛ばす
 		$('#notice_' + tlid).text(
-			'Integrated TL(' + localStorage.getItem('user_' + acct_id) + '@' + domain + ')'
+			'Integrated TL(' +
+				localStorage.getItem('user_' + acct_id) +
+				'@' +
+				domain +
+				')'
 		)
 		$('#notice_icon_' + tlid).text('merge_type')
 		mixtl(acct_id, tlid, 'integrated', delc, voice)
@@ -43,7 +55,11 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	} else if (type == 'plus') {
 		//Local+なら飛ばす
 		$('#notice_' + tlid).text(
-			'Local+ TL(' + localStorage.getItem('user_' + acct_id) + '@' + domain + ')'
+			'Local+ TL(' +
+				localStorage.getItem('user_' + acct_id) +
+				'@' +
+				domain +
+				')'
 		)
 		$('#notice_icon_' + tlid).text('people_outline')
 		mixtl(acct_id, tlid, 'plus', delc, voice)
@@ -52,7 +68,12 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		//通知なら飛ばす
 		notf(acct_id, tlid, 'direct')
 		$('#notice_' + tlid).text(
-			cap(type, data, acct_id) + '(' + localStorage.getItem('user_' + acct_id) + '@' + domain + ')'
+			cap(type, data, acct_id) +
+				'(' +
+				localStorage.getItem('user_' + acct_id) +
+				'@' +
+				domain +
+				')'
 		)
 		$('#notice_icon_' + tlid).text('notifications')
 		return
@@ -60,13 +81,18 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		//ブックマークなら飛ばす
 		getBookmark(acct_id, tlid)
 		$('#notice_' + tlid).text(
-			cap(type, data, acct_id) + '(' + localStorage.getItem('user_' + acct_id) + '@' + domain + ')'
+			cap(type, data, acct_id) +
+				'(' +
+				localStorage.getItem('user_' + acct_id) +
+				'@' +
+				domain +
+				')'
 		)
 		$('#notice_icon_' + tlid).text('bookmark')
 		return
 	} else if (type == 'home') {
 		//ホームならお知らせ「も」取りに行く
-		announ(acct_id, tlid);
+		announ(acct_id, tlid)
 	}
 	localStorage.setItem('now', type)
 	todo(cap(type) + ' TL Loading...')
@@ -74,14 +100,19 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 	if (type != 'noauth') {
 		var hdr = {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
+			Authorization: 'Bearer ' + at,
 		}
 		$('#notice_' + tlid).text(
-			cap(type, data, acct_id) + '(' + localStorage.getItem('user_' + acct_id) + '@' + domain + ')'
+			cap(type, data, acct_id) +
+				'(' +
+				localStorage.getItem('user_' + acct_id) +
+				'@' +
+				domain +
+				')'
 		)
 	} else {
 		var hdr = {
-			'content-type': 'application/json'
+			'content-type': 'application/json',
 		}
 		domain = acct_id
 		$('#notice_' + tlid).text('Glance TL(' + domain + ')')
@@ -110,7 +141,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		var i = {
 			method: method,
 			headers: hdr,
-			body: JSON.stringify(req)
+			body: JSON.stringify(req),
 		}
 	} else {
 		var misskey = false
@@ -129,26 +160,26 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		var method = 'GET'
 		var i = {
 			method: method,
-			headers: hdr
+			headers: hdr,
 		}
 	}
 
 	console.log(['Try to get timeline of ' + tlid, start])
 	fetch(start, i)
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			console.log(['Result of getting timeline of ' + tlid, json])
 			$('#landing_' + tlid).hide()
 			var mute = getFilterTypeByAcct(acct_id, type)
@@ -190,8 +221,13 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	if (localStorage.getItem('mode_' + domain) == 'misskey') {
 		var misskey = true
 		var key = localStorage.getItem('misskey_wss_' + acct_id)
-		var send = '{"type":"connect","body":{"channel":"' + typePs(type) + '","id":"' + tlid + '"}}'
-		var mskyset = setInterval(function() {
+		var send =
+			'{"type":"connect","body":{"channel":"' +
+			typePs(type) +
+			'","id":"' +
+			tlid +
+			'"}}'
+		var mskyset = setInterval(function () {
 			if (misskeywsstate[key]) {
 				misskeyws[key].send(send)
 				clearInterval(mskyset)
@@ -209,12 +245,16 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		} else if (type == 'pub') {
 			var start = wss + '/api/v1/streaming/?stream=public&access_token=' + at
 		} else if (type == 'pub-media') {
-			var start = wss + '/api/v1/streaming/?stream=public:media&access_token=' + at
+			var start =
+				wss + '/api/v1/streaming/?stream=public:media&access_token=' + at
 		} else if (type == 'local') {
-			var start = wss + '/api/v1/streaming/?stream=public:local&access_token=' + at
+			var start =
+				wss + '/api/v1/streaming/?stream=public:local&access_token=' + at
 		} else if (type == 'local-media') {
 			var start =
-				wss + '/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=' + at
+				wss +
+				'/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=' +
+				at
 		} else if (type == 'tag') {
 			if (type == 'tag') {
 				var tag = localStorage.getItem('tag-range')
@@ -222,28 +262,38 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 					data = data + '&local=true'
 				}
 			}
-			var start = wss + '/api/v1/streaming/?stream=hashtag&tag=' + data + '&access_token=' + at
+			var start =
+				wss +
+				'/api/v1/streaming/?stream=hashtag&tag=' +
+				data +
+				'&access_token=' +
+				at
 		} else if (type == 'noauth') {
 			var start = 'wss://' + acct_id + '/api/v1/streaming/?stream=public:local'
 		} else if (type == 'list') {
-			var start = wss + '/api/v1/streaming/?stream=list&list=' + data + '&access_token=' + at
+			var start =
+				wss +
+				'/api/v1/streaming/?stream=list&list=' +
+				data +
+				'&access_token=' +
+				at
 		} else if (type == 'dm') {
 			var start = wss + '/api/v1/streaming/?stream=direct&access_token=' + at
 		}
 		var wsid = websocket.length
 		localStorage.setItem('wss_' + tlid, wsid)
 		websocket[wsid] = new WebSocket(start)
-		websocket[wsid].onopen = function(mess) {
+		websocket[wsid].onopen = function (mess) {
 			console.table({
 				tlid: tlid,
 				type: 'Connect Streaming API' + type,
 				domain: domain,
-				message: [mess]
+				message: [mess],
 			})
 			errorct = 0
 			$('#notice_icon_' + tlid).removeClass('red-text')
 		}
-		websocket[wsid].onmessage = function(mess) {
+		websocket[wsid].onmessage = function (mess) {
 			console.log([tlid + ':Receive Streaming API:', JSON.parse(mess.data)])
 			if (misskey) {
 				if (JSON.parse(mess.data).type == 'note') {
@@ -254,7 +304,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 					websocketNotf[acct_id].send(
 						JSON.stringify({
 							type: 'capture',
-							id: obj.id
+							id: obj.id,
 						})
 					)
 					var templete = misskeyParse([obj], type, acct_id, tlid, '', mute)
@@ -273,26 +323,40 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 				if (typeA == 'delete') {
 					var obj = JSON.parse(mess.data).payload
 					if (delc == 'true') {
-						$('#timeline_' + tlid + ' [unique-id=' + JSON.parse(mess.data).payload + ']').addClass(
-							'emphasized'
-						)
-						$('#timeline_' + tlid + ' [unique-id=' + JSON.parse(mess.data).payload + ']').addClass(
-							'by_delcatch'
-						)
+						$(
+							'#timeline_' +
+								tlid +
+								' [unique-id=' +
+								JSON.parse(mess.data).payload +
+								']'
+						).addClass('emphasized')
+						$(
+							'#timeline_' +
+								tlid +
+								' [unique-id=' +
+								JSON.parse(mess.data).payload +
+								']'
+						).addClass('by_delcatch')
 					} else {
 						$('[unique-id=' + JSON.parse(mess.data).payload + ']').hide()
 						$('[unique-id=' + JSON.parse(mess.data).payload + ']').remove()
 					}
 				} else if (typeA == 'update' || typeA == 'conversation') {
-					if (!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')) {
+					if (
+						!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')
+					) {
 						//markers show中はダメ
 						var obj = JSON.parse(JSON.parse(mess.data).payload)
-						if ($('#timeline_' + tlid + ' [toot-id=' + obj.id + ']').length < 1) {
+						if (
+							$('#timeline_' + tlid + ' [toot-id=' + obj.id + ']').length < 1
+						) {
 							if (voice) {
 								say(obj.content)
 							}
 							var templete = parse([obj], type, acct_id, tlid, '', mute, type)
-							if ($('timeline_box_' + tlid + '_box .tl-box').scrollTop() === 0) {
+							if (
+								$('timeline_box_' + tlid + '_box .tl-box').scrollTop() === 0
+							) {
 								$('#timeline_' + tlid).prepend(templete)
 							} else {
 								var pool = localStorage.getItem('pool_' + tlid)
@@ -319,7 +383,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 				}
 			}
 		}
-		websocket[wsid].onerror = function(error) {
+		websocket[wsid].onerror = function (error) {
 			console.error('Error closing')
 			console.error(error)
 			if (mode == 'error') {
@@ -334,7 +398,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			}
 			return false
 		}
-		websocket[wsid].onclose = function() {
+		websocket[wsid].onclose = function () {
 			console.warn('Closing ' + tlid)
 			if (mode == 'error') {
 				$('#notice_icon_' + tlid).addClass('red-text')
@@ -376,13 +440,17 @@ function moreload(type, tlid) {
 	if (sid && !moreloading) {
 		if (
 			type == 'mix' &&
-			localStorage.getItem('mode_' + localStorage.getItem('domain_' + acct_id)) != 'misskey'
+			localStorage.getItem(
+				'mode_' + localStorage.getItem('domain_' + acct_id)
+			) != 'misskey'
 		) {
 			mixmore(tlid, 'integrated')
 			return
 		} else if (
 			type == 'plus' &&
-			localStorage.getItem('mode_' + localStorage.getItem('domain_' + acct_id)) != 'misskey'
+			localStorage.getItem(
+				'mode_' + localStorage.getItem('domain_' + acct_id)
+			) != 'misskey'
 		) {
 			mixmore(tlid, 'plus')
 			return
@@ -404,19 +472,19 @@ function moreload(type, tlid) {
 			var at = localStorage.getItem('acct_' + acct_id + '_at')
 			var hdr = {
 				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
+				Authorization: 'Bearer ' + at,
 			}
 			var domain = localStorage.getItem('domain_' + acct_id)
 		} else {
 			var hdr = {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
 			}
 			domain = acct_id
 		}
 		if (localStorage.getItem('mode_' + domain) == 'misskey') {
 			var misskey = true
 			hdr = {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
 			}
 			var url = misskeycom(type, data)
 			var start = 'https://' + domain + '/api/notes/' + url
@@ -439,35 +507,42 @@ function moreload(type, tlid) {
 			var i = {
 				method: method,
 				headers: hdr,
-				body: JSON.stringify(req)
+				body: JSON.stringify(req),
 			}
 		} else {
 			var misskey = false
-			var start = 'https://' + domain + '/api/v1/timelines/' + com(type, data) + 'max_id=' + sid
+			var start =
+				'https://' +
+				domain +
+				'/api/v1/timelines/' +
+				com(type, data) +
+				'max_id=' +
+				sid
 			if (type == 'dm') {
-				var start = 'https://' + domain + '/api/v1/conversations?' + 'max_id=' + sid
+				var start =
+					'https://' + domain + '/api/v1/conversations?' + 'max_id=' + sid
 			}
 			var method = 'GET'
 			var i = {
 				method: method,
-				headers: hdr
+				headers: hdr,
 			}
 		}
 		fetch(start, i)
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				var mute = getFilterTypeByAcct(acct_id, type)
 				if (misskey) {
 					var templete = misskeyParse(json, '', acct_id, tlid, '', mute)
@@ -508,12 +583,16 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 	if (sid && !moreloading) {
 		if (
 			type == 'mix' &&
-			localStorage.getItem('mode_' + localStorage.getItem('domain_' + acct_id)) != 'misskey'
+			localStorage.getItem(
+				'mode_' + localStorage.getItem('domain_' + acct_id)
+			) != 'misskey'
 		) {
 			return
 		} else if (
 			type == 'plus' &&
-			localStorage.getItem('mode_' + localStorage.getItem('domain_' + acct_id)) != 'misskey'
+			localStorage.getItem(
+				'mode_' + localStorage.getItem('domain_' + acct_id)
+			) != 'misskey'
 		) {
 			return
 		} else if (type == 'notf') {
@@ -526,19 +605,19 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 			var at = localStorage.getItem('acct_' + acct_id + '_at')
 			var hdr = {
 				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
+				Authorization: 'Bearer ' + at,
 			}
 			var domain = localStorage.getItem('domain_' + acct_id)
 		} else {
 			var hdr = {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
 			}
 			domain = acct_id
 		}
 		if (localStorage.getItem('mode_' + domain) == 'misskey') {
 			var misskey = true
 			hdr = {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
 			}
 			var url = misskeycom(type, data)
 			var start = 'https://' + domain + '/api/notes/' + url
@@ -561,36 +640,43 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 			var i = {
 				method: method,
 				headers: hdr,
-				body: JSON.stringify(req)
+				body: JSON.stringify(req),
 			}
 		} else {
 			var misskey = false
-			var start = 'https://' + domain + '/api/v1/timelines/' + com(type, data) + 'since_id=' + sid
+			var start =
+				'https://' +
+				domain +
+				'/api/v1/timelines/' +
+				com(type, data) +
+				'since_id=' +
+				sid
 			if (type == 'dm') {
-				var start = 'https://' + domain + '/api/v1/conversations?' + 'since_id=' + sid
+				var start =
+					'https://' + domain + '/api/v1/conversations?' + 'since_id=' + sid
 			}
 			var method = 'GET'
 			var i = {
 				method: method,
-				headers: hdr
+				headers: hdr,
 			}
 		}
 
 		fetch(start, i)
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				console.log(['Result diff of TL' + tlid, json])
 				if (misskey) {
 					var templete = misskeyParse(json, '', acct_id, tlid, '', mute)
@@ -612,7 +698,7 @@ function reloadTL(type, data, acct_id, key, delc, voice) {
 
 //WebSocket切断
 function tlCloser() {
-	Object.keys(websocket).forEach(function(tlid) {
+	Object.keys(websocket).forEach(function (tlid) {
 		if (websocketOld[tlid]) {
 			websocketOld[tlid].close()
 			console.log('%c Close Streaming API: Old' + tlid, 'color:blue')
@@ -624,27 +710,30 @@ function tlCloser() {
 		}
 	})
 	websocket = []
-	Object.keys(wsHome).forEach(function(tlid) {
+	Object.keys(wsHome).forEach(function (tlid) {
 		if (wsHome[tlid]) {
 			wsHome[tlid].close()
 			console.log('%c Close Streaming API:Integrated Home' + tlid, 'color:blue')
 		}
 	})
 	wsHome = []
-	Object.keys(wsLocal).forEach(function(tlid) {
+	Object.keys(wsLocal).forEach(function (tlid) {
 		if (wsLocal[tlid]) {
 			wsLocal[tlid].close()
-			console.log('%c Close Streaming API:Integrated Local' + tlid, 'color:blue')
+			console.log(
+				'%c Close Streaming API:Integrated Local' + tlid,
+				'color:blue'
+			)
 		}
 	})
 	wsLocal = []
-	Object.keys(websocketNotf).forEach(function(tlid) {
+	Object.keys(websocketNotf).forEach(function (tlid) {
 		if (websocketNotf[tlid]) {
 			websocketNotf[tlid].close()
 			console.log('%c Close Streaming API:Notf' + tlid, 'color:blue')
 		}
 	})
-	Object.keys(misskeyws).forEach(function(tlid) {
+	Object.keys(misskeyws).forEach(function (tlid) {
 		if (misskeyws[tlid]) {
 			misskeyws[tlid].close()
 			console.log('%c Close Streaming API:Misskey' + tlid, 'color:blue')
@@ -674,7 +763,11 @@ function cap(type, data, acct_id) {
 		}
 	} else if (type == 'local-media') {
 		if (localStorage.getItem('local_' + acct_id) && !locale) {
-			var response = localStorage.getItem('local_' + acct_id) + '(' + lang.lang_tl_media + ')'
+			var response =
+				localStorage.getItem('local_' + acct_id) +
+				'(' +
+				lang.lang_tl_media +
+				')'
 		} else {
 			var response = 'Local TL(Media)'
 		}
@@ -686,12 +779,22 @@ function cap(type, data, acct_id) {
 		}
 	} else if (type == 'pub-media') {
 		if (localStorage.getItem('public_' + acct_id) && !locale) {
-			var response = localStorage.getItem('public_' + acct_id) + '(' + lang.lang_tl_media + ')'
+			var response =
+				localStorage.getItem('public_' + acct_id) +
+				'(' +
+				lang.lang_tl_media +
+				')'
 		} else {
 			var response = 'Federated TL(Media)'
 		}
 	} else if (type == 'tag') {
-		var response = '#' + escapeHTML(data)
+		if (data) {
+			if (data.name) {
+				var response = '#' + escapeHTML(data.name)
+			} else {
+				var response = '#' + escapeHTML(data)
+			}
+		}
 	} else if (type == 'list') {
 		var ltitle = localStorage.getItem('list_' + data + '_' + acct_id)
 		var response = 'List(' + ltitle + ')'
@@ -706,7 +809,11 @@ function cap(type, data, acct_id) {
 	} else if (type == 'dm') {
 		var response = 'DM'
 	} else if (type == 'mix') {
-		if (localStorage.getItem('mode_' + localStorage.getItem('domain_' + acct_id)) == 'misskey') {
+		if (
+			localStorage.getItem(
+				'mode_' + localStorage.getItem('domain_' + acct_id)
+			) == 'misskey'
+		) {
 			var response = 'Social TL'
 		} else {
 			var response = 'Integrated'
@@ -736,7 +843,21 @@ function com(type, data) {
 	} else if (type == 'pub-media') {
 		return 'public?only_media=true&'
 	} else if (type == 'tag') {
-		return 'tag/' + data + '?'
+		if (data.name) {
+			var name = data.name
+			var all = data.all
+			var any = data.any
+			var none = data.none
+		} else {
+			var name = data
+			var all = ''
+			var any = ''
+			var none = ''
+		}
+		return `tag/${name}?${buildQuery('all', all)}${buildQuery(
+			'any',
+			any
+		)}${buildQuery('none', none)}`.slice(0, -1)
 	} else if (type == 'list') {
 		return 'list/' + data + '?'
 	} else if (type == 'dm') {
@@ -897,37 +1018,50 @@ function getMarker(tlid, type, acct_id) {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
-			$('#unread_' + tlid).attr('title', lang.lang_layout_unread + ':' + lang.lang_nothing)
+		.catch(function (error) {
+			$('#unread_' + tlid).attr(
+				'title',
+				lang.lang_layout_unread + ':' + lang.lang_nothing
+			)
 			$('#unread_' + tlid).attr('data-id', '')
 			return false
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json) {
 				if (json[add]) {
 					json = json[add]
 					$('#unread_' + tlid).attr(
 						'title',
-						lang.lang_layout_unread + ':' + json.updated_at + ' v' + json.version
+						lang.lang_layout_unread +
+							':' +
+							json.updated_at +
+							' v' +
+							json.version
 					)
 					$('#unread_' + tlid).attr('data-id', json.last_read_id)
 				} else {
-					$('#unread_' + tlid).attr('title', lang.lang_layout_unread + ':' + lang.lang_nothing)
+					$('#unread_' + tlid).attr(
+						'title',
+						lang.lang_layout_unread + ':' + lang.lang_nothing
+					)
 					$('#unread_' + tlid).attr('data-id', '')
 				}
 			} else {
-				$('#unread_' + tlid).attr('title', lang.lang_layout_unread + ':' + lang.lang_nothing)
+				$('#unread_' + tlid).attr(
+					'title',
+					lang.lang_layout_unread + ':' + lang.lang_nothing
+				)
 				$('#unread_' + tlid).attr('data-id', '')
 			}
 		})
@@ -951,23 +1085,23 @@ function showUnread(tlid, type, acct_id) {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (!json || !json.length) {
 				columnReload(tlid, type)
 			}
@@ -1007,23 +1141,23 @@ function ueload(tlid) {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (!json) {
 				columnReload(tlid, type)
 			}
@@ -1062,15 +1196,15 @@ function asRead(callback) {
 					var id = $('#timeline_' + i + ' .cvo:eq(0)').attr('unique-id')
 					var poster = {
 						home: {
-							last_read_id: id
-						}
+							last_read_id: id,
+						},
 					}
 				} else {
 					var id = $('#timeline_' + i + ' .cvo:eq(0)').attr('data-notf')
 					var poster = {
 						notifications: {
-							last_read_id: id
-						}
+							last_read_id: id,
+						},
 					}
 				}
 
@@ -1083,7 +1217,7 @@ function asRead(callback) {
 				httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 				httpreq.responseType = 'json'
 				httpreq.send(JSON.stringify(poster))
-				httpreq.onreadystatechange = function() {
+				httpreq.onreadystatechange = function () {
 					if (httpreq.readyState === 4) {
 						var json = httpreq.response
 						if (this.status !== 200) {
@@ -1117,8 +1251,8 @@ function asReadEnd() {
 			onBeforeOpen: () => {
 				Swal.showLoading()
 			},
-			onClose: () => {}
-		}).then(result => {})
+			onClose: () => {},
+		}).then((result) => {})
 	} else {
 		postMessage(['asReadComp', ''], '*')
 	}
@@ -1144,7 +1278,7 @@ function getBookmark(acct_id, tlid, more) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send()
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -1159,7 +1293,11 @@ function getBookmark(acct_id, tlid, more) {
 				}
 			}
 			var templete = parse(json, 'bookmark', acct_id, tlid, -1, null)
-			templete = templete + '<div class="hide notif-marker" data-maxid="' + max_id + '"></div>'
+			templete =
+				templete +
+				'<div class="hide notif-marker" data-maxid="' +
+				max_id +
+				'"></div>'
 			if (more) {
 				$('#timeline_' + tlid).append(templete)
 			} else {
@@ -1183,7 +1321,7 @@ function announ(acct_id, tlid) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send()
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -1198,7 +1336,7 @@ function announ(acct_id, tlid) {
 					}
 					ct++
 				}
-				if(ct > 0) {
+				if (ct > 0) {
 					$('.notf-announ_' + acct_id + '_ct').text(ct)
 				}
 			} else {
@@ -1210,4 +1348,14 @@ function announ(acct_id, tlid) {
 			todc()
 		}
 	}
+}
+//buildQuery
+function buildQuery(name, data) {
+	if(!data || data == '') return ''
+	var arr = data.split(',')
+	var str = ''
+	for (var i = 0; i < arr.length; i++) {
+		str = str + `${name}[]=${arr[i]}&`
+	}
+	return str
 }
