@@ -559,7 +559,7 @@ p:not(:last-child) {
 	z-index: 500;
 	padding: 5px;
 	display: grid;
-	grid-template-columns: 40px 60px 1fr 24px;
+	grid-template-columns: 40px 65px 1fr 24px;
 	grid-template-rows: 30px 30px;
 	grid-template-areas: 'notice notice_name notice_name a2' 'notice a1 sta a3' 'notf-box notf-box notf-box notf-box';
 }
