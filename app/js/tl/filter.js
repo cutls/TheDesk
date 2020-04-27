@@ -101,7 +101,7 @@ function delreset(tlid) {
 }
 /*ワードフィルター機能*/
 function filterMenu() {
-	$('#left-menu div').removeClass('active')
+	$('#left-menu a').removeClass('active')
 	$('#filterMenu').addClass('active')
 	$('.menu-content').addClass('hide')
 	$('#filter-box').removeClass('hide')
@@ -180,6 +180,9 @@ function makeNewFilter() {
 	if ($('#conv_filter:checked').val()) {
 		cont.push('thread')
 	}
+	if ($('#prof_filter:checked').val()) {
+		cont.push('profiles')
+	}
 	if (!cont.length) {
 		$('#filtered-words').html('Error:' + lang.lang_filter_errordegree)
 	}
@@ -229,6 +232,7 @@ function makeNewFilter() {
 			$('#local_filter').prop('checked', false)
 			$('#notf_filter').prop('checked', false)
 			$('#conv_filter').prop('checked', false)
+			$('#prof_filter').prop('checked', false)
 			$('#except_filter').prop('checked', false)
 			$('#wholeword_filter').prop('checked', false)
 			$('#days_filter').val('0')

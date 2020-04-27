@@ -2,6 +2,7 @@
     "list": "Списък на профилите",
     "back": "Назад",
     "add": "Добавяне на профил",
+    "addAcct": "Fill the instance domain (like mastodon.social)",
     "codesetupwarn": "Премахнете отметката за да пропуснете влизането с код. (Вход в Mastodon от Windows или macOS) (Препоръчително: pcheck)",
     "codesetup": "Настройка на код",
     "mainacct": "Основен профил",

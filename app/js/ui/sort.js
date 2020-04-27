@@ -111,7 +111,7 @@ function sort() {
 }
 //ソートボタントグル
 function sortMenu() {
-	$("#left-menu div").removeClass("active");
+	$("#left-menu a").removeClass("active");
 	$("#sortMenu").addClass("active");
 	$(".menu-content").addClass("hide");
 	$("#sort-box").removeClass("hide");

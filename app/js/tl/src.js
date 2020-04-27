@@ -3,7 +3,7 @@
 function searchMenu() {
 	$('#src-contents').html('')
 	trend()
-	$('#left-menu div').removeClass('active')
+	$('#left-menu a').removeClass('active')
 	$('#searchMenu').addClass('active')
 	$('.menu-content').addClass('hide')
 	$('#src-box').removeClass('hide')

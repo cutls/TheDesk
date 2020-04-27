@@ -33,6 +33,7 @@ function menu() {
     $("#add-box").removeClass("hide");
     $("#left-menu div").removeClass("active");
     $("#addColumnMenu").addClass("active");
+    $("#addColumnMenu").click();
   } else {
     $('#menu').fadeOut()
     $("#menu").removeClass("appear")
@@ -69,7 +70,7 @@ $(function () {
   });
 });
 function help() {
-  $("#left-menu div").removeClass("active");
+  $("#left-menu a").removeClass("active");
 	$("#helpMenu").addClass("active");
 	$(".menu-content").addClass("hide");
 	$("#help-box").removeClass("hide");

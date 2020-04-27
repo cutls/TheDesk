@@ -2,6 +2,7 @@
     "list":"List of accounts",
     "back":"Back",
     "add":"Add an account",
+    "addAcct": "Fill the instance domain (like mastodon.social)",
     "codesetupwarn":"Uncheck it to skip pasiting code.(login to Mastodon on Windows or macOS) (Recommended: pcheck)",
     "codesetup":"Code setup",
     "mainacct":"Main an account",

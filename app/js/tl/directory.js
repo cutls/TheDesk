@@ -3,7 +3,7 @@
 function dirMenu() {
 	$("#dir-contents").html("");
 	directory();
-	$("#left-menu div").removeClass("active");
+	$("#left-menu a").removeClass("active");
 	$("#dirMenu").addClass("active");
 	$(".menu-content").addClass("hide");
 	$("#dir-box").removeClass("hide");

@@ -2,6 +2,7 @@
     "list": "Accountliste",
     "back": "Zurück",
     "add": "Konto hinzufügen",
+    "addAcct": "Fill the instance domain (like mastodon.social)",
     "codesetupwarn": "Check if TheDesk is not working on Windows, you want to login Pleroma servers, you cannot login when it checked.",
     "codesetup": "Code-Setup",
     "mainacct": "Hauptkonto",

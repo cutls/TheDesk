@@ -115,6 +115,13 @@ $(function($) {
 					return false
 				}
 			}
+			//Ctrl+K:メニュー開閉
+			if (event.metaKey || event.ctrlKey) {
+				if (e.keyCode === 75) {
+					menu()
+					return false
+				}
+			}
 			//Ctrl+Space:読み込み
 			if (event.metaKey || event.ctrlKey) {
 				if (e.keyCode === 32) {
