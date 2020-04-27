@@ -1134,10 +1134,10 @@ electron-rebuild@^1.10.1:
     spawn-rx "^3.0.0"
     yargs "^14.2.0"
 
-electron@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-8.0.0.tgz#b5f105cda6985ca2f2496de15e44b2bbb0c8e4f4"
-  integrity sha512-vBXUKRqTUq0jv1upvISdvScDDH3uCPwXj4eA5BeR3UDbJp2hOhq7eJxwjIQbfLQql98aYz4X6pSlzBnhfyQqHA==
+electron@^8.2.3:
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-8.2.3.tgz#b7d6a43bd9f3a2428c660dcd055a20034520e1ea"
+  integrity sha512-FJUp103c8yJBoAaj/QM/OBde57iJh95u1yGJBytMUXmLFSsx78LmNE03QN4XCODyzi76IEcasvUcK6scogRLbQ==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
@@ -1755,10 +1755,10 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
-"itunes-nowplaying-mac@git://github.com/cutls/itunes-nowplaying-mac":
-  version "0.2.3"
-  uid "86e64e528ef4b2afa8f5b4d008d11b967b113758"
-  resolved "git://github.com/cutls/itunes-nowplaying-mac#86e64e528ef4b2afa8f5b4d008d11b967b113758"
+itunes-nowplaying-mac@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/itunes-nowplaying-mac/-/itunes-nowplaying-mac-0.3.1.tgz#3f5ee853aef843e66c20ae10b9439303bc1a4986"
+  integrity sha512-kZ/ef1rMzl/CMc1RBh3z99wqijxQgz5Vn1gLCrE1OqRwj9bq2vbgeIqWjJC8iDWZHRolizdTPfKMAbp8yKYFTQ==
 
 jimp@^0.10.3:
   version "0.10.3"
