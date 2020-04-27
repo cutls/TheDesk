@@ -2,6 +2,7 @@
     "list": "Lista de cuentas",
     "back": "Atrás",
     "add": "Agregar una cuenta",
+    "addAcct": "Fill the instance domain (like mastodon.social)",
     "codesetupwarn": "Desmarcarlo para omitir código de pegado. (iniciar sesión en Mastodon en Windows o macOS) (Recomendado: pcheck)",
     "codesetup": "Configuración de código",
     "mainacct": "Cuenta principal",
