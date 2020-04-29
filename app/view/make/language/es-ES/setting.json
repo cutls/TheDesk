@@ -173,6 +173,8 @@
   "template2": "macOS:{song}:Song name/{album}:Album name/{artist}:Artist name/composer:{composer}/spampling rate:{hz}/bit rate:{bitRate}/genre:{genre}",
   "template3": "",
   "postartwork": "Attach an Artwork of Spotify",
+  "searchArtwork": "If the song has no artwork, automatic complete it(macOS)",
+  "searchArtworkWarn": "If you nowplaying an non-artwork song, get one which seems nice through API. If you do not like the completed artwork, you can right-click it to delete.",
   "tts": "TTS(text to speech) Preferences",
   "bouyomi": "BouyomiChan connect",
   "bouyomiWarn": "Require: BouyomiChan WebSocket Plugin",

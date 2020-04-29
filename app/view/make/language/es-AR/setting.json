@@ -173,6 +173,8 @@
   "template2": "macOS: {artist}: nombre del artista // {song}: nombre del tema // {album}: nombre del álbum // {genre}: género // {composer}: compositor // {hz}: frecuencia de muestreo // {bitRate}: tasa de transferencia",
   "template3": "",
   "postartwork": "Adjuntar tapa desde Spotify",
+  "searchArtwork": "If the song has no artwork, automatic complete it(macOS)",
+  "searchArtworkWarn": "If you nowplaying an non-artwork song, get one which seems nice through API. If you do not like the completed artwork, you can right-click it to delete.",
   "tts": "Configuración de TTS (texto hablado)",
   "bouyomi": "Conectar BouyomiChan",
   "bouyomiWarn": "Requiere: Plugin WebSocket de BouyomiChan",
