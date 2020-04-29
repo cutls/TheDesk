@@ -24,8 +24,17 @@ body {
 .markdown {
 	display: none;
 }
-help {
-	display: none;
+.accessMark {
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+	background-color: var(--emphasized);
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.accessibility .scr {
+	display: none !important;
 }
 .show-help {
 	display: inline;

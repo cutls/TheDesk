@@ -140,6 +140,7 @@ function nano() {
 	postMessage(['nano', null], '*')
 }
 onmessage = function(e) {
+	console.log(e)
 	if (e.data[0] == 'details') {
 		details(e.data[1][0], e.data[1][1])
 	} else if (e.data[0] == 'udg') {
@@ -186,6 +187,10 @@ onmessage = function(e) {
 		asRead()
 	} else if (e.data[0] == 'asReadEnd') {
 		asReadEnd()
+	} else if (e.data[0] == 'accessibility') {
+		console.log('atrue')
+		$('body').addClass('accessibility')
+		$('.window-title').before('<div class="accessMark">Screen Reader Optimized</div>')
 	} else if (e.data[0] == 'logData') {
 		$('#logs').val(e.data[1])
 		var obj = document.getElementById('logs')

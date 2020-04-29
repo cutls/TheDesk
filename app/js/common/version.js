@@ -323,6 +323,7 @@ function closeSupport() {
 	)
 }
 function storeDialog(platform, ver) {
+	if($('body').hasClass('accessibility')) return false
 	if (platform == 'win32') {
 		var mes = lang.lang_version_platform
 	} else if (platform == 'linux') {

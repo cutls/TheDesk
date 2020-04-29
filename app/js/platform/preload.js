@@ -4,6 +4,7 @@ var ipc = electron.ipcRenderer
 //title bar
 const customTitlebar = require('custom-electron-titlebar')
 window.addEventListener('DOMContentLoaded', () => {
+	ipc.send('acsCheck', '')
 	ipc.send('frameCheck', '')
 	ipc.on('frame', function(event, args) {
 		const file = location.href.substr(-10)
@@ -230,11 +231,15 @@ ipc.on('prog', function(event, arg) {
 ipc.on('mess', function(event, arg) {
 	postMessage(['updateMess', arg], '*')
 })
+//misc
 ipc.on('asRead', function(event, arg) {
 	postMessage(['asRead', ''], '*')
 })
 ipc.on('asReadEnd', function(event, arg) {
 	postMessage(['asReadEnd', ''], '*')
+})
+ipc.on('accessibility', function(event, arg) {
+	postMessage(['accessibility', 'true'], '*')
 })
 var webviewDom = document.getElementById('webview')
 if (webviewDom) {

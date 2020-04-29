@@ -132,7 +132,12 @@ function system(mainWindow, dir, lang, dirname) {
 		app.relaunch();
 		app.exit();
 	});
-
+	//スクリーンリーダー
+	ipc.on("acsCheck", function(e, arg) {
+		if(app.accessibilitySupportEnabled) {
+			mainWindow.webContents.send('accessibility', 'true')
+		}
+	});
 	ipc.on("quit", (e, args) => {
 		app.quit();
 	});

@@ -195,6 +195,7 @@ function createWindow() {
 	mainWindow = new BrowserWindow(arg)
 	mainWindow.once('page-title-updated', () => {
 		mainWindow.show()
+		console.log('Accessibility: ' + app.accessibilitySupportEnabled)
 		if (window_size.max) {
 			mainWindow.maximize()
 		}
