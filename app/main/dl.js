@@ -42,7 +42,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 				filename: file,
 				openFolderWhenDone: true,
 				onProgress: function(event) {
-					e.sender.webContents.send('prog', event)
+					e.sender.webContents.send('prog', [event, args[2]])
 				},
 				saveAs: false
 			}

@@ -7,14 +7,14 @@
 		<meta charset="utf-8" />
 		@@comment-start@@
 		<script type="text/javascript">
-			var _jipt = [];
-			_jipt.push(["project", "thedesk"]);
+			var _jipt = []
+			_jipt.push(['project', 'thedesk'])
 		</script>
 		<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
 		@@comment-end@@
 		<style>
 			body {
-				font-family: "Open Sans";
+				font-family: 'Open Sans';
 				-webkit-app-region: drag;
 				cursor: move;
 				padding: 10px;
@@ -68,7 +68,7 @@
 			.skipbtn:hover {
 				background-color: #c26363;
 				transition: all 0.3s ease-in-out;
-                color:white;
+				color: white;
 			}
 
 			#prog {
@@ -92,12 +92,12 @@
 				<p>@@updatehere@@</p>
 				<span id="now"></span>→<b id="ver"></b><br />
 				<a href="" id="github" class="btn waves-effect grey darken-1"><i class="fab fa-github left"></i>@@checkWhatIsNew@@</a><br />
-				<button class="waves-effect btn windows hide" onclick="update('install')" style="margin-left:15px;">@@installer@@</button>
-				<button class="waves-effect btn windows hide" onclick="update('portable')" style="margin-left:15px;">@@portable@@</button>
-				<button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left:15px;">@@linux@@</button>
-				<button class="waves-effect btn linux hide" onclick="update('linuxdeb')" style="margin-left:15px;">@@linuxdeb@@</button>
-				<button class="waves-effect btn linux hide" onclick="update('linuxsnap')" style="margin-left:15px;">@@linuxsnap@@</button>
-				<button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left:15px;">@@download@@</button>
+				<button class="waves-effect btn windows hide" onclick="update('install')" style="margin-left: 15px;">@@installer@@</button>
+				<button class="waves-effect btn windows hide" onclick="update('portable')" style="margin-left: 15px;">@@portable@@</button>
+				<button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left: 15px;">@@linux@@</button>
+				<button class="waves-effect btn linux hide" onclick="update('linuxdeb')" style="margin-left: 15px;">@@linuxdeb@@</button>
+				<button class="waves-effect btn linux hide" onclick="update('linuxsnap')" style="margin-left: 15px;">@@linuxsnap@@</button>
+				<button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left: 15px;">@@download@@</button>
 				<br />
 				@@problem1@@<br />@@problem2@@
 			</div>
@@ -112,13 +112,13 @@
 						<div>@@nextver@@</div>
 					</a>
 				</div>
-				<a class="pointer waves-effect" onclick="skipper();" style="margin-top:5px">@@continue@@</a>
+				<a class="pointer waves-effect" onclick="skipper();" style="margin-top: 5px;">@@continue@@</a>
 			</div>
-			<div id="dlnow" class="hide">
+			<div id="dlnow" class="hide" style="width: 70%;">
 				<h4>@@dlnow@@</h4>
 				<h4 id="prog"></h4>
 				<div class="progress">
-					<div class="determinate" style="width: 0%"></div>
+					<div class="determinate" style="width: 0%;"></div>
 				</div>
 			</div>
 		</div>
@@ -126,165 +126,176 @@
 		<script type="text/javascript" src="../../js/platform/end.js"></script>
 		<script>
 			function skipper() {
-				$("#dlnow").addClass("hide");
-				$("#box").toggleClass("show");
-				if ($("#box").hasClass("hide") && $("#skipper").hasClass("hide")) {
-					$("#skipper").removeClass("hide");
-					$("#skipper").addClass("show");
+				$('#dlnow').addClass('hide')
+				$('#box').toggleClass('show')
+				if ($('#box').hasClass('hide') && $('#skipper').hasClass('hide')) {
+					$('#skipper').removeClass('hide')
+					$('#skipper').addClass('show')
 				} else {
-					$("#box").toggleClass("hide");
-					$("#skipper").toggleClass("hide");
-					$("#skipper").toggleClass("show");
+					$('#box').toggleClass('hide')
+					$('#skipper').toggleClass('hide')
+					$('#skipper').toggleClass('show')
 				}
 			}
-			verck();
+			verck()
 			function update(sel) {
-				$("#box").toggleClass("show");
-				$("#box").toggleClass("hide");
-				$("#dlnow").toggleClass("hide");
-				$("#dlnow").toggleClass("show");
-				$("#prog").text("");
-				var bit = localStorage.getItem("bit");
-				var start = "https://thedesk.top/ver.json";
+				$('#box').toggleClass('show')
+				$('#box').toggleClass('hide')
+				$('#dlnow').toggleClass('hide')
+				$('#dlnow').toggleClass('show')
+				$('#prog').text('')
+				var bit = localStorage.getItem('bit')
+				var start = 'https://thedesk.top/ver.json'
 				fetch(start, {
-					method: "GET",
-					headers: { "content-type": "application/json" }
+					method: 'GET',
+					headers: { 'content-type': 'application/json' },
 				})
-					.then(function(response) {
+					.then(function (response) {
 						if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
-		}
-		return response.json();
-					})
-					.catch(function(error) {
-						todo(error);setLog(start, "JSON", error);
-						console.error(error);
-					})
-					.then(function(json) {
-						if (sel == "install") {
-							if (bit == "x64") {
-								var url = json["winx64"];
-								if(localStorage.getItem("dl-win") == "yes") {
-									var file = "TheDesk-" + json.unique + "-setup.exe";
-								} else {
-									var file = "TheDesk-setup.exe";
-								}
-							} else if (bit == "ia32") {
-								var url = json["winia32"];
-								if(localStorage.getItem("dl-win") == "yes") {
-									var file = "TheDesk-" + json.unique + "-setup-ia32.exe";
-								} else {
-									var file = "TheDesk-setup-ia32.exe";
-								}
-							}
-						} else if (sel == "portable") {
-							if (bit == "x64") {
-								var url = json["winx64p"];
-								if(localStorage.getItem("dl-win") == "yes") {
-									var file = "TheDesk-" + json.unique + ".exe";
-								} else {
-									var file = "TheDesk.exe";
-								}
-							} else if (bit == "ia32") {
-								var url = json["winia32p"];
-								if(localStorage.getItem("dl-win") == "yes") {
-									var file = "TheDesk-" + json.unique + "-ia32.exe";
-								} else {
-									var file = "TheDesk-ia32.exe";
-								}
-							}
-						} else if (sel == "linux") {
-							var url = json["linuxx64"];
-							if(localStorage.getItem("dl-win") == "yes") {
-								var file = "thedesk-" + json.unique_linux + ".zip";
-							} else {
-								var file = "thedesk.zip";
-							}
-						} else if (sel == "linuxdeb") {
-							var url = json["linuxdeb"];
-							var file = "thedesk_" + json.unique_linux + "_amd64.deb";
-						} else if (sel == "linuxsnap") {
-							var url = json["linuxsnap"];
-							var file = "thedesk_" + json.unique_linux + "_amd64.snap";
-						} else if (sel == "mac") {
-							var url = json["mac"];
-							var file = "TheDesk-" + json.unique_mac + ".dmg";
+							response.text().then(function (text) {
+								setLog(response.url, response.status, text)
+							})
 						}
-						postMessage(["downloadButton", [url, file]], "*");
-					});
+						return response.json()
+					})
+					.catch(function (error) {
+						todo(error)
+						setLog(start, 'JSON', error)
+						console.error(error)
+					})
+					.then(function (json) {
+						if (sel == 'install') {
+							if (bit == 'x64') {
+								var url = json['winx64']
+								if (localStorage.getItem('dl-win') == 'yes') {
+									var file = 'TheDesk-' + json.unique + '-setup.exe'
+								} else {
+									var file = 'TheDesk-setup.exe'
+								}
+								var filesize = json.winx64_size
+							} else if (bit == 'ia32') {
+								var url = json['winia32']
+								if (localStorage.getItem('dl-win') == 'yes') {
+									var file = 'TheDesk-' + json.unique + '-setup-ia32.exe'
+								} else {
+									var file = 'TheDesk-setup-ia32.exe'
+								}
+								var filesize = json.winia32_size
+							}
+						} else if (sel == 'portable') {
+							if (bit == 'x64') {
+								var url = json['winx64p']
+								if (localStorage.getItem('dl-win') == 'yes') {
+									var file = 'TheDesk-' + json.unique + '.exe'
+								} else {
+									var file = 'TheDesk.exe'
+								}
+								var filesize = json.winx64p_size
+							} else if (bit == 'ia32') {
+								var url = json['winia32p']
+								if (localStorage.getItem('dl-win') == 'yes') {
+									var file = 'TheDesk-' + json.unique + '-ia32.exe'
+								} else {
+									var file = 'TheDesk-ia32.exe'
+								}
+								var filesize = json.winia32p_size
+							}
+						} else if (sel == 'linux') {
+							var url = json['linuxx64']
+							if (localStorage.getItem('dl-win') == 'yes') {
+								var file = 'thedesk-' + json.unique_linux + '.zip'
+							} else {
+								var file = 'thedesk.zip'
+							}
+							var filesize = json.linuxx64_size
+						} else if (sel == 'linuxdeb') {
+							var url = json['linuxdeb']
+							var file = 'thedesk_' + json.unique_linux + '_amd64.deb'
+							var filesize = json.linuxdeb_size
+						} else if (sel == 'linuxsnap') {
+							var url = json['linuxsnap']
+							var file = 'thedesk_' + json.unique_linux + '_amd64.snap'
+							var filesize = json.linuxsnap_size
+						} else if (sel == 'mac') {
+							var url = json['mac']
+							var file = 'TheDesk-' + json.unique_mac + '.dmg'
+							var filesize = json.mac_size
+						}
+						postMessage(['downloadButton', [url, file, filesize]], '*')
+					})
 			}
 			function quit() {
-				postMessage(["sendSinmpleIpc", "quit"], "*");
+				postMessage(['sendSinmpleIpc', 'quit'], '*')
 			}
 			function updateProg(arg) {
-				$(".determinate").css("width", arg.percent * 100 + "%");
-				$("#prog").text(Math.floor(arg.percent * 100) + "%");
+				$('.determinate').css('width', arg[0].percent * 100 + '%')
+				$('#prog').html(`${Math.floor(arg[0].percent * 100)}%<br />(${Math.floor(arg[0].percent*arg[1]/1024/1024*10)/10} MB / ${Math.floor(arg[1]/1024/1024*10)/10} MB)`)
+
 			}
 			function updateMess(arg) {
-				console.log(arg);
-				$("#prog").text(arg);
+				console.log(arg)
+				$('#prog').text(arg)
 			}
 			function verck() {
-				var platform = localStorage.getItem("platform");
-				var bit = localStorage.getItem("bit");
-				if (platform == "win32") {
-					$(".windows").removeClass("hide");
-				} else if (platform == "linux") {
-					$(".linux").removeClass("hide");
-				} else if (platform == "darwin") {
-					$(".mac").removeClass("hide");
+				var platform = localStorage.getItem('platform')
+				var bit = localStorage.getItem('bit')
+				if (platform == 'win32') {
+					$('.windows').removeClass('hide')
+				} else if (platform == 'linux') {
+					$('.linux').removeClass('hide')
+				} else if (platform == 'darwin') {
+					$('.mac').removeClass('hide')
 				}
-				var start = "https://thedesk.top/ver.json";
+				var start = 'https://thedesk.top/ver.json'
 				fetch(start, {
-					method: "GET",
-					headers: { "content-type": "application/json" }
+					method: 'GET',
+					headers: { 'content-type': 'application/json' },
 				})
-					.then(function(response) {
+					.then(function (response) {
 						if (!response.ok) {
-			response.text().then(function(text) {
-				setLog(response.url, response.status, text);
-			});
-		}
-		return response.json();
+							response.text().then(function (text) {
+								setLog(response.url, response.status, text)
+							})
+						}
+						return response.json()
 					})
-					.catch(function(error) {
-						todo(error);setLog(start, "JSON", error);
-						console.error(error);
+					.catch(function (error) {
+						todo(error)
+						setLog(start, 'JSON', error)
+						console.error(error)
 					})
-					.then(function(json) {
-						console.log(json);
-						if (platform == "win32") {
-							$("#ver").text(json.desk);
-							localStorage.setItem("next-ver", json.desk);
-							var url = "https://github.com/cutls/TheDesk/releases/tag/v" + json.unique;
-						} else if (platform == "linux") {
-							$("#ver").text(json.desk_linux);
-							localStorage.setItem("next-ver", json.desk_linux);
-							var url = "https://github.com/cutls/TheDesk/releases/tag/v" + json.unique_linux;
-						} else if (platform == "darwin") {
-							$("#ver").text(json.desk_mac);
-							localStorage.setItem("next-ver", json.desk_mac);
-							var url = "https://github.com/cutls/TheDesk/releases/tag/v" + json.unique_mac;
+					.then(function (json) {
+						console.log(json)
+						if (platform == 'win32') {
+							$('#ver').text(json.desk)
+							localStorage.setItem('next-ver', json.desk)
+							var url = 'https://github.com/cutls/TheDesk/releases/tag/v' + json.unique
+						} else if (platform == 'linux') {
+							$('#ver').text(json.desk_linux)
+							localStorage.setItem('next-ver', json.desk_linux)
+							var url = 'https://github.com/cutls/TheDesk/releases/tag/v' + json.unique_linux
+						} else if (platform == 'darwin') {
+							$('#ver').text(json.desk_mac)
+							localStorage.setItem('next-ver', json.desk_mac)
+							var url = 'https://github.com/cutls/TheDesk/releases/tag/v' + json.unique_mac
 						}
 
-						$("#github").attr("href", url);
+						$('#github').attr('href', url)
 
-						$("#now").text(localStorage.getItem("ver"));
-					});
+						$('#now').text(localStorage.getItem('ver'))
+					})
 			}
 			function nextv() {
-				localStorage.setItem("new-ver-skip", "true");
-				window.close();
+				localStorage.setItem('new-ver-skip', 'true')
+				window.close()
 			}
 			function enc(ver) {
-				var ver = ver.replace(/\s/g, "");
-				var ver = ver.replace(/\(/g, "-");
-				var ver = ver.replace(/\)/g, "");
-				var ver = ver.replace(/\[/g, "_");
-				var ver = ver.replace(/\]/g, "");
-				return ver;
+				var ver = ver.replace(/\s/g, '')
+				var ver = ver.replace(/\(/g, '-')
+				var ver = ver.replace(/\)/g, '')
+				var ver = ver.replace(/\[/g, '_')
+				var ver = ver.replace(/\]/g, '')
+				return ver
 			}
 		</script>
 	</body>
