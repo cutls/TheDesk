@@ -2,7 +2,7 @@
 function verck(ver, jp) {
 	console.log('%c Welcome😊 ' + ver, 'color: red;font-size:200%;')
 	var date = new Date()
-	var show = false
+	var showVer = false
 	if (localStorage.getItem('ver') != ver && localStorage.getItem('winstore')) {
 		//ちょっと削除とリンク解析の都合上アレ(s)
 		//対象外のアプデ:storageが20の最初まで"Usamin (18.6.5)"
@@ -15,7 +15,7 @@ function verck(ver, jp) {
 			}
 		}
 		//ちょっと削除とリンク解析の都合上アレ(e)
-		show = true
+		showVer = true
 		console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
 		$(document).ready(function() {
 			if (localStorage.getItem('winstore')) {
@@ -37,8 +37,8 @@ function verck(ver, jp) {
 		})
 	}
 	localStorage.setItem('ver', ver)
-	if (!show) {
-		console.log(show)
+	if (!showVer) {
+		console.log(showVer)
 		if (
 			date.getFullYear() * 100 + date.getMonth() + 1 >= localStorage.getItem('showSupportMe') ||
 			!localStorage.getItem('showSupportMe')
@@ -172,7 +172,7 @@ function verck(ver, jp) {
 					} else {
 						if (obj.type == 'textv2') {
 							if (~obj.languages.indexOf(lang.language)) {
-								var show = true
+								var showVer = true
 								if (obj.toot != '') {
 									var toot =
 										'<button class="btn-flat toast-action" onclick="detEx(\'' +
@@ -183,25 +183,25 @@ function verck(ver, jp) {
 								}
 								if (obj.ver != '') {
 									if (obj.ver == ver) {
-										show = true
+										showVer = true
 									} else {
-										show = false
+										showVer = false
 									}
 								}
 								if (obj.domain != '') {
 									var multi = localStorage.getItem('multi')
 									if (multi) {
-										show = false
+										showVer = false
 										var accts = JSON.parse(multi)
 										Object.keys(accts).forEach(function(key) {
 											var acct = accts[key]
 											if (acct.domain == obj.domain) {
-												show = true
+												showVer = true
 											}
 										})
 									}
 								}
-								if (show) {
+								if (showVer) {
 									M.toast({
 										html:
 											escapeHTML(obj.text) +
@@ -231,7 +231,7 @@ function infowebsocket() {
 			if (obj.type == 'textv2') {
 				if (~obj.languages.indexOf(lang.language)) {
 					localStorage.setItem('last-notice-id', obj.id)
-					var show = true
+					var showVer = true
 					if (obj.toot != '') {
 						var toot =
 							'<button class="btn-flat toast-action" onclick="detEx(\'' +
@@ -242,25 +242,25 @@ function infowebsocket() {
 					}
 					if (obj.ver != '') {
 						if (obj.ver == ver) {
-							show = true
+							showVer = true
 						} else {
-							show = false
+							showVer = false
 						}
 					}
 					if (obj.domain != '') {
 						var multi = localStorage.getItem('multi')
 						if (multi) {
-							show = false
+							showVer = false
 							var accts = JSON.parse(multi)
 							Object.keys(accts).forEach(function(key) {
 								var acct = accts[key]
 								if (acct.domain == obj.domain) {
-									show = true
+									showVer = true
 								}
 							})
 						}
 					}
-					if (show) {
+					if (showVer) {
 						console.log(obj.text)
 						console.log(escapeHTML(obj.text))
 						M.toast({
@@ -351,7 +351,7 @@ function storeDialog(platform, ver) {
 				localStorage.setItem('winstore', 'localinstall')
 			}
 			localStorage.setItem('ver', ver)
-			show = true
+			showVer = true
 			console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
 			$(document).ready(function() {
 				$('#releasenote').modal('open')
@@ -372,7 +372,7 @@ function storeDialog(platform, ver) {
 		})
 	} else {
 		localStorage.setItem('ver', ver)
-			show = true
+			showVer = true
 			console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
 			$(document).ready(function() {
 				$('#releasenote').modal('open')
