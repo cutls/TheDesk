@@ -239,8 +239,10 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 				localStorage.setItem('lastnotf_' + acct_id, obj.id)
 				if (!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')) {
 					//markers show中はダメ
-					if (obj.type != 'follow') {
+					if (obj.type != 'follow' && obj.type != 'follow_request') {
 						templete = parse([obj], 'notf', acct_id, 'notf', popup)
+					} else if (obj.type == 'follow_request') {
+						templete = userparse([obj.account], 'request', acct_id, 'notf', -1)
 					} else {
 						templete = userparse([obj], obj.type, acct_id, 'notf', popup)
 					}
