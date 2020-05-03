@@ -142,9 +142,10 @@ function verck(ver, jp) {
 	if (!localStorage.getItem('last-notice-id')) {
 		localStorage.setItem('last-notice-id', 0)
 	}
-	var start = 'https://thedesk.top/notice?since_id=' + localStorage.getItem('last-notice-id')
+	var start = 'https://thedesk.top/notice/index.php?since_id=' + localStorage.getItem('last-notice-id')
 	fetch(start, {
-		method: 'GET'
+		method: 'GET',
+		cors: true
 	})
 		.then(function(response) {
 			if (!response.ok) {

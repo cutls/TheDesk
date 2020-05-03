@@ -590,9 +590,10 @@ function enc(ver) {
 }
 //インスタンスティッカー
 function ticker() {
-	var start = 'https://toot.app/toot/'
+	var start = 'https://toot.app/toot/index.php'
 	fetch(start, {
 		method: 'GET',
+		cors: true,
 		headers: {
 			'content-type': 'application/json'
 		}
