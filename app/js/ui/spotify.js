@@ -148,6 +148,7 @@ async function npCore(arg) {
 	}
 	var flag = localStorage.getItem('artwork')
 	var platform = localStorage.getItem('platform')
+	var aaw = {aaw: '', album: ''}
 	if (platform == 'win32') {
 		if (flag && arg.path) {
 			media(arg.path, 'image/png', 'new')
@@ -157,7 +158,7 @@ async function npCore(arg) {
 			media(arg.artwork, 'image/png', 'new')
 		} else if (flag && localStorage.getItem('complete-artwork')) {
 			var q = arg.artist + ' ' + arg.album.name + ' ' + arg.name
-			var aaw = await getUnknownAA(q)
+			aaw = await getUnknownAA(q)
 			postMessage(['bmpImage', [aaw.aaw, 0]], '*')
 		}
 	}
@@ -168,11 +169,11 @@ async function npCore(arg) {
 		if (arg.album.name) {
 			content = content.replace(regExp, arg.album.name)
 		} else {
-			if(aaw.album) content.replace(regExp, aaw.album)
+			if(aaw.album) content = content.replace(regExp, aaw.album)
 			content = content.replace(regExp, '-')
 		}
 	} else {
-		if(aaw.album) content.replace(regExp, aaw.album)
+		if(aaw.album) content = content.replace(regExp, aaw.album)
 		content = content.replace(regExp, '-')
 	}
 	var regExp = new RegExp('{artist}', 'g')
