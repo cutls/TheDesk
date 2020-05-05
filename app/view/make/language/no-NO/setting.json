@@ -167,6 +167,7 @@
   "linkwarn": "TheDesk save your data on thedesk.top server.",
   "connect": "Koble til",
   "disconnect": "Koble fra",
+  "lastFmWarn": "User name...(empty to disconnect) You cannot hide your recent play log at last.fm privacy settings.",
   "templateedit": "Endre mal",
   "templateeditwarn": "",
   "template1": "Spotify:{song}:Song name/{album}:Album name/{artist}:Artist name/{url}:URL to Spotify",
