@@ -11,8 +11,6 @@
     "cwDes": "Hide text behind warning",
     "selfile": "Attach..",
     "insertEmoji": "Émojis",
-    "NPSpotify": "Spotify NowPlaying",
-    "NPiTunes": "iTunes NowPlaying(macOS)",
     "schedule": "Scheduled toot",
     "postat": "Post at",
     "scheduleWarn": "2.7.0~ Minimum time gap:5min(clock on the server may not be accurate.)",
