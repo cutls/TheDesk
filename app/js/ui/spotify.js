@@ -138,6 +138,76 @@ function nowplaying(mode) {
 		}
 	} else if (mode == 'itunes') {
 		postMessage(['itunes', ''], '*')
+	} else if (mode == 'lastFm') {
+		var user = localStorage.getItem('lastFmUser')
+		var start = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&limit=1&api_key=8f113803bfea951b6dde9e56d32458b2&format=json'
+
+		if (user) {
+			fetch(start, {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json',
+				},
+			})
+				.then(function (response) {
+					if (!response.ok) {
+						response.text().then(function (text) {
+							setLog(response.url, response.status, text)
+						})
+					}
+					return response.json()
+				})
+				.catch(function (error) {
+					todo(error)
+					setLog(start, 'JSON', error)
+					console.error(error)
+				})
+				.then(function (json) {
+					console.table(json)
+					if (!json || !json.recenttracks) {
+						console.error('no data')
+						return false
+					}
+					var item = json.recenttracks.track[0]
+					if(!item['@attr']) return false
+					var img = item.image[3]['#text']
+					var isImg = item.streamable*1
+					var flag = localStorage.getItem('artwork')
+					if (flag && isImg && img) {
+						postMessage(['bmpImage', [img, 0]], '*')
+					}
+					var content = localStorage.getItem('np-temp')
+					if (!content || content == '' || content == 'null') {
+						var content = '#NowPlaying {song} / {album} / {artist}\n{url}'
+					}
+					var regExp = new RegExp('{song}', 'g')
+					content = content.replace(regExp, item.name)
+					var regExp = new RegExp('{album}', 'g')
+					content = content.replace(regExp, item.album['#text'])
+					var regExp = new RegExp('{artist}', 'g')
+					content = content.replace(regExp, item.artist['#text'])
+					var regExp = new RegExp('{url}', 'g')
+					content = content.replace(regExp,'')
+					var regExp = new RegExp('{composer}', 'g')
+					content = content.replace(regExp, '')
+					var regExp = new RegExp('{hz}', 'g')
+					content = content.replace(regExp, '')
+					var regExp = new RegExp('{bitRate}', 'g')
+					content = content.replace(regExp, '')
+					var regExp = new RegExp('{lyricist}', 'g')
+					content = content.replace(regExp, '')
+					var regExp = new RegExp('{bpm}', 'g')
+					content = content.replace(regExp, '')
+					var regExp = new RegExp('{genre}', 'g')
+					content = content.replace(regExp, '')
+					$('#textarea').val(content)
+				})
+		} else {
+			Swal.fire({
+				type: 'info',
+				title: lang.lang_spotify_acct,
+			})
+		}
 	}
 }
 async function npCore(arg) {
@@ -148,7 +218,7 @@ async function npCore(arg) {
 	}
 	var flag = localStorage.getItem('artwork')
 	var platform = localStorage.getItem('platform')
-	var aaw = {aaw: '', album: ''}
+	var aaw = { aaw: '', album: '' }
 	if (platform == 'win32') {
 		if (flag && arg.path) {
 			media(arg.path, 'image/png', 'new')
@@ -169,11 +239,11 @@ async function npCore(arg) {
 		if (arg.album.name) {
 			content = content.replace(regExp, arg.album.name)
 		} else {
-			if(aaw.album) content = content.replace(regExp, aaw.album)
+			if (aaw.album) content = content.replace(regExp, aaw.album)
 			content = content.replace(regExp, '-')
 		}
 	} else {
-		if(aaw.album) content = content.replace(regExp, aaw.album)
+		if (aaw.album) content = content.replace(regExp, aaw.album)
 		content = content.replace(regExp, '-')
 	}
 	var regExp = new RegExp('{artist}', 'g')

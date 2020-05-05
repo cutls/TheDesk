@@ -165,6 +165,7 @@
   "linkwarn": "APIの性質上，thedesk.topへもアクセスするけどしゃーない。",
   "connect": "接続",
   "disconnect": "切断",
+  "lastFmWarn": "ユーザー名を入れてや。空白にすると消すで。last.fmの「最近のリスニング情報を表示しない」にチェックを入れんといてな。",
   "templateedit": "テンプレートの編集",
   "templateeditwarn": "以下を編集してテンプレートを変更できんで。",
   "template1": "Spotify:{song}:曲名/{album}:アルバム名/{artist}:アーティスト名/{url}:各曲のSpotifyのURL",

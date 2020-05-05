@@ -3,7 +3,7 @@ var envView = new Vue({
 	el: '#envView',
 	data: { config: envConstruction },
 	methods: {
-		complete: function(i, val) {
+		complete: function (i, val) {
 			var ls = envView.config[i].storage
 			M.toast({ html: 'Complete', displayLength: 3000 })
 			if (!val) {
@@ -21,14 +21,14 @@ var envView = new Vue({
 				frameSet(val)
 			}
 			return true
-		}
-	}
+		},
+	},
 })
 var tlView = new Vue({
 	el: '#tlView',
 	data: { config: tlConstruction },
 	methods: {
-		complete: function(i, val) {
+		complete: function (i, val) {
 			var ls = tlView.config[i]
 			if (val) {
 				localStorage.setItem(ls.storage, val)
@@ -46,18 +46,18 @@ var tlView = new Vue({
 				}
 			}
 			return true
-		}
-	}
+		},
+	},
 })
 var postView = new Vue({
 	el: '#postView',
 	data: {
 		config: postConstruction,
 		kirishima: localStorage.getItem('kirishima'),
-		quoters: localStorage.getItem('quoters')
+		quoters: localStorage.getItem('quoters'),
 	},
 	methods: {
-		complete: function(i, val) {
+		complete: function (i, val) {
 			var ls = postView.config[i]
 			if (val) {
 				localStorage.setItem(ls.storage, val)
@@ -75,8 +75,8 @@ var postView = new Vue({
 				}
 			}
 			return true
-		}
-	}
+		},
+	},
 })
 //設定ボタン押した。
 function settings() {
@@ -177,6 +177,7 @@ function load() {
 		$('#soundVolVal').text(cvol * 100)
 	}
 	//$("#log").val(localStorage.getItem("errors"))
+	$('#lastFmUser').val(localStorage.getItem('lastFmUser'))
 }
 function customVol() {
 	var cvol = $('#soundvol').val()
@@ -215,7 +216,7 @@ function climute() {
 			return
 		}
 		var templete
-		Object.keys(obj).forEach(function(key) {
+		Object.keys(obj).forEach(function (key) {
 			var cli = obj[key]
 			var list = key * 1 + 1
 			templete =
@@ -250,7 +251,7 @@ function wordmute() {
 		obj = []
 	}
 	$('#wordmute').chips({
-		data: obj
+		data: obj,
 	})
 }
 function wordmuteSave() {
@@ -266,7 +267,7 @@ function wordemp() {
 		obj = []
 	}
 	$('#wordemp').chips({
-		data: obj
+		data: obj,
 	})
 }
 function wordempSave() {
@@ -278,7 +279,7 @@ function notftest() {
 	var os = localStorage.getItem('platform')
 	var options = {
 		body: lang.lang_setting_notftest + '(' + lang.lang_setting_notftestprof + ')',
-		icon: localStorage.getItem('prof_0')
+		icon: localStorage.getItem('prof_0'),
 	}
 	var n = new Notification('TheDesk' + lang.lang_setting_notftest, options)
 }
@@ -303,7 +304,7 @@ function changelang(lang) {
 }
 function exportSettings() {
 	var exp = exportSettingsCore()
-	$("#imp-exp").val(JSON5.stringify(exp))
+	$('#imp-exp').val(JSON5.stringify(exp))
 	Swal.fire({
 		title: lang.lang_setting_exportwarn,
 		type: 'warning',
@@ -311,8 +312,8 @@ function exportSettings() {
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
-		cancelButtonText: lang.lang_no
-	}).then(result => {
+		cancelButtonText: lang.lang_no,
+	}).then((result) => {
 		if (result.value) {
 			postMessage(['exportSettings', ''], '*')
 		}
@@ -351,11 +352,7 @@ function exportSettingsCore() {
 	config.font = localStorage.getItem('font')
 	exp.config = config
 	//keysc
-	exp.ksc = [
-		localStorage.getItem('oks-1'),
-		localStorage.getItem('oks-2'),
-		localStorage.getItem('oks-3')
-	]
+	exp.ksc = [localStorage.getItem('oks-1'), localStorage.getItem('oks-2'), localStorage.getItem('oks-3')]
 	//climu
 	var cli = localStorage.getItem('client_mute')
 	var climu = JSON.parse(cli)
@@ -384,8 +381,8 @@ function exportSettingsCore() {
 	return exp
 }
 function importSettings() {
-	if($("#imp-exp").val()) {
-		importSettingsCore(JSON5.parse($("#imp-exp").val()))
+	if ($('#imp-exp').val()) {
+		importSettingsCore(JSON5.parse($('#imp-exp').val()))
 		return false
 	}
 	Swal.fire({
@@ -395,8 +392,8 @@ function importSettings() {
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
-		cancelButtonText: lang.lang_no
-	}).then(result => {
+		cancelButtonText: lang.lang_no,
+	}).then((result) => {
 		if (result.value) {
 			postMessage(['importSettings', ''], '*')
 		}
@@ -490,7 +487,7 @@ function importSettingsCore(obj) {
 	} else {
 		Swal.fire({
 			type: 'error',
-			title: 'Error'
+			title: 'Error',
 		})
 	}
 }
@@ -505,21 +502,13 @@ function fontList(arg) {
 	$('#fonts').removeClass('hide')
 	for (var i = 0; i < arg.length; i++) {
 		var font = arg[i]
-		$('#fonts').append(
-			'<div class="font pointer" style="font-family:' +
-				font +
-				'" onclick="insertFont(\'' +
-				font +
-				'\')">' +
-				font +
-				'</div>'
-		)
+		$('#fonts').append('<div class="font pointer" style="font-family:' + font + '" onclick="insertFont(\'' + font + '\')">' + font + '</div>')
 	}
 }
 function insertFont(name) {
 	$('#font').val(name)
 }
-$('.color-picker').each(function(i, elem) {
+$('.color-picker').each(function (i, elem) {
 	pickerDefine(i, 'fff')
 })
 function pickerDefine(i, color) {
@@ -536,17 +525,16 @@ function pickerDefine(i, color) {
 			hue: true, // Hue slider
 			interaction: {
 				rgba: false, // rgba option (red green blue and alpha)
-				input: true // input / output element
-			}
+				input: true, // input / output element
+			},
 		},
 		strings: {
 			save: 'Save', // Default for save button
-			clear: 'Clear' // Default for clear button
-		}
+			clear: 'Clear', // Default for clear button
+		},
 	})
 	pickr.on('change', (...args) => {
-		var rgb =
-			'rgb(' + args[0].toRGBA()[0] + ',' + args[0].toRGBA()[1] + ',' + args[0].toRGBA()[2] + ')'
+		var rgb = 'rgb(' + args[0].toRGBA()[0] + ',' + args[0].toRGBA()[1] + ',' + args[0].toRGBA()[2] + ')'
 		$('#color-picker' + i + '_value').val(rgb)
 	})
 }
@@ -600,7 +588,7 @@ function customComp() {
 			TheDeskModal: modalC,
 			TheDeskBottom: bottomC,
 			TheDeskPostbox: postboxC,
-			TheDeskSubcolor: subcolorC
+			TheDeskSubcolor: subcolorC,
 		}
 	} else {
 		var advanceTheme = {}
@@ -620,10 +608,10 @@ function customComp() {
 		vars: {
 			primary: primaryC,
 			secondary: secondaryC,
-			text: textC
+			text: textC,
 		},
 		props: advanceTheme,
-		id: id
+		id: id,
 	}
 	$('#custom_json').val(JSON.stringify(json))
 	themes('custom')
@@ -633,9 +621,7 @@ function customComp() {
 	$('#dark').prop('checked', true)
 	$('#custom_json').val('')
 	for (var i = 0; i <= 8; i++) {
-		$('#color-picker' + i + '-wrap').html(
-			'<div class="color-picker" id="color-picker' + i + '"></div>'
-		)
+		$('#color-picker' + i + '-wrap').html('<div class="color-picker" id="color-picker' + i + '"></div>')
 		$('#color-picker' + i + '_value').val('')
 		pickerDefine(i, 'fff')
 	}
@@ -648,9 +634,7 @@ function deleteIt() {
 	$('#dark').prop('checked', true)
 	$('#custom_json').val('')
 	for (var i = 0; i <= 8; i++) {
-		$('#color-picker' + i + '-wrap').html(
-			'<div class="color-picker" id="color-picker' + i + '"></div>'
-		)
+		$('#color-picker' + i + '-wrap').html('<div class="color-picker" id="color-picker' + i + '"></div>')
 		$('#color-picker' + i + '_value').val('')
 		pickerDefine(i, 'fff')
 	}
@@ -661,7 +645,7 @@ function ctLoad() {
 }
 function ctLoadCore(args) {
 	var templete = ''
-	Object.keys(args).forEach(function(key) {
+	Object.keys(args).forEach(function (key) {
 		var theme = args[key]
 		var themeid = theme.id
 		templete = templete + '<option value="' + themeid + '">' + theme.name + '</option>'
@@ -670,8 +654,7 @@ function ctLoadCore(args) {
 		localStorage.setItem('customtheme-id', args[0].id)
 	}
 	$('#custom-sel-sel').html(templete)
-	templete =
-		'<option value="add_new">' + $('#edit-selector').attr('data-add') + '</option>' + templete
+	templete = '<option value="add_new">' + $('#edit-selector').attr('data-add') + '</option>' + templete
 	$('#custom-edit-sel').html(templete)
 	$('select').formSelect()
 }
@@ -687,9 +670,7 @@ function custom() {
 		$('#dark').prop('checked', true)
 		$('#custom_json').val('')
 		for (var i = 0; i <= 8; i++) {
-			$('#color-picker' + i + '-wrap').html(
-				'<div class="color-picker" id="color-picker' + i + '"></div>'
-			)
+			$('#color-picker' + i + '-wrap').html('<div class="color-picker" id="color-picker' + i + '"></div>')
 			$('#color-picker' + i + '_value').val('')
 			pickerDefine(i, 'fff')
 		}
@@ -737,9 +718,7 @@ function advancedConncet(args, tar, sub, i) {
 	} else {
 		var color = args.vars[sub]
 	}
-	$('#color-picker' + i + '-wrap').html(
-		'<div class="color-picker" id="color-picker' + i + '"></div>'
-	)
+	$('#color-picker' + i + '-wrap').html('<div class="color-picker" id="color-picker' + i + '"></div>')
 	$('#color-picker' + i + '_value').val(color)
 	pickerDefine(i, rgbToHex(color))
 }
@@ -750,7 +729,7 @@ function customImp() {
 	} else {
 		Swal.fire({
 			type: 'error',
-			title: 'Error'
+			title: 'Error',
 		})
 	}
 }
@@ -777,7 +756,7 @@ function customSoundSave(key, file) {
 	localStorage.setItem('custom' + key, file)
 	$('#c1-file').text(file)
 }
-window.onload = function() {
+window.onload = function () {
 	//最初に読む
 	load()
 	climute()
@@ -793,11 +772,7 @@ function asReadEnd() {
 	postMessage(['asReadComp', ''], '*')
 }
 function checkupd() {
-	if (
-		localStorage.getItem('winstore') == 'brewcask' ||
-		localStorage.getItem('winstore') == 'snapcraft' ||
-		localStorage.getItem('winstore') == 'winstore'
-	) {
+	if (localStorage.getItem('winstore') == 'brewcask' || localStorage.getItem('winstore') == 'snapcraft' || localStorage.getItem('winstore') == 'winstore') {
 		var winstore = true
 	} else {
 		var winstore = false
@@ -805,22 +780,22 @@ function checkupd() {
 	var ver = localStorage.getItem('ver')
 	var start = 'https://thedesk.top/ver.json'
 	fetch(start, {
-		method: 'GET'
+		method: 'GET',
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(mess) {
+		.then(function (mess) {
 			console.table(mess)
 			if (mess) {
 				var platform = localStorage.getItem('platform')
@@ -833,13 +808,13 @@ function checkupd() {
 					Swal.fire({
 						type: 'info',
 						title: lang.lang_setting_noupd,
-						html: ver
+						html: ver,
 					})
 				} else if (ver.indexOf('beta') != -1 || winstore) {
 					Swal.fire({
 						type: 'info',
 						title: lang.lang_setting_thisisbeta,
-						html: ver
+						html: ver,
 					})
 				} else {
 					localStorage.removeItem('new-ver-skip')
@@ -847,4 +822,12 @@ function checkupd() {
 				}
 			}
 		})
+}
+function lastFmSet() {
+	if ($('#lastFmUser').val()) {
+		localStorage.setItem('lastFmUser', $('#lastFmUser').val())
+	} else {
+		localStorage.removeItem('lastFmUser')
+	}
+	M.toast({ html: 'Complete: last.fm', displayLength: 3000 })
 }

@@ -124,8 +124,8 @@
       ]
     },
     "electronDownload": {
-      "version": "6.0.0"
+      "version": "8.0.0"
     },
-    "electronVersion": "6.0.0"
+    "electronVersion": "8.0.0"
   }
 }

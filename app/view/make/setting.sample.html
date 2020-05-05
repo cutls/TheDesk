@@ -388,7 +388,7 @@
 				<i class="fab fa-spotify"></i>@@spotify@@
 			</div>
 			<div class="collapsible-body">
-				<h5>@@link@@</h5>
+				<h5>@@link@@(Spotify)</h5>
 				@@linkwarn@@<br>
 				<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button
 						onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">@@set@@</button></div>
@@ -398,6 +398,10 @@
 				<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled"
 					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i
 						class="fab fa-spotify left"></i>@@disconnect@@</a>
+				<h5>@@link@@(Last.fm)</h5>
+				@@lastFmWarn@@
+				<input type="text" style="width:150px" id="lastFmUser">
+				<button onclick="lastFmSet()" class="btn waves-effect" style="width:100px;">@@set@@</button>
 				<h5>@@templateedit@@</h5>
 				@@templateeditwarn@@<br>
 				<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}

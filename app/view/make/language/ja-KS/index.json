@@ -11,8 +11,6 @@
     "cwDes":"コンテンツワーニング(ほんまに見るんか？って聞く)",
     "selfile":"ファイル選ぶ",
     "insertEmoji":"絵文字入れる",
-    "NPSpotify":"NowPlaying(Spotify)",
-    "NPiTunes":"NowPlaying(macOS)",
     "schedule":"時間指定投稿",
     "postat":"時間指定投稿",
     "scheduleWarn":"2.7.0~ 5分は待ってな。サーバーの時計おうてるかは知らんで。",
