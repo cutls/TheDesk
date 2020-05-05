@@ -124,6 +124,7 @@ textarea {
 }
 #posttgl,#toot-post-btn {
   background-color: var(--accentbtn);
+  color: var(--color);
 }
 /*mini*/
 .mini-post .mize {
