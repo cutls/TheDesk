@@ -1,6 +1,6 @@
 //ユーザーデータ表示
 //タイムライン
-function utl(user, more, acct_id) {
+function utlShow(user, more, acct_id) {
 	if (!acct_id) {
 		var acct_id = $("#his-data").attr("use-acct");
 	}
@@ -78,6 +78,26 @@ function utl(user, more, acct_id) {
 			}
 			jQuery("time.timeago").timeago();
 		});
+}
+function utlAdd() {
+	var acct_id = $("#his-data").attr("use-acct");
+	var user = $("#his-data").attr("user-id");
+	var add = {
+		domain: acct_id,
+		type: 'utl',
+		data: {
+			id: user,
+			acct: $("#his-acct").attr('fullname')
+		}
+	}
+	var multi = localStorage.getItem('column')
+	var obj = JSON.parse(multi)
+	localStorage.setItem('card_' + obj.length, 'true')
+	obj.push(add)
+	var json = JSON.stringify(obj)
+	localStorage.setItem('column', json)
+	parseColumn('add')
+	hisclose()
 }
 //ピン留めTL
 function pinutl(before, user, acct_id) {

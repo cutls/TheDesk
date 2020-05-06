@@ -90,6 +90,19 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		)
 		$('#notice_icon_' + tlid).text('bookmark')
 		return
+	} else if (type == 'utl') {
+		//UTLなら飛ばす
+		getUtl(acct_id, tlid, data, false)
+		$('#notice_' + tlid).text(
+			cap(type, data, acct_id) +
+				'(' +
+				localStorage.getItem('user_' + acct_id) +
+				'@' +
+				domain +
+				')'
+		)
+		$('#notice_icon_' + tlid).text('person')
+		return
 	} else if (type == 'home') {
 		//ホームならお知らせ「も」取りに行く
 		announ(acct_id, tlid)
@@ -464,6 +477,10 @@ function moreload(type, tlid) {
 		} else if (type == 'bookmark') {
 			getBookmark(acct_id, tlid, true)
 			return
+		} else if (type == 'utl') {
+			var data = obj[tlid].data
+			getUtl(acct_id, tlid, data, true)
+			return
 		}
 		moreloading = true
 		localStorage.setItem('now', type)
@@ -826,6 +843,8 @@ function cap(type, data, acct_id) {
 		var response = 'tootsearch(' + escapeHTML(data) + ')'
 	} else if (type == 'bookmark') {
 		var response = 'Bookmarks'
+	} else if (type == 'utl') {
+		var response = 'User TL(' + data.acct + ')'
 	}
 	return response
 }
@@ -1298,6 +1317,46 @@ function getBookmark(acct_id, tlid, more) {
 				'<div class="hide notif-marker" data-maxid="' +
 				max_id +
 				'"></div>'
+			if (more) {
+				$('#timeline_' + tlid).append(templete)
+			} else {
+				$('#timeline_' + tlid).html(templete)
+			}
+			$('#landing_' + tlid).hide()
+			jQuery('time.timeago').timeago()
+			moreloading = false
+			todc()
+		}
+	}
+}
+function getUtl(acct_id, tlid, data, more) {
+	moreloading = true
+	if (more) {
+		var sid = $('#timeline_' + tlid + ' .cvo')
+		.last()
+		.attr('unique-id')
+		var ad = '?max_id=' + sid
+	} else {
+		var ad = ''
+	}
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var start = "https://" + domain + "/api/v1/accounts/" + data.id + "/statuses" + ad
+	var httpreq = new XMLHttpRequest()
+	httpreq.open('GET', start, true)
+	httpreq.setRequestHeader('Content-Type', 'application/json')
+	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+	httpreq.responseType = 'json'
+	httpreq.send()
+	httpreq.onreadystatechange = function () {
+		if (httpreq.readyState === 4) {
+			var json = httpreq.response
+			if (this.status !== 200) {
+				setLog(start, this.status, this.response)
+			}
+			var templete = parse(json, 'bookmark', acct_id, tlid, -1, null)
+			templete =
+				templete
 			if (more) {
 				$('#timeline_' + tlid).append(templete)
 			} else {

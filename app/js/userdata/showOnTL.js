@@ -115,7 +115,7 @@ function udg(user, acct_id) {
 				$("#his-data").attr("remote", "false");
 				var fullname = json.acct + "@" + domain;
 			}
-			utl(json.id, "", acct_id);
+			utlShow(json.id, "", acct_id);
 			flw(json.id, "", acct_id);
 			fer(json.id, "", acct_id);
 			var dis_name = escapeHTML(json.display_name);
@@ -298,7 +298,7 @@ function misskeyUdg(user, acct_id) {
 				$("#his-data").attr("remote", "false");
 				var fullname = json.acct + "@" + domain;
 			}
-			utl(json.id, "", acct_id);
+			utlShow(json.id, "", acct_id);
 			flw(json.id, "", acct_id);
 			fer(json.id, "", acct_id);
 			if (json.name) {

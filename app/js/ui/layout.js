@@ -14,7 +14,7 @@ function addColumnMenu() {
 	$('#add-box').removeClass('hide')
 	addselCk()
 }
-$('.type').click(function() {
+$('.type').click(function () {
 	$('.type').removeClass('active')
 	$(this).addClass('active')
 	$('#type-sel').val($(this).attr('data-type'))
@@ -44,7 +44,7 @@ function parseColumn(target, dontclose) {
 		var obj = JSON.parse(multi)
 
 		var templete
-		Object.keys(obj).forEach(function(key) {
+		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
 
 			localStorage.setItem('name_' + key, acct.name)
@@ -76,8 +76,8 @@ function parseColumn(target, dontclose) {
 		var obj = [
 			{
 				domain: 0,
-				type: 'local'
-			}
+				type: 'local',
+			},
 		]
 		var json = JSON.stringify(obj)
 		localStorage.setItem('column', json)
@@ -122,10 +122,7 @@ function parseColumn(target, dontclose) {
 			var if_notf = ''
 		}
 		if (localStorage.getItem('notification_' + acct.domain)) {
-			var unique_notf = lang.lang_layout_thisacct.replace(
-				'{{notf}}',
-				localStorage.getItem('notification_' + acct.domain)
-			)
+			var unique_notf = lang.lang_layout_thisacct.replace('{{notf}}', localStorage.getItem('notification_' + acct.domain))
 		} else {
 			if (lang.language == 'ja') {
 				var notflocale = '通知'
@@ -191,17 +188,7 @@ function parseColumn(target, dontclose) {
 			} else {
 				var animecss = ''
 			}
-			unstreamingTL(
-				acct.type,
-				key,
-				basekey,
-				insert,
-				icnsert,
-				acct.left_fold,
-				css,
-				animecss,
-				acct.data
-			)
+			unstreamingTL(acct.type, key, basekey, insert, icnsert, acct.left_fold, css, animecss, acct.data)
 		} else if (acct.type == 'bookmark') {
 			if (!acct.left_fold) {
 				basekey = key
@@ -213,17 +200,19 @@ function parseColumn(target, dontclose) {
 			} else {
 				var animecss = ''
 			}
-			unstreamingTL(
-				acct.type,
-				key,
-				basekey,
-				insert,
-				icnsert,
-				acct.left_fold,
-				css,
-				animecss,
-				acct.domain
-			)
+			unstreamingTL(acct.type, key, basekey, insert, icnsert, acct.left_fold, css, animecss, acct.domain)
+		} else if (acct.type == 'utl') {
+			if (!acct.left_fold) {
+				basekey = key
+			}
+
+			var anime = localStorage.getItem('animation')
+			if (anime == 'yes' || !anime) {
+				var animecss = 'box-anime'
+			} else {
+				var animecss = ''
+			}
+			unstreamingTL(acct.type, key, basekey, insert, icnsert, acct.left_fold, css, animecss, { acct: acct.domain, data: acct.data })
 		} else {
 			var anime = localStorage.getItem('animation')
 			if (anime == 'yes' || !anime) {
@@ -292,7 +281,7 @@ function parseColumn(target, dontclose) {
 					${lang.lang_layout_excludingbt}
 					<br>`
 			} else if (acct.type == 'tag') {
-				if(acct.data.name) {
+				if (acct.data.name) {
 					var name = acct.data.name
 					var all = acct.data.all
 					var any = acct.data.any
@@ -352,9 +341,7 @@ function parseColumn(target, dontclose) {
 			if (key === 0) {
 				left_hold = ''
 			}
-			if (
-				localStorage.getItem('mode_' + localStorage.getItem('domain_' + acct.domain)) == 'misskey'
-			) {
+			if (localStorage.getItem('mode_' + localStorage.getItem('domain_' + acct.domain)) == 'misskey') {
 				var isMisRed = ''
 				exclude = ''
 				var if_misskey_hide = 'hide'
@@ -517,13 +504,13 @@ function parseColumn(target, dontclose) {
 		minHeight: 50,
 		minWidth: 50,
 		grid: 50,
-		resize: function(event, ui) {
+		resize: function (event, ui) {
 			$(this).css('min-width', ui.size.width + 'px')
 			$(this).css('max-width', ui.size.width + 'px')
 			$(this).css('min-height', ui.size.height + 'px')
 			$(this).css('max-height', ui.size.height + 'px')
 		},
-		stop: function(event, ui) {
+		stop: function (event, ui) {
 			var col = localStorage.getItem('column')
 			var o = JSON.parse(col)
 			var width = ui.size.width
@@ -538,16 +525,14 @@ function parseColumn(target, dontclose) {
 			} else {
 				//横幅。その縦幅を持つカラムのidは
 				console.log('yoko')
-				var key = $(this)
-					.find('.boxIn')
-					.attr('tlid')
+				var key = $(this).find('.boxIn').attr('tlid')
 				var obj = o[key]
 				obj.width = width
 				o[key] = obj
 			}
 			var json = JSON.stringify(o)
 			localStorage.setItem('column', json)
-		}
+		},
 	})
 }
 function checkStr(type, data, acct_id, key, delc, voice) {
@@ -597,7 +582,7 @@ function addColumn() {
 	}
 	var add = {
 		domain: acct,
-		type: type
+		type: type,
 	}
 	var multi = localStorage.getItem('column')
 	var obj = JSON.parse(multi)
@@ -631,9 +616,7 @@ function addselCk() {
 		$('#webview-add').addClass('hide')
 	}
 	if (domain == 'knzk.me' || domain == 'mstdn.y-zu.org') {
-		$('#type-sel').append(
-			'<option value="dm" data-trans="dm" id="direct-add">' + lang.layout_dm + '</option>'
-		)
+		$('#type-sel').append('<option value="dm" data-trans="dm" id="direct-add">' + lang.layout_dm + '</option>')
 	} else {
 		$('#direct-add').remove()
 	}
@@ -650,8 +633,8 @@ function removeColumn(tlid) {
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
-		cancelButtonText: lang.lang_no
-	}).then(result => {
+		cancelButtonText: lang.lang_no,
+	}).then((result) => {
 		if (result.value) {
 			var multi = localStorage.getItem('column')
 			var obj = JSON.parse(multi)
@@ -673,28 +656,28 @@ function setToggle(tlid) {
 		$('#util-box_' + tlid).css('display', 'block')
 		$('#util-box_' + tlid).animate(
 			{
-				height: '200px'
+				height: '200px',
 			},
 			{
 				duration: 300,
-				complete: function() {
+				complete: function () {
 					$('#util-box_' + tlid).css('overflow-y', 'scroll')
 					$('#util-box_' + tlid).removeClass('column-hide')
-				}
+				},
 			}
 		)
 	} else {
 		$('#util-box_' + tlid).css('overflow-y', 'hidden')
 		$('#util-box_' + tlid).animate(
 			{
-				height: '0'
+				height: '0',
 			},
 			{
 				duration: 300,
-				complete: function() {
+				complete: function () {
 					$('#util-box_' + tlid).addClass('column-hide')
 					$('#util-box_' + tlid).css('display', 'none')
-				}
+				},
 			}
 		)
 	}
@@ -706,28 +689,28 @@ function setToggleTag(tlid) {
 		$('#tag-box_' + tlid).css('display', 'block')
 		$('#tag-box_' + tlid).animate(
 			{
-				height: '200px'
+				height: '200px',
 			},
 			{
 				duration: 300,
-				complete: function() {
+				complete: function () {
 					$('#tag-box_' + tlid).css('overflow-y', 'scroll')
 					$('#tag-box_' + tlid).removeClass('column-hide')
-				}
+				},
 			}
 		)
 	} else {
 		$('#tag-box_' + tlid).css('overflow-y', 'hidden')
 		$('#tag-box_' + tlid).animate(
 			{
-				height: '0'
+				height: '0',
 			},
 			{
 				duration: 300,
-				complete: function() {
+				complete: function () {
 					$('#tag-box_' + tlid).addClass('column-hide')
 					$('#tag-box_' + tlid).css('display', 'none')
-				}
+				},
 			}
 		)
 	}
@@ -879,6 +862,8 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 	} else if (type == 'bookmark') {
 		console.log(key, data)
 		bookmark(key, data)
+	} else if (type == 'utl') {
+		utl(key, data.acct, data.data)
 	}
 	cardCheck(key)
 	ebtCheck(key)
@@ -895,6 +880,15 @@ function bookmark(key, data) {
 		var voice = false
 	}
 	tl('bookmark', '', data, key, 'false', voice, '')
+}
+function utl(key, acct_id, data) {
+	console.log(key, data)
+	if (localStorage.getItem('voice_' + key)) {
+		var voice = true
+	} else {
+		var voice = false
+	}
+	tl('utl', data, acct_id, key, 'false', voice, '')
 }
 function leftFoldSet(key) {
 	var multi = localStorage.getItem('column')
