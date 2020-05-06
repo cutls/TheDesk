@@ -34,7 +34,7 @@
 		@@comment-end@@ @@pwa@@
 	</head>
 
-	<body>
+	<body class="@@pwaClass@@">
 		<script>
 			var ver = '@@versionLetter@@'
 			var gitHash = '@@gitHash@@'
@@ -356,7 +356,7 @@
 							<a class="waves-effect gray" id="cw" onclick="cw()" title="@@cwDes@@">CW</a>
 							<span
 								><span id="imgup"></span
-								><span id="imgsel"
+								><span id="imgsel" class="pwa"
 									><i
 										class="waves-effect material-icons gray"
 										onclick="fileselect()"
@@ -389,7 +389,7 @@
 							<span class=" sml mize"
 								><span>@@replyMode@@</span>: <span id="rec">@@no@@</span>/<span>@@temp@@</span>:
 								<span id="mec">@@nothing@@</span>
-								<a onclick="stamp()" class="pointer" title="@@stampWarn@@"
+								<a onclick="stamp()" class="pointer pwa" title="@@stampWarn@@"
 									>@@stamp@@: <span id="stamp">Off</span></a
 								>
 								/@@poll@@:<span id="pollsta">@@no@@</span>
@@ -444,7 +444,7 @@
 						<li>
 							<a onclick="nowplaying('spotify');">NowPlaying (Spotify)</a>
 						</li>
-						<li>
+						<li class="mac">
 							<a onclick="nowplaying('itunes');">NowPlaying (iTunes macOS)</a>
 						</li>
 						<li>
@@ -1604,7 +1604,7 @@
 					</div>
 				</div>
 			</div>
-			<a onclick="about()" class="nex waves-effect">
+			<a onclick="about()" class="nex waves-effect pwa">
 				<i class="material-icons" style="font-size: 1rem;">info</i>@@about@@ </a
 			>&nbsp;|&nbsp;
 			<a onclick="bottomReverse()" class="nex waves-effect">
@@ -1653,7 +1653,7 @@
 						<a href="setting.html" class="nex waves-effect">
 							<i class="material-icons nex" title="@@setting@@(Ctrl+Shift+S)">settings</i>
 						</a>
-						<a onclick="nano()" class="nex waves-effect">
+						<a onclick="nano()" class="nex waves-effect pwa">
 							<i class="material-icons" title="@@nanoDes@@TheDesk Nano" data-trans-title="nano_desp"
 								>remove_from_queue</i
 							>
@@ -1686,7 +1686,7 @@
 								>access_time</i
 							>
 						</a>
-						<a onclick="tips('memory')" class="nex waves-effect">
+						<a onclick="tips('memory')" class="nex waves-effect pwa">
 							<i class="material-icons nex" title="@@ramTips@@" data-trans-title="memory">memory</i>
 						</a>
 						<a onclick="tips('trend')" class="nex waves-effect imasonly" style="display:none;">

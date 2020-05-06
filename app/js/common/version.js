@@ -1,6 +1,7 @@
 //バージョンチェッカー
 function verck(ver, jp) {
 	console.log('%c Welcome😊 ' + ver, 'color: red;font-size:200%;')
+	$('body').addClass(localStorage.getItem('platform'))
 	var date = new Date()
 	var showVer = false
 	if (localStorage.getItem('ver') != ver && localStorage.getItem('winstore')) {

@@ -9,7 +9,9 @@ body {
 	height: 100vh;
 	color: var(--color);
 }
-.titlebar, .menubar-menu-container, .action-menu-item {
+.titlebar,
+.menubar-menu-container,
+.action-menu-item {
 	background-color: var(--notfbox) !important;
 	filter: brightness(110%) !important;
 	color: var(--color) !important;
@@ -25,10 +27,10 @@ body {
 	display: none;
 }
 .accessMark {
-    font-size: 12px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+	font-size: 12px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	background-color: var(--emphasized);
 	padding-left: 5px;
 	padding-right: 5px;
@@ -519,18 +521,18 @@ textarea {
 	width: 300px;
 	max-width: 100%;
 	background-color: var(--box);
-  z-index: 501;
-  padding: 5px;
+	z-index: 501;
+	padding: 5px;
 }
 #pageSrcInput {
-  width: 160px;
+	width: 160px;
 }
 .voice {
 	clip: rect(1px, 1px, 1px, 1px);
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
 }
 
 @media (max-width: 500px) {
@@ -561,17 +563,14 @@ textarea {
 	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: 300;
-	src: local('Open Sans Light'), local('OpenSans-Light'),
-		url(https://fonts.gstatic.com/s/opensans/v17/mem5YaGs126MiZpBA-UN_r8OUuhp.woff2) format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F,
-		U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	src: local('Open Sans Light'), local('OpenSans-Light'), url(https://fonts.gstatic.com/s/opensans/v17/mem5YaGs126MiZpBA-UN_r8OUuhp.woff2) format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
 	font-family: 'Material Icons';
 	font-style: normal;
 	font-weight: 400;
-	src: url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
-		format('woff2');
+	src: url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
 }
 .material-icons {
 	font-family: 'Material Icons';
@@ -587,4 +586,17 @@ textarea {
 	direction: ltr;
 	-webkit-font-feature-settings: 'liga';
 	-webkit-font-smoothing: antialiased;
+}
+.pwaView .pwa,
+.pwaView .mac,
+.pwaView .win {
+	display: none;
+}
+.win32 .mac,
+.linux .mac {
+	display: none;
+}
+.linux .win,
+.darwin .win {
+	display: none;
 }

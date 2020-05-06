@@ -147,9 +147,11 @@ function main(ver, basefile, pwa) {
 				source = source.replace(/@@pwa@@/g, `<link rel="manifest" href="/manifest.json" />
 				<script>var pwa = true;"serviceWorker"in navigator&&navigator.serviceWorker.register("/sw.pwa.js").then(e=>{});</script>`)
 				source = source.replace(/@@node_base@@/g, 'dependencies')
+				source = source.replace(/@@pwaClass@@/g, 'pwaView')
 			} else {
 				source = source.replace(/@@pwa@@/g, '<script>var pwa = false;</script>')
 				source = source.replace(/@@node_base@@/g, 'node_modules')
+				source = source.replace(/@@pwaClass@@/g, '')
 			}
 			fs.writeFileSync(basefile + 'view/' + lang + '/' + pages[i], source)
 		}

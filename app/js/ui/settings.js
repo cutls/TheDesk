@@ -766,6 +766,7 @@ window.onload = function () {
 	voiceSettingLoad()
 	oksload()
 	ctLoad()
+	$('body').addClass(localStorage.getItem('platform'))
 }
 //設定画面で未読マーカーは要らない
 function asReadEnd() {

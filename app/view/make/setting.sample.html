@@ -32,7 +32,7 @@
 	@@pwa@@
 </head>
 
-<body id="mainView" style="overflow-y:scroll">
+<body id="mainView" style="overflow-y:scroll" class="@@pwaClass@@">
 	<script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="../../js/platform/first.js"></script>
 	<script type="text/javascript" src="../../@@node_base@@/materialize-css/dist/js/materialize.js"></script>
@@ -399,7 +399,7 @@
 					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i
 						class="fab fa-spotify left"></i>@@disconnect@@</a>
 				<h5>@@link@@(Last.fm)</h5>
-				@@lastFmWarn@@
+				@@lastFmWarn@@<br />
 				<input type="text" style="width:150px" id="lastFmUser">
 				<button onclick="lastFmSet()" class="btn waves-effect" style="width:100px;">@@set@@</button>
 				<h5>@@templateedit@@</h5>
@@ -407,8 +407,7 @@
 				<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
 				@@template1@@<br>
-				@@template2@@<br>
-				@@template3@@<br>
+				<span class="mac">>@@template2@@</span><br>
 				<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">@@set@@</button>
 				<h5>@@postartwork@@</h5>
 				<label>
@@ -421,19 +420,21 @@
 						value="no" />
 					<span>@@no@@</span>
 				</label>
-				<h5>@@searchArtwork@@</h5>
-				@@searchArtworkWarn@@<br />
-				<label>
-					<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_yes"
-						value="yes" />
-					<span>@@yes@@</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_no"
-						value="no" />
-					<span>@@no@@</span>
-				</label>
-				<br>
+				<div class="mac">
+					<h5>@@searchArtwork@@</h5>
+					@@searchArtworkWarn@@<br />
+					<label>
+						<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_yes"
+							value="yes" />
+						<span>@@yes@@</span>
+					</label>
+					<label>
+						<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_no"
+							value="no" />
+						<span>@@no@@</span>
+					</label>
+					<br>
+				</div>
 			</div>
 		</li>
 		<li>

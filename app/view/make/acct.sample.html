@@ -29,7 +29,7 @@
 		@@pwa@@
 	</head>
 
-	<body id="mainView">
+	<body id="mainView" class="@@pwaClass@@">
 		<script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
 		<script type="text/javascript" src="../../js/platform/first.js"></script>
 		<script
@@ -63,12 +63,14 @@
 						<input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp" />
 						<div id="ins-suggest"></div>
 						<button class="btn waves-effect" onclick="instance()">Login</button><br />
-						@@codesetupwarn@@<br />
-						<label>
-							<input type="checkbox" class="filled-in" id="linux" />
-							<span>@@codesetup@@</span>
-						</label>
-						<br />
+						<div class="pwa">
+							@@codesetupwarn@@<br />
+							<label>
+								<input type="checkbox" class="filled-in" id="linux" />
+								<span>@@codesetup@@</span>
+							</label>
+							<br />
+						</div>
 						<label>
 							<input type="checkbox" class="filled-in" id="misskey" />
 							<span>@@thisismisskey@@</span> </label
@@ -144,5 +146,6 @@
 		<script type="text/javascript" src="../../js/login/instance.js"></script>
 		<script type="text/javascript" src="../../js/login/manager.js"></script>
 		<script type="text/javascript" src="../../js/tl/date.js"></script>
+		<script>$('body').addClass(localStorage.getItem('platform'))</script>
 	</body>
 </html>
