@@ -51,8 +51,35 @@ function isFile(file) {
 	}
 }
 function createWindow() {
+	var lang_path = join(app.getPath('userData'), 'language')
+	if (isFile(lang_path)) {
+		var lang = fs.readFileSync(lang_path, 'utf8')
+	} else {
+		var langs = app.getLocale()
+		console.log(langs)
+		if (~langs.indexOf('ja')) {
+			lang = 'ja'
+		} else if (~langs.indexOf('de')) {
+			lang = 'de'
+		} else if (~langs.indexOf('cs')) {
+			lang = 'cs'
+		} else if (~langs.indexOf('bg')) {
+			lang = 'bg'
+		} else {
+			lang = 'en'
+		}
+		fs.mkdir(app.getPath('userData'), function (err) {
+			fs.writeFileSync(lang_path, lang)
+		})
+	}
+	if (!packaged) console.log('your lang:' + app.getLocale())
+	if (!packaged) console.log('launch:' + lang)
 	//Opening
 	const package = fs.readFileSync(__dirname + '/package.json')
+	if(lang == 'ja') {
+		const maxims = JSON.parse(fs.readFileSync(__dirname + '/maxim.ja.json'))
+		var show = maxims[Math.floor(Math.random() * maxims.length)]
+	}
 	const data = JSON.parse(package)
 	const version = data.version
 	const codename = data.codename
@@ -63,7 +90,7 @@ function createWindow() {
 		frame: false,
 		resizable: false,
 	})
-	openingWindow.loadURL(`${__dirname}/opening.html?ver=${version}&codename=${codename}`)
+	openingWindow.loadURL(`${__dirname}/opening.html?ver=${version}&codename=${codename}&maxim=${encodeURI(show)}`)
 
 	if (process.argv.indexOf('--dev') === -1) {
 		var packaged = true
@@ -89,7 +116,6 @@ function createWindow() {
 
 	var info_path = join(app.getPath('userData'), 'window-size.json')
 	var max_info_path = join(app.getPath('userData'), 'max-window-size.json')
-	var lang_path = join(app.getPath('userData'), 'language')
 	var ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
 	var ua_path = join(app.getPath('userData'), 'useragent')
 	var frame_path = join(app.getPath('userData'), 'frame')
@@ -133,29 +159,6 @@ function createWindow() {
 	} catch {
 		var frame = true
 	}
-
-	if (isFile(lang_path)) {
-		var lang = fs.readFileSync(lang_path, 'utf8')
-	} else {
-		var langs = app.getLocale()
-		console.log(langs)
-		if (~langs.indexOf('ja')) {
-			lang = 'ja'
-		} else if (~langs.indexOf('de')) {
-			lang = 'de'
-		} else if (~langs.indexOf('cs')) {
-			lang = 'cs'
-		} else if (~langs.indexOf('bg')) {
-			lang = 'bg'
-		} else {
-			lang = 'en'
-		}
-		fs.mkdir(app.getPath('userData'), function (err) {
-			fs.writeFileSync(lang_path, lang)
-		})
-	}
-	if (!packaged) console.log('your lang:' + app.getLocale())
-	if (!packaged) console.log('launch:' + lang)
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
 	var platform = process.platform
 	var bit = process.arch

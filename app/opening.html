@@ -28,8 +28,8 @@
 				position: relative;
 				text-indent: -9999px;
 				width: 0.9em;
-				height: 1.5em;
-				margin: 0 1.6em;
+				height: 0.9em;
+				margin: 0 .9em;
 			}
 			.loading:before,
 			.loading:after {
@@ -37,17 +37,17 @@
 				content: '\x200B';
 				display: inline-block;
 				width: 0.9em;
-				height: 1.5em;
+				height: 0.9em;
 				position: absolute;
 				top: 0;
 			}
 			.loading:before {
 				animation: throbber-loader 1000ms 150ms infinite ease-out;
-				left: -1.6em;
+				left: -1.9em;
 			}
 			.loading:after {
 				animation: throbber-loader 1000ms 450ms infinite ease-out;
-				right: -1.6em;
+				right: -1.9em;
 			}
 			@keyframes throbber-loader {
 				0% {
@@ -65,22 +65,30 @@
 			button {
 				-webkit-app-region: no-drag;
 			}
+			h1 {
+				margin: 0;
+            }
+            #maxim {
+                font-size: 0.7rem;
+            }
 		</style>
 	</head>
 
 	<body class="center" style="overflow: hidden;">
 		<img src="./img/desk-animation.svg" style="max-width: 62%;" />
 		<h1>TheDesk</h1>
-		<span class="loading"></span>
+		<span id="ver"></span><br />
+		<span class="loading"></span><br />
 		<div class="cp">
-			<span id="ver"></span><br />
-			Copyright &copy; TheDesk 2018
+			<span id="maxim"></span><br />
 			<script>
 				if (location.search) {
-					var m = location.search.match(/\?ver=([0-9.]+)&codename=([a-zA-Z]+)/)
+					var m = location.search.match(/\?ver=([0-9.]+)&codename=([a-zA-Z]+)&maxim=(.+)/)
 					var ver = m[1]
 					var code = m[2]
+					var maxim = m[3]
 					document.getElementById('ver').innerText = `${ver}(${code})`
+					document.getElementById('maxim').innerText = `${decodeURI(maxim)}`
 				}
 			</script>
 		</div>
