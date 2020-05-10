@@ -24,10 +24,14 @@ function dl(mainWindow, lang_path, base, dirname) {
 				height: 400,
 				transparent: false, // ウィンドウの背景を透過
 				frame: false, // 枠の無いウィンドウ
-				resizable: false
+				resizable: false,
+				show: false
 			})
 			var lang = fs.readFileSync(lang_path, 'utf8')
 			updatewin.loadURL(base + lang + '/update.html')
+			updatewin.webContents.once('dom-ready', () => {
+				updatewin.show()
+			 })
 			return 'true'
 		} else {
 			return false
@@ -36,7 +40,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 	//アプデDL
 	ipc.on('download-btn', async (e, args) => {
 		function dl(url, file, dir, e) {
-			e.sender.webContents.send('mess', 'ダウンロードを開始します。')
+			e.sender.webContents.send('mess', 'Start...')
 			const opts = {
 				directory: dir,
 				filename: file,
