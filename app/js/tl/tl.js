@@ -1345,6 +1345,7 @@ function getBookmark(acct_id, tlid, more) {
 	}
 }
 function getUtl(acct_id, tlid, data, more) {
+
 	moreloading = true
 	if (more) {
 		var sid = $('#timeline_' + tlid + ' .cvo')

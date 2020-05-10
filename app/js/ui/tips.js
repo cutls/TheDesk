@@ -30,7 +30,7 @@ function tips(mode) {
 				localStorage.getItem('ver') +
 				' git: ' +
 				gitHash +
-				'\')">TheDesk ' +
+				'\')"> ' +
 				localStorage.getItem('ver') +
 				' {' +
 				gitHash.slice(0, 7) +

@@ -825,11 +825,16 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 			${lang.lang_layout_leftUnfold}
 			</span><br>`
 	}
+	if(type == 'utl') {
+		var dataHtml = false
+	} else {
+		var dataHtml = data
+	}
 	var html = `<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}">
 			<div class="notice-box z-depth-2" id="menu_${key}" style="${insert} ">
 				<div class="area-notice">
 					<i class="material-icons waves-effect" id="notice_icon_${key}" style="font-size:40px; padding-top:25%;" 
-						onclick="${type}('${key}','${data}');" title="${lang.lang_layout_gotop}"></i>
+						onclick="${type}('${key}','${dataHtml}');" title="${lang.lang_layout_gotop}"></i>
 				</div>
 				<div class="area-notice_name">
 					<span id="notice_${key}" class="tl-title"></span>
@@ -890,6 +895,13 @@ function bookmark(key, data) {
 	tl('bookmark', '', data, key, 'false', voice, '')
 }
 function utl(key, acct_id, data) {
+	if(!data) {
+		var multi = localStorage.getItem('column')
+		var obj = JSON.parse(multi)
+		data = obj[key].data
+		acct_id = obj[key].domain
+	}
+	
 	console.log(key, data)
 	if (localStorage.getItem('voice_' + key)) {
 		var voice = true
