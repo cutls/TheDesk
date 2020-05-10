@@ -127,6 +127,7 @@
     "lang_layout_delthis": "Remove this column",
     "lang_layout_setthis": "Paramètres de cette colonne",
     "lang_layout_mediafil": "Media filtering",
+    "lang_layout_remoteOnly": "Remote only",
     "lang_layout_linkana": "Auto Link Analyzer",
     "lang_layout_linkanades": "Auto link analyzer",
     "lang_layout_tts": "Text to speech ",
