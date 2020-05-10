@@ -4,6 +4,7 @@ var ipc = electron.ipcRenderer
 //title bar
 const customTitlebar = require('custom-electron-titlebar')
 window.addEventListener('DOMContentLoaded', () => {
+	document.title = 'TheDesk'
 	ipc.send('acsCheck', '')
 	ipc.send('frameCheck', '')
 	ipc.on('frame', function(event, args) {

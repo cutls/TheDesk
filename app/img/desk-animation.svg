@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 4096 4096" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g id="TheDesk">
+        <g id="back">
+            <g transform="matrix(1,0,0,1.53232,-11.8871,-1144.65)">
+                <rect x="1044.02" y="1686.36" width="2335.77" height="782.558" style="fill:rgba(255,255,255,0);">
+                    <animate attributeName="fill" begin="0.5s" dur="0.1s" fill="freeze" values="rgba(255,255,255,0);rgba(255,255,255,1)" />
+                </rect>
+            </g>
+            <rect x="1058.89" y="609.971" width="711.146" height="2885.69" style="fill:rgba(255,255,255,0);">
+                <animate attributeName="fill" begin="0.5s" dur="0.1s" fill="freeze" values="rgba(255,255,255,0);rgba(255,255,255,1)" />
+            </rect>
+            <g transform="matrix(1.08582,0,0,1,-142.973,0)">
+                <rect x="1665.9" y="1021.89" width="776.607" height="2050.26" style="fill:rgba(255,255,255,0);">
+                    <animate attributeName="fill" begin="0.5s" dur="0.1s" fill="freeze" values="rgba(255,255,255,0);rgba(255,255,255,1)" />
+                </rect>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,0.998821,0,4.65666)" id="gray">
+            <rect x="678.5" y="128.48" width="450" height="3821.5" style="fill:rgb(84,82,81);"/>
+        </g>
+        <g transform="matrix(0.999978,-5.55112e-17,-2.20005e-08,0.996112,-1237.17,972.039)" id="orange">
+            <rect x="1915.71" y="-583.55" width="450" height="3117.62" style="fill:rgb(240,132,46);" r="3117.62">
+                <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0,1915.71,-583.55" to="-60,1915.71,-583.55" dur="0.5s" repeatCount="1" fill="freeze" />
+            </rect>
+        </g>
+        <g transform="matrix(0.999978,5.55112e-17,-5.55112e-17,0.999978,-1236.96,-1164.58)" id="blue">
+            <rect x="1915.5" y="1775.41" width="450" height="3105.58" style="fill:rgb(54,76,159);" r="3117.62">
+                <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0,1915.71,4881" to="60,1915.71,4881" dur="0.5s" repeatCount="1" fill="freeze" />
+            </rect>
+        </g>
+        <path id="cat" d="M1592.47,2584L2048.94,2584C2048.94,2519.11 2044.31,2506.24 1936.84,2506.24C1954.01,2454.74 2023.79,2330.13 2062.57,2330.13C2096.88,2330.13 2137.81,2332.02 2137.81,2410.3C2137.81,2499.17 2287.37,2642.46 2323.63,2584C2377.67,2496.88 2230.72,2523.45 2230.72,2313.35C2230.72,2025.92 2398.46,2066.84 2398.46,1905.36C2398.46,1824.57 2376.14,1813.66 2376.14,1755.9C2376.14,1679.56 2443.39,1683.99 2430.31,1620.7C2421.27,1576.98 2414.2,1541.92 2408.93,1489.05C2405.19,1451.54 2404,1411.55 2365.03,1413.16C2319.25,1415.05 2301.88,1495.63 2230.72,1501.41C2159.7,1507.18 2099.15,1440.95 2071.66,1450.41C2044.41,1459.79 2052.98,1533.73 2069.14,1586.24C2094.54,1668.78 2149.93,1776.1 2048.94,1792.26C1947.95,1808.42 1774.25,1824.58 1649.02,1990.2C1523.79,2155.82 1528.42,2350.19 1479.36,2410.31C1314.72,2612.08 1146,2529.23 1146,2697.11C1146,2772.27 1273.35,2826.38 1293.55,2802.14C1313.75,2777.9 1121.93,2705.68 1336.56,2620.36C1519.91,2547.46 1536.28,2532.58 1592.47,2584Z" style="fill:rgba(0,0,0,0);">
+            <animate attributeName="fill" begin="0.6s" dur="0.5s" fill="freeze" values="rgba(0,0,0,0);rgba(0,0,0,1)" repeatCount="1" />
+        </path>
+    </g>
+</svg>

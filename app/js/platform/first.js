@@ -1,4 +1,3 @@
-document.title = 'TheDesk'
 $.strip_tags = function(str, allowed) {
 	if (!str) {
 		return ''

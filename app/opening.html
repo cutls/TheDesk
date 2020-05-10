@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<title>TheDesk</title>
+		<meta content="width=device-width,initial-scale=1.0" name="viewport" />
+		<meta charset="utf-8" />
+		<style>
+			@font-face {
+				font-family: 'Open Sans';
+				font-style: normal;
+				font-weight: 300;
+				src: local('Open Sans Light'), local('OpenSans-Light'), url('./fonts/OpenSans-Light.ttf') format('truetype');
+			}
+			body {
+				font-family: 'Open Sans';
+				-webkit-app-region: drag;
+				cursor: move;
+				padding: 5px;
+				padding-top: 15px;
+				background-color: #222222;
+				color: white;
+				text-align: center;
+			}
+			.loading {
+				animation: throbber-loader 1000ms 300ms infinite ease-out;
+				background: #3d3d3d;
+				display: inline-block;
+				position: relative;
+				text-indent: -9999px;
+				width: 0.9em;
+				height: 1.5em;
+				margin: 0 1.6em;
+			}
+			.loading:before,
+			.loading:after {
+				background: #3d3d3d;
+				content: '\x200B';
+				display: inline-block;
+				width: 0.9em;
+				height: 1.5em;
+				position: absolute;
+				top: 0;
+			}
+			.loading:before {
+				animation: throbber-loader 1000ms 150ms infinite ease-out;
+				left: -1.6em;
+			}
+			.loading:after {
+				animation: throbber-loader 1000ms 450ms infinite ease-out;
+				right: -1.6em;
+			}
+			@keyframes throbber-loader {
+				0% {
+					background: #3d3d3d;
+				}
+				10% {
+					background: #6b9dc8;
+				}
+				40% {
+					background: #3d3d3d;
+				}
+			}
+
+			a,
+			button {
+				-webkit-app-region: no-drag;
+			}
+		</style>
+	</head>
+
+	<body class="center" style="overflow: hidden;">
+		<img src="./img/desk-animation.svg" style="max-width: 62%;" />
+		<h1>TheDesk</h1>
+		<span class="loading"></span>
+		<div class="cp">
+			<span id="ver"></span><br />
+			Copyright &copy; TheDesk 2018
+			<script>
+				if (location.search) {
+					var m = location.search.match(/\?ver=([0-9.]+)&codename=([a-zA-Z]+)/)
+					var ver = m[1]
+					var code = m[2]
+					document.getElementById('ver').innerText = `${ver}(${code})`
+				}
+			</script>
+		</div>
+	</body>
+</html>
