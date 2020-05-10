@@ -79,6 +79,8 @@ function createWindow() {
 	if(lang == 'ja') {
 		const maxims = JSON.parse(fs.readFileSync(__dirname + '/maxim.ja.json'))
 		var show = maxims[Math.floor(Math.random() * maxims.length)]
+	} else {
+		var show = 'TheDesk 2018'
 	}
 	const data = JSON.parse(package)
 	const version = data.version

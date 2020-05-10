@@ -128,6 +128,7 @@
     "lang_layout_mediafil": "メディアフィルター",
     "lang_layout_linkana": "リンク解析",
     "lang_layout_linkanades": "リンクの解析を切り替え",
+    "lang_layout_remoteOnly": "リモートのみ",
     "lang_layout_tts": "読み上げ",
     "lang_layout_reconnect": "カラム再読込",
     "lang_layout_headercolor": "TLヘッダーカラー",

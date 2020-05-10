@@ -14,6 +14,46 @@ function mediaToggle(tlid) {
 		$('#timeline_' + tlid).addClass('media-filter')
 	}
 }
+/* Remote only */
+function remoteOnly(tlid, type) {
+	var multi = localStorage.getItem('column')
+	var obj = JSON.parse(multi)
+	if (obj[tlid].data) {
+		if (obj[tlid].data.remote) {
+			obj[tlid].data.remote = false
+			var json = JSON.stringify(obj)
+			localStorage.setItem('column', json)
+			$('#sta-remote-' + tlid).text('Off')
+			$('#sta-remote-' + tlid).css('color', '#009688')
+		} else {
+			obj[tlid].data.remote = true
+			var json = JSON.stringify(obj)
+			localStorage.setItem('column', json)
+			$('#sta-remote-' + tlid).text('On')
+			$('#sta-remote-' + tlid).css('color', 'red')
+		}
+	} else {
+		obj[tlid].data = {}
+		obj[tlid].data.remote = true
+		var json = JSON.stringify(obj)
+		localStorage.setItem('column', json)
+		$('#sta-remote-' + tlid).text('On')
+		$('#sta-remote-' + tlid).css('color', 'red')
+	}
+	columnReload(tlid, type)
+}
+function remoteOnlyCk(tlid) {
+	var multi = localStorage.getItem('column')
+	var obj = JSON.parse(multi)
+	if (obj[tlid].data) {
+		if (obj[tlid].data.remote) {
+			$('#sta-remote-' + tlid).text('On')
+			$('#sta-remote-' + tlid).css('color', 'red')
+			return true
+		}
+	}
+	return false
+}
 //各TL上方のBT[BTOnly/BTExc/Off]
 function ebtToggle(tlid) {
 	var ebt = localStorage.getItem('ebt_' + tlid)
@@ -117,26 +157,26 @@ function filter() {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json) {
 				var filters = ''
-				Object.keys(json).forEach(function(key) {
+				Object.keys(json).forEach(function (key) {
 					var filterword = json[key]
 					var context = filterword.context.join(',')
 					filters =
@@ -191,10 +231,7 @@ function makeNewFilter() {
 	if (!who) {
 		who = false
 	}
-	var time =
-		$('#days_filter').val() * 24 * 60 * 60 +
-		$('#hours_filter').val() * 60 * 60 +
-		$('#mins_filter').val() * 60
+	var time = $('#days_filter').val() * 24 * 60 * 60 + $('#hours_filter').val() * 60 * 60 + $('#mins_filter').val() * 60
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	if ($('#filter-edit-id').val()) {
@@ -216,10 +253,10 @@ function makeNewFilter() {
 			context: cont,
 			irreversible: exc,
 			whole_word: who,
-			expires_in: time
+			expires_in: time,
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -263,29 +300,29 @@ function filterEdit(id, acct_id) {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json) {
 				var now = new Date()
 				now = now.getTime()
 				var now = Math.floor(now / 1000)
 				$('#filter-add-word').val(json.phrase)
-				Object.keys(json.context).forEach(function(key) {
+				Object.keys(json.context).forEach(function (key) {
 					var context = json.context[key]
 					$('[value=' + context + ']').prop('checked', true)
 				})
@@ -315,7 +352,7 @@ function filterDel(id, acct_id) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send()
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -335,23 +372,23 @@ function getFilter(acct_id) {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
-			}
+				Authorization: 'Bearer ' + at,
+			},
 		})
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				localStorage.setItem('filter_' + acct_id, JSON.stringify(json))
 			})
 	} else {
@@ -370,13 +407,13 @@ function getFilterType(json, type) {
 		type = 'notifi'
 	}
 	var mutedfilters = []
-	Object.keys(json).forEach(function(key) {
+	Object.keys(json).forEach(function (key) {
 		var filterword = json[key]
 		var phrases = filterword.phrase
 		var arr = filterword.context
 		if (arr.join(',').indexOf(type) !== -1) {
 			mutedfilters.push(phrases)
-		} else if (type == 'mix'){
+		} else if (type == 'mix') {
 			if (arr.indexOf('home') !== -1 || arr.indexOf('public') !== -1) {
 				mutedfilters.push(phrases)
 			}
@@ -400,23 +437,23 @@ function filterUpdate(acct_id) {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			localStorage.setItem('filter_' + acct_id, JSON.stringify(json))
 			filterUpdateInternal(json, 'home')
 			filterUpdateInternal(json, 'local')
@@ -432,13 +469,11 @@ function filterUpdateInternal(json, type) {
 		home = home.concat(wordmute)
 	}
 	if (home) {
-		$('[data-acct=' + acct_id + '] [data-type=' + type + '] .cvo').each(function(i, elem) {
+		$('[data-acct=' + acct_id + '] [data-type=' + type + '] .cvo').each(function (i, elem) {
 			var id = $(elem).attr('toot-id')
 			$('[toot-id=' + id + ']').removeClass('hide')
-			var text = $(elem)
-				.find('.toot')
-				.html()
-			Object.keys(home).forEach(function(key8) {
+			var text = $(elem).find('.toot').html()
+			Object.keys(home).forEach(function (key8) {
 				var word = home[key8]
 				var regExp = new RegExp(word.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'), 'g')
 				if ($.strip_tags(text).match(regExp)) {

@@ -354,6 +354,18 @@ function parseColumn(target, dontclose) {
 			} else {
 				var addHeight = ''
 			}
+			if (acct.type != 'pub' && acct.type != 'pub-media') {
+				console.log(acct.type, key)
+				var mediaFil = `<a onclick="mediaToggle('${key}')" class="setting nex">
+					<i class="material-icons waves-effect nex" title="${lang.lang_layout_mediafil}">perm_media</i>
+					<span id="sta-media-${key}">On</span>
+				</a>${lang.lang_layout_mediafil}`
+			} else {
+				var mediaFil = `<a onclick="remoteOnly('${key}','${acct.type}')" class="setting nex">
+					<i class="material-icons waves-effect nex" title="${lang.lang_layout_remoteOnly}">perm_media</i>
+					<span id="sta-remote-${key}">Off</span>
+				</a>${lang.lang_layout_remoteOnly}`
+			}
 			var html = `
 				<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}" data-acct="${acct.domain}" style="${addHeight}">
 					<div class="notice-box z-depth-2" id="menu_${key}" style="${insert}">
@@ -408,11 +420,7 @@ function parseColumn(target, dontclose) {
 				<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:5px;">
 					${unread}
 					${exclude}${left_hold}
-					<a onclick="mediaToggle('${key}')" class="setting nex">
-						<i class="material-icons waves-effect nex" title="${lang.lang_layout_mediafil}">perm_media</i>
-						<span id="sta-media-${key}">On</span>
-					</a>
-					${lang.lang_layout_mediafil}<br>
+					${mediaFil}<br>
 					<a onclick="cardToggle('${key}')" class="setting nex">
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_linkanades}">link</i>
 						<span id="sta-card-${key}">On</span>

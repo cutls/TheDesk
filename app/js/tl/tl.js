@@ -158,7 +158,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		}
 	} else {
 		var misskey = false
-		var url = com(type, data)
+		var url = com(type, data, tlid)
 		if (type == 'tag') {
 			var tag = localStorage.getItem('tag-range')
 			if (tag == 'local') {
@@ -256,10 +256,17 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		if (type == 'home') {
 			var start = wss + '/api/v1/streaming/?stream=user&access_token=' + at
 		} else if (type == 'pub') {
-			var start = wss + '/api/v1/streaming/?stream=public&access_token=' + at
+			var add = ''
+			if(remoteOnlyCk(tlid)){
+				add = '&remote=true'
+			}
+			var start = wss + '/api/v1/streaming/?stream=public&access_token=' + at + add
 		} else if (type == 'pub-media') {
-			var start =
-				wss + '/api/v1/streaming/?stream=public:media&access_token=' + at
+			var add = ''
+			if(remoteOnlyCk(tlid)){
+				add = '&remote=true'
+			}var start =
+				wss + '/api/v1/streaming/?stream=public:media&access_token=' + at + add
 		} else if (type == 'local') {
 			var start =
 				wss + '/api/v1/streaming/?stream=public:local&access_token=' + at
@@ -532,7 +539,7 @@ function moreload(type, tlid) {
 				'https://' +
 				domain +
 				'/api/v1/timelines/' +
-				com(type, data) +
+				com(type, data, tlid) +
 				'max_id=' +
 				sid
 			if (type == 'dm') {
@@ -665,7 +672,7 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
 				'https://' +
 				domain +
 				'/api/v1/timelines/' +
-				com(type, data) +
+				com(type, data, tlid) +
 				'since_id=' +
 				sid
 			if (type == 'dm') {
@@ -850,7 +857,7 @@ function cap(type, data, acct_id) {
 }
 
 //TLのURL
-function com(type, data) {
+function com(type, data, tlid) {
 	if (type == 'home') {
 		return 'home?'
 	} else if (type == 'local' || type == 'noauth') {
@@ -858,9 +865,17 @@ function com(type, data) {
 	} else if (type == 'local-media') {
 		return 'public?local=true&only_media=true&'
 	} else if (type == 'pub') {
-		return 'public?'
+		var add = ''
+		if(remoteOnlyCk(tlid)){
+			add = 'remote=true&'
+		}
+		return 'public?' + add
 	} else if (type == 'pub-media') {
-		return 'public?only_media=true&'
+		var add = ''
+		if(remoteOnlyCk(tlid)){
+			add = 'remote=true&'
+		}
+		return 'public?only_media=true&' + add
 	} else if (type == 'tag') {
 		if (data.name) {
 			var name = data.name
