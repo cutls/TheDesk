@@ -95,6 +95,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 		var name = ''
 		var platform = process.platform
 		var bit = process.arch
+		const filename = args[0].match(/https:\/\/.+\/(.+\..+)$/)
 		if (args[1] == '') {
 			if (platform == 'win32') {
 				var dir = app.getPath('home') + '\\Pictures\\TheDesk'
@@ -115,11 +116,21 @@ function dl(mainWindow, lang_path, base, dirname) {
 		}
 		download(BrowserWindow.getFocusedWindow(), args[0], opts)
 			.then(dl => {
-				event.sender.webContents.send('general-dl-message', dir)
+				if(filename[1]) {
+					if (platform == 'win32') {
+						var name = dir + '\\' + filename[1]
+					} else if (platform == 'linux' || platform == 'darwin') {
+						var name = dir + '/' + filename[1]
+					}
+				} else {
+					var name = dir
+				}
+				event.sender.webContents.send('general-dl-message', name)
 			})
 			.catch(console.error)
 	})
-	ipc.on('open-finder', (e, folder) => {
+	ipc.on('openFinder', (e, folder) => {
+		console.log(folder)
 		shell.showItemInFolder(folder)
 	})
 }
