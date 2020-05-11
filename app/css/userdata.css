@@ -38,10 +38,6 @@
 #his-basic-prof {
   min-height: 130px;
 }
-#his-matching-list {
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
 #his-field {
   vertical-align: baseline;
   text-align: center;
