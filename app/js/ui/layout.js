@@ -28,9 +28,7 @@ function parseColumn(target, dontclose) {
 	console.log('%c Parse column', 'color:red;font-size:125%')
 	var size = localStorage.getItem('size')
 	if (size) {
-		$('#timeline-container').css('font-size', size + 'px')
-		$('.toot-reset').css('font-size', size + 'px')
-		$('.cont-series').css('font-size', size + 'px')
+		$('html').css('font-size', size + 'px')
 	}
 	if (localStorage.getItem('menu-done')) {
 		$('#fukidashi').addClass('hide')
@@ -262,11 +260,11 @@ function parseColumn(target, dontclose) {
 							<i class="fas fa-tasks exc-icons"></i>
 						</span>
 					</label> 
-					<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude('${key}')">Filter</button>`
+					<button class="btn waves-effect" style="width:4.6rem; padding:0;" onclick="exclude('${key}')">Filter</button>`
 				if (checkNotfFilter(key)) {
 					exclude =
 						exclude +
-						`<button class="btn red waves-effect" style="width:60px; padding:0;" onclick="resetNotfFilter('${key}')">
+						`<button class="btn red waves-effect" style="width:4.6rem; padding:0;" onclick="resetNotfFilter('${key}')">
 							Clear all
 						</button>`
 				}
@@ -275,7 +273,7 @@ function parseColumn(target, dontclose) {
 				notfKey = 'dummy'
 			} else if (acct.type == 'home') {
 				var exclude = `<a onclick="ebtToggle('${key}')" class="setting nex">
-						<i class="fas fa-retweet waves-effect nex" title="${lang.lang_layout_excludingbt}" style="font-size:24px"></i>
+						<i class="fas fa-retweet waves-effect nex" title="${lang.lang_layout_excludingbt}" style="font-size:1.84rem"></i>
 						<span id="sta-bt-${key}">Off</span>
 					</a>
 					${lang.lang_layout_excludingbt}
@@ -292,7 +290,7 @@ function parseColumn(target, dontclose) {
 					var any = ''
 					var none = ''
 				}
-				if_tag = `<div class="column-hide notf-indv-box" id="tag-box_${key}" style="padding:5px;">
+				if_tag = `<div class="column-hide notf-indv-box" id="tag-box_${key}" style="padding:0.4rem;">
 					Base: ${name}<br>
 					<div id="tagManager-${key}">
 						all: <input type="text" id="all_tm-${key}"" value="${all}">
@@ -302,7 +300,7 @@ function parseColumn(target, dontclose) {
 					<button onclick="addTag('${key}')" class="btn waves-effect" style="width: 100%">Refresh</button>
 				</div>`
 				if_tag_btn = `<a onclick="setToggleTag('${key}')" class="setting nex" 
-				title="${lang.lang_layout_tagManager}" style="width:30px">
+				title="${lang.lang_layout_tagManager}" style="width:2.4rem">
 				<i class="material-icons waves-effect nex">note_add</i>
 				</a>`
 				unread = ''
@@ -371,7 +369,7 @@ function parseColumn(target, dontclose) {
 					<div class="notice-box z-depth-2" id="menu_${key}" style="${insert}">
 						<div class="area-notice">
 							<i class="material-icons waves-effect ${isMisRed}" id="notice_icon_${key}" ${notf_attr}
-								 style="font-size:40px; padding-top:25%;" 
+								 style="font-size:3rem; padding-top:25%;" 
 								 onclick="checkStr('${acct.type}','${data}','${acct.domain}', '${key}', '${delc}','${voice}',null)"
 							 	 title="${lang.lang_layout_gotop}" aria-hidden="true">
 							</i>
@@ -417,7 +415,7 @@ function parseColumn(target, dontclose) {
 					<div id="notifications_${notfKey}" data-notf="${notfDomain}" data-type="notf" class="notf-timeline">
 					</div>
 				</div>
-				<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:5px;">
+				<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:0.4rem;">
 					${unread}
 					${exclude}${left_hold}
 					${mediaFil}<br>
@@ -779,7 +777,7 @@ function webviewParse(url, key, insert, icnsert, css) {
 	var html = `<div class="box" id="timeline_box_${key}_box" tlid="${key}" style="${css}">
 			<div class="notice-box z-depth-2" id="menu_${key}" style="${insert}">
 				<div class="area-notice">
-					<i class="fab fa-twitter waves-effect" id="notice_icon_${key}" style="font-size:40px; padding-top:25%;"></i>
+					<i class="fab fa-twitter waves-effect" id="notice_icon_${key}" style="font-size:3rem; padding-top:25%;"></i>
 				</div>
 				<div class="area-notice_name tl-title">WebView('${url}')</div>
 				<div class="area-sta"></div>
@@ -795,7 +793,7 @@ function webviewParse(url, key, insert, icnsert, css) {
 				</div>
 			</div>
 			<div class="column-hide notf-indv-box z-depth-4" id="notf-box_${key}"></div>
-			<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:5px;">
+			<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:0.4rem;">
 				${lang.lang_layout_headercolor}
 				<br>
 				<div id="picker_${key}" class="color-picker"></div>
@@ -833,7 +831,7 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 	var html = `<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}">
 			<div class="notice-box z-depth-2" id="menu_${key}" style="${insert} ">
 				<div class="area-notice">
-					<i class="material-icons waves-effect" id="notice_icon_${key}" style="font-size:40px; padding-top:25%;" 
+					<i class="material-icons waves-effect" id="notice_icon_${key}" style="font-size:3rem; padding-top:25%;" 
 						onclick="${type}('${key}','${dataHtml}');" title="${lang.lang_layout_gotop}"></i>
 				</div>
 				<div class="area-notice_name">
@@ -852,7 +850,7 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 					</a>
 				</div>
 			</div>
-		<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:5px;">
+		<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:0.4rem;">
 			${left_hold}
 			<a onclick="mediaToggle('${key}')" class="setting nex">
 				<i class="material-icons waves-effect nex" title="${lang.lang_layout_mediafil}">perm_media</i>

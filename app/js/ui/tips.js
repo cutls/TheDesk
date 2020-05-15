@@ -26,7 +26,7 @@ function tips(mode) {
 	if (mode == 'ver') {
 		tipsToggle()
 		$('#tips-text').html(
-			'<img src="../../img/desk.png" width="20" onclick="todo(\'TheDesk is a nice client!: TheDesk ' +
+			'<img src="../../img/desk.png" class="prof-img-sml" onclick="todo(\'TheDesk is a nice client!: TheDesk ' +
 				localStorage.getItem('ver') +
 				' git: ' +
 				gitHash +
@@ -34,7 +34,7 @@ function tips(mode) {
 				localStorage.getItem('ver') +
 				' {' +
 				gitHash.slice(0, 7) +
-				'} [<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]'
+				'} [<i class="material-icons" style="font-size:1.2rem;top: 0.23rem;position: relative;">supervisor_account</i><span id="persons">1+</span>]'
 		)
 		localStorage.setItem('tips', 'ver')
 	} else if (mode == 'clock') {
@@ -117,7 +117,7 @@ function trendTagonTip() {
 						</span><br>`
 				})
 				$('#tips-text').html(
-					'<div class="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTagonTip()" style="font-size:12px">refresh</i>:<br>' +
+					'<div class="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTagonTip()" style="font-size:0.9rem">refresh</i>:<br>' +
 						tags +
 						'</div>'
 				)
@@ -193,8 +193,8 @@ function spotifytips() {
 				var html = `
 				<div id="spot-box">
 					<div id="spot-refresh">
-						<i class="material-icons pointer" onclick="spotifytips()" style="font-size:20px">refresh</i>
-						<i class="material-icons pointer" onclick="nowplaying('spotify');show()" style="font-size:20px">send</i>
+						<i class="material-icons pointer" onclick="spotifytips()" style="font-size:1.5rem">refresh</i>
+						<i class="material-icons pointer" onclick="nowplaying('spotify');show()" style="font-size:1.5rem">send</i>
 					</div>
 					<div id="spot-cover">
 						<img src="${img}" id="spot-img">
@@ -277,7 +277,7 @@ function clockStart() {
 		(nowTime.getMonth() + 1) +
 		'/' +
 		nowTime.getDate() +
-		'<span style="font-size:20px; font-family:Open Sans">' +
+		'<span style="font-size:1.5rem; font-family:Open Sans">' +
 		nowHour +
 		':' +
 		nowMin +

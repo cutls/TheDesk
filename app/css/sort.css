@@ -3,29 +3,29 @@
   cursor: move;
   user-select: none;
   background-color: var(--modalfooter);
-  margin: 5px;
-  border-radius: 5px;
+  margin: 0.4rem;
+  border-radius: 0.4rem;
   color: var(--color);
   padding: 3px;
   display: grid;
-  grid-template-columns: 43px 1fr 60px;
+  grid-template-columns: 3.3rem 1fr 4.6rem;
   grid-template-areas: "sorticon sorttitle sorttitle" "sorticon sortacct sortaction";
 }
 .sorticon {
   grid-area: sorticon;
 }
 .sorticon i {
-  font-size: 43px;
+  font-size: 3.3rem;
 }
 .sorttitle {
-  margin-left: 5px;
+  margin-left: 0.4rem;
   grid-area: sorttitle;
 }
 .sortacct {
-  margin-left: 5px;
+  margin-left: 0.4rem;
   grid-area: sortacct;
 }
 .sortaction {
-  margin-left: 5px;
+  margin-left: 0.4rem;
   grid-area: sortaction;
 }

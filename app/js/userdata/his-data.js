@@ -709,7 +709,7 @@ function udAdd(acct_id, id, start) {
 		.then(function(json) {
 			var fields = json;
 			for (var i = 0; i < fields.length; i++) {
-				var html = '<a href="' + fields[i].proof_url + '" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].provider)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].provider) + ":" + escapeHTML(fields[i].provider_username) + "</a>";
+				var html = '<a href="' + fields[i].proof_url + '" target="_blank" class="cbadge teal waves-effect" style="max-width:15.4rem;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].provider)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].provider) + ":" + escapeHTML(fields[i].provider_username) + "</a>";
 				$("#his-proof-prof").append(html);
 			}
 		});
@@ -734,7 +734,7 @@ function udAdd(acct_id, id, start) {
 		})
 		.then(function(json) {
 			if (json.user.public_view) {
-				var html = '<a href="' + json.user.url + '" target="_blank" class="cbadge purple waves-effect" style="max-width:200px;" title="Notestock">Notestock</a>';
+				var html = '<a href="' + json.user.url + '" target="_blank" class="cbadge purple waves-effect" style="max-width:15.4rem;" title="Notestock">Notestock</a>';
 				$("#his-proof-prof").append(html);
 			}
 		});

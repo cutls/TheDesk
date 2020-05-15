@@ -1,145 +1,148 @@
 /*トゥートボックス向けCSS*/
 #post-box {
-  display: none;
-  position: fixed;
-  left: calc(50vw - 150px);
-  top: 50vh;
-  background-color: var(--postbox);
-  border: thin solid gray;
-  z-index: 501;
-  max-width: 100%;
-  padding: 5px;
-  border-radius: 5px;
-  overflow: hidden;
+	display: none;
+	position: fixed;
+	left: calc(50vw - 150px);
+	top: 50vh;
+	background-color: var(--postbox);
+	border: thin solid gray;
+	z-index: 501;
+	max-width: 100%;
+	padding: 0.4rem;
+	border-radius: 0.4rem;
+	overflow: hidden;
 }
 textarea {
-  min-height: 100px !important;
-  font-family: inherit;
+	min-height: 7.7rem !important;
+	font-family: inherit;
 }
-#post-box .ui-resizable-s, #post-box .ui-resizable-se{
-  display: none !important;
+#post-box .ui-resizable-s,
+#post-box .ui-resizable-se {
+	display: none !important;
 }
 
 .cancel {
-  font-size: 0.5rem;
-  color: gray;
-  cursor: pointer;
-  position: absolute;
-  right: 2px;
-  top: 4px;
+	font-size: 0.5rem;
+	color: gray;
+	cursor: pointer;
+	position: absolute;
+	right: 2px;
+	top: 4px;
 }
 .more-show {
-  display: none;
+	display: none;
 }
 #drag {
-  width: 100%;
-  height: 100px;
+	width: 100%;
+	height: 100px;
 }
 #post-btn {
-  display: none;
+	display: none;
 }
 #vis {
-  text-transform: capitalize;
+	text-transform: capitalize;
 }
 #cw-text {
-  display: none;
+	display: none;
 }
 #sch-box {
-  display: none;
+	display: none;
 }
 #sch-box input {
-  width: auto;
+	width: auto;
 }
 .picker__close,
 .picker__today,
 .picker__clear {
-  color: #26a69a !important;
+	color: #26a69a !important;
 }
 .cw {
-  display: none;
+	display: none;
 }
 .sensitive {
-  filter: blur(50px);
+	filter: blur(50px);
 }
 #emoji {
 }
 #suggest {
-  max-height: 300px;
-  overflow-y: scroll;
+	max-height: 23rem;
+	overflow-y: scroll;
 }
 #emoji-list {
-  width: 100%;
-  height: 200px;
-  overflow-y: scroll;
+	width: 100%;
+	height: 15.4rem;
+	overflow-y: scroll;
 }
 #preview-field {
-  display: none;
+	display: none;
 }
 .preview-img {
-  width: 50px;
-  max-height: 100px;
+	width: 4rem;
+	max-height: 7.6rem;
 }
 .pi-wrap {
-  display: inline-block;
-  width: 50px;
-  max-height: 100px;
+	display: inline-block;
+	width: 3.8rem;
+	max-height: 7.7rem;
 }
 #default-emoji a {
-  color: var(--color);
-  margin-right: 2px;
+	color: var(--color);
+	margin-right: 0.15rem;
 }
 .character-counter {
-  position: relative;
-  top: -25px;
+	position: relative;
+	top: -1.9rem;
 }
 .trendtag {
-  overflow-y: scroll;
-  max-height: 100px;
+	overflow-y: scroll;
+	max-height: 7.7rem;
 }
 #toot-btn-field {
-  display: flex;
+	display: flex;
 }
 #toot-post-btn {
-  width: calc(100% - 10px);
-  padding: 0;
-  margin-top: 10px;
+	width: calc(100% - 0.7rem);
+	padding: 0;
+	margin-top: 0.7rem;
+	height: 2.7rem;
 }
 #toot-sec-btn {
-  width: 30px;
-  padding: 0;
-  margin-top: 10px;
+	width: 2.3rem;
+	padding: 0;
+	margin-top: 0.7rem;
 }
 #left-side {
-  float: left;
-  overflow-x: hidden;
-  height: calc(100% - 32px);
+	float: left;
+	overflow-x: hidden;
+	height: calc(100% - 2.5rem);
 }
 #right-side {
-  display: none;
-  float: left;
-  width: 300px;
-  padding: 5px;
-  overflow-x: hidden;
-  height: calc(100% - 32px);
+	display: none;
+	float: left;
+	width: 23rem;
+	padding: 0.4rem;
+	overflow-x: hidden;
+	height: calc(100% - 2.5rem);
 }
-#posttgl,#toot-post-btn {
-  background-color: var(--accentbtn);
-  color: var(--color);
+#posttgl,
+#toot-post-btn {
+	background-color: var(--accentbtn);
+	color: var(--color);
 }
 /*mini*/
 .mini-post .mize {
-  display: none !important;
+	display: none !important;
 }
 .mini-post #textarea {
-  padding: 0;
+	padding: 0;
 }
 .mini-post #post-box {
-  width: 200px;
-  min-width: 100px;
+	width: 15.4rem;
+	min-width: 7.7rem;
 }
 .mini-post #toot-field {
-  padding: 0;
+	padding: 0;
 }
 .mini-post #toot-btn-field {
-  padding: 0;
+	padding: 0;
 }

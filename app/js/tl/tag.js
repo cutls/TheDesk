@@ -133,7 +133,7 @@ function trendTag() {
 						</span> `
 				})
 				$('#taglist').append(
-					'<div class="trendtag">アイマストドントレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' +
+					'<div class="trendtag">アイマストドントレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:0.9rem">refresh</i>:' +
 						tags +
 						'</div>'
 				)
