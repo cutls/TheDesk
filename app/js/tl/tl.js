@@ -851,7 +851,7 @@ function cap(type, data, acct_id) {
 	} else if (type == 'bookmark') {
 		var response = 'Bookmarks'
 	} else if (type == 'utl') {
-		var response = 'User TL(' + data.acct + ')'
+		var response = 'User TL(' + escapeHTML(data.acct) + ')'
 	}
 	return response
 }
