@@ -21,10 +21,12 @@ html {
 .action-menu-item:hover {
 	filter: brightness(80%) !important;
 }
-.btn {
+.btn, .btn-flat {
 	font-size: 1.1rem;
 	margin: 0.4rem;
 	text-transform: none;
+	height: 2.76rem;
+	line-height: 2.76rem;
 }
 .markdown {
 	display: none;

@@ -19,7 +19,7 @@
 	<meta charset="utf-8">
 	<style>
 		input {
-			max-height: 50px !important
+			max-height: 3.84rem !important
 		}
 
 		.pcr-result {
@@ -54,11 +54,11 @@
 				@@langlist@@
 				<h5>@@backup@@</h5>
 				<button onclick="exportSettings()" class="btn waves-effect lime darken-3"
-					style="width:100%; max-width:200px;">@@export@@</button>
+					style="width:100%; max-width:15rem;">@@export@@</button>
 				<button onclick="importSettings()" class="btn waves-effect cyan darken-3"
-					style="width:100%; max-width:200px;">@@import@@</button><br>
+					style="width:100%; max-width:15rem;">@@import@@</button><br>
 					@@backupWarn@@<br>
-					<input type="text" id="imp-exp" style="width: 300px">
+					<input type="text" id="imp-exp" style="width: 22rem">
 				<div id="envView">
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
@@ -87,22 +87,22 @@
 								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
 									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
 							</template>
-							<button class="btn waves-effect" style="width:100px;"
+							<button class="btn waves-effect" style="width:7.7rem;"
 								v-on:click="complete(i)">@@change@@</button>
 						</template><br>
 					</template>
 				</div>
 				<h5>@@font@@</h5>
 				@@fontwarn@@<br>
-				<button class="btn waves-effect" style="width:100px;" onclick="font()">@@select@@</button><br>
-				<div id="fonts" class="hide" style="overflow-y:scroll; width:300px; height:500px;"></div>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="font()">@@select@@</button><br>
+				<div id="fonts" class="hide" style="overflow-y:scroll; width:22rem; height:40rem;"></div>
 				<br>
-				<input type="text" style="width:150px" id="font">
-				<button class="btn waves-effect" style="width:100px;" onclick="settings()">@@set@@</button>
+				<input type="text" style="width:11.5rem" id="font">
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="settings()">@@set@@</button>
 				<br>
 				<h5>@@savefolder@@</h5>
 				@@savefolderwarn@@<br>
-				<button class="btn waves-effect" style="width:100px;" onclick="savefolder()">@@change@@</button>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="savefolder()">@@change@@</button>
 				<br>
 			</div>
 		</li>
@@ -150,19 +150,19 @@
 						value="custom" />
 					<span data-ct="custom">custom</span>
 				</label>
-				<div style="width:300px" id="sel-selector">
+				<div style="width:22rem" id="sel-selector">
 					<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
 				</div>
 				<h4>@@customtheme@@</h4>
-				<div style="width:300px" id="edit-selector" data-add="@@add_new@@">
+				<div style="width:22rem" id="edit-selector" data-add="@@add_new@@">
 					<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
 						<option value="add_new">@@add_new@@</option>
 					</select>
 				</div>
 				<h5>@@name@@</h5>
-				<input type="text" style="width:300px" id="custom_name" placeholder="@@name@@...">
+				<input type="text" style="width:22rem" id="custom_name" placeholder="@@name@@...">
 				<h5>@@desc@@</h5>
-				<div class="input-field"><textarea style="width:300px" id="custom_desc" class="materialize-textarea"
+				<div class="input-field"><textarea style="width:22rem" id="custom_desc" class="materialize-textarea"
 						placeholder="@@desc@@..."></textarea></div>
 				<h5>@@customthemeDirection@@</h5>
 				<label>
@@ -244,12 +244,12 @@
 				</div>
 				<button class="btn-large waves-effect" onclick="customComp()">@@change@@</button>&nbsp;<button
 					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">@@delete@@</button><br><br>
-				<input type="text" style="width:300px;height:40px;" id="custom_json" class="materialize-textarea"
+				<input type="text" style="width:22rem;height:40px;" id="custom_json" class="materialize-textarea"
 					placeholder="JSON style" readonly><br>
 				@@customShare@@
 				<h4>@@customImport@@</h4>
 				@@cImpWarn@@<br>
-				<input type="text" style="width:300px;height:40px;" id="custom_import" class="materialize-textarea"
+				<input type="text" style="width:22rem;height:40px;" id="custom_import" class="materialize-textarea"
 					placeholder="JSON/JSON5 style">
 				<button class="btn waves-effect" onclick="customImp()">@@import@@</button><br>
 		</li>
@@ -284,7 +284,7 @@
 								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
 									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
 							</template>
-							<button class="btn waves-effect" style="width:100px;"
+							<button class="btn waves-effect" style="width:7.7rem;"
 								v-on:click="complete(i)">@@change@@</button>
 						</template><br>
 					</template>
@@ -302,7 +302,7 @@
 				@@volwarn80@@<br>
 				<p class="range-field"><span id="soundVolVal">80</span><br>
 					<input type="range" id="soundvol" min="0" max="100" value="80" onchange="customVol()"
-						style="width:500px; max-width:100%" /></p>
+						style="width:40rem; max-width:100%" /></p>
 			</div>
 		</li>
 		<li>
@@ -339,7 +339,7 @@
 								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
 									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
 							</template>
-							<button class="btn waves-effect" style="width:100px;"
+							<button class="btn waves-effect" style="width:7.7rem;"
 								v-on:click="complete(i)">@@change@@</button>
 						</template><br>
 					</template>
@@ -353,12 +353,12 @@
 			<div class="collapsible-body">
 				<h5>@@iks@@</h5>
 				@@okswarn@@<br>
-				Ctrl+Shift+1:<input type="text" style="width:150px" id="oks-1">
-				<button onclick="oks(1)" class="btn waves-effect" style="width:100px;">@@set@@</button><br><br>
-				Ctrl+Shift+2:<input type="text" style="width:150px" id="oks-2">
-				<button onclick="oks(2)" class="btn waves-effect" style="width:100px;">@@set@@</button><br><br>
-				Ctrl+Shift+3:<input type="text" style="width:150px" id="oks-3">
-				<button onclick="oks(3)" class="btn waves-effect" style="width:100px;">@@set@@</button><br><br>
+				Ctrl+Shift+1:<input type="text" style="width:11.5rem" id="oks-1">
+				<button onclick="oks(1)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
+				Ctrl+Shift+2:<input type="text" style="width:11.5rem" id="oks-2">
+				<button onclick="oks(2)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
+				Ctrl+Shift+3:<input type="text" style="width:11.5rem" id="oks-3">
+				<button onclick="oks(3)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
 			</div>
 		</li>
 		<li>
@@ -373,11 +373,11 @@
 				<h5>@@wordmute@@</h5>
 				@@enter@@<br>
 				<div class="chips" id="wordmute" style="background-color:gray;"></div>
-				<button onclick="wordmuteSave()" class="btn waves-effect" style="width:100px;">@@set@@</button>
+				<button onclick="wordmuteSave()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button>
 				<h5>@@wordemp@@</h5>
 				@@enter@@<br>
 				<div class="chips" id="wordemp" style="background-color:gray;"></div>
-				<button onclick="wordempSave()" class="btn waves-effect" style="width:100px;">@@set@@</button>
+				<button onclick="wordempSave()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button>
 				<h5>@@useremp@@</h5>
 				@@useerempwarn@@
 				<span class="emphasized">　@@empcolorwarn@@　</span>
@@ -391,24 +391,24 @@
 				<h5>@@link@@(Spotify)</h5>
 				@@linkwarn@@<br>
 				<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button
-						onclick="spotifyAuth()" class="btn waves-effect" style="width:100px;">@@set@@</button></div>
+						onclick="spotifyAuth()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button></div>
 				<a onclick="spotifyConnect()" class="btn waves-effect nex"
-					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-enable"><i
+					style="width:100%; max-width:15rem; background-color:#1ed760;" id="spotify-enable"><i
 						class="fab fa-spotify left"></i>@@connect@@</a>
 				<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled"
-					style="width:100%; max-width:200px; background-color:#1ed760;" id="spotify-disable"><i
+					style="width:100%; max-width:15rem; background-color:#1ed760;" id="spotify-disable"><i
 						class="fab fa-spotify left"></i>@@disconnect@@</a>
 				<h5>@@link@@(Last.fm)</h5>
 				@@lastFmWarn@@<br />
-				<input type="text" style="width:150px" id="lastFmUser">
-				<button onclick="lastFmSet()" class="btn waves-effect" style="width:100px;">@@set@@</button>
+				<input type="text" style="width:11.5rem" id="lastFmUser">
+				<button onclick="lastFmSet()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button>
 				<h5>@@templateedit@@</h5>
 				@@templateeditwarn@@<br>
 				<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
 				@@template1@@<br>
 				<span class="mac">>@@template2@@</span><br>
-				<button onclick="spotifySave()" class="btn waves-effect" style="width:100px;">@@set@@</button>
+				<button onclick="spotifySave()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button>
 				<h5>@@postartwork@@</h5>
 				<label>
 					<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes"
@@ -459,30 +459,30 @@
 				<p class="range-field"><span id="voicespeedVal">10</span><br>
 					<input type="range" id="voicespeed" min="1" max="100" value="10"
 						onchange="document.getElementById('voicespeedVal').innerText=this.value"
-						style="width:500px; max-width:100%" /></p>
+						style="width:40rem; max-width:100%" /></p>
 				<h5>@@pitch@@</h5>
 				@@pitchwarn@@<br>
 				<p class="range-field"><span id="voicepitchVal">50</span><br>
 					<input type="range" id="voicepitch" min="0" max="100" value="50"
 						onchange="document.getElementById('voicepitchVal').innerText=this.value"
-						style="width:500px; max-width:100%" /></p>
+						style="width:40rem; max-width:100%" /></p>
 				<h5>@@vol@@</h5>
 				@@volwarn@@<br>
 				<p class="range-field"><span id="voicevolVal">100</span><br>
 					<input type="range" id="voicevol" min="0" max="100" value="100"
 						onchange="document.getElementById('voicevolVal').innerText=this.value"
-						style="width:500px; max-width:100%" /></p>
+						style="width:40rem; max-width:100%" /></p>
 				<h5>@@test@@</h5>
-				<input type="text" style="width:350px" id="voicetxt" value="@@sample@@">
-				<button class="btn waves-effect blue" style="width:150px;" onclick="voicePlay()"
+				<input type="text" style="width:27rem" id="voicetxt" value="@@sample@@">
+				<button class="btn waves-effect blue" style="width:11.5rem;" onclick="voicePlay()"
 					id="testplay">@@playstop@@</button><br>
 				<br>
-				<button class="btn waves-effect" style="width:100px;" onclick="voiceSettings()">@@set@@</button>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="voiceSettings()">@@set@@</button>
 			</div>
 		</li>
 	</ul>
 	<br>
-	<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"><i
+	<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:15rem;"><i
 			class="material-icons left">undo</i>@@back@@</a>
 	<br>
 	<br>@@keyscs@@
@@ -512,26 +512,26 @@
 		<li>B:@@bt@@</li>
 		<li>R:@@reply@@</li>
 	</div>
-	<button class="btn waves-effect red" style="width:100%; max-width:500px;"
+	<button class="btn waves-effect red" style="width:100%; max-width:40rem;"
 		onclick="if(confirm('@@resetconfirm@@')){ localStorage.clear(); location.href='index.html'; }"><i
 			class="material-icons left">delete</i>@@reset@@</button><br><br>
-	<button class="btn waves-effect indigo pwa" onclick="about()" style="width:100%; max-width:500px;"><i
+	<button class="btn waves-effect indigo pwa" onclick="about()" style="width:100%; max-width:40rem;"><i
 			class="material-icons left">info</i>@@about@@</button>
-	<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:500px;"><i
+	<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:40rem;"><i
 			class="material-icons left">web</i>@@hp@@</a>
 	<a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2"
-		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>@@support@@(Pixiv FANBOX)</a>
+		style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>@@support@@(Pixiv FANBOX)</a>
 	<a href="https://www.patreon.com/cutls" class="btn waves-effect red darken-2"
-		style="width:100%; max-width:500px;"><i class="material-icons left">trending_up</i>@@support@@(Patreon)</a>
+		style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>@@support@@(Patreon)</a>
 	<a href="https://liberapay.com/cutls" class="btn waves-effect black-text"
-		style="width:100%; max-width:500px; background-color: #f6c915"><i
+		style="width:100%; max-width:40rem; background-color: #f6c915"><i
 			class="material-icons left">trending_up</i>@@support@@(Liberapay)</a>
-	<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:500px;"><i
+	<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:40rem;"><i
 			class="material-icons left">list</i>@@help@@/Docs</a>
 	<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2"
-		style="width:100%; max-width:500px;"><i class="fab fa-github left"></i>GitHub</a>
+		style="width:100%; max-width:40rem;"><i class="fab fa-github left"></i>GitHub</a>
 	<a href="index.html?mode=user&code=Cutls@cutls.com" class="btn waves-effect blue lighten-2"
-		style="width:100%; max-width:500px;"><img src="../../img/desk_full.svg" class="left" width="25"
+		style="width:100%; max-width:40rem;"><img src="../../img/desk_full.svg" class="left" width="25"
 			style="padding-top:5px;">Main author: Cutls@cutls.com</a>
 	<br>
 	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/@@gitHash@@">@@gitHash@@</a> - <a onclick="checkupd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';"

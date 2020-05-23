@@ -770,6 +770,9 @@ p:not(:last-child) {
 	width: 100%;
 	height: 100%;
 }
+.fav_ct, .rt_ct, .rep_ct {
+	font-size: 1.1rem;
+}
 .shared.selectedToot {
 	background-color: var(--selectedWithShare);
 }

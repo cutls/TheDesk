@@ -56,31 +56,31 @@ function emojiGet(parse, started) {
 		fetch(start, {
 			method: 'GET',
 			headers: {
-				'content-type': 'application/json',
-			},
+				'content-type': 'application/json'
+			}
 		})
-			.then(function (response) {
+			.then(function(response) {
 				if (!response.ok) {
-					response.text().then(function (text) {
+					response.text().then(function(text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function (error) {
+			.catch(function(error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function (json) {
+			.then(function(json) {
 				if (parse == 'true') {
 					$('#emoji-list').text('Parsing...')
 					var md = {
 						categorized: {},
-						uncategorized: [],
+						uncategorized: []
 					}
 					var if_categorized = false
-					Object.keys(json).forEach(function (key) {
+					Object.keys(json).forEach(function(key) {
 						var emoji = json[key]
 						if (emoji.visible_in_picker) {
 							var listed = true
@@ -95,26 +95,26 @@ function emojiGet(parse, started) {
 							md['categorized'][cat].push({
 								shortcode: emoji.shortcode,
 								url: emoji.url,
-								listed: listed,
+								listed: listed
 							})
 							if_categorized = true
 						} else {
 							md['uncategorized'].push({
 								shortcode: emoji.shortcode,
 								url: emoji.url,
-								listed: listed,
+								listed: listed
 							})
 						}
 					})
 					console.log(md)
 					//絵文字をマストドン公式と同順にソート
-					md['uncategorized'].sort(function (a, b) {
+					md['uncategorized'].sort(function(a, b) {
 						if (a.shortcode < b.shortcode) return -1
 						if (a.shortcode > b.shortcode) return 1
 						return 0
 					})
-					Object.keys(md['categorized']).forEach(function (key) {
-						md['categorized'][key].sort(function (a, b) {
+					Object.keys(md['categorized']).forEach(function(key) {
+						md['categorized'][key].sort(function(a, b) {
 							if (a.shortcode < b.shortcode) return -1
 							if (a.shortcode > b.shortcode) return 1
 							return 0
@@ -136,23 +136,23 @@ function emojiGet(parse, started) {
 		fetch(start, {
 			method: 'POST',
 			headers: {
-				'content-type': 'application/json',
-			},
+				'content-type': 'application/json'
+			}
 		})
-			.then(function (response) {
+			.then(function(response) {
 				if (!response.ok) {
-					response.text().then(function (text) {
+					response.text().then(function(text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function (error) {
+			.catch(function(error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function (json) {
+			.then(function(json) {
 				if (json.enableEmojiReaction) {
 					localStorage.setItem('emojiReaction_' + acct_id, 'true')
 				} else {
@@ -160,19 +160,19 @@ function emojiGet(parse, started) {
 				}
 				var emojis = json.emojis
 				var md = { uncategorized: [] }
-				Object.keys(emojis).forEach(function (key) {
+				Object.keys(emojis).forEach(function(key) {
 					var emoji = emojis[key]
 					md['uncategorized'].push({
 						shortcode: emoji.name,
 						url: emoji.url,
-						listed: true,
+						listed: true
 					})
 				})
 				md['if_categorized'] = false
 				if (parse == 'true') {
 					$('#emoji-list').text('Parsing...')
 					//絵文字をマストドン公式と同順にソート
-					md['uncategorized'].sort(function (a, b) {
+					md['uncategorized'].sort(function(a, b) {
 						if (a.shortcode < b.shortcode) return -1
 						if (a.shortcode > b.shortcode) return 1
 						return 0
@@ -193,12 +193,15 @@ function emojiGet(parse, started) {
 function emojiList(target, reaction) {
 	$('#now-emoji').text(lang.lang_emoji_custom)
 	var acct_id = $('#post-acct-sel').val()
-	if (reaction && $('#media').val() == 'misskey') {
+	if(reaction && $('#media').val() == 'misskey') {
 		var misskeyReact = true
 	} else {
 		var misskeyReact = false
 	}
-	if (misskeyReact && localStorage.getItem('emojiReaction_' + acct_id) != 'true') {
+	if (
+		misskeyReact &&
+		localStorage.getItem('emojiReaction_' + acct_id) != 'true'
+	) {
 		console.error('Disabled')
 		clear()
 		hide()
@@ -222,18 +225,18 @@ function emojiList(target, reaction) {
 		var obj = [
 			{
 				divider: true,
-				cat: lang.lang_emoji_uncat,
-			},
+				cat: lang.lang_emoji_uncat
+			}
 		]
 		var cats = raw['uncategorized']
 		obj = obj.concat(cats)
-		Object.keys(raw['categorized']).forEach(function (key) {
+		Object.keys(raw['categorized']).forEach(function(key) {
 			var cats = raw['categorized'][key]
 			obj = obj.concat([
 				{
 					divider: true,
-					cat: key,
-				},
+					cat: key
+				}
 			])
 			obj = obj.concat(cats)
 		})
@@ -272,12 +275,14 @@ function emojiList(target, reaction) {
 					html = html + '<p style="margin-bottom:0">' + emoji.cat + '</p>'
 				} else {
 					if (emoji.listed) {
-						if (misskeyReact) {
+						if(misskeyReact) {
 							var shortcode = `:${emoji.shortcode}:`
 						} else {
 							var shortcode = emoji.shortcode
 						}
-						html = html + `<a onclick="emojiReaction('${shortcode}')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
+						html =
+							html +
+							`<a onclick="emojiReaction('${shortcode}')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
 					}
 				}
 			} else {
@@ -285,7 +290,9 @@ function emojiList(target, reaction) {
 					html = html + '<p style="margin-bottom:0">' + emoji.cat + '</p>'
 				} else {
 					if (emoji.listed) {
-						html = html + `<a onclick="emojiInsert(':${emoji.shortcode}:')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
+						html =
+							html +
+							`<a onclick="emojiInsert(':${emoji.shortcode}:')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
 					}
 				}
 			}
@@ -303,7 +310,7 @@ function emojiInsert(code, del) {
 		var blankBefore = ' '
 		var blankAfter = ' '
 	}
-	var textarea = document.getElementById('textarea')
+	var textarea = document.querySelector('#textarea')
 	var sentence = textarea.value
 	var len = sentence.length
 	var pos = textarea.selectionStart
@@ -327,11 +334,8 @@ function emojiInsert(code, del) {
 	} else {
 		var word = blankBefore + code + blankAfter
 	}
-	var go = pos - delLen + word.length
 	sentence = before + word + after
 	textarea.value = sentence
-	textarea.focus()
-	textarea.setSelectionRange(go, go)
 }
 //改行挿入
 function brInsert(code) {

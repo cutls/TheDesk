@@ -186,7 +186,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			noticeavatar = '<a onclick="udg(\'' + toot.user.id +
 				'\',' + acct_id + ');" user="' + toot.user.username + '" class="udg notf-icon">' +
 				'<img src="' + noticeavatar +
-				'" class="prof-img prof-img-sml" user="' + toot.user.username +
+				'" width="20" class="prof-img" user="' + toot.user.username +
 				'"></a>';
 			if (toot.type == "reply") {
 				var what = lang.lang_parse_mentioned;
@@ -773,7 +773,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			'<div class="area-icon"><a onclick="udg(\'' + toot.user.id +
 			'\',' + acct_id + ');" user="' + toot.user.username + '" class="udg">' +
 			'<img src="' + avatar +
-			'" class="prof-img" user="' + toot.user.username +
+			'" width="40" class="prof-img" user="' + toot.user.username +
 			'" onerror="this.src=\'../../img/loading.svg\'"></a></div>' +
 			'<div class="area-display_name"><div class="flex-name"><span class="user">' +
 			dis_name +

@@ -51,7 +51,7 @@ function defaultEmoji(target) {
 			emojis +
 			`${def}
             <span style="
-                width: 1.538rem; height: 1.538rem; display: inline-block; background-image: url('../../img/sheet.png'); background-size: 4900%;
+                width: 20px; height: 20px; display: inline-block; background-image: url('../../img/sheet.png'); background-size: 4900%;
                  background-position:${emoji['css']};"></span>
             </a>`
 	})
@@ -95,7 +95,7 @@ function faicon() {
 			emojis +
 			'<a onclick="emojiInsert(\'[faicon]' +
 			eje +
-			'[/faicon]\')" class="pointer white-text" style="font-size:1.8rem"><i class="fa ' +
+			'[/faicon]\')" class="pointer white-text" style="font-size:24px"><i class="fa ' +
 			emoji +
 			'"></i></a>'
 	})

@@ -1,131 +1,130 @@
 {
-  "name": "thedesk",
-  "version": "21.0.1",
-  "codename": "Mayu",
-  "description": "TheDesk is a Mastodon client for PC.",
-  "repository": "https://github.com/cutls/TheDesk",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "construct": "cd view/make && node make --automatic && cd ../../",
-    "dev": "npx electron ./ --dev",
-    "dist": "build --linux snap",
-    "watchview": "node view/make/make.js --automatic --watch",
-    "build:js": "node build.js",
-    "build": "node view/make/make.js --automatic && npx electron-builder",
-    "build:all": "npx electron-builder --win --linux",
-    "build:win": "npx electron-builder --win",
-    "build:pwa": "node view/make/make.js --automatic --pwa"
-  },
-  "keywords": [
-    "mastodon",
-    "client",
-    "electron",
-    "thedesk"
-  ],
-  "bugs": {
-    "url": "https://github.com/cutls/TheDesk/issues",
-    "email": "web-pro@cutls.com"
-  },
-  "homepage": "https://thedesk.top",
-  "author": {
-    "name": "Cutls",
-    "url": "https://cutls.com/@Cutls",
-    "email": "web-pro@cutls.com"
-  },
-  "contributor": [
-    {
-      "name": "とねぢ",
-      "url": "https://minohdon.jp/@toneji",
-      "email": "solfa.tono@gmail.com"
+    "name": "thedesk",
+    "version": "21.0.1",
+    "codename": "Mayu",
+    "description": "TheDesk is a Mastodon client for PC.",
+    "repository": "https://github.com/cutls/TheDesk",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "construct": "cd view/make && node make --automatic && cd ../../",
+        "dev": "npx electron ./ --dev",
+        "dist": "build --linux snap",
+        "watchview": "node view/make/make.js --automatic --watch",
+        "build:js": "node build.js",
+        "build": "node view/make/make.js --automatic && npx electron-builder",
+        "build:all": "npx electron-builder --win --linux",
+        "build:win": "npx electron-builder --win",
+        "build:pwa": "node view/make/make.js --automatic --pwa"
     },
-    {
-      "name": "ぽぷんじゃ",
-      "url": "https://popon.pptdn.jp/@popn_ja",
-      "email": "popn.ja@gmail.com"
-    },
-    {
-      "name": "kPherox",
-      "url": "https://pl.kpherox.dev/kPherox",
-      "email": "admin@mail.kr-kp.com"
-    }
-  ],
-  "license": "GPL-3.0",
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
-    "custom-electron-titlebar": "^3.2.2-hotfix62",
-    "electron-dl": "^3.0.0",
-    "jimp": "^0.10.3",
-    "jquery": "^3.5.0",
-    "jquery-ui-dist": "^1.12.1",
-    "json5": "^2.1.3",
-    "lodash": "^4.17.15",
-    "materialize-css": "git://github.com/cutls/materialize#v1-dev",
-    "sumchecker": "^3.0.1",
-    "sweetalert2": "^9.10.12",
-    "system-font-families": "^0.4.1",
-    "vue": "^2.6.11"
-  },
-  "optionalDependencies": {
-    "itunes-nowplaying-mac": "0.3.1"
-  },
-  "devDependencies": {
-    "chokidar": "^3.3.1",
-    "electron": "^8.2.3",
-    "electron-builder": "^22.5.1",
-    "electron-rebuild": "^1.10.1",
-    "readline-sync": "1.4.10"
-  },
-  "build": {
-    "productName": "TheDesk",
-    "appId": "top.thedesk",
-    "asarUnpack": [
-      "node_modules/itunes-nowplaying-mac"
+    "keywords": [
+        "mastodon",
+        "client",
+        "electron",
+        "thedesk"
     ],
-    "directories": {
-      "output": "../build"
+    "bugs": {
+        "url": "https://github.com/cutls/TheDesk/issues",
+        "email": "p@cutls.com"
     },
-    "win": {
-      "icon": "build/thedesk.ico",
-      "target": [
-        "nsis",
-        "portable",
-        "appx"
-      ]
+    "homepage": "https://thedesk.top",
+    "author": {
+        "name": "Cutls",
+        "url": "https://cutls.dev",
+        "email": "p@cutls.com"
     },
-    "appx": {
-      "identityName": "53491Cutls.TheDesk",
-      "applicationId": "Cutls.TheDesk",
-      "publisherDisplayName": "Cutls",
-      "publisher": "CN=629757F5-A5EE-474F-9562-B304A89A9FD1",
-      "languages": [
-        "JA-JP",
-        "EN-US"
-      ]
+    "contributor": [{
+            "name": "とねぢ",
+            "url": "https://minohdon.jp/@toneji",
+            "email": "solfa.tono@gmail.com"
+        },
+        {
+            "name": "ぽぷんじゃ",
+            "url": "https://popon.pptdn.jp/@popn_ja",
+            "email": "popn.ja@gmail.com"
+        },
+        {
+            "name": "kPherox",
+            "url": "https://pl.kpherox.dev/kPherox",
+            "email": "admin@mail.kr-kp.com"
+        }
+    ],
+    "license": "GPL-3.0",
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.13.0",
+        "custom-electron-titlebar": "^3.2.2-hotfix62",
+        "electron-dl": "^3.0.0",
+        "jimp": "^0.10.3",
+        "jquery": "^3.5.0",
+        "jquery-ui-dist": "^1.12.1",
+        "json5": "^2.1.3",
+        "lodash": "^4.17.15",
+        "materialize-css": "git://github.com/cutls/materialize#v1-dev",
+        "sumchecker": "^3.0.1",
+        "sweetalert2": "^9.10.12",
+        "system-font-families": "^0.4.1",
+        "vue": "^2.6.11"
     },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "artifactName": "TheDesk-setup.${ext}"
+    "optionalDependencies": {
+        "itunes-nowplaying-mac": "0.3.1"
     },
-    "linux": {
-      "icon": "build/icons",
-      "target": [
-        "zip",
-        "snap",
-        "deb"
-      ],
-      "category": "Network"
+    "devDependencies": {
+        "chokidar": "^3.3.1",
+        "electron": "^8.2.3",
+        "electron-builder": "^22.5.1",
+        "electron-rebuild": "^1.10.1",
+        "readline-sync": "1.4.10"
     },
-    "mac": {
-      "target": [
-        "dmg",
-        "zip"
-      ]
-    },
-    "electronDownload": {
-      "version": "8.0.0"
-    },
-    "electronVersion": "8.0.0"
-  }
+    "build": {
+        "productName": "TheDesk",
+        "appId": "top.thedesk",
+        "asarUnpack": [
+            "node_modules/itunes-nowplaying-mac"
+        ],
+        "directories": {
+            "output": "../build"
+        },
+        "win": {
+            "icon": "build/thedesk.ico",
+            "target": [
+                "nsis",
+                "portable",
+                "appx"
+            ]
+        },
+        "appx": {
+            "identityName": "53491Cutls.TheDesk",
+            "applicationId": "Cutls.TheDesk",
+            "publisherDisplayName": "Cutls",
+            "publisher": "CN=629757F5-A5EE-474F-9562-B304A89A9FD1",
+            "languages": [
+                "JA-JP",
+                "EN-US"
+            ]
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true,
+            "artifactName": "TheDesk-setup.${ext}"
+        },
+        "linux": {
+            "icon": "build/icons",
+            "target": [
+                "zip",
+                "snap",
+                "deb"
+            ],
+            "category": "Network"
+        },
+        "mac": {
+            "target": [
+                "dmg",
+                "zip"
+            ]
+        },
+        "electronDownload": {
+            "version": "8.0.0"
+        },
+        "electronVersion": "8.0.0"
+    }
 }

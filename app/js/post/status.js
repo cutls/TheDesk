@@ -430,7 +430,7 @@ function redraft(id, acct_id) {
 								$('#preview').append(
 									'<img src="' +
 										json.media_attachments[i].preview_url +
-										'" style="width:3.8rem; max-height:7.7rem;">'
+										'" style="width:50px; max-height:100px;">'
 								)
 							} else {
 								break

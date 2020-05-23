@@ -241,7 +241,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				noticeavatar = toot.account.avatar_static
 			}
 			noticeavatar = `<a onclick="udg('${toot.account.id}','${acct_id}');" user="${toot.account.acct}" class="udg">
-					<img draggable="false" src="${noticeavatar}" class="notf-icon prof-img prof-img-sml" user="${toot.account.acct}" alt="">
+					<img draggable="false" src="${noticeavatar}" width="20" class="notf-icon prof-img" user="${toot.account.acct}" alt="">
 				</a>`
 			if (toot.type == 'mention') {
 				var what = lang.lang_parse_mentioned
@@ -394,7 +394,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					noticeavatar = toot.account.avatar_static
 				}
 				noticeavatar = `<a onclick="udg('${toot.account.id}','${acct_id}');" user="${toot.account.acct}" class="notf-icon udg" aria-hidden="true">
-						<img draggable="false" src="${noticeavatar}" class="prof-img prof-img-sml" 
+						<img draggable="false" src="${noticeavatar}" width="20" class="prof-img" 
 							user="${toot.account.acct}" onerror="this.src=\'../../img/loading.svg\'">
 					</a>`
 				var rebtxt = lang.lang_parse_btedsimple
@@ -1286,19 +1286,20 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				}
 				var latest = date(toot.last_status_at, 'relative')
 				if (toot.last_status_at) {
-					var latesthtml = `<div class="cbadge" style="width:7.7rem;">Last <span class="voice">toot</span>: ${latest}</div>`
+					var latesthtml = `<div class="cbadge" style="width:100px;">Last <span class="voice">toot</span>: ${latest}</div>`
 				} else {
 					var latesthtml = ''
 				}
 				templete =
 					templete +
-					`<div class="cusr" style="padding-top:0.4rem;" user-id="${toot.id}">
+					`<div class="cusr" style="padding-top:5px;" user-id="${toot.id}">
 					<div class="area-notice">${notftext}</div>
 					<div class="area-icon">
 						${udg}
 						<img
 							draggable="false"
 							src="${avatar}"
+							width="40"
 							class="prof-img"
 							user="${toot.acct}"
 							onerror="this.src='../../img/loading.svg'"
@@ -1316,10 +1317,10 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 						</div>
 					</div>
 					<div class="area-status">
-						<div class="cbadge" style="width:7.7rem;">
+						<div class="cbadge" style="width:100px;">
 							${lang.lang_status_follow}:${toot.following_count}
 						</div>
-						<div class="cbadge" style="width:7.7rem;">
+						<div class="cbadge" style="width:100px;">
 							${lang.lang_status_followers}:${toot.followers_count}
 						</div>
 						${latesthtml}
