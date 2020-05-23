@@ -417,6 +417,10 @@ function relations(user, acct_id) {
 				$("#his-data").addClass("following");
 				$("#his-follow-btn-text").text(lang.lang_status_unfollow);
 				hisList(user, acct_id);
+			} else if (json.requested) {
+				//フォローリクエストを送っている
+				$("#his-data").addClass("follow-requested");
+				$("#his-follow-btn-text").text(lang.lang_status_cancel_follow_request);
 			} else {
 				$("#his-follow-btn-text").text(lang.lang_status_follow);
 			}
