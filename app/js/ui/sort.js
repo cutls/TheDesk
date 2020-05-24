@@ -33,7 +33,7 @@ function sortLoad () {
 			var acctdata = user + "@" + domain;
 		}
 
-		var html = '<li class="drag-content" data-id="' + key + '" data-flag="' + flag + '"' + insert + '><div class="sorticon"><i class="material-icons">' + icon(acct.type) + '</i></div><div class="sorttitle">' + cap(acct.type, escapeHTML(acct.data), acct.domain) + '</div><div class="sortaction"><a onclick="goColumn(' + key +
+		var html = '<li class="drag-content" data-id="' + key + '" data-flag="' + flag + '"' + insert + '><div class="sorticon"><i class="material-icons">' + icon(acct.type) + '</i></div><div class="sorttitle">' + cap(acct.type, acct.data, acct.domain) + '</div><div class="sortaction"><a onclick="goColumn(' + key +
 			')" class="setting nex"><i class="material-icons waves-effect nex" title="' + lang.lang_sort_gothis + '">forward</i></a> <a onclick="removeColumn(' + key +
 			')" class="setting nex"><i class="material-icons waves-effect nex" title="このカラムを削除">cancel</i></a></div><div class="sortacct">' + acctdata + '</div></li>';
 		$("#sort").append(html);
