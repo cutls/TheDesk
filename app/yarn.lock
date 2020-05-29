@@ -2840,10 +2840,10 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-sweetalert2@^9.10.12:
-  version "9.10.12"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.10.12.tgz#e3752fcbe13e7d23d0f85ee84b3c5fdc923da552"
-  integrity sha512-RnarmbDGTPmwecJbaVdq5LvlzbVReIOtPk0huPnXOE19G00xMxGcTY0wjt9AjwsexUnLivLXc3b6nD6+D6NlGg==
+sweetalert2@^9.13.4:
+  version "9.13.4"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.13.4.tgz#343d61d483bb3021494f2df0671123970d11f20a"
+  integrity sha512-oM046kSmwXOZON9Kmc0glRxgriAqk+t1CrT/7uYD9al2IWqwQ+tIZVY1NYZGWZFaoNsnCuDz+LENHc0O3dndwQ==
 
 system-font-families@^0.4.1:
   version "0.4.1"

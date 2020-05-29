@@ -61,7 +61,7 @@
         "lodash": "^4.17.15",
         "materialize-css": "git://github.com/cutls/materialize#v1-dev",
         "sumchecker": "^3.0.1",
-        "sweetalert2": "^9.10.12",
+        "sweetalert2": "^9.13.4",
         "system-font-families": "^0.4.1",
         "vue": "^2.6.11"
     },
