@@ -244,16 +244,16 @@ function multiDel(target) {
 			var oldcols = JSON.parse(col)
 			var newcols = []
 			Object.keys(oldcols).forEach(function(key) {
-				var nk = key - 1
 				var oldcol = oldcols[key]
-				if (target < oldcol.domain) {
-					var newdom = oldcol.domain - 1
+				var olddom = oldcol.domain
+				if (olddom !== '' && !isNaN(olddom) && target < olddom) {
+					var newdom = olddom - 1
 				} else {
-					var newdom = oldcol.domain
+					var newdom = olddom
 				}
 				var type = oldcol.type
 				//消した垢のコラムじゃないときコピー
-				if (target != oldcol.domain) {
+				if (olddom === '' || target != olddom) {
 					var add = {
 						domain: newdom,
 						type: type
