@@ -251,13 +251,11 @@ function multiDel(target) {
 				} else {
 					var newdom = olddom
 				}
-				var type = oldcol.type
 				//消した垢のコラムじゃないときコピー
 				if (olddom === '' || target != olddom) {
-					var add = {
-						domain: newdom,
-						type: type
-					}
+					var add = oldcol
+					add.domain = newdom
+					if (add.left_fold) add.left_fold = false
 					newcols.push(add)
 				}
 			})
