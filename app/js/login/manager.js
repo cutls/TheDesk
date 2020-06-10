@@ -252,11 +252,31 @@ function multiDel(target) {
 					var newdom = oldcol.domain
 				}
 				var type = oldcol.type
+				var data = null
+				if(oldcol.data) {
+					data = oldcol.data
+				}
+				var background = null
+				if(oldcol.background) {
+					background = oldcol.background
+				}
+				var text = null
+				if(oldcol.text) {
+					text = oldcol.text
+				}
+				var left_fold = false
+				if(oldcol.left_fold) {
+					left_fold = true
+				}
 				//消した垢のコラムじゃないときコピー
 				if (target != oldcol.domain) {
 					var add = {
 						domain: newdom,
-						type: type
+						type: type,
+						data: data,
+						background: background,
+						text: text,
+						left_fold: left_fold
 					}
 					newcols.push(add)
 				}

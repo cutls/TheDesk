@@ -650,7 +650,7 @@ function removeColumn(tlid) {
 			var json = JSON.stringify(obj)
 			localStorage.setItem('column', json)
 			sortLoad()
-			$('#timeline_box_' + tlid + '_parentBox').remove()
+			$('#timeline_box_' + tlid + '_box').remove()
 		}
 		$('#sort-box').removeClass('hide')
 		$('#sort-box').addClass('show')

@@ -393,8 +393,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				} else {
 					noticeavatar = toot.account.avatar_static
 				}
-				noticeavatar = `<a onclick="udg('${toot.account.id}','${acct_id}');" user="${toot.account.acct}" class="notf-icon udg" aria-hidden="true">
-						<img draggable="false" src="${noticeavatar}" width="20" class="prof-img" 
+				noticeavatar = `<a onclick="udg('${toot.account.id}','${acct_id}');" user="${toot.account.acct}" class="udg" aria-hidden="true">
+						<img draggable="false" src="${noticeavatar}" width="20" class="notf-icon prof-img" 
 							user="${toot.account.acct}" onerror="this.src=\'../../img/loading.svg\'">
 					</a>`
 				var rebtxt = lang.lang_parse_btedsimple
