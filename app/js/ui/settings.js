@@ -106,7 +106,7 @@ function settings() {
 	} else {
 		if (localStorage.getItem('font')) {
 			localStorage.removeItem('font')
-			M.toast({ html: lang.lang_setting_font.replace('{{set}}', fontd), displayLength: 3000 })
+			M.toast({ html: lang.lang_setting_font.replace('{{set}}', '"default"'), displayLength: 3000 })
 			themes()
 		}
 	}
