@@ -714,7 +714,7 @@ p:not(:last-child) {
 	background-color: var(--beforehover);
 	cursor: pointer;
 	width: 3.8rem;
-	padding: 1.5rem;
+	height: 1.7rem;
 	display: inline-block;
 	text-align: center;
 	margin-top: 0.38rem;
