@@ -950,7 +950,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				if (!quoteUser) {
 					quoteUser = toot.quote.account.acct
 				}
-				poll =
+				if(toot.quote_muted) {
+					poll =
 					poll +
 					`<div class="quote-renote">
 						<div class="renote-icon">
@@ -974,6 +975,12 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							</a>
 						</div>
 					</div>`
+				} else {
+					poll =
+					poll +
+					`<span class="gray sml">${lang.lang_parse_hidden}</span>`
+				}
+				
 			}
 			//menuは何個？
 			var menuct = 2
