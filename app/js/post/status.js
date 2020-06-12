@@ -160,8 +160,14 @@ function bkm(id, acct_id, tlid) {
 
 //フォロー
 async function follow(acct_id, resolve) {
+	if($('#his-data').hasClass('locked')) {
+		locked = true
+	} else {
+		locked = false
+	}
 	if (!acct_id && acct_id != 'selector') {
 		var acct_id = $('#his-data').attr('use-acct')
+
 	} else if (acct_id == 'selector') {
 		var acct_id = $('#user-acct-sel').val()
 	}
@@ -172,6 +178,7 @@ async function follow(acct_id, resolve) {
 		var flag = 'follow'
 		var flagm = 'create'
 	}
+	
 	var id = $('#his-data').attr('user-id')
 	if (resolve == 'selector') {
 		var fullacct = $('#his-acct').attr('fullname')
@@ -205,7 +212,11 @@ async function follow(acct_id, resolve) {
 				$('#his-follow-btn-text').text(lang.lang_status_follow)
 			} else {
 				$('#his-data').addClass('following')
-				$('#his-follow-btn-text').text(lang.lang_status_unfollow)
+				if(locked) {
+					$('#his-follow-btn-text').text(lang.lang_status_requesting)
+				} else {
+					$('#his-follow-btn-text').text(lang.lang_status_unfollow)
+				}
 			}
 		}
 	}

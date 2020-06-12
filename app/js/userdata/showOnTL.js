@@ -239,6 +239,11 @@ function udg(user, acct_id) {
 				$(".only-his-data").show();
 			}
 			todc();
+			if(json.locked) {
+				$('#his-data').addClass('locked')
+			} else {
+				$('#his-data').removeClass('locked')
+			}
 			//外部データ取得(死かもしれないので)
 			udAdd(acct_id, user, json.url);
 		});
@@ -412,9 +417,14 @@ function relations(user, acct_id) {
 		})
 		.then(function(json) {
 			var json = json[0];
+			if(json.requested) {
+				//フォロリク中
+				$('#his-data').addClass('following')
+				$("#his-follow-btn-text").text(lang.lang_status_requesting)
+			}
 			if (json.following) {
 				//自分がフォローしている
-				$("#his-data").addClass("following");
+				$("#his-data").addClass("following")
 				$("#his-follow-btn-text").text(lang.lang_status_unfollow);
 				hisList(user, acct_id);
 			} else {
@@ -538,6 +548,8 @@ function reset() {
 	$("#his-float-blocked").hide();
 	$("#his-main-acct").show();
 	$("#his-proof-prof").html("");
+	$('#his-data').removeClass('locked')
+	$('#his-data').removeClass('requesting')
 }
 $("#my-data-nav .anc-link").on("click", function() {
 	var target = $(this).attr("go");
