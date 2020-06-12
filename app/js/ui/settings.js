@@ -99,14 +99,14 @@ function settings() {
 	var fontd = $('#font').val()
 	if (fontd) {
 		if (fontd != localStorage.getItem('font')) {
-			M.toast({ html: lang.lang_setting_font.replace('{{set}}', ct), displayLength: 3000 })
+			M.toast({ html: lang.lang_setting_font.replace('{{set}}', fontd), displayLength: 3000 })
 		}
 		localStorage.setItem('font', fontd)
 		themes()
 	} else {
 		if (localStorage.getItem('font')) {
 			localStorage.removeItem('font')
-			M.toast({ html: lang.lang_setting_font.replace('{{set}}', ct), displayLength: 3000 })
+			M.toast({ html: lang.lang_setting_font.replace('{{set}}', fontd), displayLength: 3000 })
 			themes()
 		}
 	}
