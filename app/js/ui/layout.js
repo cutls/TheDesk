@@ -646,11 +646,15 @@ function removeColumn(tlid) {
 		if (result.value) {
 			var multi = localStorage.getItem('column')
 			var obj = JSON.parse(multi)
+			var data = obj[tlid]
 			obj.splice(tlid, 1)
 			var json = JSON.stringify(obj)
 			localStorage.setItem('column', json)
 			sortLoad()
 			$('#timeline_box_' + tlid + '_box').remove()
+			if(!data.left_fold) {
+				$('#timeline_box_' + tlid + '_parentBox').remove()
+			}
 		}
 		$('#sort-box').removeClass('hide')
 		$('#sort-box').addClass('show')
