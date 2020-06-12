@@ -221,6 +221,7 @@
     "lang_parse_nsfw": "sensitive media",
     "lang_parse_html": "Show embed HTML",
     "lang_parse_notffilter": "Show this user's notifications",
+    "lang_parse_hidden": "Unvisible quoted toot",
     "lang_misskeyparse_renote": "Repost",
     "lang_misskeyparse_renoteqt": "Renote",
     "lang_misskeyparse_reaction": "Réaction",
