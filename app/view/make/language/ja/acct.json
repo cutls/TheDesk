@@ -20,5 +20,6 @@
     "thisismisskey":"Misskeyとしてログイン",
     "misskeylogin":"<a href=\"https://thedesk.top/how-to-misskey-login.html\">ドキュメント</a>を参照して正しいコードを入れてください。",
     "nodata":"アカウントがありません",
-    "accessTokenSetup": "アクセストークンを用いたセットアップ(コードの代わりにアクセストークンを入力してクリックしてください: 上級者向け)"
+    "accessTokenSetup": "アクセストークンを用いたセットアップ(コードの代わりにアクセストークンを入力してクリックしてください: 上級者向け)",
+    "haveExported": "設定をインポートしたい場合、ここをクリックして設定画面に飛んでください"
 }

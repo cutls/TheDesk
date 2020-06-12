@@ -48,6 +48,12 @@ html {
 .first .hide-first {
 	display: none;
 }
+.hide-second {
+	display: none;
+}
+.first .hide-second {
+	display: inline;
+}
 
 #compt {
 	margin-top: 20px;
