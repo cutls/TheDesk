@@ -1120,60 +1120,6 @@
 				>
 			</div>
 		</div>
-		<!--mstdn.jp useragent-->
-		<div
-			id="askjp_jp_ua"
-			class="hide"
-			style="z-index:505;width:100vw;height:100vh; background-color: #530f0f;color:white;padding:20px;overflow-y:scroll;position:absolute;"
-		>
-			<p style="font-size:300%">【緊急】mstdn.jpへのアクセスについて</p>
-			<br />
-			<p style="font-size:200%">問題の概要</p>
-			<p>
-				合同会社分散型ソーシャルネットワーク機構は非公開審査によってユーザーエージェントベースで個々のアプリに対してAPIへのアクセスを許可する方法を取っています。
-			</p>
-			<p>
-				TheDesk開発者はこれに強く反発し、TheDeskのユーザーエージェントをそのアプリからのアクセスであると特定することができない値にすることを決めました。
-			</p>
-			<p>具体的には、"Mastodon client: [起動毎に変わる100文字の英数記号]"と設定しました。</p>
-			<p style="font-size:200%">ユーザーによる対策</p>
-			<p>
-				このバージョンのTheDeskでは任意のユーザーエージェントを適用できます。「設定」内の「環境設定」で設定していただけます。<a
-					href="setting.html"
-					>設定</a
-				>
-			</p>
-			<p style="font-size:150%">1. 「TheDesk」を含む値に設定する</p>
-			<p>
-				「設定」内の「環境設定」、「ユーザーエージェント」に「TheDesk」を含む値を入れてください。大文字小文字に注意してください。
-			</p>
-			<p><b>懸念点</b></p>
-			<p>
-				TheDesk開発者は合同会社分散型ソーシャルネットワーク機構に対しこの件についてメールで問い合わせを行っています(抗議ではありません)。問い合わせの過程でアプリ許可が取り消され、使用不能になる可能性があります。
-			</p>
-			<p><u>ちなみに</u></p>
-			<p>
-				合同会社分散型ソーシャルネットワーク機構はmstdn.jpのお知らせアカウントに対するリプライに書かれたサードパーティクライアントを「審査」の後許可するとトゥートし、複数ユーザーがTheDeskの名前を挙げました。
-				事実、トゥートの翌日までにTheDeskに対してアクセス許可が出されました。しかし、許可を出す際にTheDeskの標準ユーザーエージェントを機構は一切確認せず、「TheDesk」という文字列が入ったユーザーエージェントを一律で許可する設定にしたようです。
-				結果として実際の標準ユーザーエージェントはそれに合致せず、不許可のままとなっていました。前バージョンまでの標準ユーザーエージェントは、パッケージ名の都合上全て小文字の「thedesk」を採用していました。
-			</p>
-			<p style="font-size:150%">2. 「認定済み」クライアントの名前を含む値に設定する</p>
-			<p>
-				「設定」内の「環境設定」、「ユーザーエージェント」に、<a href="https://mstdn.jp/about"
-					>mstdn.jpのトップページ</a
-				>記載のアプリ名を含む値を入れてください。大文字小文字やスペースに注意してください。
-			</p>
-			<p>
-				「Mastodon日本鯖です．」と書かれた以降の一段を全てコピーして記載してもアクセス可能です。<u
-					>これほどまでにユーザーエージェント制限は「抜け道」が多いのです。</u
-				><a href="setting.html">設定</a>
-			</p>
-			<p><b>懸念点</b></p>
-			<p>
-				その記載されたアプリと合同会社分散型ソーシャルネットワーク機構になんの関係があるかは知りませんが、どちらにしろ他のクライアントの名を借りてアクセスの許可をいただくというあまり道徳的によろしくない方法です。
-			</p>
-			<button onclick="$('#askjp_jp_ua').addClass('hide')" class="btn waves-effect">閉じる</button>
-		</div>
 		<!-- Modal Structure Release Note-->
 		<div id="releasenote" class="modal modal-fixed-footer scr">
 			<div class="modal-content">
@@ -1187,22 +1133,15 @@
 					Pixiv
 					FanboxやPatreonでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。最低月一更新。<br />
 					困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
-					<h5>Release Note 21.0.1 (Mayu)</h5>
-					・画像がアップロードできない  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <a onclick="udgEx('popn_ja@popon.pptdn.jp','main')" class="contributor"><img src="https://avatars3.githubusercontent.com/u/24523508?s=88&v=4">kaias1jp</a><br>
-・画像のリサイズに失敗する  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <a onclick="udgEx('popn_ja@popon.pptdn.jp','main')" class="contributor"><img src="https://avatars3.githubusercontent.com/u/24523508?s=88&v=4">kaias1jp</a><br>
-・画像をダウンロードした後、ボタンを押しても保存先フォルダが表示されない  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
-・ユーザーマッチングを削除  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
-
-					<h5>Release Note 21.0.0 (Mayu)</h5>
-					・フォロリクをストリーミングで受け取ったときにNo status hereになる  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
-・Apple MusicのNowPlayingでアルバム情報がないときの挙動を改善  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
-・Last.fm NowPlaying  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
-・テーマCSSに関するバグ  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
-・プラットフォームやPWAか否か等で表示を切り替える  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
-・ユーザータイムラインをカラム化  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <img src="">anonymous user<br>
-・スプラッシュスクリーンを追加  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
-・アイコンの微調整  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
-・FTLのRemote only  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
+					<h5>Release Note 21.0.2 (Mayu)</h5>
+					・絵文字の挿入場所についてのバグを修正  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <img src="">Bug reporter<br>
+・ほぼすべてのフォントサイズを変更できるように  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <a onclick="udgEx('LienRag@miaou.drycat.fr','main')" class="contributor"><img src="null">LienRag</a><br>
+・カラム削除時のバグを修正  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <a onclick="udgEx('popn_ja@popon.pptdn.jp','main')" class="contributor"><img src="https://avatars3.githubusercontent.com/u/24523508?s=88&v=4">kaias1jp</a> <a onclick="udgEx('qk_k@mstdn.jp','main')" class="contributor"><img src="https://user-images.githubusercontent.com/17561618/84721679-2f453a80-afbc-11ea-9183-9bbcae5cd67d.png">heguro</a><br>
+・フォント変更時の表示の修正  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <img src="">Bug reporter<br>
+・フォローリクエストの取り消し等  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <a onclick="udgEx('kPherox@pl.kplerox.dev','main')" class="contributor"><img src="https://user-images.githubusercontent.com/17561618/66582379-a3714800-ebbc-11e9-8402-d81a35a3be9f.png">kPherox</a><br>
+・<pre>タグがPleromaや改造Mastodon等で挿入されたとき、デザインが崩れるのを修正  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <a onclick="udgEx('kPherox@pl.kplerox.dev','main')" class="contributor"><img src="https://user-images.githubusercontent.com/17561618/66582379-a3714800-ebbc-11e9-8402-d81a35a3be9f.png">kPherox</a><br>
+・`quote_muted`が挿入されたときに非表示にする  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
+・設定をアカウント登録前に飛べるようにする  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a> <a onclick="udgEx('LienRag@miaou.drycat.fr','main')" class="contributor"><img src="null">LienRag</a><br>
 
 				</div>
 				<div id="release-en" style="display:none">
