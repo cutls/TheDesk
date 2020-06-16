@@ -122,6 +122,10 @@ function post(mode, postvis) {
 		console.log('This toot will be posted at:' + scheduled)
 		schedule()
 		toot.scheduled_at = scheduled
+		if($('#sch-box').hasClass('expire')) {
+			toot.scheduled_at = null
+			toot.expires_at = scheduled
+		}
 	} else {
 		var scheduled = ''
 	}
@@ -193,6 +197,20 @@ function post(mode, postvis) {
 				clear()
 			}
 		}
+	}
+}
+function expPostMode() {
+	$('#sch-box').toggleClass('expire')
+	if($('#sch-box').hasClass('expire')) {
+		Swal.fire({
+			type: 'info',
+			title: 'Expiring toot On'
+		})
+	} else {
+		Swal.fire({
+			type: 'info',
+			title: 'Expireing toot Off'
+		})
 	}
 }
 function misskeyPost() {
