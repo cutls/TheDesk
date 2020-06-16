@@ -1096,10 +1096,10 @@ electron-builder@^22.5.1:
     update-notifier "^4.1.0"
     yargs "^15.3.1"
 
-electron-dl@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/electron-dl/-/electron-dl-3.0.0.tgz#42c5cb572af44e90b3aa4b709a14abe701bbc31c"
-  integrity sha512-TeBRv+vQgNVLGf/XLV4EYfYIBMI4TQcw84aDlM8xEm/1Lgxux3PUXDzaingivf+6jMvRojXSRPTHmiWI/6LrqQ==
+electron-dl@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/electron-dl/-/electron-dl-3.0.1.tgz#206b77a66f3a7450a0888d16b81bdd5021117241"
+  integrity sha512-JHEsUCusT7x/i682LNl1gJYWTiic71Sp3ykdvwbgywGuY19dLUd3VqkE5zI905e4Wy+G/pDcLjoeFo0SgCm3CA==
   dependencies:
     ext-name "^5.0.0"
     pupa "^2.0.1"
