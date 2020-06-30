@@ -950,7 +950,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				if (!quoteUser) {
 					quoteUser = toot.quote.account.acct
 				}
-				if(toot.quote_muted) {
+				if(!toot.quote.quote_muted) {
 					poll =
 					poll +
 					`<div class="quote-renote">
