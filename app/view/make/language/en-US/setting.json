@@ -167,6 +167,7 @@
   "linkwarn": "crwdns4194:0crwdne4194:0",
   "connect": "crwdns4196:0crwdne4196:0",
   "disconnect": "crwdns4198:0crwdne4198:0",
+  "lastFmWarn": "crwdns4490:0crwdne4490:0",
   "templateedit": "crwdns4340:0crwdne4340:0",
   "templateeditwarn": "crwdns4342:0crwdne4342:0",
   "template1": "crwdns4344:0{song}crwdnd4344:0{album}crwdnd4344:0{artist}crwdnd4344:0{url}crwdne4344:0",

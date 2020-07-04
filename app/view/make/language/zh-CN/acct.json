@@ -20,5 +20,6 @@
     "thisismisskey": "使用Misskey登录",
     "misskeylogin": "阅读 <a href=\"https://thedesk.top/how-to-misskey-login.html\">文档(ja)</a> 了解如何使用Misskey登录.",
     "nodata": "No data",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)"
+    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)",
+    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
 }

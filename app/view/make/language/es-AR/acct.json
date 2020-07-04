@@ -20,5 +20,6 @@
     "thisismisskey": "Iniciar sesión con Misskey",
     "misskeylogin": "Leé <a href=\"https://docs.thedesk.top/\">la documentación (en japonés)</a> para usar Misskey.",
     "nodata": "Sin datos",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)"
+    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)",
+    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
 }
