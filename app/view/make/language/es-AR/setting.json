@@ -167,6 +167,7 @@
   "linkwarn": "TheDesk guarda tus datos en el servidor thedesk.top.",
   "connect": "Conectar",
   "disconnect": "Desconectar",
+  "lastFmWarn": "User name...(empty to disconnect) You cannot hide your recent play log at last.fm privacy settings.",
   "templateedit": "Editar plantilla",
   "templateeditwarn": "",
   "template1": "Spotify: {artist}: nombre del artista // {song}: nombre del tema // {album}: nombre del álbum // {url}: dirección web a Spotify",

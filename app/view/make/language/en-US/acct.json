@@ -20,5 +20,6 @@
     "thisismisskey": "crwdns3052:0crwdne3052:0",
     "misskeylogin": "crwdns3054:0crwdne3054:0",
     "nodata": "crwdns3056:0crwdne3056:0",
-    "accessTokenSetup": "crwdns4362:0crwdne4362:0"
+    "accessTokenSetup": "crwdns4362:0crwdne4362:0",
+    "haveExported": "crwdns4500:0crwdne4500:0"
 }

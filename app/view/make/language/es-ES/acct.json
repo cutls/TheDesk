@@ -20,5 +20,6 @@
     "thisismisskey": "Iniciar sesión como Misskey",
     "misskeylogin": "Leer <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> para iniciar sesión en Misskey.",
     "nodata": "Sin datos",
-    "accessTokenSetup": "Usar el token de acceso para iniciar sesión (haga clic después de completar no el código si no el token de acceso en el casilla: avanzado)"
+    "accessTokenSetup": "Usar el token de acceso para iniciar sesión (haga clic después de completar no el código si no el token de acceso en el casilla: avanzado)",
+    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
 }
