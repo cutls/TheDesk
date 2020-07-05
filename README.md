@@ -165,4 +165,3 @@ Please write issues to improve TheDesk affinity with Pleroma.
 ## Vulnerabilities when `npm i`???
 
 No, if your npm says materialize-css has vulnerabilities(CVE-2019-11002/3/4), look at [here](https://github.com/Dogfalo/materialize/issues/6286) under discussion.
-
