@@ -121,7 +121,7 @@ function announReactionNew(id, acct_id, tlid) {
 	$('#unreact').hide()
 	$('#addreact').removeClass('hide')
 	$('#post-acct-sel').val(acct_id)
-	$('select').formSelect()
+	//$('select').formSelect()
 	localStorage.setItem('nohide', true)
 	show()
 	emojiToggle(true)

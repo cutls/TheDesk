@@ -428,7 +428,7 @@ function redraft(id, acct_id) {
 					var json = httpreq.response
 					$('#post-acct-sel').prop('disabled', true)
 					$('#post-acct-sel').val(acct_id)
-					$('select').formSelect()
+					//$('select').formSelect()
 					mdCheck()
 					var medias = $('[toot-id=' + id + ']').attr('data-medias')
 					var mediack = json.media_attachments[0]

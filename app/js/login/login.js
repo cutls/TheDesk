@@ -573,7 +573,7 @@ function multiSelector(parseC) {
 		)
 		$('#dir-acct-sel').append('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	}
-	$('select').formSelect()
+	//$('select').formSelect()
 	if (!parseC) {
 		parseColumn(null, true)
 	}

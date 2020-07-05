@@ -656,7 +656,7 @@ function ctLoadCore(args) {
 	$('#custom-sel-sel').html(templete)
 	templete = '<option value="add_new">' + $('#edit-selector').attr('data-add') + '</option>' + templete
 	$('#custom-edit-sel').html(templete)
-	$('select').formSelect()
+	//$('select').formSelect()
 }
 function customSel() {
 	var id = $('#custom-sel-sel').val()

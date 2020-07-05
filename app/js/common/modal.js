@@ -1,6 +1,7 @@
 //モーダル・ドロップダウンの各種設定
 $(document).ready(function () {
   // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+  return;
   $('.modal').modal({
     inDuration: 300,
     outDuration: 225,

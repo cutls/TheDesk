@@ -1007,7 +1007,7 @@ function multisel() {
 			$('.acct-sel').append(template)
 		})
 	}
-	$('select').formSelect()
+	//$('select').formSelect()
 }
 function mainacct() {
 	var acct_id = $('#main-acct-sel').val()

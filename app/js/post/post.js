@@ -347,7 +347,7 @@ function clear() {
 		$('#post-acct-sel').val(localStorage.getItem('main'))
 	}
 	$('#emoji').addClass('hide')
-	$('select').formSelect()
+	//$('select').formSelect()
 	$('#default-emoji').show()
 	$('#unreact').show()
 	$('#addreact').addClass('hide')

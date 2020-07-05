@@ -11,6 +11,9 @@ body {
 html {
 	font-size: 13px;
 }
+.waves-effect:hover {
+	filter: brightness(120%);
+}
 .titlebar,
 .menubar-menu-container,
 .action-menu-item {
