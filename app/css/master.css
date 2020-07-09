@@ -12,7 +12,10 @@ html {
 	font-size: 13px;
 }
 .waves-effect:hover {
-	filter: brightness(120%);
+	filter: brightness(80%);
+}
+.waves-effect:focus {
+	filter: brightness(70%);
 }
 .titlebar,
 .menubar-menu-container,

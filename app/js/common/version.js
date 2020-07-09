@@ -204,7 +204,7 @@ function verck(ver, jp) {
 									}
 								}
 								if (showVer) {
-									M.toast({
+									Mtoast({
 										html:
 											escapeHTML(obj.text) +
 											toot +
@@ -265,7 +265,7 @@ function infowebsocket() {
 					if (showVer) {
 						console.log(obj.text)
 						console.log(escapeHTML(obj.text))
-						M.toast({
+						Mtoast({
 							html:
 								escapeHTML(obj.text) +
 								toot +

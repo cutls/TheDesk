@@ -156,7 +156,7 @@ async function media(b64, type, no, stamped) {
 				$('.toot-btn-group').prop('disabled', false)
 				//$('select').formSelect()
 				$('#mec').text(lang.lang_there)
-				M.toast({ html: '<span>' + lang.lang_postimg_sync + '</span><button class="btn-flat toast-action" onclick="syncDetail()">Click</button>', displayLength: 3000 })
+				Mtoast({ html: '<span>' + lang.lang_postimg_sync + '</span><button class="btn-flat toast-action" onclick="syncDetail()">Click</button>', displayLength: 3000 })
 				$('#imgup').text('')
 				$('#imgsel').show()
 				localStorage.removeItem('image')
@@ -178,7 +178,7 @@ async function media(b64, type, no, stamped) {
 				$('.toot-btn-group').prop('disabled', false)
 				//$('select').formSelect()
 				$('#mec').text(lang.lang_there)
-				M.toast({ html: this.status + ':' +json, displayLength: 2000 })
+				Mtoast({ html: this.status + ':' +json, displayLength: 2000 })
 				$('#imgup').text('')
 				$('#imgsel').show()
 			}
@@ -189,7 +189,7 @@ async function media(b64, type, no, stamped) {
 				$('#post-acct-sel').prop('disabled', false)
 				//$('select').formSelect()
 				$('#imgsel').show()
-				M.toast({ html: lang.lang_postimg_failupload, displayLength: 5000 })
+				Mtoast({ html: lang.lang_postimg_failupload, displayLength: 5000 })
 				return false
 			}
 			$('#imgup').text('')

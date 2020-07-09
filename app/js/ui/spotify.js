@@ -53,20 +53,20 @@ function spotifyFlagSave() {
 	var awk = $('[name=awk]:checked').val()
 	if (awk == 'yes') {
 		localStorage.setItem('artwork', 'yes')
-		M.toast({ html: lang.lang_spotify_img, displayLength: 3000 })
+		Mtoast({ html: lang.lang_spotify_img, displayLength: 3000 })
 	} else {
 		localStorage.removeItem('artwork')
-		M.toast({ html: lang.lang_spotify_imgno, displayLength: 3000 })
+		Mtoast({ html: lang.lang_spotify_imgno, displayLength: 3000 })
 	}
 }
 function aMusicFlagSave() {
 	var awk = $('[name=amw]:checked').val()
 	if (awk == 'yes') {
 		localStorage.setItem('complete-artwork', 'yes')
-		M.toast({ html: lang.lang_spotify_img, displayLength: 3000 })
+		Mtoast({ html: lang.lang_spotify_img, displayLength: 3000 })
 	} else {
 		localStorage.removeItem('complete-artwork')
-		M.toast({ html: lang.lang_spotify_imgno, displayLength: 3000 })
+		Mtoast({ html: lang.lang_spotify_imgno, displayLength: 3000 })
 	}
 }
 function nowplaying(mode) {
@@ -267,7 +267,7 @@ async function npCore(arg) {
 function spotifySave() {
 	var temp = $('#np-temp').val()
 	localStorage.setItem('np-temp', temp)
-	M.toast({ html: lang.lang_spotify_np, displayLength: 3000 })
+	Mtoast({ html: lang.lang_spotify_np, displayLength: 3000 })
 }
 if (location.search) {
 	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)

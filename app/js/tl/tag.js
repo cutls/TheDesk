@@ -156,10 +156,10 @@ function autoToot(tag) {
 	var nowPT = localStorage.getItem('stable')
 	if (nowPT == tag) {
 		localStorage.removeItem('stable')
-		M.toast({ html: lang.lang_tags_unrealtime, displayLength: 3000 })
+		Mtoast({ html: lang.lang_tags_unrealtime, displayLength: 3000 })
 	} else {
 		localStorage.setItem('stable', tag)
-		M.toast({
+		Mtoast({
 			html: lang.lang_tags_tagwarn.replace('{{tag}}', tag).replace('{{tag}}', tag),
 			displayLength: 3000
 		})
@@ -195,7 +195,7 @@ function tagFeature(name, acct_id) {
 		})
 		.then(function(json) {
 			console.log(json)
-			M.toast({ html: 'Complete: ' + escapeHTML(name), displayLength: 3000 })
+			Mtoast({ html: 'Complete: ' + escapeHTML(name), displayLength: 3000 })
 		})
 }
 //タグのフィルタ

@@ -104,7 +104,7 @@ function sort() {
 	var json = JSON.stringify(newobj);
 	localStorage.setItem("column", json);
 	$("#sort").html("");
-	M.toast({ html: "Sorted", displayLength: 3000 })
+	Mtoast({ html: "Sorted", displayLength: 3000 })
 	sortLoad();
 	parseColumn();
 	sortMenu()

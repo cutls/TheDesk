@@ -260,7 +260,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				}
 				var domain = localStorage.getItem("domain_" + acct_id);
 				if (popup > 0) {
-					M.toast({ html: "[" + domain + "]" + escapeHTMLtemp(toot.user.name) + what, displayLength: popup * 1000 })
+					Mtoast({ html: "[" + domain + "]" + escapeHTMLtemp(toot.user.name) + what, displayLength: popup * 1000 })
 				}
 				if (native == "yes") {
 					var os = localStorage.getItem("platform");
@@ -888,7 +888,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
 		}
 		var memory = localStorage.getItem("notice-mem");
 		if (popup >= 0 && obj.length < 5 && notftext != memory) {
-			M.toast({ html: escapeHTMLtemp(toot.name) + ":" + ftxt, displayLength: popup * 1000 })
+			Mtoast({ html: escapeHTMLtemp(toot.name) + ":" + ftxt, displayLength: popup * 1000 })
 			$(".notf-icon_" + tlid).addClass("red-text");
 			localStorage.setItem("notice-mem", notftext);
 			notftext = "";

@@ -315,7 +315,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					}
 				}
 				if (popup > 0) {
-					M.toast({
+					Mtoast({
 						html: '[' + domain + ']' + escapeHTML(toot.account.display_name) + what,
 						displayLength: popup * 1000
 					})
@@ -1226,7 +1226,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				}
 				var memory = localStorage.getItem('notice-mem')
 				if (popup >= 0 && obj.length < 5 && notftext != memory) {
-					M.toast({ html: escapeHTML(toot.display_name) + ':' + ftxt, displayLength: popup * 1000 })
+					Mtoast({ html: escapeHTML(toot.display_name) + ':' + ftxt, displayLength: popup * 1000 })
 					$('.notf-icon_' + tlid).addClass('red-text')
 					localStorage.setItem('notice-mem', notftext)
 					notftext = ''
@@ -1366,7 +1366,7 @@ function client(name) {
 				if (!obj) {
 					var obj = []
 					obj.push(name)
-					M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
+					Mtoast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
 				} else {
 					var can
 					Object.keys(obj).forEach(function(key) {
@@ -1376,12 +1376,12 @@ function client(name) {
 						} else {
 							can = true
 							obj.splice(key, 1)
-							M.toast({ html: escapeHTML(name) + lang.lang_status_unemphas, displayLength: 2000 })
+							Mtoast({ html: escapeHTML(name) + lang.lang_status_unemphas, displayLength: 2000 })
 						}
 					})
 					if (!can) {
 						obj.push(name)
-						M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
+						Mtoast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
 					} else {
 					}
 					var json = JSON.stringify(obj)
@@ -1398,7 +1398,7 @@ function client(name) {
 				obj.push(name)
 				var json = JSON.stringify(obj)
 				localStorage.setItem('client_mute', json)
-				M.toast({ html: escapeHTML(name) + lang.lang_parse_mute, displayLength: 2000 })
+				Mtoast({ html: escapeHTML(name) + lang.lang_parse_mute, displayLength: 2000 })
 				parseColumn()
 			}
 		})

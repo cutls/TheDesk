@@ -49,7 +49,7 @@ function fav(id, acct_id, remote) {
 					$('.fav_' + id).addClass('yellow-text')
 				}
 			} else {
-				M.toast({ html: lang.lang_status_favWarn, displayLength: 1000 })
+				Mtoast({ html: lang.lang_status_favWarn, displayLength: 1000 })
 			}
 		}
 	}
@@ -240,7 +240,7 @@ async function acctResolve(acct_id, user) {
 	if (idJson.accounts[0]) {
 		var id = idJson.accounts[0].id
 	} else {
-		M.toast({ html: lang.lang_fatalerroroccured, displayLength: 2000 })
+		Mtoast({ html: lang.lang_fatalerroroccured, displayLength: 2000 })
 	}
 	return id
 }
@@ -580,7 +580,7 @@ function empUser() {
 	if (!obj) {
 		var obj = []
 		obj.push(id)
-		M.toast({ html: id + lang.lang_status_emphas, displayLength: 4000 })
+		Mtoast({ html: id + lang.lang_status_emphas, displayLength: 4000 })
 	} else {
 		var can
 		Object.keys(obj).forEach(function(key) {
@@ -590,7 +590,7 @@ function empUser() {
 			} else {
 				can = true
 				obj.splice(key, 1)
-				M.toast({ html: id + lang.lang_status_unemphas, displayLength: 4000 })
+				Mtoast({ html: id + lang.lang_status_unemphas, displayLength: 4000 })
 			}
 		})
 	}
@@ -634,7 +634,7 @@ function pinUser() {
 //URLコピー
 function tootUriCopy(url) {
 	execCopy(url)
-	M.toast({ html: lang.lang_details_url, displayLength: 1500 })
+	Mtoast({ html: lang.lang_details_url, displayLength: 1500 })
 }
 
 //他のアカウントで…

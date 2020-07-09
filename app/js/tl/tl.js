@@ -1000,7 +1000,7 @@ function reconnector(tlid, type, acct_id, data, mode) {
 		var mute = getFilterTypeByAcct(acct_id, type)
 		reload(type, '', acct_id, tlid, data, mute, '', voice, mode)
 	}
-	M.toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
+	Mtoast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
 }
 function columnReload(tlid, type) {
 	$('#notice_icon_' + tlid).addClass('red-text')

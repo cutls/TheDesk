@@ -291,5 +291,5 @@ function stopVideo() {
 function copyImgUrl() {
 	var murl = $('#imagemodal').attr('data-original')
 	execCopy(murl)
-	M.toast({ html: lang.lang_img_copyDone, displayLength: 1500 })
+	Mtoast({ html: lang.lang_img_copyDone, displayLength: 1500 })
 }

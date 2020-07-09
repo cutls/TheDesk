@@ -5,7 +5,7 @@ var envView = new Vue({
 	methods: {
 		complete: function (i, val) {
 			var ls = envView.config[i].storage
-			M.toast({ html: 'Complete', displayLength: 3000 })
+			Mtoast({ html: 'Complete', displayLength: 3000 })
 			if (!val) {
 				var id = envView.config[i].id
 				var val = $('#' + id).val()
@@ -39,7 +39,7 @@ var tlView = new Vue({
 					ls = ls.data
 				}
 				for (var j = 0; j < ls.length; j++) {
-					M.toast({ html: 'Complete', displayLength: 3000 })
+					Mtoast({ html: 'Complete', displayLength: 3000 })
 					var id = ls[j].id
 					var val = $('#' + id).val()
 					localStorage.setItem(ls[j].storage, val)
@@ -68,7 +68,7 @@ var postView = new Vue({
 					ls = ls.data
 				}
 				for (var j = 0; j < ls.length; j++) {
-					M.toast({ html: 'Complete', displayLength: 3000 })
+					Mtoast({ html: 'Complete', displayLength: 3000 })
 					var id = ls[j].id
 					var val = $('#' + id).val()
 					localStorage.setItem(ls[j].storage, val)
@@ -90,7 +90,7 @@ function settings() {
 		$('#' + theme).prop('checked', true)
 	} else {
 		if (cd != localStorage.getItem('theme')) {
-			M.toast({ html: lang.lang_setting_theme.replace('{{set}}', ct), displayLength: 3000 })
+			Mtoast({ html: lang.lang_setting_theme.replace('{{set}}', ct), displayLength: 3000 })
 		}
 		//テーマはこの場で設定
 		themes(cd)
@@ -99,14 +99,14 @@ function settings() {
 	var fontd = $('#font').val()
 	if (fontd) {
 		if (fontd != localStorage.getItem('font')) {
-			M.toast({ html: lang.lang_setting_font.replace('{{set}}', fontd), displayLength: 3000 })
+			Mtoast({ html: lang.lang_setting_font.replace('{{set}}', fontd), displayLength: 3000 })
 		}
 		localStorage.setItem('font', fontd)
 		themes()
 	} else {
 		if (localStorage.getItem('font')) {
 			localStorage.removeItem('font')
-			M.toast({ html: lang.lang_setting_font.replace('{{set}}', '"default"'), displayLength: 3000 })
+			Mtoast({ html: lang.lang_setting_font.replace('{{set}}', '"default"'), displayLength: 3000 })
 			themes()
 		}
 	}
@@ -286,7 +286,7 @@ function notftest() {
 function oks(no) {
 	var txt = $('#oks-' + no).val()
 	localStorage.setItem('oks-' + no, txt)
-	M.toast({ html: lang.lang_setting_ksref, displayLength: 3000 })
+	Mtoast({ html: lang.lang_setting_ksref, displayLength: 3000 })
 }
 function oksload() {
 	if (localStorage.getItem('oks-1')) {
@@ -830,5 +830,5 @@ function lastFmSet() {
 	} else {
 		localStorage.removeItem('lastFmUser')
 	}
-	M.toast({ html: 'Complete: last.fm', displayLength: 3000 })
+	Mtoast({ html: 'Complete: last.fm', displayLength: 3000 })
 }

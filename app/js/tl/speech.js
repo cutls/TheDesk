@@ -143,14 +143,14 @@ function voiceSettings() {
 	var awk = $('[name=bym]:checked').val()
 	if (awk == 'yes') {
 		localStorage.setItem('voice_bouyomi', 'yes')
-		M.toast({ html: 'Bouyomi Chan connection requires WebSocket Plugin', displayLength: 3000 })
+		Mtoast({ html: 'Bouyomi Chan connection requires WebSocket Plugin', displayLength: 3000 })
 	} else {
 		localStorage.removeItem('voice_bouyomi')
 	}
 	localStorage.setItem('voice_speed', $('#voicespeed').val() / 10)
 	localStorage.setItem('voice_pitch', $('#voicepitch').val() / 50)
 	localStorage.setItem('voice_vol', $('#voicevol').val() / 100)
-	M.toast({ html: lang.lang_speech_refresh, displayLength: 3000 })
+	Mtoast({ html: lang.lang_speech_refresh, displayLength: 3000 })
 }
 function voiceSettingLoad() {
 	var flag = localStorage.getItem('voice_bouyomi')

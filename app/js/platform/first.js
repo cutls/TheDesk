@@ -225,6 +225,9 @@ function evalAttr(json, attr, lenCk) {
 		return false
 	}
 }
+function Mtoast(obj) {
+	return true
+}
 function statusModel(now) {
 	if (!now) {
 		var now = new Date().toString()

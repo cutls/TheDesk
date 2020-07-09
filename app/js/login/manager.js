@@ -640,7 +640,7 @@ function code(code) {
 		$('#code').val('')
 	}
 	if (!code || code == '') {
-		M.toast({ html: lang.lang_fatalerroroccured + 'Error: no code', displayLength: 5000 })
+		Mtoast({ html: lang.lang_fatalerroroccured + 'Error: no code', displayLength: 5000 })
 		return false
 	}
 	var url = localStorage.getItem('domain_tmp')
@@ -757,7 +757,7 @@ function getdata(domain, at) {
 		.then(function(json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
-				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
+				Mtoast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
 				return
 			}
 			var avatar = json['avatar']
@@ -830,7 +830,7 @@ function atSetup(type) {
 		}
 	}
 	if (!i || i == '') {
-		M.toast({ html: lang.lang_fatalerroroccured + 'Error: access token', displayLength: 5000 })
+		Mtoast({ html: lang.lang_fatalerroroccured + 'Error: access token', displayLength: 5000 })
 		return false
 	}
 	var obj = JSON.parse(multi)
@@ -883,7 +883,7 @@ function refresh(target) {
 		.then(function(json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
-				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
+				Mtoast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
 				return
 			}
 			var avatar = json['avatar']
@@ -1012,7 +1012,7 @@ function multisel() {
 function mainacct() {
 	var acct_id = $('#main-acct-sel').val()
 	localStorage.setItem('main', acct_id)
-	M.toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
+	Mtoast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
 }
 function colorpicker(key) {
 	temp = `<div onclick="coloradd('${key}','def','def')" class="pointer exc">${lang.lang_manager_none}</div>
