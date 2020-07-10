@@ -590,7 +590,7 @@ function enc(ver) {
 }
 //インスタンスティッカー
 function ticker() {
-	var start = 'https://toot.app/toot/index.php'
+	var start = 'https://toot-app.thedesk.top/toot/index.php'
 	fetch(start, {
 		method: 'GET',
 		cors: true,
