@@ -157,7 +157,7 @@ function spotifytips() {
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(async function(json) {
 				var ms = json.progress_ms
 				if(!ms) {
 					tips('ver')
@@ -175,7 +175,7 @@ function spotifytips() {
 					}
 				}
 				artisttxt = escapeHTML(artisttxt)
-				sleep(last)
+				await sleep(last)
 				var tms = item.duration_ms
 				var per = (ms / item.duration_ms) * 100
 				ms = ms / 1000
@@ -251,10 +251,10 @@ function trendTagonTipInterval() {
 }
 //時計
 var clockint
-function clock() {
+async function clock() {
 	var now = new Date()
 	var last = 1000 - (now.getTime() % 1000)
-	sleep(last)
+	await sleep(last)
 	clockint = setInterval(clockStart, 1000)
 }
 function clockStart() {
@@ -285,10 +285,6 @@ function clockStart() {
 		nowSec +
 		'</span>'
 	$('#tips-text').html(msg)
-}
-function sleep(waitMsec) {
-	var startMsec = new Date()
-	while (new Date() - startMsec < waitMsec);
 }
 function tipsToggle() {
 	$('#tips').toggleClass('hide')

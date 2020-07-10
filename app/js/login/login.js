@@ -387,7 +387,8 @@ function ckdb(acct_id) {
 	var letters = domain + '_letters'
 	var quoteMarker = domain + '_quote'
 	if (idata) {
-		var json = JSON.parse(idata)
+		//check and replace json to idata
+		var json = idata
 		if (json[quoteMarker] == 'enabled') {
 			localStorage.setItem('quoters', 'true')
 			localStorage.setItem('quote_' + acct_id, 'true')

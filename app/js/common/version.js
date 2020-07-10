@@ -160,7 +160,7 @@ setInterval(function () {
 		infowebsocket()
 	}
 }, 10000)
-function toastInterpret(obj) {
+async function toastInterpret(obj) {
 	if (obj.type == 'textv2') {
 		if (~obj.languages.indexOf(lang.language)) {
 			let showVer = true
