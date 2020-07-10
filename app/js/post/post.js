@@ -342,7 +342,6 @@ function clear() {
 	$('.mastodon-choice').map(function() {
 		$(this).val('')
 	})
-	localStorage.removeItem('image')
 	if (localStorage.getItem('mainuse') == 'main') {
 		$('#post-acct-sel').val(localStorage.getItem('main'))
 	}

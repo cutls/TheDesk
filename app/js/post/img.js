@@ -108,7 +108,6 @@ async function media(b64, type, no, stamped) {
 	}
 	$('.toot-btn-group').prop('disabled', true)
 	$('#post-acct-sel').prop('disabled', true)
-	localStorage.setItem('image', 'busy')
 	todo('Image Upload...')
 	var media = toBlob(b64, type)
 	var fd = new FormData()
@@ -159,7 +158,6 @@ async function media(b64, type, no, stamped) {
 				M.toast({ html: '<span>' + lang.lang_postimg_sync + '</span><button class="btn-flat toast-action" onclick="syncDetail()">Click</button>', displayLength: 3000 })
 				$('#imgup').text('')
 				$('#imgsel').show()
-				localStorage.removeItem('image')
 			} 
 		} catch {
 			var start = 'https://' + domain + '/api/v1/media'

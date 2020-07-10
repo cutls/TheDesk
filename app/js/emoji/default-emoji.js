@@ -1,5 +1,5 @@
-var defaultemojiList = ['activity', 'flag', 'food', 'nature', 'object', 'people', 'place', 'symbol']
-var defaultemoji = {
+const defaultemojiList = ['activity', 'flag', 'food', 'nature', 'object', 'people', 'place', 'symbol']
+const defaultemoji = {
 	activity: activity,
 	flag: flag,
 	food: food,
@@ -9,8 +9,18 @@ var defaultemoji = {
 	place: place,
 	symbol: symbol
 }
+let defaultemojiname = {
+	activity: 'Activities',
+	flag: 'Flags',
+	food: 'Foods',
+	nature: 'Nature',
+	object: 'Tools',
+	people: 'People',
+	place: 'Places',
+	symbol: 'Symbols'
+}
 if (lang == 'ja') {
-	var defaultemojiname = {
+	defaultemojiname = {
 		activity: '活動',
 		flag: '国旗',
 		food: '食べ物',
@@ -20,33 +30,23 @@ if (lang == 'ja') {
 		place: '場所',
 		symbol: '記号'
 	}
-} else {
-	var defaultemojiname = {
-		activity: 'Activities',
-		flag: 'Flags',
-		food: 'Foods',
-		nature: 'Nature',
-		object: 'Tools',
-		people: 'People',
-		place: 'Places',
-		symbol: 'Symbols'
-	}
 }
 
 function defaultEmoji(target) {
-    var announcement = false
-    if ($('#media').val() == 'announcement') {
-        announcement = true
-    }
-	var json = defaultemoji[target]
-	var emojis = ''
-	Object.keys(json).forEach(function(key) {
-        var emoji = json[key]
-        if (announcement) {
-            var def = `<a onclick="emojiReactionDef('${emoji['shortcode']}')" class="pointer">`
-        } else {
-            var def = `<a onclick="defEmoji('${emoji['shortcode']}')" class="pointer">`
-        }
+	let announcement = false
+	if (document.querySelector('#media').value == 'announcement') {
+		announcement = true
+	}
+	const json = defaultemoji[target]
+	const keymap = Object.keys(json)
+	let emojis = ''
+	for (let i = 0; i < json.length; i++) {
+		const key = keymap[i]
+		const emoji = json[key]
+		let def = `<a data-shortcode="${emoji['shortcode']}" class="pointer defEmoji">`
+		if (announcement) {
+			def = `<a data-shortcode="${emoji['shortcode']}" class="pointer defEmoji">`
+		}
 		emojis =
 			emojis +
 			`${def}
@@ -54,52 +54,39 @@ function defaultEmoji(target) {
                 width: 20px; height: 20px; display: inline-block; background-image: url('../../img/sheet.png'); background-size: 4900%;
                  background-position:${emoji['css']};"></span>
             </a>`
-	})
-	$('#emoji-list').html(emojis)
-	$('#now-emoji').text(lang.lang_defaultemojis_text.replace('{{cat}}', defaultemojiname[target]))
-	$('.emoji-control').addClass('hide')
+	}
+	document.querySelector('#emoji-list').innerHTML = emojis
+	document.querySelector('#now-emoji').innerText = lang.lang_defaultemojis_text.replace('{{cat}}', defaultemojiname[target])
+	document.querySelector('.emoji-control').classList.add('hide')
+	const targets = document.querySelectorAll('.defEmoji')
+	for (let j = 0; j < targets.length; j++) {
+		const target = targets[j]
+		const sc = target.getAttribute('data-shortcode')
+		target.addEventListener('click', () => defEmoji(sc))
+	}
 }
+
 function customEmoji() {
-	$('#emoji-suggest').val('')
-	$('.emoji-control').removeClass('hide')
+	document.querySelector('#emoji-suggest').value = ''
+	document.querySelector('.emoji-control').classList.remove('hide')
 	emojiList('home')
 }
+
 function defEmoji(target) {
-	var selin = $('#textarea').prop('selectionStart')
+	const textarea = document.querySelector('#textarea')
+	let selin = textarea.selectionStart
 	if (!selin) {
 		selin = 0
 	}
-	var emojiraw = newpack.filter(function(item, index) {
-		if (item.short_name == target) return true
-	})
-	var hex = emojiraw[0].unified.split('-')
+	const hex = emojipack[target].unified.split('-')
+	let emoji = twemoji.convert.fromCodePoint(hex[0])
 	if (hex.length === 2) {
 		emoji = twemoji.convert.fromCodePoint(hex[0]) + twemoji.convert.fromCodePoint(hex[1])
-	} else {
-		emoji = twemoji.convert.fromCodePoint(hex[0])
 	}
-	var now = $('#textarea').val()
-	var before = now.substr(0, selin)
-	var after = now.substr(selin, now.length)
-	newt = before + emoji + after
-	$('#textarea').val(newt)
-	$('#textarea').focus()
-}
-function faicon() {
-	var json = faicons
-	var emojis = ''
-	Object.keys(json).forEach(function(key) {
-		var emoji = json[key]
-		var eje = emoji.replace(/fa-/g, '')
-		emojis =
-			emojis +
-			'<a onclick="emojiInsert(\'[faicon]' +
-			eje +
-			'[/faicon]\')" class="pointer white-text" style="font-size:24px"><i class="fa ' +
-			emoji +
-			'"></i></a>'
-	})
-	$('#emoji-list').html(emojis)
-	$('#now-emoji').text('faicon')
-	$('.emoji-control').addClass('hide')
+	const now = textarea.value
+	const before = now.substr(0, selin)
+	const after = now.substr(selin, now.length)
+	const newt = before + emoji + after
+	textarea.value = newt
+	textarea.focus()
 }

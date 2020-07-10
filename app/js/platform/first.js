@@ -306,4 +306,12 @@ function showElm(query) {
 		target.style.display = 'inherit'
 	}
 }
+function setAllClasses(query, className, action) {
+	const allTarget = document.querySelectorAll(query)
+	for (let i = 0; i < allTarget.length; i++) {
+		const target = allTarget[i]
+		if(action == 'add') target.classList.add(className)
+		if(action == 'remove') target.classList.remove(className)
+	}
+}
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));

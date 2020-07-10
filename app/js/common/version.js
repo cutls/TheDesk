@@ -1,5 +1,5 @@
 //バージョンチェッカー
-async function verck(ver, jp) {
+async function verck(ver) {
 	console.log('%c Welcome😊 ' + ver, 'color: red;font-size:200%;')
 	document.querySelector('body').classList.add(localStorage.getItem('platform'))
 	const date = new Date()
@@ -8,20 +8,7 @@ async function verck(ver, jp) {
 		showVer = true
 		console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
 		if (localStorage.getItem('winstore') && !pwa) {
-			M.Modal.getInstance(document.querySelector('#releasenote')).open()
-		}
-		verp = ver.replace('(', '')
-		verp = verp.replace('.', '-')
-		verp = verp.replace('.', '-')
-		verp = verp.replace('[', '-')
-		verp = verp.replace(']', '')
-		verp = verp.replace(')', '')
-		verp = verp.replace(' ', '_')
-		console.log('%c ' + verp, 'color: red;font-size:200%;')
-		if (lang.language == 'ja') {
-			showElm(`#release-${verp}`)
-		} else {
-			showElm('#release-en')
+			openRN()
 		}
 	}
 	localStorage.setItem('ver', ver)
@@ -73,12 +60,12 @@ async function verck(ver, jp) {
 	// 生成する文字列に含める文字セット
 	const c = 'abcdefghijklmnopqrstuvwxyz0123456789'
 	const cl = c.length
-	const r = ''
+	let r = ''
 	for (var i = 0; i < l; i++) {
 		r += c[Math.floor(Math.random() * cl)]
 	}
 	const start = 'https://thedesk.top/ver.json'
-	const mess = await getJson(start)
+	const mess = await getApi(start, null)
 	console.table(mess)
 	if (mess) {
 		let newest = null
@@ -111,7 +98,7 @@ async function verck(ver, jp) {
 		lni = 0
 	}
 	const getNotice = 'https://thedesk.top/notice/index.php?since_id=' + lni
-	const notices = await getJson(getNotice)
+	const notices = await getApi(getNotice, null)
 	if (notices.length < 1) {
 		return false
 	} else {
@@ -140,7 +127,10 @@ function infowebsocket() {
 		if (obj.type != 'counter') {
 			toastInterpret(obj)
 		} else {
-			document.querySelector('#persons').innerText = obj.text
+			const people = document.querySelector('#persons')
+			if(people) {
+				people.innerText = obj.text
+			}
 		}
 	}
 	infows.onerror = function (error) {
@@ -195,11 +185,11 @@ async function toastInterpret(obj) {
 					displayLength: 86400
 				})
 				await sleep(500)
-				const targets = document.querySelectorAll('toast-action')
-				for (let j = 0; j < targets.length; i++) {
+				const targets = document.querySelectorAll('.toast-action')
+				for (let j = 0; j < targets.length; j++) {
 					const target = targets[j]
 					const toot = target.getAttribute('data-toot')
-					target.addEventListener('click', detEx(toot, 'main'))
+					target.addEventListener('click', () => detEx(toot, 'main'))
 				}
 
 			}
@@ -207,6 +197,7 @@ async function toastInterpret(obj) {
 	}
 }
 function openRN() {
+	console.log(kirishima)
 	M.Modal.getInstance(document.querySelector('#releasenote')).open()
 	if (lang.language == 'ja') {
 		verp = ver.replace('(', '').replace('.', '-').replace('.', '-').replace('[', '-').replace(']', '').replace(')', '').replace(' ', '_')
