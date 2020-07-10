@@ -282,3 +282,28 @@ function statusModel(now) {
 		poll: null
 	}
 }
+
+function isFocused(query) {
+	const allTarget = document.querySelectorAll(query)
+	const active = document.activeElement
+	let is = false
+	for (let i = 0; i < allTarget.length; i++) {
+		if (allTarget[i] == active) {
+			is = true
+			break
+		}
+	}
+	return is
+}
+function getHeight(query) {
+	const elm = document.querySelector(query)
+	return parseFloat(getComputedStyle(elm, null).height.replace('px', ''))
+}
+function showElm(query) {
+	const allTarget = document.querySelectorAll(query)
+	for (let i = 0; i < allTarget.length; i++) {
+		const target = allTarget[i]
+		target.style.display = 'inherit'
+	}
+}
+const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));

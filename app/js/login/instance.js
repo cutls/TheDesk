@@ -1,5 +1,5 @@
 //インスタンスリスト
-var idata = {
+const idata = {
 	"kirishima.cloud": "instance",
 	"kirishima.cloud_name": "アスタルテ",
 	"kirishima.cloud_letters": "6229",
@@ -84,5 +84,3 @@ var idata = {
 	"biwakodon.com_quote":"enabled",
 	"comm.cx_quote":"enabled"
 };
-
-localStorage.setItem("instance", JSON.stringify(idata));

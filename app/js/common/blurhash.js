@@ -1,4 +1,4 @@
-var digitCharacters = [
+const digitCharacters = [
     "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
     "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
@@ -10,16 +10,16 @@ var digitCharacters = [
     "|", "}", "~",
 ];
 function decode83(str) {
-    var value = 0;
-    for (var i = 0; i < str.length; i++) {
-        var c = str[i];
-        var digit = digitCharacters.indexOf(c);
+    let value = 0;
+    for (let i = 0; i < str.length; i++) {
+        const c = str[i];
+        const digit = digitCharacters.indexOf(c);
         value = value * 83 + digit;
     }
     return value;
 }
 function linearTosRGB(value) {
-    var v = Math.max(0, Math.min(1, value));
+    const v = Math.max(0, Math.min(1, value));
     if (v <= 0.0031308) {
         return Math.round(v * 12.92 * 255 + 0.5);
     }
@@ -28,7 +28,7 @@ function linearTosRGB(value) {
     }
 }
 function sRGBToLinear(value) {
-    var v = value / 255;
+    const v = value / 255;
     if (v <= 0.04045) {
         return v / 12.92;
     }
@@ -37,18 +37,18 @@ function sRGBToLinear(value) {
     }
 }
 function decodeDC(value) {
-    var intR = value >> 16;
-    var intG = (value >> 8) & 255;
-    var intB = value & 255;
+    const intR = value >> 16;
+    const intG = (value >> 8) & 255;
+    const intB = value & 255;
     return [sRGBToLinear(intR), sRGBToLinear(intG), sRGBToLinear(intB)];
 };
 function sign(n) { return (n < 0 ? -1 : 1); }
 function signPow(val, exp) { return sign(val) * Math.pow(Math.abs(val), exp); }
 function decodeDC2(value, maximumValue) {
-    var quantR = Math.floor(value / (19 * 19));
-    var quantG = Math.floor(value / 19) % 19;
-    var quantB = value % 19;
-    var rgb = [
+    const quantR = Math.floor(value / (19 * 19));
+    const quantG = Math.floor(value / 19) % 19;
+    const quantB = value % 19;
+    const rgb = [
         signPow((quantR - 9) / 9, 2.0) * maximumValue,
         signPow((quantG - 9) / 9, 2.0) * maximumValue,
         signPow((quantB - 9) / 9, 2.0) * maximumValue,
@@ -61,45 +61,45 @@ function decodeblur(blurhash, width, height, punch) {
         console.error('too short blurhash');
         return null;
     }
-    var sizeFlag = decode83(blurhash[0]);
-    var numY = Math.floor(sizeFlag / 9) + 1;
-    var numX = (sizeFlag % 9) + 1;
-    var quantisedMaximumValue = decode83(blurhash[1]);
-    var maximumValue = (quantisedMaximumValue + 1) / 166;
+    const sizeFlag = decode83(blurhash[0]);
+    const numY = Math.floor(sizeFlag / 9) + 1;
+    const numX = (sizeFlag % 9) + 1;
+    const quantisedMaximumValue = decode83(blurhash[1]);
+    const maximumValue = (quantisedMaximumValue + 1) / 166;
     if (blurhash.length !== 4 + 2 * numX * numY) {
         console.error('blurhash length mismatch', blurhash.length, 4 + 2 * numX * numY);
         return null;
     }
-    var colors = new Array(numX * numY);
-    for (var i = 0; i < colors.length; i++) {
+    let colors = new Array(numX * numY);
+    for (let i = 0; i < colors.length; i++) {
         if (i === 0) {
-            var value = decode83(blurhash.substring(2, 6));
+            const value = decode83(blurhash.substring(2, 6));
             colors[i] = decodeDC(value);
         }
         else {
-            var value = decode83(blurhash.substring(4 + i * 2, 6 + i * 2));
+            const value = decode83(blurhash.substring(4 + i * 2, 6 + i * 2));
             colors[i] = decodeDC2(value, maximumValue * punch);
         }
     }
-    var bytesPerRow = width * 4;
-    var pixels = new Uint8ClampedArray(bytesPerRow * height);
+    const bytesPerRow = width * 4;
+    let pixels = new Uint8ClampedArray(bytesPerRow * height);
     for (var y = 0; y < height; y++) {
         for (var x = 0; x < width; x++) {
             var r = 0;
             var g = 0;
             var b = 0;
-            for (var j = 0; j < numY; j++) {
-                for (var i = 0; i < numX; i++) {
-                    var basis = Math.cos(Math.PI * x * i / width) * Math.cos(Math.PI * y * j / height);
-                    var color = colors[i + j * numX];
+            for (let j = 0; j < numY; j++) {
+                for (let i = 0; i < numX; i++) {
+                    let basis = Math.cos(Math.PI * x * i / width) * Math.cos(Math.PI * y * j / height);
+                    let color = colors[i + j * numX];
                     r += color[0] * basis;
                     g += color[1] * basis;
                     b += color[2] * basis;
                 }
             }
-            var intR = linearTosRGB(r);
-            var intG = linearTosRGB(g);
-            var intB = linearTosRGB(b);
+            const intR = linearTosRGB(r);
+            const intG = linearTosRGB(g);
+            const intB = linearTosRGB(b);
             pixels[4 * x + 0 + y * bytesPerRow] = intR;
             pixels[4 * x + 1 + y * bytesPerRow] = intG;
             pixels[4 * x + 2 + y * bytesPerRow] = intB;
@@ -109,9 +109,9 @@ function decodeblur(blurhash, width, height, punch) {
     return pixels;
 }
 function parseBlur(blur) {
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-    var pixels = decodeblur(blur, 32, 32)
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const pixels = decodeblur(blur, 32, 32)
     const imageData = new ImageData(pixels, 32, 32);
 
     ctx.putImageData(imageData, 0, 0);

@@ -444,7 +444,7 @@ function parseColumn(target, dontclose) {
 					<br>
 					<div id="picker_${key}" class="color-picker"></div>
 				</div>${if_tag}
-				<div class="tl-box" tlid="${key}">
+				<div class="tl-box" tlid="${key}" id="tlBox${key}">
 					<div id="timeline_${key}" class="tl ${acct.type}-timeline " tlid="${key}" 
 						data-type="${acct.type}" data-acct="${acct.domain}" data-const="${acct.type}_${acct.domain}">
 						<div id="landing_${key}" style="text-align:center">
@@ -804,7 +804,7 @@ function webviewParse(url, key, insert, icnsert, css) {
 				<br>
 				<div id="picker_${key}" class="color-picker"></div>
 			</div>
-			<div class="tl-box" tlid="${key}" style="width:100%;height:100%;">
+			<div class="tl-box" tlid="${key}" style="width:100%;height:100%;" id="tlBox${key}">
 				<div id="timeline_${key}" class="tl" tlid="${key}" data-type="webview" style="width:100%;height:100%;">
 					<webview src="${url}" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview>
 				</div>
@@ -866,7 +866,7 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 			${lang.lang_layout_headercolor}<br>
 			<div id="picker_${key}" class="color-picker"></div>
 		</div>
-		<div class="tl-box" tlid="${key}">
+		<div class="tl-box" tlid="${key}" id="tlBox${key}">
 			<div id="timeline_${key}" class="tl ${type}-timeline" tlid="${key}" data-type="${type}" data-acct="${data}">
 				<div id="landing_${key}" style="text-align:center">
 					${lang.lang_layout_nodata}

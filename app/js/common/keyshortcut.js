@@ -1,26 +1,28 @@
-selectedColumn = 0
-selectedToot = 0
-$(function($) {
+let selectedColumn = 0
+let selectedToot = 0
+$(function ($) {
 	//キーボードショートカット
-	$(window).keydown(function(e) {
-		var hasFocus = $('input').is(':focus')
-		var hasFocus2 = $('textarea').is(':focus')
+	$(window).keydown(function (e) {
+		const hasFocus = isFocused('input')
+		const hasFocus2 = isFocused('textarea')
+		const postBox = document.querySelector('#textarea')
+		let wv = false
 		if (document.getElementById('webview')) {
-			if ($('#webviewsel:checked').val()) {
-				var wv = false
+			if (document.querySelector('#webviewsel:checked').value) {
+				wv = false
 			} else {
-				var wv = true
+				wv = true
 			}
 		} else {
-			var wv = true
+			wv = true
 		}
 		//Enter
 		if (e.keyCode === 13) {
-			if ($('#src').is(':focus')) {
+			if (isFocused('#src')) {
 				src()
 				return false
 			}
-			if ($('#list-add').is(':focus')) {
+			if (isFocused('#list-add')) {
 				makeNewList()
 				return false
 			}
@@ -92,7 +94,7 @@ $(function($) {
 			}
 			//X:開閉
 			if (e.keyCode === 88) {
-				if (!$('#post-box').hasClass('appear')) {
+				if (!document.querySelector('#post-box').classList.contains('appear')) {
 					show()
 					$('textarea').focus()
 				} else {
@@ -102,10 +104,10 @@ $(function($) {
 			}
 			//N:新トゥート
 			if (e.keyCode === 78) {
-				if (!$('#post-box').hasClass('appear')) {
+				if (!document.querySelector('#post-box').classList.contains('appear')) {
 					show()
 				}
-				$('textarea').focus()
+				postBox.focus()
 				return false
 			}
 			//Ctrl+E:全ての通知未読を既読にする
@@ -153,7 +155,7 @@ $(function($) {
 			//数字:TL
 			if (event.metaKey || event.ctrlKey) {
 				if (e.keyCode >= 49 && e.keyCode <= 57) {
-					var kz = e.keyCode - 49
+					const kz = e.keyCode - 49
 					goColumn(kz)
 					return false
 				}
@@ -161,7 +163,7 @@ $(function($) {
 			//矢印:選択
 			if (e.code == 'ArrowLeft') {
 				//left
-				if ($('#imagemodal').hasClass('open')) {
+				if (document.querySelector('#imagemodal').classList.contains('open')) {
 					imgCont('prev')
 					return false
 				}
@@ -172,7 +174,7 @@ $(function($) {
 				return false
 			} else if (e.code == 'ArrowUp') {
 				//up
-				if ($('#imagemodal').hasClass('open')) {
+				if (document.querySelector('#imagemodal').classList.contains('open')) {
 					return false
 				}
 				if (selectedToot > 0) {
@@ -182,7 +184,7 @@ $(function($) {
 				return false
 			} else if (e.code == 'ArrowRight') {
 				//right
-				if ($('#imagemodal').hasClass('open')) {
+				if (document.querySelector('#imagemodal').classList.contains('open')) {
 					imgCont('next')
 					return false
 				}
@@ -193,7 +195,7 @@ $(function($) {
 				return false
 			} else if (e.code == 'ArrowDown') {
 				//down
-				if ($('#imagemodal').hasClass('open')) {
+				if (document.querySelector('#imagemodal').classList.contains('open')) {
 					return false
 				}
 				selectedToot++
@@ -210,24 +212,21 @@ $(function($) {
 				}
 			}
 			//選択時
+			const selectedId = document.querySelector('.selectedToot').getAttribute('unique-id')
+			const selectedAcctIds = document.querySelector(`#timeline_${selectedColumn}`).getAttribute('data-acct')
 			if (e.keyCode == 70) {
-				var id = $('.selectedToot').attr('unique-id')
-				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
-				fav(id, acct_id, false)
+				fav(selectedId, selectedAcctIds, false)
 				return false
 			}
 			if (e.keyCode == 66) {
-				var id = $('.selectedToot').attr('unique-id')
-				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
-				rt(id, acct_id, false)
+				rt(selectedId, selectedAcctIds, false)
 				return false
 			}
 			if (e.keyCode == 82) {
-				var id = $('.selectedToot').attr('unique-id')
-				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
-				var ats_cm = $('.selectedToot .rep-btn').attr('data-men')
-				var mode = $('.selectedToot .rep-btn').attr('data-visen')
-				re(id, ats_cm, acct_id, mode)
+				const target = document.querySelector('.selectedToot .rep-btn')
+				const ats_cm = target.getAttribute('data-men')
+				const mode = target.getAttribute('data-visen')
+				re(selectedId, ats_cm, selectedAcctIds, mode)
 				return false
 			}
 		}
@@ -237,9 +236,10 @@ $(function($) {
 				//C+S+(No):ワンクリ
 				if ((event.metaKey || event.ctrlKey) && event.shiftKey) {
 					if (e.keyCode >= 49 && e.keyCode <= 51) {
-						var no = e.keyCode - 48
-						if (localStorage.getItem('oks-' + no)) {
-							$('#textarea').val($('#textarea').val() + localStorage.getItem('oks-' + no))
+						const no = e.keyCode - 48
+						const oks = localStorage.getItem('oks-' + no)
+						if (oks) {
+							postBox.value = postBox.value + oks
 						}
 						return false
 					}
@@ -248,28 +248,29 @@ $(function($) {
 		}
 	})
 	//クリアボタン
-	$('#clear').click(function() {
-		clear()
-	})
+	document.getElementById('clear').addEventListener('click', clear)
 })
 //選択する
 function tootSelector(column, toot) {
-	$('.cvo').removeClass('selectedToot')
-	$('#timeline_' + column + ' .cvo')
-		.eq(toot)
-		.addClass('selectedToot')
-	var scr = $('.tl-box[tlid=' + column + ']').scrollTop()
-	var elem = $('.selectedToot').offset().top
-	var top = elem - $('.tl-box').height() + scr
+	const selectedToot = document.querySelector('.selectedToot')
+	let rect = {top: 0}
+	if (selectedToot) {
+		selectedToot.classList.remove('selectedToot')
+		rect = selectedToot.getBoundingClientRect()
+	}
+	document.querySelectorAll(`#timeline_${column} .cvo`)[toot].classList.add('selectedToot')
+	const scr = document.querySelector(`#tlBox${column}`).scrollTop
+	const elem = rect.top + document.body.scrollTop
+	let top = elem - getHeight('.tl-box') + scr
 	if (top > 0) {
-		top = top + $('.selectedToot').height()
+		top = top + getHeight('.selectedToot')
 		if (top > scr) {
-			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: top })
+			$(`#tlBox${column}`).animate({ scrollTop: top })
 		}
 	} else if (elem < 0) {
-		var to = scr + elem - $('.selectedToot').height()
+		const to = scr + elem - getHeight('.selectedToot')
 		if (to < scr) {
-			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: to })
+			$(`#tlBox${column}`).animate({ scrollTop: to })
 		}
 	}
 }

@@ -386,8 +386,8 @@ function ckdb(acct_id) {
 	var bbcode = domain + '_bbcode'
 	var letters = domain + '_letters'
 	var quoteMarker = domain + '_quote'
-	if (localStorage.getItem('instance')) {
-		var json = JSON.parse(localStorage.getItem('instance'))
+	if (idata) {
+		var json = JSON.parse(idata)
 		if (json[quoteMarker] == 'enabled') {
 			localStorage.setItem('quoters', 'true')
 			localStorage.setItem('quote_' + acct_id, 'true')
