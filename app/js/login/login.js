@@ -6,11 +6,12 @@ localStorage.removeItem('quoters')
 localStorage.removeItem('imas')
 //stable, 固定タグのことらしい。ふざけるな。
 localStorage.removeItem('stable')
+const acctList = JSON.parse(localStorage.getItem('multi'))
 
 function ck() {
 	const main = localStorage.getItem('main')
 	if (!main) {
-		localStorage.setItem('main', 0)
+		localStorage.setItem('main', '0')
 	}
 
 	//コード受信
@@ -31,12 +32,25 @@ function ck() {
 	} else {
 		const obj = JSON.parse(multi)
 		const keymap = Object.keys(obj)
+		let req = false
 		for (let i = 0; i < keymap.length; i++) {
 			const key = keymap[i]
 			const acct = obj[key]
 			if (acct.domain) {
-				refresh(key, true)
+				req = refresh(key, true)
 			}
+		}
+		if(req) {
+			Swal.fire({
+				title: 'Reload required',
+				text: lang.lang_login_changedData,
+				type: 'info',
+				showCancelButton: true,
+				confirmButtonText: lang.lang_no,
+				cancelButtonText: lang.lang_yesno
+			}).then(result => {
+				if(result) location.reload()
+			})
 		}
 		if (obj[0].domain) {
 			showElm('#tl')
@@ -55,9 +69,9 @@ function ck() {
 ck()
 //ユーザーデータ更新
 async function refresh(target, loadskip) {
-	const multi = localStorage.getItem('multi')
-	let obj = JSON.parse(multi)
-	const {mode, domain, at, background, text} = obj[target]
+	let obj = acctList
+	let requireReload = false
+	const { mode, domain, at, background, text, name, prof, vis } = obj[target]
 	if (mode == 'misskey') {
 		return
 	}
@@ -73,31 +87,37 @@ async function refresh(target, loadskip) {
 	if (avatar == '/avatars/original/missing.png' || !avatar) {
 		avatar = './img/missing.svg'
 	}
-	let ref = {
-		at: at,
-		name: json['display_name'],
-		domain: domain,
-		user: json['acct'],
-		prof: avatar,
-		id: json['id'],
-		vis: json['source']['privacy']
+	const { newName, newProf, newVis } = json
+	if (newName != name || newProf != prof || newVis != vis) {
+		let ref = {
+			at: at,
+			name: json['display_name'],
+			domain: domain,
+			user: json['acct'],
+			prof: avatar,
+			id: json['id'],
+			vis: json['source']['privacy']
+		}
+		if (background) {
+			ref.background = background
+		}
+		if (text) {
+			ref.text = text
+		}
+		if (json['source']['sensitive']) {
+			localStorage.setItem('nsfw_' + target, true)
+		} else {
+			localStorage.removeItem('nsfw_' + target)
+		}
+		obj[target] = ref
+		const save = JSON.stringify(obj)
+		localStorage.setItem('multi', save)
+		requireReload = true
 	}
-	if (background) {
-		ref.background = background
-	}
-	if (text) {
-		ref.text = text
-	}
-	if (json['source']['sensitive']) {
-		localStorage.setItem('nsfw_' + target, 'true')
-	} else {
-		localStorage.removeItem('nsfw_' + target)
-	}
-	obj[target] = ref
-	const save = JSON.stringify(obj)
-	localStorage.setItem('multi', save)
 	if (!loadskip) {
 		load()
+	} else {
+		return requireReload
 	}
 }
 //MarkdownやBBCodeの対応、文字数制限をチェック
@@ -105,195 +125,118 @@ async function refresh(target, loadskip) {
 function ckdb(acct_id) {
 	const domain = localStorage.getItem(`domain_${acct_id}`)
 	if (domain == 'kirishima.cloud') {
-		localStorage.setItem('kirishima', 'true')
+		localStorage.setItem('kirishima', true)
 	} else if (domain == 'imastodon.net') {
-		localStorage.setItem('imas', 'true')
+		localStorage.setItem('imas', true)
 		showElm('.imasonly')
 	}
 	const at = localStorage.getItem(`acct_${acct_id}_at`)
 	const letters = `${domain}_letters`
 	const quoteMarker = `${domain}_quote`
-	
+
 	if (idata) {
 		//check and replace json to idata
 		var json = idata
 		if (json[quoteMarker] == 'enabled') {
-			localStorage.setItem('quoters', 'true')
-			localStorage.setItem('quote_' + acct_id, 'true')
-		}
-		if (json[bbcode]) {
-			if (json[bbcode] == 'enabled') {
-				localStorage.setItem('bb_' + acct_id, 'true')
-			} else {
-				localStorage.removeItem('bb_' + acct_id)
-				$("[data-activates='bbcode']").addClass('disabled')
-				$("[data-activates='bbcode']").prop('disabled', true)
-			}
-		} else {
-			localStorage.removeItem('bb_' + acct_id)
-			$("[data-activates='bbcode']").addClass('disabled')
-			$("[data-activates='bbcode']").addClass('disabled', true)
-		}
-
-		if (json[domain + '_markdown'] == 'enabled') {
-			localStorage.setItem('md_' + acct_id, 'true')
-			$('.markdown').show()
-		} else {
-			$('.anti-markdown').hide()
-			$('.markdown').hide()
-			localStorage.removeItem('bb_' + acct_id)
-		}
-		if (json[domain + '_home']) {
-			localStorage.setItem('home_' + acct_id, json[domain + '_home'])
-		}
-		if (json[domain + '_local']) {
-			localStorage.setItem('local_' + acct_id, json[domain + '_local'])
-		}
-		if (json[domain + '_public']) {
-			localStorage.setItem('public_' + acct_id, json[domain + '_public'])
-		}
-		if (json[domain + '_notification']) {
-			localStorage.setItem('notification_' + acct_id, json[domain + '_notification'])
-		}
-		if (json[domain + '_post']) {
-			localStorage.setItem('post_' + acct_id, json[domain + '_post'])
-		}
-		if (json[domain + '_fav']) {
-			localStorage.setItem('fav_' + acct_id, json[domain + '_fav'])
-		}
-		if (json[domain + '_bt']) {
-			localStorage.setItem('bt_' + acct_id, json[domain + '_bt'])
-		}
-		if (json[domain + '_follow']) {
-			localStorage.setItem('followlocale_' + acct_id, json[domain + '_follow'])
+			localStorage.setItem('quoters', true)
+			localStorage.setItem(`quote_${acct_id}`, true)
 		}
 	}
-	if (localStorage.getItem('mode_' + domain) != 'misskey') {
-		var start = 'https://' + domain + '/api/v1/instance'
-		fetch(start, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		})
-			.then(function (response) {
-				return response.json()
-			})
-			.catch(function (error) {
-				console.error(error)
-			})
-			.then(function (json) {
-				if (json.error) {
-					console.error(json.error)
-					return
-				}
-				if (json) {
-					if (json['max_toot_chars']) {
-						localStorage.setItem('letters_' + acct_id, json['max_toot_chars'])
-					}
-					if (json['urls']['streaming_api']) {
-						localStorage.setItem('streaming_' + acct_id, json['urls']['streaming_api'])
-					} else {
-						localStorage.removeItem('streaming_' + acct_id)
-					}
-				}
-			})
-	} else {
+	if (!isMisskey(domain)) {
+		const start = `https://${domain}/api/v1/instance`
+		const json = getApi(start, null)
+		if (!json || json.error) {
+			return
+		}
+		const mtc = json['max_toot_chars']
+		if (mtc) {
+			localStorage.setItem(`letters_${acct_id}`, mtc)
+		}
+		if (json['feature_quote']) {
+			localStorage.setItem(`quote_${acct_id}`, true)
+		}
+		const str = json['urls']['streaming_api']
+		if (str) {
+			localStorage.setItem(`streaming_${acct_id}`, str)
+		}
 	}
 }
 
 //アカウントを選択…を実装
 function multiSelector(parseC) {
-	var multi = localStorage.getItem('multi')
-	if (!multi) {
-		var obj = []
-		var json = JSON.stringify(obj)
-		localStorage.setItem('multi', json)
-	} else {
-		var obj = JSON.parse(multi)
-	}
-	var templete
+	if (!acctList) return false
+	const obj = acctList
+	let template
+	//StringなのはlocalStorageがStringしか返さないから
+	let lastUsed = '0'
 	if (localStorage.getItem('mainuse') == 'main') {
-		var last = localStorage.getItem('main')
+		lastUsed = localStorage.getItem('main')
 	} else if (localStorage.getItem('last-use')) {
-		var last = localStorage.getItem('last-use')
-		if (last == 'webview' || last == 'noauth') {
-			last = '0'
+		lastUsed = localStorage.getItem('last-use')
+		if (lastUsed == 'webview' || last == 'noauth') {
+			lastUsed = '0'
 		}
 	} else {
-		var last = '0'
+		lastUsed = '0'
 	}
-	last = last + ''
-	var sel
+	let sel
 	if (obj.length < 1) {
-		$('#src-acct-sel').html('<option value="tootsearch">Tootsearch</option>')
-		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + '</option>')
+		document.querySelector('#src-acct-sel').innerHTML = '<option value="tootsearch">Tootsearch</option>'
+		document.querySelector('#add-acct-sel').innerHTML = `<option value="noauth">${lang.lang_login_noauth}</option>`
 	} else {
-		Object.keys(obj).forEach(function (key) {
-			var acct = obj[key]
-			var list = key * 1 + 1
-			if (key + '' === last) {
+		for (let i = 0; i < obj.length; i++) {
+			const acct = obj[i]
+			const strKey = i?.toString()
+			if (key == lastUsed) {
 				sel = 'selected'
-				var domain = acct.domain
-				localStorage.setItem('domain_' + key, domain)
-				if (idata[domain + '_letters']) {
-					$('#textarea').attr('data-length', idata[domain + '_letters'])
+				const domain = acct.domain
+				const letters = idata[`${domain}_letters`]
+				const textarea = document.querySelector('#textarea')
+				if (letters) {
+					textarea.setAttribute('data-length', letters)
 				} else {
-					var maxletters = localStorage.getItem('letters_' + key)
-					if (maxletters > 0) {
-						$('#textarea').attr('data-length', maxletters)
+					//手動でアカマネで変えれちゃうから
+					const maxLetters = localStorage.getItem('letters_' + key)
+					if (maxLetters > 0) {
+						textarea.setAttribute('data-length', maxLetters)
 					} else {
-						$('#textarea').attr('data-length', 500)
+						textarea.setAttribute('data-length', 500)
 					}
 				}
-				if (idata[domain + '_glitch']) {
-					$('#local-button').removeClass('hide')
+				if (idata[`${domain}_glitch`]) {
+					document.querySelector('#local-button').classList.remove('hide')
 				}
-				var profimg = acct.prof
-				//localStorage.setItem("prof_" + key, profimg);
+				let profimg = acct.prof
 				if (!profimg) {
 					profimg = '../../img/missing.svg'
 				}
-				$('#acct-sel-prof').attr('src', profimg)
+				document.querySelector('#acct-sel-pro').setAttribute('src', profimg)
+				let cc = ''
 				if (domain) {
-					var cc = '(' + domain + ')'
-				} else {
-					var cc = ''
+					cc = `(${domain})`
 				}
-				$('#toot-post-btn').text(lang.lang_toot + cc)
+				const tpb = document.querySelector('#toot-post-btn')
+				tpb.innerText = lang.lang_toot + cc
 				if (acct.background && acct.background != 'def' && acct.text && acct.text != 'def') {
-					$('#toot-post-btn').removeClass('indigo')
-					$('#toot-post-btn').css('background-color', '#' + acct.background)
-					$('#toot-post-btn').css('color', acct.text)
-				} else {
-				}
-				if (domain == 'kirishima.cloud') {
-					$('#faicon-btn').show()
-				} else {
-					$('#faicon-btn').hide()
+					tpb.classList.remove('indigo')
+					tpb.style.backgroundColor = `#${acct.background}`
+					tpb.style.color = `#${acct.text}`
 				}
 				if (domain == 'imastodon.net') {
 					trendTag()
 				} else {
-					$('#trendtag').html('')
+					document.querySelector('#trendtag').innerHTML = ''
 				}
 			} else {
 				sel = ''
 			}
-			templete =
-				'<option value="' +
-				key +
-				'" data-icon="' +
-				acct.prof +
-				'" class="left circle" ' +
-				sel +
-				'>' +
-				acct.user +
-				'@' +
-				acct.domain +
-				'</option>'
-			$('.acct-sel').append(templete)
-		})
+			template = `
+			<option value="${key}" data-icon="${acct.prof}" class="left circle" ${sel}>
+				@${acct.user} ${acct.domain}
+			</option>
+			`
+			appendPrepend('.acct-sel', template, 'append')
+		}
 		$('#src-acct-sel').append('<option value="tootsearch">Tootsearch</option>')
 		$('#add-acct-sel').append(
 			'<option value="noauth">' +
@@ -307,40 +250,12 @@ function multiSelector(parseC) {
 		parseColumn(null, true)
 	}
 }
-
-//バージョンエンコ
-function enc(ver) {
-	var ver = ver.replace(/\s/g, '')
-	var ver = ver.replace(/\(/g, '-')
-	var ver = ver.replace(/\)/g, '')
-	var ver = ver.replace(/\[/g, '_')
-	var ver = ver.replace(/\]/g, '')
-	return ver
-}
 //インスタンスティッカー
 function ticker() {
-	var start = 'https://toot-app.thedesk.top/toot/index.php'
-	fetch(start, {
-		method: 'GET',
-		cors: true,
-		headers: {
-			'content-type': 'application/json'
-		}
-	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function (error) {
-			console.error(error)
-		})
-		.then(function (json) {
-			if (json) {
-				localStorage.setItem('ticker', JSON.stringify(json))
-			}
-		})
+	const start = 'https://toot-app.thedesk.top/toot/index.php'
+	const json = getApi(start, null)
+	if(json) localStorage.setItem('ticker', JSON.stringify(json))
+}
+function isMisskey(domain) {
+	return localStorage.getItem(`mode_${domain}`) == 'misskey'
 }

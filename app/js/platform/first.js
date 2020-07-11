@@ -314,4 +314,12 @@ function setAllClasses(query, className, action) {
 		if(action == 'remove') target.classList.remove(className)
 	}
 }
+function appendPrepend(query, elm, action) {
+	const allTarget = document.querySelectorAll(query)
+	for (let i = 0; i < allTarget.length; i++) {
+		const target = allTarget[i]
+		if(action == 'prepend') target.prependChild(elm)
+		if(action == 'append') target.appendChild(elm)
+	}
+}
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
