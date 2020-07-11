@@ -1,3 +1,18 @@
+# rewrite-overallブランチへようこそ🎃
+
+このブランチはコードを最初から全部読み直して書き直そうという途方もなく壮大なプロジェクトです。
+
+1周目では、
+
+* 脱jQuery
+* 脱onclick
+* 脱コールバック地獄
+* 重複してるやつや使ってないやつを消す
+
+という極めて当たり前のやつをやっていきます。
+
+# 以下いつものREADME
+
 <img src="https://thedesk.top/img/top.png" width="300" align="left">
 <img src="https://thedesk.top/img/desk.png" width="150" align="right">
 
