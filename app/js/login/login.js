@@ -8,7 +8,7 @@ localStorage.removeItem('imas')
 localStorage.removeItem('stable')
 const acctList = JSON.parse(localStorage.getItem('multi'))
 
-function ck() {
+async function ck() {
 	const main = localStorage.getItem('main')
 	if (!main) {
 		localStorage.setItem('main', '0')
@@ -37,7 +37,8 @@ function ck() {
 			const key = keymap[i]
 			const acct = obj[key]
 			if (acct.domain) {
-				req = refresh(key, true)
+				let refreshed = await refresh(key, true)
+				if(refreshed) req = true
 			}
 		}
 		if(req) {
@@ -76,27 +77,35 @@ async function refresh(target, loadskip) {
 		return
 	}
 	const start = `https://${domain}/api/v1/accounts/verify_credentials`
-	const json = await getApi(start, at)
+	let json
+	try{
+		json = await getApi(start, at)
+	} catch {
+		return false
+	}
 	if (json.error) {
 		console.error('Error:' + json.error)
 		M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
 		return
 	}
+	if(!json) return false
 	let avatar = json['avatar']
 	//missingがmissingなやつ
 	if (avatar == '/avatars/original/missing.png' || !avatar) {
 		avatar = './img/missing.svg'
 	}
-	const { newName, newProf, newVis } = json
+	const newName = json.display_name
+	const newProf = avatar
+	const newVis = json.source.privacy
 	if (newName != name || newProf != prof || newVis != vis) {
 		let ref = {
 			at: at,
-			name: json['display_name'],
+			name: newName,
 			domain: domain,
 			user: json['acct'],
 			prof: avatar,
 			id: json['id'],
-			vis: json['source']['privacy']
+			vis: newVis
 		}
 		if (background) {
 			ref.background = background
@@ -173,7 +182,7 @@ function multiSelector(parseC) {
 		lastUsed = localStorage.getItem('main')
 	} else if (localStorage.getItem('last-use')) {
 		lastUsed = localStorage.getItem('last-use')
-		if (lastUsed == 'webview' || last == 'noauth') {
+		if (lastUsed == 'webview' || lastUsed == 'noauth') {
 			lastUsed = '0'
 		}
 	} else {
@@ -187,7 +196,7 @@ function multiSelector(parseC) {
 		for (let i = 0; i < obj.length; i++) {
 			const acct = obj[i]
 			const strKey = i?.toString()
-			if (key == lastUsed) {
+			if (strKey == lastUsed) {
 				sel = 'selected'
 				const domain = acct.domain
 				const letters = idata[`${domain}_letters`]
@@ -196,7 +205,7 @@ function multiSelector(parseC) {
 					textarea.setAttribute('data-length', letters)
 				} else {
 					//手動でアカマネで変えれちゃうから
-					const maxLetters = localStorage.getItem('letters_' + key)
+					const maxLetters = localStorage.getItem('letters_' + strKey)
 					if (maxLetters > 0) {
 						textarea.setAttribute('data-length', maxLetters)
 					} else {
@@ -210,7 +219,7 @@ function multiSelector(parseC) {
 				if (!profimg) {
 					profimg = '../../img/missing.svg'
 				}
-				document.querySelector('#acct-sel-pro').setAttribute('src', profimg)
+				document.querySelector('#acct-sel-prof').setAttribute('src', profimg)
 				let cc = ''
 				if (domain) {
 					cc = `(${domain})`
@@ -225,35 +234,35 @@ function multiSelector(parseC) {
 				if (domain == 'imastodon.net') {
 					trendTag()
 				} else {
-					document.querySelector('#trendtag').innerHTML = ''
+					if(document.querySelector('#trendtag')) this.innerHTML = ''
 				}
 			} else {
 				sel = ''
 			}
 			template = `
-			<option value="${key}" data-icon="${acct.prof}" class="left circle" ${sel}>
+			<option value="${strKey}" data-icon="${acct.prof}" class="left circle" ${sel}>
 				@${acct.user} ${acct.domain}
 			</option>
 			`
 			appendPrepend('.acct-sel', template, 'append')
 		}
-		$('#src-acct-sel').append('<option value="tootsearch">Tootsearch</option>')
-		$('#add-acct-sel').append(
-			'<option value="noauth">' +
-			lang.lang_login_noauth +
-			'</option><option value="webview">Twitter</option>'
-		)
-		$('#dir-acct-sel').append('<option value="noauth">' + lang.lang_login_noauth + '</option>')
+		appendPrepend('#src-acct-sel', '<option value="tootsearch">Tootsearch</option>', 'append')
+		appendPrepend('#add-acct-sel', `
+			<option value="noauth">${lang.lang_login_noauth}</option>
+			<option value="webview">Twitter</option>
+		`, 'append')
+		appendPrepend('#dir-acct-sel', `<option value="noauth">${lang.lang_login_noauth}</option>`, 'append')
 	}
-	$('select').formSelect()
+	const elems = document.querySelectorAll('select');
+    M.FormSelect.init(elems, null);
 	if (!parseC) {
 		parseColumn(null, true)
 	}
 }
 //インスタンスティッカー
-function ticker() {
+async function ticker() {
 	const start = 'https://toot-app.thedesk.top/toot/index.php'
-	const json = getApi(start, null)
+	const json = await getApi(start, null)
 	if(json) localStorage.setItem('ticker', JSON.stringify(json))
 }
 function isMisskey(domain) {

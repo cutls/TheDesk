@@ -65,7 +65,12 @@ async function verck(ver) {
 		r += c[Math.floor(Math.random() * cl)]
 	}
 	const start = 'https://thedesk.top/ver.json'
-	const mess = await getApi(start, null)
+	let mess
+	try {
+		mess = await getApi(start, null)
+	} catch {
+		return false
+	}
 	console.table(mess)
 	if (mess) {
 		let newest = null
@@ -98,7 +103,12 @@ async function verck(ver) {
 		lni = 0
 	}
 	const getNotice = 'https://thedesk.top/notice/index.php?since_id=' + lni
-	const notices = await getApi(getNotice, null)
+	let notices
+	try {
+		notices = await getApi(getNotice, null)
+	} catch {
+		return false
+	}
 	if (notices.length < 1) {
 		return false
 	} else {

@@ -1,11 +1,11 @@
-$.strip_tags = function(str, allowed) {
+$.strip_tags = function (str, allowed) {
 	if (!str) {
 		return ''
 	}
 	allowed = (((allowed || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('')
 	var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi,
 		commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi
-	return str.replace(commentsAndPhpTags, '').replace(tags, function($0, $1) {
+	return str.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
 		return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''
 	})
 }
@@ -13,12 +13,7 @@ function escapeHTML(str) {
 	if (!str) {
 		return ''
 	}
-	return str
-		.replace(/&/g, '&amp;')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;')
-		.replace(/"/g, '&quot;')
-		.replace(/'/g, '&#039;')
+	return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;')
 }
 //PHPのnl2brと同様
 function nl2br(str) {
@@ -88,17 +83,18 @@ function formattimeutc(date) {
 }
 postMessage(['sendSinmpleIpc', 'custom-css-request'], '*')
 function makeCID() {
-	return (
-		randomStr(8) +
-		'-' +
-		randomStr(4) +
-		'-' +
-		randomStr(4) +
-		'-' +
-		randomStr(4) +
-		'-' +
-		randomStr(12)
-	)
+	let chars = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.split('')
+	for (let i = 0, len = chars.length; i < len; i++) {
+		switch (chars[i]) {
+			case 'x':
+				chars[i] = Math.floor(Math.random() * 16).toString(16)
+				break
+			case 'y':
+				chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16)
+				break
+		}
+	}
+	return chars.join('')
 }
 function randomStr(l) {
 	// 生成する文字列に含める文字セット
@@ -129,7 +125,7 @@ function rgbToHex(color) {
 			// RGBからHEXへ変換
 			parseInt(regex[1]).toString(16),
 			parseInt(regex[2]).toString(16),
-			parseInt(regex[3]).toString(16)
+			parseInt(regex[3]).toString(16),
 		]
 
 		for (var i = 0; i < rgb.length; ++i) {
@@ -147,15 +143,15 @@ function rgbToHex(color) {
 	console.error(color + ':第1引数はRGB形式で入力')
 }
 /*マルチバイト用切り出し*/
-$.isSurrogatePear = function(upper, lower) {
+$.isSurrogatePear = function (upper, lower) {
 	return 0xd800 <= upper && upper <= 0xdbff && 0xdc00 <= lower && lower <= 0xdfff
 }
-$.mb_strlen = function(str) {
+$.mb_strlen = function (str) {
 	var splitter = new GraphemeSplitter()
 	var arr = splitter.splitGraphemes(str)
 	return arr.length
 }
-$.mb_substr = function(str, begin, end) {
+$.mb_substr = function (str, begin, end) {
 	//配列にする
 	var splitter = new GraphemeSplitter()
 	var arr = splitter.splitGraphemes(str)
@@ -175,7 +171,7 @@ function object_array_sort(data, key, order, fn) {
 		num_a = 1
 		num_b = -1
 	}
-	data = data.sort(function(a, b) {
+	data = data.sort(function (a, b) {
 		var x = a[key]
 		var y = b[key]
 		if (x > y) return num_a
@@ -252,7 +248,7 @@ function statusModel(now) {
 		reblog: null,
 		application: {
 			name: null,
-			website: null
+			website: null,
 		},
 		account: {
 			id: '',
@@ -273,13 +269,13 @@ function statusModel(now) {
 			statuses_count: 0,
 			last_status_at: now,
 			emojis: [],
-			fields: []
+			fields: [],
 		},
 		media_attachments: [],
 		mentions: [],
 		tags: [],
 		card: null,
-		poll: null
+		poll: null,
 	}
 }
 
@@ -310,16 +306,16 @@ function setAllClasses(query, className, action) {
 	const allTarget = document.querySelectorAll(query)
 	for (let i = 0; i < allTarget.length; i++) {
 		const target = allTarget[i]
-		if(action == 'add') target.classList.add(className)
-		if(action == 'remove') target.classList.remove(className)
+		if (action == 'add') target.classList.add(className)
+		if (action == 'remove') target.classList.remove(className)
 	}
 }
 function appendPrepend(query, elm, action) {
 	const allTarget = document.querySelectorAll(query)
 	for (let i = 0; i < allTarget.length; i++) {
 		const target = allTarget[i]
-		if(action == 'prepend') target.prependChild(elm)
-		if(action == 'append') target.appendChild(elm)
+		if (action == 'prepend') target.prependChild(document.createTextNode(elm))
+		if (action == 'append') target.appendChild(document.createTextNode(elm))
 	}
 }
-const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+const sleep = (msec) => new Promise((resolve) => setTimeout(resolve, msec))
