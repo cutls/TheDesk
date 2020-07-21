@@ -1,56 +1,30 @@
 //アカウントマネージャ
 //最初に読むやつ
 function load() {
-	$('#acct-list').html('')
+	document.querySelector('#acct-list').innerHTML = ''
 	if (location.search) {
-		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
-		var mode = m[1]
-		var codex = m[2]
+		const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
+		const mode = m[1]
+		const codex = m[2]
 		if (mode == 'first' && codex == 'true') {
-			$('body').addClass('first')
-		} else {
+			setAllClasses('body', 'first', 'add')
 		}
 	}
-	var prof = localStorage.getItem('prof')
-	$('.my-prof').attr('src', prof)
-	var name = localStorage.getItem('name')
-	$('#now-name').text(name)
-	var user = localStorage.getItem('user')
-	$('#now-user').text(user)
-	var domain = localStorage.getItem('domain')
-	$('.now-domain').text(domain)
-	var multi = localStorage.getItem('multi')
-	if (!multi) {
-		var obj = []
-	} else {
-		var obj = JSON.parse(multi)
-	}
-	if (obj[0]) {
-		if (!obj[0].at) {
-			obj = []
-			localStorage.removeItem('multi')
-		}
-	}
-
-	console.table(obj)
-	var domains = []
-	var templete
-	$('#acct-list').html('')
-	Object.keys(obj).forEach(function(key) {
-		var acct = obj[key]
-		var list = key * 1 + 1
-		if (acct.background != 'def' && acct.text != 'def') {
-			var style = 'style="background-color:#' + acct.background + '; color:' + acct.text + ';"'
-		} else {
-			var style = ''
-		}
-		if (acct.name) {
-			var name = acct.name
-		} else {
-			var name = acct.user
-		}
+	const multi = localStorage.getItem('multi')
+	if (!multi) return false
+	const obj = JSON.parse(multi)
+	let domains = []
+	let template = ''
+	document.querySelector('#acct-list').innerHTML = ''
+	for (let i = 0; i < obj.length; i++) {
+		const acct = obj[i]
+		const list = (parseInt(i) + 1).toString()
+		let style = ''
+		if (acct.background != 'def' && acct.text != 'def') style = `style="background-color:#${acct.background}; color:${acct.text};"`
+		let name = acct.user
+		if (acct.name) name = acct.name
 		domains.push(acct.domain)
-		templete = `
+		template = template + `
 		<div id="acct_${key}" class="card" ${style}>
 			<div class="card-content ">
 				<span class="lts">${list}.</span><img src="${acct.prof}" width="40" height="40" />
@@ -67,70 +41,61 @@ function load() {
 			</div>
 		</div>
 		`
-		$('#acct-list').append(templete)
-		colorpicker(key)
-	})
+		colorpicker(i)
+	}
+	document.querySelector('#acct-list').innerHTML = template
+	//lodash dependent
 	domains = _.uniq(domains)
-	$('#domain-list').html('')
-	Object.keys(domains).forEach(function(key2) {
-		var domain = domains[key2]
-		if (localStorage.getItem('letters_' + key2)) {
-			var maxChars = localStorage.getItem('letters_' + key2)
-		} else {
-			var maxChars = 500
-		}
-		var templete = `
-	<li class="collection-item transparent">
-		<div>
-			<p class="title">${domain}</p>
-			${lang.lang_manager_maxChars}　<input style="width: 100px" value="${maxChars}" id="maxChars${key2}">
-			<button class="btn-flat waves-effect" onclick="maxChars('${domain}', '${key2}')">
-				<i class="material-icons">send</i>
-			</button>
-			<button class="btn-flat waves-effect secondary-content" onclick="data('${domain}', '${key2}')">
-				<i class="material-icons left">info</i>${lang.lang_manager_info}
-			</button>
-		</div></li>
+	document.querySelector('#domain-list').innerHTML = ''
+	const keymap = Object.keys(domains)
+	let templateDomainList = ''
+	for(let j = 0; j < domains.length; j++) {
+		const key = keymap[j]
+		const domain = domains[key]
+		let maxChars = 500
+		const thisLtrs = localStorage.getItem(`${domain}_letters`)
+		if(thisLtrs)  maxChars = thisLtrs
+		templateDomainList = templateDomainList + `
+		<li class="collection-item transparent">
+			<div>
+				<p class="title">${domain}</p>
+				${lang.lang_manager_maxChars}　<input style="width: 100px" value="${maxChars}" id="maxChars${key2}">
+				<button class="btn-flat waves-effect" onclick="maxChars('${domain}', '${key2}')">
+					<i class="material-icons">send</i>
+				</button>
+				<button class="btn-flat waves-effect secondary-content" onclick="data('${domain}', '${key2}')">
+					<i class="material-icons left">info</i>${lang.lang_manager_info}
+				</button>
+			</div>
+		</li>
 		`
-		$('#domain-list').append(templete)
-	})
+	}
+	document.querySelector('#domain-list').innnerHTML = templateDomainList
 	multisel()
-	var acctN = localStorage.getItem('acct')
+	let acctN = localStorage.getItem('acct')
 	if (!acctN) {
 		localStorage.setItem('acct', 0)
-		var acctN = 0
+		acctN = 0
 	}
-	//全部チェックアリでいいと思うの
-	$('#linux').prop('checked', true)
 }
 //最初に読む
 load()
 support()
 function maxChars(domain, uid) {
-	var value = $('#maxChars' + uid).val()
-	if(value*1 < 1 || !Number.isInteger(value*1)) {
+	const value = document.querySelector(`#maxChars${uid}`).value
+	if (parseInt(value) < 1 || !Number.isInteger(parseInt(value))) {
 		Swal.fire({
 			type: 'error',
 			title: 'Error'
 		})
 		return false
 	}
-	var multi = localStorage.getItem('multi')
-	if (!multi) {
-		var obj = []
-	} else {
-		var obj = JSON.parse(multi)
+	const multi = localStorage.getItem('multi')
+	if(!multi) return false
+	const obj = JSON.parse(multi)
+	for(let k = 0; k < obj.length; k++) {
+		if (obj[k].domain == domain) localStorage.setItem(`${domain}_letters`, value)
 	}
-	if (obj[0]) {
-		if (!obj[0].at) {
-			obj = []
-			localStorage.removeItem('multi')
-		}
-	}
-	Object.keys(obj).forEach(function(key) {
-		if(obj[key].domain == domain) localStorage.setItem('letters_' + key, value)
-	})
-	console.log('#maxChars' + uid, value)
 	load()
 }
 //instances.social/instances API
@@ -208,7 +173,7 @@ function multiDel(target) {
 		cancelButtonText: lang.lang_no
 	}).then(result => {
 		if (result.value) {
-			Object.keys(obj).forEach(function(key) {
+			Object.keys(obj).forEach(function (key) {
 				var nk = key - 1
 				//公開範囲(差分のみ)
 				if (key >= target) {
@@ -243,7 +208,7 @@ function multiDel(target) {
 			var col = localStorage.getItem('column')
 			var oldcols = JSON.parse(col)
 			var newcols = []
-			Object.keys(oldcols).forEach(function(key) {
+			Object.keys(oldcols).forEach(function (key) {
 				var nk = key - 1
 				var oldcol = oldcols[key]
 				if (target < oldcol.domain) {
@@ -253,19 +218,19 @@ function multiDel(target) {
 				}
 				var type = oldcol.type
 				var data = null
-				if(oldcol.data) {
+				if (oldcol.data) {
 					data = oldcol.data
 				}
 				var background = null
-				if(oldcol.background) {
+				if (oldcol.background) {
 					background = oldcol.background
 				}
 				var text = null
-				if(oldcol.text) {
+				if (oldcol.text) {
 					text = oldcol.text
 				}
 				var left_fold = false
-				if(oldcol.left_fold) {
+				if (oldcol.left_fold) {
 					left_fold = true
 				}
 				//消した垢のコラムじゃないときコピー
@@ -303,7 +268,7 @@ function multiDel2(target) {
 			obj.splice(target, 1)
 			var json = JSON.stringify(obj)
 			localStorage.setItem('multi', json)
-			Object.keys(obj).forEach(function(key) {
+			Object.keys(obj).forEach(function (key) {
 				if (key >= target) {
 					var oldvis = localStorage.getItem('vis-memory-' + key)
 					if (oldvis) {
@@ -331,7 +296,7 @@ function multiDel2(target) {
 			} else {
 				var cobj = JSON.parse(col)
 			}
-			Object.keys(cobj).forEach(function(key) {
+			Object.keys(cobj).forEach(function (key) {
 				var column = cobj[key]
 				if (column.domain > target) {
 					var nk = key - 1
@@ -351,7 +316,7 @@ function multiDel2(target) {
 
 //サポートインスタンス
 function support() {
-	Object.keys(idata).forEach(function(key) {
+	Object.keys(idata).forEach(function (key) {
 		var instance = idata[key]
 		if (instance == 'instance') {
 			templete =
@@ -399,7 +364,7 @@ function login(url) {
 			website: 'https://thedesk.top'
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -437,20 +402,20 @@ function versionChecker(url) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var version = json.version
 			if (version) {
 				var reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u)
@@ -476,25 +441,25 @@ function versionCompat(prefix, ver, title, real) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var complete = false
 			var ct = 0
 			var jl = 0
 			var jl2 = 0
-			Object.keys(json).forEach(function(key) {
+			Object.keys(json).forEach(function (key) {
 				var data = json[key]
 				if (data) {
 					jl++
@@ -581,7 +546,7 @@ function misskeyLogin(url) {
 			]
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -605,7 +570,7 @@ function misskeyAuth(url, mkc) {
 			appSecret: mkc
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -657,7 +622,7 @@ function code(code) {
 				appSecret: localStorage.getItem('mkc')
 			})
 		)
-		httpreq.onreadystatechange = function() {
+		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
 				if (this.status !== 200) {
@@ -716,7 +681,7 @@ function code(code) {
 				code: code
 			})
 		)
-		httpreq.onreadystatechange = function() {
+		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
 				if (this.status !== 200) {
@@ -741,20 +706,20 @@ function getdata(domain, at) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
 				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
@@ -862,25 +827,25 @@ function refresh(target) {
 			Authorization: 'Bearer ' + obj[target].at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
 				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
@@ -934,7 +899,7 @@ function misskeyRefresh(obj, target, url) {
 			i: obj[target].at
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -983,7 +948,7 @@ function multisel() {
 		$('#src-acct-sel').html('<option value="tootsearch">Tootsearch</option>')
 		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	} else {
-		Object.keys(obj).forEach(function(key) {
+		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
 			var list = key * 1 + 1
 			if (key == last) {
@@ -1073,10 +1038,10 @@ var oldSuggest
 var suggest
 input.addEventListener(
 	'focus',
-	function() {
+	function () {
 		$('#ins-suggest').html('')
 		window.clearInterval(timer)
-		timer = window.setInterval(function() {
+		timer = window.setInterval(function () {
 			var new_val = input.value
 			if (prev_val != new_val) {
 				if (new_val.length > 3) {
@@ -1089,23 +1054,23 @@ input.addEventListener(
 								'Bearer tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M'
 						}
 					})
-						.then(function(response) {
+						.then(function (response) {
 							if (!response.ok) {
-								response.text().then(function(text) {
+								response.text().then(function (text) {
 									setLog(response.url, response.status, text)
 								})
 							}
 							return response.json()
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							todo(error)
 							setLog(start, 'JSON', error)
 							console.error(error)
 						})
-						.then(function(json) {
+						.then(function (json) {
 							if (!json.error) {
 								var urls = 'Suggest:'
-								Object.keys(json.instances).forEach(function(key) {
+								Object.keys(json.instances).forEach(function (key) {
 									var url = json.instances[key]
 									urls =
 										urls +
@@ -1127,7 +1092,7 @@ input.addEventListener(
 
 input.addEventListener(
 	'blur',
-	function() {
+	function () {
 		window.clearInterval(timer)
 	},
 	false

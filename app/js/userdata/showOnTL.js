@@ -33,20 +33,20 @@ function udgEx(user, acct_id) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text);
 				});
 			}
 			return response.json();
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error);
 			setLog(start, "JSON", error);
 			console.error(error);
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.accounts[0]) {
 				var id = json.accounts[0].id;
 				udg(id, acct_id);
@@ -76,20 +76,20 @@ function udg(user, acct_id) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text);
 				});
 			}
 			return response.json();
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error);
 			setLog(start, "JSON", error);
 			console.error(error);
 		})
-		.then(function(json) {
+		.then(function (json) {
 			//一つ前のユーザーデータ
 			if (!localStorage.getItem("history")) {
 				$("#his-history-btn").prop("disabled", true);
@@ -129,7 +129,7 @@ function udg(user, acct_id) {
 			}
 			//絵文字があれば
 			if (actemojick) {
-				Object.keys(json.emojis).forEach(function(key5) {
+				Object.keys(json.emojis).forEach(function (key5) {
 					var emoji = json.emojis[key5];
 					var shortcode = emoji.shortcode;
 					var emoji_url = '<img src="' + emoji.url + '" class="emoji-img" data-emoji="' + shortcode + '" draggable="false">';
@@ -239,7 +239,7 @@ function udg(user, acct_id) {
 				$(".only-his-data").show();
 			}
 			todc();
-			if(json.locked) {
+			if (json.locked) {
 				$('#his-data').addClass('locked')
 			} else {
 				$('#his-data').removeClass('locked')
@@ -271,20 +271,20 @@ function misskeyUdg(user, acct_id) {
 			userId: user
 		})
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text);
 				});
 			}
 			return response.json();
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error);
 			setLog(start, "JSON", error);
 			console.error(error);
 		})
-		.then(function(json) {
+		.then(function (json) {
 			//一つ前のユーザーデータ
 			if (!localStorage.getItem("history")) {
 				$("#his-history-btn").prop("disabled", true);
@@ -402,22 +402,22 @@ function relations(user, acct_id) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text);
 				});
 			}
 			return response.json();
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error);
 			setLog(start, "JSON", error);
 			console.error(error);
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var json = json[0];
-			if(json.requested) {
+			if (json.requested) {
 				//フォロリク中
 				$('#his-data').addClass('following')
 				$("#his-follow-btn-text").text(lang.lang_status_requesting)
@@ -482,7 +482,7 @@ function profbrws() {
 function setMain() {
 	var acct_id = $("#his-data").attr("use-acct");
 	localStorage.setItem("main", acct_id);
-	multiSelector(true);
+	multiSelector();
 	M.toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 });
 }
 //オールリセット
@@ -551,7 +551,7 @@ function reset() {
 	$('#his-data').removeClass('locked')
 	$('#his-data').removeClass('requesting')
 }
-$("#my-data-nav .anc-link").on("click", function() {
+$("#my-data-nav .anc-link").on("click", function () {
 	var target = $(this).attr("go");
 	if (target) {
 		$("#my-data-nav .anc-link").removeClass("active-back");

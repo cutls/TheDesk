@@ -38,10 +38,10 @@ async function ck() {
 			const acct = obj[key]
 			if (acct.domain) {
 				let refreshed = await refresh(key, true)
-				if(refreshed) req = true
+				if (refreshed) req = true
 			}
 		}
-		if(req) {
+		if (req) {
 			Swal.fire({
 				title: 'Reload required',
 				text: lang.lang_login_changedData,
@@ -50,18 +50,18 @@ async function ck() {
 				confirmButtonText: lang.lang_no,
 				cancelButtonText: lang.lang_yesno
 			}).then(result => {
-				if(result) location.reload()
+				if (result) location.reload()
 			})
 		}
 		if (obj[0].domain) {
 			showElm('#tl')
 			ticker()
-			multiSelector(false)
+			parseColumn()
 			verck(ver)
 			showElm('.stw')
-			const tips = localStorage.getItem('tips')
-			if (tips) {
-				tips(tips)
+			const tipsType = localStorage.getItem('tips')
+			if (tipsType) {
+				tips(tipsType)
 			}
 			document.querySelector('#something-wrong img').setAttribute('src', '../../img/thinking.svg')
 		}
@@ -78,7 +78,7 @@ async function refresh(target, loadskip) {
 	}
 	const start = `https://${domain}/api/v1/accounts/verify_credentials`
 	let json
-	try{
+	try {
 		json = await getApi(start, at)
 	} catch {
 		return false
@@ -88,7 +88,7 @@ async function refresh(target, loadskip) {
 		M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
 		return
 	}
-	if(!json) return false
+	if (!json) return false
 	let avatar = json['avatar']
 	//missingがmissingなやつ
 	if (avatar == '/avatars/original/missing.png' || !avatar) {
@@ -131,7 +131,7 @@ async function refresh(target, loadskip) {
 }
 //MarkdownやBBCodeの対応、文字数制限をチェック
 //絶対ストリーミングを閉じさせないマン
-function ckdb(acct_id) {
+async function ckdb(acct_id) {
 	const domain = localStorage.getItem(`domain_${acct_id}`)
 	if (domain == 'kirishima.cloud') {
 		localStorage.setItem('kirishima', true)
@@ -148,34 +148,39 @@ function ckdb(acct_id) {
 		var json = idata
 		if (json[quoteMarker] == 'enabled') {
 			localStorage.setItem('quoters', true)
-			localStorage.setItem(`quote_${acct_id}`, true)
+			localStorage.setItem(quoteMarker, true)
 		}
 	}
 	if (!isMisskey(domain)) {
 		const start = `https://${domain}/api/v1/instance`
-		const json = getApi(start, null)
+		let json
+		try {
+			json = await getApi(start, null)
+		} catch {
+			return null
+		}
 		if (!json || json.error) {
 			return
 		}
 		const mtc = json['max_toot_chars']
 		if (mtc) {
-			localStorage.setItem(`letters_${acct_id}`, mtc)
+			localStorage.setItem(letters, mtc)
 		}
 		if (json['feature_quote']) {
-			localStorage.setItem(`quote_${acct_id}`, true)
+			localStorage.setItem(quoteMarker, true)
 		}
 		const str = json['urls']['streaming_api']
 		if (str) {
-			localStorage.setItem(`streaming_${acct_id}`, str)
+			localStorage.setItem(`streaming_${domain}`, str)
 		}
 	}
 }
 
 //アカウントを選択…を実装
-function multiSelector(parseC) {
-	if (!acctList) return false
-	const obj = acctList
-	let template
+function multiSelector() {
+	let obj = acctList
+	//if (!obj) obj = JSON.parse(localStorage.getItem('multi'))
+	let template = ''
 	//StringなのはlocalStorageがStringしか返さないから
 	let lastUsed = '0'
 	if (localStorage.getItem('mainuse') == 'main') {
@@ -195,7 +200,7 @@ function multiSelector(parseC) {
 	} else {
 		for (let i = 0; i < obj.length; i++) {
 			const acct = obj[i]
-			const strKey = i?.toString()
+			const strKey = i.toString()
 			if (strKey == lastUsed) {
 				sel = 'selected'
 				const domain = acct.domain
@@ -205,7 +210,7 @@ function multiSelector(parseC) {
 					textarea.setAttribute('data-length', letters)
 				} else {
 					//手動でアカマネで変えれちゃうから
-					const maxLetters = localStorage.getItem('letters_' + strKey)
+					const maxLetters = localStorage.getItem(`${domain}_letters`)
 					if (maxLetters > 0) {
 						textarea.setAttribute('data-length', maxLetters)
 					} else {
@@ -234,36 +239,37 @@ function multiSelector(parseC) {
 				if (domain == 'imastodon.net') {
 					trendTag()
 				} else {
-					if(document.querySelector('#trendtag')) this.innerHTML = ''
+					if (document.querySelector('#trendtag')) document.querySelector('#trendtag').innerHTML = ''
 				}
 			} else {
 				sel = ''
 			}
-			template = `
-			<option value="${strKey}" data-icon="${acct.prof}" class="left circle" ${sel}>
-				@${acct.user} ${acct.domain}
+			template = template + `
+			<option value="${strKey}" data-icon="${acct.prof}" class="left circle" ${sel}>@${acct.user}@${acct.domain}
 			</option>
 			`
-			appendPrepend('.acct-sel', template, 'append')
 		}
-		appendPrepend('#src-acct-sel', '<option value="tootsearch">Tootsearch</option>', 'append')
-		appendPrepend('#add-acct-sel', `
+		const forSrc = template + '<option value="tootsearch">Tootsearch</option>'
+		const forAdd = template + `
 			<option value="noauth">${lang.lang_login_noauth}</option>
 			<option value="webview">Twitter</option>
-		`, 'append')
-		appendPrepend('#dir-acct-sel', `<option value="noauth">${lang.lang_login_noauth}</option>`, 'append')
+		`
+		const forDir = template + `<option value="noauth">${lang.lang_login_noauth}</option>`
+		document.querySelector('#post-acct-sel').innerHTML = template
+		document.querySelector('#list-acct-sel').innerHTML = template
+		document.querySelector('#filter-acct-sel').innerHTML = template
+		document.querySelector('#src-acct-sel').innerHTML = forSrc
+		document.querySelector('#add-acct-sel').innerHTML = forAdd
+		document.querySelector('#dir-acct-sel').innerHTML = forDir
 	}
-	const elems = document.querySelectorAll('select');
-    M.FormSelect.init(elems, null);
-	if (!parseC) {
-		parseColumn(null, true)
-	}
+	const elems = document.querySelectorAll('select')
+	M.FormSelect.init(elems, null)
 }
 //インスタンスティッカー
 async function ticker() {
 	const start = 'https://toot-app.thedesk.top/toot/index.php'
 	const json = await getApi(start, null)
-	if(json) localStorage.setItem('ticker', JSON.stringify(json))
+	if (json) localStorage.setItem('ticker', JSON.stringify(json))
 }
 function isMisskey(domain) {
 	return localStorage.getItem(`mode_${domain}`) == 'misskey'

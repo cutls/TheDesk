@@ -32,7 +32,6 @@ function mini() {
 function show() {
 	$('#post-box').addClass('appear')
 	$('#textarea').focus()
-	console.log('show' + localStorage.getItem('postbox-left'))
 	var left = localStorage.getItem('postbox-left')
 	if (left > $('body').width() - $('#post-box').width()) {
 		left = $('body').width() - $('#post-box').width()
@@ -55,10 +54,12 @@ function show() {
 	}
 	$('#post-box').fadeIn()
 	$('#textarea').characterCounter()
+	
 	mdCheck()
 }
 
 $(function () {
+	
 	$('#post-box').draggable({
 		handle: '#post-bar',
 		stop: function () {

@@ -2,11 +2,12 @@
 //アカウント変えた時にBBとかMDとか
 function mdCheck() {
 	var acct_id = $('#post-acct-sel').val()
-	var profimg = localStorage.getItem('prof_' + acct_id)
+	/*var profimg = localStorage.getItem('prof_' + acct_id)
 	if (!profimg) {
 		profimg = '../../img/missing.svg'
 	}
 	$('#acct-sel-prof').attr('src', profimg)
+	*/
 	if (localStorage.getItem('post_' + acct_id)) {
 		$('#toot-post-btn').text(
 			localStorage.getItem('post_' + acct_id) +
@@ -50,7 +51,7 @@ function mdCheck() {
 	if (idata[domain + '_letters']) {
 		$('#textarea').attr('data-length', idata[domain + '_letters'])
 	} else {
-		var maxletters = localStorage.getItem('letters_' + acct_id)
+		var maxletters = localStorage.getItem(domain + 'letters_')
 		if (maxletters > 0) {
 			$('#textarea').attr('data-length', maxletters)
 		} else {

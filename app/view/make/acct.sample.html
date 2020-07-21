@@ -69,7 +69,7 @@
 						<div class="pwa">
 							@@codesetupwarn@@<br />
 							<label>
-								<input type="checkbox" class="filled-in" id="linux" />
+								<input type="checkbox" class="filled-in checked" id="linux" checked />
 								<span>@@codesetup@@</span>
 							</label>
 							<br />
@@ -128,17 +128,17 @@
 			<div id="instance-data">
 				Some instance data by
 				<a href="https://instances.social" target="_blank">instances.social API</a><br />
-				<h5 id="ins-title"></h5>
-				Administered by:<a id="ins-admin"></a><br />
-				<span id="ins-desc"></span><br />
+				<h5 id="ins-title" class="ins-loading"></h5>
+				Administered by:<a id="ins-admin" class="ins-loading"></a><br />
+				<span id="ins-desc" class="ins-loading"></span><br />
 				<img src="../../img/loading.svg" id="ins-prof" width="200" /><br />
 				<br />
-				@@domain@@:<span id="ins-name"></span><br />
-				@@connect@@:<span id="ins-connect"></span>@@ko@@<br />
-				@@toots@@:<span id="ins-toot"></span>@@ko@@<br />
-				@@users@@:<span id="ins-user"></span>@@users@@<br />
-				@@safety@@:<span id="ins-per"></span>%<br />
-				@@ver@@:<span id="ins-ver"></span>@<span id="ins-upd"></span><br />
+				@@domain@@:<span id="ins-name" class="ins-loading"></span><br />
+				@@connect@@:<span id="ins-connect" class="ins-loading"></span>@@ko@@<br />
+				@@toots@@:<span id="ins-toot" class="ins-loading"></span>@@ko@@<br />
+				@@users@@:<span id="ins-user" class="ins-loading"></span>@@users@@<br />
+				@@safety@@:<span id="ins-per" class="ins-loading"></span>%<br />
+				@@ver@@:<span id="ins-ver" class="ins-loading"></span>@<span id="ins-upd" class="ins-loading"></span><br />
 			</div>
 		</div>
 		<script type="text/javascript" src="../../js/ui/theme.js"></script>

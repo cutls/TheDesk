@@ -42,7 +42,6 @@ function parseColumn(target, dontclose) {
 	var multi = localStorage.getItem('multi')
 	if (multi) {
 		var obj = JSON.parse(multi)
-
 		var templete
 		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
@@ -102,6 +101,7 @@ function parseColumn(target, dontclose) {
 			$('.box, .boxIn').resizable('destroy')
 		}
 	}
+	console.log(obj)
 	var basekey = 0
 	for (var key = 0; key < obj.length; key++) {
 		var next = key + 1
@@ -508,6 +508,8 @@ function parseColumn(target, dontclose) {
 			}
 		}
 	}
+	console.log('multiSelector')
+	multiSelector()
 	$('.box, .boxIn').resizable({
 		minHeight: 50,
 		minWidth: 50,

@@ -314,7 +314,7 @@ function appendPrepend(query, elm, action) {
 	const allTarget = document.querySelectorAll(query)
 	for (let i = 0; i < allTarget.length; i++) {
 		const target = allTarget[i]
-		if (action == 'prepend') target.prependChild(document.createTextNode(elm))
+		if (action == 'prepend') target.insertBefore(elm, target.firstChild)
 		if (action == 'append') target.appendChild(document.createTextNode(elm))
 	}
 }
