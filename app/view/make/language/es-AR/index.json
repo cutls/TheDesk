@@ -130,7 +130,7 @@
     "notf": "Notificaciones",
     "bookmark": "Marcadores",
     "showThisTL": "Mostrar esta línea temporal:",
-    "webviewWarn": "TweetDeck con TJDeck personalizado (<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Código</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>). Los atajos de teclado te irritarán. Cuando lo sientas, revisá \"Preferir WebView\" en la parte superior de la columna.",
+    "webviewWarn": "TweetDeck con TJDeck personalizado (<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Código</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>). Los atajos de teclado te irritarán. Cuando lo sientas, revisá 'Preferir WebView' en la parte superior de la columna.",
     "add": "Agregar",
     "search": "Buscar",
     "sortSet": "Ordenar",
@@ -184,5 +184,5 @@
     "acctManDesc": "Agregá más cuentas y administralas.",
     "settingDesc": "Muchas configuraciones. ¡No vas a poder con todas!",
     "nanoDescPlus": "Miniventana (experimental)",
-    "menuDesc": "Toda la configuración diaria de TheDesk y Mastodon, como <b>agergar y ordenar columnas</b> y <b>revisión de listas y filtros</b>."
+    "menuDesc": "Toda la configuración diaria de TheDesk y Mastodon, como <b>agregar y ordenar columnas</b> y <b>revisión de listas y filtros</b>."
 }
