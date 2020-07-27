@@ -1,8 +1,8 @@
 {
     "draghere": "Arrastrá y soltá acá para subir",
     "close": "Cerrar",
-    "webSrc": "Search on Web",
-    "tsSrc": "Search on tootsearch",
+    "webSrc": "Buscar en la Web",
+    "tsSrc": "Buscar en tootsearch",
     "showSelectProf": "Mostrar perfil de la cuenta seleccionada",
     "closethisbox": "Cerrar esta caja",
     "toot": "Tootear",
@@ -75,7 +75,7 @@
     "toots": "Toots",
     "follow": "Seguir",
     "follower": "Seguidor",
-    "utlColumn": "Show as a column",
+    "utlColumn": "Mostrar como columna",
     "timeline": "Línea temporal",
     "operateOtherAcct": "Cuenta cruzada",
     "list": "Enlistar",
@@ -139,7 +139,7 @@
     "filterWord": "Palabras filtradas",
     "degree": "Filtrar contextos",
     "conver": "Conversaciones",
-    "prof": "Profiles",
+    "prof": "Perfiles",
     "option": "Configuración",
     "matchWord": "Palabra completa",
     "warnMatchWord": "Útil para lenguas romances",
@@ -178,11 +178,11 @@
     "active": "Recientemente activo",
     "newcomer": "Recién llegados",
     "local_only": "Sólo local",
-    "menu": "Menu",
+    "menu": "Menú",
     "demoBottomBtns": "Guía de bienvenida",
     "lookAtBottom": "Mirá en la parte inferior de esta ventana. Acá tenés algunas sugerencias.",
     "acctManDesc": "Agregá más cuentas y administralas.",
     "settingDesc": "Muchas configuraciones. ¡No vas a poder con todas!",
     "nanoDescPlus": "Miniventana (experimental)",
-    "menuDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
+    "menuDesc": "Toda la configuración diaria de TheDesk y Mastodon, como <b>agergar y ordenar columnas</b> y <b>revisión de listas y filtros</b>."
 }
