@@ -2,7 +2,7 @@
     "list": "Lista de cuentas",
     "back": "Volver",
     "add": "Agregar una cuenta",
-    "addAcct": "Fill the instance domain (like mastodon.social)",
+    "addAcct": "Ingresa el dominio de la instancia (ej. mastodon.social)",
     "codesetupwarn": "No seleccionar para saltar el pegado de código (iniciá sesión de Mastodon en Windows o macOS) (Recomendado: pcheck)",
     "codesetup": "Configuración de código",
     "mainacct": "Establecer una cuenta",
@@ -20,6 +20,6 @@
     "thisismisskey": "Iniciar sesión con Misskey",
     "misskeylogin": "Leé <a href=\"https://docs.thedesk.top/\">la documentación (en japonés)</a> para usar Misskey.",
     "nodata": "Sin datos",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)",
-    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
+    "accessTokenSetup": "Usar token de acceso para iniciar sesión (haga clic después de completar no el código sino el token de acceso en la casilla: Avanzado)",
+    "haveExported": "Teniendo el archivo exportado de TheDesk, haga clic aquí para ir a la página de opciones"
 }
