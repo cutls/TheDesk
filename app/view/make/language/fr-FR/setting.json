@@ -101,7 +101,7 @@
   "or": "ou",
   "imgheight": "Height of images",
   "imgheightwarn": "Option:Set \"full\" to uncrop.",
-  "ticker": "Enable #InstanceTicker",
+  "ticker": "Enable OpenSticker",
   "tickerwarn": "Show colorful stickers about tooters' server. <a href=\"https://cdn.weep.me/mastodon/\">About #InstanceTicker</a> Copyright 2018 weepjp, kyori19.",
   "animation": "Animation of timelines",
   "markers": "Markers(mark as read) on HTL and notifications",
