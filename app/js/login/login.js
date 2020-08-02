@@ -590,7 +590,7 @@ function enc(ver) {
 }
 //インスタンスティッカー
 function ticker() {
-	var start = 'https://toot-app.thedesk.top/toot/index.php'
+	var start = 'https://s.0px.io/json'
 	fetch(start, {
 		method: 'GET',
 		cors: true,
@@ -611,7 +611,8 @@ function ticker() {
 		})
 		.then(function(json) {
 			if (json) {
-				localStorage.setItem('ticker', JSON.stringify(json))
+				localStorage.removeItem('ticker')
+				localStorage.setItem('sticker', JSON.stringify(json))
 			}
 		})
 }

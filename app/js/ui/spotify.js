@@ -1,30 +1,44 @@
 function spotifyConnect() {
-	var auth = 'https://accounts.spotify.com/authorize?client_id=0f18e54abe0b4aedb4591e353d3aff69&redirect_uri=https://thedesk.top/spotify-connect&response_type=code&scope=user-read-currently-playing'
-	var platform = localStorage.getItem('platform')
-	if (platform == 'win32') {
-		postMessage(['openUrl', auth], '*')
-		postMessage(['sendSinmpleIpc', 'quit'], '*')
-	} else {
-		auth = auth + '&state=code'
-		$('#spotify-code-show').removeClass('hide')
-		postMessage(['openUrl', auth], '*')
-	}
+	var auth = 'https://spotify.thedesk.top/connect'
+	$('#spotify-code-show').removeClass('hide')
+	postMessage(['openUrl', auth], '*')
 }
 function spotifyAuth() {
 	var code = $('#spotify-code').val()
-	localStorage.setItem('spotify', 'code')
-	localStorage.setItem('spotify-refresh', code)
+	localStorage.setItem('spotify-token', code)
 	$('#spotify-code-show').addClass('hide')
 	$('#spotify-enable').addClass('disabled')
 	$('#spotify-disable').removeClass('disabled')
 }
 function spotifyDisconnect() {
-	localStorage.removeItem('spotify')
-	localStorage.removeItem('spotify-refresh')
-	checkSpotify()
+	var start = 'https://spotify.thedesk.top/disconnect?code=' + localStorage.getItem('spotify-token')
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+		},
+	})
+		.then(function (response) {
+			if (!response.ok) {
+				response.text().then(function (text) {
+					setLog(response.url, response.status, text)
+				})
+			}
+			return response.json()
+		})
+		.catch(function (error) {
+			todo(error)
+			setLog(start, 'JSON', error)
+			console.error(error)
+		})
+		.then(function (json) {
+			if(!json.success) alert('error')
+			localStorage.removeItem('spotify-token')
+			checkSpotify()
+		})
 }
 function checkSpotify() {
-	if (localStorage.getItem('spotify')) {
+	if (localStorage.getItem('spotify-token')) {
 		$('#spotify-enable').addClass('disabled')
 		$('#spotify-disable').removeClass('disabled')
 	} else {
@@ -71,8 +85,8 @@ function aMusicFlagSave() {
 }
 function nowplaying(mode) {
 	if (mode == 'spotify') {
-		var start = 'https://thedesk.top/now-playing?at=' + localStorage.getItem('spotify') + '&rt=' + localStorage.getItem('spotify-refresh')
-		var at = localStorage.getItem('spotify')
+		var start = 'https://spotify.thedesk.top/current-playing?code=' + localStorage.getItem('spotify-token')
+		var at = localStorage.getItem('spotify-token')
 		if (at) {
 			fetch(start, {
 				method: 'GET',
@@ -93,7 +107,10 @@ function nowplaying(mode) {
 					setLog(start, 'JSON', error)
 					console.error(error)
 				})
-				.then(function (json) {
+				.then(function (jsonRaw) {
+					var code = jsonRaw.token
+					localStorage.setItem('spotify-token', code)
+					var json = jsonRaw.data
 					console.table(json)
 					if (json.length < 1) {
 						return false
@@ -169,9 +186,9 @@ function nowplaying(mode) {
 						return false
 					}
 					var item = json.recenttracks.track[0]
-					if(!item['@attr']) return false
+					if (!item['@attr']) return false
 					var img = item.image[3]['#text']
-					var isImg = item.streamable*1
+					var isImg = item.streamable * 1
 					var flag = localStorage.getItem('artwork')
 					if (flag && isImg && img) {
 						postMessage(['bmpImage', [img, 0]], '*')
@@ -187,7 +204,7 @@ function nowplaying(mode) {
 					var regExp = new RegExp('{artist}', 'g')
 					content = content.replace(regExp, item.artist['#text'])
 					var regExp = new RegExp('{url}', 'g')
-					content = content.replace(regExp,'')
+					content = content.replace(regExp, '')
 					var regExp = new RegExp('{composer}', 'g')
 					content = content.replace(regExp, '')
 					var regExp = new RegExp('{hz}', 'g')

@@ -194,7 +194,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 	}
 	var local = []
 	var times = []
-	Object.keys(obj).forEach(function(key) {
+	Object.keys(obj).forEach(function (key) {
 		var domain = localStorage.getItem('domain_' + acct_id)
 		var toot = obj[key]
 		if (type == 'dm') {
@@ -214,7 +214,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 		}
 		//絵文字があれば
 		if (actemojick) {
-			Object.keys(toot.account.emojis).forEach(function(key5) {
+			Object.keys(toot.account.emojis).forEach(function (key5) {
 				var emoji = toot.account.emojis[key5]
 				var shortcode = emoji.shortcode
 				if (gif == 'yes') {
@@ -273,7 +273,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				</i><span class="voice">${lang.lang_parse_notffilter}</span></span>
 				<span class="cbadge cbadge-hover" title="${date(toot.created_at, 'absolute')}(${
 				lang.lang_parse_notftime
-			})" aria-hidden="true"><i class="far fa-clock"></i>
+				})" aria-hidden="true"><i class="far fa-clock"></i>
 					${date(toot.created_at, datetype)}
 				</span>
 				<span class="voice">${date(toot.created_at, 'absolute')}(${lang.lang_parse_notftime})</span>
@@ -369,7 +369,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			//絵文字があれば
 			if (actemojick) {
-				Object.keys(toot.account.emojis).forEach(function(key5) {
+				Object.keys(toot.account.emojis).forEach(function (key5) {
 					var emoji = toot.account.emojis[key5]
 					var shortcode = emoji.shortcode
 					if (gif == 'yes') {
@@ -426,7 +426,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				}
 				//絵文字があれば
 				if (actemojick) {
-					Object.keys(toot.account.emojis).forEach(function(key5) {
+					Object.keys(toot.account.emojis).forEach(function (key5) {
 						var emoji = toot.account.emojis[key5]
 						var shortcode = emoji.shortcode
 						if (gif == 'yes') {
@@ -454,7 +454,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var fullname = toot.account.acct + '@' + domain
 				}
 				if (useremp) {
-					Object.keys(useremp).forEach(function(key10) {
+					Object.keys(useremp).forEach(function (key10) {
 						var user = useremp[key10]
 						if (user == fullname) {
 							boostback = 'emphasized'
@@ -494,7 +494,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				var via = escapeHTML(toot.application.name)
 				if (empCli) {
 					//強調チェック
-					Object.keys(empCli).forEach(function(key6) {
+					Object.keys(empCli).forEach(function (key6) {
 						var empCliList = empCli[key6]
 						if (empCliList == via) {
 							boostback = 'emphasized'
@@ -503,7 +503,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				}
 				if (muteCli) {
 					//ミュートチェック
-					Object.keys(muteCli).forEach(function(key7) {
+					Object.keys(muteCli).forEach(function (key7) {
 						var muteCliList = muteCli[key7]
 						if (muteCliList == via) {
 							boostback = 'hide'
@@ -597,7 +597,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			if (mediack) {
 				hasmedia = 'hasmedia'
 				var cwdt = 100 / toot.media_attachments.length
-				Object.keys(toot.media_attachments).forEach(function(key2) {
+				Object.keys(toot.media_attachments).forEach(function (key2) {
 					var media = toot.media_attachments[key2]
 					var purl = media.preview_url
 					media_ids = media_ids + media.id + ','
@@ -669,7 +669,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			if (menck) {
 				mentions = ''
 				var to_mention = []
-				Object.keys(toot.mentions).forEach(function(key3) {
+				Object.keys(toot.mentions).forEach(function (key3) {
 					var mention = toot.mentions[key3]
 					//自分は除外
 					//自インスタンスかどうかを確認し、IDの一致
@@ -704,19 +704,19 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			var tags = ''
 			//タグであれば
 			if (tagck) {
-				Object.keys(toot.tags).forEach(function(key4) {
+				Object.keys(toot.tags).forEach(function (key4) {
 					var tag = toot.tags[key4]
 					var featured = `　<a onclick="tagFeature('${tag.name}','${acct_id}')" class="pointer" title="add it to Featured tags">Feature</a>　`
 					tags =
 						tags +
 						`<span class="hide" data-tag="${tag.name}" data-regTag="${tag.name.toLowerCase()}">#${
-							tag.name
+						tag.name
 						}:
 							<a onclick="tl('tag','${tag.name}','${acct_id}','add')" class="pointer"
 							 title="${lang.lang_parse_tagTL.replace(
-									'{{tag}}',
-									'#' + tag.name
-								)}">TL</a>　<a onclick="brInsert('#${tag.name}')" 
+							'{{tag}}',
+							'#' + tag.name
+						)}">TL</a>　<a onclick="brInsert('#${tag.name}')" 
 							 class="pointer" title="${lang.lang_parse_tagtoot.replace('{{tag}}', '#' + tag.name)}">Toot</a>　
 						<a onclick="tagPin('${tag.name}')" class="pointer" title="${lang.lang_parse_tagpin.replace(
 							'{{tag}}',
@@ -812,7 +812,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			//ワードミュート
 			if (wordmuteList) {
-				Object.keys(wordmuteList).forEach(function(key8) {
+				Object.keys(wordmuteList).forEach(function (key8) {
 					var worde = wordmuteList[key8]
 					if (worde) {
 						if (worde.tag) {
@@ -829,7 +829,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			//ワード強調
 			if (wordempList) {
-				Object.keys(wordempList).forEach(function(key9) {
+				Object.keys(wordempList).forEach(function (key9) {
 					var wordList = wordempList[key9]
 					if (wordList) {
 						var wordList = wordList.tag
@@ -845,7 +845,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			//絵文字があれば
 			if (emojick) {
-				Object.keys(toot.emojis).forEach(function(key5) {
+				Object.keys(toot.emojis).forEach(function (key5) {
 					var emoji = toot.emojis[key5]
 					var shortcode = emoji.shortcode
 					if (gif == 'yes') {
@@ -871,7 +871,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			//絵文字があれば(nico)
 			if (nicoemojick) {
-				Object.keys(toot.profile_emojis).forEach(function(keynico) {
+				Object.keys(toot.profile_emojis).forEach(function (keynico) {
 					var emoji = toot.profile_emojis[keynico]
 					var shortcode = emoji.shortcode
 					var emoji_url = `<img draggable="false" src="${emoji.url}" class="emoji-img" data-emoji="${shortcode}" alt=" :${shortcode}: "
@@ -918,9 +918,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			//Ticker
 			var tickerdom = ''
 			if (ticker) {
-				var tickerdata = localStorage.getItem('ticker')
+				var tickerdata = localStorage.getItem('sticker')
 				if (tickerdata) {
-					var tickerdata = JSON.parse(tickerdata)
+					var tickerdataRaw = JSON.parse(tickerdata)
+					var tickerdata = tickerdataRaw.data
 
 					var thisdomain = toot.account.acct.split('@')
 					if (thisdomain.length > 1) {
@@ -929,14 +930,41 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					for (var i = 0; i < tickerdata.length; i++) {
 						var value = tickerdata[i]
 						if (value.domain == thisdomain) {
-							var tickerdom = `<div aria-hidden="true" style="user-select:none;cursor:default;background:linear-gradient(90deg, ${
-								value.bg
-							}, transparent 96%) !important; color:${
-								value.text
-							};width:100%; height:0.9rem; font-size:0.8rem;" class="tickers">
+							var bgColor = value.bgColor
+							var fontColor = value.fontColor
+							if (!value.bgColor || !value.fontColor) {
+								if (value.type == 'mastodon') {
+									if(!value.bgColor) bgColor = tickerdataRaw.default.mastodon.bgColor
+									if(!value.fontColor) fontColor = tickerdataRaw.default.mastodon.fontColor
+								} else if (value.type == 'pleroma') {
+									if(!value.bgColor) bgColor = tickerdataRaw.default.pleroma.bgColor
+									if(!value.fontColor) fontColor = tickerdataRaw.default.pleroma.fontColor
+								} else if (value.type == 'misskey') {
+									if(!value.bgColor) bgColor = tickerdataRaw.default.misskey.bgColor
+									if(!value.fontColor) fontColor = tickerdataRaw.default.misskey.fontColor
+								} else if (value.type == 'misskeylegacy') {
+									if(!value.bgColor) bgColor = tickerdataRaw.default.misskeylegacy.bgColor
+									if(!value.fontColor) fontColor = tickerdataRaw.default.misskeylegacy.fontColor
+								} else if (value.type == 'pixelfed') {
+									if(!value.bgColor) bgColor = tickerdataRaw.default.pixelfed.bgColor
+									if(!value.fontColor) fontColor = tickerdataRaw.default.pixelfed.fontColor
+								}
+							} else {
+								var bgColor = value.bgColor
+								var fontColor = value.fontColor
+							}
+							bgColorCSS = ''
+							for (let j = 0; j < bgColor.length; j++) {
+								const bg = bgColor[j]
+								bgColorCSS = bgColorCSS + bg + ','
+							}
+							bgColorCSS = `linear-gradient(90deg, ${bgColorCSS} transparent)`
+							var tickerdom = `<div aria-hidden="true" style="user-select:none;cursor:default;background:${bgColorCSS} !important; color:${
+								fontColor
+								};width:100%; height:0.9rem; font-size:0.8rem;" class="tickers">
 									<img draggable="false" src="${
-										value.image
-									}" style="height:100%;" onerror="this.src=\'../../img/loading.svg\'">
+								value.favicon
+								}" style="height:100%;" onerror="this.src=\'../../img/loading.svg\'">
 									<span style="position:relative; top:-0.2rem;">${escapeHTML(value.name)}</span>
 								</div>`
 							break
@@ -950,14 +978,14 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				if (!quoteUser) {
 					quoteUser = toot.quote.account.acct
 				}
-				if(!toot.quote.quote_muted) {
+				if (!toot.quote.quote_muted) {
 					poll =
-					poll +
-					`<div class="quote-renote">
+						poll +
+						`<div class="quote-renote">
 						<div class="renote-icon">
 							<a onclick="udg('${toot.quote.account.id}','${acct_id}');" user="${
 						toot.quote.account.acct
-					}" class="udg">
+						}" class="udg">
 								<img draggable="false" src="${toot.quote.account.avatar}">
 							</a>
 						</div>
@@ -969,18 +997,18 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						</div>
 						<div class="renote-details">
 							<a onclick="details('${
-								toot.quote.id
-							}','${acct_id}','${tlid}','normal')" class="waves-effect waves-dark btn-flat details" style="padding:0">
+						toot.quote.id
+						}','${acct_id}','${tlid}','normal')" class="waves-effect waves-dark btn-flat details" style="padding:0">
 								<i class="text-darken-3 material-icons">more_vert</i>
 							</a>
 						</div>
 					</div>`
 				} else {
 					poll =
-					poll +
-					`<span class="gray sml">${lang.lang_parse_hidden}</span>`
+						poll +
+						`<span class="gray sml">${lang.lang_parse_hidden}</span>`
 				}
-				
+
 			}
 			//menuは何個？
 			var menuct = 2
@@ -1069,8 +1097,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					</div>
 					<div class="action ${can_rt} ${disp['rt']} ${noauth}">
 						<a onclick="rt('${
-							toot.id
-						}','${acct_id}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
+				toot.id
+				}','${acct_id}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
 							style="padding:0" title="${lang.lang_parse_bt}">
 							<i class="fas fa-retweet ${if_rt} rt_${toot.id}"></i>
 							<span class="voice">${lang.lang_parse_bt} </span>
@@ -1181,7 +1209,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 	}
 	var templete = ''
 	var datetype = localStorage.getItem('datetype')
-	Object.keys(obj).forEach(function(key) {
+	Object.keys(obj).forEach(function (key) {
 		var toot = obj[key]
 		if (toot) {
 			if (!toot.username) {
@@ -1258,7 +1286,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				}
 				//絵文字があれば
 				if (actemojick) {
-					Object.keys(toot.emojis).forEach(function(key5) {
+					Object.keys(toot.emojis).forEach(function (key5) {
 						var emoji = toot.emojis[key5]
 						var shortcode = emoji.shortcode
 						if (gif == 'yes') {
@@ -1369,7 +1397,7 @@ function client(name) {
 					M.toast({ html: escapeHTML(name) + lang.lang_status_emphas, displayLength: 2000 })
 				} else {
 					var can
-					Object.keys(obj).forEach(function(key) {
+					Object.keys(obj).forEach(function (key) {
 						var cliT = obj[key]
 						if (cliT != name && !can) {
 							can = false
@@ -1457,7 +1485,7 @@ function pollParse(poll, acct_id, emojis) {
 		var max = 0
 	}
 
-	Object.keys(choices).forEach(function(keyc) {
+	Object.keys(choices).forEach(function (keyc) {
 		var choice = choices[keyc]
 		var voteit = ''
 		for (var i = 0; i < minechoice.length; i++) {
@@ -1492,7 +1520,7 @@ function pollParse(poll, acct_id, emojis) {
 		var choiceText = escapeHTML(choice.title)
 		if (emojis) {
 			//絵文字があれば
-			Object.keys(emojis).forEach(function(key5) {
+			Object.keys(emojis).forEach(function (key5) {
 				var emoji = emojis[key5]
 				var shortcode = emoji.shortcode
 				if (gif == 'yes') {

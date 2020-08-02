@@ -131,12 +131,8 @@ function trendTagonTip() {
 spotint = null
 function spotifytips() {
 	if (spotint) clearInterval(spotint)
-	var start =
-		'https://thedesk.top/now-playing?at=' +
-		localStorage.getItem('spotify') +
-		'&rt=' +
-		localStorage.getItem('spotify-refresh')
-	var at = localStorage.getItem('spotify')
+	var start = 'https://spotify.thedesk.top/current-playing?code=' + localStorage.getItem('spotify-token')
+	var at = localStorage.getItem('spotify-token')
 	if (at) {
 		fetch(start, {
 			method: 'GET',
@@ -157,7 +153,10 @@ function spotifytips() {
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function(jsonRaw) {
+				var code = jsonRaw.token
+				localStorage.setItem('spotify-token', code)
+				var json = jsonRaw.data
 				var ms = json.progress_ms
 				if(!ms) {
 					tips('ver')

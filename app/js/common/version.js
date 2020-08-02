@@ -4,18 +4,21 @@ function verck(ver, jp) {
 	$('body').addClass(localStorage.getItem('platform'))
 	var date = new Date()
 	var showVer = false
-	if (localStorage.getItem('ver') != ver && localStorage.getItem('winstore')) {
-		//ちょっと削除とリンク解析の都合上アレ(s)
-		//対象外のアプデ:storageが20の最初まで"Usamin (18.6.5)"
-		if (!localStorage.getItem('usamin_18_6_5_flag')) {
-			localStorage.setItem('usamin_18_6_5_flag', true)
-			var multi = localStorage.getItem('column')
-			var obj = JSON.parse(multi)
-			for (var i = 0; i < obj.length; i++) {
-				localStorage.removeItem('card_' + i)
-			}
+	//Spotify
+	if (localStorage.getItem('spotify')) {
+		localStorage.removeItem('spotify')
+		localStorage.removeItem('spotify-refresh')
+		var spDc = 'Spotify NowPlaying sysytem was changed, please re-login to Spotify'
+		if(lang.language == 'ja') {
+			spDc = 'Spotify NowPlayingの機能が変更されたため、もう一度ログインしてください'
 		}
-		//ちょっと削除とリンク解析の都合上アレ(e)
+		Swal.fire({
+			type: 'info',
+			title: spDc,
+		})
+	}
+	//Spotify(e)
+	if (localStorage.getItem('ver') != ver && localStorage.getItem('winstore')) {
 		showVer = true
 		console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
 		$(document).ready(function() {
