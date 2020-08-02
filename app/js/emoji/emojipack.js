@@ -92,7 +92,7 @@ var activity=[
     {shortcode:"man-rowing-boat",css:"95.8333% 14.5833%"},
     {shortcode:"man-biking",css:"95.8333% 39.5833%"},
     {shortcode:"man-mountain-biking",css:"95.8333% 64.5833%"}
-    ];
+    ]
 var flag=[
     {shortcode:"checkered_flag",css:"16.6667% 58.3333%"},
     {shortcode:"crossed_flags",css:"14.5833% 60.4167%"},
@@ -356,7 +356,7 @@ var flag=[
     {shortcode:"rainbow-flag",css:"83.3333% 100%"},
     {shortcode:"triangular_flag_on_post",css:"54.1667% 6.25%"},
     {shortcode:"waving_black_flag",css:"20.8333% 29.1667%"},
-    {shortcode:"waving_white_flag",css:"20.8333% 27.0833%"}];
+    {shortcode:"waving_white_flag",css:"20.8333% 27.0833%"}]
 var food=[
     {shortcode:"green_apple",css:"12.5% 25%"},
     {shortcode:"apple",css:"12.5% 22.9167%"},
@@ -444,7 +444,7 @@ var food=[
     {shortcode:"spoon",css:"62.5% 14.5833%"},
     {shortcode:"fork_and_knife",css:"14.5833% 0%"},
     {shortcode:"knife_fork_plate",css:"14.5833% 18.75%"}
-    ];
+    ]
 var nature=[
     {shortcode:"dog",css:"22.9167% 62.5%"},
     {shortcode:"cat",css:"22.9167% 52.0833%"},
@@ -605,7 +605,7 @@ var nature=[
     {shortcode:"droplet",css:"35.4167% 39.5833%"},
     {shortcode:"sweat_drops",css:"35.4167% 37.5%"},
     {shortcode:"umbrella_with_rain_drops",css:"0% 100%"}
-    ];
+    ]
 var object=[
     {shortcode:"watch",css:"0% 29.1667%"},
     {shortcode:"iphone",css:"39.5833% 0%"},
@@ -780,7 +780,7 @@ var object=[
     {shortcode:"closed_lock_with_key",css:"39.5833% 62.5%"},
     {shortcode:"lock",css:"39.5833% 66.6667%"},
     {shortcode:"unlock",css:"39.5833% 68.75%"}
-    ];
+    ]
 var people=[
     {shortcode:"grinning",css:"45.8333% 68.75%"},
     {shortcode:"smiley",css:"45.8333% 75%"},
@@ -1096,7 +1096,7 @@ var people=[
     {shortcode:"woman-raising-hand",css:"93.75% 29.1667%"},
     {shortcode:"woman-frowning",css:"93.75% 54.1667%"},
     {shortcode:"woman-pouting",css:"93.75% 79.1667%"}
-    ];
+    ]
 var place=[
     {shortcode:"car",css:"52.0833% 60.4167%"},
     {shortcode:"taxi",css:"52.0833% 56.25%"},
@@ -1217,7 +1217,7 @@ var place=[
     {shortcode:"milky_way",css:"8.33333% 93.75%"},
     {shortcode:"bridge_at_night",css:"8.33333% 87.5%"},
     {shortcode:"foggy",css:"8.33333% 70.8333%"}
-    ];
+    ]
 var symbol=[
     {shortcode:"heart",css:"6.25% 62.5%"},
     {shortcode:"yellow_heart",css:"35.4167% 14.5833%"},
@@ -1492,7 +1492,7 @@ var symbol=[
     {shortcode:"female_sign",css:"2.08333% 37.5%"},
     {shortcode:"male_sign",css:"2.08333% 39.5833%"},
     {shortcode:"staff_of_aesculapius",css:"2.08333% 87.5%"}
-];
+]
 var faicons=[
         "fa-500px",
         "fa-address-book",

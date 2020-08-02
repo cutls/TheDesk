@@ -120,7 +120,7 @@ function imageXhr(id, key, murl) {
 				element.onload = function() {
 					var width = element.naturalWidth
 					if(width < 650) {
-						width = 650;
+						width = 650
 					}
 					var height = element.naturalHeight
 					var windowH = $(window).height()
@@ -182,7 +182,7 @@ function zoom(z) {
 	$('#imagewrap img').css('height', hgt + 'px')
 }
 //スマホ対応ドラッグ移動システム
-;(function() {
+(function() {
 	$.fn.dragScroll = function() {
 		var target = this
 		$(this)

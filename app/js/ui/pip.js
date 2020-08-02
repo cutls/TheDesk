@@ -1,32 +1,32 @@
 function pip(id) {
-    $("#pip-content").html($("[toot-id=" + id + "] .additional").html());
-    $("#pip").removeClass("hide");
+    $("#pip-content").html($("[toot-id=" + id + "] .additional").html())
+    $("#pip").removeClass("hide")
 }
 function endPip() {
-    $("#pip-content").html("");
-    $("#pip").addClass("hide");
+    $("#pip-content").html("")
+    $("#pip").addClass("hide")
 }
 
 function pipHoriz() {
     if ($("#pip").hasClass("pip-left")) {
-        $("#pip").removeClass("pip-left");
-        $(".pip-horiz").text("chevron_left");
-        $("#pip").addClass("pip-right");
+        $("#pip").removeClass("pip-left")
+        $(".pip-horiz").text("chevron_left")
+        $("#pip").addClass("pip-right")
     } else {
-        $("#pip").addClass("pip-left");
-        $("#pip").removeClass("pip-right");
-        $(".pip-horiz").text("chevron_right");
+        $("#pip").addClass("pip-left")
+        $("#pip").removeClass("pip-right")
+        $(".pip-horiz").text("chevron_right")
     }
 }
 
 function pipVert() {
     if ($("#pip").hasClass("pip-top")) {
-        $("#pip").removeClass("pip-top");
-        $("#pip").addClass("pip-bottom");
-        $(".pip-vert").text("expand_less");
+        $("#pip").removeClass("pip-top")
+        $("#pip").addClass("pip-bottom")
+        $(".pip-vert").text("expand_less")
     } else {
-        $("#pip").addClass("pip-top");
-        $("#pip").removeClass("pip-bottom");
-        $(".pip-vert").text("expand_more");
+        $("#pip").addClass("pip-top")
+        $("#pip").removeClass("pip-bottom")
+        $(".pip-vert").text("expand_more")
     }
 }

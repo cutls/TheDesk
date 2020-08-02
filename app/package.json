@@ -15,7 +15,9 @@
         "build": "node view/make/make.js --automatic && npx electron-builder",
         "build:all": "npx electron-builder --win --linux",
         "build:win": "npx electron-builder --win",
-        "build:pwa": "node view/make/make.js --automatic --pwa"
+        "build:pwa": "node view/make/make.js --automatic --pwa",
+        "lint:fix": "eslint js --fix" ,
+        "lint": "eslint js" 
     },
     "keywords": [
         "mastodon",
@@ -33,7 +35,8 @@
         "url": "https://cutls.dev",
         "email": "p@cutls.com"
     },
-    "contributor": [{
+    "contributor": [
+        {
             "name": "とねぢ",
             "url": "https://minohdon.jp/@toneji",
             "email": "solfa.tono@gmail.com"
@@ -73,6 +76,7 @@
         "electron": "^9.1.1",
         "electron-builder": "^22.7.0",
         "electron-rebuild": "^1.11.0",
+        "eslint": "^7.6.0",
         "readline-sync": "1.4.10"
     },
     "build": {

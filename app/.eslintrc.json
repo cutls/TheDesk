@@ -1,0 +1,14 @@
+{
+    "extends": "eslint:recommended",
+    "env": {"browser": true},
+    "rules": {
+        "no-console": "off",
+        "semi": ["error", "never"]
+    },
+    "globals": {
+        "$": false,
+        "ver": true,
+        "pwa": true,
+        "lang": true
+    }
+}
