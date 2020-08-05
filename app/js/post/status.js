@@ -680,7 +680,8 @@ function staEx(mode) {
 		})
 	return
 }
-function toggleAction(elem, height) {
+function toggleAction(elem, ct) {
+	var height = ct * 39 + 6
 	var cont = elem.parents('.cvo').find('.contextMenu')
 	if (cont.hasClass('hide')) {
 		$('#contextWrap').removeClass('hide')
@@ -691,6 +692,7 @@ function toggleAction(elem, height) {
 			cont.removeClass('bottom')
 			cont.addClass('top')
 		} else {
+			top = elem.offset().top - 105
 			cont.removeClass('top')
 			cont.addClass('bottom')
 		}

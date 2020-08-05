@@ -1132,7 +1132,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				</div>
 				<div class="area-side">
 					<div class="action ${noauth}">
-						<a onclick="toggleAction($(this), ${menuct * 39 + 6})" 
+						<a onclick="toggleAction($(this), ${menuct})" 
 							class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0">
 							<i class="text-darken-3 material-icons act-icon" aria-hidden="true">expand_more</i>
 							<span class="voice">Other actions</span>
