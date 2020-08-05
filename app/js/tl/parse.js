@@ -1319,7 +1319,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				} else {
 					var udg = `<a onclick="udg('${toot.id}','${acct_id}');" user="${toot.acct}" class="udg">`
 				}
-				var latest = date(toot.last_status_at, 'relative')
+				var latest = date(toot.last_status_at, 'relative', true)
 				if (toot.last_status_at) {
 					var latesthtml = `<div class="cbadge" style="width:100px;">Last <span class="voice">toot</span>: ${latest}</div>`
 				} else {

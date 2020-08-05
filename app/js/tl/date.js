@@ -1,6 +1,9 @@
 //日付パーサー
-function date(str, datetype) {
-	if (datetype == "relative") {
+function date(str, datetype, lastStatus) {
+	if (lastStatus) {
+		var date = new Date(str)
+		return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate()
+	} else if (datetype == "relative") {
 		return '<time class="timeago" datetime="' + str + '"></time>'
 	} else {
 		var date = new Date(str)
