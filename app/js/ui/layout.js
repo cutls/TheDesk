@@ -652,7 +652,7 @@ function removeColumn(tlid) {
 			localStorage.setItem('column', json)
 			sortLoad()
 			$('#timeline_box_' + tlid + '_box').remove()
-			if(!data.left_fold) {
+			if (!data.left_fold) {
 				$('#timeline_box_' + tlid + '_parentBox').remove()
 			}
 		}
@@ -786,7 +786,8 @@ function webviewParse(url, key, insert, icnsert, css) {
 					<i class="fab fa-twitter waves-effect" id="notice_icon_${key}" style="font-size:40px; padding-top:25%;"></i>
 				</div>
 				<div class="area-notice_name tl-title">WebView('${url}')</div>
-				<div class="area-sta"></div>
+				<div class="area-sta">
+				</div>
 				<div class="area-a2">
 					<a onclick="removeColumn('${key}')" class="setting nex">
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_delthis}" ${icnsert}>cancel</i>
@@ -829,7 +830,7 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 			${lang.lang_layout_leftUnfold}
 			</span><br>`
 	}
-	if(type == 'utl') {
+	if (type == 'utl') {
 		var dataHtml = false
 	} else {
 		var dataHtml = data
@@ -899,13 +900,13 @@ function bookmark(key, data) {
 	tl('bookmark', '', data, key, 'false', voice, '')
 }
 function utl(key, acct_id, data) {
-	if(!data) {
+	if (!data) {
 		var multi = localStorage.getItem('column')
 		var obj = JSON.parse(multi)
 		data = obj[key].data
 		acct_id = obj[key].domain
 	}
-	
+
 	console.log(key, data)
 	if (localStorage.getItem('voice_' + key)) {
 		var voice = true
