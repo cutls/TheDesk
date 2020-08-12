@@ -377,6 +377,9 @@ blockquote:before,
 #left-menu a.active {
 	background-color: var(--emphasized);
 }
+#left-menu a.active span {
+	text-decoration: underline;
+}
 #right-menu {
 	width: 100%;
 	overflow-y: scroll;

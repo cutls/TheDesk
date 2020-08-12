@@ -21,6 +21,15 @@ html {
 	align-items: flex-start;
 }
 
+#acct-list .btn-flat.white-text {
+	color: inherit !important;
+}
+
+#acct-list .btn-flat.red-text {
+	background-color: white !important;
+}
+
+
 .lts {
 	font-size: 150%;
 }
