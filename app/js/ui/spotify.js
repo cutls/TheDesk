@@ -32,7 +32,7 @@ function spotifyDisconnect() {
 			console.error(error)
 		})
 		.then(function (json) {
-			if(!json.success) alert('error')
+			if (!json.success) alert('error')
 			localStorage.removeItem('spotify-token')
 			checkSpotify()
 		})
@@ -188,9 +188,8 @@ function nowplaying(mode) {
 					var item = json.recenttracks.track[0]
 					if (!item['@attr']) return false
 					var img = item.image[3]['#text']
-					var isImg = item.streamable * 1
 					var flag = localStorage.getItem('artwork')
-					if (flag && isImg && img) {
+					if (flag && img != 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png' && img) {
 						postMessage(['bmpImage', [img, 0]], '*')
 					}
 					var content = localStorage.getItem('np-temp')
