@@ -73,7 +73,7 @@
     },
     "devDependencies": {
         "chokidar": "^3.4.1",
-        "electron": "^9.1.1",
+        "electron": "^10.0.0",
         "electron-builder": "^22.7.0",
         "electron-rebuild": "^1.11.0",
         "eslint": "^7.6.0",
