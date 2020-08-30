@@ -10,9 +10,7 @@ function load() {
 			setAllClasses('body', 'first', 'add')
 		}
 	}
-	const multi = localStorage.getItem('multi')
-	if (!multi) return false
-	const obj = JSON.parse(multi)
+	const obj = acctList
 	let domains = []
 	let template = ''
 	document.querySelector('#acct-list').innerHTML = ''
@@ -49,12 +47,12 @@ function load() {
 	document.querySelector('#domain-list').innerHTML = ''
 	const keymap = Object.keys(domains)
 	let templateDomainList = ''
-	for(let j = 0; j < domains.length; j++) {
+	for (let j = 0; j < domains.length; j++) {
 		const key = keymap[j]
 		const domain = domains[key]
 		let maxChars = 500
 		const thisLtrs = localStorage.getItem(`${domain}_letters`)
-		if(thisLtrs)  maxChars = thisLtrs
+		if (thisLtrs) maxChars = thisLtrs
 		templateDomainList = templateDomainList + `
 		<li class="collection-item transparent">
 			<div>
@@ -91,67 +89,49 @@ function maxChars(domain, uid) {
 		return false
 	}
 	const multi = localStorage.getItem('multi')
-	if(!multi) return false
+	if (!multi) return false
 	const obj = JSON.parse(multi)
-	for(let k = 0; k < obj.length; k++) {
+	for (let k = 0; k < obj.length; k++) {
 		if (obj[k].domain == domain) localStorage.setItem(`${domain}_letters`, value)
 	}
 	load()
 }
 //instances.social/instances API
 async function data(domain, acct_id) {
-	$('#ins-upd').text('Loading...')
-	$('#ins-add').text('Loading...')
-	$('#ins-connect').text('Loading...')
-	$('#ins-toot').text('Loading...')
-	$('#ins-sys').text('Loading...')
-	$('#ins-per').text('Loading...')
-	$('#ins-user').text('Loading...')
-	$('#ins-ver').text('Loading...')
-	$('#ins-name').text('Loading...')
-	$('#ins-prof').attr('src', '../../img/loading.svg')
-	var start = 'https://instances.social/api/1.0/instances/show?name=' + domain
-	let promise = await fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			Authorization:
-				'Bearer tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M'
-		}
-	})
-	var json = await promise.json()
-	$('#ins-name').text(json.name)
-	$('#ins-upd').text(date(json.checked_at, 'full'))
-	$('#ins-add').text(date(json.added_at, 'full'))
-	$('#ins-connect').text(json.connections)
-	$('#ins-toot').text(json.statuses)
-	$('#ins-sys').text(date(json.updated_at, 'full'))
-	$('#ins-per').text(json.uptime * 100)
-	$('#ins-user').text(json.users)
-	$('#ins-ver').text(json.version)
-	var start = 'https://' + domain + '/api/v1/instance'
-	let promise2 = await fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
-		}
-	})
-	var json = await promise2.json()
-	$('#ins-title').text(json.title)
-	$('#ins-desc').html(json.description)
-	$('#ins-email').text(json.email)
-	$('#ins-toot').text(json.stats.status_count)
-	$('#ins-user').text(json.stats.user_count)
-	$('#ins-ver').text(json.version)
-	$('#ins-prof').attr('src', json.thumbnail)
-	$('#ins-admin').text(
-		escapeHTML(json.contact_account.display_name) + '(' + json.contact_account.acct + ')'
-	)
-	$('#ins-admin').attr(
-		'href',
-		'index.html?mode=user&code=' + json.contact_account.username + '@' + domain
-	)
-	if (json['max_toot_chars']) {
+	document.querySelector('#ins-upd').innerText = 'Loading...'
+	document.querySelector('#ins-add').innerText = 'Loading...'
+	document.querySelector('#ins-connect').innerText = 'Loading...'
+	document.querySelector('#ins-toot').innerText = 'Loading...'
+	document.querySelector('#ins-sys').innerText = 'Loading...'
+	document.querySelector('#ins-per').innerText = 'Loading...'
+	document.querySelector('#ins-user').innerText = 'Loading...'
+	document.querySelector('#ins-var').innerText = 'Loading...'
+	document.querySelector('#ins-name').innerText = 'Loading...'
+	document.querySelector('#ins-prof').setAttribute('src', '../../img/loading.svg')
+	const start = 'https://instances.social/api/1.0/instances/show?name=' + domain
+	const json = await getApi(start, 'tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M')
+	document.querySelector('#ins-name').innerText = json.name
+	document.querySelector('#ins-upd').innerText = date(json.checked_at, 'full')
+	document.querySelector('#ins-add').innerText = date(json.added_at, 'full')
+	document.querySelector('#ins-connect').innerText = json.connections
+	document.querySelector('#ins-toot').innerText = json.statuses
+	document.querySelector('#ins-sys').innerText = date(json.updated_at, 'full')
+	document.querySelector('#ins-per').innerText = json.uptime * 100
+	document.querySelector('#ins-user').innerText = json.users
+	document.querySelector('#ins-ver').innerText = json.version
+	const start2 = 'https://' + domain + '/api/v1/instance'
+	const json2 = await getApi(start2, null)
+	document.querySelector('#ins-title').innerText = json2.title
+	document.querySelector('#ins-desc').innerText = json2.description
+	document.querySelector('#ins-email').innerText = json2.email
+	document.querySelector('#ins-toot').innerText = json2.stats.status_count
+	document.querySelector('#ins-user').innerText = json2.user_count
+	document.querySelector('#ins-ver').innerText = json2.version
+	document.querySelector('#ins-prof').innerText = json2.version
+	document.querySelector('#ins-prof').setAttribute('src', json2.thumbnail)
+	document.querySelector('#ins-admin').innerText = `${escapeHTML(json2.contact_account.display_name)}(${json2.contact_account.acct})`
+	document.querySelector('#ins-admin').setAttribute('href', `index.html?mode=user&code=${json2.contact_account.username}@${domain}`)
+	if (json2['max_toot_chars']) {
 		localStorage.setItem('letters_' + acct_id, json['max_toot_chars'])
 		load()
 	}
@@ -159,8 +139,7 @@ async function data(domain, acct_id) {
 
 //アカウントデータ　消す
 function multiDel(target) {
-	var multi = localStorage.getItem('multi')
-	var obj = JSON.parse(multi)
+	const obj = acctList
 	//削除確認ダイアログ
 	Swal.fire({
 		title: lang.lang_manager_logout,
@@ -173,69 +152,39 @@ function multiDel(target) {
 		cancelButtonText: lang.lang_no
 	}).then(result => {
 		if (result.value) {
-			Object.keys(obj).forEach(function (key) {
-				var nk = key - 1
-				//公開範囲(差分のみ)
+			for (let i = 0; i < obj.length; i++) {
+				const nk = i - 1
 				if (key >= target) {
-					var oldvis = localStorage.getItem('vis-memory-' + key)
-					if (oldvis) {
-						localStorage.setItem('vis-memory-' + nk, oldvis)
-					}
+					const oldvis = localStorage.getItem(`vis-memory-${i}`)
+					if (oldvis) localStorage.setItem(`vis-memory-${nk}`, oldvis)
 				}
-				//独自ロケール
-				localStorage.removeItem('home_' + key)
-				localStorage.removeItem('local_' + key)
-				localStorage.removeItem('public_' + key)
-				localStorage.removeItem('notification_' + key)
-				//アクセストークンとドメイン、プロフ(差分)
-				if (key > target) {
-					var olddom = localStorage.getItem('domain_' + key)
-					localStorage.setItem('domain_' + nk, olddom)
-					var oldat = localStorage.getItem('acct_' + key + '_at')
-					localStorage.setItem('acct_' + nk + '_at', oldat)
-					localStorage.setItem('name_' + nk, localStorage.getItem('name_' + key))
-					localStorage.setItem('user_' + target, localStorage.getItem('user_' + key))
-					localStorage.setItem('user-id_' + target, localStorage.getItem('user-id_' + key))
-					localStorage.setItem('prof_' + target, localStorage.getItem('prof_' + key))
-				}
-			})
+			}
 			//とりあえず消す
 			obj.splice(target, 1)
-			var json = JSON.stringify(obj)
+			const json = JSON.stringify(obj)
 			localStorage.setItem('multi', json)
 			load()
 			//カラムデータコンフリクト
-			var col = localStorage.getItem('column')
-			var oldcols = JSON.parse(col)
-			var newcols = []
-			Object.keys(oldcols).forEach(function (key) {
-				var nk = key - 1
-				var oldcol = oldcols[key]
-				if (target < oldcol.domain) {
-					var newdom = oldcol.domain - 1
-				} else {
-					var newdom = oldcol.domain
-				}
-				var type = oldcol.type
-				var data = null
-				if (oldcol.data) {
-					data = oldcol.data
-				}
-				var background = null
-				if (oldcol.background) {
-					background = oldcol.background
-				}
-				var text = null
-				if (oldcol.text) {
-					text = oldcol.text
-				}
-				var left_fold = false
-				if (oldcol.left_fold) {
-					left_fold = true
-				}
+			const col = localStorage.getItem('column')
+			const oldcols = JSON.parse(col)
+			const newcols = []
+			for (let i = 0; i < oldcols.length; i++) {
+				const nk = i - 1
+				const oldcol = oldcols[i]
+				let newdom = oldcol.domain
+				if (target < oldcol.domain) newdom = oldcol.domain - 1
+				const type = oldcol.type
+				let data = null
+				if (oldcol.data) data = oldcol.data
+				let background = null
+				if (oldcol.background) background = oldcol.background
+				let text = null
+				if (oldcol.text) text = oldcol.text
+				let left_fold = false
+				if (oldcol.left_fold) left_fold = true
 				//消した垢のコラムじゃないときコピー
 				if (target != oldcol.domain) {
-					var add = {
+					const add = {
 						domain: newdom,
 						type: type,
 						data: data,
@@ -245,532 +194,318 @@ function multiDel(target) {
 					}
 					newcols.push(add)
 				}
-			})
-			var json = JSON.stringify(newcols)
-			localStorage.setItem('column', json)
-		}
-	})
-}
-function multiDel2(target) {
-	var multi = localStorage.getItem('multi')
-	var obj = JSON.parse(multi)
-	Swal.fire({
-		title: lang.lang_manager_logout,
-		text: obj[target]['user'] + '@' + obj[target]['domain'] + lang.lang_manager_confirm,
-		type: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		confirmButtonText: lang.lang_yesno,
-		cancelButtonText: lang.lang_no
-	}).then(result => {
-		if (result.value) {
-			obj.splice(target, 1)
-			var json = JSON.stringify(obj)
-			localStorage.setItem('multi', json)
-			Object.keys(obj).forEach(function (key) {
-				if (key >= target) {
-					var oldvis = localStorage.getItem('vis-memory-' + key)
-					if (oldvis) {
-						var nk = key - 1
-						localStorage.setItem('vis-memory-' + nk, oldvis)
-					}
-				}
-				localStorage.removeItem('home_' + key)
-				localStorage.removeItem('local_' + key)
-				localStorage.removeItem('public_' + key)
-				localStorage.removeItem('notification_' + key)
-				refresh(key)
-			})
-			var col = localStorage.getItem('column')
-			if (!col) {
-				var obj = [
-					{
-						domain: 0,
-						type: 'local'
-					}
-				]
-				localStorage.setItem('card_0', 'true')
-				var json = JSON.stringify(obj)
-				localStorage.setItem('column', json)
-			} else {
-				var cobj = JSON.parse(col)
 			}
-			Object.keys(cobj).forEach(function (key) {
-				var column = cobj[key]
-				if (column.domain > target) {
-					var nk = key - 1
-					column.domain = nk
-					cobj[key] = column
-				} else if (column.domain == target) {
-					localStorage.removeItem('card_' + tlid)
-					cobj.splice(key, 1)
-				}
-			})
-			var json = JSON.stringify(column)
-			localStorage.setItem('column', json)
-			load()
+			const newjson = JSON.stringify(newcols)
+			localStorage.setItem('column', newjson)
+			location.reload()
 		}
 	})
 }
 
 //サポートインスタンス
 function support() {
-	Object.keys(idata).forEach(function (key) {
-		var instance = idata[key]
+	let i = 0
+	let template = ''
+	const keys = Object.keys(idata)
+	for (const instance of idata) {
 		if (instance == 'instance') {
-			templete =
-				'<a onclick="login(\'' +
-				key +
-				'\')" class="collection-item pointer transparent">' +
-				idata[key + '_name'] +
-				'(' +
-				key +
-				')</a>'
-			$('#support').append(templete)
+			template = template + `<a onclick="login('${key}') class="collection-item pointer transparent">
+				${idata[`${keys[i]}_name`]}
+			</a>`
 		}
-	})
+		i++
+	}
+	document.querySelector('#support').innerHTML = template
 }
 
 //URL指定してポップアップ
-function login(url) {
-	var multi = localStorage.getItem('multi')
-	var obj = JSON.parse(multi)
-	if ($('#misskey:checked').val() == 'on') {
-		$('#misskey').prop('checked', true)
+async function login(url) {
+	if (document.querySelector('#misskey').checked) {
 		misskeyLogin(url)
 		return
 	}
-	$('#compt').hide()
-	if ($('#linux:checked').val() == 'on') {
-		var red = 'urn:ietf:wg:oauth:2.0:oob'
-		if (~url.indexOf('pixelfed')) {
-			red = 'https://thedesk.top/hello.html'
-		}
-	} else {
-		var red = 'thedesk://manager'
+	document.querySelector('#compt').style.display = 'none'
+	let red = 'thedesk://manager'
+	if (document.querySelector('#linux').checked) {
+		red = 'urn:ietf:wg:oauth:2.0:oob'
+		if (~url.indexOf('pixelfed')) red = 'https://thedesk.top/hello.html'
 	}
 	localStorage.setItem('redirect', red)
-	var start = 'https://' + url + '/api/v1/apps'
-	var httpreq = new XMLHttpRequest()
-	httpreq.open('POST', start, true)
-	httpreq.setRequestHeader('Content-Type', 'application/json')
-	httpreq.responseType = 'json'
-	httpreq.send(
-		JSON.stringify({
-			scopes: 'read write follow',
-			client_name: 'TheDesk(PC)',
-			redirect_uris: red,
-			website: 'https://thedesk.top'
-		})
-	)
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			var json = httpreq.response
-			if (this.status !== 200) {
-				setLog(start, this.status, json)
-			}
-			localStorage.setItem('msky', 'false')
-			var auth =
-				'https://' +
-				url +
-				'/oauth/authorize?client_id=' +
-				json['client_id'] +
-				'&client_secret=' +
-				json['client_secret'] +
-				'&response_type=code&scope=read+write+follow&redirect_uri=' +
-				encodeURIComponent(red)
-			localStorage.setItem('domain_tmp', url)
-			localStorage.setItem('client_id', json['client_id'])
-			localStorage.setItem('client_secret', json['client_secret'])
-			$('#auth').show()
-			versionChecker(url)
-			$('#add').hide()
-			postMessage(['openUrl', auth], '*')
-			if ($('#linux:checked').val() == 'on') {
-			} else {
-				postMessage(['sendSinmpleIpc', 'quit'], '*')
-			}
-		}
-	}
-}
-function versionChecker(url) {
-	var start = 'https://' + url + '/api/v1/instance'
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
-		}
+	const start = 'https://' + url + '/api/v1/apps'
+	let json
+	const body = JSON.stringify({
+		scopes: 'read write follow',
+		client_name: 'TheDesk(PC)',
+		redirect_uris: red,
+		website: 'https://thedesk.top'
 	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function (error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function (json) {
-			var version = json.version
-			if (version) {
-				var reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u)
-				if (reg) {
-					versionCompat(reg[1], reg, json.title, reg[0])
-				}
-			}
-		})
+	const json = await postApi(start, body, null, null)
+	const auth = `https://${url}/oauth/authorize?client_id=${json.client_id}&client_secret=${json.client_secret}&response_type=code&scope=read+write+follow&redirect_uri=${encodeURIComponent(red)}`
+	localStorage.setItem('domain_tmp', url)
+	localStorage.setItem('client_id', json['client_id'])
+	localStorage.setItem('client_secret', json['client_secret'])
+	document.querySelector('#auth').style.display = 'block'
+	versionChecker(url)
+	document.querySelector('#add').style.display = 'none'
+	postMessage(['openUrl', auth], '*')
+	if (!document.querySelector('#linux').checked) postMessage(['sendSinmpleIpc', 'quit'], '*')
 }
-function versionCompat(prefix, ver, title, real) {
-	$('#compt-instance').text(title)
-	$('#compt-ver').text(real)
-	if (~real.indexOf('compatible')) {
-		$('#compt-warn').show()
-	} else {
-		$('#compt-warn').hide()
-	}
-	$('#compt-list').html('')
-	var start = '../../source/version.json'
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
-		}
-	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function (error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function (json) {
-			var complete = false
-			var ct = 0
-			var jl = 0
-			var jl2 = 0
-			Object.keys(json).forEach(function (key) {
-				var data = json[key]
-				if (data) {
-					jl++
-					if (key != real && !complete) {
-						for (var i = 0; i < data.length; i++) {
-							var e = ''
-							if (i == 0) {
-								e = '(' + key + ')'
-							}
-							$('#compt-list').append('<li>' + data[i] + e + '</li>')
-							ct++
-							e = ''
-						}
-						jl2++
-					} else if (!complete) {
-						complete = true
-					}
-				}
-			})
-			if (lang.language == 'ja' && ct > 0) {
-				if (jl2 != jl && prefix != '1') {
-					$('#compt').show()
-				}
-			}
-		})
-}
-//これが後のMisskeyである。
-function misskeyLogin(url) {
-	if (!url) {
-		var url = $('#misskey-url').val()
-	}
-	var start = 'https://' + url + '/api/app/create'
-	var httpreq = new XMLHttpRequest()
-	httpreq.open('POST', start, true)
-	httpreq.setRequestHeader('Content-Type', 'application/json')
-	httpreq.responseType = 'json'
-	localStorage.setItem('msky', 'true')
-	httpreq.send(
-		JSON.stringify({
-			name: 'TheDesk(PC)',
-			description: 'Mastodon and Misskey client for PC',
-			permission: [
-				'account-read',
-				'account-write',
-				'account/read',
-				'account/write',
-				'drive-read',
-				'drive-write',
-				'favorite-read',
-				'favorite-write',
-				'favorites-read',
-				'following-read',
-				'following-write',
-				'messaging-read',
-				'messaging-write',
-				'note-read',
-				'note-write',
-				'notification-read',
-				'notification-write',
-				'reaction-read',
-				'reaction-write',
-				'vote-read',
-				'vote-write',
-				'read:account',
-				'write:account',
-				'read:drive',
-				'write:drive',
-				'read:blocks',
-				'write:blocks',
-				'read:favorites',
-				'write:favorites',
-				'read:following',
-				'write:following',
-				'read:messaging',
-				'write:messaging',
-				'read:mutes',
-				'write:mutes',
-				'write:notes',
-				'read:notifications',
-				'write:notifications',
-				'read:reactions',
-				'write:reactions',
-				'write:votes'
-			]
-		})
-	)
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			var json = httpreq.response
-			if (this.status !== 200) {
-				setLog(start, this.status, json)
-			}
-			misskeyAuth(url, json.secret)
+async function versionChecker(url) {
+	const start = `https://${url}/api/v1/instance`
+	const json = await getApi(start, null)
+	const version = json.version
+	if (version) {
+		const reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u)
+		if (reg) {
+			versionCompat(reg[1], reg, json.title, reg[0])
 		}
 	}
 }
-function misskeyAuth(url, mkc) {
-	var start = 'https://' + url + '/api/auth/session/generate'
-	var httpreq = new XMLHttpRequest()
-	httpreq.open('POST', start, true)
-	httpreq.setRequestHeader('Content-Type', 'application/json')
-	httpreq.responseType = 'json'
 
-	localStorage.setItem('mkc', mkc)
-	localStorage.setItem('msky', 'true')
-	httpreq.send(
-		JSON.stringify({
-			appSecret: mkc
-		})
-	)
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			var json = httpreq.response
-			if (this.status !== 200) {
-				setLog(start, this.status, json)
+async function versionCompat(prefix, ver, title, real) {
+	document.querySelector('#compt-instance').innerText = title
+	document.querySelector('#compt-ver').innerText = real
+	if (~real.indexOf('compatible')) {
+		document.querySelector('#compt-warn').style.display = 'block'
+	} else {
+		document.querySelector('#compt-warn').style.display = 'none'
+	}
+	document.querySelector('#compt-list').innnerHTML = ''
+	const json = await getApi('../../source/version.json', null)
+	let complete = false
+	let ct = 0
+	let jl = 0
+	let jl2 = 0
+	let template = ''
+	for (const key in json) {
+		if (complete) break
+		const data = json[key]
+		if (data) {
+			jl++
+			if (key != real && !complete) {
+				for (let i = 0; i < data.length; i++) {
+					let e = ''
+					if (i == 0) {
+						e = `(${key})`
+					}
+					template = `<li>${data[i]}${e}</li>`
+					ct++
+					e = ''
+				}
+				jl2++
+			} else if (!complete) {
+				complete = true
 			}
-			var token = json.token
-			$('#auth').show()
-			$('#code').val(token)
-			$('#add').hide()
-			$('#misskey').prop('checked', false)
-			localStorage.setItem('domain_tmp', url)
-			postMessage(['openUrl', json.url], '*')
 		}
 	}
+	document.querySelector('#compt-list').innnerHTML = template
+	if (lang.language == 'ja' && ct > 0) {
+		if (jl2 != jl && prefix != '1') {
+			document.querySelector('#compt').style.display = 'block'
+		}
+	}
+}
+
+async function misskeyLogin(url) {
+	if (!url) {
+		url = document.querySelector('#misskey-url').value
+	}
+	const start = `https://${url}/api/app/create`
+	const httpreq = new XMLHttpRequest()
+	const body = JSON.stringify({
+		name: 'TheDesk(PC)',
+		description: 'Mastodon and Misskey client for PC',
+		permission: [
+			'account-read',
+			'account-write',
+			'account/read',
+			'account/write',
+			'drive-read',
+			'drive-write',
+			'favorite-read',
+			'favorite-write',
+			'favorites-read',
+			'following-read',
+			'following-write',
+			'messaging-read',
+			'messaging-write',
+			'note-read',
+			'note-write',
+			'notification-read',
+			'notification-write',
+			'reaction-read',
+			'reaction-write',
+			'vote-read',
+			'vote-write',
+			'read:account',
+			'write:account',
+			'read:drive',
+			'write:drive',
+			'read:blocks',
+			'write:blocks',
+			'read:favorites',
+			'write:favorites',
+			'read:following',
+			'write:following',
+			'read:messaging',
+			'write:messaging',
+			'read:mutes',
+			'write:mutes',
+			'write:notes',
+			'read:notifications',
+			'write:notifications',
+			'read:reactions',
+			'write:reactions',
+			'write:votes'
+		]
+	})
+	const json = await postApi(start, body, null, null)
+	misskeyAuth(url, json.secret)
+}
+async function misskeyAuth(url, mkc) {
+	const start = 'https://' + url + '/api/auth/session/generate'
+	const body = JSON.stringify({
+		appSecret: mkc
+	})
+	const json = await postApi(start, body, null, null)
+	const token = json.token
+	localStorage.setItem('mkc', mkc)
+	document.querySelector('#auth').style.display = 'block'
+	document.querySelector('#code').value = token
+	document.querySelector('#add').style.display = 'none'
+	localStorage.setItem('domain_tmp', url)
+	postMessage(['openUrl', json.url], '*')
 }
 
 //テキストボックスにURL入れた
 function instance() {
-	var url = $('#url').val()
+	const url = document.querySelector('#url').value
 	if (url.indexOf('@') != -1 || url.indexOf('https') != -1) {
-		alert('入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
+		Swal.fire({
+			type: 'error',
+			title: '入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)'
+		})
 		return false
 	}
 	login(url)
 }
 
 //コード入れてAccessTokenゲット
-function code(code) {
+async function code(code) {
 	localStorage.removeItem('redirect')
 	if (!code) {
-		var code = $('#code').val()
-		$('#code').val('')
+		code = document.querySelector('#code').value
+		document.querySelector('#code').value = ''
 	}
 	if (!code || code == '') {
 		M.toast({ html: lang.lang_fatalerroroccured + 'Error: no code', displayLength: 5000 })
 		return false
 	}
-	var url = localStorage.getItem('domain_tmp')
+	const url = localStorage.getItem('domain_tmp')
 	localStorage.removeItem('domain_tmp')
-	if (localStorage.getItem('msky') == 'true') {
-		var start = 'https://' + url + '/api/auth/session/userkey'
-		var httpreq = new XMLHttpRequest()
-		httpreq.open('POST', start, true)
-		httpreq.setRequestHeader('Content-Type', 'application/json')
-		httpreq.responseType = 'json'
-		httpreq.send(
-			JSON.stringify({
-				token: code,
-				appSecret: localStorage.getItem('mkc')
-			})
-		)
-		httpreq.onreadystatechange = function () {
-			if (httpreq.readyState === 4) {
-				var json = httpreq.response
-				if (this.status !== 200) {
-					setLog(start, this.status, json)
-				}
-				var i = sha256(json.accessToken + localStorage.getItem('mkc'))
-				var avatar = json['user']['avatarUrl']
-				var priv = 'public'
-				var add = {
-					at: i,
-					name: json['user']['name'],
-					domain: url,
-					user: json['user']['username'],
-					prof: avatar,
-					id: json['user']['id'],
-					vis: priv,
-					mode: 'misskey'
-				}
-				localStorage.setItem('mode_' + url, 'misskey')
-				var multi = localStorage.getItem('multi')
-				var obj = JSON.parse(multi)
-				var target = obj.length
-				obj.push(add)
-				localStorage.setItem('name_' + target, json['user']['name'])
-				localStorage.setItem('user_' + target, json['user']['username'])
-				localStorage.setItem('user-id_' + target, json['user']['id'])
-				localStorage.setItem('prof_' + target, avatar)
-				var json = JSON.stringify(obj)
-				localStorage.setItem('multi', json)
-				if ($('body').hasClass('first')) {
-					location.href = 'index.html'
-				}
-				load()
-				return
-			}
+	if (document.querySelector('#misskey').checked) {
+		document.querySelector('#misskey').checked = false
+		const mkc = localStorage.getItem('mkc')
+		localStorage.removeItem('mkc')
+		const start = `https://${url}/api/auth/session/userkey`
+		const body = JSON.stringify({
+			token: code,
+			appSecret: mkc
+		})
+		const json = await postApi(start, body, null, null)
+		const i = sha256(json.accessToken + mkc)
+		const { avatarUrl, name, username, id } = json.user
+		const add = {
+			at: i,
+			name: name,
+			domain: url,
+			user: username,
+			prof: avatarUrl,
+			id: id,
+			vis: 'public',
+			mode: 'misskey'
 		}
+		const multi = localStorage.getItem('multi')
+		let obj = JSON.parse(multi)
+		obj.push(add)
+		const write = JSON.stringify(obj)
+		localStorage.setItem('multi', write)
+		if (document.getElementsByTagName('body').classList.contains('first')) {
+			location.href = 'index.html'
+		}
+		load()
 		return
-	} else {
-		var red = 'urn:ietf:wg:oauth:2.0:oob'
-		if (~url.indexOf('pixelfed')) {
-			red = 'https://thedesk.top/hello.html'
-		}
-		var start = 'https://' + url + '/oauth/token'
-		var id = localStorage.getItem('client_id')
-		var secret = localStorage.getItem('client_secret')
-		var httpreq = new XMLHttpRequest()
-		httpreq.open('POST', start, true)
-		httpreq.setRequestHeader('Content-Type', 'application/json')
-		httpreq.responseType = 'json'
-		httpreq.send(
-			JSON.stringify({
-				grant_type: 'authorization_code',
-				redirect_uri: red,
-				client_id: id,
-				client_secret: secret,
-				code: code
-			})
-		)
-		httpreq.onreadystatechange = function () {
-			if (httpreq.readyState === 4) {
-				var json = httpreq.response
-				if (this.status !== 200) {
-					setLog(start, this.status, json)
-				}
-				if (json['access_token']) {
-					$('#auth').hide()
-					$('#add').show()
-					getdata(url, json['access_token'])
-				}
-			}
-		}
+	}
+	let red = 'urn:ietf:wg:oauth:2.0:oob'
+	if (~url.indexOf('pixelfed')) {
+		red = 'https://thedesk.top/hello.html'
+	}
+	const start = `https://${url}/oauth/token`
+	const id = localStorage.getItem('client_id')
+	localStorage.removeItem('client_id')
+	const secret = localStorage.getItem('client_secret')
+	localStorage.removeItem('client_secret')
+	const body = JSON.stringify({
+		grant_type: 'authorization_code',
+		redirect_uri: red,
+		client_id: id,
+		client_secret: secret,
+		code: code
+	})
+	const json = await postApi(start, body, null, null)
+	if (json.access_token) {
+		document.querySelector('#add').style.display = 'block'
+		document.querySelector('#auth').style.display = 'none'
+		getdata(url, json.access_token)
 	}
 }
 //ユーザーデータ取得
-function getdata(domain, at) {
-	var start = 'https://' + domain + '/api/v1/accounts/verify_credentials'
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
-	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function (error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function (json) {
-			if (json.error) {
-				console.error('Error:' + json.error)
-				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
-				return
-			}
-			var avatar = json['avatar']
-			//missingがmissingなやつ
-			if (avatar == '/avatars/original/missing.png') {
-				avatar = '../../img/missing.svg'
-			}
-			if (json['source']) {
-				var priv = json['source']['privacy']
-			} else {
-				var priv = 'public'
-			}
-			var add = {
-				at: at,
-				name: json['display_name'],
-				domain: domain,
-				user: json['acct'],
-				prof: avatar,
-				id: json['id'],
-				vis: priv,
-				mode: 'mastodon'
-			}
-			var multi = localStorage.getItem('multi')
-			var obj = JSON.parse(multi)
-			var target = obj.length
-			obj.push(add)
-			localStorage.setItem('name_' + target, json['display_name'])
-			localStorage.setItem('user_' + target, json['acct'])
-			localStorage.setItem('user-id_' + target, json['id'])
-			localStorage.setItem('prof_' + target, avatar)
-			var json = JSON.stringify(obj)
-			localStorage.setItem('multi', json)
-			if ($('body').hasClass('first')) {
-				location.href = 'index.html'
-			}
-			load()
-		})
+async function getdata(domain, at) {
+	const start = `https://${domain}/api/v1/accounts/verify_credentials`
+	const json = await getApi(start, at)
+	if (json.error) {
+		console.error('Error:' + json.error)
+		M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
+		return
+	}
+	const {avatar: avatarRaw, display_name: displayName, acct, id, source} = json
+	let avatar = avatarRaw
+	if (avatar == '/avatars/original/missing.png') {
+		avatar = '../../img/missing.svg'
+	}
+	let priv = 'public'
+	if(source) priv = source.privacy
+	const add = {
+		at: at,
+		name: displayName,
+		domain: domain,
+		user: acct,
+		prof: avatar,
+		id: id,
+		vis: priv,
+		mode: 'mastodon'
+	}
+	const multi = localStorage.getItem('multi')
+	let obj = JSON.parse(multi)
+	obj.push(add)
+	const json = JSON.stringify(obj)
+	localStorage.setItem('multi', json)
+	if (document.getElementsByTagName('body').classList.contains('first')) {
+		location.href = 'index.html'
+	}
+	load()
 }
 //アクセストークン直接入力
 function atSetup(type) {
-	var url = localStorage.getItem('domain_tmp')
+	const url = localStorage.getItem('domain_tmp')
 	localStorage.removeItem('domain_tmp')
-	var multi = localStorage.getItem('multi')
-	var avatar = '../../img/missing.svg'
-	var priv = 'public'
+	const multi = localStorage.getItem('multi')
+	const avatar = '../../img/missing.svg'
+	const priv = 'public'
+	let add
 	if (type == 'misskey') {
-		var i = $('#misskey-key').val()
-		var add = {
+		const i = document.querySelector('#misskey-key').value
+		add = {
 			at: i,
 			name: 'Pseudo Account',
 			domain: url,
@@ -780,10 +515,9 @@ function atSetup(type) {
 			vis: priv,
 			mode: 'misskey'
 		}
-		localStorage.setItem('mode_' + url, 'misskey')
 	} else {
-		var i = $('#code').val()
-		var add = {
+		const i = document.querySelector('#code').value
+		add = {
 			at: i,
 			name: 'Pseudo Account',
 			domain: url,
@@ -791,101 +525,69 @@ function atSetup(type) {
 			prof: avatar,
 			id: 'id+pseudo',
 			vis: priv,
-			mode: ''
+			mode: 'mastodon'
 		}
 	}
 	if (!i || i == '') {
 		M.toast({ html: lang.lang_fatalerroroccured + 'Error: access token', displayLength: 5000 })
 		return false
 	}
-	var obj = JSON.parse(multi)
-	var target = obj.length
+	let obj = JSON.parse(multi)
 	obj.push(add)
-	localStorage.setItem('name_' + target, add['name'])
-	localStorage.setItem('user_' + target, add['username'])
-	localStorage.setItem('user-id_' + target, add['id'])
-	localStorage.setItem('prof_' + target, avatar)
-	var json = JSON.stringify(obj)
+	const json = JSON.stringify(obj)
 	localStorage.setItem('multi', json)
 	refresh(target)
 }
 
 //ユーザーデータ更新
-function refresh(target) {
-	var multi = localStorage.getItem('multi')
-	var obj = JSON.parse(multi)
-	console.log(obj)
-	if (obj[target].mode == 'misskey') {
-		misskeyRefresh(obj, target, obj[target].domain)
+async function refresh(i) {
+	const multi = localStorage.getItem('multi')
+	const obj = JSON.parse(multi)
+	const target = obj[i]
+	if (target.mode == 'misskey') {
+		misskeyRefresh(obj, target, target.domain)
 		return
 	}
-	var start = 'https://' + obj[target].domain + '/api/v1/accounts/verify_credentials'
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			Authorization: 'Bearer ' + obj[target].at
-		}
-	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function (error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function (json) {
-			if (json.error) {
-				console.error('Error:' + json.error)
-				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
-				return
-			}
-			var avatar = json['avatar']
-			//missingがmissingなやつ
-			if (avatar == '/avatars/original/missing.png' || !avatar) {
-				avatar = './img/missing.svg'
-			}
-			var ref = {
-				at: obj[target].at,
-				name: json['display_name'],
-				domain: obj[target].domain,
-				user: json['acct'],
-				prof: avatar,
-				id: json['id'],
-				vis: json['source']['privacy']
-			}
-			if (obj[target].background) {
-				ref.background = obj[target].background
-			}
-			if (obj[target].text) {
-				ref.text = obj[target].text
-			}
-			localStorage.setItem('name_' + target, json['display_name'])
-			localStorage.setItem('user_' + target, json['acct'])
-			localStorage.setItem('user-id_' + target, json['id'])
-			localStorage.setItem('prof_' + target, avatar)
-			if (json['source']['sensitive']) {
-				localStorage.setItem('nsfw_' + target, 'true')
-			} else {
-				localStorage.removeItem('nsfw_' + target)
-			}
-			obj[target] = ref
-			var json = JSON.stringify(obj)
-			localStorage.setItem('multi', json)
+	const start = `https://${target.domain}/api/v1/accounts/verify_credentials`
+	const json = await getApi(start, target.at)
+	if (json.error) {
+		console.error('Error:' + json.error)
+		M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
+		return
+	}
+	const {avatar: avatarRaw, display_name: displayName, acct, id, source} = json
+	let avatar = avatarRaw
+	//missingがmissingなやつ
+	if (avatar == '/avatars/original/missing.png' || !avatar) {
+		avatar = './img/missing.svg'
+	}
+	let priv = 'public'
+	if(source) priv = source.privacy
+	const ref = {
+		at: target.at,
+		name: displayName,
+		domain: target.domain,
+		user: acct,
+		prof: avatar,
+		id: id,
+		vis: priv
+	}
+	if (target.background) {
+		ref.background = target.background
+	}
+	if (target.text) {
+		ref.text = target.text
+	}
+	if (source.sensitive) {
+		localStorage.setItem('nsfw_' + i, 'true')
+	} else {
+		localStorage.removeItem('nsfw_' + i)
+	}
+	obj[i] = ref
+	const json = JSON.stringify(obj)
+	localStorage.setItem('multi', json)
 
-			load()
-		})
+	load()
 }
 function misskeyRefresh(obj, target, url) {
 	var start = 'https://' + url + '/api/users/show'

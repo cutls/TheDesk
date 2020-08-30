@@ -145,7 +145,7 @@ async function ckdb(acct_id) {
 
 	if (idata) {
 		//check and replace json to idata
-		var json = idata
+		const json = idata
 		if (json[quoteMarker] == 'enabled') {
 			localStorage.setItem('quoters', true)
 			localStorage.setItem(quoteMarker, true)

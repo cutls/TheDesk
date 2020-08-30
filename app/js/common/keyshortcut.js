@@ -7,15 +7,6 @@ $(function ($) {
 		const hasFocus2 = isFocused('textarea')
 		const postBox = document.querySelector('#textarea')
 		let wv = false
-		if (document.getElementById('webview')) {
-			if (document.querySelector('#webviewsel:checked').value) {
-				wv = false
-			} else {
-				wv = true
-			}
-		} else {
-			wv = true
-		}
 		//Enter
 		if (e.keyCode === 13) {
 			if (isFocused('#src')) {
