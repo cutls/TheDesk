@@ -231,6 +231,7 @@ blockquote:before,
 	width: 100vw;
 	height: calc(100vh - 3rem);
 	background-color: var(--bg);
+	filter: brightness(50%);
 	color: var(--color);
 	z-index: 99999;
 	justify-content: center;
