@@ -6,6 +6,7 @@
 		<link href="./css/tl.css" type="text/css" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 		<link href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
+		<script type="text/javascript" src="./node_modules/grapheme-splitter/index.js"></script>
 		<title>TheDesk Nano</title>
 		<style>
 			html {
@@ -82,12 +83,16 @@
 			.cvo {
 				grid-template-rows: auto 1rem 1fr auto 2rem;
 			}
+			.voice {
+				display: none;
+			}
 		</style>
 	</head>
 
 	<body>
 		<script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
 		<script>
+			var pwa = false
 			$.strip_tags = function(str, allowed) {
 				if (!str) {
 					return "";
@@ -141,7 +146,7 @@
 			}
 		</script>
 		<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
-		<script type="text/javascript" src="view/en/main.js"></script>
+		<script type="text/javascript" src="./js/platform/first.js"></script>
 		<script type="text/javascript" src="./js/post/status.js"></script>
 		<script type="text/javascript" src="./js/post/post.js"></script>
 		<script type="text/javascript" src="./js/post/use-txtbox.js"></script>

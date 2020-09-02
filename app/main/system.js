@@ -174,7 +174,7 @@ function system(mainWindow, dir, lang, dirname) {
 		})
 		nanowindow.loadURL(dir + '/nano.html')
 		nanowindow.setAlwaysOnTop(true)
-		//nanowindow.toggleDevTools()
+		nanowindow.toggleDevTools()
 		nanowindow.setPosition(window_pos[0], window_pos[1])
 		nanowindow.on('close', function () {
 			fs.writeFileSync(nano_info_path, JSON.stringify(nanowindow.getPosition()))
