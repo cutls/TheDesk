@@ -247,7 +247,29 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			}
 		}, 100)
 	} else {
-		var misskey = false
+		var domain = localStorage.getItem('domain_' + acct_id)
+		if(mastodonBaseWs[domain] == 'cannnotopen') {
+			oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
+		} else if(mastodonBaseWs[domain] == 'undetected') {
+			var mbws = setInterval(function () {
+				if(mastodonBaseWs[domain] == 'cannnotopen') {
+					oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
+					clearInterval(mbws)
+				} else if(mastodonBaseWs[domain] == 'available') {
+					stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
+					clearInterval(mbws)
+				}
+			}, 1000)
+		} else if(mastodonBaseWs[domain] == 'available') {
+			stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
+		}
+	}
+}
+function stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
+	
+}
+function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
+	var misskey = false
 		if (localStorage.getItem('streaming_' + acct_id)) {
 			var wss = localStorage.getItem('streaming_' + acct_id)
 		} else {
@@ -433,9 +455,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			}
 			return false
 		}
-	}
 }
-
 //一定のスクロールで発火
 function moreload(type, tlid) {
 	var multi = localStorage.getItem('column')

@@ -934,20 +934,20 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							var fontColor = value.fontColor
 							if (!value.bgColor || !value.fontColor) {
 								if (value.type == 'mastodon') {
-									if(!value.bgColor) bgColor = tickerdataRaw.default.mastodon.bgColor
-									if(!value.fontColor) fontColor = tickerdataRaw.default.mastodon.fontColor
+									if (!value.bgColor) bgColor = tickerdataRaw.default.mastodon.bgColor
+									if (!value.fontColor) fontColor = tickerdataRaw.default.mastodon.fontColor
 								} else if (value.type == 'pleroma') {
-									if(!value.bgColor) bgColor = tickerdataRaw.default.pleroma.bgColor
-									if(!value.fontColor) fontColor = tickerdataRaw.default.pleroma.fontColor
+									if (!value.bgColor) bgColor = tickerdataRaw.default.pleroma.bgColor
+									if (!value.fontColor) fontColor = tickerdataRaw.default.pleroma.fontColor
 								} else if (value.type == 'misskey') {
-									if(!value.bgColor) bgColor = tickerdataRaw.default.misskey.bgColor
-									if(!value.fontColor) fontColor = tickerdataRaw.default.misskey.fontColor
+									if (!value.bgColor) bgColor = tickerdataRaw.default.misskey.bgColor
+									if (!value.fontColor) fontColor = tickerdataRaw.default.misskey.fontColor
 								} else if (value.type == 'misskeylegacy') {
-									if(!value.bgColor) bgColor = tickerdataRaw.default.misskeylegacy.bgColor
-									if(!value.fontColor) fontColor = tickerdataRaw.default.misskeylegacy.fontColor
+									if (!value.bgColor) bgColor = tickerdataRaw.default.misskeylegacy.bgColor
+									if (!value.fontColor) fontColor = tickerdataRaw.default.misskeylegacy.fontColor
 								} else if (value.type == 'pixelfed') {
-									if(!value.bgColor) bgColor = tickerdataRaw.default.pixelfed.bgColor
-									if(!value.fontColor) fontColor = tickerdataRaw.default.pixelfed.fontColor
+									if (!value.bgColor) bgColor = tickerdataRaw.default.pixelfed.bgColor
+									if (!value.fontColor) fontColor = tickerdataRaw.default.pixelfed.fontColor
 								}
 							} else {
 								var bgColor = value.bgColor
@@ -1559,4 +1559,202 @@ function pollParse(poll, acct_id, emojis) {
 			</span>${poll.voters_count} ${lang.lang_parse_people}
 		</div>`
 	return pollHtml
+}
+
+//MastodonBaseStreaming
+var mastodonBaseWs = {}
+var mastodonBaseWsStatus = {}
+function mastodonBaseStreaming(acct_id) {
+	const mute = getFilterTypeByAcct(acct_id, type)
+	mastodonBaseWsStatus[domain] = 'undetected'
+	const domain = localStorage.getItem(`domain_${acct_id}`)
+	const at = localStorage.getItem(`acct_${acct_id}_at`)
+	const start = `wss://cutls.com/api/v1/streaming/?at=${at}`
+	mastodonBaseWs[domain] = new WebSocket(start)
+	mastodonBaseWs[domain].onopen = function () {
+		mastodonBaseWsStatus[domain] = 'available'
+	}
+	mastodonBaseWs[domain].onmessage = function () {
+		const typeA = JSON.parse(mess.data).event
+		if (typeA == 'delete') {
+			$(`[unique-id=${JSON.parse(mess.data).payload}]`).hide()
+			$(`[unique-id=${JSON.parse(mess.data).payload}]`).remove()
+		} else if (typeA == 'update' || typeA == 'conversation') {
+			if (
+				!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')
+			) {
+				//markers show中はダメ
+				const tl = JSON.parse(mess.data).stream
+				const obj = JSON.parse(JSON.parse(mess.data).payload)
+				const tls = getTlMeta(tl[0], tl, acct_id)
+				insertTl(obj, tls)
+			} else if (typeA == 'filters_changed') {
+				filterUpdate(acct_id)
+			} else if (~typeA.indexOf('announcement')) {
+				announ(acct_id, tlid)
+			}
+		}
+	}
+	mastodonBaseWs[domain].onerror = function (error) {
+		console.error("Error closing " + tlid)
+		console.error(error)
+		mastodonBaseWsStatus[domain] = 'cannotuse'
+		mastodonBaseWs[domain] = false
+		return false
+	}
+	mastodonBaseWs[domain].onclose = function () {
+		console.warn("Closing " + tlid)
+		mastodonBaseWs[domain] = false
+		mastodonBaseWsStatus[domain] = 'cannotuse'
+		connectMisskey(acct_id, true)
+		return false
+	}
+}
+function insertTl(obj, tls) {
+	for (const timeline of tls) {
+		const { id, voice } = timeline
+		if ($(`#timeline_${id} [toot-id=${obj.id}]`).length) {
+			if (voice) {
+				say(obj.content)
+			}
+			const template = parse([obj], type, acct_id, tlid, '', mute, type)
+			if (
+				$(`timeline_box_${tlid}_box .tl-box`).scrollTop() === 0
+			) {
+				$(`#timeline_${tlid}`).prepend(template)
+			} else {
+				const pool = localStorage.getItem('pool_' + tlid)
+				if (pool) {
+					pool = template + pool
+				} else {
+					pool = template
+				}
+				localStorage.setItem('pool_' + tlid, pool)
+			}
+			scrollck()
+			additional(acct_id, tlid)
+			jQuery('time.timeago').timeago()
+		}
+	}
+}
+function getTlMeta(type, data, num) {
+	const acct_id = num.toString()
+	const columns = localStorage.getItem('column')
+	const obj = JSON.parse(columns)
+	let ret = []
+	let i = 0
+	switch (type) {
+		case 'user':
+			for (const tl of obj) {
+				if (tl.domain != acct_id) continue
+				if (tl.type == 'mix' || tl.type == 'home') {
+					let voice = false
+					if (localStorage.getItem('voice_' + i)) voice = true
+					ret.push({
+						id: i,
+						voice: voice
+					})
+				}
+				i++
+			}
+			break
+		case 'public:local':
+			for (const tl of obj) {
+				if (tl.domain != acct_id) continue
+				if (tl.type == 'mix' || tl.type == 'local') {
+					let voice = false
+					if (localStorage.getItem('voice_' + i)) voice = true
+					ret.push({
+						id: i,
+						voice: voice
+					})
+				}
+				i++
+			}
+			break
+		case 'public:local:media':
+			for (const tl of obj) {
+				if (tl.domain != acct_id) continue
+				if (tl.type == 'local-media') {
+					let voice = false
+					if (localStorage.getItem('voice_' + i)) voice = true
+					ret.push({
+						id: i,
+						voice: voice
+					})
+				}
+				i++
+			}
+			break;
+		case 'public':
+			for (const tl of obj) {
+				if (tl.domain != acct_id) continue
+				if (tl.type == 'pub') {
+					let voice = false
+					if (localStorage.getItem('voice_' + i)) voice = true
+					ret.push({
+						id: i,
+						voice: voice
+					})
+				}
+				i++
+			}
+			break;
+		case 'public:media':
+			for (const tl of obj) {
+				if (tl.domain != acct_id) continue
+				if (tl.type == 'pub-media') {
+					let voice = false
+					if (localStorage.getItem('voice_' + i)) voice = true
+					ret.push({
+						id: i,
+						voice: voice
+					})
+				}
+				i++
+			}
+			break;
+		case 'list':
+			for (const tl of obj) {
+				if (tl.domain != acct_id) continue
+				if (tl.type == 'list' && tl.data == data[1]) {
+					let voice = false
+					if (localStorage.getItem('voice_' + i)) voice = true
+					ret.push({
+						id: i,
+						voice: voice
+					})
+				}
+				i++
+			}
+			break;
+		case 'hashtag':
+			for (const tl of obj) {
+				if (tl.domain != acct_id) continue
+				const columnDataRaw = tl.data
+				let columnData
+				if (!columnDataRaw.name) {
+					columnData = { name: columnDataRaw }
+				} else {
+					columnData = columnDataRaw
+				}
+				if (tl.type == 'tag') {
+					let voice = false
+					let can = false
+					if (columnData.name == data[1]) can = true
+					if (columnData.any.split(',').includes(data[1])) can = true
+
+					if (localStorage.getItem('voice_' + i)) voice = true
+					ret.push({
+						id: i,
+						voice: voice
+					})
+				}
+				i++
+			}
+			break;
+		default:
+			console.log(`Sorry, we are out of ${expr}.`);
+	}
+	return ret
 }
