@@ -44,10 +44,10 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		//Integratedなら飛ばす
 		$('#notice_' + tlid).text(
 			'Integrated TL(' +
-				localStorage.getItem('user_' + acct_id) +
-				'@' +
-				domain +
-				')'
+			localStorage.getItem('user_' + acct_id) +
+			'@' +
+			domain +
+			')'
 		)
 		$('#notice_icon_' + tlid).text('merge_type')
 		mixtl(acct_id, tlid, 'integrated', delc, voice)
@@ -56,10 +56,10 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		//Local+なら飛ばす
 		$('#notice_' + tlid).text(
 			'Local+ TL(' +
-				localStorage.getItem('user_' + acct_id) +
-				'@' +
-				domain +
-				')'
+			localStorage.getItem('user_' + acct_id) +
+			'@' +
+			domain +
+			')'
 		)
 		$('#notice_icon_' + tlid).text('people_outline')
 		mixtl(acct_id, tlid, 'plus', delc, voice)
@@ -69,11 +69,11 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		notf(acct_id, tlid, 'direct')
 		$('#notice_' + tlid).text(
 			cap(type, data, acct_id) +
-				'(' +
-				localStorage.getItem('user_' + acct_id) +
-				'@' +
-				domain +
-				')'
+			'(' +
+			localStorage.getItem('user_' + acct_id) +
+			'@' +
+			domain +
+			')'
 		)
 		$('#notice_icon_' + tlid).text('notifications')
 		return
@@ -82,11 +82,11 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		getBookmark(acct_id, tlid)
 		$('#notice_' + tlid).text(
 			cap(type, data, acct_id) +
-				'(' +
-				localStorage.getItem('user_' + acct_id) +
-				'@' +
-				domain +
-				')'
+			'(' +
+			localStorage.getItem('user_' + acct_id) +
+			'@' +
+			domain +
+			')'
 		)
 		$('#notice_icon_' + tlid).text('bookmark')
 		return
@@ -95,11 +95,11 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		getUtl(acct_id, tlid, data, false)
 		$('#notice_' + tlid).text(
 			cap(type, data, acct_id) +
-				'(' +
-				localStorage.getItem('user_' + acct_id) +
-				'@' +
-				domain +
-				')'
+			'(' +
+			localStorage.getItem('user_' + acct_id) +
+			'@' +
+			domain +
+			')'
 		)
 		$('#notice_icon_' + tlid).text('person')
 		return
@@ -117,11 +117,11 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		}
 		$('#notice_' + tlid).text(
 			cap(type, data, acct_id) +
-				'(' +
-				localStorage.getItem('user_' + acct_id) +
-				'@' +
-				domain +
-				')'
+			'(' +
+			localStorage.getItem('user_' + acct_id) +
+			'@' +
+			domain +
+			')'
 		)
 	} else {
 		var hdr = {
@@ -257,15 +257,15 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 			var start = wss + '/api/v1/streaming/?stream=user&access_token=' + at
 		} else if (type == 'pub') {
 			var add = ''
-			if(remoteOnlyCk(tlid)){
+			if (remoteOnlyCk(tlid)) {
 				add = '&remote=true'
 			}
 			var start = wss + '/api/v1/streaming/?stream=public&access_token=' + at + add
 		} else if (type == 'pub-media') {
 			var add = ''
-			if(remoteOnlyCk(tlid)){
+			if (remoteOnlyCk(tlid)) {
 				add = '&remote=true'
-			}var start =
+			} var start =
 				wss + '/api/v1/streaming/?stream=public:media&access_token=' + at + add
 		} else if (type == 'local') {
 			var start =
@@ -276,18 +276,19 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 				'/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=' +
 				at
 		} else if (type == 'tag') {
-			if (type == 'tag') {
-				var tag = localStorage.getItem('tag-range')
-				if (tag == 'local') {
-					data = data + '&local=true'
-				}
+			var tag = localStorage.getItem('tag-range')
+			if (tag == 'local') {
+				data = data + '&local=true'
+			}
+			if(data.name) {
+				data = data.name
 			}
 			var start =
 				wss +
 				'/api/v1/streaming/?stream=hashtag&tag=' +
 				data +
 				'&access_token=' +
-				at
+				at + add
 		} else if (type == 'noauth') {
 			var start = 'wss://' + acct_id + '/api/v1/streaming/?stream=public:local'
 		} else if (type == 'list') {
@@ -345,17 +346,17 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 					if (delc == 'true') {
 						$(
 							'#timeline_' +
-								tlid +
-								' [unique-id=' +
-								JSON.parse(mess.data).payload +
-								']'
+							tlid +
+							' [unique-id=' +
+							JSON.parse(mess.data).payload +
+							']'
 						).addClass('emphasized')
 						$(
 							'#timeline_' +
-								tlid +
-								' [unique-id=' +
-								JSON.parse(mess.data).payload +
-								']'
+							tlid +
+							' [unique-id=' +
+							JSON.parse(mess.data).payload +
+							']'
 						).addClass('by_delcatch')
 					} else {
 						$('[unique-id=' + JSON.parse(mess.data).payload + ']').hide()
@@ -866,13 +867,13 @@ function com(type, data, tlid) {
 		return 'public?local=true&only_media=true&'
 	} else if (type == 'pub') {
 		var add = ''
-		if(remoteOnlyCk(tlid)){
+		if (remoteOnlyCk(tlid)) {
 			add = 'remote=true&'
 		}
 		return 'public?' + add
 	} else if (type == 'pub-media') {
 		var add = ''
-		if(remoteOnlyCk(tlid)){
+		if (remoteOnlyCk(tlid)) {
 			add = 'remote=true&'
 		}
 		return 'public?only_media=true&' + add
@@ -1078,10 +1079,10 @@ function getMarker(tlid, type, acct_id) {
 					$('#unread_' + tlid).attr(
 						'title',
 						lang.lang_layout_unread +
-							':' +
-							json.updated_at +
-							' v' +
-							json.version
+						':' +
+						json.updated_at +
+						' v' +
+						json.version
 					)
 					$('#unread_' + tlid).attr('data-id', json.last_read_id)
 				} else {
@@ -1285,8 +1286,8 @@ function asReadEnd() {
 			onBeforeOpen: () => {
 				Swal.showLoading()
 			},
-			onClose: () => {},
-		}).then((result) => {})
+			onClose: () => { },
+		}).then((result) => { })
 	} else {
 		postMessage(['asReadComp', ''], '*')
 	}
@@ -1349,8 +1350,8 @@ function getUtl(acct_id, tlid, data, more) {
 	moreloading = true
 	if (more) {
 		var sid = $('#timeline_' + tlid + ' .cvo')
-		.last()
-		.attr('unique-id')
+			.last()
+			.attr('unique-id')
 		var ad = '?max_id=' + sid
 	} else {
 		var ad = ''
@@ -1426,7 +1427,7 @@ function announ(acct_id, tlid) {
 }
 //buildQuery
 function buildQuery(name, data) {
-	if(!data || data == '') return ''
+	if (!data || data == '') return ''
 	var arr = data.split(',')
 	var str = ''
 	for (var i = 0; i < arr.length; i++) {
