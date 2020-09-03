@@ -157,7 +157,8 @@ iframe,
 }
 .box {
 	overflow: hidden;
-	min-width: 23rem;
+	min-width: 300px;
+	max-width: 600px;
 	flex: 1;
 	border-top: none;
 	display: flex;
@@ -223,6 +224,8 @@ iframe,
 .area-toot .emoji,
 .area-toot .emoji-img {
 	width: 1.538rem;
+	height: 1.538rem;
+	object-fit: cover;
 	vertical-align: middle;
 	margin: -1px 0;
 }

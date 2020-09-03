@@ -76,8 +76,12 @@ function parseColumn(target, dontclose) {
 		var obj = [
 			{
 				domain: 0,
-				type: 'local',
+				type: 'home',
 			},
+			{
+				domain: 0,
+				type: 'local',
+			}
 		]
 		var json = JSON.stringify(obj)
 		localStorage.setItem('column', json)
@@ -161,6 +165,10 @@ function parseColumn(target, dontclose) {
 		var width = localStorage.getItem('width')
 		if (width) {
 			var css = ' min-width:' + width + 'px;'
+		}
+		var maxWidth = localStorage.getItem('max-width')
+		if (maxWidth) {
+			css = css +'max-width:' + maxWidth + 'px;'
 		}
 		if (acct.width) {
 			var css = ' min-width:' + acct.width + 'px;max-width:' + acct.width + 'px;'
