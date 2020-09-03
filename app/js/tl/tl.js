@@ -279,8 +279,8 @@ function stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mo
 		let name = data
 		if(data.name) name = data.name
 		arr.push(name)
-		if(data.any) arr = arr.concat(data.any.split())
-		if(data.all) arr = arr.concat(data.all.split())
+		if(data.any) arr = arr.concat(data.any.split(','))
+		if(data.all) arr = arr.concat(data.all.split(','))
 		for(const tag of arr) {
 			mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"hashtag","tag":"${tag}"}`)
 		}

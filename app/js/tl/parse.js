@@ -628,7 +628,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							var mty = media.remote_url.match(/.+(\..+)$/)[1]
 							viewer =
 								viewer +
-								`<a href="${media.remote_url}" title="${media.remote_url}">[${lang.lang_parse_unknown}(${mty})]</a> `
+								`<a href="${media.url ? media.url : media.remote_url}" title="${media.remote_url} from ${media.url}">[${lang.lang_parse_unknown}(${mty})]</a> `
 						} else if (media.type == 'audio') {
 							viewer =
 								viewer +
