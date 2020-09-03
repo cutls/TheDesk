@@ -217,6 +217,8 @@ iframe,
 .emoji,
 .emoji-img {
 	width: 1.153rem;
+	height: 1.153rem;
+	object-fit: cover;
 }
 .area-toot .emoji,
 .area-toot .emoji-img {
