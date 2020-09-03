@@ -130,17 +130,11 @@ function playSound() {
 	volumeControl.gain.value = vol
 	source.start(0)
 	soundFile = source
-
-	function newFunction() {
-		var source
-		return source
-	}
 }
 function nano() {
 	postMessage(['nano', null], '*')
 }
 onmessage = function(e) {
-	console.log(e)
 	if (e.data[0] == 'details') {
 		details(e.data[1][0], e.data[1][1])
 	} else if (e.data[0] == 'udg') {

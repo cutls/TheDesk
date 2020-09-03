@@ -1565,79 +1565,98 @@ function pollParse(poll, acct_id, emojis) {
 var mastodonBaseWs = {}
 var mastodonBaseWsStatus = {}
 function mastodonBaseStreaming(acct_id) {
-	const mute = getFilterTypeByAcct(acct_id, type)
-	mastodonBaseWsStatus[domain] = 'undetected'
 	const domain = localStorage.getItem(`domain_${acct_id}`)
+	if(mastodonBaseWsStatus[domain]) return
+	mastodonBaseWsStatus[domain] = 'undetected'
 	const at = localStorage.getItem(`acct_${acct_id}_at`)
-	const start = `wss://cutls.com/api/v1/streaming/?at=${at}`
+	const start = `wss://${domain}/api/v1/streaming/?access_token=${at}`
 	mastodonBaseWs[domain] = new WebSocket(start)
 	mastodonBaseWs[domain].onopen = function () {
 		mastodonBaseWsStatus[domain] = 'available'
+		mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"user"}`)
+		$('.notice_icon_acct_' + acct_id).removeClass('red-text')
 	}
-	mastodonBaseWs[domain].onmessage = function () {
+	mastodonBaseWs[domain].onmessage = function (mess) {
 		const typeA = JSON.parse(mess.data).event
 		if (typeA == 'delete') {
 			$(`[unique-id=${JSON.parse(mess.data).payload}]`).hide()
 			$(`[unique-id=${JSON.parse(mess.data).payload}]`).remove()
 		} else if (typeA == 'update' || typeA == 'conversation') {
-			if (
-				!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')
-			) {
-				//markers show中はダメ
-				const tl = JSON.parse(mess.data).stream
-				const obj = JSON.parse(JSON.parse(mess.data).payload)
-				const tls = getTlMeta(tl[0], tl, acct_id)
-				insertTl(obj, tls)
-			} else if (typeA == 'filters_changed') {
-				filterUpdate(acct_id)
-			} else if (~typeA.indexOf('announcement')) {
-				announ(acct_id, tlid)
+			//markers show中はダメ
+			const tl = JSON.parse(mess.data).stream
+			const obj = JSON.parse(JSON.parse(mess.data).payload)
+			const tls = getTlMeta(tl[0], tl, acct_id, obj)
+			insertTl(obj, tls)
+		} else if (typeA == 'filters_changed') {
+			filterUpdate(acct_id)
+		} else if (~typeA.indexOf('announcement')) {
+			announ(acct_id, tlid)
+		} else if (type == 'notification') {
+			let template = ''
+			localStorage.setItem('lastnotf_' + acct_id, obj.id)
+			if (obj.type != 'follow' && obj.type != 'follow_request') {
+				template = parse([obj], 'notf', acct_id, 'notf', popup)
+			} else if (obj.type == 'follow_request') {
+				template = userparse([obj.account], 'request', acct_id, 'notf', -1)
+			} else {
+				template = userparse([obj], obj.type, acct_id, 'notf', popup)
 			}
+			if (!$('div[data-notfIndv=' + acct_id + '_' + obj.id + ']').length) {
+				$('div[data-notf=' + acct_id + ']').prepend(template)
+				$('div[data-const=notf_' + acct_id + ']').prepend(template)
+			}
+			jQuery('time.timeago').timeago()
+		} else {
+			console.error('unknown type ' + typeA)
 		}
 	}
 	mastodonBaseWs[domain].onerror = function (error) {
-		console.error("Error closing " + tlid)
+		notf(acct_id, 0) //fallback
+		console.error("Error closing " + domain)
 		console.error(error)
 		mastodonBaseWsStatus[domain] = 'cannotuse'
 		mastodonBaseWs[domain] = false
 		return false
 	}
 	mastodonBaseWs[domain].onclose = function () {
-		console.warn("Closing " + tlid)
+		notf(acct_id, 0) //fallback
+		console.warn("Closing " + domain)
 		mastodonBaseWs[domain] = false
 		mastodonBaseWsStatus[domain] = 'cannotuse'
-		connectMisskey(acct_id, true)
 		return false
 	}
 }
 function insertTl(obj, tls) {
 	for (const timeline of tls) {
-		const { id, voice } = timeline
-		if ($(`#timeline_${id} [toot-id=${obj.id}]`).length) {
+		const { id, voice, type, acct_id } = timeline
+		const mute = getFilterTypeByAcct(acct_id, type)
+		if ($(`#unread_${id} .material-icons`).hasClass('teal-text')) continue
+		if (!$(`#timeline_${id} [toot-id=${obj.id}]`).length) {
 			if (voice) {
 				say(obj.content)
 			}
-			const template = parse([obj], type, acct_id, tlid, '', mute, type)
+			const template = parse([obj], type, acct_id, id, '', mute, type)
+			console.log($(`#timeline_box_${id}_box .tl-box`).scrollTop(), `timeline_box_${id}_box .tl-box`)
 			if (
-				$(`timeline_box_${tlid}_box .tl-box`).scrollTop() === 0
+				$(`#timeline_box_${id}_box .tl-box`).scrollTop() === 0
 			) {
-				$(`#timeline_${tlid}`).prepend(template)
+				$(`#timeline_${id}`).prepend(template)
 			} else {
-				const pool = localStorage.getItem('pool_' + tlid)
+				let pool = localStorage.getItem('pool_' + id)
 				if (pool) {
 					pool = template + pool
 				} else {
 					pool = template
 				}
-				localStorage.setItem('pool_' + tlid, pool)
+				localStorage.setItem('pool_' + id, pool)
 			}
 			scrollck()
-			additional(acct_id, tlid)
+			additional(acct_id, id)
 			jQuery('time.timeago').timeago()
 		}
 	}
 }
-function getTlMeta(type, data, num) {
+function getTlMeta(type, data, num, status) {
 	const acct_id = num.toString()
 	const columns = localStorage.getItem('column')
 	const obj = JSON.parse(columns)
@@ -1652,7 +1671,9 @@ function getTlMeta(type, data, num) {
 					if (localStorage.getItem('voice_' + i)) voice = true
 					ret.push({
 						id: i,
-						voice: voice
+						voice: voice,
+						type: tl.type,
+						acct_id: tl.domain
 					})
 				}
 				i++
@@ -1666,7 +1687,9 @@ function getTlMeta(type, data, num) {
 					if (localStorage.getItem('voice_' + i)) voice = true
 					ret.push({
 						id: i,
-						voice: voice
+						voice: voice,
+						type: tl.type,
+						acct_id: tl.domain
 					})
 				}
 				i++
@@ -1680,7 +1703,9 @@ function getTlMeta(type, data, num) {
 					if (localStorage.getItem('voice_' + i)) voice = true
 					ret.push({
 						id: i,
-						voice: voice
+						voice: voice,
+						type: tl.type,
+						acct_id: tl.domain
 					})
 				}
 				i++
@@ -1694,7 +1719,9 @@ function getTlMeta(type, data, num) {
 					if (localStorage.getItem('voice_' + i)) voice = true
 					ret.push({
 						id: i,
-						voice: voice
+						voice: voice,
+						type: tl.type,
+						acct_id: tl.domain
 					})
 				}
 				i++
@@ -1708,7 +1735,9 @@ function getTlMeta(type, data, num) {
 					if (localStorage.getItem('voice_' + i)) voice = true
 					ret.push({
 						id: i,
-						voice: voice
+						voice: voice,
+						type: tl.type,
+						acct_id: tl.domain
 					})
 				}
 				i++
@@ -1722,7 +1751,25 @@ function getTlMeta(type, data, num) {
 					if (localStorage.getItem('voice_' + i)) voice = true
 					ret.push({
 						id: i,
-						voice: voice
+						voice: voice,
+						type: tl.type,
+						acct_id: tl.domain
+					})
+				}
+				i++
+			}
+			break;
+		case 'direct':
+			for (const tl of obj) {
+				if (tl.domain != acct_id) continue
+				if (tl.type == 'dm') {
+					let voice = false
+					if (localStorage.getItem('voice_' + i)) voice = true
+					ret.push({
+						id: i,
+						voice: voice,
+						type: tl.type,
+						acct_id: tl.domain
 					})
 				}
 				i++
@@ -1742,19 +1789,38 @@ function getTlMeta(type, data, num) {
 					let voice = false
 					let can = false
 					if (columnData.name == data[1]) can = true
+					//any
 					if (columnData.any.split(',').includes(data[1])) can = true
-
+					//all
+					const { tags } = status
+					if (columnData.all) can = true
+					for (const { name } of tags) {
+						if (!columnData.all.split(',').includes(name)) {
+							can = false
+							break
+						}
+					}
+					//none
+					if (columnData.none) can = true
+					for (const { name } of tags) {
+						if (columnData.none.split(',').includes(name)) {
+							can = false
+							break
+						}
+					}
 					if (localStorage.getItem('voice_' + i)) voice = true
 					ret.push({
 						id: i,
-						voice: voice
+						voice: voice,
+						type: tl.type,
+						acct_id: tl.domain
 					})
 				}
 				i++
 			}
 			break;
 		default:
-			console.log(`Sorry, we are out of ${expr}.`);
+			console.error(`Cannot catch`);
 	}
 	return ret
 }

@@ -53,7 +53,7 @@ function parseColumn(target, dontclose) {
 			localStorage.setItem('prof_' + key, acct.prof)
 			localStorage.setItem('domain_' + key, acct.domain)
 			localStorage.setItem('acct_' + key + '_at', acct.at)
-			notf(key, 0)
+			mastodonBaseStreaming(key)
 			ckdb(key)
 			//フィルターデータ読もう
 			getFilter(key)
@@ -370,7 +370,7 @@ function parseColumn(target, dontclose) {
 				<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}" data-acct="${acct.domain}" style="${addHeight}">
 					<div class="notice-box z-depth-2" id="menu_${key}" style="${insert}">
 						<div class="area-notice">
-							<i class="material-icons waves-effect ${isMisRed}" id="notice_icon_${key}" ${notf_attr}
+							<i class="material-icons waves-effect ${isMisRed} notice_icon_acct_${acct.domain}" id="notice_icon_${key}" ${notf_attr}
 								 style="font-size:40px; padding-top:25%;" 
 								 onclick="checkStr('${acct.type}','${data}','${acct.domain}', '${key}', '${delc}','${voice}',null)"
 							 	 title="${lang.lang_layout_gotop}" aria-hidden="true">

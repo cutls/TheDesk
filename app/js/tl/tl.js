@@ -248,25 +248,43 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		}, 100)
 	} else {
 		var domain = localStorage.getItem('domain_' + acct_id)
-		if(mastodonBaseWs[domain] == 'cannnotopen') {
+		if(mastodonBaseWsStatus[domain] == 'cannnotopen') {
 			oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
 		} else if(mastodonBaseWs[domain] == 'undetected') {
-			var mbws = setInterval(function () {
-				if(mastodonBaseWs[domain] == 'cannnotopen') {
+			const mbws = setInterval(function () {
+				if(mastodonBaseWsStatus[domain] == 'cannnotopen') {
 					oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
 					clearInterval(mbws)
-				} else if(mastodonBaseWs[domain] == 'available') {
+				} else if(mastodonBaseWsStatus[domain] == 'available') {
 					stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
 					clearInterval(mbws)
 				}
 			}, 1000)
-		} else if(mastodonBaseWs[domain] == 'available') {
+		} else if(mastodonBaseWsStatus[domain] == 'available') {
 			stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
 		}
 	}
 }
 function stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
-	
+	let stream
+	const domain = localStorage.getItem('domain_' + acct_id)
+	if(type === 'local' || type === 'mix' ) { stream = 'public:local' }
+	else if(type === 'local-media' ) { stream = 'public:local:media' }
+	else if(type === 'pub' ) { stream = 'public' }
+	else if(type === 'pub-media' ) { stream = 'public:media' }
+	else if(type === 'list' ) { 
+		mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"list","list":"${data}"}`)
+	}else if(type === 'tag' ) {
+		let arr = []
+		let name = data
+		if(data.name) name = data.name
+		arr.push(name)
+		if(data.any) arr = arr.concat(data.any.split())
+		if(data.all) arr = arr.concat(data.all.split())
+		for(const tag of arr) {
+			mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"hashtag","tag":"${tag}"}`)
+		}
+	}
 }
 function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	var misskey = false
