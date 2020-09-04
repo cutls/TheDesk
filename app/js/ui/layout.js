@@ -423,7 +423,7 @@ function parseColumn(target, dontclose) {
 					</div>
 				</div>
 				<div class="column-hide notf-indv-box z-depth-4" id="notf-box_${notfKey}">
-					<div id="announce_${notfKey}" style="border: 1px solid"></div>
+					<div class="announce_${acct.domain}" style="border: 1px solid"></div>
 					<div id="notifications_${notfKey}" data-notf="${notfDomain}" data-type="notf" class="notf-timeline">
 					</div>
 				</div>

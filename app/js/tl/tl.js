@@ -1457,7 +1457,7 @@ function announ(acct_id, tlid) {
 				$('.notf-announ_' + acct_id).addClass('hide')
 			}
 			var templete = announParse(json, acct_id, tlid)
-			$('#announce_' + tlid).html(templete)
+			$('.announce_' + acct_id).html(templete)
 			jQuery('time.timeago').timeago()
 			todc()
 		}
