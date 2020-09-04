@@ -1591,9 +1591,14 @@ function mastodonBaseStreaming(acct_id) {
 			filterUpdate(acct_id)
 		} else if (~typeA.indexOf('announcement')) {
 			announ(acct_id, tlid)
-		} else if (type == 'notification') {
+		} else if (typeA == 'notification') {
+			const obj = JSON.parse(JSON.parse(mess.data).payload)
 			let template = ''
 			localStorage.setItem('lastnotf_' + acct_id, obj.id)
+			let popup = localStorage.getItem('popup')
+			if (!popup) {
+				popup = 0
+			}
 			if (obj.type != 'follow' && obj.type != 'follow_request') {
 				template = parse([obj], 'notf', acct_id, 'notf', popup)
 			} else if (obj.type == 'follow_request') {

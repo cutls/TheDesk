@@ -27,6 +27,7 @@
   "widthwarn": "画面全体の横幅÷カラム数で計算してそれ超してもうたら横スクロール入るで。",
   "fixwidth": "TweetDeckの限定の最低横幅",
   "fixwidthwarn": "",
+  "margin": "TL間のマージン",
   "above": "以上",
   "font": "フォント",
   "fontwarn": "「選択」を押してフォントを選んでな。(Linuxでは動かんかもしれん。)",

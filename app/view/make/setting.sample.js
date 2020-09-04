@@ -84,6 +84,19 @@ var envConstruction = [
 		}
 	},
 	{
+		id: 'margin',
+		storage: 'margin',
+		checkbox: false,
+		doubleText: false,
+		setValue: 0,
+		width: 50,
+		text: {
+			head: '@@margin@@',
+			desc: '',
+			after: 'px'
+		}
+	},
+	{
 		id: 'fixwidth',
 		storage: 'fixwidth',
 		checkbox: false,

@@ -28,6 +28,7 @@
   "widthwarn": "Scroll bar will be shown when your window size is more than ammounts of columns.",
   "fixwidth": "Minimum width of TweetDeck browser",
   "fixwidthwarn": "",
+  "margin": "Margin between timelines",
   "above": "above",
   "font": "Font",
   "fontwarn": "Select your favorite font to 'Select'(On Linux, it may not work.)",

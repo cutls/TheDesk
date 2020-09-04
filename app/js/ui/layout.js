@@ -162,19 +162,21 @@ function parseColumn(target, dontclose) {
 		} else {
 			localStorage.removeItem('hasNotfC_' + acct.domain)
 		}
+		var css = ''
 		var width = localStorage.getItem('width')
 		if (width) {
-			var css = ' min-width:' + width + 'px;'
+			css = ' min-width:' + width + 'px;'
 		}
 		var maxWidth = localStorage.getItem('max-width')
 		if (maxWidth) {
 			css = css +'max-width:' + maxWidth + 'px;'
 		}
-		if (acct.width) {
-			var css = ' min-width:' + acct.width + 'px;max-width:' + acct.width + 'px;'
+		var margin = localStorage.getItem('margin')
+		if (margin) {
+			css = css +'margin-right:' + margin + 'px;'
 		}
-		if (!css) {
-			var css = ''
+		if (acct.width) {
+			css = css + ' min-width:' + acct.width + 'px !important;max-width:' + acct.width + 'px !important;'
 		}
 		if (acct.type == 'webview') {
 			if (localStorage.getItem('fixwidth')) {
