@@ -248,11 +248,11 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		}, 100)
 	} else {
 		var domain = localStorage.getItem('domain_' + acct_id)
-		if(mastodonBaseWsStatus[domain] == 'cannnotopen') {
+		if(mastodonBaseWsStatus[domain] == 'cannotuse') {
 			oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
 		} else if(mastodonBaseWs[domain] == 'undetected') {
 			const mbws = setInterval(function () {
-				if(mastodonBaseWsStatus[domain] == 'cannnotopen') {
+				if(mastodonBaseWsStatus[domain] == 'cannotuse') {
 					oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
 					clearInterval(mbws)
 				} else if(mastodonBaseWsStatus[domain] == 'available') {

@@ -1572,12 +1572,15 @@ function mastodonBaseStreaming(acct_id) {
 	const start = `wss://${domain}/api/v1/streaming/?access_token=${at}`
 	mastodonBaseWs[domain] = new WebSocket(start)
 	mastodonBaseWs[domain].onopen = function () {
-		mastodonBaseWsStatus[domain] = 'available'
+		setTimeout(function () {
+			mastodonBaseWsStatus[domain] = 'available'
+		}, 1000)
 		mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"user"}`)
 		$('.notice_icon_acct_' + acct_id).removeClass('red-text')
 	}
 	mastodonBaseWs[domain].onmessage = function (mess) {
 		const typeA = JSON.parse(mess.data).event
+		console.log(domain + ':' + typeA)
 		if (typeA == 'delete') {
 			$(`[unique-id=${JSON.parse(mess.data).payload}]`).hide()
 			$(`[unique-id=${JSON.parse(mess.data).payload}]`).remove()
@@ -1586,6 +1589,7 @@ function mastodonBaseStreaming(acct_id) {
 			const tl = JSON.parse(mess.data).stream
 			const obj = JSON.parse(JSON.parse(mess.data).payload)
 			const tls = getTlMeta(tl[0], tl, acct_id, obj)
+			console.log(domain + ':' + tls)
 			insertTl(obj, tls)
 		} else if (typeA == 'filters_changed') {
 			filterUpdate(acct_id)
@@ -1619,13 +1623,17 @@ function mastodonBaseStreaming(acct_id) {
 		notf(acct_id, 0) //fallback
 		console.error("Error closing " + domain)
 		console.error(error)
-		mastodonBaseWsStatus[domain] = 'cannotuse'
+		if (mastodonBaseWsStatus[domain] == 'available') location.reload()
+		setTimeout(function () {
+			mastodonBaseWsStatus[domain] = 'cannotuse'
+		}, 2000)
 		mastodonBaseWs[domain] = false
 		return false
 	}
 	mastodonBaseWs[domain].onclose = function () {
 		notf(acct_id, 0) //fallback
 		console.warn("Closing " + domain)
+		if (mastodonBaseWsStatus[domain] == 'available') location.reload()
 		mastodonBaseWs[domain] = false
 		mastodonBaseWsStatus[domain] = 'cannotuse'
 		return false
