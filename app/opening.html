@@ -75,7 +75,7 @@
 	</head>
 
 	<body class="center" style="overflow: hidden;">
-		<img src="./img/desk-animation.svg" style="max-width: 62%;" />
+		<img src="./img/desk-animation.svg" id="leader" style="max-width: 62%;" />
 		<h1>TheDesk</h1>
 		<span id="ver"></span><br />
 		<span class="loading"></span><br />
@@ -84,11 +84,12 @@
 			<script>
 				if (location.search) {
 					var m = location.search.match(/\?ver=([0-9.]+)&codename=([a-zA-Z]+)&maxim=(.+)/)
+					var maxim = decodeURI(m[3])
+					if(maxim == 'いのちの輝き版ロゴ') document.getElementById('leader').setAttribute('src', './img/2025.svg')
 					var ver = m[1]
 					var code = m[2]
-					var maxim = m[3]
 					document.getElementById('ver').innerText = `${ver}(${code})`
-					document.getElementById('maxim').innerText = `${decodeURI(maxim)}`
+					document.getElementById('maxim').innerText = maxim
 				}
 			</script>
 		</div>

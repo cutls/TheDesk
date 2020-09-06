@@ -1,6 +1,6 @@
 {
     "name": "thedesk",
-    "version": "21.0.5",
+    "version": "21.1.0",
     "codename": "Mayu",
     "description": "TheDesk is a Mastodon client for PC.",
     "repository": "https://github.com/cutls/TheDesk",
