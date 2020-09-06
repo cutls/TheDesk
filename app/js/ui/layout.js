@@ -42,18 +42,16 @@ function parseColumn(target, dontclose) {
 	var multi = localStorage.getItem('multi')
 	if (multi) {
 		var obj = JSON.parse(multi)
-
 		var templete
 		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
-
 			localStorage.setItem('name_' + key, acct.name)
 			localStorage.setItem('user_' + key, acct.user)
 			localStorage.setItem('user-id_' + key, acct.id)
 			localStorage.setItem('prof_' + key, acct.prof)
 			localStorage.setItem('domain_' + key, acct.domain)
 			localStorage.setItem('acct_' + key + '_at', acct.at)
-			mastodonBaseStreaming(key)
+			if(!target) mastodonBaseStreaming(key)
 			ckdb(key)
 			//フィルターデータ読もう
 			getFilter(key)

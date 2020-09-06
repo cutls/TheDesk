@@ -206,7 +206,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 			additional(acct_id, tlid)
 			jQuery('time.timeago').timeago()
 			todc()
-			reload(type, '', acct_id, tlid, data, mute, delc, voice)
+			reload(type, 'from timeline to reload', acct_id, tlid, data, mute, delc, voice)
 			if (type == 'home' || type == 'notf') {
 				//Markers
 				var markers = localStorage.getItem('markers')
@@ -248,231 +248,241 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 		}, 100)
 	} else {
 		var domain = localStorage.getItem('domain_' + acct_id)
-		if(mastodonBaseWsStatus[domain] == 'cannotuse') {
+		if (mastodonBaseWsStatus[domain] == 'cannotuse') {
 			oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
-		} else if(mastodonBaseWs[domain] == 'undetected') {
+		} else if (mastodonBaseWsStatus[domain] == 'undetected' || mastodonBaseWsStatus[domain] == 'connecting') {
 			const mbws = setInterval(function () {
-				if(mastodonBaseWsStatus[domain] == 'cannotuse') {
+				if (mastodonBaseWsStatus[domain] == 'cannotuse') {
 					oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
 					clearInterval(mbws)
-				} else if(mastodonBaseWsStatus[domain] == 'available') {
-					stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
+				} else if (mastodonBaseWsStatus[domain] == 'available') {
+					$('#notice_icon_' + tlid).removeClass('red-text')
+					stremaingSubscribe(type, acct_id, data)
 					clearInterval(mbws)
 				}
 			}, 1000)
-		} else if(mastodonBaseWsStatus[domain] == 'available') {
-			stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
+		} else if (mastodonBaseWsStatus[domain] == 'available') {
+			$('#notice_icon_' + tlid).removeClass('red-text')
+			stremaingSubscribe(type, acct_id, data)
 		}
 	}
 }
-function stremaingSubscribe(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
+function stremaingSubscribe(type, acct_id, data, unsubscribe) {
+	let command = 'subscribe'
+	if (unsubscribe) command = 'unsubscribe'
 	let stream
 	const domain = localStorage.getItem('domain_' + acct_id)
-	if(type === 'local' || type === 'mix' ) { stream = 'public:local' }
-	else if(type === 'local-media' ) { stream = 'public:local:media' }
-	else if(type === 'pub' ) { stream = 'public' }
-	else if(type === 'pub-media' ) { stream = 'public:media' }
-	else if(type === 'list' ) { 
-		mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"list","list":"${data}"}`)
-	}else if(type === 'tag' ) {
+	if(type == 'home') return false
+	if (type === 'local' || type === 'mix') { stream = 'public:local' }
+	else if (type === 'local-media') { stream = 'public:local:media' }
+	else if (type === 'pub') { stream = 'public' }
+	else if (type === 'pub-media') { stream = 'public:media' }
+	else if (type === 'list') {
+		mastodonBaseWs[domain].send(`{"type":"${command}","stream":"list","list":"${data}"}`)
+		return true
+	} else if (type === 'tag') {
 		let arr = []
 		let name = data
-		if(data.name) name = data.name
+		if (data.name) name = data.name
 		arr.push(name)
-		if(data.any) arr = arr.concat(data.any.split(','))
-		if(data.all) arr = arr.concat(data.all.split(','))
-		for(const tag of arr) {
-			mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"hashtag","tag":"${tag}"}`)
+		if (data.any) arr = arr.concat(data.any.split(','))
+		if (data.all) arr = arr.concat(data.all.split(','))
+		for (const tag of arr) {
+			mastodonBaseWs[domain].send(`{"type":"${command}","stream":"hashtag","tag":"${tag}"}`)
 		}
+		return true
 	}
+	mastodonBaseWs[domain].send(`{"type":"${command}","stream":"${stream}"`)
 }
 function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	var misskey = false
-		if (localStorage.getItem('streaming_' + acct_id)) {
-			var wss = localStorage.getItem('streaming_' + acct_id)
+	const domain = localStorage.getItem(`domain_${acct_id}`)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	if (localStorage.getItem('streaming_' + acct_id)) {
+		var wss = localStorage.getItem('streaming_' + acct_id)
+	} else {
+		var wss = 'wss://' + domain
+	}
+	if (type == 'home') {
+		var start = wss + '/api/v1/streaming/?stream=user&access_token=' + at
+	} else if (type == 'pub') {
+		var add = ''
+		if (remoteOnlyCk(tlid)) {
+			add = '&remote=true'
+		}
+		var start = wss + '/api/v1/streaming/?stream=public&access_token=' + at + add
+	} else if (type == 'pub-media') {
+		var add = ''
+		if (remoteOnlyCk(tlid)) {
+			add = '&remote=true'
+		} var start =
+			wss + '/api/v1/streaming/?stream=public:media&access_token=' + at + add
+	} else if (type == 'local') {
+		var start =
+			wss + '/api/v1/streaming/?stream=public:local&access_token=' + at
+	} else if (type == 'local-media') {
+		var start =
+			wss +
+			'/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=' +
+			at
+	} else if (type == 'tag') {
+		var tag = localStorage.getItem('tag-range')
+		if (tag == 'local') {
+			data = data + '&local=true'
+		}
+		if (data.name) {
+			data = data.name
+		}
+		var start =
+			wss +
+			'/api/v1/streaming/?stream=hashtag&tag=' +
+			data +
+			'&access_token=' +
+			at + add
+	} else if (type == 'noauth') {
+		var start = 'wss://' + acct_id + '/api/v1/streaming/?stream=public:local'
+	} else if (type == 'list') {
+		var start =
+			wss +
+			'/api/v1/streaming/?stream=list&list=' +
+			data +
+			'&access_token=' +
+			at
+	} else if (type == 'dm') {
+		var start = wss + '/api/v1/streaming/?stream=direct&access_token=' + at
+	}
+	var wsid = websocket.length
+	localStorage.setItem('wss_' + tlid, wsid)
+	websocket[wsid] = new WebSocket(start)
+	websocket[wsid].onopen = function (mess) {
+		console.table({
+			tlid: tlid,
+			type: 'Connect Streaming API' + type,
+			domain: domain,
+			message: [mess],
+		})
+		errorct = 0
+		$('#notice_icon_' + tlid).removeClass('red-text')
+	}
+	websocket[wsid].onmessage = function (mess) {
+		console.log([tlid + ':Receive Streaming API:', JSON.parse(mess.data)])
+		if (misskey) {
+			if (JSON.parse(mess.data).type == 'note') {
+				var obj = JSON.parse(mess.data).body
+				if (voice) {
+					say(obj.text)
+				}
+				websocketNotf[acct_id].send(
+					JSON.stringify({
+						type: 'capture',
+						id: obj.id,
+					})
+				)
+				var templete = misskeyParse([obj], type, acct_id, tlid, '', mute)
+				var pool = localStorage.getItem('pool_' + tlid)
+				if (pool) {
+					pool = templete + pool
+				} else {
+					pool = templete
+				}
+				localStorage.setItem('pool_' + tlid, pool)
+				scrollck()
+				jQuery('time.timeago').timeago()
+			}
 		} else {
-			var wss = 'wss://' + domain
-		}
-		if (type == 'home') {
-			var start = wss + '/api/v1/streaming/?stream=user&access_token=' + at
-		} else if (type == 'pub') {
-			var add = ''
-			if (remoteOnlyCk(tlid)) {
-				add = '&remote=true'
-			}
-			var start = wss + '/api/v1/streaming/?stream=public&access_token=' + at + add
-		} else if (type == 'pub-media') {
-			var add = ''
-			if (remoteOnlyCk(tlid)) {
-				add = '&remote=true'
-			} var start =
-				wss + '/api/v1/streaming/?stream=public:media&access_token=' + at + add
-		} else if (type == 'local') {
-			var start =
-				wss + '/api/v1/streaming/?stream=public:local&access_token=' + at
-		} else if (type == 'local-media') {
-			var start =
-				wss +
-				'/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=' +
-				at
-		} else if (type == 'tag') {
-			var tag = localStorage.getItem('tag-range')
-			if (tag == 'local') {
-				data = data + '&local=true'
-			}
-			if(data.name) {
-				data = data.name
-			}
-			var start =
-				wss +
-				'/api/v1/streaming/?stream=hashtag&tag=' +
-				data +
-				'&access_token=' +
-				at + add
-		} else if (type == 'noauth') {
-			var start = 'wss://' + acct_id + '/api/v1/streaming/?stream=public:local'
-		} else if (type == 'list') {
-			var start =
-				wss +
-				'/api/v1/streaming/?stream=list&list=' +
-				data +
-				'&access_token=' +
-				at
-		} else if (type == 'dm') {
-			var start = wss + '/api/v1/streaming/?stream=direct&access_token=' + at
-		}
-		var wsid = websocket.length
-		localStorage.setItem('wss_' + tlid, wsid)
-		websocket[wsid] = new WebSocket(start)
-		websocket[wsid].onopen = function (mess) {
-			console.table({
-				tlid: tlid,
-				type: 'Connect Streaming API' + type,
-				domain: domain,
-				message: [mess],
-			})
-			errorct = 0
-			$('#notice_icon_' + tlid).removeClass('red-text')
-		}
-		websocket[wsid].onmessage = function (mess) {
-			console.log([tlid + ':Receive Streaming API:', JSON.parse(mess.data)])
-			if (misskey) {
-				if (JSON.parse(mess.data).type == 'note') {
-					var obj = JSON.parse(mess.data).body
-					if (voice) {
-						say(obj.text)
-					}
-					websocketNotf[acct_id].send(
-						JSON.stringify({
-							type: 'capture',
-							id: obj.id,
-						})
-					)
-					var templete = misskeyParse([obj], type, acct_id, tlid, '', mute)
-					var pool = localStorage.getItem('pool_' + tlid)
-					if (pool) {
-						pool = templete + pool
-					} else {
-						pool = templete
-					}
-					localStorage.setItem('pool_' + tlid, pool)
-					scrollck()
-					jQuery('time.timeago').timeago()
+			var typeA = JSON.parse(mess.data).event
+			if (typeA == 'delete') {
+				var obj = JSON.parse(mess.data).payload
+				if (delc == 'true') {
+					$(
+						'#timeline_' +
+						tlid +
+						' [unique-id=' +
+						JSON.parse(mess.data).payload +
+						']'
+					).addClass('emphasized')
+					$(
+						'#timeline_' +
+						tlid +
+						' [unique-id=' +
+						JSON.parse(mess.data).payload +
+						']'
+					).addClass('by_delcatch')
+				} else {
+					$('[unique-id=' + JSON.parse(mess.data).payload + ']').hide()
+					$('[unique-id=' + JSON.parse(mess.data).payload + ']').remove()
 				}
-			} else {
-				var typeA = JSON.parse(mess.data).event
-				if (typeA == 'delete') {
-					var obj = JSON.parse(mess.data).payload
-					if (delc == 'true') {
-						$(
-							'#timeline_' +
-							tlid +
-							' [unique-id=' +
-							JSON.parse(mess.data).payload +
-							']'
-						).addClass('emphasized')
-						$(
-							'#timeline_' +
-							tlid +
-							' [unique-id=' +
-							JSON.parse(mess.data).payload +
-							']'
-						).addClass('by_delcatch')
-					} else {
-						$('[unique-id=' + JSON.parse(mess.data).payload + ']').hide()
-						$('[unique-id=' + JSON.parse(mess.data).payload + ']').remove()
-					}
-				} else if (typeA == 'update' || typeA == 'conversation') {
+			} else if (typeA == 'update' || typeA == 'conversation') {
+				if (
+					!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')
+				) {
+					//markers show中はダメ
+					var obj = JSON.parse(JSON.parse(mess.data).payload)
 					if (
-						!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')
+						$('#timeline_' + tlid + ' [toot-id=' + obj.id + ']').length < 1
 					) {
-						//markers show中はダメ
-						var obj = JSON.parse(JSON.parse(mess.data).payload)
-						if (
-							$('#timeline_' + tlid + ' [toot-id=' + obj.id + ']').length < 1
-						) {
-							if (voice) {
-								say(obj.content)
-							}
-							var templete = parse([obj], type, acct_id, tlid, '', mute, type)
-							if (
-								$('timeline_box_' + tlid + '_box .tl-box').scrollTop() === 0
-							) {
-								$('#timeline_' + tlid).prepend(templete)
-							} else {
-								var pool = localStorage.getItem('pool_' + tlid)
-								if (pool) {
-									pool = templete + pool
-								} else {
-									pool = templete
-								}
-								localStorage.setItem('pool_' + tlid, pool)
-							}
-							scrollck()
-							additional(acct_id, tlid)
-							jQuery('time.timeago').timeago()
-						} else {
-							todo('二重取得発生中')
+						if (voice) {
+							say(obj.content)
 						}
-
-						todc()
+						var templete = parse([obj], type, acct_id, tlid, '', mute, type)
+						if (
+							$('timeline_box_' + tlid + '_box .tl-box').scrollTop() === 0
+						) {
+							$('#timeline_' + tlid).prepend(templete)
+						} else {
+							var pool = localStorage.getItem('pool_' + tlid)
+							if (pool) {
+								pool = templete + pool
+							} else {
+								pool = templete
+							}
+							localStorage.setItem('pool_' + tlid, pool)
+						}
+						scrollck()
+						additional(acct_id, tlid)
+						jQuery('time.timeago').timeago()
+					} else {
+						todo('二重取得発生中')
 					}
-				} else if (typeA == 'filters_changed') {
-					filterUpdate(acct_id)
-				} else if (~typeA.indexOf('announcement')) {
-					announ(acct_id, tlid)
+
+					todc()
 				}
+			} else if (typeA == 'filters_changed') {
+				filterUpdate(acct_id)
+			} else if (~typeA.indexOf('announcement')) {
+				announ(acct_id, tlid)
 			}
 		}
-		websocket[wsid].onerror = function (error) {
-			console.error('Error closing')
-			console.error(error)
-			if (mode == 'error') {
-				$('#notice_icon_' + tlid).addClass('red-text')
-				todo('WebSocket Error ' + error)
-			} else {
-				errorct++
-				console.log(errorct)
-				if (errorct < 3) {
-					reconnector(tlid, type, acct_id, data, 'error')
-				}
+	}
+	websocket[wsid].onerror = function (error) {
+		console.error('Error closing')
+		console.error(error)
+		if (mode == 'error') {
+			$('#notice_icon_' + tlid).addClass('red-text')
+			todo('WebSocket Error ' + error)
+		} else {
+			errorct++
+			console.log(errorct)
+			if (errorct < 3) {
+				reconnector(tlid, type, acct_id, data, 'error')
 			}
-			return false
 		}
-		websocket[wsid].onclose = function () {
-			console.warn('Closing ' + tlid)
-			if (mode == 'error') {
-				$('#notice_icon_' + tlid).addClass('red-text')
-				todo('WebSocket Closed')
-			} else {
-				errorct++
-				console.log(errorct)
-				if (errorct < 3) {
-					reconnector(tlid, type, acct_id, data, 'error')
-				}
+		return false
+	}
+	websocket[wsid].onclose = function () {
+		console.warn('Closing ' + tlid)
+		if (mode == 'error') {
+			$('#notice_icon_' + tlid).addClass('red-text')
+			todo('WebSocket Closed')
+		} else {
+			errorct++
+			console.log(errorct)
+			if (errorct < 3) {
+				reconnector(tlid, type, acct_id, data, 'error')
 			}
-			return false
 		}
+		return false
+	}
 }
 //一定のスクロールで発火
 function moreload(type, tlid) {
@@ -1037,7 +1047,7 @@ function reconnector(tlid, type, acct_id, data, mode) {
 			var voice = false
 		}
 		var mute = getFilterTypeByAcct(acct_id, type)
-		reload(type, '', acct_id, tlid, data, mute, '', voice, mode)
+		var domain = localStorage.getItem('domain_' + acct_id)
 	}
 	M.toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
 }
@@ -1047,6 +1057,12 @@ function columnReload(tlid, type) {
 	var multi = localStorage.getItem('column')
 	var obj = JSON.parse(multi)
 	var acct_id = obj[tlid].domain
+	var domain = localStorage.getItem('domain_' + acct_id)
+	if (mastodonBaseWsStatus[domain] == 'available') {
+		stremaingSubscribe(type, acct_id, obj[tlid].data, true)
+		parseColumn(tlid, true)
+		return true
+	}
 	if (type == 'mix' || type == 'integrated' || type == 'plus') {
 		if (localStorage.getItem('voice_' + tlid)) {
 			var voice = true
@@ -1066,15 +1082,10 @@ function columnReload(tlid, type) {
 		$('#notice_icon_' + tlid).removeClass('red-text')
 		getBookmark(acct_id, tlid, false)
 	} else {
+
 		var wss = localStorage.getItem('wss_' + tlid)
 		websocket[wss].close()
-		if (localStorage.getItem('voice_' + tlid)) {
-			var voice = true
-		} else {
-			var voice = false
-		}
-		var mute = getFilterTypeByAcct(acct_id, type)
-		parseColumn(tlid)
+		parseColumn(tlid, false)
 	}
 }
 //Markers
