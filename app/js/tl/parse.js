@@ -1246,7 +1246,6 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 				} else if (auth == 'request') {
 					var ftxt = lang.lang_parse_request
 				}
-				console.log(auth, ftxt)
 				if (popup > 0 || popup == -1 || notf) {
 					var notftext = ftxt + '<br>'
 				} else {

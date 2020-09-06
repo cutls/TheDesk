@@ -45,20 +45,20 @@ function utlShow(user, more, acct_id) {
 		}
 	}
 	fetch(start, i)
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (localStorage.getItem("mode_" + domain) == "misskey") {
 				var templete = misskeyParse(json, "", acct_id, "user")
 			} else {
@@ -118,20 +118,20 @@ function pinutl(before, user, acct_id) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var templete = parse(json, "pinned", acct_id, "user")
 			if (!json[0]) {
 				templete = ""
@@ -154,9 +154,9 @@ function flw(user, more, acct_id) {
 	if (localStorage.getItem("mode_" + domain) == "misskey") {
 		var req = { i: at }
 		if (more) {
-			var sid = $("#his-follow-list .cvo")
-				.last()
-				.attr("user-id")
+			var sid = $("#his-follow-list .cusr")
+			.last()
+			.attr("user-id")
 			req.maxId = sid
 		}
 		req.userId = user
@@ -170,9 +170,7 @@ function flw(user, more, acct_id) {
 		}
 	} else {
 		if (more) {
-			var sid = $("#his-follow-list .cvo")
-				.last()
-				.attr("user-id")
+			var sid = $("#his-follow-list-contents").attr('max-id')
 			var plus = "?max_id=" + sid
 		} else {
 			var plus = ""
@@ -185,22 +183,56 @@ function flw(user, more, acct_id) {
 				Authorization: "Bearer " + at
 			}
 		}
+		var httpreq = new XMLHttpRequest()
+		httpreq.open("GET", start, true)
+		httpreq.setRequestHeader('Content-Type', 'application/json')
+		httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+		httpreq.responseType = 'json'
+		httpreq.send()
+		httpreq.onreadystatechange = function () {
+			if (httpreq.readyState === 4) {
+				var json = httpreq.response
+				if (localStorage.getItem("mode_" + domain) == "misskey") {
+					var templete = misskeyUserparse(json, "", acct_id)
+				} else {
+					var templete = userparse(json, "", acct_id)
+				}
+				if (templete == "") {
+					templete = lang.lang_details_nodata + "<br>"
+				}
+				var linkHeader = httpreq.getResponseHeader("link")
+				let link
+				if (linkHeader) {
+					console.log(linkHeader)
+					link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1]
+					console.log(link)
+				}
+				$("#his-follow-list-contents").attr('max-id', link)
+				if (more) {
+					$("#his-follow-list-contents").append(templete)
+				} else {
+					$("#his-follow-list-contents").html(templete)
+				}
+				jQuery("time.timeago").timeago()
+			}
+		}
+		return false
 	}
 	fetch(start, i)
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (localStorage.getItem("mode_" + domain) == "misskey") {
 				var templete = misskeyUserparse(json, "", acct_id)
 			} else {
@@ -231,9 +263,9 @@ function fer(user, more, acct_id) {
 	if (localStorage.getItem("mode_" + domain) == "misskey") {
 		var req = { i: at }
 		if (more) {
-			var sid = $("#his-follower-list .cvo")
-				.last()
-				.attr("user-id")
+			var sid = $("#his-follow-list .cusr")
+			.last()
+			.attr("user-id")
 			req.maxId = sid
 		}
 		req.userId = user
@@ -247,9 +279,7 @@ function fer(user, more, acct_id) {
 		}
 	} else {
 		if (more) {
-			var sid = $("#his-follower-list .cvo")
-				.last()
-				.attr("user-id")
+			var sid = $("#his-followr-list-contents").attr('max-id')
 			var plus = "?max_id=" + sid
 		} else {
 			var plus = ""
@@ -262,22 +292,56 @@ function fer(user, more, acct_id) {
 				Authorization: "Bearer " + at
 			}
 		}
+		var httpreq = new XMLHttpRequest()
+		httpreq.open("GET", start, true)
+		httpreq.setRequestHeader('Content-Type', 'application/json')
+		httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+		httpreq.responseType = 'json'
+		httpreq.send()
+		httpreq.onreadystatechange = function () {
+			if (httpreq.readyState === 4) {
+				var json = httpreq.response
+				if (localStorage.getItem("mode_" + domain) == "misskey") {
+					var templete = misskeyUserparse(json, "", acct_id)
+				} else {
+					var templete = userparse(json, "", acct_id)
+				}
+				if (templete == "") {
+					templete = lang.lang_details_nodata + "<br>"
+				}
+				var linkHeader = httpreq.getResponseHeader("link")
+				let link
+				if (linkHeader) {
+					console.log(linkHeader)
+					link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1]
+					console.log(link)
+				}
+				$("#his-follower-list-contents").attr('max-id', link)
+				if (more) {
+					$("#his-follower-list-contents").append(templete)
+				} else {
+					$("#his-follower-list-contents").html(templete)
+				}
+				jQuery("time.timeago").timeago()
+			}
+		}
+		return false
 	}
 	fetch(start, i)
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (localStorage.getItem("mode_" + domain) == "misskey") {
 				var templete = misskeyUserparse(json, "", acct_id)
 			} else {
@@ -286,6 +350,14 @@ function fer(user, more, acct_id) {
 			if (templete == "") {
 				templete = lang.lang_details_nodata + "<br>"
 			}
+			var linkHeader = httpreq.getResponseHeader("link")
+			let link
+			if (linkHeader) {
+				console.log(linkHeader)
+				link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1]
+				console.log(link)
+			}
+			$("#his-follower-list-contents").attr('max-id', link)
 			if (more) {
 				$("#his-follower-list-contents").append(templete)
 			} else {
@@ -293,7 +365,7 @@ function fer(user, more, acct_id) {
 			}
 			jQuery("time.timeago").timeago()
 		})
-}
+	}
 
 //以下自分のみ
 //お気に入り一覧
@@ -305,9 +377,7 @@ function showFav(more, acct_id) {
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
 	if (localStorage.getItem("mode_" + domain) != "misskey") {
 		if (more) {
-			var sid = $("#his-fav-list .cvo")
-				.last()
-				.attr("toot-id")
+			var sid = $("#his-fav-list-contents").attr('max-id')
 			var plus = "?max_id=" + sid
 		} else {
 			var plus = ""
@@ -318,6 +388,35 @@ function showFav(more, acct_id) {
 			headers: {
 				"content-type": "application/json",
 				Authorization: "Bearer " + at
+			}
+		}
+		var httpreq = new XMLHttpRequest()
+		httpreq.open("GET", start, true)
+		httpreq.setRequestHeader('Content-Type', 'application/json')
+		httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+		httpreq.responseType = 'json'
+		httpreq.send()
+		httpreq.onreadystatechange = function () {
+			if (httpreq.readyState === 4) {
+				var json = httpreq.response
+				var linkHeader = httpreq.getResponseHeader("link")
+				let link
+				if (linkHeader) {
+					console.log(linkHeader)
+					link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1]
+					console.log(link)
+				}
+				var template = parse(json, "", acct_id, "user")
+				if (!json[0]) {
+					template = lang.lang_details_nodata + "<br>"
+				}
+				$("#his-fav-list-contents").attr('max-id', link)
+				if (more) {
+					$("#his-fav-list-contents").append(template)
+				} else {
+					$("#his-fav-list-contents").html(template)
+				}
+				jQuery("time.timeago").timeago()
 			}
 		}
 	} else {
@@ -339,20 +438,20 @@ function showFav(more, acct_id) {
 	}
 
 	fetch(start, i)
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (localStorage.getItem("mode_" + domain) != "misskey") {
 				var templete = parse(json, "", acct_id, "user")
 			} else {
@@ -413,20 +512,20 @@ function showMut(more, acct_id) {
 	}
 
 	fetch(start, i)
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (!json[0]) {
 				templete = lang.lang_details_nodata + "<br>"
 			}
@@ -466,20 +565,20 @@ function showBlo(more, acct_id) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (!json[0]) {
 				templete = lang.lang_details_nodata + "<br>"
 			}
@@ -535,20 +634,20 @@ function showReq(more, acct_id) {
 		}
 	}
 	fetch(start, i)
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (localStorage.getItem("mode_" + domain) != "misskey") {
 				var templete = userparse(json, "request", acct_id)
 			} else {
@@ -595,25 +694,25 @@ function showDom(more, acct_id) {
 		}
 		//body: JSON.stringify({})
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var templete = ""
 			if (!json[0]) {
 				templete = lang.lang_details_nodata + "<br>"
 			}
-			Object.keys(json).forEach(function(key) {
+			Object.keys(json).forEach(function (key) {
 				var domain = json[key]
 				templete = templete + domain + '<i class="material-icons gray pointer" onclick="domainblock(\'' + domain + "','DELETE')\">cancel</i>" + '<div class="divider"></div>'
 			})
@@ -652,19 +751,19 @@ function showFrl(more, acct_id) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			$("#his-follow-recom-contents").html(lang.lang_details_nodata + "(" + lang.lang_hisdata_frcreq + ")<br>")
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (!json[0]) {
 				console.warn("No suggestions(recommend) data")
 				templete = lang.lang_details_nodata + "(" + lang.lang_hisdata_frcwarn + ")<br>"
@@ -693,20 +792,20 @@ function udAdd(acct_id, id, start) {
 		}
 		//body: JSON.stringify({})
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var fields = json
 			for (var i = 0; i < fields.length; i++) {
 				var html = '<a href="' + fields[i].proof_url + '" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].provider)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].provider) + ":" + escapeHTML(fields[i].provider_username) + "</a>"
@@ -719,20 +818,20 @@ function udAdd(acct_id, id, start) {
 			Accept: "application/json"
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.user.public_view) {
 				var html = '<a href="' + json.user.url + '" target="_blank" class="cbadge purple waves-effect" style="max-width:200px;" title="Notestock">Notestock</a>'
 				$("#his-proof-prof").append(html)

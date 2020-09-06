@@ -87,6 +87,7 @@
   overflow-y: scroll;
   overflow-x: hidden;
   height: calc(100% - 3.4rem);
+  padding-bottom: 60px;
 }
 #my-data-nav .btn {
   width: 10.7rem;
