@@ -28,6 +28,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 				show: false
 			})
 			var lang = fs.readFileSync(lang_path, 'utf8')
+			//updatewin.toggleDevTools()
 			updatewin.loadURL(base + lang + '/update.html')
 			updatewin.webContents.once('dom-ready', () => {
 				updatewin.show()
