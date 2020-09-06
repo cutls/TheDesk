@@ -1621,7 +1621,7 @@ function mastodonBaseStreaming(acct_id) {
 		notf(acct_id, 0) //fallback
 		console.error("Error closing " + domain)
 		console.error(error)
-		if (mastodonBaseWsStatus[domain] == 'available') alert(domain)
+		if (mastodonBaseWsStatus[domain] == 'available') location.reload()
 		mastodonBaseWsStatus[domain] = 'cannotuse'
 		setTimeout(function () {
 			mastodonBaseWsStatus[domain] = 'cannotuse'
@@ -1632,7 +1632,7 @@ function mastodonBaseStreaming(acct_id) {
 	mastodonBaseWs[domain].onclose = function () {
 		notf(acct_id, 0) //fallback
 		console.warn("Closing " + domain)
-		if (mastodonBaseWsStatus[domain] == 'available') alert(domain)
+		if (mastodonBaseWsStatus[domain] == 'available') location.reload()
 		mastodonBaseWs[domain] = false
 		mastodonBaseWsStatus[domain] = 'cannotuse'
 		setTimeout(function () {
