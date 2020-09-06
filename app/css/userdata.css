@@ -143,6 +143,9 @@
 #hisdropdown{
   background-color: var(--bg);
 }
+#hisdropdown li a {
+  color: white;
+}
 #hisdropdown li:hover{
   background-color: var(--active);
 }

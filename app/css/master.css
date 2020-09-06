@@ -610,3 +610,6 @@ textarea {
 .darwin .win {
 	display: none;
 }
+.dropdown-content.header:hover {
+	background-color: white;
+}
