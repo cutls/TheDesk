@@ -111,9 +111,7 @@ function announReaction(id, acct_id, tlid, del, name) {
 			if (this.status !== 200) {
 				setLog(start, this.status, this.response)
 			}
-			setTimeout(function () {
-				announ(acct_id, tlid)
-			}, 3000)
+			announ(acct_id, tlid)
 		}
 	}
 }
