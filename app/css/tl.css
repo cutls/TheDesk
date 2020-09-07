@@ -451,6 +451,13 @@ iframe,
 .action .fa-quote-right {
 	margin-top: 0.15rem;
 }
+.actct {
+	color: var(--beforehover);
+}
+.actct:hover {
+	color: var(--color);
+	transition: 0.5s;
+}
 .contextMenu.dropdown-content {
 	padding-top: 5px;
 	overflow-y: hidden;

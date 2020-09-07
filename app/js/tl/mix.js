@@ -19,11 +19,11 @@ async function mixtl(acct_id, tlid, type, delc, voice) {
 	additional(acct_id, tlid)
 	jQuery('time.timeago').timeago()
 	todc()
-	if(mastodonBaseWsStatus[domain] == 'cannnotopen') {
+	if(mastodonBaseWsStatus[domain] == 'cannotuse') {
 		mixre(acct_id, tlid, 'mix', mute, voice, '')
-	} else if(mastodonBaseWs[domain] == 'undetected') {
+	} else if (mastodonBaseWsStatus[domain] == 'undetected' || mastodonBaseWsStatus[domain] == 'connecting') {
 		const mbws = setInterval(function () {
-			if(mastodonBaseWsStatus[domain] == 'cannnotopen') {
+			if(mastodonBaseWsStatus[domain] == 'cannotuse') {
 				mixre(acct_id, tlid, 'mix', mute, voice, '')
 				clearInterval(mbws)
 			} else if(mastodonBaseWsStatus[domain] == 'available') {

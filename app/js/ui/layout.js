@@ -149,7 +149,6 @@ function parseColumn(target, dontclose) {
 				icnsert = ' style="color: #' + ichex + '" '
 			}
 		}
-		console.log(acct)
 		if (acctlist[acct.domain]) {
 			if (acctlist[acct.domain].background != 'def') {
 				insert = insert + ' border-bottom:medium solid #' + acctlist[acct.domain].background + ';'
@@ -363,7 +362,6 @@ function parseColumn(target, dontclose) {
 				var addHeight = ''
 			}
 			if (acct.type != 'pub' && acct.type != 'pub-media') {
-				console.log(acct.type, key)
 				var mediaFil = `<a onclick="mediaToggle('${key}')" class="setting nex">
 					<i class="material-icons waves-effect nex" title="${lang.lang_layout_mediafil}">perm_media</i>
 					<span id="sta-media-${key}">On</span>
