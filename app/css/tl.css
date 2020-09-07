@@ -451,48 +451,12 @@ iframe,
 .action .fa-quote-right {
 	margin-top: 0.15rem;
 }
-.actct {
-	color: var(--beforehover);
+.contextMenu.dropdown-content {
+	padding-top: 5px;
+	overflow-y: hidden;
+	left: calc(100% - 200px) !important;
+	width: 200px !important;
 }
-.actct:hover {
-	color: var(--color);
-	transition: 0.5s;
-}
-#contextWrap {
-	position: fixed;
-	width: 199vw;
-	height: 100vh;
-	z-index: 100;
-}
-.contextMenu {
-	position: fixed;
-	background-color: var(--box);
-	z-index: 9999;
-	border-radius: 0.4rem;
-	padding: 0.4rem;
-}
-.contextMenu.bottom:before {
-	content: '';
-	position: absolute;
-	top: 100%;
-	right: 2rem;
-	border: 1.2rem solid transparent;
-	border-top: 1.2rem solid var(--box);
-}
-.contextMenu.top:before {
-	content: '';
-	position: absolute;
-	top: -2.3rem;
-	right: 2rem;
-	border: 1.5rem solid transparent;
-	border-bottom: 1.5rem solid var(--box);
-}
-.contextMenu .btn-flat {
-	text-transform: none !important;
-	width: 100%;
-	text-align: left;
-}
-
 .gray {
 	color: var(--gray);
 }

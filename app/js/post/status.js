@@ -680,7 +680,11 @@ function staEx(mode) {
 		})
 	return
 }
-function toggleAction(elem, ct) {
+function toggleAction(id) {
+	console.log(document.getElementById(id))
+	var instance = M.Dropdown.init(document.getElementById(id));
+	instance.open()
+	return
 	var height = ct * 39 + 6
 	var cont = elem.parents('.cvo').find('.contextMenu')
 	if (cont.hasClass('hide')) {

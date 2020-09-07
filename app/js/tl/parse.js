@@ -901,12 +901,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			}
 			//日本語じゃない
 			if (toot.language != lang.language && toot.language) {
-				var trans = `<div class="">
-						<a onclick="trans('${toot.language}','${lang.language}', $(this))" 
+				var trans = `<li onclick="trans('${toot.language}','${lang.language}', $(this))" 
 							class="waves-effect waves-dark btn-flat actct" style="padding:0">
 								<i class="material-icons" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
-						</a>
-					</div>`
+					</li>`
 			} else {
 				var trans = ''
 			}
@@ -1132,8 +1130,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				</div>
 				<div class="area-side">
 					<div class="action ${noauth}">
-						<a onclick="toggleAction($(this), ${menuct})" 
-							class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0">
+						<a onclick="toggleAction('trigger_${tlid}_${uniqueid}')" data-target="dropdown_${tlid}_${uniqueid}"
+							class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0" id="trigger_${tlid}_${uniqueid}">
 							<i class="text-darken-3 material-icons act-icon" aria-hidden="true">expand_more</i>
 							<span class="voice">Other actions</span>
 						</a>
@@ -1146,45 +1144,33 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						<span class="voice">${lang.lang_parse_detail}</span>
 					</div>
 				</div>
-				<div class="contextMenu hide z-depth-4">
-					<div class="${viashow}">
+				<ul class="dropdown-content contextMenu" id="dropdown_${tlid}_${uniqueid}">
+					<li class="${viashow}">
 						via ${escapeHTML(via)}<br>
 						<a onclick="client('${$.strip_tags(via)}')" class="pointer">${lang.lang_parse_clientop}</a>
-					</div>
+					</li>
 					<div>
-					<button onclick="bkm('${uniqueid}','${acct_id}','${tlid}')"
-						class="waves-effect waves-dark btn-flat actct bkm-btn" style="padding:0">
-						<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${if_bkm}"></i>
-						<span class="bkmStr_${uniqueid}">${bkmStr}</span>
-					</button>
-					</div>
-					<div class="${if_mine}">
-						<button onclick="del('${uniqueid}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
+					<li onclick="bkm('${uniqueid}','${acct_id}','${tlid}')"
+						class="bkm-btn bkmStr_${uniqueid}" style="padding:0">
+						<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${if_bkm}"></i>${bkmStr}
+					</li>
+					<li class="${if_mine}" onclick="del('${uniqueid}','${acct_id}')"
 							style="padding:0">
 							<i class="fas fa-trash"></i>${lang.lang_parse_del}
-						</button>
-					</div>
-					<div class="${if_mine}">
-						<button onclick="pin('${uniqueid}','${acct_id}')" class="waves-effect waves-dark btn-flat actct" style="padding:0">
-							<i class="fas fa-map-pin pin_${uniqueid} ${if_pin}"></i>
-							<span class="pinStr_${uniqueid}">${pinStr}</span>
-						</button>
-					</div>
-					<div class="${if_mine}">
-						<button onclick="redraft('${uniqueid}','${acct_id}')" class="waves-effect waves-dark btn-flat actct"
+					</li>
+					<li class="${if_mine}" onclick="pin('${uniqueid}','${acct_id}')" style="padding:0" class="pinStr_${uniqueid}">
+							<i class="fas fa-map-pin pin_${uniqueid} ${if_pin}"></i>${pinStr}
+					</li>
+					<li class="${if_mine}"  onclick="redraft('${uniqueid}','${acct_id}')"
 							style="padding:0">
 							<i class="material-icons" aria-hidden="true">redo</i>${lang.lang_parse_redraft}
-						</button>
-					</div>
+					</li>
 					${trans}
-					<div>
-					<button onclick="postMessage(['openUrl', '${toot.url}'], '*')"
-						class="waves-effect waves-dark btn-flat actct" style="padding:0">
-						<i class="fas text-darken-3 fa-globe"></i>
-						${lang.lang_parse_link}
-					</button>
-					</div>
-				</div>
+					<li onclick="postMessage(['openUrl', '${toot.url}'], '*')"
+						 style="padding:0">
+						<i class="fas text-darken-3 fa-globe"></i>${lang.lang_parse_link}
+					</li>
+				</ul>
 			</div>
 			`
 		}
@@ -1371,7 +1357,6 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 }
 //クライアントダイアログ
 function client(name) {
-	$('#contextWrap').addClass('hide')
 	if (name != 'Unknown') {
 		//聞く
 		Swal.fire({

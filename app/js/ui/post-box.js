@@ -126,11 +126,6 @@ function initPostbox() {
 		localStorage.removeItem('nohide')
 		srcBox('close')
 	})
-	$('#contextWrap').click(function (e) {
-		$('#contextWrap').addClass('hide')
-		$('.contextMenu').addClass('hide')
-		$('.act-icon').text('expand_more')
-	})
 	$('#textarea,#cw-text').focusout(function (e) {
 		localStorage.setItem('nohide', true)
 		var countup = function () {
