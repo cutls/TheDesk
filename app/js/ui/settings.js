@@ -167,10 +167,10 @@ function load() {
 		var font = ''
 	}
 	$('#font').val(font)
-	$('#c1-file').text(localStorage.getItem('custom1'))
-	$('#c2-file').text(localStorage.getItem('custom2'))
-	$('#c3-file').text(localStorage.getItem('custom3'))
-	$('#c4-file').text(localStorage.getItem('custom4'))
+	$('#c1-file').text(localStorage.getItem('custom1')!= 'null' ? localStorage.getItem('custom1') : '')
+	$('#c2-file').text(localStorage.getItem('custom2')!= 'null' ? localStorage.getItem('custom2') : '')
+	$('#c3-file').text(localStorage.getItem('custom3')!= 'null' ? localStorage.getItem('custom3') : '')
+	$('#c4-file').text(localStorage.getItem('custom4')!= 'null' ? localStorage.getItem('custom4') : '')
 	var cvol = localStorage.getItem('customVol')
 	if (cvol) {
 		$('#soundvol').val(cvol * 100)
@@ -754,7 +754,7 @@ function customSound(key) {
 }
 function customSoundSave(key, file) {
 	localStorage.setItem('custom' + key, file)
-	$('#c1-file').text(file)
+	$(`#c${key}-file`).text(file)
 }
 window.onload = function () {
 	//最初に読む
