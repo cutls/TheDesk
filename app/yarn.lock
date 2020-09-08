@@ -3211,10 +3211,10 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-sweetalert2@^9.17.0:
-  version "9.17.0"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.17.0.tgz#9ea457f3c44295a3629ed5998fee6a51940c3891"
-  integrity sha512-tOby96N1FlTT8Xi7Y7QlTiswNJTySgghmRSyFwb3pO3zdrhsR2PUp4ucmye7a3CTLbLdqjHdszsGlCJ0v6pGaQ==
+sweetalert2@^10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-10.0.1.tgz#1538a8a161676c72e42793c1291a3101254a03da"
+  integrity sha512-U7haMP/twW4atNBCBnKSt7r+TdBA/WOdjLtFyyRNPecHjk/wqp12AiPwGoYpJmdMoT/g2DLwvUSyNcPRHQq7SQ==
 
 system-font-families@^0.4.1:
   version "0.4.1"
