@@ -1,0 +1,27 @@
+{
+	name: 'Brown',
+	author: 'TheDesk',
+	desc: 'TheDesk Default Theme',
+	base: 'dark',
+	primary: {
+		background: '#261411',
+		subcolor: '#4e342e',
+		text: '#fff',
+		accent: '#004d40',
+	},
+	advanced: {
+		modal: '#261411',
+		modalFooter: '#261411',
+		third: '#4e342e',
+		forth: '#4e342e',
+		bottom: '#4e342e',
+		emphasized: '#0d47a1',
+		postbox: '#4e342e',
+		active: '#827717',
+		selected: '#6d352b',
+		selectedWithShared: '#003a30',
+	},
+	id: 'brown',
+	version: '2',
+	default: true
+}

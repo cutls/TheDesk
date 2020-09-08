@@ -1,0 +1,27 @@
+{
+	name: 'White',
+	author: 'TheDesk',
+	desc: 'TheDesk Default Theme',
+	base: 'light',
+	primary: {
+		background: '#fff',
+		subcolor: '#fff',
+		text: '#000',
+		accent: '#cfd8dc',
+	},
+	advanced: {
+		modal: '#fff',
+		modalFooter: '#fafafa',
+		third: '#e0e0e0',
+		forth: '#fff',
+		bottom: '#eeeeee',
+		emphasized: '#81c784',
+		postbox: '#fff',
+		active: '#009688',
+		selected: '#c0c0c0',
+		selectedWithShared: '#b2babd',
+	},
+	id: 'white',
+	version: '2',
+	default: true
+}

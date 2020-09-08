@@ -12,7 +12,6 @@
 	@@comment-end@@
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
 	<link href="../../@@node_base@@/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
-	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
 	<link href="../../css/pickr.css" type="text/css" rel="stylesheet">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
 	<link href="../../@@node_base@@/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
@@ -25,6 +24,7 @@
 		.pcr-result {
 			height: 1rem !important;
 		}
+
 		.container-after-titlebar {
 			padding: 20px;
 		}
@@ -37,7 +37,7 @@
 	<script type="text/javascript" src="../../js/platform/first.js"></script>
 	<script type="text/javascript" src="../../@@node_base@@/materialize-css/dist/js/materialize.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	<script src="../../@@node_base@@/json5/dist/index.min.js"></script> 
+	<script src="../../@@node_base@@/json5/dist/index.min.js"></script>
 	<script src="../../@@node_base@@/vue/dist/vue.min.js"></script>
 	<script type="text/javascript" src="setting.vue.js"></script>
 	<script type="text/javascript" src="../../@@node_base@@/sweetalert2/dist/sweetalert2.all.min.js"></script>
@@ -57,8 +57,8 @@
 					style="width:100%; max-width:15rem;">@@export@@</button>
 				<button onclick="importSettings()" class="btn waves-effect cyan darken-3"
 					style="width:100%; max-width:15rem;">@@import@@</button><br>
-					@@backupWarn@@<br>
-					<input type="text" id="imp-exp" style="width: 22rem">
+				@@backupWarn@@<br>
+				<input type="text" id="imp-exp" style="width: 22rem">
 				<div id="envView">
 					<template v-for="(item, i) in config">
 						<h5>{{item.text.head}}</h5>
@@ -112,44 +112,6 @@
 			</div>
 			<div class="collapsible-body">
 				<h4>@@themeSel@@</h4>
-				<label>
-					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="black" value="black" />
-					<span data-ct="black">Black</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="white" value="white" />
-					<span data-ct="white">White</span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="indigo"
-						value="indigo" />
-					<span data-ct="indigo">Indigo<span class="imas hide">(エンドレスナイト)</span></span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="brown" value="brown" />
-					<span data-ct="brown">Brown<span class="imas hide">(ビタースイート・タイム)</span></span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="green" value="green" />
-					<span data-ct="green">Green<span class="imas hide">(ユースフルロマンス)</span></span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="blue" value="blue" />
-					<span data-ct="blue">Blue<span class="imas hide">(渚の花嫁)</span></span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="polar" value="polar" />
-					<span data-ct="polar">Polar Night<span class="imas hide">(ひみつの小夜曲)</span></span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="snow" value="snow" />
-					<span data-ct="snow">Snow Storm<span class="imas hide">(極光のしらべ)</span></span>
-				</label>
-				<label>
-					<input class="with-gap" onchange="settings()" name="theme" type="radio" id="custom"
-						value="custom" />
-					<span data-ct="custom">custom</span>
-				</label>
 				<div style="width:22rem" id="sel-selector">
 					<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
 				</div>
@@ -174,74 +136,150 @@
 					<input class="with-gap" onchange="settings()" name="direction" type="radio" id="light"
 						value="light" />
 					<span>Light</span>
-				</label><br>
+				</label><br><br />
 				<button class="btn waves-effect" onclick="advanced()">@@advanced@@</button>
 				<span class="advanced hide">@@advancedWarn@@</span>
 				<div id="pickers">
 					<div>
-						<h5>Primary</h5>@@secondarycolor@@
-						<div id="color-picker0-wrap">
-							<div class="color-picker" id="color-picker0"></div>
-						</div>
-						<input type="hidden" id="color-picker0_value">
+						<h5>Background</h5>@@bg@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_0" value="1" checked disabled />
+							<span>@@use@@</span>
+						</label><br />
+						<input type="color" class="btn  waves-effect" id="color-picker0_value">
 					</div>
 					<div>
-						<h5>Secondary</h5>@@primary@@
-						<div id="color-picker1-wrap">
-							<div class="color-picker" id="color-picker1"></div>
-						</div>
-						<input type="hidden" id="color-picker1_value">
+						<h5>Text</h5>@@text@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_1" value="1" checked disabled />
+							<span>@@use@@</span>
+						</label><br />
+						<input type="color" class="btn waves-effect" id="color-picker1_value">
 					</div>
 					<div>
-						<h5>Texts</h5>@@text@@
-						<div id="color-picker2-wrap">
-							<div class="color-picker" id="color-picker2"></div>
-						</div>
-						<input type="hidden" id="color-picker2_value">
+						<h5>Subcolor</h5>@@subcolor@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_2" value="1" checked disabled />
+							<span>@@use@@</span>
+						</label><br />
+						<input type="color" class="btn waves-effect" id="color-picker2_value">
+					</div>
+					<div>
+						<h5>Accent</h5>@@accent@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_3" value="1" checked disabled />
+							<span>@@use@@</span>
+						</label><br />
+						<input type="color" class="btn waves-effect" id="color-picker3_value">
+					</div>
+
+					<div class="advanced hide">
+						<h5>Modal</h5>@@modal@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_4" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						@@copyFrom@@:
+							<a class="pointer" onclick="copyColor('background','modal')">Background</a>
+						<br />
+						<input type="color" class="btn waves-effect" id="color-picker4_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Accent</h5>@@accent@@
-						<div id="color-picker3-wrap">
-							<div class="color-picker" id="color-picker3"></div>
-						</div>
-						<input type="hidden" id="color-picker3_value">
+						<h5>Modal Footer</h5>@@modalFooter@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_5" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						@@copyFrom@@:
+							<a class="pointer" onclick="copyColor('background','modalFooter')">Background</a>/
+							<a class="pointer" onclick="copyColor('modal','modalFooter')">Modal</a>
+						<br />
+						<input type="color" class="btn waves-effect" id="color-picker5_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Active</h5>@@active@@
-						<div id="color-picker4-wrap">
-							<div class="color-picker" id="color-picker4"></div>
-						</div>
-						<input type="hidden" id="color-picker4_value">
+						<h5>3rd Color</h5>@@thirdColor@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_6" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						@@copyFrom@@:
+							<a class="pointer" onclick="copyColor('subcolor','third')">Subcolor</a>
+						<br />
+						<input type="color" class="btn waves-effect" id="color-picker6_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Modal</h5>@@modal@@
-						<div id="color-picker5-wrap">
-							<div class="color-picker" id="color-picker5"></div>
-						</div>
-						<input type="hidden" id="color-picker5_value">
+						<h5>4th Color</h5>@@forthColor@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_7" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						@@copyFrom@@:
+							<a class="pointer" onclick="copyColor('subcolor','forth')">Subcolor</a>/
+							<a class="pointer" onclick="copyColor('third','forth')">3rd Color</a>
+						<br />
+						<input type="color" class="btn waves-effect" id="color-picker7_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Bottom</h5>@@bottom@@
-						<div id="color-picker6-wrap">
-							<div class="color-picker" id="color-picker6"></div>
-						</div>
-						<input type="hidden" id="color-picker6_value">
+						<h5>Bottom</h5>@@bottom@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_8" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						@@copyFrom@@:
+							<a class="pointer" onclick="copyColor('subcolor','bottom')">Subcolor</a>
+						<br />
+						<input type="color" class="btn waves-effect" id="color-picker8_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Postbox</h5>@@postbox@@
-						<div id="color-picker7-wrap">
-							<div class="color-picker" id="color-picker7"></div>
-						</div>
-						<input type="hidden" id="color-picker7_value">
+						<h5>2nd Accent</h5>@@emphasized@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_9" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						@@copyFrom@@:
+							<a class="pointer" onclick="copyColor('accent','emphasized')">Accent</a>
+						<br />
+						<input type="color" class="btn waves-effect" id="color-picker9_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Subcolor</h5>@@subcolor@@
-						<div id="color-picker8-wrap">
-							<div class="color-picker" id="color-picker8"></div>
-						</div>
-						<input type="hidden" id="color-picker8_value">
+						<h5>Postbox</h5>@@postbox@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_10" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						@@copyFrom@@:
+							<a class="pointer" onclick="copyColor('subcolor','postbox')">Subcolor</a>
+						<br />
+						<input type="color" class="btn waves-effect" id="color-picker10_value">
 					</div>
-				</div>
+					<div class="advanced hide">
+						<h5>Active</h5>@@active@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_11" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						@@copyFrom@@:
+							<a class="pointer" onclick="copyColor('accent','active')">Accent</a>
+						<br />
+						<input type="color" class="btn waves-effect" id="color-picker11_value">
+					</div>
+					<div class="advanced hide">
+						<h5>Selected</h5>@@selected@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_12" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						<input type="color" class="btn waves-effect" id="color-picker12_value">
+					</div>
+					<div class="advanced hide">
+						<h5>Selected with shared</h5>@@selectedWithShare@@<br />
+						<label>
+							<input type="checkbox" class="filled-in" id="use-color_13" value="1" />
+							<span>@@use@@</span>
+						</label><br />
+						<input type="color" class="btn waves-effect" id="color-picker13_value">
+					</div>
+				</div><br /><br />
 				<button class="btn-large waves-effect" onclick="customComp()">@@change@@</button>&nbsp;<button
 					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">@@delete@@</button><br><br>
 				<input type="text" style="width:22rem;height:40px;" id="custom_json" class="materialize-textarea"
@@ -443,15 +481,15 @@
 			</div>
 			<div class="collapsible-body">
 				<h5>@@bouyomi@@</h5>
-				@@bouyomiWarn@@<a href="https://github.com/xztaityozx/BouyomiChan-WebSocket-Plugin" target="_blank">GitHub</a><br>
+				@@bouyomiWarn@@<a href="https://github.com/xztaityozx/BouyomiChan-WebSocket-Plugin"
+					target="_blank">GitHub</a><br>
 				<label>
 					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_yes"
 						value="yes" />
 					<span>@@yes@@</span>
 				</label>
 				<label>
-					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_no"
-						value="no" />
+					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_no" value="no" />
 					<span>@@no@@</span>
 				</label>
 				<h5>@@speed@@</h5>
@@ -534,16 +572,19 @@
 		style="width:100%; max-width:40rem;"><img src="../../img/desk_full.svg" class="left" width="25"
 			style="padding-top:5px;">Main author: Cutls@cutls.com</a>
 	<br>
-	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/@@gitHash@@">@@gitHash@@</a> - <a onclick="checkupd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';"
-	class="pointer pwa">@@checkup@@</a><br>
+	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/@@gitHash@@">@@gitHash@@</a> - <a
+		onclick="checkupd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';"
+		class="pointer pwa">@@checkup@@</a><br>
 	<br>
 	Kyash<br>
 	<img src="../../img/kyash.png" width="100"><br>
-		<a href="https://status.cutls.com/">
-			<img src="https://status.cutls.com/badge-service?site=thedesk.top">
-		</a><br>
-		<h5>OSS License@@ossJP@@</h5>
-		<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/@@gitHash@@" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcutls%2FTheDesk.svg?type=small"/></a>
+	<a href="https://status.cutls.com/">
+		<img src="https://status.cutls.com/badge-service?site=thedesk.top">
+	</a><br>
+	<h5>OSS License@@ossJP@@</h5>
+	<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/@@gitHash@@"
+		alt="FOSSA Status"><img
+			src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcutls%2FTheDesk.svg?type=small" /></a>
 	<br>
 	<span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018
 		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a

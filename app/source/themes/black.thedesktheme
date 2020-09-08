@@ -1,0 +1,27 @@
+{
+	name: 'Black',
+	author: 'TheDesk',
+	desc: 'TheDesk Default Theme',
+	base: 'dark',
+	primary: {
+		background: '#212121',
+		subcolor: '#424242',
+		text: '#fff',
+		accent: '#004d40',
+	},
+	advanced: {
+		modal: '#000',
+		modalFooter: '#212121',
+		third: '#212121',
+		forth: '#333333',
+		bottom: '#424242',
+		emphasized: '#4e342e',
+		postbox: '#424242',
+		active: '#3f51b5',
+		selected: '#3f3f3f',
+		selectedWithShared: '#003a30',
+	},
+	id: 'black',
+	version: '2',
+	default: true
+}

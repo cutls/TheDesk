@@ -1,0 +1,27 @@
+{
+	name: 'Green',
+	author: 'TheDesk',
+	desc: 'TheDesk Default Theme',
+	base: 'light',
+	primary: {
+		background: '#c8e6c9',
+		subcolor: '#a5d6a7',
+		text: '#000',
+		accent: '#ffcc80',
+	},
+	advanced: {
+		modal: '#81c784',
+		modalFooter: '#81c784',
+		third: '#a5d6a7',
+		forth: '#81c784',
+		bottom: '#c5e1a5',
+		emphasized: '#9e9d24',
+		postbox: '#a5d6a7',
+		active: '#33691e',
+		selected: '#78c17a',
+		selectedWithShared: '#caa266',
+	},
+	id: 'green',
+	version: '2',
+	default: true
+}

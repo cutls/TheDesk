@@ -58,7 +58,7 @@ function main(ver, basefile, pwa) {
 			langstr +
 			'<a onclick="changelang(\'' +
 			lang +
-			'\')" class="pointer" style="margin:4px;border: 1px solid var(--color); padding: 3px">' +
+			'\')" class="pointer" style="margin:4px;border: 1px solid var(--text); padding: 3px">' +
 			langsh[n] +
 			'</a>'
 		let mainJson = JSON.parse(

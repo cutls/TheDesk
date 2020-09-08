@@ -1,0 +1,27 @@
+{
+	name: 'Blue',
+	author: 'TheDesk',
+	desc: 'TheDesk Default Theme',
+	base: 'light',
+	primary: {
+		background: '#c9e1ec',
+		subcolor: '#dff1ff',
+		text: '#000',
+		accent: '#e0ffe4',
+	},
+	advanced: {
+		modal: '#b2ebf2',
+		modalFooter: '#2196f3',
+		third: '#90caf9',
+		forth: '#90caf9',
+		bottom: '#b6e6f5',
+		emphasized: '#c5e1a5',
+		postbox: '#dff1ff',
+		active: '#2f7bb7',
+		selected: '#9dcade',
+		selectedWithShared: '#c1dac4',
+	},
+	id: 'blue',
+	version: '2',
+	default: true
+}

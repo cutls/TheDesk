@@ -5,7 +5,7 @@
   background-color: var(--modalfooter);
   margin: 0.4rem;
   border-radius: 0.4rem;
-  color: var(--color);
+  color: var(--text);
   padding: 3px;
   display: grid;
   grid-template-columns: 3.3rem 1fr 4.6rem;

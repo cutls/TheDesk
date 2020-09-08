@@ -234,6 +234,7 @@
     "lang_misskeyparse_quoted": "が引用",
     "lang_misskeyparse_reacted": "がリアクション",
     "lang_setting_time": "時間設定を{{set}}に設定したで。",
+    "lang_setting_compat": "互換テーマ",
     "lang_setting_theme": "テーマ設定を{{set}}に設定したで。",
     "lang_setting_nsfw": "画像表示設定を{{set}}に設定したで。",
     "lang_setting_cw": "テキスト表示設定を{{set}}に設定したで。",

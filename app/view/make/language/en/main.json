@@ -240,6 +240,7 @@
     "lang_misskeyparse_reacted": " reacted your following post.",
     "lang_setting_time": "Time format:{{set}}",
     "lang_setting_theme": "Theme:{{set}}",
+    "lang_setting_compat": "Compatible",
     "lang_setting_nsfw": "Sensitive media:{{set}}",
     "lang_setting_cw": "CW:{{set}}",
     "lang_setting_cwtext": "Default CW text:{{set}}",

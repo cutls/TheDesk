@@ -31,119 +31,246 @@ function css(mainWindow) {
 		}
 	})
 	ipc.on('theme-json-delete', function (e, arg) {
-		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
-		console.log(themecss);
-		fs.unlink(themecss, function (err) {
-			e.sender.webContents.send('theme-json-delete-complete', "");
-		});
+		try{
+			var themecss = join(app.getPath("userData"), arg);
+			console.log(themecss);
+			fs.unlink(themecss, function (err) {
+				e.sender.webContents.send('theme-json-delete-complete', "");
+			});
+		} catch {
+			e.sender.webContents.send('theme-json-delete-complete', 'cannot delete');
+		}
+		
 	})
 	ipc.on('theme-json-request', function (e, arg) {
-		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
-		var raw = fs.readFileSync(themecss, 'utf8')
-		var json = JSON5.parse(raw);
+		try {
+			var themecss = join('./source/themes', arg)
+			var raw = fs.readFileSync(themecss, 'utf8')
+			var json = JSON5.parse(raw)
+		} catch {
+			var themecss = join(app.getPath("userData"), arg)
+			var raw = fs.readFileSync(themecss, 'utf8')
+			var json = JSON5.parse(raw)
+		}
 		e.sender.webContents.send('theme-json-response', [json, raw]);
 	})
 	ipc.on('theme-css-request', function (e, arg) {
-		var themecss = join(app.getPath("userData"), arg + ".thedesktheme");
 		try {
-			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'));
+			var themecss = join('./source/themes', arg)
+			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'))
+		} catch {
+			var themecss = join(app.getPath("userData"), arg)
+			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'))
+		}
 
-			var primary = json.vars.primary;
-			var secondary = json.vars.secondary;
-			var text = json.vars.text;
-			if (json.base == "light") {
-				var drag = "rgba(255, 255, 255, 0.8)";
-				var beforehover = "#757575";
-				var selected = "#3f3f3f"
-				var selectedWithShare = "#b2babd"
-				var gray = "#757575"
-			} else {
-				var drag = "rgba(0, 0, 0, 0.8)";
-				var beforehover = "#9e9e9e";
-				var selected = "#c0c0c0"
-				var selectedWithShare = "#003a30"
-				var gray = "#cccccc"
-			}
-			if (json.props) {
-				if (json.props.TheDeskAccent) {
-					var emphasized = json.props.TheDeskAccent
+		try {
+			var css
+			if (json.version) {
+				var bg = json.primary.background
+				var subcolor = json.primary.subcolor
+				var text = json.primary.text
+				var accent = json.primary.accent
+				if (json.base == "light") {
+					var drag = "rgba(255, 255, 255, 0.8)";
+					var beforehover = "#757575";
+					var selected = "#3f3f3f"
+					var selectedWithShare = "#b2babd"
+					var gray = "#757575"
+					var hisData = 'rgba(255, 255, 255, 0.9)'
 				} else {
-					var emphasized = secondary
+					var drag = "rgba(0, 0, 0, 0.8)";
+					var beforehover = "#9e9e9e";
+					var selected = "#c0c0c0"
+					var selectedWithShare = "#003a30"
+					var gray = "#cccccc"
+					var hisData = 'rgba(0, 0, 0, 0.8)'
 				}
-				if (json.props.TheDeskActive) {
-					var active = json.props.TheDeskActive
+				if (!json.advanced) {
+					json.advanced = {}
+				}
+				if (json.advanced.modal) {
+					var modal = json.advanced.modal
 				} else {
-					var active = primary
+					var modal = bg
 				}
-				if (json.props.TheDeskModal) {
-					var modal = json.props.TheDeskModal
+				if (json.advanced.modalFooter) {
+					var modalFooter = json.advanced.modalFooter
 				} else {
-					var modal = secondary
+					var modalFooter = bg
+					if (modal != bg) modalFooter = modal
 				}
-				if (json.props.TheDeskBottom) {
-					var bottom = json.props.TheDeskBottom
+				if (json.advanced.thirdColor) {
+					var thirdColor = json.advanced.thirdColor
 				} else {
-					var bottom = primary
+					var thirdColor = subcolor
 				}
-				if (json.props.TheDeskPostbox) {
-					var postbox = json.props.TheDeskPostbox
+				if (json.advanced.forthColor) {
+					var forthColor = json.advanced.forthColor
 				} else {
-					var postbox = primary
+					var forthColor = subcolor
+					if (thirdColor != subcolor) forthColor = thirdColor
 				}
-				if (json.props.TheDeskSubcolor) {
-					var subcolor = json.props.TheDeskSubcolor
+				if (json.advanced.bottom) {
+					var bottom = json.advanced.bottom
 				} else {
-					var subcolor = primary
+					var bottom = subcolor
 				}
-			} else {
-				var emphasized = primary
-				var acs = secondary
-				var active = primary
-				var modal = secondary
-				var bottom = primary
-				var postbox = primary
-				var subcolor = primary
-			}
+				if (json.advanced.emphasized) {
+					var emphasized = json.advanced.emphasized
+				} else {
+					var emphasized = accent
+				}
+				if (json.advanced.postbox) {
+					var postbox = json.advanced.postbox
+				} else {
+					var postbox = subcolor
+				}
+				if (json.advanced.active) {
+					var active = json.advanced.active
+				} else {
+					var active = accent
+				}
+				if (json.advanced.selected) {
+					var selected = json.advanced.selected
+				}
+				if (json.advanced.selectedWithShare) {
+					var selectedWithShare = json.advanced.selectedWithShare
+				}
 
-			var css = ".customtheme {--bg:" + secondary + ";--drag:" + drag + ";" +
-				"--color:" + text + ";--beforehover:" + beforehover + ";--modal:" +
-				modal + ";--subcolor:" + subcolor + ";--box:" + subcolor +
-				";--sidebar:" + bottom + ";--shared:" + emphasized + ";" +
-				"--notfbox:" + secondary + ";--emphasized:" + active + ";--his-data:" +
-				secondary +
-				";--active:" + active + ";--postbox:" + postbox + ";--modalfooter:" +
-				primary +
-				";--accentbtn:" + subcolor + ";--selected:" + selected + ";--selectedWithShare:" + selectedWithShare + "}"+
-				"--gray:" + gray + ";"+
-				".customtheme #imagemodal{background: url(\"../img/pixel.svg\");}";
+				var css = ":root {--bg:" + bg + ";--drag:" + drag + ";" +
+					"--text:" + text + ";--beforehover:" + beforehover + ";--modal:" +
+					modal + ";--thirdColor:" + thirdColor + ";--subcolor:" + forthColor +
+					";--bottom:" + bottom + ";--accent:" + accent + ";" + ";--emphasized:" + emphasized + ";--his-data:" +
+					hisData +
+					";--active:" + active + ";--postbox:" + postbox + ";--modalfooter:" +
+					modalFooter + ";--selected:" + selected + ";--selectedWithShare:" + selectedWithShare + "}" +
+					"--gray:" + gray + ";" +
+					".customtheme #imagemodal{background: url(\"../img/pixel.svg\");}";
+			} else {
+				var css = compatibleTheme(json)
+			}
 			e.sender.webContents.send('theme-css-response', css);
 		} catch (e) {
 			var css = "";
 		}
 
 	})
-	ipc.on('theme-json-list', function (e, arg) {
-		fs.readdir(app.getPath("userData"), function (err, files) {
-			if (err || !files) throw err;
-			var fileList = files.filter(function (file) {
-				if(file.match(/\.thedesktheme$/)){
-					var tfile = join(app.getPath("userData"), file)
-					return fs.statSync(tfile).isFile() && /.*\.thedesktheme$/.test(tfile)
-				}else{
-					return null
-				}
-			})
-			var themes = [];
-			for (var i = 0; i < fileList.length; i++) {
-				var themecss = join(app.getPath("userData"), fileList[i]);
-				var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'));
-				themes.push({
-					name: json.name,
-					id: json.id
-				})
+	function compatibleTheme(json) {
+		var primary = json.vars.primary;
+		var secondary = json.vars.secondary;
+		var text = json.vars.text;
+		if (json.base == "light") {
+			var drag = "rgba(255, 255, 255, 0.8)";
+			var beforehover = "#757575";
+			var selected = "#3f3f3f"
+			var selectedWithShare = "#b2babd"
+			var gray = "#757575"
+		} else {
+			var drag = "rgba(0, 0, 0, 0.8)";
+			var beforehover = "#9e9e9e";
+			var selected = "#c0c0c0"
+			var selectedWithShare = "#003a30"
+			var gray = "#cccccc"
+		}
+		if (json.advanced) {
+			if (json.advanced.TheDeskAccent) {
+				var emphasized = json.advanced.TheDeskAccent
+			} else {
+				var emphasized = secondary
 			}
-			e.sender.webContents.send('theme-json-list-response', themes);
-		});
+			if (json.advanced.TheDeskActive) {
+				var active = json.advanced.TheDeskActive
+			} else {
+				var active = primary
+			}
+			if (json.advanced.TheDeskModal) {
+				var modal = json.advanced.TheDeskModal
+			} else {
+				var modal = secondary
+			}
+			if (json.advanced.TheDeskBottom) {
+				var bottom = json.advanced.TheDeskBottom
+			} else {
+				var bottom = primary
+			}
+			if (json.advanced.TheDeskPostbox) {
+				var postbox = json.advanced.TheDeskPostbox
+			} else {
+				var postbox = primary
+			}
+			if (json.advanced.TheDeskSubcolor) {
+				var subcolor = json.advanced.TheDeskSubcolor
+			} else {
+				var subcolor = primary
+			}
+		} else {
+			var emphasized = primary
+			var acs = secondary
+			var active = primary
+			var modal = secondary
+			var bottom = primary
+			var postbox = primary
+			var subcolor = primary
+		}
+
+		var css = ".customtheme {--bg:" + secondary + ";--drag:" + drag + ";" +
+			"--text:" + text + ";--beforehover:" + beforehover + ";--modal:" +
+			modal + ";--thirdColor:" + subcolor + ";--subcolor:" + subcolor +
+			";--bottom:" + bottom + ";--accent:" + emphasized + ";" +
+			"--subcolor:" + secondary + ";--emphasized:" + active + ";--his-data:" +
+			secondary +
+			";--active:" + active + ";--postbox:" + postbox + ";--modalfooter:" +
+			primary +
+			";--active:" + subcolor + ";--selected:" + selected + ";--selectedWithShare:" + selectedWithShare + "}" +
+			"--gray:" + gray + ";" +
+			".customtheme #imagemodal{background: url(\"../img/pixel.svg\");}";
+		return css
+	}
+	ipc.on('theme-json-list', function (e, arg) {
+		var files1 = fs.readdirSync('./source/themes')
+		var file1List = files1.filter(function (file) {
+			if (file.match(/\.thedesktheme$/)) {
+				var tfile = join('./source/themes', file)
+				return fs.statSync(tfile).isFile() && /.*\.thedesktheme$/.test(tfile)
+			} else {
+				return null
+			}
+		})
+		var themes = [];
+		for (var i = 0; i < file1List.length; i++) {
+			var themecss = join('./source/themes', file1List[i]);
+			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'));
+			let compat = true
+			if (json.version) compat = false
+			themes.push({
+				name: json.name,
+				id: json.id,
+				compatible: compat,
+				default: true
+			})
+		}
+		var files2 = fs.readdirSync(app.getPath("userData"))
+		var file2List = files2.filter(function (file) {
+			if (file.match(/\.thedesktheme$/)) {
+				var tfile = join(app.getPath("userData"), file)
+				return fs.statSync(tfile).isFile() && /.*\.thedesktheme$/.test(tfile)
+			} else {
+				return null
+			}
+		})
+		for (var i = 0; i < file2List.length; i++) {
+			var themecss = join(app.getPath("userData"), file2List[i]);
+			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'));
+			let compat = true
+			if (json.version) compat = false
+			themes.push({
+				name: json.name,
+				id: json.id,
+				compatible: compat,
+				default: false
+			})
+		}
+		e.sender.webContents.send('theme-json-list-response', themes);
 	})
 }
 exports.css = css;

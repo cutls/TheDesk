@@ -1,0 +1,27 @@
+{
+	name: 'Snow Storm',
+	author: 'TheDesk',
+	desc: 'TheDesk Default Theme',
+	base: 'light',
+	primary: {
+		background: '#eceff4',
+		subcolor: '#d8dee9',
+		text: '#36425a',
+		accent: '#c3d4e6',
+	},
+	advanced: {
+		modal: '#e5e9f0',
+		modalFooter: '#b2bed4',
+		third: '#d8dee9',
+		forth: '#4c566a',
+		bottom: '#eeeeee',
+		emphasized: '#88c0d0',
+		postbox: '#d8dee9',
+		active: '#81a1c1',
+		selected: '#b4bdd0',
+		selectedWithShared: '#a3afbb',
+	},
+	id: 'snow',
+	version: '2',
+	default: true
+}

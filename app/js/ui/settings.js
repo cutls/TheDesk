@@ -167,10 +167,10 @@ function load() {
 		var font = ''
 	}
 	$('#font').val(font)
-	$('#c1-file').text(localStorage.getItem('custom1')!= 'null' ? localStorage.getItem('custom1') : '')
-	$('#c2-file').text(localStorage.getItem('custom2')!= 'null' ? localStorage.getItem('custom2') : '')
-	$('#c3-file').text(localStorage.getItem('custom3')!= 'null' ? localStorage.getItem('custom3') : '')
-	$('#c4-file').text(localStorage.getItem('custom4')!= 'null' ? localStorage.getItem('custom4') : '')
+	$('#c1-file').text(localStorage.getItem('custom1') != 'null' ? localStorage.getItem('custom1') : '')
+	$('#c2-file').text(localStorage.getItem('custom2') != 'null' ? localStorage.getItem('custom2') : '')
+	$('#c3-file').text(localStorage.getItem('custom3') != 'null' ? localStorage.getItem('custom3') : '')
+	$('#c4-file').text(localStorage.getItem('custom4') != 'null' ? localStorage.getItem('custom4') : '')
 	var cvol = localStorage.getItem('customVol')
 	if (cvol) {
 		$('#soundvol').val(cvol * 100)
@@ -508,35 +508,39 @@ function fontList(arg) {
 function insertFont(name) {
 	$('#font').val(name)
 }
-$('.color-picker').each(function (i, elem) {
-	pickerDefine(i, 'fff')
-})
-function pickerDefine(i, color) {
-	var pickr = new Pickr({
-		el: '#color-picker' + i,
-		default: color,
-		showAlways: true,
-		appendToBody: true,
-		closeWithKey: 'Escape',
-		comparison: false,
-		components: {
-			preview: true, // Left side color comparison
-			opacity: false, // Opacity slider
-			hue: true, // Hue slider
-			interaction: {
-				rgba: false, // rgba option (red green blue and alpha)
-				input: true, // input / output element
-			},
-		},
-		strings: {
-			save: 'Save', // Default for save button
-			clear: 'Clear', // Default for clear button
-		},
-	})
-	pickr.on('change', (...args) => {
-		var rgb = 'rgb(' + args[0].toRGBA()[0] + ',' + args[0].toRGBA()[1] + ',' + args[0].toRGBA()[2] + ')'
-		$('#color-picker' + i + '_value').val(rgb)
-	})
+function copyColor(from, to) {
+	let props = [
+		'background', 'subcolor', 'text', 'accent',
+		'modal', 'modalFooter', 'third', 'forth',
+		'bottom', 'emphasized', 'postbox', 'active',
+		'selected', 'selectedWithShared'
+	]
+	let i = 0
+	let color
+	for (tag of props) {
+		if(tag == from) {
+			let used = $(`#use-color_${i}`).prop('checked')
+			if(!used) {
+				Swal.fire({
+					type: 'error',
+					title: 'Not checked',
+				})
+				break
+			}
+			color = $(`#color-picker${i}_value`).val()
+			break
+		}
+		i++
+	}
+	if(!color) return false
+	for (tag of props) {
+		if(tag == to) {
+			$(`#color-picker${i}_value`).val(color)
+			$(`#use-color_${i}`).prop('checked', true)
+			break
+		}
+		i++
+	}
 }
 function customComp() {
 	var nameC = $('#custom_name').val()
@@ -544,59 +548,32 @@ function customComp() {
 		return false
 	}
 	var descC = $('#custom_desc').val()
-	var primaryC = $('#color-picker0_value').val()
-	if (!primaryC) {
-		primaryC = 'rgb(255,255,255)'
-	}
-	var secondaryC = $('#color-picker1_value').val()
-	if (!secondaryC) {
-		secondaryC = 'rgb(255,255,255)'
-	}
-	var textC = $('#color-picker2_value').val()
-	if (!textC) {
-		textC = 'rgb(255,255,255)'
-	}
+	var bgC = $('#color-picker0_value').val()
+	var subcolorC = $('#color-picker2_value').val()
+	var textC = $('#color-picker1_value').val()
+	var accentC = $('#color-picker3_value').val()
 	var multi = localStorage.getItem('multi')
-	if ($('#pickers').hasClass('advanceTheme')) {
-		var accentC = $('#color-picker3_value').val()
-		if (!accentC) {
-			accentC = null
+	let advanced = [
+		'modal', 'modalFooter', 'third', 'forth',
+		'bottom', 'emphasized', 'postbox', 'active',
+		'selected', 'selectedWithShared'
+	]
+	var advanceTheme = {}
+	let i = 4
+	for (tag of advanced) {
+		let used = $(`#use-color_${i}`).prop('checked')
+		if (used) {
+			advanceTheme[tag] = $(`#color-picker${i}_value`).val()
 		}
-		var activeC = $('#color-picker4_value').val()
-		if (!activeC) {
-			activeC = null
-		}
-		var modalC = $('#color-picker5_value').val()
-		if (!modalC) {
-			modalC = null
-		}
-		var bottomC = $('#color-picker6_value').val()
-		if (!bottomC) {
-			bottomC = null
-		}
-		var postboxC = $('#color-picker7_value').val()
-		if (!postboxC) {
-			postboxC = null
-		}
-		var subcolorC = $('#color-picker8_value').val()
-		if (!subcolorC) {
-			subcolorC = null
-		}
-		var advanceTheme = {
-			TheDeskAccent: accentC,
-			TheDeskActive: activeC,
-			TheDeskModal: modalC,
-			TheDeskBottom: bottomC,
-			TheDeskPostbox: postboxC,
-			TheDeskSubcolor: subcolorC,
-		}
-	} else {
-		var advanceTheme = {}
+		i++
 	}
 
 	var my = JSON.parse(multi)[0].name
 	var id = $('#custom-edit-sel').val()
-	if (id == 'add_new') {
+	const defaults = [
+		'black','blue','brown','green','indigo','polar','snow','white'
+	]
+	if (id == 'add_new' || defaults.includes(id)) {
 		id = makeCID()
 	}
 	localStorage.setItem('customtheme-id', id)
@@ -605,26 +582,48 @@ function customComp() {
 		author: my,
 		desc: descC,
 		base: $('[name=direction]:checked').val(),
-		vars: {
-			primary: primaryC,
-			secondary: secondaryC,
+		primary: {
+			background: bgC,
+			subcolor: subcolorC,
 			text: textC,
+			accent: accentC
 		},
-		props: advanceTheme,
+		advanced: advanceTheme,
 		id: id,
+		version: '2'
 	}
 	$('#custom_json').val(JSON.stringify(json))
-	themes('custom')
-	$('#custom').prop('checked', true)
-	$('#custom_name').val('')
-	$('#custom_desc').val('')
-	$('#dark').prop('checked', true)
-	$('#custom_json').val('')
-	for (var i = 0; i <= 8; i++) {
-		$('#color-picker' + i + '-wrap').html('<div class="color-picker" id="color-picker' + i + '"></div>')
-		$('#color-picker' + i + '_value').val('')
-		pickerDefine(i, 'fff')
-	}
+	let timerInterval
+	Swal.fire({
+		title: 'Saving...',
+		html: '',
+		timer: 1000,
+		timerProgressBar: true,
+		onBeforeOpen: () => {
+			Swal.showLoading()
+		},
+		onClose: () => {
+			clearInterval(timerInterval)
+		}
+	}).then((result) => {
+		themes()
+		ctLoad()
+		Swal.fire({
+			title: 'Refreshing...',
+			html: '',
+			timer: 1000,
+			timerProgressBar: true,
+			onBeforeOpen: () => {
+				Swal.showLoading()
+			},
+			onClose: () => {
+				clearInterval(timerInterval)
+			}
+		}).then((result) => {
+			$('#custom-edit-sel').val(id)
+			$('select').formSelect()
+		})
+	})
 	postMessage(['themeJsonCreate', JSON.stringify(json)], '*')
 }
 function deleteIt() {
@@ -633,34 +632,34 @@ function deleteIt() {
 	$('#custom_desc').val('')
 	$('#dark').prop('checked', true)
 	$('#custom_json').val('')
-	for (var i = 0; i <= 8; i++) {
-		$('#color-picker' + i + '-wrap').html('<div class="color-picker" id="color-picker' + i + '"></div>')
+	for (var i = 0; i <= 13; i++) {
+		if (i >= 4) $(`#use-color_${i}`).prop('checked', false)
 		$('#color-picker' + i + '_value').val('')
-		pickerDefine(i, 'fff')
 	}
-	postMessage(['themeJsonDelete', id], '*')
+	postMessage(['themeJsonDelete', id + '.thedesktheme'], '*')
 }
 function ctLoad() {
 	postMessage(['sendSinmpleIpc', 'theme-json-list'], '*')
 }
 function ctLoadCore(args) {
-	var templete = ''
+	var template = ''
+	var editTemplate = ''
 	Object.keys(args).forEach(function (key) {
 		var theme = args[key]
 		var themeid = theme.id
-		templete = templete + '<option value="' + themeid + '">' + theme.name + '</option>'
+		template = template + `<option value="${themeid}">${theme.name}${theme.compatible ? `(${lang.lang_setting_compat})` : ''}</option>`
+		if (!theme.compatible) editTemplate = editTemplate + `<option value="${themeid}">${theme.name}</option>`
 	})
-	if (args[0]) {
-		localStorage.setItem('customtheme-id', args[0].id)
-	}
-	$('#custom-sel-sel').html(templete)
-	templete = '<option value="add_new">' + $('#edit-selector').attr('data-add') + '</option>' + templete
-	$('#custom-edit-sel').html(templete)
+	$('#custom-sel-sel').html(template)
+	editTemplate = '<option value="add_new">' + $('#edit-selector').attr('data-add') + '</option>' + editTemplate
+	$('#custom-edit-sel').html(editTemplate)
+	$('#custom-sel-sel').val(localStorage.getItem('customtheme-id'))
 	$('select').formSelect()
 }
 function customSel() {
 	var id = $('#custom-sel-sel').val()
 	localStorage.setItem('customtheme-id', id)
+	themes(id)
 }
 function custom() {
 	var id = $('#custom-edit-sel').val()
@@ -669,58 +668,47 @@ function custom() {
 		$('#custom_desc').val('')
 		$('#dark').prop('checked', true)
 		$('#custom_json').val('')
-		for (var i = 0; i <= 8; i++) {
-			$('#color-picker' + i + '-wrap').html('<div class="color-picker" id="color-picker' + i + '"></div>')
+		for (var i = 0; i <= 13; i++) {
+			if (i >= 4) $(`#use-color_${i}`).prop('checked', false)
 			$('#color-picker' + i + '_value').val('')
-			pickerDefine(i, 'fff')
 		}
 		$('#delTheme').addClass('disabled')
 	} else {
 		$('#delTheme').removeClass('disabled')
-		postMessage(['themeJsonRequest', id], '*')
+		postMessage(['themeJsonRequest', id + '.thedesktheme'], '*')
 	}
 }
 function customConnect(raw) {
 	var args = raw[0]
-	$('#custom_name').val(args.name)
-	$('#custom_desc').val(args.desc)
+	$('#custom_name').val(`${args.name} ${args.default ? 'Customed' : ''}`)
+	$('#custom_desc').val(args.default ? 'TheDesk default theme with some changes by user' : args.desc)
 	$('#' + args.base).prop('checked', true)
-	//Primary
-	$('#color-picker0-wrap').html('<div class="color-picker" id="color-picker0"></div>')
-	pickerDefine(0, rgbToHex(args.vars.primary))
-	$('#color-picker0_value').val(args.vars.primary)
-	//Secondary
-	$('#color-picker1-wrap').html('<div class="color-picker" id="color-picker1"></div>')
-	pickerDefine(1, rgbToHex(args.vars.secondary))
-	$('#color-picker1_value').val(args.vars.secondary)
+	//Background
+	$('#color-picker0_value').val(args.primary.background)
 	//Text
-	$('#color-picker2-wrap').html('<div class="color-picker" id="color-picker2"></div>')
-	$('#color-picker2_value').val(args.vars.text)
-	pickerDefine(2, rgbToHex(args.vars.text))
-	//TheDesk Only
-	advancedConncet(args, 'TheDeskAccent', 'secondary', 3)
-	advancedConncet(args, 'TheDeskActive', 'primary', 4)
-	advancedConncet(args, 'TheDeskModal', 'secondary', 5)
-	advancedConncet(args, 'TheDeskBottom', 'primary', 6)
-	advancedConncet(args, 'TheDeskPostbox', 'primary', 7)
-	advancedConncet(args, 'TheDeskSubcolor', 'primary', 8)
-	$('#custom_json').val(raw[1])
-}
-function advancedConncet(args, tar, sub, i) {
-	if (args.props) {
-		if (args.props[tar]) {
-			var color = args.props[tar]
-			$('#pickers').addClass('advanceTheme')
-			$('.advanced').removeClass('hide')
-		} else {
-			var color = args.vars[sub]
+	$('#color-picker1_value').val(args.primary.text)
+	//Subcolor
+	$('#color-picker2_value').val(args.primary.subcolor)
+	//Accent
+	$('#color-picker3_value').val(args.primary.accent)
+	let advanced = [
+		'modal', 'modalFooter', 'third', 'forth',
+		'bottom', 'emphasized', 'postbox', 'active',
+		'selected', 'selectedWithShared'
+	]
+	let i = 4
+	for (tag of advanced) {
+		if (args.advanced[tag]) {
+			$(`#color-picker${i}_value`).val(args.advanced[tag])
+
 		}
-	} else {
-		var color = args.vars[sub]
+		$(`#use-color_${i}`).prop('checked', true)
+		i++
 	}
-	$('#color-picker' + i + '-wrap').html('<div class="color-picker" id="color-picker' + i + '"></div>')
-	$('#color-picker' + i + '_value').val(color)
-	pickerDefine(i, rgbToHex(color))
+	$('#custom_json').val(raw[1])
+	if(args.default) {
+		$('#delTheme').addClass('disabled')
+	}
 }
 function customImp() {
 	var json = $('#custom_import').val()
@@ -832,3 +820,5 @@ function lastFmSet() {
 	}
 	M.toast({ html: 'Complete: last.fm', displayLength: 3000 })
 }
+
+function stopVideo() { return false }

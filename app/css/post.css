@@ -86,7 +86,7 @@ textarea {
 	max-height: 7.7rem;
 }
 #default-emoji a {
-	color: var(--color);
+	color: var(--text);
 	margin-right: 0.15rem;
 }
 .character-counter {
@@ -126,8 +126,8 @@ textarea {
 }
 #posttgl,
 #toot-post-btn {
-	background-color: var(--accentbtn);
-	color: var(--color);
+	background-color: var(--active);
+	color: var(--text);
 }
 /*mini*/
 .mini-post .mize {

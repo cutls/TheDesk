@@ -207,6 +207,7 @@ ipc.on('theme-json-response', function(event, args) {
 	postMessage(['customConnect', args], '*')
 })
 ipc.on('theme-json-create-complete', function(event, args) {
+	if(args != '') alert(args)
 	postMessage(['clearCustomImport', ''], '*')
 	postMessage(['ctLoad', ''], '*')
 })

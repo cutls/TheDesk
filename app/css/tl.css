@@ -18,7 +18,7 @@
 	padding: 0.23rem;
 	padding-right: 0;
 	padding-left: 3rem;
-	background-color: var(--sidebar);
+	background-color: var(--bottom);
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
@@ -62,7 +62,7 @@
 }
 #bottom a,
 #demogroup a {
-	color: var(--color);
+	color: var(--text);
 }
 #bottom i {
 	font-size: 2.3rem;
@@ -436,7 +436,7 @@ iframe,
 }
 
 .btn-flat {
-	color: var(--color);
+	color: var(--text);
 }
 .area-side i {
 	margin-left: 0.75rem;
@@ -455,7 +455,7 @@ iframe,
 	color: var(--beforehover);
 }
 .actct:hover {
-	color: var(--color);
+	color: var(--text);
 	transition: 0.5s;
 }
 .contextMenu.dropdown-content {
@@ -502,7 +502,7 @@ iframe,
 	user-select: none;
 }
 .cbadge-hover {
-	color: var(--color);
+	color: var(--text);
 	background-color: transparent;
 }
 .cbadge-hover:hover {
@@ -518,7 +518,7 @@ p:not(:last-child) {
 	margin-bottom: 0.76rem;
 }
 .shared {
-	background-color: var(--shared);
+	background-color: var(--accent);
 }
 .emphasized {
 	background-color: var(--emphasized);
@@ -528,7 +528,7 @@ p:not(:last-child) {
 }
 .notice-box {
 	top: 0;
-	background-color: var(--notfbox);
+	background-color: var(--subcolor);
 	filter: brightness(110%);
 	position: relative;
 	margin-right: 0.7rem;
@@ -597,7 +597,7 @@ p:not(:last-child) {
 .notf-box {
 	position: fixed;
 	right: 5.4rem;
-	background-color: var(--box);
+	background-color: var(--subcolor);
 	border: thin solid gray;
 	z-index: 501;
 	width: 30rem;
@@ -653,10 +653,10 @@ p:not(:last-child) {
 	display: none;
 }
 .modal-footer {
-	background-color: var(--box);
+	background-color: var(--subcolor);
 }
 .ballons {
-	background-color: var(--box);
+	background-color: var(--subcolor);
 	position: absolute;
 	bottom: 0px;
 	right: 0px;
@@ -714,11 +714,11 @@ p:not(:last-child) {
 	transition-duration: 0.5s;
 }
 .votebtn:hover {
-	background-color: var(--color);
+	background-color: var(--text);
 }
 .leadPoll {
 	position: absolute;
-	background-color: var(--box);
+	background-color: var(--subcolor);
 	height: 1.5rem;
 	border-radius: 0.23rem;
 }
@@ -780,11 +780,11 @@ audio {
 .cw_btn {
 	margin: 0.23rem;
 	background-color: var(--emphasized);
-	color: var(--color);
+	color: var(--text);
 	padding-left: 0.23rem;
 	padding-right: 0.23rem;
 	border-radius: 0.23rem;
-	border: 1px solid var(--color);
+	border: 1px solid var(--text);
 	user-select: none;
 }
 .vis-data {
@@ -874,7 +874,7 @@ audio {
 	cursor: pointer;
 	border: solid 1px;
 	padding-left: 0.15rem;
-	background-color: var(--notfbox);
+	background-color: var(--subcolor);
 	border-radius: 0.15rem;
 }
 .announReaction img {

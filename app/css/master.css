@@ -6,7 +6,7 @@ body {
 	user-select: none;
 	cursor: default;
 	height: 100vh;
-	color: var(--color);
+	color: var(--text);
 }
 html {
 	font-size: 13px;
@@ -14,9 +14,9 @@ html {
 .titlebar,
 .menubar-menu-container,
 .action-menu-item {
-	background-color: var(--notfbox) !important;
+	background-color: var(--subcolor) !important;
 	filter: brightness(110%) !important;
-	color: var(--color) !important;
+	color: var(--text) !important;
 }
 .action-menu-item:hover {
 	filter: brightness(80%) !important;
@@ -232,7 +232,7 @@ blockquote:before,
 	height: calc(100vh - 3rem);
 	background-color: var(--bg);
 	filter: brightness(50%);
-	color: var(--color);
+	color: var(--text);
 	z-index: 99999;
 	justify-content: center;
 	align-items: center;
@@ -243,7 +243,7 @@ blockquote:before,
 	width: 100vw;
 	height: 100vh;
 	background-color: var(--bg);
-	color: var(--color);
+	color: var(--text);
 	z-index: 99999;
 	justify-content: center;
 	align-items: center;
@@ -254,7 +254,7 @@ blockquote:before,
 #pip {
 	z-index: 504;
 	width: 418px;
-	background-color: var(--subcolor);
+	background-color: var(--thirdColor);
 	position: absolute;
 }
 .pip-bottom {
@@ -315,10 +315,10 @@ blockquote:before,
 }
 .collapsible-header,
 .tabs {
-	background-color: var(--subcolor);
+	background-color: var(--thirdColor);
 }
 .collapsible-header:focus {
-	background-color: var(--subcolor) !important;
+	background-color: var(--thirdColor) !important;
 }
 .modal-footer {
 	background-color: var(--modalfooter) !important;
@@ -332,12 +332,13 @@ blockquote:before,
 }
 .release-do {
 	border: solid 2px;
-	border-color: var(--color);
+	border-color: var(--text);
 	padding: 5px;
 }
 #pickers {
 	display: flex;
 	flex-wrap: wrap;
+	flex-direction: column;
 }
 #menu {
 	position: fixed;
@@ -367,7 +368,7 @@ blockquote:before,
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-	color: var(--color);
+	color: var(--text);
 }
 #left-menu a:hover {
 	background-color: var(--beforehover);
@@ -398,7 +399,7 @@ blockquote:before,
 	width: 13rem;
 	height: 3.1rem;
 	cursor: pointer;
-	color: var(--color);
+	color: var(--text);
 }
 #tltype .type span {
 	width: calc(100% - 2.3rem);
@@ -425,7 +426,7 @@ blockquote:before,
 	text-align: center;
 	width: calc(100% + 0.8rem);
 	border-radius: 5px;
-	background-color: var(--box);
+	background-color: var(--subcolor);
 	filter: brightness(80%);
 	margin-left: -0.4rem;
 	margin-right: -0.4rem;
@@ -446,7 +447,7 @@ blockquote:before,
 	position: fixed;
 	bottom: -300px;
 	width: 100vw;
-	background-color: var(--box);
+	background-color: var(--subcolor);
 	z-index: 9999;
 	padding: 0.8rem;
 	display: grid;
@@ -472,16 +473,16 @@ blockquote:before,
 }
 input,
 textarea {
-	color: var(--color);
+	color: var(--text);
 	font-size: 1rem !important;
 	font-family: inherit;
 }
 .swal2-popup {
-	background-color: var(--notfbox) !important;
+	background-color: var(--subcolor) !important;
 }
 .swal2-title,
 .swal2-content {
-	color: var(--color) !important;
+	color: var(--text) !important;
 }
 #src-contents svg {
 	margin-right: 0.4rem;
@@ -530,7 +531,7 @@ textarea {
 	left: calc(50vw - 11.53rem);
 	width: 23rem;
 	max-width: 100%;
-	background-color: var(--box);
+	background-color: var(--subcolor);
 	z-index: 501;
 	padding: 0.4rem;
 }
