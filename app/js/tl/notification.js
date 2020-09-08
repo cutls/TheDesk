@@ -116,7 +116,7 @@ function notfColumn(acct_id, tlid, sys) {
 		var start = 'wss://' + domain + '/?i=' + at
 	}
 }
-function notfCommon(acct_id, tlid, sys) {
+function notfCommon(acct_id, tlid, sys, stream) {
 	todo('Notifications Loading...')
 	var native = localStorage.getItem('nativenotf')
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
@@ -146,6 +146,10 @@ function notfCommon(acct_id, tlid, sys) {
 				Authorization: 'Bearer ' + at
 			}
 		}
+	}
+	if(stream == 'only') {
+		notfWS(misskey, acct_id, tlid, domain, at)
+		return false
 	}
 	fetch(start, i)
 		.then(function(response) {
@@ -203,7 +207,7 @@ function notfCommon(acct_id, tlid, sys) {
 			}
 			$('#notf-box').addClass('fetched')
 			todc()
-			notfWS(misskey, acct_id, tlid, domain, at)
+			if(stream != 'no') notfWS(misskey, acct_id, tlid, domain, at)
 		})
 }
 function notfWS(misskey, acct_id, tlid, domain, at) {
