@@ -902,7 +902,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			//日本語じゃない
 			if (toot.language != lang.language && toot.language) {
 				var trans = `<li onclick="trans('${toot.language}','${lang.language}', $(this))" 
-							class="waves-effect waves-dark btn-flat actct" style="padding:0">
+							 style="padding:0">
 								<i class="material-icons" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
 					</li>`
 			} else {
@@ -1549,6 +1549,7 @@ function pollParse(poll, acct_id, emojis) {
 var mastodonBaseWs = {}
 var mastodonBaseWsStatus = {}
 function mastodonBaseStreaming(acct_id) {
+	notfCommon(acct_id, 0, null, 'no')
 	const domain = localStorage.getItem(`domain_${acct_id}`)
 	if(mastodonBaseWsStatus[domain]) return
 	mastodonBaseWsStatus[domain] = 'undetected'
@@ -1603,7 +1604,7 @@ function mastodonBaseStreaming(acct_id) {
 		}
 	}
 	mastodonBaseWs[domain].onerror = function (error) {
-		notf(acct_id, 0) //fallback
+		notfCommon(acct_id, 0, null, 'only') //fallback
 		console.error("Error closing " + domain)
 		console.error(error)
 		if (mastodonBaseWsStatus[domain] == 'available') location.reload()
@@ -1615,7 +1616,7 @@ function mastodonBaseStreaming(acct_id) {
 		return false
 	}
 	mastodonBaseWs[domain].onclose = function () {
-		notf(acct_id, 0) //fallback
+		notfCommon(acct_id, 0, null, 'only') //fallback
 		console.warn("Closing " + domain)
 		if (mastodonBaseWsStatus[domain] == 'available') location.reload()
 		mastodonBaseWs[domain] = false
