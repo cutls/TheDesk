@@ -1,0 +1,22 @@
+:root {
+  --bg: #212121;
+  --drag: rgba(0, 0, 0, 0.8);
+  --text: white;
+  --beforehover: #9e9e9e;
+  --modal: black;
+  --thirdColor: #212121;
+  --bottom: #424242;
+  --accent: #004d40;
+  --subcolor: #333333;
+  --emphasized: #4e342e;
+  --his-data: rgba(0, 0, 0, 0.8);
+  --postbox: #424242;
+  --modalfooter: #212121;
+  --active: #3f51b5;
+  --selected: #3f3f3f;
+  --selectedWithShare: #003a30;
+  --gray: #cccccc;
+}
+#imagemodal {
+  background: url("../img/pixel.svg");
+}
