@@ -228,65 +228,63 @@ function parseColumn(target, dontclose) {
 				var animecss = ''
 			}
 			var unread = `<a id="unread_${key}" onclick="showUnread('${key}','${acct.type}','${acct.domain}')"
-					 class="setting nex" title="${lang.lang_layout_unread}">
-					<i class="material-icons waves-effect nex">more</i>
-				</a>${lang.lang_layout_unread}<br>`
+					 class="setting nex waves-effect" title="${lang.lang_layout_unread}">
+					<i class="material-icons waves-effect nex">more</i><br />${lang.lang_layout_unread}
+				</a>`
 			var notfDomain = acct.domain
 			var notfKey = key
 			var if_tag = ''
 			var if_tag_btn = ''
 			if (acct.type == 'notf') {
 				var exclude =
-					lang.lang_excluded +
-					`:<br>
+					`<div style="border: 1px solid; padding: 5px; margin-top: 5px; margin-bottom: 5px;">${lang.lang_layout_excluded}:<br>
 					<label>
 						<input type="checkbox" class="filled-in" id="exc-reply-${key}" ${excludeCk(key, 'mention')} />
 						<span>
-							<i class="fas fa-share exc-icons"></i>
+							${lang.lang_layout_mention}
 						</span>
 					</label>
 					<label>
 						<input type="checkbox" class="filled-in" id="exc-fav-${key}" ${excludeCk(key, 'favourite')} />
 						<span>
-							<i class="fas fa-star exc-icons"></i>
+						${lang.lang_layout_fav}
 						</span>
 					</label> 
 					<label>
 						<input type="checkbox" class="filled-in" id="exc-bt-${key}" ${excludeCk(key, 'reblog')} />
 						<span>
-							<i class="fas fa-retweet exc-icons"></i>
+						${lang.lang_layout_bt}
 						</span>
-					</label> 
+					</label>
 					<label>
 						<input type="checkbox" class="filled-in" id="exc-follow-${key}" ${excludeCk(key, 'follow')} />
 						<span>
-							<i class="fas fa-users exc-icons"></i>
+						${lang.lang_status_follow}
 						</span>
 					</label> 
 					<label>
 						<input type="checkbox" class="filled-in" id="exc-poll-${key}" ${excludeCk(key, 'poll')} />
 						<span>
-							<i class="fas fa-tasks exc-icons"></i>
+						${lang.lang_layout_poll}
 						</span>
-					</label> 
-					<button class="btn waves-effect" style="width:60px; padding:0;" onclick="exclude('${key}')">Filter</button>`
+					</label> <br />
+					<button class="btn btn-flat waves-effect notf-exclude-btn waves-light" style="width:calc(50% - 11px); padding:0;" onclick="exclude('${key}')">Filter</button>`
 				if (checkNotfFilter(key)) {
 					exclude =
 						exclude +
-						`<button class="btn red waves-effect" style="width:60px; padding:0;" onclick="resetNotfFilter('${key}')">
+						`<button class="btn btn-flat red-text waves-effect notf-exclude-btn waves-light" style="width:calc(50% - 11px); padding:0;" onclick="resetNotfFilter('${key}')">
 							Clear all
 						</button>`
 				}
-				exclude = exclude + '<br>'
+				exclude = exclude + '</div>'
 				notfDomain = 'dummy'
 				notfKey = 'dummy'
 			} else if (acct.type == 'home') {
-				var exclude = `<a onclick="ebtToggle('${key}')" class="setting nex">
-						<i class="fas fa-retweet waves-effect nex" title="${lang.lang_layout_excludingbt}" style="font-size:24px"></i>
-						<span id="sta-bt-${key}">Off</span>
-					</a>
+				var exclude = `<a onclick="ebtToggle('${key}')" class="setting nex waves-effect">
+						<i class="fas fa-retweet nex" title="${lang.lang_layout_excludingbt}" style="font-size: 24px"></i>
+						<span id="sta-bt-${key}">Off</span><br />
 					${lang.lang_layout_excludingbt}
-					<br>`
+					</a>`
 			} else if (acct.type == 'tag') {
 				if (acct.data.name) {
 					var name = acct.data.name
@@ -335,15 +333,13 @@ function parseColumn(target, dontclose) {
 					var basehtml = `<div style="${css}" class="box ${animecss}" id="timeline_box_${basekey}_parentBox"></div>`
 					$('#timeline-container').append(basehtml)
 				}
-				var left_hold = `<a onclick="leftFoldSet('${key}')" class="setting nex">
-						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftFold}">view_agenda</i>
-					</a>
-					${lang.lang_layout_leftFold}<br>`
+				var left_hold = `<a onclick="leftFoldSet('${key}')" class="setting nex waves-effect">
+						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftFold}">view_agenda</i><br />
+					${lang.lang_layout_leftFold}</a>`
 			} else {
-				var left_hold = `<a onclick="leftFoldRemove('${key}')" class="setting nex">
-						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i>
-					</a>
-					${lang.lang_layout_leftUnfold}<br>`
+				var left_hold = `<a onclick="leftFoldRemove('${key}')" class="setting nex waves-effect">
+						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i><br />
+					${lang.lang_layout_leftUnfold}</a>`
 			}
 			if (key === 0) {
 				left_hold = ''
@@ -362,15 +358,15 @@ function parseColumn(target, dontclose) {
 				var addHeight = ''
 			}
 			if (acct.type != 'pub' && acct.type != 'pub-media') {
-				var mediaFil = `<a onclick="mediaToggle('${key}')" class="setting nex">
-					<i class="material-icons waves-effect nex" title="${lang.lang_layout_mediafil}">perm_media</i>
-					<span id="sta-media-${key}">On</span>
-				</a>${lang.lang_layout_mediafil}`
+				var mediaFil = `<a onclick="mediaToggle('${key}')" class="setting nex waves-effect">
+					<i class="material-icons nex" title="${lang.lang_layout_mediafil}">perm_media</i>
+					<span id="sta-media-${key}">On</span><br />
+				${lang.lang_layout_mediafil}</a>`
 			} else {
-				var mediaFil = `<a onclick="remoteOnly('${key}','${acct.type}')" class="setting nex">
-					<i class="material-icons waves-effect nex" title="${lang.lang_layout_remoteOnly}">perm_media</i>
+				var mediaFil = `<a onclick="remoteOnly('${key}','${acct.type}')" class="setting nex waves-effect">
+					<i class="material-icons nex" title="${lang.lang_layout_remoteOnly}">perm_media</i><br />
 					<span id="sta-remote-${key}">Off</span>
-				</a>${lang.lang_layout_remoteOnly}`
+				${lang.lang_layout_remoteOnly}</a>`
 			}
 			var html = `
 				<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}" data-acct="${acct.domain}" style="${addHeight}">
@@ -424,28 +420,25 @@ function parseColumn(target, dontclose) {
 					</div>
 				</div>
 				<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:5px;">
+					${exclude}
 					${unread}
-					${exclude}${left_hold}
-					${mediaFil}<br>
-					<a onclick="cardToggle('${key}')" class="setting nex">
-						<i class="material-icons waves-effect nex" title="${lang.lang_layout_linkanades}">link</i>
-						<span id="sta-card-${key}">On</span>
-					</a>
+					${left_hold}
+					${mediaFil}
+					<a onclick="cardToggle('${key}')" class="setting nex waves-effect">
+						<i class="material-icons nex" title="${lang.lang_layout_linkanades}">link</i>
+						<span id="sta-card-${key}">On</span><br />
 					${lang.lang_layout_linkana}
-					<br>
-					<a onclick="voiceToggle('${key}')" class="setting nex">
-						<i class="material-icons waves-effect nex" title="${lang.lang_layout_tts}">hearing</i>
-						<span id="sta-voice-${key}">On</span>
 					</a>
+					<a onclick="voiceToggle('${key}')" class="setting nex waves-effect">
+						<i class="material-icons nex" title="${lang.lang_layout_tts}">hearing</i>
+						<span id="sta-voice-${key}">On</span><br />
 					${lang.lang_layout_tts}
-					TL<br>
-					<a onclick="columnReload('${key}','${acct.type}')" class="setting nex ${if_misskey_hide}">
-						<i class="material-icons waves-effect nex" title="${lang.lang_layout_reconnect}">refresh</i>
-					</a>
-					<span>
+					TL</a>
+					<a onclick="columnReload('${key}','${acct.type}')" class="setting nex ${if_misskey_hide} waves-effect">
+						<i class="material-icons nex" title="${lang.lang_layout_reconnect}">refresh</i>
+					<br />
 						${lang.lang_layout_reconnect}
-					</span>
-					<br>
+					</a><br />
 					${lang.lang_layout_headercolor}
 					<br>
 					<div id="picker_${key}" class="color-picker"></div>
