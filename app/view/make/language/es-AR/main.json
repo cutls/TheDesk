@@ -226,6 +226,7 @@
     "lang_parse_html": "Mostrar HTML insertado",
     "lang_parse_notffilter": "Mostrar notificaciones de este usuario",
     "lang_parse_hidden": "Toot citado no visible",
+    "lang_parse_disconnected": "Streaming has been disconnected(retry after 3s)",
     "lang_misskeyparse_renote": "Republicar",
     "lang_misskeyparse_renoteqt": "Renovar",
     "lang_misskeyparse_reaction": "Reacción",
