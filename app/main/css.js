@@ -44,7 +44,7 @@ function css(mainWindow) {
 	})
 	ipc.on('theme-json-request', function (e, arg) {
 		try {
-			var themecss = join('./source/themes', arg)
+			var themecss = join(app.getAppPath(), '/source/themes', arg)
 			var raw = fs.readFileSync(themecss, 'utf8')
 			var json = JSON5.parse(raw)
 		} catch {
@@ -56,7 +56,7 @@ function css(mainWindow) {
 	})
 	ipc.on('theme-css-request', function (e, arg) {
 		try {
-			var themecss = join('./source/themes', arg)
+			var themecss = join(app.getAppPath(), '/source/themes', arg)
 			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'))
 		} catch {
 			var themecss = join(app.getPath("userData"), arg)
@@ -227,10 +227,10 @@ function css(mainWindow) {
 		return css
 	}
 	ipc.on('theme-json-list', function (e, arg) {
-		var files1 = fs.readdirSync('./source/themes')
+		var files1 = fs.readdirSync(join(app.getAppPath(), '/source/themes'))
 		var file1List = files1.filter(function (file) {
 			if (file.match(/\.thedesktheme$/)) {
-				var tfile = join('./source/themes', file)
+				var tfile = join(app.getAppPath(), '/source/themes', file)
 				return fs.statSync(tfile).isFile() && /.*\.thedesktheme$/.test(tfile)
 			} else {
 				return null
@@ -238,7 +238,7 @@ function css(mainWindow) {
 		})
 		var themes = [];
 		for (var i = 0; i < file1List.length; i++) {
-			var themecss = join('./source/themes', file1List[i]);
+			var themecss = join(app.getAppPath(), '/source/themes', file1List[i]);
 			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'));
 			let compat = true
 			if (json.version) compat = false
