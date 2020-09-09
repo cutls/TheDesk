@@ -226,6 +226,7 @@
     "lang_parse_html": "Show embed HTML",
     "lang_parse_notffilter": "Benachrichtigungen dieses Benutzers anzeigen",
     "lang_parse_hidden": "Unvisible quoted toot",
+    "lang_parse_disconnected": "Streaming has been disconnected(retry after 3s)",
     "lang_misskeyparse_renote": "Weiterleiten",
     "lang_misskeyparse_renoteqt": "Renote",
     "lang_misskeyparse_reaction": "Reaktion",
