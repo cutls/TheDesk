@@ -1,5 +1,6 @@
 //バージョンチェッカー
 function verck(ver, jp) {
+	if (store) return false
 	console.log('%c Welcome😊 ' + ver, 'color: red;font-size:200%;')
 	$('body').addClass(localStorage.getItem('platform'))
 	var date = new Date()
@@ -327,82 +328,8 @@ function closeSupport() {
 		}
 	)
 }
-function storeDialog(platform, ver) {
-	if($('body').hasClass('accessibility')) return false
-	if (platform == 'win32') {
-		var mes = lang.lang_version_platform
-	} else if (platform == 'linux') {
-		var mes = lang.lang_version_platform_linux
-	} else if (platform == 'darwin') {
-		var mes = lang.lang_version_platform_mac
-	} else {
-		var mes = false
-	}
-	if (mes) {
-		Swal.fire({
-			title: 'Select your platform',
-			text: mes,
-			type: 'info',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#3085d6',
-			confirmButtonText: lang.lang_no,
-			cancelButtonText: lang.lang_yesno
-		}).then(result => {
-			//逆にしてる
-			if (!result.value) {
-				localStorage.setItem('winstore', 'winstore')
-			} else {
-				localStorage.setItem('winstore', 'localinstall')
-			}
-			localStorage.setItem('ver', ver)
-			showVer = true
-			if(pwa) return false
-			console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
-			$(document).ready(function() {
-				$('#releasenote').modal('open')
-				verp = ver.replace('(', '')
-				verp = verp.replace('.', '-')
-				verp = verp.replace('.', '-')
-				verp = verp.replace('[', '-')
-				verp = verp.replace(']', '')
-				verp = verp.replace(')', '')
-				verp = verp.replace(' ', '_')
-				console.log('%c ' + verp, 'color: red;font-size:200%;')
-				if (lang.language == 'ja') {
-					$('#release-' + verp).show()
-				} else {
-					$('#release-en').show()
-				}
-			})
-		})
-	} else {
-		localStorage.setItem('ver', ver)
-			showVer = true
-			console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
-			$(document).ready(function() {
-				if(pwa) return false
-				$('#releasenote').modal('open')
-				verp = ver.replace('(', '')
-				verp = verp.replace('.', '-')
-				verp = verp.replace('.', '-')
-				verp = verp.replace('[', '-')
-				verp = verp.replace(']', '')
-				verp = verp.replace(')', '')
-				verp = verp.replace(' ', '_')
-				console.log('%c ' + verp, 'color: red;font-size:200%;')
-				if (lang.language == 'ja') {
-					$('#release-' + verp).show()
-				} else {
-					$('#release-en').show()
-				}
-			})
-	}
-	
-}
 function closeStart() {
 	$('#start').css('display', 'none')
 	var platform = localStorage.getItem('platform')
 	var ver = localStorage.getItem('ver')
-	storeDialog(platform, ver)
 }
