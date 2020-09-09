@@ -62,5 +62,5 @@ deploy:
   on:
     repo: cutls/TheDesk
     tags: false
-branches:
-  only: "/^v?[0-9\\.]+/"
+#branches:
+#  only: "/^v?[0-9\\.]+/"
