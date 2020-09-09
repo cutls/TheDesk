@@ -1,9 +1,9 @@
 {
   "setting": "Preferences",
   "set": "Save",
-  "yes": "Yes",
-  "no": "No",
-  "none": "None",
+  "yes": "Sim",
+  "no": "Não",
+  "none": "Nenhum",
   "show": "Show",
   "hide": "Hide",
   "default": "Padrão",
