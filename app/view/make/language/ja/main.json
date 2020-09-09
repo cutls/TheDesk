@@ -227,6 +227,7 @@
     "lang_parse_html": "埋め込みを表示",
     "lang_parse_hidden": "ミュートされた引用トゥート",
     "lang_parse_notffilter": "このユーザーの通知のみを表示",
+    "lang_parse_disconnected": "ストリーミングから切断されました(3秒後に再試行)",
     "lang_misskeyparse_renote": "再投稿",
     "lang_misskeyparse_renoteqt": "引用",
     "lang_misskeyparse_reaction": "リアクション",

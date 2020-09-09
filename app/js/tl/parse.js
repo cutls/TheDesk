@@ -1145,9 +1145,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					</div>
 				</div>
 				<ul class="dropdown-content contextMenu" id="dropdown_${tlid}_${uniqueid}">
-					<li class="${viashow}">
-						via ${escapeHTML(via)}<br>
-						<a onclick="client('${$.strip_tags(via)}')" class="pointer">${lang.lang_parse_clientop}</a>
+					<li class="${viashow} via-dropdown" onclick="client('${$.strip_tags(via)}')" title="${lang.lang_parse_clientop}">
+						via ${escapeHTML(via)}</a>
 					</li>
 					<div>
 					<li onclick="bkm('${uniqueid}','${acct_id}','${tlid}')"
@@ -1551,7 +1550,7 @@ var mastodonBaseWsStatus = {}
 function mastodonBaseStreaming(acct_id) {
 	notfCommon(acct_id, 0, null, 'no')
 	const domain = localStorage.getItem(`domain_${acct_id}`)
-	if(mastodonBaseWsStatus[domain]) return
+	if (mastodonBaseWsStatus[domain]) return
 	mastodonBaseWsStatus[domain] = 'undetected'
 	const at = localStorage.getItem(`acct_${acct_id}_at`)
 	let wss = 'wss://' + domain
@@ -1611,7 +1610,16 @@ function mastodonBaseStreaming(acct_id) {
 		notfCommon(acct_id, 0, null, 'only') //fallback
 		console.error("Error closing " + domain)
 		console.error(error)
-		if (mastodonBaseWsStatus[domain] == 'available' && !pwa) location.reload()
+		if (mastodonBaseWsStatus[domain] == 'available') {
+			M.toast({
+				html:
+					`${lang.lang_parse_disconnected}<button class="btn-flat toast-action" onclick="location.reload()">${lang.lang_layout_reconnect}</button>`,
+				completeCallback: function () {
+					mastodonBaseWs[domain] = new WebSocket(start)
+				},
+				displayLength: 3000
+			})
+		}
 		mastodonBaseWsStatus[domain] = 'cannotuse'
 		setTimeout(function () {
 			mastodonBaseWsStatus[domain] = 'cannotuse'
@@ -1622,7 +1630,16 @@ function mastodonBaseStreaming(acct_id) {
 	mastodonBaseWs[domain].onclose = function () {
 		notfCommon(acct_id, 0, null, 'only') //fallback
 		console.warn("Closing " + domain)
-		if (mastodonBaseWsStatus[domain] == 'available' && !pwa) location.reload()
+		if (mastodonBaseWsStatus[domain] == 'available') {
+			M.toast({
+				html:
+					`${lang.lang_parse_disconnected}<button class="btn-flat toast-action" onclick="location.reload()">${lang.lang_layout_reconnect}</button>`,
+				completeCallback: function () {
+					mastodonBaseWs[domain] = new WebSocket(start)
+				},
+				displayLength: 3000
+			})
+		}
 		mastodonBaseWs[domain] = false
 		mastodonBaseWsStatus[domain] = 'cannotuse'
 		setTimeout(function () {

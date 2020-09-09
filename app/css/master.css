@@ -626,3 +626,11 @@ textarea {
 .dropdown-content.header:hover {
 	background-color: white;
 }
+button {
+	font-family: inherit !important;
+}
+.via-dropdown {
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+}

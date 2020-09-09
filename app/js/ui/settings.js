@@ -80,22 +80,6 @@ var postView = new Vue({
 })
 //設定ボタン押した。
 function settings() {
-	var cd = $('[name=theme]:checked').val()
-	var ct = $('[data-ct=' + cd + ']').html()
-	if (cd == 'custom' && !$('#custom-sel-sel').val()) {
-		var theme = localStorage.getItem('theme')
-		if (!theme) {
-			var theme = 'white'
-		}
-		$('#' + theme).prop('checked', true)
-	} else {
-		if (cd != localStorage.getItem('theme')) {
-			M.toast({ html: lang.lang_setting_theme.replace('{{set}}', ct), displayLength: 3000 })
-		}
-		//テーマはこの場で設定
-		themes(cd)
-		localStorage.setItem('theme', cd)
-	}
 	var fontd = $('#font').val()
 	if (fontd) {
 		if (fontd != localStorage.getItem('font')) {

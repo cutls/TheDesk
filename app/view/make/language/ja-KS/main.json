@@ -221,6 +221,7 @@
     "lang_parse_nsfw": "閲覧注意",
     "lang_parse_html": "埋め込みを表示",
     "lang_parse_notffilter": "このユーザーの通知だけ見る",
+    "lang_parse_disconnected": "ストリーミングがなんかおかしいねん(3秒後にもっかいやってみる)",
     "lang_misskeyparse_renote": "再投稿",
     "lang_misskeyparse_renoteqt": "引用",
     "lang_misskeyparse_reaction": "リアクション",
