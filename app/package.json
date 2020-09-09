@@ -8,14 +8,19 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "construct": "cd view/make && node make --automatic && cd ../../",
+        "construct:store": "cd view/make && node make --automatic --store && cd ../../",
         "dev": "npx electron ./ --dev",
         "dist": "build --linux snap",
         "watchview": "node view/make/make.js --automatic --watch",
         "build:js": "node build.js",
         "build": "node view/make/make.js --automatic && npx electron-builder",
-        "build:all": "npx electron-builder --win --linux",
-        "build:win": "npx electron-builder --win",
         "build:pwa": "node view/make/make.js --automatic --pwa",
+        "build:win:web": "node view/make/make.js --automatic && npx electron-builder --win",
+        "build:win:msstore": "node view/make/make.js --automatic --store && npx electron-builder --win appx",
+        "build:linux:web": "node view/make/make.js --automatic && npx electron-builder --linux",
+        "build:linux:snapstore": "node view/make/make.js --automatic --store && npx electron-builder --linux",
+        "build:mac:web": "node view/make/make.js --automatic && npx electron-builder --mac",
+        "build:mac:homebrew": "node view/make/make.js --automatic --store && npx electron-builder --mac",
         "lint:fix": "eslint js --fix" ,
         "lint": "eslint js" 
     },
@@ -92,8 +97,8 @@
             "icon": "build/thedesk.ico",
             "target": [
                 "nsis",
-                "portable",
-                "appx"
+                "appx",
+                "portable"
             ]
         },
         "appx": {
@@ -115,6 +120,7 @@
             "icon": "build/icons",
             "target": [
                 "zip",
+                "appImage",
                 "snap",
                 "deb"
             ],
