@@ -14,6 +14,8 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
 
 [Pixiv FANBOX](https://www.pixiv.net/fanbox/creator/28105985)
 
+`-store.*`とあるアセットはストアやパッケージマネージャ向けのもので、アップデートの確認をソフト本体で行いません。
+
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
 ## ライセンス

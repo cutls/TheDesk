@@ -219,9 +219,9 @@ function moreTs(tlid, q) {
 function graphDraw(tag, acct_id) {
 	var tags = ''
 	var his = tag.history
-	return graphDrawCore(his, tag)
+	return graphDrawCore(his, tag, acct_id)
 }
-function graphDrawCore(his, tag) {
+function graphDrawCore(his, tag, acct_id) {
 	var max = Math.max.apply(null, [
 		his[0].uses,
 		his[1].uses,
@@ -307,7 +307,7 @@ function trend() {
 			Object.keys(json).forEach(function(keye) {
 				var tag = json[keye]
 				var his = tag.history
-				tags = graphDrawCore(his, tag)
+				tags = graphDrawCore(his, tag, acct_id)
 
 				$('#src-contents').append(tags)
 			})

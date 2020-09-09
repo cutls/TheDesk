@@ -1554,7 +1554,11 @@ function mastodonBaseStreaming(acct_id) {
 	if(mastodonBaseWsStatus[domain]) return
 	mastodonBaseWsStatus[domain] = 'undetected'
 	const at = localStorage.getItem(`acct_${acct_id}_at`)
-	const start = `wss://${domain}/api/v1/streaming/?access_token=${at}`
+	let wss = 'wss://' + domain
+	if (localStorage.getItem('streaming_' + acct_id)) {
+		wss = localStorage.getItem('streaming_' + acct_id)
+	}
+	const start = `${wss}/api/v1/streaming/?access_token=${at}`
 	mastodonBaseWs[domain] = new WebSocket(start)
 	mastodonBaseWs[domain].onopen = function () {
 		mastodonBaseWsStatus[domain] = 'connecting'
