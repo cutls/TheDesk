@@ -24,7 +24,7 @@ before_deploy:
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv *.snap TheDesk-$VERSION-store.snap;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../app;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win appx:x64 -p never ;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi;fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv *.appx TheDesk-$VERSION-store.appx;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../app;else :;fi
   - yarn construct
