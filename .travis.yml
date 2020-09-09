@@ -19,11 +19,11 @@ before_deploy:
   - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ];then cd ../build;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ];then mv *.dmg TheDesk-$VERSION-store.dmg;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 -p never snap:x64;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux snap:x64 -p never;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../build;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv *.snap TheDesk-$VERSION-store.snap;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../app;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win --x64 -p never appx:x64;else :;fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win appx:x64 -p never ;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv *.appx TheDesk-$VERSION-store.appx;else :;fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../app;else :;fi
