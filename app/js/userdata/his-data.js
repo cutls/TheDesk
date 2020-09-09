@@ -204,7 +204,7 @@ function flw(user, more, acct_id) {
 				let link
 				if (linkHeader) {
 					console.log(linkHeader)
-					link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1]
+					try {link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1] }catch{}
 					console.log(link)
 				}
 				$("#his-follow-list-contents").attr('max-id', link)
@@ -313,7 +313,7 @@ function fer(user, more, acct_id) {
 				let link
 				if (linkHeader) {
 					console.log(linkHeader)
-					link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1]
+					try {link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1] }catch{}
 					console.log(link)
 				}
 				$("#his-follower-list-contents").attr('max-id', link)
@@ -354,7 +354,7 @@ function fer(user, more, acct_id) {
 			let link
 			if (linkHeader) {
 				console.log(linkHeader)
-				link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1]
+				try {link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1] }catch{}
 				console.log(link)
 			}
 			$("#his-follower-list-contents").attr('max-id', link)
@@ -403,7 +403,7 @@ function showFav(more, acct_id) {
 				let link
 				if (linkHeader) {
 					console.log(linkHeader)
-					link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1]
+					try {link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1] }catch{}
 					console.log(link)
 				}
 				var template = parse(json, "", acct_id, "user")
