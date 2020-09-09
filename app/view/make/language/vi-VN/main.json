@@ -226,6 +226,7 @@
     "lang_parse_html": "Show embed HTML",
     "lang_parse_notffilter": "Show this user's notifications",
     "lang_parse_hidden": "Unvisible quoted toot",
+    "lang_parse_disconnected": "Streaming has been disconnected(retry after 3s)",
     "lang_misskeyparse_renote": "Repost",
     "lang_misskeyparse_renoteqt": "Renote",
     "lang_misskeyparse_reaction": "Reaction",
