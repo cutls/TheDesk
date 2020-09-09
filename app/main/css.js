@@ -143,8 +143,8 @@ function css(mainWindow) {
 					";--bottom:" + bottom + ";--accent:" + accent + ";" + ";--emphasized:" + emphasized + ";--his-data:" +
 					hisData +
 					";--active:" + active + ";--postbox:" + postbox + ";--modalfooter:" +
-					modalFooter + ";--selected:" + selected + ";--selectedWithShare:" + selectedWithShare + "}" +
-					"--gray:" + gray + ";" +
+					modalFooter + ";--selected:" + selected + ";--selectedWithShare:" + selectedWithShare +
+					"--gray:" + gray + ";}" +
 					".customtheme #imagemodal{background: url(\"../img/pixel.svg\");}";
 			} else {
 				var css = compatibleTheme(json)

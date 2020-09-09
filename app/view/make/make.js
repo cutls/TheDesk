@@ -16,8 +16,12 @@ var pwa = false
 if (process.argv.indexOf('--pwa') > 0) {
 	var pwa = true
 }
+var store = false
+if (process.argv.indexOf('--store') > 0) {
+	var store = true
+}
 
-function main(ver, basefile, pwa) {
+function main(ver, basefile, pwa, store) {
 	const execSync = require('child_process').execSync
 	let gitHash = execSync('git rev-parse HEAD')
 		.toString()
@@ -144,7 +148,7 @@ function main(ver, basefile, pwa) {
 			source = source.replace(/@@lang@@/g, lang)
 			source = source.replace(/@@langlist@@/g, langstr)
 			if(pwa) {
-				source = source.replace(/@@pwa@@/g, `<link rel="manifest" href="/manifest.json" />
+				source = source.replace(/@@pwa@@/g, `<link rel="manifest" href="../../manifest.json" />
 				<script>var pwa = true;"serviceWorker"in navigator&&navigator.serviceWorker.register("/sw.pwa.js").then(e=>{});</script>`)
 				source = source.replace(/@@node_base@@/g, 'dependencies')
 				source = source.replace(/@@pwaClass@@/g, 'pwaView')
@@ -153,11 +157,16 @@ function main(ver, basefile, pwa) {
 				source = source.replace(/@@node_base@@/g, 'node_modules')
 				source = source.replace(/@@pwaClass@@/g, '')
 			}
+			if (store) {
+				source = source.replace(/@@store@@/g, '<script>var store = true;</script>')
+			} else {
+				source = source.replace(/@@store@@/g, '<script>var store = false;</script>')
+			}
 			fs.writeFileSync(basefile + 'view/' + lang + '/' + pages[i], source)
 		}
 	}
 }
-main(ver, basefile, pwa)
+main(ver, basefile, pwa, store)
 
 //if --watch, to yarn dev
 if (process.argv.indexOf('--watch') !== -1) {
