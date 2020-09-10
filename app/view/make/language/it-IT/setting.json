@@ -1,6 +1,6 @@
 {
-  "setting": "Preferences",
-  "set": "Save",
+  "setting": "Preferenze",
+  "set": "Salva",
   "yes": "Sì",
   "no": "No",
   "none": "Nessuno",
@@ -208,7 +208,7 @@
   "keyesc": "Hide toot box",
   "keyf5": "Super Reload",
   "keyclear": "Svuota casella toot",
-  "keyacctman": "Account Manager",
+  "keyacctman": "Gestione account",
   "keyshowprof": "Show profile of selecting",
   "keyrow": "Show next or previous image",
   "keyzoom": "Mousewheel:Zoom a image",
