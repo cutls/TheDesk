@@ -17,9 +17,9 @@
     "safety": "Connessione",
     "ver": "Versione di Mastodon",
     "ko": "",
-    "thisismisskey": "Login as Misskey",
-    "misskeylogin": "Read <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> to login Misskey.",
-    "nodata": "No data",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)",
-    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
+    "thisismisskey": "Accedi come Misskey",
+    "misskeylogin": "Leggi <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> per accedere a Misskey.",
+    "nodata": "Nessun dato",
+    "accessTokenSetup": "Usa il token di accesso per effettuare il login (clicca dopo aver riempito non il codice ma il token di accesso nella scatola: Avanzato)",
+    "haveExported": "Avendo il file esportato di TheDesk, clicca qui per saltare la pagina di impostazione"
 }
