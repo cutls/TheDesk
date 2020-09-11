@@ -681,40 +681,8 @@ function staEx(mode) {
 	return
 }
 function toggleAction(id) {
-	console.log(document.getElementById(id))
-	var instance = M.Dropdown.init(document.getElementById(id));
+	const elm = document.getElementById(id)
+	const instance = M.Dropdown.init(elm);
+	console.log(instance.isOpen)
 	instance.open()
-	return
-	var height = ct * 39 + 6
-	var cont = elem.parents('.cvo').find('.contextMenu')
-	if (cont.hasClass('hide')) {
-		$('#contextWrap').removeClass('hide')
-		var left = elem.offset().left + 60
-		var top = elem.offset().top - height
-		if (top < 75) {
-			top = elem.offset().top + 45
-			cont.removeClass('bottom')
-			cont.addClass('top')
-		} else {
-			top = elem.offset().top - 105
-			cont.removeClass('top')
-			cont.addClass('bottom')
-		}
-		if (elem.parents('.cvo').attr('id') == 'toot-this') {
-			console.log($('#toot-this').offset().top, elem.offset().top)
-			left = $('#toot-this').offset().left + elem.offset().left + 10
-			top = $('#toot-this').offset().top - $('#toot-this').height() - height + 25
-		}
-		cont.css('top', top + 'px')
-		cont.css('right', `calc(100vw - ${left}px)`)
-		cont.removeClass('hide')
-		elem
-			.parents('.cvo')
-			.find('.act-icon')
-			.text('expand_less')
-	} else {
-		$('#contextWrap').addClass('hide')
-		$('.contextMenu').addClass('hide')
-		$('.act-icon').text('expand_more')
-	}
 }

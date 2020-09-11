@@ -335,6 +335,13 @@ function cardCheck(tlid) {
 }
 
 function mov(id, tlid, type) {
+	const dropdownTrigger = `dropdown_${tlid}_${id}`
+	const elm = document.getElementById(dropdownTrigger)
+	const instance = M.Dropdown.getInstance(elm)
+	if(instance) {
+		if(instance.isOpen) return false
+	}
+	
 	var click = false
 	if (tlid == 'notf') {
 		var tlide = '[data-notf=' + acct_id + ']'
@@ -361,9 +368,9 @@ function mov(id, tlid, type) {
 	}
 	if (mouseover == 'hide') {
 		if (click) {
-			$(tlide + ' [toot-id=' + id + ']').toggleClass('hide-actions')
+			$(tlide + ' [unique-id=' + id + ']').toggleClass('hide-actions')
 		} else {
-			$(tlide + ' [toot-id=' + id + ']').removeClass('hide-actions')
+			$(tlide + ' [unique-id=' + id + ']').removeClass('hide-actions')
 		}
 
 		//$(tlide + " [toot-id=" + id + "] .area-vis").toggleClass("hide")

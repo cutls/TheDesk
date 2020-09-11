@@ -1032,8 +1032,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					'unix'
 				)}"
 					${if_notf}
-					onmouseover="mov('${toot.id}','${tlid}','mv')"
-					onclick="mov('${toot.id}','${tlid}','cl')"
+					onmouseover="mov('${uniqueid}','${tlid}','mv')"
+					onclick="mov('${uniqueid}','${tlid}','cl')"
 					onmouseout="resetmv('mv')"
 				>
 				<div class="area-notice grid"><span class="gray sharesta">${notice}${home}</span></div>
