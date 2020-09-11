@@ -9,7 +9,7 @@
   "default": "Predefinito",
   "change": "Cambia",
   "select": "Seleziona",
-  "env": "System Preferences",
+  "env": "Preferenze Di Sistema",
   "setlang": "Languages",
   "backup": "Import and export of preferences",
   "backupWarn": "If you got a error when you choose the file, please paste the strings printed when you open the file and click import",
