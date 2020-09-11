@@ -11,7 +11,7 @@
   "select": "Seleziona",
   "env": "Preferenze Di Sistema",
   "setlang": "Lingue",
-  "backup": "Import and export of preferences",
+  "backup": "Importazione ed esportazione delle preferenze",
   "backupWarn": "If you got a error when you choose the file, please paste the strings printed when you open the file and click import",
   "import": "Import",
   "export": "Export",
