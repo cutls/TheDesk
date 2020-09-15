@@ -81,7 +81,7 @@
         "electron": "^9.1.1",
         "electron-builder": "^22.7.0",
         "electron-rebuild": "^1.11.0",
-        "eslint": "^7.6.0",
+        "eslint": "^7.9.0",
         "readline-sync": "1.4.10"
     },
     "build": {
