@@ -278,7 +278,7 @@ function stremaingSubscribe(type, acct_id, data, unsubscribe) {
 	else if (type === 'pub') { stream = 'public' }
 	else if (type === 'pub-media') { stream = 'public:media' }
 	else if (type === 'list') {
-		mastodonBaseWs[domain].send(`{"type":"${command}","stream":"list","list":"${data}"}`)
+		mastodonBaseWs[domain].send(JSON.stringify({type: command, stream: 'list', list: data}))
 		return true
 	} else if (type === 'tag') {
 		let arr = []
@@ -288,11 +288,11 @@ function stremaingSubscribe(type, acct_id, data, unsubscribe) {
 		if (data.any) arr = arr.concat(data.any.split(','))
 		if (data.all) arr = arr.concat(data.all.split(','))
 		for (const tag of arr) {
-			mastodonBaseWs[domain].send(`{"type":"${command}","stream":"hashtag","tag":"${tag}"}`)
+			mastodonBaseWs[domain].send(JSON.stringify({type: command, stream: 'hashtag', tag: tag}))
 		}
 		return true
 	}
-	mastodonBaseWs[domain].send(`{"type":"${command}","stream":"${stream}"`)
+	mastodonBaseWs[domain].send(JSON.stringify({type: command, stream: stream}))
 }
 function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	var misskey = false

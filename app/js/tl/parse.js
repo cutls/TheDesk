@@ -1564,7 +1564,7 @@ function mastodonBaseStreaming(acct_id) {
 		setTimeout(function () {
 			mastodonBaseWsStatus[domain] = 'available'
 		}, 3000)
-		mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"user"}`)
+		mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'user'}))
 		$('.notice_icon_acct_' + acct_id).removeClass('red-text')
 	}
 	mastodonBaseWs[domain].onmessage = function (mess) {

@@ -27,12 +27,12 @@ async function mixtl(acct_id, tlid, type, delc, voice) {
 				mixre(acct_id, tlid, 'mix', mute, voice, '')
 				clearInterval(mbws)
 			} else if(mastodonBaseWsStatus[domain] == 'available') {
-				mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"public:local"}`)
+				mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'public:local'}))
 				clearInterval(mbws)
 			}
 		}, 1000)
 	} else if(mastodonBaseWsStatus[domain] == 'available') {
-		mastodonBaseWs[domain].send(`{"type":"subscribe","stream":"public:local"}`)
+		mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'public:local'}))
 	}
 	
 	$(window).scrollTop(0)
