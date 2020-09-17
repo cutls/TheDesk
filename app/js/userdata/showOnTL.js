@@ -554,6 +554,8 @@ function reset() {
 $("#my-data-nav .anc-link").on("click", function() {
 	var target = $(this).attr("go")
 	if (target) {
+		const title = $(this).html()
+		$('#his-data-title').html(title)
 		$("#my-data-nav .anc-link").removeClass("active-back")
 		$(this).addClass("active-back")
 		$(target).show()

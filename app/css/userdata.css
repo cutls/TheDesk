@@ -1,151 +1,159 @@
 /*アイコンをクリックした時とかにでてくるユーザーデータ*/
 #his-data {
-  background-repeat: no-repeat;
-  background-image: url("../img/loading.svg");
-  overflow-y: hidden;
+	background-repeat: no-repeat;
+	background-image: url('../img/loading.svg');
+	overflow-y: hidden;
 }
-#his-data .btn .material-icons{
-  float:left;
+#his-data .btn .material-icons {
+	float: left;
 }
 #his-data-content {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 #his-name {
-  font-size: 1.5rem;
+	font-size: 1.5rem;
 }
 #his-prof {
-  float: left;
-  width: 7.7rem;
-  margin-right: 0.4rem;
+	width: 7.7rem;
+	margin-right: 0.4rem;
 }
 .his-float {
-  overflow-y: scroll;
-  padding: 0.4rem;
+	overflow-y: scroll;
+	padding: 0.4rem;
 }
 #his-float-data {
-  height: 100%;
+	height: 100%;
   overflow-y: hidden;
+  
 }
 #his-leftside {
-  width: 38.4rem;
+  width: 28.4rem;
+  max-width: 30vw;
 }
 #his-float-timeline {
-  max-width: 59.6rem;
-  height: 100%;
-  overflow-y: hidden;
+  max-width: 47.5rem;
+  min-width: calc(100% - 29.4rem);
+	height: 100%;
+	overflow-y: hidden;
 }
 #his-basic-prof {
-  min-height: 10rem;
+  display: flex;
+	min-height: 10rem;
 }
 #his-field {
-  vertical-align: baseline;
-  text-align: center;
-  padding: 0;
+	vertical-align: baseline;
+	text-align: center;
+	padding: 0;
 }
 #his-field tr {
-  height: 1.5rem;
+	height: 1.5rem;
 }
 .his-field-title {
-  height: 1.5rem;
-  padding: 0;
-  background-color: #757575;
-  text-align: center;
-  padding: 0.4rem;
-  margin-bottom: 1px;
-  width: 30%;
+	height: 1.5rem;
+	padding: 0;
+	background-color: #757575;
+	text-align: center;
+	padding: 0.4rem;
+	margin-bottom: 1px;
+	width: 30%;
 }
 .his-field-content {
-  height: 1.5rem;
-  padding: 0;
-  padding-left: 0.4rem;
+	height: 1.5rem;
+	padding: 0;
+	padding-left: 0.4rem;
 }
 .his-var-content a span.ellipsis:after {
-  content: "...";
+	content: '...';
 }
 .his-var-content a:not(.mention) span:last-of-type {
-  display: none;
+	display: none;
 }
 #his-data a .rep_ct,
 #his-data a .rt_ct,
 #his-data a .fav_ct {
-  display: inline !important;
+	display: inline !important;
 }
 #his-data-show {
-  margin: 1.5rem;
-  margin-left: 3.8rem;
-  margin-right: 3.8rem;
-  background-color: var(--his-data);
-  height: calc(100% - 1.5rem);
-  margin-bottom: 0;
-  padding: 0.4rem;
+	margin: 1.5rem;
+	margin-left: 3.8rem;
+	margin-right: 3.8rem;
+	background-color: var(--his-data);
+	height: calc(100% - 1.5rem);
+	margin-bottom: 0;
+	padding: 0.4rem;
 }
 #his-data-wrap {
-  display: flex;
+	display: flex;
 }
 .his-var-content {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: calc(100% - 3.4rem);
-  padding-bottom: 60px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	height: calc(100% - 3.4rem);
+	padding-bottom: 60px;
 }
 #my-data-nav .btn {
-  width: 10.7rem;
+	width: 10.6rem;
 }
-.active-back {
-  background-color: var(--active);
+#my-data-nav .active-back {
+	display: none;
 }
 #his-name .emojione,
 #his-name .emoji-img {
-  width: 1.538rem;
+	width: 1.538rem;
 }
 #his-plus-action .btn {
-  padding-right: 0.4rem;
-  padding-left: 0.4rem;
+	padding-right: 0.4rem;
+	padding-left: 0.4rem;
 }
 .tabs {
-  display: flex;
+	display: flex;
 }
 .tabs .tab a {
-  padding: 0.6rem 0.9rem;
+	padding: 0.6rem 0.9rem;
 }
 #his-des {
-  max-height: 17.7rem;
-  overflow-y: scroll;
+	max-height: 17.7rem;
+	overflow-y: scroll;
 }
 #his-sign-action {
-  border: 1px solid;
-  border-radius: 0.4rem;
-  display: flex;
-  align-items: center;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  flex-wrap: wrap;
+	border: 1px solid;
+	border-radius: 0.4rem;
+	display: flex;
+	align-items: center;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+	flex-wrap: wrap;
 }
 #his-sign-action .btn {
-  flex-basis: 31.2%;
+	flex-basis: calc(50% - 10.6px);
 }
 #his-des .mention {
-  color: #039be5;
-  cursor: pointer;
+	color: #039be5;
+	cursor: pointer;
 }
-#his-table{
-  max-height: 11.538rem;
-  overflow-y: scroll;
+#his-table {
+	max-height: 11.538rem;
+	overflow-y: scroll;
 }
 #his-float-blocked {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2rem;
+	height: 100%;
 }
-#hisdropdown{
-  background-color: var(--bg);
+#hisdropdown {
+	background-color: var(--bg);
 }
 #hisdropdown li a {
-  color: white;
+	color: white;
 }
-#hisdropdown li:hover{
-  background-color: var(--active);
+#hisdropdown li:hover {
+	background-color: var(--active);
+}
+#his-data-title {
+	width: 100%;
+	text-align: center;
+	font-size: 1.5rem;
 }

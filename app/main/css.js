@@ -144,7 +144,7 @@ function css(mainWindow) {
 					hisData +
 					";--active:" + active + ";--postbox:" + postbox + ";--modalfooter:" +
 					modalFooter + ";--selected:" + selected + ";--selectedWithShare:" + selectedWithShare +
-					"--gray:" + gray + ";}" +
+					";--gray:" + gray + ";}" +
 					".customtheme #imagemodal{background: url(\"../img/pixel.svg\");}";
 			} else {
 				var css = compatibleTheme(json)
