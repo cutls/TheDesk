@@ -71,7 +71,7 @@
         "sumchecker": "^3.0.1",
         "sweetalert2": "^10.0.2",
         "system-font-families": "^0.4.1",
-        "vue": "^2.6.11"
+        "vue": "^2.6.12"
     },
     "optionalDependencies": {
         "itunes-nowplaying-mac": "0.3.1"
