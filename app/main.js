@@ -173,6 +173,7 @@ function createWindow() {
 			webviewTag: true,
 			nodeIntegration: false,
 			contextIsolation: true,
+			spellcheck: false,
 			preload: join(__dirname, 'js', 'platform', 'preload.js'),
 		},
 		width: window_size.width,
