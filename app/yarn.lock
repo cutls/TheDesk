@@ -3176,10 +3176,10 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-sweetalert2@^10.0.2:
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-10.0.2.tgz#dd2ae80102b992c7acd683a68c5b875209ee77d0"
-  integrity sha512-norIgpVW16EAD+wgAnw86PTQn4WgBTXwSJUOUrWP0cd+gVjQKxYXyMNJWAcb1bBAMr9dL2dyS4LztbyErRZ/BA==
+sweetalert2@^10.2.0:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-10.2.0.tgz#81d01ebd5d775d5a307430a19f043ffbf7bf579c"
+  integrity sha512-rFDcsFbc0NGryGl0iUSzwAAgM3vjpVFVJbqyjjufgCyCOlWNjz1/ZD9enyG40oGd2no088EcYLpcg2fwYon2jA==
 
 system-font-families@^0.4.1:
   version "0.4.1"
