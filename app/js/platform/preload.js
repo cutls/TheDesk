@@ -2,25 +2,9 @@ var electron = require('electron')
 const shell = electron.shell
 var ipc = electron.ipcRenderer
 //title bar
-const customTitlebar = require('custom-electron-titlebar')
 window.addEventListener('DOMContentLoaded', () => {
 	document.title = 'TheDesk'
 	ipc.send('acsCheck', '')
-	ipc.send('frameCheck', '')
-	ipc.on('frame', function(event, args) {
-		const file = location.href.substr(-10)
-		if (
-			file == 'index.html' ||
-			file == '/acct.html' ||
-			file == 'tting.html'
-		) {
-			new customTitlebar.Titlebar({
-				backgroundColor: customTitlebar.Color.fromHex('#000'),
-				titleHorizontalAlignment: 'right',
-				icon: '../../img/desk.png'
-			})
-		}
-		})
 })
 
 onmessage = function(e) {

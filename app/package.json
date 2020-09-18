@@ -21,8 +21,8 @@
         "build:linux:snapstore": "node view/make/make.js --automatic --store && npx electron-builder --linux",
         "build:mac:web": "node view/make/make.js --automatic && npx electron-builder --mac",
         "build:mac:homebrew": "node view/make/make.js --automatic --store && npx electron-builder --mac",
-        "lint:fix": "eslint js --fix" ,
-        "lint": "eslint js" 
+        "lint:fix": "eslint js --fix",
+        "lint": "eslint js"
     },
     "keywords": [
         "mastodon",
@@ -60,7 +60,6 @@
     "license": "GPL-3.0",
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.14.0",
-        "custom-electron-titlebar": "^3.2.4",
         "electron-dl": "^3.0.2",
         "jimp": "^0.16.1",
         "jquery": "^3.5.1",

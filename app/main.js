@@ -124,7 +124,6 @@ function createWindow() {
 	var max_info_path = join(app.getPath('userData'), 'max-window-size.json')
 	var ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
 	var ua_path = join(app.getPath('userData'), 'useragent')
-	var frame_path = join(app.getPath('userData'), 'frame')
 	try {
 		fs.readFileSync(ha_path, 'utf8')
 		app.disableHardwareAcceleration()
@@ -152,19 +151,6 @@ function createWindow() {
 			y: 'string',
 		} // デフォルトバリュー
 	}
-
-	try {
-		var frameRaw = fs.readFileSync(frame_path, 'utf8')
-		if (frameRaw == 'false') {
-			var frame = false
-			var frameTitle = 'hidden'
-		} else {
-			var frame = true
-			var frameTitle = 'default'
-		}
-	} catch {
-		var frame = true
-	}
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
 	var platform = process.platform
 	var bit = process.arch
@@ -180,8 +166,7 @@ function createWindow() {
 		height: window_size.height,
 		x: window_size.x,
 		y: window_size.y,
-		show: false,
-		frame: frame,
+		show: true,
 	}
 	if (platform == 'linux') {
 		arg.resizable = true
@@ -190,7 +175,6 @@ function createWindow() {
 		arg.simpleFullscreen = true
 	} else if (platform == 'darwin') {
 		arg.simpleFullscreen = true
-		arg.titleBarStyle = frameTitle
 	}
 	mainWindow = new BrowserWindow(arg)
 	mainWindow.once('page-title-updated', () => {
@@ -294,10 +278,7 @@ function createWindow() {
 
 	var platform = process.platform
 	var bit = process.arch
-	Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir, dirname, frame)))
-	if (!frame) {
-		mainWindow.setMenu(null)
-	}
+	Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir, dirname)))
 	//CSS
 	css.css(mainWindow)
 	//アップデータとダウンロード
