@@ -166,26 +166,6 @@ var envConstruction = [
 			desc: '@@srcUrlWarn@@',
 			after: ''
 		}
-	},
-	{
-		id: 'frame',
-		storage: 'frame',
-		checkbox: true,
-		setValue: true,
-		text: {
-			head: '@@frame@@',
-			desc: '@@frameWarn@@',
-			checkbox: [
-				{
-					text: '@@show@@',
-					value: 'true'
-				},
-				{
-					text: '@@hide@@',
-					value: 'false'
-				}
-			]
-		}
 	},{
 		id: 'download',
 		storage: 'dl-win',
