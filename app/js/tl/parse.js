@@ -1549,6 +1549,7 @@ function pollParse(poll, acct_id, emojis) {
 var mastodonBaseWs = {}
 var mastodonBaseWsStatus = {}
 function mastodonBaseStreaming(acct_id) {
+	console.log('start to connect mastodonBaseStreaming of ' + acct_id)
 	notfCommon(acct_id, 0, null, 'no')
 	const domain = localStorage.getItem(`domain_${acct_id}`)
 	if (mastodonBaseWsStatus[domain]) return
@@ -1612,14 +1613,16 @@ function mastodonBaseStreaming(acct_id) {
 		console.error("Error closing " + domain)
 		console.error(error)
 		if (mastodonBaseWsStatus[domain] == 'available') {
-			M.toast({
+			/*M.toast({
 				html:
 					`${lang.lang_parse_disconnected}<button class="btn-flat toast-action" onclick="location.reload()">${lang.lang_layout_reconnect}</button>`,
 				completeCallback: function () {
-					mastodonBaseWs[domain] = new WebSocket(start)
+					parseColumn()
+
 				},
 				displayLength: 3000
-			})
+			})*/
+			parseColumn()
 		}
 		mastodonBaseWsStatus[domain] = 'cannotuse'
 		setTimeout(function () {
@@ -1632,14 +1635,16 @@ function mastodonBaseStreaming(acct_id) {
 		notfCommon(acct_id, 0, null, 'only') //fallback
 		console.warn("Closing " + domain)
 		if (mastodonBaseWsStatus[domain] == 'available') {
-			M.toast({
+			/*M.toast({
 				html:
 					`${lang.lang_parse_disconnected}<button class="btn-flat toast-action" onclick="location.reload()">${lang.lang_layout_reconnect}</button>`,
 				completeCallback: function () {
-					mastodonBaseWs[domain] = new WebSocket(start)
+					parseColumn()
+
 				},
 				displayLength: 3000
-			})
+			})*/
+			parseColumn()
 		}
 		mastodonBaseWs[domain] = false
 		mastodonBaseWsStatus[domain] = 'cannotuse'

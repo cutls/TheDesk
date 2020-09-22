@@ -211,6 +211,7 @@ function notfCommon(acct_id, tlid, sys, stream) {
 		})
 }
 function notfWS(misskey, acct_id, tlid, domain, at) {
+	if(mastodonBaseWsStatus[domain] == 'available') return false
 	if (!misskey) {
 		if (localStorage.getItem('streaming_' + acct_id)) {
 			var wss = localStorage.getItem('streaming_' + acct_id)
@@ -262,7 +263,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 			}
 		}
 		websocketNotf[acct_id].onerror = function(error) {
-			console.error('WebSocket Error ' + error)
+			console.error('WebSocket Error ', error)
 			errorct++
 			console.log(errorct)
 			if (errorct < 3) {
@@ -270,7 +271,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 			}
 		}
 		websocketNotf[acct_id].onclose = function(error) {
-			console.error('WebSocket Close ' + error)
+			console.error('WebSocket Close ', error)
 			errorct++
 			console.log(errorct)
 			if (errorct < 3) {
