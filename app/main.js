@@ -166,7 +166,7 @@ function createWindow() {
 		height: window_size.height,
 		x: window_size.x,
 		y: window_size.y,
-		show: true,
+		show: false,
 	}
 	if (platform == 'linux') {
 		arg.resizable = true
