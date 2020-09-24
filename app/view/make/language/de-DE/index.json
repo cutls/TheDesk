@@ -20,8 +20,8 @@
     "yes": "Ja",
     "temp": "Dateien anhängen",
     "nothing": "Keine",
-    "stamp": "Stamp",
-    "stampWarn": "Your acct(aa@bb.cc) is printed on the right-bottom of the uploaded image",
+    "stamp": "Stempel",
+    "stampWarn": "Ihr acct(aa@bb.cc) wird rechts unten des hochgeladenen Bildes gedruckt",
     "vis": "Status Privatsphäre anpassen",
     "cwtext": "Warntext",
     "selectVis": "Status Privatsphäre anpassen",
@@ -75,7 +75,7 @@
     "toots": "Tröts",
     "follow": "Folgen",
     "follower": "Abonnenten",
-    "utlColumn": "Show as a column",
+    "utlColumn": "Als Spalte anzeigen",
     "timeline": "Verlauf",
     "operateOtherAcct": "Cross-Account",
     "list": "Liste",
@@ -139,7 +139,7 @@
     "filterWord": "Filterwörter",
     "degree": "Kontexte filtern",
     "conver": "Gespräche",
-    "prof": "Profiles",
+    "prof": "Profile",
     "option": "Einstellungen",
     "matchWord": "Ganze Wörter",
     "warnMatchWord": "Schön für lateinische Sprachen",
@@ -184,5 +184,5 @@
     "acctManDesc": "Fügen Sie weitere Konten hinzu und loggen Sie sie aus.",
     "settingDesc": "Hier sind sehr, sehr viele Einstellungen. Du könntest gar nicht alles ausprobieren!",
     "nanoDescPlus": "Mini-Fenster-Klient (experimentell)",
-    "menuDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
+    "menuDesc": "Alle täglichen TheDesk und Mastodon-Einstellungen wie <b>hinzufügen und sortieren von Spalten</b>, <b>Liste und Filter prüfen</b>."
 }
