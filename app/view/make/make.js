@@ -28,7 +28,7 @@ function main(ver, basefile, pwa, store) {
 		.trim()
 	fs.writeFileSync(basefile + 'git', gitHash)
 	console.log('Constructing view files ' + ver)
-	const langs = ['ja', 'ja-KS', 'en', 'bg', 'cs', 'de', 'es-AR', 'ps']
+	const langs = ['ja', 'ja-KS', 'en', 'bg', 'cs', 'de', 'es-AR', 'it-IT', 'ps']
 	const langsh = [
 		'日本語',
 		'日本語(関西)',
@@ -37,6 +37,7 @@ function main(ver, basefile, pwa, store) {
 		'Česky',
 		'Deutsch',
 		'Spanish, Argentina',
+		'italiano',
 		'Crowdin translate system(beta)'
 	]
 	const simples = ['acct', 'index', 'setting', 'update', 'setting']
