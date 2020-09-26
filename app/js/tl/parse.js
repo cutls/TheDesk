@@ -1689,10 +1689,11 @@ function getTlMeta(type, data, num, status) {
 	const columns = localStorage.getItem('column')
 	const obj = JSON.parse(columns)
 	let ret = []
-	let i = 0
+	let i = -1
 	switch (type) {
 		case 'user':
 			for (const tl of obj) {
+				i++
 				if (tl.domain != acct_id) continue
 				if (tl.type == 'mix' || tl.type == 'home') {
 					let voice = false
@@ -1704,11 +1705,11 @@ function getTlMeta(type, data, num, status) {
 						acct_id: tl.domain
 					})
 				}
-				i++
 			}
 			break
 		case 'public:local':
 			for (const tl of obj) {
+				i++
 				if (tl.domain != acct_id) continue
 				if (tl.type == 'mix' || tl.type == 'local') {
 					let voice = false
@@ -1720,11 +1721,11 @@ function getTlMeta(type, data, num, status) {
 						acct_id: tl.domain
 					})
 				}
-				i++
 			}
 			break
 		case 'public:local:media':
 			for (const tl of obj) {
+				i++
 				if (tl.domain != acct_id) continue
 				if (tl.type == 'local-media') {
 					let voice = false
@@ -1736,13 +1737,14 @@ function getTlMeta(type, data, num, status) {
 						acct_id: tl.domain
 					})
 				}
-				i++
 			}
 			break;
 		case 'public':
 			for (const tl of obj) {
+				i++
 				if (tl.domain != acct_id) continue
 				if (tl.type == 'pub') {
+					console.log(i, tl)
 					let voice = false
 					if (localStorage.getItem('voice_' + i)) voice = true
 					ret.push({
@@ -1752,11 +1754,11 @@ function getTlMeta(type, data, num, status) {
 						acct_id: tl.domain
 					})
 				}
-				i++
 			}
 			break;
 		case 'public:media':
 			for (const tl of obj) {
+				i++
 				if (tl.domain != acct_id) continue
 				if (tl.type == 'pub-media') {
 					let voice = false
@@ -1768,11 +1770,11 @@ function getTlMeta(type, data, num, status) {
 						acct_id: tl.domain
 					})
 				}
-				i++
 			}
 			break;
 		case 'list':
 			for (const tl of obj) {
+				i++
 				if (tl.domain != acct_id) continue
 				if (tl.type == 'list' && tl.data == data[1]) {
 					let voice = false
@@ -1784,11 +1786,11 @@ function getTlMeta(type, data, num, status) {
 						acct_id: tl.domain
 					})
 				}
-				i++
 			}
 			break;
 		case 'direct':
 			for (const tl of obj) {
+				i++
 				if (tl.domain != acct_id) continue
 				if (tl.type == 'dm') {
 					let voice = false
@@ -1800,11 +1802,11 @@ function getTlMeta(type, data, num, status) {
 						acct_id: tl.domain
 					})
 				}
-				i++
 			}
 			break;
 		case 'hashtag':
 			for (const tl of obj) {
+				i++
 				if (tl.domain != acct_id) continue
 				const columnDataRaw = tl.data
 				let columnData
@@ -1844,7 +1846,6 @@ function getTlMeta(type, data, num, status) {
 						acct_id: tl.domain
 					})
 				}
-				i++
 			}
 			break;
 		default:
