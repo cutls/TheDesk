@@ -188,8 +188,8 @@ function system(mainWindow, dir, lang, dirname) {
 	})
 	function mems() {
 		var mem = os.totalmem() - os.freemem()
-		if (mainWindow) {
-			event.webContents.send('memory', [mem, os.cpus()[0].model, os.totalmem()])
+		if (mainWindow && event.webContents) {
+			event.webContents.send('memory', [mem, os.cpus()[0].model, os.totalmem(), os.cpus().length, os.uptime()])
 		}
 	}
 	ipc.on('endmem', (e, arg) => {

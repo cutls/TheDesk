@@ -93,7 +93,7 @@
 	display: grid;
 	grid-template-columns: 3rem 2.3rem 2.5fr 1fr 4.6rem;
 	grid-template-rows: 1.7rem 1.5rem;
-	grid-template-areas: 'cover name name artist refresh' 'cover progress progress progress time';
+	grid-template-areas: 'cover name name name refresh' 'cover progress progress progress time';
 }
 #spot-refresh {
 	grid-area: refresh;
@@ -108,18 +108,12 @@
 	overflow: hidden;
 	line-height: 1.92rem;
 }
-#spot-artist {
-	grid-area: artist;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	line-height: 1.92rem;
-}
 #spot-img {
 	width: 90%;
 }
 #spot-time {
 	grid-area: time;
+	line-height: 0.5rem;
 }
 .progress {
 	grid-area: progress;

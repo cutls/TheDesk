@@ -63,16 +63,21 @@ function tips(mode) {
 function startmem() {
 	postMessage(['sendSinmpleIpc', 'startmem'], '*')
 }
-function renderMem(use, cpu, total) {
+function renderMem(use, cpu, total, core, uptime) {
+	let day = Math.floor(uptime / 60 / 60 / 24)
+	let hour = Math.floor(uptime / 60 /60 % 24)
+	if(hour < 10) hour = '0' + hour
+	let min = Math.floor(uptime / 60 % 60)
+	if(min < 10) min = '0' + min
+	let sec = Math.floor(uptime % 60)
+	if(sec < 10) sec = '0' + sec
+	let time = `${day ? day + ' days ' : ''}${hour ? hour + ':' : ''}${min}:${sec}`
+	//Intel
+	cpu = cpu.replace('Intel(R)', '').replace('(TM)', '').replace(' CPU', '')
+	//AMD
+	cpu = cpu.replace('AMD ', '').replace(/\s[0-9]{1,3}-Core\sProcessor/, '')
 	$('#tips-text').html(
-		escapeHTML(cpu) +
-			'<br>Memory:' +
-			Math.floor(use / 1024 / 1024 / 102.4) / 10 +
-			'/' +
-			Math.floor(total / 1024 / 1024 / 102.4) / 10 +
-			'GB(' +
-			Math.floor((use / total) * 100) +
-			'%)'
+		`${escapeHTML(cpu)} x ${core}<br />RAM: ${Math.floor(use / 1024 / 1024 / 102.4) / 10}/${Math.floor(total / 1024 / 1024 / 102.4) / 10}GB(${Math.floor((use / total) * 100)}%) UP:${time}`
 	)
 }
 //トレンドタグ
@@ -196,12 +201,10 @@ function spotifytips() {
 						<i class="material-icons pointer" onclick="nowplaying('spotify');show()" style="font-size:20px">send</i>
 					</div>
 					<div id="spot-cover">
-						<img src="${img}" id="spot-img">
+						<img src="${img}" id="spot-img" draggable="false">
 					</div>
 					<div id="spot-name">
 						${escapeHTML(item.name)}
-					</div>
-					<div id="spot-artist">
 						<span class="gray sml" id="spot-art">${artisttxt}</span>
 					</div>
 					<div id="spot-time">

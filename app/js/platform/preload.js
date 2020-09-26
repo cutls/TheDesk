@@ -204,7 +204,7 @@ ipc.on('memory', function(event, arg) {
 	var use = arg[0]
 	var cpu = arg[1]
 	var total = arg[2]
-	postMessage(['renderMem', [use, cpu, total]], '*')
+	postMessage(['renderMem', [use, cpu, total, arg[3], arg[4]]], '*')
 })
 //log
 ipc.on('logData', function(event, args) {

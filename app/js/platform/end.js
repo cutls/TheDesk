@@ -170,7 +170,7 @@ onmessage = function(e) {
 	} else if (e.data[0] == 'npCore') {
 		npCore(e.data[1])
 	} else if (e.data[0] == 'renderMem') {
-		renderMem(e.data[1][0], e.data[1][1], e.data[1][2])
+		renderMem(e.data[1][0], e.data[1][1], e.data[1][2], e.data[1][3], e.data[1][4])
 	} else if (e.data[0] == 'updateProg') {
 		updateProg(e.data[1])
 	} else if (e.data[0] == 'updateMess') {
