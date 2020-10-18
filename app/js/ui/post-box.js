@@ -101,7 +101,7 @@ if (location.search) {
 		$('.mini-btn').text('expand_less')
 	}
 }
-window.onload = initPostbox
+window.onload = function () { initPostbox(); connection() }
 function initPostbox() {
 	$('#posttgl').click(function (e) {
 		if (!$('#post-box').hasClass('appear')) {

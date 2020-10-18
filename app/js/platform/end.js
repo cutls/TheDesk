@@ -216,3 +216,13 @@ if(pwa) {
 		}
 	}
 }
+const connection = function (event) {
+	console.log(navigator.onLine, 'network state')
+	if(!navigator.onLine) {
+		$('#toot-post-btn').addClass('disabled')
+	} else {
+		$('#toot-post-btn').removeClass('disabled')
+	}
+}
+window.onoffline = connection
+window.ononline = connection
