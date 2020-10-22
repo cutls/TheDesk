@@ -3149,10 +3149,10 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-sweetalert2@^10.3.5:
-  version "10.3.5"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-10.3.5.tgz#e5a10ad789163e85ec6031a413b08b20e5aae0a4"
-  integrity sha512-8XBQvW2frWVn0Xs80qyraRXcb3Mg/aKG+9sdVPlzViDIYJfLhMeda3pRuyGzyvrPXbBQ3KRjs+66xKH3kz8/og==
+sweetalert2@^10.7.0:
+  version "10.7.0"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-10.7.0.tgz#73c82b7988175fede29358d3cc28bc83bbd8cda9"
+  integrity sha512-L/RwuY6JKs38nxnIjLnnNLnZ0+m2Bod+fXgNS2ewLI+9xzNJwUcPGv/Sh3wn2bmNNjcfuHTS7qZKwa7AIeDvNg==
 
 system-font-families@^0.4.1:
   version "0.4.1"
