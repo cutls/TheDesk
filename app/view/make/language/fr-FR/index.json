@@ -1,5 +1,7 @@
 {
     "draghere": "Faites glisser ici pour transférer",
+    "nowOffline": "OFFLINE: all of your post is in the draft box and you should reload after re-connect to the Internet",
+    "reOnline": "Now we are in the Internet, you should reload...",
     "close": "Fermer",
     "webSrc": "Search on Web",
     "tsSrc": "Search on tootsearch",
@@ -45,6 +47,7 @@
     "thingsEmoji": "Emojis of tools",
     "symbolEmoji": "Emojis of symbols",
     "flagsEmoji": "Emojis of flags",
+    "draft": "Draft",
     "poll": "Poll",
     "pollDdisabled": "Polls: Disabled",
     "pollProvider": "Provider of Poll",
