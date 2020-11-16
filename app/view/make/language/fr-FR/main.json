@@ -71,6 +71,7 @@
     "lang_post_btn3": "Continue to post",
     "lang_post_unfinishedMedia": "The server has not finished processing your media. Retry.",
     "lang_post_retry": "Retry",
+    "lang_post_offline": "Add to the drafts because of offline",
     "lang_status_favWarn": "It will take a miunte to favourite a remote toot.",
     "lang_status_btWarn": "It will take a miunte to boost a remote toot.",
     "lang_status_follow": "Suivre",
