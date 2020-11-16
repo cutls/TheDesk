@@ -475,7 +475,7 @@ function draftToPost(json, acct_id, id) {
 	}
 	$('#textarea').val(html)
 	if (json.spoiler_text) {
-		cw()
+		cw(true)
 		$('#cw-text').val(json.spoiler_text)
 	}
 	if (json.sensitive) {

@@ -227,7 +227,8 @@ $(function($) {
 				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
 				var ats_cm = $('.selectedToot .rep-btn').attr('data-men')
 				var mode = $('.selectedToot .rep-btn').attr('data-visen')
-				re(id, ats_cm, acct_id, mode)
+				var cwTxt = $('#cw-text').val()
+				re(id, ats_cm, acct_id, mode, cwTxt)
 				return false
 			}
 		}

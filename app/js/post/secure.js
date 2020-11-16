@@ -79,8 +79,8 @@ function loadVis() {
 loadVis()
 
 //コンテントワーニング
-function cw() {
-	if ($('#cw').hasClass('cw-avail')) {
+function cw(force) {
+	if ($('#cw').hasClass('cw-avail') || !force) {
 		$('#cw-text').val()
 		$('#cw-text').hide()
 		$('#cw').removeClass('yellow-text')
