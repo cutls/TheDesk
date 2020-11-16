@@ -71,6 +71,7 @@
     "lang_post_btn3": "Continue to post",
     "lang_post_unfinishedMedia": "The server has not finished processing your media. Retry.",
     "lang_post_retry": "Retry",
+    "lang_post_offline": "Add to the drafts because of offline",
     "lang_status_favWarn": "将花费一点点时间收藏距离很远的嘟嘟",
     "lang_status_btWarn": "将花费一点点时间收藏距离很远的嘟嘟",
     "lang_status_follow": "关注",
