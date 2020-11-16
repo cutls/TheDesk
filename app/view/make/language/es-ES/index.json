@@ -45,6 +45,7 @@
     "thingsEmoji": "Emojis of tools",
     "symbolEmoji": "Emojis of symbols",
     "flagsEmoji": "Emojis of flags",
+    "draft": "Draft",
     "poll": "Poll",
     "pollDdisabled": "Polls: Disabled",
     "pollProvider": "Provider of Poll",
