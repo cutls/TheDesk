@@ -45,6 +45,7 @@
     "thingsEmoji":"もの",
     "symbolEmoji":"記号",
     "flagsEmoji":"国旗",
+    "draft": "下書き",
     "poll":"アンケート",
     "pollDdisabled":"アンケートを使用しない",
     "pollProvider":"アンケートのプロバイダ",

@@ -25,6 +25,7 @@ function pollToggle() {
 		}
 		$('#post-box').css('width', width + 'px')
 		$('#emoji').addClass('hide')
+		$('#draft').addClass('hide')
 		$('#poll').addClass('hide')
 		$('#pollsta').text(lang.lang_no)
 	}

@@ -23,6 +23,7 @@ function emojiToggle(reaction) {
 		}
 		$('#post-box').css('width', width + 'px')
 		$('#suggest').html('')
+		$('#draft').html('')
 		if (!localStorage.getItem('emojis_' + acct_id)) {
 			var html = `<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="emojiGet('true');">${lang.lang_emoji_get}</button>`
 			$('#emoji-list').html(html)
@@ -31,10 +32,12 @@ function emojiToggle(reaction) {
 		}
 	} else {
 		$('#poll').addClass('hide')
+		$('#draft').addClass('hide')
 		$('#right-side').hide()
 		$('#right-side').css('width', '300px')
 		$('#emoji').addClass('hide')
 		$('#suggest').html('')
+		$('#draft').html('')
 		$('#left-side').css('width', '100%')
 		var width = localStorage.getItem('postbox-width')
 		if (width) {

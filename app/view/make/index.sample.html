@@ -278,6 +278,9 @@
 					<li>
 						<a onclick="pollToggle();">@@poll@@</a>
 					</li>
+					<li>
+						<a onclick="draftToggle();">@@draft@@</a>
+					</li>
 				</ul>
 				<!--hidden area-->
 				<input type="hidden" id="reply" />
@@ -297,6 +300,7 @@
 		</div>
 		<div id="right-side">
 			<div id="suggest" class="right-side-content"></div>
+			<div id="draft" class="hide right-side-content"></div>
 			<!--絵文字ピッカー-->
 			<div id="emoji" class="hide right-side-content">
 				<span class="gray sml">@@emojiWarn@@

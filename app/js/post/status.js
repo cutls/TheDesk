@@ -15,7 +15,7 @@ function fav(id, acct_id, remote) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send()
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -75,7 +75,7 @@ function rt(id, acct_id, remote, vis) {
 	} else {
 		httpreq.send()
 	}
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -131,7 +131,7 @@ function bkm(id, acct_id, tlid) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send()
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -160,7 +160,7 @@ function bkm(id, acct_id, tlid) {
 
 //フォロー
 async function follow(acct_id, resolve) {
-	if($('#his-data').hasClass('locked')) {
+	if ($('#his-data').hasClass('locked')) {
 		locked = true
 	} else {
 		locked = false
@@ -178,7 +178,7 @@ async function follow(acct_id, resolve) {
 		var flag = 'follow'
 		var flagm = 'create'
 	}
-	
+
 	var id = $('#his-data').attr('user-id')
 	if (resolve == 'selector') {
 		var fullacct = $('#his-acct').attr('fullname')
@@ -200,7 +200,7 @@ async function follow(acct_id, resolve) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify(ent))
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -212,7 +212,7 @@ async function follow(acct_id, resolve) {
 				$('#his-follow-btn-text').text(lang.lang_status_follow)
 			} else {
 				$('#his-data').addClass('following')
-				if(locked) {
+				if (locked) {
 					$('#his-follow-btn-text').text(lang.lang_status_requesting)
 				} else {
 					$('#his-follow-btn-text').text(lang.lang_status_unfollow)
@@ -278,7 +278,7 @@ function block(acct_id) {
 			httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 			httpreq.responseType = 'json'
 			httpreq.send()
-			httpreq.onreadystatechange = function() {
+			httpreq.onreadystatechange = function () {
 				if (httpreq.readyState === 4) {
 					if (this.status !== 200) {
 						setLog(start, this.status, this.response)
@@ -338,7 +338,7 @@ function muteDo(acct_id) {
 			httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 			httpreq.responseType = 'json'
 			httpreq.send(rq)
-			httpreq.onreadystatechange = function() {
+			httpreq.onreadystatechange = function () {
 				if (httpreq.readyState === 4) {
 					if (this.status !== 200) {
 						setLog(start, this.status, this.response)
@@ -378,7 +378,7 @@ function del(id, acct_id) {
 		httpreq.responseType = 'json'
 		httpreq.send()
 	}
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			if (this.status !== 200) {
 				setLog(start, this.status, this.response)
@@ -420,68 +420,72 @@ function redraft(id, acct_id) {
 				httpreq.responseType = 'json'
 				httpreq.send()
 			}
-			httpreq.onreadystatechange = function() {
+			httpreq.onreadystatechange = function () {
 				if (httpreq.readyState === 4) {
 					if (this.status !== 200) {
 						setLog(start, this.status, this.response)
 					}
 					var json = httpreq.response
-					$('#post-acct-sel').prop('disabled', true)
-					$('#post-acct-sel').val(acct_id)
-					$('select').formSelect()
-					mdCheck()
-					var medias = $('[toot-id=' + id + ']').attr('data-medias')
-					var mediack = json.media_attachments[0]
-					//メディアがあれば
-					var media_ids = []
-					if (mediack) {
-						for (var i = 0; i <= 4; i++) {
-							if (json.media_attachments[i]) {
-								media_ids.push(json.media_attachments[i].id)
-								$('#preview').append(
-									'<img src="' +
-										json.media_attachments[i].preview_url +
-										'" style="width:50px; max-height:100px;">'
-								)
-							} else {
-								break
-							}
-						}
-					}
-					var vismode = $('[toot-id=' + id + '] .vis-data').attr('data-vis')
-					vis(vismode)
-					var medias = media_ids.join(',');
-					$('#media').val(medias)
-					localStorage.setItem('nohide', true)
-					show()
-					if (json.text) {
-						var html = json.text
-					} else {
-						var html = $('[toot-id=' + id + '] .toot').html()
-						html = html.replace(/^<p>(.+)<\/p>$/, '$1')
-						html = html.replace(/<br\s?\/?>/, '\n')
-						html = html.replace(/<p>/, '\n')
-						html = html.replace(/<\/p>/, '\n')
-						html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, '$1')
-						html = $.strip_tags(html)
-					}
-					$('#textarea').val(html)
-					if (json.spoiler_text) {
-						cw()
-						$('#cw-text').val(json.spoiler_text)
-					}
-					if (json.sensitive) {
-						$('#nsfw').addClass('yellow-text')
-						$('#nsfw').html('visibility')
-						$('#nsfw').addClass('nsfw-avail')
-					}
-					if (json.in_reply_to_id) {
-						$('#reply').val(json.in_reply_to_id)
-					}
+					draftToPost(json, acct_id, id)
 				}
 			}
 		}
 	})
+}
+function draftToPost(json, acct_id, id) {
+	$('#post-acct-sel').prop('disabled', true)
+	$('#post-acct-sel').val(acct_id)
+	$('select').formSelect()
+	mdCheck()
+	var medias = $('[toot-id=' + id + ']').attr('data-medias')
+	mediack = null
+	if(json.media_attachments) mediack = json.media_attachments[0]
+	//メディアがあれば
+	var media_ids = []
+	if (mediack) {
+		for (var i = 0; i <= 4; i++) {
+			if (json.media_attachments[i]) {
+				media_ids.push(json.media_attachments[i].id)
+				$('#preview').append(
+					'<img src="' +
+					json.media_attachments[i].preview_url +
+					'" style="width:50px; max-height:100px;">'
+				)
+			} else {
+				break
+			}
+		}
+	}
+	var vismode = json.visibility
+	vis(vismode)
+	var medias = media_ids.join(',')
+	$('#media').val(medias)
+	localStorage.setItem('nohide', true)
+	show()
+	if (json.text) {
+		var html = json.text
+	} else {
+		var html = json.status
+		html = html.replace(/^<p>(.+)<\/p>$/, '$1')
+		html = html.replace(/<br\s?\/?>/, '\n')
+		html = html.replace(/<p>/, '\n')
+		html = html.replace(/<\/p>/, '\n')
+		html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, '$1')
+		html = $.strip_tags(html)
+	}
+	$('#textarea').val(html)
+	if (json.spoiler_text) {
+		cw()
+		$('#cw-text').val(json.spoiler_text)
+	}
+	if (json.sensitive) {
+		$('#nsfw').addClass('yellow-text')
+		$('#nsfw').html('visibility')
+		$('#nsfw').addClass('nsfw-avail')
+	}
+	if (json.in_reply_to_id) {
+		$('#reply').val(json.in_reply_to_id)
+	}
 }
 //ピン留め
 function pin(id, acct_id) {
@@ -499,7 +503,7 @@ function pin(id, acct_id) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send()
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -530,7 +534,7 @@ function request(id, flag, acct_id) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send()
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -556,7 +560,7 @@ function domainblock(add, flag, acct_id) {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send()
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -583,7 +587,7 @@ function empUser() {
 		M.toast({ html: id + lang.lang_status_emphas, displayLength: 4000 })
 	} else {
 		var can
-		Object.keys(obj).forEach(function(key) {
+		Object.keys(obj).forEach(function (key) {
 			var usT = obj[key]
 			if (usT != id && !can) {
 				can = false
@@ -615,7 +619,7 @@ function pinUser() {
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send()
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -651,20 +655,20 @@ function staEx(mode) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.statuses) {
 				if (json.statuses[0]) {
 					var id = json.statuses[0].id

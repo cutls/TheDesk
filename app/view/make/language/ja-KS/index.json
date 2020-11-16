@@ -43,6 +43,7 @@
     "thingsEmoji":"もの",
     "symbolEmoji":"記号",
     "flagsEmoji":"国旗",
+    "draft": "下書き(タンス)",
     "poll":"アンケート",
     "pollDdisabled":"アンケート付けへん",
     "pollProvider":"アンケートのプロバイダ",

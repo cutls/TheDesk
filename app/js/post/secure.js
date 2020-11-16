@@ -100,8 +100,8 @@ function cw_show(e) {
 	$(e).parent().parent().find('.cw_hide').toggleClass('cw')
 	$(e).parent().find('.cw_long').toggleClass('hide')
 }
-$(function() {
-	$('#cw-text').on('change', function(event) {
+$(function () {
+	$('#cw-text').on('change', function (event) {
 		var acct_id = $('#post-acct-sel').val()
 		var domain = localStorage.getItem('domain_' + acct_id)
 		var cwlen = $('#cw-text').val().length
@@ -125,4 +125,80 @@ function schedule() {
 		$('#sch-date').val(formattime(date))
 		$('#sch-box').addClass('sch-avail')
 	}
+}
+
+//下書き機能
+function draftToggle() {
+	if ($('#draft').hasClass('hide')) {
+		$('#draft').removeClass('hide')
+		$('#right-side').show()
+		$('#right-side').css('width', '300px')
+		$('#left-side').css('width', 'calc(100% - 300px)')
+		var width = localStorage.getItem('postbox-width')
+		if (width) {
+			width = width.replace('px', '') * 1 + 300
+		} else {
+			width = 600
+		}
+		$('#post-box').css('width', width + 'px')
+		$('#suggest').html('')
+		$('#draft').html('')
+		draftDraw()
+	} else {
+		$('#poll').addClass('hide')
+		$('#draft').addClass('hide')
+		$('#right-side').hide()
+		$('#right-side').css('width', '300px')
+		$('#emoji').addClass('hide')
+		$('#suggest').html('')
+		$('#draft').html('')
+		$('#left-side').css('width', '100%')
+		var width = localStorage.getItem('postbox-width')
+		if (width) {
+			width = width.replace('px', '') * 1
+		} else {
+			width = 300
+		}
+		$('#post-box').css('width', width + 'px')
+	}
+}
+function draftDraw() {
+	var draft = localStorage.getItem('draft')
+	var html = `<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="addToDraft();">${lang.lang_secure_draft}</button>`
+	if (draft) {
+		var draftObj = JSON.parse(draft)
+		for (let i = 0; i < draftObj.length; i++) {
+			var toot = draftObj[i]
+			html = html + `<div class="tootInDraft">
+				<i class="waves-effect gray material-icons" onclick="useThisDraft(${i})" title="${lang.lang_secure_userThis}">reply</i>
+				<i class="waves-effect gray material-icons" onclick="deleteThisDraft(${i})" title="${lang.lang_secure_deleteThis}">cancel</i>
+				${escapeHTML(toot.status).replace(/\n/, '').substr(0, 10)}
+			</div>`
+		}
+	}
+	$('#draft').html(html)
+}
+function addToDraft() {
+	var json = post(null, null, true)
+	var draft = localStorage.getItem('draft')
+	var draftObj = []
+	if (draft) draftObj = JSON.parse(draft)
+	draftObj.push(json)
+	draft = JSON.stringify(draftObj)
+	localStorage.setItem('draft', draft)
+	draftDraw()
+}
+function useThisDraft(i) {
+	var draft = localStorage.getItem('draft')
+	var draftObj = JSON.parse(draft)
+	draftToPost(draftObj[i], draftObj[i]['TheDeskAcctId'], 0)
+	draftToggle()
+}
+function deleteThisDraft(i) {
+	var draft = localStorage.getItem('draft')
+	var draftObj = JSON.parse(draft)
+	draftObj.splice(i, 1)
+	draft = JSON.stringify(draftObj)
+	localStorage.setItem('draft', draft)
+	draftDraw()
 }
