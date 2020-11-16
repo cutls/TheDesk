@@ -72,6 +72,7 @@
     "lang_status_btWarn": "ブーストしたんやけどインスタンスがちゃうときは時間がかかるで、知らんけど。",
     "lang_post_unfinishedMedia": "処理未了のメディアがあります。再試行してください。",
     "lang_post_retry": "再試行",
+    "lang_post_offline": "オフラインやったし下書きいれといたで",
     "lang_status_follow": "フォロー",
     "lang_status_unfollow": "フォロー解除",
     "lang_status_block": "ブロック",

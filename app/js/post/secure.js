@@ -128,8 +128,8 @@ function schedule() {
 }
 
 //下書き機能
-function draftToggle() {
-	if ($('#draft').hasClass('hide')) {
+function draftToggle(force) {
+	if ($('#draft').hasClass('hide') || force) {
 		$('#draft').removeClass('hide')
 		$('#right-side').show()
 		$('#right-side').css('width', '300px')

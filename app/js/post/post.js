@@ -10,6 +10,15 @@ function sec() {
 	post(null, mode)
 }
 function post(mode, postvis, dry) {
+	if(!navigator.onLine && !dry) {
+		draftToggle(true)
+		addToDraft()
+		M.toast({
+			html: lang.lang_post_offline,
+			displayLength: 3000
+		})
+		return false
+	}
 	if ($('#toot-post-btn').prop('disabled')) {
 		return false
 	}

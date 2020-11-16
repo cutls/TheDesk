@@ -219,9 +219,11 @@ if(pwa) {
 const connection = function (event) {
 	console.log(navigator.onLine, 'network state')
 	if(!navigator.onLine) {
-		$('#toot-post-btn').addClass('disabled')
-	} else {
-		$('#toot-post-btn').removeClass('disabled')
+		$('#re-online').addClass('hide')
+		$('#offline').removeClass('hide')
+	} else if(!$('#offline').hasClass('hide')) {
+		$('#offline').addClass('hide')
+		$('#re-online').removeClass('hide')
 	}
 }
 window.onoffline = connection

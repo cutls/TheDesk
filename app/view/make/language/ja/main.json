@@ -72,6 +72,7 @@
     "lang_post_btn3": "そのまま投稿",
     "lang_post_unfinishedMedia": "処理未了のメディアがあります。再試行してください。",
     "lang_post_retry": "再試行",
+    "lang_post_offline": "オフラインのため下書きに追加しました。",
     "lang_status_favWarn": "お気に入り登録しました。インスタンスが違うときは時間がかかる場合があります。",
     "lang_status_btWarn": "ブーストしました。インスタンスが違うときは時間がかかる場合があります。",
     "lang_status_follow": "フォロー",

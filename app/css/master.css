@@ -21,7 +21,8 @@ html {
 .action-menu-item:hover {
 	filter: brightness(80%) !important;
 }
-.btn, .btn-flat {
+.btn,
+.btn-flat {
 	font-size: 1.1rem;
 	margin: 0.4rem;
 	text-transform: none;
@@ -340,16 +341,16 @@ blockquote:before,
 	flex-wrap: wrap;
 	flex-direction: column;
 }
-input[type="color"] {
+input[type='color'] {
 	-webkit-appearance: none;
 	border: none;
 	width: 32px;
 	height: 32px;
 }
-input[type="color"]::-webkit-color-swatch-wrapper {
+input[type='color']::-webkit-color-swatch-wrapper {
 	padding: 0;
 }
-input[type="color"]::-webkit-color-swatch {
+input[type='color']::-webkit-color-swatch {
 	border: none;
 }
 #menu {
@@ -631,6 +632,24 @@ button {
 }
 .via-dropdown {
 	text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow-x: hidden;
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+#re-online {
+	background-color: rgb(38, 92, 153);
+	position: fixed;
+	width: 100vw;
+	height: 2rem;
+	padding: 0.25rem;
+	color: white;
+	z-index: 1000;
+}
+#offline {
+	background-color: rgb(153, 38, 38);
+	position: fixed;
+	width: 100vw;
+	height: 2rem;
+	padding: 0.25rem;
+	color: white;
+	z-index: 999;
 }
