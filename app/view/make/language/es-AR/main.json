@@ -71,6 +71,7 @@
     "lang_post_btn3": "Continuar con el envío",
     "lang_post_unfinishedMedia": "El servidor no ha terminado de procesar tu archivo. Volvé a intentarlo.",
     "lang_post_retry": "Reintentar",
+    "lang_post_offline": "Add to the drafts because of offline",
     "lang_status_favWarn": "Llevará un minuto marcar un toot remoto como favorito.",
     "lang_status_btWarn": "Llevará un minuto retootear un toot remoto.",
     "lang_status_follow": "Seguir",
