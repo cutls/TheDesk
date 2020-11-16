@@ -6,7 +6,7 @@ language: node_js
 env:
   - YARN_GPG=no
 node_js:
-- '10.15.2'
+- '12.17.0'
 cache:
   yarn: true
 script: node -v
