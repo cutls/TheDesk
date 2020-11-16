@@ -1,5 +1,7 @@
 {
     "draghere": "Arraste o arquivo para cá para fazer o upload",
+    "nowOffline": "OFFLINE: all of your post is in the draft box and you should reload after re-connect to the Internet",
+    "reOnline": "Now we are in the Internet, you should reload...",
     "close": "Fechar",
     "webSrc": "Buscar na Web",
     "tsSrc": "Buscar no tootsearch",
