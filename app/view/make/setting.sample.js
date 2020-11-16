@@ -524,6 +524,17 @@ var postConstruction = [
 		}
 	},
 	{
+		id: 'cw-continue',
+		storage: 'cw-continue',
+		checkbox: true,
+		setValue: 'no',
+		text: {
+			head: '@@cwContinue@@',
+			desc: '',
+			checkbox: yesno
+		}
+	},
+	{
 		id: 'vis',
 		storage: 'vis',
 		checkbox: true,

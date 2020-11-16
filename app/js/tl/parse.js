@@ -1085,7 +1085,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						</a>
 					</div>
 					<div class="action ${disp['re']} ${noauth}">
-						<a onclick="re('${toot.id}','${to_mention}','${acct_id}','${visen}')" 
+						<a onclick="re('${toot.id}','${to_mention}','${acct_id}','${visen}','${escapeHTML(toot.spoiler_text)}')" 
 							class="waves-effect waves-dark btn-flat actct rep-btn"
 							data-men="${to_mention}" data-visen="${visen}" style="padding:0" title="${lang.lang_parse_replyto}">
 								<i class="fas fa-share"></i>

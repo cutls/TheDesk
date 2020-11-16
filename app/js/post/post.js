@@ -9,7 +9,16 @@ function sec() {
 	}
 	post(null, mode)
 }
-function post(mode, postvis) {
+function post(mode, postvis, dry) {
+	if(!navigator.onLine && !dry) {
+		draftToggle(true)
+		addToDraft()
+		M.toast({
+			html: lang.lang_post_offline,
+			displayLength: 3000
+		})
+		return false
+	}
 	if ($('#toot-post-btn').prop('disabled')) {
 		return false
 	}
@@ -122,7 +131,7 @@ function post(mode, postvis) {
 		console.log('This toot will be posted at:' + scheduled)
 		schedule()
 		toot.scheduled_at = scheduled
-		if($('#sch-box').hasClass('expire')) {
+		if ($('#sch-box').hasClass('expire')) {
 			toot.scheduled_at = null
 			toot.expires_at = scheduled
 		}
@@ -131,7 +140,7 @@ function post(mode, postvis) {
 	}
 	if (!$('#poll').hasClass('hide')) {
 		var options = []
-		$('.mastodon-choice').map(function() {
+		$('.mastodon-choice').map(function () {
 			var choice = $(this).val()
 			if (choice != '') {
 				options.push(choice)
@@ -159,6 +168,13 @@ function post(mode, postvis) {
 		}
 	}
 	console.table(toot)
+	if (dry) {
+		$('#ideKey').val('')
+		$('.toot-btn-group').prop('disabled', false)
+		todc()
+		toot['TheDeskAcctId'] = acct_id
+		return toot
+	}
 	var httpreq = new XMLHttpRequest()
 	httpreq.open('POST', start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
@@ -166,11 +182,11 @@ function post(mode, postvis) {
 	httpreq.setRequestHeader('Idempotency-Key', ideKey)
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify(toot))
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
-				if(media && this.status == 422) {
+				if (media && this.status == 422) {
 					$('#ideKey').val('')
 					$('.toot-btn-group').prop('disabled', false)
 					alertProcessUnfinished()
@@ -201,7 +217,7 @@ function post(mode, postvis) {
 }
 function expPostMode() {
 	$('#sch-box').toggleClass('expire')
-	if($('#sch-box').hasClass('expire')) {
+	if ($('#sch-box').hasClass('expire')) {
 		Swal.fire({
 			type: 'info',
 			title: 'Expiring toot On'
@@ -270,7 +286,7 @@ function misskeyPost() {
 	httpreq.setRequestHeader('Content-Type', 'application/json')
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify(toot))
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			if (str.indexOf(localStorage.getItem('stable')) == -1) {
 				localStorage.removeItem('stable')
@@ -339,7 +355,7 @@ function clear() {
 	$('#mins_poll').val(6)
 	$('#poll').addClass('hide')
 	$('#pollsta').text(lang.lang_no)
-	$('.mastodon-choice').map(function() {
+	$('.mastodon-choice').map(function () {
 		$(this).val('')
 	})
 	localStorage.removeItem('image')

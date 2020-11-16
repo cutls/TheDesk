@@ -1,5 +1,5 @@
 /*リプライ*/
-function re(id, ats_cm, acct_id, mode) {
+function re(id, ats_cm, acct_id, mode, cwTxt) {
 	clear()
 	var ats = ats_cm.split(',')
 	localStorage.setItem('nohide', true)
@@ -25,13 +25,18 @@ function re(id, ats_cm, acct_id, mode) {
 	}
 	$('#acct-sel-prof').attr('src', profimg)
 	vis(mode)
+	if(localStorage.getItem('cw-continue') == 'yes') {
+		cw(true)
+		$('#cw-text').val(cwTxt)
+	}
 }
 function reEx(id) {
 	$('#tootmodal').modal('close')
 	var at = $('#tootmodal').attr('data-user')
 	var acct_id = $('#status-acct-sel').val()
 	var mode = $('#tootmodal .vis-data').attr('data-vis')
-	re(id, at, acct_id, mode)
+	var cwTxt = $('#cw-text').val()
+	re(id, at, acct_id, mode, cwTxt)
 }
 //引用
 function qt(id, acct_id, at, url) {

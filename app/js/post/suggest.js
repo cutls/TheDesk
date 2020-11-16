@@ -18,7 +18,7 @@ input.addEventListener(
 			var new_val = input.value
 			if (new_val == '') {
 				$('#suggest').html('')
-				if ($('#poll').hasClass('hide') && $('#emoji').hasClass('hide')) {
+				if ($('#poll').hasClass('hide') && $('#emoji').hasClass('hide') && $('#draft').hasClass('hide')) {
 					$('#right-side').hide()
 					$('#right-side').css('width', '300px')
 					$('#left-side').css('width', '100%')
@@ -41,7 +41,7 @@ input.addEventListener(
 					var q = acct[1]
 				} else {
 					$('#suggest').html('')
-					if ($('#poll').hasClass('hide') && $('#emoji').hasClass('hide')) {
+					if ($('#poll').hasClass('hide') && $('#emoji').hasClass('hide') && $('#draft').hasClass('hide')) {
 						$('#right-side').hide()
 						$('#right-side').css('width', '300px')
 						$('#left-side').css('width', '100%')
@@ -138,6 +138,7 @@ input.addEventListener(
 									$('#post-box').css('width', width + 'px')
 									$('#poll').addClass('hide')
 									$('#emoji').addClass('hide')
+									$('#draft').addClass('hide')
 								}
 							} else if (json.accounts[0] && acct[1]) {
 								var accts = ''
@@ -165,8 +166,9 @@ input.addEventListener(
 								$('#suggest').html(accts)
 								$('#poll').addClass('hide')
 								$('#emoji').addClass('hide')
+								$('#draft').addClass('hide')
 							} else {
-								if ($('#poll').hasClass('hide') && $('#emoji').hasClass('hide')) {
+								if ($('#poll').hasClass('hide') && $('#emoji').hasClass('hide') && $('#draft').hasClass('hide')) {
 									$('#right-side').hide()
 									$('#right-side').css('width', '300px')
 									$('#left-side').css('width', '100%')
@@ -226,7 +228,7 @@ function tagInsert(code, del) {
 	}
 	sentence = before + word + after
 	textarea.value = sentence
-	if ($('#poll').hasClass('hide') && $('#emoji').hasClass('hide')) {
+	if ($('#poll').hasClass('hide') && $('#emoji').hasClass('hide') && $('#draft').hasClass('hide')) {
 		$('#right-side').hide()
 		$('#right-side').css('width', '300px')
 		$('#left-side').css('width', '50%')

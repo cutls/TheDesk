@@ -64,9 +64,10 @@ textarea {
 }
 #emoji {
 }
-#suggest {
+#suggest, #draft {
 	max-height: 23rem;
 	overflow-y: scroll;
+	overflow-x: hidden;
 }
 #emoji-list {
 	width: 100%;
