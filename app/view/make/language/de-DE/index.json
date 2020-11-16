@@ -1,5 +1,7 @@
 {
     "draghere": "Zum Hochladen hier her ziehen",
+    "nowOffline": "OFFLINE: all of your post is in the draft box and you should reload after re-connect to the Internet",
+    "reOnline": "Now we are in the Internet, you should reload...",
     "close": "Schließen",
     "webSrc": "Suche im Internet",
     "tsSrc": "Bei Tootsearch suchen",
@@ -45,6 +47,7 @@
     "thingsEmoji": "Emojis vom Werkzeugen",
     "symbolEmoji": "Emojis von Symbolen",
     "flagsEmoji": "Emojis der Flaggen",
+    "draft": "Draft",
     "poll": "Umfrage",
     "pollDdisabled": "Umfragen: Deaktiviert",
     "pollProvider": "Anbieter von Umfragen",
