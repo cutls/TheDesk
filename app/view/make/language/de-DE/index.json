@@ -1,5 +1,7 @@
 {
     "draghere": "Zum Hochladen hier her ziehen",
+    "nowOffline": "OFFLINE: all of your post is in the draft box and you should reload after re-connect to the Internet",
+    "reOnline": "Now we are in the Internet, you should reload...",
     "close": "Schließen",
     "webSrc": "Suche im Internet",
     "tsSrc": "Bei Tootsearch suchen",
