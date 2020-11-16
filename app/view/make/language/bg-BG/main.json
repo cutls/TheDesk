@@ -71,6 +71,7 @@
     "lang_post_btn3": "Продължете към публикуването",
     "lang_post_unfinishedMedia": "The server has not finished processing your media. Retry.",
     "lang_post_retry": "Retry",
+    "lang_post_offline": "Add to the drafts because of offline",
     "lang_status_favWarn": "Ще отнеме минута раздумката отдалечено да стане любима.",
     "lang_status_btWarn": "Ще отнеме минута раздумката отдалечено да бъде подсилена.",
     "lang_status_follow": "Следване",
