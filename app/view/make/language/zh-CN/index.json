@@ -1,5 +1,7 @@
 {
     "draghere": "拖动到此处上传",
+    "nowOffline": "OFFLINE: all of your post is in the draft box and you should reload after re-connect to the Internet",
+    "reOnline": "Now we are in the Internet, you should reload...",
     "close": "关闭",
     "webSrc": "Search on Web",
     "tsSrc": "Search on tootsearch",
