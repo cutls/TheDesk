@@ -71,6 +71,7 @@
     "lang_post_btn3": "Fortsett å poste",
     "lang_post_unfinishedMedia": "The server has not finished processing your media. Retry.",
     "lang_post_retry": "Retry",
+    "lang_post_offline": "Add to the drafts because of offline",
     "lang_status_favWarn": "Det vil ta en stund å favorittmarkere en fjern toot.",
     "lang_status_btWarn": "Det vil ta en stund å dytte en fjern toot.",
     "lang_status_follow": "Følg",
