@@ -15,7 +15,8 @@
 }
 ```
 これを冒頭に入れます。
-
+* version  
+数字でも文字列でも好きに使ってください。TheDesk側では全く参照しません。
 * dangerHtml: true|false  
 `TheDesk:changeText`にアクセスするために必要です。
 * apiGetl: true|false  
