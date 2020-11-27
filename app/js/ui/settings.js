@@ -502,9 +502,9 @@ function copyColor(from, to) {
 	let i = 0
 	let color
 	for (tag of props) {
-		if(tag == from) {
+		if (tag == from) {
 			let used = $(`#use-color_${i}`).prop('checked')
-			if(!used) {
+			if (!used) {
 				Swal.fire({
 					type: 'error',
 					title: 'Not checked',
@@ -516,9 +516,9 @@ function copyColor(from, to) {
 		}
 		i++
 	}
-	if(!color) return false
+	if (!color) return false
 	for (tag of props) {
-		if(tag == to) {
+		if (tag == to) {
 			$(`#color-picker${i}_value`).val(color)
 			$(`#use-color_${i}`).prop('checked', true)
 			break
@@ -555,7 +555,7 @@ function customComp() {
 	var my = JSON.parse(multi)[0].name
 	var id = $('#custom-edit-sel').val()
 	const defaults = [
-		'black','blue','brown','green','indigo','polar','snow','white'
+		'black', 'blue', 'brown', 'green', 'indigo', 'polar', 'snow', 'white'
 	]
 	if (id == 'add_new' || defaults.includes(id)) {
 		id = makeCID()
@@ -690,7 +690,7 @@ function customConnect(raw) {
 		i++
 	}
 	$('#custom_json').val(raw[1])
-	if(args.default) {
+	if (args.default) {
 		$('#delTheme').addClass('disabled')
 	}
 }
@@ -728,6 +728,107 @@ function customSoundSave(key, file) {
 	localStorage.setItem('custom' + key, file)
 	$(`#c${key}-file`).text(file)
 }
+function pluginLoad() {
+	$('#plugin-edit-sel').val('add_new')
+	$(".plugin_delete").addClass('disabled')
+	var template = ''
+	var pgns = localStorage.getItem('plugins')
+	var args = JSON.parse(pgns ? pgns : '[]')
+	Object.keys(args).forEach(function (key) {
+		var theme = args[key]
+		var themeid = theme.id
+		template = template + `<option value="${themeid}">${getMeta(theme.content).name}</option>`
+	})
+	template = '<option value="add_new">' + $('#plugin-selector').attr('data-add') + '</option>' + template
+	$('#plugin-edit-sel').html(template)
+	$('select').formSelect()
+}
+function pluginEdit() {
+	var id = $('#plugin-edit-sel').val()
+	$('#plugin').attr('data-id', id)
+	if (id == 'add_new') {
+		$('#plugin').val('')
+		$(".plugin_delete").addClass('disabled')
+	} else {
+		$(".plugin_delete").removeClass('disabled')
+		var pgns = localStorage.getItem('plugins')
+		var args = JSON.parse(pgns ? pgns : '[]')
+		Object.keys(args).forEach(function (key) {
+			var plugin = args[key]
+			var targetId = plugin.id
+			if (targetId == id) $('#plugin').val(plugin.content)
+		})
+	}
+}
+function completePlugin(comp) {
+	var pgns = localStorage.getItem('plugins')
+	var args = JSON.parse(pgns ? pgns : '[]')
+	var id = $('#plugin').attr('data-id')
+	
+	var inputPlugin = $('#plugin').val()
+	var meta = getMeta(inputPlugin)
+	if (!meta) {
+		Swal.fire({
+			icon: 'error',
+			title: 'error',
+		})
+		return false
+	}
+	if (!meta.name || !meta.version || !meta.event || !meta.author) {
+		Swal.fire({
+			icon: 'error',
+			title: 'error',
+		})
+		return false
+	}
+	if (id == 'add_new') {
+		id = makeCID()
+		args.push({
+			id: id,
+			content: inputPlugin
+		})
+	} else {
+		Object.keys(args).forEach(function (key) {
+			var plugin = args[key]
+			var targetId = plugin.id
+			if (targetId == id) args[key].content = inputPlugin
+		})
+	}
+	var ss = args
+	localStorage.setItem('plugins', JSON.stringify(ss))
+	if(comp) return false
+	$('#plugin').attr('data-id', 'add_new')
+	$('#plugin').val('')
+	pluginLoad()
+}
+async function deletePlugin() {
+	const alert = await Swal.fire({
+		title: 'delete',
+		icon: 'warning',
+		showCancelButton: true
+	})
+	if (!alert) return false
+	$('#plugin').val('')
+	var pgns = localStorage.getItem('plugins')
+	var args = JSON.parse(pgns ? pgns : '[]')
+	var id = $('#plugin').attr('data-id')
+	$('#plugin').attr('data-id', 'add_new')
+	var ss = []
+	Object.keys(args).forEach(function (key) {
+		var plugin = args[key]
+		var targetId = plugin.id
+		if (targetId != id) ss.push(plugin)
+	})
+	localStorage.setItem('plugins', JSON.stringify(ss))
+	pluginLoad()
+}
+function execEditPlugin() {
+	completePlugin(true)
+	var id = $('#plugin').attr('data-id')
+	var inputPlugin = $('#plugin').val()
+	var meta = getMeta(inputPlugin)
+	execPlugin(id, meta.event, { acct_id: 0, id: null })
+}
 window.onload = function () {
 	//最初に読む
 	load()
@@ -738,6 +839,7 @@ window.onload = function () {
 	voiceSettingLoad()
 	oksload()
 	ctLoad()
+	pluginLoad()
 	$('body').addClass(localStorage.getItem('platform'))
 }
 //設定画面で未読マーカーは要らない

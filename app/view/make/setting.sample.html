@@ -398,10 +398,19 @@
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="material-icons">power</i>@@plugin@@
+				<img src="../../img/aiscript.svg" style="height: 1.5rem; margin-left: 0.4rem; margin-right: 0.4rem;">@@plugin@@
 			</div>
 			<div class="collapsible-body">
-				
+				<a href="https://github.com/cutls/TheDesk/blob/master/plugin.md">@@howToWritePlugin@@</a><br />
+				<textarea id="plugin" data-id="add_new" style="height: 20rem"></textarea>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="completePlugin()">@@change@@</button>
+				<button class="btn waves-effect red disabled plugin_delete" style="width:7.7rem;" onclick="deletePlugin()">@@delete@@</button>
+				<h5>@@pluginList@@</h5>
+				<div style="width:22rem" id="plugin-selector" data-add="@@add_new@@">
+					<select id="plugin-edit-sel" class="custom-sel" onchange="pluginEdit()">
+						<option value="add_new">@@add_new@@</option>
+					</select>
+				</div>
 			</div>
 		</li>
 		<li>
@@ -599,6 +608,9 @@
 	</span><br>
 	TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
 	タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
+<script type="text/javascript" src="../../@@node_base@@/lodash/lodash.min.js"></script>
+	<script type="text/javascript" src="../../js/platform/aiscript.js"></script>
+	<script type="text/javascript" src="../../js/platform/plugin.js"></script>
 	<script type="text/javascript" src="../../js/common/modal.js"></script>
 	<script type="text/javascript" src="../../js/common/about.js"></script>
 	<script type="text/javascript" src="../../js/platform/end.js"></script>

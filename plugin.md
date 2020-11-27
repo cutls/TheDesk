@@ -11,6 +11,7 @@
     version: 1
     event: "buttonOnPostbox"
     author: "Cutls P"
+    apiGet: false(例)
 }
 ```
 これを冒頭に入れます。
@@ -115,3 +116,37 @@ NSFWを切り替えます。forceはデフォルトでfalseで、trueにする�
 
 `apiPost`をtrueにしてください。  
 トゥートボタンを押したのと同じ挙動をします。
+
+
+## 実例
+
+https://misskey.io/@syuilo/pages/bebeyo をTheDeskで使用できるようにするためには…(勝手に改造)
+```
+### {
+      name: "ﾍﾞﾍﾞﾖ"
+      version: 1
+      event: "buttonOnPostbox"
+      author: "syuilo"
+ }
+
+#chars = 
+Str:split("ｱ,ｲ,ｳ,ｴ,ｵ,ｶ,ｷ,ｸ,ｹ,ｺ,ｻ,ｼ,ｽ,ｾ,ｿ,ﾀ,ﾁ,ﾂ,ﾃ,ﾄ,ﾅ,ﾆ,ﾇ,ﾈ,ﾉ,ﾊ,ﾋ,ﾌ,ﾍ,ﾎ,ﾏ,ﾐ,ﾑ,ﾒ,ﾓ,ﾔ,ﾕ,ﾖ,ｶﾞ,ｷﾞ,ｸﾞ,ｹﾞ,ｺﾞ,ｻﾞ,ｼﾞ,ｽﾞ,ｾﾞ,ｿﾞ,ﾀﾞ,ﾁﾞ,ﾂﾞ,ﾃﾞ,ﾄﾞ,ﾊﾞ,ﾋﾞ,ﾌﾞ,ﾍﾞ,ﾎﾞ,ﾊﾟ,ﾋﾟ,ﾌﾟ,ﾍﾟ,ﾎﾟ", ",")
+#yos = ["ｵ", "ﾆｮ"]
+#suffixes = ["ｵｵｵｵｵｵｵ", "ﾅｰﾗ", "ﾝﾁｰﾉ"]
+$text <- _
+
+@do() {
+  #char1 = chars[Math:rnd(1, Arr:len(chars))]
+  #char2 = chars[Math:rnd(1, Arr:len(chars))]
+  #yo = ? (Math:rnd(0, 2) = 0) { yos[Math:rnd(1, Arr:len(yos))] } ... { "ﾖ" }
+  #n = ? (Math:rnd(0, 2) = 0) { "ﾝ" } ... { "" }
+  #suffix = ? (Math:rnd(0, 2) = 0) { suffixes[Math:rnd(1, Arr:len(suffixes))] } ... { "" }
+  text <- `{char1}{char2}{n}{yo}{suffix}`
+  TheDesk:postText(text)
+}
+
+do()
+```
+
+最初のメタデータを追加します。
+また、do関数の最下部の`TheDesk:postText(text)`で、TheDeskの投稿ボックスに結果を挿入しています。

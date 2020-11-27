@@ -6,20 +6,8 @@ function getPlugin() {
         buttonOnPostbox: [],
         buttonOnToot: []
     }
-    //if(!json) return ret
-    //const plugins = JSON.parse(json)
-    const plugins = [
-        {
-            id: randomStr(20),
-            content: `### {
-                name: "マイ・ファースト・プラグイン"
-                version: 1
-                event: "buttonOnPostbox"
-                author: "Cutls P"
-            }
-            `
-        }
-    ]
+    if(!json) return ret
+    const plugins = JSON.parse(json)
     for (let plugin of plugins) {
         const meta = getMeta(plugin.content)
         if (!meta) continue
