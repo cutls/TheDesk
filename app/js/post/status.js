@@ -437,7 +437,6 @@ function draftToPost(json, acct_id, id) {
 	$('#post-acct-sel').val(acct_id)
 	$('select').formSelect()
 	mdCheck()
-	var medias = $('[toot-id=' + id + ']').attr('data-medias')
 	mediack = null
 	if(json.media_attachments) mediack = json.media_attachments[0]
 	//メディアがあれば
@@ -684,9 +683,9 @@ function staEx(mode) {
 		})
 	return
 }
-function toggleAction(id) {
-	const elm = document.getElementById(id)
-	const instance = M.Dropdown.init(elm);
+function toggleAction(elm) {
+	console.log(elm)
+	const instance = M.Dropdown.init(elm)
 	console.log(instance.isOpen)
 	instance.open()
 }

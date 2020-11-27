@@ -334,9 +334,14 @@ function cardCheck(tlid) {
 	}
 }
 
-function mov(id, tlid, type) {
-	const dropdownTrigger = `dropdown_${tlid}_${id}`
-	const elm = document.getElementById(dropdownTrigger)
+function mov(id, tlid, type, rand, target) {
+	const dropdownTrigger = `dropdown_${rand}`
+	let elm = document.querySelector(`#timeline_${tlid} #${dropdownTrigger}`)
+	if(tlid == 'notf') {
+		const timeline = $(target).parents('.notf-indv-box').attr('id')
+		elm = document.querySelector(`#${timeline} #${dropdownTrigger}`)
+		console.log(`#${timeline} #${dropdownTrigger}`)
+	}
 	const instance = M.Dropdown.getInstance(elm)
 	if(instance) {
 		if(instance.isOpen) return false

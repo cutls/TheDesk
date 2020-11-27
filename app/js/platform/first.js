@@ -1,3 +1,9 @@
+window.onload = function () {
+	console.log('loaded')
+	initPostbox()
+	connection()
+	initPlugin(plugins)
+}
 $.strip_tags = function (str, allowed) {
 	if (!str) {
 		return ''

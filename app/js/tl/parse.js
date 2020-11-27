@@ -271,8 +271,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			var noticetext = `<span onclick="notfFilter('${toot.account.id}','${tlid}');" class=" pointer big-text ${notfFilHide}"><i class="fas fa-filter" 
 					 title="${lang.lang_parse_notffilter}">
 				</i><span class="voice">${lang.lang_parse_notffilter}</span></span>
-				<span class="cbadge cbadge-hover" title="${date(toot.created_at, 'absolute')}(${
-				lang.lang_parse_notftime
+				<span class="cbadge cbadge-hover" title="${date(toot.created_at, 'absolute')}(${lang.lang_parse_notftime
 				})" aria-hidden="true"><i class="far fa-clock"></i>
 					${date(toot.created_at, datetype)}
 				</span>
@@ -709,8 +708,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					var featured = `　<a onclick="tagFeature('${tag.name}','${acct_id}')" class="pointer" title="add it to Featured tags">Feature</a>　`
 					tags =
 						tags +
-						`<span class="hide" data-tag="${tag.name}" data-regTag="${tag.name.toLowerCase()}">#${
-						tag.name
+						`<span class="hide" data-tag="${tag.name}" data-regTag="${tag.name.toLowerCase()}">#${tag.name
 						}:
 							<a onclick="tl('tag','${tag.name}','${acct_id}','add')" class="pointer"
 							 title="${lang.lang_parse_tagTL.replace(
@@ -957,11 +955,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 								bgColorCSS = bgColorCSS + bg + ','
 							}
 							bgColorCSS = `linear-gradient(90deg, ${bgColorCSS} transparent)`
-							var tickerdom = `<div aria-hidden="true" style="user-select:none;cursor:default;background:${bgColorCSS} !important; color:${
-								fontColor
+							var tickerdom = `<div aria-hidden="true" style="user-select:none;cursor:default;background:${bgColorCSS} !important; color:${fontColor
 								};width:100%; height:0.9rem; font-size:0.8rem;" class="tickers">
-									<img draggable="false" src="${
-								value.favicon
+									<img draggable="false" src="${value.favicon
 								}" style="height:100%;" onerror="this.src=\'../../img/loading.svg\'" loading="lazy">
 									<span style="position:relative; top:-0.2rem;">${escapeHTML(value.name)}</span>
 								</div>`
@@ -981,8 +977,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						poll +
 						`<div class="quote-renote">
 						<div class="renote-icon">
-							<a onclick="udg('${toot.quote.account.id}','${acct_id}');" user="${
-						toot.quote.account.acct
+							<a onclick="udg('${toot.quote.account.id}','${acct_id}');" user="${toot.quote.account.acct
 						}" class="udg">
 								<img draggable="false" src="${toot.quote.account.avatar}" loading="lazy">
 							</a>
@@ -994,8 +989,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 							${toot.quote.content}
 						</div>
 						<div class="renote-details">
-							<a onclick="details('${
-						toot.quote.id
+							<a onclick="details('${toot.quote.id
 						}','${acct_id}','${tlid}','normal')" class="waves-effect waves-dark btn-flat details" style="padding:0">
 								<i class="text-darken-3 material-icons">more_vert</i>
 							</a>
@@ -1022,6 +1016,15 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			if (trans != '') {
 				menuct++
 			}
+			//このトゥート内のアクションを完了させるために、適当にIDを振る
+			var rand = randomStr(8)
+			//プラグイン機構
+			var plugin = plugins.buttonOnToot
+			var pluginHtml = ''
+			for (let target of plugin) {
+				const meta = getMeta(target.content)
+				pluginHtml = pluginHtml + `<li><a onclick="execPlugin('${target.id}','buttonOnToot',{id: '${uniqueid}', acct_id: '${acct_id}'});">${escapeHTML(meta.name)}</a></li>`
+			}
 			templete =
 				templete +
 				`<div
@@ -1032,8 +1035,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 					'unix'
 				)}"
 					${if_notf}
-					onmouseover="mov('${uniqueid}','${tlid}','mv')"
-					onclick="mov('${uniqueid}','${tlid}','cl')"
+					onmouseover="mov('${uniqueid}','${tlid}','mv', '${rand}', this)"
+					onclick="mov('${uniqueid}','${tlid}','cl', '${rand}', this)"
 					onmouseout="resetmv('mv')"
 				>
 				<div class="area-notice grid"><span class="gray sharesta">${notice}${home}</span></div>
@@ -1094,8 +1097,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						</a>
 					</div>
 					<div class="action ${can_rt} ${disp['rt']} ${noauth}">
-						<a onclick="rt('${
-				toot.id
+						<a onclick="rt('${toot.id
 				}','${acct_id}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
 							style="padding:0" title="${lang.lang_parse_bt}">
 							<i class="fas fa-retweet ${if_rt} rt_${toot.id}"></i>
@@ -1130,8 +1132,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 				</div>
 				<div class="area-side">
 					<div class="action ${noauth}">
-						<a onclick="toggleAction('trigger_${tlid}_${uniqueid}')" data-target="dropdown_${tlid}_${uniqueid}"
-							class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0" id="trigger_${tlid}_${uniqueid}">
+						<a onclick="toggleAction(this)" data-target="dropdown_${rand}"
+							class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0" id="trigger_${rand}">
 							<i class="text-darken-3 material-icons act-icon" aria-hidden="true">expand_more</i>
 							<span class="voice">Other actions</span>
 						</a>
@@ -1144,7 +1146,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						<span class="voice">${lang.lang_parse_detail}</span>
 					</div>
 				</div>
-				<ul class="dropdown-content contextMenu" id="dropdown_${tlid}_${uniqueid}">
+				<ul class="dropdown-content contextMenu" id="dropdown_${rand}">
 					<li class="${viashow} via-dropdown" onclick="client('${$.strip_tags(via)}')" title="${lang.lang_parse_clientop}">
 						via ${escapeHTML(via)}</a>
 					</li>
@@ -1169,6 +1171,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 						 style="padding:0">
 						<i class="fas text-darken-3 fa-globe"></i>${lang.lang_parse_link}
 					</li>
+					${pluginHtml}
 				</ul>
 			</div>
 			`
@@ -1566,7 +1569,7 @@ function mastodonBaseStreaming(acct_id) {
 		setTimeout(function () {
 			mastodonBaseWsStatus[domain] = 'available'
 		}, 3000)
-		mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'user'}))
+		mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'user' }))
 		$('.notice_icon_acct_' + acct_id).removeClass('red-text')
 	}
 	mastodonBaseWs[domain].onmessage = function (mess) {

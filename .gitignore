@@ -25,3 +25,4 @@ app/git
 *.code-workspace
 releasenote.md
 app/yarn-error.log
+app/js/platform/aiscript.js

@@ -1,14 +1,14 @@
 /*保護系*/
 //画像保護
-function nsfw() {
-	if ($('#nsfw').hasClass('nsfw-avail')) {
-		$('#nsfw').removeClass('yellow-text')
-		$('#nsfw').html('visibility_off')
-		$('#nsfw').removeClass('nsfw-avail')
-	} else {
+function nsfw(force) {
+	if (force || !$('#nsfw').hasClass('nsfw-avail')) {
 		$('#nsfw').addClass('yellow-text')
 		$('#nsfw').html('visibility')
 		$('#nsfw').addClass('nsfw-avail')
+	} else {
+		$('#nsfw').removeClass('yellow-text')
+		$('#nsfw').html('visibility_off')
+		$('#nsfw').removeClass('nsfw-avail')
 	}
 }
 
@@ -80,12 +80,7 @@ loadVis()
 
 //コンテントワーニング
 function cw(force) {
-	if ($('#cw').hasClass('cw-avail') || !force) {
-		$('#cw-text').val()
-		$('#cw-text').hide()
-		$('#cw').removeClass('yellow-text')
-		$('#cw').removeClass('cw-avail')
-	} else {
+	if (force || !$('#cw').hasClass('cw-avail')) {
 		$('#cw-text').show()
 		$('#cw').addClass('yellow-text')
 		$('#cw').addClass('cw-avail')
@@ -93,6 +88,11 @@ function cw(force) {
 		if (cwt) {
 			$('#cw-text').val(cwt)
 		}
+	} else {
+		$('#cw-text').val()
+		$('#cw-text').hide()
+		$('#cw').removeClass('yellow-text')
+		$('#cw').removeClass('cw-avail')
 	}
 }
 //TLでコンテントワーニングを表示トグル
