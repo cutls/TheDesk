@@ -12,6 +12,7 @@ cache:
 script: node -v
 before_deploy:
   - yarn global add electron-builder
+  - yarn global add browserify
   - cd app
   - VERSION=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
   - yarn install --no-lockfile --prod
