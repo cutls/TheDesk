@@ -106,7 +106,7 @@ async function execPlugin(id, source, args) {
         const json = await promise.json()
         common.TOOT = asUtil.jsToVal(json)
         common['TheDesk:changeText'] = asValue.FN_NATIVE((z) => {
-            if (getMeta(exe).dangerHtml) $(`[unique-id=${args.id}] .cvo`).html(z[0].value)
+            if (getMeta(exe).dangerHtml) $(`[unique-id=${args.id}] .toot`).html(z[0].value)
         })
     } else if (source == 'buttonOnPostbox') {
         const postDt = post(null, false, true)

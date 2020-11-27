@@ -11,17 +11,17 @@
     version: 1
     event: "buttonOnPostbox"
     author: "Cutls P"
-    apiGet: false(例)
+    apiGet: "no"(例)
 }
 ```
 これを冒頭に入れます。
 * version  
 数字でも文字列でも好きに使ってください。TheDesk側では全く参照しません。
-* dangerHtml: true|false  
+* dangerHtml: yes|no  
 `TheDesk:changeText`にアクセスするために必要です。
-* apiGetl: true|false  
+* apiGetl: yes|no    
 `TheDesk:api`にGETメソッドでアクセスするときに必要です。
-* apiPost: true|false
+* apiPost: yes|no  
 `TheDesk:api`にPOST/PUT/DELETEメソッドでアクセスするときや、`postExec`を実行するときに必要です。
 
 ### event
@@ -121,6 +121,8 @@ NSFWを切り替えます。forceはデフォルトでfalseで、trueにする�
 
 ## 実例
 
+### 1
+
 https://misskey.io/@syuilo/pages/bebeyo をTheDeskで使用できるようにするためには…(勝手に改造)
 ```
 ### {
@@ -151,3 +153,22 @@ do()
 
 最初のメタデータを追加します。
 また、do関数の最下部の`TheDesk:postText(text)`で、TheDeskの投稿ボックスに結果を挿入しています。
+
+
+### 2
+
+Catにするやつ(ユーザーがいちいち押さないと変換されないし、タグごと変わってしまうのであまりよくない)
+```
+### {
+    name: "nyaize"
+    version: 1
+    event: "buttonOnToot"
+    author: "Cutls P"
+    dangerHtml: yes
+}
+
+#toot = TOOT.content
+#nyaized = Str:replace(toot, "な", "にゃ")
+
+TheDesk:changeText(nyaized)
+```
