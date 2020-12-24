@@ -1,6 +1,6 @@
 {
   "setting": "Preferences",
-  "set": "Save",
+  "set": "儲存",
   "yes": "是",
   "no": "否",
   "none": "沒有",
@@ -106,7 +106,7 @@
   "autofoldwarn": "TheDesk does not collapse totes of 5 characters or less. Also, when collapsing, newlines are not shown. TheDesk count only newlines as the number of lines.",
   "lines": "lines",
   "letters": "letters",
-  "or": "or",
+  "or": "或",
   "imgheight": "Height of images",
   "imgheightwarn": "Option:Set \"full\" to uncrop.",
   "ticker": "Enable OpenSticker",
