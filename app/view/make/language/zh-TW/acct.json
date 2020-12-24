@@ -21,5 +21,5 @@
     "misskeylogin": "請閱讀 <a href=\"https://thedesk.top/how-to-misskey-login.html\"> 文件(日文)</a> 以 Misskey 登入說明。",
     "nodata": "沒有資料",
     "accessTokenSetup": "使用 access token 登入 (填入 access token 而非授權碼後點擊：進階設定)",
-    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
+    "haveExported": "擁有已匯出之 TheDesk 設定檔，請點此跳至設定頁"
 }
