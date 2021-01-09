@@ -1453,6 +1453,7 @@ function announ(acct_id, tlid) {
 				setLog(start, this.status, this.response)
 			}
 			if (json.length > 0) {
+				localStorage.setItem('announ_' + acct_id, json[0].id)
 				$('.notf-announ_' + acct_id).removeClass('hide')
 				var ct = 0
 				for (var i = 0; i < json.length; i++) {
