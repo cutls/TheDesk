@@ -356,8 +356,12 @@ function exportSettingsCore() {
 	//tags
 	var tagarr = localStorage.getItem('tag')
 	var favtag = JSON.parse(tagarr)
-	exp.favoriteTags = favtag
-	exp.revisons = 2.1
+	//plugins
+	var plugins = localStorage.getItem('plugins')
+	var plugin = JSON.parse(plugins)
+	exp.plugins = plugin
+
+	exp.revisons = 2.2
 	exp.meta = {}
 	exp.meta.date = new Date()
 	exp.meta.thedesk = localStorage.getItem('ver')
