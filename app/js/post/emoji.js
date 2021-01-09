@@ -339,6 +339,8 @@ function emojiInsert(code, del) {
 	}
 	sentence = before + word + after
 	textarea.value = sentence
+	textarea.focus()
+	textarea.setSelectionRange(pos + word.length, pos + word.length)
 }
 //改行挿入
 function brInsert(code) {
