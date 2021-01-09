@@ -638,6 +638,7 @@ p:not(:last-child) {
 	text-align: left;
 	padding: 5px;
 	height: 70px;
+	text-align: center;
 }
 .notf-exclude-btn:hover {
 	background-color: inherit !important;

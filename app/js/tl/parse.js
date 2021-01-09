@@ -1019,12 +1019,13 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type) {
 			//このトゥート内のアクションを完了させるために、適当にIDを振る
 			var rand = randomStr(8)
 			//プラグイン機構
-			var plugin = plugins.buttonOnToot
+			var pluginBOT = plugins.buttonOnToot
 			var pluginHtml = ''
-			for (let target of plugin) {
+			for (let target of pluginBOT) {
 				const meta = getMeta(target.content)
 				pluginHtml = pluginHtml + `<li><a onclick="execPlugin('${target.id}','buttonOnToot',{id: '${uniqueid}', acct_id: '${acct_id}'});">${escapeHTML(meta.name)}</a></li>`
 			}
+			
 			templete =
 				templete +
 				`<div

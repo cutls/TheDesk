@@ -438,6 +438,11 @@ function parseColumn(target, dontclose) {
 						<i class="material-icons nex" title="${lang.lang_layout_reconnect}">refresh</i>
 					<br />
 						${lang.lang_layout_reconnect}
+					</a>
+					<a onclick="resetWidth('${key}')" class="setting nex waves-effect">
+						<i class="material-icons nex" title="${lang.lang_layout_resetWidth}">refresh</i>
+					<br />
+						${lang.lang_layout_resetWidth}
 					</a><br />
 					${lang.lang_layout_headercolor}
 					<br>
@@ -929,4 +934,12 @@ function leftFoldRemove(key) {
 	var json = JSON.stringify(obj)
 	localStorage.setItem('column', json)
 	parseColumn()
+}
+function resetWidth(key) {
+	var multi = localStorage.getItem('column')
+	var obj = JSON.parse(multi)
+	obj[key].width = null
+	var json = JSON.stringify(obj)
+	localStorage.setItem('column', json)
+	$(`#timeline_box_${key}_parentBox`).attr('style', '')
 }
