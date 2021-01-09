@@ -568,8 +568,14 @@ textarea {
 /*スクロールバー*/
 ::-webkit-scrollbar {
 	width: 5px;
-	height: 10px;
+	height: 12px;
 	background: rgba(0, 0, 0, 0.05);
+}
+.thickScrollBar ::-webkit-scrollbar {
+	height: 18px;
+}
+.thinScrollBar ::-webkit-scrollbar {
+	height: 5px;
 }
 ::-webkit-scrollbar-track {
 	-webkit-border-radius: 5px;
@@ -581,6 +587,15 @@ textarea {
 	border-radius: 5px;
 	background: #607d8b;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+::-webkit-scrollbar-thumb::after {
+	content: '';
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -15px;
+	border: 15px solid transparent;
+	border-top: 15px solid #e0edff;
 }
 /* Web Fonts */
 @font-face {

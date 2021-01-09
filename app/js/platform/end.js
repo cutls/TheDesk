@@ -216,6 +216,8 @@ if(pwa) {
 		}
 	}
 }
+
+$('html').addClass(localStorage.getItem('scroll') ? localStorage.getItem('scroll') : '')
 const connection = function (event) {
 	console.log(navigator.onLine, 'network state')
 	if(!navigator.onLine) {

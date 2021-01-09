@@ -430,6 +430,30 @@ var tlConstruction = [
 		}
 	},
 	{
+		id: 'scroll',
+		storage: 'scroll',
+		checkbox: true,
+		setValue: 'normalScrollBar',
+		text: {
+			head: '@@scrollBar@@',
+			desc: '',
+			checkbox: [
+				{
+					text: '@@thick@@',
+					value: 'thickScrollBar'
+				},
+				{
+					text: '@@normal@@',
+					value: 'normalScrollBar'
+				},
+				{
+					text: '@@thin@@',
+					value: 'thinScrollBar'
+				}
+			]
+		}
+	},
+	{
 		id: 'replySound',
 		storage: 'replySound',
 		checkbox: true,
