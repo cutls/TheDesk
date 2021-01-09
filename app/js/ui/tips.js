@@ -19,7 +19,7 @@ function bottomReverse() {
 		localStorage.setItem('reverse', 'true')
 	}
 }
-function tips(mode) {
+function tips(mode, custom) {
 	postMessage(['sendSinmpleIpc', 'endmem'], '*')
 	clearInterval(clockint)
 	clearInterval(spotStart)
@@ -57,6 +57,10 @@ function tips(mode) {
 		tipsToggle()
 		localStorage.setItem('tips', 'itunes')
 		itunestips()
+	} else if (mode == 'custom') {
+		tipsToggle()
+		localStorage.setItem('tips', `custom:${custom}`)
+		execPlugin(custom, 'tips', null)
 	}
 }
 //メモリ

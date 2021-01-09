@@ -668,3 +668,12 @@ button {
 	color: white;
 	z-index: 999;
 }
+.pluginNex {
+	width: 2rem;
+    text-align: center;
+}
+.pluginNex span {
+	font-size: 2rem;
+    position: relative;
+    top: -4px;
+}

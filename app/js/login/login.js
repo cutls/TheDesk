@@ -47,8 +47,15 @@ function ck() {
 			multiSelector(false)
 			verck(ver, jp)
 			$('.stw').show()
-			if (localStorage.getItem('tips')) {
-				tips(localStorage.getItem('tips'))
+			let tipsName = localStorage.getItem('tips')
+			const matchCID = /custom:([abcdef0-9]{8}-[abcdef0-9]{4}-4[abcdef0-9]{3}-[abcdef0-9]{4}-[abcdef0-9]{12})/
+			if (tipsName) {
+				if(tipsName.match(matchCID)) {
+					const id = tipsName.match(matchCID)[1]
+					tips('custom', id)
+				} else {
+					tips(tipsName)
+				}
 			}
 			$('#something-wrong img').attr('src', '../../img/thinking.svg')
 		}

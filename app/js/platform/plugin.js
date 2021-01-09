@@ -4,15 +4,38 @@ function getPlugin() {
     const json = localStorage.getItem('plugins')
     let ret = {
         buttonOnPostbox: [],
-        buttonOnToot: []
+        buttonOnToot: [],
+        buttonOnBottom: [],
+        init: [],
+        tips: [],
+        none: []
     }
-    if(!json) return ret
+    if (!json) return ret
     const plugins = JSON.parse(json)
     for (let plugin of plugins) {
         const meta = getMeta(plugin.content)
         if (!meta) continue
         const type = meta.event
         ret[type] ? ret[type].push(plugin) : ret[type] = [plugin]
+        if (type === 'buttonOnToot') continue
+        if (type === 'tips') {
+            if (meta.interval) {
+                const matchCID = /custom:([abcdef0-9]{8}-[abcdef0-9]{4}-4[abcdef0-9]{3}-[abcdef0-9]{4}-[abcdef0-9]{12})/
+                setInterval(function () {
+                    const tipsName = localStorage.getItem('tips')
+                    if (tipsName.match(matchCID)) {
+                        const id = tipsName.match(matchCID)[1]
+                        if (id === plugin.id) if (location.href.split('/').pop() === 'index.html') execPlugin(id, 'tips', null)
+                    }
+                    
+                }, meta.interval)
+            }
+            continue
+        }
+        const shortcut = meta.shortcut
+        $(window).keydown(function (e) {
+            if (e.keyCode === shortcut && e.altKey) execPlugin(plugin.id, type)
+        })
     }
     return ret
 }
@@ -36,34 +59,22 @@ function initPlugin() {
     asCommon['TheDesk:css'] = asValue.FN_NATIVE((z) => {
         $(escapeHTML(z[0].value)).css(escapeHTML(z[1].value), escapeHTML(z[2].value))
     })
-    asCommon['TheDesk:api'] = asValue.FN_NATIVE(async (z) => {
-        try {
-            if (!getMeta(exe).apiGet && z[0].value == "GET") return asUtil.jsToVal(false)
-            if (!getMeta(exe).apiPost && (z[0].value == "POST" || z[0].value == "DELETE" || z[0].value == "PUT")) return asUtil.jsToVal(false)
-            const domain = localStorage.getItem(`domain_${z[3].value}`)
-            const at = localStorage.getItem(`acct_${z[3].value}_at`)
-            const start = `https://${domain}/api/${z[1].value}`
-            const q = {
-                method: z[0].value,
-                headers: {
-                    'content-type': 'application/json',
-                    Authorization:
-                        `Bearer ${at}`
-                }
-            }
-            if (z[2]) q.body = z[2].value
-            const promise = await fetch(start, q)
-            const json = await promise.json()
-            return asUtil.jsToVal(json)
-        } catch (e) {
-            return asUtil.jsToVal(e)
-        }
-
+    asCommon['TheDesk:openLink'] = asValue.FN_NATIVE((z) => {
+        postMessage(['openUrl', z[0].value], '*')
     })
-    const { buttonOnPostbox, init } = plugins
+    
+    const { buttonOnPostbox, init, buttonOnBottom, tips } = plugins
     for (let target of buttonOnPostbox) {
         const meta = getMeta(target.content)
         $('#dropdown2').append(`<li><a onclick="execPlugin('${target.id}','buttonOnPostbox', null);">${escapeHTML(meta.name)}</a></li>`)
+    }
+    for (let target of buttonOnBottom) {
+        const meta = getMeta(target.content)
+        $('#group .btnsgroup').append(`<a onclick="execPlugin('${target.id}','buttonOnBottom', null);" class="nex waves-effect pluginNex"><span title="${escapeHTML(meta.name)}">${escapeHTML(meta.name).substr(0, 1)}</span></a>`)
+    }
+    for (let target of tips) {
+        const meta = getMeta(target.content)
+        $('#tips-menu .btnsgroup').append(`<a onclick="tips('custom', '${target.id}')" class="nex waves-effect pluginNex"><span title="${escapeHTML(meta.name)}">${escapeHTML(meta.name).substr(0, 1)}</span></a>`)
     }
     for (let target of init) {
         const as = new AiScript(asCommon)
@@ -103,10 +114,21 @@ async function execPlugin(id, source, args) {
                     `Bearer ${at}`
             }
         })
-        const json = await promise.json()
+        let json = await promise.json()
         common.TOOT = asUtil.jsToVal(json)
         common['TheDesk:changeText'] = asValue.FN_NATIVE((z) => {
-            if (getMeta(exe).dangerHtml) $(`[unique-id=${args.id}] .toot`).html(z[0].value)
+            const v = sanitizeHtml(z[0].value,
+                {
+                    allowedTags: ['p', 'br', 'a', 'span'],
+                    allowedAttributes: {
+                        'a': ['href', 'class', 'rel', 'target'],
+                        'span': [],
+                        'p': [],
+                        'br': [],
+                    }
+                }).replace(/href="javascript:/, 'href="').replace(/href='javascript:/, 'href="').replace(/href=javascript:/, 'href="')
+            json.content = v
+            if (getMeta(exe).dangerHtml) $(`[unique-id=${args.id}] .toot`).html(parse([json], null, null, null, null, null, null, true))
         })
     } else if (source == 'buttonOnPostbox') {
         const postDt = post(null, false, true)
@@ -131,9 +153,65 @@ async function execPlugin(id, source, args) {
         common['TheDesk:postExec'] = asValue.FN_NATIVE(() => {
             if (getMeta(exe).apiPost) post()
         })
+    } else if (source == 'tips') {
+        common['TheDesk:refreshTipsView'] = asValue.FN_NATIVE((z) => {
+            const v = sanitizeHtml(z[0].value,
+                {
+                    allowedTags: ['p', 'br', 'a', 'span', 'img'],
+                    allowedAttributes: {
+                        'a': ['href', 'class', 'rel', 'target', 'style'],
+                        'span': ['style'],
+                        'p': ['style'],
+                        'br': [],
+                        'img': ['src', 'style']
+                    }
+                }).replace(/href="javascript:/, 'href="').replace(/href='javascript:/, 'href="').replace(/href=javascript:/, 'href="')
+            if (getMeta(exe).dangerHtml) $('#tips-text').html(v)
+        })
     }
     common['TheDesk:console'] = asValue.FN_NATIVE((z) => {
         console.log(z[0].value)
+    })
+    common['TheDesk:api'] = asValue.FN_NATIVE(async (z) => {
+        try {
+            if (!getMeta(exe).apiGet && z[0].value == "GET") return asUtil.jsToVal(null)
+            if (!getMeta(exe).apiPost && (z[0].value == "POST" || z[0].value == "DELETE" || z[0].value == "PUT")) return asUtil.jsToVal(null)
+            const domain = localStorage.getItem(`domain_${z[3].value}`)
+            const at = localStorage.getItem(`acct_${z[3].value}_at`)
+            const start = `https://${domain}/api/${z[1].value}`
+            const q = {
+                method: z[0].value,
+                headers: {
+                    'content-type': 'application/json',
+                    Authorization:
+                        `Bearer ${at}`
+                }
+            }
+            if (z[2]) q.body = z[2].value
+            const promise = await fetch(start, q)
+            const json = await promise.json()
+            return asUtil.jsToVal(json)
+        } catch (e) {
+            return asUtil.jsToVal(null)
+        }
+
+    })
+    common['TheDesk:getRequest'] = asValue.FN_NATIVE(async (z) => {
+        try {
+            if (!getMeta(exe).apiGet) return asUtil.jsToVal(null)
+            const start = `https://${z[0].value}`
+            const promise = await fetch(start)
+            let json = null
+            if (z[1].value) {
+                json = await promise.json()
+            } else {
+                json = await promise.text()
+            }
+            return asUtil.jsToVal(json)
+        } catch (e) {
+            return asUtil.jsToVal(null)
+        }
+
     })
     const as = new AiScript(common)
     if (exe) as.exec(asParse(exe))
