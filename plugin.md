@@ -121,6 +121,16 @@ HTML を引数にすることに留意してください。
 
 p, span, br, a タグを利用できます。また、a タグには'href', 'class', 'rel', 'target'属性以外を入れることはできず、
 href の最初が javascript:で始まるものも利用できません。
+### TheDesk:refreshTipsView(body: string)
+
+`tips`で使用可能
+
+Tipsのコンテンツを書き換えます。  
+`dangerHtml`を true にしてください。  
+HTML を引数にすることに留意してください。
+
+p, span, br, a, img タグを利用できます。また、a タグには'href', 'class', 'rel', 'target', 'style'属性以外を入れることはできず、
+href の最初が javascript:で始まるものも利用できません。また、p, span, imgにはstyleを使用できます(imgは当然srcも可)
 
 ### TheDesk:postText(text: string)
 
@@ -213,4 +223,28 @@ Cat にするやつ(ユーザーがいちいち押さないと変換されない
 #nyaized = Str:replace(toot, "な", "にゃ")
 
 TheDesk:changeText(nyaized)
+```
+
+### 3
+
+BitFlyerのAPIを利用してTips部に3秒ごとにビットコインの価格を表示するやつ
+https://1m.cutls.com/@Cutls/105525654999148930
+
+```
+### {
+    name: "Bitcoinの値段を3秒ごとにTipsに表示するやつ"
+    version: 1
+    event: "tips"
+    author: "Cutls P"
+    dangerHtml: yes
+    apiGet: yes
+    interval: 3000
+}
+
+#json = TheDesk:getRequest("bitflyer.com/api/echo/price", yes)
+#ask = json.ask
+#mid = json.mid
+#bid = json.bid
+#text = `ASK: {ask} / MID: {mid} / BID: {bid}`
+TheDesk:refreshTipsView(text)
 ```
