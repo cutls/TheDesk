@@ -1,6 +1,6 @@
 {
     "name": "thedesk",
-    "version": "22.0.0",
+    "version": "22.0.1",
     "codename": "Koume",
     "description": "TheDesk is a Mastodon client for PC.",
     "repository": "https://github.com/cutls/TheDesk",
