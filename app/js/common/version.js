@@ -73,9 +73,9 @@ function verck(ver, jp) {
 	}
 	var platform = localStorage.getItem('platform')
 	console.log('Your platform:' + platform)
-	if (!localStorage.getItem('winstore') && !pwa) {
-		$('#start').css('display', 'flex')
-	}
+	//if (!localStorage.getItem('winstore') && !pwa) {
+	//	$('#start').css('display', 'flex')
+	//}
 	if (
 		localStorage.getItem('winstore') == 'brewcask' ||
 		localStorage.getItem('winstore') == 'snapcraft' ||
