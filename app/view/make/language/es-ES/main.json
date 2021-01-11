@@ -153,6 +153,7 @@
     "lang_layout_unread": "Unread",
     "lang_layout_tagManager": "Tag timeline manager",
     "lang_layout_announ": "Announcement: the counter is the number of your unread announcements. If not shown, it means announcements are all marked as read.",
+    "lang_layout_resetWidth": "Stretch this column",
     "lang_sort_gothis": "Go to this column",
     "lang_sort_remthis": "Delete this column",
     "lang_spotify_img": "Attach an album artwork",
