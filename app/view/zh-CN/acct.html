@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>Account Manager - TheDesk</title>
+		<meta content="width=device-width,initial-scale=1.0" name="viewport" />
+		<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+		<link
+			href="../../node_modules/materialize-css/dist/css/materialize.css"
+			type="text/css"
+			rel="stylesheet"
+		/>
+		<link href="../../css/master.css" type="text/css" rel="stylesheet" />
+		<link href="../../css/tl.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/userdata.css" rel="stylesheet" type="text/css" />
+		<link
+			href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+			type="text/css"
+			rel="stylesheet"
+		/>
+		<link href="../../css/acct.css" rel="stylesheet" type="text/css" />
+		<meta charset="utf-8" />
+		<!--
+		<script type="text/javascript">
+			var _jipt = []
+			_jipt.push(['project', 'thedesk'])
+		</script>
+		<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+		-->
+		<script>var pwa = false;</script> <script>var store = false;</script>
+	</head>
+
+	<body id="mainView" class="">
+		<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="../../js/platform/first.js"></script>
+		<script
+			type="text/javascript"
+			src="../../node_modules/materialize-css/dist/js/materialize.js"
+		></script>
+		<script type="text/javascript" src="main.js"></script>
+		<script
+			type="text/javascript"
+			src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"
+		></script>
+		<script>
+			var misskeytoken = false
+		</script>
+		<script type="text/javascript" src="../../js/common/time.js"></script>
+		<div class="hide-first">
+			<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;"
+				>返回</a
+			><br />
+			<h5>已登录帐户</h5>
+			<div id="acct-list"></div>
+			<div class="divider"></div>
+		</div>
+		<div class="hide-second">
+			<a href="setting.html">Having the exported file of TheDesk, click here to jump setting page</a>
+		</div>
+		<div>
+			<h5>添加一个帐户</h5>
+			<br />
+			<div id="add">
+				<div class="row">
+					<div class="col s8">
+						Fill the instance domain (like mastodon.social)<br />
+						<input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp" />
+						<div id="ins-suggest"></div>
+						<button class="btn waves-effect" onclick="instance()">Login</button><br />
+						<div class="pwa">
+							Windows以外的运行环境，或需要登录Pleroma，请尝试勾选下面的复选框<br />
+							<label>
+								<input type="checkbox" class="filled-in" id="linux" />
+								<span>使用授权码登录</span>
+							</label>
+							<br />
+						</div>
+						<label>
+							<input type="checkbox" class="filled-in" id="misskey" />
+							<span>使用Misskey登录</span> </label
+						><br />
+					</div>
+					<div class="col s4 scr" aria-hidden="true">
+						<span style="font-family:Open Sans;">Supports</span>
+						<div id="support" class="collection transparent"></div>
+					</div>
+				</div>
+			</div>
+			<div id="auth" style="display:none">
+				在这里粘贴授权码后即可关闭浏览器<br />
+				<input type="text" id="code" placeholder="授权码" required />
+				<button class="btn waves-effect" onclick="code()">Auth</button><br />
+				<br />
+				<a onclick="atSetup()" class="pointer">Use access token to login(click after fill not code but access-token in box: Advanced)</a>
+				<div id="compt" style="display:none" class="scr">
+					<h5>ログイン前に必ずご確認ください</h5>
+					<span id="compt-instance"></span>はバージョンが<span id="compt-ver"></span
+					>のため以下の機能がご利用いただけません。
+					<span id="compt-warn" style="display:none"
+						>また、このインスタンスはMastodonではなくそのAPI上の互換実装であり、TheDeskでは利用を想定していないため非保証となります。</span
+					>
+					<ul id="compt-list"></ul>
+				</div>
+			</div>
+			<div id="misskeylogin" style="display:none">
+				<h5>AppSecret</h5>
+				阅读 <a href="https://thedesk.top/how-to-misskey-login.html">文档(ja)</a> 了解如何使用Misskey登录.<br />
+				<input type="hidden" id="misskey-url" />
+				<input type="text" id="misskey-key" placeholder="授权码" required />
+				<button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br />
+				<br />
+				<a onclick="atSetup('misskey')" class="pointer">Use access token to login(click after fill not code but access-token in box: Advanced)</a>
+			</div>
+		</div>
+		<div class="hide-first">
+			<h5>主帐户</h5>
+			<div class="input-field" style="width:300px">
+				<span data-trans="your_acct">选择一个帐户</span>
+				<br />
+				<select
+					id="main-acct-sel"
+					class="acct-sel"
+					style="color:black"
+					onchange="mainacct()"
+				></select>
+				<label></label>
+			</div>
+			<ul id="domain-list" class="collection transparent"></ul>
+			<div id="instance-data">
+				Some instance data by
+				<a href="https://instances.social" target="_blank">instances.social API</a><br />
+				<h5 id="ins-title"></h5>
+				Administered by:<a id="ins-admin"></a><br />
+				<span id="ins-desc"></span><br />
+				<img src="../../img/loading.svg" id="ins-prof" width="200" /><br />
+				<br />
+				域名:<span id="ins-name"></span><br />
+				联接实例统计:<span id="ins-connect"></span><br />
+				嘟嘟统计:<span id="ins-toot"></span><br />
+				用户统计:<span id="ins-user"></span>用户统计<br />
+				连通率:<span id="ins-per"></span>%<br />
+				长毛象版本:<span id="ins-ver"></span>@<span id="ins-upd"></span><br />
+			</div>
+		</div>
+		<script type="text/javascript" src="../../js/ui/theme.js"></script>
+		<script type="text/javascript" src="../../js/ui/tips.js"></script>
+		<script type="text/javascript" src="../../js/platform/end.js"></script>
+		<script type="text/javascript" src="../../js/common/sha256.js"></script>
+		<script type="text/javascript" src="../../node_modules/lodash/lodash.min.js"></script>
+		<script type="text/javascript" src="../../js/login/instance.js"></script>
+		<script type="text/javascript" src="../../js/login/manager.js"></script>
+		<script type="text/javascript" src="../../js/tl/date.js"></script>
+		<script>$('body').addClass(localStorage.getItem('platform'))</script>
+	</body>
+</html>

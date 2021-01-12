@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+	<script type="text/javascript" src="../../js/ui/theme.js"></script>
+	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
+	<meta content="width=device-width,initial-scale=1.0" name="viewport" />
+	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet" />
+	<link href="../../node_modules/jquery-ui-dist/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+	<link href="../../css/tl.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/userdata.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/post.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/master.css" type="text/css" rel="stylesheet" />
+	<link href="../../css/sort.css" rel="stylesheet" type="text/css" />
+	<link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet" />
+	<meta charset="utf-8" />
+	<!--
+	<script type="text/javascript">
+		var _jipt = []
+		_jipt.push(['project', 'thedesk'])
+	</script>
+	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+	--> <script>var pwa = false;</script> <script>var store = false;</script>
+</head>
+
+<body class="">
+	<script>
+		var ver = '22.0.1 (Koume)'
+		var gitHash = '89b25c56e7ecf0c1c0e3b73f3138207abe1a6c9c'
+		//betaを入れるとバージョンチェックしない
+		//var ver="beta";
+		var acct_id = 0
+		var tlid = 0
+	</script>
+	<textarea id="copy" style="top:-100px; position:fixed;"></textarea>
+	<canvas id="canvas" style="top:-100px; position:fixed;width:32px;height:32px" width="32" height="32"></canvas>
+	<div id="pageSrc" class="hide z-depth-5">
+		<input type="text" id="pageSrcInput" placeholder="Поиск" />
+		<button class="btn waves-effect" onclick="doSrc('web')" title="Search on Web">
+			<i class="material-icons">open_in_browser</i>
+		</button>
+		<button class="btn waves-effect" onclick="doSrc('ts')" title="Search on tootsearch">
+			<i class="material-icons">chat</i>
+		</button>
+	</div>
+	<div id="offline" class="hide">
+		OFFLINE: all of your post is in the draft box and you should reload after re-connect to the Internet
+	</div>
+	<div id="re-online" class="hide">
+		Now we are in the Internet, you should reload...
+	</div>
+	<div id="tl">
+		<!--TL-->
+		<!--スターター-->
+		<div id="start" class="scr">
+			<div id="start-content">
+				<h3 class="center">Welcome guide</h3>
+				Посмотрите на нижнюю часть этого окна. Вот несколько советов по этому поводу.
+				<div id="demobottom">
+					<button class="btn waves-effect"
+						style="width: 23rem;height: 2.5rem;line-height: 0;margin: 0; background-color: var(--active);">
+						<i class="material-icons"
+							style="position: relative; top: 0.4rem; font-size: 1.5rem; text-align: center; margin-right: 0.7rem;">edit</i>Toot
+					</button>
+					<div class="leftside reverse" id="demogroup">
+						<div class="btnsgroup" style="margin-left: 0.4rem;">
+							<a href="#" class="nex waves-effect">
+								<i class="material-icons nex big-icon"
+									title="Account Manager(Ctrl+Shift+M)">account_circle</i>
+							</a>
+							<a href="#" class="nex waves-effect">
+								<i class="material-icons nex" title="Предпочтения(Ctrl+Shift+S)">settings</i>
+							</a>
+							<a class="nex waves-effect">
+								<i class="material-icons" title="The smallest Mastodon,TheDesk Nano">remove_from_queue</i>
+							</a>
+							<a class="nex waves-effect" id="list-tgl">
+								<i class="material-icons" title="Menu">apps</i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<br />
+				<i class="material-icons nex big-icon">account_circle</i>: Account Manager<br />
+				Добавьте больше аккаунтов и выйдите из них.
+				<hr />
+				<i class="material-icons nex">settings</i>: Предпочтения<br />
+				Здесь очень много настроек. Вы не сможете проверить все!
+				<hr />
+				<i class="material-icons nex">remove_from_queue</i>: TheDesk Nano The smallest Mastodon,<br />
+				Клиент мини-окна (экспериментальный)
+				<hr />
+				<i class="material-icons nex">apps</i>: Menu<br />
+				All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>.<br />
+				<br />
+				<button class="btn waves-effect" onclick="closeStart()" style="width: 300px;">
+					Закрыть
+				</button>
+			</div>
+		</div>
+		<!--ドラッグハンドラ-->
+		<div id="drag">
+			<div id="drag-content">
+				Перетащите сюда для загрузки
+				<br />
+				<button class="btn waves-effect" onclick="closedrop()">Закрыть</button>
+			</div>
+		</div>
+	</div>
+	<div id="post-box" class="z-depth-5">
+		<div id="post-bar" class="drag-bar">
+			<span id="unreact">Новая запись</span><span id="addreact" class="hide">Reaction</span>
+		</div>
+		<!--トゥートボックス-->
+		<div id="left-side">
+			<div class="row" style="margin-bottom:0;">
+				<div class="" style="float:left;">
+					<a onclick="profShow()" style="vertical-align:-1.7rem;" class="pointer mize">
+						<img src="../../img/missing.svg" id="acct-sel-prof" title="Показать профиль выбранного аккаунта(Ctrl+Shift+P)"
+							data-trans-title="post_box_prof" style="width: 1.8rem" />
+					</a>
+				</div>
+				<div class="input-field mize" style="float:left; width:calc(100% - 1.8rem); margin-top:0;">
+					<select id="post-acct-sel" class="acct-sel" onchange="mdCheck()"></select>
+				</div>
+				<span class="cancel">
+					<i class="material-icons waves-effect" onclick="hide()" title="Close this box(X)"
+						data-trans-title="post_box_close">cancel</i>
+				</span>
+				<!--Markdown-->
+				<div class="row" style="margin-bottom:0">
+					<div class="markdown mize hide">
+						<div class="col s12">
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('b')"
+								title="太字(Ctrl+B)テキストボックス内を選択してから押すと囲みます。">format_bold</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('i')"
+								title="斜字(Ctrl+I)テキストボックス内を選択してから押すと囲みます。">format_italic</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('u')"
+								title="下線(Ctrl+U)テキストボックス内を選択してから押すと囲みます。">format_underlined</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('s')"
+								title="取り消し(Ctrl+S)テキストボックス内を選択してから押すと囲みます。">strikethrough_s</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('>','no','yes')"
+								title="引用">format_quote</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('#','no','yes')"
+								title="見出し">short_text</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('`','yes','no')"
+								title="コード挿入　テキストボックス内を選択してから押すと囲みます。">code</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('- ','yes','yes')"
+								title="箇条書きリスト">format_list_bulleted</i>
+							<i class="material-icons pointer setting waves-effect" onclick="markdown('1. ','yes','yes')"
+								title="番号付きリスト">format_list_numbered</i>
+							<i class="pointer setting fa fa-subscript waves-effect"
+								onclick="markdown('__','yes','no','before')" title="下付き文字　テキストボックス内を選択してから押すと囲みます。"
+								style="font-size:1.5rem"></i>
+							<i class="pointer setting fa fa-superscript waves-effect"
+								onclick="markdown('_','yes','no','before')" title="上付き文字　テキストボックス内を選択してから押すと囲みます。"
+								style="font-size:1.5rem"></i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('spin')"
+								title="回転　テキストボックス内を選択してから押すと囲みます。">autorenew</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('pulse')"
+								title="点滅　テキストボックス内を選択してから押すと囲みます。">flare</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('flip=vertical')"
+								title="上下反転　テキストボックス内を選択してから押すと囲みます。">swap_vert</i>
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('flip=horizontal')"
+								title="左右反転　テキストボックス内を選択してから押すと囲みます。">swap_horiz</i>
+							<span class="sml gray pointer waves-effect">
+								<a onclick="mdToggle()">Markdownエディタを隠す</a>
+							</span>
+							<br />
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('size')"
+								title="文字サイズ変更　テキストボックス内を選択してから押すと囲みます。">format_size</i>
+							<input id="size" style="width: calc(50% - 1.5rem); margin: 0; height: 1.8rem;"
+								value="12" />px
+							<i class="material-icons pointer setting waves-effect" onclick="tagsel('colorhex')"
+								title="文字色変更　テキストボックス内を選択してから押すと囲みます。">color_lens</i>
+							<input id="colorhex" style="width: calc(50% - 3.8rem); margin: 0; height: 1.8rem;"
+								type="color" />
+							<br />
+							<i class="material-icons pointer setting waves-effect" onclick="markdownLink()"
+								title="リンク挿入">link</i>
+							<input id="linkt" style="width: calc(50% - 1.5rem); margin: 0; height: 1.8rem;"
+								placeholder="リンクテキスト" />&nbsp;
+							<input id="link2" style="width: calc(50% - 1.5rem); margin: 0; height: 1.8rem;"
+								placeholder="リンクアドレス" />
+							<br />
+							<i class="material-icons pointer setting waves-effect" onclick="markdownImage()"
+								title="インライン画像挿入">image</i>
+							<input id="image" style="width: calc(50% - 1.5rem); margin: 0; height: 1.8rem;"
+								placeholder="代替テキスト" />&nbsp;
+							<input id="image2" style="width: calc(50% - 1.5rem); margin: 0; height: 1.8rem;"
+								placeholder="画像アドレス" />
+						</div>
+					</div>
+					<div class="input-field col s12" id="preview-field" style="margin-top: 0;">
+						<div id="md-preview"></div>
+						<span class="sml gray pointer">
+							<a onclick="previewEdit()">Edit</a>
+						</span>
+					</div>
+					<div class="input-field col s12" id="toot-field" style="margin-top: 0;margin-bottom: 0;">
+						<textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;"
+							data-length="500"></textarea>
+						<label for="textarea" data-trans="toot">Toot</label>
+						<br />
+						<span class="sml gray pointer markdown mize" id="preview-btn">
+							<a onclick="preview()">Preview</a>
+						</span>
+						<span class="sml gray pointer anti-markdown mize">
+							<a onclick="mdToggle()">Markdownエディタを表示</a>
+						</span>
+					</div>
+					<div class="col s12 mize" style="margin-top: 0; display:flex; justify-content: space-between">
+						<i class="waves-effect gray material-icons" id="nsfw" title="Mark media as sensitive"
+							onclick="nsfw()">visibility_off</i>
+						<i class="waves-effect gray material-icons purple-text dropdown-trigger" data-target="dropdown1"
+							id="vis-icon">public</i>
+						<a class="waves-effect gray" id="cw" onclick="cw()" title="Hide text behind warning">CW</a>
+						<span><span id="imgup"></span><span id="imgsel" class="pwa"><i
+									class="waves-effect material-icons gray" onclick="fileselect()"
+									title="Вложение..">photo_library</i></span></span>
+						<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn"
+							title="Смайлики">tag_faces</i>
+						<i class="waves-effect gray material-icons dropdown-trigger"
+							data-target="dropdown2">more_vert</i>
+						<i class="material-icons nex gray waves-effect" title="Clear toot box(Ctrl+Shit+C)"
+							data-trans-title="post_box_clear" id="clear">clear</i>
+					</div>
+					<div class="col s12 mize" style="margin-bottom:0.4rem; padding:0;">
+						<div id="taglist"></div>
+						<div id="preview" class="mize"></div>
+						<span class=" sml mize"><span>Ответить</span>: <span
+								id="rec">Нет</span>/<span>Прикрепить файлы</span>:
+							<span id="mec">None</span>
+							<a onclick="stamp()" class="pointer pwa" title="Your acct(aa@bb.cc) is printed on the right-bottom of the uploaded image">Stamp: <span
+									id="stamp">Off</span></a>
+							/Poll:<span id="pollsta">Нет</span>
+							<span id="vis" class="hide">public</span>
+						</span>
+						<br />
+						<input type="text" id="cw-text" placeholder="Предупреждающий текст" class="mize" style="margin:0" />
+						<div id="sch-box">
+							Post at<br /><span class="sml">2.7.0~ Минимальный промежуток времени: 5 минут (часы на сервере могут быть неточными.)</span><a onclick="expPostMode()">Expire
+								mode(beta)</a><br />
+							<input type="datetime-local" id="sch-date" placeholder="Scheduled toot" class="datepicker"
+								style="margin:0" />
+						</div>
+					</div>
+				</div>
+				<!-- 公開範囲 Dropdown Structure -->
+				<ul id="dropdown1" class="dropdown-content">
+					<li>
+						<a onclick="vis('public')">(Public)</a>
+					</li>
+					<li>
+						<a onclick="vis('unlisted')">(Unlisted)</a>
+					</li>
+					<li>
+						<a onclick="vis('private')" id="private-button">(Private)</a>
+					</li>
+					<li id="limited-button" class="hide">
+						<a onclick="vis('limited')">限定公開(Limited)</a>
+					</li>
+					<li id="local-button" class="hide">
+						<a onclick="vis('local')">Только локальные(Local)</a>
+					</li>
+					<li>
+						<a onclick="vis('direct')" class="disabled direct">(Direct)</a>
+					</li>
+				</ul>
+				<!-- その他 Dropdown Structure -->
+				<ul id="dropdown2" class="dropdown-content">
+					<li>
+						<a onclick="nowplaying('spotify');">NowPlaying (Spotify)</a>
+					</li>
+					<li class="mac">
+						<a onclick="nowplaying('itunes');">NowPlaying (iTunes macOS)</a>
+					</li>
+					<li>
+						<a onclick="nowplaying('lastFm');">NowPlaying (Last.fm)</a>
+					</li>
+					<li>
+						<a onclick="schedule();">Scheduled toot</a>
+					</li>
+					<li>
+						<a onclick="pollToggle();">Poll</a>
+					</li>
+					<li>
+						<a onclick="draftToggle();">Draft</a>
+					</li>
+				</ul>
+				<!--hidden area-->
+				<input type="hidden" id="reply" />
+				<input type="hidden" id="ideKey" />
+				<input type="hidden" id="quote" />
+				<input type="hidden" id="media" />
+				<!--END hidden area-->
+			</div>
+			<div id="toot-btn-field">
+				<button class="btn waves-effect unmize toot-btn-group" onclick="post()" id="toot-post-btn">
+					Toot
+				</button>
+				<button class="btn waves-effect darken-3 unmize hide toot-btn-group" onclick="sec()" id="toot-sec-btn">
+					<i class="material-icons" id="toot-sec-icon" title="Secondary Toot">lock_open</i>
+				</button>
+			</div>
+		</div>
+		<div id="right-side">
+			<div id="suggest" class="right-side-content"></div>
+			<div id="draft" class="hide right-side-content"></div>
+			<!--絵文字ピッカー-->
+			<div id="emoji" class="hide right-side-content">
+				<span class="gray sml">
+					<a onclick="emojiGet('true')" class="pointer">Обновить список смайликов</a>
+					<br />
+				</span>
+				<div id="emoji-list" class="" style=""></div>
+				<div class="emoji-control center">
+					<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('before')"
+						id="emoji-before">
+						<i class="material-icons">navigate_before</i>
+					</button>
+					<span id="emoji-count"></span>/
+					<span id="emoji-sum"></span>
+					<button class="btn waves-effect blue" style="width:30%; padding:0;" onclick="emojiList('next')"
+						id="emoji-next">
+						<i class="material-icons">navigate_next</i>
+					</button>
+				</div>
+				<div id="default-emoji">
+					<span id="now-emoji"></span> показаны.<br /><span class="gray sml">Некоторые смайлики не могут быть вставлены.</span>
+					<br />
+					<a onclick="customEmoji()" class="pointer waves-effect" title="Пользовательские смайлики">
+						<i class="material-icons">add</i>
+					</a>
+					<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="Смайлики людей">
+						<i class="material-icons">people</i>
+					</a>
+					<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="Смайлики природы">
+						<i class="material-icons">local_florist</i>
+					</a>
+					<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="Смайлики еды">
+						<i class="material-icons">restaurant</i>
+					</a>
+					<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="Смайлики деятельности">
+						<i class="material-icons">directions_run</i>
+					</a>
+					<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="Смайлики мест">
+						<i class="material-icons">directions_car</i>
+					</a>
+					<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="Смайлики инструментов">
+						<i class="material-icons">attach_file</i>
+					</a>
+					<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="Смайлики символов">
+						<i class="material-icons">gesture</i>
+					</a>
+					<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="Смайлики флагов">
+						<i class="material-icons">flag</i>
+					</a>
+					<a onclick="faicon()" class="pointer waves-effect" title="faicon" id="faicon-btn">
+						<i class="fab fa-fort-awesome"></i>
+					</a>
+				</div>
+			</div>
+			<!--Poll UI-->
+			<div id="poll" class="hide right-side-content">
+				<div id="mastodon-poll" class="poll-provider">
+					<input type="text" class="mastodon-choice" placeholder="Выбор1" />
+					<input type="text" class="mastodon-choice" placeholder="Выбор2" />
+					<input type="text" class="mastodon-choice" placeholder="Выбор3" />
+					<input type="text" class="mastodon-choice" placeholder="Выбор4" />
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
+						<span>Множественный выбор</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="poll-until" value="1" />
+						<span>Скрыть количество голосов, пока люди не проголосуют.</span>
+					</label>
+					<input type="number" style="width:50px" id="days_poll" placeholder="d" value="0" />день(ей)
+					<input type="number" style="width:50px" id="hours_poll" placeholder="h" value="0" />час(ов)
+					<input type="number" style="width:50px" id="mins_poll" placeholder="m" value="6" />minute(s)
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Structure Tootdata-->
+	<div id="tootmodal" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<ul class="collapsible" id="det-col">
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="material-icons">people_outline</i>Local TL after this toot)
+					</div>
+					<div class="collapsible-body toot-reset" id="ltl-after"></div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="material-icons">person_outline</i>User TL before this toot
+					</div>
+					<div class="collapsible-body toot-reset" id="user-after"></div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header"><i class="material-icons">language</i>Federated TL after this toot</div>
+					<div class="collapsible-body toot-reset" id="ftl-after"></div>
+				</li>
+				<li>
+					<div class="collapsible-header">
+						<i class="material-icons">arrow_upward</i>Context before this toot
+					</div>
+					<div class="collapsible-body toot-reset" id="toot-reply"></div>
+				</li>
+				<li>
+					<div class="collapsible-header" id="activator">
+						<i class="material-icons">more_horiz</i>This toot
+					</div>
+					<div class="collapsible-body">
+						<div class="toot-reset" id="toot-this"></div>
+					</div>
+				</li>
+				<li>
+					<div class="collapsible-header">
+						<i class="material-icons">arrow_downward</i>Context after this toot
+					</div>
+					<div class="collapsible-body toot-reset" id="toot-after"></div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="material-icons">people_outline</i>Local TL before this toot
+					</div>
+					<div class="collapsible-body toot-reset" id="toot-before"></div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="material-icons">person_outline</i>User TL before this toot
+					</div>
+					<div class="collapsible-body toot-reset" id="user-before"></div>
+				</li>
+				<li>
+					<div class="collapsible-header"><i class="material-icons">star</i>People who favourited it</div>
+					<div class="collapsible-body toot-reset" id="toot-fav"></div>
+				</li>
+				<li class="dm-hide">
+					<div class="collapsible-header">
+						<i class="text-darken-3 false fas fa-retweet"></i>People who boosted it
+					</div>
+					<div class="collapsible-body toot-reset" id="toot-rt"></div>
+				</li>
+			</ul>
+			<div class="dm-hide">
+				Use other account(<i class="fas fa-retweet"></i>/<i class="fas fa-star"></i>:unfav and unBT are disabled.)<br />
+				<div class="row">
+					<div class="col s6">
+						<select id="status-acct-sel" class="acct-sel"></select>
+					</div>
+					<div class="col s2">
+						<button class="dropdown-button btn waves-effect" style="width:100%;" onclick="staEx('reply')">
+							<i class="fas fa-share"></i>
+						</button>
+					</div>
+					<div class="col s2">
+						<button class="dropdown-button btn waves-effect indigo" style="width:100%;"
+							onclick="staEx('rt')">
+							<i class="fas fa-retweet"></i>
+						</button>
+					</div>
+					<div class="col s2">
+						<button class="dropdown-button btn waves-effect orange" style="width:100%;"
+							onclick="staEx('fav')">
+							<i class="fas fa-star"></i>
+						</button>
+					</div>
+				</div>
+				Boost with visibility<br />
+				<button class="btn waves-effect darken-3 toot-btn-group purple" onclick="boostWith('public')">
+					<i class="material-icons">public</i>
+				</button>
+				<button class="btn waves-effect darken-3 toot-btn-group blue" onclick="boostWith('unlisted')">
+					<i class="material-icons">lock_open</i>
+				</button>
+				<button class="btn waves-effect darken-3 toot-btn-group orange" onclick="boostWith('private')">
+					<i class="material-icons">lock</i>
+				</button>
+				<div id="toot-tools"></div>
+				<div id="toot-after"></div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="brws()">Открыть в браузере</a>
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy()">Копировать URL</a>
+			<a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy('emb')">Embed</a>
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Закрыть</a>
+		</div>
+	</div>
+	<!-- Modal Structure Userdata -->
+	<div id="his-data" class="modal bottom-sheet modal-fixed-footer" style="max-height:750px; height:90%;">
+		<div id="his-data-content" class="modal-content" style="padding-bottom: 0;overflow-y:hidden;">
+			<div id="his-data-show">
+				<div id="his-data-wrap">
+					<div class="his-float" id="his-float-data">
+						<div id="his-leftside">
+							<div id="his-basic-prof">
+								<div>
+									<img src="../../img/loading.svg" id="his-prof" draggable="false" />
+								</div>
+								<div>
+									<span id="his-name">Loading...</span>
+									<span class="gray">@</span><span id="his-acct" class="gray"></span><br />
+									<span class="gray" id="his-relation"></span>
+									<br />
+									<span class="cbadge"> <span id="his-sta"></span>Toots </span>
+									<span class="cbadge">Следить:
+										<span id="his-follow"></span>
+									</span>
+									<span class="cbadge">Подписчик: <span id="his-follower"></span> </span><br />
+									<span class="cbadge" style="max-width:11.5rem; width:11.5rem; ">Since:
+										<span id="his-since"></span>
+									</span>
+									<span class="cbadge" id="his-bot">[bot]</span>
+								</div>
+							</div>
+							<div id="his-proof-prof"></div>
+							<div id="his-des" data-acct=""></div>
+							<br />
+							<div id="his-table"></div>
+							<br />
+							<div id="his-sign-action">
+								<a href="#!" class="waves-effect waves-green btn" onclick="follow()"
+									style="flex-basis: 100%" id="his-follow-btn"><i
+										class="material-icons">people</i><span
+										id="his-follow-btn-text">Следить</span></a>
+								<a href="#!" class="waves-effect waves-green btn blue" onclick="muteDo()"
+									id="his-mute-btn"><i class="material-icons">voice_over_off</i><span
+										id="his-mute-btn-text">Заглушить</span></a>
+								<a href="#!" class="waves-effect waves-g
+									reen btn red" onclick="block()" id="his-block-btn"><i class="material-icons ">block</i><span
+										id="his-block-btn-text">Заблокировать</span></a>
+								<a class="dropdown-trigger btn waves-effect grey" href="#" data-target="actiondropdown">
+									<i class="material-icons">more_vert</i>Ещё</a>
+							</div>
+							<!-- Dropdown Structure -->
+							<ul id="actiondropdown" class="dropdown-content">
+								<li onclick="empUser()">
+									<a title="Подчеркнуть этого пользователя"><i class="material-icons">highlight</i>Подчеркнуть этого пользователя</a>
+								</li>
+								<li onclick="pinUser()" class="only-his-data">
+									<a title="Функция в профиле"><i class="material-icons">thumb_up</i>Функция в профиле</a>
+								</li>
+								<li onclick="profbrws()" id="his-openin">
+									<a title="Открыть в браузере"><i
+											class="material-icons">open_in_browser</i>Открыть в браузере</a>
+								</li>
+								<li onclick="setMain()" class="only-my-data" id="his-main-acct">
+									<a title="Установить как основной аккаунт"><i class="material-icons">grade</i>Установить как основной аккаунт</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="his-float" id="his-float-timeline">
+						<div id="my-data-nav">
+							<a go="#his-tl" title="Хронология"
+								class="btn active-back column-first anc-link waves-effect"><i
+									class="material-icons">timeline</i>Хронология</a>
+							<a go="#his-follow-list" title="Следить" class="btn anc-link waves-effect"><i
+									class="material-icons">people</i>→Следить</a>
+							<a go="#his-follower-list" title="Подписчик" class="btn anc-link waves-effect"><i
+									class="material-icons">people</i>←Подписчик</a>
+							<a go="#his-fav-list" title="Favourite"
+								class="btn only-my-data anc-link waves-effect"><i
+									class="material-icons">star</i>Favourite</a>
+							<a class="dropdown-trigger btn waves-effect" href="#" data-target="hisdropdown"><i
+									class="material-icons">more_vert</i>Ещё</a>
+							<div id="his-data-title"><i class="material-icons">timeline</i>Хронология</div>
+							<!-- Dropdown Structure -->
+							<ul id="hisdropdown" class="dropdown-content">
+								<li class="anc-link only-his-data" go="#his-list">
+									<a href="#" title="Список">
+										<i class="material-icons">list</i>Список
+									</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-blocking-list">
+									<a href="#" title="Блоки"><i class="material-icons">block</i>Блоки</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-muting-list">
+									<a href="#" title="Заглушить"><i
+											class="material-icons">voice_over_off</i>Заглушить</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-domain-list">
+									<a href="#" title="Заблокировать домен"><i
+											class="material-icons">cancel_schedule_send</i>Заблокировать домен</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-prof-list">
+									<a href="#" title="Изменить профиль"><i
+											class="material-icons">create</i>Изменить профиль</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-request-list">
+									<a href="#" title="Follow requests"><i
+											class="material-icons">how_to_reg</i>Follow requests</a>
+								</li>
+								<li class="anc-link only-my-data" go="#his-follow-recom-list">
+									<a href="#" title="Предложить"><i class="material-icons">recent_actors</i>Предложить</a>
+								</li>
+								<li class="anc-link only-his-data" go="#his-action">
+									<a href="#" title="Кросс-аккаунт"><i
+											class="material-icons">account_box</i>Кросс-аккаунт</a>
+								</li>
+							</ul>
+						</div>
+						<div id="his-tl" class="his-var-content">
+							<button class="btn waves-effect grey" style="width:100%; padding:0;" onclick="utlAdd()">
+								Show as a column
+							</button>
+							<div id="his-tl-contents" class="cont-series"></div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="utlShow('--now','more')">
+								Ещё
+							</button>
+						</div>
+						<div id="his-follow-list" class="his-var-content">
+							<div id="his-follow-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="flw('--now','more')">
+								Ещё
+							</button>
+						</div>
+						<div id="his-follower-list" class="his-var-content">
+							<div id="his-follower-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect " style="width:100%; padding:0;"
+								onclick="fer('--now','more')">
+								Ещё
+							</button>
+						</div>
+						<div id="his-action" class="his-var-content">
+							Use other account to Следить((Не удается отписаться))<br />
+							<div style="max-width:500px;">
+								<select id="user-acct-sel" class="acct-sel"></select>
+							</div>
+							
+							<a href="#!" class="waves-effect btn"
+								onclick="follow('selector','selector')">Следить</a><br />
+							или<br />
+							<a href="#!" class="waves-effect btn"
+								onclick="udgEx('selector', 'selector')">Показать профиль</a><br />
+						</div>
+						<div id="his-list" class="his-var-content">
+							<div id="his-lists-a">Подпишитесь, чтобы добавить этого пользователя в списки.</div>
+
+							<div id="his-lists-b"></div>
+						</div>
+						<div id="his-fav-list" class="his-var-content">
+							<div id="his-fav-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect" style="width:100%; padding:0;" onclick="showFav('more')">
+								Ещё
+							</button>
+						</div>
+						<div id="his-blocking-list" class="his-var-content">
+							<div id="his-blocking-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showBlo('more')">
+								Ещё
+							</button>
+						</div>
+						<div id="his-muting-list" class="his-var-content">
+							<div id="his-muting-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showMut('more')">
+								Ещё
+							</button>
+						</div>
+						<div id="his-domain-list" class="his-var-content">
+							<div id="his-domain-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showDom('more')">
+								Ещё</button>Add blocking domain
+							<br />
+							<input type="text" placeholder="example.com" id="domainblock" />
+							<button class="btn waves-effect" onclick="addDomainblock()">Добавить</button>
+							<br />
+						</div>
+						<div id="his-prof-list" class="his-var-content">
+							Отображаемое имя
+							<br />
+							<input type="text" placeholder="Отображаемое имя" id="his-name-val" style="max-width:250px;" />
+							<br />Примечание
+							<br />
+							<div class="input-field col s12">
+								<textarea placeholder="Примечание" id="his-des-val"
+									class="materialize-textarea"></textarea>
+								<label for="his-des-val">Примечание</label>
+							</div>
+							<button class="btn waves-effect" style="width:100%; padding:0;" onclick="profedit()">
+								Сохранить
+							</button>
+							<br />Изменить аватар:
+							<span id="prof-change">
+								<input type="file" onchange="imgChange(this,'avatar')" />
+							</span>
+							<br />Изменить изображение заголовка:
+							<span id="header-change">
+								<input type="file" onchange="imgChange(this,'header')" />
+							</span>
+						</div>
+						<div id="his-request-list" class="his-var-content">
+							<div id="his-request-list-contents" class="cont-series"></div>
+							<button class="btn waves-effect " style="width:100%; padding:0;" onclick="showReq('more')">
+								Ещё
+							</button>
+						</div>
+						<div id="his-follow-recom-list" class="his-var-content">
+							<div id="his-follow-recom-contents" class="cont-series"></div>
+						</div>
+						<div id="his-float-blocked">
+							<div>Вы заблокированы. Почему?</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="modal-action waves-effect waves-green btn-flat" id="his-history-btn" onclick="historyShow()">
+				Назад
+			</button>
+			<a href="#!" class="modal-action waves-effect waves-green btn-flat" onclick="hisclose()">Закрыть</a>
+		</div>
+	</div>
+	<!-- Modal Structure Image-->
+	<div id="imagemodal" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<div id="imagewrap">
+				<img src="" id="imgmodal" />
+			</div>
+
+			<br />
+		</div>
+		<div class="modal-footer">
+			<div style="float: left;padding-top:0.23rem;line-height: normal;">
+				<span id="imgprog"></span>% <br />
+				<span id="imgsec"></span>ms <br /><span id="imgbyte"></span>KB
+			</div>
+			<a class="waves-effect white-text" onclick="zoom(2)">
+				<i class="material-icons">zoom_in</i>
+			</a>
+			<a class="waves-effect white-text" onclick="zoom(0.5)">
+				<i class="material-icons">zoom_out</i>
+			</a>
+			<button class="btn waves-effect blue" onclick="copyImgUrl()" title="Копировать URL">
+				<i class="material-icons">link</i>
+			</button>
+			<button class="btn waves-effect purple" onclick="dlImg()">
+				<i class="material-icons">file_download</i>
+			</button>
+			<button class="btn waves-effect brown" onclick="detFromImg()" title="This toot">
+				<i class="material-icons">pageview</i>
+			</button>
+			<button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">
+				<i class="material-icons">keyboard_arrow_left</i>
+			</button>
+			<button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next">
+				<i class="material-icons">keyboard_arrow_right</i>
+			</button>
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">
+				<i class="material-icons">close</i>
+			</a>
+		</div>
+	</div>
+	<!-- Modal Structure Video-->
+	<div id="videomodal" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<video src="" id="video" style="max-width:100%; max-height:100%;" controls loop="true" autoplay="true" />
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Закрыть</a>
+		</div>
+	</div>
+	<!-- Modal Structure Release Note-->
+	<div id="releasenote" class="modal modal-fixed-footer scr">
+		<div class="modal-content">
+			<h3>TheDesk</h3>
+			<a href="https://thedesk.top" target="_blank">HP</a><br />
+			<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br />
+			<br />
+			<div id="release-22-0-1_Koume" class="release-do" style="display:none; ">
+				<br />
+				<a href="https://ja.mstdn.
+				wiki/TheDesk" target="_blank">機能一覧</a><br />
+				Pixiv
+				FanboxやPatreonでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。最低月一更新。<br />
+				困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
+				<h5>Release Note 22.0.1 (Koume)</h5>
+				<!--上のdivのidも変えてね-->
+				・手動調節したカラム横幅を自動に戻すボタン  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
+・水平方向のスクロールバーについて太さを変更できるように  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
+・絵文字入力時にカーソル位置がリセットされてしまう問題を修正  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
+・AiScriptプラグインのアップデート  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
+・未読アナウンス数が消えない不具合を修正  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
+・最初のチュートリアルを一時的に削除  <a onclick="udgEx('Cutls@cutls.com','main')" class="contributor"><img src="https://media.thedesk.top/accounts/avatars/000/000/001/original/d34ef8bb49d5e011.png">cutls</a><br>
+
+			</div>
+			<div id="release-en" style="display:none">
+				<h5>Let's make it native!</h5>
+				<a href="https://translate.thedesk.top">Crowdin translation project</a>
+			</div>
+			<br /><br />
+			<h3>Поддержите TheDesk!</h3>
+			У TheDesk нет рекламы, вам не нужно платить за разблокировку премиум-функций. Нам нужна ваша дружественная поддержка!<br />
+			<a class="btn-share btn waves-effect waves-light red lighten-2"
+				href="https://www.pixiv.net/fanbox/creator/28105985" target="_blank">
+				Поддержка на Pixiv FANBOX
+			</a>
+			<a class="btn-share btn waves-effect waves-light red darken-2" href="https://www.patreon.com/cutls"
+				target="_blank">
+				Поддержка на Patreon
+			</a>
+			<a class="btn-share btn waves-effect waves-light black-text" href="https://liberapay.com/cutls"
+				target="_blank" style="background-color: #f6c915">
+				Liberapay
+			</a>
+			<a class="btn-share btn waves-effect waves-light blue"
+				href="https://www.amazon.co.jp/registry/wishlist/2TV35ZHHJPDSB" target="_blank">
+				Список желаний Amazon
+			</a>
+			<br />
+			Дайте мне подарочную карту Amazon:<a href="mailto:web-pro@cutls.com"
+				target="_blank">web-pro@cutls.com</a><br />
+			Kyash<br />
+			<img src="../../img/kyash.png" width="100" /><br />
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Закрыть</a>
+		</div>
+	</div>
+	<!--PiP-->
+	<div id="pip" class="hide pip-bottom pip-left">
+		<i class="material-icons pip-horiz pointer" onclick="pipHoriz()">chevron_right</i>
+		<i class="material-icons pip-vert pointer" onclick="pipVert()">expand_less</i>
+		<i class="material-icons pointer" onclick="endPip()">close</i>
+		<div id="pip-content"></div>
+	</div>
+	<!--menu-->
+	<div id="menu" class="z-depth-5" style="display:none">
+		<div id="menu-bar" class="drag-bar"></div>
+		<span class="cancel">
+			<i class="material-icons waves-effect" onclick="menu()" title="Close this box(X)">cancel</i>
+		</span>
+		<div id="menu-wrapper">
+			<div id="left-menu">
+				<a class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu">
+					<i class="material-icons" aria-hidden="true">add</i><span>Добавить столбец</span>
+				</a>
+				<a class="waves-effect" onclick="sortMenu()" id="sortMenu">
+					<i class="material-icons" aria-hidden="true">sort</i><span>Сортировать</span>
+				</a>
+				<a class="waves-effect" onclick="searchMenu()" id="searchMenu">
+					<i class="material-icons" aria-hidden="true">search</i><span>Поиск</span>
+				</a>
+				<a class="waves-effect" onclick="listMenu()" id="listMenu">
+					<i class="material-icons" aria-hidden="true">view_headline</i><span>Список</span>
+				</a>
+				<a class="waves-effect" onclick="dirMenu()" id="dirMenu">
+					<i class="material-icons" aria-hidden="true">recent_actors</i><span>Каталог</span>
+				</a>
+				<a class="waves-effect" onclick="filterMenu()" id="filterMenu">
+					<i class="material-icons" aria-hidden="true">filter_list</i><span>Фильтр</span>
+				</a>
+				<a class="waves-effect" onclick="help()" id="helpMenu">
+					<i class="material-icons" aria-hidden="true">help_outline</i><span>Help & Log</span>
+				</a>
+				<a class="waves-effect" onclick="location.href='index.html'">
+					<i class="material-icons" aria-hidden="true">refresh</i><span>Reload TL</span>
+				</a>
+			</div>
+			<div id="right-menu">
+				<!--カラム追加-->
+				<div id="add-box" class="hide menu-content">
+					<div class="input-field">
+						<span data-trans="your_acct">Account(Scroll to show all)</span>
+						<br />
+						<select id="add-acct-sel" class="acct-sel" style="color:black" onchange="addselCk()"></select>
+						<label></label>
+					</div>
+					<div class="input-field">
+						<div id="auth">
+							<input type="hidden" value="local" id="type-sel" />
+							Show this TL:
+							<div id="tltype">
+								<a class="type waves-effect active" data-type="local">
+									<div><i class="material-icons" aria-hidden="true">people_outline</i></div>
+									<span>Local</span>
+								</a>
+								<a class="type waves-effect" data-type="local-media">
+									<div><i class="material-icons" aria-hidden="true">perm_media</i></div>
+									<span>Local(Media)</span>
+								</a>
+								<a class="type waves-effect" data-type="home">
+									<div><i class="material-icons" aria-hidden="true">home</i></div>
+									<span>Home</span>
+								</a>
+								<a class="type waves-effect" data-type="pub">
+									<div><i class="material-icons" aria-hidden="true">language</i></div>
+									<span>Federated</span>
+								</a>
+								<a class="type waves-effect" data-type="pub-media">
+									<div><i class="material-icons" aria-hidden="true">perm_media</i></div>
+									<span>Federated(Media)</span>
+								</a>
+								<a class="type waves-effect" data-type="dm">
+									<div><i class="material-icons" aria-hidden="true">mail_outline</i></div>
+									<span>Прямое сообщение</span>
+								</a>
+								<a class="type waves-effect" data-type="mix">
+									<div><i class="material-icons" aria-hidden="true">merge_type</i></div>
+									<span>Integrated(Local/Home)</span>
+								</a>
+								<a class="type waves-effect" data-type="plus">
+									<div><i class="material-icons" aria-hidden="true">reply</i></div>
+									<span>LTL+Reply+BT</span>
+								</a>
+								<a class="type waves-effect" data-type="notf">
+									<div><i class="material-icons" aria-hidden="true">notifications</i></div>
+									<span>Уведомления</span>
+								</a>
+								<a class="type waves-effect" data-type="bookmark">
+									<div><i class="material-icons" aria-hidden="true">bookmark</i></div>
+									<span>Закладки</span>
+								</a>
+							</div>
+						</div>
+						<div id="noauth" class="hide">
+							Show this TL:
+							<input id="noauth-url" type="text" class="validate" style="width:calc( 70% - 3rem);"
+								placeholder="e.g:mstdn.jp" />
+						</div>
+						<div id="webview-add" class="hide">TweetDeck with customed TJDeck(<a href='https://gist.github.com/cutls/8787a55d2c1c53274e68a427966046a6' target='_blank'>Code</a>/<a href='https://gist.github.com/totoraj930/d1394dadb51d75666a76829f61e7280c' target='_blank'>TJDeck</a>).</div>
+					</div>
+					<button class="btn waves-effect blue " style="width:calc( 100% - 0.7rem);" onclick="addColumn()"
+						data-trans-i="add">
+						<i class="material-icons left">add</i>Добавить
+					</button>
+					<br />
+					<br />
+				</div>
+				<!--検索-->
+				<div id="src-box" class="hide menu-content">
+					<div class="input-field">
+						<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
+					</div>
+					<div class="input-field">
+						<input id="src" type="text" class="validate" style="width:57%" />
+						<label for="src" data-trans="src">Поиск</label>
+						<button class="btn waves-effect indigo" style="width: 36%;padding: 0;padding-left: 1.15rem;"
+							onclick="src()" data-trans-i="src">
+							<i class="material-icons left" style="margin:0">search</i>Поиск
+						</button>
+						<br />
+						<br />
+					</div>
+					<div id="search">
+						<div id="src-contents"></div>
+					</div>
+				</div>
+				<!--ディレクトリ-->
+				<div id="dir-box" class="hide menu-content">
+					<div class="input-field">
+						<select id="dir-acct-sel" class="acct-sel" onchange="dirselCk()"></select>
+					</div>
+					<div id="dirNoAuth" class="hide">
+						<input id="dirNoAuth-url" type="text" class="validate" style="width:calc( 70% - 3rem);"
+							placeholder="e.g:mastodon.social" />
+						<button class="btn waves-effect indigo" style="width: 9.23rem;padding: 0;padding-left: 1.15rem;"
+							onclick="directory()">
+							<i class="material-icons left" style="margin:0">search</i>Показать
+						</button>
+					</div>
+					<label>
+						<input class="with-gap" onchange="directory()" name="sort" type="radio" value="active"
+							checked />
+						<span>Последние активные</span>
+					</label>
+					<label>
+						<input class="with-gap" onchange="directory()" name="sort" type="radio" value="new" />
+						<span>Новые прибытия</span> </label><br />
+					<label>
+						<input type="checkbox" class="filled-in" id="local_only" value="true" onchange="directory()" />
+						<span>Только локальные</span>
+					</label>
+					<div id="dir-contents"></div>
+					<button class="btn waves-effect teal disabled" style="width: 100%" id="moreDir"
+						onclick="directory('more')">
+						Ещё
+					</button>
+				</div>
+				<!--並べ替え-->
+				<div id="sort-box" class="hide menu-content">
+					<ul id="sort"></ul>
+					<div>
+						<button onclick="sort()" class="btn waves-effect nex" style="width:97.5%;" data-trans-i="sort">
+							<i class="material-icons left">sort</i>Сортировать
+						</button>
+					</div>
+				</div>
+				<!--リスト-->
+				<div id="list-box" class="hide menu-content">
+					<div class="input-field" style="width:calc( 100% - 100px);float:left">
+						<select id="list-acct-sel" class="acct-sel"></select>
+						<label>Account(Scroll to show all)</label>
+					</div>
+					<div style="float:left; padding-top:8px; padding-bottom:28px;">
+						<button class="btn waves-effect indigo" style="width:80px;" onclick="list()"
+							data-trans-i="lists">
+							Список
+						</button>
+					</div>
+					<br /><br />
+					<div id="lists"></div>
+					<div id="lists-user"></div>
+					<input type="text" style="width:150px" id="list-add" placeholder="Отображаемое имя" />
+					<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">
+						Сохранить
+					</button>
+				</div>
+				<!--フィルター-->
+				<div id="filter-box" class="hide menu-content">
+					<div class="input-field" style="width:calc( 100% - 100px);float:left">
+						<select id="filter-acct-sel" class="acct-sel"></select>
+						<label>Account(Scroll to show all)</label>
+					</div>
+					<div style="float:left; padding-top:8px; padding-bottom:28px;">
+						<button class="btn waves-effect indigo" style="width:80px;" onclick="filter()"
+							data-trans-i="filters">
+							Список
+						</button>
+					</div>
+					<div id="filtered-words"></div>
+					<input type="hidden" id="filter-edit-id" />
+					<input type="text" style="width:150px" id="filter-add-word" placeholder="Фильтрация слов" /><br />
+					Фильтр контекстов<br />
+					<label>
+						<input type="checkbox" class="filled-in" id="home_filter" value="home" />
+						<span>Home</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="local_filter" value="public" />
+						<span>Local</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+						<span>Уведомления</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+						<span>Разговоры</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="prof_filter" value="profiles" />
+						<span>Profiles</span>
+					</label><br />
+					Настройки<br />
+					<label>
+						<input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+						<span>Целое слово</span>
+					</label>
+					<br />
+					<span class="sml">Хорошо для латинского языка</span><br />
+					<label>
+						<input type="checkbox" class="filled-in" id="except_filter" value="1" />
+						<span>Drop instead of hide</span>
+					</label>
+					<br />
+					<span class="sml">Filtered toots will disappear irreversibly, even if filter is later removed</span><br />
+					Истекает через<span class="sml">Не установлено или "0" означает "Никогда"<b>Это значение может содержать ошибку</b></span><br /><br />
+					<input type="number" style="width:50px" id="days_filter" placeholder="d" value="0" />день(ей)
+					<input type="number" style="width:50px" id="hours_filter" placeholder="h" value="0" />час(ов)
+					<input type="number" style="width:50px" id="mins_filter" placeholder="m" value="0" />minute(s)<br />
+					Quick:<a onclick="filterTime(0,0,30)" class="pointer">30minute(s)</a>/
+					<a onclick="filterTime(0,1,0)" class="pointer">1час(ов)</a>/
+					<a onclick="filterTime(0,6,0)" class="pointer">6час(ов)</a>/
+					<a onclick="filterTime(0,12,0)" class="pointer">12час(ов)</a>/
+					<a onclick="filterTime(1,0,0)" class="pointer">1день(ей)</a>/
+					<a onclick="filterTime(7,0,0)" class="pointer">7день(ей)</a>/
+					<a onclick="filterTime(0,0,0)" class="pointer">Никогда</a><br />
+					<button class="btn waves-effect" style="width:120px;" onclick="makeNewFilter()" id="add-filter-btn">
+						Добавить</button><br />
+					<span class="sml">Integrated TL/Plus TL will hide both Home-filtering words and Local-filtering words.</span>
+				</div>
+				<!--ヘルプとログ-->
+				<div id="help-box" class="hide menu-content">
+					<a href="https://docs.thedesk.top" class="btn waves-effect" style="width:97.5%;">Help</a><br />
+					Если вы скажите мне об ошибках (не работает что-нибудь и пр.) с этим журналом, то мне будет проще выявить и устранить проблему.<br />
+					<textarea id="logs" style="height:250px;"></textarea><br />
+				</div>
+			</div>
+		</div>
+		<a onclick="about()" class="nex waves-effect pwa">
+			<i class="material-icons" style="font-size: 1rem;">info</i>О TheDesk </a>&nbsp;|&nbsp;
+		<a onclick="bottomReverse()" class="nex waves-effect">
+			<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>Toot button layout reverse </a>&nbsp;|&nbsp;
+		<a onclick="openRN()" class="nex waves-effect">
+			<i class="material-icons" style="font-size: 1rem;">new_releases</i>Release Note
+		</a>
+	</div>
+	<div id="main">
+		<!--TLのTL-->
+		<div id="timeline-container">
+			<div id="something-wrong">
+				<img src="../../img/thinking.svg" style="width:150px;margin:5px;display:none;" draggable="false" />
+				<div class="stw" style="display: none">Internal error: please clear all data(at setting page) <b>All data will be deleted.</b></div>
+			</div>
+		</div>
+	</div>
+	<!--bottom-->
+	<div id="bottom" class="reverse hide">
+		<div class="leftside reverse">
+			<div id="dambox">
+				<button id="posttgl" class="btn waves-effect"
+					style="width: 100%;height: 2.5rem;line-height: 0;margin: 0;">
+					<i class="material-icons"
+						style="position: relative; top: 0.38rem; font-size: 1.5rem; text-align: center; margin-right: 0.76rem;">edit</i>Toot
+				</button>
+			</div>
+			<div class="leftside reverse" id="group">
+				<div class="btnsgroup">
+					<a href="acct.html" class="nex waves-effect">
+						<i class="material-icons nex big-icon" title="Account Manager(Ctrl+Shift+M)">account_circle</i>
+					</a>
+					<a href="setting.html" class="nex waves-effect">
+						<i class="material-icons nex" title="Предпочтения(Ctrl+Shift+S)">settings</i>
+					</a>
+					<a onclick="nano()" class="nex waves-effect pwa">
+						<i class="material-icons" title="The smallest Mastodon,TheDesk Nano"
+							data-trans-title="nano_desp">remove_from_queue</i>
+					</a>
+					<a onclick="menu()" class="nex waves-effect">
+						<i class="material-icons" title="Menu">apps</i>
+					</a>
+					<span id="fukidashi"><- Добавить TL</span>
+				</div>
+				<a href="https://thedesk.top/bugs/?lang=ru-RU" target="_blank" class="waves-effect bgReport"
+					draggable="false" title="Feeling unlucky">
+					I found a bug
+				</a>
+			</div>
+		</div>
+		<div>
+			<div id="tips-menu">
+				<div class="btnsgroup" style="height:2.61rem">
+					<span class="grouptitle">Tips:</span>
+					<a onclick="tips('ver')" class="nex waves-effect">
+						<i class="material-icons nex" title="Версия" data-trans-title="ver">info</i>
+					</a>
+					<a onclick="tips('clock')" class="nex waves-effect">
+						<i class="material-icons nex" title="Часы" data-trans-title="clock">access_time</i>
+					</a>
+					<a onclick="tips('memory')" class="nex waves-effect pwa">
+						<i class="material-icons nex" title="состояние ОЗУ" data-trans-title="memory">memory</i>
+					</a>
+					<a onclick="tips('trend')" class="nex waves-effect imasonly" style="display:none;">
+						<i class="material-icons nex" title="アイマストドントレンド" data-trans-title="trendtip">whatshot</i>
+					</a>
+					<a onclick="tips('spotify')" class="nex waves-effect">
+						<i class="fab fa-spotify nex" title="Spotify" data-trans-title="spotifytips"></i>
+					</a>
+				</div>
+			</div>
+			<div id="tips" class="hide">
+				<a onclick="tipsToggle()" class="nex waves-effect">
+					<i class="material-icons nex" title="Изменить советы" data-trans-title="tips">bubble_chart</i>
+				</a>
+				<div id="tips-text" style="width:23rem;line-height: 1rem;"></div>
+			</div>
+		</div>
+	</div>
+	<!--Support me-->
+	<div id="support-btm" class="z-depth-4 hide scr">
+		<div id="support-btm-ja">
+			<h5>ご支援いただけませんか？</h5>
+			(これは支援の有無に関わらず定期的に出ます。過去のバージョン等で何度も表示される等のバグを確認しております。)<br />
+			あなたのMastodon, Misskeyライフを邪魔してしまって申し訳ありません。<br />
+			乞食のようなマネをしてご支援をお願いするのもどうかと思いますが、少々お時間をください。<br />
+			<br />
+			TheDeskになぜ金銭が発生するかについて:
+			詳細は省きますが、開発者から緊急の連絡をしたりするのに使われます。<br />
+			<b>全てのユーザーが安心してTheDeskを使っていただける環境のため</b>にも、ぜひご支援をご検討ください。ご支援いただけなくても使用不可能になることは全くありません。<br />
+			<b>У TheDesk нет рекламы, вам не нужно платить за разблокировку премиум-функций. Нам нужна ваша дружественная поддержка!</b>
+		</div>
+		<div id="support-btm-en" class="hide">
+			<h5>Support me</h5>
+			It may disturb your Mastodon life, but your support is required to keep TheDesk awesome!<br />
+			<b>У TheDesk нет рекламы, вам не нужно платить за разблокировку премиум-функций. Нам нужна ваша дружественная поддержка!</b>
+		</div>
+		<div id="support-btm-middle">
+			<h5>Ежемесячно</h5>
+			<a class="btn-share btn waves-effect waves-light red lighten-2"
+				href="https://www.pixiv.net/fanbox/creator/28105985" target="_blank">
+				Поддержка на Pixiv FANBOX
+			</a>
+			<a class="btn-share btn waves-effect waves-light red darken-2" href="https://www.patreon.com/cutls"
+				target="_blank">
+				Поддержка на Patreon
+			</a>
+			<a class="btn-share btn waves-effect waves-light black-text" href="https://liberapay.com/cutls"
+				target="_blank" style="background-color: #f6c915">
+				Liberapay
+			</a>
+		</div>
+		<div id="support-btm-right">
+			<h5>Однажды</h5>
+			<a class="btn-share btn waves-effect waves-light blue"
+				href="https://www.amazon.co.jp/registry/wishlist/2TV35ZHHJPDSB" target="_blank">
+				Список желаний Amazon
+			</a>
+			<br />
+			Дайте мне подарочную карту Amazon:<a href="mailto:web-pro@cutls.com"
+				target="_blank">web-pro@cutls.com</a><br />
+			Kyash<br />
+			<img src="../../img/kyash.png" width="100" /><br />
+		</div>
+		<div id="support-btm-close">
+			<button class="btn waves-effect" style="width:100%;" onclick="closeSupport()" id="add-filter-btn">
+				Закрыть
+			</button>
+		</div>
+	</div>
+	<!--左下メッセージ-->
+	<div id="message"></div>
+	<!--Radio Happy(Yui) Taku Inoue-->
+	<audio src="" id="radio"></audio>
+	<!--JS-->
+	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../../js/platform/first.js"></script>
+	<script type="text/javascript" src="../../js/platform/aiscript.js"></script>
+	<script type="text/javascript" src="../../js/platform/plugin.js"></script>
+	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
+	<script type="text/javascript" src="../../node_modules/grapheme-splitter/index.js"></script>
+	<script type="text/javascript" src="../../node_modules/lodash/lodash.min.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="../../js/common/time.js"></script>
+	<script type="text/javascript" src="../../js/common/blurhash.js"></script>
+	<script type="text/javascript" src="../../js/common/version.js"></script>
+	<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
+	<script type="text/javascript" src="../../js/common/modal.js"></script>
+	<script type="text/javascript" src="../../node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script type="text/javascript" src="../../js/platform/punycode.js"></script>
+	<script type="text/javascript" src="../../js/ui/tips.js"></script>
+	<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
+	<script type="text/javascript" src="../../js/common/about.js"></script>
+	<script type="text/javascript" src="../../js/tl/misskeyparse.js"></script>
+	<script type="text/javascript" src="../../js/tl/dm.js"></script>
+	<script type="text/javascript" src="../../js/ui/scroll.js"></script>
+	<script type="text/javascript" src="../../js/tl/announParse.js"></script>
+	<script type="text/javascript" src="../../js/tl/tl.js"></script>
+	<script type="text/javascript" src="../../js/tl/card.js"></script>
+	<script type="text/javascript" src="../../js/tl/parse.js"></script>
+	<script type="text/javascript" src="../../js/tl/poll.js"></script>
+	<script type="text/javascript" src="../../js/tl/date.js"></script>
+	<script type="text/javascript" src="../../js/tl/notification.js"></script>
+	<script type="text/javascript" src="../../js/tl/datails.js"></script>
+	<script type="text/javascript" src="../../js/tl/mix.js"></script>
+	<script type="text/javascript" src="../../js/tl/src.js"></script>
+	<script type="text/javascript" src="../../js/tl/directory.js"></script>
+	<script type="text/javascript" src="../../js/tl/filter.js"></script>
+	<script type="text/javascript" src="../../js/tl/tag.js"></script>
+	<script type="text/javascript" src="../../js/tl/list.js"></script>
+	<script type="text/javascript" src="../../js/tl/speech.js"></script>
+	<script type="text/javascript" src="../../js/ui/post-box.js"></script>
+	<script type="text/javascript" src="../../js/ui/layout.js"></script>
+	<script type="text/javascript" src="../../js/post/emoji.js"></script>
+	<script type="text/javascript" src="../../js/login/instance.js"></script>
+	<script type="text/javascript" src="../../js/login/login.js"></script>
+	<script type="text/javascript" src="../../js/ui/img.js"></script>
+	<script type="text/javascript" src="../../js/ui/pip.js"></script>
+	<script type="text/javascript" src="../../js/ui/sort.js"></script>
+	<script type="text/javascript" src="../../js/ui/spotify.js"></script>
+	<script type="text/javascript" src="../../js/post/post.js"></script>
+	<script type="text/javascript" src="../../js/post/use-txtbox.js"></script>
+	<script type="text/javascript" src="../../js/post/secure.js"></script>
+	<script type="text/javascript" src="../../js/post/img.js"></script>
+	<script type="text/javascript" src="../../js/post/status.js"></script>
+	<script type="text/javascript" src="../../js/post/misskeystatus.js"></script>
+	<script type="text/javascript" src="../../js/post/suggest.js"></script>
+	<script type="text/javascript" src="../../js/post/bb-md.js"></script>
+	<script type="text/javascript" src="../../js/userdata/showOnTL.js"></script>
+	<script type="text/javascript" src="../../js/userdata/his-data.js"></script>
+	<script type="text/javascript" src="../../js/userdata/prof-edit.js"></script>
+	<script type="text/javascript" src="../../js/emoji/emojipack.js"></script>
+	<script type="text/javascript" src="../../js/emoji/default-emoji.js"></script>
+	<script type="text/javascript" src="../../js/platform/end.js"></script>
+	<script type="text/javascript" src="../../js/ui/menu.js"></script>
+</body>
+
+</html>

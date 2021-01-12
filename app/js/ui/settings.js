@@ -98,6 +98,10 @@ function settings() {
 
 //読み込み時の設定ロード
 function load() {
+	var currentLang = lang.language
+	console.log(currentLang)
+	$(`#langsel-sel`).val(currentLang)
+	$('#langsel-sel').formSelect()
 	var max = envView.config.length
 	for (var i = 0; i < max; i++) {
 		var ls = envView.config[i].storage
@@ -283,8 +287,10 @@ function oksload() {
 		$('#oks-3').val(localStorage.getItem('oks-3'))
 	}
 }
-function changelang(lang) {
-	postMessage(['lang', lang], '*')
+function changeLang() {
+	const lang = $('#langsel-sel').val()
+	console.log(lang)
+	if(lang) postMessage(['lang', lang], '*')
 }
 function exportSettings() {
 	var exp = exportSettingsCore()

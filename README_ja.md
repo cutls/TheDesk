@@ -41,8 +41,9 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
 ## 言語
 
 * 日本語
+* 日本語(関西)
 * English(英語)
-* ドイツ語, チェコ語, ブルガリア語(from Crowdin)
+* ドイツ語, チェコ語, ブルガリア語, イタリア語, スペイン語アルゼンチン方言 (from [Crowdin](https://translate.thedesk.top))
 
 ### 翻訳
   

@@ -185,6 +185,13 @@ function createWindow() {
 			mainWindow.maximize()
 		}
 	})
+	mainWindow.webContents.on('page-title-updated', () => {
+		const url = mainWindow.webContents.getURL()
+		if(url.match(/https:\/\/crowdin.com\/profile/)) {
+			app.relaunch()
+			app.exit()
+		}
+	})
 	if (!packaged) mainWindow.toggleDevTools()
 	electron.session.defaultSession.clearCache(() => {})
 	if (process.argv) {
@@ -230,9 +237,12 @@ function createWindow() {
 		}
 		const promise = new Promise(function (resolve) {
 			mainWindow.webContents.send('asReadEnd', '')
+			let wait = 3000
+			const url = mainWindow.webContents.getURL()
+			if(!url.match(/index.html/)) wait = 0
 			setTimeout(function () {
 				resolve()
-			}, 3000)
+			}, wait)
 		})
 		promise.then(function (response) {
 			closeArg = true

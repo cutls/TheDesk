@@ -28,7 +28,8 @@ function main(ver, basefile, pwa, store) {
 		.trim()
 	fs.writeFileSync(basefile + 'git', gitHash)
 	console.log('Constructing view files ' + ver)
-	const langs = ['ja', 'ja-KS', 'en', 'bg', 'cs', 'de', 'es-AR', 'it-IT', 'ps']
+	const langs = ['ja', 'ja-KS', 'en', 'bg', 'cs', 'de',
+	 'es-AR', 'it-IT', 'zh-CN', 'zh-TW', 'fr-FR', 'no-NO', 'pt-BR', 'ru-RU', 'es-ES', 'ps']
 	const langsh = [
 		'日本語',
 		'日本語(関西)',
@@ -36,8 +37,15 @@ function main(ver, basefile, pwa, store) {
 		'български',
 		'Česky',
 		'Deutsch',
-		'Spanish, Argentina',
+		'Español, argentina',
 		'italiano',
+		'简体中文',
+		'繁體中文(β)',
+		'français(β)',
+		'norsk(β)',
+		'Português, brasileiro(β)',
+		'русский(β)',
+		'Español(β)',
 		'Crowdin translate system(beta)'
 	]
 	const simples = ['acct', 'index', 'setting', 'update', 'setting']
@@ -60,28 +68,24 @@ function main(ver, basefile, pwa, store) {
 			fs.mkdirSync(targetDir)
 		}
 		langstr =
-			langstr +
-			'<a onclick="changelang(\'' +
-			lang +
-			'\')" class="pointer" style="margin:4px;border: 1px solid var(--text); padding: 3px">' +
-			langsh[n] +
-			'</a>'
+			langstr + `<option value="${lang}">${langsh[n]}</option>`
 		let mainJson = JSON.parse(
 			fs.readFileSync(basefile + 'view/make/language/' + lang + '/main.json', 'utf8')
 		)
 		if (lang == 'ja-KS') {
-			Object.keys(jaJson).forEach(function(key) {
+			Object.keys(jaJson).forEach(function (key) {
 				if (!mainJson[key]) {
 					mainJson[key] = jaJson[key]
 				}
 			})
 		} else if (lang != 'en') {
-			Object.keys(enJson).forEach(function(key) {
+			Object.keys(enJson).forEach(function (key) {
 				if (!mainJson[key]) {
 					mainJson[key] = enJson[key]
 				}
 			})
 		}
+		mainJson.language = lang
 		fs.writeFileSync(
 			basefile + 'view/' + lang + '/main.js',
 			JSON.stringify(mainJson).replace(/^{/, 'var lang = {')
@@ -106,7 +110,7 @@ function main(ver, basefile, pwa, store) {
 				)
 			)
 			if (lang == 'ja') {
-				Object.keys(target).forEach(function(key) {
+				Object.keys(target).forEach(function (key) {
 					refKey.push(key)
 					let str = target[key]
 					if (pages[i] == 'setting.vue.js') {
@@ -148,7 +152,7 @@ function main(ver, basefile, pwa, store) {
 			source = source.replace(/@@gitHashShort@@/g, gitHash.slice(0, 7))
 			source = source.replace(/@@lang@@/g, lang)
 			source = source.replace(/@@langlist@@/g, langstr)
-			if(pwa) {
+			if (pwa) {
 				source = source.replace(/@@pwa@@/g, `<link rel="manifest" href="../../manifest.json" />
 				<script>var pwa = true;"serviceWorker"in navigator&&navigator.serviceWorker.register("/sw.pwa.js").then(e=>{});</script>`)
 				source = source.replace(/@@node_base@@/g, 'dependencies')
@@ -179,9 +183,9 @@ if (process.argv.indexOf('--watch') !== -1) {
 		ignored: 'view/make/make.js',
 		persistent: true
 	})
-	watcher.on('ready', function() {
+	watcher.on('ready', function () {
 		console.log('watching...')
-		watcher.on('change', function(path) {
+		watcher.on('change', function (path) {
 			console.log(path + ' changed.')
 			main(ver, basefile)
 		})

@@ -1,21 +1,21 @@
 <!doctype html>
-<html lang="@@lang@@" style="overflow-y:scroll">
+<html lang="zh-CN" style="overflow-y:scroll">
 
 <head>
 	<title>Settings - TheDesk</title>
-	@@comment-start@@
+	<!--
 	<script type="text/javascript">
 		var _jipt = [];
 		_jipt.push(['project', 'thedesk']);
 	</script>
 	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-	@@comment-end@@
+	-->
 	<meta content="width=device-width,initial-scale=1.0" name="viewport">
-	<link href="../../@@node_base@@/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
+	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet">
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
 	<link href="../../css/pickr.css" type="text/css" rel="stylesheet">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
-	<link href="../../@@node_base@@/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
+	<link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
 	<meta charset="utf-8">
 	<style>
 		input {
@@ -30,42 +30,42 @@
 			padding: 20px;
 		}
 	</style>
-	@@pwa@@
-	@@store@@
+	<script>var pwa = false;</script>
+	<script>var store = false;</script>
 </head>
 
-<body id="mainView" style="overflow-y:scroll" class="@@pwaClass@@">
-	<script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
+<body id="mainView" style="overflow-y:scroll" class="">
+	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="../../js/platform/first.js"></script>
-	<script type="text/javascript" src="../../@@node_base@@/materialize-css/dist/js/materialize.js"></script>
+	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	<script src="../../@@node_base@@/json5/dist/index.min.js"></script>
-	<script src="../../@@node_base@@/vue/dist/vue.min.js"></script>
+	<script src="../../node_modules/json5/dist/index.min.js"></script>
+	<script src="../../node_modules/vue/dist/vue.min.js"></script>
 	<script type="text/javascript" src="setting.vue.js"></script>
-	<script type="text/javascript" src="../../@@node_base@@/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 	<script>function renderMem() { return false; }</script>
 
-	<h4>@@setting@@</h4>
+	<h4>Preferences</h4>
 	<ul class="collapsible" data-collapsible="accordion">
 		<li>
 			<div class="collapsible-header">
-				<i class="material-icons">desktop_windows</i>@@env@@
+				<i class="material-icons">desktop_windows</i>System Preferences
 			</div>
 			<div class="collapsible-body">
-				<h5>@@setlang@@</h5>
+				<h5>Languages</h5>
 				To translate with Crowdin, you have to login Crowdin and restart TheDesk when login is finished.<br><br>
 				<div style="display: flex;">
 					<div style="width: 22rem;" id="langsel">
-						<select id="langsel-sel">@@langlist@@</select>
+						<select id="langsel-sel"><option value="ja">日本語</option><option value="ja-KS">日本語(関西)</option><option value="en">English</option><option value="bg">български</option><option value="cs">Česky</option><option value="de">Deutsch</option><option value="es-AR">Español, argentina</option><option value="it-IT">italiano</option><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文(β)</option><option value="fr-FR">français(β)</option><option value="no-NO">norsk(β)</option><option value="pt-BR">Português, brasileiro(β)</option><option value="ru-RU">русский(β)</option><option value="es-ES">Español(β)</option><option value="ps">Crowdin translate system(beta)</option></select>
 					</div>
-					<button class="btn waves-effect" onclick="changeLang()">@@change@@</button>
+					<button class="btn waves-effect" onclick="changeLang()">Change</button>
 				</div>
-				<h5>@@backup@@</h5>
+				<h5>Import and export of preferences</h5>
 				<button onclick="exportSettings()" class="btn waves-effect lime darken-3"
-					style="width:100%; max-width:15rem;">@@export@@</button>
+					style="width:100%; max-width:15rem;">Export</button>
 				<button onclick="importSettings()" class="btn waves-effect cyan darken-3"
-					style="width:100%; max-width:15rem;">@@import@@</button><br>
-				@@backupWarn@@<br>
+					style="width:100%; max-width:15rem;">Import</button><br>
+				If you got a error when you choose the file, please paste the strings printed when you open the file and click import<br>
 				<input type="text" id="imp-exp" style="width: 22rem">
 				<div id="envView">
 					<template v-for="(item, i) in config">
@@ -74,7 +74,7 @@
 							<span v-html="item.text.desc"></span><br>
 						</template>
 						<template v-if="item.id=='notf'"><a onclick="notftest()"
-								class="pointer">@@nntest@@</a><br></template>
+								class="pointer">Notification test</a><br></template>
 						<template v-if="item.checkbox">
 							<template v-for="(check, j) in item.text.checkbox">
 								<label>
@@ -96,45 +96,45 @@
 									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
 							</template>
 							<button class="btn waves-effect" style="width:7.7rem;"
-								v-on:click="complete(i)">@@change@@</button>
+								v-on:click="complete(i)">Change</button>
 						</template><br>
 					</template>
 				</div>
-				<h5>@@font@@</h5>
-				@@fontwarn@@<br>
-				<button class="btn waves-effect" style="width:7.7rem;" onclick="font()">@@select@@</button><br>
+				<h5>Font</h5>
+				Select your favorite font to 'Select'<br>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="font()">Select</button><br>
 				<div id="fonts" class="hide" style="overflow-y:scroll; width:22rem; height:40rem;"></div>
 				<br>
 				<input type="text" style="width:11.5rem" id="font">
-				<button class="btn waves-effect" style="width:7.7rem;" onclick="settings()">@@set@@</button>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="settings()">Save</button>
 				<br>
-				<h5>@@savefolder@@</h5>
-				@@savefolderwarn@@<br>
-				<button class="btn waves-effect" style="width:7.7rem;" onclick="savefolder()">@@change@@</button>
+				<h5>Folder to save</h5>
+				TheDesk uses this value when it try to save pictures or take screenshots.<br>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="savefolder()">Change</button>
 				<br>
 			</div>
 		</li>
 		<li class="pwa">
 			<div class="collapsible-header">
-				<i class="material-icons">color_lens</i>@@theme@@
+				<i class="material-icons">color_lens</i>Themes
 			</div>
 			<div class="collapsible-body">
-				<h4>@@themeSel@@</h4>
+				<h4>Select theme</h4>
 				<div style="width:22rem" id="sel-selector">
 					<select id="custom-sel-sel" class="custom-sel" onchange="customSel()"></select>
 				</div>
-				<h4>@@customtheme@@</h4>
-				<div style="width:22rem" id="edit-selector" data-add="@@add_new@@">
+				<h4>Edit and add themes</h4>
+				<div style="width:22rem" id="edit-selector" data-add="Add new">
 					<select id="custom-edit-sel" class="custom-sel" onchange="custom()">
-						<option value="add_new">@@add_new@@</option>
+						<option value="add_new">Add new</option>
 					</select>
 				</div>
-				<h5>@@name@@</h5>
-				<input type="text" style="width:22rem" id="custom_name" placeholder="@@name@@...">
-				<h5>@@desc@@</h5>
+				<h5>Name</h5>
+				<input type="text" style="width:22rem" id="custom_name" placeholder="Name...">
+				<h5>About this theme</h5>
 				<div class="input-field"><textarea style="width:22rem" id="custom_desc" class="materialize-textarea"
-						placeholder="@@desc@@..."></textarea></div>
-				<h5>@@customthemeDirection@@</h5>
+						placeholder="About this theme..."></textarea></div>
+				<h5>Color scheme</h5>
 				<label>
 					<input class="with-gap" onchange="settings()" name="direction" type="radio" id="dark" value="dark"
 						checked="true" />
@@ -145,161 +145,161 @@
 						value="light" />
 					<span>Light</span>
 				</label><br><br />
-				<button class="btn waves-effect" onclick="advanced()">@@advanced@@</button>
-				<span class="advanced hide">@@advancedWarn@@</span>
+				<button class="btn waves-effect" onclick="advanced()">Advanced options</button>
+				<span class="advanced hide"></span>
 				<div id="pickers">
 					<div>
-						<h5>Background</h5>@@bg@@<br />
+						<h5>Background</h5>Background color<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_0" value="1" checked disabled />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
 						<input type="color" id="color-picker0_value">
 					</div>
 					<div>
-						<h5>Text</h5>@@text@@<br />
+						<h5>Text</h5>Text color<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_1" value="1" checked disabled />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
 						<input type="color" id="color-picker1_value">
 					</div>
 					<div>
-						<h5>Subcolor</h5>@@subcolor@@<br />
+						<h5>Subcolor</h5>Distinguishable from background<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_2" value="1" checked disabled />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
 						<input type="color" id="color-picker2_value">
 					</div>
 					<div>
-						<h5>Accent</h5>@@accent@@<br />
+						<h5>Accent</h5>Background of boosts<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_3" value="1" checked disabled />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
 						<input type="color" id="color-picker3_value">
 					</div>
 
 					<div class="advanced hide">
-						<h5>Modal</h5>@@modal@@<br />
+						<h5>Modal</h5>Background of modal window<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_4" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
-						@@copyFrom@@:
+						Copy from:
 						<a class="pointer" onclick="copyColor('background','modal')">Background</a>
 						<br />
 						<input type="color" id="color-picker4_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Modal Footer</h5>@@modalFooter@@<br />
+						<h5>Modal Footer</h5>Background of modal window's footer<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_5" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
-						@@copyFrom@@:
+						Copy from:
 						<a class="pointer" onclick="copyColor('background','modalFooter')">Background</a>/
 						<a class="pointer" onclick="copyColor('modal','modalFooter')">Modal</a>
 						<br />
 						<input type="color" id="color-picker5_value">
 					</div>
 					<div class="advanced hide">
-						<h5>3rd Color</h5>@@thirdColor@@<br />
+						<h5>3rd Color</h5>Backgroud of tag buttons, etc(near to Background)<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_6" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
-						@@copyFrom@@:
+						Copy from:
 						<a class="pointer" onclick="copyColor('subcolor','third')">Subcolor</a>
 						<br />
 						<input type="color" id="color-picker6_value">
 					</div>
 					<div class="advanced hide">
-						<h5>4th Color</h5>@@forthColor@@<br />
+						<h5>4th Color</h5>Title bar(same scheme to Background)<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_7" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
-						@@copyFrom@@:
+						Copy from:
 						<a class="pointer" onclick="copyColor('subcolor','forth')">Subcolor</a>/
 						<a class="pointer" onclick="copyColor('third','forth')">3rd Color</a>
 						<br />
 						<input type="color" id="color-picker7_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Bottom</h5>@@bottom@@<br />
+						<h5>Bottom</h5>Background of menu-bar at bottom of window<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_8" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
-						@@copyFrom@@:
+						Copy from:
 						<a class="pointer" onclick="copyColor('subcolor','bottom')">Subcolor</a>
 						<br />
 						<input type="color" id="color-picker8_value">
 					</div>
 					<div class="advanced hide">
-						<h5>2nd Accent</h5>@@emphasized@@<br />
+						<h5>2nd Accent</h5>Emphasized toot's background<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_9" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
-						@@copyFrom@@:
+						Copy from:
 						<a class="pointer" onclick="copyColor('accent','emphasized')">Accent</a>
 						<br />
 						<input type="color" id="color-picker9_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Postbox</h5>@@postbox@@<br />
+						<h5>Postbox</h5>Background of post-box and menu<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_10" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
-						@@copyFrom@@:
+						Copy from:
 						<a class="pointer" onclick="copyColor('subcolor','postbox')">Subcolor</a>
 						<br />
 						<input type="color" id="color-picker10_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Active</h5>@@active@@<br />
+						<h5>Active</h5>Background of 'active' elements<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_11" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
-						@@copyFrom@@:
+						Copy from:
 						<a class="pointer" onclick="copyColor('accent','active')">Accent</a>
 						<br />
 						<input type="color" id="color-picker11_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Selected</h5>@@selected@@<br />
+						<h5>Selected</h5>Background of selected with arrow keys<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_12" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
 						<input type="color" id="color-picker12_value">
 					</div>
 					<div class="advanced hide">
-						<h5>Selected with shared</h5>@@selectedWithShare@@<br />
+						<h5>Selected with shared</h5>Background of selected with arrow keys(boosted toots)<br />
 						<label>
 							<input type="checkbox" class="filled-in" id="use-color_13" value="1" />
-							<span>@@use@@</span>
+							<span>Use this</span>
 						</label><br />
 						<input type="color" id="color-picker13_value">
 					</div>
 				</div><br /><br />
-				<button class="btn-large waves-effect" onclick="customComp()">@@change@@</button>&nbsp;<button
-					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">@@delete@@</button><br><br>
+				<button class="btn-large waves-effect" onclick="customComp()">Change</button>&nbsp;<button
+					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">删除</button><br><br>
 				<input type="text" style="width:22rem;height:40px;" id="custom_json" class="materialize-textarea"
 					placeholder="JSON style" readonly><br>
-				<h4>@@customImport@@</h4>
+				<h4>Import of custom themes</h4>
 				<input type="text" style="width:22rem;height:40px;" id="custom_import" class="materialize-textarea"
 					placeholder="JSON/JSON5 style">
-				<button class="btn waves-effect" onclick="customImp()">@@import@@</button><br>
+				<button class="btn waves-effect" onclick="customImp()">Import</button><br>
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="material-icons">reorder</i>@@timeline@@
+				<i class="material-icons">reorder</i>Timeline Preferences
 			</div>
 			<div class="collapsible-body">
 				<div id="tlView">
@@ -329,11 +329,11 @@
 									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
 							</template>
 							<button class="btn waves-effect" style="width:7.7rem;"
-								v-on:click="complete(i)">@@change@@</button>
+								v-on:click="complete(i)">Change</button>
 						</template><br>
 					</template>
 				</div>
-				<h5>@@customSound@@</h5>
+				<h5>Custom sound</h5>
 				<button class="btn waves-effect" style="width:120px;" onclick="customSound(1)">Custom 1</button><span
 					id="c1-file"></span><br>
 				<button class="btn waves-effect" style="width:120px;" onclick="customSound(2)">Custom 2</button><span
@@ -342,8 +342,8 @@
 					id="c3-file"></span><br>
 				<button class="btn waves-effect" style="width:120px;" onclick="customSound(4)">Custom 4</button><span
 					id="c4-file"></span><br>
-				<h5>@@vol@@</h5>
-				@@volwarn80@@<br>
+				<h5>Volume</h5>
+				0-100(default:80)<br>
 				<p class="range-field"><span id="soundVolVal">80</span><br>
 					<input type="range" id="soundvol" min="0" max="100" value="80" onchange="customVol()"
 						style="width:40rem; max-width:100%" />
@@ -352,7 +352,7 @@
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="material-icons">send</i>@@post@@
+				<i class="material-icons">send</i>Posting Preferences
 			</div>
 			<div class="collapsible-body">
 				<div id="postView">
@@ -385,111 +385,111 @@
 									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
 							</template>
 							<button class="btn waves-effect" style="width:7.7rem;"
-								v-on:click="complete(i)">@@change@@</button>
+								v-on:click="complete(i)">Change</button>
 						</template><br>
 					</template>
 				</div>
-				<h5>@@iks@@</h5>
-				@@okswarn@@<br>
+				<h5>Easy inserter</h5>
+				You can insert any letters and emojis with only 3 keys<br>
 				Ctrl+Shift+1:<input type="text" style="width:11.5rem" id="oks-1">
-				<button onclick="oks(1)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
+				<button onclick="oks(1)" class="btn waves-effect" style="width:7.7rem;">Save</button><br><br>
 				Ctrl+Shift+2:<input type="text" style="width:11.5rem" id="oks-2">
-				<button onclick="oks(2)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
+				<button onclick="oks(2)" class="btn waves-effect" style="width:7.7rem;">Save</button><br><br>
 				Ctrl+Shift+3:<input type="text" style="width:11.5rem" id="oks-3">
-				<button onclick="oks(3)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
+				<button onclick="oks(3)" class="btn waves-effect" style="width:7.7rem;">Save</button><br><br>
 
 			</div>
 		</li>
 		<li>
 			<div class="collapsible-header">
 				<img src="../../img/aiscript.svg"
-					style="height: 1.5rem; margin-left: 0.4rem; margin-right: 0.4rem;">@@plugin@@
+					style="height: 1.5rem; margin-left: 0.4rem; margin-right: 0.4rem;">Plugins
 			</div>
 			<div class="collapsible-body">
-				<a href="https://github.com/cutls/TheDesk/blob/master/plugin.md">@@howToWritePlugin@@</a><br />
+				<a href="https://github.com/cutls/TheDesk/blob/master/plugin.md">Japanese docs of AiScript TheDesk plugins</a><br />
 				<textarea id="plugin" data-id="add_new" style="height: 20rem"></textarea>
-				<button class="btn waves-effect" style="width:7.7rem;" onclick="completePlugin()">@@change@@</button>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="completePlugin()">Change</button>
 				<button class="btn waves-effect red disabled plugin_delete" style="width:7.7rem;"
-					onclick="deletePlugin()">@@delete@@</button>
-				<h5>@@pluginList@@</h5>
-				<div style="width:22rem" id="plugin-selector" data-add="@@add_new@@">
+					onclick="deletePlugin()">删除</button>
+				<h5>Plugin list</h5>
+				<div style="width:22rem" id="plugin-selector" data-add="Add new">
 					<select id="plugin-edit-sel" class="custom-sel" onchange="pluginEdit()">
-						<option value="add_new">@@add_new@@</option>
+						<option value="add_new">Add new</option>
 					</select>
 				</div>
 			</div>
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="material-icons">bookmark</i>@@muteemp@@
+				<i class="material-icons">bookmark</i>Mute & Emphasis Preferences
 			</div>
 			<div class="collapsible-body">
-				<h5>@@climute@@</h5>
+				<h5>Client Mute</h5>
 				<div id="mute-cli"></div>
-				<h5>@@cliemp@@</h5>
-				@@cliwarn@@
-				<h5>@@wordmute@@</h5>
-				@@enter@@<br>
+				<h5>Client Emphasis</h5>
+				Click client name on toots to toggle mute and emphasis.
+				<h5>Words Mute</h5>
+				Enter to set<br>
 				<div class="chips" id="wordmute" style="background-color:gray;"></div>
-				<button onclick="wordmuteSave()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button>
-				<h5>@@wordemp@@</h5>
-				@@enter@@<br>
+				<button onclick="wordmuteSave()" class="btn waves-effect" style="width:7.7rem;">Save</button>
+				<h5>Words Emphasis</h5>
+				Enter to set<br>
 				<div class="chips" id="wordemp" style="background-color:gray;"></div>
-				<button onclick="wordempSave()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button>
-				<h5>@@useremp@@</h5>
-				@@useerempwarn@@
-				<span class="emphasized">　@@empcolorwarn@@　</span>
+				<button onclick="wordempSave()" class="btn waves-effect" style="width:7.7rem;">Save</button>
+				<h5>Users Emphasis</h5>
+				Set on users data modals.
+				<span class="emphasized">　Use this color to emphasis　</span>
 			</div>
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="fab fa-spotify"></i>@@spotify@@
+				<i class="fab fa-spotify"></i>Spotify and NowPlaying Preferences
 			</div>
 			<div class="collapsible-body">
-				<h5>@@link@@(Spotify)</h5>
-				@@linkwarn@@<br>
+				<h5>Account Connection(Spotify)</h5>
+				TheDesk save your data on thedesk.top server.<br>
 				<div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button
-						onclick="spotifyAuth()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button></div>
+						onclick="spotifyAuth()" class="btn waves-effect" style="width:7.7rem;">Save</button></div>
 				<a onclick="spotifyConnect()" class="btn waves-effect nex"
 					style="width:100%; max-width:15rem; background-color:#1ed760;" id="spotify-enable"><i
-						class="fab fa-spotify left"></i>@@connect@@</a>
+						class="fab fa-spotify left"></i>Connect</a>
 				<a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled"
 					style="width:100%; max-width:15rem; background-color:#1ed760;" id="spotify-disable"><i
-						class="fab fa-spotify left"></i>@@disconnect@@</a>
-				<h5>@@link@@(Last.fm)</h5>
-				@@lastFmWarn@@<br />
+						class="fab fa-spotify left"></i>Disconnect</a>
+				<h5>Account Connection(Last.fm)</h5>
+				User name...(empty to disconnect) You cannot hide your recent play log at last.fm privacy settings.<br />
 				<input type="text" style="width:11.5rem" id="lastFmUser">
-				<button onclick="lastFmSet()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button>
-				<h5>@@templateedit@@</h5>
-				@@templateeditwarn@@<br>
+				<button onclick="lastFmSet()" class="btn waves-effect" style="width:7.7rem;">Save</button>
+				<h5>Edit a template</h5>
+				<br>
 				<textarea id="np-temp" class="materialize-textarea" data-length="500">#NowPlaying {song} / {album} / {artist}
 {url}</textarea><br>
-				@@template1@@<br>
-				<span class="mac">>@@template2@@</span><br>
-				<button onclick="spotifySave()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button>
-				<h5>@@postartwork@@</h5>
+				Spotify:{song}:Song name/{album}:Album name/{artist}:Artist name/{url}:URL to Spotify<br>
+				<span class="mac">>macOS:{song}:Song name/{album}:Album name/{artist}:Artist name/composer:{composer}/spampling rate:{hz}/bit rate:{bitRate}/genre:{genre}</span><br>
+				<button onclick="spotifySave()" class="btn waves-effect" style="width:7.7rem;">Save</button>
+				<h5>Attach an Artwork of Spotify</h5>
 				<label>
 					<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes"
 						value="yes" />
-					<span>@@yes@@</span>
+					<span>Yes</span>
 				</label>
 				<label>
 					<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no"
 						value="no" />
-					<span>@@no@@</span>
+					<span>No</span>
 				</label>
 				<div class="mac">
-					<h5>@@searchArtwork@@</h5>
-					@@searchArtworkWarn@@<br />
+					<h5>If the song has no artwork, automatic complete it(macOS)</h5>
+					If you nowplaying an non-artwork song, get one which seems nice through API. If you do not like the completed artwork, you can right-click it to delete.<br />
 					<label>
 						<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_yes"
 							value="yes" />
-						<span>@@yes@@</span>
+						<span>Yes</span>
 					</label>
 					<label>
 						<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_no"
 							value="no" />
-						<span>@@no@@</span>
+						<span>No</span>
 					</label>
 					<br>
 				</div>
@@ -497,115 +497,115 @@
 		</li>
 		<li>
 			<div class="collapsible-header">
-				<i class="material-icons">hearing</i>@@tts@@
+				<i class="material-icons">hearing</i>TTS(text to speech) Preferences
 			</div>
 			<div class="collapsible-body">
-				<h5>@@bouyomi@@</h5>
-				@@bouyomiWarn@@<a href="https://github.com/xztaityozx/BouyomiChan-WebSocket-Plugin"
+				<h5>BouyomiChan connect</h5>
+				Require: BouyomiChan WebSocket Plugin<a href="https://github.com/xztaityozx/BouyomiChan-WebSocket-Plugin"
 					target="_blank">GitHub</a><br>
 				<label>
 					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_yes"
 						value="yes" />
-					<span>@@yes@@</span>
+					<span>Yes</span>
 				</label>
 				<label>
 					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_no" value="no" />
-					<span>@@no@@</span>
+					<span>No</span>
 				</label>
-				<h5>@@speed@@</h5>
-				@@speedwarn@@<br>
+				<h5>Speed</h5>
+				1-100(default:10)<br>
 				<p class="range-field"><span id="voicespeedVal">10</span><br>
 					<input type="range" id="voicespeed" min="1" max="100" value="10"
 						onchange="document.getElementById('voicespeedVal').innerText=this.value"
 						style="width:40rem; max-width:100%" />
 				</p>
-				<h5>@@pitch@@</h5>
-				@@pitchwarn@@<br>
+				<h5>Pitch</h5>
+				0-100(default:50)<br>
 				<p class="range-field"><span id="voicepitchVal">50</span><br>
 					<input type="range" id="voicepitch" min="0" max="100" value="50"
 						onchange="document.getElementById('voicepitchVal').innerText=this.value"
 						style="width:40rem; max-width:100%" />
 				</p>
-				<h5>@@vol@@</h5>
-				@@volwarn@@<br>
+				<h5>Volume</h5>
+				0-100(default:100)<br>
 				<p class="range-field"><span id="voicevolVal">100</span><br>
 					<input type="range" id="voicevol" min="0" max="100" value="100"
 						onchange="document.getElementById('voicevolVal').innerText=this.value"
 						style="width:40rem; max-width:100%" />
 				</p>
-				<h5>@@test@@</h5>
-				<input type="text" style="width:27rem" id="voicetxt" value="@@sample@@">
+				<h5>Test</h5>
+				<input type="text" style="width:27rem" id="voicetxt" value="TheDesk is an open-source Mastodon client for PC.">
 				<button class="btn waves-effect blue" style="width:11.5rem;" onclick="voicePlay()"
-					id="testplay">@@playstop@@</button><br>
+					id="testplay">Play/Stop</button><br>
 				<br>
-				<button class="btn waves-effect" style="width:7.7rem;" onclick="voiceSettings()">@@set@@</button>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="voiceSettings()">Save</button>
 			</div>
 		</li>
 	</ul>
 	<br>
 	<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:15rem;"><i
-			class="material-icons left">undo</i>@@back@@</a>
+			class="material-icons left">undo</i>Back</a>
 	<br>
-	<br>@@keyscs@@
-	<li>Ctrl+1-9:@@keyscr@@</li>
-	<li>N:@@keynew@@</li>
-	<li>X:@@keytoggle@@</li>
-	<li>Ctrl+Enter:@@keypost@@</li>
-	<li>Ctrl+Enter+Shift:@@keysecpost@@</li>
-	<li>Alt+Enter:@@secondary@@</li>
-	<li>Ctrl+E:@@keyunread@@</li>
-	<li>Ctrl+U:@@keyselecttop@@</li>
-	<li>Esc:@@keyesc@@</li>
-	<li>F5:@@keyf5@@</li>
-	<li>Ctrl+Shift+C:@@keyclear@@</li>
-	<li>Ctrl+Shift+S:@@setting@@</li>
-	<li>Ctrl+Shift+M:@@keyacctman@@</li>
+	<br>Keyboard shortcuts
+	<li>Ctrl+1-9:Jump to n(1-9)th column</li>
+	<li>N:Open toot box</li>
+	<li>X:Toggle toot box</li>
+	<li>Ctrl+Enter:Post</li>
+	<li>Ctrl+Enter+Shift:Post(secondary toot)</li>
+	<li>Alt+Enter:Secondary Toot Button</li>
+	<li>Ctrl+E:Make all notifications read</li>
+	<li>Ctrl+U:Select the top & left(No.1 column) toot</li>
+	<li>Esc:Hide toot box</li>
+	<li>F5:Super Reload</li>
+	<li>Ctrl+Shift+C:Clear toot box</li>
+	<li>Ctrl+Shift+S:Preferences</li>
+	<li>Ctrl+Shift+M:Account Manager</li>
 	<li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
-	<li>Ctrl+Shift+P:@@keyshowprof@@</li>
-	<li>←/→:@@keyrow@@</li>
-	<li>@@keyzoom@@</li>
+	<li>Ctrl+Shift+P:Show profile of selecting</li>
+	<li>←/→:Show next or previous image</li>
+	<li>Mousewheel:Zoom a image</li>
 	<div class="hide kirishima">
 		以下Markdownに対応したインスタンスのみ。
 		<br>
 		<li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線</li>
-		@@whenSelected@@
-		<li>F:@@fav@@</li>
-		<li>B:@@bt@@</li>
-		<li>R:@@reply@@</li>
+		When a toot is selected: 
+		<li>F:Favourite this toot</li>
+		<li>B:Boost this toot</li>
+		<li>R:Reply to this toot</li>
 	</div>
 	<button class="btn waves-effect red" style="width:100%; max-width:40rem;"
-		onclick="if(confirm('@@resetconfirm@@')){ localStorage.clear(); location.href='index.html'; }"><i
-			class="material-icons left">delete</i>@@reset@@</button><br><br>
+		onclick="if(confirm('Delete all data. You cannot undo. Continue?')){ localStorage.clear(); location.href='index.html'; }"><i
+			class="material-icons left">delete</i>Reset(Danger)</button><br><br>
 	<button class="btn waves-effect indigo pwa" onclick="about()" style="width:100%; max-width:40rem;"><i
-			class="material-icons left">info</i>@@about@@</button>
+			class="material-icons left">info</i>About TheDesk</button>
 	<a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:40rem;"><i
-			class="material-icons left">web</i>@@hp@@</a>
+			class="material-icons left">web</i>Website</a>
 	<a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2"
-		style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>@@support@@(Pixiv FANBOX)</a>
+		style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>Support(Pixiv FANBOX)</a>
 	<a href="https://www.patreon.com/cutls" class="btn waves-effect red darken-2"
-		style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>@@support@@(Patreon)</a>
+		style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>Support(Patreon)</a>
 	<a href="https://liberapay.com/cutls" class="btn waves-effect black-text"
 		style="width:100%; max-width:40rem; background-color: #f6c915"><i
-			class="material-icons left">trending_up</i>@@support@@(Liberapay)</a>
+			class="material-icons left">trending_up</i>Support(Liberapay)</a>
 	<a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:40rem;"><i
-			class="material-icons left">list</i>@@help@@/Docs</a>
+			class="material-icons left">list</i>Help/Docs</a>
 	<a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2"
 		style="width:100%; max-width:40rem;"><i class="fab fa-github left"></i>GitHub</a>
 	<a href="index.html?mode=user&code=Cutls@cutls.com" class="btn waves-effect blue lighten-2"
 		style="width:100%; max-width:40rem;"><img src="../../img/desk_full.svg" class="left" width="25"
 			style="padding-top:5px;">Main author: Cutls@cutls.com</a>
 	<br>
-	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/@@gitHash@@">@@gitHash@@</a> - <a
+	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/89b25c56e7ecf0c1c0e3b73f3138207abe1a6c9c">89b25c56e7ecf0c1c0e3b73f3138207abe1a6c9c</a> - <a
 		onclick="checkupd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';"
-		class="pointer pwa">@@checkup@@</a><br>
+		class="pointer pwa">Check update</a><br>
 	<br>
 	Kyash<br>
 	<img src="../../img/kyash.png" width="100"><br>
 	<a href="https://status.cutls.com/">
 		<img src="https://status.cutls.com/badge-service?site=thedesk.top">
 	</a><br>
-	<h5>OSS License@@ossJP@@</h5>
-	<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/@@gitHash@@"
+	<h5>OSS License</h5>
+	<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/89b25c56e7ecf0c1c0e3b73f3138207abe1a6c9c"
 		alt="FOSSA Status"><img
 			src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcutls%2FTheDesk.svg?type=small" /></a>
 	<br>
@@ -617,7 +617,7 @@
 	</span><br>
 	TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
 	タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
-	<script type="text/javascript" src="../../@@node_base@@/lodash/lodash.min.js"></script>
+	<script type="text/javascript" src="../../node_modules/lodash/lodash.min.js"></script>
 	<script type="text/javascript" src="../../js/platform/aiscript.js"></script>
 	<script type="text/javascript" src="../../js/platform/plugin.js"></script>
 	<script type="text/javascript" src="../../js/common/modal.js"></script>

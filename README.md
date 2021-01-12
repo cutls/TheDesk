@@ -42,8 +42,13 @@ The default sounds of notifications is provided [Creative Commons BY](https://cr
 ## Language
 
 * 日本語(Japanese)
+* 日本語, 関西(Japanese, Kansai)
 * English
-* de, cs, bg(from Crowdin)
+* български(Bulgarian) with [translate project](https://translate.thedesk.top/project/thedesk/bg)
+* Česky(Czech) with [translate project](https://translate.thedesk.top/project/thedesk/cs)
+* Deutsch(German) with [translate project](https://translate.thedesk.top/project/thedesk/de)
+* Español, argentina(Spanish, Argentina) with [translate project](https://translate.thedesk.top/project/thedesk/es-AR)
+* italiano(Italian) with [translate project](https://translate.thedesk.top/project/thedesk/it-IT)
 
 ### Translation
 
