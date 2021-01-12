@@ -10,7 +10,7 @@
 ![Contributors](https://flat.badgen.net/github/contributors/cutls/TheDesk)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのPC向けクライアント  
-Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge/?site=thedesk.top)](https://status.cutls.com)    
+Download:[TheDesk](https://thedesk.top)
 
 [Pixiv FANBOX](https://www.pixiv.net/fanbox/creator/28105985)
 
@@ -33,9 +33,8 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
 
 標準の通知音は [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/) で提供されています。
 
-## 利用規約
+## プライバシーポリシー
 
-* [利用規約](https://thedesk.top/tos.html)
 * [プライバシーポリシー](https://thedesk.top/priv.html)
 
 ## 言語
@@ -49,17 +48,24 @@ Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge
   
 Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.top  
 
+以下、`yarn ***`は全て`npm run ***`で実行できます。(yarnが推奨)
+
 ### デベロッパーモード
 
-`npm run dev`を`app`フォルダ内で実行
+`yarn dev`を`app`フォルダ内で実行。  
+ただし、最初に`yarn construct`必須。
+
+watchモード(ホットリロードはしません): `yarn construct`の代わりに`yarn watchview`  
+HTMLや言語定義の変更について、このコマンドで継続監視します。その他のアセットの変更には不要です。  
+プロセス1つを占拠するので、`yarn dev`は他のプロセスで行ってください。
 
 ## 主なコントリビューター
 
-macOSビルダー  
+macOSビルダー(現在はTravis CI)
 
 * [とねぢ](https://minohdon.jp/@toneji)
 
-Linuxビルダー  
+Linuxビルダー(現在はTravis CI)
 
 * [ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja)
 
@@ -69,7 +75,7 @@ Linuxビルダー
 
 ## ビルド
 
-npmでもyarnでも好きな方を選んでください。
+npmでもyarnでも好きな方を選んでください。Windows環境ではyarnを強く推奨します。
 
 ### npm
 
@@ -98,22 +104,6 @@ yarn construct
 
 scriptsを利用します
 
-#### npm
-
-```sh
-# 実行している環境向けにビルド
-npm run build
-
-# ターゲットを指定してビルド
-## Windows
-npm run build:win
-
-## macOS向けのビルドにはmacOSで実行する必要があるためこのコマンドではビルドされません
-npm run build:all
-```
-
-#### yarn
-
 ```sh
 # 実行している環境向けにビルド
 yarn build
@@ -126,10 +116,11 @@ yarn build:win
 yarn build:all
 ```
 
+
 ビルド設定はすべてpackage.jsonに記載しています。  
 
 ### electron-packager(非推奨)
-`npm install --save-dev electron-rebuild`  
+`yarn -D electron-rebuild`  
   
 Linux/macOS  
 `./node_modules/.bin/electron-rebuild`  
@@ -142,19 +133,25 @@ WindowsでPython 2.xやVisualC++を一発でインストールできるツール
 日本語話者向けですが、macOSビルドにはXCodeが要るとの情報があります。([とねぢ](https://minohdon.jp/@toneji)氏談)  
 
 Windows  
-`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=4.0.5 --icon=.\app\thedesk.ico --overwrite`  
+```
+electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=4.0.5 --icon=.\app\thedesk.ico --overwrite
+```  
 Linux  
-`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=4.0.5 --overwrite`  
+```
+electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=4.0.5 --overwrite
+```  
 macOS  
-`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=4.0.5 --icon=./app/icon.icns --overwrite`  
+```
+electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=4.0.5 --icon=./app/icon.icns --overwrite
+```  
 
 ### PWAとして実行
 
 TheDeskはウェブ技術を使用して作られているので、ブラウザで動かすこともできます。もちろん、Electron向けに設計されているので一部機能は動きません。
 
-`npm run build:pwa`でビルドできます。PWAに必要な`manifest.json`やサービスワーカーなども要員されています。
+`yarn build:pwa`でビルドできます。PWAに必要な`manifest.json`やサービスワーカーなども用意されています。
 
-**`node_modules`を`dependencies`にリネームしないと動きません。(Netlifyの制限です)**
+**`node_modules`を`dependencies`にリネームしないと動きません。(Netlifyの制限ですが、Netlify以外で動かす場合にも必須です)**
 
 ChromeまたはFirefoxでチェック: [こちら](https://app.thedesk.top) (`master`ブランチに追従しています。不安定です。)  
 [![Netlify Status](https://api.netlify.com/api/v1/badges/6916503b-2882-43f7-9681-ab814e6d28f9/deploy-status)](https://app.netlify.com/sites/thedesk/deploys)
@@ -168,7 +165,7 @@ Issuesに書いてある問題についてはなるべく対処しますので�
 
 [TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
 
-## `npm i`したら脆弱性あるって言われた
+## `yarn install`したら脆弱性あるって言われた
 
 materialize-cssの脆弱性(CVE-2019-11002/3/4)については[こちら](https://github.com/Dogfalo/materialize/issues/6286)で本当に脆弱性かどうか議論しています。  
 実際には害が無いものと思われます。

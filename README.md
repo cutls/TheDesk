@@ -11,7 +11,7 @@
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのPC向けクライアント[日本語はこちら](README_ja.md)  
   
-Download:[TheDesk](https://thedesk.top) [![check](https://status.cutls.com/badge/?site=thedesk.top)](https://status.cutls.com)
+Download:[TheDesk](https://thedesk.top)
 
 On GitHub Releases, `-store.*` assets are made for some application store or manager(Snapcraft, Homebrew, Microsoft Store). 
 They do not check the latest version(Which you can get the latest ver or not depends on the store)
@@ -31,12 +31,12 @@ The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.o
 * [SVG 4095x4096](https://d2upiril6ywqp9.cloudfront.net/press/thedesk-fullcolor.svg)
 * [ico 256x256](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.ico)
 * [icns old](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.icns)
+* [Illustrator .ai](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.ai)
 
 The default sounds of notifications is provided [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/)
 
-## Terms of Use
+## Privacy Policy
 
-* [利用規約(Terms of Use(ja))](https://thedesk.top/tos.html)
 * [プライバシーポリシー(Privacy Policy(ja))](https://thedesk.top/priv.html)
 
 ## Language
@@ -56,15 +56,17 @@ Crowdin project is available! Visit: https://translate.thedesk.top
 
 ### Run on developer mode
 
-`npm run dev` on `app` folder.
+`npm run dev` on `app` folder.(before you should run `yarn construct` to make HTML views)
+
+If you change HTML or language files, you should rub to `yarn construct`. Or `yarn watchview` can always watch and construct such files with 1 process.
 
 ## Contributors
 
-Build for macOS  
+Build for macOS(Now: Travis CI)  
 
 * [toneji](https://minohdon.jp/@toneji)
 
-Build for Linux  
+Build for Linux(Now: Travis CI)  
 
 * [popn_ja](https://popon.pptdn.jp/@popn_ja)
 
@@ -74,7 +76,8 @@ Fellow coder
 
 ## Build
 
-You have to use either **npm** or **yarn**. Whichever you use, it works well.
+You should use `yarn` but you can use also `npm`, but if you build on Windows, you should strongly use `yarn`  
+`yarn ***` and `npm run ***` has the same meaning,
 
 ### npm
 
@@ -99,26 +102,10 @@ yarn install
 yarn construct
 ```
 
-run `npm run dev` or `yarn dev` to launch developer version with console(click `view`)
+run `yarn dev` to launch developer version with console(click `view`)
 
 ### electron-builder(Recommended)
 Use scripts(they can work well with npm, **yarn**).  
-
-#### npm
-
-```sh
-# Build for current platform
-npm run build
-
-# Select build target
-## Windows
-npm run build:win
-
-## Windows and Linux (The macOS target should run on macOS. So, this option hasn't include the build for macOS)
-npm run build:all
-```
-
-#### yarn
 
 ```sh
 # Build for current platform
@@ -136,7 +123,7 @@ yarn build:all
 Config is all on package.json  
 
 ### electron-packager
-`npm install --save-dev electron-rebuild`  
+`yarn --D electron-rebuild`  
   
 Linux/macOS  
 `./node_modules/.bin/electron-rebuild`  
@@ -147,11 +134,17 @@ To install Python 2.x and Visual C++ for Windows, before running `npm install --
 `npm install --global windows-build-tools`  
 
 Windows  
-`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=4.0.5 --icon=.\app\thedesk.ico --overwrite`  
+```
+electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=4.0.5 --icon=.\app\thedesk.ico --overwrite
+```  
 Linux  
-`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=4.0.5 --overwrite`  
+```
+electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=4.0.5 --overwrite
+```  
 macOS  
-`electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=4.0.5 --icon=./app/icon.icns --overwrite`  
+```
+electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=4.0.5 --icon=./app/icon.icns --overwrite
+```  
 
 ### PWA support
 
@@ -159,7 +152,7 @@ TheDesk is a web-based app, so you can run it on a browser. Of course, the main 
 
 You can run `npm run build:pwa` to build as PWA, including `manifest.json` and the ServiceWorker.
 
-**You have to rename `node_modules` to `dependencies` to run as a web application. (restricted by Netlify)**
+**You have to rename `node_modules` to `dependencies` to run as a web application. (restricted by Netlify, but always you should do to run as PWA)**
 
 Check the app on Chrome or Firefox: [Here](https://app.thedesk.top) (it follows the `master` branch, so not stable.)  
 [![Netlify Status](https://api.netlify.com/api/v1/badges/6916503b-2882-43f7-9681-ab814e6d28f9/deploy-status)](https://app.netlify.com/sites/thedesk/deploys)
@@ -170,6 +163,6 @@ Did you find a bug with Pleroma accounts?
 Pleroma **does not** follow Mastodon API rules completely although Pleroma developers say so.  
 Please write issues to improve TheDesk affinity with Pleroma.
 
-## Vulnerabilities when `npm i`???
+## Vulnerabilities when `yarn install`???
 
-No, if your npm says materialize-css has vulnerabilities(CVE-2019-11002/3/4), look at [here](https://github.com/Dogfalo/materialize/issues/6286) under discussion.
+No, if your npm says materialize-css has vulnerabilities(CVE-2019-11002/3/4), look at [here](https://github.com/Dogfalo/materialize/issues/6286) under discussion, but I do not think this report is really fatal.
