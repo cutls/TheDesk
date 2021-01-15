@@ -62,6 +62,12 @@ function checkSpotify() {
 	} else {
 		$('#amw_no').prop('checked', true)
 	}
+	var flag3 = localStorage.getItem('control-center-np')
+	if (flag3) {
+		$('#cmw_yes').prop('checked', true)
+	} else {
+		$('#cmw_no').prop('checked', true)
+	}
 }
 function spotifyFlagSave() {
 	var awk = $('[name=awk]:checked').val()
@@ -81,6 +87,16 @@ function aMusicFlagSave() {
 	} else {
 		localStorage.removeItem('complete-artwork')
 		M.toast({ html: lang.lang_spotify_imgno, displayLength: 3000 })
+	}
+}
+function cMusicFlagSave() {
+	var awk = $('[name=cmw]:checked').val()
+	if (awk == 'yes') {
+		localStorage.setItem('control-center-np', 'yes')
+		M.toast({ html: 'コントロールセンターNPをオンにしました', displayLength: 3000 })
+	} else {
+		localStorage.removeItem('control-center-np')
+		M.toast({ html: 'コントロールセンターNPをオフにしました', displayLength: 3000 })
 	}
 }
 function nowplaying(mode) {

@@ -3,6 +3,7 @@ window.onload = function () {
 	initPostbox()
 	connection()
 	initPlugin(plugins)
+	if(localStorage.getItem('control-center-np')) $('#ccnp').removeClass('hide')
 }
 $.strip_tags = function (str, allowed) {
 	if (!str) {
