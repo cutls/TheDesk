@@ -155,6 +155,8 @@ function nowplaying(mode) {
 		}
 	} else if (mode == 'itunes') {
 		postMessage(['itunes', ''], '*')
+	} else if (mode == 'anynp') {
+		postMessage(['itunes', 'anynp'], '*')
 	} else if (mode == 'lastFm') {
 		var user = localStorage.getItem('lastFmUser')
 		var start = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&limit=1&api_key=8f113803bfea951b6dde9e56d32458b2&format=json'
@@ -228,6 +230,16 @@ function nowplaying(mode) {
 }
 async function npCore(arg) {
 	console.table(arg)
+	if(arg.anynp) {
+		var flag = localStorage.getItem('artwork')
+		var q = arg.title
+		if (flag && localStorage.getItem('complete-artwork')) {
+			aaw = await getUnknownAA(q)
+			postMessage(['bmpImage', [aaw.aaw, 0]], '*')
+		}
+		$('#textarea').val(q)
+		return false
+	}
 	var content = localStorage.getItem('np-temp')
 	if (!content || content == '' || content == 'null') {
 		var content = '#NowPlaying {song} / {album} / {artist}\n{url}'
