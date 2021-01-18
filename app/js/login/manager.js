@@ -36,7 +36,7 @@ function load() {
 	var domains = []
 	var templete
 	$('#acct-list').html('')
-	Object.keys(obj).forEach(function(key) {
+	Object.keys(obj).forEach(function (key) {
 		var acct = obj[key]
 		var list = key * 1 + 1
 		if (acct.background != 'def' && acct.text != 'def') {
@@ -55,6 +55,9 @@ function load() {
 			<div class="card-content ">
 				<span class="lts">${list}.</span><img src="${acct.prof}" width="40" height="40" />
 				<span class="card-title">${name}</span>${escapeHTML(acct.user)}@${acct.domain}
+				<a onclick="login('${acct.domain}')" class="pointer white-text waves-effect" title="${lang.lang_manager_refreshAt}">
+					<i class="material-icons text-line-icon">login</i>
+				</a>
 			</div>
 			<div class="card-action">
 				<button class="btn-flat waves-effect disTar pointer  white-text" onclick="refresh('${key}')">
@@ -72,7 +75,7 @@ function load() {
 	})
 	domains = _.uniq(domains)
 	$('#domain-list').html('')
-	Object.keys(domains).forEach(function(key2) {
+	Object.keys(domains).forEach(function (key2) {
 		var domain = domains[key2]
 		if (localStorage.getItem('letters_' + key2)) {
 			var maxChars = localStorage.getItem('letters_' + key2)
@@ -108,7 +111,7 @@ load()
 support()
 function maxChars(domain, uid) {
 	var value = $('#maxChars' + uid).val()
-	if(value*1 < 1 || !Number.isInteger(value*1)) {
+	if (value * 1 < 1 || !Number.isInteger(value * 1)) {
 		Swal.fire({
 			type: 'error',
 			title: 'Error'
@@ -127,8 +130,8 @@ function maxChars(domain, uid) {
 			localStorage.removeItem('multi')
 		}
 	}
-	Object.keys(obj).forEach(function(key) {
-		if(obj[key].domain == domain) localStorage.setItem('letters_' + key, value)
+	Object.keys(obj).forEach(function (key) {
+		if (obj[key].domain == domain) localStorage.setItem('letters_' + key, value)
 	})
 	console.log('#maxChars' + uid, value)
 	load()
@@ -208,7 +211,7 @@ function multiDel(target) {
 		cancelButtonText: lang.lang_no
 	}).then(result => {
 		if (result.value) {
-			Object.keys(obj).forEach(function(key) {
+			Object.keys(obj).forEach(function (key) {
 				var nk = key - 1
 				//公開範囲(差分のみ)
 				if (key >= target) {
@@ -227,7 +230,9 @@ function multiDel(target) {
 					var olddom = localStorage.getItem('domain_' + key)
 					localStorage.setItem('domain_' + nk, olddom)
 					var oldat = localStorage.getItem('acct_' + key + '_at')
+					var oldrt = localStorage.getItem('acct_' + key + '_rt')
 					localStorage.setItem('acct_' + nk + '_at', oldat)
+					localStorage.setItem('acct_' + nk + '_rt', oldrt)
 					localStorage.setItem('name_' + nk, localStorage.getItem('name_' + key))
 					localStorage.setItem('user_' + target, localStorage.getItem('user_' + key))
 					localStorage.setItem('user-id_' + target, localStorage.getItem('user-id_' + key))
@@ -243,7 +248,7 @@ function multiDel(target) {
 			var col = localStorage.getItem('column')
 			var oldcols = JSON.parse(col)
 			var newcols = []
-			Object.keys(oldcols).forEach(function(key) {
+			Object.keys(oldcols).forEach(function (key) {
 				var nk = key - 1
 				var oldcol = oldcols[key]
 				if (target < oldcol.domain) {
@@ -253,19 +258,19 @@ function multiDel(target) {
 				}
 				var type = oldcol.type
 				var data = null
-				if(oldcol.data) {
+				if (oldcol.data) {
 					data = oldcol.data
 				}
 				var background = null
-				if(oldcol.background) {
+				if (oldcol.background) {
 					background = oldcol.background
 				}
 				var text = null
-				if(oldcol.text) {
+				if (oldcol.text) {
 					text = oldcol.text
 				}
 				var left_fold = false
-				if(oldcol.left_fold) {
+				if (oldcol.left_fold) {
 					left_fold = true
 				}
 				//消した垢のコラムじゃないときコピー
@@ -303,7 +308,7 @@ function multiDel2(target) {
 			obj.splice(target, 1)
 			var json = JSON.stringify(obj)
 			localStorage.setItem('multi', json)
-			Object.keys(obj).forEach(function(key) {
+			Object.keys(obj).forEach(function (key) {
 				if (key >= target) {
 					var oldvis = localStorage.getItem('vis-memory-' + key)
 					if (oldvis) {
@@ -331,7 +336,7 @@ function multiDel2(target) {
 			} else {
 				var cobj = JSON.parse(col)
 			}
-			Object.keys(cobj).forEach(function(key) {
+			Object.keys(cobj).forEach(function (key) {
 				var column = cobj[key]
 				if (column.domain > target) {
 					var nk = key - 1
@@ -351,7 +356,7 @@ function multiDel2(target) {
 
 //サポートインスタンス
 function support() {
-	Object.keys(idata).forEach(function(key) {
+	Object.keys(idata).forEach(function (key) {
 		var instance = idata[key]
 		if (instance == 'instance') {
 			templete =
@@ -399,7 +404,7 @@ function login(url) {
 			website: 'https://thedesk.top'
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -437,20 +442,20 @@ function versionChecker(url) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var version = json.version
 			if (version) {
 				var reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u)
@@ -476,25 +481,25 @@ function versionCompat(prefix, ver, title, real) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var complete = false
 			var ct = 0
 			var jl = 0
 			var jl2 = 0
-			Object.keys(json).forEach(function(key) {
+			Object.keys(json).forEach(function (key) {
 				var data = json[key]
 				if (data) {
 					jl++
@@ -581,7 +586,7 @@ function misskeyLogin(url) {
 			]
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -605,7 +610,7 @@ function misskeyAuth(url, mkc) {
 			appSecret: mkc
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -629,9 +634,8 @@ function instance() {
 		alert('入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
 		return false
 	}
-	login(url)
+	login(url)	
 }
-
 //コード入れてAccessTokenゲット
 function code(code) {
 	localStorage.removeItem('redirect')
@@ -657,7 +661,7 @@ function code(code) {
 				appSecret: localStorage.getItem('mkc')
 			})
 		)
-		httpreq.onreadystatechange = function() {
+		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
 				if (this.status !== 200) {
@@ -716,7 +720,7 @@ function code(code) {
 				code: code
 			})
 		)
-		httpreq.onreadystatechange = function() {
+		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
 				if (this.status !== 200) {
@@ -725,14 +729,16 @@ function code(code) {
 				if (json['access_token']) {
 					$('#auth').hide()
 					$('#add').show()
-					getdata(url, json['access_token'])
+					getdata(url, json)
 				}
 			}
 		}
 	}
 }
 //ユーザーデータ取得
-function getdata(domain, at) {
+function getdata(domain, json) {
+	var at = json['access_token']
+	var rt = `${json['refresh_token']} ${localStorage.getItem('client_id')} ${localStorage.getItem('client_secret')}`
 	var start = 'https://' + domain + '/api/v1/accounts/verify_credentials'
 	fetch(start, {
 		method: 'GET',
@@ -741,20 +747,20 @@ function getdata(domain, at) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
 				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
@@ -772,6 +778,7 @@ function getdata(domain, at) {
 			}
 			var add = {
 				at: at,
+				rt: rt ? rt : null,
 				name: json['display_name'],
 				domain: domain,
 				user: json['acct'],
@@ -782,8 +789,24 @@ function getdata(domain, at) {
 			}
 			var multi = localStorage.getItem('multi')
 			var obj = JSON.parse(multi)
-			var target = obj.length
-			obj.push(add)
+			let addTarget = -1
+			let ct = 0
+			for (let acct of obj) {
+				if (acct.domain === domain && acct.user === json['acct']) {
+					console.log('detected dupl addct')
+					addTarget = ct
+					break
+				}
+				ct++
+			}
+			if (addTarget == -1) {
+				var target = obj.length
+				obj.push(add)
+			} else {
+				console.log('dupl acct_' + addTarget)
+				obj[addTarget] = add
+				var target = addTarget
+			}
 			localStorage.setItem('name_' + target, json['display_name'])
 			localStorage.setItem('user_' + target, json['acct'])
 			localStorage.setItem('user-id_' + target, json['id'])
@@ -807,6 +830,7 @@ function atSetup(type) {
 		var i = $('#misskey-key').val()
 		var add = {
 			at: i,
+			rt: null,
 			name: 'Pseudo Account',
 			domain: url,
 			user: 'user+pseudo',
@@ -820,6 +844,7 @@ function atSetup(type) {
 		var i = $('#code').val()
 		var add = {
 			at: i,
+			rt: null,
 			name: 'Pseudo Account',
 			domain: url,
 			user: 'user+pseudo',
@@ -862,25 +887,25 @@ function refresh(target) {
 			Authorization: 'Bearer ' + obj[target].at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
 				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
@@ -893,6 +918,7 @@ function refresh(target) {
 			}
 			var ref = {
 				at: obj[target].at,
+				rt: obj[target].rt ? obj[target].rt : null,
 				name: json['display_name'],
 				domain: obj[target].domain,
 				user: json['acct'],
@@ -934,7 +960,7 @@ function misskeyRefresh(obj, target, url) {
 			i: obj[target].at
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -944,6 +970,7 @@ function misskeyRefresh(obj, target, url) {
 			var priv = 'public'
 			var add = {
 				at: json.accessToken,
+				rt: null,
 				name: json['user']['name'],
 				domain: url,
 				user: json['user']['username'],
@@ -983,7 +1010,7 @@ function multisel() {
 		$('#src-acct-sel').html('<option value="tootsearch">Tootsearch</option>')
 		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	} else {
-		Object.keys(obj).forEach(function(key) {
+		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
 			var list = key * 1 + 1
 			if (key == last) {
@@ -1073,10 +1100,10 @@ var oldSuggest
 var suggest
 input.addEventListener(
 	'focus',
-	function() {
+	function () {
 		$('#ins-suggest').html('')
 		window.clearInterval(timer)
-		timer = window.setInterval(function() {
+		timer = window.setInterval(function () {
 			var new_val = input.value
 			if (prev_val != new_val) {
 				if (new_val.length > 3) {
@@ -1089,23 +1116,23 @@ input.addEventListener(
 								'Bearer tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M'
 						}
 					})
-						.then(function(response) {
+						.then(function (response) {
 							if (!response.ok) {
-								response.text().then(function(text) {
+								response.text().then(function (text) {
 									setLog(response.url, response.status, text)
 								})
 							}
 							return response.json()
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							todo(error)
 							setLog(start, 'JSON', error)
 							console.error(error)
 						})
-						.then(function(json) {
+						.then(function (json) {
 							if (!json.error) {
 								var urls = 'Suggest:'
-								Object.keys(json.instances).forEach(function(key) {
+								Object.keys(json.instances).forEach(function (key) {
 									var url = json.instances[key]
 									urls =
 										urls +
@@ -1127,7 +1154,7 @@ input.addEventListener(
 
 input.addEventListener(
 	'blur',
-	function() {
+	function () {
 		window.clearInterval(timer)
 	},
 	false

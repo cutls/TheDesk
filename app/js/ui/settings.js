@@ -405,6 +405,7 @@ function importSettingsCore(obj) {
 			localStorage.setItem('prof_' + key, acct.prof)
 			localStorage.setItem('domain_' + key, acct.domain)
 			localStorage.setItem('acct_' + key + '_at', acct.at)
+			localStorage.setItem('acct_' + key + '_rt', acct.rt ? acct.rt : null)
 		}
 		localStorage.setItem('column', JSON.stringify(obj.columns))
 		if (obj.config) {

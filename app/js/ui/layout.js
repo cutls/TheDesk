@@ -51,6 +51,7 @@ function parseColumn(target, dontclose) {
 			localStorage.setItem('prof_' + key, acct.prof)
 			localStorage.setItem('domain_' + key, acct.domain)
 			localStorage.setItem('acct_' + key + '_at', acct.at)
+			localStorage.setItem('acct_' + key + '_rt', acct.rt ? acct.rt : null)
 			if(!target) mastodonBaseStreaming(key)
 			ckdb(key)
 			//フィルターデータ読もう
