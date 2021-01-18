@@ -49,6 +49,7 @@
     "lang_manager_godev": "開始 Misskey 的 DevCenter。我們也會顯示官方文件以供參考。",
     "lang_manager_logout": "登出",
     "lang_manager_maxChars": "嘟文最大字數上限",
+    "lang_manager_refreshAt": "Login with this domain",
     "lang_bbmd_misskey": "TheDesk 以 \"@\" 表示回覆，請使用其他參數。Mastodon 上之 Unlisted 即為 Misskey 之 Home。",
     "lang_emoji_get": "取得 emoji 表情符號",
     "lang_emoji_custom": "自訂 emoji 表情符號",
