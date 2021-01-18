@@ -49,6 +49,7 @@
     "lang_manager_godev": "MisskeyのDevセンターに移動します。同時に開かれるドキュメントを参考にログインしてください。",
     "lang_manager_logout": "ログアウト",
     "lang_manager_maxChars": "投稿最大文字数",
+    "lang_manager_refreshAt": "このドメインでログイン",
     "lang_bbmd_misskey": "TheDeskにおけるMisskeyでは、@を返信として扱いますが、全ての@は消去され別パラメータに入力されます。また、「未収載」を「ホーム」として扱います。",
     "lang_emoji_get": "絵文字リストを取得",
     "lang_emoji_custom": "カスタム絵文字",
