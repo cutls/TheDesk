@@ -80,7 +80,7 @@
     "devDependencies": {
         "browserify": "^17.0.0",
         "chokidar": "^3.5.1",
-        "electron": "^10.1.5",
+        "electron": "^11.2.0",
         "electron-builder": "^22.9.1",
         "electron-rebuild": "^2.3.2",
         "eslint": "^7.13.0",
