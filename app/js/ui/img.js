@@ -4,6 +4,7 @@ function imgv(id, key, acct_id) {
 	$('#imgprog').text(0)
 	$('#imgsec').text(0)
 	$('#imgmodal').hide()
+	rotate(true)
 	$('#imgmodal').attr('src', '../../img/loading.svg')
 	var murl = $('#' + id + '-image-' + key).attr('data-url')
 	var ourl = $('#' + id + '-image-' + key).attr('data-original')
@@ -119,37 +120,10 @@ function imageXhr(id, key, murl) {
 				var width
 				element.onload = function() {
 					var width = element.naturalWidth
-					if(width < 650) {
-						width = 650
-					}
 					var height = element.naturalHeight
-					var windowH = $(window).height()
-					var windowW = $(window).width()
-					$('#imagemodal').css('bottom', '0')
-					$('#imagemodal img').css('width', 'auto')
-					if (height < windowH) {
-						$('#imagemodal').css('height', height + 100 + 'px')
-						$('#imagemodal img').css('height',  height + 'px')
-						if (width > windowW * 0.8) {
-							$('#imagemodal').css('width', '80vw')
-							$('#imagemodal img').css('width', 'auto')
-							var heightS = ((windowW * 0.8) / width) * height
-							$('#imagemodal').css('height', heightS + 100 + 'px')
-						} else {
-							$('#imagemodal').css('width', width + 'px')
-						}
-					} else {
-						$('#imagemodal img').css('width', 'auto')
-						var widthS = (windowH / height) * width
-						if (widthS < windowW) {
-							$('#imagemodal').css('width', widthS + 'px')
-						} else {
-							$('#imagemodal').css('width', '100vw')
-						}
-
-						$('#imagemodal').css('height', '100vh')
-						$('#imagemodal img').css('height', 'calc(100vh - 60px)')
-					}
+					calcNiceAspect(width, height)
+					$('#imagemodal').attr('data-naturalWidth', width)
+					$('#imagemodal').attr('data-naturalHeight', height)
 				}
 				if ($('#' + id + '-image-' + (key * 1 + 1)).length == 0) {
 					$('#image-next').prop('disabled', true)
@@ -171,6 +145,38 @@ function imageXhr(id, key, murl) {
 	}
 	xhr.responseType = 'blob'
 	xhr.send()
+}
+function calcNiceAspect( width, height ) {
+	if(width < 650) {
+		width = 650
+	}
+	var windowH = $(window).height()
+	var windowW = $(window).width()
+	$('#imagemodal').css('bottom', '0')
+	$('#imagemodal img').css('width', 'auto')
+	if (height < windowH) {
+		$('#imagemodal').css('height', height + 100 + 'px')
+		$('#imagemodal img').css('height',  height + 'px')
+		if (width > windowW * 0.8) {
+			$('#imagemodal').css('width', '80vw')
+			$('#imagemodal img').css('width', 'auto')
+			var heightS = ((windowW * 0.8) / width) * height
+			$('#imagemodal').css('height', heightS + 100 + 'px')
+		} else {
+			$('#imagemodal').css('width', width + 'px')
+		}
+	} else {
+		$('#imagemodal img').css('width', 'auto')
+		var widthS = (windowH / height) * width
+		if (widthS < windowW) {
+			$('#imagemodal').css('width', widthS + 'px')
+		} else {
+			$('#imagemodal').css('width', '100vw')
+		}
+
+		$('#imagemodal').css('height', '100vh')
+		$('#imagemodal img').css('height', 'calc(100vh - 60px)')
+	}
 }
 //ズームボタン(z:倍率)
 function zoom(z) {
@@ -258,6 +264,33 @@ element.onmousewheel = function(e) {
 		zoom(1.1)
 	} else {
 		zoom(0.9)
+	}
+}
+function rotate(reset) {
+	if (reset) {
+		$('#imagewrap img').removeClass('rotate-90')
+		$('#imagewrap img').removeClass('rotate-180')
+		$('#imagewrap img').removeClass('rotate-270')
+		$('#imagemodal').attr('data-naturalWidth', null)
+		$('#imagemodal').attr('data-naturalWidth', null)
+		return true
+	}
+	var width = $('#imagemodal').attr('data-naturalWidth')
+	var height = $('#imagemodal').attr('data-naturalHeight')
+	if ($('#imagewrap img').hasClass('rotate-90')) {
+		$('#imagewrap img').removeClass('rotate-90')
+		$('#imagewrap img').addClass('rotate-180')
+		calcNiceAspect(width, height)
+	} else if ($('#imagewrap img').hasClass('rotate-180')) {
+		$('#imagewrap img').removeClass('rotate-180')
+		$('#imagewrap img').addClass('rotate-270')
+		calcNiceAspect(height, width)
+	} else if ($('#imagewrap img').hasClass('rotate-270')) {
+		$('#imagewrap img').removeClass('rotate-270')
+		calcNiceAspect(width, height)
+	} else {
+		$('#imagewrap img').addClass('rotate-90')
+		calcNiceAspect(height, width)
 	}
 }
 
