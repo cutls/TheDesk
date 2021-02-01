@@ -17,7 +17,7 @@
     "safety": "Verbindung",
     "ver": "Mastodon Version",
     "ko": "",
-    "thisismisskey": "Als Misskey anmelden",
+    "thisismisskey": "Login als Misskey",
     "misskeylogin": "Lies die <a href=\"https://thedesk.top/how-to-misskey-login.html\">Doku (japanisch)</a> um dich bei Misskey einzuloggen.",
     "nodata": "Keine Daten",
     "accessTokenSetup": "Benutze Zugangs-Token zum Anmelden (Klicke nach Ausfüllen nicht den Code, sondern den Access-Token im Kästchen: Erweitert)",
