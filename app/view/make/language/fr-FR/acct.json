@@ -7,7 +7,7 @@
     "codesetup": "Code setup",
     "mainacct": "Main an account",
     "selacct": "Choisir un compte",
-    "codepastewarn": "Paste the code and close browser.",
+    "codepastewarn": "Insérer le code et fermez le navigateur.",
     "codepaste": "Code",
     "domain": "Domaine",
     "connect": "Serveur fédérées",
@@ -17,9 +17,9 @@
     "safety": "Connection",
     "ver": "Version de Mastodon",
     "ko": "",
-    "thisismisskey": "Login as Misskey",
+    "thisismisskey": "Connexion en tant que Misskey",
     "misskeylogin": "Read <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> to login Misskey.",
-    "nodata": "No data",
+    "nodata": "Aucune donnée",
     "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)",
     "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
 }
