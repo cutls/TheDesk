@@ -49,6 +49,7 @@
     "lang_manager_godev": "Open DevCenter of Misskey. We show also an official documents to refer.",
     "lang_manager_logout": "Logout",
     "lang_manager_maxChars": "Max chars of toots",
+    "lang_manager_refreshAt": "Login with this domain",
     "lang_bbmd_misskey": "TheDesk regards \"@\" as reply, but put other parameter. Unlisted on Mastodon means Home on Misskey.",
     "lang_emoji_get": "Get emojis",
     "lang_emoji_custom": "Пользовательские смайлики",
