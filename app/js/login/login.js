@@ -605,7 +605,7 @@ function multiSelector(parseC) {
 		$('#add-acct-sel').append(
 			'<option value="noauth">' +
 			lang.lang_login_noauth +
-			'</option><option value="webview">Twitter</option>'
+			'</option><!--option value="webview">Twitter</option-->'
 		)
 		$('#dir-acct-sel').append('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	}
