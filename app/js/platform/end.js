@@ -3,6 +3,7 @@
 $(document).on('click', 'a', e => {
 	var $a = $(e.target)
 	var url = $a.attr('href')
+	var acct_id = $a.attr('data-acct')
 	if (!url) {
 		var url = $a.parent().attr('href')
 	}
@@ -43,10 +44,14 @@ $(document).on('click', 'a', e => {
 			if (ats[2]) {
 				//Quesdon判定
 				if (!~ats[2].indexOf('@')) {
-					udgEx(url, 'main')
+					var acct_id = $a.parent().attr('data-acct')
+					if (!acct_id) {
+						acct_id = localStorage.getItem("main")
+					}
+					udgEx(url, acct_id)
 					return false
 				} else {
-					if(pwa) {
+					if (pwa) {
 						return true
 					} else {
 						postMessage(['openUrl', url], '*')
@@ -54,7 +59,7 @@ $(document).on('click', 'a', e => {
 				}
 			}
 		} else {
-			if(pwa) {
+			if (pwa) {
 				return true
 			}
 			//hrefがhttp/httpsならブラウザで
@@ -112,7 +117,7 @@ function playSound() {
 	}
 	context = new AudioContext()
 	context.createBufferSource().start(0)
-	context.decodeAudioData(request.response, function(buf) {
+	context.decodeAudioData(request.response, function (buf) {
 		//console.log("Playing:" , source)
 		source.buffer = buf
 		source.loop = false
@@ -134,7 +139,7 @@ function playSound() {
 function nano() {
 	postMessage(['nano', null], '*')
 }
-onmessage = function(e) {
+onmessage = function (e) {
 	if (e.data[0] == 'details') {
 		details(e.data[1][0], e.data[1][1])
 	} else if (e.data[0] == 'udg') {
@@ -144,9 +149,8 @@ onmessage = function(e) {
 	} else if (e.data[0] == 'post') {
 		post('pass')
 	} else if (e.data[0] == 'toastSaved') {
-		var showTxt = `${lang.lang_img_DLDone}${
-			e.data[1][0]
-		}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`
+		var showTxt = `${lang.lang_img_DLDone}${e.data[1][0]
+			}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`
 		M.toast({ html: showTxt, displayLength: 5000 })
 	} else if (e.data[0] == 'parseColumn') {
 		parseColumn(e.data[1])
@@ -197,7 +201,7 @@ onmessage = function(e) {
 	}
 }
 /* PWA */
-if(pwa) {
+if (pwa) {
 	function postMessage(e) {
 		if (e[0] == 'openUrl') {
 			urls = e[1].match(/https?:\/\/(.+)/)
@@ -206,12 +210,12 @@ if(pwa) {
 					title: 'Open URL',
 					icon: 'info',
 					html:
-					  `If you are OK, click: <a href="${urls[0]}" target="_blank" class="btn waves-effect">Here</a>`,
+						`If you are OK, click: <a href="${urls[0]}" target="_blank" class="btn waves-effect">Here</a>`,
 					showCloseButton: false,
 					showCancelButton: true,
 					focusConfirm: false,
 					confirmButtonText: 'Close'
-				  })
+				})
 			}
 		}
 	}
@@ -220,10 +224,10 @@ if(pwa) {
 $('html').addClass(localStorage.getItem('scroll') ? localStorage.getItem('scroll') : '')
 const connection = function (event) {
 	console.log(navigator.onLine, 'network state')
-	if(!navigator.onLine) {
+	if (!navigator.onLine) {
 		$('#re-online').addClass('hide')
 		$('#offline').removeClass('hide')
-	} else if(!$('#offline').hasClass('hide')) {
+	} else if (!$('#offline').hasClass('hide')) {
 		$('#offline').addClass('hide')
 		$('#re-online').removeClass('hide')
 	}

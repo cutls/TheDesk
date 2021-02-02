@@ -195,7 +195,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 	var local = []
 	var times = []
 	let content
-	for(let key in obj){
+	for (let key in obj) {
 		var domain = localStorage.getItem('domain_' + acct_id)
 		var toot = obj[key]
 		if (type == 'dm') {
@@ -560,6 +560,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 					/https?:\/\/([^+_]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
 				)
 			urlsck = content.match(/(https?):\/\/([^<>]*?)\/([^"]*)/g)
+			content = content.replace(/href="([^"]+)"/g, `href="$1" data-acct="${acct_id}"`)
 			if (urlsck) {
 				for (var urlct = 0; urlct < urlsck.length; urlct++) {
 					var urlindv = urlsck[urlct]
@@ -569,12 +570,11 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 						var encoded = encodeURI(urlCont[4])
 						var punycoded = 'xn--' + punycode.encode(urlCont[2])
 						var eUrl = urlCont[1] + '://' + punycoded + '.' + urlCont[3] + '/' + encoded
-						var regExp = new RegExp('href="' + urlindv + '"', 'g')
-						content = content.replace(regExp, 'href="' + eUrl + '"')
+						var regExp = new RegExp(`href="${urlindv}"`, 'g')
+						content = content.replace(regExp, `href="${eUrl}"`)
 					}
 				}
 			}
-
 			if (urls) {
 				var analyze = `<a onclick="additionalIndv('${tlid}','${acct_id}','${id}')" class="add-show pointer" aria-hidden="true">
 						${lang.lang_parse_url}
