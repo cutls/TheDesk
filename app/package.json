@@ -82,7 +82,7 @@
         "chokidar": "^3.5.1",
         "electron": "^10.1.5",
         "electron-builder": "^22.9.1",
-        "electron-rebuild": "^2.3.2",
+        "electron-rebuild": "^2.3.5",
         "eslint": "^7.13.0",
         "readline-sync": "1.4.10"
     },
