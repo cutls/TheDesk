@@ -1134,7 +1134,7 @@ input.addEventListener(
 									var url = json.data[key]
 									urls =
 										urls +
-										` <a onclick="login('${url.url}')" class="pointer" title="${url.uri}">${escapeHTML(url.title)}</a>`
+										`<a onclick="login('${url.url}')" class="pointer" title="${url.uri}">${escapeHTML(url.title ? url.title : url.uri)}</a>, `
 								})
 								$('#ins-suggest').html(urls)
 							} else {
