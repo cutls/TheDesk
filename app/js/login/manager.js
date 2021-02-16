@@ -1108,12 +1108,7 @@ input.addEventListener(
 			if (prev_val != new_val) {
 				if (new_val.length > 3) {
 					var start = 'https://www.fediversesearch.com/search/?keyword=' + new_val
-					fetch(start, {
-						method: 'GET',
-						headers: {
-							'content-type': 'application/json',
-							}
-					})
+					fetch(start)
 						.then(function (response) {
 							if (!response.ok) {
 								response.text().then(function (text) {
