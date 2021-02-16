@@ -1108,7 +1108,12 @@ input.addEventListener(
 			if (prev_val != new_val) {
 				if (new_val.length > 3) {
 					var start = 'https://www.fediversesearch.com/search/?keyword=' + new_val
-					fetch(start)
+					fetch(start, {
+						method: 'GET',
+						headers: {
+							'content-type': 'application/json',
+							}
+					})
 						.then(function (response) {
 							if (!response.ok) {
 								response.text().then(function (text) {
@@ -1129,7 +1134,7 @@ input.addEventListener(
 									var url = json.data[key]
 									urls =
 										urls +
-										`<a onclick="login('${url.url}')" class="pointer" title="${url.uri}">${escapeHTML(url.title ? url.title : url.uri)}</a>, `
+										`<a onclick="login('${url.uri}')" class="pointer" title="${url.uri}">${escapeHTML(url.title ? url.title : url.uri)}</a>, `
 								})
 								$('#ins-suggest').html(urls)
 							} else {
