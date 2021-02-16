@@ -1107,7 +1107,7 @@ input.addEventListener(
 			var new_val = input.value
 			if (prev_val != new_val) {
 				if (new_val.length > 3) {
-					var start = 'https://www.fediversesearch.com/search?keyword=' + new_val
+					var start = 'https://www.fediversesearch.com/search/?keyword=' + new_val
 					fetch(start, {
 						method: 'GET',
 						headers: {
