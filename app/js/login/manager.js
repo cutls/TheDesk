@@ -1113,7 +1113,7 @@ input.addEventListener(
 						headers: {
 							'content-type': 'application/json',
 							},
-						cors: true
+							mode: 'cors'
 					})
 						.then(function (response) {
 							if (!response.ok) {
