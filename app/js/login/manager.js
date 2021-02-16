@@ -1112,7 +1112,8 @@ input.addEventListener(
 						method: 'GET',
 						headers: {
 							'content-type': 'application/json',
-							}
+							},
+						cors: true
 					})
 						.then(function (response) {
 							if (!response.ok) {
