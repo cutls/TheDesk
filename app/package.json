@@ -61,7 +61,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.2",
         "@syuilo/aiscript": "^0.11.1",
-        "electron-dl": "^3.0.2",
+        "electron-dl": "^3.1.0",
         "jimp": "^0.16.1",
         "jquery": "^3.5.1",
         "jquery-ui-dist": "^1.12.1",
