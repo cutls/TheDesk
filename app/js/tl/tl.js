@@ -299,7 +299,7 @@ function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 	const domain = localStorage.getItem(`domain_${acct_id}`)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	if (localStorage.getItem('streaming_' + acct_id)) {
-		var wss = localStorage.getItem('streaming_' + acct_id)
+		var wss = localStorage.getItem('streaming_' + acct_id).replace('https://', 'wss://')
 	} else {
 		var wss = 'wss://' + domain
 	}
