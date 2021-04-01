@@ -113,6 +113,8 @@
   "markerswarn": "Mastodon 3.0相当以上。WebUIと対応クライアントで共有するやつや。",
   "remote_img": "画像をリモートから取得",
   "remote_imgWarn": "プレビューはログインサーバーのキャッシュからどちらにしろ取得する。ビューワーのみに適用されるで。",
+  "moreContextMode": "コンテキストツール",
+  "moreContextModeWarn": "トゥート詳細の、トゥート前後のトゥートを表示する機能",
   "replySound": "リプライの通知音",
   "favSound": "お気に入り登録の通知音",
   "btSound": "ブーストの通知音",
