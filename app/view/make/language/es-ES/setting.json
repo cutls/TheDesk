@@ -114,6 +114,8 @@
   "markerswarn": "Mastodon 3.0~. Shared on WebUI and third-party supported clients.",
   "remote_img": "Get images from the remote server",
   "remote_imgWarn": "All previews are got from your loginned cache server.",
+  "moreContextMode": "Context Tool",
+  "moreContextModeWarn": "On detail of the toot modal, show toots before / after the toot on LTL, FTL, UTL",
   "replySound": "Sound(Reply)",
   "favSound": "Sound(Fav)",
   "btSound": "Sound(Boost)",

@@ -114,7 +114,7 @@ function main(ver, basefile, pwa, store) {
 					refKey.push(key)
 					let str = target[key]
 					if (pages[i] == 'setting.vue.js') {
-						str = str.replace(/'/g, '\\')
+						str = str.replace(/'/g, "\\'")
 					}
 					var regExp = new RegExp('@@' + key + '@@', 'g')
 					source = source.replace(regExp, str)
@@ -133,7 +133,7 @@ function main(ver, basefile, pwa, store) {
 					}
 					if (pages[i] == 'setting.vue.js') {
 						if (str) {
-							str = str.replace(/'/g, '\\')
+							str = str.replace(/'/g, "\\'")
 						}
 					}
 					var regExp = new RegExp('@@' + tarKey + '@@', 'g')

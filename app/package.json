@@ -61,16 +61,16 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.2",
         "@syuilo/aiscript": "^0.11.1",
-        "electron-dl": "^3.0.2",
+        "electron-dl": "^3.2.1",
         "jimp": "^0.16.1",
-        "jquery": "^3.5.1",
+        "jquery": "^3.6.0",
         "jquery-ui-dist": "^1.12.1",
         "json5": "^2.2.0",
-        "lodash": "^4.17.20",
+        "lodash": "^4.17.21",
         "materialize-css": "git://github.com/cutls/materialize#v1-dev",
         "sanitize-html": "^2.3.2",
         "sumchecker": "^3.0.1",
-        "sweetalert2": "^10.14.0",
+        "sweetalert2": "^10.15.7",
         "system-font-families": "^0.4.1",
         "vue": "^2.6.12"
     },
@@ -80,10 +80,10 @@
     "devDependencies": {
         "browserify": "^17.0.0",
         "chokidar": "^3.5.1",
-        "electron": "^10.1.5",
+        "electron": "^10.2.0",
         "electron-builder": "^22.10.5",
         "electron-rebuild": "^2.3.2",
-        "eslint": "^7.13.0",
+        "eslint": "^7.23.0",
         "readline-sync": "1.4.10"
     },
     "build": {
