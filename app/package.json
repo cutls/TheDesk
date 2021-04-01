@@ -63,7 +63,7 @@
         "@syuilo/aiscript": "^0.11.1",
         "electron-dl": "^3.2.1",
         "jimp": "^0.16.1",
-        "jquery": "^3.5.1",
+        "jquery": "^3.6.0",
         "jquery-ui-dist": "^1.12.1",
         "json5": "^2.2.0",
         "lodash": "^4.17.20",
