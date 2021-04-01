@@ -1563,7 +1563,7 @@ function mastodonBaseStreaming(acct_id) {
 	const at = localStorage.getItem(`acct_${acct_id}_at`)
 	let wss = 'wss://' + domain
 	if (localStorage.getItem('streaming_' + acct_id)) {
-		wss = localStorage.getItem('streaming_' + acct_id)
+		wss = localStorage.getItem('streaming_' + acct_id).replace('https://', 'wss://')
 	}
 	const start = `${wss}/api/v1/streaming/?access_token=${at}`
 	mastodonBaseWs[domain] = new WebSocket(start)
