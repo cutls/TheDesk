@@ -81,7 +81,7 @@
         "browserify": "^17.0.0",
         "chokidar": "^3.5.1",
         "electron": "^10.2.0",
-        "electron-builder": "^22.9.1",
+        "electron-builder": "^22.10.5",
         "electron-rebuild": "^2.3.5",
         "eslint": "^7.23.0",
         "readline-sync": "1.4.10"
