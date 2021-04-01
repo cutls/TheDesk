@@ -4,13 +4,18 @@ var envView = new Vue({
 	data: { config: envConstruction },
 	methods: {
 		complete: function (i, val) {
-			var ls = envView.config[i].storage
-			M.toast({ html: 'Complete', displayLength: 3000 })
-			if (!val) {
-				var id = envView.config[i].id
-				var val = $('#' + id).val()
+			var ls = envView.config[i]
+			if (!ls.data) {
+				ls = [ls]
+			} else {
+				ls = ls.data
 			}
-			localStorage.setItem(ls, val)
+			for (var j = 0; j < ls.length; j++) {
+				M.toast({ html: 'Complete', displayLength: 3000 })
+				var id = ls[j].id
+				var val = $('#' + id).val()
+				localStorage.setItem(ls[j].storage, val)
+			}
 			if (ls == 'ha') {
 				hardwareAcceleration(val)
 			}
@@ -105,8 +110,15 @@ function load() {
 	var max = envView.config.length
 	for (var i = 0; i < max; i++) {
 		var ls = envView.config[i].storage
-		if (localStorage.getItem(ls)) {
-			envView.config[i].setValue = localStorage.getItem(ls)
+		if (ls) {
+			if (localStorage.getItem(ls)) {
+				envView.config[i].setValue = localStorage.getItem(ls)
+			}
+		} else {
+			ls = envView.config[i].data
+			for (var j = 0; j < ls.length; j++) {
+				envView.config[i].data[j].setValue = localStorage.getItem(ls[j].storage)
+			}
 		}
 	}
 	var max = tlView.config.length
