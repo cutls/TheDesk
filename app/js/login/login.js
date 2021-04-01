@@ -307,10 +307,13 @@ async function refresh(target, loadskip) {
 	let at = obj[target].at
 	if (obj[target].rt) {
 		console.log('refresh access token')
-		at = await refreshPleromaAt(obj[target])
-		localStorage.setItem(`acct_${target}_at`, at)
-		obj[target].at = at
-		localStorage.setItem(`multi`, JSON.stringify(obj))
+		const atk = await refreshPleromaAt(obj[target])
+		if (atk) {
+			at = atk
+			localStorage.setItem(`acct_${target}_at`, at)
+			obj[target].at = at
+			localStorage.setItem(`multi`, JSON.stringify(obj))
+		}
 	}
 	var start = 'https://' + obj[target].domain + '/api/v1/accounts/verify_credentials'
 	fetch(start, {
