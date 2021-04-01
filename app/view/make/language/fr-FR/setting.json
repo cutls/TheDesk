@@ -114,6 +114,8 @@
   "markerswarn": "Mastodon 3.0~. Partagé sur l'interface web et les clients tiers supportés.",
   "remote_img": "Récupérer les images depuis le serveur distant",
   "remote_imgWarn": "Toutes les prévisualisations sont obtenues depuis le serveur où vous êtes connecté.",
+  "moreContextMode": "Context Tool",
+  "moreContextModeWarn": "On detail of the toot modal, show toots before / after the toot on LTL, FTL, UTL",
   "replySound": "Son (Réponse)",
   "favSound": "Son (Fav)",
   "btSound": "Son (Boost)",
