@@ -454,6 +454,17 @@ var tlConstruction = [
 		}
 	},
 	{
+		id: 'mcm',
+		storage: 'moreContext',
+		checkbox: true,
+		setValue: 'no',
+		text: {
+			head: '@@moreContextMode@@',
+			desc: '@@moreContextModeWarn@@',
+			checkbox: yesno
+		}
+	},
+	{
 		id: 'replySound',
 		storage: 'replySound',
 		checkbox: true,

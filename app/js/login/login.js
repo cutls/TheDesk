@@ -286,7 +286,7 @@ function getdataAdv(domain, at) {
 			}
 			var multi = localStorage.getItem('multi')
 			var obj = JSON.parse(multi)
-			var target = obj.lengtth
+			var target = obj.length
 			obj.push(add)
 			localStorage.setItem('name_' + target, json['display_name'])
 			localStorage.setItem('user_' + target, json['acct'])
@@ -307,8 +307,13 @@ async function refresh(target, loadskip) {
 	let at = obj[target].at
 	if (obj[target].rt) {
 		console.log('refresh access token')
-		at = await refreshPleromaAt(obj[target])
-		localStorage.setItem(`acct_${target}_at`, at)
+		const atk = await refreshPleromaAt(obj[target])
+		if (atk) {
+			at = atk
+			localStorage.setItem(`acct_${target}_at`, at)
+			obj[target].at = at
+			localStorage.setItem(`multi`, JSON.stringify(obj))
+		}
 	}
 	var start = 'https://' + obj[target].domain + '/api/v1/accounts/verify_credentials'
 	fetch(start, {
@@ -384,13 +389,13 @@ async function refreshPleromaAt(obj) {
 			'content-type': 'application/json'
 		},
 		body: JSON.stringify({
-			grant_type : 'refresh_token',
+			grant_type: 'refresh_token',
 			refresh_token: rt[0],
 			client_id: rt[1],
 			client_secret: rt[2]
 		})
 	})
-	
+
 	const json = await promise.json()
 	if (json.access_token) {
 		return json.access_token
