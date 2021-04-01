@@ -133,7 +133,7 @@ function main(ver, basefile, pwa, store) {
 					}
 					if (pages[i] == 'setting.vue.js') {
 						if (str) {
-							str = str.replace(/'/g, '\\')
+							str = str.replace(/'/g, "\\'")
 						}
 					}
 					var regExp = new RegExp('@@' + tarKey + '@@', 'g')
