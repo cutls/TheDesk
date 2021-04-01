@@ -59,7 +59,7 @@
     ],
     "license": "GPL-3.0",
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.2",
+        "@fortawesome/fontawesome-free": "^5.15.3",
         "@syuilo/aiscript": "^0.11.1",
         "electron-dl": "^3.2.1",
         "jimp": "^0.16.1",
