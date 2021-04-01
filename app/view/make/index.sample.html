@@ -390,25 +390,26 @@
 	<div id="tootmodal" class="modal modal-fixed-footer">
 		<div class="modal-content">
 			<ul class="collapsible" id="det-col">
-				<li class="dm-hide">
+				<li class="dm-hide contextTool">
 					<div class="collapsible-header">
 						<i class="material-icons">people_outline</i>@@afterLTL@@
 					</div>
 					<div class="collapsible-body toot-reset" id="ltl-after"></div>
 				</li>
-				<li class="dm-hide">
+				<li class="dm-hide contextTool">
 					<div class="collapsible-header">
 						<i class="material-icons">person_outline</i>@@afterUTL@@
 					</div>
 					<div class="collapsible-body toot-reset" id="user-after"></div>
 				</li>
-				<li class="dm-hide">
+				<li class="dm-hide contextTool">
 					<div class="collapsible-header"><i class="material-icons">language</i>@@afterFTL@@</div>
 					<div class="collapsible-body toot-reset" id="ftl-after"></div>
 				</li>
 				<li>
 					<div class="collapsible-header">
 						<i class="material-icons">arrow_upward</i>@@contextBefore@@
+						<i class="material-icons red-text hide" id="toot-reply-new">new_releases</i>
 					</div>
 					<div class="collapsible-body toot-reset" id="toot-reply"></div>
 				</li>
@@ -423,16 +424,17 @@
 				<li>
 					<div class="collapsible-header">
 						<i class="material-icons">arrow_downward</i>@@contextAfter@@
+						<i class="material-icons red-text hide" id="toot-after-new">new_releases</i>
 					</div>
 					<div class="collapsible-body toot-reset" id="toot-after"></div>
 				</li>
-				<li class="dm-hide">
+				<li class="dm-hide contextTool">
 					<div class="collapsible-header">
 						<i class="material-icons">people_outline</i>@@beforeLTL@@
 					</div>
 					<div class="collapsible-body toot-reset" id="toot-before"></div>
 				</li>
-				<li class="dm-hide">
+				<li class="dm-hide contextTool">
 					<div class="collapsible-header">
 						<i class="material-icons">person_outline</i>@@beforeUTL@@
 					</div>

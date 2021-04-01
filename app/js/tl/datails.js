@@ -5,6 +5,12 @@ function details(id, acct_id, tlid, mode) {
 	} else {
 		$('.dm-hide').show()
 	}
+	const context = localStorage.getItem('moreContext')
+	if(context != 'yes') {
+		$('.contextTool').hide()
+	} else {
+		$('.contextTool').show()
+	}
 	$('.toot-reset').html('<span class="no-data">' + lang.lang_details_nodata + '</span>')
 	var html = $('#timeline_' + tlid + ' [toot-id=' + id + ']').html()
 	$('#toot-this').html(html)
@@ -222,6 +228,10 @@ function getContext(id, acct_id) {
 				var templete = parse(json.descendants, '', acct_id, '', '', mute)
 				if (templete != '') {
 					$('#toot-after .no-data').hide()
+					$('#toot-after-new').removeClass('hide')
+				} else {
+					$('#toot-after-new').addClass('hide')
+					$('#toot-after').html('<span class="no-data">' + lang.lang_details_nodata + '</span>')
 				}
 				$('#toot-after').html(templete)
 				$('#toot-after .hide').html(lang.lang_details_filtered)
@@ -230,6 +240,9 @@ function getContext(id, acct_id) {
 				var templete = parse(json.ancestors, '', acct_id, '', '', mute)
 				if (templete != '') {
 					$('#toot-reply .no-data').hide()
+					$('#toot-reply-new').removeClass('hide')
+				} else {
+					$('#toot-reply-new').addClass('hide')
 				}
 				$('#toot-reply').prepend(templete)
 				$('#toot-reply .hide').html(lang.lang_details_filtered)
