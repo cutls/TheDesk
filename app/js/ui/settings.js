@@ -760,7 +760,7 @@ function pluginLoad() {
 	Object.keys(args).forEach(function (key) {
 		var theme = args[key]
 		var themeid = theme.id
-		template = template + `<option value="${themeid}">${getMeta(theme.content).name}</option>`
+		template = template + `<option value="${themeid}">${getMeta(theme.content).data.name}</option>`
 	})
 	template = '<option value="add_new">' + $('#plugin-selector').attr('data-add') + '</option>' + template
 	$('#plugin-edit-sel').html(template)
@@ -770,7 +770,7 @@ function pluginEdit() {
 	var id = $('#plugin-edit-sel').val()
 	$('#plugin').attr('data-id', id)
 	if (id == 'add_new') {
-		$('#plugin').val('')
+		editor.setValue('', -1)
 		$(".plugin_delete").addClass('disabled')
 	} else {
 		$(".plugin_delete").removeClass('disabled')
@@ -779,7 +779,7 @@ function pluginEdit() {
 		Object.keys(args).forEach(function (key) {
 			var plugin = args[key]
 			var targetId = plugin.id
-			if (targetId == id) $('#plugin').val(plugin.content)
+			if (targetId == id) editor.setValue(plugin.content, -1)
 		})
 	}
 }
@@ -788,19 +788,21 @@ function completePlugin(comp) {
 	var args = JSON.parse(pgns ? pgns : '[]')
 	var id = $('#plugin').attr('data-id')
 	
-	var inputPlugin = $('#plugin').val()
+	var inputPlugin = editor.getValue()
 	var meta = getMeta(inputPlugin)
-	if (!meta) {
+	if (!meta.data) {
 		Swal.fire({
 			icon: 'error',
-			title: 'error',
+			title: `error on line ${meta.location.start.line}`,
+			text: meta,
 		})
 		return false
 	}
-	if (!meta.name || !meta.version || !meta.event || !meta.author) {
+	if (!meta.data.name || !meta.data.version || !meta.data.event || !meta.data.author) {
 		Swal.fire({
 			icon: 'error',
 			title: 'error',
+			title: 'Syntax Error of META DATA',
 		})
 		return false
 	}
@@ -821,8 +823,21 @@ function completePlugin(comp) {
 	localStorage.setItem('plugins', JSON.stringify(ss))
 	if(comp) return false
 	$('#plugin').attr('data-id', 'add_new')
-	$('#plugin').val('')
+	editor.setValue('', -1)
 	pluginLoad()
+}
+function testExecTrg() {
+	var inputPlugin = editor.getValue()
+	var meta = getMeta(inputPlugin)
+	if (meta.location) {
+		Swal.fire({
+			icon: 'error',
+			title: `error on line ${meta.location.start.line}`,
+			text: meta,
+		})
+		return false
+	}
+	testExec(inputPlugin)
 }
 async function deletePlugin() {
 	const alert = await Swal.fire({
@@ -831,7 +846,7 @@ async function deletePlugin() {
 		showCancelButton: true
 	})
 	if (!alert) return false
-	$('#plugin').val('')
+	editor.setValue('', -1)
 	var pgns = localStorage.getItem('plugins')
 	var args = JSON.parse(pgns ? pgns : '[]')
 	var id = $('#plugin').attr('data-id')
@@ -848,8 +863,8 @@ async function deletePlugin() {
 function execEditPlugin() {
 	completePlugin(true)
 	var id = $('#plugin').attr('data-id')
-	var inputPlugin = $('#plugin').val()
-	var meta = getMeta(inputPlugin)
+	var inputPlugin = editor.getValue()
+	var meta = getMeta(inputPlugin).data
 	execPlugin(id, meta.event, { acct_id: 0, id: null })
 }
 window.onload = function () {

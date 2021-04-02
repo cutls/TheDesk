@@ -9,6 +9,7 @@
   "default": "Default",
   "change": "Change",
   "select": "Select",
+  "exec": "Exec",
   "env": "System Preferences",
   "setlang": "Languages",
   "backup": "Import and export of preferences",

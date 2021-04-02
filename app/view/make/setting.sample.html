@@ -406,10 +406,11 @@
 			</div>
 			<div class="collapsible-body">
 				<a href="https://github.com/cutls/TheDesk/blob/master/plugin.md">@@howToWritePlugin@@</a><br />
-				<textarea id="plugin" data-id="add_new" style="height: 20rem"></textarea>
+				<div id="plugin" data-id="add_new" style="height: 600px"></div>
 				<button class="btn waves-effect" style="width:7.7rem;" onclick="completePlugin()">@@change@@</button>
 				<button class="btn waves-effect red disabled plugin_delete" style="width:7.7rem;"
 					onclick="deletePlugin()">@@delete@@</button>
+				<button class="btn waves-effect" style="width:7.7rem;" onclick="testExecTrg()">@@exec@@</button>
 				<h5>@@pluginList@@</h5>
 				<div style="width:22rem" id="plugin-selector" data-add="@@add_new@@">
 					<select id="plugin-edit-sel" class="custom-sel" onchange="pluginEdit()">
@@ -631,6 +632,26 @@
 	TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
 	タグタイムラインを開く:<a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
 	<script type="text/javascript" src="../../@@node_base@@/lodash/lodash.min.js"></script>
+	<script src="../../js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var editor = ace.edit("plugin");
+		editor.$blockScrolling = Infinity;
+		editor.setOptions({
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: true
+		})
+		editor.setTheme("ace/theme/monokai")
+		editor.getSession().setMode("ace/mode/aiscript")
+		editor.setValue(`### {
+	manifest: 1
+	name: "My First Plugin"
+	version: 1
+	event: "buttonOnPostbox"
+	author: "Cutls P"
+	apiGet: no
+}`, -1)
+	</script>
 	<script type="text/javascript" src="../../js/platform/aiscript.js"></script>
 	<script type="text/javascript" src="../../js/platform/plugin.js"></script>
 	<script type="text/javascript" src="../../js/common/modal.js"></script>

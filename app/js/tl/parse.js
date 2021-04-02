@@ -1023,7 +1023,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 			var pluginBOT = plugins.buttonOnToot
 			var pluginHtml = ''
 			for (let target of pluginBOT) {
-				const meta = getMeta(target.content)
+				const meta = getMeta(target.content).data
 				pluginHtml = pluginHtml + `<li><a onclick="execPlugin('${target.id}','buttonOnToot',{id: '${uniqueid}', acct_id: '${acct_id}'});">${escapeHTML(meta.name)}</a></li>`
 			}
 

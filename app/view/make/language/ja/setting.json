@@ -9,6 +9,7 @@
   "default": "既定",
   "change": "変更",
   "select": "選択",
+  "exec": "実行",
   "env": "環境設定",
   "setlang": "言語",
   "backup": "設定のインポートとエクスポート",
