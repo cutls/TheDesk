@@ -2977,10 +2977,10 @@ istextorbinary@^5.12.0:
     editions "^6.1.0"
     textextensions "^5.11.0"
 
-itunes-nowplaying-mac@0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/itunes-nowplaying-mac/-/itunes-nowplaying-mac-0.3.1.tgz#3f5ee853aef843e66c20ae10b9439303bc1a4986"
-  integrity sha512-kZ/ef1rMzl/CMc1RBh3z99wqijxQgz5Vn1gLCrE1OqRwj9bq2vbgeIqWjJC8iDWZHRolizdTPfKMAbp8yKYFTQ==
+itunes-nowplaying-mac@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/itunes-nowplaying-mac/-/itunes-nowplaying-mac-0.4.0.tgz#c6a71cc411d42bab6a53d3da8f84452c26ec5fb9"
+  integrity sha512-FCrsY8h0UQnGV/0r16djH9BjFNCBW11YlHYLxuVyia1moZ1Ru6hqQGeeiBjZ8t2zWBLXsCg64duU0isLCc3dLA==
 
 jake@^10.6.1:
   version "10.8.2"
