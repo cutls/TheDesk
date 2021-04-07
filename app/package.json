@@ -70,7 +70,7 @@
         "materialize-css": "git://github.com/cutls/materialize#v1-dev",
         "sanitize-html": "^2.3.2",
         "sumchecker": "^3.0.1",
-        "sweetalert2": "^10.15.7",
+        "sweetalert2": "^10.16.0",
         "system-font-families": "^0.4.1",
         "vue": "^2.6.12"
     },
