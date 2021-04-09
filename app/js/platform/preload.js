@@ -54,6 +54,8 @@ onmessage = function(e) {
 		ipc.send('theme-json-request', e.data[1])
 	} else if (e.data[0] == 'ha') {
 		ipc.send('ha', e.data[1])
+	} else if (e.data[0] == 'webviewSetting') {
+		ipc.send('webview', e.data[1])
 	} else if (e.data[0] == 'frameSet') {
 		ipc.send('frameSet', e.data[1])
 	} else if (e.data[0] == 'ua') {
@@ -77,6 +79,8 @@ onmessage = function(e) {
 		ipc.send('copy', e.data[1])
 	} else if (e.data[0] == 'log') {
 		ipc.send('log', e.data[1])
+	} else if (e.data[0] == 'twitterLogin') {
+		ipc.send('twitterLogin', e.data[1])
 	}
 }
 //version.js
@@ -227,9 +231,6 @@ ipc.on('asReadEnd', function(event, arg) {
 ipc.on('accessibility', function(event, arg) {
 	postMessage(['accessibility', 'true'], '*')
 })
-var webviewDom = document.getElementById('webview')
-if (webviewDom) {
-	webviewDom.addEventListener('new-window', function(e) {
-		shell.openExternal(e.url)
-	})
-}
+ipc.on('twitterLoginComplete', function(event, arg) {
+	postMessage(['twitterLoginComplete', ''], '*')
+})

@@ -155,6 +155,26 @@ var envConstruction = [
 		}
 	},
 	{
+		id: 'webview',
+		storage: 'webview_setting',
+		checkbox: true,
+		setValue: false,
+		text: {
+			head: '@@webview@@',
+			desc: '@@webviewWarn@@',
+			checkbox: [
+				{
+					text: '@@yes@@',
+					value: 'true'
+				},
+				{
+					text: '@@no@@',
+					value: 'false'
+				}
+			]
+		}
+	},
+	{
 		id: 'srcUrl',
 		storage: 'srcUrl',
 		checkbox: false,

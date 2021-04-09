@@ -55,7 +55,7 @@
 				<h5>Języki</h5>
 				<div style="display: flex;">
 					<div style="width: 22rem;" id="langsel">
-						<select id="langsel-sel"><option value="ja">日本語</option><option value="ja-KS">日本語(関西)</option><option value="en">English</option><option value="bg">български</option><option value="cs">Česky</option><option value="de">Deutsch</option><option value="es-AR">Español, argentina</option><option value="it-IT">italiano</option><option value="zh-CN">简体中文</option><option value="zh-TW">français</option><option value="fr-FR">繁體中文(β)</option><option value="no-NO">norsk(β)</option><option value="pt-BR">Português, brasileiro(β)</option><option value="ru-RU">русский(β)</option><option value="es-ES">Español(β)</option><option value="pl-PL">Polskie(β)</option><option value="ps">Crowdin translate system(beta)</option></select>
+						<select id="langsel-sel"><option value="ja">日本語</option><option value="ja-KS">日本語(関西)</option><option value="en">English</option><option value="bg">български</option><option value="cs">Česky</option><option value="de">Deutsch</option><option value="es-AR">Español, argentina</option><option value="it-IT">italiano</option><option value="zh-CN">简体中文</option><option value="fr-FR">français</option><option value="zh-TW">繁體中文(β)</option><option value="no-NO">norsk(β)</option><option value="pt-BR">Português, brasileiro(β)</option><option value="ru-RU">русский(β)</option><option value="es-ES">Español(β)</option><option value="pl-PL">Polskie(β)</option><option value="ps">Crowdin translate system(beta)</option></select>
 					</div>
 					<button class="btn waves-effect" onclick="changeLang()">Zmień</button>
 				</div>
@@ -78,7 +78,7 @@
 							<template v-for="(check, j) in item.text.checkbox">
 								<label>
 									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
-										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+										type="radio" v-bind:id="item.id" v-bind:value="check.value" />
 									<span>{{check.text}}</span>
 								</label>
 							</template>
@@ -609,7 +609,7 @@
 		style="width:100%; max-width:40rem;"><img src="../../img/desk_full.svg" class="left" width="25"
 			style="padding-top:5px;">Main author: Cutls@cutls.com</a>
 	<br>
-	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/6e75ea7f374fe887b8956bcb9bdac5524133b865">6e75ea7f374fe887b8956bcb9bdac5524133b865</a> - <a
+	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/816665f7d335ffd75978b96126cf43ecf456e983">816665f7d335ffd75978b96126cf43ecf456e983</a> - <a
 		onclick="checkupd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';"
 		class="pointer pwa">Sprawdź aktualizacje</a><br>
 	<br>
@@ -619,7 +619,7 @@
 		<img src="https://status.cutls.com/badge-service?site=thedesk.top">
 	</a><br>
 	<h5>OSS License</h5>
-	<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/6e75ea7f374fe887b8956bcb9bdac5524133b865"
+	<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/816665f7d335ffd75978b96126cf43ecf456e983"
 		alt="FOSSA Status"><img
 			src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcutls%2FTheDesk.svg?type=small" /></a>
 	<br>

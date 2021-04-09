@@ -185,6 +185,7 @@ function parseColumn(target, dontclose) {
 			}
 			var html = webviewParse('https://tweetdeck.twitter.com', key, insert, icnsert, css)
 			$('#timeline-container').append(html)
+			initWebviewEvent()
 		} else if (acct.type == 'tootsearch') {
 			if (!acct.left_fold) {
 				basekey = key

@@ -3,7 +3,7 @@ window.onload = function () {
 	initPostbox()
 	connection()
 	initPlugin(plugins)
-	if(localStorage.getItem('control-center-np')) $('#ccnp').removeClass('hide')
+	if (localStorage.getItem('control-center-np')) $('#ccnp').removeClass('hide')
 }
 $.strip_tags = function (str, allowed) {
 	if (!str) {
@@ -288,5 +288,25 @@ function statusModel(now) {
 		tags: [],
 		card: null,
 		poll: null
+	}
+}
+function webviewFinder() {
+	const webview = document.querySelector('webview')
+	webview.addEventListener('did-navigate', (e) => {
+		const url = webview.getURL()
+		if (url.match('https://mobile.twitter.com/login')) {
+			postMessage(['twitterLogin', null], '*')
+		} else if (url.match('https://mobile.twitter.com/logout')) {
+			postMessage(['twitterLogin', true], '*')
+		}
+	})
+}
+function initWebviewEvent() {
+	if (document.querySelector('webview')) { webviewFinder() } else {
+		const timerWV = setInterval(function () {
+			document.querySelector('webview')
+				? (webviewFinder(), clearInterval(timerWV))
+				: console.log('まだロード中')
+		}, 500)
 	}
 }

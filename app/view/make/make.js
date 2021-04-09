@@ -29,7 +29,7 @@ function main(ver, basefile, pwa, store) {
 	fs.writeFileSync(basefile + 'git', gitHash)
 	console.log('Constructing view files ' + ver)
 	const langs = ['ja', 'ja-KS', 'en', 'bg', 'cs', 'de',
-	 'es-AR', 'it-IT', 'zh-CN', 'zh-TW', 'fr-FR', 'no-NO', 'pt-BR', 'ru-RU', 'es-ES','pl-PL', 'ps']
+	 'es-AR', 'it-IT', 'zh-CN', 'fr-FR', 'zh-TW', 'no-NO', 'pt-BR', 'ru-RU', 'es-ES','pl-PL', 'ps']
 	const langsh = [
 		'日本語',
 		'日本語(関西)',

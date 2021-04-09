@@ -13,16 +13,18 @@ var envView = new Vue({
 			for (var j = 0; j < ls.length; j++) {
 				M.toast({ html: 'Complete', displayLength: 3000 })
 				var id = ls[j].id
-				var val = $('#' + id).val()
 				localStorage.setItem(ls[j].storage, val)
 			}
-			if (ls == 'ha') {
+			if (ls[0].id == 'ha') {
 				hardwareAcceleration(val)
 			}
-			if (ls == 'ua_setting') {
+			if (ls[0].id == 'webview') {
+				postMessage(['webviewSetting', val], '*')
+			}
+			if (ls[0].id == 'ua_setting') {
 				useragent(val)
 			}
-			if (ls == 'frame') {
+			if (ls[0].id == 'frame') {
 				frameSet(val)
 			}
 			return true
@@ -302,7 +304,7 @@ function oksload() {
 function changeLang() {
 	const lang = $('#langsel-sel').val()
 	console.log(lang)
-	if(lang) postMessage(['lang', lang], '*')
+	if (lang) postMessage(['lang', lang], '*')
 }
 function exportSettings() {
 	var exp = exportSettingsCore()
@@ -787,7 +789,7 @@ function completePlugin(comp) {
 	var pgns = localStorage.getItem('plugins')
 	var args = JSON.parse(pgns ? pgns : '[]')
 	var id = $('#plugin').attr('data-id')
-	
+
 	var inputPlugin = editor.getValue()
 	var meta = getMeta(inputPlugin)
 	if (!meta.data) {
@@ -821,7 +823,7 @@ function completePlugin(comp) {
 	}
 	var ss = args
 	localStorage.setItem('plugins', JSON.stringify(ss))
-	if(comp) return false
+	if (comp) return false
 	$('#plugin').attr('data-id', 'add_new')
 	editor.setValue('', -1)
 	pluginLoad()

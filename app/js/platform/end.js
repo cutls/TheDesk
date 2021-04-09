@@ -198,6 +198,8 @@ onmessage = function (e) {
 			type: 'info',
 			title: e.data[1]
 		})
+	} else if (e.data[0] == 'twitterLoginComplete') {
+		location.reload()
 	}
 }
 /* PWA */

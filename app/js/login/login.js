@@ -537,9 +537,10 @@ function multiSelector(parseC) {
 	}
 	last = last + ''
 	var sel
+	const webview = localStorage.getItem('webview_setting') === 'true'
 	if (obj.length < 1) {
 		$('#src-acct-sel').html('<option value="tootsearch">Tootsearch</option>')
-		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + '</option>')
+		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + `</option>${webview ? `<option value="webview">TweetDeck</option>` : ''}`)
 	} else {
 		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
@@ -610,7 +611,7 @@ function multiSelector(parseC) {
 		$('#add-acct-sel').append(
 			'<option value="noauth">' +
 			lang.lang_login_noauth +
-			'</option><!--option value="webview">Twitter</option-->'
+			`</option>${webview ? `<option value="webview">TweetDeck</option>` : ''}`
 		)
 		$('#dir-acct-sel').append('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	}

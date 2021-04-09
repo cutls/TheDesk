@@ -18,6 +18,8 @@
   "export": "エクスポート",
   "hardwareAcceleration": "ハードウェアアクセラレーションの無効化",
   "hardwareAccelerationWarn": "表示(特に設定画面)が乱れる場合に「はい」を選択してください。自動で再起動します。",
+  "webview": "Webviewの使用",
+  "webviewWarn": "TweetDeckを埋め込むために必要です。セキュリティに影響するため、使用しないときは「いいえ」を選択してください。自動で再起動します。",
   "theme": "テーマの設定",
   "popup": "新規通知のポップアップお知らせの表示秒数",
   "popupwarn": "0に設定すると表示されません",

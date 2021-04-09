@@ -123,6 +123,7 @@ function createWindow() {
 	var info_path = join(app.getPath('userData'), 'window-size.json')
 	var max_info_path = join(app.getPath('userData'), 'max-window-size.json')
 	var ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
+	var wv_path = join(app.getPath('userData'), 'webview')
 	var ua_path = join(app.getPath('userData'), 'useragent')
 	try {
 		fs.readFileSync(ha_path, 'utf8')
@@ -131,6 +132,8 @@ function createWindow() {
 	} catch {
 		if (!packaged) console.log('enabled: Hardware Acceleration')
 	}
+	let webviewEnabled = false
+	if(fs.existsSync(wv_path, 'utf8')) webviewEnabled = true
 	var window_size
 	try {
 		window_size = JSON.parse(fs.readFileSync(info_path, 'utf8'))
@@ -156,7 +159,7 @@ function createWindow() {
 	var bit = process.arch
 	var arg = {
 		webPreferences: {
-			webviewTag: true,
+			webviewTag: webviewEnabled,
 			nodeIntegration: false,
 			contextIsolation: true,
 			spellcheck: false,

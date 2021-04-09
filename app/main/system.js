@@ -9,6 +9,7 @@ function system(mainWindow, dir, lang, dirname) {
 	const clipboard = electron.clipboard
 	var tmp_img = join(app.getPath('userData'), 'tmp.png')
 	var ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
+	var wv_path = join(app.getPath('userData'), 'webview')
 	var ua_path = join(app.getPath('userData'), 'useragent')
 	var lang_path = join(app.getPath('userData'), 'language')
 	var log_dir_path = join(app.getPath('userData'), 'logs')
@@ -100,7 +101,16 @@ function system(mainWindow, dir, lang, dirname) {
 		if (arg == 'true') {
 			fs.writeFileSync(ha_path, arg)
 		} else {
-			fs.unlink(ha_path, function (err) {})
+			fs.unlink(ha_path, function (err) { })
+		}
+		app.relaunch()
+		app.exit()
+	})
+	ipc.on('webview', function (e, arg) {
+		if (arg == 'true') {
+			fs.writeFileSync(wv_path, arg)
+		} else {
+			fs.unlink(wv_path, function (err) { })
 		}
 		app.relaunch()
 		app.exit()
@@ -108,7 +118,7 @@ function system(mainWindow, dir, lang, dirname) {
 	//ユーザーエージェント
 	ipc.on('ua', function (e, arg) {
 		if (arg == '') {
-			fs.unlink(ua_path, function (err) {})
+			fs.unlink(ua_path, function (err) { })
 		} else {
 			fs.writeFileSync(ua_path, arg)
 		}
@@ -298,6 +308,29 @@ function system(mainWindow, dir, lang, dirname) {
 				})
 			})
 		}
+	})
+
+	ipc.on('twitterLogin', (e, args) => {
+		const window = new BrowserWindow({
+			webPreferences: {
+				webviewTag: false,
+				nodeIntegration: false,
+				contextIsolation: true,
+				preload: join(dirname, 'js', 'platform', 'preload.js'),
+			},
+			width: 414,
+			height: 736,
+		})
+		const login = `https://mobile.twitter.com/login?hide_message=true&redirect_after_login=https%3A%2F%2Ftweetdeck.twitter.com%2F%3Fvia_twitter_login%3Dtrue`
+		const logout = `https://mobile.twitter.com/logout?redirect_after_logout=https%3A%2F%2Ftweetdeck.twitter.com%2F`
+		window.loadURL(args ? logout : login)
+		window.webContents.on('did-navigate', () => {
+			const url = window.webContents.getURL()
+			if (url.match("https://tweetdeck.twitter.com")) {
+				window.close()
+				e.sender.webContents.send('twitterLoginComplete', '')
+			}
+		})
 	})
 }
 exports.system = system

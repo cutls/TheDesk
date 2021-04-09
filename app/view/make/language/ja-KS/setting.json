@@ -17,6 +17,8 @@
   "export": "エクスポート",
   "hardwareAcceleration": "ハードウェアアクセラレーションの無効化",
   "hardwareAccelerationWarn": "表示(特に設定画面)があかんときは「はい」を選んでな。再起動入るで。",
+  "webview": "Webviewの使用",
+  "webviewWarn": "TweetDeck使いたかったら「はい」にしてほしいんやけど、セキュリティ的には結構あかんやつやから、使わんのやったらちゃんと「いいえ」にしといてな。再起動入るで。",
   "theme": "テーマの設定",
   "popup": "新規通知のポップアップお知らせの表示秒数",
   "popupwarn": "0にしたら出さへん",
