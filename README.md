@@ -106,7 +106,6 @@ run `yarn dev` to launch developer version with console(click `view`)
 
 Requires XCode(XCode Command Line Tools) to use iTunes NowPlaying
 
-Notarizeが入ります。つまり、認証された(課金したとも言う)デベロッパであるCutlsによるキーチェーンが必要で一般環境からビルドすることができません。これを解除する場合`app/build/notarize.js`を参照してください。**なお、試験実装なのでちゃんとNotarizeできているかどうかを保証しません。**
 Notarize the asset after building. To disable it, see `app/build/notarize.js` (beta)
 
 ### PWA support
