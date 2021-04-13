@@ -21,7 +21,7 @@ const config = {
     },
     win: {
         icon: 'build/thedesk.ico',
-        target: ['nsis', 'appx', 'portable'],
+        target: ['nsis', 'appx', 'portable']
     },
     appx: {
         identityName: '53491Cutls.TheDesk',
