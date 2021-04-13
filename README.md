@@ -100,7 +100,7 @@ yarn install
 yarn build
 ```
 
-run `yarn dev` to launch developer version with console(click `view`)
+run `yarn dev` to launch developer version with console(if close dev mode, you may press Ctrl+C twice.)
 
 ### Restriction with macOS build
 

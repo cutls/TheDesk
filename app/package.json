@@ -61,7 +61,7 @@
         "@fortawesome/fontawesome-free": "^5.15.2",
         "@syuilo/aiscript": "^0.11.1",
         "electron-dl": "^3.2.1",
-        "itunes-nowplaying-mac": "git://github.com/cutls/itunes-nowplaying-mac#157acd5db0108c0de85e225cebaae5e13ecce4f0",
+        "itunes-nowplaying-mac": "git://github.com/cutls/itunes-nowplaying-mac#48fb2970c57dca905a2669897cba82052a9f5a6a",
         "jimp": "^0.16.1",
         "jquery": "^3.6.0",
         "jquery-ui-dist": "^1.12.1",
