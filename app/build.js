@@ -86,7 +86,7 @@ async function cmd() {
                 )
                 fs.renameSync(
                     `../build/TheDesk-setup.exe`,
-                    '../build/TheDesk-setup-ia32-store.exe'
+                    '../build/TheDesk-setup-store.exe'
                 )
             }
         } else if (platform == 'linux') {
