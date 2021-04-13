@@ -24,12 +24,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: cd app && yarn
-    - run: yarn build:all && cd ../
+    - run: cd app && yarn build:all
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "*.exe"
+          asset_path: "build/*.exe"
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "*.appx"
+          asset_path: "build/*.appx"
