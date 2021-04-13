@@ -30,7 +30,7 @@ deploy:
   skip_cleanup: true
   on:
     repo: cutls/TheDesk
-    tags: true
+    tags: false
 branches:
   # only: "/^v?[0-9\\.]+/"
   only: "/.+/"
