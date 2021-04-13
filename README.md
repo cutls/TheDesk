@@ -106,7 +106,7 @@ run `yarn dev` to launch developer version with console(click `view`)
 
 Requires XCode(XCode Command Line Tools) to use iTunes NowPlaying
 
-Notarize the asset after building. To disable it, see `app/build/notarize.js` (beta)
+Built assets should be notarized after building by expensive Apple Developer user. To disable it, see `app/build/notarize.js` (beta)
 
 ### PWA support
 

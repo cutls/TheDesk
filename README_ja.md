@@ -78,14 +78,17 @@ git clone https://github.com/cutls/TheDesk
 cd TheDesk/app
 yarn install
 
-yarn dev
+yarn build
 ```
+
+`yarn dev`でコンソールが出る開発モードで起動します。
 
 ### macOSでビルドするときの制限
 
 完全なビルドにはXCode(XCode Command Line Tools)が必要です。無いままビルドした場合でもおそらくビルドは完了しますが、iTunesのNowPlayingが利用できません。
 
-Notarizeが入ります。つまり、認証された(課金したとも言う)デベロッパであるCutlsによるキーチェーンが必要で一般環境からビルドすることができません。これを解除する場合`app/build/notarize.js`を参照してください。**なお、試験実装なのでちゃんとNotarizeできているかどうかを保証しません。**
+Notarizeが入ります。つまり、認証された(課金したとも言う)デベロッパによるキーチェーンが必要で一般環境からビルドすることができません。配布版はCutlsが行っています。
+これを解除する場合`app/build/notarize.js`を参照してください。**なお、試験実装なのでちゃんとNotarizeできているかどうかを保証しません。**
 
 フォークを世に出す場合や、Cutlsが信用できない場合、自分でMac AppStoreに出す場合など、[自分でNotarizeする必要があるとき](https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/)、[それをCI等で自動化するとき](https://qiita.com/ktmouk/items/7fc27c9ad0e3caf7899d)。
 
