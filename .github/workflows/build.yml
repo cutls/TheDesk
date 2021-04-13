@@ -20,23 +20,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build
+    - name: Setup
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: cd app
-    - run: yarn
-    - run: yarn build:all
-    - run: cd ../
+    - name: Dependency
+      run: cd app && yarn
+    - name: Build
+      run: yarn build:all && cd ../
     - name: Upload Release exe Asset
       id: upload-release-exe
-    - uses: shogo82148/actions-upload-release-asset@v1
+      uses: shogo82148/actions-upload-release-asset@v1
       with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "*.exe"
     - name: Upload Release appx Asset
       id: upload-release-appx
-    - uses: shogo82148/actions-upload-release-asset@v1
+      uses: shogo82148/actions-upload-release-asset@v1
       with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "*.appx"
