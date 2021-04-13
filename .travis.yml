@@ -1,7 +1,9 @@
-os: 
- - windows
- - linux
- - osx
+matrix:
+  include:
+  - os: osx
+    osx_image: xcode11.3
+  - os: linux
+  - os: windows
 language: node_js
 env:
   - YARN_GPG=no
@@ -30,4 +32,5 @@ deploy:
     repo: cutls/TheDesk
     tags: true
 branches:
-  only: "/^v?[0-9\\.]+/"
+  # only: "/^v?[0-9\\.]+/"
+  only: "/.+/"
