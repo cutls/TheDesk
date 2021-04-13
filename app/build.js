@@ -133,8 +133,11 @@ async function cmd() {
                 )
             }
         } else if (platform == 'linux') {
-            if ((isTrue('withIa32') && arch == 'x64') || arch == 'ia32') {
+            if (arch == 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
+            }
+            if ((isTrue('withIa32') && arch == 'x64') ) {
+                console.log('snapcraft does not curretly support builing i386 on amd64')
             }
             if (arch == 'x64') {
                 await build(Platform.LINUX, Arch.x64, config)
