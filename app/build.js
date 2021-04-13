@@ -70,23 +70,30 @@ async function cmd() {
                 await build(Platform.WINDOWS, Arch.ia32, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
-                    '../build/TheDesk-ia32.exe'
+                    '../build/TheDesk-ia32-store.exe'
                 )
                 fs.renameSync(
                     `../build/TheDesk-setup.exe`,
-                    '../build/TheDesk-setup-ia32.exe'
+                    '../build/TheDesk-setup-ia32-store.exe'
                 )
             }
             if (arch == 'x64') {
                 await build(Platform.WINDOWS, Arch.x64, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
-                    '../build/TheDesk.exe'
+                    '../build/TheDesk-store.exe'
+                )
+                fs.renameSync(
+                    `../build/TheDesk-setup.exe`,
+                    '../build/TheDesk-setup-ia32-store.exe'
                 )
             }
         } else if (platform == 'linux') {
-            if ((isTrue('withIa32') && arch == 'x64') || arch == 'ia32') {
+            if (arch == 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
+            }
+            if ((isTrue('withIa32') && arch == 'x64') ) {
+                console.log('snapcraft does not curretly support builing i386 on amd64')
             }
             if (arch == 'x64') {
                 await build(Platform.LINUX, Arch.x64, config)
