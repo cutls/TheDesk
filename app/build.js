@@ -60,6 +60,7 @@ async function build(os, arch, config) {
     await builder.build({
         targets: targets,
         config: config,
+        publish: 'never'
     })
 }
 async function cmd() {
