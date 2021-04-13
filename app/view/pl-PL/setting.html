@@ -78,7 +78,7 @@
 							<template v-for="(check, j) in item.text.checkbox">
 								<label>
 									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
-										type="radio" v-bind:id="item.id" v-bind:value="check.value" />
+										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
 									<span>{{check.text}}</span>
 								</label>
 							</template>
@@ -609,7 +609,7 @@
 		style="width:100%; max-width:40rem;"><img src="../../img/desk_full.svg" class="left" width="25"
 			style="padding-top:5px;">Main author: Cutls@cutls.com</a>
 	<br>
-	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/816665f7d335ffd75978b96126cf43ecf456e983">816665f7d335ffd75978b96126cf43ecf456e983</a> - <a
+	TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/e2c0fda4c956ff5edf31442706fd915ddb9bb17d">e2c0fda4c956ff5edf31442706fd915ddb9bb17d</a> - <a
 		onclick="checkupd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';"
 		class="pointer pwa">Sprawdź aktualizacje</a><br>
 	<br>
@@ -619,7 +619,7 @@
 		<img src="https://status.cutls.com/badge-service?site=thedesk.top">
 	</a><br>
 	<h5>OSS License</h5>
-	<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/816665f7d335ffd75978b96126cf43ecf456e983"
+	<a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/e2c0fda4c956ff5edf31442706fd915ddb9bb17d"
 		alt="FOSSA Status"><img
 			src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcutls%2FTheDesk.svg?type=small" /></a>
 	<br>

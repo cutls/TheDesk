@@ -16,7 +16,7 @@ function np(mainWindow) {
 				title: title,
 				anynp: true
 			}
-			e.sender.webContents.send('itunes-np', ret)
+			e.sender.send('itunes-np', ret)
 		} else {
 			
 				try {
@@ -27,16 +27,16 @@ function np(mainWindow) {
 						if(artwork) {
 							const base64 = artwork.toString('base64')
 							value.artwork = base64
-							e.sender.webContents.send('itunes-np', value)
+							e.sender.send('itunes-np', value)
 						}
 					} catch (error) {
 						console.error(error)
-						e.sender.webContents.send('itunes-np', value)
+						e.sender.send('itunes-np', value)
 					}
 					
 				} catch (error) {
 					console.error(error)
-					e.sender.webContents.send('itunes-np', error)
+					e.sender.send('itunes-np', error)
 				}
 		}
     })

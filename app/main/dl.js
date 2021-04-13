@@ -41,19 +41,19 @@ function dl(mainWindow, lang_path, base, dirname) {
 	//アプデDL
 	ipc.on('download-btn', async (e, args) => {
 		function dl(url, file, dir, e) {
-			e.sender.webContents.send('mess', 'Start...')
+			e.sender.send('mess', 'Start...')
 			const opts = {
 				directory: dir,
 				filename: file,
 				openFolderWhenDone: true,
 				onProgress: function(event) {
-					e.sender.webContents.send('prog', [event, args[2]])
+					e.sender.send('prog', [event, args[2]])
 				},
 				saveAs: false
 			}
 			download(updatewin, url, opts)
 				.then(dl => {
-					e.sender.webContents.send('mess', 'ダウンロードが完了しました。')
+					e.sender.send('mess', 'ダウンロードが完了しました。')
 					app.quit()
 				})
 				.catch(console.error)
@@ -111,7 +111,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 			filename: name,
 			openFolderWhenDone: false,
 			onProgress: function(e) {
-				event.sender.webContents.send('general-dl-prog', e)
+				event.sender.send('general-dl-prog', e)
 			},
 			saveAs: false
 		}
@@ -126,7 +126,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 				} else {
 					var name = dir
 				}
-				event.sender.webContents.send('general-dl-message', name)
+				event.sender.send('general-dl-message', name)
 			})
 			.catch(console.error)
 	})

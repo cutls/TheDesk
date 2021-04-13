@@ -10,7 +10,7 @@ function css(mainWindow) {
 
 	ipc.on('custom-css-create', function (e, arg) {
 		fs.writeFileSync(customcss, arg);
-		e.sender.webContents.send('custom-css-create-complete', "");
+		e.sender.send('custom-css-create-complete', "");
 	})
 	ipc.on('custom-css-request', function (e, arg) {
 		try {
@@ -18,16 +18,16 @@ function css(mainWindow) {
 		} catch (e) {
 			var css = "";
 		}
-		e.sender.webContents.send('custom-css-response', css);
+		e.sender.send('custom-css-response', css);
 	})
 	ipc.on('theme-json-create', function (e, arg) {
 		var themecss = join(app.getPath("userData"), JSON5.parse(arg)["id"] +
 			".thedesktheme");
 		fs.writeFileSync(themecss, JSON5.stringify(JSON5.parse(arg)));
 		if (JSON5.parse(arg)["id"]) {
-			e.sender.webContents.send('theme-json-create-complete', "");
+			e.sender.send('theme-json-create-complete', "");
 		} else {
-			e.sender.webContents.send('theme-json-create-complete', "error");
+			e.sender.send('theme-json-create-complete', "error");
 		}
 	})
 	ipc.on('theme-json-delete', function (e, arg) {
@@ -35,10 +35,10 @@ function css(mainWindow) {
 			var themecss = join(app.getPath("userData"), arg);
 			console.log(themecss);
 			fs.unlink(themecss, function (err) {
-				e.sender.webContents.send('theme-json-delete-complete', "");
+				e.sender.send('theme-json-delete-complete', "");
 			});
 		} catch {
-			e.sender.webContents.send('theme-json-delete-complete', 'cannot delete');
+			e.sender.send('theme-json-delete-complete', 'cannot delete');
 		}
 		
 	})
@@ -52,7 +52,7 @@ function css(mainWindow) {
 			var raw = fs.readFileSync(themecss, 'utf8')
 			var json = JSON5.parse(raw)
 		}
-		e.sender.webContents.send('theme-json-response', [json, raw]);
+		e.sender.send('theme-json-response', [json, raw]);
 	})
 	ipc.on('theme-css-request', function (e, arg) {
 		try {
@@ -149,7 +149,7 @@ function css(mainWindow) {
 			} else {
 				var css = compatibleTheme(json)
 			}
-			e.sender.webContents.send('theme-css-response', css);
+			e.sender.send('theme-css-response', css);
 		} catch (e) {
 			var css = "";
 		}
@@ -270,7 +270,7 @@ function css(mainWindow) {
 				default: false
 			})
 		}
-		e.sender.webContents.send('theme-json-list-response', themes);
+		e.sender.send('theme-json-list-response', themes);
 	})
 }
 exports.css = css;

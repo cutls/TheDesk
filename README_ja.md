@@ -14,7 +14,7 @@ Download:[TheDesk](https://thedesk.top)
 
 [Pixiv FANBOX](https://www.pixiv.net/fanbox/creator/28105985)
 
-`-store.*`とあるアセットはストアやパッケージマネージャ向けのもので、アップデートの確認をソフト本体で行いません。
+`-store.*`とあるアセットはストアやパッケージマネージャ向けのもので、アップデートの確認をソフト本体で行いません。ただし、.snapに関しては-normalが通常、無印がアップデート確認なしバージョンです。
 
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
@@ -42,22 +42,17 @@ Download:[TheDesk](https://thedesk.top)
 * 日本語
 * 日本語(関西)
 * English(英語)
-* ドイツ語, チェコ語, ブルガリア語, イタリア語, スペイン語アルゼンチン方言 (from [Crowdin](https://translate.thedesk.top))
+* ドイツ語, チェコ語, ブルガリア語, イタリア語, スペイン語アルゼンチン方言他 (from [Crowdin](https://translate.thedesk.top))
 
 ### 翻訳
   
 Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.top  
 
-以下、`yarn ***`は全て`npm run ***`で実行できます。(yarnが推奨)
+**yarnを使ってください。その他(npmなど)を使用するとエラーが出ます**
 
 ### デベロッパーモード
 
-`yarn dev`を`app`フォルダ内で実行。  
-ただし、最初に`yarn construct`必須。
-
-watchモード(ホットリロードはしません): `yarn construct`の代わりに`yarn watchview`  
-HTMLや言語定義の変更について、このコマンドで継続監視します。その他のアセットの変更には不要です。  
-プロセス1つを占拠するので、`yarn dev`は他のプロセスで行ってください。
+`yarn dev`を`app`フォルダ内で実行。
 
 ## 主なコントリビューター
 
@@ -75,75 +70,25 @@ Linuxビルダー(現在はTravis CI)
 
 ## ビルド
 
-npmでもyarnでも好きな方を選んでください。Windows環境ではyarnを強く推奨します。
+**yarnを使ってください。その他(npmなど)を使用するとエラーが出ます**
 
-### npm
-
-```sh
-git clone https://github.com/cutls/TheDesk
-cd TheDesk/app
-npm install
-npm install --only=dev
-npm run construct
-```
-
-### yarn
 
 ```sh
 git clone https://github.com/cutls/TheDesk
 cd TheDesk/app
-# Linux or macOS
-yarn install --no-lockfile
-# Windows
 yarn install
 
-yarn construct
+yarn dev
 ```
 
-### electron-builder(推奨)
+### macOSでビルドするときの制限
 
-scriptsを利用します
+完全なビルドにはXCode(XCode Command Line Tools)が必要です。無いままビルドした場合でもおそらくビルドは完了しますが、iTunesのNowPlayingが利用できません。
 
-```sh
-# 実行している環境向けにビルド
-yarn build
+Notarizeが入ります。つまり、認証された(課金したとも言う)デベロッパであるCutlsによるキーチェーンが必要で一般環境からビルドすることができません。これを解除する場合`app/build/notarize.js`を参照してください。**なお、試験実装なのでちゃんとNotarizeできているかどうかを保証しません。**
 
-# ターゲットを指定してビルド
-## Windows
-yarn build:win
+フォークを世に出す場合や、Cutlsが信用できない場合、自分でMac AppStoreに出す場合など、[自分でNotarizeする必要があるとき](https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/)、[それをCI等で自動化するとき](https://qiita.com/ktmouk/items/7fc27c9ad0e3caf7899d)。
 
-## macOS向けのビルドにはmacOSで実行する必要があるためこのコマンドではビルドされません
-yarn build:all
-```
-
-
-ビルド設定はすべてpackage.jsonに記載しています。  
-
-### electron-packager(非推奨)
-`yarn -D electron-rebuild`  
-  
-Linux/macOS  
-`./node_modules/.bin/electron-rebuild`  
-Windows  
-`.\node_modules\.bin\electron-rebuild.cmd`  
-  
-WindowsでPython 2.xやVisualC++を一発でインストールできるツールもあります(`npm install --save-dev electron-rebuild`の前に)  
-`npm install --global windows-build-tools`  
-  
-日本語話者向けですが、macOSビルドにはXCodeが要るとの情報があります。([とねぢ](https://minohdon.jp/@toneji)氏談)  
-
-Windows  
-```
-electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --win32metadata.CompanyName="TheDesk&Cutls.com" --win32metadata.FileDescription="TheDesk" --win32metadata.OriginalFilename="TheDesk" --win32metadata.InternalName="TheDesk" --win32metadata.ProductName="TheDesk" --platform=win32 --arch=all --electron-version=4.0.5 --icon=.\app\thedesk.ico --overwrite
-```  
-Linux  
-```
-electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=linux --arch=x64,ia32 --electron-version=4.0.5 --overwrite
-```  
-macOS  
-```
-electron-packager ./app TheDesk --executable-name="TheDesk" --app-copyright="Copyright (c) TheDesk 2018 Cutls.com 2015 All Right Reserved" --platform=darwin --arch=all --electron-version=4.0.5 --icon=./app/icon.icns --overwrite
-```  
 
 ### PWAとして実行
 

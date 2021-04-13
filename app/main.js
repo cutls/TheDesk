@@ -239,7 +239,7 @@ function createWindow() {
 			e.preventDefault()
 		}
 		const promise = new Promise(function (resolve) {
-			mainWindow.webContents.send('asReadEnd', '')
+			mainWindow.send('asReadEnd', '')
 			let wait = 3000
 			const url = mainWindow.webContents.getURL()
 			if(!url.match(/index.html/)) wait = 0
@@ -286,7 +286,7 @@ function createWindow() {
 	})
 	mainWindow.on('minimize', function () {
 		writePos(mainWindow)
-		mainWindow.webContents.send('asRead', '')
+		mainWindow.send('asRead', '')
 	})
 
 	var platform = process.platform
@@ -322,7 +322,7 @@ function mouseTrack(mainWindow) {
 		if (unchanged > 60 && !locked) {
 			unchanged = 0
 			locked = true
-			mainWindow.webContents.send('asRead', '')
+			mainWindow.send('asRead', '')
 		}
 	}
 	x = xNow

@@ -26,14 +26,14 @@ function img(mainWindow, dir) {
 		for (var i = 0; i < fileNames.length; i++) {
 			var path = fileNames[i]
 			var bin = fs.readFileSync(path, 'base64')
-			e.sender.webContents.send('resizeJudgement', [bin, 'new'])
+			e.sender.send('resizeJudgement', [bin, 'new'])
 		}
 	})
 	ipc.on('bmp-image', (e, args) => {
 		Jimp.read(args[0], function (err, lenna) {
 			if (err) throw err
 			lenna.getBase64(Jimp.MIME_PNG, function (err, src) {
-				e.sender.webContents.send('bmp-img-comp', [src, args[1]])
+				e.sender.send('bmp-img-comp', [src, args[1]])
 			})
 		})
 	})
@@ -49,7 +49,7 @@ function img(mainWindow, dir) {
 		Jimp.read(decodedFile, function (err, lenna) {
 			if (err) throw err
 			lenna.scaleToFit(args[1], args[1]).getBase64(Jimp[use], function (err, src) {
-				e.sender.webContents.send('bmp-img-comp', [src, args[1]])
+				e.sender.send('bmp-img-comp', [src, args[1]])
 			})
 		})
 	})
@@ -71,12 +71,12 @@ function img(mainWindow, dir) {
 				var ave = (color.r + color.g + color.b) / 3
 				if (ave > 128) {
 					image.print(font, left, top, args[1]).getBase64(Jimp.MIME_PNG, function (err, src) {
-						e.sender.webContents.send('bmp-img-comp', [src, args[1], true])
+						e.sender.send('bmp-img-comp', [src, args[1], true])
 					})
 				} else {
 					Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then((font) => {
 						image.print(font, left, top, args[1]).getBase64(Jimp.MIME_PNG, function (err, src) {
-							e.sender.webContents.send('bmp-img-comp', [src, args[1], true])
+							e.sender.send('bmp-img-comp', [src, args[1], true])
 						})
 					})
 				}

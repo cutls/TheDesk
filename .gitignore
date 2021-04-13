@@ -33,3 +33,7 @@ app/view/zh-CN
 app/view/ru-RU
 app/view/zh-TW
 app/view/pt-BR
+app/build.js
+app/view/make/make.js
+app/view/make/makeCli.ts
+app/.env

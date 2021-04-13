@@ -36,13 +36,13 @@ function system(mainWindow, dir, lang, dirname) {
 		} catch {
 			var gitHash = null
 		}
-		e.sender.webContents.send('platform', [process.platform, process.arch, process.version, process.versions.chrome, process.versions.electron, gitHash])
+		e.sender.send('platform', [process.platform, process.arch, process.version, process.versions.chrome, process.versions.electron, gitHash])
 	})
 	//言語
 	ipc.on('lang', function (e, arg) {
 		console.log('set:' + arg)
 		fs.writeFileSync(lang_path, arg)
-		e.sender.webContents.send('langres', arg)
+		e.sender.send('langres', arg)
 	})
 	//エクスポートのダイアログ
 	ipc.on('exportSettings', function (e, args) {
@@ -54,7 +54,7 @@ function system(mainWindow, dir, lang, dirname) {
 		if (!savedFiles) {
 			return false
 		}
-		e.sender.webContents.send('exportSettingsFile', savedFiles)
+		e.sender.send('exportSettingsFile', savedFiles)
 	})
 	//インポートのダイアログ
 	ipc.on('importSettings', function (e, args) {
@@ -67,7 +67,7 @@ function system(mainWindow, dir, lang, dirname) {
 		if (!fileNames) {
 			return false
 		}
-		e.sender.webContents.send('config', JSON5.parse(fs.readFileSync(fileNames[0], 'utf8')))
+		e.sender.send('config', JSON5.parse(fs.readFileSync(fileNames[0], 'utf8')))
 	})
 	//保存フォルダのダイアログ
 	ipc.on('savefolder', function (e, args) {
@@ -78,7 +78,7 @@ function system(mainWindow, dir, lang, dirname) {
 				properties: ['openDirectory'],
 			}
 		)
-		e.sender.webContents.send('savefolder', fileNames[0])
+		e.sender.send('savefolder', fileNames[0])
 	})
 	//カスタムサウンドのダイアログ
 	ipc.on('customSound', function (e, arg) {
@@ -93,7 +93,7 @@ function system(mainWindow, dir, lang, dirname) {
 				],
 			}
 		)
-		e.sender.webContents.send('customSoundRender', [arg, fileNames[0]])
+		e.sender.send('customSoundRender', [arg, fileNames[0]])
 	})
 
 	//ハードウェアアクセラレーションの無効化
@@ -134,7 +134,7 @@ function system(mainWindow, dir, lang, dirname) {
 	//スクリーンリーダー
 	ipc.on('acsCheck', function (e, arg) {
 		if (app.accessibilitySupportEnabled) {
-			mainWindow.webContents.send('accessibility', 'true')
+			mainWindow.send('accessibility', 'true')
 		}
 	})
 	ipc.on('quit', (e, args) => {
@@ -198,8 +198,8 @@ function system(mainWindow, dir, lang, dirname) {
 	})
 	function mems() {
 		var mem = os.totalmem() - os.freemem()
-		if (mainWindow && event.webContents) {
-			event.webContents.send('memory', [mem, os.cpus()[0].model, os.totalmem(), os.cpus().length, os.uptime()])
+		if (mainWindow && event) {
+			event.send('memory', [mem, os.cpus()[0].model, os.totalmem(), os.cpus().length, os.uptime()])
 		}
 	}
 	ipc.on('endmem', (e, arg) => {
@@ -210,7 +210,7 @@ function system(mainWindow, dir, lang, dirname) {
 
 	ipc.on('export', (e, args) => {
 		fs.writeFileSync(args[0], JSON5.stringify(args[1]))
-		e.sender.webContents.send('exportAllComplete', '')
+		e.sender.send('exportAllComplete', '')
 	})
 	//フォント
 	function object_array_sort(data, key, order, fn) {
@@ -249,7 +249,7 @@ function system(mainWindow, dir, lang, dirname) {
 		var SystemFonts = require('system-font-families').default
 		var fm = new SystemFonts()
 		const fontList = fm.getFontsSync()
-		e.sender.webContents.send('font-list', fontList)
+		e.sender.send('font-list', fontList)
 	})
 	//コピー
 	ipc.on('copy', (e, arg) => {
@@ -286,7 +286,7 @@ function system(mainWindow, dir, lang, dirname) {
 				logs = todayLog + yestLog + yest2Log
 			})
 			logs = yest2Log + yestLog + todayLog
-			e.sender.webContents.send('logData', logs)
+			e.sender.send('logData', logs)
 		})
 	})
 
@@ -328,7 +328,7 @@ function system(mainWindow, dir, lang, dirname) {
 			const url = window.webContents.getURL()
 			if (url.match("https://tweetdeck.twitter.com")) {
 				window.close()
-				e.sender.webContents.send('twitterLoginComplete', '')
+				e.sender.send('twitterLoginComplete', '')
 			}
 		})
 	})

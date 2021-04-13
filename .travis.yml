@@ -6,49 +6,14 @@ language: node_js
 env:
   - YARN_GPG=no
 node_js:
-- '12.17.0'
+- '14.16.1'
 cache:
   yarn: true
 script: node -v
 before_deploy:
-  - yarn global add electron-builder
-  - yarn global add browserify
   - cd app
-  - VERSION=$(cat package.json | grep version | head -1 | awk -F= "{ print $2 }" | sed 's/[version:,\",]//g' | tr -d '[[:space:]]')
-  - yarn install --no-lockfile --prod
-  - yarn construct:store
-  - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ];then cd ../build;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ];then mv *.dmg TheDesk-$VERSION-store.dmg;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ];then cd ../app;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux snap:x64 -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../build;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv *.snap TheDesk-$VERSION-store.snap;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../app;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then yarn add electron-builder;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win appx:x64 -p never ;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv *.appx TheDesk-$VERSION-store.appx;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../app;else :;fi
-  - yarn construct
-  - if [ "$TRAVIS_OS_NAME" = "osx" ];then electron-builder --mac -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then electron-builder --linux --x64 -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../build;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then ls;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then mv thedesk-*.zip thedesk.zip;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ];then cd ../app;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win --ia32 -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then ls;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv TheDesk-setup.exe TheDesk-setup-ia32.exe;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv *$VERSION.exe TheDesk-ia32.exe;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../app;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then electron-builder --win --x64 -p never;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../build;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then ls;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv ../build/TheDesk-setup.exe ../build/TheDesk-setup.exe;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then mv ../build/*$VERSION.exe ../build/TheDesk.exe;else :;fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ];then cd ../app;else :;fi
+  - yarn
+  - yarn build:all
   - cd ../
   - ls build
 deploy:

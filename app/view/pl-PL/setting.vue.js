@@ -160,8 +160,8 @@ var envConstruction = [
 		checkbox: true,
 		setValue: false,
 		text: {
-			head: 'undefined',
-			desc: 'undefined',
+			head: 'Webview Integration',
+			desc: 'To use TweetDeck Integration, please turn on. You should understand it may lessen security level.',
 			checkbox: [
 				{
 					text: 'Tak',
