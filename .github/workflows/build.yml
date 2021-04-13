@@ -1,0 +1,35 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: TheDesk Build
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: cd app && yarn
+    - run: cd app && yarn build:all
+    - uses: shogo82148/actions-upload-release-asset@v1
+      with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/*.exe"
+    - uses: shogo82148/actions-upload-release-asset@v1
+      with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/*.appx"
