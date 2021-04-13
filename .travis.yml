@@ -2,8 +2,6 @@ matrix:
   include:
   - os: osx
     osx_image: xcode11.3
-  - os: linux
-  - os: windows
 language: node_js
 env:
   - YARN_GPG=no
