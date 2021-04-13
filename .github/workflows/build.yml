@@ -19,25 +19,17 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Setup
-      uses: actions/setup-node@v2
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Dependency
-      run: cd app && yarn
-    - name: Build
-      run: yarn build:all && cd ../
-    - name: Upload Release exe Asset
-      id: upload-release-exe
-      uses: shogo82148/actions-upload-release-asset@v1
+    - run: cd app && yarn
+    - run: yarn build:all && cd ../
+    - uses: shogo82148/actions-upload-release-asset@v1
       with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "*.exe"
-    - name: Upload Release appx Asset
-      id: upload-release-appx
-      uses: shogo82148/actions-upload-release-asset@v1
+    - uses: shogo82148/actions-upload-release-asset@v1
       with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "*.appx"
