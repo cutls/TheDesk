@@ -37,7 +37,6 @@ const config = {
         artifactName: 'TheDesk-setup.${ext}',
     },
     linux: {
-        icon: 'build/icons',
         target: ['zip', 'appImage', 'snap', 'deb'],
         category: 'Network',
     },
