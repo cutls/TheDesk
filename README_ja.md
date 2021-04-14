@@ -14,8 +14,6 @@ Download:[TheDesk](https://thedesk.top)
 
 [Pixiv FANBOX](https://www.pixiv.net/fanbox/creator/28105985)
 
-`-store.*`とあるアセットはストアやパッケージマネージャ向けのもので、アップデートの確認をソフト本体で行いません。ただし、.snapに関しては-normalが通常、無印がアップデート確認なしバージョンです。
-
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
 ## 翻訳

@@ -17,20 +17,6 @@ Download:[TheDesk](https://thedesk.top)
 <a href="https://liberapay.com/cutls/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
-## GitHub Releases notice
-
-### For Windows and macOS
-
-On GitHub Releases, `-store.*` assets are made for some application store or manager(Homebrew, Microsoft Store). 
-They do not check the latest version(Which you can get the latest ver or not depends on the store)
-
-### For Linux
-
-On GitHub Releases, `-normal.snap` assets are **not** made for Snapcraft. 
-No suffix version .snap does not check if there is the latest version(Which you can get the latest ver or not depends on the store), so it is for Snapcraft.
-
-.deb always checks if there is the latest version
-
 ## Build and Development
 
 See [Wiki](https://github.com/cutls/TheDesk/wiki)
