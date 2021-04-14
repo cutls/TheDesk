@@ -93,7 +93,7 @@ async function cmd() {
             if (arch == 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
             }
-            if ((isTrue('withIa32') && arch == 'x64') ) {
+            if ((isTrue('withIa32') && arch == 'x64')) {
                 console.log('snapcraft does not curretly support builing i386 on amd64')
             }
             if (arch == 'x64') {
@@ -133,11 +133,22 @@ async function cmd() {
                     '../build/TheDesk.exe'
                 )
             }
+            if (isTrue('withArm64')) {
+                await build(Platform.WINDOWS, Arch.arm64, config)
+                fs.renameSync(
+                    `../build/TheDesk ${version}.exe`,
+                    '../build/TheDesk-arm64.exe'
+                )
+                fs.renameSync(
+                    `../build/TheDesk-setup.exe`,
+                    '../build/TheDesk-setup-arm64.exe'
+                )
+            }
         } else if (platform == 'linux') {
             if (arch == 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
             }
-            if ((isTrue('withIa32') && arch == 'x64') ) {
+            if ((isTrue('withIa32') && arch == 'x64')) {
                 console.log('snapcraft does not curretly support builing i386 on amd64')
             }
             if (arch == 'x64') {
