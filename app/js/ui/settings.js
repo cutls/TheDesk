@@ -5,13 +5,13 @@ var envView = new Vue({
 	methods: {
 		complete: function (i, val) {
 			var ls = envView.config[i]
+			let header = ls.text.head
 			if (!ls.data) {
 				ls = [ls]
 			} else {
 				ls = ls.data
 			}
 			for (var j = 0; j < ls.length; j++) {
-				M.toast({ html: 'Complete', displayLength: 3000 })
 				var id = ls[j].id
 				localStorage.setItem(ls[j].storage, val)
 			}
@@ -27,6 +27,7 @@ var envView = new Vue({
 			if (ls[0].id == 'frame') {
 				frameSet(val)
 			}
+			M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
 			return true
 		},
 	},
@@ -37,6 +38,7 @@ var tlView = new Vue({
 	methods: {
 		complete: function (i, val) {
 			var ls = tlView.config[i]
+			let header = ls.text.head
 			if (val) {
 				localStorage.setItem(ls.storage, val)
 			} else {
@@ -46,12 +48,12 @@ var tlView = new Vue({
 					ls = ls.data
 				}
 				for (var j = 0; j < ls.length; j++) {
-					M.toast({ html: 'Complete', displayLength: 3000 })
 					var id = ls[j].id
 					var val = $('#' + id).val()
 					localStorage.setItem(ls[j].storage, val)
 				}
 			}
+			M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
 			return true
 		},
 	},
@@ -66,6 +68,7 @@ var postView = new Vue({
 	methods: {
 		complete: function (i, val) {
 			var ls = postView.config[i]
+			let header = ls.text.head
 			if (val) {
 				localStorage.setItem(ls.storage, val)
 			} else {
@@ -81,6 +84,7 @@ var postView = new Vue({
 					localStorage.setItem(ls[j].storage, val)
 				}
 			}
+			M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
 			return true
 		},
 	},
@@ -310,11 +314,10 @@ function exportSettings() {
 	var exp = exportSettingsCore()
 	$('#imp-exp').val(JSON5.stringify(exp))
 	Swal.fire({
-		title: lang.lang_setting_exportwarn,
+		title: 'Warning',
+		text: lang.lang_setting_exportwarn,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no,
 	}).then((result) => {
@@ -394,11 +397,10 @@ function importSettings() {
 		return false
 	}
 	Swal.fire({
-		title: lang.lang_setting_importwarn,
+		title: 'Warning',
+		text: lang.lang_setting_importwarn,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no,
 	}).then((result) => {
@@ -795,7 +797,8 @@ function completePlugin(comp) {
 	if (!meta.data) {
 		Swal.fire({
 			icon: 'error',
-			title: `error on line ${meta.location.start.line}`,
+			title: 'Syntax Error',
+			text: `error on line ${meta.location.start.line}`,
 			text: meta,
 		})
 		return false
@@ -803,7 +806,7 @@ function completePlugin(comp) {
 	if (!meta.data.name || !meta.data.version || !meta.data.event || !meta.data.author) {
 		Swal.fire({
 			icon: 'error',
-			title: 'error',
+			title: 'Meta data error',
 			title: 'Syntax Error of META DATA',
 		})
 		return false
@@ -834,7 +837,8 @@ function testExecTrg() {
 	if (meta.location) {
 		Swal.fire({
 			icon: 'error',
-			title: `error on line ${meta.location.start.line}`,
+			title: 'Error',
+			text: `error on line ${meta.location.start.line}`,
 			text: meta,
 		})
 		return false
@@ -922,13 +926,13 @@ function checkupd() {
 				if (newest == ver) {
 					Swal.fire({
 						type: 'info',
-						title: lang.lang_setting_noupd,
+						text: lang.lang_setting_noupd,
 						html: ver,
 					})
 				} else if (ver.indexOf('beta') != -1 || winstore) {
 					Swal.fire({
 						type: 'info',
-						title: lang.lang_setting_thisisbeta,
+						text: lang.lang_setting_thisisbeta,
 						html: ver,
 					})
 				} else {

@@ -485,6 +485,17 @@ var tlConstruction = [
 		}
 	},
 	{
+		id: 'small-header',
+		storage: 'smallHeader',
+		checkbox: true,
+		setValue: 'no',
+		text: {
+			head: 'Minimize column headers',
+			desc: '',
+			checkbox: yesno
+		}
+	},
+	{
 		id: 'replySound',
 		storage: 'replySound',
 		checkbox: true,

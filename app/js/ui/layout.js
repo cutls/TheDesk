@@ -326,6 +326,7 @@ function parseColumn(target, dontclose) {
 			} else {
 				markers = false
 			}
+			const smallHeader = localStorage.getItem('smallHeader') === 'yes'
 			if (!markers) {
 				unread = ''
 			}
@@ -372,10 +373,9 @@ function parseColumn(target, dontclose) {
 			}
 			var html = `
 				<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}" data-acct="${acct.domain}" style="${addHeight}">
-					<div class="notice-box z-depth-2" id="menu_${key}" style="${insert}">
+					<div class="notice-box ${smallHeader ? 'small-header' : ''} z-depth-2" id="menu_${key}" style="${insert}">
 						<div class="area-notice">
-							<i class="material-icons waves-effect ${isMisRed} notice_icon_acct_${acct.domain}" id="notice_icon_${key}" ${notf_attr}
-								 style="font-size:40px; padding-top:25%;" 
+							<i class="material-icons waves-effect ${isMisRed} notice_icon_acct_${acct.domain} top-icon" id="notice_icon_${key}" ${notf_attr} 
 								 onclick="checkStr('${acct.type}','${data}','${acct.domain}', '${key}', '${delc}','${voice}',null)"
 							 	 title="${lang.lang_layout_gotop}" aria-hidden="true">
 							</i>
@@ -398,10 +398,10 @@ function parseColumn(target, dontclose) {
 						${if_tag_btn}
 					</div>
 					<div class="area-sta">
-						<span class="new badge teal notf-reply_${acct.domain} hide" data-badge-caption="Reply" aria-hidden="true">0</span>
-						<span class="new badge yellow black-text notf-fav_${acct.domain} hide" data-badge-caption="Fav" aria-hidden="true">0</span>
+						<span class="new badge teal notf-reply_${acct.domain} hide" data-badge-caption="Rp" aria-hidden="true">0</span>
+						<span class="new badge yellow black-text notf-fav_${acct.domain} hide" data-badge-caption="Fv" aria-hidden="true">0</span>
 						<span class="new badge blue notf-bt_${acct.domain} hide" data-badge-caption="BT" aria-hidden="true">0</span>
-						<span class="new badge orange notf-follow_${acct.domain} hide" data-badge-caption="Follow" aria-hidden="true">0</span>
+						<span class="new badge orange notf-follow_${acct.domain} hide" data-badge-caption="Fw" aria-hidden="true">0</span>
 					</div>
 					<div class="area-a2">
 						<a onclick="removeColumn('${key}')" class="setting nex">
@@ -644,8 +644,6 @@ function removeColumn(tlid) {
 		text: lang.lang_layout_deleteColumnDesc,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no,
 	}).then((result) => {

@@ -415,6 +415,7 @@ function notfCanceler(acct) {
 	$('.notf-icon_' + acct).removeClass('red-text')
 	var id = $('#announce_' + acct + ' .announcement').first().attr('data-id')
 	$('.notf-announ_' + acct + '_ct').text("")
+	$(`.boxIn[data-acct=${acct}] .notice-box`).removeClass('has-notf')
 	if(id) {
 		localStorage.setItem('announ_' + acct, id)
 	}

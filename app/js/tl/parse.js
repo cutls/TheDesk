@@ -290,6 +290,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 						$('.notf-reply_' + acct_id).text(replyct * 1 - -1)
 						localStorage.setItem('notf-reply_' + acct_id, replyct * 1 - -1)
 						$('.notf-reply_' + acct_id).removeClass('hide')
+						$(`.boxIn[data-acct=${acct_id}] .notice-box`).addClass('has-notf')
 						var sound = localStorage.getItem('replySound')
 						if (sound == 'default') {
 							var file = '../../source/notif3.wav'
@@ -299,6 +300,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 						$('.notf-bt_' + acct_id).text(btct * 1 - -1)
 						localStorage.setItem('notf-bt_' + acct_id, btct * 1 - -1)
 						$('.notf-bt_' + acct_id).removeClass('hide')
+						$(`.boxIn[data-acct=${acct_id}] .notice-box`).addClass('has-notf')
 						var sound = localStorage.getItem('btSound')
 						if (sound == 'default') {
 							var file = '../../source/notif2.wav'
@@ -308,6 +310,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 						$('.notf-fav_' + acct_id).text(favct * 1 - -1)
 						localStorage.setItem('notf-fav_' + acct_id, favct * 1 - -1)
 						$('.notf-fav_' + acct_id).removeClass('hide')
+						$(`.boxIn[data-acct=${acct_id}] .notice-box`).addClass('has-notf')
 						var sound = localStorage.getItem('favSound')
 						if (sound == 'default') {
 							var file = '../../source/notif.wav'
@@ -1370,8 +1373,6 @@ function client(name) {
 			text: name + lang.lang_parse_clienttxt,
 			type: 'info',
 			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#3085d6',
 			confirmButtonText: lang.lang_parse_clientmute,
 			cancelButtonText: lang.lang_parse_clientemp,
 			showCloseButton: true,

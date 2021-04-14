@@ -118,6 +118,7 @@
   "remote_imgWarn": "プレビューはログインサーバーのキャッシュからどちらにしろ取得する。ビューワーのみに適用されるで。",
   "moreContextMode": "コンテキストツール",
   "moreContextModeWarn": "トゥート詳細の、トゥート前後のトゥートを表示する機能",
+  "smallHeader": "カラムのヘッダーの高さを小さくする",
   "replySound": "リプライの通知音",
   "favSound": "お気に入り登録の通知音",
   "btSound": "ブーストの通知音",
