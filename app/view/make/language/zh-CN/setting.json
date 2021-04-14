@@ -119,6 +119,7 @@
   "remote_imgWarn": "All previews are got from your loginned cache server.",
   "moreContextMode": "Context Tool",
   "moreContextModeWarn": "On detail of the toot modal, show toots before / after the toot on LTL, FTL, UTL",
+  "smallHeader": "Minimize column headers",
   "replySound": "Sound(Reply)",
   "favSound": "Sound(Fav)",
   "btSound": "Sound(Boost)",
