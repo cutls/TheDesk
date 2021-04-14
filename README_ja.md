@@ -37,11 +37,8 @@ Issuesに書いてある問題についてはなるべく対処しますので�
 
 ## ライセンス
 
-[GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  
-[License of other assets](https://github.com/cutls/TheDesk/wiki/License-of-other-assets)
-
-### プライバシーポリシー
-
+* [GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)
+* [License of other assets](https://github.com/cutls/TheDesk/wiki/License-of-other-assets)
 * [プライバシーポリシー](https://thedesk.top/priv.html)
 
 ## 主なコントリビューター
