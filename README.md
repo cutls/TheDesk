@@ -54,62 +54,9 @@ The default sounds of notifications is provided [Creative Commons BY](https://cr
 
 Crowdin project is available! Visit: https://translate.thedesk.top
 
-## Development
+## Build and Development
 
- to launch developer version with console(if close dev mode, you may press Ctrl+C twice.)
-
-**Strongly recommend to use yarn, not npm**
-
-```sh
-git clone https://github.com/cutls/TheDesk
-cd TheDesk/app
-yarn install
-
-yarn dev
-```
-
-## Build
-
-**Strongly recommend to use yarn, not npm**
-
-```sh
-git clone https://github.com/cutls/TheDesk
-cd TheDesk/app
-yarn install
-
-yarn build
-```
-
-### Options
-
-Look at `yarn build --help`
-
-### Restriction with macOS build
-
-Requires XCode(XCode Command Line Tools) to use iTunes NowPlaying
-
-Built assets should be notarized after building by expensive Apple Developer user. To disable it, see `app/build/notarize.js` (beta)
-
-### Programatic build
-
-TheDesk builder has type declaration for TypeScript.
-
-```ts
-import build from './app/builder'
-build()
-```
-
-
-### PWA build
-
-TheDesk is a web-based app, so you can run it on a browser. Of course, the main stream is as Electron. Some features won't work as well as Electron.
-
-You can run `yarn build:pwa` to build as PWA, including `manifest.json` and the ServiceWorker.
-
-**You have to rename `node_modules` to `dependencies` to run as a web application. (restricted by Netlify, but always you should do to run as PWA)**
-
-Check the app on Chrome or Firefox: [Here](https://app.thedesk.top) (it follows the `master` branch, so not stable.)  
-[![Netlify Status](https://api.netlify.com/api/v1/badges/6916503b-2882-43f7-9681-ab814e6d28f9/deploy-status)](https://app.netlify.com/sites/thedesk/deploys)
+See [Wiki](https://github.com/cutls/TheDesk/wiki)
 
 ## Pleroma support
 

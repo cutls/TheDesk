@@ -43,65 +43,7 @@ Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.
 
 ## ビルドと開発
 
-**npmではなくyarnを使ってください。**
-
-### 開発
-
-コンソールが出る開発モードで起動します。並行して監視が走る関係上、Ctrl+Cを2回押さないと終了しない場合があります。
-
-```sh
-git clone https://github.com/cutls/TheDesk
-cd TheDesk/app
-yarn install
-
-yarn dev
-```
-
-**npmではなくyarnを使ってください。**
-
-### ビルド
-
-```sh
-git clone https://github.com/cutls/TheDesk
-cd TheDesk/app
-yarn install
-
-yarn build
-```
-
-### オプション
-
-`yarn build --help`参照。
-
-### macOSでビルドするときの制限
-
-完全なビルドにはXCode(XCode Command Line Tools)が必要です。無いままビルドした場合でもおそらくビルドは完了しますが、iTunesのNowPlayingが利用できません。
-
-Notarizeが入ります。つまり、認証された(課金したとも言う)デベロッパによるキーチェーンが必要で一般環境からビルドすることができません。配布版はCutlsが行っています。
-これを解除する場合`app/build/notarize.js`を参照してください。**なお、試験実装なのでちゃんとNotarizeできているかどうかを保証しません。**
-
-フォークを世に出す場合や、Cutlsが信用できない場合、自分でMac AppStoreに出す場合など、[自分でNotarizeする必要があるとき](https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/)、[それをCI等で自動化するとき](https://qiita.com/ktmouk/items/7fc27c9ad0e3caf7899d)。
-
-
-### プログラムでビルド
-
-TypeScript用の型定義を持っています。
-
-```ts
-import build from './app/builder'
-build()
-```
-
-### PWAとしてビルド
-
-TheDeskはウェブ技術を使用して作られているので、ブラウザで動かすこともできます。もちろん、Electron向けに設計されているので一部機能は動きません。
-
-`yarn build:pwa`でビルドできます。PWAに必要な`manifest.json`やサービスワーカーなども用意されています。
-
-**`node_modules`を`dependencies`にリネームしないと動きません。(Netlifyの制限ですが、Netlify以外で動かす場合にも必須です)**
-
-ChromeまたはFirefoxでチェック: [こちら](https://app.thedesk.top) (`master`ブランチに追従しています。不安定です。)  
-[![Netlify Status](https://api.netlify.com/api/v1/badges/6916503b-2882-43f7-9681-ab814e6d28f9/deploy-status)](https://app.netlify.com/sites/thedesk/deploys)
+[Wiki](https://github.com/cutls/TheDesk/wiki)を参照。
 
 ## Pleromaのサポート
 

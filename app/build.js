@@ -8,7 +8,6 @@ const version = data.version
 const codename = data.codename
 const ver = `${version} (${codename})`
 const construct = require('./view/make/make.js')
-const { ModuleResolutionKind } = require('typescript')
 const { platform, arch } = process
 const Platform = builder.Platform
 const Arch = builder.Arch
@@ -70,7 +69,7 @@ async function cmd(options) {
     if (isTrue(options, 'onlyStore') || isTrue(options, 'withStore')) {
         console.log('start building for application stores')
         construct(ver, basefile, false, true)
-        if (platform == 'win32') {
+        if ((platform == 'win32' && !isTrue(options, 'skiWindows')) || isTrue(options, 'windows', 'w')) {
             if ((isTrue(options, 'withIa32') && arch == 'x64') || arch == 'ia32') {
                 await build(Platform.WINDOWS, Arch.ia32, config)
                 fs.renameSync(
@@ -93,7 +92,8 @@ async function cmd(options) {
                     '../build/TheDesk-setup-store.exe'
                 )
             }
-        } else if (platform == 'linux') {
+        }
+        if ((platform == 'linux' && !isTrue(options, 'skipLinux')) || isTrue(options, 'linux', 'l')) {
             if (arch == 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
             }
@@ -109,16 +109,12 @@ async function cmd(options) {
                     )
                 }
             }
-        } else if (platform == 'darwin') {
-            console.log('Mac App Store should be use electron-packager')
-        } else {
-            return false
         }
     }
     if (!isTrue(options, 'onlyStore')) {
         console.log('start building for normal usage')
         construct(ver, basefile, false, false)
-        if (platform == 'win32') {
+        if ((platform == 'win32' && !isTrue(options, 'skiWindows')) || isTrue(options, 'windows', 'w')) {
             if ((isTrue(options, 'withIa32') && arch == 'x64') || arch == 'ia32') {
                 await build(Platform.WINDOWS, Arch.ia32, config)
                 fs.renameSync(
@@ -148,7 +144,8 @@ async function cmd(options) {
                     '../build/TheDesk-setup-arm64.exe'
                 )
             }
-        } else if (platform == 'linux') {
+        }
+        if ((platform == 'linux' && !isTrue(options, 'skipLinux')) || isTrue(options, 'linux', 'l')) {
             if (arch == 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
             }
@@ -168,10 +165,10 @@ async function cmd(options) {
                     )
                 }
             }
-        } else if (platform == 'darwin') {
+        }
+        if (platform == 'darwin' && !isTrue(options, 'skipMacOS')) {
+            if(isTrue(options, 'unnotarize')) delete config.afterSign
             await build(Platform.MAC, Arch.x64, config)
-        } else {
-            return false
         }
     }
 }
@@ -190,16 +187,27 @@ TheDesk Builder command tool
 
     --help or -h: show help
 
-    --onlyStore: App Store of platforms assets(without update check)
-    --withStore: App Store assets and normal version
+    [Build for other platforms]
+    --windows (-w)
+    --linux (-l)
+
+    --skipWindows
+    --skipLinux
+    --skipMacOS
+        To skip building for itself platform.
+
+
+    [only Windows, Linux]
+    --onlyStore: application store of platforms assets(without update check)
+    --withStore: application store assets and normal version
 
     [only Windows]
-    if you pass these args on Linux or macOS, it just will be ignored...
 
     --withIa32: ia32 build on x64 system(if your machine is ia32, it will be built if this arg is not passed)
     --withArm64(beta) arm64 build on x64 system(if your machine is arm64, it will be built if this arg is not passed, and not build store build for arm64)
 
-    Programatic usage
+    [only macOS]
+    --unnotarize: Without notarize
     `
 }
 
