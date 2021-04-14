@@ -38,17 +38,7 @@ Issuesに書いてある問題についてはなるべく対処しますので�
 ## ライセンス
 
 [GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  
-
-アイコンは[クリエイティブ・コモンズ 表示-非営利-継承](https://creativecommons.org/licenses/by-nc-sa/4.0/)で提供されています。  
-[プレスキット](https://d2upiril6ywqp9.cloudfront.net/press/TheDesk+PressKit.zip)  
-
-* [PNG 512x512](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.png)
-* [SVG 4095x4096](https://d2upiril6ywqp9.cloudfront.net/press/thedesk-fullcolor.svg)
-* [ico 256x256](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.ico)
-* [icns old](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.icns)
-* [Illustrator .ai](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.ai)
-
-標準の通知音は [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/) で提供されています。
+[License of other assets](https://github.com/cutls/TheDesk/wiki/License-of-other-assets)
 
 ### プライバシーポリシー
 

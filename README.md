@@ -48,17 +48,7 @@ Please write issues to improve TheDesk affinity with Pleroma.
 ## License
 
 [GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  
-
-The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[Press Kit](https://d2upiril6ywqp9.cloudfront.net/press/TheDesk+PressKit.zip)  
-
-* [PNG 512x512](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.png)
-* [SVG 4095x4096](https://d2upiril6ywqp9.cloudfront.net/press/thedesk-fullcolor.svg)
-* [ico 256x256](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.ico)
-* [icns old](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.icns)
-* [Illustrator .ai](https://d2upiril6ywqp9.cloudfront.net/press/thedesk.ai)
-
-The default sounds of notifications is provided [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/)
+[License of other assets](https://github.com/cutls/TheDesk/wiki/License-of-other-assets)
 
 ### Privacy Policy
 
