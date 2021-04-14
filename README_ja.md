@@ -1,8 +1,11 @@
-<img src="https://thedesk.top/img/top.png" width="300" align="left">
-<img src="https://thedesk.top/img/desk.png" width="150" align="right">
-
-# TheDesk
+[English](README.md) | **日本語**
  
+<div align="center">
+
+<img src="https://thedesk.top/img/desk.png" width="150" align="center">
+
+<h1 align="center">TheDesk</h1>
+
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)
 [![FOSSA Status](https://bit.ly/2N4cLd1)](https://bit.ly/31zqMmZ)
@@ -12,7 +15,7 @@ Mastodon/Misskey client for PC(Windows/Linux/macOS)
 オープンソースSNSマストドン/MisskeyのPC向けクライアント  
 Download:[TheDesk](https://thedesk.top)
 
-[Pixiv FANBOX](https://www.pixiv.net/fanbox/creator/28105985)
+</div>
 
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
@@ -41,15 +44,14 @@ Issuesに書いてある問題についてはなるべく対処しますので�
 
 ## 主なコントリビューター
 
-macOSビルダー(現在はTravis CI)
+* <img src="https://user-images.githubusercontent.com/17561618/66582029-162df380-ebbc-11e9-8a6f-1832b3a35d89.png" width="20">[とねぢ](https://minohdon.jp/@toneji) macOSビルダー(現在はTravis CI)
+* <img src="https://avatars3.githubusercontent.com/u/24523508?s=88&v=4" width="20">[ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja) Linuxビルダー(現在はTravis CI)
+* <img src="https://user-images.githubusercontent.com/17561618/66582379-a3714800-ebbc-11e9-8402-d81a35a3be9f.png" width="20">[kPherox](https://pl.kpherox.dev/kPherox)
 
-* [とねぢ](https://minohdon.jp/@toneji)
+## 支援
 
-Linuxビルダー(現在はTravis CI)
+<a href="https://www.patreon.com/cutls"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" alt="Become a Patron!" height="30"></a>
+<a href="https://liberapay.com/cutls/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="30"></a>
+<a href="https://cutls.fanbox.cc"><img alt="PixivFANBOX" src="https://thedesk.top/img/fanbox.png" height="30"></a>
 
-* [ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja)
-
-コーダー
-
-* [kPherox](https://pl.kpherox.dev/kPherox)
-
+[その他の支援法](https://cutls.dev)

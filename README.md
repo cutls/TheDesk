@@ -1,8 +1,11 @@
-<img src="https://thedesk.top/img/top.png" width="300" align="left">
-<img src="https://thedesk.top/img/desk.png" width="150" align="right">
-
-# TheDesk
+ **English** | [日本語](README_ja.md)
  
+<div align="center">
+
+<img src="https://thedesk.top/img/desk.png" width="150" align="center">
+
+<h1 align="center">TheDesk</h1>
+
 [![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)
 [![FOSSA Status](https://bit.ly/2N4cLd1)](https://bit.ly/31zqMmZ)
@@ -13,8 +16,8 @@ Mastodon/Misskey client for PC(Windows/Linux/macOS)
   
 Download:[TheDesk](https://thedesk.top)
 
-<a href="https://www.patreon.com/cutls"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" alt="Become a Patron!" width="160"></a>  
-<a href="https://liberapay.com/cutls/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+</div>
+
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
 ## Build and Development
@@ -39,14 +42,14 @@ Please write issues to improve TheDesk affinity with Pleroma.
 
 ## Contributors
 
-Build for macOS(Now: Travis CI)  
+* <img src="https://user-images.githubusercontent.com/17561618/66582029-162df380-ebbc-11e9-8a6f-1832b3a35d89.png" width="20">[toneji](https://minohdon.jp/@toneji) Build for macOS(Now: Travis CI)  
+* <img src="https://avatars3.githubusercontent.com/u/24523508?s=88&v=4" width="20">[popn_ja](https://popon.pptdn.jp/@popn_ja) Build for Linux(Now: Travis CI)  
+* <img src="https://user-images.githubusercontent.com/17561618/66582379-a3714800-ebbc-11e9-8402-d81a35a3be9f.png" width="20">[kPherox](https://pl.kpherox.dev/kPherox) Fellow coder
 
-* [toneji](https://minohdon.jp/@toneji)
+## Support
 
-Build for Linux(Now: Travis CI)  
+<a href="https://www.patreon.com/cutls"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" alt="Become a Patron!" height="30"></a>
+<a href="https://liberapay.com/cutls/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="30"></a>
+<a href="https://cutls.fanbox.cc"><img alt="PixivFANBOX" src="https://thedesk.top/img/fanbox.png" height="30"></a>
 
-* [popn_ja](https://popon.pptdn.jp/@popn_ja)
-
-Fellow coder
-
-* [kPherox](https://pl.kpherox.dev/kPherox)
+Or [others](https://cutls.dev) to support me.
