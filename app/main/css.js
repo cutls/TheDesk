@@ -31,7 +31,7 @@ function css(mainWindow) {
 		}
 	})
 	ipc.on('theme-json-delete', function (e, arg) {
-		try{
+		try {
 			var themecss = join(app.getPath("userData"), arg);
 			console.log(themecss);
 			fs.unlink(themecss, function (err) {
@@ -40,7 +40,7 @@ function css(mainWindow) {
 		} catch {
 			e.sender.send('theme-json-delete-complete', 'cannot delete');
 		}
-		
+
 	})
 	ipc.on('theme-json-request', function (e, arg) {
 		try {
@@ -54,13 +54,17 @@ function css(mainWindow) {
 		}
 		e.sender.send('theme-json-response', [json, raw]);
 	})
-	ipc.on('theme-css-request', function (e, arg) {
-		try {
-			var themecss = join(app.getAppPath(), '/source/themes', arg)
-			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'))
-		} catch {
-			var themecss = join(app.getPath("userData"), arg)
-			var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'))
+	ipc.on('theme-css-request', function (e, args) {
+		if (args[0] === 'themeCSSPreview') {
+			var json = args[1]
+		} else {
+			try {
+				var themecss = join(app.getAppPath(), '/source/themes', args[1])
+				var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'))
+			} catch {
+				var themecss = join(app.getPath("userData"), args[1])
+				var json = JSON5.parse(fs.readFileSync(themecss, 'utf8'))
+			}
 		}
 
 		try {

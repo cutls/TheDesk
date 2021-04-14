@@ -70,6 +70,7 @@
   "name": "名前",
   "desc": "説明",
   "customImport": "カスタムテーマのインポート",
+  "preview": "プレビュー",
   "delete": "削除",
   "timeline": "タイムラインの設定",
   "timemode": "時間表記設定",

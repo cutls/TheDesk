@@ -509,6 +509,13 @@ h2.swal2-title {
 	margin: 0;
 	line-height: 100%;
 }
+.swal2-close:focus {
+    background-color: inherit !important;
+	box-shadow: none !important;
+}
+.swal2-actions {
+	background-color: var(--modalfooter);
+}
 #src-contents svg {
 	margin-right: 0.4rem;
 }

@@ -392,10 +392,6 @@ function exportSettingsCore() {
 	return exp
 }
 function importSettings() {
-	if ($('#imp-exp').val()) {
-		importSettingsCore(JSON5.parse($('#imp-exp').val()))
-		return false
-	}
 	Swal.fire({
 		title: 'Warning',
 		text: lang.lang_setting_importwarn,
@@ -405,6 +401,10 @@ function importSettings() {
 		cancelButtonText: lang.lang_no,
 	}).then((result) => {
 		if (result.value) {
+			if ($('#imp-exp').val()) {
+				importSettingsCore(JSON5.parse($('#imp-exp').val()))
+				return false
+			}
 			postMessage(['importSettings', ''], '*')
 		}
 	})
@@ -553,9 +553,9 @@ function copyColor(from, to) {
 		i++
 	}
 }
-function customComp() {
+function customComp(preview) {
 	var nameC = $('#custom_name').val()
-	if (!nameC) {
+	if (!nameC && !preview) {
 		return false
 	}
 	var descC = $('#custom_desc').val()
@@ -587,7 +587,7 @@ function customComp() {
 	if (id == 'add_new' || defaults.includes(id)) {
 		id = makeCID()
 	}
-	localStorage.setItem('customtheme-id', id)
+	if (!preview) localStorage.setItem('customtheme-id', id)
 	var json = {
 		name: nameC,
 		author: my,
@@ -604,38 +604,18 @@ function customComp() {
 		version: '2'
 	}
 	$('#custom_json').val(JSON.stringify(json))
-	let timerInterval
-	Swal.fire({
-		title: 'Saving...',
-		html: '',
-		timer: 1000,
-		timerProgressBar: true,
-		onBeforeOpen: () => {
-			Swal.showLoading()
-		},
-		onClose: () => {
-			clearInterval(timerInterval)
-		}
-	}).then((result) => {
-		themes()
-		ctLoad()
+	if (preview) {
+		postMessage(['themeCSSPreview', json], '*')
+	} else {
+		$('#custom-edit-sel').val(id)
+		$('select').formSelect()
 		Swal.fire({
-			title: 'Refreshing...',
-			html: '',
-			timer: 1000,
-			timerProgressBar: true,
-			onBeforeOpen: () => {
-				Swal.showLoading()
-			},
-			onClose: () => {
-				clearInterval(timerInterval)
-			}
-		}).then((result) => {
-			$('#custom-edit-sel').val(id)
-			$('select').formSelect()
+			type: 'success',
+			title: 'Saved',
 		})
-	})
-	postMessage(['themeJsonCreate', JSON.stringify(json)], '*')
+		postMessage(['themeJsonCreate', JSON.stringify(json)], '*')
+	}
+
 }
 function deleteIt() {
 	var id = $('#custom-sel-sel').val()

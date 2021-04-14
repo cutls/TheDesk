@@ -66,7 +66,9 @@ onmessage = function(e) {
 		console.log('NowPlaying')
 		ipc.send('itunes', e.data[1])
 	} else if (e.data[0] == 'themeCSSRequest') {
-		ipc.send('theme-css-request', e.data[1])
+		ipc.send('theme-css-request', e.data)
+	} else if (e.data[0] == 'themeCSSPreview') {
+		ipc.send('theme-css-request', e.data)
 	} else if (e.data[0] == 'customCSSRequest') {
 		ipc.send('custom-css-request', e.data[1])
 	} else if (e.data[0] == 'downloadButton') {

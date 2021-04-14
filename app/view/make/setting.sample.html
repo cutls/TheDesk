@@ -15,6 +15,7 @@
 	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
 	<link href="../../css/pickr.css" type="text/css" rel="stylesheet">
 	<link href="../../css/master.css" type="text/css" rel="stylesheet">
+	<link href="../../css/tl.css" type="text/css" rel="stylesheet">
 	<link href="../../css/sweetalert2-material.min.css" type="text/css" rel="stylesheet">
 	<link href="../../@@node_base@@/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet">
 	<meta charset="utf-8">
@@ -288,6 +289,7 @@
 						<input type="color" id="color-picker13_value">
 					</div>
 				</div><br /><br />
+				<button class="btn waves-effect blue" onclick="customComp(true)">@@preview@@</button><br /><br />
 				<button class="btn-large waves-effect" onclick="customComp()">@@change@@</button>&nbsp;<button
 					class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">@@delete@@</button><br><br>
 				<input type="text" style="width:22rem;height:40px;" id="custom_json" class="materialize-textarea"
@@ -296,6 +298,84 @@
 				<input type="text" style="width:22rem;height:40px;" id="custom_import" class="materialize-textarea"
 					placeholder="JSON/JSON5 style">
 				<button class="btn waves-effect" onclick="customImp()">@@import@@</button><br>
+				<h4>@@preview@@</h4>
+				<div style="max-width: 500px" class="cvo">
+					<div class="area-notice grid"><span class="gray sharesta"><span class=" pointer big-text "><i class="fas fa-filter">
+								</i></span>
+							<span class="cbadge cbadge-hover"><i class="far fa-clock"></i>
+								0:00:00
+							</span>
+							<i class="big-text fas fa-star  yellow-text"></i>
+							<a class="pointer grey-text">
+								TheDesk(@thedesk@b.thedesk.tld)
+							</a></span></div>
+					<div class="area-icon grid">
+						<a user="thedesk" class="udg">
+							<img draggable="false" src="../../img/desk.svg" width="40" class="prof-img" user="TheDesk"
+								onerror="this.src='../../img/loading.svg'" alt="" loading="lazy">
+						</a>
+						<a user="Cutls@misskey.io" class="udg">
+							<img draggable="false" src="../../img/desk.svg" width="20" class="notf-icon prof-img" user="TheDesk" alt=""
+								loading="lazy">
+						</a>
+					</div>
+					<div class="area-display_name grid">
+						<div class="flex-name">
+							<span class="user">TheDesk<img class="emoji" draggable="false" alt="👀" src="https://twemoji.maxcdn.com/v/13.0.2/72x72/1f440.png"></span>
+							<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;">
+								@thedesk@a.thedesk.tld <i class="fas fa-lock red-text"></i>
+							</span>
+						</div>
+						<div class="flex-time">
+							<span class="cbadge cbadge-hover pointer waves-effect">
+								<i class="far fa-clock"></i>0:00:00
+							</span>
+						</div>
+					</div>
+					<div class="area-toot grid">
+						<div class="toot ">
+							<p>Toot</p>
+						</div>
+				
+					</div>
+					<div class="area-vis grid"><span><i class="text-darken-3 material-icons gray sml vis-data pointer">
+								public
+							</i></span></div>
+					<div class="area-actions grid">
+						<div class="action type-a ">
+							<a class="waves-effect waves-dark btn-flat actct rep-btn" style="padding:0">
+								<i class="fas fa-share"></i>
+								<span class="rep_ct">1</span>
+							</a>
+						</div>
+						<div class="action  type-a ">
+							<a class="waves-effect waves-dark btn-flat actct bt-btn" style="padding:0">
+								<i class="fas fa-retweet"></i>
+								<span class="rt_ct">0</span>
+							</a>
+						</div>
+						<div class="action type-a ">
+							<a class="waves-effect waves-dark btn-flat actct fav-btn" style="padding:0">
+								<i class="fas text-darken-3 fa-star"></i>
+								<span class="fav_ct">1</span>
+							</a>
+						</div>
+					</div>
+					<div class="area-side">
+						<div class="action ">
+							<a onclick="toggleAction(this)" data-target="dropdown_0ugtorxe"
+								class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0" id="trigger_0ugtorxe">
+								<i class="text-darken-3 material-icons act-icon" aria-hidden="true">expand_more</i>
+								<span class="voice">Other actions</span>
+							</a>
+						</div>
+						<div class="action ">
+							<a class="waves-effect waves-dark btn-flat details " style="padding:0">
+								<i class="text-darken-3 material-icons" aria-hidden="true">menu_open</i></a>
+						</div>
+					</div>
+				</div>
+
 		</li>
 		<li>
 			<div class="collapsible-header">

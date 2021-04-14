@@ -72,6 +72,7 @@
   "desc": "説明",
   "customImport": "カスタムテーマのインポート",
   "delete": "削除",
+  "preview": "プレビュー",
   "timeline": "タイムラインの設定",
   "timemode": "時間表記設定",
   "relativetime": "相対時間の例:\"1分前\",\"3日前\"",
