@@ -259,8 +259,6 @@ function block(acct_id) {
 		text: '',
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
 	}).then(result => {
@@ -312,8 +310,6 @@ function muteDo(acct_id) {
 		text: '',
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
 	}).then(result => {
@@ -393,8 +389,6 @@ function redraft(id, acct_id) {
 		text: lang.lang_status_redraft,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
 	}).then(result => {

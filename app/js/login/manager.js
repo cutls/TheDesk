@@ -205,8 +205,6 @@ function multiDel(target) {
 		text: obj[target]['user'] + '@' + obj[target]['domain'] + lang.lang_manager_confirm,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
 	}).then(result => {
@@ -299,8 +297,6 @@ function multiDel2(target) {
 		text: obj[target]['user'] + '@' + obj[target]['domain'] + lang.lang_manager_confirm,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
 	}).then(result => {

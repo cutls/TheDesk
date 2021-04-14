@@ -103,7 +103,6 @@ option {
 	cursor: pointer;
 }
 .badge {
-	min-width: 0 !important;
 	margin-left: 0.4rem !important;
 }
 .unvisible {
@@ -499,12 +498,16 @@ textarea {
 	font-size: 1rem !important;
 	font-family: inherit;
 }
-.swal2-popup {
+.swal2-popup, .swal2-header {
 	background-color: var(--subcolor) !important;
 }
 .swal2-title,
 .swal2-content {
 	color: var(--text) !important;
+}
+h2.swal2-title {
+	margin: 0;
+	line-height: 100%;
 }
 #src-contents svg {
 	margin-right: 0.4rem;

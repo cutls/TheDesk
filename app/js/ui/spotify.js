@@ -166,7 +166,7 @@ function nowplaying(mode) {
 		} else {
 			Swal.fire({
 				type: 'info',
-				title: lang.lang_spotify_acct,
+				text: lang.lang_spotify_acct,
 			})
 		}
 	} else if (mode == 'itunes') {
@@ -239,7 +239,7 @@ function nowplaying(mode) {
 		} else {
 			Swal.fire({
 				type: 'info',
-				title: lang.lang_spotify_acct,
+				text: lang.lang_spotify_acct,
 			})
 		}
 	}

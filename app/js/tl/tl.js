@@ -1331,6 +1331,7 @@ function asReadEnd() {
 		Swal.fire({
 			title: lang.lang_tl_postmarkers_title,
 			html: lang.lang_tl_postmarkers,
+			showConfirmButton: false,
 			timer: 3000,
 			onBeforeOpen: () => {
 				Swal.showLoading()

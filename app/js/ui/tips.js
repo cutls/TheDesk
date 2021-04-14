@@ -226,7 +226,7 @@ function spotifytips() {
 	} else {
 		Swal.fire({
 			type: 'info',
-			title: lang.lang_spotify_acct
+			text: lang.lang_spotify_acct
 		})
 		tips('ver')
 		return false

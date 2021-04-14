@@ -55,8 +55,6 @@ function post(mode, postvis, dry) {
 				text: lang.lang_post_cwtxt + plus,
 				type: 'info',
 				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#3085d6',
 				confirmButtonText: lang.lang_post_btn2,
 				cancelButtonText: lang.lang_post_btn3,
 				showCloseButton: true,

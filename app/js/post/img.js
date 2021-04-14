@@ -276,8 +276,6 @@ function deleteImage(key) {
 		title: lang.lang_postimg_delete,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
 	}).then(result => {
