@@ -31,6 +31,20 @@ No suffix version .snap does not check if there is the latest version(Which you 
 
 .deb always checks if there is the latest version
 
+## Build and Development
+
+See [Wiki](https://github.com/cutls/TheDesk/wiki)
+
+## Translation
+
+Crowdin project is available! Visit: https://translate.thedesk.top
+
+## Pleroma support
+
+Did you find a bug with Pleroma accounts?  
+Pleroma **does not** follow Mastodon API rules completely although Pleroma developers say so.  
+Please write issues to improve TheDesk affinity with Pleroma.
+
 ## License
 
 [GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  
@@ -49,20 +63,6 @@ The default sounds of notifications is provided [Creative Commons BY](https://cr
 ### Privacy Policy
 
 * [プライバシーポリシー(Privacy Policy(ja))](https://thedesk.top/priv.html)
-
-## Translation
-
-Crowdin project is available! Visit: https://translate.thedesk.top
-
-## Build and Development
-
-See [Wiki](https://github.com/cutls/TheDesk/wiki)
-
-## Pleroma support
-
-Did you find a bug with Pleroma accounts?  
-Pleroma **does not** follow Mastodon API rules completely although Pleroma developers say so.  
-Please write issues to improve TheDesk affinity with Pleroma.
 
 ## Contributors
 

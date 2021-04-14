@@ -18,6 +18,23 @@ Download:[TheDesk](https://thedesk.top)
 
 ![Screenshots1](https://thedesk.top/img/scr1.png)  
 
+## 翻訳
+  
+Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.top  
+
+## ビルドと開発
+
+[Wiki](https://github.com/cutls/TheDesk/wiki)を参照。
+
+## Pleromaのサポート
+
+Pleromaは、Mastodon APIとの互換性を謳っていますが、実際には様々な差異があり、TheDeskで不具合が発生することがあります。  
+Issuesに書いてある問題についてはなるべく対処しますので、ぜひお知らせください。
+
+## 詳しく
+
+[TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
+
 ## ライセンス
 
 [GNU General Public License v3.0](https://github.com/cutls/TheDesk/blob/master/LICENSE)  
@@ -36,23 +53,6 @@ Download:[TheDesk](https://thedesk.top)
 ### プライバシーポリシー
 
 * [プライバシーポリシー](https://thedesk.top/priv.html)
-
-## 翻訳
-  
-Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.top  
-
-## ビルドと開発
-
-[Wiki](https://github.com/cutls/TheDesk/wiki)を参照。
-
-## Pleromaのサポート
-
-Pleromaは、Mastodon APIとの互換性を謳っていますが、実際には様々な差異があり、TheDeskで不具合が発生することがあります。  
-Issuesに書いてある問題についてはなるべく対処しますので、ぜひお知らせください。
-
-## 詳しく
-
-[TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
 
 ## 主なコントリビューター
 
