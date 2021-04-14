@@ -46,51 +46,31 @@ The icon is provided under [Creative Commons BY-NC-SA](https://creativecommons.o
 
 The default sounds of notifications is provided [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/)
 
-## Privacy Policy
+### Privacy Policy
 
 * [プライバシーポリシー(Privacy Policy(ja))](https://thedesk.top/priv.html)
 
-## Language
-
-* 日本語(Japanese)
-* 日本語, 関西(Japanese, Kansai)
-* English
-* български(Bulgarian) with [translate project](https://translate.thedesk.top/project/thedesk/bg)
-* Česky(Czech) with [translate project](https://translate.thedesk.top/project/thedesk/cs)
-* Deutsch(German) with [translate project](https://translate.thedesk.top/project/thedesk/de)
-* Español, argentina(Spanish, Argentina) with [translate project](https://translate.thedesk.top/project/thedesk/es-AR)
-* italiano(Italian) with [translate project](https://translate.thedesk.top/project/thedesk/it-IT)
-
-and more...
-
-### Translation
+## Translation
 
 Crowdin project is available! Visit: https://translate.thedesk.top
 
-### Run on developer mode
+## Development
 
-**you cannot use npm or any other package manager without Yarn.**(it will throw error)
+ to launch developer version with console(if close dev mode, you may press Ctrl+C twice.)
 
-* `yarn`
-* `yarn dev`
+**Strongly recommend to use yarn, not npm**
 
-## Contributors
+```sh
+git clone https://github.com/cutls/TheDesk
+cd TheDesk/app
+yarn install
 
-Build for macOS(Now: Travis CI)  
-
-* [toneji](https://minohdon.jp/@toneji)
-
-Build for Linux(Now: Travis CI)  
-
-* [popn_ja](https://popon.pptdn.jp/@popn_ja)
-
-Fellow coder
-
-* [kPherox](https://pl.kpherox.dev/kPherox)
+yarn dev
+```
 
 ## Build
 
-**you cannot use npm or any other package manager without Yarn.**(it will throw error)
+**Strongly recommend to use yarn, not npm**
 
 ```sh
 git clone https://github.com/cutls/TheDesk
@@ -100,7 +80,9 @@ yarn install
 yarn build
 ```
 
-run `yarn dev` to launch developer version with console(if close dev mode, you may press Ctrl+C twice.)
+### Options
+
+Look at `yarn build --help`
 
 ### Restriction with macOS build
 
@@ -108,7 +90,17 @@ Requires XCode(XCode Command Line Tools) to use iTunes NowPlaying
 
 Built assets should be notarized after building by expensive Apple Developer user. To disable it, see `app/build/notarize.js` (beta)
 
-### PWA support
+### Programatic build
+
+TheDesk builder has type declaration for TypeScript.
+
+```ts
+import build from './app/builder'
+build()
+```
+
+
+### PWA build
 
 TheDesk is a web-based app, so you can run it on a browser. Of course, the main stream is as Electron. Some features won't work as well as Electron.
 
@@ -125,6 +117,16 @@ Did you find a bug with Pleroma accounts?
 Pleroma **does not** follow Mastodon API rules completely although Pleroma developers say so.  
 Please write issues to improve TheDesk affinity with Pleroma.
 
-## Vulnerabilities when `yarn install`???
+## Contributors
 
-No, if your npm says materialize-css has vulnerabilities(CVE-2019-11002/3/4), look at [here](https://github.com/Dogfalo/materialize/issues/6286) under discussion, but I do not think this report is really fatal.
+Build for macOS(Now: Travis CI)  
+
+* [toneji](https://minohdon.jp/@toneji)
+
+Build for Linux(Now: Travis CI)  
+
+* [popn_ja](https://popon.pptdn.jp/@popn_ja)
+
+Fellow coder
+
+* [kPherox](https://pl.kpherox.dev/kPherox)

@@ -33,45 +33,33 @@ Download:[TheDesk](https://thedesk.top)
 
 標準の通知音は [Creative Commons BY](https://creativecommons.org/licenses/by/4.0/) で提供されています。
 
-## プライバシーポリシー
+### プライバシーポリシー
 
 * [プライバシーポリシー](https://thedesk.top/priv.html)
 
-## 言語
-
-* 日本語
-* 日本語(関西)
-* English(英語)
-* ドイツ語, チェコ語, ブルガリア語, イタリア語, スペイン語アルゼンチン方言他 (from [Crowdin](https://translate.thedesk.top))
-
-### 翻訳
+## 翻訳
   
 Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.top  
 
-**yarnを使ってください。その他(npmなど)を使用するとエラーが出ます**
+## ビルドと開発
 
-### デベロッパーモード
+**npmではなくyarnを使ってください。**
 
-`yarn dev`を`app`フォルダ内で実行。
+### 開発
 
-## 主なコントリビューター
+コンソールが出る開発モードで起動します。並行して監視が走る関係上、Ctrl+Cを2回押さないと終了しない場合があります。
 
-macOSビルダー(現在はTravis CI)
+```sh
+git clone https://github.com/cutls/TheDesk
+cd TheDesk/app
+yarn install
 
-* [とねぢ](https://minohdon.jp/@toneji)
+yarn dev
+```
 
-Linuxビルダー(現在はTravis CI)
+**npmではなくyarnを使ってください。**
 
-* [ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja)
-
-コーダー
-
-* [kPherox](https://pl.kpherox.dev/kPherox)
-
-## ビルド
-
-**yarnを使ってください。その他(npmなど)を使用するとエラーが出ます**
-
+### ビルド
 
 ```sh
 git clone https://github.com/cutls/TheDesk
@@ -81,7 +69,9 @@ yarn install
 yarn build
 ```
 
-`yarn dev`でコンソールが出る開発モードで起動します。並行して監視が走る関係上、Ctrl+Cを2回押さないと終了しない場合があります。
+### オプション
+
+`yarn build --help`参照。
 
 ### macOSでビルドするときの制限
 
@@ -93,7 +83,16 @@ Notarizeが入ります。つまり、認証された(課金したとも言う)�
 フォークを世に出す場合や、Cutlsが信用できない場合、自分でMac AppStoreに出す場合など、[自分でNotarizeする必要があるとき](https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/)、[それをCI等で自動化するとき](https://qiita.com/ktmouk/items/7fc27c9ad0e3caf7899d)。
 
 
-### PWAとして実行
+### プログラムでビルド
+
+TypeScript用の型定義を持っています。
+
+```ts
+import build from './app/builder'
+build()
+```
+
+### PWAとしてビルド
 
 TheDeskはウェブ技術を使用して作られているので、ブラウザで動かすこともできます。もちろん、Electron向けに設計されているので一部機能は動きません。
 
@@ -113,7 +112,17 @@ Issuesに書いてある問題についてはなるべく対処しますので�
 
 [TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
 
-## `yarn install`したら脆弱性あるって言われた
+## 主なコントリビューター
 
-materialize-cssの脆弱性(CVE-2019-11002/3/4)については[こちら](https://github.com/Dogfalo/materialize/issues/6286)で本当に脆弱性かどうか議論しています。  
-実際には害が無いものと思われます。
+macOSビルダー(現在はTravis CI)
+
+* [とねぢ](https://minohdon.jp/@toneji)
+
+Linuxビルダー(現在はTravis CI)
+
+* [ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja)
+
+コーダー
+
+* [kPherox](https://pl.kpherox.dev/kPherox)
+

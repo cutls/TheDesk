@@ -8,6 +8,7 @@ const version = data.version
 const codename = data.codename
 const ver = `${version} (${codename})`
 const construct = require('./view/make/make.js')
+const { ModuleResolutionKind } = require('typescript')
 const { platform, arch } = process
 const Platform = builder.Platform
 const Arch = builder.Arch
@@ -62,12 +63,15 @@ async function build(os, arch, config) {
         publish: 'never'
     })
 }
-async function cmd() {
-    if (isTrue('onlyStore') || isTrue('withStore')) {
+async function cmd(options) {
+    if (isTrue(options, 'help', 'h')) {
+        return console.log(help())
+    }
+    if (isTrue(options, 'onlyStore') || isTrue(options, 'withStore')) {
         console.log('start building for application stores')
         construct(ver, basefile, false, true)
         if (platform == 'win32') {
-            if ((isTrue('withIa32') && arch == 'x64') || arch == 'ia32') {
+            if ((isTrue(options, 'withIa32') && arch == 'x64') || arch == 'ia32') {
                 await build(Platform.WINDOWS, Arch.ia32, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
@@ -93,12 +97,12 @@ async function cmd() {
             if (arch == 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
             }
-            if ((isTrue('withIa32') && arch == 'x64')) {
+            if ((isTrue(options, 'withIa32') && arch == 'x64')) {
                 console.log('snapcraft does not curretly support builing i386 on amd64')
             }
             if (arch == 'x64') {
                 await build(Platform.LINUX, Arch.x64, config)
-                if (!isTrue('onlyStore')) {
+                if (!isTrue(options, 'onlyStore')) {
                     fs.renameSync(
                         `../build/thedesk_${version}_amd64.snap`,
                         `../build/thedesk_${version}_amd64-store.snap`
@@ -111,11 +115,11 @@ async function cmd() {
             return false
         }
     }
-    if (!isTrue('onlyStore')) {
+    if (!isTrue(options, 'onlyStore')) {
         console.log('start building for normal usage')
         construct(ver, basefile, false, false)
         if (platform == 'win32') {
-            if ((isTrue('withIa32') && arch == 'x64') || arch == 'ia32') {
+            if ((isTrue(options, 'withIa32') && arch == 'x64') || arch == 'ia32') {
                 await build(Platform.WINDOWS, Arch.ia32, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
@@ -133,7 +137,7 @@ async function cmd() {
                     '../build/TheDesk.exe'
                 )
             }
-            if (isTrue('withArm64')) {
+            if ((isTrue(options, 'withArm64') && arch == 'x64') || arch == 'arm64') {
                 await build(Platform.WINDOWS, Arch.arm64, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
@@ -148,7 +152,7 @@ async function cmd() {
             if (arch == 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
             }
-            if ((isTrue('withIa32') && arch == 'x64')) {
+            if (isTrue(options, 'withIa32') && arch == 'x64') {
                 console.log('snapcraft does not curretly support builing i386 on amd64')
             }
             if (arch == 'x64') {
@@ -157,7 +161,7 @@ async function cmd() {
                     `../build/thedesk_${version}_amd64.snap`,
                     `../build/thedesk_${version}_amd64-normal.snap`
                 )
-                if (isTrue('onlyStore') || isTrue('withStore')) {
+                if (isTrue(options, 'onlyStore') || isTrue(options, 'withStore')) {
                     fs.renameSync(
                         `../build/thedesk_${version}_amd64-store.snap`,
                         `../build/thedesk_${version}_amd64.snap`
@@ -171,10 +175,42 @@ async function cmd() {
         }
     }
 }
-function isTrue(long, short) {
+function isTrue(options, long, short) {
     const { argv } = process
+    if (options ? options[long] : 0) return true
     if (argv.includes(`--${long}`)) return true
     if (short && argv.includes(`-${short}`)) return true
     return false
 }
-cmd()
+function help() {
+    return `
+TheDesk Builder command tool
+    yarn build [options] (or node build.js [options])
+    yarn build:[preset] (check package.json)
+
+    --help or -h: show help
+
+    --onlyStore: App Store of platforms assets(without update check)
+    --withStore: App Store assets and normal version
+
+    [only Windows]
+    if you pass these args on Linux or macOS, it just will be ignored...
+
+    --withIa32: ia32 build on x64 system(if your machine is ia32, it will be built if this arg is not passed)
+    --withArm64(beta) arm64 build on x64 system(if your machine is arm64, it will be built if this arg is not passed, and not build store build for arm64)
+
+    Programatic usage
+    `
+}
+
+/**
+ * Builder
+ * @module builder
+ * @param {Object} [options] - Options
+ * @param {boolean} [options.onlyStore] - App Store of platforms assets(without update check)
+ * @param {boolean} [options.withStore] - App Store of platforms assets(without update check) assets and normal version
+ * @param {boolean} [options.withIa32] - [Windows only] ia32 build on x64 system(if your machine is ia32, it will be built if this arg is not passed)
+ * @param {boolean} [options.withArm64] - [Windows only(beta)] arm64 build on x64 system(if your machine is arm64, it will be built if this arg is not passed, and not build store build for arm64)
+ * @return {void}
+ */
+ module.exports = cmd
