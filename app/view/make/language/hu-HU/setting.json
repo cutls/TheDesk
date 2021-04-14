@@ -72,6 +72,7 @@
   "desc": "About this theme",
   "customImport": "Import of custom themes",
   "delete": "Delete",
+  "preview": "Preview",
   "timeline": "Timeline Preferences",
   "timemode": "Time format",
   "relativetime": "Relative format:\"1 minutes ago\",\"3 days ago\"",
