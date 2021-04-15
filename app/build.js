@@ -34,7 +34,7 @@ const config = {
     nsis: {
         oneClick: false,
         allowToChangeInstallationDirectory: true,
-        artifactName: 'TheDesk-setup.${ext}',
+        artifactName: 'TheDesk-setup-${arch}.${ext}',
     },
     linux: {
         target: ['zip', 'appImage', 'snap', 'deb'],
@@ -77,7 +77,7 @@ async function cmd(options) {
                     '../build/TheDesk-ia32-store.exe'
                 )
                 fs.renameSync(
-                    `../build/TheDesk-setup.exe`,
+                    `../build/TheDesk-setup-ia32.exe`,
                     '../build/TheDesk-setup-ia32-store.exe'
                 )
             }
@@ -88,7 +88,7 @@ async function cmd(options) {
                     '../build/TheDesk-store.exe'
                 )
                 fs.renameSync(
-                    `../build/TheDesk-setup.exe`,
+                    `../build/TheDesk-setup-x64.exe`,
                     '../build/TheDesk-setup-store.exe'
                 )
             }
@@ -121,10 +121,6 @@ async function cmd(options) {
                     `../build/TheDesk ${version}.exe`,
                     '../build/TheDesk-ia32.exe'
                 )
-                fs.renameSync(
-                    `../build/TheDesk-setup.exe`,
-                    '../build/TheDesk-setup-ia32.exe'
-                )
             }
             if (arch == 'x64') {
                 await build(Platform.WINDOWS, Arch.x64, config)
@@ -132,16 +128,16 @@ async function cmd(options) {
                     `../build/TheDesk ${version}.exe`,
                     '../build/TheDesk.exe'
                 )
+                fs.renameSync(
+                    `../build/TheDesk-setup-x64.exe`,
+                    '../build/TheDesk-setup.exe'
+                )
             }
             if ((isTrue(options, 'withArm64') && arch == 'x64') || arch == 'arm64') {
                 await build(Platform.WINDOWS, Arch.arm64, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
                     '../build/TheDesk-arm64.exe'
-                )
-                fs.renameSync(
-                    `../build/TheDesk-setup.exe`,
-                    '../build/TheDesk-setup-arm64.exe'
                 )
             }
         }
