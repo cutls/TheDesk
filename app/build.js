@@ -139,6 +139,7 @@ async function cmd(options) {
                 )
             }
             if ((isTrue(options, 'withArm64') && arch == 'x64') || arch == 'arm64') {
+                config.nsis.artifactName = artifactName.replace('${arch}', 'arm64')
                 await build(Platform.WINDOWS, Arch.arm64, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
