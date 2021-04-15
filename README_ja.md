@@ -15,7 +15,8 @@
 ![Contributors](https://flat.badgen.net/github/contributors/cutls/TheDesk)  
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのPC向けクライアント  
-Download:[TheDesk](https://thedesk.top)
+
+[![Download from TheDesk Official Website](https://thedesk.top/img/dlfrom-thedesk.svg)](https://thedesk.top)
 
 </div>
 
