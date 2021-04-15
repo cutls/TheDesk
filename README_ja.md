@@ -16,7 +16,7 @@
 Mastodon/Misskey client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドン/MisskeyのPC向けクライアント  
 
-[![Download from TheDesk Official Website](https://thedesk.top/img/dlfrom-thedesk.svg)](https://thedesk.top)
+[![Download from TheDesk Official Website](https://thedesk.top/img/dlfrom-thedesk.svg?2)](https://thedesk.top)
 
 </div>
 
