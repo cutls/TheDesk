@@ -6,7 +6,7 @@ name: TheDesk Build on Linux
 on:
   release:
     types:
-      - created
+      - edited
 
 jobs:
   build:
@@ -33,6 +33,10 @@ jobs:
       with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: "build/*.snap"
+    - uses: shogo82148/actions-upload-release-asset@v1
+      with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "build/*.deb"
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
           upload_url: ${{ github.event.release.upload_url }}
