@@ -6,7 +6,9 @@
 
 <h1 align="center">TheDesk</h1>
 
-[![Build Status](https://travis-ci.org/cutls/TheDesk.svg?branch=master)](https://travis-ci.org/cutls/TheDesk)
+[![Windows build](https://github.com/cutls/TheDesk/actions/workflows/build.yml/badge.svg)](https://github.com/cutls/TheDesk/actions/workflows/build.yml)
+[![Linux build](https://github.com/cutls/TheDesk/actions/workflows/build-linux.yml/badge.svg)](https://github.com/cutls/TheDesk/actions/workflows/build-linux.yml)
+[![Linux build](https://github.com/cutls/TheDesk/actions/workflows/build-macos.yml/badge.svg)](https://github.com/cutls/TheDesk/actions/workflows/build-macos.yml)  
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/thedesk/localized.svg)](https://translate.thedesk.top/project/thedesk)
 [![FOSSA Status](https://bit.ly/2N4cLd1)](https://bit.ly/31zqMmZ)
 [![Version](https://flat.badgen.net/github/release/cutls/TheDesk)](https://github.com/cutls/TheDesk/releases)
