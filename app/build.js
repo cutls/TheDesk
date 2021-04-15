@@ -11,6 +11,7 @@ const construct = require('./view/make/make.js')
 const { platform, arch } = process
 const Platform = builder.Platform
 const Arch = builder.Arch
+const artifactName = 'TheDesk-setup-${arch}.${ext}'
 const config = {
     productName: 'TheDesk',
     appId: 'top.thedesk',
@@ -71,6 +72,7 @@ async function cmd(options) {
         construct(ver, basefile, false, true)
         if ((platform == 'win32' && !isTrue(options, 'skiWindows')) || isTrue(options, 'windows', 'w')) {
             if ((isTrue(options, 'withIa32') && arch == 'x64') || arch == 'ia32') {
+                config.nsis.artifactName = artifactName.replace('${arch}', 'ia32')
                 await build(Platform.WINDOWS, Arch.ia32, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
@@ -82,6 +84,7 @@ async function cmd(options) {
                 )
             }
             if (arch == 'x64') {
+                config.nsis.artifactName = artifactName.replace('${arch}', 'x64')
                 await build(Platform.WINDOWS, Arch.x64, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
@@ -116,6 +119,7 @@ async function cmd(options) {
         construct(ver, basefile, false, false)
         if ((platform == 'win32' && !isTrue(options, 'skiWindows')) || isTrue(options, 'windows', 'w')) {
             if ((isTrue(options, 'withIa32') && arch == 'x64') || arch == 'ia32') {
+                config.nsis.artifactName = artifactName.replace('${arch}', 'ia32')
                 await build(Platform.WINDOWS, Arch.ia32, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
@@ -123,6 +127,7 @@ async function cmd(options) {
                 )
             }
             if (arch == 'x64') {
+                config.nsis.artifactName = artifactName.replace('${arch}', 'x64')
                 await build(Platform.WINDOWS, Arch.x64, config)
                 fs.renameSync(
                     `../build/TheDesk ${version}.exe`,
