@@ -6,7 +6,7 @@ name: TheDesk Build on macOS
 on:
   release:
     types:
-      - edited
+      - created
 
 jobs:
   build:
