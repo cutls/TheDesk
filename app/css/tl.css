@@ -359,8 +359,8 @@ iframe,
 	grid-area: actions;
 }
 .area-actions .btn-flat {
-	height: 1rem;
-	line-height: 1rem;
+	height: 1.3rem;
+    line-height: 1.3rem;
 }
 .area-actions .btn-flat,
 .area-vis i,
@@ -384,7 +384,14 @@ iframe,
 	margin: 0.15rem;
 	grid-area: side;
 }
-
+.notf-udg-text {
+	white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    overflow: hidden;
+    max-width: calc(100% - 150px);
+    display: inline-block;
+}
 .cusr {
 	user-select: text;
 	padding-left: 0.4rem;
@@ -578,9 +585,6 @@ p:not(:last-child) {
 	width: 8rem;
 	display: flex;
 }
-.area-sta .hide {
-	display: inline-block !important;
-}
 .small-header .area-sta::-webkit-scrollbar {
 	height: 5px;
 }
@@ -676,13 +680,24 @@ p:not(:last-child) {
 	padding-left: 23px !important;
 	margin-right: 5px;
 }
+.columnSettings {
+	display: flex;
+	flex-wrap: wrap;
+}
 .notf-indv-box .setting {
 	font-size: 1rem;
-	width: calc(25% - 3px);
-	text-align: left;
-	padding: 5px;
-	height: 70px;
-	text-align: center;
+    width: calc(25% - 6px);
+    margin: 3px;
+    height: 100px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 17px;
+    border: 1px solid;
+    border-radius: 5px;
+}
+.notf-indv-box .setting:hover {
+	color: var(--text);
 }
 .notf-exclude-btn {
 	border: 1px solid;
@@ -720,6 +735,9 @@ p:not(:last-child) {
 	border-radius: 0.23rem;
 	overflow: hidden;
 	position: relative;
+}
+.dropdown-content li {
+    padding-top: 0.4rem;
 }
 .fa-2x > .emoji-img {
 	width: 2.3rem !important;

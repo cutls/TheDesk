@@ -83,6 +83,8 @@ onmessage = function(e) {
 		ipc.send('log', e.data[1])
 	} else if (e.data[0] == 'twitterLogin') {
 		ipc.send('twitterLogin', e.data[1])
+	} else if (e.data[0] == 'textareaContextMenu') {
+		ipc.send('textareaContextMenu', e.data[1])
 	}
 }
 //version.js
@@ -235,4 +237,10 @@ ipc.on('accessibility', function(event, arg) {
 })
 ipc.on('twitterLoginComplete', function(event, arg) {
 	postMessage(['twitterLoginComplete', ''], '*')
+})
+ipc.on('alert', function(event, arg) {
+	postMessage(['alert', arg], '*')
+})
+ipc.on('customUrl', function(event, args) {
+	postMessage(['customUrl', args], '*')
 })

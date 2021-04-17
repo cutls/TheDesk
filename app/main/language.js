@@ -1,13 +1,11 @@
 // Create the Application's main menu
 function templete(lang, mainWindow, packaged, dir, dirname) {
     //フレーム
-    if(lang !="ja" && lang != "en"){
+    if (lang != "ja" && lang != "en") {
         lang = "en"
     }
-    const electron = require("electron");
-    const ipc = electron.ipcMain;
-    const app = electron.app;
-    const BrowserWindow = electron.BrowserWindow;
+    const electron = require("electron")
+    const { Menu, MenuItem, ipcMain, BrowserWindow, app } = electron
     const join = require('path').join;
     const dict = {
         "application": {
@@ -71,7 +69,7 @@ function templete(lang, mainWindow, packaged, dir, dirname) {
             "en": "Close"
         }
     }
-    if(packaged){
+    if (packaged) {
         var ifDev = [
             {
                 label: dict.reload[lang],
@@ -79,12 +77,12 @@ function templete(lang, mainWindow, packaged, dir, dirname) {
                 click: function () { mainWindow.reload(); }
             }
         ]
-    }else{
+    } else {
         var ifDev = [
             {
                 label: 'Toggle Developer Tools',
                 accelerator: 'Alt+Command+I',
-                click: function () { if (!packaged) { mainWindow.toggleDevTools(); } }
+                click: function () { mainWindow.toggleDevTools(); }
             },
             {
                 label: dict.reload[lang],
@@ -104,7 +102,7 @@ function templete(lang, mainWindow, packaged, dir, dirname) {
                             webviewTag: false,
                             nodeIntegration: false,
                             contextIsolation: true,
-                            preload: join(dirname , "js", "platform", "preload.js")
+                            preload: join(dirname, "js", "platform", "preload.js")
                         },
                         width: 300, height: 500,
                         "transparent": false,    // ウィンドウの背景を透過
@@ -150,6 +148,28 @@ function templete(lang, mainWindow, packaged, dir, dirname) {
         ]
     }
     ];
+    // コピペメニュー
+    const ctxMenu = new Menu()
+    ctxMenu.append(new MenuItem({
+        label: dict.cut[lang],
+        role: 'cut',
+        click: () => { console.log('Cut clicked!') }
+    }))
+    ctxMenu.append(new MenuItem({
+        label: dict.copy[lang],
+        role: 'copy',
+        click: () => { console.log('Copy clicked!') }
+    }))
+    ctxMenu.append(new MenuItem({
+        label: dict.paste[lang],
+        role: 'paste',
+        click: () => { console.log('Paste clicked!') }
+    }))
+
+
+    ipcMain.on('textareaContextMenu', function (e, params) {
+        ctxMenu.popup(mainWindow, params.x, params.y)
+    })
     return menu;
 }
 

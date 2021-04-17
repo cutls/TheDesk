@@ -36,13 +36,11 @@
 	<textarea id="copy" style="top:-100px; position:fixed;"></textarea>
 	<canvas id="canvas" style="top:-100px; position:fixed;width:32px;height:32px" width="32" height="32"></canvas>
 	<div id="pageSrc" class="hide z-depth-5">
-		<input type="text" id="pageSrcInput" placeholder="@@search@@" />
-		<button class="btn waves-effect" onclick="doSrc('web')" title="@@webSrc@@">
-			<i class="material-icons">open_in_browser</i>
-		</button>
-		<button class="btn waves-effect" onclick="doSrc('ts')" title="@@tsSrc@@">
-			<i class="material-icons">chat</i>
-		</button>
+		<div class="srcQ"></div>
+		<div class="pageSrcBtn pointer" onclick="doSrc('web')">@@webSrc@@</div>
+		<div class="pageSrcBtn pointer" onclick="doSrc('ts')">@@tsSrc@@</div>
+		<div class="pageSrcBtn pointer" onclick="doSrc('copy')">@@copy@@</div>
+		<div class="pageSrcBtn pointer lastPSB" onclick="doSrc('toot')">@@toot@@</div>
 	</div>
 	<div id="offline" class="hide">
 		@@nowOffline@@
@@ -571,11 +569,17 @@
 							<a go="#his-follower-list" title="@@follower@@" class="btn anc-link waves-effect"><i
 									class="material-icons">people</i>←@@follower@@</a>
 							<a go="#his-fav-list" title="@@favRegist@@"
-								class="btn only-my-data anc-link waves-effect"><i
-									class="material-icons">star</i>@@favRegist@@</a>
+								class="btn only-my-data anc-link waves-effect">
+								<i class="material-icons">star</i>@@favRegist@@</a>
 							<a class="dropdown-trigger btn waves-effect" href="#" data-target="hisdropdown"><i
 									class="material-icons">more_vert</i>@@more@@</a>
-							<div id="his-data-title"><i class="material-icons">timeline</i>@@timeline@@</div>
+							<div id="his-data-title-wrap">
+								<span id="his-data-title"><i class="material-icons">timeline</i>@@timeline@@</span>
+								<button class="btn waves-effect grey darken-2" style="width: 180px" id="util-add" onclick="utlAdd()">
+									<i class="material-icons">add</i>
+									@@utlColumn@@
+								</button>
+							</div>
 							<!-- Dropdown Structure -->
 							<ul id="hisdropdown" class="dropdown-content">
 								<li class="anc-link only-his-data" go="#his-list">
@@ -612,9 +616,6 @@
 							</ul>
 						</div>
 						<div id="his-tl" class="his-var-content">
-							<button class="btn waves-effect grey" style="width:100%; padding:0;" onclick="utlAdd()">
-								@@utlColumn@@
-							</button>
 							<div id="his-tl-contents" class="cont-series"></div>
 							<button class="btn waves-effect " style="width:100%; padding:0;"
 								onclick="utlShow('--now','more')">
@@ -893,43 +894,43 @@
 							<input type="hidden" value="local" id="type-sel" />
 							@@showThisTL@@
 							<div id="tltype">
-								<a class="type waves-effect active" data-type="local">
+								<a class="type waves-effect active" data-type="local" title="@@local@@">
 									<div><i class="material-icons" aria-hidden="true">people_outline</i></div>
 									<span>@@local@@</span>
 								</a>
-								<a class="type waves-effect" data-type="local-media">
+								<a class="type waves-effect" data-type="local-media" title="@@localMedia@@">
 									<div><i class="material-icons" aria-hidden="true">perm_media</i></div>
 									<span>@@localMedia@@</span>
 								</a>
-								<a class="type waves-effect" data-type="home">
+								<a class="type waves-effect" data-type="home" title="@@home@@">
 									<div><i class="material-icons" aria-hidden="true">home</i></div>
 									<span>@@home@@</span>
 								</a>
-								<a class="type waves-effect" data-type="pub">
+								<a class="type waves-effect" data-type="pub" title="@@fed@@">
 									<div><i class="material-icons" aria-hidden="true">language</i></div>
 									<span>@@fed@@</span>
 								</a>
-								<a class="type waves-effect" data-type="pub-media">
+								<a class="type waves-effect" data-type="pub-media" title="@@fedMedia@@">
 									<div><i class="material-icons" aria-hidden="true">perm_media</i></div>
 									<span>@@fedMedia@@</span>
 								</a>
-								<a class="type waves-effect" data-type="dm">
+								<a class="type waves-effect" data-type="dm" title="@@dm@@">
 									<div><i class="material-icons" aria-hidden="true">mail_outline</i></div>
 									<span>@@dm@@</span>
 								</a>
-								<a class="type waves-effect" data-type="mix">
+								<a class="type waves-effect" data-type="mix" title="@@integratedTLDes@@">
 									<div><i class="material-icons" aria-hidden="true">merge_type</i></div>
 									<span>@@integratedTLDes@@</span>
 								</a>
-								<a class="type waves-effect" data-type="plus">
+								<a class="type waves-effect" data-type="plus" title="@@localPlusDes@@">
 									<div><i class="material-icons" aria-hidden="true">reply</i></div>
 									<span>@@localPlusDes@@</span>
 								</a>
-								<a class="type waves-effect" data-type="notf">
+								<a class="type waves-effect" data-type="notf" title="@@notf@@">
 									<div><i class="material-icons" aria-hidden="true">notifications</i></div>
 									<span>@@notf@@</span>
 								</a>
-								<a class="type waves-effect" data-type="bookmark">
+								<a class="type waves-effect" data-type="bookmark" title="@@bookmark@@">
 									<div><i class="material-icons" aria-hidden="true">bookmark</i></div>
 									<span>@@bookmark@@</span>
 								</a>
@@ -955,7 +956,7 @@
 						<select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
 					</div>
 					<div class="input-field">
-						<input id="src" type="text" class="validate" style="width:57%" />
+						<input id="src" type="text" class="validate" style="width:calc(100% - 150px)" />
 						<label for="src" data-trans="src">@@search@@</label>
 						<button class="btn waves-effect indigo" style="width: 36%;padding: 0;padding-left: 1.15rem;"
 							onclick="src()" data-trans-i="src">
@@ -1023,7 +1024,7 @@
 					<br /><br />
 					<div id="lists"></div>
 					<div id="lists-user"></div>
-					<input type="text" style="width:150px" id="list-add" placeholder="@@name@@" />
+					<input type="text" style="width: calc(100% - 143px)" id="list-add" placeholder="@@name@@" />
 					<button class="btn waves-effect" style="width:120px;" onclick="makeNewList()">
 						@@makeNew@@
 					</button>

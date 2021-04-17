@@ -314,39 +314,19 @@ function trend() {
 		})
 }
 function srcBox(mode) {
-	var selectedText = window.getSelection().toString()
 	if (mode == 'open') {
 		$('#pageSrc').removeClass('hide')
 	} else if (mode == 'close') {
-		if(!selectedText) {
-			$('#pageSrc').addClass('hide')
-			$('#pageSrc').removeClass('keep')
-		}
+		$('#pageSrc').addClass('hide')
+		$('#pageSrc').removeClass('keep')
 	} else {
 		$('#pageSrc').toggleClass('hide')
 	}
-	if(!$('#pageSrc').hasClass('keep')) {
-		$('#pageSrcInput').val(selectedText)
-	}
 }
-$('#pageSrcInput').click(function() {
-	$('#pageSrc').addClass('keep')
-})
-$('#pageSrcInput').on('input', function(evt) {
-	if(!$('#pageSrcInput').val()) {
-		$('#pageSrc').removeClass('keep')
-	}
-})
-document.addEventListener('selectionchange', function() {
-	var selectedText = window.getSelection().toString()
-	if (selectedText && !$('input').is(':focus') && !$('textarea').is(':focus')) {
-		srcBox('open')
-	}
-})
 function doSrc(type) {
 	$('#pageSrc').addClass('hide')
 	$('#pageSrc').removeClass('keep')
-	var q = $('#pageSrcInput').val()
+	var q = $('.srcQ').text()
 	if(type == 'web') {
 		var start = localStorage.getItem('srcUrl')
 		if(!start) {
@@ -356,5 +336,9 @@ function doSrc(type) {
 		postMessage(["openUrl", start], "*")
 	} else if(type == 'ts') {
 		tsAdd(q)
+	} else if(type == 'copy') {
+		execCopy(q)
+	} else if(type == 'toot') {
+		brInsert(q)
 	}
 }
