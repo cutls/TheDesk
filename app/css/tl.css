@@ -568,7 +568,9 @@ p:not(:last-child) {
 	font-weight: bold;
 	text-decoration: underline;
 }
-
+.rotate-90 {
+	transform: rotate(90deg);
+}
 .area-notice {
 	grid-area: notice;
 }

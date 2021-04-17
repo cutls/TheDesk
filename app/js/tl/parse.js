@@ -278,7 +278,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 				</span>
 				<span class="voice">${date(toot.created_at, 'absolute')}(${lang.lang_parse_notftime})</span>
 				<i class="big-text fas ${icon}"></i>
-				<a onclick="udg('${toot.account.id}','${acct_id}')" class="pointer grey-text">
+				<a onclick="udg('${toot.account.id}','${acct_id}')" class="pointer grey-text notf-udg-text">
 					${dis_name}(@${toot.account.acct})
 				</a>`
 			var notice = noticetext
@@ -904,7 +904,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 			//日本語じゃない
 			if (toot.language != lang.language && toot.language) {
 				var trans = `<li onclick="trans('${toot.language}','${lang.language}', $(this))" 
-							 style="padding:0">
+							 style="padding:0; padding-top: 5px;">
 								<i class="material-icons" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
 					</li>`
 			} else {
@@ -1157,23 +1157,23 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 					</li>
 					<div>
 					<li onclick="bkm('${uniqueid}','${acct_id}','${tlid}')"
-						class="bkm-btn bkmStr_${uniqueid}" style="padding:0">
+						class="bkm-btn bkmStr_${uniqueid}" style="padding:0; padding-top: 5px;">
 						<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${if_bkm}"></i>${bkmStr}
 					</li>
 					<li class="${if_mine}" onclick="del('${uniqueid}','${acct_id}')"
-							style="padding:0">
+							style="padding:0; padding-top: 5px;">
 							<i class="fas fa-trash"></i>${lang.lang_parse_del}
 					</li>
-					<li class="${if_mine}" onclick="pin('${uniqueid}','${acct_id}')" style="padding:0" class="pinStr_${uniqueid}">
+					<li class="${if_mine}" onclick="pin('${uniqueid}','${acct_id}')" style="padding:0; padding-top: 5px;" class="pinStr_${uniqueid}">
 							<i class="fas fa-map-pin pin_${uniqueid} ${if_pin}"></i>${pinStr}
 					</li>
 					<li class="${if_mine}"  onclick="redraft('${uniqueid}','${acct_id}')"
-							style="padding:0">
+							style="padding:0; padding-top: 5px;">
 							<i class="material-icons" aria-hidden="true">redo</i>${lang.lang_parse_redraft}
 					</li>
 					${trans}
 					<li onclick="postMessage(['openUrl', '${toot.url}'], '*')"
-						 style="padding:0">
+						 style="padding:0; padding-top: 5px;">
 						<i class="fas text-darken-3 fa-globe"></i>${lang.lang_parse_link}
 					</li>
 					${pluginHtml}

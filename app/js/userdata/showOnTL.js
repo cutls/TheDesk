@@ -33,20 +33,20 @@ function udgEx(user, acct_id) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.accounts[0]) {
 				var id = json.accounts[0].id
 				udg(id, acct_id)
@@ -76,20 +76,20 @@ function udg(user, acct_id) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			//一つ前のユーザーデータ
 			if (!localStorage.getItem("history")) {
 				$("#his-history-btn").prop("disabled", true)
@@ -129,7 +129,7 @@ function udg(user, acct_id) {
 			}
 			//絵文字があれば
 			if (actemojick) {
-				Object.keys(json.emojis).forEach(function(key5) {
+				Object.keys(json.emojis).forEach(function (key5) {
 					var emoji = json.emojis[key5]
 					var shortcode = emoji.shortcode
 					var emoji_url = '<img src="' + emoji.url + '" class="emoji-img" data-emoji="' + shortcode + '" draggable="false">'
@@ -147,6 +147,11 @@ function udg(user, acct_id) {
 			$("#his-acct").text(json.acct)
 			$("#his-acct").attr("fullname", fullname)
 			$("#his-prof").attr("src", json.avatar)
+			$("#util-add").removeClass("hide")
+			const title = $('.column-first').html()
+			$("#my-data-nav .anc-link").removeClass("active-back")
+			$('.column-first').addClass("active-back")
+			$('#his-data-title').html(title) 
 			$("#his-data").css("background-image", "url(" + json.header + ")")
 			$("#his-sta").text(json.statuses_count)
 			$("#his-follow").text(json.following_count)
@@ -186,6 +191,7 @@ function udg(user, acct_id) {
 			$("#his-des").html(twemoji.parse(note))
 			if (json.bot) {
 				$("#his-bot").html(lang.lang_showontl_botacct)
+				$("#his-bot").removeClass("hide")
 			}
 			$("#his-des").attr("data-acct", acct_id)
 			$("#his-data").css("background-size", "cover")
@@ -239,7 +245,7 @@ function udg(user, acct_id) {
 				$(".only-his-data").show()
 			}
 			todc()
-			if(json.locked) {
+			if (json.locked) {
 				$('#his-data').addClass('locked')
 			} else {
 				$('#his-data').removeClass('locked')
@@ -271,20 +277,20 @@ function misskeyUdg(user, acct_id) {
 			userId: user
 		})
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			//一つ前のユーザーデータ
 			if (!localStorage.getItem("history")) {
 				$("#his-history-btn").prop("disabled", true)
@@ -402,22 +408,22 @@ function relations(user, acct_id) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var json = json[0]
-			if(json.requested) {
+			if (json.requested) {
 				//フォロリク中
 				$('#his-data').addClass('following')
 				$("#his-follow-btn-text").text(lang.lang_status_requesting)
@@ -516,6 +522,7 @@ function reset() {
 	$("#his-end-btn").removeClass("endorsed")
 	$("#his-des").css("max-height", "250px")
 	$("#his-bot").html("")
+	$("#his-bot").addClass("hide")
 	$("#his-follow-btn").show()
 	$("#his-block-btn").show()
 	$("#his-mute-btn").show()
@@ -551,11 +558,13 @@ function reset() {
 	$('#his-data').removeClass('locked')
 	$('#his-data').removeClass('requesting')
 }
-$("#my-data-nav .anc-link").on("click", function() {
+$("#my-data-nav .anc-link").on("click", function () {
 	var target = $(this).attr("go")
 	if (target) {
-		const title = $(this).html()
-		$('#his-data-title').html(title)
+		let title = $(this).html()
+		if (target === '#his-tl') $("#util-add").removeClass("hide")
+		if (target != '#his-tl') $("#util-add").addClass("hide")
+		$('#his-data-title').html(title) 
 		$("#my-data-nav .anc-link").removeClass("active-back")
 		$(this).addClass("active-back")
 		$(target).show()

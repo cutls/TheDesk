@@ -52,7 +52,7 @@ function parseColumn(target, dontclose) {
 			localStorage.setItem('domain_' + key, acct.domain)
 			localStorage.setItem('acct_' + key + '_at', acct.at)
 			localStorage.setItem('acct_' + key + '_rt', acct.rt ? acct.rt : null)
-			if(!target) mastodonBaseStreaming(key)
+			if (!target) mastodonBaseStreaming(key)
 			ckdb(key)
 			//フィルターデータ読もう
 			getFilter(key)
@@ -167,11 +167,11 @@ function parseColumn(target, dontclose) {
 		}
 		var maxWidth = localStorage.getItem('max-width')
 		if (maxWidth) {
-			css = css +'max-width:' + maxWidth + 'px;'
+			css = css + 'max-width:' + maxWidth + 'px;'
 		}
 		var margin = localStorage.getItem('margin')
 		if (margin) {
-			css = css +'margin-right:' + margin + 'px;'
+			css = css + 'margin-right:' + margin + 'px;'
 		}
 		if (acct.width) {
 			css = css + ' min-width:' + acct.width + 'px !important;max-width:' + acct.width + 'px !important;'
@@ -231,14 +231,14 @@ function parseColumn(target, dontclose) {
 			}
 			var unread = `<a id="unread_${key}" onclick="showUnread('${key}','${acct.type}','${acct.domain}')"
 					 class="setting nex waves-effect" title="${lang.lang_layout_unread}">
-					<i class="material-icons waves-effect nex">more</i><br />${lang.lang_layout_unread}
+					<i class="material-icons waves-effect nex">more</i><span>${lang.lang_layout_unread}</span>
 				</a>`
 			var notfDomain = acct.domain
 			var notfKey = key
 			var if_tag = ''
 			var if_tag_btn = ''
 			if (acct.type == 'notf') {
-				var exclude =
+				var excludeNotf =
 					`<div style="border: 1px solid; padding: 5px; margin-top: 5px; margin-bottom: 5px;">${lang.lang_layout_excluded}:<br>
 					<label>
 						<input type="checkbox" class="filled-in" id="exc-reply-${key}" ${excludeCk(key, 'mention')} />
@@ -272,20 +272,21 @@ function parseColumn(target, dontclose) {
 					</label> <br />
 					<button class="btn btn-flat waves-effect notf-exclude-btn waves-light" style="width:calc(50% - 11px); padding:0;" onclick="exclude('${key}')">Filter</button>`
 				if (checkNotfFilter(key)) {
-					exclude =
-						exclude +
+					excludeNotf =
+						excludeNotf +
 						`<button class="btn btn-flat red-text waves-effect notf-exclude-btn waves-light" style="width:calc(50% - 11px); padding:0;" onclick="resetNotfFilter('${key}')">
 							Clear all
 						</button>`
 				}
-				exclude = exclude + '</div>'
+				excludeNotf = excludeNotf + '</div>'
 				notfDomain = 'dummy'
 				notfKey = 'dummy'
+				var excludeHome =''
 			} else if (acct.type == 'home') {
-				var exclude = `<a onclick="ebtToggle('${key}')" class="setting nex waves-effect">
+				var excludeNotf = ''
+				var excludeHome = `<a onclick="ebtToggle('${key}')" class="setting nex waves-effect">
 						<i class="fas fa-retweet nex" title="${lang.lang_layout_excludingbt}" style="font-size: 24px"></i>
-						<span id="sta-bt-${key}">Off</span><br />
-					${lang.lang_layout_excludingbt}
+						<span>${lang.lang_layout_excludingbt}</span><span id="sta-bt-${key}">Off</span>
 					</a>`
 			} else if (acct.type == 'tag') {
 				if (acct.data.name) {
@@ -313,10 +314,12 @@ function parseColumn(target, dontclose) {
 				<i class="material-icons waves-effect nex">note_add</i>
 				</a>`
 				unread = ''
-				var exclude = ''
+				var excludeNotf = ''
+				var excludeHome = ''
 				var if_notf = 'hide'
 			} else {
-				var exclude = ''
+				var excludeNotf = ''
+				var excludeHome = ''
 				unread = ''
 			}
 
@@ -337,12 +340,12 @@ function parseColumn(target, dontclose) {
 					$('#timeline-container').append(basehtml)
 				}
 				var left_hold = `<a onclick="leftFoldSet('${key}')" class="setting nex waves-effect">
-						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftFold}">view_agenda</i><br />
-					${lang.lang_layout_leftFold}</a>`
+						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftFold}">view_agenda</i>
+					<span>${lang.lang_layout_leftFold}</span></a>`
 			} else {
 				var left_hold = `<a onclick="leftFoldRemove('${key}')" class="setting nex waves-effect">
-						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i><br />
-					${lang.lang_layout_leftUnfold}</a>`
+						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i>
+					<span>${lang.lang_layout_leftUnfold}</span></a>`
 			}
 			if (key === 0) {
 				left_hold = ''
@@ -363,8 +366,7 @@ function parseColumn(target, dontclose) {
 			if (acct.type != 'pub' && acct.type != 'pub-media') {
 				var mediaFil = `<a onclick="mediaToggle('${key}')" class="setting nex waves-effect">
 					<i class="material-icons nex" title="${lang.lang_layout_mediafil}">perm_media</i>
-					<span id="sta-media-${key}">On</span><br />
-				${lang.lang_layout_mediafil}</a>`
+				<span>${lang.lang_layout_mediafil}</span/><span id="sta-media-${key}">On</span></a>`
 			} else {
 				var mediaFil = `<a onclick="remoteOnly('${key}','${acct.type}')" class="setting nex waves-effect">
 					<i class="material-icons nex" title="${lang.lang_layout_remoteOnly}">perm_media</i><br />
@@ -422,32 +424,29 @@ function parseColumn(target, dontclose) {
 					</div>
 				</div>
 				<div class="column-hide notf-indv-box" id="util-box_${key}" style="padding:5px;">
-					${exclude}
+					${excludeNotf}
+					<div class="columnSettings">
+					${excludeHome}
 					${unread}
 					${left_hold}
 					${mediaFil}
 					<a onclick="cardToggle('${key}')" class="setting nex waves-effect">
 						<i class="material-icons nex" title="${lang.lang_layout_linkanades}">link</i>
-						<span id="sta-card-${key}">On</span><br />
-					${lang.lang_layout_linkana}
+					<span>${lang.lang_layout_linkana}</span><span id="sta-card-${key}">On</span>
 					</a>
 					<a onclick="voiceToggle('${key}')" class="setting nex waves-effect">
 						<i class="material-icons nex" title="${lang.lang_layout_tts}">hearing</i>
-						<span id="sta-voice-${key}">On</span><br />
-					${lang.lang_layout_tts}
-					TL</a>
+					<span>${lang.lang_layout_tts}TL</span/><span id="sta-voice-${key}">On</span>
+					</a>
 					<a onclick="columnReload('${key}','${acct.type}')" class="setting nex ${if_misskey_hide} waves-effect">
 						<i class="material-icons nex" title="${lang.lang_layout_reconnect}">refresh</i>
-					<br />
-						${lang.lang_layout_reconnect}
+						<span>${lang.lang_layout_reconnect}</span>
 					</a>
 					<a onclick="resetWidth('${key}')" class="setting nex waves-effect">
-						<i class="material-icons nex" title="${lang.lang_layout_resetWidth}">refresh</i>
-					<br />
-						${lang.lang_layout_resetWidth}
-					</a><br />
-					${lang.lang_layout_headercolor}
-					<br>
+						<i class="material-icons nex rotate-90" title="${lang.lang_layout_resetWidth}">height</i>
+						<span>${lang.lang_layout_resetWidth}</span>
+					</a></div>
+					<p>${lang.lang_layout_headercolor}</p>
 					<div id="picker_${key}" class="color-picker"></div>
 				</div>${if_tag}
 				<div class="tl-box" tlid="${key}">
