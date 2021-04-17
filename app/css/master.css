@@ -91,13 +91,13 @@ option {
 	height: 100%;
 }
 #imagewrap img.rotate-90 {
-	transform: rotate(-90deg)
+	transform: rotate(-90deg);
 }
 #imagewrap img.rotate-180 {
-	transform: rotate(-180deg)
+	transform: rotate(-180deg);
 }
 #imagewrap img.rotate-270 {
-	transform: rotate(-270deg)
+	transform: rotate(-270deg);
 }
 .pointer {
 	cursor: pointer;
@@ -417,13 +417,23 @@ input[type='color']::-webkit-color-swatch {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	width: 13rem;
-	height: 3.1rem;
+	min-width: 150px;
+	width: 50%;
+    height: 2.5rem;
 	cursor: pointer;
 	color: var(--text);
 }
+#tltype .type div {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 3px;
+}
 #tltype .type span {
-	width: calc(100% - 2.3rem);
+	width: calc(100% - 4rem);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    overflow: hidden;
 }
 #tltype .type:hover {
 	background-color: var(--beforehover);
@@ -498,7 +508,8 @@ textarea {
 	font-size: 1rem !important;
 	font-family: inherit;
 }
-.swal2-popup, .swal2-header {
+.swal2-popup,
+.swal2-header {
 	background-color: var(--subcolor) !important;
 }
 .swal2-title,
@@ -510,7 +521,7 @@ h2.swal2-title {
 	line-height: 100%;
 }
 .swal2-close:focus {
-    background-color: inherit !important;
+	background-color: inherit !important;
 	box-shadow: none !important;
 }
 .swal2-actions {
@@ -558,6 +569,7 @@ h2.swal2-title {
 	background-color: var(--emphasized);
 }
 #pageSrc {
+	border-radius: 10px;
 	position: absolute;
 	top: 0;
 	left: calc(50vw - 11.53rem);
@@ -565,10 +577,22 @@ h2.swal2-title {
 	max-width: 100%;
 	background-color: var(--subcolor);
 	z-index: 501;
-	padding: 0.4rem;
 }
-#pageSrcInput {
-	width: 12.3rem;
+.pageSrcBtn:hover {
+	background-color: var(--active);
+}
+.srcQ {
+	margin-top: 0.4rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	border-bottom: 1px solid;
+}
+.lastPSB {
+	margin-bottom: 0.4rem;
+}
+.pageSrcBtn {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 }
 .voice {
 	clip: rect(1px, 1px, 1px, 1px);
@@ -689,10 +713,10 @@ button {
 }
 .pluginNex {
 	width: 2rem;
-    text-align: center;
+	text-align: center;
 }
 .pluginNex span {
 	font-size: 2rem;
-    position: relative;
-    top: -4px;
+	position: relative;
+	top: -4px;
 }

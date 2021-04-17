@@ -186,7 +186,7 @@ onmessage = function (e) {
 	} else if (e.data[0] == 'asReadEnd') {
 		asReadEnd()
 	} else if (e.data[0] == 'accessibility') {
-		console.log('atrue')
+		console.log('accessibility mode')
 		$('body').addClass('accessibility')
 		$('.window-title').before('<div class="accessMark">Screen Reader Optimized</div>')
 	} else if (e.data[0] == 'logData') {
@@ -200,6 +200,22 @@ onmessage = function (e) {
 		})
 	} else if (e.data[0] == 'twitterLoginComplete') {
 		location.reload()
+	} else if (e.data[0] == 'customUrl') {
+		const mode = e.data[1][0]
+		const codex = e.data[1][1]
+		if (mode === 'share') {
+			$('textarea').focus()
+			$('#textarea').val(decodeURI(codex))
+			show()
+			$('body').removeClass('mini-post')
+			$('.mini-btn').text('expand_less')
+		} else if (mode === 'manager' || mode === 'login') {
+			code(codex)
+		} else if (mode === 'spotify') {
+			var coder = codex.split(':')
+			localStorage.setItem('spotify', coder[0])
+			localStorage.setItem('spotify-refresh', coder[1])
+		}
 	}
 }
 /* PWA */
@@ -236,3 +252,34 @@ const connection = function (event) {
 }
 window.onoffline = connection
 window.ononline = connection
+
+let lastSelection = null
+let isSame = true
+$(document).on('keyup mouseup', function (e) {
+	lastSelection = (window.getSelection().toString() !== '') ? window.getSelection().getRangeAt(0) : null
+	if (!isSame) $('#pageSrc').addClass('hide')
+})
+
+// カスタム右クリックメニュー
+$(document).on('contextmenu', function (e) {
+	// テキスト選択中であれば何もしない
+	if (lastSelection !== null) {
+		const currentSelection = window.getSelection().getRangeAt(0)
+		for (let key in currentSelection) {
+			if (currentSelection[key] != lastSelection[key]) {
+				isSame = false
+				break
+			}
+		}
+
+		if (isSame && currentSelection != '') {
+			$('#pageSrc').removeClass('hide')
+			$('#pageSrc').css('left', e.pageX)
+			$('#pageSrc').css('top', e.pageY)
+			$('.srcQ').text(currentSelection)
+		}
+	}
+})
+$('textarea, input').on('contextmenu', function (e) {
+	postMessage(['textareaContextMenu', { x: e.pageX, y: e.pageY }], '*')
+})

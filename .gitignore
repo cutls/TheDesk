@@ -21,6 +21,7 @@ app/view/cs
 app/view/ps
 app/view/es-AR
 app/view/it-IT
+app/view/pl-PL
 app/git
 *.code-workspace
 releasenote.md

@@ -423,10 +423,6 @@ function login(url) {
 			versionChecker(url)
 			$('#add').hide()
 			postMessage(['openUrl', auth], '*')
-			if ($('#linux:checked').val() == 'on') {
-			} else {
-				postMessage(['sendSinmpleIpc', 'quit'], '*')
-			}
 		}
 	}
 }
@@ -625,15 +621,16 @@ function misskeyAuth(url, mkc) {
 
 //テキストボックスにURL入れた
 function instance() {
-	var url = $('#url').val()
+	var url = $('#autocomplete-input').val()
 	if (url.indexOf('@') != -1 || url.indexOf('https') != -1) {
 		alert('入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
 		return false
 	}
-	login(url)	
+	login(url)
 }
 //コード入れてAccessTokenゲット
 function code(code) {
+	var red = localStorage.getItem('redirect')
 	localStorage.removeItem('redirect')
 	if (!code) {
 		var code = $('#code').val()
@@ -696,7 +693,7 @@ function code(code) {
 		}
 		return
 	} else {
-		var red = 'urn:ietf:wg:oauth:2.0:oob'
+		if (!red) red = 'urn:ietf:wg:oauth:2.0:oob'
 		if (~url.indexOf('pixelfed')) {
 			red = 'https://thedesk.top/hello.html'
 		}
@@ -720,6 +717,7 @@ function code(code) {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
 				if (this.status !== 200) {
+					M.toast({ html: lang.lang_fatalerroroccured + 'Error: cannot complete', displayLength: 5000 })
 					setLog(start, this.status, json)
 				}
 				if (json['access_token']) {
@@ -1089,15 +1087,14 @@ function coloradd(key, bg, txt) {
 //入力時にハッシュタグと@をサジェスト
 var timer = null
 
-var input = document.getElementById('url')
-
+var input = document.getElementById('autocomplete-input')
 var prev_val = input.value
 var oldSuggest
 var suggest
 input.addEventListener(
 	'focus',
 	function () {
-		$('#ins-suggest').html('')
+		const instance = M.Autocomplete.getInstance(input)
 		window.clearInterval(timer)
 		timer = window.setInterval(function () {
 			var new_val = input.value
@@ -1108,7 +1105,7 @@ input.addEventListener(
 						method: 'GET',
 						headers: {
 							'content-type': 'application/json',
-							}
+						}
 					})
 						.then(function (response) {
 							if (!response.ok) {
@@ -1125,21 +1122,20 @@ input.addEventListener(
 						})
 						.then(function (json) {
 							if (!json.error) {
-								var urls = 'Suggest:'
+								let data = {}
 								Object.keys(json.data).forEach(function (key) {
 									var url = json.data[key]
-									urls =
-										urls +
-										`<a onclick="login('${url.uri}')" class="pointer" title="${url.uri}">${escapeHTML(url.title ? url.title : url.uri)}</a>, `
+									data[url.uri] = escapeHTML(url.title ? url.title : url.uri)
 								})
-								$('#ins-suggest').html(urls)
+								instance.updateData(data)
+								instance.open()
 							} else {
 								console.error(json.error)
 							}
 						})
 				}
 				oldSuggest = suggest
-				prev_value = new_val
+				prev_val = new_val
 			}
 		}, 1000)
 	},
@@ -1157,3 +1153,12 @@ input.addEventListener(
 function asReadEnd() {
 	postMessage(['asReadComp', ''], '*')
 }
+
+// Or with jQuery
+
+$(document).ready(function(){
+    $('input.autocomplete').autocomplete({
+      data: {},
+    });
+  });
+        
