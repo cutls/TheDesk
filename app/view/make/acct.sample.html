@@ -40,19 +40,28 @@
 		<div id="acct-list"></div>
 		<div class="divider"></div>
 	</div>
-	<div class="hide-second">
-		<a href="setting.html">@@haveExported@@</a>
-	</div>
 	<div>
 		<h5>@@add@@</h5>
+
+		<div class="hide-second">
+			<a href="setting.html">@@haveExported@@</a>
+		</div>
 		<br />
 		<div id="add">
 			<div class="row">
 				<div class="col s8">
-					@@addAcct@@<br />
-					<input type="text" id="url" style="width:70%" placeholder="ex)mstdn.jp" />
-					<div id="ins-suggest"></div>
-					<button class="btn waves-effect" onclick="instance()">Login</button><br />
+					@@addAcct@@
+					<div class="row">
+						<div class="input-field col s6">
+							<input type="text" id="autocomplete-input" class="autocomplete" placeholder="eg) mstdn.jp">
+							<label for="autocomplete-input">URL</label>
+						</div>
+						<div class="col s4 loginBtnWrap">
+							<button class="btn waves-effect" onclick="instance()"><i
+									class="material-icons left">login</i>Login</button>
+						</div>
+					</div>
+
 					<div class="pwa">
 						@@codesetupwarn@@<br />
 						<label>
@@ -129,6 +138,7 @@
 	<script type="text/javascript" src="../../js/login/manager.js"></script>
 	<script type="text/javascript" src="../../js/tl/date.js"></script>
 	<script>$('body').addClass(localStorage.getItem('platform'))</script>
+
 </body>
 
 </html>

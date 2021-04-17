@@ -155,8 +155,16 @@
 #hisdropdown li:hover {
 	background-color: var(--active);
 }
-#his-data-title {
+#his-data-title-wrap {
 	width: 100%;
 	text-align: center;
 	font-size: 1.5rem;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#his-data-title .material-icons {
+	position: relative;
+    top: 7px;
+    margin-right: 3px;
 }

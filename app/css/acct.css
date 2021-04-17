@@ -92,3 +92,9 @@ i.left {
 .text-line-icon {
 	font-size: 1rem;
 }
+.loginBtnWrap {
+	padding-top: 10px !important;
+}
+#add {
+	max-width: 1000px;
+}

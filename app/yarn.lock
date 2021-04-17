@@ -3381,7 +3381,7 @@ matcher@^2.0.0:
 
 "materialize-css@git://github.com/cutls/materialize#v1-dev":
   version "1.0.0"
-  resolved "git://github.com/cutls/materialize#e92efb770c6f17197b12b9af14b388f1454b5b4d"
+  resolved "git://github.com/cutls/materialize#58faa963ee4b1dd7fb5370e67f4650d5a78079c3"
   dependencies:
     grapheme-splitter "^1.0.4"
 
