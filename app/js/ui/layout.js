@@ -659,8 +659,6 @@ function removeColumn(tlid) {
 				$('#timeline_box_' + tlid + '_parentBox').remove()
 			}
 		}
-		$('#sort-box').removeClass('hide')
-		$('#sort-box').addClass('show')
 	})
 }
 

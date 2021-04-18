@@ -104,6 +104,7 @@
     "lang_details_embed": "埋め込みHTMLがコピーされました。",
     "lang_details_url": "トゥートURLがコピーされました。",
     "lang_details_txt": "トゥート本文がコピーされました。",
+    "lang_details_fetch": "トゥートの情報を読み込んでいます",
     "lang_filter_nodata": "フィルターはありません",
     "lang_filter_errordegree": "適応範囲を最低一つ以上チェックしてください。",
     "lang_list_nodata": "リストはありません",

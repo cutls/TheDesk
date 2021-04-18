@@ -637,42 +637,48 @@ function brws() {
 	postMessage(['openUrl', url], '*')
 }
 //外部からトゥート開く
-function detEx(url, acct_id) {
+async function detEx(url, acct_id) {
 	if (acct_id == 'main') {
 		acct_id = localStorage.getItem('main')
 	}
-	var domain = localStorage.getItem('domain_' + acct_id)
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	var start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + encodeURIComponent(url)
-	fetch(start, {
+	Swal.fire({
+		title: 'Loading...',
+		html: lang.lang_details_fetch,
+		showConfirmButton: false,
+		showCloseButton: true,
+		onBeforeOpen: () => {
+			Swal.showLoading()
+		},
+		onClose: () => { },
+	}).then((result) => { })
+	const json = await detExCore(url, acct_id)
+	Swal.close()
+	if (!json.statuses) {
+		postMessage(['openUrl', url], '*')
+	} else {
+		var id = json.statuses[0].id
+		$('.loadp').text($('.loadp').attr('href'))
+		$('.loadp').removeClass('loadp')
+		details(id, acct_id, 0)
+	}
+	return
+}
+async function detExCore(url, acct_id) {
+	const domain = localStorage.getItem('domain_' + acct_id)
+	const start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + encodeURIComponent(url)
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
+	let promise = await fetch(start, {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
-			if (!response.ok) {
-				response.text().then(function(text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function(error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function(json) {
-			if (!json.statuses) {
-				postMessage(['openUrl', url], '*')
-			} else {
-				var id = json.statuses[0].id
-				$('.loadp').text($('.loadp').attr('href'))
-				$('.loadp').removeClass('loadp')
-				details(id, acct_id, 0)
-			}
-		})
-	return
+
+	const json = await promise.json()
+	if (json) {
+		return json
+	} else {
+		return false
+	}
 }

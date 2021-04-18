@@ -29,7 +29,7 @@ $(document).on('click', 'a', e => {
 					acct_id = 0
 				}
 				$a.parent().addClass('loadp')
-				$a.parent().text('Loading...')
+				
 				detEx(url, acct_id)
 			}
 		} else if (tags) {

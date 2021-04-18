@@ -89,7 +89,7 @@ function list() {
 							</a>/
 							<a onclick="listUser('${list.id}','${acct_id}')" class="pointer">
 								${lang.lang_list_users}
-							'</a><br>`
+							</a><br>`
 					})
 					$('#lists').html(lists)
 				} else {
