@@ -507,7 +507,12 @@ function savefolder() {
 }
 
 function font() {
-	postMessage(['sendSinmpleIpc', 'fonts'], '*')
+	if($('#fonts').hasClass('hide')) {
+		postMessage(['sendSinmpleIpc', 'fonts'], '*')
+		$('#fonts').removeClass('hide')
+	} else {
+		$('#fonts').addClass('hide')
+	}
 }
 function fontList(arg) {
 	$('#fonts').removeClass('hide')
@@ -517,6 +522,7 @@ function fontList(arg) {
 	}
 }
 function insertFont(name) {
+	$('#fonts').addClass('hide')
 	$('#font').val(name)
 }
 function copyColor(from, to) {
