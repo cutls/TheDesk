@@ -17,7 +17,8 @@ function additional(acct_id, tlid) {
 		}
 
 		if (tagThis) {
-			$(this).attr('href', "javascript:tagShow('" + tagThis + "')")
+			$(this).attr('href', "#")
+			$(this).attr('onclick', "tagShow('" + tagThis + "', this)")
 			
 		}
 	})

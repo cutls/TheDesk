@@ -98,3 +98,12 @@ i.left {
 #add {
 	max-width: 1000px;
 }
+.autocomplete-content {
+	min-width: 450px;
+}
+.autocomplete-content li {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    overflow: hidden;
+}

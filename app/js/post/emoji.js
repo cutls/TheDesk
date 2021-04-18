@@ -126,8 +126,10 @@ function emojiGet(parse, started) {
 
 					md['if_categorized'] = if_categorized
 					localStorage.setItem('emojis_' + acct_id, JSON.stringify(md))
+					localStorage.setItem(`emojis_raw_${acct_id}`, JSON.stringify(json))
 				} else {
 					localStorage.setItem('emojis_' + acct_id, JSON.stringify(md))
+					localStorage.setItem(`emojis_raw_${acct_id}`, JSON.stringify(json))
 				}
 				localStorage.setItem('emojiseek', 0)
 				if (!started) {

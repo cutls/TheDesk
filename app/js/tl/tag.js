@@ -9,9 +9,46 @@ if (location.search) {
 	}
 }
 //よく使うタグ
-function tagShow(tag) {
-	console.log('[data-regTag=' + decodeURI(tag).toLowerCase() + ']')
-	$('[data-regTag=' + decodeURI(tag).toLowerCase() + ']').toggleClass('hide')
+function tagShow(tag, elm) {
+	const tagTL = lang.lang_parse_tagTL.replace('{{tag}}', '#' + tag)
+	const tagPin = lang.lang_parse_tagpin.replace('{{tag}}', '#' + tag)
+	const tagToot = lang.lang_parse_tagtoot.replace('{{tag}}', '#' + tag)
+	$('#tagCMTL').text(tagTL)
+	$('#tagCMPin').text(tagPin)
+	$('#tagCMToot').text(tagToot)
+	const acct_id = $(elm).parents('.tl').attr('data-acct')
+	const rect = elm.getBoundingClientRect()
+	$('#tagContextMenu').css('top', `calc(${rect.top}px + 1rem)`)
+	$('#tagContextMenu').css('left', `${rect.left}px`)
+	$('#tagContextMenu').attr('data-tag', tag)
+	$('#tagContextMenu').attr('data-acct', acct_id)
+	$('#tagContextMenu').removeClass('hide')
+	setTimeout(() => tShowBox('open'), 500)
+}
+function tShowBox(mode) {
+	if (mode == 'open') {
+		$('#tagContextMenu').removeClass('hide')
+	} else if (mode == 'close') {
+		if (!$('#tagContextMenu').hasClass('hide')) $('#tagContextMenu').addClass('hide')
+		$('#tagContextMenu').removeClass('keep')
+	} else {
+		$('#tagContextMenu').toggleClass('hide')
+	}
+}
+function doTShowBox(type) {
+	$('#tagContextMenu').addClass('hide')
+	$('#tagContextMenu').removeClass('keep')
+	const q = $('#tagContextMenu').attr('data-tag')
+	const acct_id = $('#tagContextMenu').attr('data-acct')
+	if (type == 'tl') {
+		tl('tag', q, acct_id, 'add')
+	} else if (type == 'toot') {
+		brInsert(`#${q}`)
+	} else if (type == 'pin') {
+		tagPin(q)
+	} else if (type == 'f') {
+		tagFeature(q, acct_id)
+	}
 }
 //タグ追加
 function tagPin(tag) {
@@ -22,7 +59,7 @@ function tagPin(tag) {
 		var obj = JSON.parse(tags)
 	}
 	var can
-	Object.keys(obj).forEach(function(key) {
+	Object.keys(obj).forEach(function (key) {
 		var tagT = obj[key]
 		if (tagT == tag) {
 			can = true
@@ -56,7 +93,7 @@ function favTag() {
 	}
 	var tags = ''
 	var nowPT = localStorage.getItem('stable')
-	Object.keys(obj).forEach(function(key) {
+	Object.keys(obj).forEach(function (key) {
 		var tag = obj[key]
 		if (nowPT != tag) {
 			console.log('stable tags:' + nowPT + '/' + tag)
@@ -69,27 +106,30 @@ function favTag() {
 		tag = escapeHTML(tag)
 		tags =
 			tags +
-			`<a onclick="tagShow('${tag}')" class="pointer">#${tag}</a>
+			`<a onclick="tagShowHorizon('${tag}')" class="pointer">#${tag}</a>
 			${nowon}<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">　
 			<a onclick=\"tagTL('tag','${tag}',false,'add')" class="pointer" title="${lang.lang_parse_tagTL.replace('{{tag}}', '#' + tag)}">
 				TL
-			</a>　
+			</a>
 			<a onclick="brInsert('#${tag}')" class="pointer" title="${lang.lang_parse_tagtoot.replace('{{tag}}', '#' + tag)}">
 				Toot
-			</a>　
+			</a>
 			<a onclick="autoToot('${tag}');" class="pointer" title="${lang.lang_tags_always}${lang.lang_parse_tagtoot.replace('{{tag}}', '#' + tag)}">
 				${ptt}
-			</a>　
+			</a>
 			<a onclick="tagRemove('${key}')" class="pointer" title="${lang.lang_tags_tagunpin.replace('{{tag}}', '#' + tag)}">
 				${lang.lang_del}
 			</a>
 			</span> `
 	})
 	if (obj.length > 0) {
-		$('#taglist').append('My Tags:' + tags)
+		$('#taglist').append('My Tags: ' + tags)
 	} else {
 		$('#taglist').append('')
 	}
+}
+function tagShowHorizon(tag) {
+	$('[data-regTag=' + decodeURI(tag).toLowerCase() + ']').toggleClass('hide')
 }
 function trendTag() {
 	$('.trendtag').remove()
@@ -103,28 +143,28 @@ function trendTag() {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json) {
 				var tags = ''
 				json = json.score
-				Object.keys(json).forEach(function(tag) {
+				Object.keys(json).forEach(function (tag) {
 					tag = escapeHTML(tag)
 					tags =
 						tags +
-						`<a onclick="tagShow('${tag}')" class="pointer">#${tag}</a>
+						`<a onclick="tagShow('${tag}', this)" class="pointer">#${tag}</a>
 						<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">　
 						<a onclick=\"tagTL('tag','${tag}',false,'add')" class="pointer" title="#${tag}のタイムライン">TL</a>　
 						<a onclick="show();brInsert('#${tag}')" class="pointer" title="#${tag}でトゥート">
@@ -134,8 +174,8 @@ function trendTag() {
 				})
 				$('#taglist').append(
 					'<div class="trendtag">アイマストドントレンドタグ<i class="material-icons pointer" onclick="trendTag()" style="font-size:12px">refresh</i>:' +
-						tags +
-						'</div>'
+					tags +
+					'</div>'
 				)
 				trendintervalset()
 			} else {
@@ -182,18 +222,18 @@ function tagFeature(name, acct_id) {
 			name: name
 		})
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			return false
 		})
-		.then(function(json) {
+		.then(function (json) {
 			console.log(json)
 			M.toast({ html: 'Complete: ' + escapeHTML(name), displayLength: 3000 })
 		})
@@ -202,7 +242,7 @@ function tagFeature(name, acct_id) {
 function addTag(id) {
 	var columns = JSON.parse(localStorage.getItem('column'))
 	var column = columns[id]
-	if(!column.data.name) {
+	if (!column.data.name) {
 		var name = column.data
 	} else {
 		var name = column.data.name
@@ -219,7 +259,7 @@ function addTag(id) {
 	o[id] = obj
 	var json = JSON.stringify(o)
 	console.log(json)
-	localStorage.setItem('column',json)
+	localStorage.setItem('column', json)
 	columnReload(id, 'tag')
 }
 

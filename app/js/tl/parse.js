@@ -703,31 +703,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 							${lang.lang_parse_thread}
 						</a></div>`
 			}
-			var tagck = toot.tags[0]
-			var tags = ''
-			//タグであれば
-			if (tagck) {
-				Object.keys(toot.tags).forEach(function (key4) {
-					var tag = toot.tags[key4]
-					var featured = `　<a onclick="tagFeature('${tag.name}','${acct_id}')" class="pointer" title="add it to Featured tags">Feature</a>　`
-					tags =
-						tags +
-						`<span class="hide" data-tag="${tag.name}" data-regTag="${tag.name.toLowerCase()}">#${tag.name
-						}:
-							<a onclick="tl('tag','${tag.name}','${acct_id}','add')" class="pointer"
-							 title="${lang.lang_parse_tagTL.replace(
-							'{{tag}}',
-							'#' + tag.name
-						)}">TL</a>　<a onclick="brInsert('#${tag.name}')" 
-							 class="pointer" title="${lang.lang_parse_tagtoot.replace('{{tag}}', '#' + tag.name)}">Toot</a>　
-						<a onclick="tagPin('${tag.name}')" class="pointer" title="${lang.lang_parse_tagpin.replace(
-							'{{tag}}',
-							'#' + tag.name
-						)}
-						">Pin</a>${featured}</span> `
-				})
-				tags = '<div style="float:right" aria-hidden="true">' + tags + '</div>'
-			}
 			//リプ数
 			if (toot.replies_count || toot.replies_count === 0) {
 				var replyct = toot.replies_count
@@ -1077,7 +1052,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 				</div>
 				<div class="area-additional grid">
 					<span class="additional">${analyze}</span>
-					${mentions}${tags}
+					${mentions}
 				</div>
 				<div class="area-vis grid">${vis}</div>
 				<div class="area-actions grid">

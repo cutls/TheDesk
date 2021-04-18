@@ -117,7 +117,7 @@ function trendTagonTip() {
 				Object.keys(json).forEach(function(tag) {
 					tags =
 						tags +
-						`<a onclick="tagShow('${tag}')" class="pointer">
+						`<a onclick="tagShow('${tag}', this)" class="pointer">
 							#${escapeHTML(tag)}
 						</a>
 						<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">　

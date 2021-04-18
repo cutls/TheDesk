@@ -101,6 +101,7 @@ if (location.search) {
 		$('.mini-btn').text('expand_less')
 	}
 }
+
 function initPostbox() {
 	$('#posttgl').click(function (e) {
 		if (!$('#post-box').hasClass('appear')) {
@@ -124,6 +125,7 @@ function initPostbox() {
 		selectedToot = 0
 		localStorage.removeItem('nohide')
 		srcBox('close')
+		tShowBox('close')
 	})
 	$('#textarea,#cw-text').focusout(function (e) {
 		localStorage.setItem('nohide', true)

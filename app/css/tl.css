@@ -590,7 +590,29 @@ p:not(:last-child) {
 .small-header .area-sta::-webkit-scrollbar {
 	height: 5px;
 }
-
+#tagContextMenu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: var(--subcolor);
+	z-index: 2;
+	border-radius: 0.4rem;
+}
+#tagContextMenu a {
+	display: block;
+	color: var(--text);
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+#tagContextMenu a:hover {
+	background-color: var(--selected);
+}
+.firstTCM {
+	margin-top: 0.4rem;
+}
+.lastTCM {
+	margin-bottom: 0.4rem;
+}
 .area-notice_name {
 	grid-area: notice_name;
 	overflow: hidden;

@@ -69,6 +69,20 @@ textarea {
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
+#suggest {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: var(--bg);
+	z-index: 2;
+	border-radius: 0.5rem;
+	display: none;
+	max-height: 10rem;
+}
+#suggest a {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
 #emoji-list {
 	width: 100%;
 	height: 15.4rem;

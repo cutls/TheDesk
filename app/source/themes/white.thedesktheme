@@ -17,7 +17,7 @@
 		bottom: '#eeeeee',
 		emphasized: '#81c784',
 		postbox: '#fff',
-		active: '#009688',
+		active: '#66dacf',
 		selected: '#c0c0c0',
 		selectedWithShared: '#b2babd',
 	},

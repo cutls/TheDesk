@@ -579,7 +579,7 @@ h2.swal2-title {
 	z-index: 501;
 }
 .pageSrcBtn:hover {
-	background-color: var(--active);
+	background-color: var(--selected);
 }
 .srcQ {
 	margin-top: 0.4rem;

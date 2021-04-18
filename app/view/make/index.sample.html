@@ -35,12 +35,19 @@
 	</script>
 	<textarea id="copy" style="top:-100px; position:fixed;"></textarea>
 	<canvas id="canvas" style="top:-100px; position:fixed;width:32px;height:32px" width="32" height="32"></canvas>
-	<div id="pageSrc" class="hide z-depth-5">
+	<div id="pageSrc" class="hide z-depth-2">
 		<div class="srcQ"></div>
 		<div class="pageSrcBtn pointer" onclick="doSrc('web')">@@webSrc@@</div>
 		<div class="pageSrcBtn pointer" onclick="doSrc('ts')">@@tsSrc@@</div>
 		<div class="pageSrcBtn pointer" onclick="doSrc('copy')">@@copy@@</div>
 		<div class="pageSrcBtn pointer lastPSB" onclick="doSrc('toot')">@@toot@@</div>
+	</div>
+	<div class="hide  z-depth-2" id="tagContextMenu">
+		<a onclick="doTShowBox('tl')" class="pointer firstTCM" id="tagCMTL"></a>
+		<a onclick="doTShowBox('toot')" class="pointer" id="tagCMToot"></a>
+		<a onclick="doTShowBox('pin')" class="pointer" id="tagCMPin"></a>
+		<a onclick="doTShowBox('f')" class="pointer lastTCM" title="add it to Featured tags"
+			id="tagCMFeature">Feature</a>
 	</div>
 	<div id="offline" class="hide">
 		@@nowOffline@@
@@ -199,6 +206,8 @@
 					<div class="input-field col s12" id="toot-field" style="margin-top: 0;margin-bottom: 0;">
 						<textarea id="textarea" class="materialize-textarea unmize" style="margin-bottom:0;"
 							data-length="500"></textarea>
+
+						<div id="suggest"></div>
 						<label for="textarea" data-trans="toot">@@toot@@</label>
 						<br />
 						<span class="sml gray pointer markdown mize" id="preview-btn">
@@ -307,7 +316,6 @@
 			</div>
 		</div>
 		<div id="right-side">
-			<div id="suggest" class="right-side-content"></div>
 			<div id="draft" class="hide right-side-content"></div>
 			<!--絵文字ピッカー-->
 			<div id="emoji" class="hide right-side-content">
@@ -568,14 +576,14 @@
 									class="material-icons">people</i>→@@follow@@</a>
 							<a go="#his-follower-list" title="@@follower@@" class="btn anc-link waves-effect"><i
 									class="material-icons">people</i>←@@follower@@</a>
-							<a go="#his-fav-list" title="@@favRegist@@"
-								class="btn only-my-data anc-link waves-effect">
+							<a go="#his-fav-list" title="@@favRegist@@" class="btn only-my-data anc-link waves-effect">
 								<i class="material-icons">star</i>@@favRegist@@</a>
 							<a class="dropdown-trigger btn waves-effect" href="#" data-target="hisdropdown"><i
 									class="material-icons">more_vert</i>@@more@@</a>
 							<div id="his-data-title-wrap">
 								<span id="his-data-title"><i class="material-icons">timeline</i>@@timeline@@</span>
-								<button class="btn waves-effect grey darken-2" style="width: 180px" id="util-add" onclick="utlAdd()">
+								<button class="btn waves-effect grey darken-2" style="width: 180px" id="util-add"
+									onclick="utlAdd()">
 									<i class="material-icons">add</i>
 									@@utlColumn@@
 								</button>

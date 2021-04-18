@@ -71,6 +71,7 @@
         "sumchecker": "^3.0.1",
         "sweetalert2": "^10.15.7",
         "system-font-families": "^0.4.1",
+        "textarea-caret": "^3.1.0",
         "vue": "^2.6.12"
     },
     "devDependencies": {
