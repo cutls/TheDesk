@@ -1,7 +1,7 @@
 {
     "draghere": "Zum Hochladen hier her ziehen",
     "nowOffline": "OFFLINE: all of your post is in the draft box and you should reload after re-connect to the Internet",
-    "reOnline": "Now we are in the Internet, you should reload...",
+    "reOnline": "Jetzt haben wir wieder Internet. Du solltest neuladen...",
     "close": "Schließen",
     "webSrc": "Suche im Internet",
     "tsSrc": "Bei Tootsearch suchen",
@@ -74,6 +74,7 @@
     "openBrowser": "Im Browser öffnen",
     "screenshot": "Bildschirmfoto aufnehmen",
     "copyURL": "URL dieses Tröts kopieren",
+    "copy": "Copy",
     "embed": "Einbinden",
     "toots": "Tröts",
     "follow": "Folgen",
