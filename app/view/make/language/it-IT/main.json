@@ -103,6 +103,7 @@
     "lang_details_embed": "HTML incorporato è sotto la lente.",
     "lang_details_url": "L'URL di questo toot è sotto la lente.",
     "lang_details_txt": "Il contenuto di questo toot è ritagliato.",
+    "lang_details_fetch": "Fetcging toot data...",
     "lang_filter_nodata": "Nessun dato",
     "lang_filter_errordegree": "Si prega di controllare un contesto",
     "lang_list_nodata": "Nessun dato",
