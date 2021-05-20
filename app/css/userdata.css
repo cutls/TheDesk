@@ -24,21 +24,20 @@
 }
 #his-float-data {
 	height: 100%;
-  overflow-y: hidden;
-  
+	overflow-y: hidden;
 }
 #his-leftside {
-  width: 28.4rem;
-  max-width: 30vw;
+	width: 28.4rem;
+	max-width: 30vw;
 }
 #his-float-timeline {
-  max-width: 47.5rem;
-  min-width: calc(100% - 29.4rem);
+	max-width: 47.5rem;
+	width: calc(100% - 28.4rem);
 	height: 100%;
 	overflow-y: hidden;
 }
 #his-basic-prof {
-  display: flex;
+	display: flex;
 	min-height: 10rem;
 }
 #his-field {
@@ -150,7 +149,7 @@
 	background-color: var(--bg);
 }
 #hisdropdown li a {
-	color: white;
+	color: var(--text);
 }
 #hisdropdown li:hover {
 	background-color: var(--active);
@@ -160,11 +159,14 @@
 	text-align: center;
 	font-size: 1.5rem;
 	display: flex;
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 }
 #his-data-title .material-icons {
 	position: relative;
-    top: 7px;
-    margin-right: 3px;
+	top: 5px;
+	margin-right: 3px;
+}
+#his-data-title a {
+	color: white;
 }

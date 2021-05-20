@@ -38,9 +38,10 @@ function directory(isMore) {
 	}
 	if (isMore) {
 		var addOffset = $("#dir-contents .cvo").length
+		$("#dir-contents").append(`<div class="progress transparent"><div class="indeterminate"></div></div>`)
 	} else {
 		var addOffset = 0
-		$("#dir-contents").html("")
+		$("#dir-contents").html(`<div class="progress transparent"><div class="indeterminate"></div></div>`)
 	}
 	var start = "https://" + domain + "/api/v1/directory?order=" + order + "&local=" + local_only + "&offset=" + addOffset
 	console.log(start)
@@ -51,19 +52,20 @@ function directory(isMore) {
 			Authorization: "Bearer " + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
+			$("#dir-contents .progress").remove()
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			setLog(start, "JSON", error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json) {
 				$("#moreDir").removeClass("disabled")
 				var html = userparse(json, null, acct_id, "dir", null)

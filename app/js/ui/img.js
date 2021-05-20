@@ -21,7 +21,7 @@ function imgv(id, key, acct_id) {
 	if (remote_img == 'yes') {
 		murl = ourl
 	}
-	$(document).ready(function() {
+	$(document).ready(function () {
 		if (type == 'image') {
 			$('#imagemodal').modal('open')
 			imageXhr(id, key, murl)
@@ -62,7 +62,7 @@ function imgCont(type) {
 		$('#imgsec').text(0)
 		$('#imgmodal').attr('src', '../../img/loading.svg')
 		var type = $('#' + id + '-image-' + key).attr('data-type')
-		$(document).ready(function() {
+		$(document).ready(function () {
 			if (type == 'image') {
 				imageXhr(id, key, murl)
 				$('#imagewrap').dragScroll() // ドラッグスクロール設定
@@ -77,16 +77,22 @@ function imgCont(type) {
 }
 function imageXhr(id, key, murl) {
 	var startTime = new Date()
+	$('#imgmodal-progress div').removeClass('determinate')
+	$('#imgmodal-progress div').addClass('indeterminate')
+	$('#imgmodal-progress').removeClass('hide')
 	xhr = new XMLHttpRequest()
 	xhr.open('GET', murl, true)
 	xhr.responseType = 'arraybuffer'
 	xhr.addEventListener(
 		'progress',
-		function(event) {
+		function (event) {
 			if (event.lengthComputable) {
 				var total = event.total
 				var now = event.loaded
 				var per = (now / total) * 100
+				$('#imgmodal-progress div').removeClass('indeterminate')
+				$('#imgmodal-progress div').addClass('determinate')
+				$('#imgmodal-progress div').css('width', `${per}%`)
 				$('#imgprog').text(Math.floor(per))
 			}
 		},
@@ -94,31 +100,35 @@ function imageXhr(id, key, murl) {
 	)
 	xhr.addEventListener(
 		'loadend',
-		function(event) {
+		function (event) {
 			var total = event.total
 			$('#imgbyte').text(Math.floor(total / 1024))
 			var now = event.loaded
 			var per = (now / total) * 100
 			$('#imgprog').text(Math.floor(per))
+			$('#imgmodal-progress').addClass('hide')
+			$('#imgmodal-progress div').css('width', '0%')
+			$('#imgmodal-progress div').removeClass('determinate')
+			$('#imgmodal-progress div').addClass('indeterminate')
 		},
 		false
 	)
 	xhr.addEventListener(
 		'error',
-		function(event) {
+		function (event) {
 			$('#imgmodal').attr('src', murl)
 		},
 		false
 	)
-	xhr.onreadystatechange = function() {
+	xhr.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
 			r = new FileReader()
 			r.readAsDataURL(this.response)
-			r.onload = function() {
+			r.onload = function () {
 				var b64 = r.result
 				var element = new Image()
 				var width
-				element.onload = function() {
+				element.onload = function () {
 					var width = element.naturalWidth
 					var height = element.naturalHeight
 					calcNiceAspect(width, height)
@@ -146,8 +156,8 @@ function imageXhr(id, key, murl) {
 	xhr.responseType = 'blob'
 	xhr.send()
 }
-function calcNiceAspect( width, height ) {
-	if(width < 650) {
+function calcNiceAspect(width, height) {
+	if (width < 650) {
 		width = 650
 	}
 	var windowH = $(window).height()
@@ -156,7 +166,7 @@ function calcNiceAspect( width, height ) {
 	$('#imagemodal img').css('width', 'auto')
 	if (height < windowH) {
 		$('#imagemodal').css('height', height + 100 + 'px')
-		$('#imagemodal img').css('height',  height + 'px')
+		$('#imagemodal img').css('height', height + 'px')
 		if (width > windowW * 0.8) {
 			$('#imagemodal').css('width', '80vw')
 			$('#imagemodal img').css('width', 'auto')
@@ -188,11 +198,11 @@ function zoom(z) {
 	$('#imagewrap img').css('height', hgt + 'px')
 }
 //スマホ対応ドラッグ移動システム
-(function() {
-	$.fn.dragScroll = function() {
+(function () {
+	$.fn.dragScroll = function () {
 		var target = this
 		$(this)
-			.mousedown(function(event) {
+			.mousedown(function (event) {
 				$(this)
 					.data('down', true)
 					.data('x', event.clientX)
@@ -207,7 +217,7 @@ function zoom(z) {
 			})
 		// ウィンドウから外れてもイベント実行
 		$(document)
-			.mousemove(function(event) {
+			.mousemove(function (event) {
 				if ($(target).data('down') == true) {
 					// スクロール
 					target.scrollLeft($(target).data('scrollLeft') + $(target).data('x') - event.clientX)
@@ -215,11 +225,11 @@ function zoom(z) {
 					return false // 文字列選択を抑止
 				}
 			})
-			.mouseup(function(event) {
+			.mouseup(function (event) {
 				$(target).data('down', false)
 			})
 		$(this)
-			.on('touchstart', function(event) {
+			.on('touchstart', function (event) {
 				$(this)
 					.data('down', true)
 					.data('x', getX(event))
@@ -232,7 +242,7 @@ function zoom(z) {
 				overflow: 'hidden', // スクロールバー非表示
 				cursor: 'move'
 			}) //指が触れたか検知
-		$(this).on('touchmove', function(event) {
+		$(this).on('touchmove', function (event) {
 			if ($(target).data('down') === true) {
 				// スクロール
 				target.scrollLeft($(target).data('scrollLeft') + $(target).data('x') - getX(event))
@@ -241,7 +251,7 @@ function zoom(z) {
 			} else {
 			}
 		}) //指が動いたか検知
-		$(this).on('touchend', function(event) {
+		$(this).on('touchend', function (event) {
 			$(target).data('down', false)
 		})
 
@@ -258,7 +268,7 @@ function getY(event) {
 }
 //マウスホイールで拡大
 var element = document.getElementById('imagemodal')
-element.onmousewheel = function(e) {
+element.onmousewheel = function (e) {
 	var delta = e.wheelDelta
 	if (delta > 0) {
 		zoom(1.1)

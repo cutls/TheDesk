@@ -19,7 +19,7 @@ function emojiToggle(reaction) {
 		if (width) {
 			width = width.replace('px', '') * 1 + 300
 		} else {
-			width = 600
+			width = reaction ? 300 : 600
 		}
 		$('#post-box').css('width', width + 'px')
 		$('#suggest').html('')

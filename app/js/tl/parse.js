@@ -631,7 +631,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 							var mty = media.remote_url.match(/.+(\..+)$/)[1]
 							viewer =
 								viewer +
-								`<a href="${media.url ? media.url : media.remote_url}" title="${media.remote_url} from ${media.url}">[${lang.lang_parse_unknown}(${mty})]</a> `
+								`<a href="${media.url ? media.url : media.remote_url}" title="${media.url ? media.url : media.remote_url}">[${lang.lang_parse_unknown}(${mty})]</a>${media.url ? `<a href="${media.remote_url}"><i class="material-icons sublink" title="${media.remote_url}">open_in_new</i></a>` : ''} `
 						} else if (media.type == 'audio') {
 							viewer =
 								viewer +
@@ -1317,7 +1317,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 								class="sml gray"
 								style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"
 							>
-								@ ${toot.acct}${locked}</span>
+								@${toot.acct}${locked}</span>
 						</div>
 					</div>
 					<div class="area-status">
@@ -1552,6 +1552,7 @@ function mastodonBaseStreaming(acct_id) {
 		$('.notice_icon_acct_' + acct_id).removeClass('red-text')
 	}
 	mastodonBaseWs[domain].onmessage = function (mess) {
+		$(`div[data-acct=${acct_id}] .landing`).hide()
 		const typeA = JSON.parse(mess.data).event
 		if (typeA == 'delete') {
 			$(`[unique-id=${JSON.parse(mess.data).payload}]`).hide()

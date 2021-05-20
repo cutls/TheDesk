@@ -28,7 +28,9 @@ html {
 	text-transform: none;
 	height: 2.76rem;
 	line-height: 2.76rem;
+	border-radius: 0.5rem;
 }
+
 .markdown {
 	display: none;
 }
@@ -88,7 +90,7 @@ option {
 
 #imagewrap {
 	width: 100%;
-	height: 100%;
+	height: calc(100% - 4px);
 }
 #imagewrap img.rotate-90 {
 	transform: rotate(-90deg);
@@ -234,6 +236,12 @@ blockquote:before,
 	right: 0;
 	top: 0;
 }
+.menu-icon {
+	font-size: 1.4rem !important;
+	top: 0.3rem;
+	line-height: 1rem !important;
+	position: relative;
+}
 #start {
 	display: none;
 	position: fixed;
@@ -329,8 +337,26 @@ blockquote:before,
 .collapsible-header:focus {
 	background-color: var(--thirdColor) !important;
 }
-.modal-footer {
+.modal .modal-footer {
 	background-color: var(--modalfooter) !important;
+	border-radius: 0;
+	padding: 0;
+}
+.modal {
+	border-radius: 1.5rem;
+}
+.progress .determinate,
+.progress .indeterminate {
+	background-color: var(--active);
+}
+.nomargin {
+	margin: 0;
+}
+#imginfo {
+	float: left;
+	padding-top: 0.23rem;
+	line-height: normal;
+	padding-left: 1rem;
 }
 .font {
 	font-size: 1.5rem;
@@ -342,7 +368,8 @@ blockquote:before,
 .release-do {
 	border: solid 2px;
 	border-color: var(--text);
-	padding: 5px;
+	padding: 1.5rem;
+	border-radius: 0.5rem;
 }
 #pickers {
 	display: flex;
@@ -392,7 +419,8 @@ input[type='color']::-webkit-color-swatch {
 	color: var(--text);
 }
 #left-menu a:hover {
-	background-color: var(--beforehover);
+	background-color: var(--emphasized);
+    filter: brightness(80%);
 }
 #left-menu span {
 	margin-left: 0.4rem;
@@ -401,7 +429,9 @@ input[type='color']::-webkit-color-swatch {
 	background-color: var(--emphasized);
 }
 #left-menu a.active span {
-	text-decoration: underline;
+	text-decoration: none;
+	border-bottom: 1px solid;
+	padding-bottom: 0.5px;
 }
 #right-menu {
 	width: 100%;
@@ -419,7 +449,7 @@ input[type='color']::-webkit-color-swatch {
 	align-items: center;
 	min-width: 150px;
 	width: 50%;
-    height: 2.5rem;
+	height: 2.5rem;
 	cursor: pointer;
 	color: var(--text);
 }
@@ -430,13 +460,14 @@ input[type='color']::-webkit-color-swatch {
 }
 #tltype .type span {
 	width: calc(100% - 4rem);
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	word-break: break-word;
+	overflow: hidden;
 }
 #tltype .type:hover {
-	background-color: var(--beforehover);
+	background-color: var(--emphasized);
+    filter: brightness(80%);
 }
 #tltype .active {
 	background-color: var(--emphasized);
@@ -722,10 +753,10 @@ button {
 }
 #fonts {
 	overflow-y: scroll;
-    width: 22rem;
-    height: 40rem;
-    position: absolute;
-    background-color: var(--bg);
-    z-index: 2;
-    padding: 5px;
+	width: 22rem;
+	height: 40rem;
+	position: absolute;
+	background-color: var(--bg);
+	z-index: 2;
+	padding: 5px;
 }

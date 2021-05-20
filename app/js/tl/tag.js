@@ -10,6 +10,7 @@ if (location.search) {
 }
 //よく使うタグ
 function tagShow(tag, elm) {
+	tag = decodeURIComponent(tag)
 	const tagTL = lang.lang_parse_tagTL.replace('{{tag}}', '#' + tag)
 	const tagPin = lang.lang_parse_tagpin.replace('{{tag}}', '#' + tag)
 	const tagToot = lang.lang_parse_tagtoot.replace('{{tag}}', '#' + tag)

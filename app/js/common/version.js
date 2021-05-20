@@ -5,20 +5,6 @@ function verck(ver, jp) {
 	$('body').addClass(localStorage.getItem('platform'))
 	var date = new Date()
 	var showVer = false
-	//Spotify
-	if (localStorage.getItem('spotify')) {
-		localStorage.removeItem('spotify')
-		localStorage.removeItem('spotify-refresh')
-		var spDc = 'Spotify NowPlaying sysytem was changed, please re-login to Spotify'
-		if(lang.language == 'ja') {
-			spDc = 'Spotify NowPlayingの機能が変更されたため、もう一度ログインしてください'
-		}
-		Swal.fire({
-			type: 'info',
-			title: spDc,
-		})
-	}
-	//Spotify(e)
 	if (localStorage.getItem('ver') != ver && localStorage.getItem('winstore')) {
 		showVer = true
 		console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
@@ -44,10 +30,7 @@ function verck(ver, jp) {
 	localStorage.setItem('ver', ver)
 	if (!showVer) {
 		console.log(showVer)
-		if (
-			date.getFullYear() * 100 + date.getMonth() + 1 >= localStorage.getItem('showSupportMe') ||
-			!localStorage.getItem('showSupportMe')
-		) {
+		if (!localStorage.getItem('showSupportMe')) {
 			if (date.getMonth() == 11) {
 				var yrs = date.getFullYear() + 1
 				var nextmonth = yrs * 100 + 1
@@ -55,21 +38,35 @@ function verck(ver, jp) {
 				var yrs = date.getFullYear() 
 				var nextmonth = yrs * 100 + date.getMonth() + 2
 			}
-			if (lang.language != 'ja') {
-				$('#support-btm-ja').addClass('hide')
-				$('#support-btm-en').removeClass('hide')
-			}
 			localStorage.setItem('showSupportMe', nextmonth)
-			$('#support-btm').removeClass('hide')
-			$('#support-btm').animate(
-				{
-					bottom: '0'
-				},
-				{
-					duration: 300
+		} else {
+			if (
+				date.getFullYear() * 100 + date.getMonth() + 1 >= localStorage.getItem('showSupportMe')
+			) {
+				if (date.getMonth() == 11) {
+					var yrs = date.getFullYear() + 1
+					var nextmonth = yrs * 100 + 1
+				} else {
+					var yrs = date.getFullYear() 
+					var nextmonth = yrs * 100 + date.getMonth() + 2
 				}
-			)
+				localStorage.setItem('showSupportMe', nextmonth)
+				if (lang.language != 'ja') {
+					$('#support-btm-ja').addClass('hide')
+					$('#support-btm-en').removeClass('hide')
+				}
+				$('#support-btm').removeClass('hide')
+				$('#support-btm').animate(
+					{
+						bottom: '0'
+					},
+					{
+						duration: 300
+					}
+				)
+			}
 		}
+		
 	}
 	var platform = localStorage.getItem('platform')
 	console.log('Your platform:' + platform)
@@ -114,11 +111,6 @@ function verck(ver, jp) {
 		.then(function(mess) {
 			console.table(mess)
 			if (mess) {
-				//askjp_jp_ua: 2019年10月24日、mstdn.jpによるユーザーエージェントアクセス制限
-				if (jp && mess.jp_ua && !localStorage.getItem('askjp_jp_ua')) {
-					localStorage.setItem('askjp_jp_ua', true)
-					$('#askjp_jp_ua').removeClass('hide')
-				}
 				var platform = localStorage.getItem('platform')
 				if (platform == 'darwin') {
 					var newest = mess.desk_mac

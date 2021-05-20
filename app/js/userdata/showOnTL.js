@@ -26,6 +26,16 @@ function udgEx(user, acct_id) {
 	}
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
 	var start = "https://" + domain + "/api/v2/search?resolve=true&q=" + encodeURIComponent(user)
+	Swal.fire({
+		title: 'Loading...',
+		html: lang.lang_details_fetch,
+		showConfirmButton: false,
+		showCloseButton: true,
+		onBeforeOpen: () => {
+			Swal.showLoading()
+		},
+		onClose: () => { },
+	}).then((result) => { })
 	fetch(start, {
 		method: "GET",
 		headers: {
@@ -35,6 +45,7 @@ function udgEx(user, acct_id) {
 	})
 		.then(function (response) {
 			if (!response.ok) {
+				Swal.close()
 				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
@@ -49,14 +60,15 @@ function udgEx(user, acct_id) {
 		.then(function (json) {
 			if (json.accounts[0]) {
 				var id = json.accounts[0].id
-				udg(id, acct_id)
+				udg(id, acct_id, true)
 			} else {
+				Swal.close()
 				postMessage(["openUrl", user], "*")
 			}
 		})
 	return true
 }
-function udg(user, acct_id) {
+function udg(user, acct_id, isSwal) {
 	reset()
 	if (!user) {
 		user = localStorage.getItem("user-id_" + acct_id)
@@ -77,6 +89,7 @@ function udg(user, acct_id) {
 		}
 	})
 		.then(function (response) {
+			if(isSwal) Swal.close()
 			if (!response.ok) {
 				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
@@ -151,7 +164,7 @@ function udg(user, acct_id) {
 			const title = $('.column-first').html()
 			$("#my-data-nav .anc-link").removeClass("active-back")
 			$('.column-first').addClass("active-back")
-			$('#his-data-title').html(title) 
+			$('#his-data-title').html(title)
 			$("#his-data").css("background-image", "url(" + json.header + ")")
 			$("#his-sta").text(json.statuses_count)
 			$("#his-follow").text(json.following_count)
@@ -564,7 +577,7 @@ $("#my-data-nav .anc-link").on("click", function () {
 		let title = $(this).html()
 		if (target === '#his-tl') $("#util-add").removeClass("hide")
 		if (target != '#his-tl') $("#util-add").addClass("hide")
-		$('#his-data-title').html(title) 
+		$('#his-data-title').html(title)
 		$("#my-data-nav .anc-link").removeClass("active-back")
 		$(this).addClass("active-back")
 		$(target).show()

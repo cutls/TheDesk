@@ -13,7 +13,21 @@ function searchMenu() {
 //検索取得
 function src(mode, offset) {
 	if (!offset) {
-		$('#src-contents').html('')
+		$('#src-contents').html(`
+		<div class="preloader-wrapper small active" style="margin-left: calc(50% - 36px);">
+			<div class="spinner-layer spinner-blue-only">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+		`)
 		var add = ''
 	} else {
 		var add = '&type=accounts&offset=' + $('#src-accts .cvo').length
@@ -48,24 +62,27 @@ function src(mode, offset) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
+			if (!offset) {
+				$('#src-contents').html(``)
+			}
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			src('v1')
 			return false
 		})
-		.then(function(json) {
+		.then(function (json) {
 			console.log(['Search', json])
 			//ハッシュタグ
 			if (json.hashtags[0]) {
 				var tags = ''
-				Object.keys(json.hashtags).forEach(function(key4) {
+				Object.keys(json.hashtags).forEach(function (key4) {
 					var tag = json.hashtags[key4]
 					if (mode) {
 						tags =
@@ -116,7 +133,7 @@ function tsAdd(q) {
 	parseColumn('add')
 }
 function tootsearch(tlid, q) {
-	if(!q || q=='undefined') {
+	if (!q || q == 'undefined') {
 		return false
 	}
 	var start = 'https://tootsearch.chotto.moe/api/v1/search?from=0&sort=created_at%3Adesc&q=' + q
@@ -129,20 +146,20 @@ function tootsearch(tlid, q) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(raw) {
+		.then(function (raw) {
 			var templete = ''
 			var json = raw.hits.hits
 			var max_id = raw['hits'].length
@@ -180,20 +197,20 @@ function moreTs(tlid, q) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(raw) {
+		.then(function (raw) {
 			var templete = ''
 			var json = raw.hits.hits
 			var max_id = raw['hits'].length
@@ -256,8 +273,8 @@ function graphDrawCore(his, tag, acct_id) {
 				</div>
 				<div class="tagCompTag">
 					<a onclick="tl('tag','${escapeHTML(
-						tag.name
-					)}','${acct_id}','add')" class="pointer" title="${escapeHTML(tag.name)}">
+		tag.name
+	)}','${acct_id}','add')" class="pointer" title="${escapeHTML(tag.name)}">
 						#${escapeHTML(tag.name)}
 					</a>
 				</div>
@@ -290,21 +307,21 @@ function trend() {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var tags = ''
-			Object.keys(json).forEach(function(keye) {
+			Object.keys(json).forEach(function (keye) {
 				var tag = json[keye]
 				var his = tag.history
 				tags = graphDrawCore(his, tag, acct_id)
@@ -327,18 +344,18 @@ function doSrc(type) {
 	$('#pageSrc').addClass('hide')
 	$('#pageSrc').removeClass('keep')
 	var q = $('.srcQ').text()
-	if(type == 'web') {
+	if (type == 'web') {
 		var start = localStorage.getItem('srcUrl')
-		if(!start) {
+		if (!start) {
 			start = 'https://google.com/search?q={q}'
 		}
 		start = start.replace(/{q}/, q)
 		postMessage(["openUrl", start], "*")
-	} else if(type == 'ts') {
+	} else if (type == 'ts') {
 		tsAdd(q)
-	} else if(type == 'copy') {
+	} else if (type == 'copy') {
 		execCopy(q)
-	} else if(type == 'toot') {
+	} else if (type == 'toot') {
 		brInsert(q)
 	}
 }

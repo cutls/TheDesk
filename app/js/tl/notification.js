@@ -44,6 +44,7 @@ function notfColumn(acct_id, tlid, sys) {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
+				$('#landing_' + tlid).append(`<div>${this.status}</div><div>${escapeHTML(this.response)}`)
 				setLog(start, this.status, this.response)
 			}
 			var max_id = httpreq.getResponseHeader('link')
@@ -88,7 +89,7 @@ function notfColumn(acct_id, tlid, sys) {
 				})
 				templete = templete + '<div class="hide notif-marker" data-maxid="' + max_id + '"></div>'
 				$('#timeline_' + tlid).html(templete)
-				$('#landing_' + tlid).hide()
+				// $('#landing_' + tlid).hide()
 				jQuery('time.timeago').timeago()
 			}
 			$('#notf-box').addClass('fetched')
@@ -156,6 +157,8 @@ function notfCommon(acct_id, tlid, sys, stream) {
 			console.log('header to get param:' + response.headers.get('link'))
 			if (!response.ok) {
 				response.text().then(function(text) {
+					console.log('notf error', 'div[data-notf=' + acct_id + '] .landing')
+					$('div[data-notf=' + acct_id + '] .landing').append(`<div>${response.status}</div><div>${escapeHTML(text)}`)
 					setLog(response.url, response.status, text)
 				})
 			}
@@ -202,7 +205,7 @@ function notfCommon(acct_id, tlid, sys, stream) {
 					}
 				})
 				$('div[data-notf=' + acct_id + ']').html(templete)
-				$('#landing_' + tlid).hide()
+				// $('#landing_' + tlid).hide()
 				jQuery('time.timeago').timeago()
 			}
 			$('#notf-box').addClass('fetched')
@@ -232,6 +235,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 			$('i[data-notf=' + acct_id + ']').removeClass('red-text')
 		}
 		websocketNotf[acct_id].onmessage = function(mess) {
+			$('#landing_' + tlid).hide()
 			//console.log(["Receive Streaming API(Notf):" + acct_id + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
 			var popup = localStorage.getItem('popup')
 			if (!popup) {
@@ -356,7 +360,7 @@ function notfmore(tlid) {
 					moreloading = false
 					templete = templete + '<div class="hide notif-marker" data-maxid="' + max_id + '"></div>'
 					$('#timeline_' + tlid).append(templete)
-					$('#landing_' + tlid).hide()
+					// $('#landing_' + tlid).hide()
 					jQuery('time.timeago').timeago()
 				}
 				$('#notf-box').addClass('fetched')

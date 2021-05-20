@@ -281,7 +281,7 @@ function parseColumn(target, dontclose) {
 				excludeNotf = excludeNotf + '</div>'
 				notfDomain = 'dummy'
 				notfKey = 'dummy'
-				var excludeHome =''
+				var excludeHome = ''
 			} else if (acct.type == 'home') {
 				var excludeNotf = ''
 				var excludeHome = `<a onclick="ebtToggle('${key}')" class="setting nex waves-effect">
@@ -452,8 +452,20 @@ function parseColumn(target, dontclose) {
 				<div class="tl-box" tlid="${key}">
 					<div id="timeline_${key}" class="tl ${acct.type}-timeline " tlid="${key}" 
 						data-type="${acct.type}" data-acct="${acct.domain}" data-const="${acct.type}_${acct.domain}">
-						<div id="landing_${key}" style="text-align:center">
-						${lang.lang_layout_nodata}
+						<div id="landing_${key}" class="landing">
+						<div class="preloader-wrapper small active " style="margin-top: calc(50vh - 15px)">
+							<div class="spinner-layer spinner-blue-only">
+								<div class="circle-clipper left">
+									<div class="circle"></div>
+								</div>
+								<div class="gap-patch">
+									<div class="circle"></div>
+								</div>
+								<div class="circle-clipper right">
+									<div class="circle"></div>
+								</div>
+							</div>
+					  </div>
 					</div>
 				</div>
 			</div>`

@@ -182,6 +182,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 		.then(function (response) {
 			if (!response.ok) {
 				response.text().then(function (text) {
+					$('#landing_' + tlid).append(`<div>${response.status}</div><div>${escapeHTML(text)}`)
 					setLog(response.url, response.status, text)
 				})
 			}
@@ -193,6 +194,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
 			console.error(error)
 		})
 		.then(function (json) {
+			if(!json) return true
 			console.log(['Result of getting timeline of ' + tlid, json])
 			$('#landing_' + tlid).hide()
 			var mute = getFilterTypeByAcct(acct_id, type)

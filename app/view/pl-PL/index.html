@@ -27,7 +27,7 @@
 <body class="">
 	<script>
 		var ver = '22.2.0 (Koume)'
-		var gitHash = '5de0ede4e1a99358a9078c5f560f3b650fcf94b8'
+		var gitHash = '8acf86d9cb88488a71de6a158f6bdab4b09ae2d9'
 		//betaを入れるとバージョンチェックしない
 		//var ver="beta";
 		var acct_id = 0
@@ -458,7 +458,7 @@
 					<div class="collapsible-body toot-reset" id="toot-rt"></div>
 				</li>
 			</ul>
-			<div class="dm-hide">
+			<div class="dm-hide" style="max-width: 450px;">
 				Use other account(<i class="fas fa-retweet"></i>/<i class="fas fa-star"></i>:unfav and unBT are disabled.)<br />
 				<div class="row">
 					<div class="col s6">
@@ -740,11 +740,13 @@
 			<div id="imagewrap">
 				<img src="" id="imgmodal" />
 			</div>
-
+			<div class="progress nomargin hide transparent" id="imgmodal-progress">
+				<div class="indeterminate"></div>
+			</div>
 			<br />
 		</div>
 		<div class="modal-footer">
-			<div style="float: left;padding-top:0.23rem;line-height: normal;">
+			<div id="imginfo">
 				<span id="imgprog"></span>% <br />
 				<span id="imgsec"></span>ms <br /><span id="imgbyte"></span>KB
 			</div>
@@ -794,11 +796,7 @@
 			<a href="https://github.com/cutls/TheDesk" target="_blank">GitHub</a><br />
 			<br />
 			<div id="release-22-2-0_Koume" class="release-do" style="display:none; ">
-				<br />
-				<a href="https://ja.mstdn.
-				wiki/TheDesk" target="_blank">機能一覧</a><br />
-				Pixiv
-				FanboxやPatreonでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。最低月一更新。<br />
+				Pixiv FanboxやPatreonでは支援者様限定で様々なTheDeskに関する記事をご覧いただけます。最低月一更新。<br />
 				困ったときは、<a href="https://docs.thedesk.top">TheDesk Docs</a>をご覧ください。
 				<h5>Release Note 22.2.0 (Koume)</h5>
 				<!--上のdivのidや1行上のところも変えてね-->
@@ -1110,11 +1108,11 @@
 			</div>
 		</div>
 		<a onclick="about()" class="nex waves-effect pwa">
-			<i class="material-icons" style="font-size: 1rem;">info</i>About TheDesk </a>&nbsp;|&nbsp;
+			<i class="material-icons menu-icon">info</i>About TheDesk </a>&nbsp;|&nbsp;
 		<a onclick="bottomReverse()" class="nex waves-effect">
-			<i class="material-icons" style="font-size: 1rem;">swap_horiz</i>Toot button layout reverse </a>&nbsp;|&nbsp;
+			<i class="material-icons menu-icon">swap_horiz</i>Toot button layout reverse </a>&nbsp;|&nbsp;
 		<a onclick="openRN()" class="nex waves-effect">
-			<i class="material-icons" style="font-size: 1rem;">new_releases</i>Release Note
+			<i class="material-icons menu-icon">new_releases</i>Release Note
 		</a>
 	</div>
 	<div id="main">
