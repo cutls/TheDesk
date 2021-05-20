@@ -67,7 +67,7 @@
         "json5": "^2.2.0",
         "lodash": "^4.17.21",
         "materialize-css": "git://github.com/cutls/materialize#v1-dev",
-        "sanitize-html": "^2.3.3",
+        "sanitize-html": "^2.4.0",
         "sumchecker": "^3.0.1",
         "sweetalert2": "^11.0.8",
         "system-font-families": "^0.4.1",
