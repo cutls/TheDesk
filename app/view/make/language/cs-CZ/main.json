@@ -103,6 +103,7 @@
     "lang_details_embed": "HTML pro vložení je zkopírován.",
     "lang_details_url": "URL adresa tohoto tootu je zkopírována.",
     "lang_details_txt": "Obsah tohoto tootu je zkopírován.",
+    "lang_details_fetch": "Fetcging toot data...",
     "lang_filter_nodata": "Žádná data",
     "lang_filter_errordegree": "Prosím zkontrolujte kontext",
     "lang_list_nodata": "Žádná data",
