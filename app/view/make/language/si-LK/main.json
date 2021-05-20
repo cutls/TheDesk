@@ -103,6 +103,7 @@
     "lang_details_embed": "Embed HTML is cliped.",
     "lang_details_url": "URL of this toot is cliped.",
     "lang_details_txt": "Content of this toot is cliped.",
+    "lang_details_fetch": "Fetcging toot data...",
     "lang_filter_nodata": "No data",
     "lang_filter_errordegree": "Please check a context",
     "lang_list_nodata": "No data",
