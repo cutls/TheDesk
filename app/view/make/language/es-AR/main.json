@@ -103,6 +103,7 @@
     "lang_details_embed": "El código HTML de inserción se copió al portapapeles.",
     "lang_details_url": "La dirección web de este toot se copió al portapapeles.",
     "lang_details_txt": "El contenido de este toot se copió al portapapeles.",
+    "lang_details_fetch": "Fetcging toot data...",
     "lang_filter_nodata": "Sin datos",
     "lang_filter_errordegree": "Por favor, comprobá un contexto",
     "lang_list_nodata": "Sin datos",
