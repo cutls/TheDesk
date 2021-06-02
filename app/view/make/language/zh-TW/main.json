@@ -103,6 +103,7 @@
     "lang_details_embed": "已複製內嵌 HTML",
     "lang_details_url": "已複製此嘟文 URL",
     "lang_details_txt": "已複製此嘟文內容",
+    "lang_details_fetch": "Fetcging toot data...",
     "lang_filter_nodata": "沒有資料",
     "lang_filter_errordegree": "請檢查上下文",
     "lang_list_nodata": "沒有資料",

@@ -103,6 +103,7 @@
     "lang_details_embed": "Le code HTML intégré est tronqué.",
     "lang_details_url": "L'URL de ce pouet est tronqué.",
     "lang_details_txt": "Le contenu de ce pouet est tronqué.",
+    "lang_details_fetch": "Fetcging toot data...",
     "lang_filter_nodata": "Aucune donnée",
     "lang_filter_errordegree": "Veuillez vérifier le contexte",
     "lang_list_nodata": "Aucune donnée",

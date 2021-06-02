@@ -103,6 +103,7 @@
     "lang_details_embed": "Вграденият HTML е изрязан.",
     "lang_details_url": "URL адресът на този toot е изрязан.",
     "lang_details_txt": "Съдържанието на този toot е изрязано.",
+    "lang_details_fetch": "Fetcging toot data...",
     "lang_filter_nodata": "Няма данни",
     "lang_filter_errordegree": "Моля, проверете контекстта",
     "lang_list_nodata": "Няма данни",
