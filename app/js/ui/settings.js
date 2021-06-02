@@ -544,12 +544,7 @@ function insertFont(name) {
 }
 
 function copyColor(from, to) {
-    let props = [
-        'background', 'subcolor', 'text', 'accent',
-        'modal', 'modalFooter', 'third', 'forth',
-        'bottom', 'emphasized', 'postbox', 'active',
-        'selected', 'selectedWithShared'
-    ]
+    let props = ['background', 'subcolor', 'text', 'accent', 'modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
     let i = 0
     let color
     for (tag of props) {
@@ -589,11 +584,7 @@ function customComp(preview) {
     var textC = $('#color-picker1_value').val()
     var accentC = $('#color-picker3_value').val()
     var multi = localStorage.getItem('multi')
-    let advanced = [
-        'modal', 'modalFooter', 'third', 'forth',
-        'bottom', 'emphasized', 'postbox', 'active',
-        'selected', 'selectedWithShared'
-    ]
+    let advanced = ['modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
     var advanceTheme = {}
     let i = 4
     for (tag of advanced) {
@@ -606,9 +597,7 @@ function customComp(preview) {
 
     var my = JSON.parse(multi)[0].name
     var id = $('#custom-edit-sel').val()
-    const defaults = [
-        'black', 'blue', 'brown', 'green', 'indigo', 'polar', 'snow', 'white'
-    ]
+    const defaults = ['black', 'blue', 'brown', 'green', 'indigo', 'polar', 'snow', 'white']
     if (id == 'add_new' || defaults.includes(id)) {
         id = makeCID()
     }
@@ -622,11 +611,11 @@ function customComp(preview) {
             background: bgC,
             subcolor: subcolorC,
             text: textC,
-            accent: accentC
+            accent: accentC,
         },
         advanced: advanceTheme,
         id: id,
-        version: '2'
+        version: '2',
     }
     $('#custom_json').val(JSON.stringify(json))
     if (preview) {
@@ -640,7 +629,6 @@ function customComp(preview) {
         })
         postMessage(['themeJsonCreate', JSON.stringify(json)], '*')
     }
-
 }
 
 function deleteIt() {
@@ -710,16 +698,11 @@ function customConnect(raw) {
 	$('#color-picker2_value').val(args.primary.subcolor)
 	//Accent
 	$('#color-picker3_value').val(args.primary.accent)
-	let advanced = [
-		'modal', 'modalFooter', 'third', 'forth',
-		'bottom', 'emphasized', 'postbox', 'active',
-		'selected', 'selectedWithShared'
-	]
+	let advanced = ['modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
 	let i = 4
 	for (tag of advanced) {
 		if (args.advanced[tag]) {
 			$(`#color-picker${i}_value`).val(args.advanced[tag])
-
 		}
 		$(`#use-color_${i}`).prop('checked', true)
 		i++
@@ -765,7 +748,7 @@ function customSoundSave(key, file) {
 }
 function pluginLoad() {
 	$('#plugin-edit-sel').val('add_new')
-	$(".plugin_delete").addClass('disabled')
+	$('.plugin_delete').addClass('disabled')
 	var template = ''
 	var pgns = localStorage.getItem('plugins')
 	var args = JSON.parse(pgns ? pgns : '[]')
@@ -783,9 +766,9 @@ function pluginEdit() {
 	$('#plugin').attr('data-id', id)
 	if (id == 'add_new') {
 		editor.setValue('', -1)
-		$(".plugin_delete").addClass('disabled')
+		$('.plugin_delete').addClass('disabled')
 	} else {
-		$(".plugin_delete").removeClass('disabled')
+		$('.plugin_delete').removeClass('disabled')
 		var pgns = localStorage.getItem('plugins')
 		var args = JSON.parse(pgns ? pgns : '[]')
 		Object.keys(args).forEach(function (key) {
@@ -823,7 +806,7 @@ function completePlugin(comp) {
 		id = makeCID()
 		args.push({
 			id: id,
-			content: inputPlugin
+			content: inputPlugin,
 		})
 	} else {
 		Object.keys(args).forEach(function (key) {
@@ -857,7 +840,7 @@ async function deletePlugin() {
 	const alert = await Swal.fire({
 		title: 'delete',
 		icon: 'warning',
-		showCancelButton: true
+		showCancelButton: true,
 	})
 	if (!alert) return false
 	editor.setValue('', -1)
@@ -959,4 +942,6 @@ function lastFmSet() {
 	M.toast({ html: 'Complete: last.fm', displayLength: 3000 })
 }
 
-function stopVideo() { return false }
+function stopVideo() {
+	return false
+}
