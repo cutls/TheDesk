@@ -1,6 +1,6 @@
 {
     "name": "thedesk",
-    "version": "22.2.0",
+    "version": "22.3.0",
     "codename": "Koume",
     "description": "TheDesk is a Mastodon client for PC.",
     "repository": "https://github.com/cutls/TheDesk",
@@ -38,8 +38,7 @@
         "url": "https://cutls.dev",
         "email": "p@cutls.com"
     },
-    "contributor": [
-        {
+    "contributor": [{
             "name": "とねぢ",
             "url": "https://minohdon.jp/@toneji",
             "email": "solfa.tono@gmail.com"

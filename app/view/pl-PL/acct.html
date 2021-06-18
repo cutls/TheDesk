@@ -2,142 +2,142 @@
 <html lang="pl-PL">
 
 <head>
-	<title>Account Manager - TheDesk</title>
-	<meta content="width=device-width,initial-scale=1.0" name="viewport" />
-	<link href="../../css/themes.css" type="text/css" rel="stylesheet">
-	<link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet" />
-	<link href="../../css/master.css" type="text/css" rel="stylesheet" />
-	<link href="../../css/tl.css" rel="stylesheet" type="text/css" />
-	<link href="../../css/userdata.css" rel="stylesheet" type="text/css" />
-	<link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href="../../css/sweetalert2-material.min.css" type="text/css" rel="stylesheet">
-	<link href="../../css/acct.css" rel="stylesheet" type="text/css" />
-	<meta charset="utf-8" />
-	<!--
-	<script type="text/javascript">
-		var _jipt = []
-		_jipt.push(['project', 'thedesk'])
-	</script>
-	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-	-->
-	<script>var pwa = false;</script> <script>var store = false;</script>
+    <title>Account Manager - TheDesk</title>
+    <meta content="width=device-width,initial-scale=1.0" name="viewport" />
+    <link href="../../css/themes.css" type="text/css" rel="stylesheet">
+    <link href="../../node_modules/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet" />
+    <link href="../../css/master.css" type="text/css" rel="stylesheet" />
+    <link href="../../css/tl.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/userdata.css" rel="stylesheet" type="text/css" />
+    <link href="../../node_modules/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="../../css/sweetalert2-material.css" type="text/css" rel="stylesheet">
+    <link href="../../css/acct.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8" /> <!--
+    <script type="text/javascript">
+        var _jipt = []
+        _jipt.push(['project', 'thedesk'])
+    </script>
+    <script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+    --> <script>var pwa = false;</script> <script>var store = false;</script>
 </head>
 
 <body id="mainView" class="">
-	<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="../../js/platform/first.js"></script>
-	<script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
-	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-	<script>
-		var misskeytoken = false
-	</script>
-	<script type="text/javascript" src="../../js/common/time.js"></script>
-	<div class="hide-first">
-		<a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">Wstecz</a><br />
-		<h5>Lista kont</h5>
-		<div id="acct-list"></div>
-		<div class="divider"></div>
-	</div>
-	<div>
-		<h5>Dodaj konto</h5>
+    <script type="text/javascript" src="../../node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../../js/platform/first.js"></script>
+    <script type="text/javascript" src="../../node_modules/materialize-css/dist/js/materialize.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script>
+        var misskeytoken = false
+    </script>
+    <script type="text/javascript" src="../../js/common/time.js"></script>
+    <div class="hide-first">
+        <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">Wstecz</a><br />
+        <h5>Lista kont</h5>
+        <div id="acct-list"></div>
+        <div class="divider"></div>
+    </div>
+    <div>
+        <h5>Dodaj konto</h5>
 
-		<div class="hide-second">
-			<a href="setting.html">Having the exported file of TheDesk, click here to jump setting page</a>
-		</div>
-		<br />
-		<div id="add">
-			<div class="row">
-				<div class="col s8">
-					Wprowadź domenę instancji (jak mastodon.social)
-					<div class="row">
-						<div class="input-field col s6">
-							<input type="text" id="autocomplete-input" class="autocomplete" placeholder="eg) mstdn.jp">
-							<label for="autocomplete-input">URL</label>
-						</div>
-						<div class="col s4 loginBtnWrap">
-							<button class="btn waves-effect" onclick="instance()"><i
+        <div class="hide-second">
+            <a href="setting.html">Having the exported file of TheDesk, click here to jump setting page</a>
+        </div>
+        <br />
+        <div id="add">
+            <div class="row">
+                <div class="col s8">
+                    Wprowadź domenę instancji (jak mastodon.social)
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" id="autocomplete-input" class="autocomplete" placeholder="eg) mstdn.jp">
+                            <label for="autocomplete-input">URL</label>
+                        </div>
+                        <div class="col s4 loginBtnWrap">
+                            <button class="btn waves-effect" onclick="instance()"><i
 									class="material-icons left">login</i>Login</button>
-						</div>
-					</div>
+                        </div>
+                    </div>
 
-					<div class="pwa">
-						Uncheck it to skip pasiting code.(login to Mastodon on Windows or macOS) (Recommended: pcheck)<br />
-						<label>
+                    <div class="pwa">
+                        Uncheck it to skip pasiting code.(login to Mastodon on Windows or macOS) (Recommended: pcheck)<br />
+                        <label>
 							<input type="checkbox" class="filled-in" id="linux" />
 							<span>Code setup</span>
 						</label>
-						<br />
-					</div>
-					<label>
+                        <br />
+                    </div>
+                    <label>
 						<input type="checkbox" class="filled-in" id="misskey" />
 						<span>Login as Misskey</span> </label><br />
-				</div>
-				<div class="col s4 scr" aria-hidden="true">
-					<span style="font-family:Open Sans;">Supports</span>
-					<div id="support" class="collection transparent"></div>
-				</div>
-			</div>
-		</div>
-		<div id="auth" style="display:none">
-			Wklej kod i zamknij przeglądarkę.<br />
-			<input type="text" id="code" placeholder="Code" required />
-			<button class="btn waves-effect" onclick="code()">Auth</button><br />
-			<br />
-			<a onclick="atSetup()" class="pointer">Use access token to login(click after fill not code but access-token in box: Advanced)</a>
-			<div id="compt" style="display:none" class="scr">
-				<h5>ログイン前に必ずご確認ください</h5>
-				<span id="compt-instance"></span>はバージョンが<span id="compt-ver"></span>のため以下の機能がご利用いただけません。
-				<span id="compt-warn"
-					style="display:none">また、このインスタンスはMastodonではなくそのAPI上の互換実装であり、TheDeskでは利用を想定していないため非保証となります。</span>
-				<ul id="compt-list"></ul>
-			</div>
-		</div>
-		<div id="misskeylogin" style="display:none">
-			<h5>AppSecret</h5>
-			Read <a href="https://thedesk.top/how-to-misskey-login.html">Docs(ja)</a> to login Misskey.<br />
-			<input type="hidden" id="misskey-url" />
-			<input type="text" id="misskey-key" placeholder="Code" required />
-			<button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br />
-			<br />
-			<a onclick="atSetup('misskey')" class="pointer">Use access token to login(click after fill not code but access-token in box: Advanced)</a>
-		</div>
-	</div>
-	<div class="hide-first">
-		<h5>Main an account</h5>
-		<div class="input-field" style="width:300px">
-			<span data-trans="your_acct">Wybierz konto</span>
-			<br />
-			<select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
-			<label></label>
-		</div>
-		<ul id="domain-list" class="collection transparent"></ul>
-		<div id="instance-data">
-			Some instance data by
-			<a href="https://instances.social" target="_blank">instances.social API</a><br />
-			<h5 id="ins-title"></h5>
-			Administered by:<a id="ins-admin"></a><br />
-			<span id="ins-desc"></span><br />
-			<img src="../../img/loading.svg" id="ins-prof" width="200" /><br />
-			<br />
-			Domain:<span id="ins-name"></span><br />
-			Federated servers:<span id="ins-connect"></span><br />
-			Tooty:<span id="ins-toot"></span><br />
-			Użytkownicy:<span id="ins-user"></span>Użytkownicy<br />
-			Connection:<span id="ins-per"></span>%<br />
-			Wersja Mastodona:<span id="ins-ver"></span>@<span id="ins-upd"></span><br />
-		</div>
-	</div>
-	<script type="text/javascript" src="../../js/ui/theme.js"></script>
-	<script type="text/javascript" src="../../js/ui/tips.js"></script>
-	<script type="text/javascript" src="../../js/platform/end.js"></script>
-	<script type="text/javascript" src="../../js/common/sha256.js"></script>
-	<script type="text/javascript" src="../../node_modules/lodash/lodash.min.js"></script>
-	<script type="text/javascript" src="../../js/login/instance.js"></script>
-	<script type="text/javascript" src="../../js/login/manager.js"></script>
-	<script type="text/javascript" src="../../js/tl/date.js"></script>
-	<script>$('body').addClass(localStorage.getItem('platform'))</script>
+                </div>
+                <div class="col s4 scr" aria-hidden="true">
+                    <span style="font-family:Open Sans;">Supports</span>
+                    <div id="support" class="collection transparent"></div>
+                </div>
+            </div>
+        </div>
+        <div id="auth" style="display:none">
+            Wklej kod i zamknij przeglądarkę.<br />
+            <input type="text" id="code" placeholder="Code" required />
+            <button class="btn waves-effect" onclick="code()">Auth</button><br />
+            <br />
+            <a onclick="atSetup()" class="pointer">Use access token to login(click after fill not code but access-token in box: Advanced)</a>
+            <div id="compt" style="display:none" class="scr">
+                <h5>ログイン前に必ずご確認ください</h5>
+                <span id="compt-instance"></span>はバージョンが<span id="compt-ver"></span>のため以下の機能がご利用いただけません。
+                <span id="compt-warn" style="display:none">また、このインスタンスはMastodonではなくそのAPI上の互換実装であり、TheDeskでは利用を想定していないため非保証となります。</span>
+                <ul id="compt-list"></ul>
+            </div>
+        </div>
+        <div id="misskeylogin" style="display:none">
+            <h5>AppSecret</h5>
+            Read <a href="https://thedesk.top/how-to-misskey-login.html">Docs(ja)</a> to login Misskey.<br />
+            <input type="hidden" id="misskey-url" />
+            <input type="text" id="misskey-key" placeholder="Code" required />
+            <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br />
+            <br />
+            <a onclick="atSetup('misskey')" class="pointer">Use access token to login(click after fill not code but access-token in box: Advanced)</a>
+        </div>
+    </div>
+    <div class="hide-first">
+        <h5>Main an account</h5>
+        <div class="input-field" style="width:300px">
+            <span data-trans="your_acct">Wybierz konto</span>
+            <br />
+            <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
+            <label></label>
+        </div>
+        <ul id="domain-list" class="collection transparent"></ul>
+        <div id="instance-data">
+            Some instance data by
+            <a href="https://instances.social" target="_blank">instances.social API</a><br />
+            <h5 id="ins-title"></h5>
+            Administered by:
+            <a id="ins-admin"></a><br />
+            <span id="ins-desc"></span><br />
+            <img src="../../img/loading.svg" id="ins-prof" width="200" /><br />
+            <br /> Domain:
+            <span id="ins-name"></span><br /> Federated servers:
+            <span id="ins-connect"></span><br /> Tooty:
+            <span id="ins-toot"></span><br /> Użytkownicy:
+            <span id="ins-user"></span>Użytkownicy<br /> Connection:
+            <span id="ins-per"></span>%<br /> Wersja Mastodona:
+            <span id="ins-ver"></span>@<span id="ins-upd"></span><br />
+        </div>
+    </div>
+    <script type="text/javascript" src="../../js/ui/theme.js"></script>
+    <script type="text/javascript" src="../../js/ui/tips.js"></script>
+    <script type="text/javascript" src="../../js/platform/end.js"></script>
+    <script type="text/javascript" src="../../js/common/sha256.js"></script>
+    <script type="text/javascript" src="../../node_modules/lodash/lodash.min.js"></script>
+    <script type="text/javascript" src="../../js/login/instance.js"></script>
+    <script type="text/javascript" src="../../js/login/manager.js"></script>
+    <script type="text/javascript" src="../../js/tl/date.js"></script>
+    <script>
+        $('body').addClass(localStorage.getItem('platform'))
+    </script>
 
 </body>
 
