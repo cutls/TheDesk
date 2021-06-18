@@ -44,9 +44,7 @@ Please write issues to improve TheDesk affinity with Pleroma.
 
 ## Contributors
 
-* <img src="https://user-images.githubusercontent.com/17561618/66582029-162df380-ebbc-11e9-8a6f-1832b3a35d89.png" width="20">[toneji](https://minohdon.jp/@toneji) Build for macOS(Now: Travis CI)  
-* <img src="https://avatars3.githubusercontent.com/u/24523508?s=88&v=4" width="20">[popn_ja](https://popon.pptdn.jp/@popn_ja) Build for Linux(Now: Travis CI)  
-* <img src="https://user-images.githubusercontent.com/17561618/66582379-a3714800-ebbc-11e9-8402-d81a35a3be9f.png" width="20">[kPherox](https://pl.kpherox.dev/kPherox) Fellow coder
+[![](https://opencollective.com/TheDesk/contributors.svg?width=400&button=false)](https://github.com/cutls/TheDesk/graphs/contributors)
 
 ## Support
 
