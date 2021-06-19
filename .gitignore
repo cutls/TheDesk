@@ -26,7 +26,7 @@ app/git
 *.code-workspace
 releasenote.md
 app/yarn-error.log
-app/js/platform/aiscript.js
+app/js/platform/native.js
 app/view/es-ES
 app/view/fr-FR
 app/view/no-NO

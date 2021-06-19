@@ -9,7 +9,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "postinstall": "run-s util:*",
         "util:hash": "node gitHash.js",
-        "util:browserify": "browserify aiscript.js -o js/platform/aiscript.js",
+        "util:browserify": "browserify native.js -o js/platform/native.js",
         "construct": "node view/make/makeCli.js",
         "construct:store": "node view/make/makeCli.js --store",
         "dev": "run-p dev:*",
@@ -38,7 +38,8 @@
         "url": "https://cutls.dev",
         "email": "p@cutls.com"
     },
-    "contributor": [{
+    "contributor": [
+        {
             "name": "とねぢ",
             "url": "https://minohdon.jp/@toneji",
             "email": "solfa.tono@gmail.com"
@@ -71,6 +72,7 @@
         "sweetalert2": "^11.0.17",
         "system-font-families": "^0.4.1",
         "textarea-caret": "^3.1.0",
+        "uuid": "^8.3.2",
         "vue": "^2.6.14"
     },
     "devDependencies": {

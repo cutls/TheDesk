@@ -1,5 +1,7 @@
 const { AiScript, parse, values, utils } = require('@syuilo/aiscript')
 const gcc = require('textarea-caret')
+const { v4: uuidv4 } = require('uuid')
+global.uuid = uuidv4
 global.getCaretCoordinates = gcc
 global.sanitizeHtml = require('sanitize-html')
 global.asValue = values
