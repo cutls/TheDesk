@@ -1856,10 +1856,10 @@ electron-dl@^3.2.1:
     pupa "^2.0.1"
     unused-filename "^2.1.0"
 
-electron-notarize@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/electron-notarize/-/electron-notarize-1.0.0.tgz#bc925b1ccc3f79e58e029e8c4706572b01a9fd8f"
-  integrity sha512-dsib1IAquMn0onCrNMJ6gtEIZn/azG8hZMCYOuZIMVMUeRMgBYHK1s5TK9P8xAcrAjh/2aN5WYHzgVSWX314og==
+electron-notarize@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/electron-notarize/-/electron-notarize-1.1.0.tgz#00ed0182366b97f5593cb5ccdcf1120f1de37179"
+  integrity sha512-Dmp/jm2y3PTcjmjVe+jCT0sjsbBfbNuk7GOPtduZce2iae1hgAPnlNErk6x70TalsGIL5Ip3liSryqde/6eB5w==
   dependencies:
     debug "^4.1.1"
     fs-extra "^9.0.1"
