@@ -1,0 +1,96 @@
+<!-- Modal Structure Tootdata-->
+<div id="tootmodal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <ul class="collapsible" id="det-col">
+            <li class="dm-hide contextTool">
+                <div class="collapsible-header"><i class="material-icons">people_outline</i>@@afterLTL@@</div>
+                <div class="collapsible-body toot-reset" id="ltl-after"></div>
+            </li>
+            <li class="dm-hide contextTool">
+                <div class="collapsible-header"><i class="material-icons">person_outline</i>@@afterUTL@@</div>
+                <div class="collapsible-body toot-reset" id="user-after"></div>
+            </li>
+            <li class="dm-hide contextTool">
+                <div class="collapsible-header"><i class="material-icons">language</i>@@afterFTL@@</div>
+                <div class="collapsible-body toot-reset" id="ftl-after"></div>
+            </li>
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons">arrow_upward</i>@@contextBefore@@
+                    <i class="material-icons red-text hide" id="toot-reply-new">new_releases</i>
+                </div>
+                <div class="collapsible-body toot-reset" id="toot-reply"></div>
+            </li>
+            <li>
+                <div class="collapsible-header" id="activator"><i class="material-icons">more_horiz</i>@@thisToot@@</div>
+                <div class="collapsible-body">
+                    <div class="toot-reset" id="toot-this"></div>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">
+                    <i class="material-icons">arrow_downward</i>@@contextAfter@@
+                    <i class="material-icons red-text hide" id="toot-after-new">new_releases</i>
+                </div>
+                <div class="collapsible-body toot-reset" id="toot-after"></div>
+            </li>
+            <li class="dm-hide contextTool">
+                <div class="collapsible-header"><i class="material-icons">people_outline</i>@@beforeLTL@@</div>
+                <div class="collapsible-body toot-reset" id="toot-before"></div>
+            </li>
+            <li class="dm-hide contextTool">
+                <div class="collapsible-header"><i class="material-icons">person_outline</i>@@beforeUTL@@</div>
+                <div class="collapsible-body toot-reset" id="user-before"></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">star</i>@@favedPeople@@</div>
+                <div class="collapsible-body toot-reset" id="toot-fav"></div>
+            </li>
+            <li class="dm-hide">
+                <div class="collapsible-header"><i class="text-darken-3 false fas fa-retweet"></i>@@btedPeople@@</div>
+                <div class="collapsible-body toot-reset" id="toot-rt"></div>
+            </li>
+        </ul>
+        <div class="dm-hide" style="max-width: 450px">
+            @@useOtherAcct1@@(<i class="fas fa-retweet"></i>/<i class="fas fa-star"></i>@@useOtherAcct2@@)<br />
+            <div class="row">
+                <div class="col s6">
+                    <select id="status-acct-sel" class="acct-sel"></select>
+                </div>
+                <div class="col s2">
+                    <button class="dropdown-button btn waves-effect" style="width: 100%" onclick="staEx('reply')">
+                            <i class="fas fa-share"></i>
+                        </button>
+                </div>
+                <div class="col s2">
+                    <button class="dropdown-button btn waves-effect indigo" style="width: 100%" onclick="staEx('rt')">
+                            <i class="fas fa-retweet"></i>
+                        </button>
+                </div>
+                <div class="col s2">
+                    <button class="dropdown-button btn waves-effect orange" style="width: 100%" onclick="staEx('fav')">
+                            <i class="fas fa-star"></i>
+                        </button>
+                </div>
+            </div>
+            @@btWithVis@@<br />
+            <button class="btn waves-effect darken-3 toot-btn-group purple" onclick="boostWith('public')">
+                    <i class="material-icons">public</i>
+                </button>
+            <button class="btn waves-effect darken-3 toot-btn-group blue" onclick="boostWith('unlisted')">
+                    <i class="material-icons">lock_open</i>
+                </button>
+            <button class="btn waves-effect darken-3 toot-btn-group orange" onclick="boostWith('private')">
+                    <i class="material-icons">lock</i>
+                </button>
+            <div id="toot-tools"></div>
+            <div id="toot-after"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="brws()">@@openBrowser@@</a>
+        <a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy()">@@copyURL@@</a>
+        <a href="#!" class="waves-effect waves-green btn-flat dm-hide" onclick="cbCopy('emb')">@@embed@@</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">@@close@@</a>
+    </div>
+</div>

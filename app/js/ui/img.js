@@ -76,7 +76,12 @@ function imgCont(type) {
 	}
 }
 function imageXhr(id, key, murl) {
+	let time = 0
 	var startTime = new Date()
+	const timer = setInterval(function() {
+		time = time + 1
+		$('#imgsec').text(time)
+	}, 10)
 	$('#imgmodal-progress div').removeClass('determinate')
 	$('#imgmodal-progress div').addClass('indeterminate')
 	$('#imgmodal-progress').removeClass('hide')
@@ -89,6 +94,7 @@ function imageXhr(id, key, murl) {
 			if (event.lengthComputable) {
 				var total = event.total
 				var now = event.loaded
+				$('#imgbyte').text(`${Math.floor(now / 1024)}KB/${Math.floor(total / 1024)}`)
 				var per = (now / total) * 100
 				$('#imgmodal-progress div').removeClass('indeterminate')
 				$('#imgmodal-progress div').addClass('determinate')
@@ -147,6 +153,7 @@ function imageXhr(id, key, murl) {
 				}
 				element.src = b64
 				var endTime = new Date()
+				clearInterval(timer)
 				var proctime = endTime.getTime() - startTime.getTime()
 				$('#imgsec').text(proctime)
 				$('#imgmodal').attr('src', b64)

@@ -1,0 +1,17 @@
+<textarea id="copy" style="top: -100px; position: fixed"></textarea>
+<canvas id="canvas" style="top: -100px; position: fixed; width: 32px; height: 32px" width="32" height="32"></canvas>
+<div id="pageSrc" class="hide z-depth-2">
+    <div class="srcQ"></div>
+    <div class="pageSrcBtn pointer" onclick="doSrc('web')">@@webSrc@@</div>
+    <div class="pageSrcBtn pointer" onclick="doSrc('ts')">@@tsSrc@@</div>
+    <div class="pageSrcBtn pointer" onclick="doSrc('copy')">@@copy@@</div>
+    <div class="pageSrcBtn pointer lastPSB" onclick="doSrc('toot')">@@toot@@</div>
+</div>
+<div class="hide z-depth-2" id="tagContextMenu">
+    <a onclick="doTShowBox('tl')" class="pointer firstTCM" id="tagCMTL"></a>
+    <a onclick="doTShowBox('toot')" class="pointer" id="tagCMToot"></a>
+    <a onclick="doTShowBox('pin')" class="pointer" id="tagCMPin"></a>
+    <a onclick="doTShowBox('f')" class="pointer lastTCM" title="add it to Featured tags" id="tagCMFeature">Feature</a>
+</div>
+<div id="offline" class="hide">@@nowOffline@@</div>
+<div id="re-online" class="hide">@@reOnline@@</div>

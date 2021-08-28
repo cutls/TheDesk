@@ -86,6 +86,7 @@ option {
 #imagemodal .modal-footer {
 	overflow-x: hidden;
 	overflow-y: hidden;
+	height: 56px;
 }
 
 #imagewrap {

@@ -38,3 +38,4 @@ app/build.js
 app/view/make/make.js
 app/view/make/makeCli.ts
 app/.env
+app/view/make/index.generated.html

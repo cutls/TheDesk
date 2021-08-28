@@ -84,6 +84,8 @@
     "makeNew": "新しいやつ",
     "blocks": "ブロック",
     "mutes": "ミュート",
+    "notfMute": "通知もミュート",
+    "zeroSetToInfinity": "ミュート期間: 0分にしたらずっとミュートするで。",
     "block": "ブロック",
     "mute": "ミュート",
     "domainBlock": "ドメインブロック",

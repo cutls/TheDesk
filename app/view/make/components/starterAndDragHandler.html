@@ -1,0 +1,50 @@
+<div id="tl">
+    <!--TL-->
+    <!--スターター-->
+    <div id="start" class="scr">
+        <div id="start-content">
+            <h3 class="center">@@demoBottomBtns@@</h3>
+            @@lookAtBottom@@
+            <div id="demobottom">
+                <button class="btn waves-effect" style="width: 23rem; height: 2.5rem; line-height: 0; margin: 0; background-color: var(--active)">
+                        <i class="material-icons" style="position: relative; top: 0.4rem; font-size: 1.5rem; text-align: center; margin-right: 0.7rem">edit</i>@@toot@@
+                    </button>
+                <div class="leftside reverse" id="demogroup">
+                    <div class="btnsgroup" style="margin-left: 0.4rem">
+                        <a href="#" class="nex waves-effect">
+                            <i class="material-icons nex big-icon" title="@@acctMan@@(Ctrl+Shift+M)">account_circle</i>
+                        </a>
+                        <a href="#" class="nex waves-effect">
+                            <i class="material-icons nex" title="@@setting@@(Ctrl+Shift+S)">settings</i>
+                        </a>
+                        <a class="nex waves-effect">
+                            <i class="material-icons" title="@@nanoDes@@TheDesk Nano">remove_from_queue</i>
+                        </a>
+                        <a class="nex waves-effect" id="list-tgl">
+                            <i class="material-icons" title="@@menu@@">apps</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <i class="material-icons nex big-icon">account_circle</i>: @@acctMan@@<br /> @@acctManDesc@@
+            <hr />
+            <i class="material-icons nex">settings</i>: @@setting@@<br /> @@settingDesc@@
+            <hr />
+            <i class="material-icons nex">remove_from_queue</i>: TheDesk Nano @@nanoDes@@<br /> @@nanoDescPlus@@
+            <hr />
+            <i class="material-icons nex">apps</i>: @@menu@@<br /> @@menuDesc@@
+            <br />
+            <br />
+            <button class="btn waves-effect" onclick="closeStart()" style="width: 300px">@@close@@</button>
+        </div>
+    </div>
+    <!--ドラッグハンドラ-->
+    <div id="drag">
+        <div id="drag-content">
+            @@draghere@@
+            <br />
+            <button class="btn waves-effect" onclick="closedrop()">@@close@@</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<!--bottom-->
+<div id="bottom" class="reverse hide">
+    <div class="leftside reverse">
+        <div id="dambox">
+            <button id="posttgl" class="btn waves-effect" style="width: 100%; height: 2.5rem; line-height: 0; margin: 0">
+                    <i class="material-icons" style="position: relative; top: 0.38rem; font-size: 1.5rem; text-align: center; margin-right: 0.76rem">edit</i>@@toot@@
+                </button>
+        </div>
+        <div class="leftside reverse" id="group">
+            <div class="btnsgroup">
+                <a href="acct.html" class="nex waves-effect">
+                    <i class="material-icons nex big-icon" title="@@acctMan@@(Ctrl+Shift+M)">account_circle</i>
+                </a>
+                <a href="setting.html" class="nex waves-effect">
+                    <i class="material-icons nex" title="@@setting@@(Ctrl+Shift+S)">settings</i>
+                </a>
+                <a onclick="nano()" class="nex waves-effect pwa">
+                    <i class="material-icons" title="@@nanoDes@@TheDesk Nano" data-trans-title="nano_desp">remove_from_queue</i>
+                </a>
+                <a onclick="menu()" class="nex waves-effect">
+                    <i class="material-icons" title="@@menu@@">apps</i>
+                </a>
+                <span id="fukidashi">@@hereAddColumns@@</span>
+            </div>
+            <a href="https://thedesk.top/bugs/?lang=@@lang@@" target="_blank" class="waves-effect bgReport" draggable="false" title="Feeling unlucky"> @@foundBug@@ </a>
+        </div>
+    </div>
+    <div>
+        <div id="tips-menu">
+            <div class="btnsgroup" style="height: 2.61rem">
+                <span class="grouptitle">Tips:</span>
+                <a onclick="tips('ver')" class="nex waves-effect">
+                    <i class="material-icons nex" title="@@verTips@@" data-trans-title="ver">info</i>
+                </a>
+                <a onclick="tips('clock')" class="nex waves-effect">
+                    <i class="material-icons nex" title="@@clockTips@@" data-trans-title="clock">access_time</i>
+                </a>
+                <a onclick="tips('memory')" class="nex waves-effect pwa">
+                    <i class="material-icons nex" title="@@ramTips@@" data-trans-title="memory">memory</i>
+                </a>
+                <a onclick="tips('trend')" class="nex waves-effect imasonly" style="display: none">
+                    <i class="material-icons nex" title="アイマストドントレンド" data-trans-title="trendtip">whatshot</i>
+                </a>
+                <a onclick="tips('spotify')" class="nex waves-effect">
+                    <i class="fab fa-spotify nex" title="Spotify" data-trans-title="spotifytips"></i>
+                </a>
+            </div>
+        </div>
+        <div id="tips" class="hide">
+            <a onclick="tipsToggle()" class="nex waves-effect">
+                <i class="material-icons nex" title="@@changeTips@@" data-trans-title="tips">bubble_chart</i>
+            </a>
+            <div id="tips-text" style="width: 23rem; line-height: 1rem"></div>
+        </div>
+    </div>
+</div>

@@ -190,7 +190,7 @@ function udg(user, acct_id, isSwal) {
             if (json.fields) {
                 var table = ''
                 if (json.fields.length > 0) {
-                    $('#his-des').css('max-height', '250px')
+                    $('#his-des').css('max-height', '196px')
                     table = '<table id="his-field">'
                     for (var i = 0; i < json.fields.length; i++) {
                         var fname = json.fields[i].name

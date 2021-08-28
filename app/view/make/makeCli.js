@@ -31,7 +31,7 @@ if (process.argv.indexOf('--watch') !== -1) {
 		'watch mode(not hot-watch): when construction files are changed, refresh view files but not reload. Please reload manually.'
 	)
 	const watcher = chokidar.watch(basefile + 'view/make', {
-		ignored: 'view/make/make.js',
+		ignored: /view\/make\/(make.*\.js|.*\.generated\.html)/,
 		persistent: true
 	})
 	watcher.on('ready', function () {

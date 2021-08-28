@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="@@lang@@">
+	<head>
+		<script type="text/javascript" src="../../js/ui/theme.js"></script>
+		<link href="../../css/themes.css" type="text/css" rel="stylesheet" />
+		<meta content="width=device-width,initial-scale=1.0" name="viewport" />
+		<link href="../../@@node_base@@/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet" />
+		<link href="../../@@node_base@@/jquery-ui-dist/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+		<link href="../../css/tl.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/userdata.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/post.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/master.css" type="text/css" rel="stylesheet" />
+		<link href="../../css/sort.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/sweetalert2-material.css" type="text/css" rel="stylesheet" />
+		<link href="../../@@node_base@@/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet" />
+		<meta charset="utf-8" />
+		@@comment-start@@
+		<script type="text/javascript">
+			var _jipt = []
+			_jipt.push(['project', 'thedesk'])
+		</script>
+		<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+		@@comment-end@@ @@pwa@@ @@store@@
+	</head>
+
+	<body class="@@pwaClass@@">
+		<script>
+			var ver = '@@versionLetter@@'
+			var gitHash = '@@gitHash@@'
+			//betaを入れるとバージョンチェックしない
+			//var ver="beta";
+			var acct_id = 0
+			var tlid = 0
+		</script>
+		@@preTL@@ @@starterAndDragHandler@@ @@postBox@@ @@tootModal@@ @@userDataModal@@ @@mediaModal@@ @@releaseNote@@
+		<!--PiP-->
+		<div id="pip" class="hide pip-bottom pip-left">
+			<i class="material-icons pip-horiz pointer" onclick="pipHoriz()">chevron_right</i>
+			<i class="material-icons pip-vert pointer" onclick="pipVert()">expand_less</i>
+			<i class="material-icons pointer" onclick="endPip()">close</i>
+			<div id="pip-content"></div>
+		</div>
+		@@menuHtml@@
+		<div id="main">
+			<!--TLのTL-->
+			<div id="timeline-container">
+				<div id="something-wrong">
+					<img src="../../img/thinking.svg" style="width: 150px; margin: 5px; display: none" draggable="false" />
+					<div class="stw" style="display: none">@@helloTheDesk@@</div>
+				</div>
+			</div>
+		</div>
+		@@bottomBarHtml@@ @@supportMe@@
+		<!--左下メッセージ-->
+		<div id="message"></div>
+		<!--Radio Happy(Yui) Taku Inoue-->
+		<audio src="" id="radio"></audio>
+		<!--JS-->
+		<script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="../../js/platform/first.js"></script>
+		<script type="text/javascript" src="../../js/platform/native.js"></script>
+		<script type="text/javascript" src="../../js/platform/plugin.js"></script>
+		<script type="text/javascript" src="../../@@node_base@@/materialize-css/dist/js/materialize.js"></script>
+		<script type="text/javascript" src="../../@@node_base@@/grapheme-splitter/index.js"></script>
+		<script type="text/javascript" src="../../@@node_base@@/lodash/lodash.min.js"></script>
+		<script type="text/javascript" src="main.js"></script>
+		<script type="text/javascript" src="../../js/common/time.js"></script>
+		<script type="text/javascript" src="../../js/common/blurhash.js"></script>
+		<script type="text/javascript" src="../../js/common/version.js"></script>
+		<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
+		<script type="text/javascript" src="../../js/common/modal.js"></script>
+		<script type="text/javascript" src="../../@@node_base@@/jquery-ui-dist/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="../../@@node_base@@/sweetalert2/dist/sweetalert2.min.js"></script>
+		<script type="text/javascript" src="../../js/platform/punycode.js"></script>
+		<script type="text/javascript" src="../../js/ui/tips.js"></script>
+		<script src="https://twemoji.maxcdn.com/2/twemoji.min.js?2.7"></script>
+		<script type="text/javascript" src="../../js/common/about.js"></script>
+		<script type="text/javascript" src="../../js/tl/misskeyparse.js"></script>
+		<script type="text/javascript" src="../../js/tl/dm.js"></script>
+		<script type="text/javascript" src="../../js/ui/scroll.js"></script>
+		<script type="text/javascript" src="../../js/tl/announParse.js"></script>
+		<script type="text/javascript" src="../../js/tl/tl.js"></script>
+		<script type="text/javascript" src="../../js/tl/card.js"></script>
+		<script type="text/javascript" src="../../js/tl/parse.js"></script>
+		<script type="text/javascript" src="../../js/tl/poll.js"></script>
+		<script type="text/javascript" src="../../js/tl/date.js"></script>
+		<script type="text/javascript" src="../../js/tl/notification.js"></script>
+		<script type="text/javascript" src="../../js/tl/datails.js"></script>
+		<script type="text/javascript" src="../../js/tl/mix.js"></script>
+		<script type="text/javascript" src="../../js/tl/src.js"></script>
+		<script type="text/javascript" src="../../js/tl/directory.js"></script>
+		<script type="text/javascript" src="../../js/tl/filter.js"></script>
+		<script type="text/javascript" src="../../js/tl/tag.js"></script>
+		<script type="text/javascript" src="../../js/tl/list.js"></script>
+		<script type="text/javascript" src="../../js/tl/speech.js"></script>
+		<script type="text/javascript" src="../../js/ui/post-box.js"></script>
+		<script type="text/javascript" src="../../js/ui/layout.js"></script>
+		<script type="text/javascript" src="../../js/post/emoji.js"></script>
+		<script type="text/javascript" src="../../js/login/instance.js"></script>
+		<script type="text/javascript" src="../../js/login/login.js"></script>
+		<script type="text/javascript" src="../../js/ui/img.js"></script>
+		<script type="text/javascript" src="../../js/ui/pip.js"></script>
+		<script type="text/javascript" src="../../js/ui/sort.js"></script>
+		<script type="text/javascript" src="../../js/ui/spotify.js"></script>
+		<script type="text/javascript" src="../../js/post/post.js"></script>
+		<script type="text/javascript" src="../../js/post/use-txtbox.js"></script>
+		<script type="text/javascript" src="../../js/post/secure.js"></script>
+		<script type="text/javascript" src="../../js/post/img.js"></script>
+		<script type="text/javascript" src="../../js/post/status.js"></script>
+		<script type="text/javascript" src="../../js/post/misskeystatus.js"></script>
+		<script type="text/javascript" src="../../js/post/suggest.js"></script>
+		<script type="text/javascript" src="../../js/post/bb-md.js"></script>
+		<script type="text/javascript" src="../../js/userdata/showOnTL.js"></script>
+		<script type="text/javascript" src="../../js/userdata/his-data.js"></script>
+		<script type="text/javascript" src="../../js/userdata/prof-edit.js"></script>
+		<script type="text/javascript" src="../../js/emoji/emojipack.js"></script>
+		<script type="text/javascript" src="../../js/emoji/default-emoji.js"></script>
+		<script type="text/javascript" src="../../js/platform/end.js"></script>
+		<script type="text/javascript" src="../../js/ui/menu.js"></script>
+	</body>
+</html>

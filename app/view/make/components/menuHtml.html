@@ -1,0 +1,229 @@
+<!--menu-->
+<div id="menu" class="z-depth-5" style="display: none">
+    <div id="menu-bar" class="drag-bar"></div>
+    <span class="cancel">
+            <i class="material-icons waves-effect" onclick="menu()" title="@@closeThisBox@@(X)">cancel</i>
+        </span>
+    <div id="menu-wrapper">
+        <div id="left-menu">
+            <a class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu"> <i class="material-icons" aria-hidden="true">add</i><span>@@addColumn@@</span> </a>
+            <a class="waves-effect" onclick="sortMenu()" id="sortMenu"> <i class="material-icons" aria-hidden="true">sort</i><span>@@sortColumns@@</span> </a>
+            <a class="waves-effect" onclick="searchMenu()" id="searchMenu"> <i class="material-icons" aria-hidden="true">search</i><span>@@search@@</span> </a>
+            <a class="waves-effect" onclick="listMenu()" id="listMenu"> <i class="material-icons" aria-hidden="true">view_headline</i><span>@@list@@</span> </a>
+            <a class="waves-effect" onclick="dirMenu()" id="dirMenu"> <i class="material-icons" aria-hidden="true">recent_actors</i><span>@@discover@@</span> </a>
+            <a class="waves-effect" onclick="filterMenu()" id="filterMenu"> <i class="material-icons" aria-hidden="true">filter_list</i><span>@@filter@@</span> </a>
+            <a class="waves-effect" onclick="help()" id="helpMenu"> <i class="material-icons" aria-hidden="true">help_outline</i><span>@@helpAndLogs@@</span> </a>
+            <a class="waves-effect" onclick="location.href='index.html'"> <i class="material-icons" aria-hidden="true">refresh</i><span>@@f5@@</span> </a>
+        </div>
+        <div id="right-menu">
+            <!--カラム追加-->
+            <div id="add-box" class="hide menu-content">
+                <div class="input-field">
+                    <span data-trans="your_acct">@@selectAcct@@</span>
+                    <br />
+                    <select id="add-acct-sel" class="acct-sel" style="color: black" onchange="addselCk()"></select>
+                    <label></label>
+                </div>
+                <div class="input-field">
+                    <div id="auth">
+                        <input type="hidden" value="local" id="type-sel" /> @@showThisTL@@
+                        <div id="tltype">
+                            <a class="type waves-effect active" data-type="local" title="@@local@@">
+                                <div><i class="material-icons" aria-hidden="true">people_outline</i></div>
+                                <span>@@local@@</span>
+                            </a>
+                            <a class="type waves-effect" data-type="local-media" title="@@localMedia@@">
+                                <div><i class="material-icons" aria-hidden="true">perm_media</i></div>
+                                <span>@@localMedia@@</span>
+                            </a>
+                            <a class="type waves-effect" data-type="home" title="@@home@@">
+                                <div><i class="material-icons" aria-hidden="true">home</i></div>
+                                <span>@@home@@</span>
+                            </a>
+                            <a class="type waves-effect" data-type="pub" title="@@fed@@">
+                                <div><i class="material-icons" aria-hidden="true">language</i></div>
+                                <span>@@fed@@</span>
+                            </a>
+                            <a class="type waves-effect" data-type="pub-media" title="@@fedMedia@@">
+                                <div><i class="material-icons" aria-hidden="true">perm_media</i></div>
+                                <span>@@fedMedia@@</span>
+                            </a>
+                            <a class="type waves-effect" data-type="dm" title="@@dm@@">
+                                <div><i class="material-icons" aria-hidden="true">mail_outline</i></div>
+                                <span>@@dm@@</span>
+                            </a>
+                            <a class="type waves-effect" data-type="mix" title="@@integratedTLDes@@">
+                                <div><i class="material-icons" aria-hidden="true">merge_type</i></div>
+                                <span>@@integratedTLDes@@</span>
+                            </a>
+                            <a class="type waves-effect" data-type="plus" title="@@localPlusDes@@">
+                                <div><i class="material-icons" aria-hidden="true">reply</i></div>
+                                <span>@@localPlusDes@@</span>
+                            </a>
+                            <a class="type waves-effect" data-type="notf" title="@@notf@@">
+                                <div><i class="material-icons" aria-hidden="true">notifications</i></div>
+                                <span>@@notf@@</span>
+                            </a>
+                            <a class="type waves-effect" data-type="bookmark" title="@@bookmark@@">
+                                <div><i class="material-icons" aria-hidden="true">bookmark</i></div>
+                                <span>@@bookmark@@</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="noauth" class="hide">
+                        @@showThisTL@@
+                        <input id="noauth-url" type="text" class="validate" style="width: calc(70% - 3rem)" placeholder="e.g:mstdn.jp" />
+                    </div>
+                    <div id="webview-add" class="hide">@@webviewWarn@@</div>
+                </div>
+                <button class="btn waves-effect blue" style="width: calc(100% - 0.7rem)" onclick="addColumn()" data-trans-i="add"><i class="material-icons left">add</i>@@add@@</button>
+                <br />
+                <br />
+            </div>
+            <!--検索-->
+            <div id="src-box" class="hide menu-content">
+                <div class="input-field">
+                    <select id="src-acct-sel" class="acct-sel" onchange="trend()"></select>
+                </div>
+                <div class="input-field">
+                    <input id="src" type="text" class="validate" style="width: calc(100% - 150px)" />
+                    <label for="src" data-trans="src">@@search@@</label>
+                    <button class="btn waves-effect indigo" style="width: 36%; padding: 0; padding-left: 1.15rem" onclick="src()" data-trans-i="src">
+                            <i class="material-icons left" style="margin: 0">search</i>@@search@@
+                        </button>
+                    <br />
+                    <br />
+                </div>
+                <div id="search">
+                    <div id="src-contents"></div>
+                </div>
+            </div>
+            <!--ディレクトリ-->
+            <div id="dir-box" class="hide menu-content">
+                <label>
+                        <input class="with-gap" onchange="dirChange('directory')" name="dirsug" type="radio" value="directory" checked />
+                        <span>@@directory@@</span>
+                    </label>
+                <label>
+                        <input class="with-gap" onchange="dirChange('suggest')" name="dirsug" type="radio" value="suggest" />
+                        <span>@@frc@@</span>
+                    </label>
+                <div class="input-field">
+                    <select id="dir-acct-sel" class="acct-sel" onchange="dirselCk()"></select>
+                </div>
+                <div id="dirNoAuth" class="hide">
+                    <input id="dirNoAuth-url" type="text" class="validate" style="width: calc(70% - 3rem)" placeholder="e.g:mastodon.social" />
+                    <button class="btn waves-effect indigo" style="width: 9.23rem; padding: 0; padding-left: 1.15rem" onclick="directory('directory')">
+                            <i class="material-icons left" style="margin: 0">search</i>@@show@@
+                        </button>
+                </div>
+                <div id="directoryConfig">
+                    <label>
+                            <input class="with-gap" onchange="directory('directory')" name="sort" type="radio" value="active" checked />
+                            <span>@@active@@</span>
+                        </label>
+                    <label>
+                            <input class="with-gap" onchange="directory('directory')" name="sort" type="radio" value="new" />
+                            <span>@@newcomer@@</span> </label
+                        ><br />
+                        <label>
+                            <input type="checkbox" class="filled-in" id="local_only" value="true" onchange="directory('directory')" />
+                            <span>@@local_only@@</span>
+                        </label>
+                </div>
+
+                <div id="dir-contents"></div>
+                <button class="btn waves-effect teal disabled" style="width: 100%" id="moreDir" onclick="directory('check', 'more')">@@more@@</button>
+            </div>
+            <!--並べ替え-->
+            <div id="sort-box" class="hide menu-content">
+                <ul id="sort"></ul>
+                <div>
+                    <button onclick="sort()" class="btn waves-effect nex" style="width: 97.5%" data-trans-i="sort"><i class="material-icons left">sort</i>@@sortSet@@</button>
+                </div>
+            </div>
+            <!--リスト-->
+            <div id="list-box" class="hide menu-content">
+                <div class="input-field" style="width: calc(100% - 100px); float: left">
+                    <select id="list-acct-sel" class="acct-sel"></select>
+                    <label>@@selectAcct@@</label>
+                </div>
+                <div style="float: left; padding-top: 8px; padding-bottom: 28px">
+                    <button class="btn waves-effect indigo" style="width: 80px" onclick="list()" data-trans-i="lists">@@listLocale@@</button>
+                </div>
+                <br /><br />
+                <div id="lists"></div>
+                <div id="lists-user"></div>
+                <input type="text" style="width: calc(100% - 143px)" id="list-add" placeholder="@@name@@" />
+                <button class="btn waves-effect" style="width: 120px" onclick="makeNewList()">@@makeNew@@</button>
+            </div>
+            <!--フィルター-->
+            <div id="filter-box" class="hide menu-content">
+                <div class="input-field" style="width: calc(100% - 100px); float: left">
+                    <select id="filter-acct-sel" class="acct-sel"></select>
+                    <label>@@selectAcct@@</label>
+                </div>
+                <div style="float: left; padding-top: 8px; padding-bottom: 28px">
+                    <button class="btn waves-effect indigo" style="width: 80px" onclick="filter()" data-trans-i="filters">@@listLocale@@</button>
+                </div>
+                <div id="filtered-words"></div>
+                <input type="hidden" id="filter-edit-id" />
+                <input type="text" style="width: 150px" id="filter-add-word" placeholder="@@filterWord@@" /><br /> @@degree@@
+                <br />
+                <label>
+                        <input type="checkbox" class="filled-in" id="home_filter" value="home" />
+                        <span>@@home@@</span>
+                    </label>
+                <label>
+                        <input type="checkbox" class="filled-in" id="local_filter" value="public" />
+                        <span>@@local@@</span>
+                    </label>
+                <label>
+                        <input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+                        <span>@@notf@@</span>
+                    </label>
+                <label>
+                        <input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+                        <span>@@conver@@</span>
+                    </label>
+                <label>
+                        <input type="checkbox" class="filled-in" id="prof_filter" value="profiles" />
+                        <span>@@prof@@</span> </label
+                    ><br />
+                    @@option@@
+                    <br />
+                    <label>
+                        <input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+                        <span>@@matchWord@@</span>
+                    </label>
+                <br />
+                <span class="sml">@@warnMatchWord@@</span><br />
+                <label>
+                        <input type="checkbox" class="filled-in" id="except_filter" value="1" />
+                        <span>@@except@@</span>
+                    </label>
+                <br />
+                <span class="sml">@@exceptWorn@@</span><br /> @@avalableBefore@@ <span class="sml">@@warnAvBefore@@<b>@@warnAvBefore2@@</b></span
+                    ><br /><br />
+                    <input type="number" style="width: 50px" id="days_filter" placeholder="d" value="0" />@@days@@
+                    <input type="number" style="width: 50px" id="hours_filter" placeholder="h" value="0" />@@hours@@
+                    <input type="number" style="width: 50px" id="mins_filter" placeholder="m" value="0" />@@mins@@<br />
+                    Quick: <a onclick="filterTime(0,0,30)" class="pointer">30@@mins@@</a>/ <a onclick="filterTime(0,1,0)" class="pointer">1@@hours@@</a>/
+                    <a onclick="filterTime(0,6,0)" class="pointer">6@@hours@@</a>/ <a onclick="filterTime(0,12,0)" class="pointer">12@@hours@@</a>/
+                    <a onclick="filterTime(1,0,0)" class="pointer">1@@days@@</a>/ <a onclick="filterTime(7,0,0)" class="pointer">7@@days@@</a>/
+                    <a onclick="filterTime(0,0,0)" class="pointer">@@unlimited@@</a><br />
+                    <button class="btn waves-effect" style="width: 120px" onclick="makeNewFilter()" id="add-filter-btn">@@add@@</button><br />
+                    <span class="sml">@@warnOnIntegratedTL@@</span>
+            </div>
+            <!--ヘルプとログ-->
+            <div id="help-box" class="hide menu-content">
+                <a href="https://docs.thedesk.top" class="btn waves-effect" style="width: 97.5%">@@help@@</a><br /> @@contactwithlog@@
+                <br />
+                <textarea id="logs" style="height: 250px"></textarea><br />
+            </div>
+        </div>
+    </div>
+    <a onclick="about()" class="nex waves-effect pwa"> <i class="material-icons menu-icon">info</i>@@about@@ </a>&nbsp;|&nbsp;
+    <a onclick="bottomReverse()" class="nex waves-effect"> <i class="material-icons menu-icon">swap_horiz</i>@@reverse@@ </a>&nbsp;|&nbsp;
+    <a onclick="openRN()" class="nex waves-effect"> <i class="material-icons menu-icon">new_releases</i>Release Note </a>
+</div>

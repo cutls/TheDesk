@@ -340,13 +340,23 @@ function muteDo(acct_id) {
             var id = $('#his-data').attr('user-id')
             var domain = localStorage.getItem('domain_' + acct_id)
             var at = localStorage.getItem('acct_' + acct_id + '_at')
+            const days = parseInt($('#days_mute').val(), 10)
+            const hours = parseInt($('#hours_mute').val(), 10)
+            const mins = parseInt($('#mins_mute').val(), 10)
+            const notf = $('#notf_mute:checked').val() === '1'
+            let duration = days * 24 * 60 * 60 + hours * 60 + mins
             if (localStorage.getItem('mode_' + domain) == 'misskey') {
                 var start = 'https://' + domain + '/api/mute/' + flagm
                 var ent = { i: at, userId: id }
                 var rq = JSON.stringify(ent)
             } else {
                 var start = 'https://' + domain + '/api/v1/accounts/' + id + '/' + flag
-                var rq = ''
+                const q = {
+                    notifications: notf
+                }
+                if (duration > 0) q.duration = duration * 60
+                if (days < 0 || hours < 0 || mins < 0) return Swal.fire('Invalid number')
+                var rq = JSON.stringify(q)
             }
             var httpreq = new XMLHttpRequest()
             httpreq.open('POST', start, true)
@@ -370,6 +380,15 @@ function muteDo(acct_id) {
             }
         }
     })
+}
+function muteMenu() {
+    $('#muteDuration').toggleClass('hide')
+    !$('#muteDuration').hasClass('hide') ? $('#his-des').css('max-height', '112px') : $('#his-des').css('max-height', '196px')
+}
+function muteTime(day, hour, min) {
+    $('#days_mute').val(day)
+    $('#hours_mute').val(hour)
+    $('#mins_mute').val(min)
 }
 
 //投稿削除
