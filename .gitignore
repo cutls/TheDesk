@@ -34,7 +34,6 @@ app/view/zh-CN
 app/view/ru-RU
 app/view/zh-TW
 app/view/pt-BR
-app/view/pl-PL
 app/view/si-LK
 app/build.js
 app/view/make/make.js
