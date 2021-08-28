@@ -70,8 +70,8 @@ async function cmd(options) {
     if (isTrue(options, 'onlyStore') || isTrue(options, 'withStore')) {
         console.log('start building for application stores')
         construct(ver, basefile, false, true)
-        if ((platform == 'win32' && !isTrue(options, 'skiWindows')) || isTrue(options, 'windows', 'w')) {
-            if ((isTrue(options, 'withIa32') && arch == 'x64') || arch == 'ia32') {
+        if ((platform === 'win32' && !isTrue(options, 'skiWindows')) || isTrue(options, 'windows', 'w')) {
+            if ((isTrue(options, 'withIa32') && arch === 'x64') || arch === 'ia32') {
                 config.nsis.artifactName = artifactName.replace('${arch}', 'ia32')
                 await build(Platform.WINDOWS, Arch.ia32, config)
                 fs.renameSync(
@@ -83,7 +83,7 @@ async function cmd(options) {
                     '../build/TheDesk-setup-ia32-store.exe'
                 )
             }
-            if (arch == 'x64') {
+            if (arch === 'x64') {
                 config.nsis.artifactName = artifactName.replace('${arch}', 'x64')
                 await build(Platform.WINDOWS, Arch.x64, config)
                 fs.renameSync(
@@ -96,14 +96,14 @@ async function cmd(options) {
                 )
             }
         }
-        if ((platform == 'linux' && !isTrue(options, 'skipLinux')) || isTrue(options, 'linux', 'l')) {
-            if (arch == 'ia32') {
+        if ((platform === 'linux' && !isTrue(options, 'skipLinux')) || isTrue(options, 'linux', 'l')) {
+            if (arch === 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
             }
-            if ((isTrue(options, 'withIa32') && arch == 'x64')) {
+            if ((isTrue(options, 'withIa32') && arch === 'x64')) {
                 console.log('snapcraft does not curretly support builing i386 on amd64')
             }
-            if (arch == 'x64') {
+            if (arch === 'x64') {
                 await build(Platform.LINUX, Arch.x64, config)
                 if (!isTrue(options, 'onlyStore')) {
                     fs.renameSync(
@@ -117,8 +117,8 @@ async function cmd(options) {
     if (!isTrue(options, 'onlyStore')) {
         console.log('start building for normal usage')
         construct(ver, basefile, false, false)
-        if ((platform == 'win32' && !isTrue(options, 'skiWindows')) || isTrue(options, 'windows', 'w')) {
-            if ((isTrue(options, 'withIa32') && arch == 'x64') || arch == 'ia32') {
+        if ((platform === 'win32' && !isTrue(options, 'skiWindows')) || isTrue(options, 'windows', 'w')) {
+            if ((isTrue(options, 'withIa32') && arch === 'x64') || arch === 'ia32') {
                 config.nsis.artifactName = artifactName.replace('${arch}', 'ia32')
                 await build(Platform.WINDOWS, Arch.ia32, config)
                 fs.renameSync(
@@ -126,7 +126,7 @@ async function cmd(options) {
                     '../build/TheDesk-ia32.exe'
                 )
             }
-            if (arch == 'x64') {
+            if (arch === 'x64') {
                 config.nsis.artifactName = artifactName.replace('${arch}', 'x64')
                 await build(Platform.WINDOWS, Arch.x64, config)
                 fs.renameSync(
@@ -138,7 +138,7 @@ async function cmd(options) {
                     '../build/TheDesk-setup.exe'
                 )
             }
-            if ((isTrue(options, 'withArm64') && arch == 'x64') || arch == 'arm64') {
+            if ((isTrue(options, 'withArm64') && arch === 'x64') || arch === 'arm64') {
                 config.nsis.artifactName = artifactName.replace('${arch}', 'arm64')
                 await build(Platform.WINDOWS, Arch.arm64, config)
                 fs.renameSync(
@@ -147,14 +147,14 @@ async function cmd(options) {
                 )
             }
         }
-        if ((platform == 'linux' && !isTrue(options, 'skipLinux')) || isTrue(options, 'linux', 'l')) {
-            if (arch == 'ia32') {
+        if ((platform === 'linux' && !isTrue(options, 'skipLinux')) || isTrue(options, 'linux', 'l')) {
+            if (arch === 'ia32') {
                 await build(Platform.LINUX, Arch.ia32, config)
             }
-            if (isTrue(options, 'withIa32') && arch == 'x64') {
+            if (isTrue(options, 'withIa32') && arch === 'x64') {
                 console.log('snapcraft does not curretly support builing i386 on amd64')
             }
-            if (arch == 'x64') {
+            if (arch === 'x64') {
                 await build(Platform.LINUX, Arch.x64, config)
                 fs.renameSync(
                     `../build/thedesk_${version}_amd64.snap`,
@@ -168,9 +168,27 @@ async function cmd(options) {
                 }
             }
         }
-        if (platform == 'darwin' && !isTrue(options, 'skipMacOS')) {
+        if (platform === 'darwin' && !isTrue(options, 'skipMacOS')) {
             if(isTrue(options, 'unnotarize')) delete config.afterSign
-            await build(Platform.MAC, Arch.x64, config)
+            if (arch === 'x64') {
+                if (isTrue(options, 'withArm64')) {
+                    await build(Platform.MAC, Arch.arm64, config)
+                    fs.renameSync(
+                        `../build/TheDesk-${version}.dmg`,
+                        `../build/TheDesk-${version}-arm64.dmg`
+                    )
+                }
+                await build(Platform.MAC, Arch.x64, config)
+            }
+            if (arch === 'arm64') {
+                await build(Platform.MAC, Arch.arm64, config)
+                fs.renameSync(
+                    `../build/TheDesk-${version}.dmg`,
+                    `../build/TheDesk-${version}-arm64.dmg`
+                )
+                if(isTrue(options, 'skipX64')) await build(Platform.MAC, Arch.x64, config)
+            }
+
         }
     }
 }
