@@ -171,16 +171,26 @@ async function cmd(options) {
         if (platform === 'darwin' && !isTrue(options, 'skipMacOS')) {
             if(isTrue(options, 'unnotarize')) delete config.afterSign
             if (arch === 'x64') {
+                await build(Platform.MAC, Arch.x64, config)
+                fs.renameSync(
+                    `../build/TheDesk-${version}.dmg`,
+                    `../build/TheDesk-${version}-x64.dmg`
+                )
                 if (isTrue(options, 'withArm64')) {
+                    delete config.afterSign
                     await build(Platform.MAC, Arch.arm64, config)
                     fs.renameSync(
                         `../build/TheDesk-${version}.dmg`,
                         `../build/TheDesk-${version}-arm64.dmg`
                     )
                 }
-                await build(Platform.MAC, Arch.x64, config)
+                fs.renameSync(
+                    `../build/TheDesk-${version}-x64.dmg`,
+                    `../build/TheDesk-${version}.dmg`
+                )
             }
             if (arch === 'arm64') {
+                delete config.afterSign
                 await build(Platform.MAC, Arch.arm64, config)
                 fs.renameSync(
                     `../build/TheDesk-${version}.dmg`,
