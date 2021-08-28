@@ -35,9 +35,10 @@ Crowdinから翻訳に参加してみませんか？: https://translate.thedesk.
 Pleromaは、Mastodon APIとの互換性を謳っていますが、実際には様々な差異があり、TheDeskで不具合が発生することがあります。  
 Issuesに書いてある問題についてはなるべく対処しますので、ぜひお知らせください。
 
-## 詳しく
+## よみもの
 
-[TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
+* [TheDesk - マストドン日本語ウィキ](https://ja.mstdn.wiki/TheDesk)
+* [TheDeskを作って思う今クライアントを作る意味 | Cutls Code Archives ](https://code.cutls.com/thedesk-log/)
 
 ## ライセンス
 
@@ -47,9 +48,7 @@ Issuesに書いてある問題についてはなるべく対処しますので�
 
 ## 主なコントリビューター
 
-* <img src="https://user-images.githubusercontent.com/17561618/66582029-162df380-ebbc-11e9-8a6f-1832b3a35d89.png" width="20">[とねぢ](https://minohdon.jp/@toneji) macOSビルダー(現在はTravis CI)
-* <img src="https://avatars3.githubusercontent.com/u/24523508?s=88&v=4" width="20">[ぽぷんじゃ](https://popon.pptdn.jp/@popn_ja) Linuxビルダー(現在はTravis CI)
-* <img src="https://user-images.githubusercontent.com/17561618/66582379-a3714800-ebbc-11e9-8402-d81a35a3be9f.png" width="20">[kPherox](https://pl.kpherox.dev/kPherox)
+[![](https://opencollective.com/TheDesk/contributors.svg?width=400&button=false)](https://github.com/cutls/TheDesk/graphs/contributors)
 
 ## 支援
 

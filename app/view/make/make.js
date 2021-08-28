@@ -8,7 +8,7 @@ function construct(ver, basefile, pwa, store) {
     console.log('Constructing view files ' + ver)
     genIndexHtml(basefile)
     const langs = ['ja', 'ja-KS', 'en', 'bg', 'cs', 'de',
-        'es-AR', 'it-IT', 'zh-CN', 'fr-FR', 'zh-TW', 'no-NO', 'pt-BR', 'ru-RU', 'es-ES', 'pl-PL', 'ps'
+        'es-AR', 'it-IT', 'zh-CN', 'fr-FR', 'zh-TW', 'no-NO', 'pt-BR', 'ru-RU', 'es-ES', 'pl-PL', 'si-LK', 'ps'
     ]
     const langsh = [
         '日本語',
@@ -27,6 +27,7 @@ function construct(ver, basefile, pwa, store) {
         'русский(β)',
         'Español(β)',
         'Polskie(β)',
+        'සිංහල(β)',
         'Crowdin translate system(beta)'
     ]
     const simples = ['acct', 'index', 'setting', 'update', 'setting']
