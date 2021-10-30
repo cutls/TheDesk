@@ -780,6 +780,11 @@ p:not(:last-child) {
 .dropdown-content li {
 	padding-top: 0.4rem;
 }
+.dropdown-content li > a, .dropdown-content li > span {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 .fa-2x > .emoji-img {
 	width: 2.3rem !important;
 	height: 2.3rem !important;
