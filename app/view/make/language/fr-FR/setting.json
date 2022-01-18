@@ -19,7 +19,7 @@
   "hardwareAcceleration": "Désactiver l'accélération matérielle",
   "hardwareAccelerationWarn": "Redémarrage Automatique",
   "webview": "Webview Integration",
-  "webviewWarn": "To use TweetDeck Integration, please turn on. You should understand it may lessen security level.",
+  "webviewWarn": "To use TweetDeck Integration, please turn it on. Please be aware that it may lessen the security level.",
   "theme": "Thèmes",
   "popup": "Notification pop-up",
   "popupwarn": "\"0\" pour cacher",
