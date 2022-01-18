@@ -62,7 +62,7 @@ function templete(lang, mainWindow, packaged, dir, dirname) {
         },
         "minimun": {
             "ja": "最小化",
-            "en": "Minimarize"
+            "en": "Minimize"
         },
         "close": {
             "ja": "閉じる",
