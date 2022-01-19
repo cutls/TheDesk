@@ -3,11 +3,11 @@
     "back":"Back",
     "add":"Add an account",
     "addAcct": "Fill the instance domain (like mastodon.social)",
-    "codesetupwarn":"Uncheck it to skip pasiting code.(login to Mastodon on Windows or macOS) (Recommended: pcheck)",
+    "codesetupwarn":"Uncheck to skip pasting the code. (login to Mastodon on Windows or macOS) (Recommended: pcheck)",
     "codesetup":"Code setup",
-    "mainacct":"Main an account",
+    "mainacct":"Main account",
     "selacct":"Select an account",
-    "codepastewarn":"Paste the code and close browser.",
+    "codepastewarn":"Paste the code and close the browser.",
     "codepaste":"Code",
     "domain":"Domain",
     "connect":"Federated servers",
@@ -20,6 +20,6 @@
     "thisismisskey":"Login as Misskey",
     "misskeylogin":"Read <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> to login Misskey.",
     "nodata":"No data",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)",
-    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
+    "accessTokenSetup": "Use the access token to login (Fill the access-token into the Advanced box)",
+    "haveExported": "Having the exported file of TheDesk, click here to jump to the settings page"
 }
