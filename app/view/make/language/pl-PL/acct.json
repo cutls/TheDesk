@@ -2,7 +2,7 @@
     "list": "Lista kont",
     "back": "Wstecz",
     "add": "Dodaj konto",
-    "addAcct": "Wprowadź domenę instancji (jak mastodon.social)",
+    "addAcct": "Wprowadź domenę instancji (np. mastodon.social)",
     "codesetupwarn": "Odznacz, aby pominąć pasujący kod. (zaloguj się do Mastodon na Windows lub macOS) (Zalecane: pcheck)",
     "codesetup": "Ustawienia kodu",
     "mainacct": "Konto główne",
@@ -20,6 +20,6 @@
     "thisismisskey": "Zaloguj się do Misskey",
     "misskeylogin": "Przeczytaj <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> aby zalogować się do Misskey.",
     "nodata": "Brak danych",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)",
-    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
+    "accessTokenSetup": "Użyj tokenu dostępu do logowania (po wypełnieniu kliknij \"token dostępu\" a nie \"kod\" w polu: Zaawansowane)",
+    "haveExported": "Posiadając wyeksportowany plik TheDesk, kliknij tutaj, aby skoczyć do strony ustawień"
 }
