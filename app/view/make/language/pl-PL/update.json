@@ -4,7 +4,7 @@
     "portable": "Wersja bezinstalacyjna",
     "installer": "Instalator (zalecane)",
     "linux": "zip",
-    "linuxdeb": "deb(Rekomendowane na buntu, Debian)",
+    "linuxdeb": "deb(Rekomendowane dla buntu, Debian)",
     "linuxsnap": "snap",
     "snap": "Pobierz na Snapcraft",
     "sureupd": "Może Cię ominąć fajne doświadczenie!",
