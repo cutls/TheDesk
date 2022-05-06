@@ -203,7 +203,7 @@
   "speedwarn": "1-100(domyślnie:10)",
   "pitch": "Wysokość",
   "pitchwarn": "0-100 (domyślnie: 50)",
-  "vol": "Volume",
+  "vol": "Głośność",
   "volwarn": "0-100(default:100)",
   "volwarn80": "0-100(default:80)",
   "test": "Test",
