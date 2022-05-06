@@ -60,7 +60,7 @@
     "lang_postimg_failupload": "Nie powiodło się",
     "lang_postimg_delete": "Kliknij, aby dodać opis, prawoklik myszą to usuwa",
     "lang_postimg_desc": "Opis",
-    "lang_postimg_leadContext": "right-click the thumbnail to delete this",
+    "lang_postimg_leadContext": "użyj prawokliku myszą aby to usunąć",
     "lang_post_syncDetail": "Upload media synchronously",
     "lang_post_syncDetailText": "Click each picture icon to get the thumbnail. If you can get, the media you uploaded are completely processed.",
     "lang_post_tagTL": "This toot does not contain a default tag. This toot will not be shown on Local TL. Continue?",
