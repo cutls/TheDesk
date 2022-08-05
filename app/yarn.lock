@@ -4848,10 +4848,10 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-sweetalert2@^11.1.4:
-  version "11.1.4"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.1.4.tgz#3497064c0ec1493f6df937804b841d889a71a4d8"
-  integrity sha512-CTNLviF6w1wyh1ou2UY8RpZasV2RiXbO6489v+a1Swz4jrUyuFDDjMZ9tMMVFnxTMdiUGfYiJoFUniZbHSEnHw==
+sweetalert2@^11.4.25:
+  version "11.4.25"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.4.25.tgz#30f61e246c5210729757965c548b55adbefa410d"
+  integrity sha512-8yB7SswMAZQaLOlGqgstEPMwM+Me7MFKM2Uk7qwNlHxSem1gZmisvpw5F77QhoFvca0nkGnJ9fIGgBBleXl60w==
 
 syntax-error@^1.1.1:
   version "1.4.0"
