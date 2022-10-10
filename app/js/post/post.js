@@ -82,7 +82,13 @@ function post(mode, postvis, dry) {
 	$('.toot-btn-group').prop('disabled', true)
 	todo('Posting')
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	var start = 'https://' + domain + '/api/v1/statuses'
+	let start = 'https://' + domain + '/api/v1/statuses'
+	let method = 'POST'
+	const editTarget = $('#tootmodal').attr('data-edit')
+	if (editTarget) {
+		start = start + `/${editTarget}`
+		method = 'PUT'
+	}
 	var reply = $('#reply').val()
 	if (str.indexOf(localStorage.getItem('stable')) == -1) {
 		str + ' #' + localStorage.getItem('stable')
@@ -174,7 +180,7 @@ function post(mode, postvis, dry) {
 		return toot
 	}
 	var httpreq = new XMLHttpRequest()
-	httpreq.open('POST', start, true)
+	httpreq.open(method, start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.setRequestHeader('Idempotency-Key', ideKey)
@@ -375,5 +381,6 @@ function clear() {
 		width = 300
 	}
 	$('#post-box').css('width', width)
+	$('#tootmodal').attr('data-edit', null)
 	mdCheck()
 }

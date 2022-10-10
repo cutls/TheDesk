@@ -1,12 +1,12 @@
 //トゥートの詳細
-function details(id, acct_id, tlid, mode) {
+async function details(id, acct_id, tlid, mode) {
 	if (mode == 'dm') {
 		$('.dm-hide').hide()
 	} else {
 		$('.dm-hide').show()
 	}
 	const context = localStorage.getItem('moreContext')
-	if(context != 'yes') {
+	if (context != 'yes') {
 		$('.contextTool').hide()
 	} else {
 		$('.contextTool').show()
@@ -39,90 +39,98 @@ function details(id, acct_id, tlid, mode) {
 			}
 		}
 	}
-
-	fetch(start, i)
-		.then(function(response) {
-			if (!response.ok) {
-				response.text().then(function(text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function(error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function(json) {
-			console.log(['Toot data:', json])
-			if (!$('#timeline_' + tlid + ' #pub_' + id).length) {
-				var html = parse([json], '', acct_id)
-				$('#toot-this').html(html)
-				jQuery('time.timeago').timeago()
-			}
-			if (localStorage.getItem('mode_' + domain) == 'misskey') {
-				var url = 'https://' + domain + '/notes/' + json.id
-				var scn = json.user.username
-				if (!json.user.host) {
-					var local = true
-				} else {
-					var local = false
-					scn = scn + '@' + host
-				}
-				var rep = ''
-				var uid = json.user.id
-				if (json._replyIds) {
-					replyTL(json._replyIds[0], acct_id)
-				}
+	try {
+		const response = await fetch(start, i)
+		if (!response.ok) {
+			response.text().then(function (text) {
+				setLog(response.url, response.status, text)
+			})
+		}
+		const json = await response.json()
+		console.log(['Toot data:', json])
+		if (!$('#timeline_' + tlid + ' #pub_' + id).length) {
+			var html = parse([json], '', acct_id, '', '', mute)
+			$('#toot-this').html(html)
+			jQuery('time.timeago').timeago()
+		}
+		if (localStorage.getItem('mode_' + domain) == 'misskey') {
+			var url = 'https://' + domain + '/notes/' + json.id
+			var scn = json.user.username
+			if (!json.user.host) {
+				var local = true
 			} else {
-				var url = json.url
-				if (json.account.acct == json.account.username) {
-					var local = true
-				} else {
-					var local = false
-				}
-				var scn = json.account.acct
-				var uid = json.account.id
-				if (json['in_reply_to_id']) {
-					replyTL(json['in_reply_to_id'], acct_id)
-				}
+				var local = false
+				scn = scn + '@' + host
 			}
-			$('#toot-this .fav_ct').text(json.favourites_count)
-			$('#toot-this .rt_ct').text(json.reblogs_count)
-			$('#tootmodal').attr('data-url', url)
-			$('#tootmodal').attr('data-id', json.id)
-			$('#tootmodal').attr('data-acct', acct_id)
-			if (local) {
-				$('#tootmodal').attr('data-user', scn + '@' + domain)
+			var rep = ''
+			var uid = json.user.id
+			if (json._replyIds) {
+				replyTL(json._replyIds[0], acct_id)
+			}
+		} else {
+			var url = json.url
+			if (json.account.acct == json.account.username) {
+				var local = true
 			} else {
-				$('#tootmodal').attr('data-user', scn)
+				var local = false
 			}
-			getContext(id, acct_id)
-			var dom = null
-			if (!local) {
-				dom = scn.replace(/.+@/g, '')
-			} else {
-				dom = domain
+			var scn = json.account.acct
+			var uid = json.account.id
+			if (json['in_reply_to_id']) {
+				replyTL(json['in_reply_to_id'], acct_id)
 			}
-			beforeToot(id, acct_id, dom)
-			userToot(id, acct_id, uid)
-			afterToot(id, acct_id, dom)
-			afterUserToot(id, acct_id, uid)
-			afterFTLToot(id, acct_id, dom)
-			faved(id, acct_id)
-			rted(id, acct_id)
-			if ($('#toot-this div').hasClass('cvo')) {
-				$('#toot-this').removeClass('cvo')
-			} else {
-				if (!$('#toot-this .cvo').hasClass('cvo')) {
-					$('#toot-this').addClass('cvo')
-				}
+		}
+		$('#toot-this .fav_ct').text(json.favourites_count)
+		$('#toot-this .rt_ct').text(json.reblogs_count)
+		$('#tootmodal').attr('data-url', url)
+		$('#tootmodal').attr('data-id', json.id)
+		$('#tootmodal').attr('data-acct', acct_id)
+		if (local) {
+			$('#tootmodal').attr('data-user', scn + '@' + domain)
+		} else {
+			$('#tootmodal').attr('data-user', scn)
+		}
+		getContext(id, acct_id)
+		var dom = null
+		if (!local) {
+			dom = scn.replace(/.+@/g, '')
+		} else {
+			dom = domain
+		}
+		beforeToot(id, acct_id, dom)
+		userToot(id, acct_id, uid)
+		afterToot(id, acct_id, dom)
+		afterUserToot(id, acct_id, uid)
+		afterFTLToot(id, acct_id, dom)
+		faved(id, acct_id)
+		rted(id, acct_id)
+		if (json.edited_at) {
+			$('.edited-hide').show()
+			try {
+				const history = await (await fetch(`https://${domain}/api/v1/statuses/${id}/history`, i)).json()
+				const temp = parse(history, 'noauth', acct_id)
+				console.log(temp)
+				$('#toot-edit').html(temp)
+			} catch(e) { console.error(e) }
+		} else {
+			$('#toot-edit').html('')
+			$('.edited-hide').hide()
+		}
+		if ($('#toot-this div').hasClass('cvo')) {
+			$('#toot-this').removeClass('cvo')
+		} else {
+			if (!$('#toot-this .cvo').hasClass('cvo')) {
+				$('#toot-this').addClass('cvo')
 			}
-			if (!$('#activator').hasClass('active')) {
-				$('#det-col').collapsible('open', 4)
-			}
-		})
+		}
+		if (!$('#activator').hasClass('active')) {
+			$('#det-col').collapsible('open', 4)
+		}
+	} catch (e) {
+		todo(error)
+		setLog(start, 'JSON', error)
+		console.error(error)
+	}
 }
 
 //返信タイムライン
@@ -145,20 +153,20 @@ function replyTL(id, acct_id) {
 		return false
 	}
 	fetch(start, i)
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var mute = getFilterTypeByAcct(acct_id, 'thread')
 			if (localStorage.getItem('mode_' + domain) == 'misskey') {
 				var templete = misskeyParse([json], '', acct_id, '', '', mute)
@@ -201,20 +209,20 @@ function getContext(id, acct_id) {
 		}
 	}
 	fetch(start, i)
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (localStorage.getItem('mode_' + domain) == 'misskey') {
 				json.reverse()
 				var templete = misskeyParse(json, '', acct_id, '', '', [])
@@ -269,20 +277,20 @@ function beforeToot(id, acct_id, domain) {
 				untilID: id
 			})
 		})
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				var templete = misskeyParse(json, 'noauth', acct_id)
 				$('#toot-before').html(templete)
 				jQuery('time.timeago').timeago()
@@ -295,20 +303,20 @@ function beforeToot(id, acct_id, domain) {
 				'content-type': 'application/json'
 			}
 		})
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				var templete = parse(json, 'noauth', acct_id)
 				if (templete != '') {
 					$('#toot-before .no-data').hide()
@@ -335,20 +343,20 @@ function userToot(id, acct_id, user) {
 				userId: user
 			})
 		})
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				var templete = misskeyParse(json, 'noauth', acct_id)
 				$('#user-before').html(templete)
 				jQuery('time.timeago').timeago()
@@ -362,20 +370,20 @@ function userToot(id, acct_id, user) {
 				Authorization: 'Bearer ' + at
 			}
 		})
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				var templete = parse(json, '', acct_id)
 				if (templete != '') {
 					$('#user-before .no-data').hide()
@@ -396,20 +404,20 @@ function afterToot(id, acct_id, domain) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var templete = parse(json, 'noauth', acct_id)
 			if (templete != '') {
 				$('#ltl-after .no-data').hide()
@@ -430,20 +438,20 @@ function afterUserToot(id, acct_id, user) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var templete = parse(json, '', acct_id)
 			if (templete != '') {
 				$('#user-after .no-data').hide()
@@ -463,20 +471,20 @@ function afterFTLToot(id, acct_id, domain) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var templete = parse(json, 'noauth', acct_id)
 			if (templete != '') {
 				$('#ftl-after .no-data').hide()
@@ -501,20 +509,20 @@ function faved(id, acct_id) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var templete = userparse(json, '', acct_id)
 			if (templete != '') {
 				$('#toot-fav .no-data').hide()
@@ -539,20 +547,20 @@ function rted(id, acct_id) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var templete = userparse(json, '', acct_id)
 			$('#toot-rt').html(templete)
 			jQuery('time.timeago').timeago()
@@ -614,20 +622,20 @@ function trans(tar, to, elem) {
 	fetch(exec, {
 		method: 'GET'
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(text) {
+		.then(function (text) {
 			elem.parents('.cvo').find('.toot').append('<span class="gray translate">' + text.text + '</span>')
 		})
 }

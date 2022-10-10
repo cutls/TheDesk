@@ -15,7 +15,7 @@ function fav(id, acct_id, remote) {
     httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
     httpreq.responseType = 'json'
     httpreq.send()
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response
             if (this.status !== 200) {
@@ -34,7 +34,7 @@ function fav(id, acct_id, remote) {
                         }
                     } else {
                         var fav = json.favourites_count
-                            //var fav = json.favourites_count;
+                        //var fav = json.favourites_count;
                     }
                 } else {
                     var fav = json.favourites_count
@@ -75,7 +75,7 @@ function rt(id, acct_id, remote, vis) {
     } else {
         httpreq.send()
     }
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response
             if (this.status !== 200) {
@@ -132,7 +132,7 @@ function bkm(id, acct_id, tlid) {
     httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
     httpreq.responseType = 'json'
     httpreq.send()
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response
             if (this.status !== 200) {
@@ -201,7 +201,7 @@ async function follow(acct_id, resolve) {
     httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
     httpreq.responseType = 'json'
     httpreq.send(JSON.stringify(ent))
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response
             if (this.status !== 200) {
@@ -296,7 +296,7 @@ function block(acct_id) {
             httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
             httpreq.responseType = 'json'
             httpreq.send()
-            httpreq.onreadystatechange = function() {
+            httpreq.onreadystatechange = function () {
                 if (httpreq.readyState === 4) {
                     if (this.status !== 200) {
                         setLog(start, this.status, this.response)
@@ -364,7 +364,7 @@ function muteDo(acct_id) {
             httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
             httpreq.responseType = 'json'
             httpreq.send(rq)
-            httpreq.onreadystatechange = function() {
+            httpreq.onreadystatechange = function () {
                 if (httpreq.readyState === 4) {
                     if (this.status !== 200) {
                         setLog(start, this.status, this.response)
@@ -413,7 +413,7 @@ function del(id, acct_id) {
         httpreq.responseType = 'json'
         httpreq.send()
     }
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             if (this.status !== 200) {
                 setLog(start, this.status, this.response)
@@ -453,27 +453,50 @@ function redraft(id, acct_id) {
                 httpreq.responseType = 'json'
                 httpreq.send()
             }
-            httpreq.onreadystatechange = function() {
+            httpreq.onreadystatechange = function () {
                 if (httpreq.readyState === 4) {
                     if (this.status !== 200) {
                         setLog(start, this.status, this.response)
                     }
                     var json = httpreq.response
-                    draftToPost(json, acct_id, id)
+                    draftToPost(json, acct_id, null)
                 }
             }
         }
     })
+}
+// edit
+function editToot(id, acct_id) {
+    show()
+    var domain = localStorage.getItem('domain_' + acct_id)
+    var at = localStorage.getItem('acct_' + acct_id + '_at')
+    var start = 'https://' + domain + '/api/v1/statuses/' + id + '/source'
+    var httpreq = new XMLHttpRequest()
+    httpreq.open('GET', start, true)
+    httpreq.setRequestHeader('Content-Type', 'application/json')
+    httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+    httpreq.responseType = 'json'
+    httpreq.send()
+    httpreq.onreadystatechange = function () {
+        if (httpreq.readyState === 4) {
+            if (this.status !== 200) {
+                setLog(start, this.status, this.response)
+            }
+            var json = httpreq.response
+            draftToPost(json, acct_id, id)
+        }
+    }
 }
 
 function draftToPost(json, acct_id, id) {
     $('#post-acct-sel').prop('disabled', true)
     $('#post-acct-sel').val(acct_id)
     $('select').formSelect()
+    if (id) $('#tootmodal').attr('data-edit', id)
     mdCheck()
     mediack = null
     if (json.media_attachments) mediack = json.media_attachments[0]
-        //メディアがあれば
+    //メディアがあれば
     var media_ids = []
     if (mediack) {
         for (var i = 0; i <= 4; i++) {
@@ -532,7 +555,7 @@ function pin(id, acct_id) {
     httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
     httpreq.responseType = 'json'
     httpreq.send()
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response
             if (this.status !== 200) {
@@ -563,7 +586,7 @@ function request(id, flag, acct_id) {
     httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
     httpreq.responseType = 'json'
     httpreq.send()
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response
             if (this.status !== 200) {
@@ -589,7 +612,7 @@ function domainblock(add, flag, acct_id) {
     httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
     httpreq.responseType = 'json'
     httpreq.send()
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response
             if (this.status !== 200) {
@@ -616,7 +639,7 @@ function empUser() {
         M.toast({ html: id + lang.lang_status_emphas, displayLength: 4000 })
     } else {
         var can
-        Object.keys(obj).forEach(function(key) {
+        Object.keys(obj).forEach(function (key) {
             var usT = obj[key]
             if (usT != id && !can) {
                 can = false
@@ -648,7 +671,7 @@ function pinUser() {
     httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
     httpreq.responseType = 'json'
     httpreq.send()
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response
             if (this.status !== 200) {
@@ -678,26 +701,26 @@ function staEx(mode) {
     var at = localStorage.getItem('acct_' + acct_id + '_at')
     var start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + url
     fetch(start, {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json',
-                Authorization: 'Bearer ' + at,
-            },
-        })
-        .then(function(response) {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            Authorization: 'Bearer ' + at,
+        },
+    })
+        .then(function (response) {
             if (!response.ok) {
-                response.text().then(function(text) {
+                response.text().then(function (text) {
                     setLog(response.url, response.status, text)
                 })
             }
             return response.json()
         })
-        .catch(function(error) {
+        .catch(function (error) {
             todo(error)
             setLog(start, 'JSON', error)
             console.error(error)
         })
-        .then(function(json) {
+        .then(function (json) {
             if (json.statuses) {
                 if (json.statuses[0]) {
                     var id = json.statuses[0].id

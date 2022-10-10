@@ -483,6 +483,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
             } else {
                 var locked = ''
             }
+			if (toot.edited_at) {
+                locked = locked + ` <i class="material-icons teal-text" style="font-size: 0.8rem" title="Edited at ${date(toot.edited_at, 'absolute')}">create</i>`
+            }
             if (!toot.application) {
                 var via = ''
                 viashow = 'hide'
@@ -642,7 +645,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 							} else {
 								var desc = ''
 							}
-							console.log('https://' + domain + '/storage/no-preview.png')
 							if (media.preview_url == 'https://' + domain + '/storage/no-preview.png') {
 								purl = url
 								nsfwmes = '<div class="nsfw-media">Unavailable preview</div>'
@@ -664,10 +666,9 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 				viewer = ''
 				hasmedia = 'nomedia'
 			}
-			var menck = toot.mentions[0]
 			var mentions = ''
 			//メンションであれば
-			if (menck) {
+			if (toot.mentions && toot.mentions[0]) {
 				mentions = ''
 				var to_mention = []
 				Object.keys(toot.mentions).forEach(function (key3) {
@@ -1144,6 +1145,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 							style="padding:0; padding-top: 5px;">
 							<i class="material-icons" aria-hidden="true">redo</i>${lang.lang_parse_redraft}
 					</li>
+					<li class="${if_mine}"  onclick="editToot('${uniqueid}','${acct_id}')"
+							style="padding:0; padding-top: 5px;">
+							<i class="material-icons" aria-hidden="true">create</i>${lang.lang_edit}(v3.5.0~)
+					</li>
 					${trans}
 					<li onclick="postMessage(['openUrl', '${toot.url}'], '*')"
 						 style="padding:0; padding-top: 5px;">
@@ -1565,6 +1570,13 @@ function mastodonBaseStreaming(acct_id) {
 			filterUpdate(acct_id)
 		} else if (~typeA.indexOf('announcement')) {
 			announ(acct_id, tlid)
+		} else if (typeA === 'status.update') {
+			const tl = JSON.parse(mess.data).stream
+			const obj = JSON.parse(JSON.parse(mess.data).payload)
+			const tls = getTlMeta(tl[0], tl, acct_id, obj)
+			const template = insertTl(obj, tls, true)
+			$(`[unique-id=${obj.id}]`).html(template)
+			$(`[unique-id=${obj.id}] [unique-id=${obj.id}]`).unwrap()
 		} else if (typeA == 'notification') {
 			const obj = JSON.parse(JSON.parse(mess.data).payload)
 			let template = ''
@@ -1635,7 +1647,7 @@ function mastodonBaseStreaming(acct_id) {
 		return false
 	}
 }
-function insertTl(obj, tls) {
+function insertTl(obj, tls, dry) {
 	for (const timeline of tls) {
 		const { id, voice, type, acct_id } = timeline
 		const mute = getFilterTypeByAcct(acct_id, type)
@@ -1645,6 +1657,7 @@ function insertTl(obj, tls) {
 				say(obj.content)
 			}
 			const template = parse([obj], type, acct_id, id, '', mute, type)
+			if (dry) return template
 			console.log($(`#timeline_box_${id}_box .tl-box`).scrollTop(), `timeline_box_${id}_box .tl-box`)
 			if (
 				$(`#timeline_box_${id}_box .tl-box`).scrollTop() === 0
