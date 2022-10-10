@@ -167,6 +167,7 @@ function createWindow() {
 			nodeIntegration: false,
 			contextIsolation: true,
 			spellcheck: false,
+			sandbox: false,
 			preload: join(__dirname, 'js', 'platform', 'preload.js'),
 		},
 		width: window_size.width,
