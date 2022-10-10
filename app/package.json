@@ -70,7 +70,7 @@
         "sanitize-html": "^2.4.0",
         "sumchecker": "^3.0.1",
         "sweetalert2": "^11.1.4",
-        "system-font-families": "^0.4.1",
+        "system-font-families": "^0.6.0",
         "textarea-caret": "^3.1.0",
         "uuid": "^8.3.2",
         "vue": "^2.6.14"
