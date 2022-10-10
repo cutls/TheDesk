@@ -1,7 +1,7 @@
 {
     "name": "thedesk",
-    "version": "22.3.1",
-    "codename": "Koume",
+    "version": "23.0.1",
+    "codename": "Chieri",
     "description": "TheDesk is a Mastodon client for PC.",
     "repository": "https://github.com/cutls/TheDesk",
     "main": "main.js",
@@ -62,7 +62,7 @@
         "@syuilo/aiscript": "^0.11.1",
         "electron-dl": "^3.4.0",
         "itunes-nowplaying-mac": "https://github.com/cutls/itunes-nowplaying-mac/releases/download/v0.4.0/itunes-nowplaying-mac-0.4.0.tgz",
-        "jimp": "^0.16.1",
+        "jimp": "^0.16.2",
         "jquery": "^3.6.0",
         "jquery-ui-dist": "^1.13.2",
         "json5": "^2.2.0",
@@ -80,7 +80,7 @@
         "chokidar": "^3.5.2",
         "dotenv": "^10.0.0",
         "electron": "^21.1.0",
-        "electron-builder": "^22.11.7",
+        "electron-builder": "^23.6.0",
         "electron-notarize": "^1.2.1",
         "electron-rebuild": "^3.2.9",
         "eslint": "^8.25.0",
@@ -88,7 +88,9 @@
         "readline-sync": "1.4.10"
     },
     "resolutions": {
-        "@types/fs-extra": "9.0.11",
-        "plist": "3.0.2"
+        "@types/fs-extra": "^9.0.11",
+        "plist": "^3.0.5",
+        "minimist": "^1.2.6",
+        "got": "^11.8.5"
     }
 }
