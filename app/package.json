@@ -59,7 +59,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.4",
         "@syuilo/aiscript": "^0.11.1",
-        "electron-dl": "^3.2.1",
+        "electron-dl": "^3.4.0",
         "itunes-nowplaying-mac": "https://github.com/cutls/itunes-nowplaying-mac/releases/download/v0.4.0/itunes-nowplaying-mac-0.4.0.tgz",
         "jimp": "^0.16.1",
         "jquery": "^3.6.0",
@@ -70,7 +70,7 @@
         "sanitize-html": "^2.4.0",
         "sumchecker": "^3.0.1",
         "sweetalert2": "^11.1.4",
-        "system-font-families": "^0.4.1",
+        "system-font-families": "^0.6.0",
         "textarea-caret": "^3.1.0",
         "uuid": "^8.3.2",
         "vue": "^2.6.14"
