@@ -86,6 +86,8 @@
     "makeNew": "crwdns3210:0crwdne3210:0",
     "blocks": "crwdns3212:0crwdne3212:0",
     "mutes": "crwdns3214:0crwdne3214:0",
+    "notfMute": "crwdns4591:0crwdne4591:0",
+    "zeroSetToInfinity": "crwdns4593:0crwdne4593:0",
     "block": "crwdns3216:0crwdne3216:0",
     "mute": "crwdns3218:0crwdne3218:0",
     "domainBlock": "crwdns3220:0crwdne3220:0",

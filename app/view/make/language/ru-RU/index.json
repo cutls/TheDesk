@@ -86,6 +86,8 @@
     "makeNew": "Сохранить",
     "blocks": "Блоки",
     "mutes": "Mutes",
+    "notfMute": "Mute their notifications too",
+    "zeroSetToInfinity": "Mute duration: 0 min to set Infinity",
     "block": "Заблокировать",
     "mute": "Заглушить",
     "domainBlock": "Заблокировать домен",
