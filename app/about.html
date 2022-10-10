@@ -124,8 +124,9 @@
         }
         $('#hash').html('<a href="https://github.com/cutls/TheDesk/commits/' + about[3] + '" target="_blank">' + about[3].slice(0, 7) + '</a>')
         $(document).on('click', 'a', (e) => {
+            e.preventDefault()
             var url = $(e.target).attr('href')
-            postMessage(['openUrl', url], '*')
+            postMessage(['openUrlMainProcess', url], '*')
             return false
         })
     </script>

@@ -1,3 +1,5 @@
+const { shell } = require('electron')
+
 function system(mainWindow, dir, lang, dirname) {
 	const electron = require('electron')
 	const app = electron.app
@@ -144,6 +146,9 @@ function system(mainWindow, dir, lang, dirname) {
 	ipc.on('about', (e, args) => {
 		about()
 	})
+	ipc.on('openUrl', function (event, arg) {
+		shell.openExternal(arg)
+	})
 	function about() {
 		var ver = app.getVersion()
 		var window = new BrowserWindow({
@@ -151,7 +156,9 @@ function system(mainWindow, dir, lang, dirname) {
 				webviewTag: false,
 				nodeIntegration: false,
 				contextIsolation: true,
-				preload: join(dirname, 'js', 'platform', 'preload.js'),
+				spellcheck: false,
+				sandbox: false,
+				preload: join(__dirname, 'js', 'platform', 'preload.js'),
 			},
 			width: 300,
 			height: 500,
@@ -175,6 +182,7 @@ function system(mainWindow, dir, lang, dirname) {
 				webviewTag: false,
 				nodeIntegration: false,
 				contextIsolation: true,
+				sandbox: false,
 				preload: join(dirname, 'js', 'platform', 'preload.js'),
 			},
 			width: 350,
@@ -321,6 +329,7 @@ function system(mainWindow, dir, lang, dirname) {
 				webviewTag: false,
 				nodeIntegration: false,
 				contextIsolation: true,
+				sandbox: false,
 				preload: join(dirname, 'js', 'platform', 'preload.js'),
 			},
 			width: 414,
