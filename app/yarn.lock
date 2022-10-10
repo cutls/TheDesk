@@ -5058,9 +5058,9 @@ truncate-utf8-bytes@^1.0.0:
   dependencies:
     utf8-byte-length "^1.0.1"
 
-"ttfinfo@git+https://github.com/rBurgett/ttfinfo.git":
+"ttfinfo@https://github.com/rBurgett/ttfinfo.git":
   version "0.2.0"
-  resolved "git+https://github.com/rBurgett/ttfinfo.git#f00e43e2a6d4c8a12a677df20b7804492d50863c"
+  resolved "https://github.com/rBurgett/ttfinfo.git#f00e43e2a6d4c8a12a677df20b7804492d50863c"
 
 tty-browserify@0.0.1:
   version "0.0.1"

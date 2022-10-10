@@ -180,7 +180,6 @@ async function cmd(options) {
                     `../build/TheDesk-${version}-x64.dmg`
                 )
                 if (isTrue(options, 'withArm64')) {
-                    delete config.afterSign
                     await build(Platform.MAC, Arch.arm64, config)
                     fs.renameSync(
                         `../build/TheDesk-${version}.dmg`,
@@ -193,7 +192,7 @@ async function cmd(options) {
                 )
             }
             if (arch === 'arm64') {
-                delete config.afterSign
+                if (isTrue(options, 'unnotarize')) delete config.afterSign
                 await build(Platform.MAC, Arch.arm64, config)
                 fs.renameSync(
                     `../build/TheDesk-${version}.dmg`,
