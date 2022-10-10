@@ -41,6 +41,9 @@ const config = {
         target: ['zip', 'appImage', 'snap', 'deb'],
         category: 'Network',
     },
+    deb: {
+        depends: ['gconf2', 'gconf-service', 'libnotify4', 'libappindicator1', 'libxtst6', 'libnss3']
+    },
     mac: {
         hardenedRuntime: true,
         gatekeeperAssess: false,
@@ -169,7 +172,7 @@ async function cmd(options) {
             }
         }
         if (platform === 'darwin' && !isTrue(options, 'skipMacOS')) {
-            if(isTrue(options, 'unnotarize')) delete config.afterSign
+            if (isTrue(options, 'unnotarize')) delete config.afterSign
             if (arch === 'x64') {
                 await build(Platform.MAC, Arch.x64, config)
                 fs.renameSync(
@@ -196,7 +199,7 @@ async function cmd(options) {
                     `../build/TheDesk-${version}.dmg`,
                     `../build/TheDesk-${version}-arm64.dmg`
                 )
-                if(isTrue(options, 'skipX64')) await build(Platform.MAC, Arch.x64, config)
+                if (isTrue(options, 'skipX64')) await build(Platform.MAC, Arch.x64, config)
             }
 
         }
@@ -251,4 +254,4 @@ TheDesk Builder command tool
  * @param {boolean} [options.withArm64] - [Windows only(beta)] arm64 build on x64 system(if your machine is arm64, it will be built if this arg is not passed, and not build store build for arm64)
  * @return {void}
  */
- module.exports = cmd
+module.exports = cmd
