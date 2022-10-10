@@ -1,6 +1,6 @@
 //ユーザーデータ表示
 localStorage.removeItem('history')
-    //コード受信
+//コード受信
 if (location.search) {
     var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
     var mode = m[1]
@@ -45,30 +45,30 @@ async function udgEx(user, acct_id) {
         onBeforeOpen: () => {
             Swal.showLoading()
         },
-        onClose: () => {},
-    }).then((result) => {})
+        onClose: () => { },
+    }).then((result) => { })
     fetch(start, {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json',
-                Authorization: 'Bearer ' + at,
-            },
-        })
-        .then(function(response) {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            Authorization: 'Bearer ' + at,
+        },
+    })
+        .then(function (response) {
             if (!response.ok) {
                 Swal.close()
-                response.text().then(function(text) {
+                response.text().then(function (text) {
                     setLog(response.url, response.status, text)
                 })
             }
             return response.json()
         })
-        .catch(function(error) {
+        .catch(function (error) {
             todo(error)
             setLog(start, 'JSON', error)
             console.error(error)
         })
-        .then(function(json) {
+        .then(function (json) {
             if (json.accounts[0]) {
                 var id = json.accounts[0].id
                 udg(id, acct_id, true)
@@ -80,7 +80,7 @@ async function udgEx(user, acct_id) {
     return true
 }
 
-function udg(user, acct_id, isSwal) {
+async function udg(user, acct_id, isSwal) {
     reset()
     if (!user) {
         user = localStorage.getItem('user-id_' + acct_id)
@@ -91,203 +91,203 @@ function udg(user, acct_id, isSwal) {
         misskeyUdg(user, acct_id)
         return
     }
-    var at = localStorage.getItem('acct_' + acct_id + '_at')
-    var start = 'https://' + domain + '/api/v1/accounts/' + user
-    fetch(start, {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json',
-                Authorization: 'Bearer ' + at,
-            },
+    const at = localStorage.getItem('acct_' + acct_id + '_at')
+    const start = 'https://' + domain + '/api/v1/accounts/' + user
+    const response = await fetch(start, {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            Authorization: 'Bearer ' + at,
+        },
+    })
+    if (isSwal) Swal.close()
+    if (!response.ok) {
+        response.text().then(function (text) {
+            setLog(response.url, response.status, text)
         })
-        .then(function(response) {
-            if (isSwal) Swal.close()
-            if (!response.ok) {
-                response.text().then(function(text) {
-                    setLog(response.url, response.status, text)
-                })
-            }
-            return response.json()
+    }
+    const json = await response.json()
+    //一つ前のユーザーデータ
+    if (!localStorage.getItem('history')) {
+        $('#his-history-btn').prop('disabled', true)
+    } else {
+        $('#his-history-btn').prop('disabled', false)
+        $('#his-data').attr('history', localStorage.getItem('history'))
+    }
+    //moved設定時
+    if (json.moved) {
+        M.toast({
+            html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' + json.moved.id + "','" + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>',
+            displayLength: 4000,
         })
-        .catch(function(error) {
-            todo(error)
-            setLog(start, 'JSON', error)
-            console.error(error)
+    }
+    if (json.limited) {
+        const limitedCheck = await Swal.fire({
+            title: lang.lang_showontl_limited_title,
+            text: lang.lang_showontl_limited,
+            icon: 'info',
+            showCancelButton: true
         })
-        .then(function(json) {
-            //一つ前のユーザーデータ
-            if (!localStorage.getItem('history')) {
-                $('#his-history-btn').prop('disabled', true)
-            } else {
-                $('#his-history-btn').prop('disabled', false)
-                $('#his-data').attr('history', localStorage.getItem('history'))
-            }
-            //moved設定時
-            if (json.moved) {
-                M.toast({
-                    html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' + json.moved.id + "','" + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>',
-                    displayLength: 4000,
-                })
-            }
-            $('#his-data').modal('open')
-            $('#his-data').attr('user-id', user)
-            $('#his-data').attr('use-acct', acct_id)
-            if (json.username != json.acct) {
-                //Remote
-                $('#his-data').attr('remote', 'true')
-                var fullname = json.acct
-            } else {
-                $('#his-data').attr('remote', 'false')
-                var fullname = json.acct + '@' + domain
-            }
-            utlShow(json.id, '', acct_id)
-            flw(json.id, '', acct_id)
-            fer(json.id, '', acct_id)
-            var dis_name = escapeHTML(json.display_name)
-            dis_name = twemoji.parse(dis_name)
+        if (!limitedCheck.isConfirmed) return false
+    }
+    $('#his-data').modal('open')
+    $('#his-data').attr('user-id', user)
+    $('#his-data').attr('use-acct', acct_id)
+    if (json.username != json.acct) {
+        //Remote
+        $('#his-data').attr('remote', 'true')
+        var fullname = json.acct
+    } else {
+        $('#his-data').attr('remote', 'false')
+        var fullname = json.acct + '@' + domain
+    }
+    utlShow(json.id, '', acct_id)
+    flw(json.id, '', acct_id)
+    fer(json.id, '', acct_id)
+    var dis_name = escapeHTML(json.display_name)
+    dis_name = twemoji.parse(dis_name)
 
-            var note = json.note
-            if (json.emojis) {
-                var actemojick = json.emojis[0]
-            } else {
-                var actemojick = false
-            }
-            //絵文字があれば
-            if (actemojick) {
-                Object.keys(json.emojis).forEach(function(key5) {
-                    var emoji = json.emojis[key5]
-                    var shortcode = emoji.shortcode
-                    var emoji_url = '<img src="' + emoji.url + '" class="emoji-img" data-emoji="' + shortcode + '" draggable="false">'
-                    var regExp = new RegExp(':' + shortcode + ':', 'g')
-                    dis_name = dis_name.replace(regExp, emoji_url)
-                    note = note.replace(regExp, emoji_url)
-                })
-            }
-            //noteの解析
-            //var tags =  '<a onclick="tl(\'tag\',\'$1\',' + acct_id +',\'add\')" class="pointer parsed">#$1</a>';
-            //var mens =  '<a onclick="udgEx(\'$1\',' + acct_id +')" class="pointer parsed">@$1</a>';
-            //note=note.replace(/#(\S+)/gi, tags)
-            //note=note.replace(/\s@([a-zA-Z_0-9@.-]+)/gi, mens)
-            $('#his-name').html(dis_name)
-            $('#his-acct').text(json.acct)
-            $('#his-acct').attr('fullname', fullname)
-            $('#his-prof').attr('src', json.avatar)
-            $('#util-add').removeClass('hide')
-            const title = $('.column-first').html()
-            $('#my-data-nav .anc-link').removeClass('active-back')
-            $('.column-first').addClass('active-back')
-            $('#his-data-title').html(title)
-            $('#his-data').css('background-image', 'url(' + json.header + ')')
-            $('#his-sta').text(json.statuses_count)
-            $('#his-follow').text(json.following_count)
-            var flerc = json.followers_count
-            if (flerc < 0) {
-                flerc = '-'
-            }
-            $('#his-follower').text(flerc)
-            $('#his-since').text(crat(json.created_at))
-            $('#his-openin').attr('data-href', json.url)
-            if (json.fields) {
-                var table = ''
-                if (json.fields.length > 0) {
-                    $('#his-des').css('max-height', '196px')
-                    table = '<table id="his-field">'
-                    for (var i = 0; i < json.fields.length; i++) {
-                        var fname = json.fields[i].name
-                        var fval = json.fields[i].value
-                        if (json.fields[i].verified_at) {
-                            var when = lang.lang_showontl_verified + ':' + crat(json.fields[i].verified_at)
-                            var color = 'rgba(121,189,154,.25);'
-                        } else {
-                            var when = ''
-                            var color = 'inherit'
-                        }
-                        table =
-                            table +
-                            '<tr><td class="his-field-title">' +
-                            escapeHTML(fname) +
-                            '</td><td class="his-field-content" title="' +
-                            when +
-                            '" style="background-color:' +
-                            color +
-                            '">' +
-                            fval +
-                            '</td></tr>'
-                    }
-                    table = table + '</table>'
-                    $('#his-des').html(twemoji.parse(note))
-                } else {
-                    $('#his-des').css('max-height', '400px')
-                }
-                $('#his-table').html(twemoji.parse(table))
-            } else {
-                $('#his-des').css('max-height', '400px')
-            }
-            $('#his-des').html(twemoji.parse(note))
-            if (json.bot) {
-                $('#his-bot').html(lang.lang_showontl_botacct)
-                $('#his-bot').removeClass('hide')
-            }
-            $('#his-des').attr('data-acct', acct_id)
-            $('#his-data').css('background-size', 'cover')
-            $('#his-float-timeline').css('height', $('#his-data-show').height() + 'px')
-            localStorage.setItem('history', user)
-                //自分の時
-            if (json.acct == localStorage.getItem('user_' + acct_id)) {
-                showFav('', acct_id)
-                showBlo('', acct_id)
-                showMut('', acct_id)
-                showDom('', acct_id)
-                showReq('', acct_id)
-                showFrl('', acct_id)
-                $('#his-name-val').val(json.display_name)
-                if (json.fields.length > 0) {
-                    if (json.fields[0]) {
-                        $('#his-f1-name').val(json.fields[0].name)
-                        $('#his-f1-val').val($.strip_tags(json.fields[0].value))
-                    }
-                    if (json.fields[1]) {
-                        $('#his-f2-name').val(json.fields[1].name)
-                        $('#his-f2-val').val($.strip_tags(json.fields[1].value))
-                    }
-                    if (json.fields[2]) {
-                        $('#his-f3-name').val(json.fields[2].name)
-                        $('#his-f3-val').val($.strip_tags(json.fields[2].value))
-                    }
-                    if (json.fields[3]) {
-                        $('#his-f4-name').val(json.fields[3].name)
-                        $('#his-f4-val').val($.strip_tags(json.fields[3].value))
-                    }
-                }
-                var des = json.note
-                des = des.replace(/<br \/>/g, '\n')
-                des = $.strip_tags(des)
-                $('#his-des-val').val(des)
-                $('#his-follow-btn').hide()
-                $('#his-block-btn').hide()
-                $('#his-mute-btn').hide()
-                $('#his-notf-btn').hide()
-                $('#his-domain-btn').hide()
-                $('#his-emp-btn').hide()
-                $('.only-my-data').show()
-                $('.only-his-data').hide()
-                if (localStorage.getItem('main') == acct_id) {
-                    $('#his-main-acct').hide()
-                }
-            } else {
-                relations(user, acct_id)
-                $('.only-my-data').hide()
-                $('.only-his-data').show()
-            }
-            todc()
-            if (json.locked) {
-                $('#his-data').addClass('locked')
-            } else {
-                $('#his-data').removeClass('locked')
-            }
-            //外部データ取得(死かもしれないので)
-            udAdd(acct_id, user, json.url)
+    var note = json.note
+    if (json.emojis) {
+        var actemojick = json.emojis[0]
+    } else {
+        var actemojick = false
+    }
+    //絵文字があれば
+    if (actemojick) {
+        Object.keys(json.emojis).forEach(function (key5) {
+            var emoji = json.emojis[key5]
+            var shortcode = emoji.shortcode
+            var emoji_url = '<img src="' + emoji.url + '" class="emoji-img" data-emoji="' + shortcode + '" draggable="false">'
+            var regExp = new RegExp(':' + shortcode + ':', 'g')
+            dis_name = dis_name.replace(regExp, emoji_url)
+            note = note.replace(regExp, emoji_url)
         })
+    }
+    //noteの解析
+    //var tags =  '<a onclick="tl(\'tag\',\'$1\',' + acct_id +',\'add\')" class="pointer parsed">#$1</a>';
+    //var mens =  '<a onclick="udgEx(\'$1\',' + acct_id +')" class="pointer parsed">@$1</a>';
+    //note=note.replace(/#(\S+)/gi, tags)
+    //note=note.replace(/\s@([a-zA-Z_0-9@.-]+)/gi, mens)
+    $('#his-name').html(dis_name)
+    $('#his-acct').text(json.acct)
+    $('#his-acct').attr('fullname', fullname)
+    $('#his-prof').attr('src', json.avatar)
+    $('#util-add').removeClass('hide')
+    const title = $('.column-first').html()
+    $('#my-data-nav .anc-link').removeClass('active-back')
+    $('.column-first').addClass('active-back')
+    $('#his-data-title').html(title)
+    $('#his-data').css('background-image', 'url(' + json.header + ')')
+    $('#his-sta').text(json.statuses_count)
+    $('#his-follow').text(json.following_count)
+    var flerc = json.followers_count
+    if (flerc < 0) {
+        flerc = '-'
+    }
+    $('#his-follower').text(flerc)
+    $('#his-since').text(crat(json.created_at))
+    $('#his-openin').attr('data-href', json.url)
+    if (json.fields) {
+        var table = ''
+        if (json.fields.length > 0) {
+            $('#his-des').css('max-height', '196px')
+            table = '<table id="his-field">'
+            for (var i = 0; i < json.fields.length; i++) {
+                var fname = json.fields[i].name
+                var fval = json.fields[i].value
+                if (json.fields[i].verified_at) {
+                    var when = lang.lang_showontl_verified + ':' + crat(json.fields[i].verified_at)
+                    var color = 'rgba(121,189,154,.25);'
+                } else {
+                    var when = ''
+                    var color = 'inherit'
+                }
+                table =
+                    table +
+                    '<tr><td class="his-field-title">' +
+                    escapeHTML(fname) +
+                    '</td><td class="his-field-content" title="' +
+                    when +
+                    '" style="background-color:' +
+                    color +
+                    '">' +
+                    fval +
+                    '</td></tr>'
+            }
+            table = table + '</table>'
+            $('#his-des').html(twemoji.parse(note))
+        } else {
+            $('#his-des').css('max-height', '400px')
+        }
+        $('#his-table').html(twemoji.parse(table))
+    } else {
+        $('#his-des').css('max-height', '400px')
+    }
+    $('#his-des').html(twemoji.parse(note))
+    if (json.bot) {
+        $('#his-bot').html(lang.lang_showontl_botacct)
+        $('#his-bot').removeClass('hide')
+    }
+    $('#his-des').attr('data-acct', acct_id)
+    $('#his-data').css('background-size', 'cover')
+    $('#his-float-timeline').css('height', $('#his-data-show').height() + 'px')
+    localStorage.setItem('history', user)
+    //自分の時
+    if (json.acct == localStorage.getItem('user_' + acct_id)) {
+        showFav('', acct_id)
+        showBlo('', acct_id)
+        showMut('', acct_id)
+        showDom('', acct_id)
+        showReq('', acct_id)
+        showFrl('', acct_id)
+        $('#his-name-val').val(json.display_name)
+        if (json.fields.length > 0) {
+            if (json.fields[0]) {
+                $('#his-f1-name').val(json.fields[0].name)
+                $('#his-f1-val').val($.strip_tags(json.fields[0].value))
+            }
+            if (json.fields[1]) {
+                $('#his-f2-name').val(json.fields[1].name)
+                $('#his-f2-val').val($.strip_tags(json.fields[1].value))
+            }
+            if (json.fields[2]) {
+                $('#his-f3-name').val(json.fields[2].name)
+                $('#his-f3-val').val($.strip_tags(json.fields[2].value))
+            }
+            if (json.fields[3]) {
+                $('#his-f4-name').val(json.fields[3].name)
+                $('#his-f4-val').val($.strip_tags(json.fields[3].value))
+            }
+        }
+        var des = json.note
+        des = des.replace(/<br \/>/g, '\n')
+        des = $.strip_tags(des)
+        $('#his-des-val').val(des)
+        $('#his-follow-btn').hide()
+        $('#his-block-btn').hide()
+        $('#his-mute-btn').hide()
+        $('#his-notf-btn').hide()
+        $('#his-domain-btn').hide()
+        $('#his-emp-btn').hide()
+        $('.only-my-data').show()
+        $('.only-his-data').hide()
+        if (localStorage.getItem('main') == acct_id) {
+            $('#his-main-acct').hide()
+        }
+    } else {
+        relations(user, acct_id)
+        $('.only-my-data').hide()
+        $('.only-his-data').show()
+    }
+    todc()
+    if (json.locked) {
+        $('#his-data').addClass('locked')
+    } else {
+        $('#his-data').removeClass('locked')
+    }
+    //外部データ取得(死かもしれないので)
+    udAdd(acct_id, user, json.url)
 }
 
 function misskeyUdg(user, acct_id) {
@@ -304,29 +304,29 @@ function misskeyUdg(user, acct_id) {
     var at = localStorage.getItem('acct_' + acct_id + '_at')
     var start = 'https://' + domain + '/api/users/show'
     fetch(start, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                i: at,
-                userId: user,
-            }),
-        })
-        .then(function(response) {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+            i: at,
+            userId: user,
+        }),
+    })
+        .then(function (response) {
             if (!response.ok) {
-                response.text().then(function(text) {
+                response.text().then(function (text) {
                     setLog(response.url, response.status, text)
                 })
             }
             return response.json()
         })
-        .catch(function(error) {
+        .catch(function (error) {
             todo(error)
             setLog(start, 'JSON', error)
             console.error(error)
         })
-        .then(function(json) {
+        .then(function (json) {
             //一つ前のユーザーデータ
             if (!localStorage.getItem('history')) {
                 $('#his-history-btn').prop('disabled', true)
@@ -370,7 +370,7 @@ function misskeyUdg(user, acct_id) {
             }
             $('#his-data').css('background-size', 'cover')
             localStorage.setItem('history', user)
-                //自分の時
+            //自分の時
             if (json.username == localStorage.getItem('user_' + acct_id) && !json.host) {
                 //showFav('', acct_id);
                 //showMut('', acct_id);
@@ -438,26 +438,26 @@ function relations(user, acct_id) {
     var at = localStorage.getItem('acct_' + acct_id + '_at')
     var start = 'https://' + domain + '/api/v1/accounts/relationships?id=' + user
     fetch(start, {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json',
-                Authorization: 'Bearer ' + at,
-            },
-        })
-        .then(function(response) {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+            Authorization: 'Bearer ' + at,
+        },
+    })
+        .then(function (response) {
             if (!response.ok) {
-                response.text().then(function(text) {
+                response.text().then(function (text) {
                     setLog(response.url, response.status, text)
                 })
             }
             return response.json()
         })
-        .catch(function(error) {
+        .catch(function (error) {
             todo(error)
             setLog(start, 'JSON', error)
             console.error(error)
         })
-        .then(function(json) {
+        .then(function (json) {
             var json = json[0]
             if (json.requested) {
                 //フォロリク中
@@ -597,7 +597,7 @@ function reset() {
     $('#his-data').removeClass('locked')
     $('#his-data').removeClass('requesting')
 }
-$('#my-data-nav .anc-link').on('click', function() {
+$('#my-data-nav .anc-link').on('click', function () {
     var target = $(this).attr('go')
     if (target) {
         let title = $(this).html()

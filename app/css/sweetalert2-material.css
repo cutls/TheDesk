@@ -721,9 +721,11 @@
     text-rendering: auto;
     line-height: 1;
     font-weight: 900;
-    color: #000;
+    color: var(--text);
     position: relative;
-    font-size: 1.5em
+    font-size: 1.5em;
+    top: 1.7rem;
+    left: 1rem;
 }
 
 .swal2-icon {

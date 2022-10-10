@@ -837,12 +837,12 @@ function testExecTrg() {
 	testExec(inputPlugin)
 }
 async function deletePlugin() {
-	const alert = await Swal.fire({
+	const delIsIt = await Swal.fire({
 		title: 'delete',
 		icon: 'warning',
 		showCancelButton: true,
 	})
-	if (!alert) return false
+	if (!delIsIt.isConfirmed) return false
 	editor.setValue('', -1)
 	var pgns = localStorage.getItem('plugins')
 	var args = JSON.parse(pgns ? pgns : '[]')

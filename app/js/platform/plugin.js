@@ -48,13 +48,13 @@ function initPlugin() {
         })
     })
     asCommon['TheDesk:confirm'] = asValue.FN_NATIVE(async (z) => {
-        const alert = await Swal.fire({
+        const alertSwal = await Swal.fire({
             title: z[0].value,
             text: z[1].value,
             icon: z[2] ? z[2].value : 'info',
             showCancelButton: true
         })
-        return asUtil.jsToVal(!!(alert.value && alert.value === true))
+        return asUtil.jsToVal(!!(alertSwal.value && alertSwal.value === true))
     })
     asCommon['TheDesk:css'] = asValue.FN_NATIVE((z) => {
         $(escapeHTML(z[0].value)).css(escapeHTML(z[1].value), escapeHTML(z[2].value))
@@ -227,13 +227,13 @@ async function testExec(exe) {
         })
     })
     asCommon['TheDesk:confirm'] = asValue.FN_NATIVE(async (z) => {
-        const alert = await Swal.fire({
+        const alertSwal = await Swal.fire({
             title: z[0].value,
             text: z[1].value,
             icon: z[2] ? z[2].value : 'info',
             showCancelButton: true
         })
-        return asUtil.jsToVal(!!(alert.value && alert.value === true))
+        return asUtil.jsToVal(!!(alertSwal.value && alertSwal.value === true))
     })
     asCommon['TheDesk:css'] = asValue.FN_NATIVE((z) => {
         $(escapeHTML(z[0].value)).css(escapeHTML(z[1].value), escapeHTML(z[2].value))
