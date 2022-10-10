@@ -174,11 +174,13 @@ async function cmd(options) {
         if (platform === 'darwin' && !isTrue(options, 'skipMacOS')) {
             if (isTrue(options, 'unnotarize')) delete config.afterSign
             if (arch === 'x64') {
-                await build(Platform.MAC, Arch.x64, config)
-                fs.renameSync(
-                    `../build/TheDesk-${version}.dmg`,
-                    `../build/TheDesk-${version}-x64.dmg`
-                )
+                if (!isTrue(options, 'skipX64')) {
+                    await build(Platform.MAC, Arch.x64, config)
+                    fs.renameSync(
+                        `../build/TheDesk-${version}.dmg`,
+                        `../build/TheDesk-${version}-x64.dmg`
+                    )
+                }
                 if (isTrue(options, 'withArm64')) {
                     await build(Platform.MAC, Arch.arm64, config)
                     fs.renameSync(
@@ -198,7 +200,7 @@ async function cmd(options) {
                     `../build/TheDesk-${version}.dmg`,
                     `../build/TheDesk-${version}-arm64.dmg`
                 )
-                if (isTrue(options, 'skipX64')) await build(Platform.MAC, Arch.x64, config)
+                if (!isTrue(options, 'skipX64')) await build(Platform.MAC, Arch.x64, config)
             }
 
         }

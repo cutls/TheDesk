@@ -28,7 +28,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: cd app && yarn
-    - run: cd app && yarn build:all
+    - run: cd app && yarn build --skipX64 --withArm64
     - name: Deploy to S3
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
