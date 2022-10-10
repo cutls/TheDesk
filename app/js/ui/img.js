@@ -78,7 +78,7 @@ function imgCont(type) {
 function imageXhr(id, key, murl) {
 	let time = 0
 	var startTime = new Date()
-	const timer = setInterval(function() {
+	const timer = setInterval(function () {
 		time = time + 1
 		$('#imgsec').text(time)
 	}, 10)
@@ -342,4 +342,14 @@ function copyImgUrl() {
 	var murl = $('#imagemodal').attr('data-original')
 	execCopy(murl)
 	M.toast({ html: lang.lang_img_copyDone, displayLength: 1500 })
+}
+async function copyImgBinary() {
+	var murl = $('#imagemodal').attr('data-original')
+	const blob = await (await fetch(murl)).blob()
+	const reader = new FileReader()
+	reader.onloadend = function () {
+		postMessage(['copyBinary', reader.result], '*')
+		M.toast({ html: lang.lang_imgBin_copyDone, displayLength: 1500 })
+	}
+	reader.readAsDataURL(blob)
 }

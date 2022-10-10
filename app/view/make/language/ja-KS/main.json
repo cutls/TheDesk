@@ -126,6 +126,7 @@
     "lang_tl_postmarkers_title": "処理中",
     "lang_tl_postmarkers": "未読マーカー送信してるしちょっと待ってな…",
     "lang_img_DLDone": "ダウンロード先:",
+    "lang_imgBin_copyDone": "画像データをコピーしたで。",
     "lang_img_copyDone": "画像のURLをコピーしたで",
     "lang_layout_gotop": "一番上へ。アイコンが赤のときはストリーミングに接続できてへんしF5で再読込やってみて。",
     "lang_layout_thisacct": "このアカウントの{{notf}}",

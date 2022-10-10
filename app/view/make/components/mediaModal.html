@@ -14,30 +14,38 @@
             <span id="imgprog"></span>% <br />
             <span id="imgsec"></span>ms <br /><span id="imgbyte"></span>KB
         </div>
-        <a class="waves-effect white-text" onclick="zoom(2)">
-            <i class="material-icons">zoom_in</i>
-        </a>
-        <a class="waves-effect white-text" onclick="zoom(0.5)">
-            <i class="material-icons">zoom_out</i>
-        </a>
-        <a class="waves-effect white-text" onclick="rotate(false)">
-            <i class="material-icons">rotate_90_degrees_ccw</i>
-        </a>
-        <button class="btn waves-effect blue" onclick="copyImgUrl()" title="@@copyURL@@">
+        <span style="padding: 0.6rem" class="btnsgroup">
+            <a class="waves-effect white-text" onclick="zoom(2)">
+                <i class="material-icons">zoom_in</i>
+            </a>
+            <a class="waves-effect white-text" onclick="zoom(0.5)">
+                <i class="material-icons">zoom_out</i>
+            </a>
+            <a class="waves-effect white-text" onclick="rotate(false)">
+                <i class="material-icons">rotate_90_degrees_ccw</i>
+            </a>
+        </span>
+        <span style="padding: 0.6rem" class="btnsgroup">
+            <span style="position: relative; top: -2px;">Copy:</span>
+            <a class="waves-effect white-text" onclick="copyImgBinary()" title="@@copyBinary@@">
+                <i class="material-icons">image</i>
+            </a>
+            <a class="waves-effect white-text" onclick="copyImgUrl()" title="@@copyURL@@">
                 <i class="material-icons">link</i>
-            </button>
+            </a>
+        </span>
         <button class="btn waves-effect purple" onclick="dlImg()">
-                <i class="material-icons">file_download</i>
-            </button>
+            <i class="material-icons">file_download</i>
+        </button>
         <button class="btn waves-effect brown" onclick="detFromImg()" title="@@thisToot@@">
-                <i class="material-icons">pageview</i>
-            </button>
+            <i class="material-icons">pageview</i>
+        </button>
         <button class="btn waves-effect orange" onclick="imgCont('prev')" id="image-prev">
-                <i class="material-icons">keyboard_arrow_left</i>
-            </button>
+            <i class="material-icons">keyboard_arrow_left</i>
+        </button>
         <button class="btn waves-effect orange" onclick="imgCont('next')" id="image-next">
-                <i class="material-icons">keyboard_arrow_right</i>
-            </button>
+            <i class="material-icons">keyboard_arrow_right</i>
+        </button>
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">
             <i class="material-icons">close</i>
         </a>

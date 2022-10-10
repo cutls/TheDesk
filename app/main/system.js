@@ -7,6 +7,7 @@ function system(mainWindow, dir, lang, dirname) {
 	var JSON5 = require('json5')
 	var ipc = electron.ipcMain
 	const clipboard = electron.clipboard
+	const nativeImage = electron.nativeImage
 	var tmp_img = join(app.getPath('userData'), 'tmp.png')
 	var ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
 	var wv_path = join(app.getPath('userData'), 'webview')
@@ -254,6 +255,10 @@ function system(mainWindow, dir, lang, dirname) {
 	//コピー
 	ipc.on('copy', (e, arg) => {
 		clipboard.writeText(arg)
+	})
+	ipc.on('copyBinary', (e, arg) => {
+		const ni = nativeImage.createFromDataURL(arg)
+		clipboard.writeImage(ni)
 	})
 	//ログ
 	ipc.on('log', (e, arg) => {

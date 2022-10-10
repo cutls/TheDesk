@@ -79,6 +79,8 @@ onmessage = function(e) {
 		ipc.send('sendMarkersComplete', null)
 	} else if (e.data[0] == 'copy') {
 		ipc.send('copy', e.data[1])
+	} else if (e.data[0] == 'copyBinary') {
+		ipc.send('copyBinary', e.data[1])
 	} else if (e.data[0] == 'log') {
 		ipc.send('log', e.data[1])
 	} else if (e.data[0] == 'twitterLogin') {
