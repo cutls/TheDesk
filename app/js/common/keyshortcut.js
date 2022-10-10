@@ -94,7 +94,7 @@ $(function($) {
 			if (e.keyCode === 88) {
 				if (!$('#post-box').hasClass('appear')) {
 					show()
-					$('textarea').focus()
+					document.getElementById('textarea').focus()
 				} else {
 					hide()
 				}
@@ -105,7 +105,8 @@ $(function($) {
 				if (!$('#post-box').hasClass('appear')) {
 					show()
 				}
-				$('textarea').focus()
+				document.getElementById('textarea').focus()
+				
 				return false
 			}
 			//Ctrl+E:全ての通知未読を既読にする
