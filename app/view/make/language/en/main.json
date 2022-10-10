@@ -169,6 +169,8 @@
     "lang_hisdata_taketime": "It will take 30s ~ several minutes",
     "lang_hisdata_notonmisskey": "Misskey is unable to request.",
     "lang_hisdata_key": "This user is proofed by {{set}}",
+    "lang_showontl_limited_title": "Limited account",
+    "lang_showontl_limited": "This is limited account by moderator, show anyway?",
     "lang_showontl_movetxt": "This account was moved",
     "lang_showontl_movebtn": "Continue on the new account",
     "lang_showontl_botacct": "[bot]",

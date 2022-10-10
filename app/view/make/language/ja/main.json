@@ -170,6 +170,8 @@
     "lang_hisdata_taketime": "30秒から数分かかります",
     "lang_hisdata_notonmisskey": "このシステムはMisskeyにはありません。",
     "lang_hisdata_key": "このユーザーの信頼性は{{set}}によって示されています",
+    "lang_showontl_limited_title": "制限されたアカウント",
+    "lang_showontl_limited": "管理者によりこのアカウントの表示は制限されています。それでも表示しますか？",
     "lang_showontl_movetxt": "このアカウントは移行しています",
     "lang_showontl_movebtn": "移行先を見る",
     "lang_showontl_botacct": "botアカウント",

@@ -169,6 +169,8 @@
     "lang_hisdata_notonmisskey": "このシステムはMisskeyにはあらへん。",
     "lang_hisdata_key": "こいつは{{set}}が信じれるって言うてるし信じたってな",
     "lang_showontl_movetxt": "このアカウントはお引っ越ししたで",
+    "lang_showontl_limited_title": "制限されたアカウント",
+    "lang_showontl_limited": "管理者がこのアカウントはあかんって言うたけど、あんたはどうする？それでも見るんやったらOK押してくれや",
     "lang_showontl_movebtn": "移行先を見る",
     "lang_showontl_botacct": "botアカウント",
     "lang_showontl_followed": "フォローしてもろてる",
