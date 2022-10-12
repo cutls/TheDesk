@@ -79,7 +79,7 @@
         "browserify": "^17.0.0",
         "chokidar": "^3.5.2",
         "dotenv": "^10.0.0",
-        "electron": "^19.0.11",
+        "electron": "^21.1.1",
         "electron-builder": "^23.2.0",
         "electron-notarize": "^1.2.1",
         "electron-rebuild": "^3.2.9",
