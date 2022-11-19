@@ -49,6 +49,7 @@ async function details(id, acct_id, tlid, mode) {
 		const json = await response.json()
 		console.log(['Toot data:', json])
 		if (!$('#timeline_' + tlid + ' #pub_' + id).length) {
+			var mute = getFilterTypeByAcct(acct_id, 'thread')
 			var html = parse([json], '', acct_id, '', '', mute)
 			$('#toot-this').html(html)
 			jQuery('time.timeago').timeago()
@@ -126,7 +127,7 @@ async function details(id, acct_id, tlid, mode) {
 		if (!$('#activator').hasClass('active')) {
 			$('#det-col').collapsible('open', 4)
 		}
-	} catch (e) {
+	} catch (error) {
 		todo(error)
 		setLog(start, 'JSON', error)
 		console.error(error)
