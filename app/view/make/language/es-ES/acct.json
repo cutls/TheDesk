@@ -2,14 +2,14 @@
     "list": "Lista de cuentas",
     "back": "Atrás",
     "add": "Agregar una cuenta",
-    "addAcct": "Fill the instance domain (like mastodon.social)",
+    "addAcct": "Rellena el dominio de la instancia (como mastodon.social)",
     "codesetupwarn": "Desmarcarlo para omitir código de pegado. (iniciar sesión en Mastodon en Windows o macOS) (Recomendado: pcheck)",
     "codesetup": "Configuración de código",
     "mainacct": "Cuenta principal",
     "selacct": "Seleccionar una cuenta",
     "codepastewarn": "Pegar el código y cerrar el navegador web.",
     "codepaste": "Código",
-    "domain": "Dominio",
+    "domain": "Instancia",
     "connect": "Servidores federados",
     "toots": "Toots",
     "users": "Usuarios",
@@ -21,5 +21,5 @@
     "misskeylogin": "Leer <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> para iniciar sesión en Misskey.",
     "nodata": "Sin datos",
     "accessTokenSetup": "Usar el token de acceso para iniciar sesión (haga clic después de completar no el código si no el token de acceso en el casilla: avanzado)",
-    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
+    "haveExported": "Una vez exportado el archivo de TheDesk haz clic aquí para saltar la página de configuración"
 }
