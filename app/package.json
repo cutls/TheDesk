@@ -73,7 +73,7 @@
         "system-font-families": "^0.6.0",
         "textarea-caret": "^3.1.0",
         "uuid": "^8.3.2",
-        "vue": "^2.6.14"
+        "vue": "^3.2.45"
     },
     "devDependencies": {
         "browserify": "^17.0.0",
