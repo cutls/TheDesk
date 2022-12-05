@@ -41,7 +41,7 @@ function notfColumn(acct_id, tlid, sys) {
 
     httpreq.responseType = 'json'
     httpreq.send(body)
-    httpreq.onreadystatechange = function() {
+    httpreq.onreadystatechange = function () {
         if (httpreq.readyState === 4) {
             var json = httpreq.response
             if (this.status !== 200) {
@@ -56,7 +56,7 @@ function notfColumn(acct_id, tlid, sys) {
                 var templete = ''
                 var lastnotf = localStorage.getItem('lastnotf_' + acct_id)
                 localStorage.setItem('lastnotf_' + acct_id, json[0].id)
-                Object.keys(json).forEach(function(key) {
+                Object.keys(json).forEach(function (key) {
                     var obj = json[key]
                     if (lastnotf == obj.id && key > 0 && native == 'yes') {
                         var ct = key
@@ -71,8 +71,8 @@ function notfColumn(acct_id, tlid, sys) {
                         var n = new Notification('TheDesk:' + domain, options)
                     }
                     var mute = getFilterTypeByAcct(acct_id, 'notif')
-                        //Pleromaにはmoveというtypeがあるらしい。何が互換APIじゃ
-                    if (obj.type != 'follow' && obj.type != 'move' && obj.type != 'follow_request') {
+                    //Pleromaにはmoveというtypeがあるらしい。何が互換APIじゃ
+                    if (obj.type !== 'follow' && obj.type !== 'move' && obj.type !== 'request' && obj.type !== 'admin.sign_up') {
                         if (misskey) {
                             templete = templete + misskeyParse([obj], 'notf', acct_id, tlid, -1, mute)
                         } else {
@@ -90,12 +90,12 @@ function notfColumn(acct_id, tlid, sys) {
                 })
                 templete = templete + '<div class="hide notif-marker" data-maxid="' + max_id + '"></div>'
                 $('#timeline_' + tlid).html(templete)
-                    // $('#landing_' + tlid).hide()
+                // $('#landing_' + tlid).hide()
                 jQuery('time.timeago').timeago()
             }
             $('#notf-box').addClass('fetched')
             todc()
-                //Markers
+            //Markers
             var markers = localStorage.getItem('markers')
             if (markers == 'yes') {
                 markers = true
@@ -155,10 +155,10 @@ function notfCommon(acct_id, tlid, sys, stream) {
         return false
     }
     fetch(start, i)
-        .then(function(response) {
+        .then(function (response) {
             console.log('header to get param:' + response.headers.get('link'))
             if (!response.ok) {
-                response.text().then(function(text) {
+                response.text().then(function (text) {
                     console.log('notf error', 'div[data-notf=' + acct_id + '] .landing')
                     $('div[data-notf=' + acct_id + '] .landing').append(`<div>${response.status}</div><div>${escapeHTML(text)}`)
                     setLog(response.url, response.status, text)
@@ -166,17 +166,17 @@ function notfCommon(acct_id, tlid, sys, stream) {
             }
             return response.json()
         })
-        .catch(function(error) {
+        .catch(function (error) {
             todo(error)
             setLog(start, 'JSON', error)
             console.error(error)
         })
-        .then(function(json) {
+        .then(function (json) {
             if (json[0]) {
                 var templete = ''
                 var lastnotf = localStorage.getItem('lastnotf_' + acct_id)
                 localStorage.setItem('lastnotf_' + acct_id, json[0].id)
-                Object.keys(json).forEach(function(key) {
+                Object.keys(json).forEach(function (key) {
                     var obj = json[key]
                     if (lastnotf == obj.id && key > 0 && native == 'yes') {
                         var ct = key
@@ -191,8 +191,8 @@ function notfCommon(acct_id, tlid, sys, stream) {
                         var n = new Notification('TheDesk:' + domain, options)
                     }
                     var mute = getFilterTypeByAcct(acct_id, 'notif')
-                        //Pleromaにはmoveというtypeがあるらしい。何が互換APIじゃ
-                    if (obj.type != 'follow' && obj.type != 'move') {
+                    //Pleromaにはmoveというtypeがあるらしい。何が互換APIじゃ
+                    if (obj.type !== 'follow' && obj.type !== 'move' && obj.type !== 'request' && obj.type !== 'admin.sign_up') {
                         if (misskey) {
                             templete = templete + misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute)
                         } else {
@@ -207,7 +207,7 @@ function notfCommon(acct_id, tlid, sys, stream) {
                     }
                 })
                 $('div[data-notf=' + acct_id + ']').html(templete)
-                    // $('#landing_' + tlid).hide()
+                // $('#landing_' + tlid).hide()
                 jQuery('time.timeago').timeago()
             }
             $('#notf-box').addClass('fetched')
@@ -228,7 +228,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
 
         var wsid = websocketNotf.length
         websocketNotf[acct_id] = new WebSocket(start)
-        websocketNotf[acct_id].onopen = function(mess) {
+        websocketNotf[acct_id].onopen = function (mess) {
             console.table({
                 acct_id: acct_id,
                 type: 'Connect Streaming API(Notf)',
@@ -237,9 +237,9 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
             })
             $('i[data-notf=' + acct_id + ']').removeClass('red-text')
         }
-        websocketNotf[acct_id].onmessage = function(mess) {
+        websocketNotf[acct_id].onmessage = function (mess) {
             $('#landing_' + tlid).hide()
-                //console.log(["Receive Streaming API(Notf):" + acct_id + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
+            //console.log(["Receive Streaming API(Notf):" + acct_id + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
             var popup = localStorage.getItem('popup')
             if (!popup) {
                 popup = 0
@@ -251,7 +251,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
                 localStorage.setItem('lastnotf_' + acct_id, obj.id)
                 if (!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')) {
                     //markers show中はダメ
-                    if (obj.type != 'follow' && obj.type != 'follow_request') {
+                    if (obj.type !== 'follow' && obj.type !== 'move' && obj.type !== 'request' && obj.type !== 'admin.sign_up') {
                         templete = parse([obj], 'notf', acct_id, 'notf', popup)
                     } else if (obj.type == 'follow_request') {
                         templete = userparse([obj.account], 'request', acct_id, 'notf', -1)
@@ -269,7 +269,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
                 $('[toot-id=' + obj + ']').remove()
             }
         }
-        websocketNotf[acct_id].onerror = function(error) {
+        websocketNotf[acct_id].onerror = function (error) {
             console.error('WebSocket Error ', error)
             errorct++
             console.log(errorct)
@@ -277,7 +277,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
                 notfWS(misskey, acct_id, tlid, domain, at)
             }
         }
-        websocketNotf[acct_id].onclose = function(error) {
+        websocketNotf[acct_id].onclose = function (error) {
             console.error('WebSocket Close ', error)
             errorct++
             console.log(errorct)
@@ -331,7 +331,7 @@ function notfmore(tlid) {
 
         httpreq.responseType = 'json'
         httpreq.send(body)
-        httpreq.onreadystatechange = function() {
+        httpreq.onreadystatechange = function () {
             if (httpreq.readyState === 4) {
                 var json = httpreq.response
                 if (this.status !== 200) {
@@ -343,10 +343,10 @@ function notfmore(tlid) {
                     var templete = ''
                     var lastnotf = localStorage.getItem('lastnotf_' + acct_id)
                     localStorage.setItem('lastnotf_' + acct_id, json[0].id)
-                    Object.keys(json).forEach(function(key) {
+                    Object.keys(json).forEach(function (key) {
                         var obj = json[key]
                         var mute = getFilterTypeByAcct(acct_id, 'notif')
-                        if (obj.type != 'follow') {
+                        if (obj.type !== 'follow' && obj.type !== 'move' && obj.type !== 'request' && obj.type !== 'admin.sign_up') {
                             if (misskey) {
                                 templete = templete + misskeyParse([obj], 'notf', acct_id, 'notf', -1, mute)
                             } else {
@@ -363,7 +363,7 @@ function notfmore(tlid) {
                     moreloading = false
                     templete = templete + '<div class="hide notif-marker" data-maxid="' + max_id + '"></div>'
                     $('#timeline_' + tlid).append(templete)
-                        // $('#landing_' + tlid).hide()
+                    // $('#landing_' + tlid).hide()
                     jQuery('time.timeago').timeago()
                 }
                 $('#notf-box').addClass('fetched')
@@ -381,7 +381,7 @@ function notfToggle(acct, tlid) {
             height: '400px',
         }, {
             duration: 300,
-            complete: function() {
+            complete: function () {
                 $('#notf-box_' + tlid).css('overflow-y', 'scroll')
                 $('#notf-box_' + tlid).removeClass('column-hide')
             },
@@ -392,7 +392,7 @@ function notfToggle(acct, tlid) {
             height: '0',
         }, {
             duration: 300,
-            complete: function() {
+            complete: function () {
                 $('#notf-box_' + tlid).addClass('column-hide')
                 $('#notf-box_' + tlid).css('display', 'none')
             },
@@ -429,7 +429,7 @@ function allNotfRead() {
     var multi = localStorage.getItem('multi')
     if (multi) {
         var obj = JSON.parse(multi)
-        Object.keys(obj).forEach(function(key) {
+        Object.keys(obj).forEach(function (key) {
             notfCanceler(key)
         })
     }
