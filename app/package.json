@@ -72,7 +72,7 @@
         "sweetalert2": "^11.6.15",
         "system-font-families": "^0.6.0",
         "textarea-caret": "^3.1.0",
-        "uuid": "^8.3.2",
+        "uuid": "^9.0.0",
         "vue": "^3.2.45"
     },
     "devDependencies": {
