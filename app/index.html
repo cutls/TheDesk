@@ -1,7 +1,12 @@
 <!doctype html>
 <html>
     <head>
-        <meta http-equiv=”refresh” content=”0;URL=’./view/ja'” />
-        <script>location.href = './view/ja';</script>
+        <script>
+            if (/^ja\b/.test(navigator.language)) {
+                location.href = './view/ja'
+            } else {
+                location.href = './view/en'
+           }
+        </script>
     </head>
 </html>
