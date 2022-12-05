@@ -1217,6 +1217,8 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 					var ftxt = lang.lang_parse_moved
 				} else if (auth == 'request') {
 					var ftxt = lang.lang_parse_request
+				} else if (auth == 'admin.sign_up') {
+					var ftxt = lang.lang_parse_signup
 				}
 				if (popup > 0 || popup == -1 || notf) {
 					var notftext = ftxt + '<br>'
@@ -1585,7 +1587,7 @@ function mastodonBaseStreaming(acct_id) {
 			if (!popup) {
 				popup = 0
 			}
-			if (obj.type != 'follow' && obj.type != 'follow_request') {
+			if (obj.type !== 'follow' && obj.type !== 'move' && obj.type !== 'request' && obj.type !== 'admin.sign_up') {
 				template = parse([obj], 'notf', acct_id, 'notf', popup)
 			} else if (obj.type == 'follow_request') {
 				template = userparse([obj.account], 'request', acct_id, 'notf', -1)

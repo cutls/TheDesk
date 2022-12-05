@@ -178,6 +178,8 @@
     "lang_showontl_domain": "ドメイン",
     "lang_showontl_listwarn": "リストに追加すんにはまずフォローしてな。",
     "lang_showontl_verified": "このサイトはこの人のやつやってわかってる。",
+    "lang_parse_request": "フォローリクエスト",
+    "lang_parse_signup": "新規登録",
     "lang_parse_mentioned": "が返信したで",
     "lang_parse_faved": "がお気に入り登録したで",
     "lang_parse_bted": "がブーストしたで",
