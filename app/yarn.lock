@@ -1872,6 +1872,7 @@ electron-rebuild@^3.2.9:
     semver "^7.3.5"
     tar "^6.0.5"
     yargs "^17.0.1"
+
 electron@^22.0.0:
   version "22.0.0"
   resolved "https://registry.yarnpkg.com/electron/-/electron-22.0.0.tgz#ef84ab9cf23aa3f8c2f42a1e8e000ad7fd941058"
@@ -3019,10 +3020,10 @@ jquery-ui-dist@^1.13.2:
   dependencies:
     jquery ">=1.8.0 <4.0.0"
 
-"jquery@>=1.8.0 <4.0.0", jquery@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
-  integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
+"jquery@>=1.8.0 <4.0.0", jquery@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.1.tgz#fab0408f8b45fc19f956205773b62b292c147a16"
+  integrity sha512-opJeO4nCucVnsjiXOE+/PcCgYw9Gwpvs/a6B1LL/lQhwWwpbVEVYDZ1FokFr8PRc7ghYlrFPuyHuiiDNTQxmcw==
 
 js-sdsl@^4.1.4:
   version "4.1.5"
