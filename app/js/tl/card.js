@@ -17,7 +17,8 @@ function additional(acct_id, tlid) {
 		}
 
 		if (tagThis) {
-			$(this).attr('href', "javascript:tagShow('" + tagThis + "')")
+			$(this).attr('href', "#")
+			$(this).attr('onclick', "tagShow('" + tagThis + "', this)")
 			
 		}
 	})
@@ -334,7 +335,19 @@ function cardCheck(tlid) {
 	}
 }
 
-function mov(id, tlid, type) {
+function mov(id, tlid, type, rand, target) {
+	const dropdownTrigger = `dropdown_${rand}`
+	let elm = document.querySelector(`#timeline_${tlid} #${dropdownTrigger}`)
+	if(tlid == 'notf') {
+		const timeline = $(target).parents('.notf-indv-box').attr('id')
+		elm = document.querySelector(`#${timeline} #${dropdownTrigger}`)
+		console.log(`#${timeline} #${dropdownTrigger}`)
+	}
+	const instance = M.Dropdown.getInstance(elm)
+	if(instance) {
+		if(instance.isOpen) return false
+	}
+	
 	var click = false
 	if (tlid == 'notf') {
 		var tlide = '[data-notf=' + acct_id + ']'
@@ -361,9 +374,9 @@ function mov(id, tlid, type) {
 	}
 	if (mouseover == 'hide') {
 		if (click) {
-			$(tlide + ' [toot-id=' + id + ']').toggleClass('hide-actions')
+			$(tlide + ' [unique-id=' + id + ']').toggleClass('hide-actions')
 		} else {
-			$(tlide + ' [toot-id=' + id + ']').removeClass('hide-actions')
+			$(tlide + ' [unique-id=' + id + ']').removeClass('hide-actions')
 		}
 
 		//$(tlide + " [toot-id=" + id + "] .area-vis").toggleClass("hide")

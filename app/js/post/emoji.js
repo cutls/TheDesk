@@ -19,10 +19,11 @@ function emojiToggle(reaction) {
 		if (width) {
 			width = width.replace('px', '') * 1 + 300
 		} else {
-			width = 600
+			width = reaction ? 300 : 600
 		}
 		$('#post-box').css('width', width + 'px')
 		$('#suggest').html('')
+		$('#draft').html('')
 		if (!localStorage.getItem('emojis_' + acct_id)) {
 			var html = `<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="emojiGet('true');">${lang.lang_emoji_get}</button>`
 			$('#emoji-list').html(html)
@@ -31,10 +32,12 @@ function emojiToggle(reaction) {
 		}
 	} else {
 		$('#poll').addClass('hide')
+		$('#draft').addClass('hide')
 		$('#right-side').hide()
 		$('#right-side').css('width', '300px')
 		$('#emoji').addClass('hide')
 		$('#suggest').html('')
+		$('#draft').html('')
 		$('#left-side').css('width', '100%')
 		var width = localStorage.getItem('postbox-width')
 		if (width) {
@@ -123,8 +126,10 @@ function emojiGet(parse, started) {
 
 					md['if_categorized'] = if_categorized
 					localStorage.setItem('emojis_' + acct_id, JSON.stringify(md))
+					localStorage.setItem(`emojis_raw_${acct_id}`, JSON.stringify(json))
 				} else {
 					localStorage.setItem('emojis_' + acct_id, JSON.stringify(md))
+					localStorage.setItem(`emojis_raw_${acct_id}`, JSON.stringify(json))
 				}
 				localStorage.setItem('emojiseek', 0)
 				if (!started) {
@@ -193,7 +198,15 @@ function emojiGet(parse, started) {
 function emojiList(target, reaction) {
 	$('#now-emoji').text(lang.lang_emoji_custom)
 	var acct_id = $('#post-acct-sel').val()
-	if (reaction && localStorage.getItem('emojiReaction_' + acct_id) != 'true') {
+	if(reaction && $('#media').val() == 'misskey') {
+		var misskeyReact = true
+	} else {
+		var misskeyReact = false
+	}
+	if (
+		misskeyReact &&
+		localStorage.getItem('emojiReaction_' + acct_id) != 'true'
+	) {
 		console.error('Disabled')
 		clear()
 		hide()
@@ -263,9 +276,20 @@ function emojiList(target, reaction) {
 		var emoji = obj[i]
 		if (emoji) {
 			if (reaction) {
-				html =
-					html +
-					`<a onclick="emojiReaction(':${emoji.shortcode}:')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
+				if (emoji.divider) {
+					html = html + '<p style="margin-bottom:0">' + emoji.cat + '</p>'
+				} else {
+					if (emoji.listed) {
+						if(misskeyReact) {
+							var shortcode = `:${emoji.shortcode}:`
+						} else {
+							var shortcode = emoji.shortcode
+						}
+						html =
+							html +
+							`<a onclick="emojiReaction('${shortcode}')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
+					}
+				}
 			} else {
 				if (emoji.divider) {
 					html = html + '<p style="margin-bottom:0">' + emoji.cat + '</p>'
@@ -317,6 +341,8 @@ function emojiInsert(code, del) {
 	}
 	sentence = before + word + after
 	textarea.value = sentence
+	textarea.focus()
+	textarea.setSelectionRange(pos + word.length, pos + word.length)
 }
 //改行挿入
 function brInsert(code) {

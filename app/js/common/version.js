@@ -1,27 +1,18 @@
 //バージョンチェッカー
-function verck(ver, jp) {
-	console.log('%c Welcome😊', 'color: red;font-size:200%;')
-	var date = new Date()
-	var show = false
+async function verck(ver, jp) {
+	if (store) return false
+	console.log('%c Welcome😊 ' + ver, 'color: red;font-size:200%;')
+	$('body').addClass(localStorage.getItem('platform'))
+	const date = new Date()
+	let showVer = false
 	if (localStorage.getItem('ver') != ver && localStorage.getItem('winstore')) {
-		//ちょっと削除とリンク解析の都合上アレ(s)
-		//対象外のアプデ:storageが20の最初まで"Usamin (18.6.5)"
-		if (!localStorage.getItem('usamin_18_6_5_flag')) {
-			localStorage.setItem('usamin_18_6_5_flag', true)
-			var multi = localStorage.getItem('column')
-			var obj = JSON.parse(multi)
-			for (var i = 0; i < obj.length; i++) {
-				localStorage.removeItem('card_' + i)
-			}
-		}
-		//ちょっと削除とリンク解析の都合上アレ(e)
-		show = true
+		showVer = true
 		console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
-		$(document).ready(function() {
-			if (localStorage.getItem('winstore')) {
+		$(document).ready(function () {
+			if (localStorage.getItem('winstore') && !pwa) {
 				$('#releasenote').modal('open')
 			}
-			verp = ver.replace('(', '')
+			let verp = ver.replace('(', '')
 			verp = verp.replace('.', '-')
 			verp = verp.replace('.', '-')
 			verp = verp.replace('[', '-')
@@ -37,129 +28,116 @@ function verck(ver, jp) {
 		})
 	}
 	localStorage.setItem('ver', ver)
-	if (!show) {
-		console.log(show)
-		if (
-			date.getFullYear() * 100 + date.getMonth() + 1 >= localStorage.getItem('showSupportMe') ||
-			!localStorage.getItem('showSupportMe')
-		) {
+	if (!showVer) {
+		console.log(showVer)
+		let nextmonth
+		if (!localStorage.getItem('showSupportMe')) {
 			if (date.getMonth() == 11) {
-				var yrs = date.getFullYear() + 1
-				var nextmonth = yrs * 100 + 1
+				const yrs = date.getFullYear() + 1
+				nextmonth = yrs * 100 + 1
 			} else {
-				var yrs = date.getFullYear() 
-				var nextmonth = yrs * 100 + date.getMonth() + 2
-			}
-			if (lang.language != 'ja') {
-				$('#support-btm-ja').addClass('hide')
-				$('#support-btm-en').removeClass('hide')
+				const yrs = date.getFullYear()
+				nextmonth = yrs * 100 + date.getMonth() + 2
 			}
 			localStorage.setItem('showSupportMe', nextmonth)
-			$('#support-btm').removeClass('hide')
-			$('#support-btm').animate(
-				{
-					bottom: '0'
-				},
-				{
-					duration: 300
+		} else {
+			if (
+				date.getFullYear() * 100 + date.getMonth() + 1 >= localStorage.getItem('showSupportMe')
+			) {
+				if (date.getMonth() == 11) {
+					const yrs = date.getFullYear() + 1
+					nextmonth = yrs * 100 + 1
+				} else {
+					const yrs = date.getFullYear()
+					nextmonth = yrs * 100 + date.getMonth() + 2
 				}
-			)
+				localStorage.setItem('showSupportMe', nextmonth)
+				if (lang.language != 'ja') {
+					$('#support-btm-ja').addClass('hide')
+					$('#support-btm-en').removeClass('hide')
+				}
+				$('#support-btm').removeClass('hide')
+				$('#support-btm').animate(
+					{
+						bottom: '0'
+					},
+					{
+						duration: 300
+					}
+				)
+			}
 		}
+
 	}
-	var platform = localStorage.getItem('platform')
+	const platform = localStorage.getItem('platform')
 	console.log('Your platform:' + platform)
-	if (!localStorage.getItem('winstore')) {
-		$('#start').css('display', 'flex')
-	}
-	if (
-		localStorage.getItem('winstore') == 'brewcask' ||
+	//if (!localStorage.getItem('winstore') && !pwa) {
+	//	$('#start').css('display', 'flex')
+	//}
+	const winstore = localStorage.getItem('winstore') == 'brewcask' ||
 		localStorage.getItem('winstore') == 'snapcraft' ||
 		localStorage.getItem('winstore') == 'winstore'
-	) {
-		var winstore = true
-	} else {
-		var winstore = false
-	}
-	var l = 5
+	const l = 5
 	// 生成する文字列に含める文字セット
-	var c = 'abcdefghijklmnopqrstuvwxyz0123456789'
-	var cl = c.length
-	var r = ''
+	const c = 'abcdefghijklmnopqrstuvwxyz0123456789'
+	const cl = c.length
+	let r = ''
 	for (var i = 0; i < l; i++) {
 		r += c[Math.floor(Math.random() * cl)]
 	}
-	var start = 'https://thedesk.top/ver.json'
-	fetch(start, {
-		method: 'GET'
-	})
-		.then(function(response) {
-			if (!response.ok) {
-				response.text().then(function(text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
+	const start1 = 'https://thedesk.top/ver.json'
+	const response = await fetch(start1, { method: 'GET' })
+	if (!response.ok) {
+		response.text().then(function (text) {
+			setLog(response.url, response.status, text)
 		})
-		.catch(function(error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function(mess) {
-			console.table(mess)
-			if (mess) {
-				//askjp_jp_ua: 2019年10月24日、mstdn.jpによるユーザーエージェントアクセス制限
-				if (jp && mess.jp_ua && !localStorage.getItem('askjp_jp_ua')) {
-					localStorage.setItem('askjp_jp_ua', true)
-					$('#askjp_jp_ua').removeClass('hide')
-				}
-				var platform = localStorage.getItem('platform')
-				if (platform == 'darwin') {
-					var newest = mess.desk_mac
+	}
+	const mess = await response.json()
+
+	console.table(mess)
+	if (mess) {
+		const platform = localStorage.getItem('platform')
+		const newest = platform == 'darwin' ? mess.desk_mac : mess.desk
+		if (newest == ver) {
+			todo(lang.lang_version_usever.replace('{{ver}}', mess.desk))
+			//betaかWinstoreならアプデチェックしない
+		} else if (ver.indexOf('beta') != -1 || winstore) {
+		} else {
+			localStorage.removeItem('instance')
+			if (localStorage.getItem('new-ver-skip')) {
+				if (localStorage.getItem('next-ver') != newest) {
+					postMessage(['sendSinmpleIpc', 'update'], '*')
 				} else {
-					var newest = mess.desk
+					console.warn(lang.lang_version_skipver)
+					todo(lang.lang_version_skipver)
 				}
-				if (newest == ver) {
-					todo(lang.lang_version_usever.replace('{{ver}}', mess.desk))
-					//betaかWinstoreならアプデチェックしない
-				} else if (ver.indexOf('beta') != -1 || winstore) {
-				} else {
-					localStorage.removeItem('instance')
-					if (localStorage.getItem('new-ver-skip')) {
-						if (localStorage.getItem('next-ver') != newest) {
-							postMessage(['sendSinmpleIpc', 'update'], '*')
-						} else {
-							console.warn(lang.lang_version_skipver)
-							todo(lang.lang_version_skipver)
-						}
-					} else {
-						postMessage(['sendSinmpleIpc', 'update'], '*')
-					}
-				}
+			} else {
+				postMessage(['sendSinmpleIpc', 'update'], '*')
 			}
-		})
+		}
+	}
 	if (!localStorage.getItem('last-notice-id')) {
 		localStorage.setItem('last-notice-id', 0)
 	}
-	var start = 'https://thedesk.top/notice?since_id=' + localStorage.getItem('last-notice-id')
+	var start = 'https://thedesk.top/notice/index.php?since_id=' + localStorage.getItem('last-notice-id')
 	fetch(start, {
-		method: 'GET'
+		method: 'GET',
+		cors: true
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(mess) {
+		.then(function (mess) {
 			if (mess.length < 1) {
 				return false
 			} else {
@@ -172,7 +150,7 @@ function verck(ver, jp) {
 					} else {
 						if (obj.type == 'textv2') {
 							if (~obj.languages.indexOf(lang.language)) {
-								var show = true
+								var showVer = true
 								if (obj.toot != '') {
 									var toot =
 										'<button class="btn-flat toast-action" onclick="detEx(\'' +
@@ -183,25 +161,25 @@ function verck(ver, jp) {
 								}
 								if (obj.ver != '') {
 									if (obj.ver == ver) {
-										show = true
+										showVer = true
 									} else {
-										show = false
+										showVer = false
 									}
 								}
 								if (obj.domain != '') {
 									var multi = localStorage.getItem('multi')
 									if (multi) {
-										show = false
+										showVer = false
 										var accts = JSON.parse(multi)
-										Object.keys(accts).forEach(function(key) {
+										Object.keys(accts).forEach(function (key) {
 											var acct = accts[key]
 											if (acct.domain == obj.domain) {
-												show = true
+												showVer = true
 											}
 										})
 									}
 								}
-								if (show) {
+								if (showVer) {
 									M.toast({
 										html:
 											escapeHTML(obj.text) +
@@ -220,18 +198,18 @@ function verck(ver, jp) {
 var infostreaming = false
 function infowebsocket() {
 	infows = new WebSocket('wss://thedesk.top/ws/')
-	infows.onopen = function(mess) {
+	infows.onopen = function (mess) {
 		console.log([tlid, ':Connect Streaming Info:', mess])
 		infostreaming = true
 	}
-	infows.onmessage = function(mess) {
+	infows.onmessage = function (mess) {
 		console.log([tlid, ':Receive Streaming:', JSON.parse(mess.data)])
 		var obj = JSON.parse(mess.data)
 		if (obj.type != 'counter') {
 			if (obj.type == 'textv2') {
 				if (~obj.languages.indexOf(lang.language)) {
 					localStorage.setItem('last-notice-id', obj.id)
-					var show = true
+					var showVer = true
 					if (obj.toot != '') {
 						var toot =
 							'<button class="btn-flat toast-action" onclick="detEx(\'' +
@@ -242,25 +220,25 @@ function infowebsocket() {
 					}
 					if (obj.ver != '') {
 						if (obj.ver == ver) {
-							show = true
+							showVer = true
 						} else {
-							show = false
+							showVer = false
 						}
 					}
 					if (obj.domain != '') {
 						var multi = localStorage.getItem('multi')
 						if (multi) {
-							show = false
+							showVer = false
 							var accts = JSON.parse(multi)
-							Object.keys(accts).forEach(function(key) {
+							Object.keys(accts).forEach(function (key) {
 								var acct = accts[key]
 								if (acct.domain == obj.domain) {
-									show = true
+									showVer = true
 								}
 							})
 						}
 					}
-					if (show) {
+					if (showVer) {
 						console.log(obj.text)
 						console.log(escapeHTML(obj.text))
 						M.toast({
@@ -277,18 +255,18 @@ function infowebsocket() {
 			$('#persons').text(obj.text)
 		}
 	}
-	infows.onerror = function(error) {
+	infows.onerror = function (error) {
 		infostreaming = false
 		console.error('Error closing:info')
 		console.error(error)
 		return false
 	}
-	infows.onclose = function() {
+	infows.onclose = function () {
 		infostreaming = false
 		console.error('Closing:info')
 	}
 }
-setInterval(function() {
+setInterval(function () {
 	if (!infostreaming) {
 		console.log('try to connect to base-streaming')
 		infowebsocket()
@@ -316,60 +294,14 @@ function closeSupport() {
 		},
 		{
 			duration: 300,
-			complete: function() {
+			complete: function () {
 				$('#support-btm').addClass('hide')
 			}
 		}
 	)
 }
-function storeDialog(platform, ver) {
-	if (platform == 'win32') {
-		var mes = lang.lang_version_platform
-	} else if (platform == 'linux') {
-		var mes = lang.lang_version_platform_linux
-	} else if (platform == 'darwin') {
-		var mes = lang.lang_version_platform_mac
-	}
-	Swal.fire({
-		title: 'Select your platform',
-		text: mes,
-		type: 'info',
-		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#3085d6',
-		confirmButtonText: lang.lang_no,
-		cancelButtonText: lang.lang_yesno
-	}).then(result => {
-		//逆にしてる
-		if (!result.value) {
-			localStorage.setItem('winstore', 'winstore')
-		} else {
-			localStorage.setItem('winstore', 'localinstall')
-		}
-		localStorage.setItem('ver', ver)
-		show = true
-		console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
-		$(document).ready(function() {
-			$('#releasenote').modal('open')
-			verp = ver.replace('(', '')
-			verp = verp.replace('.', '-')
-			verp = verp.replace('.', '-')
-			verp = verp.replace('[', '-')
-			verp = verp.replace(']', '')
-			verp = verp.replace(')', '')
-			verp = verp.replace(' ', '_')
-			console.log('%c ' + verp, 'color: red;font-size:200%;')
-			if (lang.language == 'ja') {
-				$('#release-' + verp).show()
-			} else {
-				$('#release-en').show()
-			}
-		})
-	})
-}
 function closeStart() {
 	$('#start').css('display', 'none')
 	var platform = localStorage.getItem('platform')
 	var ver = localStorage.getItem('ver')
-	storeDialog(platform, ver)
 }

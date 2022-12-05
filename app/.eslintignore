@@ -1,0 +1,5 @@
+js/common/blurhash.js
+js/common/hammer.min.js
+js/common/sha256.js
+js/platform/punycode.js
+js/platform/tj-deck.js

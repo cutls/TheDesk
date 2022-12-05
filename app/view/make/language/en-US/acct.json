@@ -2,6 +2,7 @@
     "list": "crwdns3018:0crwdne3018:0",
     "back": "crwdns3020:0crwdne3020:0",
     "add": "crwdns3022:0crwdne3022:0",
+    "addAcct": "crwdns4484:0crwdne4484:0",
     "codesetupwarn": "crwdns3024:0crwdne3024:0",
     "codesetup": "crwdns3026:0crwdne3026:0",
     "mainacct": "crwdns3028:0crwdne3028:0",
@@ -19,5 +20,6 @@
     "thisismisskey": "crwdns3052:0crwdne3052:0",
     "misskeylogin": "crwdns3054:0crwdne3054:0",
     "nodata": "crwdns3056:0crwdne3056:0",
-    "accessTokenSetup": "crwdns4362:0crwdne4362:0"
+    "accessTokenSetup": "crwdns4362:0crwdne4362:0",
+    "haveExported": "crwdns4500:0crwdne4500:0"
 }

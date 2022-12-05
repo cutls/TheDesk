@@ -10,7 +10,7 @@ $(document).ready(function () {
     belowOrigin: false, // Displays dropdown below the button
     alignment: 'left', // Displays dropdown with edge aligned to the left of button
     stopPropagation: false
-  });
+  })
   $('.dropdown-trigger').dropdown({
     inDuration: 300,
     outDuration: 225,
@@ -21,9 +21,9 @@ $(document).ready(function () {
     alignment: 'left', // Displays dropdown with edge aligned to the left of button
     stopPropagation: false // Stops event propagation
   }
-  );
-  $('.collapsible').collapsible();
+  )
+  $('.collapsible').collapsible()
   $('#videomodal').modal({
     onCloseEnd: stopVideo
-  });
-});
+  })
+})

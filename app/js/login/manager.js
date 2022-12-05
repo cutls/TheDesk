@@ -33,8 +33,10 @@ function load() {
 	}
 
 	console.table(obj)
+	var domains = []
 	var templete
-	Object.keys(obj).forEach(function(key) {
+	$('#acct-list').html('')
+	Object.keys(obj).forEach(function (key) {
 		var acct = obj[key]
 		var list = key * 1 + 1
 		if (acct.background != 'def' && acct.text != 'def') {
@@ -47,28 +49,53 @@ function load() {
 		} else {
 			var name = acct.user
 		}
+		domains.push(acct.domain)
 		templete = `
 		<div id="acct_${key}" class="card" ${style}>
 			<div class="card-content ">
 				<span class="lts">${list}.</span><img src="${acct.prof}" width="40" height="40" />
 				<span class="card-title">${name}</span>${escapeHTML(acct.user)}@${acct.domain}
+				<a onclick="login('${acct.domain}')" class="pointer white-text waves-effect" title="${lang.lang_manager_refreshAt}">
+					<i class="material-icons text-line-icon">login</i>
+				</a>
 			</div>
 			<div class="card-action">
-				<a class="waves-effect disTar pointer white-text" onclick="data('${acct.domain}')">
-					<i class="material-icons">info</i>${lang.lang_manager_info}
-				</a>
-				<a class="waves-effect disTar pointer  white-text" onclick="refresh('${key}')">
-					<i class="material-icons">refresh</i>${lang.lang_manager_refresh}
-				</a>
-				<a class="waves-effect disTar pointer red-text" onclick="multiDel('${key}')">
-					<i class="material-icons">delete</i>${lang.lang_manager_delete}"
-				</a><br />${lang.lang_manager_color}
+				<button class="btn-flat waves-effect disTar pointer  white-text" onclick="refresh('${key}')">
+					<i class="material-icons left">refresh</i>${lang.lang_manager_refresh}
+				</button>
+				<button class="btn-flat waves-effect disTar pointer red-text" onclick="multiDel('${key}')">
+					<i class="material-icons left">delete</i>${lang.lang_manager_delete}
+				</button><br />${lang.lang_manager_color}
 				<div id="colorsel_${key}" class="colorsel"></div>
 			</div>
 		</div>
 		`
 		$('#acct-list').append(templete)
 		colorpicker(key)
+	})
+	domains = _.uniq(domains)
+	$('#domain-list').html('')
+	Object.keys(domains).forEach(function (key2) {
+		var domain = domains[key2]
+		if (localStorage.getItem('letters_' + key2)) {
+			var maxChars = localStorage.getItem('letters_' + key2)
+		} else {
+			var maxChars = 500
+		}
+		var templete = `
+	<li class="collection-item transparent">
+		<div>
+			<p class="title">${domain}</p>
+			${lang.lang_manager_maxChars}　<input style="width: 100px" value="${maxChars}" id="maxChars${key2}">
+			<button class="btn-flat waves-effect" onclick="maxChars('${domain}', '${key2}')">
+				<i class="material-icons">send</i>
+			</button>
+			<button class="btn-flat waves-effect secondary-content" onclick="data('${domain}', '${key2}')">
+				<i class="material-icons left">info</i>${lang.lang_manager_info}
+			</button>
+		</div></li>
+		`
+		$('#domain-list').append(templete)
 	})
 	multisel()
 	var acctN = localStorage.getItem('acct')
@@ -82,9 +109,35 @@ function load() {
 //最初に読む
 load()
 support()
-
+function maxChars(domain, uid) {
+	var value = $('#maxChars' + uid).val()
+	if (value * 1 < 1 || !Number.isInteger(value * 1)) {
+		Swal.fire({
+			type: 'error',
+			title: 'Error'
+		})
+		return false
+	}
+	var multi = localStorage.getItem('multi')
+	if (!multi) {
+		var obj = []
+	} else {
+		var obj = JSON.parse(multi)
+	}
+	if (obj[0]) {
+		if (!obj[0].at) {
+			obj = []
+			localStorage.removeItem('multi')
+		}
+	}
+	Object.keys(obj).forEach(function (key) {
+		if (obj[key].domain == domain) localStorage.setItem('letters_' + key, value)
+	})
+	console.log('#maxChars' + uid, value)
+	load()
+}
 //instances.social/instances API
-function data(domain) {
+async function data(domain, acct_id) {
 	$('#ins-upd').text('Loading...')
 	$('#ins-add').text('Loading...')
 	$('#ins-connect').text('Loading...')
@@ -96,7 +149,7 @@ function data(domain) {
 	$('#ins-name').text('Loading...')
 	$('#ins-prof').attr('src', '../../img/loading.svg')
 	var start = 'https://instances.social/api/1.0/instances/show?name=' + domain
-	fetch(start, {
+	let promise = await fetch(start, {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
@@ -104,74 +157,42 @@ function data(domain) {
 				'Bearer tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M'
 		}
 	})
-		.then(function(response) {
-			if (!response.ok) {
-				response.text().then(function(text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function(error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function(json) {
-			if (!json.error) {
-				$('#ins-name').text(json.name)
-				$('#ins-upd').text(date(json.checked_at, 'full'))
-				$('#ins-add').text(date(json.added_at, 'full'))
-				$('#ins-connect').text(json.connections)
-				$('#ins-toot').text(json.statuses)
-				$('#ins-sys').text(date(json.updated_at, 'full'))
-				$('#ins-per').text(json.uptime * 100)
-				$('#ins-user').text(json.users)
-				$('#ins-ver').text(json.version)
-			} else {
-				console.error(json.error)
-			}
-		})
+	var json = await promise.json()
+	$('#ins-name').text(json.name)
+	$('#ins-upd').text(date(json.checked_at, 'full'))
+	$('#ins-add').text(date(json.added_at, 'full'))
+	$('#ins-connect').text(json.connections)
+	$('#ins-toot').text(json.statuses)
+	$('#ins-sys').text(date(json.updated_at, 'full'))
+	$('#ins-per').text(json.uptime * 100)
+	$('#ins-user').text(json.users)
+	$('#ins-ver').text(json.version)
 	var start = 'https://' + domain + '/api/v1/instance'
-	fetch(start, {
+	let promise2 = await fetch(start, {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
-			if (!response.ok) {
-				response.text().then(function(text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function(error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function(json) {
-			if (!json.error) {
-				$('#ins-title').text(json.title)
-				$('#ins-desc').html(json.description)
-				$('#ins-email').text(json.email)
-				$('#ins-toot').text(json.stats.status_count)
-				$('#ins-user').text(json.stats.user_count)
-				$('#ins-ver').text(json.version)
-				$('#ins-prof').attr('src', json.thumbnail)
-				$('#ins-admin').text(
-					escapeHTML(json.contact_account.display_name) + '(' + json.contact_account.acct + ')'
-				)
-				$('#ins-admin').attr(
-					'href',
-					'index.html?mode=user&code=' + json.contact_account.username + '@' + domain
-				)
-			} else {
-				console.error(json.error)
-			}
-		})
+	var json = await promise2.json()
+	$('#ins-title').text(json.title)
+	$('#ins-desc').html(json.description)
+	$('#ins-email').text(json.email)
+	$('#ins-toot').text(json.stats.status_count)
+	$('#ins-user').text(json.stats.user_count)
+	$('#ins-ver').text(json.version)
+	$('#ins-prof').attr('src', json.thumbnail)
+	$('#ins-admin').text(
+		escapeHTML(json.contact_account.display_name) + '(' + json.contact_account.acct + ')'
+	)
+	$('#ins-admin').attr(
+		'href',
+		'index.html?mode=user&code=' + json.contact_account.username + '@' + domain
+	)
+	if (json['max_toot_chars']) {
+		localStorage.setItem('letters_' + acct_id, json['max_toot_chars'])
+		load()
+	}
 }
 
 //アカウントデータ　消す
@@ -184,13 +205,11 @@ function multiDel(target) {
 		text: obj[target]['user'] + '@' + obj[target]['domain'] + lang.lang_manager_confirm,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
 	}).then(result => {
 		if (result.value) {
-			Object.keys(obj).forEach(function(key) {
+			Object.keys(obj).forEach(function (key) {
 				var nk = key - 1
 				//公開範囲(差分のみ)
 				if (key >= target) {
@@ -209,7 +228,9 @@ function multiDel(target) {
 					var olddom = localStorage.getItem('domain_' + key)
 					localStorage.setItem('domain_' + nk, olddom)
 					var oldat = localStorage.getItem('acct_' + key + '_at')
+					var oldrt = localStorage.getItem('acct_' + key + '_rt')
 					localStorage.setItem('acct_' + nk + '_at', oldat)
+					localStorage.setItem('acct_' + nk + '_rt', oldrt)
 					localStorage.setItem('name_' + nk, localStorage.getItem('name_' + key))
 					localStorage.setItem('user_' + target, localStorage.getItem('user_' + key))
 					localStorage.setItem('user-id_' + target, localStorage.getItem('user-id_' + key))
@@ -225,7 +246,7 @@ function multiDel(target) {
 			var col = localStorage.getItem('column')
 			var oldcols = JSON.parse(col)
 			var newcols = []
-			Object.keys(oldcols).forEach(function(key) {
+			Object.keys(oldcols).forEach(function (key) {
 				var nk = key - 1
 				var oldcol = oldcols[key]
 				if (target < oldcol.domain) {
@@ -234,11 +255,31 @@ function multiDel(target) {
 					var newdom = oldcol.domain
 				}
 				var type = oldcol.type
+				var data = null
+				if (oldcol.data) {
+					data = oldcol.data
+				}
+				var background = null
+				if (oldcol.background) {
+					background = oldcol.background
+				}
+				var text = null
+				if (oldcol.text) {
+					text = oldcol.text
+				}
+				var left_fold = false
+				if (oldcol.left_fold) {
+					left_fold = true
+				}
 				//消した垢のコラムじゃないときコピー
 				if (target != oldcol.domain) {
 					var add = {
 						domain: newdom,
-						type: type
+						type: type,
+						data: data,
+						background: background,
+						text: text,
+						left_fold: left_fold
 					}
 					newcols.push(add)
 				}
@@ -256,8 +297,6 @@ function multiDel2(target) {
 		text: obj[target]['user'] + '@' + obj[target]['domain'] + lang.lang_manager_confirm,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
 	}).then(result => {
@@ -265,7 +304,7 @@ function multiDel2(target) {
 			obj.splice(target, 1)
 			var json = JSON.stringify(obj)
 			localStorage.setItem('multi', json)
-			Object.keys(obj).forEach(function(key) {
+			Object.keys(obj).forEach(function (key) {
 				if (key >= target) {
 					var oldvis = localStorage.getItem('vis-memory-' + key)
 					if (oldvis) {
@@ -293,7 +332,7 @@ function multiDel2(target) {
 			} else {
 				var cobj = JSON.parse(col)
 			}
-			Object.keys(cobj).forEach(function(key) {
+			Object.keys(cobj).forEach(function (key) {
 				var column = cobj[key]
 				if (column.domain > target) {
 					var nk = key - 1
@@ -313,7 +352,7 @@ function multiDel2(target) {
 
 //サポートインスタンス
 function support() {
-	Object.keys(idata).forEach(function(key) {
+	Object.keys(idata).forEach(function (key) {
 		var instance = idata[key]
 		if (instance == 'instance') {
 			templete =
@@ -361,7 +400,7 @@ function login(url) {
 			website: 'https://thedesk.top'
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -384,10 +423,6 @@ function login(url) {
 			versionChecker(url)
 			$('#add').hide()
 			postMessage(['openUrl', auth], '*')
-			if ($('#linux:checked').val() == 'on') {
-			} else {
-				postMessage(['sendSinmpleIpc', 'quit'], '*')
-			}
 		}
 	}
 }
@@ -399,20 +434,20 @@ function versionChecker(url) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var version = json.version
 			if (version) {
 				var reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u)
@@ -438,25 +473,25 @@ function versionCompat(prefix, ver, title, real) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			var complete = false
 			var ct = 0
 			var jl = 0
 			var jl2 = 0
-			Object.keys(json).forEach(function(key) {
+			Object.keys(json).forEach(function (key) {
 				var data = json[key]
 				if (data) {
 					jl++
@@ -488,7 +523,7 @@ function misskeyLogin(url) {
 	if (!url) {
 		var url = $('#misskey-url').val()
 	}
-	var start = 'http://' + url + '/api/app/create'
+	var start = 'https://' + url + '/api/app/create'
 	var httpreq = new XMLHttpRequest()
 	httpreq.open('POST', start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
@@ -543,7 +578,7 @@ function misskeyLogin(url) {
 			]
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -567,7 +602,7 @@ function misskeyAuth(url, mkc) {
 			appSecret: mkc
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -586,16 +621,16 @@ function misskeyAuth(url, mkc) {
 
 //テキストボックスにURL入れた
 function instance() {
-	var url = $('#url').val()
+	var url = $('#autocomplete-input').val()
 	if (url.indexOf('@') != -1 || url.indexOf('https') != -1) {
 		alert('入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
 		return false
 	}
 	login(url)
 }
-
 //コード入れてAccessTokenゲット
 function code(code) {
+	var red = localStorage.getItem('redirect')
 	localStorage.removeItem('redirect')
 	if (!code) {
 		var code = $('#code').val()
@@ -619,7 +654,7 @@ function code(code) {
 				appSecret: localStorage.getItem('mkc')
 			})
 		)
-		httpreq.onreadystatechange = function() {
+		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
 				if (this.status !== 200) {
@@ -658,7 +693,7 @@ function code(code) {
 		}
 		return
 	} else {
-		var red = 'urn:ietf:wg:oauth:2.0:oob'
+		if (!red) red = 'urn:ietf:wg:oauth:2.0:oob'
 		if (~url.indexOf('pixelfed')) {
 			red = 'https://thedesk.top/hello.html'
 		}
@@ -678,23 +713,26 @@ function code(code) {
 				code: code
 			})
 		)
-		httpreq.onreadystatechange = function() {
+		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
 				if (this.status !== 200) {
+					M.toast({ html: lang.lang_fatalerroroccured + 'Error: cannot complete', displayLength: 5000 })
 					setLog(start, this.status, json)
 				}
 				if (json['access_token']) {
 					$('#auth').hide()
 					$('#add').show()
-					getdata(url, json['access_token'])
+					getdata(url, json)
 				}
 			}
 		}
 	}
 }
 //ユーザーデータ取得
-function getdata(domain, at) {
+function getdata(domain, json) {
+	var at = json['access_token']
+	var rt = `${json['refresh_token']} ${localStorage.getItem('client_id')} ${localStorage.getItem('client_secret')}`
 	var start = 'https://' + domain + '/api/v1/accounts/verify_credentials'
 	fetch(start, {
 		method: 'GET',
@@ -703,20 +741,20 @@ function getdata(domain, at) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
 				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
@@ -734,6 +772,7 @@ function getdata(domain, at) {
 			}
 			var add = {
 				at: at,
+				rt: rt ? rt : null,
 				name: json['display_name'],
 				domain: domain,
 				user: json['acct'],
@@ -744,8 +783,24 @@ function getdata(domain, at) {
 			}
 			var multi = localStorage.getItem('multi')
 			var obj = JSON.parse(multi)
-			var target = obj.length
-			obj.push(add)
+			let addTarget = -1
+			let ct = 0
+			for (let acct of obj) {
+				if (acct.domain === domain && acct.user === json['acct']) {
+					console.log('detected dupl addct')
+					addTarget = ct
+					break
+				}
+				ct++
+			}
+			if (addTarget == -1) {
+				var target = obj.length
+				obj.push(add)
+			} else {
+				console.log('dupl acct_' + addTarget)
+				obj[addTarget] = add
+				var target = addTarget
+			}
 			localStorage.setItem('name_' + target, json['display_name'])
 			localStorage.setItem('user_' + target, json['acct'])
 			localStorage.setItem('user-id_' + target, json['id'])
@@ -769,6 +824,7 @@ function atSetup(type) {
 		var i = $('#misskey-key').val()
 		var add = {
 			at: i,
+			rt: null,
 			name: 'Pseudo Account',
 			domain: url,
 			user: 'user+pseudo',
@@ -782,6 +838,7 @@ function atSetup(type) {
 		var i = $('#code').val()
 		var add = {
 			at: i,
+			rt: null,
 			name: 'Pseudo Account',
 			domain: url,
 			user: 'user+pseudo',
@@ -824,25 +881,25 @@ function refresh(target) {
 			Authorization: 'Bearer ' + obj[target].at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
 				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
@@ -855,6 +912,7 @@ function refresh(target) {
 			}
 			var ref = {
 				at: obj[target].at,
+				rt: obj[target].rt ? obj[target].rt : null,
 				name: json['display_name'],
 				domain: obj[target].domain,
 				user: json['acct'],
@@ -896,7 +954,7 @@ function misskeyRefresh(obj, target, url) {
 			i: obj[target].at
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -906,6 +964,7 @@ function misskeyRefresh(obj, target, url) {
 			var priv = 'public'
 			var add = {
 				at: json.accessToken,
+				rt: null,
 				name: json['user']['name'],
 				domain: url,
 				user: json['user']['username'],
@@ -945,7 +1004,7 @@ function multisel() {
 		$('#src-acct-sel').html('<option value="tootsearch">Tootsearch</option>')
 		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	} else {
-		Object.keys(obj).forEach(function(key) {
+		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
 			var list = key * 1 + 1
 			if (key == last) {
@@ -1028,59 +1087,55 @@ function coloradd(key, bg, txt) {
 //入力時にハッシュタグと@をサジェスト
 var timer = null
 
-var input = document.getElementById('url')
-
+var input = document.getElementById('autocomplete-input')
 var prev_val = input.value
 var oldSuggest
 var suggest
 input.addEventListener(
 	'focus',
-	function() {
-		$('#ins-suggest').html('')
+	function () {
+		const instance = M.Autocomplete.getInstance(input)
 		window.clearInterval(timer)
-		timer = window.setInterval(function() {
+		timer = window.setInterval(function () {
 			var new_val = input.value
 			if (prev_val != new_val) {
 				if (new_val.length > 3) {
-					var start = 'https://instances.social/api/1.0/instances/search?q=' + new_val
+					var start = 'https://www.fediversesearch.com/search/?keyword=' + new_val
 					fetch(start, {
 						method: 'GET',
 						headers: {
 							'content-type': 'application/json',
-							Authorization:
-								'Bearer tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M'
 						}
 					})
-						.then(function(response) {
+						.then(function (response) {
 							if (!response.ok) {
-								response.text().then(function(text) {
+								response.text().then(function (text) {
 									setLog(response.url, response.status, text)
 								})
 							}
 							return response.json()
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							todo(error)
 							setLog(start, 'JSON', error)
 							console.error(error)
 						})
-						.then(function(json) {
+						.then(function (json) {
 							if (!json.error) {
-								var urls = 'Suggest:'
-								Object.keys(json.instances).forEach(function(key) {
-									var url = json.instances[key]
-									urls =
-										urls +
-										` <a onclick="login('${url.name}')" class="pointer">${escapeHTML(url.name)}</a>`
+								let data = {}
+								Object.keys(json.data).forEach(function (key) {
+									var url = json.data[key]
+									data[url.uri] = escapeHTML(url.title ? url.title : url.uri)
 								})
-								$('#ins-suggest').html(urls)
+								instance.updateData(data)
+								instance.open()
 							} else {
 								console.error(json.error)
 							}
 						})
 				}
 				oldSuggest = suggest
-				prev_value = new_val
+				prev_val = new_val
 			}
 		}, 1000)
 	},
@@ -1089,7 +1144,7 @@ input.addEventListener(
 
 input.addEventListener(
 	'blur',
-	function() {
+	function () {
 		window.clearInterval(timer)
 	},
 	false
@@ -1098,3 +1153,12 @@ input.addEventListener(
 function asReadEnd() {
 	postMessage(['asReadComp', ''], '*')
 }
+
+// Or with jQuery
+
+$(document).ready(function(){
+    $('input.autocomplete').autocomplete({
+      data: {},
+    });
+  });
+        

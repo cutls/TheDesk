@@ -3,7 +3,7 @@
 function searchMenu() {
 	$('#src-contents').html('')
 	trend()
-	$('#left-menu div').removeClass('active')
+	$('#left-menu a').removeClass('active')
 	$('#searchMenu').addClass('active')
 	$('.menu-content').addClass('hide')
 	$('#src-box').removeClass('hide')
@@ -13,7 +13,21 @@ function searchMenu() {
 //検索取得
 function src(mode, offset) {
 	if (!offset) {
-		$('#src-contents').html('')
+		$('#src-contents').html(`
+		<div class="preloader-wrapper small active" style="margin-left: calc(50% - 36px);">
+			<div class="spinner-layer spinner-blue-only">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+		`)
 		var add = ''
 	} else {
 		var add = '&type=accounts&offset=' + $('#src-accts .cvo').length
@@ -36,7 +50,7 @@ function src(mode, offset) {
 		var user = $('#his-data').attr('user-id')
 	}
 	if (!mode) {
-		var start = 'https://' + domain + '/api/v2/search?q=' + q + add
+		var start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + encodeURIComponent(q) + add
 	} else {
 		var start = 'https://' + domain + '/api/v1/search?q=' + q
 	}
@@ -48,24 +62,27 @@ function src(mode, offset) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
+			if (!offset) {
+				$('#src-contents').html(``)
+			}
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			src('v1')
 			return false
 		})
-		.then(function(json) {
+		.then(function (json) {
 			console.log(['Search', json])
 			//ハッシュタグ
 			if (json.hashtags[0]) {
 				var tags = ''
-				Object.keys(json.hashtags).forEach(function(key4) {
+				Object.keys(json.hashtags).forEach(function (key4) {
 					var tag = json.hashtags[key4]
 					if (mode) {
 						tags =
@@ -116,8 +133,11 @@ function tsAdd(q) {
 	parseColumn('add')
 }
 function tootsearch(tlid, q) {
+	if (!q || q == 'undefined') {
+		return false
+	}
 	var start = 'https://tootsearch.chotto.moe/api/v1/search?from=0&sort=created_at%3Adesc&q=' + q
-	console.log('Toot srrach at ' + start)
+	console.log('Toot search at ' + start)
 	$('#notice_' + tlid).text('tootsearch(' + q + ')')
 	$('#notice_icon_' + tlid).text('search')
 	fetch(start, {
@@ -126,20 +146,20 @@ function tootsearch(tlid, q) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(raw) {
+		.then(function (raw) {
 			var templete = ''
 			var json = raw.hits.hits
 			var max_id = raw['hits'].length
@@ -177,20 +197,20 @@ function moreTs(tlid, q) {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(raw) {
+		.then(function (raw) {
 			var templete = ''
 			var json = raw.hits.hits
 			var max_id = raw['hits'].length
@@ -216,9 +236,9 @@ function moreTs(tlid, q) {
 function graphDraw(tag, acct_id) {
 	var tags = ''
 	var his = tag.history
-	return graphDrawCore(his, tag)
+	return graphDrawCore(his, tag, acct_id)
 }
-function graphDrawCore(his, tag){
+function graphDrawCore(his, tag, acct_id) {
 	var max = Math.max.apply(null, [
 		his[0].uses,
 		his[1].uses,
@@ -252,7 +272,9 @@ function graphDrawCore(his, tag){
 					toot
 				</div>
 				<div class="tagCompTag">
-					<a onclick="tl('tag','${escapeHTML(tag.name)}','${acct_id}','add')" class="pointer" title="${escapeHTML(tag.name)}">
+					<a onclick="tl('tag','${escapeHTML(
+		tag.name
+	)}','${acct_id}','add')" class="pointer" title="${escapeHTML(tag.name)}">
 						#${escapeHTML(tag.name)}
 					</a>
 				</div>
@@ -262,49 +284,120 @@ function graphDrawCore(his, tag){
 				</div>
 				</div>`
 }
-/*
-<svg version="1.1" viewbox="0 0 50 300" width="100%" height="50">
-	<path d="M0,0 L10,0 20,10 20,50" fill="#3F51B5"></path>
-</svg>
-*/
-function trend() {
+async function trend() {
 	console.log('get trend')
 	$('#src-contents').html('')
 	var acct_id = $('#src-acct-sel').val()
 	if (acct_id == 'tootsearch') {
 		return false
 	}
-	var domain = localStorage.getItem('domain_' + acct_id)
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	var start = 'https://' + domain + '/api/v1/trends'
-	console.log(start)
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
-	})
-		.then(function(response) {
-			if (!response.ok) {
-				response.text().then(function(text) {
-					setLog(response.url, response.status, text)
-				})
+	const domain = localStorage.getItem('domain_' + acct_id)
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
+	try {
+		const tagTrendUrl = 'https://' + domain + '/api/v1/trends'
+		const tagTrendResponse = await fetch(tagTrendUrl, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
 			}
-			return response.json()
 		})
-		.catch(function(error) {
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function(json) {
-			var tags = ''
-			Object.keys(json).forEach(function(keye) {
-				var tag = json[keye]
-				var his = tag.history
-				tags = graphDrawCore(his, tag)
-
-				$('#src-contents').append(tags)
+		if (!tagTrendResponse.ok) {
+			tagTrendResponse.text().then(function (text) {
+				setLog(tagTrendResponse.url, tagTrendResponse.status, text)
 			})
+		}
+		const tagTrends = await tagTrendResponse.json()
+		let tags = ''
+		for (const tag of tagTrends) {
+			const his = tag.history
+			tags = tags + graphDrawCore(his, tag, acct_id)
+		}
+		$('#src-contents').append(`<div id="src-content-tag">Trend Tags<br />${tags || 'none'}</div>`)
+	} catch {
+
+	}
+
+	try {
+		const tootTrendUrl = 'https://' + domain + '/api/v1/trends/statuses'
+		const tootTrendResponse = await fetch(tootTrendUrl, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
+			}
 		})
+		if (!tootTrendResponse.ok) {
+			tootTrendResponse.text().then(function (text) {
+				setLog(tootTrendResponse.url, tootTrendResponse.status, text)
+			})
+		}
+		const tootTrends = await tootTrendResponse.json()
+		if (tootTrends.length) {
+			const templete = parse(tootTrends, '', acct_id)
+			$('#src-contents').append(`<div id="src-content-status">Trend Statuses<br />${templete}</div>`)
+		} else {
+			$('#src-contents').append(`<div id="src-content-status">Trend Statuses<br />none</div>`)
+		}
+	} catch {
+
+	}
+
+	try {
+		const linkTrendUrl = 'https://' + domain + '/api/v1/trends/links'
+		const linkTrendResponse = await fetch(linkTrendUrl, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
+			}
+		})
+		if (!linkTrendResponse.ok) {
+			linkTrendResponse.text().then(function (text) {
+				setLog(linkTrendResponse.url, linkTrendResponse.status, text)
+			})
+		}
+		const linkTrends = await linkTrendResponse.json()
+		console.log(linkTrends)
+		let links = ''
+		for (const link of linkTrends) {
+			links = links + `<a href="${link.url}" target="_blank">${link.url}</a><br />` + cardHtml(link, acct_id, '') + `<br />`
+		}
+		$('#src-contents').append(`<div id="src-content-link">Trend Links<br />${links}</div>`)
+	} catch {
+
+	}
+
+
+
+
+}
+function srcBox(mode) {
+	if (mode == 'open') {
+		$('#pageSrc').removeClass('hide')
+	} else if (mode == 'close') {
+		$('#pageSrc').addClass('hide')
+		$('#pageSrc').removeClass('keep')
+	} else {
+		$('#pageSrc').toggleClass('hide')
+	}
+}
+function doSrc(type) {
+	$('#pageSrc').addClass('hide')
+	$('#pageSrc').removeClass('keep')
+	var q = $('.srcQ').text()
+	if (type == 'web') {
+		var start = localStorage.getItem('srcUrl')
+		if (!start) {
+			start = 'https://google.com/search?q={q}'
+		}
+		start = start.replace(/{q}/, q)
+		postMessage(["openUrl", start], "*")
+	} else if (type == 'ts') {
+		tsAdd(q)
+	} else if (type == 'copy') {
+		execCopy(q)
+	} else if (type == 'toot') {
+		brInsert(q)
+	}
 }

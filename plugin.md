@@ -1,0 +1,1 @@
+Moved to [Wiki](https://github.com/cutls/TheDesk/wiki/プラグイン)

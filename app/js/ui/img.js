@@ -4,6 +4,7 @@ function imgv(id, key, acct_id) {
 	$('#imgprog').text(0)
 	$('#imgsec').text(0)
 	$('#imgmodal').hide()
+	rotate(true)
 	$('#imgmodal').attr('src', '../../img/loading.svg')
 	var murl = $('#' + id + '-image-' + key).attr('data-url')
 	var ourl = $('#' + id + '-image-' + key).attr('data-original')
@@ -20,7 +21,7 @@ function imgv(id, key, acct_id) {
 	if (remote_img == 'yes') {
 		murl = ourl
 	}
-	$(document).ready(function() {
+	$(document).ready(function () {
 		if (type == 'image') {
 			$('#imagemodal').modal('open')
 			imageXhr(id, key, murl)
@@ -61,7 +62,7 @@ function imgCont(type) {
 		$('#imgsec').text(0)
 		$('#imgmodal').attr('src', '../../img/loading.svg')
 		var type = $('#' + id + '-image-' + key).attr('data-type')
-		$(document).ready(function() {
+		$(document).ready(function () {
 			if (type == 'image') {
 				imageXhr(id, key, murl)
 				$('#imagewrap').dragScroll() // ドラッグスクロール設定
@@ -75,17 +76,29 @@ function imgCont(type) {
 	}
 }
 function imageXhr(id, key, murl) {
+	let time = 0
 	var startTime = new Date()
+	const timer = setInterval(function () {
+		time = time + 1
+		$('#imgsec').text(time)
+	}, 10)
+	$('#imgmodal-progress div').removeClass('determinate')
+	$('#imgmodal-progress div').addClass('indeterminate')
+	$('#imgmodal-progress').removeClass('hide')
 	xhr = new XMLHttpRequest()
 	xhr.open('GET', murl, true)
 	xhr.responseType = 'arraybuffer'
 	xhr.addEventListener(
 		'progress',
-		function(event) {
+		function (event) {
 			if (event.lengthComputable) {
 				var total = event.total
 				var now = event.loaded
+				$('#imgbyte').text(`${Math.floor(now / 1024)}KB/${Math.floor(total / 1024)}`)
 				var per = (now / total) * 100
+				$('#imgmodal-progress div').removeClass('indeterminate')
+				$('#imgmodal-progress div').addClass('determinate')
+				$('#imgmodal-progress div').css('width', `${per}%`)
 				$('#imgprog').text(Math.floor(per))
 			}
 		},
@@ -93,53 +106,40 @@ function imageXhr(id, key, murl) {
 	)
 	xhr.addEventListener(
 		'loadend',
-		function(event) {
+		function (event) {
 			var total = event.total
 			$('#imgbyte').text(Math.floor(total / 1024))
 			var now = event.loaded
 			var per = (now / total) * 100
 			$('#imgprog').text(Math.floor(per))
+			$('#imgmodal-progress').addClass('hide')
+			$('#imgmodal-progress div').css('width', '0%')
+			$('#imgmodal-progress div').removeClass('determinate')
+			$('#imgmodal-progress div').addClass('indeterminate')
 		},
 		false
 	)
-	xhr.onreadystatechange = function() {
+	xhr.addEventListener(
+		'error',
+		function (event) {
+			$('#imgmodal').attr('src', murl)
+		},
+		false
+	)
+	xhr.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
 			r = new FileReader()
 			r.readAsDataURL(this.response)
-			r.onload = function() {
+			r.onload = function () {
 				var b64 = r.result
 				var element = new Image()
 				var width
-				element.onload = function() {
+				element.onload = function () {
 					var width = element.naturalWidth
 					var height = element.naturalHeight
-					var windowH = $(window).height()
-					var windowW = $(window).width()
-					$('#imagemodal').css('bottom', '0')
-					$('#imagemodal img').css('width', 'auto')
-					if (height < windowH) {
-						$('#imagemodal').css('height', height + 60 + 'px')
-						$('#imagemodal img').css('height', '100%')
-						if (width > windowW * 0.8) {
-							$('#imagemodal').css('width', '80vw')
-							$('#imagemodal img').css('width', '100%')
-							var heightS = ((windowW * 0.8) / width) * height
-							$('#imagemodal').css('height', heightS + 60 + 'px')
-						} else {
-							$('#imagemodal').css('width', width + 'px')
-						}
-					} else {
-						$('#imagemodal img').css('width', 'auto')
-						var widthS = (windowH / height) * width
-						if (widthS < windowW) {
-							$('#imagemodal').css('width', widthS + 'px')
-						} else {
-							$('#imagemodal').css('width', '100vw')
-						}
-
-						$('#imagemodal').css('height', '100vh')
-						$('#imagemodal img').css('height', 'calc(100vh - 60px)')
-					}
+					calcNiceAspect(width, height)
+					$('#imagemodal').attr('data-naturalWidth', width)
+					$('#imagemodal').attr('data-naturalHeight', height)
 				}
 				if ($('#' + id + '-image-' + (key * 1 + 1)).length == 0) {
 					$('#image-next').prop('disabled', true)
@@ -153,6 +153,7 @@ function imageXhr(id, key, murl) {
 				}
 				element.src = b64
 				var endTime = new Date()
+				clearInterval(timer)
 				var proctime = endTime.getTime() - startTime.getTime()
 				$('#imgsec').text(proctime)
 				$('#imgmodal').attr('src', b64)
@@ -161,6 +162,38 @@ function imageXhr(id, key, murl) {
 	}
 	xhr.responseType = 'blob'
 	xhr.send()
+}
+function calcNiceAspect(width, height) {
+	if (width < 650) {
+		width = 650
+	}
+	var windowH = $(window).height()
+	var windowW = $(window).width()
+	$('#imagemodal').css('bottom', '0')
+	$('#imagemodal img').css('width', 'auto')
+	if (height < windowH) {
+		$('#imagemodal').css('height', height + 100 + 'px')
+		$('#imagemodal img').css('height', height + 'px')
+		if (width > windowW * 0.8) {
+			$('#imagemodal').css('width', '80vw')
+			$('#imagemodal img').css('width', 'auto')
+			var heightS = ((windowW * 0.8) / width) * height
+			$('#imagemodal').css('height', heightS + 100 + 'px')
+		} else {
+			$('#imagemodal').css('width', width + 'px')
+		}
+	} else {
+		$('#imagemodal img').css('width', 'auto')
+		var widthS = (windowH / height) * width
+		if (widthS < windowW) {
+			$('#imagemodal').css('width', widthS + 'px')
+		} else {
+			$('#imagemodal').css('width', '100vw')
+		}
+
+		$('#imagemodal').css('height', '100vh')
+		$('#imagemodal img').css('height', 'calc(100vh - 60px)')
+	}
 }
 //ズームボタン(z:倍率)
 function zoom(z) {
@@ -172,11 +205,11 @@ function zoom(z) {
 	$('#imagewrap img').css('height', hgt + 'px')
 }
 //スマホ対応ドラッグ移動システム
-;(function() {
-	$.fn.dragScroll = function() {
+(function () {
+	$.fn.dragScroll = function () {
 		var target = this
 		$(this)
-			.mousedown(function(event) {
+			.mousedown(function (event) {
 				$(this)
 					.data('down', true)
 					.data('x', event.clientX)
@@ -191,7 +224,7 @@ function zoom(z) {
 			})
 		// ウィンドウから外れてもイベント実行
 		$(document)
-			.mousemove(function(event) {
+			.mousemove(function (event) {
 				if ($(target).data('down') == true) {
 					// スクロール
 					target.scrollLeft($(target).data('scrollLeft') + $(target).data('x') - event.clientX)
@@ -199,11 +232,11 @@ function zoom(z) {
 					return false // 文字列選択を抑止
 				}
 			})
-			.mouseup(function(event) {
+			.mouseup(function (event) {
 				$(target).data('down', false)
 			})
 		$(this)
-			.on('touchstart', function(event) {
+			.on('touchstart', function (event) {
 				$(this)
 					.data('down', true)
 					.data('x', getX(event))
@@ -216,7 +249,7 @@ function zoom(z) {
 				overflow: 'hidden', // スクロールバー非表示
 				cursor: 'move'
 			}) //指が触れたか検知
-		$(this).on('touchmove', function(event) {
+		$(this).on('touchmove', function (event) {
 			if ($(target).data('down') === true) {
 				// スクロール
 				target.scrollLeft($(target).data('scrollLeft') + $(target).data('x') - getX(event))
@@ -225,7 +258,7 @@ function zoom(z) {
 			} else {
 			}
 		}) //指が動いたか検知
-		$(this).on('touchend', function(event) {
+		$(this).on('touchend', function (event) {
 			$(target).data('down', false)
 		})
 
@@ -242,12 +275,39 @@ function getY(event) {
 }
 //マウスホイールで拡大
 var element = document.getElementById('imagemodal')
-element.onmousewheel = function(e) {
+element.onmousewheel = function (e) {
 	var delta = e.wheelDelta
 	if (delta > 0) {
 		zoom(1.1)
 	} else {
 		zoom(0.9)
+	}
+}
+function rotate(reset) {
+	if (reset) {
+		$('#imagewrap img').removeClass('rotate-90')
+		$('#imagewrap img').removeClass('rotate-180')
+		$('#imagewrap img').removeClass('rotate-270')
+		$('#imagemodal').attr('data-naturalWidth', null)
+		$('#imagemodal').attr('data-naturalWidth', null)
+		return true
+	}
+	var width = $('#imagemodal').attr('data-naturalWidth')
+	var height = $('#imagemodal').attr('data-naturalHeight')
+	if ($('#imagewrap img').hasClass('rotate-90')) {
+		$('#imagewrap img').removeClass('rotate-90')
+		$('#imagewrap img').addClass('rotate-180')
+		calcNiceAspect(width, height)
+	} else if ($('#imagewrap img').hasClass('rotate-180')) {
+		$('#imagewrap img').removeClass('rotate-180')
+		$('#imagewrap img').addClass('rotate-270')
+		calcNiceAspect(height, width)
+	} else if ($('#imagewrap img').hasClass('rotate-270')) {
+		$('#imagewrap img').removeClass('rotate-270')
+		calcNiceAspect(width, height)
+	} else {
+		$('#imagewrap img').addClass('rotate-90')
+		calcNiceAspect(height, width)
 	}
 }
 
@@ -282,4 +342,14 @@ function copyImgUrl() {
 	var murl = $('#imagemodal').attr('data-original')
 	execCopy(murl)
 	M.toast({ html: lang.lang_img_copyDone, displayLength: 1500 })
+}
+async function copyImgBinary() {
+	var murl = $('#imagemodal').attr('data-original')
+	const blob = await (await fetch(murl)).blob()
+	const reader = new FileReader()
+	reader.onloadend = function () {
+		postMessage(['copyBinary', reader.result], '*')
+		M.toast({ html: lang.lang_imgBin_copyDone, displayLength: 1500 })
+	}
+	reader.readAsDataURL(blob)
 }

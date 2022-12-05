@@ -1,0 +1,49 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/app"
+  schedule:
+    interval: daily
+    time: "20:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: font-manager
+    versions:
+    - "> 0.3.0, < 0.4"
+  - dependency-name: sweetalert2
+    versions:
+    - 10.14.1
+    - 10.15.0
+    - 10.15.1
+    - 10.15.2
+    - 10.15.3
+    - 10.15.5
+    - 10.15.6
+    - 10.16.0
+    - 10.16.2
+    - 10.16.5
+  - dependency-name: electron
+    versions:
+    - 11.2.1
+    - 12.0.2
+    - 12.0.3
+    - 12.0.4
+  - dependency-name: eslint
+    versions:
+    - 7.18.0
+    - 7.19.0
+    - 7.20.0
+    - 7.21.0
+    - 7.22.0
+    - 7.24.0
+  - dependency-name: itunes-nowplaying-mac
+    versions:
+    - 0.4.0
+  - dependency-name: electron-dl
+    versions:
+    - 3.0.3
+    - 3.1.0
+    - 3.2.0
+  - dependency-name: electron-rebuild
+    versions:
+    - 2.3.4

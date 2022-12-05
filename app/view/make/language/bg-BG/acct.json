@@ -2,6 +2,7 @@
     "list": "Списък на профилите",
     "back": "Назад",
     "add": "Добавяне на профил",
+    "addAcct": "Fill the instance domain (like mastodon.social)",
     "codesetupwarn": "Премахнете отметката за да пропуснете влизането с код. (Вход в Mastodon от Windows или macOS) (Препоръчително: pcheck)",
     "codesetup": "Настройка на код",
     "mainacct": "Основен профил",
@@ -19,5 +20,6 @@
     "thisismisskey": "Влезте като Misskey",
     "misskeylogin": "Прочетете <a href=\"https://thedesk.top/how-to-misskey-login.html\">Документацията</a>, за да влезете в Misskey.",
     "nodata": "Няма данни",
-    "accessTokenSetup": "Използвайте маркера за достъп и вход (щракнете след попълване, но не код, а знак за достъп в поле: Разширено)"
+    "accessTokenSetup": "Използвайте маркера за достъп и вход (щракнете след попълване, но не код, а знак за достъп в поле: Разширено)",
+    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
 }

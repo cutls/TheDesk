@@ -19,7 +19,7 @@ function bottomReverse() {
 		localStorage.setItem('reverse', 'true')
 	}
 }
-function tips(mode) {
+function tips(mode, custom) {
 	postMessage(['sendSinmpleIpc', 'endmem'], '*')
 	clearInterval(clockint)
 	clearInterval(spotStart)
@@ -30,7 +30,7 @@ function tips(mode) {
 				localStorage.getItem('ver') +
 				' git: ' +
 				gitHash +
-				'\')">TheDesk ' +
+				'\')"> ' +
 				localStorage.getItem('ver') +
 				' {' +
 				gitHash.slice(0, 7) +
@@ -57,22 +57,31 @@ function tips(mode) {
 		tipsToggle()
 		localStorage.setItem('tips', 'itunes')
 		itunestips()
+	} else if (mode == 'custom') {
+		tipsToggle()
+		localStorage.setItem('tips', `custom:${custom}`)
+		execPlugin(custom, 'tips', null)
 	}
 }
 //メモリ
 function startmem() {
 	postMessage(['sendSinmpleIpc', 'startmem'], '*')
 }
-function renderMem(use, cpu, total) {
+function renderMem(use, cpu, total, core, uptime) {
+	let day = Math.floor(uptime / 60 / 60 / 24)
+	let hour = Math.floor(uptime / 60 /60 % 24)
+	if(hour < 10) hour = '0' + hour
+	let min = Math.floor(uptime / 60 % 60)
+	if(min < 10) min = '0' + min
+	let sec = Math.floor(uptime % 60)
+	if(sec < 10) sec = '0' + sec
+	let time = `${day ? day + ' days ' : ''}${hour ? hour + ':' : ''}${min}:${sec}`
+	//Intel
+	cpu = cpu.replace('Intel(R)', '').replace('(TM)', '').replace(' CPU', '')
+	//AMD
+	cpu = cpu.replace('AMD ', '').replace(/\s[0-9]{1,3}-Core\sProcessor/, '')
 	$('#tips-text').html(
-		escapeHTML(cpu) +
-			'<br>Memory:' +
-			Math.floor(use / 1024 / 1024 / 102.4) / 10 +
-			'/' +
-			Math.floor(total / 1024 / 1024 / 102.4) / 10 +
-			'GB(' +
-			Math.floor((use / total) * 100) +
-			'%)'
+		`${escapeHTML(cpu)} x ${core}<br />RAM: ${Math.floor(use / 1024 / 1024 / 102.4) / 10}/${Math.floor(total / 1024 / 1024 / 102.4) / 10}GB(${Math.floor((use / total) * 100)}%) UP:${time}`
 	)
 }
 //トレンドタグ
@@ -108,7 +117,7 @@ function trendTagonTip() {
 				Object.keys(json).forEach(function(tag) {
 					tags =
 						tags +
-						`<a onclick="tagShow('${tag}')" class="pointer">
+						`<a onclick="tagShow('${tag}', this)" class="pointer">
 							#${escapeHTML(tag)}
 						</a>
 						<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">　
@@ -131,12 +140,8 @@ function trendTagonTip() {
 spotint = null
 function spotifytips() {
 	if (spotint) clearInterval(spotint)
-	var start =
-		'https://thedesk.top/now-playing?at=' +
-		localStorage.getItem('spotify') +
-		'&rt=' +
-		localStorage.getItem('spotify-refresh')
-	var at = localStorage.getItem('spotify')
+	var start = 'https://spotify.thedesk.top/current-playing?code=' + localStorage.getItem('spotify-token')
+	var at = localStorage.getItem('spotify-token')
 	if (at) {
 		fetch(start, {
 			method: 'GET',
@@ -157,8 +162,15 @@ function spotifytips() {
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function(jsonRaw) {
+				var code = jsonRaw.token
+				localStorage.setItem('spotify-token', code)
+				var json = jsonRaw.data
 				var ms = json.progress_ms
+				if(!ms) {
+					tips('ver')
+					return false
+				}
 				var last = 1000 - (ms % 1000)
 				var item = json.item
 				var img = item.album.images[0].url
@@ -193,12 +205,10 @@ function spotifytips() {
 						<i class="material-icons pointer" onclick="nowplaying('spotify');show()" style="font-size:20px">send</i>
 					</div>
 					<div id="spot-cover">
-						<img src="${img}" id="spot-img">
+						<img src="${img}" id="spot-img" draggable="false">
 					</div>
 					<div id="spot-name">
 						${escapeHTML(item.name)}
-					</div>
-					<div id="spot-artist">
 						<span class="gray sml" id="spot-art">${artisttxt}</span>
 					</div>
 					<div id="spot-time">
@@ -216,8 +226,10 @@ function spotifytips() {
 	} else {
 		Swal.fire({
 			type: 'info',
-			title: lang.lang_spotify_acct
+			text: lang.lang_spotify_acct
 		})
+		tips('ver')
+		return false
 	}
 }
 function spotStart() {
@@ -288,6 +300,4 @@ function tipsToggle() {
 	$('#tips').toggleClass('hide')
 	$('#tips-menu').toggleClass('hide')
 }
-if (localStorage.getItem('tips')) {
-	tips(localStorage.getItem('tips'))
-}
+

@@ -83,6 +83,6 @@ var idata = {
 	"nitiasa.com_quote":"enabled",
 	"biwakodon.com_quote":"enabled",
 	"comm.cx_quote":"enabled"
-};
+}
 
-localStorage.setItem("instance", JSON.stringify(idata));
+localStorage.setItem("instance", JSON.stringify(idata))

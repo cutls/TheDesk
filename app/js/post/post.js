@@ -9,7 +9,16 @@ function sec() {
 	}
 	post(null, mode)
 }
-function post(mode, postvis) {
+function post(mode, postvis, dry) {
+	if(!navigator.onLine && !dry) {
+		draftToggle(true)
+		addToDraft()
+		M.toast({
+			html: lang.lang_post_offline,
+			displayLength: 3000
+		})
+		return false
+	}
 	if ($('#toot-post-btn').prop('disabled')) {
 		return false
 	}
@@ -46,8 +55,6 @@ function post(mode, postvis) {
 				text: lang.lang_post_cwtxt + plus,
 				type: 'info',
 				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#3085d6',
 				confirmButtonText: lang.lang_post_btn2,
 				cancelButtonText: lang.lang_post_btn3,
 				showCloseButton: true,
@@ -75,7 +82,13 @@ function post(mode, postvis) {
 	$('.toot-btn-group').prop('disabled', true)
 	todo('Posting')
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	var start = 'https://' + domain + '/api/v1/statuses'
+	let start = 'https://' + domain + '/api/v1/statuses'
+	let method = 'POST'
+	const editTarget = $('#tootmodal').attr('data-edit')
+	if (editTarget) {
+		start = start + `/${editTarget}`
+		method = 'PUT'
+	}
 	var reply = $('#reply').val()
 	if (str.indexOf(localStorage.getItem('stable')) == -1) {
 		str + ' #' + localStorage.getItem('stable')
@@ -122,12 +135,16 @@ function post(mode, postvis) {
 		console.log('This toot will be posted at:' + scheduled)
 		schedule()
 		toot.scheduled_at = scheduled
+		if ($('#sch-box').hasClass('expire')) {
+			toot.scheduled_at = null
+			toot.expires_at = scheduled
+		}
 	} else {
 		var scheduled = ''
 	}
 	if (!$('#poll').hasClass('hide')) {
 		var options = []
-		$('.mastodon-choice').map(function() {
+		$('.mastodon-choice').map(function () {
 			var choice = $(this).val()
 			if (choice != '') {
 				options.push(choice)
@@ -155,30 +172,65 @@ function post(mode, postvis) {
 		}
 	}
 	console.table(toot)
+	if (dry) {
+		$('#ideKey').val('')
+		$('.toot-btn-group').prop('disabled', false)
+		todc()
+		toot['TheDeskAcctId'] = acct_id
+		return toot
+	}
 	var httpreq = new XMLHttpRequest()
-	httpreq.open('POST', start, true)
+	httpreq.open(method, start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.setRequestHeader('Idempotency-Key', ideKey)
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify(toot))
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
-				setLog(start, this.status, json)
+				if (media && this.status == 422) {
+					$('#ideKey').val('')
+					$('.toot-btn-group').prop('disabled', false)
+					alertProcessUnfinished()
+				} else {
+					setLog(start, this.status, json)
+					var box = localStorage.getItem('box')
+					if (box == 'yes' || !box) {
+						$('#textarea').blur()
+						hide()
+					}
+					$('.toot-btn-group').prop('disabled', false)
+					todc()
+					clear()
+				}
 			} else {
 				$('#ideKey').val('')
+				var box = localStorage.getItem('box')
+				if (box == 'yes' || !box) {
+					$('#textarea').blur()
+					hide()
+				}
+				$('.toot-btn-group').prop('disabled', false)
+				todc()
+				clear()
 			}
-			var box = localStorage.getItem('box')
-			if (box == 'yes' || !box) {
-				$('#textarea').blur()
-				hide()
-			}
-			$('.toot-btn-group').prop('disabled', false)
-			todc()
-			clear()
 		}
+	}
+}
+function expPostMode() {
+	$('#sch-box').toggleClass('expire')
+	if ($('#sch-box').hasClass('expire')) {
+		Swal.fire({
+			type: 'info',
+			title: 'Expiring toot On'
+		})
+	} else {
+		Swal.fire({
+			type: 'info',
+			title: 'Expireing toot Off'
+		})
 	}
 }
 function misskeyPost() {
@@ -238,7 +290,7 @@ function misskeyPost() {
 	httpreq.setRequestHeader('Content-Type', 'application/json')
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify(toot))
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			if (str.indexOf(localStorage.getItem('stable')) == -1) {
 				localStorage.removeItem('stable')
@@ -307,7 +359,7 @@ function clear() {
 	$('#mins_poll').val(6)
 	$('#poll').addClass('hide')
 	$('#pollsta').text(lang.lang_no)
-	$('.mastodon-choice').map(function() {
+	$('.mastodon-choice').map(function () {
 		$(this).val('')
 	})
 	localStorage.removeItem('image')
@@ -329,5 +381,6 @@ function clear() {
 		width = 300
 	}
 	$('#post-box').css('width', width)
+	$('#tootmodal').attr('data-edit', null)
 	mdCheck()
 }

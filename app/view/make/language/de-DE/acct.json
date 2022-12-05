@@ -1,7 +1,8 @@
 {
-    "list": "Accountliste",
+    "list": "Konten",
     "back": "Zurück",
     "add": "Konto hinzufügen",
+    "addAcct": "Geben Sie die Instanz-Domain ein (wie mastodon.social)",
     "codesetupwarn": "Check if TheDesk is not working on Windows, you want to login Pleroma servers, you cannot login when it checked.",
     "codesetup": "Code-Setup",
     "mainacct": "Hauptkonto",
@@ -16,8 +17,9 @@
     "safety": "Verbindung",
     "ver": "Mastodon Version",
     "ko": "",
-    "thisismisskey": "Als Misskey anmelden",
+    "thisismisskey": "Login als Misskey",
     "misskeylogin": "Lies die <a href=\"https://thedesk.top/how-to-misskey-login.html\">Doku (japanisch)</a> um dich bei Misskey einzuloggen.",
     "nodata": "Keine Daten",
-    "accessTokenSetup": "Benutze Zugangs-Token zum Anmelden (Klicke nach Ausfüllen nicht den Code, sondern den Access-Token im Kästchen: Erweitert)"
+    "accessTokenSetup": "Benutze Zugangs-Token zum Anmelden (Klicke nach Ausfüllen nicht den Code, sondern den Access-Token im Kästchen: Erweitert)",
+    "haveExported": "Haben Sie eine exportierte Datei von TheDesk, klicken Sie hier für die Einstellungen"
 }

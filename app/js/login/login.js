@@ -32,7 +32,7 @@ function ck() {
 	} else {
 		var obj = JSON.parse(multi)
 		var jp = false
-		Object.keys(obj).forEach(function(key) {
+		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
 			if (acct.domain) {
 				refresh(key, true)
@@ -47,6 +47,16 @@ function ck() {
 			multiSelector(false)
 			verck(ver, jp)
 			$('.stw').show()
+			let tipsName = localStorage.getItem('tips')
+			const matchCID = /custom:([abcdef0-9]{8}-[abcdef0-9]{4}-4[abcdef0-9]{3}-[abcdef0-9]{4}-[abcdef0-9]{12})/
+			if (tipsName) {
+				if (tipsName.match(matchCID)) {
+					const id = tipsName.match(matchCID)[1]
+					tips('custom', id)
+				} else {
+					tips(tipsName)
+				}
+			}
 			$('#something-wrong img').attr('src', '../../img/thinking.svg')
 		}
 	}
@@ -74,7 +84,7 @@ function login(url) {
 			website: 'https://thedesk.top'
 		})
 	)
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
@@ -139,20 +149,20 @@ function code(code, mode) {
 			code: code
 		})
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			todo(json)
 			if (json['access_token']) {
 				localStorage.setItem(url + '_at', json['access_token'])
@@ -178,20 +188,20 @@ function getdata() {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
 				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
@@ -236,20 +246,20 @@ function getdataAdv(domain, at) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
 				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
@@ -276,7 +286,7 @@ function getdataAdv(domain, at) {
 			}
 			var multi = localStorage.getItem('multi')
 			var obj = JSON.parse(multi)
-			var target = obj.lengtth
+			var target = obj.length
 			obj.push(add)
 			localStorage.setItem('name_' + target, json['display_name'])
 			localStorage.setItem('user_' + target, json['acct'])
@@ -288,34 +298,45 @@ function getdataAdv(domain, at) {
 		})
 }
 //ユーザーデータ更新
-function refresh(target, loadskip) {
+async function refresh(target, loadskip) {
 	var multi = localStorage.getItem('multi')
 	var obj = JSON.parse(multi)
 	if (obj[target].mode == 'misskey') {
 		return
+	}
+	let at = obj[target].at
+	if (obj[target].rt) {
+		console.log('refresh access token')
+		const atk = await refreshPleromaAt(obj[target])
+		if (atk) {
+			at = atk
+			localStorage.setItem(`acct_${target}_at`, at)
+			obj[target].at = at
+			localStorage.setItem(`multi`, JSON.stringify(obj))
+		}
 	}
 	var start = 'https://' + obj[target].domain + '/api/v1/accounts/verify_credentials'
 	fetch(start, {
 		method: 'GET',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + obj[target].at
+			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
 				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
@@ -358,6 +379,29 @@ function refresh(target, loadskip) {
 				load()
 			}
 		})
+}
+async function refreshPleromaAt(obj) {
+	const start = 'https://' + obj.domain + '/oauth/token'
+	const rt = obj.rt.split(' ')
+	let promise = await fetch(start, {
+		method: 'POST',
+		headers: {
+			'content-type': 'application/json'
+		},
+		body: JSON.stringify({
+			grant_type: 'refresh_token',
+			refresh_token: rt[0],
+			client_id: rt[1],
+			client_secret: rt[2]
+		})
+	})
+
+	const json = await promise.json()
+	if (json.access_token) {
+		return json.access_token
+	} else {
+		return false
+	}
 }
 //MarkdownやBBCodeの対応、文字数制限をチェック
 //絶対ストリーミングを閉じさせないマン
@@ -444,13 +488,13 @@ function ckdb(acct_id) {
 				'content-type': 'application/json'
 			}
 		})
-			.then(function(response) {
+			.then(function (response) {
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				if (json.error) {
 					console.error(json.error)
 					return
@@ -493,11 +537,12 @@ function multiSelector(parseC) {
 	}
 	last = last + ''
 	var sel
+	const webview = localStorage.getItem('webview_setting') === 'true'
 	if (obj.length < 1) {
 		$('#src-acct-sel').html('<option value="tootsearch">Tootsearch</option>')
-		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + '</option>')
+		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + `</option>${webview ? `<option value="webview">TweetDeck</option>` : ''}`)
 	} else {
-		Object.keys(obj).forEach(function(key) {
+		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
 			var list = key * 1 + 1
 			if (key + '' === last) {
@@ -565,8 +610,8 @@ function multiSelector(parseC) {
 		$('#src-acct-sel').append('<option value="tootsearch">Tootsearch</option>')
 		$('#add-acct-sel').append(
 			'<option value="noauth">' +
-				lang.lang_login_noauth +
-				'</option><option value="webview">Twitter</option>'
+			lang.lang_login_noauth +
+			`</option>${webview ? `<option value="webview">TweetDeck</option>` : ''}`
 		)
 		$('#dir-acct-sel').append('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	}
@@ -587,27 +632,29 @@ function enc(ver) {
 }
 //インスタンスティッカー
 function ticker() {
-	var start = 'https://toot.app/toot/'
+	var start = 'https://s.0px.io/json'
 	fetch(start, {
 		method: 'GET',
+		cors: true,
 		headers: {
 			'content-type': 'application/json'
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json) {
-				localStorage.setItem('ticker', JSON.stringify(json))
+				localStorage.removeItem('ticker')
+				localStorage.setItem('sticker', JSON.stringify(json))
 			}
 		})
 }

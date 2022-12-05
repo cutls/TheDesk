@@ -3,6 +3,7 @@
 $(document).on('click', 'a', e => {
 	var $a = $(e.target)
 	var url = $a.attr('href')
+	var acct_id = $a.attr('data-acct')
 	if (!url) {
 		var url = $a.parent().attr('href')
 	}
@@ -28,7 +29,7 @@ $(document).on('click', 'a', e => {
 					acct_id = 0
 				}
 				$a.parent().addClass('loadp')
-				$a.parent().text('Loading...')
+				
 				detEx(url, acct_id)
 			}
 		} else if (tags) {
@@ -43,13 +44,24 @@ $(document).on('click', 'a', e => {
 			if (ats[2]) {
 				//Quesdon判定
 				if (!~ats[2].indexOf('@')) {
-					udgEx(url, 'main')
+					var acct_id = $a.parent().attr('data-acct')
+					if (!acct_id) {
+						acct_id = localStorage.getItem("main")
+					}
+					udgEx(url, acct_id)
 					return false
 				} else {
-					postMessage(['openUrl', url], '*')
+					if (pwa) {
+						return true
+					} else {
+						postMessage(['openUrl', url], '*')
+					}
 				}
 			}
 		} else {
+			if (pwa) {
+				return true
+			}
 			//hrefがhttp/httpsならブラウザで
 			if (urls) {
 				if (urls[0]) {
@@ -105,7 +117,7 @@ function playSound() {
 	}
 	context = new AudioContext()
 	context.createBufferSource().start(0)
-	context.decodeAudioData(request.response, function(buf) {
+	context.decodeAudioData(request.response, function (buf) {
 		//console.log("Playing:" , source)
 		source.buffer = buf
 		source.loop = false
@@ -123,16 +135,11 @@ function playSound() {
 	volumeControl.gain.value = vol
 	source.start(0)
 	soundFile = source
-
-	function newFunction() {
-		var source
-		return source
-	}
 }
 function nano() {
 	postMessage(['nano', null], '*')
 }
-onmessage = function(e) {
+onmessage = function (e) {
 	if (e.data[0] == 'details') {
 		details(e.data[1][0], e.data[1][1])
 	} else if (e.data[0] == 'udg') {
@@ -142,10 +149,9 @@ onmessage = function(e) {
 	} else if (e.data[0] == 'post') {
 		post('pass')
 	} else if (e.data[0] == 'toastSaved') {
-		var show = `${lang.lang_img_DLDone}${
-			e.data[1][0]
-		}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`
-		M.toast({ html: show, displayLength: 5000 })
+		var showTxt = `${lang.lang_img_DLDone}${e.data[1][0]
+			}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`
+		M.toast({ html: showTxt, displayLength: 5000 })
 	} else if (e.data[0] == 'parseColumn') {
 		parseColumn(e.data[1])
 	} else if (e.data[0] == 'exportSettingsCore') {
@@ -168,7 +174,7 @@ onmessage = function(e) {
 	} else if (e.data[0] == 'npCore') {
 		npCore(e.data[1])
 	} else if (e.data[0] == 'renderMem') {
-		renderMem(e.data[1][0], e.data[1][1], e.data[1][2])
+		renderMem(e.data[1][0], e.data[1][1], e.data[1][2], e.data[1][3], e.data[1][4])
 	} else if (e.data[0] == 'updateProg') {
 		updateProg(e.data[1])
 	} else if (e.data[0] == 'updateMess') {
@@ -179,6 +185,10 @@ onmessage = function(e) {
 		asRead()
 	} else if (e.data[0] == 'asReadEnd') {
 		asReadEnd()
+	} else if (e.data[0] == 'accessibility') {
+		console.log('accessibility mode')
+		$('body').addClass('accessibility')
+		$('.window-title').before('<div class="accessMark">Screen Reader Optimized</div>')
 	} else if (e.data[0] == 'logData') {
 		$('#logs').val(e.data[1])
 		var obj = document.getElementById('logs')
@@ -188,5 +198,88 @@ onmessage = function(e) {
 			type: 'info',
 			title: e.data[1]
 		})
+	} else if (e.data[0] == 'twitterLoginComplete') {
+		location.reload()
+	} else if (e.data[0] == 'customUrl') {
+		const mode = e.data[1][0]
+		const codex = e.data[1][1]
+		if (mode === 'share') {
+			$('textarea').focus()
+			$('#textarea').val(decodeURI(codex))
+			show()
+			$('body').removeClass('mini-post')
+			$('.mini-btn').text('expand_less')
+		} else if (mode === 'manager' || mode === 'login') {
+			code(codex)
+		} else if (mode === 'spotify') {
+			var coder = codex.split(':')
+			localStorage.setItem('spotify', coder[0])
+			localStorage.setItem('spotify-refresh', coder[1])
+		}
 	}
 }
+/* PWA */
+if (pwa) {
+	function postMessage(e) {
+		if (e[0] == 'openUrl') {
+			urls = e[1].match(/https?:\/\/(.+)/)
+			if (urls) {
+				Swal.fire({
+					title: 'Open URL',
+					icon: 'info',
+					html:
+						`If you are OK, click: <a href="${urls[0]}" target="_blank" class="btn waves-effect">Here</a>`,
+					showCloseButton: false,
+					showCancelButton: true,
+					focusConfirm: false,
+					confirmButtonText: 'Close'
+				})
+			}
+		}
+	}
+}
+
+$('html').addClass(localStorage.getItem('scroll') ? localStorage.getItem('scroll') : '')
+const connection = function (event) {
+	console.log(navigator.onLine, 'network state')
+	if (!navigator.onLine) {
+		$('#re-online').addClass('hide')
+		$('#offline').removeClass('hide')
+	} else if (!$('#offline').hasClass('hide')) {
+		$('#offline').addClass('hide')
+		$('#re-online').removeClass('hide')
+	}
+}
+window.onoffline = connection
+window.ononline = connection
+
+let lastSelection = null
+let isSame = true
+$(document).on('keyup mouseup', function (e) {
+	lastSelection = (window.getSelection().toString() !== '') ? window.getSelection().getRangeAt(0) : null
+	if (!isSame) $('#pageSrc').addClass('hide')
+})
+
+// カスタム右クリックメニュー
+$(document).on('contextmenu', function (e) {
+	// テキスト選択中であれば何もしない
+	if (lastSelection !== null) {
+		const currentSelection = window.getSelection().getRangeAt(0)
+		for (let key in currentSelection) {
+			if (currentSelection[key] != lastSelection[key]) {
+				isSame = false
+				break
+			}
+		}
+
+		if (isSame && currentSelection != '') {
+			$('#pageSrc').removeClass('hide')
+			$('#pageSrc').css('left', e.pageX)
+			$('#pageSrc').css('top', e.pageY)
+			$('.srcQ').text(currentSelection)
+		}
+	}
+})
+$('textarea, input').on('contextmenu', function (e) {
+	postMessage(['textareaContextMenu', { x: e.pageX, y: e.pageY }], '*')
+})

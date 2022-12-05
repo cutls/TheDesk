@@ -1,36 +1,45 @@
+const { execSync } = require('child_process')
+const { join } = require('path')
 function np(mainWindow) {
-    const electron = require("electron");
-    const join = require('path').join;
-    const app = electron.app;
-    const fs = require("fs");
-    var ipc = electron.ipcMain;
-    ipc.on('itunes', async (e, args) => {
-        //Verified on Windows
-        console.log("Access");
-        if (args[0] == "set") {
-            
-        } else {
-            var platform = process.platform;
-            var bit = process.arch;
-            if (platform == "darwin") {
-                try {
-                    const nowplaying = require("itunes-nowplaying-mac");
-                    let value = await nowplaying();
+	var platform = process.platform
+	if (platform !== 'darwin') return false
+	const electron = require('electron')
+	const ipc = electron.ipcMain
+	ipc.on('itunes', async (e, args) => {
+		console.log('Access')
+		if (args == 'anynp') {
+			const dir = join(__dirname, "..", "main", "script", "macOSNP.scpt").replace("app.asar","app.asar.unpacked")
 
-                    const artwork = await nowplaying.getThumbnailBuffer(value.databaseID);
-                    const base64 = artwork.toString('base64');
-                    value.artwork = base64
-                    e.sender.webContents.send('itunes-np', value);
-                } catch (error) {
-                    // エラーを返す
-                    console.error(error);
-                    e.sender.webContents.send('itunes-np', error);
-                }
-            } else {
-                
-            }
-        }
-
-    });
+			const stdout = execSync(`osascript ${dir}`).toString()
+			const title = stdout.substring(0, stdout.length - 100).match(/"(.+)?"/)[1].replace('\"','"')
+			const ret = {
+				title: title,
+				anynp: true
+			}
+			e.sender.send('itunes-np', ret)
+		} else {
+			
+				try {
+					const nowplaying = require('itunes-nowplaying-mac')
+					let value = await nowplaying()
+					try {
+						const artwork = await nowplaying.getThumbnailBuffer(value.databaseID)
+						if(artwork) {
+							const base64 = artwork.toString('base64')
+							value.artwork = base64
+							e.sender.send('itunes-np', value)
+						}
+					} catch (error) {
+						console.error(error)
+						e.sender.send('itunes-np', value)
+					}
+					
+				} catch (error) {
+					console.error(error)
+					e.sender.send('itunes-np', error)
+				}
+		}
+    })
+    
 }
-exports.TheDeskNowPlaying = np;
+exports.TheDeskNowPlaying = np

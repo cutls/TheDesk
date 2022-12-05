@@ -86,7 +86,7 @@ function handleFileUpload(files, obj, no) {
 }
 
 //ファイルアップロード
-function media(b64, type, no, stamped) {
+async function media(b64, type, no, stamped) {
 	var acct_id = $('#post-acct-sel').val()
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var user = localStorage.getItem('user_' + acct_id)
@@ -94,7 +94,6 @@ function media(b64, type, no, stamped) {
 		postMessage(['stampImage', [b64, user + '@' + domain]], '*')
 		return false
 	}
-	console.log(b64)
 	var l = 4
 	var c = 'abcdefghijklmnopqrstuvwxyz0123456789'
 	var cl = c.length
@@ -131,18 +130,57 @@ function media(b64, type, no, stamped) {
 		httpreq.send(fd)
 	} else {
 		var previewer = 'preview_url'
-		var start = 'https://' + domain + '/api/v1/media'
-		httpreq.open('POST', start, true)
-		httpreq.upload.addEventListener('progress', progshow, false)
-		httpreq.responseType = 'json'
-		httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
-		httpreq.send(fd)
+		//v2/media
+		try {
+			var id = await v2MediaUpload(domain, at, fd)
+			if(!id) {
+				var start = 'https://' + domain + '/api/v1/media'
+				httpreq.open('POST', start, true)
+				httpreq.upload.addEventListener('progress', progshow, false)
+				httpreq.responseType = 'json'
+				httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+				httpreq.send(fd)
+			} else {
+				var mediav = $('#media').val()
+				var regExp = new RegExp('tmp_' + r, 'g')
+				mediav = mediav.replace(regExp, id)
+				$('#media').val(mediav)
+				var html = `<img src="../../img/picture.svg" class="preview-img pointer unknown" data-media="${id}" oncontextmenu="deleteImage('${id}')" onclick="altImage('${acct_id}','${id}')" title="${lang.lang_postimg_delete}">`
+				$('#preview').append(html)
+				todc()
+				if (localStorage.getItem('nsfw_' + acct_id)) {
+					$('#nsfw').addClass('yellow-text')
+					$('#nsfw').html('visibility')
+					$('#nsfw').addClass('nsfw-avail')
+				}
+				$('.toot-btn-group').prop('disabled', false)
+				$('select').formSelect()
+				$('#mec').text(lang.lang_there)
+				M.toast({ html: '<span>' + lang.lang_postimg_sync + '</span><button class="btn-flat toast-action" onclick="syncDetail()">Click</button>', displayLength: 3000 })
+				$('#imgup').text('')
+				$('#imgsel').show()
+				localStorage.removeItem('image')
+			} 
+		} catch {
+			var start = 'https://' + domain + '/api/v1/media'
+			httpreq.open('POST', start, true)
+			httpreq.upload.addEventListener('progress', progshow, false)
+			httpreq.responseType = 'json'
+			httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+			httpreq.send(fd)
+		}
 	}
 	httpreq.onreadystatechange = function() {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
 				setLog(start, this.status, json)
+				$('.toot-btn-group').prop('disabled', false)
+				$('select').formSelect()
+				$('#mec').text(lang.lang_there)
+				M.toast({ html: this.status + ':' +json, displayLength: 2000 })
+				$('#imgup').text('')
+				$('#imgsel').show()
 			}
 			if (!json.id) {
 				todc()
@@ -154,6 +192,10 @@ function media(b64, type, no, stamped) {
 				M.toast({ html: lang.lang_postimg_failupload, displayLength: 5000 })
 				return false
 			}
+			$('#imgup').text('')
+			$('.toot-btn-group').prop('disabled', false)
+			$('select').formSelect()
+			$('#imgsel').show()
 			var img = localStorage.getItem('img')
 			if (json.type.indexOf('image') != -1) {
 				var html = `<img src="${json[previewer]}" class="preview-img pointer" data-media="${json['id']}" oncontextmenu="deleteImage('${json['id']}')" onclick="altImage('${acct_id}','${json['id']}')" title="${lang.lang_postimg_delete}">`
@@ -173,19 +215,6 @@ function media(b64, type, no, stamped) {
 			if (img == 'url' && json['text_url']) {
 				$('#textarea').val($('#textarea').val() + ' ' + json['text_url'])
 			}
-			todc()
-			if (localStorage.getItem('nsfw_' + acct_id)) {
-				$('#nsfw').addClass('yellow-text')
-				$('#nsfw').html('visibility')
-				$('#nsfw').addClass('nsfw-avail')
-			}
-			$('.toot-btn-group').prop('disabled', false)
-			$('select').formSelect()
-			$('#mec').text(lang.lang_there)
-			M.toast({ html: lang.lang_postimg_aftupload, displayLength: 1000 })
-			$('#imgup').text('')
-			$('#imgsel').show()
-			localStorage.removeItem('image')
 		}
 	}
 }
@@ -247,8 +276,6 @@ function deleteImage(key) {
 		title: lang.lang_postimg_delete,
 		type: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
 	}).then(result => {
@@ -270,54 +297,84 @@ function altImage(acct_id, id) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	var start = 'https://' + domain + '/api/v1/media/' + id
-
-	Swal.fire({
-		title: lang.lang_postimg_desc,
-		text: lang.lang_postimg_leadContext,
-		input: 'text',
-		inputAttributes: {
-			autocapitalize: 'off'
-		},
-		showCancelButton: true,
-		confirmButtonText: 'Post',
-		showLoaderOnConfirm: true,
-		preConfirm: data => {
-			return fetch(start, {
-				method: 'PUT',
-				headers: {
-					'content-type': 'application/json',
-					Authorization: 'Bearer ' + at
-				},
-				body: JSON.stringify({
-					description: data
+	if($('[data-media=' + id + ']').hasClass('unknown')) {
+		fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
+			}
+		})
+		.then(function(response) {
+			if (!response.ok) {
+				response.text().then(function(text) {
+					setLog(response.url, response.status, text)
 				})
-			})
-				.then(function(response) {
-					if (!response.ok) {
-						response.text().then(function(text) {
-							setLog(response.url, response.status, text)
-						})
-					}
-					return response.json()
+			}
+			return response.json()
+		})
+		.catch(function(error) {
+			todo(error)
+			setLog(start, 'JSON', error)
+			console.error(error)
+		})
+		.then(function(json) {
+			console.log(json)
+			$('[data-media=' + id + ']').removeClass('unknown')
+			if(json.preview_url) {
+				$('[data-media=' + id + ']').attr('src', json.preview_url)
+			}
+		})
+	} else {
+		Swal.fire({
+			title: lang.lang_postimg_desc,
+			text: lang.lang_postimg_leadContext,
+			input: 'text',
+			inputAttributes: {
+				autocapitalize: 'off'
+			},
+			showCancelButton: true,
+			confirmButtonText: 'Post',
+			showLoaderOnConfirm: true,
+			preConfirm: data => {
+				return fetch(start, {
+					method: 'PUT',
+					headers: {
+						'content-type': 'application/json',
+						Authorization: 'Bearer ' + at
+					},
+					body: JSON.stringify({
+						description: data
+					})
 				})
-				.catch(function(error) {
-					todo(error)
-					setLog(start, 'JSON', error)
-					console.error(error)
+					.then(function(response) {
+						if (!response.ok) {
+							response.text().then(function(text) {
+								setLog(response.url, response.status, text)
+							})
+						}
+						return response.json()
+					})
+					.catch(function(error) {
+						todo(error)
+						setLog(start, 'JSON', error)
+						console.error(error)
+					})
+					.then(function(json) {
+						console.log(json)
+						$('[data-media=' + id + ']').attr('title', data)
+					})
+			},
+			allowOutsideClick: () => !Swal.isLoading()
+		}).then(result => {
+			if (result.value) {
+				Swal.fire({
+					title: 'Complete'
 				})
-				.then(function(json) {
-					console.log(json)
-					$('[data-media=' + id + ']').attr('title', data)
-				})
-		},
-		allowOutsideClick: () => !Swal.isLoading()
-	}).then(result => {
-		if (result.value) {
-			Swal.fire({
-				title: 'Complete'
-			})
-		}
-	})
+			}
+		})
+	}
+	
 }
 function stamp() {
 	if ($('#stamp').hasClass('stamp-avail')) {
@@ -327,4 +384,42 @@ function stamp() {
 		$('#stamp').html('On')
 		$('#stamp').addClass('stamp-avail')
 	}
+}
+//v2/media対応
+async function v2MediaUpload(domain, at, fd) {
+	var start = 'https://' + domain + '/api/v2/media'
+	let promise = await fetch(start, {
+		method: 'POST',
+		headers: {
+			Authorization:
+				'Bearer ' + at
+		},
+		body: fd
+	})
+	var json = await promise.json()
+	if(json.id) {
+		return json.id
+	} else {
+		return false
+	}
+}
+function alertProcessUnfinished() {
+	Swal.fire({
+		title: lang.lang_post_unfinishedMedia,
+		type: 'error',
+		showCancelButton: true,
+		confirmButtonText: lang.lang_post_retry,
+		cancelButtonText: lang.lang_no
+	}).then(result => {
+		if (result.value) {
+			post()
+		}
+	})
+}
+function syncDetail() {
+	Swal.fire({
+		title: lang.lang_post_syncDetail,
+		text: lang.lang_post_syncDetailText,
+		type: 'info'
+	})
 }

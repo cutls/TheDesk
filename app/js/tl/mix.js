@@ -19,7 +19,22 @@ async function mixtl(acct_id, tlid, type, delc, voice) {
 	additional(acct_id, tlid)
 	jQuery('time.timeago').timeago()
 	todc()
-	mixre(acct_id, tlid, 'mix', mute, voice, '')
+	if(mastodonBaseWsStatus[domain] == 'cannotuse') {
+		mixre(acct_id, tlid, 'mix', mute, voice, '')
+	} else if (mastodonBaseWsStatus[domain] == 'undetected' || mastodonBaseWsStatus[domain] == 'connecting') {
+		const mbws = setInterval(function () {
+			if(mastodonBaseWsStatus[domain] == 'cannotuse') {
+				mixre(acct_id, tlid, 'mix', mute, voice, '')
+				clearInterval(mbws)
+			} else if(mastodonBaseWsStatus[domain] == 'available') {
+				mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'public:local'}))
+				clearInterval(mbws)
+			}
+		}, 1000)
+	} else if(mastodonBaseWsStatus[domain] == 'available') {
+		mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'public:local'}))
+	}
+	
 	$(window).scrollTop(0)
 	lastId = integrated[0].id
 	beforeLastId = integrated[1].id

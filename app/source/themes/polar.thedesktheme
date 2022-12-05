@@ -1,0 +1,27 @@
+{
+	name: 'Polar Night',
+	author: 'TheDesk',
+	desc: 'TheDesk Default Theme',
+	base: 'dark',
+	primary: {
+		background: '#2e3440',
+		subcolor: '#434c5e',
+		text: '#ffffff',
+		accent: '#2d3b58',
+	},
+	advanced: {
+		modal: '#3b4252',
+		modalFooter: '#485166',
+		third: '#434c5e',
+		forth: '#4c566a',
+		bottom: '#3b4252',
+		emphasized: '#2f4b86',
+		postbox: '#434c5e',
+		active: '#2f4b86',
+		selected: '#464f61',
+		selectedWithShared: '#3e527e',
+	},
+	id: 'polar',
+	version: '2',
+	default: true
+}

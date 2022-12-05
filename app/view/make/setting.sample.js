@@ -60,16 +60,40 @@ var envConstruction = [
 		}
 	},
 	{
-		id: 'width',
-		storage: 'width',
+		checkbox: false,
+		doubleText: true,
+		data: [
+			{
+				id: 'width',
+				storage: 'width',
+				width: 50,
+				setValue: 300,
+				text: { after: 'px ~ ' }
+			},
+			{
+				id: 'maxWidth',
+				storage: 'max-width',
+				width: 50,
+				setValue: 600,
+				text: { after: 'px' }
+			}
+		],
+		text: {
+			head: '@@width@@',
+			desc: '@@widthwarn@@'
+		}
+	},
+	{
+		id: 'margin',
+		storage: 'margin',
 		checkbox: false,
 		doubleText: false,
+		setValue: 0,
 		width: 50,
-		setValue: 300,
 		text: {
-			head: '@@minwidth@@',
-			desc: '@@minwidthwarn@@',
-			after: 'px @@above@@'
+			head: '@@margin@@',
+			desc: '',
+			after: 'px'
 		}
 	},
 	{
@@ -128,6 +152,49 @@ var envConstruction = [
 		text: {
 			head: '@@useragent@@',
 			desc: '@@useragentWarn@@'
+		}
+	},
+	{
+		id: 'webview',
+		storage: 'webview_setting',
+		checkbox: true,
+		setValue: false,
+		text: {
+			head: '@@webview@@',
+			desc: '@@webviewWarn@@',
+			checkbox: [
+				{
+					text: '@@yes@@',
+					value: 'true'
+				},
+				{
+					text: '@@no@@',
+					value: 'false'
+				}
+			]
+		}
+	},
+	{
+		id: 'srcUrl',
+		storage: 'srcUrl',
+		checkbox: false,
+		doubleText: false,
+		width: 200,
+		setValue: 'https://google.com/search?q={q}',
+		text: {
+			head: '@@srcUrl@@',
+			desc: '@@srcUrlWarn@@',
+			after: ''
+		}
+	},{
+		id: 'download',
+		storage: 'dl-win',
+		checkbox: true,
+		setValue: 'no',
+		text: {
+			head: '@@downloadWin@@',
+			desc: 'ex: TheDesk-1.0.0-setup.exe',
+			checkbox: yesno
 		}
 	}
 ]
@@ -383,6 +450,52 @@ var tlConstruction = [
 		}
 	},
 	{
+		id: 'scroll',
+		storage: 'scroll',
+		checkbox: true,
+		setValue: 'normalScrollBar',
+		text: {
+			head: '@@scrollBar@@',
+			desc: '',
+			checkbox: [
+				{
+					text: '@@thick@@',
+					value: 'thickScrollBar'
+				},
+				{
+					text: '@@normal@@',
+					value: 'normalScrollBar'
+				},
+				{
+					text: '@@thin@@',
+					value: 'thinScrollBar'
+				}
+			]
+		}
+	},
+	{
+		id: 'mcm',
+		storage: 'moreContext',
+		checkbox: true,
+		setValue: 'no',
+		text: {
+			head: '@@moreContextMode@@',
+			desc: '@@moreContextModeWarn@@',
+			checkbox: yesno
+		}
+	},
+	{
+		id: 'small-header',
+		storage: 'smallHeader',
+		checkbox: true,
+		setValue: 'no',
+		text: {
+			head: '@@smallHeader@@',
+			desc: '',
+			checkbox: yesno
+		}
+	},
+	{
 		id: 'replySound',
 		storage: 'replySound',
 		checkbox: true,
@@ -472,6 +585,17 @@ var postConstruction = [
 		setValue: 'no',
 		text: {
 			head: '@@cws@@',
+			desc: '',
+			checkbox: yesno
+		}
+	},
+	{
+		id: 'cw-continue',
+		storage: 'cw-continue',
+		checkbox: true,
+		setValue: 'no',
+		text: {
+			head: '@@cwContinue@@',
 			desc: '',
 			checkbox: yesno
 		}

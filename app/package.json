@@ -1,130 +1,96 @@
 {
-  "name": "thedesk",
-  "version": "20.1.0",
-  "description": "TheDesk is a Mastodon client for PC.",
-  "repository": "https://github.com/cutls/TheDesk",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "construct": "cd view/make && node make --automatic && cd ../../",
-    "dev": "electron ./ --dev",
-    "dist": "build --linux snap",
-    "watchview": "node view/make/make.js --automatic --watch",
-    "build:js": "node build.js",
-    "build": "electron-builder",
-    "build:all": "electron-builder --win --linux",
-    "build:win": "electron-builder --win"
-  },
-  "keywords": [
-    "mastodon",
-    "client",
-    "electron",
-    "thedesk"
-  ],
-  "bugs": {
-    "url": "https://github.com/cutls/TheDesk/issues",
-    "email": "web-pro@cutls.com"
-  },
-  "homepage": "https://thedesk.top",
-  "author": {
-    "name": "Cutls",
-    "url": "https://cutls.com/@Cutls",
-    "email": "web-pro@cutls.com"
-  },
-  "contributor": [
-    {
-      "name": "とねぢ",
-      "url": "https://minohdon.jp/@toneji",
-      "email": "solfa.tono@gmail.com"
+    "name": "thedesk",
+    "version": "23.0.1",
+    "codename": "Chieri",
+    "description": "TheDesk is a Mastodon client for PC.",
+    "repository": "https://github.com/cutls/TheDesk",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "postinstall": "run-s util:*",
+        "util:hash": "node gitHash.js",
+        "util:browserify": "browserify native.js -o js/platform/native.js",
+        "construct": "node view/make/makeCli.js",
+        "construct:store": "node view/make/makeCli.js --store",
+        "dev": "run-p dev:*",
+        "dev:run": "electron ./ --dev",
+        "dev:watchview": "node view/make/makeCli.js --watch",
+        "build": "node buildCli.js",
+        "build:pwa": "node view/make/makeCli.js --pwa",
+        "build:all:x64": "node buildCli.js --withStore",
+        "build:all": "node buildCli.js --withStore --withIa32 --withArm64",
+        "lint:fix": "eslint js --fix",
+        "lint": "eslint js"
     },
-    {
-      "name": "ぽぷんじゃ",
-      "url": "https://popon.pptdn.jp/@popn_ja",
-      "email": "popn.ja@gmail.com"
-    },
-    {
-      "name": "kPherox",
-      "url": "https://pl.kpherox.dev/kPherox",
-      "email": "admin@mail.kr-kp.com"
-    }
-  ],
-  "license": "GPL-3.0",
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2",
-    "electron-dl": "^1.14.0",
-    "jimp": "^0.9.1",
-    "jquery": "^3.4.1",
-    "jquery-ui-dist": "^1.12.1",
-    "materialize-css": "git://github.com/cutls/materialize",
-    "json5": "^2.1.1",
-    "lodash": "^4.17.15",
-    "sumchecker": "^3.0.0",
-    "sweetalert2": "^9.5.3",
-    "sumchecker": "^3.0.1",
-    "sweetalert2": "^9.4.0",
-    "vue": "^2.6.10"
-  },
-  "optionalDependencies": {
-    "font-manager": "0.3.0",
-    "itunes-nowplaying-mac": "0.3.1"
-  },
-  "devDependencies": {
-    "chokidar": "^3.3.0",
-    "electron": "^7.1.1",
-    "electron-builder": "^22.1.0",
-    "electron-rebuild": "^1.8.8",
-    "readline-sync": "1.4.10"
-  },
-  "build": {
-    "productName": "TheDesk",
-    "appId": "top.thedesk",
-    "asarUnpack": [
-      "node_modules/itunes-nowplaying-mac"
+    "keywords": [
+        "mastodon",
+        "client",
+        "electron",
+        "thedesk"
     ],
-    "directories": {
-      "output": "../build"
+    "bugs": {
+        "url": "https://github.com/cutls/TheDesk/issues",
+        "email": "p@cutls.com"
     },
-    "win": {
-      "icon": "build/thedesk.ico",
-      "target": [
-        "nsis",
-        "portable",
-        "appx"
-      ]
+    "homepage": "https://thedesk.top",
+    "author": {
+        "name": "Cutls",
+        "url": "https://cutls.dev",
+        "email": "p@cutls.com"
     },
-    "appx": {
-      "identityName": "53491Cutls.TheDesk",
-      "applicationId": "Cutls.TheDesk",
-      "publisherDisplayName": "Cutls",
-      "publisher": "CN=629757F5-A5EE-474F-9562-B304A89A9FD1",
-      "languages": [
-        "JA-JP",
-        "EN-US"
-      ]
+    "contributor": [
+        {
+            "name": "とねぢ",
+            "url": "https://minohdon.jp/@toneji",
+            "email": "solfa.tono@gmail.com"
+        },
+        {
+            "name": "ぽぷんじゃ",
+            "url": "https://popon.pptdn.jp/@popn_ja",
+            "email": "popn.ja@gmail.com"
+        },
+        {
+            "name": "kPherox",
+            "url": "https://pl.kpherox.dev/kPherox",
+            "email": "admin@mail.kr-kp.com"
+        }
+    ],
+    "license": "GPL-3.0",
+    "dependencies": {
+        "@cutls/materialize-css": "1.0.0",
+        "@fortawesome/fontawesome-free": "^5.15.4",
+        "@syuilo/aiscript": "^0.11.1",
+        "electron-dl": "^3.4.0",
+        "itunes-nowplaying-mac": "https://github.com/cutls/itunes-nowplaying-mac/releases/download/v0.4.0/itunes-nowplaying-mac-0.4.0.tgz",
+        "jimp": "^0.16.2",
+        "jquery": "^3.6.0",
+        "jquery-ui-dist": "^1.13.2",
+        "json5": "^2.2.0",
+        "lodash": "^4.17.21",
+        "sanitize-html": "^2.7.2",
+        "sumchecker": "^3.0.1",
+        "sweetalert2": "^11.4.38",
+        "system-font-families": "^0.6.0",
+        "textarea-caret": "^3.1.0",
+        "uuid": "^8.3.2",
+        "vue": "^2.6.14"
     },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "artifactName": "TheDesk-setup.${ext}"
+    "devDependencies": {
+        "browserify": "^17.0.0",
+        "chokidar": "^3.5.2",
+        "dotenv": "^10.0.0",
+        "electron": "^19.0.11",
+        "electron-builder": "^23.2.0",
+        "electron-notarize": "^1.2.1",
+        "electron-rebuild": "^3.2.9",
+        "eslint": "^8.25.0",
+        "npm-run-all": "^4.1.5",
+        "readline-sync": "1.4.10"
     },
-    "linux": {
-      "icon": "build/icons",
-      "target": [
-        "zip",
-        "snap",
-        "deb"
-      ],
-      "category": "Network"
-    },
-    "mac": {
-      "target": [
-        "dmg",
-        "zip"
-      ]
-    },
-    "electronDownload": {
-      "version": "6.0.0"
-    },
-    "electronVersion": "6.0.0"
-  }
+    "resolutions": {
+        "@types/fs-extra": "^9.0.11",
+        "plist": "^3.0.5",
+        "minimist": "^1.2.6",
+        "got": "^11.8.5"
+    }
 }

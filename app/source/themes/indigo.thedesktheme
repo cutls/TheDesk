@@ -1,0 +1,27 @@
+{
+	name: 'Indigo',
+	author: 'TheDesk',
+	desc: 'TheDesk Default Theme',
+	base: 'dark',
+	primary: {
+		background: '#031833',
+		subcolor: '#1a237e',
+		text: '#fff',
+		accent: '#004d40',
+	},
+	advanced: {
+		modal: '#0d1351',
+		modalFooter: '#031833',
+		third: '#0d1351',
+		forth: '#0d47a1',
+		bottom: '#0d1351',
+		emphasized: '#4e342e',
+		postbox: '#1a237e',
+		active: '#00acc1',
+		selected: '#214f8a',
+		selectedWithShared: '#003a30',
+	},
+	id: 'indigo',
+	version: '2',
+	default: true
+}
