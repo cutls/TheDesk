@@ -600,28 +600,21 @@ function staCopy(id) {
 }
 //翻訳
 function trans(tar, to, elem) {
-	var html = elem.parents('.cvo').find('.toot').html()
-	if (html.match(/^<p>(.+)<\/p>$/)) {
-		html = html.match(/^<p>(.+)<\/p>$/)[1]
-	}
-	html = html.replace(/<br\s?\/?>/g, '\n')
-	html = html.replace(/<p>/g, '\n')
-	html = html.replace(/<\/p>/g, '\n')
-	html = $.strip_tags(html)
-	if (~tar.indexOf('zh')) {
-		tar = 'zh'
-	}
+	var id = elem.parents('.cvo').attr('toot-id')
+	alert(id)
 	$('#toot-this .additional').text('Loading...(Powered by Google Translate)')
-	var exec =
-		'https://script.google.com/macros/s/AKfycbxhwW5tjjop9Irg-y1zr_WsXlCKEzwWG6KuoOt_vVRDfEbRv0c/exec?format=json&text=' +
-		encodeURIComponent(html) +
-		'&source=' +
-		tar +
-		'&target=' +
-		to
-	console.log('Try to translate from ' + tar + ' to ' + to + ' at ' + exec)
+	var domain = localStorage.getItem('domain_' + acct_id)
+	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+		return false
+	}
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	var exec = `https://${domain}/api/v1/statuses/${id}/translate`
 	fetch(exec, {
-		method: 'GET'
+		method: 'POST',
+		headers: {
+			'content-type': 'application/json',
+			Authorization: 'Bearer ' + at
+		}
 	})
 		.then(function (response) {
 			if (!response.ok) {
@@ -637,7 +630,8 @@ function trans(tar, to, elem) {
 			console.error(error)
 		})
 		.then(function (text) {
-			elem.parents('.cvo').find('.toot').append('<span class="gray translate">' + text.text + '</span>')
+			console.log(text)
+			elem.parents('.cvo').find('.toot').append('<span class="gray translate">' + text.content + '</span>')
 		})
 }
 //ブラウザで開く
