@@ -21,5 +21,6 @@
     "misskeylogin": "Read <a href=\"https://thedesk.top/how-to-misskey-login.html\">Docs(ja)</a> to login Misskey.",
     "nodata": "Нет данных",
     "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)",
-    "haveExported": "Having the exported file of TheDesk, click here to jump setting page"
+    "haveExported": "Having the exported file of TheDesk, click here to jump setting page",
+    "redo": "Retry(re-input address)"
 }
