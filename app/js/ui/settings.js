@@ -1,9 +1,12 @@
 //設定(setting.html)で読む
-var envView = new Vue({
-    el: '#envView',
-    data: { config: envConstruction },
+Vue.createApp({
+    data() {
+        return {
+            config: envConstruction
+        }
+    },
     methods: {
-        complete: function(i, val) {
+        complete: function (i, val) {
             var ls = envView.config[i]
             let header = ls.text.head
             if (!ls.data) {
@@ -33,12 +36,11 @@ var envView = new Vue({
             return true
         },
     },
-})
-var tlView = new Vue({
-    el: '#tlView',
-    data: { config: tlConstruction },
+}).mount('#envView')
+Vue.createApp({
+    data() { return { config: tlConstruction } },
     methods: {
-        complete: function(i, val) {
+        complete: function (i, val) {
             var ls = tlView.config[i]
             let header = ls.text.head
             if (val) {
@@ -59,39 +61,40 @@ var tlView = new Vue({
             return true
         },
     },
-})
-var postView = new Vue({
-        el: '#postView',
-        data: {
+}).mount('#tlView')
+Vue.createApp({
+    data() {
+        return {
             config: postConstruction,
             kirishima: localStorage.getItem('kirishima'),
             quoters: localStorage.getItem('quoters'),
-        },
-        methods: {
-            complete: function(i, val) {
-                var ls = postView.config[i]
-                let header = ls.text.head
-                if (val) {
-                    localStorage.setItem(ls.storage, val)
+        }
+    },
+    methods: {
+        complete: function (i, val) {
+            var ls = postView.config[i]
+            let header = ls.text.head
+            if (val) {
+                localStorage.setItem(ls.storage, val)
+            } else {
+                if (!ls.data) {
+                    ls = [ls]
                 } else {
-                    if (!ls.data) {
-                        ls = [ls]
-                    } else {
-                        ls = ls.data
-                    }
-                    for (var j = 0; j < ls.length; j++) {
-                        M.toast({ html: 'Complete', displayLength: 3000 })
-                        var id = ls[j].id
-                        var val = $('#' + id).val()
-                        localStorage.setItem(ls[j].storage, val)
-                    }
+                    ls = ls.data
                 }
-                M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
-                return true
-            },
+                for (var j = 0; j < ls.length; j++) {
+                    M.toast({ html: 'Complete', displayLength: 3000 })
+                    var id = ls[j].id
+                    var val = $('#' + id).val()
+                    localStorage.setItem(ls[j].storage, val)
+                }
+            }
+            M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
+            return true
         },
-    })
-    //設定ボタン押した。
+    },
+}).mount('#postView')
+//設定ボタン押した。
 function settings() {
     var fontd = $('#font').val()
     if (fontd) {
@@ -225,7 +228,7 @@ function climute() {
             return
         }
         var templete
-        Object.keys(obj).forEach(function(key) {
+        Object.keys(obj).forEach(function (key) {
             var cli = obj[key]
             var list = key * 1 + 1
             templete =
@@ -340,18 +343,18 @@ function exportSettings() {
 
 function exportSettingsCore() {
     var exp = {}
-        //Accounts
+    //Accounts
     var multi = localStorage.getItem('multi')
     var acct = JSON.parse(multi)
     exp.accts = acct
-        //Columns
+    //Columns
     var multi = localStorage.getItem('column')
     var column = JSON.parse(multi)
     exp.columns = column
-        //Themes
+    //Themes
     var config = {}
     config.theme = localStorage.getItem('theme')
-        //Other configs
+    //Other configs
     var max = envView.config.length
     for (var i = 0; i < max; i++) {
         var ls = envView.config[i].storage
@@ -370,17 +373,17 @@ function exportSettingsCore() {
     //Font
     config.font = localStorage.getItem('font')
     exp.config = config
-        //keysc
+    //keysc
     exp.ksc = [localStorage.getItem('oks-1'), localStorage.getItem('oks-2'), localStorage.getItem('oks-3')]
-        //climu
+    //climu
     var cli = localStorage.getItem('client_mute')
     var climu = JSON.parse(cli)
     exp.clientMute = climu
-        //wordmu
+    //wordmu
     var wdm = localStorage.getItem('word_mute')
     var wordmu = JSON.parse(wdm)
     exp.wordMute = wordmu
-        //spotify
+    //spotify
     exp.spotifyArtwork = localStorage.getItem('artwork')
     var content = localStorage.getItem('np-temp')
     if (content || content == '' || content == 'null') {
@@ -391,7 +394,7 @@ function exportSettingsCore() {
     //tags
     var tagarr = localStorage.getItem('tag')
     var favtag = JSON.parse(tagarr)
-        //plugins
+    //plugins
     var plugins = localStorage.getItem('plugins')
     var plugin = JSON.parse(plugins)
     exp.plugins = plugin
@@ -482,7 +485,7 @@ function importSettingsCore(obj) {
                 localStorage.setItem('cwtext', obj.cw)
             }
             localStorage.setItem('vis', obj.vis)
-                //End
+            //End
         }
         if (obj.ksc[0]) {
             localStorage.setItem('oks-1', obj.ksc[0])
@@ -651,297 +654,297 @@ function ctLoad() {
 function ctLoadCore(args) {
     var template = ''
     var editTemplate = ''
-    Object.keys(args).forEach(function(key) {
-                var theme = args[key]
-                var themeid = theme.id
-                template = template + `<option value="${themeid}">${theme.name}${theme.compatible ? `(${lang.lang_setting_compat})` : ''}</option>`
-		if (!theme.compatible) editTemplate = editTemplate + `<option value="${themeid}">${theme.name}</option>`
-	})
-	$('#custom-sel-sel').html(template)
-	editTemplate = '<option value="add_new">' + $('#edit-selector').attr('data-add') + '</option>' + editTemplate
-	$('#custom-edit-sel').html(editTemplate)
-	$('#custom-sel-sel').val(localStorage.getItem('customtheme-id'))
-	$('select').formSelect()
+    Object.keys(args).forEach(function (key) {
+        var theme = args[key]
+        var themeid = theme.id
+        template = template + `<option value="${themeid}">${theme.name}${theme.compatible ? `(${lang.lang_setting_compat})` : ''}</option>`
+        if (!theme.compatible) editTemplate = editTemplate + `<option value="${themeid}">${theme.name}</option>`
+    })
+    $('#custom-sel-sel').html(template)
+    editTemplate = '<option value="add_new">' + $('#edit-selector').attr('data-add') + '</option>' + editTemplate
+    $('#custom-edit-sel').html(editTemplate)
+    $('#custom-sel-sel').val(localStorage.getItem('customtheme-id'))
+    $('select').formSelect()
 }
 function customSel() {
-	var id = $('#custom-sel-sel').val()
-	localStorage.setItem('customtheme-id', id)
-	themes(id)
+    var id = $('#custom-sel-sel').val()
+    localStorage.setItem('customtheme-id', id)
+    themes(id)
 }
 function custom() {
-	var id = $('#custom-edit-sel').val()
-	if (id == 'add_new') {
-		$('#custom_name').val('')
-		$('#custom_desc').val('')
-		$('#dark').prop('checked', true)
-		$('#custom_json').val('')
-		for (var i = 0; i <= 13; i++) {
-			if (i >= 4) $(`#use-color_${i}`).prop('checked', false)
-			$('#color-picker' + i + '_value').val('')
-		}
-		$('#delTheme').addClass('disabled')
-	} else {
-		$('#delTheme').removeClass('disabled')
-		postMessage(['themeJsonRequest', id + '.thedesktheme'], '*')
-	}
+    var id = $('#custom-edit-sel').val()
+    if (id == 'add_new') {
+        $('#custom_name').val('')
+        $('#custom_desc').val('')
+        $('#dark').prop('checked', true)
+        $('#custom_json').val('')
+        for (var i = 0; i <= 13; i++) {
+            if (i >= 4) $(`#use-color_${i}`).prop('checked', false)
+            $('#color-picker' + i + '_value').val('')
+        }
+        $('#delTheme').addClass('disabled')
+    } else {
+        $('#delTheme').removeClass('disabled')
+        postMessage(['themeJsonRequest', id + '.thedesktheme'], '*')
+    }
 }
 function customConnect(raw) {
-	var args = raw[0]
-	$('#custom_name').val(`${args.name} ${args.default ? 'Customed' : ''}`)
-	$('#custom_desc').val(args.default ? 'TheDesk default theme with some changes by user' : args.desc)
-	$('#' + args.base).prop('checked', true)
-	//Background
-	$('#color-picker0_value').val(args.primary.background)
-	//Text
-	$('#color-picker1_value').val(args.primary.text)
-	//Subcolor
-	$('#color-picker2_value').val(args.primary.subcolor)
-	//Accent
-	$('#color-picker3_value').val(args.primary.accent)
-	let advanced = ['modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
-	let i = 4
-	for (tag of advanced) {
-		if (args.advanced[tag]) {
-			$(`#color-picker${i}_value`).val(args.advanced[tag])
-		}
-		$(`#use-color_${i}`).prop('checked', true)
-		i++
-	}
-	$('#custom_json').val(raw[1])
-	if (args.default) {
-		$('#delTheme').addClass('disabled')
-	}
+    var args = raw[0]
+    $('#custom_name').val(`${args.name} ${args.default ? 'Customed' : ''}`)
+    $('#custom_desc').val(args.default ? 'TheDesk default theme with some changes by user' : args.desc)
+    $('#' + args.base).prop('checked', true)
+    //Background
+    $('#color-picker0_value').val(args.primary.background)
+    //Text
+    $('#color-picker1_value').val(args.primary.text)
+    //Subcolor
+    $('#color-picker2_value').val(args.primary.subcolor)
+    //Accent
+    $('#color-picker3_value').val(args.primary.accent)
+    let advanced = ['modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
+    let i = 4
+    for (tag of advanced) {
+        if (args.advanced[tag]) {
+            $(`#color-picker${i}_value`).val(args.advanced[tag])
+        }
+        $(`#use-color_${i}`).prop('checked', true)
+        i++
+    }
+    $('#custom_json').val(raw[1])
+    if (args.default) {
+        $('#delTheme').addClass('disabled')
+    }
 }
 function customImp() {
-	var json = $('#custom_import').val()
-	if (JSON5.parse(json)) {
-		postMessage(['themeJsonCreate', json], '*')
-	} else {
-		Swal.fire({
-			type: 'error',
-			title: 'Error',
-		})
-	}
+    var json = $('#custom_import').val()
+    if (JSON5.parse(json)) {
+        postMessage(['themeJsonCreate', json], '*')
+    } else {
+        Swal.fire({
+            type: 'error',
+            title: 'Error',
+        })
+    }
 }
 function advanced() {
-	$('.advanced').toggleClass('hide')
-	$('#pickers').toggleClass('advanceTheme')
+    $('.advanced').toggleClass('hide')
+    $('#pickers').toggleClass('advanceTheme')
 }
 function clearCustomImport() {
-	$('#custom_import').val('')
+    $('#custom_import').val('')
 }
 function hardwareAcceleration(had) {
-	postMessage(['ha', had], '*')
+    postMessage(['ha', had], '*')
 }
 function useragent(val) {
-	postMessage(['ua', val], '*')
+    postMessage(['ua', val], '*')
 }
 function frameSet(val) {
-	postMessage(['frameSet', val], '*')
+    postMessage(['frameSet', val], '*')
 }
 function customSound(key) {
-	postMessage(['customSound', key], '*')
+    postMessage(['customSound', key], '*')
 }
 function customSoundSave(key, file) {
-	localStorage.setItem('custom' + key, file)
-	$(`#c${key}-file`).text(file)
+    localStorage.setItem('custom' + key, file)
+    $(`#c${key}-file`).text(file)
 }
 function pluginLoad() {
-	$('#plugin-edit-sel').val('add_new')
-	$('.plugin_delete').addClass('disabled')
-	var template = ''
-	var pgns = localStorage.getItem('plugins')
-	var args = JSON.parse(pgns ? pgns : '[]')
-	Object.keys(args).forEach(function (key) {
-		var theme = args[key]
-		var themeid = theme.id
-		template = template + `<option value="${themeid}">${getMeta(theme.content).data.name}</option>`
-	})
-	template = '<option value="add_new">' + $('#plugin-selector').attr('data-add') + '</option>' + template
-	$('#plugin-edit-sel').html(template)
-	$('select').formSelect()
+    $('#plugin-edit-sel').val('add_new')
+    $('.plugin_delete').addClass('disabled')
+    var template = ''
+    var pgns = localStorage.getItem('plugins')
+    var args = JSON.parse(pgns ? pgns : '[]')
+    Object.keys(args).forEach(function (key) {
+        var theme = args[key]
+        var themeid = theme.id
+        template = template + `<option value="${themeid}">${getMeta(theme.content).data.name}</option>`
+    })
+    template = '<option value="add_new">' + $('#plugin-selector').attr('data-add') + '</option>' + template
+    $('#plugin-edit-sel').html(template)
+    $('select').formSelect()
 }
 function pluginEdit() {
-	var id = $('#plugin-edit-sel').val()
-	$('#plugin').attr('data-id', id)
-	if (id == 'add_new') {
-		editor.setValue('', -1)
-		$('.plugin_delete').addClass('disabled')
-	} else {
-		$('.plugin_delete').removeClass('disabled')
-		var pgns = localStorage.getItem('plugins')
-		var args = JSON.parse(pgns ? pgns : '[]')
-		Object.keys(args).forEach(function (key) {
-			var plugin = args[key]
-			var targetId = plugin.id
-			if (targetId == id) editor.setValue(plugin.content, -1)
-		})
-	}
+    var id = $('#plugin-edit-sel').val()
+    $('#plugin').attr('data-id', id)
+    if (id == 'add_new') {
+        editor.setValue('', -1)
+        $('.plugin_delete').addClass('disabled')
+    } else {
+        $('.plugin_delete').removeClass('disabled')
+        var pgns = localStorage.getItem('plugins')
+        var args = JSON.parse(pgns ? pgns : '[]')
+        Object.keys(args).forEach(function (key) {
+            var plugin = args[key]
+            var targetId = plugin.id
+            if (targetId == id) editor.setValue(plugin.content, -1)
+        })
+    }
 }
 function completePlugin(comp) {
-	var pgns = localStorage.getItem('plugins')
-	var args = JSON.parse(pgns ? pgns : '[]')
-	var id = $('#plugin').attr('data-id')
+    var pgns = localStorage.getItem('plugins')
+    var args = JSON.parse(pgns ? pgns : '[]')
+    var id = $('#plugin').attr('data-id')
 
-	var inputPlugin = editor.getValue()
-	var meta = getMeta(inputPlugin)
-	if (!meta.data) {
-		Swal.fire({
-			icon: 'error',
-			title: 'Syntax Error',
-			text: `error on line ${meta.location.start.line}`,
-			text: meta,
-		})
-		return false
-	}
-	if (!meta.data.name || !meta.data.version || !meta.data.event || !meta.data.author) {
-		Swal.fire({
-			icon: 'error',
-			title: 'Meta data error',
-			title: 'Syntax Error of META DATA',
-		})
-		return false
-	}
-	if (id == 'add_new') {
-		id = makeCID()
-		args.push({
-			id: id,
-			content: inputPlugin,
-		})
-	} else {
-		Object.keys(args).forEach(function (key) {
-			var plugin = args[key]
-			var targetId = plugin.id
-			if (targetId == id) args[key].content = inputPlugin
-		})
-	}
-	var ss = args
-	localStorage.setItem('plugins', JSON.stringify(ss))
-	if (comp) return false
-	$('#plugin').attr('data-id', 'add_new')
-	editor.setValue('', -1)
-	pluginLoad()
+    var inputPlugin = editor.getValue()
+    var meta = getMeta(inputPlugin)
+    if (!meta.data) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Syntax Error',
+            text: `error on line ${meta.location.start.line}`,
+            text: meta,
+        })
+        return false
+    }
+    if (!meta.data.name || !meta.data.version || !meta.data.event || !meta.data.author) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Meta data error',
+            title: 'Syntax Error of META DATA',
+        })
+        return false
+    }
+    if (id == 'add_new') {
+        id = makeCID()
+        args.push({
+            id: id,
+            content: inputPlugin,
+        })
+    } else {
+        Object.keys(args).forEach(function (key) {
+            var plugin = args[key]
+            var targetId = plugin.id
+            if (targetId == id) args[key].content = inputPlugin
+        })
+    }
+    var ss = args
+    localStorage.setItem('plugins', JSON.stringify(ss))
+    if (comp) return false
+    $('#plugin').attr('data-id', 'add_new')
+    editor.setValue('', -1)
+    pluginLoad()
 }
 function testExecTrg() {
-	var inputPlugin = editor.getValue()
-	var meta = getMeta(inputPlugin)
-	if (meta.location) {
-		Swal.fire({
-			icon: 'error',
-			title: 'Error',
-			text: `error on line ${meta.location.start.line}`,
-			text: meta,
-		})
-		return false
-	}
-	testExec(inputPlugin)
+    var inputPlugin = editor.getValue()
+    var meta = getMeta(inputPlugin)
+    if (meta.location) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `error on line ${meta.location.start.line}`,
+            text: meta,
+        })
+        return false
+    }
+    testExec(inputPlugin)
 }
 async function deletePlugin() {
-	const delIsIt = await Swal.fire({
-		title: 'delete',
-		icon: 'warning',
-		showCancelButton: true,
-	})
-	if (!delIsIt.isConfirmed) return false
-	editor.setValue('', -1)
-	var pgns = localStorage.getItem('plugins')
-	var args = JSON.parse(pgns ? pgns : '[]')
-	var id = $('#plugin').attr('data-id')
-	$('#plugin').attr('data-id', 'add_new')
-	var ss = []
-	Object.keys(args).forEach(function (key) {
-		var plugin = args[key]
-		var targetId = plugin.id
-		if (targetId != id) ss.push(plugin)
-	})
-	localStorage.setItem('plugins', JSON.stringify(ss))
-	pluginLoad()
+    const delIsIt = await Swal.fire({
+        title: 'delete',
+        icon: 'warning',
+        showCancelButton: true,
+    })
+    if (!delIsIt.isConfirmed) return false
+    editor.setValue('', -1)
+    var pgns = localStorage.getItem('plugins')
+    var args = JSON.parse(pgns ? pgns : '[]')
+    var id = $('#plugin').attr('data-id')
+    $('#plugin').attr('data-id', 'add_new')
+    var ss = []
+    Object.keys(args).forEach(function (key) {
+        var plugin = args[key]
+        var targetId = plugin.id
+        if (targetId != id) ss.push(plugin)
+    })
+    localStorage.setItem('plugins', JSON.stringify(ss))
+    pluginLoad()
 }
 function execEditPlugin() {
-	completePlugin(true)
-	var id = $('#plugin').attr('data-id')
-	var inputPlugin = editor.getValue()
-	var meta = getMeta(inputPlugin).data
-	execPlugin(id, meta.event, { acct_id: 0, id: null })
+    completePlugin(true)
+    var id = $('#plugin').attr('data-id')
+    var inputPlugin = editor.getValue()
+    var meta = getMeta(inputPlugin).data
+    execPlugin(id, meta.event, { acct_id: 0, id: null })
 }
 window.onload = function () {
-	//最初に読む
-	load()
-	climute()
-	wordmute()
-	wordemp()
-	checkSpotify()
-	voiceSettingLoad()
-	oksload()
-	ctLoad()
-	pluginLoad()
-	$('body').addClass(localStorage.getItem('platform'))
+    //最初に読む
+    load()
+    climute()
+    wordmute()
+    wordemp()
+    checkSpotify()
+    voiceSettingLoad()
+    oksload()
+    ctLoad()
+    pluginLoad()
+    $('body').addClass(localStorage.getItem('platform'))
 }
 //設定画面で未読マーカーは要らない
 function asReadEnd() {
-	postMessage(['asReadComp', ''], '*')
+    postMessage(['asReadComp', ''], '*')
 }
 function checkupd() {
-	if (localStorage.getItem('winstore') == 'brewcask' || localStorage.getItem('winstore') == 'snapcraft' || localStorage.getItem('winstore') == 'winstore') {
-		var winstore = true
-	} else {
-		var winstore = false
-	}
-	var ver = localStorage.getItem('ver')
-	var start = 'https://thedesk.top/ver.json'
-	fetch(start, {
-		method: 'GET',
-	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function (error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function (mess) {
-			console.table(mess)
-			if (mess) {
-				var platform = localStorage.getItem('platform')
-				if (platform == 'darwin') {
-					var newest = mess.desk_mac
-				} else {
-					var newest = mess.desk
-				}
-				if (newest == ver) {
-					Swal.fire({
-						type: 'info',
-						text: lang.lang_setting_noupd,
-						html: ver,
-					})
-				} else if (ver.indexOf('beta') != -1 || winstore) {
-					Swal.fire({
-						type: 'info',
-						text: lang.lang_setting_thisisbeta,
-						html: ver,
-					})
-				} else {
-					localStorage.removeItem('new-ver-skip')
-					location.href = 'index.html'
-				}
-			}
-		})
+    if (localStorage.getItem('winstore') == 'brewcask' || localStorage.getItem('winstore') == 'snapcraft' || localStorage.getItem('winstore') == 'winstore') {
+        var winstore = true
+    } else {
+        var winstore = false
+    }
+    var ver = localStorage.getItem('ver')
+    var start = 'https://thedesk.top/ver.json'
+    fetch(start, {
+        method: 'GET',
+    })
+        .then(function (response) {
+            if (!response.ok) {
+                response.text().then(function (text) {
+                    setLog(response.url, response.status, text)
+                })
+            }
+            return response.json()
+        })
+        .catch(function (error) {
+            todo(error)
+            setLog(start, 'JSON', error)
+            console.error(error)
+        })
+        .then(function (mess) {
+            console.table(mess)
+            if (mess) {
+                var platform = localStorage.getItem('platform')
+                if (platform == 'darwin') {
+                    var newest = mess.desk_mac
+                } else {
+                    var newest = mess.desk
+                }
+                if (newest == ver) {
+                    Swal.fire({
+                        type: 'info',
+                        text: lang.lang_setting_noupd,
+                        html: ver,
+                    })
+                } else if (ver.indexOf('beta') != -1 || winstore) {
+                    Swal.fire({
+                        type: 'info',
+                        text: lang.lang_setting_thisisbeta,
+                        html: ver,
+                    })
+                } else {
+                    localStorage.removeItem('new-ver-skip')
+                    location.href = 'index.html'
+                }
+            }
+        })
 }
 function lastFmSet() {
-	if ($('#lastFmUser').val()) {
-		localStorage.setItem('lastFmUser', $('#lastFmUser').val())
-	} else {
-		localStorage.removeItem('lastFmUser')
-	}
-	M.toast({ html: 'Complete: last.fm', displayLength: 3000 })
+    if ($('#lastFmUser').val()) {
+        localStorage.setItem('lastFmUser', $('#lastFmUser').val())
+    } else {
+        localStorage.removeItem('lastFmUser')
+    }
+    M.toast({ html: 'Complete: last.fm', displayLength: 3000 })
 }
 
 function stopVideo() {
-	return false
+    return false
 }
