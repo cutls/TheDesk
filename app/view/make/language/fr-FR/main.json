@@ -50,6 +50,8 @@
     "lang_manager_logout": "Se déconnecter",
     "lang_manager_maxChars": "Nombre maximum de caractères de pouets",
     "lang_manager_refreshAt": "Se connecter avec ce domaine",
+    "lang_manager_codesetup_title": "Skip code-setup",
+    "lang_manager_codesetup": "If you failed log-in, please click Cancel.",
     "lang_bbmd_misskey": "TheDesk considère \"@\" comme une réponse, mais met un autre paramètre. Non listé sur Mastodon signifie Accueil sur Misskey.",
     "lang_emoji_get": "Téléchargez les émojis",
     "lang_emoji_custom": "Émojis personnalisés",
