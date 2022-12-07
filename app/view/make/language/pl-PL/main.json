@@ -50,6 +50,8 @@
     "lang_manager_logout": "Wyloguj się",
     "lang_manager_maxChars": "Maksymalna liczba znaków w tootach",
     "lang_manager_refreshAt": "Zaloguj się za pomocą tej domeny",
+    "lang_manager_codesetup_title": "Skip code-setup",
+    "lang_manager_codesetup": "If you failed log-in, please click Cancel.",
     "lang_bbmd_misskey": "TheDesk uważa \"@\" za odpowiedź, ale wprowadź inny parametr. Nieskatalogowany w Mastodon oznacza Home na Misskey.",
     "lang_emoji_get": "Pobierzz emotikony",
     "lang_emoji_custom": "Custom emojis",
