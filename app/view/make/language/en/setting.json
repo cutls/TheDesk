@@ -131,6 +131,7 @@
   "autocwwarn": "Show dialog whether you make too-long text hidden.",
   "defaultcw": "Default warining text",
   "cws": "Always CW set",
+  "cwContinue": "Keep CW enabled",
   "defaultvis": "Default visibility",
   "public": "Public",
   "unlisted": "Unlisted",

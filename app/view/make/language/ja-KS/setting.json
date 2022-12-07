@@ -130,6 +130,7 @@
   "autocwwarn": "下で指定した以上のトゥートを投稿しよ思ったらCWするかのダイアログが出るで。",
   "defaultcw": "デフォルトの警告文",
   "cws": "標準でCWを設定",
+  "cwContinue": "CWを維持する",
   "defaultvis": "デフォルトの公開設定",
   "public": "公開(Public)",
   "unlisted": "未収載(Unlisted)",
