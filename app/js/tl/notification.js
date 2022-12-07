@@ -32,6 +32,7 @@ function notfColumn(acct_id, tlid, sys) {
         } else {
             var exc = ''
         }
+        if (exc === 'null') exc = ''
         var start = 'https://' + domain + '/api/v1/notifications' + exc
         httpreq.open('GET', start, true)
         httpreq.setRequestHeader('Content-Type', 'application/json')
