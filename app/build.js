@@ -11,6 +11,7 @@ const construct = require('./view/make/make.js')
 const { platform, arch } = process
 const Platform = builder.Platform
 const Arch = builder.Arch
+require('dotenv').config()
 const artifactName = 'TheDesk-setup-${arch}.${ext}'
 const config = {
     productName: 'TheDesk',
@@ -173,6 +174,9 @@ async function cmd(options) {
         }
         if (platform === 'darwin' && !isTrue(options, 'skipMacOS')) {
             if (isTrue(options, 'unnotarize')) delete config.afterSign
+            if (isTrue(options, 'unnotarize')) delete config.mac.entitlements
+            if (isTrue(options, 'unnotarize')) delete config.mac.entitlementsInherit
+            if (isTrue(options, 'unnotarize')) process.env.CSC_IDENTITY_AUTO_DISCOVERY = false
             if (arch === 'x64') {
                 if (!isTrue(options, 'skipX64')) {
                     await build(Platform.MAC, Arch.x64, config)

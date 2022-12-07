@@ -1,6 +1,10 @@
 require('dotenv').config()
-const { notarize } = require('@electron/notarize')
+const { notarize } = require('electron-notarize')
+
+// Notarizeをしない場合、下のuseNotarizeをtrueからfalseに変更してください。
 const useNotarize = true
+
+
 exports.default = async function notarizing(context) {
     const { electronPlatformName, appOutDir } = context
     if (electronPlatformName !== 'darwin' || !useNotarize) return
