@@ -37,6 +37,7 @@ function src(mode, offset) {
 	var acct_id = $('#src-acct-sel').val()
 	if (acct_id == 'tootsearch') {
 		tsAdd(q)
+		$('#src-contents').html('')
 		return false
 	}
 	localStorage.setItem('last-use', acct_id)
@@ -361,16 +362,12 @@ async function trend() {
 		console.log(linkTrends)
 		let links = ''
 		for (const link of linkTrends) {
-			links = links + `<a href="${link.url}" target="_blank">${link.url}</a><br />` + cardHtml(link, acct_id, '') + `<br />`
+			links = links + `<a href="${link.url}" target="_blank">${link.url}</a><br />` + cardHtml(link, acct_id, '') + `<hr />`
 		}
 		$('#src-contents').append(`<div id="src-content-link">Trend Links<br />${links}</div>`)
 	} catch {
 
 	}
-
-
-
-
 }
 function srcBox(mode) {
 	if (mode == 'open') {
