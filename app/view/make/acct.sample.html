@@ -55,8 +55,9 @@
                             <label for="autocomplete-input">URL</label>
                         </div>
                         <div class="col s4 loginBtnWrap">
-                            <button class="btn waves-effect" onclick="instance()"><i
-									class="material-icons left">login</i>Login</button>
+                            <button class="btn waves-effect" id="loginBtn" onclick="instance()">
+                                <i class="material-icons left">login</i>Login
+                            </button>
                         </div>
                     </div>
 
@@ -80,6 +81,7 @@
         </div>
         <div id="auth" style="display:none">
             @@codepastewarn@@<br />
+            <a onclick="backToInit()" class="pointer">@@redo@@</a>
             <input type="text" id="code" placeholder="@@codepaste@@" required />
             <button class="btn waves-effect" onclick="code()">Auth</button><br />
             <br />

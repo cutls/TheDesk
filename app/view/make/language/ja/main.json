@@ -50,6 +50,8 @@
     "lang_manager_logout": "ログアウト",
     "lang_manager_maxChars": "投稿最大文字数",
     "lang_manager_refreshAt": "このドメインでログイン",
+    "lang_manager_codesetup_title": "コードスキップログイン",
+    "lang_manager_codesetup": "うまくログインできなかった場合、「キャンセル」を押してください",
     "lang_bbmd_misskey": "TheDeskにおけるMisskeyでは、@を返信として扱いますが、全ての@は消去され別パラメータに入力されます。また、「未収載」を「ホーム」として扱います。",
     "lang_emoji_get": "絵文字リストを取得",
     "lang_emoji_custom": "カスタム絵文字",

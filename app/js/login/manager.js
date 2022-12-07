@@ -367,9 +367,13 @@ function support() {
 		}
 	})
 }
+function backToInit() {
+	$('#auth').hide()
+	$('#add').show()
+}
 
 //URL指定してポップアップ
-function login(url) {
+async function login(url) {
 	var multi = localStorage.getItem('multi')
 	var obj = JSON.parse(multi)
 	if ($('#misskey:checked').val() == 'on') {
@@ -378,16 +382,18 @@ function login(url) {
 		return
 	}
 	$('#compt').hide()
-	if ($('#linux:checked').val() == 'on') {
-		var red = 'urn:ietf:wg:oauth:2.0:oob'
+	const start = `https://${url}/api/v1/apps`
+	$('#loginBtn').attr('disabled', true)
+	const nextSetup = await versionChecker(url)
+	$('#loginBtn').attr('disabled', false)
+	let red = 'thedesk://manager'
+	if (!nextSetup) {
+		red = 'urn:ietf:wg:oauth:2.0:oob'
 		if (~url.indexOf('pixelfed')) {
 			red = 'https://thedesk.top/hello.html'
 		}
-	} else {
-		var red = 'thedesk://manager'
 	}
 	localStorage.setItem('redirect', red)
-	var start = 'https://' + url + '/api/v1/apps'
 	var httpreq = new XMLHttpRequest()
 	httpreq.open('POST', start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
@@ -420,103 +426,86 @@ function login(url) {
 			localStorage.setItem('client_id', json['client_id'])
 			localStorage.setItem('client_secret', json['client_secret'])
 			$('#auth').show()
-			versionChecker(url)
 			$('#add').hide()
 			postMessage(['openUrl', auth], '*')
 		}
 	}
 }
-function versionChecker(url) {
-	var start = 'https://' + url + '/api/v1/instance'
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
+async function versionChecker(url) {
+	const start = `https://${url}/api/v1/instance`
+	try {
+		const response = await fetch(start, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		if (!response.ok) {
+			response.text().then(function (text) {
+				setLog(response.url, response.status, text)
+			})
 		}
-	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
+		const json = await response.json()
+		const version = json.version
+		if (version) {
+			const reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u)
+			if (reg) versionCompat(json.title, version)
+			if (version.match('compatible')) {
+				$('#compt-warn').show()
+				return false
+			} else {
+				$('#compt-warn').hide()
+				if (pwa) return true
+				const codeSetupCheck = await Swal.fire({
+					title: lang.lang_manager_codesetup_title,
+					text: lang.lang_manager_codesetup,
+					icon: 'info',
+					showCancelButton: true
 				})
+				if (!codeSetupCheck.isConfirmed) return false
+				return true
 			}
-			return response.json()
-		})
-		.catch(function (error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function (json) {
-			var version = json.version
-			if (version) {
-				var reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u)
-				if (reg) {
-					versionCompat(reg[1], reg, json.title, reg[0])
-				}
-			}
-		})
-}
-function versionCompat(prefix, ver, title, real) {
-	$('#compt-instance').text(title)
-	$('#compt-ver').text(real)
-	if (~real.indexOf('compatible')) {
-		$('#compt-warn').show()
-	} else {
-		$('#compt-warn').hide()
+		}
+	} catch {
+		return false
 	}
+}
+async function versionCompat(title, version) {
+	const [sem, a, b, c] = version.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/)
+	$('#compt-instance').text(title)
+	$('#compt-ver').text(version)
 	$('#compt-list').html('')
 	var start = '../../source/version.json'
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
+	const response = await fetch(start)
+	const json = await response.json()
+	const keys = Object.keys(json)
+	let i = 0
+	let onceAdd = false
+	for (const targetVersion of keys) {
+		const data = json[targetVersion]
+		const [tsem, ta, tb, tc] = targetVersion.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/)
+		let add = false
+		if (ta === a) {
+			if (tb === b) {
+				if (tc > c) {
+					add = true
+				}
+			} else if (tb > b) {
+				add = true
+			}
+		} else if (ta > a) {
+			add = true
 		}
-	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function (error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function (json) {
-			var complete = false
-			var ct = 0
-			var jl = 0
-			var jl2 = 0
-			Object.keys(json).forEach(function (key) {
-				var data = json[key]
-				if (data) {
-					jl++
-					if (key != real && !complete) {
-						for (var i = 0; i < data.length; i++) {
-							var e = ''
-							if (i == 0) {
-								e = '(' + key + ')'
-							}
-							$('#compt-list').append('<li>' + data[i] + e + '</li>')
-							ct++
-							e = ''
-						}
-						jl2++
-					} else if (!complete) {
-						complete = true
-					}
-				}
-			})
-			if (lang.language == 'ja' && ct > 0) {
-				if (jl2 != jl && prefix != '1') {
-					$('#compt').show()
-				}
-			}
-		})
+		if (!add) break
+		if (add) onceAdd = true
+		for (const note of data) {
+			$('#compt-list').append(`<li>${note}(${targetVersion})</li>`)
+		}
+		i++
+	}
+	if (lang.language == 'ja' && onceAdd) {
+		$('#compt').show()
+	}
 }
 //これが後のMisskeyである。
 function misskeyLogin(url) {
@@ -1156,9 +1145,8 @@ function asReadEnd() {
 
 // Or with jQuery
 
-$(document).ready(function(){
-    $('input.autocomplete').autocomplete({
-      data: {},
-    });
-  });
-        
+$(document).ready(function () {
+	$('input.autocomplete').autocomplete({
+		data: {},
+	});
+});
