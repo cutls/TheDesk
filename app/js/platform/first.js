@@ -4,7 +4,11 @@ window.onload = function() {
     connection()
     initPlugin(plugins)
     if (localStorage.getItem('control-center-np')) $('#ccnp').removeClass('hide')
+	
 }
+
+const size = localStorage.getItem('size')
+if (size) $('html,body').css('font-size', `${size}px`)
 $.strip_tags = function(str, allowed) {
     if (!str) {
         return ''

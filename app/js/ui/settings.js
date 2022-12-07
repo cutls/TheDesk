@@ -1,5 +1,5 @@
 //設定(setting.html)で読む
-Vue.createApp({
+const envView = Vue.createApp({
     data() {
         return {
             config: envConstruction
@@ -7,7 +7,7 @@ Vue.createApp({
     },
     methods: {
         complete: function (i, val) {
-            var ls = envView.config[i]
+            var ls = this.config[i]
             let header = ls.text.head
             if (!ls.data) {
                 ls = [ls]
@@ -32,16 +32,19 @@ Vue.createApp({
             if (ls[0].id == 'frame') {
                 frameSet(val)
             }
+            if (ls[0].id == 'size') {
+	            $('html,body').css('font-size', `${val}px`)
+            }
             M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
             return true
         },
     },
 }).mount('#envView')
-Vue.createApp({
+const tlView = Vue.createApp({
     data() { return { config: tlConstruction } },
     methods: {
         complete: function (i, val) {
-            var ls = tlView.config[i]
+            var ls = this.config[i]
             let header = ls.text.head
             if (val) {
                 localStorage.setItem(ls.storage, val)
@@ -62,7 +65,7 @@ Vue.createApp({
         },
     },
 }).mount('#tlView')
-Vue.createApp({
+const postView = Vue.createApp({
     data() {
         return {
             config: postConstruction,
@@ -72,7 +75,7 @@ Vue.createApp({
     },
     methods: {
         complete: function (i, val) {
-            var ls = postView.config[i]
+            var ls = this.config[i]
             let header = ls.text.head
             if (val) {
                 localStorage.setItem(ls.storage, val)

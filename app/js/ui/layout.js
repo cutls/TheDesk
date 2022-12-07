@@ -26,12 +26,6 @@ function parseColumn(target, dontclose) {
 		target = 'zero'
 	}
 	console.log('%c Parse column', 'color:red;font-size:125%')
-	var size = localStorage.getItem('size')
-	if (size) {
-		$('#timeline-container').css('font-size', size + 'px')
-		$('.toot-reset').css('font-size', size + 'px')
-		$('.cont-series').css('font-size', size + 'px')
-	}
 	if (localStorage.getItem('menu-done')) {
 		$('#fukidashi').addClass('hide')
 	}
