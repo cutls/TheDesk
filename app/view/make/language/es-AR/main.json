@@ -50,6 +50,8 @@
     "lang_manager_logout": "Cerrar sesión",
     "lang_manager_maxChars": "Máx. de caracteres para toots",
     "lang_manager_refreshAt": "Iniciar sesión con este dominio",
+    "lang_manager_codesetup_title": "Skip code-setup",
+    "lang_manager_codesetup": "If you failed log-in, please click Cancel.",
     "lang_bbmd_misskey": "TheDesk considera \"@\" como respuesta, pero podés poner otro parámetro. \"No listado\" en Mastodon significa \"Principal\" en Misskey.",
     "lang_emoji_get": "Obtené emojis",
     "lang_emoji_custom": "Emojis personalizados",
