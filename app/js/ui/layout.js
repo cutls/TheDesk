@@ -642,8 +642,6 @@ function addselCk() {
 }
 //カラム削除
 function removeColumn(tlid) {
-	$('#sort-box').addClass('hide')
-	$('#sort-box').removeClass('show')
 	Swal.fire({
 		title: lang.lang_layout_deleteColumn,
 		text: lang.lang_layout_deleteColumnDesc,

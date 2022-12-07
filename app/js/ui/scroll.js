@@ -60,11 +60,10 @@ function goTop(id) {
 	$('#timeline_box_' + id + '_box .tl-box').animate({ scrollTop: 0 })
 }
 function goColumn(key) {
-	$('#sort-box').addClass('hide')
-	$('#sort-box').removeClass('show')
 	if ($('[tlid=' + key + ']').length) {
 		$('#timeline-container').animate({
 			scrollLeft: $('#timeline-container').scrollLeft() + $('[tlid=' + key + ']').offset().left
 		})
 	}
+	sortLoad()
 }
