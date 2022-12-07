@@ -29,13 +29,9 @@ if (!gotTheLock) {
 } else {
 	app.on('second-instance', (event, commandLine, workingDirector) => {
 		opening = false
-		const m = commandLine[2].match(/([a-zA-Z0-9]+)\/\?[a-zA-Z-0-9]+=(.+)/)
+		const m = commandLine[2].match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=(.+)/)
 		if (m) {
 			mainWindow.send('customUrl', [m[1], m[2]])
-		}
-		if (mainWindow) {
-			if (mainWindow.isMinimized()) mainWindow.restore()
-			mainWindow.focus()
 		}
 	})
 }
@@ -44,6 +40,13 @@ if (!gotTheLock) {
 app.on('window-all-closed', function () {
 	electron.session.defaultSession.clearCache(() => { })
 	app.quit()
+})
+app.on('open-url', function (event, url) {
+	event.preventDefault()
+	const m = url.match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=(.+)/)
+	if (m) {
+		mainWindow.send('customUrl', [m[1], m[2]])
+	}
 })
 function isFile(file) {
 	try {
@@ -55,6 +58,7 @@ function isFile(file) {
 }
 function createWindow() {
 	var lang_path = join(app.getPath('userData'), 'language')
+	console.log(lang_path)
 	if (isFile(lang_path)) {
 		var lang = fs.readFileSync(lang_path, 'utf8')
 	} else {
