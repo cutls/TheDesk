@@ -97,8 +97,7 @@
 				<button class="waves-effect btn linux hide" onclick="update('linux')" style="margin-left: 15px;">@@linux@@</button>
 				<button class="waves-effect btn linux hide" onclick="update('linuxdeb')" style="margin-left: 15px;">@@linuxdeb@@</button>
 				<button class="waves-effect btn linux hide" onclick="update('linuxsnap')" style="margin-left: 15px;">@@linuxsnap@@</button>
-				<button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left: 15px;">@@download@@(Intel Mac)</button>
-				<button class="waves-effect btn mac hide" onclick="update('macarm64')" style="margin-left: 15px;">@@download@@(M1 Mac)</button>
+				<button class="waves-effect btn mac hide" onclick="update('mac')" style="margin-left: 15px;">@@download@@</button>
 				<br />
 				@@problem1@@<br />@@problem2@@
 			</div>
@@ -221,10 +220,6 @@
 							var url = json['mac']
 							var file = 'TheDesk-' + json.unique_mac + '.dmg'
 							var filesize = json.mac_size
-						} else if (sel == 'macarm64') {
-							var url = json['macarm64']
-							var file = 'TheDesk-' + json.unique_mac + '.dmg'
-							var filesize = json.macarm64_size
 						}
 						postMessage(['downloadButton', [url, file, filesize]], '*')
 					})

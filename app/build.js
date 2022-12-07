@@ -177,36 +177,22 @@ async function cmd(options) {
             if (isTrue(options, 'unnotarize')) delete config.mac.entitlements
             if (isTrue(options, 'unnotarize')) delete config.mac.entitlementsInherit
             if (isTrue(options, 'unnotarize')) process.env.CSC_IDENTITY_AUTO_DISCOVERY = false
-            if (arch === 'x64') {
-                if (!isTrue(options, 'skipX64')) {
-                    await build(Platform.MAC, Arch.x64, config)
-                    fs.renameSync(
-                        `../build/TheDesk-${version}.dmg`,
-                        `../build/TheDesk-${version}-x64.dmg`
-                    )
-                }
-                if (isTrue(options, 'withArm64')) {
-                    await build(Platform.MAC, Arch.arm64, config)
-                    fs.renameSync(
-                        `../build/TheDesk-${version}.dmg`,
-                        `../build/TheDesk-${version}-arm64.dmg`
-                    )
-                }
-                fs.renameSync(
-                    `../build/TheDesk-${version}-x64.dmg`,
-                    `../build/TheDesk-${version}.dmg`
-                )
-            }
-            if (arch === 'arm64') {
-                if (isTrue(options, 'unnotarize')) delete config.afterSign
+            if (isTrue(options, 'unnotarize')) delete config.afterSign
+            if (!isTrue(options, 'skipUniversal')) await build(Platform.MAC, Arch.universal, config)
+            if (isTrue(options, 'withArm64')) {
                 await build(Platform.MAC, Arch.arm64, config)
                 fs.renameSync(
                     `../build/TheDesk-${version}.dmg`,
                     `../build/TheDesk-${version}-arm64.dmg`
                 )
-                if (!isTrue(options, 'skipX64')) await build(Platform.MAC, Arch.x64, config)
             }
-
+            if (isTrue(options, 'withX64')) {
+                await build(Platform.MAC, Arch.x64, config)
+                fs.renameSync(
+                    `../build/TheDesk-${version}.dmg`,
+                    `../build/TheDesk-${version}-x64.dmg`
+                )
+            }
         }
     }
 }
@@ -246,6 +232,10 @@ TheDesk Builder command tool
 
     [only macOS]
     --unnotarize: Without notarize
+    Build as a "universal" package.
+    --skipUniversal: skip build for universal enviroment
+    --withX64: build x64-only build
+    --withArm64: build arm64-only build
     `
 }
 

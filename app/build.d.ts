@@ -10,5 +10,6 @@ declare function _exports(options?: {
     skipLinux?: boolean;
     skipMacOS?: boolean;
     unnotarize?: boolean;
+    skipUniversal?: boolean;
 }): void;
 export = _exports;

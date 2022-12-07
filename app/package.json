@@ -18,7 +18,7 @@
         "build": "node buildCli.js",
         "build:pwa": "node view/make/makeCli.js --pwa",
         "build:all:x64": "node buildCli.js --withStore",
-        "build:all": "node buildCli.js --withStore --withIa32 --withArm64",
+        "build:all": "node buildCli.js --withStore --withX64 --withIa32 --withArm64",
         "lint:fix": "eslint js --fix",
         "lint": "eslint js"
     },
