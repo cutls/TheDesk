@@ -165,6 +165,7 @@
     "lang_spotify_acct": "まずアカウント連携をしてな",
     "lang_spotify_np": "NowPlayingするときのやつを変えたで",
     "lang_setting_npprovide": "NowPlayingのソースを{{set}}にしたで",
+    "lang_setting_webview_warn": "TweetDeckをカラムとして追加するには、TheDeskの環境設定でWebViewをオンにする必要があります。",
     "lang_hisdata_frcreq": "Mastodon 2.4.3~だけやで",
     "lang_hisdata_frcwarn": "非フォローやけど絡みある人らや。",
     "lang_hisdata_taketime": "30秒から数分かかることがあるで",

@@ -611,8 +611,9 @@ function multiSelector(parseC) {
 		$('#add-acct-sel').append(
 			'<option value="noauth">' +
 			lang.lang_login_noauth +
-			`</option>${webview ? `<option value="webview">TweetDeck</option>` : ''}`
+			`</option><option value="webview">TweetDeck</option>`
 		)
+		if (!webview) $('#webview-add').append(`<br /><span style="font-size: 0.7rem">${lang.lang_setting_webview_warn}</span>`)
 		$('#dir-acct-sel').append('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	}
 	$('select').formSelect()

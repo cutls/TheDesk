@@ -166,6 +166,7 @@
     "lang_spotify_acct": "Connect TheDesk to Spotify",
     "lang_spotify_np": "Done:templete of NowPlaying",
     "lang_setting_npprovide": "NowPlaying provider:{{set}}",
+    "lang_setting_webview_warn": "Please turn WebView on at System Preferences of TheDesk to add TweetDeck as a column",
     "lang_hisdata_frcreq": "Required Mastodon 2.4.3 and above",
     "lang_hisdata_frcwarn": "Unfollow accounts will be shown.",
     "lang_hisdata_taketime": "It will take 30s ~ several minutes",
