@@ -23,11 +23,11 @@
         input {
             max-height: 3.84rem !important
         }
-        
+
         .pcr-result {
             height: 1rem !important;
         }
-        
+
         .container-after-titlebar {
             padding: 20px;
         }
@@ -65,45 +65,49 @@
                     <button class="btn waves-effect" onclick="changeLang()">@@change@@</button>
                 </div>
                 <h5>@@backup@@</h5>
-                <button onclick="exportSettings()" class="btn waves-effect lime darken-3" style="width:100%; max-width:15rem;">@@export@@</button>
-                <button onclick="importSettings()" class="btn waves-effect cyan darken-3" style="width:100%; max-width:15rem;">@@import@@</button><br> @@backupWarn@@
+                <button onclick="exportSettings()" class="btn waves-effect lime darken-3"
+                    style="width:100%; max-width:15rem;">@@export@@</button>
+                <button onclick="importSettings()" class="btn waves-effect cyan darken-3"
+                    style="width:100%; max-width:15rem;">@@import@@</button><br> @@backupWarn@@
                 <br>
                 <input type="text" id="imp-exp" style="width: 22rem">
                 <div id="envView">
                     <template v-for="(item, i) in config">
-						<h5>{{item.text.head}}</h5>
-						<template v-if="item.text.desc">
-							<span v-html="item.text.desc"></span><br>
-						</template>
-                    <template v-if="item.id=='notf'"><a onclick="notftest()"
-								class="pointer">@@nntest@@</a><br></template>
-                    <template v-if="item.checkbox">
-							<template v-for="(check, j) in item.text.checkbox">
-								<label>
-									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
-										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
-									<span>{{check.text}}</span>
-								</label>
-							</template>
-                    </template>
-                    <template v-else>
-							<template v-if="item.doubleText">
-								<template v-for="(textbox, j) in item.data">
-									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
-										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
-								</template>
-                    </template>
-                    <template v-else>
-								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
-									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
-							</template>
-                    <button class="btn waves-effect" style="width:7.7rem;" v-on:click="complete(i)">@@change@@</button>
-                    </template><br>
+                        <h5>{{item.text.head}}</h5>
+                        <template v-if="item.text.desc">
+                            <span v-html="item.text.desc"></span><br>
+                        </template>
+                        <template v-if="item.id=='notf'"><a onclick="notftest()"
+                                class="pointer">@@nntest@@</a><br></template>
+                        <template v-if="item.checkbox">
+                            <template v-for="(check, j) in item.text.checkbox">
+                                <label>
+                                    <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+                                        type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+                                    <span>{{check.text}}</span>
+                                </label>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <template v-if="item.doubleText">
+                                <template v-for="(textbox, j) in item.data">
+                                    <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+                                        v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                                </template>
+                            </template>
+                            <template v-else>
+                                <input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+                                    v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+                            </template>
+                            <button class="btn waves-effect" style="width:7.7rem;"
+                                v-on:click="complete(i)">@@change@@</button>
+                        </template><br>
                     </template>
                 </div>
                 <h5>@@font@@</h5>
                 @@fontwarn@@<br>
-                <button class="btn waves-effect orange darken-2" style="width:7.7rem;" onclick="font()">@@select@@</button>
+                <button class="btn waves-effect orange darken-2" style="width:7.7rem;"
+                    onclick="font()">@@select@@</button>
                 <input type="text" style="width:11.5rem" id="font">
                 <button class="btn waves-effect" style="width:7.7rem;" onclick="settings()">@@set@@</button>
                 <div id="fonts" class="hide"></div>
@@ -125,66 +129,67 @@
                 <h4>@@customtheme@@</h4>
                 <div style="width:22rem" id="edit-selector" data-add="@@add_new@@">
                     <select id="custom-edit-sel" class="custom-sel" onchange="custom()">
-						<option value="add_new">@@add_new@@</option>
-					</select>
+                        <option value="add_new">@@add_new@@</option>
+                    </select>
                 </div>
                 <h5>@@name@@</h5>
                 <input type="text" style="width:22rem" id="custom_name" placeholder="@@name@@...">
                 <h5>@@desc@@</h5>
-                <div class="input-field"><textarea style="width:22rem" id="custom_desc" class="materialize-textarea" placeholder="@@desc@@..."></textarea></div>
+                <div class="input-field"><textarea style="width:22rem" id="custom_desc" class="materialize-textarea"
+                        placeholder="@@desc@@..."></textarea></div>
                 <h5>@@customthemeDirection@@</h5>
                 <label>
-					<input class="with-gap" onchange="settings()" name="direction" type="radio" id="dark" value="dark"
-						checked="true" />
-					<span>Dark</span>
-				</label>
+                    <input class="with-gap" onchange="settings()" name="direction" type="radio" id="dark" value="dark"
+                        checked="true" />
+                    <span>Dark</span>
+                </label>
                 <label>
-					<input class="with-gap" onchange="settings()" name="direction" type="radio" id="light"
-						value="light" />
-					<span>Light</span>
-				</label><br><br />
+                    <input class="with-gap" onchange="settings()" name="direction" type="radio" id="light"
+                        value="light" />
+                    <span>Light</span>
+                </label><br><br />
                 <button class="btn waves-effect" onclick="advanced()">@@advanced@@</button>
                 <span class="advanced hide">@@advancedWarn@@</span>
                 <div id="pickers">
                     <div>
                         <h5>Background</h5>@@bg@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_0" value="1" checked disabled />
-							<span>@@use@@</span>
-						</label><br />
+                            <input type="checkbox" class="filled-in" id="use-color_0" value="1" checked disabled />
+                            <span>@@use@@</span>
+                        </label><br />
                         <input type="color" id="color-picker0_value">
                     </div>
                     <div>
                         <h5>Text</h5>@@text@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_1" value="1" checked disabled />
-							<span>@@use@@</span>
-						</label><br />
+                            <input type="checkbox" class="filled-in" id="use-color_1" value="1" checked disabled />
+                            <span>@@use@@</span>
+                        </label><br />
                         <input type="color" id="color-picker1_value">
                     </div>
                     <div>
                         <h5>Subcolor</h5>@@subcolor@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_2" value="1" checked disabled />
-							<span>@@use@@</span>
-						</label><br />
+                            <input type="checkbox" class="filled-in" id="use-color_2" value="1" checked disabled />
+                            <span>@@use@@</span>
+                        </label><br />
                         <input type="color" id="color-picker2_value">
                     </div>
                     <div>
                         <h5>Accent</h5>@@accent@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_3" value="1" checked disabled />
-							<span>@@use@@</span>
-						</label><br />
+                            <input type="checkbox" class="filled-in" id="use-color_3" value="1" checked disabled />
+                            <span>@@use@@</span>
+                        </label><br />
                         <input type="color" id="color-picker3_value">
                     </div>
 
                     <div class="advanced hide">
                         <h5>Modal</h5>@@modal@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_4" value="1" />
-							<span>@@use@@</span>
-						</label><br /> @@copyFrom@@:
+                            <input type="checkbox" class="filled-in" id="use-color_4" value="1" />
+                            <span>@@use@@</span>
+                        </label><br /> @@copyFrom@@:
                         <a class="pointer" onclick="copyColor('background','modal')">Background</a>
                         <br />
                         <input type="color" id="color-picker4_value">
@@ -192,9 +197,9 @@
                     <div class="advanced hide">
                         <h5>Modal Footer</h5>@@modalFooter@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_5" value="1" />
-							<span>@@use@@</span>
-						</label><br /> @@copyFrom@@:
+                            <input type="checkbox" class="filled-in" id="use-color_5" value="1" />
+                            <span>@@use@@</span>
+                        </label><br /> @@copyFrom@@:
                         <a class="pointer" onclick="copyColor('background','modalFooter')">Background</a>/
                         <a class="pointer" onclick="copyColor('modal','modalFooter')">Modal</a>
                         <br />
@@ -203,9 +208,9 @@
                     <div class="advanced hide">
                         <h5>3rd Color</h5>@@thirdColor@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_6" value="1" />
-							<span>@@use@@</span>
-						</label><br /> @@copyFrom@@:
+                            <input type="checkbox" class="filled-in" id="use-color_6" value="1" />
+                            <span>@@use@@</span>
+                        </label><br /> @@copyFrom@@:
                         <a class="pointer" onclick="copyColor('subcolor','third')">Subcolor</a>
                         <br />
                         <input type="color" id="color-picker6_value">
@@ -213,9 +218,9 @@
                     <div class="advanced hide">
                         <h5>4th Color</h5>@@forthColor@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_7" value="1" />
-							<span>@@use@@</span>
-						</label><br /> @@copyFrom@@:
+                            <input type="checkbox" class="filled-in" id="use-color_7" value="1" />
+                            <span>@@use@@</span>
+                        </label><br /> @@copyFrom@@:
                         <a class="pointer" onclick="copyColor('subcolor','forth')">Subcolor</a>/
                         <a class="pointer" onclick="copyColor('third','forth')">3rd Color</a>
                         <br />
@@ -224,9 +229,9 @@
                     <div class="advanced hide">
                         <h5>Bottom</h5>@@bottom@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_8" value="1" />
-							<span>@@use@@</span>
-						</label><br /> @@copyFrom@@:
+                            <input type="checkbox" class="filled-in" id="use-color_8" value="1" />
+                            <span>@@use@@</span>
+                        </label><br /> @@copyFrom@@:
                         <a class="pointer" onclick="copyColor('subcolor','bottom')">Subcolor</a>
                         <br />
                         <input type="color" id="color-picker8_value">
@@ -234,9 +239,9 @@
                     <div class="advanced hide">
                         <h5>2nd Accent</h5>@@emphasized@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_9" value="1" />
-							<span>@@use@@</span>
-						</label><br /> @@copyFrom@@:
+                            <input type="checkbox" class="filled-in" id="use-color_9" value="1" />
+                            <span>@@use@@</span>
+                        </label><br /> @@copyFrom@@:
                         <a class="pointer" onclick="copyColor('accent','emphasized')">Accent</a>
                         <br />
                         <input type="color" id="color-picker9_value">
@@ -244,9 +249,9 @@
                     <div class="advanced hide">
                         <h5>Postbox</h5>@@postbox@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_10" value="1" />
-							<span>@@use@@</span>
-						</label><br /> @@copyFrom@@:
+                            <input type="checkbox" class="filled-in" id="use-color_10" value="1" />
+                            <span>@@use@@</span>
+                        </label><br /> @@copyFrom@@:
                         <a class="pointer" onclick="copyColor('subcolor','postbox')">Subcolor</a>
                         <br />
                         <input type="color" id="color-picker10_value">
@@ -254,9 +259,9 @@
                     <div class="advanced hide">
                         <h5>Active</h5>@@active@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_11" value="1" />
-							<span>@@use@@</span>
-						</label><br /> @@copyFrom@@:
+                            <input type="checkbox" class="filled-in" id="use-color_11" value="1" />
+                            <span>@@use@@</span>
+                        </label><br /> @@copyFrom@@:
                         <a class="pointer" onclick="copyColor('accent','active')">Accent</a>
                         <br />
                         <input type="color" id="color-picker11_value">
@@ -264,57 +269,65 @@
                     <div class="advanced hide">
                         <h5>Selected</h5>@@selected@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_12" value="1" />
-							<span>@@use@@</span>
-						</label><br />
+                            <input type="checkbox" class="filled-in" id="use-color_12" value="1" />
+                            <span>@@use@@</span>
+                        </label><br />
                         <input type="color" id="color-picker12_value">
                     </div>
                     <div class="advanced hide">
                         <h5>Selected with shared</h5>@@selectedWithShare@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="use-color_13" value="1" />
-							<span>@@use@@</span>
-						</label><br />
+                            <input type="checkbox" class="filled-in" id="use-color_13" value="1" />
+                            <span>@@use@@</span>
+                        </label><br />
                         <input type="color" id="color-picker13_value">
                     </div>
                 </div><br /><br />
                 <button class="btn waves-effect blue" onclick="customComp(true)">@@preview@@</button><br /><br />
-                <button class="btn-large waves-effect" onclick="customComp()">@@change@@</button>&nbsp;<button class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">@@delete@@</button><br><br>
-                <input type="text" style="width:22rem;height:40px;" id="custom_json" class="materialize-textarea" placeholder="JSON style" readonly><br>
+                <button class="btn-large waves-effect" onclick="customComp()">@@change@@</button>&nbsp;<button
+                    class="btn waves-effect red disabled" id="delTheme" onclick="deleteIt()">@@delete@@</button><br><br>
+                <input type="text" style="width:22rem;height:40px;" id="custom_json" class="materialize-textarea"
+                    placeholder="JSON style" readonly><br>
                 <h4>@@customImport@@</h4>
-                <input type="text" style="width:22rem;height:40px;" id="custom_import" class="materialize-textarea" placeholder="JSON/JSON5 style">
+                <input type="text" style="width:22rem;height:40px;" id="custom_import" class="materialize-textarea"
+                    placeholder="JSON/JSON5 style">
                 <button class="btn waves-effect" onclick="customImp()">@@import@@</button><br>
                 <h4>@@preview@@</h4>
                 <div style="max-width: 500px" class="cvo">
-                    <div class="area-notice grid"><span class="gray sharesta"><span class=" pointer big-text "><i class="fas fa-filter">
-								</i></span>
-                        <span class="cbadge cbadge-hover"><i class="far fa-clock"></i>
-								0:00:00
-							</span>
-                        <i class="big-text fas fa-star  yellow-text"></i>
-                        <a class="pointer grey-text">
-								TheDesk(@thedesk@b.thedesk.tld)
-							</a></span>
+                    <div class="area-notice grid"><span class="gray sharesta"><span class=" pointer big-text "><i
+                                    class="fas fa-filter">
+                                </i></span>
+                            <span class="cbadge cbadge-hover"><i class="far fa-clock"></i>
+                                0:00:00
+                            </span>
+                            <i class="big-text fas fa-star  yellow-text"></i>
+                            <a class="pointer grey-text">
+                                TheDesk(@thedesk@b.thedesk.tld)
+                            </a></span>
                     </div>
                     <div class="area-icon grid">
                         <a user="thedesk" class="udg">
-                            <img draggable="false" src="../../img/desk.svg" width="40" class="prof-img" user="TheDesk" onerror="this.src='../../img/loading.svg'" alt="" loading="lazy">
+                            <img draggable="false" src="../../img/desk.svg" width="40" class="prof-img" user="TheDesk"
+                                onerror="this.src='../../img/loading.svg'" alt="" loading="lazy">
                         </a>
                         <a user="Cutls@misskey.io" class="udg">
-                            <img draggable="false" src="../../img/desk.svg" width="20" class="notf-icon prof-img" user="TheDesk" alt="" loading="lazy">
+                            <img draggable="false" src="../../img/desk.svg" width="20" class="notf-icon prof-img"
+                                user="TheDesk" alt="" loading="lazy">
                         </a>
                     </div>
                     <div class="area-display_name grid">
                         <div class="flex-name">
-                            <span class="user">TheDesk<img class="emoji" draggable="false" alt="👀" src="https://twemoji.maxcdn.com/v/13.0.2/72x72/1f440.png"></span>
-                            <span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;">
-								@thedesk@a.thedesk.tld <i class="fas fa-lock red-text"></i>
-							</span>
+                            <span class="user">TheDesk<img class="emoji" draggable="false" alt="👀"
+                                    src="https://twemoji.maxcdn.com/v/13.0.2/72x72/1f440.png"></span>
+                            <span class="sml gray"
+                                style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;">
+                                @thedesk@a.thedesk.tld <i class="fas fa-lock red-text"></i>
+                            </span>
                         </div>
                         <div class="flex-time">
                             <span class="cbadge cbadge-hover pointer waves-effect">
-								<i class="far fa-clock"></i>0:00:00
-							</span>
+                                <i class="far fa-clock"></i>0:00:00
+                            </span>
                         </div>
                     </div>
                     <div class="area-toot grid">
@@ -324,8 +337,8 @@
 
                     </div>
                     <div class="area-vis grid"><span><i class="text-darken-3 material-icons gray sml vis-data pointer">
-								public
-							</i></span></div>
+                                public
+                            </i></span></div>
                     <div class="area-actions grid">
                         <div class="action type-a ">
                             <a class="waves-effect waves-dark btn-flat actct rep-btn" style="padding:0">
@@ -348,7 +361,9 @@
                     </div>
                     <div class="area-side">
                         <div class="action ">
-                            <a onclick="toggleAction(this)" data-target="dropdown_0ugtorxe" class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0" id="trigger_0ugtorxe">
+                            <a onclick="toggleAction(this)" data-target="dropdown_0ugtorxe"
+                                class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0"
+                                id="trigger_0ugtorxe">
                                 <i class="text-darken-3 material-icons act-icon" aria-hidden="true">expand_more</i>
                                 <span class="voice">Other actions</span>
                             </a>
@@ -368,43 +383,49 @@
             <div class="collapsible-body">
                 <div id="tlView">
                     <template v-for="(item, i) in config">
-						<h5>{{item.text.head}}</h5>
-						<template v-if="item.text.desc">
-							<span v-html="item.text.desc"></span><br>
-						</template>
-                    <template v-if="item.checkbox">
-							<template v-for="(check, j) in item.text.checkbox">
-								<label>
-									<input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
-										type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
-									<span>{{check.text}}</span>
-								</label>
-							</template>
-                    </template>
-                    <template v-else>
-							<template v-if="item.doubleText">
-								<template v-for="(textbox, j) in item.data">
-									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
-										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
-								</template>
-                    </template>
-                    <template v-else>
-								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
-									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
-							</template>
-                    <button class="btn waves-effect" style="width:7.7rem;" v-on:click="complete(i)">@@change@@</button>
-                    </template><br>
+                        <h5>{{item.text.head}}</h5>
+                        <template v-if="item.text.desc">
+                            <span v-html="item.text.desc"></span><br>
+                        </template>
+                        <template v-if="item.checkbox">
+                            <template v-for="(check, j) in item.text.checkbox">
+                                <label>
+                                    <input class="with-gap" v-on:click="complete(i,check.value)" v-model="item.setValue"
+                                        type="radio" v-bind:id="item.id+check.value" v-bind:value="check.value" />
+                                    <span>{{check.text}}</span>
+                                </label>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <template v-if="item.doubleText">
+                                <template v-for="(textbox, j) in item.data">
+                                    <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+                                        v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                                </template>
+                            </template>
+                            <template v-else>
+                                <input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+                                    v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+                            </template>
+                            <button class="btn waves-effect" style="width:7.7rem;"
+                                v-on:click="complete(i)">@@change@@</button>
+                        </template><br>
                     </template>
                 </div>
                 <h5>@@customSound@@</h5>
-                <button class="btn waves-effect" style="width:120px;" onclick="customSound(1)">Custom 1</button><span id="c1-file"></span><br>
-                <button class="btn waves-effect" style="width:120px;" onclick="customSound(2)">Custom 2</button><span id="c2-file"></span><br>
-                <button class="btn waves-effect" style="width:120px;" onclick="customSound(3)">Custom 3</button><span id="c3-file"></span><br>
-                <button class="btn waves-effect" style="width:120px;" onclick="customSound(4)">Custom 4</button><span id="c4-file"></span><br>
+                <button class="btn waves-effect" style="width:120px;" onclick="customSound(1)">Custom 1</button><span
+                    id="c1-file"></span><br>
+                <button class="btn waves-effect" style="width:120px;" onclick="customSound(2)">Custom 2</button><span
+                    id="c2-file"></span><br>
+                <button class="btn waves-effect" style="width:120px;" onclick="customSound(3)">Custom 3</button><span
+                    id="c3-file"></span><br>
+                <button class="btn waves-effect" style="width:120px;" onclick="customSound(4)">Custom 4</button><span
+                    id="c4-file"></span><br>
                 <h5>@@vol@@</h5>
                 @@volwarn80@@<br>
                 <p class="range-field"><span id="soundVolVal">80</span><br>
-                    <input type="range" id="soundvol" min="0" max="100" value="80" onchange="customVol()" style="width:40rem; max-width:100%" />
+                    <input type="range" id="soundvol" min="0" max="100" value="80" onchange="customVol()"
+                        style="width:40rem; max-width:100%" />
                 </p>
             </div>
         </li>
@@ -415,43 +436,46 @@
             <div class="collapsible-body">
                 <div id="postView">
                     <template v-for="(item, i) in config">
-						<h5>{{item.text.head}}</h5>
-						<template v-if="item.text.desc">
-							<span v-html="item.text.desc"></span><br>
-						</template>
-                    <template v-if="item.checkbox">
-							<template v-for="(check, j) in item.text.checkbox">
-								<template
-									v-if="(!check.kirishima || (check.kirishima && kirishima) )&& (!check.quote || (check.quote && quoters))">
-									<label><input class="with-gap" v-on:click="complete(i,check.value)"
-											v-model="item.setValue" type="radio" v-bind:id="item.id+check.value"
-											v-bind:value="check.value" />
-										<span>{{check.text}}</span></label>
-									<span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
-								</template>
-                    </template>
-                    </template>
-                    <template v-else>
-							<template v-if="item.doubleText">
-								<template v-for="(textbox, j) in item.data">
-									<input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
-										v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
-								</template>
-                    </template>
-                    <template v-else>
-								<input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
-									v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
-							</template>
-                    <button class="btn waves-effect" style="width:7.7rem;" v-on:click="complete(i)">@@change@@</button>
-                    </template><br>
+                        <h5>{{item.text.head}}</h5>
+                        <template v-if="item.text.desc">
+                            <span v-html="item.text.desc"></span><br>
+                        </template>
+                        <template v-if="item.checkbox">
+                            <template v-for="(check, j) in item.text.checkbox">
+                                <template
+                                    v-if="(!check.kirishima || (check.kirishima && kirishima) )&& (!check.quote || (check.quote && quoters))">
+                                    <label><input class="with-gap" v-on:click="complete(i,check.value)"
+                                            v-model="item.setValue" type="radio" v-bind:id="item.id+check.value"
+                                            v-bind:value="check.value" />
+                                        <span>{{check.text}}</span></label>
+                                    <span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
+                                </template>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <template v-if="item.doubleText">
+                                <template v-for="(textbox, j) in item.data">
+                                    <input type="text" v-model="textbox.setValue" type="radio" v-bind:id="textbox.id"
+                                        v-bind:style="{ width: textbox.width+'px'}" />{{textbox.text.after}}
+                                </template>
+                            </template>
+                            <template v-else>
+                                <input type="text" v-model="item.setValue" type="radio" v-bind:id="item.id"
+                                    v-bind:style="{ width: item.width+'px'}" />{{item.text.after}}
+                            </template>
+                            <button class="btn waves-effect" style="width:7.7rem;"
+                                v-on:click="complete(i)">@@change@@</button>
+                        </template><br>
                     </template>
                 </div>
                 <h5>@@iks@@</h5>
                 @@okswarn@@<br> Ctrl+Shift+1:
                 <input type="text" style="width:11.5rem" id="oks-1">
-                <button onclick="oks(1)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br> Ctrl+Shift+2:
+                <button onclick="oks(1)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
+                Ctrl+Shift+2:
                 <input type="text" style="width:11.5rem" id="oks-2">
-                <button onclick="oks(2)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br> Ctrl+Shift+3:
+                <button onclick="oks(2)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
+                Ctrl+Shift+3:
                 <input type="text" style="width:11.5rem" id="oks-3">
                 <button onclick="oks(3)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
 
@@ -459,19 +483,21 @@
         </li>
         <li>
             <div class="collapsible-header">
-                <img src="../../img/aiscript.svg" style="height: 1.5rem; margin-left: 0.4rem; margin-right: 0.4rem;">@@plugin@@
+                <img src="../../img/aiscript.svg"
+                    style="height: 1.5rem; margin-left: 0.4rem; margin-right: 0.4rem;">@@plugin@@
             </div>
             <div class="collapsible-body">
                 <a href="https://github.com/cutls/TheDesk/wiki/プラグイン">@@howToWritePlugin@@</a><br />
                 <div id="plugin" data-id="add_new" style="height: 600px"></div>
                 <button class="btn waves-effect" style="width:7.7rem;" onclick="completePlugin()">@@change@@</button>
-                <button class="btn waves-effect red disabled plugin_delete" style="width:7.7rem;" onclick="deletePlugin()">@@delete@@</button>
+                <button class="btn waves-effect red disabled plugin_delete" style="width:7.7rem;"
+                    onclick="deletePlugin()">@@delete@@</button>
                 <button class="btn waves-effect" style="width:7.7rem;" onclick="testExecTrg()">@@exec@@</button>
                 <h5>@@pluginList@@</h5>
                 <div style="width:22rem" id="plugin-selector" data-add="@@add_new@@">
                     <select id="plugin-edit-sel" class="custom-sel" onchange="pluginEdit()">
-						<option value="add_new">@@add_new@@</option>
-					</select>
+                        <option value="add_new">@@add_new@@</option>
+                    </select>
                 </div>
             </div>
         </li>
@@ -504,11 +530,14 @@
             <div class="collapsible-body">
                 <h5>@@link@@(Spotify)</h5>
                 @@linkwarn@@<br>
-                <div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button onclick="spotifyAuth()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button></div>
-                <a onclick="spotifyConnect()" class="btn waves-effect nex" style="width:100%; max-width:15rem; background-color:#1ed760;" id="spotify-enable"><i
-						class="fab fa-spotify left"></i>@@connect@@</a>
-                <a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled" style="width:100%; max-width:15rem; background-color:#1ed760;" id="spotify-disable"><i
-						class="fab fa-spotify left"></i>@@disconnect@@</a>
+                <div id="spotify-code-show" class="hide"><input type="text" id="spotify-code"><button
+                        onclick="spotifyAuth()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button></div>
+                <a onclick="spotifyConnect()" class="btn waves-effect nex"
+                    style="width:100%; max-width:15rem; background-color:#1ed760;" id="spotify-enable"><i
+                        class="fab fa-spotify left"></i>@@connect@@</a>
+                <a onclick="spotifyDisconnect()" class="btn waves-effect nex disabled"
+                    style="width:100%; max-width:15rem; background-color:#1ed760;" id="spotify-disable"><i
+                        class="fab fa-spotify left"></i>@@disconnect@@</a>
                 <h5>@@link@@(Last.fm)</h5>
                 @@lastFmWarn@@<br />
                 <input type="text" style="width:11.5rem" id="lastFmUser">
@@ -522,42 +551,28 @@
                 <button onclick="spotifySave()" class="btn waves-effect" style="width:7.7rem;">@@set@@</button>
                 <h5>@@postartwork@@</h5>
                 <label>
-					<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes"
-						value="yes" />
-					<span>@@yes@@</span>
-				</label>
+                    <input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_yes"
+                        value="yes" />
+                    <span>@@yes@@</span>
+                </label>
                 <label>
-					<input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no"
-						value="no" />
-					<span>@@no@@</span>
-				</label>
+                    <input class="with-gap" onchange="spotifyFlagSave()" name="awk" type="radio" id="awk_no"
+                        value="no" />
+                    <span>@@no@@</span>
+                </label>
                 <div class="mac">
                     <h5>@@searchArtwork@@</h5>
                     @@searchArtworkWarn@@<br />
                     <label>
-						<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_yes"
-							value="yes" />
-						<span>@@yes@@</span>
-					</label>
+                        <input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_yes"
+                            value="yes" />
+                        <span>@@yes@@</span>
+                    </label>
                     <label>
-						<input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_no"
-							value="no" />
-						<span>@@no@@</span>
-					</label>
-                    <br>
-                    <h5>macOSコントロールセンター NowPlaying</h5>
-                    日本語環境でのみご利用いただけます。(It works well on macOS with Japanese language profile.)<br /> 上のアートワーク補完を使用しないとアートワークは付与されません。コントロールセンターがある日本語設定のmacOS Big Sur以降が対象です。<br /> なお、コントロールセンターが勝手に開きますが仕様ですのでご理解ください。上記のテンプレートは反映されず、常に「タイトル, アーティスト」になります。<br
-                    />
-                    <label>
-						<input class="with-gap" onchange="cMusicFlagSave()" name="cmw" type="radio" id="cmw_yes"
-							value="yes" />
-						<span>@@yes@@</span>
-					</label>
-                    <label>
-						<input class="with-gap" onchange="cMusicFlagSave()" name="cmw" type="radio" id="cmw_no"
-							value="no" />
-						<span>@@no@@</span>
-					</label>
+                        <input class="with-gap" onchange="aMusicFlagSave()" name="amw" type="radio" id="amw_no"
+                            value="no" />
+                        <span>@@no@@</span>
+                    </label>
                 </div>
             </div>
         </li>
@@ -567,34 +582,42 @@
             </div>
             <div class="collapsible-body">
                 <h5>@@bouyomi@@</h5>
-                @@bouyomiWarn@@<a href="https://github.com/xztaityozx/BouyomiChan-WebSocket-Plugin" target="_blank">GitHub</a><br>
+                @@bouyomiWarn@@<a href="https://github.com/xztaityozx/BouyomiChan-WebSocket-Plugin"
+                    target="_blank">GitHub</a><br>
                 <label>
-					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_yes"
-						value="yes" />
-					<span>@@yes@@</span>
-				</label>
+                    <input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_yes"
+                        value="yes" />
+                    <span>@@yes@@</span>
+                </label>
                 <label>
-					<input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_no" value="no" />
-					<span>@@no@@</span>
-				</label>
+                    <input class="with-gap" onchange="voiceSettings()" name="bym" type="radio" id="bym_no" value="no" />
+                    <span>@@no@@</span>
+                </label>
                 <h5>@@speed@@</h5>
                 @@speedwarn@@<br>
                 <p class="range-field"><span id="voicespeedVal">10</span><br>
-                    <input type="range" id="voicespeed" min="1" max="100" value="10" onchange="document.getElementById('voicespeedVal').innerText=this.value" style="width:40rem; max-width:100%" />
+                    <input type="range" id="voicespeed" min="1" max="100" value="10"
+                        onchange="document.getElementById('voicespeedVal').innerText=this.value"
+                        style="width:40rem; max-width:100%" />
                 </p>
                 <h5>@@pitch@@</h5>
                 @@pitchwarn@@<br>
                 <p class="range-field"><span id="voicepitchVal">50</span><br>
-                    <input type="range" id="voicepitch" min="0" max="100" value="50" onchange="document.getElementById('voicepitchVal').innerText=this.value" style="width:40rem; max-width:100%" />
+                    <input type="range" id="voicepitch" min="0" max="100" value="50"
+                        onchange="document.getElementById('voicepitchVal').innerText=this.value"
+                        style="width:40rem; max-width:100%" />
                 </p>
                 <h5>@@vol@@</h5>
                 @@volwarn@@<br>
                 <p class="range-field"><span id="voicevolVal">100</span><br>
-                    <input type="range" id="voicevol" min="0" max="100" value="100" onchange="document.getElementById('voicevolVal').innerText=this.value" style="width:40rem; max-width:100%" />
+                    <input type="range" id="voicevol" min="0" max="100" value="100"
+                        onchange="document.getElementById('voicevolVal').innerText=this.value"
+                        style="width:40rem; max-width:100%" />
                 </p>
                 <h5>@@test@@</h5>
                 <input type="text" style="width:27rem" id="voicetxt" value="@@sample@@">
-                <button class="btn waves-effect blue" style="width:11.5rem;" onclick="voicePlay()" id="testplay">@@playstop@@</button><br>
+                <button class="btn waves-effect blue" style="width:11.5rem;" onclick="voicePlay()"
+                    id="testplay">@@playstop@@</button><br>
                 <br>
                 <button class="btn waves-effect" style="width:7.7rem;" onclick="voiceSettings()">@@set@@</button>
             </div>
@@ -602,7 +625,7 @@
     </ul>
     <br>
     <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:15rem;"><i
-			class="material-icons left">undo</i>@@back@@</a>
+            class="material-icons left">undo</i>@@back@@</a>
     <br>
     <br>@@keyscs@@
     <li>Ctrl+1-9:@@keyscr@@</li>
@@ -631,36 +654,45 @@
         <li>B:@@bt@@</li>
         <li>R:@@reply@@</li>
     </div>
-    <button class="btn waves-effect red" style="width:100%; max-width:40rem;" onclick="if(confirm('@@resetconfirm@@')){ localStorage.clear(); location.href='index.html'; }"><i
-			class="material-icons left">delete</i>@@reset@@</button><br><br>
+    <button class="btn waves-effect red" style="width:100%; max-width:40rem;"
+        onclick="if(confirm('@@resetconfirm@@')){ localStorage.clear(); location.href='index.html'; }"><i
+            class="material-icons left">delete</i>@@reset@@</button><br><br>
     <button class="btn waves-effect indigo pwa" onclick="about()" style="width:100%; max-width:40rem;"><i
-			class="material-icons left">info</i>@@about@@</button>
+            class="material-icons left">info</i>@@about@@</button>
     <a href="https://thedesk.top" class="btn waves-effect deep-purple lighten-2" style="width:100%; max-width:40rem;"><i
-			class="material-icons left">web</i>@@hp@@</a>
-    <a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2" style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>@@support@@(Pixiv FANBOX)</a>
-    <a href="https://www.patreon.com/cutls" class="btn waves-effect red darken-2" style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>@@support@@(Patreon)</a>
-    <a href="https://liberapay.com/cutls" class="btn waves-effect black-text" style="width:100%; max-width:40rem; background-color: #f6c915"><i
-			class="material-icons left">trending_up</i>@@support@@(Liberapay)</a>
+            class="material-icons left">web</i>@@hp@@</a>
+    <a href="https://www.pixiv.net/fanbox/creator/28105985" class="btn waves-effect red lighten-2"
+        style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>@@support@@(Pixiv FANBOX)</a>
+    <a href="https://www.patreon.com/cutls" class="btn waves-effect red darken-2"
+        style="width:100%; max-width:40rem;"><i class="material-icons left">trending_up</i>@@support@@(Patreon)</a>
+    <a href="https://liberapay.com/cutls" class="btn waves-effect black-text"
+        style="width:100%; max-width:40rem; background-color: #f6c915"><i
+            class="material-icons left">trending_up</i>@@support@@(Liberapay)</a>
     <a href="https://docs.thedesk.top" class="btn waves-effect blue darken-2" style="width:100%; max-width:40rem;"><i
-			class="material-icons left">list</i>@@help@@/Docs</a>
-    <a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2" style="width:100%; max-width:40rem;"><i class="fab fa-github left"></i>GitHub</a>
-    <a href="index.html?mode=user&code=Cutls@1m.cutls.com" class="btn waves-effect blue lighten-2" style="width:100%; max-width:40rem;"><img src="../../img/desk_full.svg" class="left" width="25" style="padding-top:5px;">Main author: Cutls@1m.cutls.com</a>
-    <br> TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/@@gitHash@@">@@gitHash@@</a> - <a onclick="checkupd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';" class="pointer pwa">@@checkup@@</a><br>
+            class="material-icons left">list</i>@@help@@/Docs</a>
+    <a href="https://github.com/cutls/TheDesk" class="btn waves-effect black lighten-2"
+        style="width:100%; max-width:40rem;"><i class="fab fa-github left"></i>GitHub</a>
+    <a href="index.html?mode=user&code=Cutls@2m.cutls.com" class="btn waves-effect blue lighten-2"
+        style="width:100%; max-width:40rem;"><img src="../../img/desk_full.svg" class="left" width="25"
+            style="padding-top:5px;">Main author: Cutls@2m.cutls.com</a>
+    <br> TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/@@gitHash@@">@@gitHash@@</a> - <a
+        onclick="checkupd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';"
+        class="pointer pwa">@@checkup@@</a><br>
     <br> Kyash
     <br>
     <img src="../../img/kyash.png" width="100"><br>
-    <a href="https://status.cutls.com/">
-        <img src="https://status.cutls.com/badge-service?site=thedesk.top">
-    </a><br>
     <h5>OSS License@@ossJP@@</h5>
-    <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/@@gitHash@@" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcutls%2FTheDesk.svg?type=small" /></a>
+    <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fcutls%2FTheDesk/refs/branch/master/@@gitHash@@"
+        alt="FOSSA Status"><img
+            src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcutls%2FTheDesk.svg?type=small" /></a>
     <br>
     <span style="font-family:Open Sans;">Copyright &copy; TheDesk 2018
-		Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a
-			href="https://thedesk.top/priv.html">Privacy
-			Policy</a>
-		<br>
-	</span><br> TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br> タグタイムラインを開く:
+        Under <a href="https://github.com/cutls/TheDesk/blob/master/LICENSE">GNU General Public License v3.0</a> and <a
+            href="https://thedesk.top/priv.html">Privacy
+            Policy</a>
+        <br>
+    </span><br> TheDeskおよびCutls Pは<a href="https://donken.org/">被災地支援のためのマストドン研究会</a>をログイン機能提供等の形で応援しています。<br>
+    タグタイムラインを開く:
     <a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
     <script type="text/javascript" src="../../@@node_base@@/lodash/lodash.min.js"></script>
     <script src="../../js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
