@@ -601,7 +601,7 @@ function staCopy(id) {
 //翻訳
 function trans(tar, to, elem) {
 	var id = elem.parents('.cvo').attr('toot-id')
-	alert(id)
+	//alert(id)
 	$('#toot-this .additional').text('Loading...(Powered by Google Translate)')
 	var domain = localStorage.getItem('domain_' + acct_id)
 	if (localStorage.getItem('mode_' + domain) == 'misskey') {
