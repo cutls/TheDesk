@@ -80,7 +80,7 @@ function imageXhr(id, key, murl) {
 	var startTime = new Date()
 	const timer = setInterval(function () {
 		time = time + 1
-		$('#imgsec').text(time)
+		$('#imgsec').text(time < 5000 ? time : '?')
 	}, 10)
 	$('#imgmodal-progress div').removeClass('determinate')
 	$('#imgmodal-progress div').addClass('indeterminate')
