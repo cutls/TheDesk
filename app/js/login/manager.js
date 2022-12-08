@@ -455,7 +455,7 @@ async function versionChecker(url) {
 				return false
 			} else {
 				$('#compt-warn').hide()
-				if (pwa) return true
+				if (pwa) return false
 				const codeSetupCheck = await Swal.fire({
 					title: lang.lang_manager_codesetup_title,
 					text: lang.lang_manager_codesetup,
