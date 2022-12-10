@@ -845,7 +845,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 				})
 			}
 			//デフォ絵文字
-			content = twemoji.parse(content)
+			const contentElement = document.createElement('div')
+			contentElement.innerHTML = content
+			const emojified = twemoji.parse(contentElement)
+			content = emojified.innerHTML
 
 			if (dis_name) {
 				dis_name = twemoji.parse(dis_name)
