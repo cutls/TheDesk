@@ -602,7 +602,7 @@ function staCopy(id) {
 function trans(tar, to, elem) {
 	var id = elem.parents('.cvo').attr('toot-id')
 	//alert(id)
-	$('#toot-this .additional').text('Loading...(Powered by Google Translate)')
+	$('#toot-this .additional').text('Loading...(Powered by Mastodon API)')
 	var domain = localStorage.getItem('domain_' + acct_id)
 	if (localStorage.getItem('mode_' + domain) == 'misskey') {
 		return false
