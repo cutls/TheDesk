@@ -67,7 +67,7 @@
         "jquery-ui-dist": "^1.13.2",
         "json5": "^2.2.1",
         "lodash": "^4.17.21",
-        "sanitize-html": "^2.7.2",
+        "sanitize-html": "^2.8.0",
         "sumchecker": "^3.0.1",
         "sweetalert2": "^11.6.15",
         "system-font-families": "^0.6.0",
