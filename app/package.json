@@ -65,7 +65,7 @@
         "jimp": "^0.16.2",
         "jquery": "^3.6.1",
         "jquery-ui-dist": "^1.13.2",
-        "json5": "^2.2.1",
+        "json5": "^2.2.2",
         "lodash": "^4.17.21",
         "sanitize-html": "^2.7.2",
         "sumchecker": "^3.0.1",
