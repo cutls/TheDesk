@@ -278,7 +278,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             }
             var if_notf = 'data-notfIndv="' + acct_id + "_" + toot.id + '"'
             var toot = toot.note
-            var dis_name = escapeHTML(toot.user.name)
+            var dis_name = escapeHTML(toot.user.name || toot.user.username)
         } else {
             var if_notf = ""
             if (toot.renote) {
@@ -291,7 +291,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                 if (!toot.text) {
                     var toot = toot.renote
                 }
-                var dis_name = escapeHTML(toot.user.name)
+                var dis_name = escapeHTML(toot.user.name || toot.user.username)
                 var uniqueid = toot.id
                 var actemojick = false
             } else {
@@ -606,9 +606,8 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
         }
         //Ticker
         var tickerdom = ""
-        if (ticker) {
-            var tickerdata = JSON.parse(localStorage.getItem("ticker"))
-
+        var tickerdata = JSON.parse(localStorage.getItem("ticker"))
+        if (ticker && tickerdata) {
             var thisdomain = toot.user.username.split("@")
             if (thisdomain.length > 1) {
                 thisdomain = thisdomain[1]
@@ -798,7 +797,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             '</span>' +
             '' + viewer + '' +
             '</div><div class="area-additional"><span class="additional">' + analyze +
-            '<div class="reactions ' + fullhide + '" style="height: 25px;"><span class="' + likehide + ' reaction re-like"><a onclick="reaction(\'like\',\'' + toot.id + '\',' + acct_id +
+            '<div class="reactions ' + fullhide + '" style="height: 25px; position: relative; top: -7px;"><span class="' + likehide + ' reaction re-like"><a onclick="reaction(\'like\',\'' + toot.id + '\',' + acct_id +
             ',\'' + tlid + '\')" class="waves-effect waves-dark btn-flat" style="padding:0;margin-left:3px;">' + twemoji.parse("👍") + '</a><span class="re-likect">' + like +
             '</span></span><span class="' + lovehide + ' reaction re-love"><a onclick="reaction(\'love\',\'' + toot.id + '\',' + acct_id +
             ',\'' + tlid + '\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;">' + twemoji.parse("💓") + '</a><span class="re-lovect">' + love +
