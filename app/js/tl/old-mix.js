@@ -57,11 +57,11 @@ function mixtl(acct_id, tlid, type, delc, voice) {
 						if (date(a.created_at, 'unix') < date(b.created_at, 'unix')) return 1
 						return 0
 					})
-					if (type == 'integrated') {
+					if (type === 'integrated') {
 						timeline.splice(20)
 					}
 					var templete = ''
-					if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
+					if (localStorage.getItem('filter_' + acct_id) !== 'undefined') {
 						var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), 'mix')
 					} else {
 						var mute = []
@@ -70,12 +70,12 @@ function mixtl(acct_id, tlid, type, delc, voice) {
 						var pkey = key * 1 + 1
 						if (pkey < timeline.length) {
 							if (
-								date(timeline[key].created_at, 'unix') != date(timeline[pkey].created_at, 'unix')
+								date(timeline[key].created_at, 'unix') !== date(timeline[pkey].created_at, 'unix')
 							) {
-								if (type == 'integrated') {
+								if (type === 'integrated') {
 									templete = templete + parse([timeline[key]], '', acct_id, tlid, '', mute, 'mix')
-								} else if (type == 'plus') {
-									if (timeline[key].account.acct == timeline[key].account.username) {
+								} else if (type === 'plus') {
+									if (timeline[key].account.acct === timeline[key].account.username) {
 										templete =
 											templete + parse([timeline[key]], '', acct_id, tlid, '', mute, 'plus')
 									}
@@ -133,8 +133,8 @@ function mixre(acct_id, tlid, TLtype, mute, delc, voice, mode) {
 
 		var obj = JSON.parse(JSON.parse(mess.data).payload)
 		var type = JSON.parse(mess.data).event
-		if (type == 'delete') {
-			if (delc == 'true') {
+		if (type === 'delete') {
+			if (delc === 'true') {
 				$('#timeline_' + tlid + ' [toot-id=' + JSON.parse(mess.data).payload + ']').addClass(
 					'emphasized'
 				)
@@ -145,7 +145,7 @@ function mixre(acct_id, tlid, TLtype, mute, delc, voice, mode) {
 				$('[toot-id=' + JSON.parse(mess.data).payload + ']').hide()
 				$('[toot-id=' + JSON.parse(mess.data).payload + ']').remove()
 			}
-		} else if (type == 'update') {
+		} else if (type === 'update') {
 			var templete = parse([obj], '', acct_id, tlid, '', mute)
 			if ($('#timeline_' + tlid + ' [toot-id=' + obj.id + ']').length < 1) {
 				if (voice) {
@@ -173,25 +173,25 @@ function mixre(acct_id, tlid, TLtype, mute, delc, voice, mode) {
 		console.log(['Receive Streaming API:(Integrated:Home)', obj])
 		var obj = JSON.parse(JSON.parse(mess.data).payload)
 		var type = JSON.parse(mess.data).event
-		if (type == 'delete') {
+		if (type === 'delete') {
 			if (del > 10) {
 				reconnector(tlid, type, acct_id, data)
 			} else {
 				localStorage.setItem('delete', del * 1 + 1)
 			}
-			if (delc == 'true') {
+			if (delc === 'true') {
 				$('[toot-id=' + JSON.parse(mess.data).payload + ']').addClass('emphasized')
 				$('[toot-id=' + JSON.parse(mess.data).payload + ']').addClass('by_delcatch')
 			} else {
 				$('[toot-id=' + JSON.parse(mess.data).payload + ']').hide()
 				$('[toot-id=' + JSON.parse(mess.data).payload + ']').remove()
 			}
-		} else if (type == 'update') {
+		} else if (type === 'update') {
 			localStorage.removeItem('delete')
-			if (TLtype == 'integrated') {
+			if (TLtype === 'integrated') {
 				var templete = parse([obj], '', acct_id, tlid)
-			} else if (TLtype == 'plus') {
-				if (obj.account.acct == obj.account.username) {
+			} else if (TLtype === 'plus') {
+				if (obj.account.acct === obj.account.username) {
 					var templete = parse([obj], '', acct_id, tlid, '', mute, 'mix')
 				} else {
 					var templete = ''
@@ -222,7 +222,7 @@ function mixre(acct_id, tlid, TLtype, mute, delc, voice, mode) {
 	websocketLocal[wslid].onerror = function(error) {
 		console.error('WebSocketLocal Error')
 		console.error(error)
-		if (mode == 'error') {
+		if (mode === 'error') {
 			$('#notice_icon_' + tlid).addClass('red-text')
 			todo('WebSocket Error ' + error)
 		} else {
@@ -235,7 +235,7 @@ function mixre(acct_id, tlid, TLtype, mute, delc, voice, mode) {
 	}
 	websocketLocal[wslid].onclose = function() {
 		console.warn('WebSocketLocal Closing:' + tlid)
-		if (mode == 'error') {
+		if (mode === 'error') {
 			$('#notice_icon_' + tlid).addClass('red-text')
 			todo('WebSocket Closed')
 		} else {
@@ -248,7 +248,7 @@ function mixre(acct_id, tlid, TLtype, mute, delc, voice, mode) {
 	}
 	websocketHome[wshid].onerror = function(error) {
 		console.error(['WebSocketHome Error', error])
-		if (mode == 'error') {
+		if (mode === 'error') {
 			$('#notice_icon_' + tlid).addClass('red-text')
 			todo('WebSocket Error ' + error)
 		} else {
@@ -261,7 +261,7 @@ function mixre(acct_id, tlid, TLtype, mute, delc, voice, mode) {
 	}
 	websocketHome[wshid].onclose = function() {
 		console.warn('WebSocketHome Closing:' + tlid)
-		if (mode == 'error') {
+		if (mode === 'error') {
 			$('#notice_icon_' + tlid).addClass('red-text')
 			todo('WebSocket Closed')
 		} else {
@@ -344,9 +344,9 @@ function mixmore(tlid, type) {
 						var pkey = key * 1 + 1
 						if (pkey < 20) {
 							if (
-								date(timeline[key].created_at, 'unix') != date(timeline[pkey].created_at, 'unix')
+								date(timeline[key].created_at, 'unix') !== date(timeline[pkey].created_at, 'unix')
 							) {
-								if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
+								if (localStorage.getItem('filter_' + acct_id) !== 'undefined') {
 									var mute = getFilterType(
 										JSON.parse(localStorage.getItem('filter_' + acct_id)),
 										'mix'
@@ -354,10 +354,10 @@ function mixmore(tlid, type) {
 								} else {
 									var mute = []
 								}
-								if (type == 'integrated') {
+								if (type === 'integrated') {
 									templete = templete + parse([timeline[key]], '', acct_id, tlid, '', mute, 'mix')
-								} else if (type == 'plus') {
-									if (timeline[key].account.acct == timeline[key].account.username) {
+								} else if (type === 'plus') {
+									if (timeline[key].account.acct === timeline[key].account.username) {
 										templete = templete + parse([timeline[key]], '', acct_id, tlid, '', mute, 'mix')
 									}
 								}

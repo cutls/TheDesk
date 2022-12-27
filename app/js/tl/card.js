@@ -113,7 +113,7 @@ function additionalIndv(tlid, acct_id, id) {
 	if (urls) {
 		$('[toot-id=' + id + '] .toot a').remove()
 	} else {
-		if (localStorage.getItem('mode_' + domain) == 'misskey') {
+		if (localStorage.getItem('mode_' + domain) === 'misskey') {
 			var start = 'https://' + domain + '/url?url=' + text
 			fetch(start, {
 				method: 'GET',
@@ -200,7 +200,7 @@ function cardHtml(json, acct_id, id) {
 		"twitcasting.tv"
 	]
 	var isHad = _.includes(ok, domain);
-	if (json.provider_name == 'pixiv') {
+	if (json.provider_name === 'pixiv') {
 		if (json.image) {
 			var pxvImg = `
 			<br><img src="${json.image}" style="max-width:100%" 
@@ -230,7 +230,7 @@ function cardHtml(json, acct_id, id) {
 					</span>`
 		}
 
-		if (json.html || json.provider_name == 'Twitter') {
+		if (json.html || json.provider_name === 'Twitter') {
 			if(isHad) {
 				var prved = `<img class="emoji" draggable="false" alt="✅" 
 					src="https://twemoji.maxcdn.com/v/12.1.3/72x72/2705.png">`
@@ -289,7 +289,7 @@ function cardHtmlShow(acct_id, id) {
 								${lang.lang_cards_pip}
 								">picture_in_picture_alt</i>`
 			}
-			if (json.provider_name == 'Twitter') {
+			if (json.provider_name === 'Twitter') {
 				var url = json.author_url
 				var status = json.url.match(/^https:\/\/twitter.com\/[_a-zA-Z0-9-]+\/status\/([0-9]+)/);
 				var statusId = false
@@ -338,7 +338,7 @@ function cardCheck(tlid) {
 function mov(id, tlid, type, rand, target) {
 	const dropdownTrigger = `dropdown_${rand}`
 	let elm = document.querySelector(`#timeline_${tlid} #${dropdownTrigger}`)
-	if(tlid == 'notf') {
+	if(tlid === 'notf') {
 		const timeline = $(target).parents('.notf-indv-box').attr('id')
 		elm = document.querySelector(`#${timeline} #${dropdownTrigger}`)
 		console.log(`#${timeline} #${dropdownTrigger}`)
@@ -349,9 +349,9 @@ function mov(id, tlid, type, rand, target) {
 	}
 	
 	var click = false
-	if (tlid == 'notf') {
+	if (tlid === 'notf') {
 		var tlide = '[data-notf=' + acct_id + ']'
-	} else if (tlid == 'user') {
+	} else if (tlid === 'user') {
 		var tlide = '#his-data'
 	} else {
 		var tlide = '[tlid=' + tlid + ']'
@@ -360,19 +360,19 @@ function mov(id, tlid, type, rand, target) {
 	if (!mouseover) {
 		mouseover = ''
 	}
-	if (mouseover == 'yes') {
+	if (mouseover === 'yes') {
 		mouseover = 'hide'
-	} else if (mouseover == 'click') {
-		if (type == 'mv') {
+	} else if (mouseover === 'click') {
+		if (type === 'mv') {
 			mouseover = ''
 		} else {
 			mouseover = 'hide'
 		}
 		click = true
-	} else if (mouseover == 'no') {
+	} else if (mouseover === 'no') {
 		mouseover = ''
 	}
-	if (mouseover == 'hide') {
+	if (mouseover === 'hide') {
 		if (click) {
 			$(tlide + ' [unique-id=' + id + ']').toggleClass('hide-actions')
 		} else {
@@ -389,14 +389,14 @@ function resetmv(type) {
 	var mouseover = localStorage.getItem('mouseover')
 	if (!mouseover) {
 		mouseover = ''
-	} else if (mouseover == 'yes') {
+	} else if (mouseover === 'yes') {
 		mouseover = 'hide'
-	} else if (mouseover == 'no') {
+	} else if (mouseover === 'no') {
 		mouseover = ''
-	} else if (mouseover == 'click' && type != 'mv') {
+	} else if (mouseover === 'click' && type !== 'mv') {
 		mouseover = 'hide'
 	}
-	if (mouseover == 'hide') {
+	if (mouseover === 'hide') {
 		$('.cvo').addClass('hide-actions')
 		//$(".area-vis").addClass("hide");
 		//$(".area-actions").addClass("hide");

@@ -101,7 +101,7 @@ function system(mainWindow, dir, lang, dirname) {
 
 	//ハードウェアアクセラレーションの無効化
 	ipc.on('ha', function (e, arg) {
-		if (arg == 'true') {
+		if (arg === 'true') {
 			fs.writeFileSync(ha_path, arg)
 		} else {
 			fs.unlink(ha_path, function (err) { })
@@ -110,7 +110,7 @@ function system(mainWindow, dir, lang, dirname) {
 		app.exit()
 	})
 	ipc.on('webview', function (e, arg) {
-		if (arg == 'true') {
+		if (arg === 'true') {
 			fs.writeFileSync(wv_path, arg)
 		} else {
 			fs.unlink(wv_path, function (err) { })
@@ -120,7 +120,7 @@ function system(mainWindow, dir, lang, dirname) {
 	})
 	//ユーザーエージェント
 	ipc.on('ua', function (e, arg) {
-		if (arg == '') {
+		if (arg === '') {
 			fs.unlink(ua_path, function (err) { })
 		} else {
 			fs.writeFileSync(ua_path, arg)
@@ -287,13 +287,13 @@ function system(mainWindow, dir, lang, dirname) {
 		fs.readdir(log_dir_path, function (err, files) {
 			if (err) throw err
 			files.filter(function (file) {
-				if (file == todayStr) {
+				if (file === todayStr) {
 					todayLog = fs.readFileSync(join(log_dir_path, file), 'utf8')
 				}
-				if (file == yestStr) {
+				if (file === yestStr) {
 					yestLog = logs + fs.readFileSync(join(log_dir_path, file), 'utf8')
 				}
-				if (file == yest2Str) {
+				if (file === yest2Str) {
 					yest2Log = fs.readFileSync(join(log_dir_path, file), 'utf8')
 				}
 				logs = todayLog + yestLog + yest2Log
@@ -315,7 +315,7 @@ function system(mainWindow, dir, lang, dirname) {
 			fs.readdir(log_dir_path, function (err, files) {
 				if (err) throw err
 				files.filter(function (file) {
-					if (file != todayStr && file != yestStr && file != yest2Str) {
+					if (file !== todayStr && file !== yestStr && file !== yest2Str) {
 						fs.unlinkSync(join(log_dir_path, file))
 					}
 				})

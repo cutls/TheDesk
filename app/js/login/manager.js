@@ -6,7 +6,7 @@ function load() {
 		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
 		var mode = m[1]
 		var codex = m[2]
-		if (mode == 'first' && codex == 'true') {
+		if (mode === 'first' && codex === 'true') {
 			$('body').addClass('first')
 		} else {
 		}
@@ -39,7 +39,7 @@ function load() {
 	Object.keys(obj).forEach(function (key) {
 		var acct = obj[key]
 		var list = key * 1 + 1
-		if (acct.background != 'def' && acct.text != 'def') {
+		if (acct.background !== 'def' && acct.text !== 'def') {
 			var style = 'style="background-color:#' + acct.background + '; color:' + acct.text + ';"'
 		} else {
 			var style = ''
@@ -131,7 +131,7 @@ function maxChars(domain, uid) {
 		}
 	}
 	Object.keys(obj).forEach(function (key) {
-		if (obj[key].domain == domain) localStorage.setItem('letters_' + key, value)
+		if (obj[key].domain === domain) localStorage.setItem('letters_' + key, value)
 	})
 	console.log('#maxChars' + uid, value)
 	load()
@@ -272,7 +272,7 @@ function multiDel(target) {
 					left_fold = true
 				}
 				//消した垢のコラムじゃないときコピー
-				if (target != oldcol.domain) {
+				if (target !== oldcol.domain) {
 					var add = {
 						domain: newdom,
 						type: type,
@@ -338,7 +338,7 @@ function multiDel2(target) {
 					var nk = key - 1
 					column.domain = nk
 					cobj[key] = column
-				} else if (column.domain == target) {
+				} else if (column.domain === target) {
 					localStorage.removeItem('card_' + tlid)
 					cobj.splice(key, 1)
 				}
@@ -354,7 +354,7 @@ function multiDel2(target) {
 function support() {
 	Object.keys(idata).forEach(function (key) {
 		var instance = idata[key]
-		if (instance == 'instance') {
+		if (instance === 'instance') {
 			templete =
 				'<a onclick="login(\'' +
 				key +
@@ -376,7 +376,7 @@ function backToInit() {
 async function login(url) {
 	var multi = localStorage.getItem('multi')
 	var obj = JSON.parse(multi)
-	if ($('#misskey:checked').val() == 'on') {
+	if ($('#misskey:checked').val() === 'on') {
 		$('#misskey').prop('checked', true)
 		misskeyLogin(url)
 		return
@@ -503,7 +503,7 @@ async function versionCompat(title, version) {
 		}
 		i++
 	}
-	if (lang.language == 'ja' && onceAdd) {
+	if (lang.language === 'ja' && onceAdd) {
 		$('#compt').show()
 	}
 }
@@ -611,7 +611,7 @@ function misskeyAuth(url, mkc) {
 //テキストボックスにURL入れた
 function instance() {
 	var url = $('#autocomplete-input').val()
-	if (url.indexOf('@') != -1 || url.indexOf('https') != -1) {
+	if (url.indexOf('@') !== -1 || url.indexOf('https') !== -1) {
 		alert('入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
 		return false
 	}
@@ -625,13 +625,13 @@ function code(code) {
 		var code = $('#code').val()
 		$('#code').val('')
 	}
-	if (!code || code == '') {
+	if (!code || code === '') {
 		M.toast({ html: lang.lang_fatalerroroccured + 'Error: no code', displayLength: 5000 })
 		return false
 	}
 	var url = localStorage.getItem('domain_tmp')
 	localStorage.removeItem('domain_tmp')
-	if (localStorage.getItem('msky') == 'true') {
+	if (localStorage.getItem('msky') === 'true') {
 		var start = 'https://' + url + '/api/auth/session/userkey'
 		var httpreq = new XMLHttpRequest()
 		httpreq.open('POST', start, true)
@@ -751,7 +751,7 @@ function getdata(domain, json) {
 			}
 			var avatar = json['avatar']
 			//missingがmissingなやつ
-			if (avatar == '/avatars/original/missing.png') {
+			if (avatar === '/avatars/original/missing.png') {
 				avatar = '../../img/missing.svg'
 			}
 			if (json['source']) {
@@ -782,7 +782,7 @@ function getdata(domain, json) {
 				}
 				ct++
 			}
-			if (addTarget == -1) {
+			if (addTarget === -1) {
 				var target = obj.length
 				obj.push(add)
 			} else {
@@ -809,7 +809,7 @@ function atSetup(type) {
 	var multi = localStorage.getItem('multi')
 	var avatar = '../../img/missing.svg'
 	var priv = 'public'
-	if (type == 'misskey') {
+	if (type === 'misskey') {
 		var i = $('#misskey-key').val()
 		var add = {
 			at: i,
@@ -837,7 +837,7 @@ function atSetup(type) {
 			mode: ''
 		}
 	}
-	if (!i || i == '') {
+	if (!i || i === '') {
 		M.toast({ html: lang.lang_fatalerroroccured + 'Error: access token', displayLength: 5000 })
 		return false
 	}
@@ -858,7 +858,7 @@ function refresh(target) {
 	var multi = localStorage.getItem('multi')
 	var obj = JSON.parse(multi)
 	console.log(obj)
-	if (obj[target].mode == 'misskey') {
+	if (obj[target].mode === 'misskey') {
 		misskeyRefresh(obj, target, obj[target].domain)
 		return
 	}
@@ -896,7 +896,7 @@ function refresh(target) {
 			}
 			var avatar = json['avatar']
 			//missingがmissingなやつ
-			if (avatar == '/avatars/original/missing.png' || !avatar) {
+			if (avatar === '/avatars/original/missing.png' || !avatar) {
 				avatar = './img/missing.svg'
 			}
 			var ref = {
@@ -996,7 +996,7 @@ function multisel() {
 		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]
 			var list = key * 1 + 1
-			if (key == last) {
+			if (key === last) {
 				sel = 'selected'
 				mainb = '(' + lang.lang_manager_def + ')'
 				var domain = localStorage.getItem('domain_' + key)
@@ -1058,14 +1058,14 @@ function coloradd(key, bg, txt) {
 	o[key] = obj
 	var json = JSON.stringify(o)
 	localStorage.setItem('multi', json)
-	if (txt == 'def') {
+	if (txt === 'def') {
 		$('#acct_' + key).attr('style', '')
 	} else {
 		$('#acct_' + key).css('background-color', '#' + bg)
-		if (txt == 'black') {
+		if (txt === 'black') {
 			var bghex = '000000'
 			var ichex = '9e9e9e'
-		} else if (txt == 'white') {
+		} else if (txt === 'white') {
 			var bghex = 'ffffff'
 			var ichex = 'eeeeee'
 		}
@@ -1087,7 +1087,7 @@ input.addEventListener(
 		window.clearInterval(timer)
 		timer = window.setInterval(function () {
 			var new_val = input.value
-			if (prev_val != new_val) {
+			if (prev_val !== new_val) {
 				if (new_val.length > 3) {
 					var start = 'https://www.fediversesearch.com/search/?keyword=' + new_val
 					fetch(start, {

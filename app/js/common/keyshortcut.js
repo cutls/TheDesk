@@ -160,7 +160,7 @@ $(function($) {
 				}
 			}
 			//矢印:選択
-			if (e.code == 'ArrowLeft') {
+			if (e.code === 'ArrowLeft') {
 				//left
 				if ($('#imagemodal').hasClass('open')) {
 					imgCont('prev')
@@ -171,7 +171,7 @@ $(function($) {
 				}
 				tootSelector(selectedColumn, selectedToot)
 				return false
-			} else if (e.code == 'ArrowUp') {
+			} else if (e.code === 'ArrowUp') {
 				//up
 				if ($('#imagemodal').hasClass('open')) {
 					return false
@@ -181,7 +181,7 @@ $(function($) {
 				}
 				tootSelector(selectedColumn, selectedToot)
 				return false
-			} else if (e.code == 'ArrowRight') {
+			} else if (e.code === 'ArrowRight') {
 				//right
 				if ($('#imagemodal').hasClass('open')) {
 					imgCont('next')
@@ -192,7 +192,7 @@ $(function($) {
 				}
 				tootSelector(selectedColumn, selectedToot)
 				return false
-			} else if (e.code == 'ArrowDown') {
+			} else if (e.code === 'ArrowDown') {
 				//down
 				if ($('#imagemodal').hasClass('open')) {
 					return false
@@ -211,19 +211,19 @@ $(function($) {
 				}
 			}
 			//選択時
-			if (e.keyCode == 70) {
+			if (e.keyCode === 70) {
 				var id = $('.selectedToot').attr('unique-id')
 				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
 				fav(id, acct_id, false)
 				return false
 			}
-			if (e.keyCode == 66) {
+			if (e.keyCode === 66) {
 				var id = $('.selectedToot').attr('unique-id')
 				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
 				rt(id, acct_id, false)
 				return false
 			}
-			if (e.keyCode == 82) {
+			if (e.keyCode === 82) {
 				var id = $('.selectedToot').attr('unique-id')
 				var acct_id = $('#timeline_' + selectedColumn).attr('data-acct')
 				var ats_cm = $('.selectedToot .rep-btn').attr('data-men')

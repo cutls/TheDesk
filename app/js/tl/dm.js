@@ -102,7 +102,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var imh = localStorage.getItem("img-height")
 	//独自ロケール
 	var locale = localStorage.getItem("locale")
-	if (locale == "yes") {
+	if (locale === "yes") {
 		var locale = false
 	}
 	//ネイティブ通知
@@ -154,13 +154,13 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	if (!ltr) {
 		var ltr = 500
 	}
-	if (!nsfwtype || nsfwtype == "yes") {
+	if (!nsfwtype || nsfwtype === "yes") {
 		var nsfw = "ok"
 	} else {
 		var nsfw
 	}
 	var cwtype = localStorage.getItem("cw")
-	if (!cwtype || cwtype == "yes") {
+	if (!cwtype || cwtype === "yes") {
 		var cw = "ok"
 	} else {
 		var cw
@@ -194,11 +194,11 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	if (!viashow) {
 		viashow = "via-hide"
 	}
-	if (viashow == "hide") {
+	if (viashow === "hide") {
 		viashow = "via-hide"
 	}
 	//認証なしTL
-	if (mix == "noauth") {
+	if (mix === "noauth") {
 		var noauth = "hide"
 		var antinoauth = ""
 	} else {
@@ -209,9 +209,9 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 	var mouseover = localStorage.getItem("mouseover")
 	if (!mouseover) {
 		mouseover = ""
-	} else if (mouseover == "yes" || mouseover == "click") {
+	} else if (mouseover === "yes" || mouseover === "click") {
 		mouseover = "hide"
-	} else if (mouseover == "no") {
+	} else if (mouseover === "no") {
 		mouseover = ""
 	}
 	var local = []
@@ -241,7 +241,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		var notice = ""
 		var boostback = ""
 		//ユーザー強調
-		if (toot.account.username != toot.account.acct) {
+		if (toot.account.username !== toot.account.acct) {
 			var fullname = toot.account.acct
 		} else {
 			var domain = localStorage.getItem("domain_" + acct_id)
@@ -250,7 +250,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		if (useremp) {
 			Object.keys(useremp).forEach(function(key10) {
 				var user = useremp[key10]
-				if (user == fullname) {
+				if (user === fullname) {
 					boostback = "emphasized"
 				}
 			})
@@ -270,19 +270,19 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			//強調チェック
 			Object.keys(emp).forEach(function(key6) {
 				var cli = emp[key6]
-				if (cli == via) {
+				if (cli === via) {
 					boostback = "emphasized"
 				}
 			})
 			//ミュートチェック
 			Object.keys(mute).forEach(function(key7) {
 				var cli = mute[key7]
-				if (cli == via) {
+				if (cli === via) {
 					boostback = "hide"
 				}
 			})
 		}
-		if (mix == "pinned") {
+		if (mix === "pinned") {
 			boostback = "emphasized"
 		}
 		if (toot.spoiler_text && cw) {
@@ -408,7 +408,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			tags = '<div style="float:right">' + tags + "</div>"
 		}
 		//アニメ再生
-		if (gif == "yes") {
+		if (gif === "yes") {
 			var avatar = toot.account.avatar
 		} else {
 			var avatar = toot.account.avatar_static
@@ -442,7 +442,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			})
 		}
 		//日本語じゃない
-		if (toot.language != "ja") {
+		if (toot.language !== "ja") {
 			var trans = '<div class="action pin"><a onclick="trans(\'' + toot.language + '\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_parse_trans + '"><i class="material-icons">g_translate</i></a></div>'
 		} else {
 			var trans = ""
@@ -457,7 +457,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		//Cards
 		if (!card && toot.card) {
 			var cards = toot.card
-			if (cards.provider_name == "Twitter") {
+			if (cards.provider_name === "Twitter") {
 				if (cards.image) {
 					var twiImg = '<br><img src="' + cards.image + '">'
 				} else {
@@ -485,7 +485,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				}
 				for (var i = 0; i < tickerdata.length; i++) {
 					var value = tickerdata[i]
-					if (value.domain == thisdomain) {
+					if (value.domain === thisdomain) {
 						var tickerdom = '<div style="background:linear-gradient(to left,transparent, ' + value.bg + " 96%) !important; color:" + value.text + ';width:100%; height:0.9rem; font-size:0.8rem;"><img src="' + value.image + '" style="height:100%;"><span style="position:relative; top:-0.2rem;"> ' + escapeHTML(value.name) + "</span></div>"
 						break
 					}

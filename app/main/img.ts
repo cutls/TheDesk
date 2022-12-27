@@ -1,9 +1,12 @@
-function img(mainWindow, dir) {
+
+import electron from 'electron'
+import * as fs from 'fs'
+import Jimp from 'jimp'
+export default function img(mainWindow: electron.BrowserWindow, dir: string) {
 	const electron = require('electron')
 	const dialog = electron.dialog
 	const fs = require('fs')
-	var Jimp = require('jimp')
-	var ipc = electron.ipcMain
+	const ipc = electron.ipcMain
 	const BrowserWindow = electron.BrowserWindow
 	ipc.on('file-select', (e, args) => {
 		let fileNames = dialog.showOpenDialogSync(mainWindow, {
@@ -23,9 +26,9 @@ function img(mainWindow, dir) {
 		if (!fileNames) {
 			return false
 		}
-		for (var i = 0; i < fileNames.length; i++) {
-			var path = fileNames[i]
-			var bin = fs.readFileSync(path, 'base64')
+		for (let i = 0; i < fileNames.length; i++) {
+			const path = fileNames[i]
+			const bin = fs.readFileSync(path, 'base64')
 			e.sender.send('resizeJudgement', [bin, 'new'])
 		}
 	})
@@ -38,14 +41,10 @@ function img(mainWindow, dir) {
 		})
 	})
 	ipc.on('resize-image', (e, args) => {
-		var ext = args[0].toString().slice(args[0].indexOf('/') + 1, args[0].indexOf(';'))
-		if (ext == 'jpeg') {
-			var use = 'MIME_JPEG'
-		} else {
-			var use = 'MIME_PNG'
-		}
-		var b64 = args[0].replace(/^data:\w+\/\w+;base64,/, '')
-		var decodedFile = new Buffer(b64, 'base64')
+		const ext = args[0].toString().slice(args[0].indexOf('/') + 1, args[0].indexOf(';'))
+		const use = ext === 'jpeg' ? 'MIME_JPEG' : 'MIME_PNG'
+		const b64 = args[0].replace(/^data:\w+\/\w+;base64,/, '')
+		const decodedFile = new Buffer(b64, 'base64')
 		Jimp.read(decodedFile, function (err, lenna) {
 			if (err) throw err
 			lenna.scaleToFit(args[1], args[1]).getBase64(Jimp[use], function (err, src) {
@@ -54,21 +53,21 @@ function img(mainWindow, dir) {
 		})
 	})
 	ipc.on('stamp-image', (e, args) => {
-		var text = args[1]
-		var b64 = args[0].replace(/^data:\w+\/\w+;base64,/, '')
-		var decodedFile = new Buffer(b64, 'base64')
+		const text = args[1]
+		const b64 = args[0].replace(/^data:\w+\/\w+;base64,/, '')
+		const decodedFile = new Buffer(b64, 'base64')
 		console.log(text)
 		Jimp.read(decodedFile, function (err, image) {
 			if (err) throw err
 			Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then((font) => {
-				var evWidth = Jimp.measureText(font, text)
-				var width = image.bitmap.width
-				var height = image.bitmap.height
-				var left = width - evWidth - 10
-				var top = height - 30
-				var color = Jimp.intToRGBA(image.getPixelColor(left, top))
+				const evWidth = Jimp.measureText(font, text)
+				const width = image.bitmap.width
+				const height = image.bitmap.height
+				const left = width - evWidth - 10
+				const top = height - 30
+				const color = Jimp.intToRGBA(image.getPixelColor(left, top))
 				console.log(left, top, color)
-				var ave = (color.r + color.g + color.b) / 3
+				const ave = (color.r + color.g + color.b) / 3
 				if (ave > 128) {
 					image.print(font, left, top, args[1]).getBase64(Jimp.MIME_PNG, function (err, src) {
 						e.sender.send('bmp-img-comp', [src, args[1], true])
@@ -84,4 +83,3 @@ function img(mainWindow, dir) {
 		})
 	})
 }
-exports.img = img

@@ -93,7 +93,7 @@ if (location.search) {
 	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
 	var mode = m[1]
 	var codex = m[2]
-	if (mode == 'share') {
+	if (mode === 'share') {
 		$('textarea').focus()
 		$('#textarea').val(decodeURI(codex))
 		show()
@@ -115,7 +115,7 @@ function initPostbox() {
 	})
 
 	$('#timeline-container,#group').click(function (e) {
-		if (localStorage.getItem('box') != 'absolute') {
+		if (localStorage.getItem('box') !== 'absolute') {
 			if ($('#post-box').hasClass('appear') && !localStorage.getItem('nohide')) {
 				hide()
 			}

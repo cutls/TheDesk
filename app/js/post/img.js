@@ -11,7 +11,7 @@ obj.on('dragend', function(e) {
 })
 //ドラッグファイルが画面上に
 obj.on('dragenter', function(e) {
-	if (system != 'locked') {
+	if (system !== 'locked') {
 		$('#drag').css('display', 'flex')
 	}
 })
@@ -21,7 +21,7 @@ $('body').on('dragover', function(e) {
 })
 //ドロップした
 $('body').on('drop', function(e) {
-	if (system != 'locked') {
+	if (system !== 'locked') {
 		$('#drag').css('display', 'none')
 		e.preventDefault()
 		var files = e.originalEvent.dataTransfer.files
@@ -38,7 +38,7 @@ function pimg(files) {
 	console.table(files)
 	for (i = 0; i < files.length; i++) {
 		var dot = files[i].path.match(/\.(.+)$/)[1]
-		if (dot == 'bmp' || dot == 'BMP') {
+		if (dot === 'bmp' || dot === 'BMP') {
 			postMessage(['bmpImage', [files[i].path, i]], '*')
 			todo(lang.lang_progress)
 		} else {
@@ -115,7 +115,7 @@ async function media(b64, type, no, stamped) {
 	fd.append('file', media)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	var httpreq = new XMLHttpRequest()
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var start = 'https://' + domain + '/api/drive/files/create'
 		httpreq.open('POST', start, true)
 		httpreq.upload.addEventListener('progress', progshow, false)
@@ -197,7 +197,7 @@ async function media(b64, type, no, stamped) {
 			$('select').formSelect()
 			$('#imgsel').show()
 			var img = localStorage.getItem('img')
-			if (json.type.indexOf('image') != -1) {
+			if (json.type.indexOf('image') !== -1) {
 				var html = `<img src="${json[previewer]}" class="preview-img pointer" data-media="${json['id']}" oncontextmenu="deleteImage('${json['id']}')" onclick="altImage('${acct_id}','${json['id']}')" title="${lang.lang_postimg_delete}">`
 				$('#preview').append(html)
 			} else {
@@ -206,13 +206,13 @@ async function media(b64, type, no, stamped) {
 			if (!img) {
 				var img = 'no-act'
 			}
-			if (img != 'inline') {
+			if (img !== 'inline') {
 				var mediav = $('#media').val()
 				var regExp = new RegExp('tmp_' + r, 'g')
 				mediav = mediav.replace(regExp, json['id'])
 				$('#media').val(mediav)
 			}
-			if (img == 'url' && json['text_url']) {
+			if (img === 'url' && json['text_url']) {
 				$('#textarea').val($('#textarea').val() + ' ' + json['text_url'])
 			}
 		}
@@ -245,7 +245,7 @@ element.addEventListener('paste', function(e) {
 	}
 	// DataTransferItemList に画像が含まれいない場合は終了する
 	var imageItems = [...e.clipboardData.items].filter(i => i.type.startsWith('image'))
-	if (imageItems.length == 0) {
+	if (imageItems.length === 0) {
 		console.warn('it is not image')
 		return true
 	}
@@ -283,7 +283,7 @@ function deleteImage(key) {
 			var media = $('#media').val()
 			var arr = media.split(',')
 			for (var i = 0; i < media.length; i++) {
-				if (arr[i] == key) {
+				if (arr[i] === key) {
 					arr.splice(i, 1)
 					break
 				}

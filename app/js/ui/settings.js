@@ -20,19 +20,19 @@ const envView = Vue.createApp({
                 if (!val || j > 0) val = lsi.setValue
                 localStorage.setItem(lsi.storage, val)
             }
-            if (ls[0].id == 'ha') {
+            if (ls[0].id === 'ha') {
                 hardwareAcceleration(val)
             }
-            if (ls[0].id == 'webview') {
+            if (ls[0].id === 'webview') {
                 postMessage(['webviewSetting', val], '*')
             }
-            if (ls[0].id == 'ua_setting') {
+            if (ls[0].id === 'ua_setting') {
                 useragent(val)
             }
-            if (ls[0].id == 'frame') {
+            if (ls[0].id === 'frame') {
                 frameSet(val)
             }
-            if (ls[0].id == 'size') {
+            if (ls[0].id === 'size') {
 	            $('html,body').css('font-size', `${val}px`)
             }
             M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
@@ -101,7 +101,7 @@ const postView = Vue.createApp({
 function settings() {
     var fontd = $('#font').val()
     if (fontd) {
-        if (fontd != localStorage.getItem('font')) {
+        if (fontd !== localStorage.getItem('font')) {
             M.toast({ html: lang.lang_setting_font.replace('{{set}}', fontd), displayLength: 3000 })
         }
         localStorage.setItem('font', fontd)
@@ -181,10 +181,10 @@ function load() {
         var font = ''
     }
     $('#font').val(font)
-    $('#c1-file').text(localStorage.getItem('custom1') != 'null' ? localStorage.getItem('custom1') : '')
-    $('#c2-file').text(localStorage.getItem('custom2') != 'null' ? localStorage.getItem('custom2') : '')
-    $('#c3-file').text(localStorage.getItem('custom3') != 'null' ? localStorage.getItem('custom3') : '')
-    $('#c4-file').text(localStorage.getItem('custom4') != 'null' ? localStorage.getItem('custom4') : '')
+    $('#c1-file').text(localStorage.getItem('custom1') !== 'null' ? localStorage.getItem('custom1') : '')
+    $('#c2-file').text(localStorage.getItem('custom2') !== 'null' ? localStorage.getItem('custom2') : '')
+    $('#c3-file').text(localStorage.getItem('custom3') !== 'null' ? localStorage.getItem('custom3') : '')
+    $('#c4-file').text(localStorage.getItem('custom4') !== 'null' ? localStorage.getItem('custom4') : '')
     var cvol = localStorage.getItem('customVol')
     if (cvol) {
         $('#soundvol').val(cvol * 100)
@@ -199,16 +199,16 @@ function customVol() {
     $('#soundVolVal').text(cvol)
     localStorage.setItem('customVol', cvol / 100)
     var sound = localStorage.getItem('favSound')
-    if (sound == 'default') {
+    if (sound === 'default') {
         var file = '../../source/notif.wav'
     } else {
-        if (sound == 'c1') {
+        if (sound === 'c1') {
             var file = localStorage.getItem('custom1')
-        } else if (sound == 'c2') {
+        } else if (sound === 'c2') {
             var file = localStorage.getItem('custom2')
-        } else if (sound == 'c3') {
+        } else if (sound === 'c3') {
             var file = localStorage.getItem('custom3')
-        } else if (sound == 'c4') {
+        } else if (sound === 'c4') {
             var file = localStorage.getItem('custom4')
         }
     }
@@ -389,7 +389,7 @@ function exportSettingsCore() {
     //spotify
     exp.spotifyArtwork = localStorage.getItem('artwork')
     var content = localStorage.getItem('np-temp')
-    if (content || content == '' || content == 'null') {
+    if (content || content === '' || content === 'null') {
         exp.spotifyTemplete = content
     } else {
         exp.spotifyTemplete = null
@@ -554,7 +554,7 @@ function copyColor(from, to) {
     let i = 0
     let color
     for (tag of props) {
-        if (tag == from) {
+        if (tag === from) {
             let used = $(`#use-color_${i}`).prop('checked')
             if (!used) {
                 Swal.fire({
@@ -570,7 +570,7 @@ function copyColor(from, to) {
     }
     if (!color) return false
     for (tag of props) {
-        if (tag == to) {
+        if (tag === to) {
             $(`#color-picker${i}_value`).val(color)
             $(`#use-color_${i}`).prop('checked', true)
             break
@@ -604,7 +604,7 @@ function customComp(preview) {
     var my = JSON.parse(multi)[0].name
     var id = $('#custom-edit-sel').val()
     const defaults = ['black', 'blue', 'brown', 'green', 'indigo', 'polar', 'snow', 'white']
-    if (id == 'add_new' || defaults.includes(id)) {
+    if (id === 'add_new' || defaults.includes(id)) {
         id = makeCID()
     }
     if (!preview) localStorage.setItem('customtheme-id', id)
@@ -676,7 +676,7 @@ function customSel() {
 }
 function custom() {
     var id = $('#custom-edit-sel').val()
-    if (id == 'add_new') {
+    if (id === 'add_new') {
         $('#custom_name').val('')
         $('#custom_desc').val('')
         $('#dark').prop('checked', true)
@@ -770,7 +770,7 @@ function pluginLoad() {
 function pluginEdit() {
     var id = $('#plugin-edit-sel').val()
     $('#plugin').attr('data-id', id)
-    if (id == 'add_new') {
+    if (id === 'add_new') {
         editor.setValue('', -1)
         $('.plugin_delete').addClass('disabled')
     } else {
@@ -780,7 +780,7 @@ function pluginEdit() {
         Object.keys(args).forEach(function (key) {
             var plugin = args[key]
             var targetId = plugin.id
-            if (targetId == id) editor.setValue(plugin.content, -1)
+            if (targetId === id) editor.setValue(plugin.content, -1)
         })
     }
 }
@@ -808,7 +808,7 @@ function completePlugin(comp) {
         })
         return false
     }
-    if (id == 'add_new') {
+    if (id === 'add_new') {
         id = makeCID()
         args.push({
             id: id,
@@ -818,7 +818,7 @@ function completePlugin(comp) {
         Object.keys(args).forEach(function (key) {
             var plugin = args[key]
             var targetId = plugin.id
-            if (targetId == id) args[key].content = inputPlugin
+            if (targetId === id) args[key].content = inputPlugin
         })
     }
     var ss = args
@@ -858,7 +858,7 @@ async function deletePlugin() {
     Object.keys(args).forEach(function (key) {
         var plugin = args[key]
         var targetId = plugin.id
-        if (targetId != id) ss.push(plugin)
+        if (targetId !== id) ss.push(plugin)
     })
     localStorage.setItem('plugins', JSON.stringify(ss))
     pluginLoad()
@@ -888,7 +888,7 @@ function asReadEnd() {
     postMessage(['asReadComp', ''], '*')
 }
 function checkupd() {
-    if (localStorage.getItem('winstore') == 'brewcask' || localStorage.getItem('winstore') == 'snapcraft' || localStorage.getItem('winstore') == 'winstore') {
+    if (localStorage.getItem('winstore') === 'brewcask' || localStorage.getItem('winstore') === 'snapcraft' || localStorage.getItem('winstore') === 'winstore') {
         var winstore = true
     } else {
         var winstore = false
@@ -915,18 +915,18 @@ function checkupd() {
             console.table(mess)
             if (mess) {
                 var platform = localStorage.getItem('platform')
-                if (platform == 'darwin') {
+                if (platform === 'darwin') {
                     var newest = mess.desk_mac
                 } else {
                     var newest = mess.desk
                 }
-                if (newest == ver) {
+                if (newest === ver) {
                     Swal.fire({
                         type: 'info',
                         text: lang.lang_setting_noupd,
                         html: ver,
                     })
-                } else if (ver.indexOf('beta') != -1 || winstore) {
+                } else if (ver.indexOf('beta') !== -1 || winstore) {
                     Swal.fire({
                         type: 'info',
                         text: lang.lang_setting_thisisbeta,

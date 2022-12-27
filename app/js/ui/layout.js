@@ -51,7 +51,7 @@ function parseColumn(target, dontclose) {
 			//フィルターデータ読もう
 			getFilter(key)
 			var domain = localStorage.getItem('domain_' + key)
-			if (localStorage.getItem('mode_' + domain) == 'misskey') {
+			if (localStorage.getItem('mode_' + domain) === 'misskey') {
 				localStorage.removeItem('misskey_wss_' + key)
 				connectMisskey(key, false)
 			}
@@ -82,12 +82,12 @@ function parseColumn(target, dontclose) {
 		var obj = JSON.parse(col)
 	}
 	var numtarget = false
-	if (target == 'add') {
+	if (target === 'add') {
 		var tlidtar = obj.length - 1
 		obj = [obj[tlidtar]]
 	} else if (target) {
 		var tlidtar = target
-		if (target == 'zero') {
+		if (target === 'zero') {
 			target = 0
 		}
 		obj = [obj[target]]
@@ -105,13 +105,13 @@ function parseColumn(target, dontclose) {
 		//acctって言いながらタイムライン
 		var acct = obj[key]
 		if (tlidtar) {
-			if (tlidtar == 'zero') {
+			if (tlidtar === 'zero') {
 				key = 0
 			} else {
 				key = tlidtar
 			}
 		}
-		if (acct.type == 'notf') {
+		if (acct.type === 'notf') {
 			var notf_attr = ' data-notf=' + acct.domain
 			var if_notf = 'hide'
 		} else {
@@ -121,9 +121,9 @@ function parseColumn(target, dontclose) {
 		if (localStorage.getItem('notification_' + acct.domain)) {
 			var unique_notf = lang.lang_layout_thisacct.replace('{{notf}}', localStorage.getItem('notification_' + acct.domain))
 		} else {
-			if (lang.language == 'ja') {
+			if (lang.language === 'ja') {
 				var notflocale = '通知'
-			} else if (lang.language == 'en') {
+			} else if (lang.language === 'en') {
 				var notflocale = 'Notification'
 			}
 			var unique_notf = lang.lang_layout_thisacct.replace('{{notf}}', notflocale)
@@ -131,12 +131,12 @@ function parseColumn(target, dontclose) {
 		var insert = ''
 		var icnsert = ''
 		if (acct.background) {
-			if (acct.text == 'def') {
+			if (acct.text === 'def') {
 			} else {
-				if (acct.text == 'black') {
+				if (acct.text === 'black') {
 					var txhex = '000000'
 					var ichex = '9e9e9e'
-				} else if (acct.text == 'white') {
+				} else if (acct.text === 'white') {
 					var txhex = 'ffffff'
 					var ichex = 'eeeeee'
 				}
@@ -145,11 +145,11 @@ function parseColumn(target, dontclose) {
 			}
 		}
 		if (acctlist[acct.domain]) {
-			if (acctlist[acct.domain].background != 'def') {
+			if (acctlist[acct.domain].background !== 'def') {
 				insert = insert + ' border-bottom:medium solid #' + acctlist[acct.domain].background + ';'
 			}
 		}
-		if (acct.type == 'notf' && localStorage.getItem('setasread') == 'no') {
+		if (acct.type === 'notf' && localStorage.getItem('setasread') === 'no') {
 			localStorage.setItem('hasNotfC_' + acct.domain, 'true')
 		} else {
 			localStorage.removeItem('hasNotfC_' + acct.domain)
@@ -170,7 +170,7 @@ function parseColumn(target, dontclose) {
 		if (acct.width) {
 			css = css + ' min-width:' + acct.width + 'px !important;max-width:' + acct.width + 'px !important;'
 		}
-		if (acct.type == 'webview') {
+		if (acct.type === 'webview') {
 			if (localStorage.getItem('fixwidth')) {
 				var fixwidth = localStorage.getItem('fixwidth')
 				var css = ' min-width:' + fixwidth + 'px;'
@@ -180,37 +180,37 @@ function parseColumn(target, dontclose) {
 			var html = webviewParse('https://tweetdeck.twitter.com', key, insert, icnsert, css)
 			$('#timeline-container').append(html)
 			initWebviewEvent()
-		} else if (acct.type == 'tootsearch') {
+		} else if (acct.type === 'tootsearch') {
 			if (!acct.left_fold) {
 				basekey = key
 			}
 
 			var anime = localStorage.getItem('animation')
-			if (anime == 'yes' || !anime) {
+			if (anime === 'yes' || !anime) {
 				var animecss = 'box-anime'
 			} else {
 				var animecss = ''
 			}
 			unstreamingTL(acct.type, key, basekey, insert, icnsert, acct.left_fold, css, animecss, acct.data)
-		} else if (acct.type == 'bookmark') {
+		} else if (acct.type === 'bookmark') {
 			if (!acct.left_fold) {
 				basekey = key
 			}
 
 			var anime = localStorage.getItem('animation')
-			if (anime == 'yes' || !anime) {
+			if (anime === 'yes' || !anime) {
 				var animecss = 'box-anime'
 			} else {
 				var animecss = ''
 			}
 			unstreamingTL(acct.type, key, basekey, insert, icnsert, acct.left_fold, css, animecss, acct.domain)
-		} else if (acct.type == 'utl') {
+		} else if (acct.type === 'utl') {
 			if (!acct.left_fold) {
 				basekey = key
 			}
 
 			var anime = localStorage.getItem('animation')
-			if (anime == 'yes' || !anime) {
+			if (anime === 'yes' || !anime) {
 				var animecss = 'box-anime'
 			} else {
 				var animecss = ''
@@ -218,7 +218,7 @@ function parseColumn(target, dontclose) {
 			unstreamingTL(acct.type, key, basekey, insert, icnsert, acct.left_fold, css, animecss, { acct: acct.domain, data: acct.data })
 		} else {
 			var anime = localStorage.getItem('animation')
-			if (anime == 'yes' || !anime) {
+			if (anime === 'yes' || !anime) {
 				var animecss = 'box-anime'
 			} else {
 				var animecss = ''
@@ -231,7 +231,7 @@ function parseColumn(target, dontclose) {
 			var notfKey = key
 			var if_tag = ''
 			var if_tag_btn = ''
-			if (acct.type == 'notf') {
+			if (acct.type === 'notf') {
 				var excludeNotf =
 					`<div style="border: 1px solid; padding: 5px; margin-top: 5px; margin-bottom: 5px;">${lang.lang_layout_excluded}:<br>
 					<label>
@@ -276,13 +276,13 @@ function parseColumn(target, dontclose) {
 				notfDomain = 'dummy'
 				notfKey = 'dummy'
 				var excludeHome = ''
-			} else if (acct.type == 'home') {
+			} else if (acct.type === 'home') {
 				var excludeNotf = ''
 				var excludeHome = `<a onclick="ebtToggle('${key}')" class="setting nex waves-effect">
 						<i class="fas fa-retweet nex" title="${lang.lang_layout_excludingbt}" style="font-size: 24px"></i>
 						<span>${lang.lang_layout_excludingbt}</span><span id="sta-bt-${key}">Off</span>
 					</a>`
-			} else if (acct.type == 'tag') {
+			} else if (acct.type === 'tag') {
 				if (acct.data.name) {
 					var name = acct.data.name
 					var all = acct.data.all
@@ -318,7 +318,7 @@ function parseColumn(target, dontclose) {
 			}
 
 			var markers = localStorage.getItem('markers')
-			if (markers == 'yes') {
+			if (markers === 'yes') {
 				markers = true
 			} else {
 				markers = false
@@ -344,7 +344,7 @@ function parseColumn(target, dontclose) {
 			if (key === 0) {
 				left_hold = ''
 			}
-			if (localStorage.getItem('mode_' + localStorage.getItem('domain_' + acct.domain)) == 'misskey') {
+			if (localStorage.getItem('mode_' + localStorage.getItem('domain_' + acct.domain)) === 'misskey') {
 				var isMisRed = ''
 				exclude = ''
 				var if_misskey_hide = 'hide'
@@ -357,7 +357,7 @@ function parseColumn(target, dontclose) {
 			} else {
 				var addHeight = ''
 			}
-			if (acct.type != 'pub' && acct.type != 'pub-media') {
+			if (acct.type !== 'pub' && acct.type !== 'pub-media') {
 				var mediaFil = `<a onclick="mediaToggle('${key}')" class="setting nex waves-effect">
 					<i class="material-icons nex" title="${lang.lang_layout_mediafil}">perm_media</i>
 				<span>${lang.lang_layout_mediafil}</span/><span id="sta-media-${key}">On</span></a>`
@@ -495,7 +495,7 @@ function parseColumn(target, dontclose) {
 		}
 	}
 	var box = localStorage.getItem('box')
-	if (box == 'absolute') {
+	if (box === 'absolute') {
 		setTimeout(show, 1000)
 	}
 	if (localStorage.getItem('reverse')) {
@@ -503,12 +503,12 @@ function parseColumn(target, dontclose) {
 		$('.leftside').removeClass('reverse')
 	}
 	$('#bottom').removeClass('hide')
-	if (localStorage.getItem('sec') && localStorage.getItem('sec') != 'nothing') {
+	if (localStorage.getItem('sec') && localStorage.getItem('sec') !== 'nothing') {
 		secvis(localStorage.getItem('sec'))
 	}
 	favTag()
 	var cw = localStorage.getItem('always-cw')
-	if (cw == 'yes') {
+	if (cw === 'yes') {
 		if (!$('#cw').hasClass('cw-avail')) {
 			$('#cw-text').show()
 			$('#cw').addClass('yellow-text')
@@ -555,7 +555,7 @@ function parseColumn(target, dontclose) {
 	})
 }
 function checkStr(type, data, acct_id, key, delc, voice) {
-	if ($('#notice_icon_' + key).hasClass('red-text') && type != 'notf' && type != 'mix') {
+	if ($('#notice_icon_' + key).hasClass('red-text') && type !== 'notf' && type !== 'mix') {
 		goTop(key)
 		tlDiff(type, data, acct_id, key, delc, voice, '')
 	} else {
@@ -564,22 +564,22 @@ function checkStr(type, data, acct_id, key, delc, voice) {
 }
 //セカンダリートゥートボタン
 function secvis(set) {
-	if (set == 'public') {
+	if (set === 'public') {
 		$('#toot-sec-icon').text('public')
 		$('#toot-sec-btn').addClass('purple')
-	} else if (set == 'unlisted') {
+	} else if (set === 'unlisted') {
 		$('#toot-sec-icon').text('lock_open')
 		$('#toot-sec-btn').addClass('blue')
-	} else if (set == 'private') {
+	} else if (set === 'private') {
 		$('#toot-sec-icon').text('lock')
 		$('#toot-sec-btn').addClass('orange')
-	} else if (set == 'direct') {
+	} else if (set === 'direct') {
 		$('#toot-sec-icon').text('mail')
 		$('#toot-sec-btn').addClass('red')
-	} else if (set == 'limited') {
+	} else if (set === 'limited') {
 		$('#toot-sec-icon').text('group')
 		$('#toot-sec-btn').addClass('teal')
-	} else if (set == 'local') {
+	} else if (set === 'local') {
 		$('#toot-sec-icon').text('visibility')
 		$('#toot-sec-btn').addClass('light-blue')
 	}
@@ -588,14 +588,14 @@ function secvis(set) {
 //カラム追加
 function addColumn() {
 	var acct = $('#add-acct-sel').val()
-	if (acct != 'webview' && acct != 'noauth') {
+	if (acct !== 'webview' && acct !== 'noauth') {
 		localStorage.setItem('last-use', acct)
 	}
 	var type = $('#type-sel').val()
-	if (acct == 'noauth') {
+	if (acct === 'noauth') {
 		acct = $('#noauth-url').val()
 		type = 'noauth'
-	} else if (acct == 'webview') {
+	} else if (acct === 'webview') {
 		acct = ''
 		type = 'webview'
 	}
@@ -621,11 +621,11 @@ function addColumn() {
 function addselCk() {
 	var acct = $('#add-acct-sel').val()
 	var domain = localStorage.getItem('domain_' + acct)
-	if (acct == 'webview') {
+	if (acct === 'webview') {
 		$('#auth').addClass('hide')
 		$('#noauth').addClass('hide')
 		$('#webview-add').removeClass('hide')
-	} else if (acct == 'noauth') {
+	} else if (acct === 'noauth') {
 		$('#auth').addClass('hide')
 		$('#noauth').removeClass('hide')
 		$('#webview-add').addClass('hide')
@@ -634,7 +634,7 @@ function addselCk() {
 		$('#noauth').addClass('hide')
 		$('#webview-add').addClass('hide')
 	}
-	if (domain == 'knzk.me' || domain == 'mstdn.y-zu.org') {
+	if (domain === 'knzk.me' || domain === 'mstdn.y-zu.org') {
 		$('#type-sel').append('<option value="dm" data-trans="dm" id="direct-add">' + lang.layout_dm + '</option>')
 	} else {
 		$('#direct-add').remove()
@@ -766,16 +766,16 @@ function coloradd(key, bg, txt) {
 	o[key] = obj
 	var json = JSON.stringify(o)
 	localStorage.setItem('column', json)
-	if (txt == 'def') {
+	if (txt === 'def') {
 		$('#menu_' + key).css('background-color', '')
 		$('#menu_' + key).css('color', '')
 		$('#menu_' + key + ' .nex').css('color', '')
 	} else {
 		$('#menu_' + key).css('background-color', '#' + bg)
-		if (txt == 'black') {
+		if (txt === 'black') {
 			var bghex = '000000'
 			var ichex = '9e9e9e'
-		} else if (txt == 'white') {
+		} else if (txt === 'white') {
 			var bghex = 'ffffff'
 			var ichex = 'eeeeee'
 		}
@@ -835,7 +835,7 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 			${lang.lang_layout_leftUnfold}
 			</span><br>`
 	}
-	if (type == 'utl') {
+	if (type === 'utl') {
 		var dataHtml = false
 	} else {
 		var dataHtml = data
@@ -880,12 +880,12 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 			</div>
 		</div>`
 	$('#timeline_box_' + basekey + '_parentBox').append(html)
-	if (type == 'tootsearch') {
+	if (type === 'tootsearch') {
 		tootsearch(key, data)
-	} else if (type == 'bookmark') {
+	} else if (type === 'bookmark') {
 		console.log(key, data)
 		bookmark(key, data)
-	} else if (type == 'utl') {
+	} else if (type === 'utl') {
 		utl(key, data.acct, data.data)
 	}
 	cardCheck(key)

@@ -3,11 +3,11 @@ function date(str, datetype, lastStatus) {
 	if (lastStatus) {
 		var date = new Date(str)
 		return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate()
-	} else if (datetype == "relative") {
+	} else if (datetype === "relative") {
 		return '<time class="timeago" datetime="' + str + '"></time>'
 	} else {
 		var date = new Date(str)
-		if (datetype == "unix") {
+		if (datetype === "unix") {
 			var unixm = date.getTime()
 			return Math.floor(unixm / 1000)
 		}
@@ -24,14 +24,14 @@ function date(str, datetype, lastStatus) {
 		} else {
 			sec = date.getSeconds()
 		}
-		if (datetype == "full") {
+		if (datetype === "full") {
 			var ret = date.getFullYear() + "/" + month + "/" + date.getDate() + "/ " +
 				date.getHours() + ":" + min + ":" + sec
 		}
-		if (date.getFullYear() == now.getFullYear()) {
-			if (date.getMonth() == now.getMonth()) {
-				if (date.getDate() == now.getDate()) {
-					if (datetype == "medium") {
+		if (date.getFullYear() === now.getFullYear()) {
+			if (date.getMonth() === now.getMonth()) {
+				if (date.getDate() === now.getDate()) {
+					if (datetype === "medium") {
 						var ret = '<time class="timeago" datetime="' + str + '"></time>'
 					} else {
 						var ret = date.getHours() + ":" + min + ":" + sec
@@ -49,7 +49,7 @@ function date(str, datetype, lastStatus) {
 			var ret = date.getFullYear() + "/" + month + "/" + date.getDate() + " " +
 				date.getHours() + ":" + min + ":" + sec
 		}
-		if (datetype == "double") {
+		if (datetype === "double") {
 			return '<time class="timeago" datetime="' + str + '"></time>/' + ret
 		} else {
 			return ret

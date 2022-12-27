@@ -24,10 +24,10 @@ function fav(id, acct_id, remote) {
             if (json.reblog) {
                 json = json.reblog
             }
-            if (remote != 'remote') {
+            if (remote !== 'remote') {
                 //APIのふぁぼカウントがおかしい
-                if ($('[unique-id=' + id + '] .fav_ct').text() == json.favourites_count) {
-                    if (flag == 'unfavourite') {
+                if ($('[unique-id=' + id + '] .fav_ct').text() === json.favourites_count) {
+                    if (flag === 'unfavourite') {
                         var fav = json.favourites_count - 1
                         if (fav * 1 < 0) {
                             fav = 0
@@ -87,7 +87,7 @@ function rt(id, acct_id, remote, vis) {
             console.log(['Success: boost', json])
             $('[toot-id=' + id + '] .fav_ct').text(json.favourites_count)
             if (!json.reblog) {
-                if (flag == 'unreblog') {
+                if (flag === 'unreblog') {
                     var rt = json.reblogs_count - 1
                     if (rt * 1 < 0) {
                         rt = 0
@@ -144,7 +144,7 @@ function bkm(id, acct_id, tlid) {
             var fav = json.favourites_count
             $('[toot-id=' + id + '] .fav_ct').text(fav)
             $('[toot-id=' + id + '] .rt_ct').text(json.reblogs_count)
-            if (flag == 'unbookmark') {
+            if (flag === 'unbookmark') {
                 $('.bkmStr_' + id).text(lang.lang_parse_bookmark)
                 $('.bkm_' + id).removeClass('red-text')
                 $('[toot-id=' + id + ']').removeClass('bkmed')
@@ -166,9 +166,9 @@ async function follow(acct_id, resolve) {
     } else {
         locked = false
     }
-    if (!acct_id && acct_id != 'selector') {
+    if (!acct_id && acct_id !== 'selector') {
         var acct_id = $('#his-data').attr('use-acct')
-    } else if (acct_id == 'selector') {
+    } else if (acct_id === 'selector') {
         var acct_id = $('#user-acct-sel').val()
     }
     if (!resolve && $('#his-data').hasClass('following')) {
@@ -180,7 +180,7 @@ async function follow(acct_id, resolve) {
     }
 
     var id = $('#his-data').attr('user-id')
-    if (resolve == 'selector') {
+    if (resolve === 'selector') {
         var fullacct = $('#his-acct').attr('fullname')
         var data = await acctResolve(acct_id, fullacct)
         var { id } = data
@@ -189,10 +189,10 @@ async function follow(acct_id, resolve) {
     var domain = localStorage.getItem('domain_' + acct_id)
     var at = localStorage.getItem('acct_' + acct_id + '_at')
     var start = 'https://' + domain + '/api/v1/accounts/' + id + '/' + flag
-    if (localStorage.getItem('mode_' + domain) == 'misskey') {
+    if (localStorage.getItem('mode_' + domain) === 'misskey') {
         var start = 'https://' + domain + '/api/following/' + flagm
         var ent = { i: at, userId: id }
-    } else if (flag == 'follow') {
+    } else if (flag === 'follow') {
         var ent = {}
     }
     var httpreq = new XMLHttpRequest()
@@ -225,7 +225,7 @@ async function follow(acct_id, resolve) {
 async function acctResolve(acct_id, user) {
     console.log('Get user data of ' + user)
     const domain = localStorage.getItem('domain_' + acct_id)
-    if (localStorage.getItem('mode_' + domain) == 'misskey') {
+    if (localStorage.getItem('mode_' + domain) === 'misskey') {
         return false
     }
     const at = localStorage.getItem('acct_' + acct_id + '_at')
@@ -345,7 +345,7 @@ function muteDo(acct_id) {
             const mins = parseInt($('#mins_mute').val(), 10)
             const notf = $('#notf_mute:checked').val() === '1'
             let duration = days * 24 * 60 * 60 + hours * 60 + mins
-            if (localStorage.getItem('mode_' + domain) == 'misskey') {
+            if (localStorage.getItem('mode_' + domain) === 'misskey') {
                 var start = 'https://' + domain + '/api/mute/' + flagm
                 var ent = { i: at, userId: id }
                 var rq = JSON.stringify(ent)
@@ -395,7 +395,7 @@ function muteTime(day, hour, min) {
 function del(id, acct_id) {
     var domain = localStorage.getItem('domain_' + acct_id)
     var at = localStorage.getItem('acct_' + acct_id + '_at')
-    if (localStorage.getItem('mode_' + domain) == 'misskey') {
+    if (localStorage.getItem('mode_' + domain) === 'misskey') {
         var start = 'https://' + domain + '/api/notes/delete'
         var httpreq = new XMLHttpRequest()
         httpreq.open('POST', start, true)
@@ -435,7 +435,7 @@ function redraft(id, acct_id) {
             show()
             var domain = localStorage.getItem('domain_' + acct_id)
             var at = localStorage.getItem('acct_' + acct_id + '_at')
-            if (localStorage.getItem('mode_' + domain) == 'misskey') {
+            if (localStorage.getItem('mode_' + domain) === 'misskey') {
                 var start = 'https://' + domain + '/api/notes/delete'
                 var httpreq = new XMLHttpRequest()
                 httpreq.open('POST', start, true)
@@ -562,7 +562,7 @@ function pin(id, acct_id) {
                 setLog(start, this.status, this.response)
             }
             console.log(['Success: pinned', json])
-            if (flag == 'unpin') {
+            if (flag === 'unpin') {
                 $('[toot-id=' + id + ']').removeClass('pined')
                 $('.pin_' + id).removeClass('blue-text')
                 $('.pinStr_' + id).text(lang.lang_parse_pin)
@@ -641,7 +641,7 @@ function empUser() {
         var can
         Object.keys(obj).forEach(function (key) {
             var usT = obj[key]
-            if (usT != id && !can) {
+            if (usT !== id && !can) {
                 can = false
             } else {
                 can = true
@@ -724,11 +724,11 @@ function staEx(mode) {
             if (json.statuses) {
                 if (json.statuses[0]) {
                     var id = json.statuses[0].id
-                    if (mode == 'rt') {
+                    if (mode === 'rt') {
                         rt(id, acct_id, 'remote')
-                    } else if (mode == 'fav') {
+                    } else if (mode === 'fav') {
                         fav(id, acct_id, 'remote')
-                    } else if (mode == 'reply') {
+                    } else if (mode === 'reply') {
                         reEx(id)
                     }
                 }

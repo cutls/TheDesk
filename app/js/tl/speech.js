@@ -4,7 +4,7 @@ $voiseName = lang.lang_speech
 $voices = speechSynthesis.getVoices()
 $synthes = new SpeechSynthesisUtterance()
 $voise = $.grep($voices, function(n, i) {
-	return n.name == $voiseName
+	return n.name === $voiseName
 })[0]
 $synthes.voice = $voise // 音声の設定
 localStorage.removeItem('voicebank')
@@ -141,7 +141,7 @@ function voicePlay() {
 
 function voiceSettings() {
 	var awk = $('[name=bym]:checked').val()
-	if (awk == 'yes') {
+	if (awk === 'yes') {
 		localStorage.setItem('voice_bouyomi', 'yes')
 		M.toast({ html: 'Bouyomi Chan connection requires WebSocket Plugin', displayLength: 3000 })
 	} else {

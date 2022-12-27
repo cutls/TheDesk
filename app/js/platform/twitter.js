@@ -83,7 +83,7 @@ var TJScrollTask = (function() {
 					key: 'getOption',
 					value: function getOption(e, f) {
 						var g = localStorage.getItem('tj_deck_' + e)
-						return g ? 'true' == g : f
+						return g ? 'true' === g : f
 					}
 				},
 				{
@@ -117,7 +117,7 @@ var TJScrollTask = (function() {
 				{
 					key: 'back',
 					value: function back() {
-						if ('none' != this.$options.style.display)
+						if ('none' !== this.$options.style.display)
 							return this.updateOption(), void this.hideOptionPanel()
 						var e = document.querySelector('.mdl-dismiss')
 						if (e) return void e.click()
@@ -266,7 +266,7 @@ var TJScrollTask = (function() {
 											if (Math.abs(l.x - e.x) < Math.abs(l.y - e.y)) return void (j = 0)
 											j = 1
 										}
-										if (1 == j) {
+										if (1 === j) {
 											this.scrollTask && this.scrollTask.stop()
 											var l = this._getPosObj(k)
 											;(g = l), this.options.light_clm || this.scrollWrap(this.wrapL + g.x - l.x)
@@ -465,7 +465,7 @@ var TJScrollTask = (function() {
 						window.addEventListener(
 							'resize',
 							function() {
-								if (e != window.innerWidth) {
+								if (e !== window.innerWidth) {
 									var f = document.querySelector('#tj_deck_css')
 									f && f.remove(),
 										this.addStyle(),

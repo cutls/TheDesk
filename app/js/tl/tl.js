@@ -8,10 +8,10 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
     localStorage.removeItem('pool')
     var domain = localStorage.getItem('domain_' + acct_id)
         //タグとかの場合はカラム追加して描画
-    if (tlid == 'add') {
+    if (tlid === 'add') {
         console.log('add new column')
         var newtab = $('.box').length
-        if (type == 'tag') {
+        if (type === 'tag') {
             data = {
                 name: data,
                 any: [],
@@ -41,7 +41,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
             var type = 'local'
         }
     }
-    if (type == 'mix' && localStorage.getItem('mode_' + domain) != 'misskey') {
+    if (type === 'mix' && localStorage.getItem('mode_' + domain) !== 'misskey') {
         //Integratedなら飛ばす
         $('#notice_' + tlid).text(
             'Integrated TL(' +
@@ -53,7 +53,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
         $('#notice_icon_' + tlid).text('merge_type')
         mixtl(acct_id, tlid, 'integrated', delc, voice)
         return
-    } else if (type == 'plus') {
+    } else if (type === 'plus') {
         //Local+なら飛ばす
         $('#notice_' + tlid).text(
             'Local+ TL(' +
@@ -65,7 +65,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
         $('#notice_icon_' + tlid).text('people_outline')
         mixtl(acct_id, tlid, 'plus', delc, voice)
         return
-    } else if (type == 'notf') {
+    } else if (type === 'notf') {
         //通知なら飛ばす
         notf(acct_id, tlid, 'direct')
         $('#notice_' + tlid).text(
@@ -78,7 +78,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
         )
         $('#notice_icon_' + tlid).text('notifications')
         return
-    } else if (type == 'bookmark') {
+    } else if (type === 'bookmark') {
         //ブックマークなら飛ばす
         getBookmark(acct_id, tlid)
         $('#notice_' + tlid).text(
@@ -91,7 +91,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
         )
         $('#notice_icon_' + tlid).text('bookmark')
         return
-    } else if (type == 'utl') {
+    } else if (type === 'utl') {
         //UTLなら飛ばす
         getUtl(acct_id, tlid, data, false)
         $('#notice_' + tlid).text(
@@ -104,14 +104,14 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
         )
         $('#notice_icon_' + tlid).text('person')
         return
-    } else if (type == 'home') {
+    } else if (type === 'home') {
         //ホームならお知らせ「も」取りに行く
         announ(acct_id, tlid)
     }
     localStorage.setItem('now', type)
     todo(cap(type) + ' TL Loading...')
     var at = localStorage.getItem('acct_' + acct_id + '_at')
-    if (type != 'noauth') {
+    if (type !== 'noauth') {
         var hdr = {
             'content-type': 'application/json',
             Authorization: 'Bearer ' + at,
@@ -132,23 +132,23 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
         $('#notice_' + tlid).text('Glance TL(' + domain + ')')
     }
     $('#notice_icon_' + tlid).text(icon(type))
-    if (localStorage.getItem('mode_' + domain) == 'misskey') {
+    if (localStorage.getItem('mode_' + domain) === 'misskey') {
         var misskey = true
         var url = misskeycom(type, data)
         var start = 'https://' + domain + '/api/notes/' + url
         var method = 'POST'
         var req = {}
-        if (type != 'noauth') {
+        if (type !== 'noauth') {
             req.i = at
         }
 
-        if (type == 'local-media' || type == 'pub-media') {
+        if (type === 'local-media' || type === 'pub-media') {
             req.mediaOnly = true
         }
-        if (type == 'tag') {
+        if (type === 'tag') {
             req.tag = data
         }
-        if (type == 'list') {
+        if (type === 'list') {
             req.listId = data
         }
         req.limit = 20
@@ -160,13 +160,13 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
     } else {
         var misskey = false
         var url = com(type, data, tlid)
-        if (type == 'tag') {
+        if (type === 'tag') {
             var tag = localStorage.getItem('tag-range')
-            if (tag == 'local') {
+            if (tag === 'local') {
                 url = url + 'local=true'
             }
         }
-        if (type == 'dm') {
+        if (type === 'dm') {
             var start = 'https://' + domain + '/api/v1/conversations'
         } else {
             var start = 'https://' + domain + '/api/v1/timelines/' + url
@@ -210,10 +210,10 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
             jQuery('time.timeago').timeago()
             todc()
             reload(type, 'from timeline to reload', acct_id, tlid, data, mute, delc, voice)
-            if (type == 'home' || type == 'notf') {
+            if (type === 'home' || type === 'notf') {
                 //Markers
                 var markers = localStorage.getItem('markers')
-                if (markers == 'yes') {
+                if (markers === 'yes') {
                     markers = true
                 } else {
                     markers = false
@@ -234,7 +234,7 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
     var domain = localStorage.getItem('domain_' + acct_id)
     var at = localStorage.getItem('acct_' + acct_id + '_at')
     localStorage.setItem('now', type)
-    if (localStorage.getItem('mode_' + domain) == 'misskey') {
+    if (localStorage.getItem('mode_' + domain) === 'misskey') {
         var misskey = true
         var key = localStorage.getItem('misskey_wss_' + acct_id)
         var send =
@@ -251,20 +251,20 @@ function reload(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
         }, 100)
     } else {
         var domain = localStorage.getItem('domain_' + acct_id)
-        if (mastodonBaseWsStatus[domain] == 'cannotuse') {
+        if (mastodonBaseWsStatus[domain] === 'cannotuse') {
             oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
-        } else if (mastodonBaseWsStatus[domain] == 'undetected' || mastodonBaseWsStatus[domain] == 'connecting') {
+        } else if (mastodonBaseWsStatus[domain] === 'undetected' || mastodonBaseWsStatus[domain] === 'connecting') {
             const mbws = setInterval(function() {
-                if (mastodonBaseWsStatus[domain] == 'cannotuse') {
+                if (mastodonBaseWsStatus[domain] === 'cannotuse') {
                     oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode)
                     clearInterval(mbws)
-                } else if (mastodonBaseWsStatus[domain] == 'available') {
+                } else if (mastodonBaseWsStatus[domain] === 'available') {
                     $('#notice_icon_' + tlid).removeClass('red-text')
                     stremaingSubscribe(type, acct_id, data)
                     clearInterval(mbws)
                 }
             }, 1000)
-        } else if (mastodonBaseWsStatus[domain] == 'available') {
+        } else if (mastodonBaseWsStatus[domain] === 'available') {
             $('#notice_icon_' + tlid).removeClass('red-text')
             stremaingSubscribe(type, acct_id, data)
         }
@@ -276,7 +276,7 @@ function stremaingSubscribe(type, acct_id, data, unsubscribe) {
     if (unsubscribe) command = 'unsubscribe'
     let stream
     const domain = localStorage.getItem('domain_' + acct_id)
-    if (type == 'home') return false
+    if (type === 'home') return false
     if (type === 'local' || type === 'mix') { stream = 'public:local' } else if (type === 'local-media') { stream = 'public:local:media' } else if (type === 'pub') { stream = 'public' } else if (type === 'pub-media') { stream = 'public:media' } else if (type === 'list') {
         mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: 'list', list: data }))
         return true
@@ -304,32 +304,32 @@ function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
     } else {
         var wss = 'wss://' + domain
     }
-    if (type == 'home') {
+    if (type === 'home') {
         var start = wss + '/api/v1/streaming/?stream=user&access_token=' + at
-    } else if (type == 'pub') {
+    } else if (type === 'pub') {
         var add = ''
         if (remoteOnlyCk(tlid)) {
             add = '&remote=true'
         }
         var start = wss + '/api/v1/streaming/?stream=public&access_token=' + at + add
-    } else if (type == 'pub-media') {
+    } else if (type === 'pub-media') {
         var add = ''
         if (remoteOnlyCk(tlid)) {
             add = '&remote=true'
         }
         var start =
             wss + '/api/v1/streaming/?stream=public:media&access_token=' + at + add
-    } else if (type == 'local') {
+    } else if (type === 'local') {
         var start =
             wss + '/api/v1/streaming/?stream=public:local&access_token=' + at
-    } else if (type == 'local-media') {
+    } else if (type === 'local-media') {
         var start =
             wss +
             '/api/v1/streaming/?stream=public:local:media&only_media=true&access_token=' +
             at
-    } else if (type == 'tag') {
+    } else if (type === 'tag') {
         var tag = localStorage.getItem('tag-range')
-        if (tag == 'local') {
+        if (tag === 'local') {
             data = data + '&local=true'
         }
         if (data.name) {
@@ -341,16 +341,16 @@ function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
             data +
             '&access_token=' +
             at + add
-    } else if (type == 'noauth') {
+    } else if (type === 'noauth') {
         var start = 'wss://' + acct_id + '/api/v1/streaming/?stream=public:local'
-    } else if (type == 'list') {
+    } else if (type === 'list') {
         var start =
             wss +
             '/api/v1/streaming/?stream=list&list=' +
             data +
             '&access_token=' +
             at
-    } else if (type == 'dm') {
+    } else if (type === 'dm') {
         var start = wss + '/api/v1/streaming/?stream=direct&access_token=' + at
     }
     var wsid = websocket.length
@@ -369,7 +369,7 @@ function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
     websocket[wsid].onmessage = function(mess) {
         console.log([tlid + ':Receive Streaming API:', JSON.parse(mess.data)])
         if (misskey) {
-            if (JSON.parse(mess.data).type == 'note') {
+            if (JSON.parse(mess.data).type === 'note') {
                 var obj = JSON.parse(mess.data).body
                 if (voice) {
                     say(obj.text)
@@ -393,9 +393,9 @@ function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
             }
         } else {
             var typeA = JSON.parse(mess.data).event
-            if (typeA == 'delete') {
+            if (typeA === 'delete') {
                 var obj = JSON.parse(mess.data).payload
-                if (delc == 'true') {
+                if (delc === 'true') {
                     $(
                         '#timeline_' +
                         tlid +
@@ -414,7 +414,7 @@ function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
                     $('[unique-id=' + JSON.parse(mess.data).payload + ']').hide()
                     $('[unique-id=' + JSON.parse(mess.data).payload + ']').remove()
                 }
-            } else if (typeA == 'update' || typeA == 'conversation') {
+            } else if (typeA === 'update' || typeA === 'conversation') {
                 if (!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')) {
                     //markers show中はダメ
                     var obj = JSON.parse(JSON.parse(mess.data).payload)
@@ -447,7 +447,7 @@ function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
 
                     todc()
                 }
-            } else if (typeA == 'filters_changed') {
+            } else if (typeA === 'filters_changed') {
                 filterUpdate(acct_id)
             } else if (~typeA.indexOf('announcement')) {
                 announ(acct_id, tlid)
@@ -457,7 +457,7 @@ function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
     websocket[wsid].onerror = function(error) {
         console.error('Error closing')
         console.error(error)
-        if (mode == 'error') {
+        if (mode === 'error') {
             $('#notice_icon_' + tlid).addClass('red-text')
             todo('WebSocket Error ' + error)
         } else {
@@ -471,7 +471,7 @@ function oldStreaming(type, cc, acct_id, tlid, data, mute, delc, voice, mode) {
     }
     websocket[wsid].onclose = function() {
         console.warn('Closing ' + tlid)
-        if (mode == 'error') {
+        if (mode === 'error') {
             $('#notice_icon_' + tlid).addClass('red-text')
             todo('WebSocket Closed')
         } else {
@@ -494,13 +494,13 @@ function moreload(type, tlid) {
     } else {
         var data
     }
-    if (type == 'tag') {
+    if (type === 'tag') {
         var data = obj[tlid].data
         var tag = localStorage.getItem('tag-range')
-        if (tag == 'local') {
+        if (tag === 'local') {
             data = data + '&local=true'
         }
-    } else if (type == 'list') {
+    } else if (type === 'list') {
         var data = obj[tlid].data
     }
     var sid = $('#timeline_' + tlid + ' .cvo')
@@ -508,32 +508,32 @@ function moreload(type, tlid) {
         .attr('unique-id')
     if (sid && !moreloading) {
         if (
-            type == 'mix' &&
+            type === 'mix' &&
             localStorage.getItem(
                 'mode_' + localStorage.getItem('domain_' + acct_id)
-            ) != 'misskey'
+            ) !== 'misskey'
         ) {
             mixmore(tlid, 'integrated')
             return
         } else if (
-            type == 'plus' &&
+            type === 'plus' &&
             localStorage.getItem(
                 'mode_' + localStorage.getItem('domain_' + acct_id)
-            ) != 'misskey'
+            ) !== 'misskey'
         ) {
             mixmore(tlid, 'plus')
             return
-        } else if (type == 'notf') {
+        } else if (type === 'notf') {
             notfmore(tlid)
             return
-        } else if (type == 'tootsearch') {
+        } else if (type === 'tootsearch') {
             var data = obj[tlid].data
             moreTs(tlid, data)
             return
-        } else if (type == 'bookmark') {
+        } else if (type === 'bookmark') {
             getBookmark(acct_id, tlid, true)
             return
-        } else if (type == 'utl') {
+        } else if (type === 'utl') {
             var data = obj[tlid].data
             getUtl(acct_id, tlid, data, true)
             return
@@ -541,7 +541,7 @@ function moreload(type, tlid) {
         moreloading = true
         localStorage.setItem('now', type)
         todo(cap(type) + ' TL MoreLoading')
-        if (type != 'noauth') {
+        if (type !== 'noauth') {
             var at = localStorage.getItem('acct_' + acct_id + '_at')
             var hdr = {
                 'content-type': 'application/json',
@@ -554,7 +554,7 @@ function moreload(type, tlid) {
             }
             domain = acct_id
         }
-        if (localStorage.getItem('mode_' + domain) == 'misskey') {
+        if (localStorage.getItem('mode_' + domain) === 'misskey') {
             var misskey = true
             hdr = {
                 'content-type': 'application/json',
@@ -563,16 +563,16 @@ function moreload(type, tlid) {
             var start = 'https://' + domain + '/api/notes/' + url
             var method = 'POST'
             var req = {}
-            if (type != 'noauth') {
+            if (type !== 'noauth') {
                 req.i = at
             }
-            if (type == 'local-media' || type == 'pub-media') {
+            if (type === 'local-media' || type === 'pub-media') {
                 req.mediaOnly = true
             }
-            if (type == 'tag') {
+            if (type === 'tag') {
                 req.tag = data
             }
-            if (type == 'list') {
+            if (type === 'list') {
                 req.listId = data
             }
             req.untilId = sid
@@ -591,7 +591,7 @@ function moreload(type, tlid) {
                 com(type, data, tlid) +
                 'max_id=' +
                 sid
-            if (type == 'dm') {
+            if (type === 'dm') {
                 var start =
                     'https://' + domain + '/api/v1/conversations?' + 'max_id=' + sid
             }
@@ -641,13 +641,13 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
     } else {
         var data
     }
-    if (type == 'tag') {
+    if (type === 'tag') {
         var data = obj[tlid].data
         var tag = localStorage.getItem('tag-range')
-        if (tag == 'local') {
+        if (tag === 'local') {
             data = data + '&local=true'
         }
-    } else if (type == 'list') {
+    } else if (type === 'list') {
         var data = obj[tlid].data
     }
     var sid = $('#timeline_' + tlid + ' .cvo')
@@ -655,26 +655,26 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
         .attr('unique-id')
     if (sid && !moreloading) {
         if (
-            type == 'mix' &&
+            type === 'mix' &&
             localStorage.getItem(
                 'mode_' + localStorage.getItem('domain_' + acct_id)
-            ) != 'misskey'
+            ) !== 'misskey'
         ) {
             return
         } else if (
-            type == 'plus' &&
+            type === 'plus' &&
             localStorage.getItem(
                 'mode_' + localStorage.getItem('domain_' + acct_id)
-            ) != 'misskey'
+            ) !== 'misskey'
         ) {
             return
-        } else if (type == 'notf') {
+        } else if (type === 'notf') {
             return
         }
         moreloading = true
         localStorage.setItem('now', type)
         todo(cap(type) + ' TL MoreLoading')
-        if (type != 'noauth') {
+        if (type !== 'noauth') {
             var at = localStorage.getItem('acct_' + acct_id + '_at')
             var hdr = {
                 'content-type': 'application/json',
@@ -687,7 +687,7 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
             }
             domain = acct_id
         }
-        if (localStorage.getItem('mode_' + domain) == 'misskey') {
+        if (localStorage.getItem('mode_' + domain) === 'misskey') {
             var misskey = true
             hdr = {
                 'content-type': 'application/json',
@@ -696,16 +696,16 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
             var start = 'https://' + domain + '/api/notes/' + url
             var method = 'POST'
             var req = {}
-            if (type != 'noauth') {
+            if (type !== 'noauth') {
                 req.i = at
             }
-            if (type == 'local-media' || type == 'pub-media') {
+            if (type === 'local-media' || type === 'pub-media') {
                 req.mediaOnly = true
             }
-            if (type == 'tag') {
+            if (type === 'tag') {
                 req.tag = data
             }
-            if (type == 'list') {
+            if (type === 'list') {
                 req.listId = data
             }
             req.sinceId = sid
@@ -724,7 +724,7 @@ function tlDiff(type, data, acct_id, tlid, delc, voice, mode) {
                 com(type, data, tlid) +
                 'since_id=' +
                 sid
-            if (type == 'dm') {
+            if (type === 'dm') {
                 var start =
                     'https://' + domain + '/api/v1/conversations?' + 'since_id=' + sid
             }
@@ -819,22 +819,22 @@ function tlCloser() {
 function cap(type, data, acct_id) {
     //独自ロケール
     var locale = localStorage.getItem('locale')
-    if (locale == 'yes') {
+    if (locale === 'yes') {
         var locale = false
     }
-    if (type == 'home') {
+    if (type === 'home') {
         if (localStorage.getItem('home_' + acct_id) && !locale) {
             var response = localStorage.getItem('home_' + acct_id)
         } else {
             var response = 'Home TL'
         }
-    } else if (type == 'local') {
+    } else if (type === 'local') {
         if (localStorage.getItem('local_' + acct_id) && !locale) {
             var response = localStorage.getItem('local_' + acct_id)
         } else {
             var response = 'Local TL'
         }
-    } else if (type == 'local-media') {
+    } else if (type === 'local-media') {
         if (localStorage.getItem('local_' + acct_id) && !locale) {
             var response =
                 localStorage.getItem('local_' + acct_id) +
@@ -844,13 +844,13 @@ function cap(type, data, acct_id) {
         } else {
             var response = 'Local TL(Media)'
         }
-    } else if (type == 'pub') {
+    } else if (type === 'pub') {
         if (localStorage.getItem('public_' + acct_id) && !locale) {
             var response = localStorage.getItem('public_' + acct_id)
         } else {
             var response = 'Federated TL'
         }
-    } else if (type == 'pub-media') {
+    } else if (type === 'pub-media') {
         if (localStorage.getItem('public_' + acct_id) && !locale) {
             var response =
                 localStorage.getItem('public_' + acct_id) +
@@ -860,7 +860,7 @@ function cap(type, data, acct_id) {
         } else {
             var response = 'Federated TL(Media)'
         }
-    } else if (type == 'tag') {
+    } else if (type === 'tag') {
         if (data) {
             if (data.name) {
                 var response = '#' + escapeHTML(data.name)
@@ -868,38 +868,38 @@ function cap(type, data, acct_id) {
                 var response = '#' + escapeHTML(data)
             }
         }
-    } else if (type == 'list') {
+    } else if (type === 'list') {
         var ltitle = localStorage.getItem('list_' + data + '_' + acct_id)
         var response = 'List(' + ltitle + ')'
-    } else if (type == 'notf') {
+    } else if (type === 'notf') {
         if (localStorage.getItem('notification_' + acct_id) && !locale) {
             var response = localStorage.getItem('notification_' + acct_id)
         } else {
             var response = 'Notification TL'
         }
-    } else if (type == 'noauth') {
+    } else if (type === 'noauth') {
         var response = 'Glance TL'
-    } else if (type == 'dm') {
+    } else if (type === 'dm') {
         var response = 'DM'
-    } else if (type == 'mix') {
+    } else if (type === 'mix') {
         if (
             localStorage.getItem(
                 'mode_' + localStorage.getItem('domain_' + acct_id)
-            ) == 'misskey'
+            ) === 'misskey'
         ) {
             var response = 'Social TL'
         } else {
             var response = 'Integrated'
         }
-    } else if (type == 'plus') {
+    } else if (type === 'plus') {
         var response = 'Local+'
-    } else if (type == 'webview') {
+    } else if (type === 'webview') {
         var response = 'Twitter'
-    } else if (type == 'tootsearch') {
+    } else if (type === 'tootsearch') {
         var response = 'tootsearch(' + escapeHTML(data) + ')'
-    } else if (type == 'bookmark') {
+    } else if (type === 'bookmark') {
         var response = 'Bookmarks'
-    } else if (type == 'utl') {
+    } else if (type === 'utl') {
         var response = 'User TL(' + escapeHTML(data.acct) + ')'
     }
     return response
@@ -907,25 +907,25 @@ function cap(type, data, acct_id) {
 
 //TLのURL
 function com(type, data, tlid) {
-    if (type == 'home') {
+    if (type === 'home') {
         return 'home?'
-    } else if (type == 'local' || type == 'noauth') {
+    } else if (type === 'local' || type === 'noauth') {
         return 'public?local=true&'
-    } else if (type == 'local-media') {
+    } else if (type === 'local-media') {
         return 'public?local=true&only_media=true&'
-    } else if (type == 'pub') {
+    } else if (type === 'pub') {
         var add = ''
         if (remoteOnlyCk(tlid)) {
             add = 'remote=true&'
         }
         return 'public?' + add
-    } else if (type == 'pub-media') {
+    } else if (type === 'pub-media') {
         var add = ''
         if (remoteOnlyCk(tlid)) {
             add = 'remote=true&'
         }
         return 'public?only_media=true&' + add
-    } else if (type == 'tag') {
+    } else if (type === 'tag') {
         if (data.name) {
             var name = data.name
             var all = data.all
@@ -941,84 +941,84 @@ function com(type, data, tlid) {
 			'any',
 			any
 		)}${buildQuery('none', none)}`.slice(0, -1)
-    } else if (type == 'list') {
+    } else if (type === 'list') {
         return 'list/' + data + '?'
-    } else if (type == 'dm') {
+    } else if (type === 'dm') {
         return 'direct?'
-    } else if (type == 'bookmark') {
+    } else if (type === 'bookmark') {
         return 'bookmarks?'
     }
 }
 //Misskey
 function typePs(type) {
-    if (type == 'home') {
+    if (type === 'home') {
         return 'homeTimeline'
-    } else if (type == 'local' || type == 'noauth') {
+    } else if (type === 'local' || type === 'noauth') {
         return 'localTimeline'
-    } else if (type == 'local-media') {
+    } else if (type === 'local-media') {
         return 'localTimeline'
-    } else if (type == 'pub') {
+    } else if (type === 'pub') {
         return 'globalTimeline'
-    } else if (type == 'mix') {
+    } else if (type === 'mix') {
         return 'hybridTimeline'
-    } else if (type == 'tag') {
+    } else if (type === 'tag') {
         return 'hashtag'
-    } else if (type == 'list') {
+    } else if (type === 'list') {
         return 'userList'
     }
 }
 
 function misskeycom(type, data) {
-    if (type == 'home') {
+    if (type === 'home') {
         return 'timeline'
-    } else if (type == 'mix') {
+    } else if (type === 'mix') {
         return 'hybrid-timeline'
-    } else if (type == 'local' || type == 'noauth') {
+    } else if (type === 'local' || type === 'noauth') {
         return 'local-timeline'
-    } else if (type == 'local-media') {
+    } else if (type === 'local-media') {
         return 'local-timeline'
-    } else if (type == 'pub') {
+    } else if (type === 'pub') {
         return 'global-timeline'
-    } else if (type == 'pub-media') {
+    } else if (type === 'pub-media') {
         return 'global-timeline'
-    } else if (type == 'tag') {
+    } else if (type === 'tag') {
         return 'search_by_tag'
-    } else if (type == 'list') {
+    } else if (type === 'list') {
         return 'user-list-timeline'
     }
 }
 
 //TLのアイコン
 function icon(type) {
-    if (type == 'home') {
+    if (type === 'home') {
         var response = 'home'
-    } else if (type == 'local') {
+    } else if (type === 'local') {
         var response = 'people_outline'
-    } else if (type == 'local-media') {
+    } else if (type === 'local-media') {
         var response = 'people_outline'
-    } else if (type == 'pub') {
+    } else if (type === 'pub') {
         var response = 'language'
-    } else if (type == 'pub-media') {
+    } else if (type === 'pub-media') {
         var response = 'language'
-    } else if (type == 'tag') {
+    } else if (type === 'tag') {
         var response = 'whatshot'
-    } else if (type == 'list') {
+    } else if (type === 'list') {
         var response = 'view_headline'
-    } else if (type == 'notf') {
+    } else if (type === 'notf') {
         var response = 'notifications'
-    } else if (type == 'noauth') {
+    } else if (type === 'noauth') {
         var response = 'people_outline'
-    } else if (type == 'dm') {
+    } else if (type === 'dm') {
         var response = 'mail_outline'
-    } else if (type == 'mix') {
+    } else if (type === 'mix') {
         var response = 'merge_type'
-    } else if (type == 'plus') {
+    } else if (type === 'plus') {
         var response = 'merge_type'
-    } else if (type == 'webview') {
+    } else if (type === 'webview') {
         var response = 'language'
-    } else if (type == 'tootsearch') {
+    } else if (type === 'tootsearch') {
         var response = 'search'
-    } else if (type == 'bookmark') {
+    } else if (type === 'bookmark') {
         var response = 'bookmark'
     }
     return response
@@ -1026,7 +1026,7 @@ function icon(type) {
 
 function reconnector(tlid, type, acct_id, data, mode) {
     console.log('%c Reconnector:' + mode + '(timeline' + tlid + ')', 'color:pink')
-    if (type == 'mix' || type == 'integrated' || type == 'plus') {
+    if (type === 'mix' || type === 'integrated' || type === 'plus') {
         if (localStorage.getItem('voice_' + tlid)) {
             var voice = true
         } else {
@@ -1038,7 +1038,7 @@ function reconnector(tlid, type, acct_id, data, mode) {
         var wssl = localStorage.getItem('wssL_' + tlid)
         wsLocal[wssl].close()
         mixre(acct_id, tlid, type, mute, '', voice, mode)
-    } else if (type == 'notf') {
+    } else if (type === 'notf') {
         notfColumn(acct_id, tlid, '')
     } else {
         var wss = localStorage.getItem('wss_' + tlid)
@@ -1061,12 +1061,12 @@ function columnReload(tlid, type) {
     var obj = JSON.parse(multi)
     var acct_id = obj[tlid].domain
     var domain = localStorage.getItem('domain_' + acct_id)
-    if (mastodonBaseWsStatus[domain] == 'available') {
+    if (mastodonBaseWsStatus[domain] === 'available') {
         stremaingSubscribe(type, acct_id, obj[tlid].data, true)
         parseColumn(tlid, true)
         return true
     }
-    if (type == 'mix' || type == 'integrated' || type == 'plus') {
+    if (type === 'mix' || type === 'integrated' || type === 'plus') {
         if (localStorage.getItem('voice_' + tlid)) {
             var voice = true
         } else {
@@ -1078,10 +1078,10 @@ function columnReload(tlid, type) {
         var wssl = localStorage.getItem('wssL_' + tlid)
         wsLocal[wssl].close()
         parseColumn(tlid)
-    } else if (type == 'notf') {
+    } else if (type === 'notf') {
         $('#notice_icon_' + tlid).removeClass('red-text')
         notfColumn(acct_id, tlid, '')
-    } else if (type == 'bookmark') {
+    } else if (type === 'bookmark') {
         $('#notice_icon_' + tlid).removeClass('red-text')
         getBookmark(acct_id, tlid, false)
     } else {
@@ -1095,9 +1095,9 @@ function columnReload(tlid, type) {
 function getMarker(tlid, type, acct_id) {
     var domain = localStorage.getItem('domain_' + acct_id)
     var at = localStorage.getItem('acct_' + acct_id + '_at')
-    if (type == 'home') {
+    if (type === 'home') {
         var add = 'home'
-    } else if (type == 'notf') {
+    } else if (type === 'notf') {
         var add = 'notifications'
     }
     var start = 'https://' + domain + '/api/v1/markers?timeline=' + add
@@ -1163,9 +1163,9 @@ function showUnread(tlid, type, acct_id) {
     var domain = localStorage.getItem('domain_' + acct_id)
     var at = localStorage.getItem('acct_' + acct_id + '_at')
     var id = $('#unread_' + tlid).attr('data-id')
-    if (type == 'home') {
+    if (type === 'home') {
         var add = 'timelines/home?min_id=' + id
-    } else if (type == 'notf') {
+    } else if (type === 'notf') {
         var add = 'notifications?min_id=' + id
     }
     var start = 'https://' + domain + '/api/v1/' + add
@@ -1220,9 +1220,9 @@ function ueload(tlid) {
     var domain = localStorage.getItem('domain_' + acct_id)
     var at = localStorage.getItem('acct_' + acct_id + '_at')
     var id = $('#timeline_' + tlid + ' .cvo:eq(0)').attr('unique-id')
-    if (type == 'home') {
+    if (type === 'home') {
         var add = 'timelines/home?min_id=' + id
-    } else if (type == 'notf') {
+    } else if (type === 'notf') {
         var add = 'notifications?min_id=' + id
     }
     var start = 'https://' + domain + '/api/v1/' + add
@@ -1268,7 +1268,7 @@ function ueload(tlid) {
 function asRead(callback) {
     //Markers
     var markers = localStorage.getItem('markers')
-    if (markers == 'no') {
+    if (markers === 'no') {
         markers = false
     } else {
         markers = true
@@ -1281,8 +1281,8 @@ function asRead(callback) {
         for (var i = 0; i < obl; i++) {
             var acct_id = obj[i].domain
             var type = obj[i].type
-            if (type == 'home' || type == 'notf') {
-                if (type == 'home') {
+            if (type === 'home' || type === 'notf') {
+                if (type === 'home') {
                     var id = $('#timeline_' + i + ' .cvo:eq(0)').attr('unique-id')
                     var poster = {
                         home: {
@@ -1315,7 +1315,7 @@ function asRead(callback) {
                         }
                         console.log(json)
                         ct++
-                        if (ct == obl && callback) {
+                        if (ct === obl && callback) {
                             postMessage(['asReadComp', ''], '*')
                         }
                     }
@@ -1328,7 +1328,7 @@ function asRead(callback) {
 function asReadEnd() {
     //Markers
     var markers = localStorage.getItem('markers')
-    if (markers == 'no') {
+    if (markers === 'no') {
         markers = false
     } else {
         markers = true
@@ -1465,7 +1465,7 @@ function announ(acct_id, tlid) {
                 $('.notf-announ_' + acct_id).removeClass('hide')
                 var ct = 0
                 for (var i = 0; i < json.length; i++) {
-                    if (localStorage.getItem('announ_' + acct_id) == json[i].id) {
+                    if (localStorage.getItem('announ_' + acct_id) === json[i].id) {
                         break
                     }
                     ct++
@@ -1487,7 +1487,7 @@ function announ(acct_id, tlid) {
 }
 //buildQuery
 function buildQuery(name, data) {
-    if (!data || data == '') return ''
+    if (!data || data === '') return ''
     var arr = data.split(',')
     var str = ''
     for (var i = 0; i < arr.length; i++) {

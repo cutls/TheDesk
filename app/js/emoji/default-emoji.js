@@ -9,7 +9,7 @@ var defaultemoji = {
 	place: place,
 	symbol: symbol
 }
-if (lang == 'ja') {
+if (lang === 'ja') {
 	var defaultemojiname = {
 		activity: '活動',
 		flag: '国旗',
@@ -35,7 +35,7 @@ if (lang == 'ja') {
 
 function defaultEmoji(target) {
     var announcement = false
-    if ($('#media').val() == 'announcement') {
+    if ($('#media').val() === 'announcement') {
         announcement = true
     }
 	var json = defaultemoji[target]
@@ -70,7 +70,7 @@ function defEmoji(target) {
 		selin = 0
 	}
 	var emojiraw = newpack.filter(function(item, index) {
-		if (item.short_name == target) return true
+		if (item.short_name === target) return true
 	})
 	var hex = emojiraw[0].unified.split('-')
 	if (hex.length === 2) {

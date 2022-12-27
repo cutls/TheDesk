@@ -8,7 +8,7 @@ function imgv(id, key, acct_id) {
 	$('#imgmodal').attr('src', '../../img/loading.svg')
 	var murl = $('#' + id + '-image-' + key).attr('data-url')
 	var ourl = $('#' + id + '-image-' + key).attr('data-original')
-	if (!ourl || ourl == 'null') {
+	if (!ourl || ourl === 'null') {
 		ourl = murl
 	}
 	var type = $('#' + id + '-image-' + key).attr('data-type')
@@ -18,18 +18,18 @@ function imgv(id, key, acct_id) {
 	$('#imagemodal').attr('data-image', murl)
 	//表示はリモートを使うか(どちらにしろコピーはオリジナル)
 	var remote_img = localStorage.getItem('remote_img')
-	if (remote_img == 'yes') {
+	if (remote_img === 'yes') {
 		murl = ourl
 	}
 	$(document).ready(function () {
-		if (type == 'image') {
+		if (type === 'image') {
 			$('#imagemodal').modal('open')
 			imageXhr(id, key, murl)
 			$('#imagewrap').dragScroll() // ドラッグスクロール設定
 			$('#imgmodal').show()
 			$('#imagemodal').attr('data-key', key)
 			$('#imagemodal').attr('data-id', id)
-		} else if (type == 'video' || type == 'gifv') {
+		} else if (type === 'video' || type === 'gifv') {
 			$('#video').attr('src', murl)
 			$('#videomodal').modal('open')
 			$('#imgmodal').show()
@@ -40,9 +40,9 @@ function imgv(id, key, acct_id) {
 function imgCont(type) {
 	var key = $('#imagemodal').attr('data-key')
 	var id = $('#imagemodal').attr('data-id')
-	if (type == 'next') {
+	if (type === 'next') {
 		key++
-	} else if (type == 'prev') {
+	} else if (type === 'prev') {
 		key = key * 1 - 1
 	}
 	var murl = $('#' + id + '-image-' + key).attr('data-url')
@@ -54,7 +54,7 @@ function imgCont(type) {
 	$('#imagemodal').attr('data-image', murl)
 	//表示はリモートを使うか(どちらにしろコピーはオリジナル)
 	var remote_img = localStorage.getItem('remote_img')
-	if (remote_img == 'yes' && ourl != 'null') {
+	if (remote_img === 'yes' && ourl !== 'null') {
 		murl = ourl
 	}
 	if (murl) {
@@ -63,12 +63,12 @@ function imgCont(type) {
 		$('#imgmodal').attr('src', '../../img/loading.svg')
 		var type = $('#' + id + '-image-' + key).attr('data-type')
 		$(document).ready(function () {
-			if (type == 'image') {
+			if (type === 'image') {
 				imageXhr(id, key, murl)
 				$('#imagewrap').dragScroll() // ドラッグスクロール設定
 				$('#imagemodal').attr('data-key', key)
 				$('#imagemodal').attr('data-id', id)
-			} else if (type == 'video' || type == 'gifv') {
+			} else if (type === 'video' || type === 'gifv') {
 				$('#video').attr('src', murl)
 				$('#videomodal').modal('open')
 			}
@@ -127,7 +127,7 @@ function imageXhr(id, key, murl) {
 		false
 	)
 	xhr.onreadystatechange = function () {
-		if (this.readyState == 4 && this.status == 200) {
+		if (this.readyState === 4 && this.status === 200) {
 			r = new FileReader()
 			r.readAsDataURL(this.response)
 			r.onload = function () {
@@ -141,12 +141,12 @@ function imageXhr(id, key, murl) {
 					$('#imagemodal').attr('data-naturalWidth', width)
 					$('#imagemodal').attr('data-naturalHeight', height)
 				}
-				if ($('#' + id + '-image-' + (key * 1 + 1)).length == 0) {
+				if ($('#' + id + '-image-' + (key * 1 + 1)).length === 0) {
 					$('#image-next').prop('disabled', true)
 				} else {
 					$('#image-next').prop('disabled', false)
 				}
-				if ($('#' + id + '-image-' + (key * 1 - 1)).length == 0) {
+				if ($('#' + id + '-image-' + (key * 1 - 1)).length === 0) {
 					$('#image-prev').prop('disabled', true)
 				} else {
 					$('#image-prev').prop('disabled', false)
@@ -225,7 +225,7 @@ function zoom(z) {
 		// ウィンドウから外れてもイベント実行
 		$(document)
 			.mousemove(function (event) {
-				if ($(target).data('down') == true) {
+				if ($(target).data('down') === true) {
 					// スクロール
 					target.scrollLeft($(target).data('scrollLeft') + $(target).data('x') - event.clientX)
 					target.scrollTop($(target).data('scrollTop') + $(target).data('y') - event.clientY)
@@ -323,11 +323,11 @@ function dlImg() {
 	var ourl = $('#imagemodal').attr('data-original')
 	var murl = $('#imagemodal').attr('data-image')
 	var remote_img = localStorage.getItem('remote_img')
-	if (remote_img == 'yes') {
+	if (remote_img === 'yes') {
 		murl = ourl
 	}
 	var save = localStorage.getItem('savefolder')
-	if (!save || save == 'null') {
+	if (!save || save === 'null') {
 		var save = ''
 	}
 	postMessage(['generalDL', [murl, save, false]], '*')

@@ -4,7 +4,7 @@ function sec() {
 	var mode = localStorage.getItem('sec')
 	var acct_id = $('#post-acct-sel').val()
 	var domain = localStorage.getItem('domain_' + acct_id)
-	if (~domain.indexOf('kirishima.cloud') >= 0 && mode == 'local') {
+	if (~domain.indexOf('kirishima.cloud') >= 0 && mode === 'local') {
 		mode = 'unlisted'
 	}
 	post(null, mode)
@@ -26,7 +26,7 @@ function post(mode, postvis, dry) {
 	var acct_id = $('#post-acct-sel').val()
 	localStorage.setItem('last-use', acct_id)
 	var domain = localStorage.getItem('domain_' + acct_id)
-	if ($('#ideKey').val() != '') {
+	if ($('#ideKey').val() !== '') {
 		var ideKey = $('#ideKey').val()
 	} else {
 		var user = localStorage.getItem('user_' + acct_id)
@@ -43,9 +43,9 @@ function post(mode, postvis, dry) {
 	} else {
 		var cw_ltres = localStorage.getItem('cw_letters')
 	}
-	if (domain != 'kirishima.cloud') {
+	if (domain !== 'kirishima.cloud') {
 		if (
-			mode != 'pass' &&
+			mode !== 'pass' &&
 			!$('#cw').hasClass('cw-avail') &&
 			(str.length > cw_sent || str.split('\n').length - 1 > cw_ltres)
 		) {
@@ -60,7 +60,7 @@ function post(mode, postvis, dry) {
 				showCloseButton: true,
 				focusConfirm: false
 			}).then(result => {
-				if (result.dismiss == 'cancel') {
+				if (result.dismiss === 'cancel') {
 					//btn3:sonomama
 					post('pass')
 				} else if (result.value) {
@@ -75,7 +75,7 @@ function post(mode, postvis, dry) {
 			return false
 		}
 	}
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		misskeyPost()
 		return
 	}
@@ -90,7 +90,7 @@ function post(mode, postvis, dry) {
 		method = 'PUT'
 	}
 	var reply = $('#reply').val()
-	if (str.indexOf(localStorage.getItem('stable')) == -1) {
+	if (str.indexOf(localStorage.getItem('stable')) === -1) {
 		str + ' #' + localStorage.getItem('stable')
 	}
 	var toot = {
@@ -118,9 +118,9 @@ function post(mode, postvis, dry) {
 	} else {
 		var vis = $('#vis').text()
 	}
-	if (vis != 'inherit' && vis != 'local') {
+	if (vis !== 'inherit' && vis !== 'local') {
 		toot.visibility = vis
-	} else if (vis == 'local') {
+	} else if (vis === 'local') {
 		toot.status = str + '👁️'
 	}
 	if ($('#cw').hasClass('cw-avail')) {
@@ -146,16 +146,16 @@ function post(mode, postvis, dry) {
 		var options = []
 		$('.mastodon-choice').map(function () {
 			var choice = $(this).val()
-			if (choice != '') {
+			if (choice !== '') {
 				options.push(choice)
 			}
 		})
-		if ($('#poll-multiple:checked').val() == '1') {
+		if ($('#poll-multiple:checked').val() === '1') {
 			var mul = true
 		} else {
 			var mul = false
 		}
-		if ($('#poll-until:checked').val() == '1') {
+		if ($('#poll-until:checked').val() === '1') {
 			var htt = true
 		} else {
 			var htt = false
@@ -190,14 +190,14 @@ function post(mode, postvis, dry) {
 		if (httpreq.readyState === 4) {
 			var json = httpreq.response
 			if (this.status !== 200) {
-				if (media && this.status == 422) {
+				if (media && this.status === 422) {
 					$('#ideKey').val('')
 					$('.toot-btn-group').prop('disabled', false)
 					alertProcessUnfinished()
 				} else {
 					setLog(start, this.status, json)
 					var box = localStorage.getItem('box')
-					if (box == 'yes' || !box) {
+					if (box === 'yes' || !box) {
 						$('#textarea').blur()
 						hide()
 					}
@@ -208,7 +208,7 @@ function post(mode, postvis, dry) {
 			} else {
 				$('#ideKey').val('')
 				var box = localStorage.getItem('box')
-				if (box == 'yes' || !box) {
+				if (box === 'yes' || !box) {
 					$('#textarea').blur()
 					hide()
 				}
@@ -265,16 +265,16 @@ function misskeyPost() {
 		var nsfw = 'false'
 	}
 	var vis = $('#vis').text()
-	if (vis == 'unlisted') {
+	if (vis === 'unlisted') {
 		vis = 'home'
-	} else if (vis == 'direct') {
+	} else if (vis === 'direct') {
 		vis = 'specified'
 		toot.visibleUserIds = str
 			.match(/@([a-zA-Z0-9_@.-]+)(\s|$)/g)
 			.join('')
 			.split('@')
 	}
-	if (vis != 'inherit') {
+	if (vis !== 'inherit') {
 		toot.visibility = vis
 	}
 	if ($('#cw').hasClass('cw-avail')) {
@@ -292,7 +292,7 @@ function misskeyPost() {
 	httpreq.send(JSON.stringify(toot))
 	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
-			if (str.indexOf(localStorage.getItem('stable')) == -1) {
+			if (str.indexOf(localStorage.getItem('stable')) === -1) {
 				localStorage.removeItem('stable')
 			}
 			var json = httpreq.response
@@ -301,9 +301,9 @@ function misskeyPost() {
 			}
 			console.log(['Success: toot', json])
 			var box = localStorage.getItem('box')
-			if (box == 'yes') {
+			if (box === 'yes') {
 				hide()
-			} else if (box == 'hide') {
+			} else if (box === 'hide') {
 				$('body').addClass('mini-post')
 				$('.mini-btn').text('expand_less')
 			}
@@ -332,7 +332,7 @@ function clear() {
 		$('#cw-text').val('')
 	}
 	var acw = localStorage.getItem('always-cw')
-	if (acw != 'yes') {
+	if (acw !== 'yes') {
 		$('#cw').removeClass('yellow-text')
 		$('#cw').removeClass('cw-avail')
 		$('#cw-text').hide()
@@ -363,7 +363,7 @@ function clear() {
 		$(this).val('')
 	})
 	localStorage.removeItem('image')
-	if (localStorage.getItem('mainuse') == 'main') {
+	if (localStorage.getItem('mainuse') === 'main') {
 		$('#post-acct-sel').val(localStorage.getItem('main'))
 	}
 	$('#emoji').addClass('hide')

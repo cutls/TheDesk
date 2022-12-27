@@ -85,7 +85,7 @@
 				if (location.search) {
 					var m = location.search.match(/\?ver=([0-9.]+)&codename=([a-zA-Z]+)&maxim=(.+)/)
 					var maxim = decodeURI(m[3])
-					if(maxim == 'いのちの輝き版ロゴ') document.getElementById('leader').setAttribute('src', './img/2025.svg')
+					if(maxim === 'いのちの輝き版ロゴ') document.getElementById('leader').setAttribute('src', './img/2025.svg')
 					var ver = m[1]
 					var code = m[2]
 					document.getElementById('ver').innerText = `${ver}(${code})`

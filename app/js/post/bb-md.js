@@ -29,22 +29,22 @@ function mdCheck() {
 		localStorage.removeItem('md')
 	}
 	var domain = localStorage.getItem('domain_' + acct_id)
-	if (domain == 'itabashi.0j0.jp') {
+	if (domain === 'itabashi.0j0.jp') {
 		$('#limited-button').removeClass('hide')
 	} else {
 		$('#limited-button').addClass('hide')
 	}
-	if (domain == 'kirishima.cloud') {
+	if (domain === 'kirishima.cloud') {
 		$('#faicon-btn').show()
 	} else {
 		$('#faicon-btn').hide()
 	}
-	if (domain == 'imastodon.net') {
+	if (domain === 'imastodon.net') {
 		trendTag()
 	} else {
 		$('#trendtag').html('')
 	}
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		M.toast({ html: lang.lang_bbmd_misskey, displayLength: 5000 })
 	}
 	if (idata[domain + '_letters']) {
@@ -67,9 +67,9 @@ function mdCheck() {
 		var obj = JSON.parse(multi)
 		if (
 			obj[acct_id].background &&
-			obj[acct_id].background != 'def' &&
+			obj[acct_id].background !== 'def' &&
 			obj[acct_id].text &&
-			obj[acct_id].text != 'def'
+			obj[acct_id].text !== 'def'
 		) {
 			$('#toot-post-btn').removeClass('indigo')
 			$('#toot-post-btn').css('background-color', '#' + obj[acct_id].background)
@@ -93,7 +93,7 @@ function mdToggle() {
 	}
 }
 //最初に読み込みます(MD対応インスタンスかチェック)
-if (localStorage.getItem('md') == 'hide') {
+if (localStorage.getItem('md') === 'hide') {
 	$('.markdown').addClass('hide')
 	$('.anti-markdown').removeClass('hide')
 }
@@ -103,11 +103,11 @@ function tagsel(tag) {
 	if (!localStorage.getItem('bb_' + acct_id)) {
 		return false
 	}
-	if (tag == 'large' || tag == 'size' || tag == 'color' || tag == 'colorhex') {
+	if (tag === 'large' || tag === 'size' || tag === 'color' || tag === 'colorhex') {
 		var sub = $('#' + tag).val()
 		var sub = sub.replace(/#/g, '')
 		surroundHTML(tag + '=' + sub, tag)
-	} else if (tag == 'flip=vertical' || tag == 'flip=horizontal') {
+	} else if (tag === 'flip=vertical' || tag === 'flip=horizontal') {
 		surroundHTML(tag, 'flip')
 	} else {
 		surroundHTML(tag, tag)
@@ -144,16 +144,16 @@ function surroundHTML(tagS, tagE) {
 	var beforeNode = val.slice(0, pos.start)
 	var afterNode = val.slice(pos.end)
 	var insertNode
-	if (range || pos.start != pos.end) {
+	if (range || pos.start !== pos.end) {
 		insertNode = '[' + tagS + ']' + range + '[/' + tagE + ']'
 		target.value = beforeNode + insertNode + afterNode
-	} else if (pos.start == pos.end) {
+	} else if (pos.start === pos.end) {
 		insertNode = '[' + tagS + ']' + '[/' + tagE + ']'
 		target.value = beforeNode + insertNode + afterNode
 	}
 }
 function markdown(tag, ck, br, space) {
-	if (space == 'before') {
+	if (space === 'before') {
 		tagE = tag
 		tag = ' ' + tag
 	} else {
@@ -175,16 +175,16 @@ function surroundMD(tagS, tagE, ck, br) {
 	var beforeNode = val.slice(0, pos.start)
 	var afterNode = val.slice(pos.end)
 	var insertNode
-	if (br == 'yes') {
+	if (br === 'yes') {
 		var br = '\n'
 	} else {
 		var br = ''
 	}
 
-	if ((range || pos.start != pos.end) && ck == 'yes') {
+	if ((range || pos.start !== pos.end) && ck === 'yes') {
 		insertNode = tagS + range + tagE
 		target.value = beforeNode + insertNode + br + afterNode
-	} else if (pos.start == pos.end || ck == 'no') {
+	} else if (pos.start === pos.end || ck === 'no') {
 		insertNode = tagS + range
 		target.value = beforeNode + insertNode + br + afterNode
 	}
@@ -208,7 +208,7 @@ function markdownLink() {
 		return false
 	}
 	var linkIns = '[' + $('#linkt').val() + ']' + '(' + $('#link2').val() + ')'
-	if (linkIns != '[]()') {
+	if (linkIns !== '[]()') {
 		$('#textarea').val($('#textarea').val() + linkIns)
 		$('#linkt').val('')
 		$('#link2').val('')
@@ -222,7 +222,7 @@ function markdownImage() {
 		return false
 	}
 	var imgIns = '![' + $('#image').val() + ']' + '(' + $('#image2').val() + ')'
-	if (imgIns != '![]()') {
+	if (imgIns !== '![]()') {
 		$('#textarea').val($('#textarea').val() + imgIns)
 		$('#image').val('')
 		$('#image2').val('')
@@ -298,10 +298,10 @@ function preview() {
 		for (let l = 0; l < li.length; l++) {
 			var u = li[l].match(/^\- (.+)$/)
 			var listUl = '<li>' + u[1] + '</li>'
-			if (l == 0) {
+			if (l === 0) {
 				listUl = '<ul>' + listUl
 			}
-			if (l == li.length - 1) {
+			if (l === li.length - 1) {
 				listUl = listUl + '</ul>'
 			}
 			var bb = bb.replace(new RegExp(li[l], ''), listUl)

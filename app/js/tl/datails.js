@@ -1,12 +1,12 @@
 //トゥートの詳細
 async function details(id, acct_id, tlid, mode) {
-	if (mode == 'dm') {
+	if (mode === 'dm') {
 		$('.dm-hide').hide()
 	} else {
 		$('.dm-hide').show()
 	}
 	const context = localStorage.getItem('moreContext')
-	if (context != 'yes') {
+	if (context !== 'yes') {
 		$('.contextTool').hide()
 	} else {
 		$('.contextTool').show()
@@ -17,7 +17,7 @@ async function details(id, acct_id, tlid, mode) {
 	$('#tootmodal').modal('open')
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var start = 'https://' + domain + '/api/notes/show'
 		var i = {
 			method: 'POST',
@@ -54,7 +54,7 @@ async function details(id, acct_id, tlid, mode) {
 			$('#toot-this').html(html)
 			jQuery('time.timeago').timeago()
 		}
-		if (localStorage.getItem('mode_' + domain) == 'misskey') {
+		if (localStorage.getItem('mode_' + domain) === 'misskey') {
 			var url = 'https://' + domain + '/notes/' + json.id
 			var scn = json.user.username
 			if (!json.user.host) {
@@ -70,7 +70,7 @@ async function details(id, acct_id, tlid, mode) {
 			}
 		} else {
 			var url = json.url
-			if (json.account.acct == json.account.username) {
+			if (json.account.acct === json.account.username) {
 				var local = true
 			} else {
 				var local = false
@@ -138,7 +138,7 @@ async function details(id, acct_id, tlid, mode) {
 function replyTL(id, acct_id) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var start = 'https://' + domain + '/api/notes/show'
 		var i = {
 			method: 'POST',
@@ -169,7 +169,7 @@ function replyTL(id, acct_id) {
 		})
 		.then(function (json) {
 			var mute = getFilterTypeByAcct(acct_id, 'thread')
-			if (localStorage.getItem('mode_' + domain) == 'misskey') {
+			if (localStorage.getItem('mode_' + domain) === 'misskey') {
 				var templete = misskeyParse([json], '', acct_id, '', '', mute)
 				$('#toot-after').prepend(templete)
 				$('#toot-after .hide').html(lang.lang_details_filtered)
@@ -187,7 +187,7 @@ function replyTL(id, acct_id) {
 function getContext(id, acct_id) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var start = 'https://' + domain + '/api/notes/conversation'
 		var i = {
 			method: 'POST',
@@ -224,7 +224,7 @@ function getContext(id, acct_id) {
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem('mode_' + domain) == 'misskey') {
+			if (localStorage.getItem('mode_' + domain) === 'misskey') {
 				json.reverse()
 				var templete = misskeyParse(json, '', acct_id, '', '', [])
 				$('#toot-reply').html(templete)
@@ -235,7 +235,7 @@ function getContext(id, acct_id) {
 			} else {
 				var mute = getFilterTypeByAcct(acct_id, 'thread')
 				var templete = parse(json.descendants, '', acct_id, '', '', mute)
-				if (templete != '') {
+				if (templete !== '') {
 					$('#toot-after .no-data').hide()
 					$('#toot-after-new').removeClass('hide')
 				} else {
@@ -247,7 +247,7 @@ function getContext(id, acct_id) {
 				$('#toot-after .by_filter').css('display', 'block')
 				$('#toot-after .by_filter').removeClass('hide')
 				var templete = parse(json.ancestors, '', acct_id, '', '', mute)
-				if (templete != '') {
+				if (templete !== '') {
 					$('#toot-reply .no-data').hide()
 					$('#toot-reply-new').removeClass('hide')
 				} else {
@@ -266,7 +266,7 @@ function getContext(id, acct_id) {
 function beforeToot(id, acct_id, domain) {
 	//var domain = localStorage.getItem("domain_" + acct_id);
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var start = 'https://' + domain + '/api/notes/local-timeline'
 		fetch(start, {
 			method: 'POST',
@@ -319,7 +319,7 @@ function beforeToot(id, acct_id, domain) {
 			})
 			.then(function (json) {
 				var templete = parse(json, 'noauth', acct_id)
-				if (templete != '') {
+				if (templete !== '') {
 					$('#toot-before .no-data').hide()
 				}
 				$('#toot-before').html(templete)
@@ -331,7 +331,7 @@ function beforeToot(id, acct_id, domain) {
 function userToot(id, acct_id, user) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var start = 'https://' + domain + '/api/users/notes'
 		fetch(start, {
 			method: 'POST',
@@ -386,7 +386,7 @@ function userToot(id, acct_id, user) {
 			})
 			.then(function (json) {
 				var templete = parse(json, '', acct_id)
-				if (templete != '') {
+				if (templete !== '') {
 					$('#user-before .no-data').hide()
 				}
 				$('#user-before').html(templete)
@@ -420,7 +420,7 @@ function afterToot(id, acct_id, domain) {
 		})
 		.then(function (json) {
 			var templete = parse(json, 'noauth', acct_id)
-			if (templete != '') {
+			if (templete !== '') {
 				$('#ltl-after .no-data').hide()
 			}
 			$('#ltl-after').html(templete)
@@ -454,7 +454,7 @@ function afterUserToot(id, acct_id, user) {
 		})
 		.then(function (json) {
 			var templete = parse(json, '', acct_id)
-			if (templete != '') {
+			if (templete !== '') {
 				$('#user-after .no-data').hide()
 			}
 			$('#user-after').html(templete)
@@ -487,7 +487,7 @@ function afterFTLToot(id, acct_id, domain) {
 		})
 		.then(function (json) {
 			var templete = parse(json, 'noauth', acct_id)
-			if (templete != '') {
+			if (templete !== '') {
 				$('#ftl-after .no-data').hide()
 			}
 			$('#ftl-after').html(templete)
@@ -498,7 +498,7 @@ function afterFTLToot(id, acct_id, domain) {
 //ふぁぼ一覧
 function faved(id, acct_id) {
 	var domain = localStorage.getItem('domain_' + acct_id)
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		return false
 	}
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
@@ -525,7 +525,7 @@ function faved(id, acct_id) {
 		})
 		.then(function (json) {
 			var templete = userparse(json, '', acct_id)
-			if (templete != '') {
+			if (templete !== '') {
 				$('#toot-fav .no-data').hide()
 			}
 			$('#toot-fav').html(templete)
@@ -536,7 +536,7 @@ function faved(id, acct_id) {
 //ブースト一覧
 function rted(id, acct_id) {
 	var domain = localStorage.getItem('domain_' + acct_id)
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		return false
 	}
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
@@ -572,7 +572,7 @@ function cbCopy(mode) {
 	var url = $('#tootmodal').attr('data-url')
 	var urls = url.match(/https?:\/\/([-.a-zA-Z0-9]+)/)
 	var domain = urls[1]
-	if (mode == 'emb') {
+	if (mode === 'emb') {
 		var emb =
 			`<iframe src="${url}/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400"></iframe>
 			<script src="https://${domain}/embed.js" async="async"></script>`
@@ -604,7 +604,7 @@ function trans(tar, to, elem) {
 	//alert(id)
 	$('#toot-this .additional').text('Loading...(Powered by Mastodon API)')
 	var domain = localStorage.getItem('domain_' + acct_id)
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		return false
 	}
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
@@ -641,7 +641,7 @@ function brws() {
 }
 //外部からトゥート開く
 async function detEx(url, acct_id) {
-	if (acct_id == 'main') {
+	if (acct_id === 'main') {
 		acct_id = localStorage.getItem('main')
 	}
 	Swal.fire({

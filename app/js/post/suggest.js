@@ -17,12 +17,12 @@ input.addEventListener(
 		window.clearInterval(timer)
 		timer = window.setInterval(function () {
 			var new_val = input.value
-			if (new_val == '') {
+			if (new_val === '') {
 				$('#suggest').html('')
 				$('#suggest').hide()
 				return
 			}
-			if (prev_val != new_val) {
+			if (prev_val !== new_val) {
 				const pos = input.selectionStart
 				let startI = pos - 1
 				let hasDomain = false
@@ -64,7 +64,7 @@ input.addEventListener(
 					var domain = localStorage.getItem('domain_' + acct_id)
 					var at = localStorage.getItem('acct_' + acct_id + '_at')
 					suggest = 'https://' + domain + '/api/v2/search?q=' + encodeURIComponent(q)
-					if (suggest != oldSuggest) {
+					if (suggest !== oldSuggest) {
 						console.log('Try to get suggest at ' + suggest)
 						fetch(suggest, {
 							method: 'GET',
@@ -138,7 +138,7 @@ input.addEventListener(
 									var accts = ''
 									Object.keys(json.accounts).forEach(function (key3) {
 										var acct = json.accounts[key3]
-										if (acct.acct != q) {
+										if (acct.acct !== q) {
 											//Instance Actorって…
 											if (acct.username.indexOf('.') < 0) {
 												accts =
@@ -179,7 +179,7 @@ input.addEventListener(
 	false
 )
 function tagInsert(code, del, emoji) {
-	if (localStorage.getItem('emoji-zero-width') == 'yes' && emoji) {
+	if (localStorage.getItem('emoji-zero-width') === 'yes' && emoji) {
 		var blankBefore = '​'
 		var blankAfter = '​'
 	} else {
@@ -197,15 +197,15 @@ function tagInsert(code, del, emoji) {
 	}
 	var before = sentence.substr(0, pos - delLen)
 	var last = before.substr(-1, 1)
-	if (last == ' ') blankBefore = ''
+	if (last === ' ') blankBefore = ''
 	var after = sentence.substr(pos, len)
 	var start = after.substr(0, 1)
-	if (start == ' ') blankAfter = ''
+	if (start === ' ') blankAfter = ''
 	if (len === delLen) {
 		var word = code + blankAfter
-	} else if (len == pos) {
+	} else if (len === pos) {
 		var word = blankBefore + code + blankAfter
-	} else if (pos == 0) {
+	} else if (pos === 0) {
 		var word = code + blankAfter
 	} else {
 		var word = blankBefore + code + blankAfter
@@ -218,7 +218,7 @@ function tagInsert(code, del, emoji) {
 }
 function cgNPs(q) {
 	suggest = 'https://cg.toot.app/api/v1/search/light?q=' + q
-	if (suggest != oldSuggest) {
+	if (suggest !== oldSuggest) {
 		console.log('Try to get suggest at ' + suggest)
 		fetch(suggest, {
 			method: 'GET',

@@ -44,13 +44,13 @@ function tl(data) {
 		})
 	//Streaming接続
 	var tlid = 0
-	if (type == 'home') {
+	if (type === 'home') {
 		var start = 'wss://' + domain + '/api/v1/streaming/?stream=user&access_token=' + at
-	} else if (type == 'pub') {
+	} else if (type === 'pub') {
 		var start = 'wss://' + domain + '/api/v1/streaming/?stream=public&access_token=' + at
-	} else if (type == 'local') {
+	} else if (type === 'local') {
 		var start = 'wss://' + domain + '/api/v1/streaming/?stream=public:local&access_token=' + at
-	} else if (type == 'tag') {
+	} else if (type === 'tag') {
 		var start =
 			'wss://' + domain + '/api/v1/streaming/?stream=hashtag&tag=' + data + '&access_token=' + at
 	}
@@ -60,7 +60,7 @@ function tl(data) {
 	}
 	websocket.onmessage = function(mess) {
 		var typeA = JSON.parse(mess.data).event
-		if (typeA == 'update') {
+		if (typeA === 'update') {
 			var obj = JSON.parse(JSON.parse(mess.data).payload)
 			var templete = parse([obj], '', acct_id, tlid)
 			jQuery('time.timeago').timeago()
@@ -76,49 +76,49 @@ function tl(data) {
 }
 //TLのタイトル
 function cap(type, data) {
-	if (type == 'home') {
+	if (type === 'home') {
 		return 'Home'
-	} else if (type == 'local') {
+	} else if (type === 'local') {
 		return 'Local'
-	} else if (type == 'pub') {
+	} else if (type === 'pub') {
 		return 'Public'
-	} else if (type == 'tag') {
+	} else if (type === 'tag') {
 		return '#' + data
-	} else if (type == 'list') {
+	} else if (type === 'list') {
 		return 'List(id:' + data + ')'
-	} else if (type == 'notf') {
+	} else if (type === 'notf') {
 		return 'Notification'
 	}
 }
 
 //TLのURL
 function com(type, data) {
-	if (type == 'home') {
+	if (type === 'home') {
 		return 'home?'
-	} else if (type == 'local') {
+	} else if (type === 'local') {
 		return 'public?local=true&'
-	} else if (type == 'pub') {
+	} else if (type === 'pub') {
 		return 'public?'
-	} else if (type == 'tag') {
+	} else if (type === 'tag') {
 		return 'tag/' + data + '?'
 	}
-	if (type == 'list') {
+	if (type === 'list') {
 		return 'list/' + data + '?'
 	}
 }
 
 //TLのアイコン
 function icon(type) {
-	if (type == 'home') {
+	if (type === 'home') {
 		return 'home'
-	} else if (type == 'local') {
+	} else if (type === 'local') {
 		return 'people_outline'
-	} else if (type == 'pub') {
+	} else if (type === 'pub') {
 		return 'language'
-	} else if (type == 'tag') {
+	} else if (type === 'tag') {
 		return 'search'
 	}
-	if (type == 'list') {
+	if (type === 'list') {
 		return 'subject'
 	}
 }
@@ -170,7 +170,7 @@ var sel
 Object.keys(obj).forEach(function(key) {
 	var acct = obj[key]
 	var list = key * 1 + 1
-	if (key == last) {
+	if (key === last) {
 		sel = 'selected'
 	} else {
 		sel = ''
@@ -215,13 +215,13 @@ function loadVis(acct_id) {
 	if (!vist) {
 		return 'public'
 	} else {
-		if (vist == 'memory') {
+		if (vist === 'memory') {
 			var memory = localStorage.getItem('vis-memory-' + acct_id)
 			if (!memory) {
 				memory = 'public'
 			}
 			return memory
-		} else if (vist == 'server' || vist == 'useapi') {
+		} else if (vist === 'server' || vist === 'useapi') {
 			var multi = localStorage.getItem('multi')
 			var obj = JSON.parse(multi)
 			var memory = obj[acct_id]['vis']

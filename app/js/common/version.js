@@ -5,7 +5,7 @@ async function verck(ver, jp) {
 	$('body').addClass(localStorage.getItem('platform'))
 	const date = new Date()
 	let showVer = false
-	if (localStorage.getItem('ver') != ver && localStorage.getItem('winstore')) {
+	if (localStorage.getItem('ver') !== ver && localStorage.getItem('winstore')) {
 		showVer = true
 		console.log('%c Thank you for your update🎉', 'color: red;font-size:200%;')
 		$(document).ready(function () {
@@ -20,7 +20,7 @@ async function verck(ver, jp) {
 			verp = verp.replace(')', '')
 			verp = verp.replace(' ', '_')
 			console.log('%c ' + verp, 'color: red;font-size:200%;')
-			if (lang.language == 'ja') {
+			if (lang.language === 'ja') {
 				$('#release-' + verp).show()
 			} else {
 				$('#release-en').show()
@@ -32,7 +32,7 @@ async function verck(ver, jp) {
 		console.log(showVer)
 		let nextmonth
 		if (!localStorage.getItem('showSupportMe')) {
-			if (date.getMonth() == 11) {
+			if (date.getMonth() === 11) {
 				const yrs = date.getFullYear() + 1
 				nextmonth = yrs * 100 + 1
 			} else {
@@ -44,7 +44,7 @@ async function verck(ver, jp) {
 			if (
 				date.getFullYear() * 100 + date.getMonth() + 1 >= localStorage.getItem('showSupportMe')
 			) {
-				if (date.getMonth() == 11) {
+				if (date.getMonth() === 11) {
 					const yrs = date.getFullYear() + 1
 					nextmonth = yrs * 100 + 1
 				} else {
@@ -52,7 +52,7 @@ async function verck(ver, jp) {
 					nextmonth = yrs * 100 + date.getMonth() + 2
 				}
 				localStorage.setItem('showSupportMe', nextmonth)
-				if (lang.language != 'ja') {
+				if (lang.language !== 'ja') {
 					$('#support-btm-ja').addClass('hide')
 					$('#support-btm-en').removeClass('hide')
 				}
@@ -74,9 +74,9 @@ async function verck(ver, jp) {
 	//if (!localStorage.getItem('winstore') && !pwa) {
 	//	$('#start').css('display', 'flex')
 	//}
-	const winstore = localStorage.getItem('winstore') == 'brewcask' ||
-		localStorage.getItem('winstore') == 'snapcraft' ||
-		localStorage.getItem('winstore') == 'winstore'
+	const winstore = localStorage.getItem('winstore') === 'brewcask' ||
+		localStorage.getItem('winstore') === 'snapcraft' ||
+		localStorage.getItem('winstore') === 'winstore'
 	const l = 5
 	// 生成する文字列に含める文字セット
 	const c = 'abcdefghijklmnopqrstuvwxyz0123456789'
@@ -97,15 +97,15 @@ async function verck(ver, jp) {
 	console.table(mess)
 	if (mess) {
 		const platform = localStorage.getItem('platform')
-		const newest = platform == 'darwin' ? mess.desk_mac : mess.desk
-		if (newest == ver) {
+		const newest = platform === 'darwin' ? mess.desk_mac : mess.desk
+		if (newest === ver) {
 			todo(lang.lang_version_usever.replace('{{ver}}', mess.desk))
 			//betaかWinstoreならアプデチェックしない
-		} else if (ver.indexOf('beta') != -1 || winstore) {
+		} else if (ver.indexOf('beta') !== -1 || winstore) {
 		} else {
 			localStorage.removeItem('instance')
 			if (localStorage.getItem('new-ver-skip')) {
-				if (localStorage.getItem('next-ver') != newest) {
+				if (localStorage.getItem('next-ver') !== newest) {
 					postMessage(['sendSinmpleIpc', 'update'], '*')
 				} else {
 					console.warn(lang.lang_version_skipver)
@@ -148,10 +148,10 @@ async function verck(ver, jp) {
 					if (obj.ID * 1 <= last) {
 						break
 					} else {
-						if (obj.type == 'textv2') {
+						if (obj.type === 'textv2') {
 							if (~obj.languages.indexOf(lang.language)) {
 								var showVer = true
-								if (obj.toot != '') {
+								if (obj.toot !== '') {
 									var toot =
 										'<button class="btn-flat toast-action" onclick="detEx(\'' +
 										obj.toot +
@@ -159,21 +159,21 @@ async function verck(ver, jp) {
 								} else {
 									var toot = ''
 								}
-								if (obj.ver != '') {
-									if (obj.ver == ver) {
+								if (obj.ver !== '') {
+									if (obj.ver === ver) {
 										showVer = true
 									} else {
 										showVer = false
 									}
 								}
-								if (obj.domain != '') {
+								if (obj.domain !== '') {
 									var multi = localStorage.getItem('multi')
 									if (multi) {
 										showVer = false
 										var accts = JSON.parse(multi)
 										Object.keys(accts).forEach(function (key) {
 											var acct = accts[key]
-											if (acct.domain == obj.domain) {
+											if (acct.domain === obj.domain) {
 												showVer = true
 											}
 										})
@@ -205,12 +205,12 @@ function infowebsocket() {
 	infows.onmessage = function (mess) {
 		console.log([tlid, ':Receive Streaming:', JSON.parse(mess.data)])
 		var obj = JSON.parse(mess.data)
-		if (obj.type != 'counter') {
-			if (obj.type == 'textv2') {
+		if (obj.type !== 'counter') {
+			if (obj.type === 'textv2') {
 				if (~obj.languages.indexOf(lang.language)) {
 					localStorage.setItem('last-notice-id', obj.id)
 					var showVer = true
-					if (obj.toot != '') {
+					if (obj.toot !== '') {
 						var toot =
 							'<button class="btn-flat toast-action" onclick="detEx(\'' +
 							obj.toot +
@@ -218,21 +218,21 @@ function infowebsocket() {
 					} else {
 						var toot = ''
 					}
-					if (obj.ver != '') {
-						if (obj.ver == ver) {
+					if (obj.ver !== '') {
+						if (obj.ver === ver) {
 							showVer = true
 						} else {
 							showVer = false
 						}
 					}
-					if (obj.domain != '') {
+					if (obj.domain !== '') {
 						var multi = localStorage.getItem('multi')
 						if (multi) {
 							showVer = false
 							var accts = JSON.parse(multi)
 							Object.keys(accts).forEach(function (key) {
 								var acct = accts[key]
-								if (acct.domain == obj.domain) {
+								if (acct.domain === obj.domain) {
 									showVer = true
 								}
 							})
@@ -274,7 +274,7 @@ setInterval(function () {
 }, 10000)
 function openRN() {
 	$('#releasenote').modal('open')
-	if (lang.language == 'ja') {
+	if (lang.language === 'ja') {
 		verp = ver.replace('(', '')
 		verp = verp.replace('.', '-')
 		verp = verp.replace('.', '-')

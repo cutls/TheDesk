@@ -96,13 +96,13 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
     if (!ltr) {
         var ltr = 500
     }
-    if (!nsfwtype || nsfwtype == "yes") {
+    if (!nsfwtype || nsfwtype === "yes") {
         var nsfw = "ok"
     } else {
         var nsfw
     }
     var cwtype = localStorage.getItem("cw")
-    if (!cwtype || cwtype == "yes") {
+    if (!cwtype || cwtype === "yes") {
         var cw = "ok"
     } else {
         var cw
@@ -136,11 +136,11 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
     if (!viashow) {
         viashow = "via-hide"
     }
-    if (viashow == "hide") {
+    if (viashow === "hide") {
         viashow = "via-hide"
     }
     //認証なしTL
-    if (mix == "noauth") {
+    if (mix === "noauth") {
         var noauth = "hide"
         var antinoauth = ""
     } else {
@@ -151,9 +151,9 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
     var mouseover = localStorage.getItem("mouseover")
     if (!mouseover) {
         mouseover = ""
-    } else if (mouseover == "yes" || mouseover == "click") {
+    } else if (mouseover === "yes" || mouseover === "click") {
         mouseover = "hide"
-    } else if (mouseover == "no") {
+    } else if (mouseover === "no") {
         mouseover = ""
     }
     var local = []
@@ -177,8 +177,8 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                 dis_name = dis_name.replace(regExp, emoji_url)
             })
         }
-        if (mix == "notf") {
-            if (gif == "yes") {
+        if (mix === "notf") {
+            if (gif === "yes") {
                 noticeavatar = toot.user.avatarUrl
             } else {
                 noticeavatar = toot.user.avatarUrl
@@ -188,17 +188,17 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                 '<img src="' + noticeavatar +
                 '" width="20" class="prof-img" user="' + toot.user.username +
                 '"></a>'
-            if (toot.type == "reply") {
+            if (toot.type === "reply") {
                 var what = lang.lang_parse_mentioned
                 var icon = '<i class="big-text fas fa-share teal-text"></i>'
                 noticeavatar = ""
-            } else if (toot.type == "renote") {
+            } else if (toot.type === "renote") {
                 var what = lang.lang_misskeyparse_renoted
                 var icon = '<i class="big-text fas fa-retweet light-blue-text"></i>'
-            } else if (toot.type == "quote") {
+            } else if (toot.type === "quote") {
                 var what = lang.lang_misskeyparse_quoted
                 var icon = '<i class="big-text fas fa-quote-right orange-text"></i>'
-            } else if (toot.type == "reaction") {
+            } else if (toot.type === "reaction") {
                 var what = lang.lang_misskeyparse_reacted
                 var reactions = {
                     "like": "👍",
@@ -219,7 +219,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                         var ehtml = ""
                         for (i = 0; i < num; i++) {
                             var emoji = emojisData[i]
-                            if (":" + emoji.shortcode + ":" == toot.reaction) {
+                            if (":" + emoji.shortcode + ":" === toot.reaction) {
                                 if (emoji) {
                                     icon = '<img src="' + emoji.url + '" style="width:1rem">'
                                 }
@@ -239,19 +239,19 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                 ")</a>"
             var notice = noticetext
             var memory = localStorage.getItem("notice-mem")
-            if (popup >= 0 && obj.length < 5 && noticetext != memory) {
-                if (localStorage.getItem("hasNotfC_" + acct_id) != "true") {
-                    if (toot.type == "reply") {
+            if (popup >= 0 && obj.length < 5 && noticetext !== memory) {
+                if (localStorage.getItem("hasNotfC_" + acct_id) !== "true") {
+                    if (toot.type === "reply") {
                         var replyct = localStorage.getItem("notf-reply_" + acct_id)
                         $(".notf-reply_" + acct_id).text(replyct * 1 - (-1))
                         localStorage.setItem("notf-reply_" + acct_id, replyct * 1 - (-1))
                         $(".notf-reply_" + acct_id).removeClass("hide")
-                    } else if (toot.type == "renote" || toot.type == "quote") {
+                    } else if (toot.type === "renote" || toot.type === "quote") {
                         var btct = localStorage.getItem("notf-bt_" + acct_id)
                         $(".notf-bt_" + acct_id).text(btct * 1 + 1)
                         localStorage.setItem("notf-bt_" + acct_id, btct * 1 - (-1))
                         $(".notf-bt_" + acct_id).removeClass("hide")
-                    } else if (toot.type == "reaction") {
+                    } else if (toot.type === "reaction") {
                         var favct = localStorage.getItem("notf-fav_" + acct_id)
                         $(".notf-fav_" + acct_id).text(favct * 1 - (-1))
                         localStorage.setItem("notf-fav_" + acct_id, favct * 1 - (-1))
@@ -262,7 +262,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                 if (popup > 0) {
                     M.toast({ html: "[" + domain + "]" + escapeHTMLtemp(toot.user.name) + what, displayLength: popup * 1000 })
                 }
-                if (native == "yes") {
+                if (native === "yes") {
                     var os = localStorage.getItem("platform")
                     var options = {
                         body: toot.user.name + "(" + toot.user.username + ")" + what + "\n\n" + $.strip_tagstemp(toot.note.text),
@@ -270,7 +270,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                     }
                     var n = new Notification('TheDesk:' + domain, options)
                 }
-                if (localStorage.getItem("hasNotfC_" + acct_id) != "true") {
+                if (localStorage.getItem("hasNotfC_" + acct_id) !== "true") {
                     $(".notf-icon_" + acct_id).addClass("red-text")
                 }
                 localStorage.setItem("notice-mem", noticetext)
@@ -308,7 +308,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                 if (useremp) {
                     Object.keys(useremp).forEach(function(key10) {
                         var user = useremp[key10]
-                        if (user == fullname) {
+                        if (user === fullname) {
                             boostback = "emphasized"
                         }
                     })
@@ -316,7 +316,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             }
         }
         var id = toot.id
-        if (mix == "home") {
+        if (mix === "home") {
             var home = ""
             var divider = '<div class="divider"></div>'
         } else {
@@ -345,19 +345,19 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             //強調チェック
             Object.keys(empCli).forEach(function(key6) {
                     var empCliList = empCli[key6]
-                    if (empCliList == via) {
+                    if (empCliList === via) {
                         boostback = "emphasized"
                     }
                 })
                 //ミュートチェック
             Object.keys(muteCli).forEach(function(key7) {
                 var muteCliList = muteCli[key7]
-                if (muteCliList == via) {
+                if (muteCliList === via) {
                     boostback = "hide"
                 }
             })
         }
-        if ((toot.cw || toot.cw == "") && cw) {
+        if ((toot.cw || toot.cw === "") && cw) {
             var content = escapeHTML(toot.text)
             var spoil = escapeHTMLtemp(toot.cw)
             var spoiler = "cw cw_hide"
@@ -528,28 +528,28 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
         //公開範囲を取得
         var vis = ""
         var visen = toot.visibility
-        if (visen == "public") {
+        if (visen === "public") {
             var vis =
                 '<i class="text-darken-3 material-icons gray sml vis-data pointer" title="' + lang.lang_parse_public + '(' + lang.lang_parse_clickcopy + ')" data-vis="public" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">public</i>'
             var can_rt = ""
-        } else if (visen == "home") {
+        } else if (visen === "home") {
             var vis =
                 '<i class="text-darken-3 material-icons blue-text vis-data pointer" title="' + lang.lang_misskeyparse_home + '(' + lang.lang_parse_clickcopy + ')" data-vis="unlisted" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">lock_open</i>'
             var can_rt = ""
-        } else if (visen == "followers") {
+        } else if (visen === "followers") {
             var vis =
                 '<i class="text-darken-3 material-icons blue-text vis-data pointer" title="' + lang.lang_misskeyparse_followers + '(' + lang.lang_parse_clickcopy + ')" data-vis="unlisted" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">people</i>'
             var can_rt = ""
-        } else if (visen == "private") {
+        } else if (visen === "private") {
             var vis =
                 '<i class="text-darken-3 material-icons orange-text vis-data pointer" title="' + lang.lang_parse_private + '(' + lang.lang_parse_clickcopy + ')" data-vis="private" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">lock</i>'
             var can_rt = ""
-        } else if (visen == "specified") {
+        } else if (visen === "specified") {
             var vis =
                 '<i class="text-darken-3 material-icons red-text vis-data pointer" title="' + lang.lang_misskeyparse_specified + '(' + lang.lang_parse_clickcopy + ')" data-vis="direct" onclick="staCopy(\'' + id + '\')" style="font-size:1rem;">mail</i>'
             var can_rt = "hide"
         }
-        if (toot.user.username == localStorage.getItem("user_" + acct_id)) {
+        if (toot.user.username === localStorage.getItem("user_" + acct_id)) {
             var if_mine = ""
             var mine_via = "type-b"
         } else {
@@ -614,7 +614,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             }
             for (var i = 0; i < tickerdata.length; i++) {
                 var value = tickerdata[i]
-                if (value.domain == thisdomain) {
+                if (value.domain === thisdomain) {
                     var tickerdom = '<div style="background:linear-gradient(to left,transparent, ' + value.bg + ' 96%) !important; color:' + value.text + ';width:100%; height:0.9rem; font-size:0.8rem;"><img src="' + value.image + '" style="height:100%;"><span style="position:relative; top:-0.2rem;"> ' + escapeHTML(value.name) + '</span></div>'
                     break
                 }
@@ -640,7 +640,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             poll = poll + '<div class="quote-renote"><div class="renote-icon"><a onclick="udg(\'' + toot.renote.user.id +
                 '\',' + acct_id + ');" user="' + toot.renote.user.username + '" class="udg"><img src="' + toot.renote.user.avatarUrl + '"></a></div><div class="renote-user">' + escapeHTML(toot.renote.user.name) + '</div><div class="renote-text">' + escapeHTML(toot.renote.text) + '</div></div>'
         }
-        if (localStorage.getItem("emojiReaction_" + acct_id) == "disabled") {
+        if (localStorage.getItem("emojiReaction_" + acct_id) === "disabled") {
             var freeReact = "hide"
         } else {
             var freeReact = ""
@@ -650,14 +650,14 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
         if (toot.reactions) {
             Object.keys(toot.reactions).forEach(function(keye) {
                 var thisReact = toot.reactions[keye]
-                if (keye == "like") { var defaultEmoji = true } else if (keye == "love") { var defaultEmoji = true } else if (keye == "laugh") { var defaultEmoji = true } else if (keye == "hmm") { var defaultEmoji = true } else if (keye == "surprise") { var defaultEmoji = true } else if (keye == "congrats") { var defaultEmoji = true } else if (keye == "angry") { var defaultEmoji = true } else if (keye == "confused") { var defaultEmoji = true } else if (keye == "star") { var defaultEmoji = true } else {
+                if (keye === "like") { var defaultEmoji = true } else if (keye === "love") { var defaultEmoji = true } else if (keye === "laugh") { var defaultEmoji = true } else if (keye === "hmm") { var defaultEmoji = true } else if (keye === "surprise") { var defaultEmoji = true } else if (keye === "congrats") { var defaultEmoji = true } else if (keye === "angry") { var defaultEmoji = true } else if (keye === "confused") { var defaultEmoji = true } else if (keye === "star") { var defaultEmoji = true } else {
                     var obj = JSON.parse(localStorage.getItem("emoji_" + acct_id))
                     if (obj) {
                         var num = obj.length
                         var ehtml = ""
                         for (i = 0; i < num; i++) {
                             var emoji = obj[i]
-                            if (":" + emoji.shortcode + ":" == keye) {
+                            if (":" + emoji.shortcode + ":" === keye) {
                                 if (emoji) {
                                     addReact = addReact + '<span class="reaction"><a onclick="reaction(\'' + keye + '\',\'' + toot.id + '\',' + acct_id +
                                         ',\'' + tlid + '\')" class="waves-effect waves-dark btn-flat pointer" style="padding:0;margin-left:3px;"><img src="' + emoji.url + '" style="width:13px;"></a><span class="re-' + emoji.shortcode + 'ct">' + thisReact +
@@ -753,7 +753,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             var riphide = "hide"
             var fullhide = "hide"
         }
-        if (!addReact && likehide == "hide" && lovehide == "hide" && laughhide == "hide" && hmmhide == "hide" && suphide == "hide" && conghide == "hide" && anghide == "hide" && confhide == "hide" && riphide == "hide") {
+        if (!addReact && likehide === "hide" && lovehide === "hide" && laughhide === "hide" && hmmhide === "hide" && suphide === "hide" && conghide === "hide" && anghide === "hide" && confhide === "hide" && riphide === "hide") {
             var fullhide = "hide"
         }
         if (toot.myReaction) {
@@ -762,7 +762,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             var reacted = ""
         }
         content = nl2br(content)
-        if (!content || content == "") {
+        if (!content || content === "") {
             content = '<span class="gray">This post has no content. It may be media-only, private or deleted.</span>'
         }
         var trans = ""
@@ -860,7 +860,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 //オブジェクトパーサー(ユーザーデータ)
 function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
     console.log(["Parse them ", obj])
-    if (popup > 0 || popup == -1) {
+    if (popup > 0 || popup === -1) {
 
     } else {
         if (obj.users) {
@@ -884,7 +884,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
             var auth = ""
         }
         var ftxt = lang.lang_parse_followed
-        if (popup > 0 || popup == -1) {
+        if (popup > 0 || popup === -1) {
             var notftext = '<span class="cbadge" title="' + date(toot.createdAt,
                     'absolute') + '(' + lang.lang_parse_notftime + ')"><i class="far fa-clock"></i>' + date(toot.createdAt,
                     datetype) +
@@ -894,7 +894,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
             var notftext = ""
         }
         var memory = localStorage.getItem("notice-mem")
-        if (popup >= 0 && obj.length < 5 && notftext != memory) {
+        if (popup >= 0 && obj.length < 5 && notftext !== memory) {
             M.toast({ html: escapeHTMLtemp(toot.name) + ":" + ftxt, displayLength: popup * 1000 })
             $(".notf-icon_" + tlid).addClass("red-text")
             localStorage.setItem("notice-mem", notftext)
@@ -903,7 +903,7 @@ function misskeyUserparse(obj, auth, acct_id, tlid, popup) {
             if (!native) {
                 native = "yes"
             }
-            if (native == "yes") {
+            if (native === "yes") {
                 var os = localStorage.getItem("platform")
                 var options = {
                     body: toot.display_name + "(" + toot.acct + ")" + ftxt,
@@ -988,13 +988,13 @@ function connectMisskey(acct_id, re) {
             if (!popup) {
                 popup = 0
             }
-            if (JSON.parse(mess.data).body.type != "follow") {
+            if (JSON.parse(mess.data).body.type !== "follow") {
 
                 templete = misskeyParse([obj.body], 'notf', acct_id, 'notf', popup)
             } else {
                 templete = misskeyUserparse([obj.body], 'notf', acct_id, 'notf', popup)
             }
-            if (JSON.parse(mess.data).body.type == "reaction") {
+            if (JSON.parse(mess.data).body.type === "reaction") {
                 console.log("reaction refresh")
                 reactRefresh(acct_id, obj.body.note.id)
             }
@@ -1003,7 +1003,7 @@ function connectMisskey(acct_id, re) {
                 $("div[data-const=notf_" + acct_id + "]").prepend(templete)
             }
             jQuery("time.timeago").timeago()
-        } else if (data.body.type == "note") {
+        } else if (data.body.type === "note") {
             var tlid = data.body.id * 1
             var multi = localStorage.getItem("column")
             var col = JSON.parse(multi)[tlid]
@@ -1031,10 +1031,10 @@ function connectMisskey(acct_id, re) {
             localStorage.setItem("pool_" + tlid, pool)
             scrollck()
             jQuery("time.timeago").timeago()
-        } else if (data.type == "noteUpdated") {
-            if (data.body.type == "reacted") {
+        } else if (data.type === "noteUpdated") {
+            if (data.body.type === "reacted") {
                 reactRefresh(acct_id, data.body.id)
-            } else if (data.body.type == "deleted") {
+            } else if (data.body.type === "deleted") {
                 $("#pub_" + data.body.id).hide()
                 $("#pub_" + data.body.id).remove()
             }

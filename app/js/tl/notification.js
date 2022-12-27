@@ -1,7 +1,7 @@
 //通知
 //取得+Streaming接続
 function notf(acct_id, tlid, sys) {
-    if (sys == 'direct') {
+    if (sys === 'direct') {
         notfColumn(acct_id, tlid, sys)
     } else {
         notfCommon(acct_id, tlid, sys)
@@ -17,7 +17,7 @@ function notfColumn(acct_id, tlid, sys) {
     }
     var domain = localStorage.getItem('domain_' + acct_id)
     var httpreq = new XMLHttpRequest()
-    if (localStorage.getItem('mode_' + domain) == 'misskey') {
+    if (localStorage.getItem('mode_' + domain) === 'misskey') {
         var misskey = true
         var start = 'https://' + domain + '/api/i/notifications'
         httpreq.open('POST', start, true)
@@ -59,7 +59,7 @@ function notfColumn(acct_id, tlid, sys) {
                 localStorage.setItem('lastnotf_' + acct_id, json[0].id)
                 Object.keys(json).forEach(function (key) {
                     var obj = json[key]
-                    if (lastnotf == obj.id && key > 0 && native == 'yes') {
+                    if (lastnotf === obj.id && key > 0 && native === 'yes') {
                         var ct = key
                         if (key > 14) {
                             ct = '15+'
@@ -79,7 +79,7 @@ function notfColumn(acct_id, tlid, sys) {
                         } else {
                             templete = templete + parse([obj], 'notf', acct_id, tlid, -1, mute)
                         }
-                    } else if (obj.type == 'follow_request') {
+                    } else if (obj.type === 'follow_request') {
                         templete = templete + userparse([obj.account], 'request', acct_id, tlid, -1)
                     } else {
                         if (misskey) {
@@ -98,7 +98,7 @@ function notfColumn(acct_id, tlid, sys) {
             todc()
             //Markers
             var markers = localStorage.getItem('markers')
-            if (markers == 'yes') {
+            if (markers === 'yes') {
                 markers = true
             } else {
                 markers = false
@@ -128,7 +128,7 @@ function notfCommon(acct_id, tlid, sys, stream) {
         native = 'yes'
     }
     var domain = localStorage.getItem('domain_' + acct_id)
-    if (localStorage.getItem('mode_' + domain) == 'misskey') {
+    if (localStorage.getItem('mode_' + domain) === 'misskey') {
         var misskey = true
         var start = 'https://' + domain + '/api/i/notifications'
         var i = {
@@ -151,7 +151,7 @@ function notfCommon(acct_id, tlid, sys, stream) {
             },
         }
     }
-    if (stream == 'only') {
+    if (stream === 'only') {
         notfWS(misskey, acct_id, tlid, domain, at)
         return false
     }
@@ -179,7 +179,7 @@ function notfCommon(acct_id, tlid, sys, stream) {
                 localStorage.setItem('lastnotf_' + acct_id, json[0].id)
                 Object.keys(json).forEach(function (key) {
                     var obj = json[key]
-                    if (lastnotf == obj.id && key > 0 && native == 'yes') {
+                    if (lastnotf === obj.id && key > 0 && native === 'yes') {
                         var ct = key
                         if (key > 14) {
                             ct = '15+'
@@ -213,12 +213,12 @@ function notfCommon(acct_id, tlid, sys, stream) {
             }
             $('#notf-box').addClass('fetched')
             todc()
-            if (stream != 'no') notfWS(misskey, acct_id, tlid, domain, at)
+            if (stream !== 'no') notfWS(misskey, acct_id, tlid, domain, at)
         })
 }
 
 function notfWS(misskey, acct_id, tlid, domain, at) {
-    if (mastodonBaseWsStatus[domain] == 'available') return false
+    if (mastodonBaseWsStatus[domain] === 'available') return false
     if (!misskey) {
         if (localStorage.getItem('streaming_' + acct_id)) {
             var wss = localStorage.getItem('streaming_' + acct_id)
@@ -247,14 +247,14 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
             }
             var obj = JSON.parse(JSON.parse(mess.data).payload)
             var type = JSON.parse(mess.data).event
-            if (type == 'notification') {
+            if (type === 'notification') {
                 var templete = ''
                 localStorage.setItem('lastnotf_' + acct_id, obj.id)
                 if (!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')) {
                     //markers show中はダメ
                     if (obj.type !== 'follow' && obj.type !== 'move' && obj.type !== 'request' && obj.type !== 'admin.sign_up') {
                         templete = parse([obj], 'notf', acct_id, 'notf', popup)
-                    } else if (obj.type == 'follow_request') {
+                    } else if (obj.type === 'follow_request') {
                         templete = userparse([obj.account], 'request', acct_id, 'notf', -1)
                     } else {
                         templete = userparse([obj], obj.type, acct_id, 'notf', popup)
@@ -265,7 +265,7 @@ function notfWS(misskey, acct_id, tlid, domain, at) {
                     }
                     jQuery('time.timeago').timeago()
                 }
-            } else if (type == 'delete') {
+            } else if (type === 'delete') {
                 $('[toot-id=' + obj + ']').hide()
                 $('[toot-id=' + obj + ']').remove()
             }
@@ -307,7 +307,7 @@ function notfmore(tlid) {
     if (sid && !moreloading) {
         moreloading = true
         var httpreq = new XMLHttpRequest()
-        if (localStorage.getItem('mode_' + domain) == 'misskey') {
+        if (localStorage.getItem('mode_' + domain) === 'misskey') {
             var misskey = true
             var start = 'https://' + domain + '/api/i/notifications'
             httpreq.open(POST, start, true)

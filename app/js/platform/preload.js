@@ -8,89 +8,89 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 onmessage = async function (e) {
-	if (e.data[0] == 'openUrl') {
+	if (e.data[0] === 'openUrl') {
 		urls = e.data[1].match(/https?:\/\/(.+)/)
 		if (urls) {
 			shell.openExternal(e.data[1])
 		}
-	} else if (e.data[0] == 'openUrlMainProcess') {
+	} else if (e.data[0] === 'openUrlMainProcess') {
 		urls = e.data[1].match(/https?:\/\/(.+)/)
 		if (urls) {
 			ipc.send('openUrl', e.data[1])
 		}
-	} else if (e.data[0] == 'sendSinmpleIpc') {
+	} else if (e.data[0] === 'sendSinmpleIpc') {
 		ipc.send(e.data[1], '')
-	} else if (e.data[0] == 'dialogStore') {
+	} else if (e.data[0] === 'dialogStore') {
 		ipc.send('dialogStore', e.data[1])
-	} else if (e.data[0] == 'bmpImage') {
+	} else if (e.data[0] === 'bmpImage') {
 		ipc.send('bmp-image', e.data[1])
-	} else if (e.data[0] == 'resizeImage') {
+	} else if (e.data[0] === 'resizeImage') {
 		ipc.send('resize-image', e.data[1])
-	} else if (e.data[0] == 'stampImage') {
+	} else if (e.data[0] === 'stampImage') {
 		ipc.send('stamp-image', e.data[1])
-	} else if (e.data[0] == 'dialogCW') {
+	} else if (e.data[0] === 'dialogCW') {
 		ipc.send('dialogCW', e.data[1])
-	} else if (e.data[0] == 'nativeNotf') {
+	} else if (e.data[0] === 'nativeNotf') {
 		console.log(e.data[1])
 		ipc.send('native-notf', e.data[1])
-	} else if (e.data[0] == 'dialogClient') {
+	} else if (e.data[0] === 'dialogClient') {
 		ipc.send('dialogClient', e.data[1])
-	} else if (e.data[0] == 'generalDL') {
+	} else if (e.data[0] === 'generalDL') {
 		ipc.send('general-dl', e.data[1])
-	} else if (e.data[0] == 'openFinder') {
+	} else if (e.data[0] === 'openFinder') {
 		ipc.send('openFinder', e.data[1])
-	} else if (e.data[0] == 'columnDel') {
+	} else if (e.data[0] === 'columnDel') {
 		ipc.send('column-del', e.data[1])
-	} else if (e.data[0] == 'lang') {
+	} else if (e.data[0] === 'lang') {
 		ipc.send('lang', e.data[1])
-	} else if (e.data[0] == 'exportSettings') {
+	} else if (e.data[0] === 'exportSettings') {
 		ipc.send('exportSettings', e.data[1])
-	} else if (e.data[0] == 'exportSettingsCoreComplete') {
+	} else if (e.data[0] === 'exportSettingsCoreComplete') {
 		ipc.send('export', e.data[1])
-	} else if (e.data[0] == 'importSettings') {
+	} else if (e.data[0] === 'importSettings') {
 		ipc.send('importSettings', e.data[1])
-	} else if (e.data[0] == 'customSound') {
+	} else if (e.data[0] === 'customSound') {
 		ipc.send('customSound', e.data[1])
-	} else if (e.data[0] == 'themeJsonDelete') {
+	} else if (e.data[0] === 'themeJsonDelete') {
 		ipc.send('theme-json-delete', e.data[1])
-	} else if (e.data[0] == 'themeJsonCreate') {
+	} else if (e.data[0] === 'themeJsonCreate') {
 		ipc.send('theme-json-create', e.data[1])
-	} else if (e.data[0] == 'themeJsonRequest') {
+	} else if (e.data[0] === 'themeJsonRequest') {
 		ipc.send('theme-json-request', e.data[1])
-	} else if (e.data[0] == 'ha') {
+	} else if (e.data[0] === 'ha') {
 		ipc.send('ha', e.data[1])
-	} else if (e.data[0] == 'webviewSetting') {
+	} else if (e.data[0] === 'webviewSetting') {
 		ipc.send('webview', e.data[1])
-	} else if (e.data[0] == 'frameSet') {
+	} else if (e.data[0] === 'frameSet') {
 		ipc.send('frameSet', e.data[1])
-	} else if (e.data[0] == 'ua') {
+	} else if (e.data[0] === 'ua') {
 		ipc.send('ua', e.data[1])
-	} else if (e.data[0] == 'aboutData') {
+	} else if (e.data[0] === 'aboutData') {
 		ipc.send('aboutData', '')
-	} else if (e.data[0] == 'itunes') {
+	} else if (e.data[0] === 'itunes') {
 		console.log('NowPlaying')
 		ipc.send('itunes', e.data[1])
-	} else if (e.data[0] == 'themeCSSRequest') {
+	} else if (e.data[0] === 'themeCSSRequest') {
 		ipc.send('theme-css-request', e.data)
-	} else if (e.data[0] == 'themeCSSPreview') {
+	} else if (e.data[0] === 'themeCSSPreview') {
 		ipc.send('theme-css-request', e.data)
-	} else if (e.data[0] == 'customCSSRequest') {
+	} else if (e.data[0] === 'customCSSRequest') {
 		ipc.send('custom-css-request', e.data[1])
-	} else if (e.data[0] == 'downloadButton') {
+	} else if (e.data[0] === 'downloadButton') {
 		ipc.send('download-btn', e.data[1])
-	} else if (e.data[0] == 'nano') {
+	} else if (e.data[0] === 'nano') {
 		ipc.send('nano', null)
-	} else if (e.data[0] == 'asReadComp') {
+	} else if (e.data[0] === 'asReadComp') {
 		ipc.send('sendMarkersComplete', null)
-	} else if (e.data[0] == 'copy') {
+	} else if (e.data[0] === 'copy') {
 		ipc.send('copy', e.data[1])
-	} else if (e.data[0] == 'copyBinary') {
+	} else if (e.data[0] === 'copyBinary') {
 		ipc.send('copyBinary', e.data[1])
-	} else if (e.data[0] == 'log') {
+	} else if (e.data[0] === 'log') {
 		ipc.send('log', e.data[1])
-	} else if (e.data[0] == 'twitterLogin') {
+	} else if (e.data[0] === 'twitterLogin') {
 		ipc.send('twitterLogin', e.data[1])
-	} else if (e.data[0] == 'textareaContextMenu') {
+	} else if (e.data[0] === 'textareaContextMenu') {
 		ipc.send('textareaContextMenu', e.data[1])
 	}
 }
@@ -106,16 +106,16 @@ ipc.on('reload', function (event, arg) {
 })
 //Native Notf
 ipc.on('shownotf', function (event, args) {
-	if (args['type'] == 'toot') {
+	if (args['type'] === 'toot') {
 		postMessage(['details', [id, acct_id]], '*')
-	} else if (args['type'] == 'userdata') {
+	} else if (args['type'] === 'userdata') {
 		postMessage(['udg', [user, acct_id]], '*')
 	}
 })
 
 //first.js
 ipc.on('custom-css-response', function (event, arg) {
-	if (arg == '') {
+	if (arg === '') {
 		return false
 	}
 	var styleNode = document.createElement('style')
@@ -126,7 +126,7 @@ ipc.on('custom-css-response', function (event, arg) {
 	document.getElementsByTagName('head')[0].append(styleNode)
 })
 ipc.on('theme-css-response', function (event, arg) {
-	if (arg == '') {
+	if (arg === '') {
 		return false
 	}
 	var styleNode = document.createElement('style')
@@ -205,7 +205,7 @@ ipc.on('theme-json-response', function (event, args) {
 	postMessage(['customConnect', args], '*')
 })
 ipc.on('theme-json-create-complete', function (event, args) {
-	if (args != '') alert(args)
+	if (args !== '') alert(args)
 	postMessage(['clearCustomImport', ''], '*')
 	postMessage(['ctLoad', ''], '*')
 })

@@ -1,18 +1,18 @@
-function dl(mainWindow, lang_path, base, dirname) {
-	const electron = require('electron')
+import electron from 'electron'
+import * as fs from 'fs'
+export default function dl(mainWindow: electron.BrowserWindow, lang_path: string, base: string, dirname: string) {
 	const shell = electron.shell
-	const fs = require('fs')
 	const { download } = require('electron-dl')
 	const BrowserWindow = electron.BrowserWindow
 	const dialog = electron.dialog
-	var updatewin = null
-	var ipc = electron.ipcMain
+	let updatewin: electron.BrowserWindow | null = null
+	const ipc = electron.ipcMain
 	const app = electron.app
 	const join = require('path').join
-	ipc.on('update', function(e, x, y) {
-		var platform = process.platform
-		var bit = process.arch
-		if (platform != 'others') {
+	ipc.on('update', function (e, x, y) {
+		const platform = process.platform
+		const bit = process.arch
+		if (platform !== 'win32' && platform !== 'linux' && platform !== 'darwin') {
 			updatewin = new BrowserWindow({
 				webPreferences: {
 					webviewTag: false,
@@ -27,12 +27,12 @@ function dl(mainWindow, lang_path, base, dirname) {
 				resizable: false,
 				show: false
 			})
-			var lang = fs.readFileSync(lang_path, 'utf8')
+			const lang = fs.readFileSync(lang_path, 'utf8')
 			//updatewin.toggleDevTools()
 			updatewin.loadURL(base + lang + '/update.html')
 			updatewin.webContents.once('dom-ready', () => {
-				updatewin.show()
-			 })
+				if (updatewin) updatewin.show()
+			})
 			return 'true'
 		} else {
 			return false
@@ -46,7 +46,7 @@ function dl(mainWindow, lang_path, base, dirname) {
 				directory: dir,
 				filename: file,
 				openFolderWhenDone: true,
-				onProgress: function(event) {
+				onProgress: function (event) {
 					e.sender.send('prog', [event, args[2]])
 				},
 				saveAs: false
@@ -58,23 +58,21 @@ function dl(mainWindow, lang_path, base, dirname) {
 				})
 				.catch(console.error)
 		}
-		var platform = process.platform
-		var bit = process.arch
-		var options = {
+		const platform = process.platform
+		const bit = process.arch
+		const options = {
 			title: 'Save',
 			defaultPath: app.getPath('home') + '/' + args[1]
 		}
-		const file = await dialog.showSaveDialog(null, options)
+		if (!updatewin) return
+		const file = await dialog.showSaveDialog(updatewin, options)
 		const savedFiles = file.filePath
 		console.log(savedFiles)
 		if (!savedFiles) {
 			return false
 		}
-		if (platform == 'win32') {
-			var m = savedFiles.match(/(.+)\\(.+)$/)
-		} else {
-			var m = savedFiles.match(/(.+)\/(.+)$/)
-		}
+		const m = platform === 'win32' ? savedFiles.match(/(.+)\\(.+)$/) : savedFiles.match(/(.+)\/(.+)$/)
+		if (!m) return
 		//console.log(m);
 		if (isExistFile(savedFiles)) {
 			fs.unlinkSync(savedFiles)
@@ -87,44 +85,43 @@ function dl(mainWindow, lang_path, base, dirname) {
 		try {
 			fs.statSync(file)
 			return true
-		} catch (err) {
+		} catch (err: any) {
 			if (err.code === 'ENOENT') return false
 		}
 	}
 
 	ipc.on('general-dl', (event, args) => {
-		var name = ''
-		var platform = process.platform
-		var bit = process.arch
+		const name = ''
+		const platform = process.platform
+		const bit = process.arch
 		const filename = args[0].match(/https:\/\/.+\/(.+\..+)$/)
-		if (args[1] == '') {
-			if (platform == 'win32') {
-				var dir = app.getPath('home') + '\\Pictures\\TheDesk'
-			} else if (platform == 'linux' || platform == 'darwin') {
-				var dir = app.getPath('home') + '/Pictures/TheDesk'
+		let dir = args[1]
+		if (args[1] === '') {
+			if (platform === 'win32') {
+				dir = app.getPath('home') + '\\Pictures\\TheDesk'
+			} else if (platform === 'linux' || platform === 'darwin') {
+				dir = app.getPath('home') + '/Pictures/TheDesk'
 			}
-		} else {
-			var dir = args[1]
 		}
 		const opts = {
 			directory: dir,
 			filename: name,
 			openFolderWhenDone: false,
-			onProgress: function(e) {
+			onProgress: function (e) {
 				event.sender.send('general-dl-prog', e)
 			},
 			saveAs: false
 		}
 		download(BrowserWindow.getFocusedWindow(), args[0], opts)
 			.then(dl => {
-				if(filename[1]) {
-					if (platform == 'win32') {
-						var name = dir + '\\' + filename[1]
-					} else if (platform == 'linux' || platform == 'darwin') {
-						var name = dir + '/' + filename[1]
+				if (filename[1]) {
+					if (platform === 'win32') {
+						const name = dir + '\\' + filename[1]
+					} else if (platform === 'linux' || platform === 'darwin') {
+						const name = dir + '/' + filename[1]
 					}
 				} else {
-					var name = dir
+					const name = dir
 				}
 				event.sender.send('general-dl-message', name)
 			})
@@ -135,4 +132,3 @@ function dl(mainWindow, lang_path, base, dirname) {
 		shell.showItemInFolder(folder)
 	})
 }
-exports.dl = dl

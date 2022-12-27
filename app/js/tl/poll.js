@@ -76,7 +76,7 @@ function voteMastodon(acct_id, id, target) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	var start = 'https://' + domain + '/api/v1/polls/' + id + '/votes'
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		return false
 	}
 	var httpreq = new XMLHttpRequest()
@@ -107,7 +107,7 @@ function voteMastodonrefresh(acct_id, id, target) {
 	httpreqd.responseType = 'json'
 	httpreqd.send()
 	httpreqd.onreadystatechange = function() {
-		if (httpreqd.readyState == 4) {
+		if (httpreqd.readyState === 4) {
 			if (this.status !== 200) {
 				setLog(start, this.status, this.response)
 			}

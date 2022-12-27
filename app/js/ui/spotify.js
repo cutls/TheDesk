@@ -46,7 +46,7 @@ function checkSpotify() {
 		$('#spotify-disable').addClass('disabled')
 	}
 	var content = localStorage.getItem('np-temp')
-	if (!content || content == '' || content == 'null') {
+	if (!content || content === '' || content === 'null') {
 		var content = '#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk'
 	}
 	$('#np-temp').val(content)
@@ -71,7 +71,7 @@ function checkSpotify() {
 }
 function spotifyFlagSave() {
 	var awk = $('[name=awk]:checked').val()
-	if (awk == 'yes') {
+	if (awk === 'yes') {
 		localStorage.setItem('artwork', 'yes')
 		M.toast({ html: lang.lang_spotify_img, displayLength: 3000 })
 	} else {
@@ -81,7 +81,7 @@ function spotifyFlagSave() {
 }
 function aMusicFlagSave() {
 	var awk = $('[name=amw]:checked').val()
-	if (awk == 'yes') {
+	if (awk === 'yes') {
 		localStorage.setItem('complete-artwork', 'yes')
 		M.toast({ html: lang.lang_spotify_img, displayLength: 3000 })
 	} else {
@@ -91,7 +91,7 @@ function aMusicFlagSave() {
 }
 function cMusicFlagSave() {
 	var awk = $('[name=cmw]:checked').val()
-	if (awk == 'yes') {
+	if (awk === 'yes') {
 		localStorage.setItem('control-center-np', 'yes')
 		M.toast({ html: 'コントロールセンターNPをオンにしました', displayLength: 3000 })
 	} else {
@@ -100,7 +100,7 @@ function cMusicFlagSave() {
 	}
 }
 function nowplaying(mode) {
-	if (mode == 'spotify') {
+	if (mode === 'spotify') {
 		var start = 'https://spotify.thedesk.top/current-playing?code=' + localStorage.getItem('spotify-token')
 		var at = localStorage.getItem('spotify-token')
 		if (at) {
@@ -138,7 +138,7 @@ function nowplaying(mode) {
 						postMessage(['bmpImage', [img, 0]], '*')
 					}
 					var content = localStorage.getItem('np-temp')
-					if (!content || content == '' || content == 'null') {
+					if (!content || content === '' || content === 'null') {
 						var content = '#NowPlaying {song} / {album} / {artist}\n{url}'
 					}
 					var regExp = new RegExp('{song}', 'g')
@@ -169,11 +169,11 @@ function nowplaying(mode) {
 				text: lang.lang_spotify_acct,
 			})
 		}
-	} else if (mode == 'itunes') {
+	} else if (mode === 'itunes') {
 		postMessage(['itunes', ''], '*')
-	} else if (mode == 'anynp') {
+	} else if (mode === 'anynp') {
 		postMessage(['itunes', 'anynp'], '*')
-	} else if (mode == 'lastFm') {
+	} else if (mode === 'lastFm') {
 		var user = localStorage.getItem('lastFmUser')
 		var start = 'https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&limit=1&api_key=8f113803bfea951b6dde9e56d32458b2&format=json'
 
@@ -207,11 +207,11 @@ function nowplaying(mode) {
 					if (!item['@attr']) return false
 					var img = item.image[3]['#text']
 					var flag = localStorage.getItem('artwork')
-					if (flag && img != 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png' && img) {
+					if (flag && img !== 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png' && img) {
 						postMessage(['bmpImage', [img, 0]], '*')
 					}
 					var content = localStorage.getItem('np-temp')
-					if (!content || content == '' || content == 'null') {
+					if (!content || content === '' || content === 'null') {
 						var content = '#NowPlaying {song} / {album} / {artist}\n{url}'
 					}
 					var regExp = new RegExp('{song}', 'g')
@@ -257,17 +257,17 @@ async function npCore(arg) {
 		return false
 	}
 	var content = localStorage.getItem('np-temp')
-	if (!content || content == '' || content == 'null') {
+	if (!content || content === '' || content === 'null') {
 		var content = '#NowPlaying {song} / {album} / {artist}\n{url}'
 	}
 	var flag = localStorage.getItem('artwork')
 	var platform = localStorage.getItem('platform')
 	var aaw = { aaw: '', album: '' }
-	if (platform == 'win32') {
+	if (platform === 'win32') {
 		if (flag && arg.path) {
 			media(arg.path, 'image/png', 'new')
 		}
-	} else if (platform == 'darwin') {
+	} else if (platform === 'darwin') {
 		if (flag && arg.artwork) {
 			media(arg.artwork, 'image/png', 'new')
 		} else if (flag && localStorage.getItem('complete-artwork')) {
@@ -317,7 +317,7 @@ if (location.search) {
 	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
 	var mode = m[1]
 	var codex = m[2]
-	if (mode == 'spotify') {
+	if (mode === 'spotify') {
 		var coder = codex.split(':')
 		localStorage.setItem('spotify', coder[0])
 		localStorage.setItem('spotify-refresh', coder[1])

@@ -3,7 +3,7 @@ if (location.search) {
 	var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
 	var mode = m[1]
 	var codex = m[2]
-	if (mode == 'tag') {
+	if (mode === 'tag') {
 		var acct_id = localStorage.getItem('main')
 		tl('tag', decodeURI(codex), acct_id, 'add')
 	}
@@ -27,9 +27,9 @@ function tagShow(tag, elm) {
 	setTimeout(() => tShowBox('open'), 500)
 }
 function tShowBox(mode) {
-	if (mode == 'open') {
+	if (mode === 'open') {
 		$('#tagContextMenu').removeClass('hide')
-	} else if (mode == 'close') {
+	} else if (mode === 'close') {
 		if (!$('#tagContextMenu').hasClass('hide')) $('#tagContextMenu').addClass('hide')
 		$('#tagContextMenu').removeClass('keep')
 	} else {
@@ -41,13 +41,13 @@ function doTShowBox(type) {
 	$('#tagContextMenu').removeClass('keep')
 	const q = $('#tagContextMenu').attr('data-tag')
 	const acct_id = $('#tagContextMenu').attr('data-acct')
-	if (type == 'tl') {
+	if (type === 'tl') {
 		tl('tag', q, acct_id, 'add')
-	} else if (type == 'toot') {
+	} else if (type === 'toot') {
 		brInsert(`#${q}`)
-	} else if (type == 'pin') {
+	} else if (type === 'pin') {
 		tagPin(q)
-	} else if (type == 'f') {
+	} else if (type === 'f') {
 		tagFeature(q, acct_id)
 	}
 }
@@ -62,7 +62,7 @@ function tagPin(tag) {
 	var can
 	Object.keys(obj).forEach(function (key) {
 		var tagT = obj[key]
-		if (tagT == tag) {
+		if (tagT === tag) {
 			can = true
 		} else {
 			can = false
@@ -96,7 +96,7 @@ function favTag() {
 	var nowPT = localStorage.getItem('stable')
 	Object.keys(obj).forEach(function (key) {
 		var tag = obj[key]
-		if (nowPT != tag) {
+		if (nowPT !== tag) {
 			console.log('stable tags:' + nowPT + '/' + tag)
 			var ptt = lang.lang_tags_realtime
 			var nowon = ''
@@ -195,7 +195,7 @@ function tagTL(a, b, c, d) {
 function autoToot(tag) {
 	tag = escapeHTML(tag)
 	var nowPT = localStorage.getItem('stable')
-	if (nowPT == tag) {
+	if (nowPT === tag) {
 		localStorage.removeItem('stable')
 		M.toast({ html: lang.lang_tags_unrealtime, displayLength: 3000 })
 	} else {

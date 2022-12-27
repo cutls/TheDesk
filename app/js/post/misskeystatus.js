@@ -6,7 +6,7 @@ function renote(id, acct_id, remote) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	var start = 'https://' + domain + '/api/notes/create'
-	if (localStorage.getItem('mode_' + domain) != 'misskey') {
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		return false
 	}
 	var httpreq = new XMLHttpRequest()
@@ -55,7 +55,7 @@ function reactiontoggle(id, acct_id, tlid) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	var start = 'https://' + domain + '/api/notes/show'
-	if (localStorage.getItem('mode_' + domain) != 'misskey') {
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		return false
 	}
 	var httpreq = new XMLHttpRequest()
@@ -190,7 +190,7 @@ function emojiReaction(emoji) {
 	var media = $('#media').val()
 	var acct_id = $('#post-acct-sel').val()
 	var id = $('#reply').val()
-	if(media == 'announcement') {
+	if(media === 'announcement') {
 		announReaction(id, acct_id, 0, false, emoji)
 	} else {
 		reaction(emoji, id, acct_id, null)
@@ -207,7 +207,7 @@ function reaction(mode, id, acct_id, tlid) {
 		var flag = 'create'
 	}
 	var start = 'https://' + domain + '/api/notes/reactions/' + flag
-	if (localStorage.getItem('mode_' + domain) != 'misskey') {
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		return false
 	}
 	var httpreq = new XMLHttpRequest()
@@ -229,7 +229,7 @@ function vote(acct_id, id, to) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	var start = 'https://' + domain + '/api/notes/polls/vote'
-	if (localStorage.getItem('mode_' + domain) != 'misskey') {
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		return false
 	}
 	var httpreq = new XMLHttpRequest()
@@ -251,7 +251,7 @@ function voterefresh(acct_id, id) {
 	httpreqd.responseType = 'json'
 	httpreqd.send(JSON.stringify({ i: at, noteId: id }))
 	httpreqd.onreadystatechange = function() {
-		if (httpreqd.readyState == 4) {
+		if (httpreqd.readyState === 4) {
 			var json = httpreqd.response
 			if (this.status !== 200) {
 				setLog(start, this.status, json)

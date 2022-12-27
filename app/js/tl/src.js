@@ -35,7 +35,7 @@ function src(mode, offset) {
 
 	var q = $('#src').val()
 	var acct_id = $('#src-acct-sel').val()
-	if (acct_id == 'tootsearch') {
+	if (acct_id === 'tootsearch') {
 		tsAdd(q)
 		$('#src-contents').html('')
 		return false
@@ -47,7 +47,7 @@ function src(mode, offset) {
 	if (m) {
 		q = m[1]
 	}
-	if (user == '--now') {
+	if (user === '--now') {
 		var user = $('#his-data').attr('user-id')
 	}
 	if (!mode) {
@@ -134,7 +134,7 @@ function tsAdd(q) {
 	parseColumn('add')
 }
 function tootsearch(tlid, q) {
-	if (!q || q == 'undefined') {
+	if (!q || q === 'undefined') {
 		return false
 	}
 	var start = 'https://tootsearch.chotto.moe/api/v1/search?from=0&sort=created_at%3Adesc&q=' + q
@@ -166,7 +166,7 @@ function tootsearch(tlid, q) {
 			var max_id = raw['hits'].length
 			for (var i = 0; i < json.length; i++) {
 				var toot = json[i]['_source']
-				if (lastid != toot.uri) {
+				if (lastid !== toot.uri) {
 					if (toot && toot.account) {
 						templete = templete + parse([toot], 'noauth', null, tlid, 0, [], 'tootsearch')
 					}
@@ -217,7 +217,7 @@ function moreTs(tlid, q) {
 			var max_id = raw['hits'].length
 			for (var i = 0; i < json.length; i++) {
 				var toot = json[i]['_source']
-				if (lastid != toot.uri) {
+				if (lastid !== toot.uri) {
 					if (toot && toot.account) {
 						templete = templete + parse([toot], 'noauth', null, tlid, 0, [], 'tootsearch')
 					}
@@ -289,7 +289,7 @@ async function trend() {
 	console.log('get trend')
 	$('#src-contents').html('')
 	var acct_id = $('#src-acct-sel').val()
-	if (acct_id == 'tootsearch') {
+	if (acct_id === 'tootsearch') {
 		return false
 	}
 	const domain = localStorage.getItem('domain_' + acct_id)
@@ -370,9 +370,9 @@ async function trend() {
 	}
 }
 function srcBox(mode) {
-	if (mode == 'open') {
+	if (mode === 'open') {
 		$('#pageSrc').removeClass('hide')
-	} else if (mode == 'close') {
+	} else if (mode === 'close') {
 		$('#pageSrc').addClass('hide')
 		$('#pageSrc').removeClass('keep')
 	} else {
@@ -383,18 +383,18 @@ function doSrc(type) {
 	$('#pageSrc').addClass('hide')
 	$('#pageSrc').removeClass('keep')
 	var q = $('.srcQ').text()
-	if (type == 'web') {
+	if (type === 'web') {
 		var start = localStorage.getItem('srcUrl')
 		if (!start) {
 			start = 'https://google.com/search?q={q}'
 		}
 		start = start.replace(/{q}/, q)
 		postMessage(["openUrl", start], "*")
-	} else if (type == 'ts') {
+	} else if (type === 'ts') {
 		tsAdd(q)
-	} else if (type == 'copy') {
+	} else if (type === 'copy') {
 		execCopy(q)
-	} else if (type == 'toot') {
+	} else if (type === 'toot') {
 		brInsert(q)
 	}
 }

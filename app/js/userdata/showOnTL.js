@@ -5,24 +5,24 @@ if (location.search) {
     var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
     var mode = m[1]
     var codex = m[2]
-    if (mode == 'user') {
+    if (mode === 'user') {
         udgEx(codex, 'main')
     }
 }
 
 async function udgEx(user, acct_id) {
-    if (user == 'selector') {
+    if (user === 'selector') {
         user = $('#his-acct').attr('fullname')
     }
-    if (acct_id == 'selector') {
+    if (acct_id === 'selector') {
         acct_id = $('#user-acct-sel').val()
     }
-    if (acct_id == 'main') {
+    if (acct_id === 'main') {
         acct_id = localStorage.getItem('main')
     }
     console.log('Get user data of ' + user)
     var domain = localStorage.getItem('domain_' + acct_id)
-    if (localStorage.getItem('mode_' + domain) == 'misskey') {
+    if (localStorage.getItem('mode_' + domain) === 'misskey') {
         return false
     }
     var at = localStorage.getItem('acct_' + acct_id + '_at')
@@ -87,7 +87,7 @@ async function udg(user, acct_id, isSwal) {
     }
     todo('User Data Loading...')
     var domain = localStorage.getItem('domain_' + acct_id)
-    if (localStorage.getItem('mode_' + domain) == 'misskey') {
+    if (localStorage.getItem('mode_' + domain) === 'misskey') {
         misskeyUdg(user, acct_id)
         return
     }
@@ -133,7 +133,7 @@ async function udg(user, acct_id, isSwal) {
     $('#his-data').modal('open')
     $('#his-data').attr('user-id', user)
     $('#his-data').attr('use-acct', acct_id)
-    if (json.username != json.acct) {
+    if (json.username !== json.acct) {
         //Remote
         $('#his-data').attr('remote', 'true')
         var fullname = json.acct
@@ -234,7 +234,7 @@ async function udg(user, acct_id, isSwal) {
     $('#his-float-timeline').css('height', $('#his-data-show').height() + 'px')
     localStorage.setItem('history', user)
     //自分の時
-    if (json.acct == localStorage.getItem('user_' + acct_id)) {
+    if (json.acct === localStorage.getItem('user_' + acct_id)) {
         showFav('', acct_id)
         showBlo('', acct_id)
         showMut('', acct_id)
@@ -272,7 +272,7 @@ async function udg(user, acct_id, isSwal) {
         $('#his-emp-btn').hide()
         $('.only-my-data').show()
         $('.only-his-data').hide()
-        if (localStorage.getItem('main') == acct_id) {
+        if (localStorage.getItem('main') === acct_id) {
             $('#his-main-acct').hide()
         }
     } else {
@@ -297,7 +297,7 @@ function misskeyUdg(user, acct_id) {
     }
     todo('User Data Loading...')
     var domain = localStorage.getItem('domain_' + acct_id)
-    if (localStorage.getItem('mode_' + domain) != 'misskey') {
+    if (localStorage.getItem('mode_' + domain) !== 'misskey') {
         udg(user, acct_id)
         return
     }
@@ -371,7 +371,7 @@ function misskeyUdg(user, acct_id) {
             $('#his-data').css('background-size', 'cover')
             localStorage.setItem('history', user)
             //自分の時
-            if (json.username == localStorage.getItem('user_' + acct_id) && !json.host) {
+            if (json.username === localStorage.getItem('user_' + acct_id) && !json.host) {
                 //showFav('', acct_id);
                 //showMut('', acct_id);
                 //showReq('', acct_id);
@@ -389,7 +389,7 @@ function misskeyUdg(user, acct_id) {
                 $('#his-emp-btn').hide()
                 $('.only-my-data').show()
                 $('.only-his-data').hide()
-                if (localStorage.getItem('main') == acct_id) {
+                if (localStorage.getItem('main') === acct_id) {
                     $('#his-main-acct').hide()
                 }
             } else {
@@ -602,7 +602,7 @@ $('#my-data-nav .anc-link').on('click', function () {
     if (target) {
         let title = $(this).html()
         if (target === '#his-tl') $('#util-add').removeClass('hide')
-        if (target != '#his-tl') $('#util-add').addClass('hide')
+        if (target !== '#his-tl') $('#util-add').addClass('hide')
         $('#his-data-title').html(title)
         $('#my-data-nav .anc-link').removeClass('active-back')
         $(this).addClass('active-back')

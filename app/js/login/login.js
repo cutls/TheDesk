@@ -19,13 +19,13 @@ function ck() {
 		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
 		var mode = m[1]
 		var codex = m[2]
-		if (mode == 'manager' || mode == 'login') {
+		if (mode === 'manager' || mode === 'login') {
 			code(codex, mode)
 		} else {
 		}
 	}
 	var multi = localStorage.getItem('multi')
-	if (!multi || multi == '[]') {
+	if (!multi || multi === '[]') {
 		var date = new Date()
 		localStorage.setItem('showSupportMe', date.getMonth() + 2)
 		location.href = 'acct.html?mode=first&code=true'
@@ -37,7 +37,7 @@ function ck() {
 			if (acct.domain) {
 				refresh(key, true)
 			}
-			if (acct.domain == 'mstdn.jp') {
+			if (acct.domain === 'mstdn.jp') {
 				jp = true
 			}
 		})
@@ -65,7 +65,7 @@ ck()
 
 //ログインポップアップ
 function login(url) {
-	if ($('#linux:checked').val() == 'on') {
+	if ($('#linux:checked').val() === 'on') {
 		var red = 'urn:ietf:wg:oauth:2.0:oob'
 	} else {
 		var red = 'thedesk://login'
@@ -107,7 +107,7 @@ function login(url) {
 			$('#masara').hide()
 			postMessage(['openUrl', auth], '*')
 
-			if ($('#linux:checked').val() == 'on') {
+			if ($('#linux:checked').val() === 'on') {
 			} else {
 				postMessage(['sendSinmpleIpc', 'quit'], '*')
 			}
@@ -166,7 +166,7 @@ function code(code, mode) {
 			todo(json)
 			if (json['access_token']) {
 				localStorage.setItem(url + '_at', json['access_token'])
-				if (mode == 'manager') {
+				if (mode === 'manager') {
 					getdataAdv(url, json['access_token'])
 				} else {
 					getdata()
@@ -209,7 +209,7 @@ function getdata() {
 			}
 			var avatar = json['avatar']
 			//missingがmissingなやつ
-			if (avatar == '/avatars/original/missing.png') {
+			if (avatar === '/avatars/original/missing.png') {
 				avatar = './img/missing.svg'
 			}
 			var obj = [
@@ -267,7 +267,7 @@ function getdataAdv(domain, at) {
 			}
 			var avatar = json['avatar']
 			//missingがmissingなやつ
-			if (avatar == '/avatars/original/missing.png') {
+			if (avatar === '/avatars/original/missing.png') {
 				avatar = '../../img/missing.svg'
 			}
 			if (json['source']['privacy']) {
@@ -301,7 +301,7 @@ function getdataAdv(domain, at) {
 async function refresh(target, loadskip) {
 	var multi = localStorage.getItem('multi')
 	var obj = JSON.parse(multi)
-	if (obj[target].mode == 'misskey') {
+	if (obj[target].mode === 'misskey') {
 		return
 	}
 	let at = obj[target].at
@@ -344,7 +344,7 @@ async function refresh(target, loadskip) {
 			}
 			var avatar = json['avatar']
 			//missingがmissingなやつ
-			if (avatar == '/avatars/original/missing.png' || !avatar) {
+			if (avatar === '/avatars/original/missing.png' || !avatar) {
 				avatar = './img/missing.svg'
 			}
 			var ref = {
@@ -417,9 +417,9 @@ function ckdb(acct_id) {
 	localStorage.removeItem('fav_' + acct_id)
 	localStorage.removeItem('bt_' + acct_id)
 	localStorage.removeItem('followlocale_' + acct_id)
-	if (domain == 'kirishima.cloud') {
+	if (domain === 'kirishima.cloud') {
 		localStorage.setItem('kirishima', 'true')
-	} else if (domain == 'imastodon.net') {
+	} else if (domain === 'imastodon.net') {
 		localStorage.setItem('imas', 'true')
 		$('.imasonly').show()
 	}
@@ -429,12 +429,12 @@ function ckdb(acct_id) {
 	var quoteMarker = domain + '_quote'
 	if (localStorage.getItem('instance')) {
 		var json = JSON.parse(localStorage.getItem('instance'))
-		if (json[quoteMarker] == 'enabled') {
+		if (json[quoteMarker] === 'enabled') {
 			localStorage.setItem('quoters', 'true')
 			localStorage.setItem('quote_' + acct_id, 'true')
 		}
 		if (json[bbcode]) {
-			if (json[bbcode] == 'enabled') {
+			if (json[bbcode] === 'enabled') {
 				localStorage.setItem('bb_' + acct_id, 'true')
 			} else {
 				localStorage.removeItem('bb_' + acct_id)
@@ -447,7 +447,7 @@ function ckdb(acct_id) {
 			$("[data-activates='bbcode']").addClass('disabled', true)
 		}
 
-		if (json[domain + '_markdown'] == 'enabled') {
+		if (json[domain + '_markdown'] === 'enabled') {
 			localStorage.setItem('md_' + acct_id, 'true')
 			$('.markdown').show()
 		} else {
@@ -480,7 +480,7 @@ function ckdb(acct_id) {
 			localStorage.setItem('followlocale_' + acct_id, json[domain + '_follow'])
 		}
 	}
-	if (localStorage.getItem('mode_' + domain) != 'misskey') {
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		var start = 'https://' + domain + '/api/v1/instance'
 		fetch(start, {
 			method: 'GET',
@@ -525,11 +525,11 @@ function multiSelector(parseC) {
 		var obj = JSON.parse(multi)
 	}
 	var templete
-	if (localStorage.getItem('mainuse') == 'main') {
+	if (localStorage.getItem('mainuse') === 'main') {
 		var last = localStorage.getItem('main')
 	} else if (localStorage.getItem('last-use')) {
 		var last = localStorage.getItem('last-use')
-		if (last == 'webview' || last == 'noauth') {
+		if (last === 'webview' || last === 'noauth') {
 			last = '0'
 		}
 	} else {
@@ -574,18 +574,18 @@ function multiSelector(parseC) {
 					var cc = ''
 				}
 				$('#toot-post-btn').text(lang.lang_toot + cc)
-				if (acct.background && acct.background != 'def' && acct.text && acct.text != 'def') {
+				if (acct.background && acct.background !== 'def' && acct.text && acct.text !== 'def') {
 					$('#toot-post-btn').removeClass('indigo')
 					$('#toot-post-btn').css('background-color', '#' + acct.background)
 					$('#toot-post-btn').css('color', acct.text)
 				} else {
 				}
-				if (domain == 'kirishima.cloud') {
+				if (domain === 'kirishima.cloud') {
 					$('#faicon-btn').show()
 				} else {
 					$('#faicon-btn').hide()
 				}
-				if (domain == 'imastodon.net') {
+				if (domain === 'imastodon.net') {
 					trendTag()
 				} else {
 					$('#trendtag').html('')

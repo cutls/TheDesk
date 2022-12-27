@@ -21,27 +21,27 @@ function vis(set) {
 	$('#vis-icon').removeClass('purple-text')
 	$('#vis-icon').removeClass('light-blue-text')
 	$('#vis-icon').removeClass('teal-text')
-	if (set == 'public') {
+	if (set === 'public') {
 		$('#vis-icon').text('public')
 		$('#vis-icon').addClass('purple-text')
-	} else if (set == 'unlisted') {
+	} else if (set === 'unlisted') {
 		$('#vis-icon').text('lock_open')
 		$('#vis-icon').addClass('blue-text')
-	} else if (set == 'private') {
+	} else if (set === 'private') {
 		$('#vis-icon').text('lock')
 		$('#vis-icon').addClass('orange-text')
-	} else if (set == 'direct') {
+	} else if (set === 'direct') {
 		$('#vis-icon').text('mail')
 		$('#vis-icon').addClass('red-text')
-	} else if (set == 'limited') {
+	} else if (set === 'limited') {
 		$('#vis-icon').text('group')
 		$('#vis-icon').addClass('teal-text')
-	} else if (set == 'local') {
+	} else if (set === 'local') {
 		$('#vis-icon').text('visibility')
 		$('#vis-icon').addClass('light-blue-text')
 	}
 	var vis = localStorage.getItem('vis')
-	if (vis == 'memory') {
+	if (vis === 'memory') {
 		var acct_id = $('#post-acct-sel').val()
 		localStorage.setItem('vis-memory-' + acct_id, set)
 	}
@@ -55,14 +55,14 @@ function loadVis() {
 	if (!vist) {
 		vis('public')
 	} else {
-		if (vist == 'memory') {
+		if (vist === 'memory') {
 			var acct_id = $('#post-acct-sel').val()
 			var memory = localStorage.getItem('vis-memory-' + acct_id)
 			if (!memory) {
 				memory = 'public'
 			}
 			vis(memory)
-		} else if (vist == 'useapi') {
+		} else if (vist === 'useapi') {
 			var acct_id = $('#post-acct-sel').val()
 			var multi = localStorage.getItem('multi')
 			var obj = JSON.parse(multi)

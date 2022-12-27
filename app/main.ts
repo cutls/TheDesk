@@ -1,68 +1,96 @@
-var dirname = __dirname
-var dir = 'file://' + __dirname
-var base = dir + '/view/'
+const dirname = __dirname
+const dir = 'file://' + __dirname
+const base = dir + '/view/'
 // Electronのモジュール
-const electron = require('electron')
+import electron from 'electron'
 // アプリケーションをコントロールするモジュール
 const app = electron.app
 // Electronの初期化完了後に実行
 app.on('ready', createWindow)
-const fs = require('fs')
-const language = require('./main/language.js')
-const css = require('./main/css.js')
-const dl = require('./main/dl.js')
-const img = require('./main/img.js')
-const np = require('./main/np.js')
-const systemFunc = require('./main/system.js')
+import * as fs from 'fs'
+import language from './main/language'
+import css from './main/css'
+import dl from './main/dl'
+import img from './main/img'
+import np from './main/np'
+import systemFunc from './main/system'
 const { Menu, MenuItem, BrowserWindow, ipcMain } = electron
 const join = require('path').join
+
+const info_path = join(app.getPath('userData'), 'window-size.json')
+const max_info_path = join(app.getPath('userData'), 'max-window-size.json')
+const ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
+const wv_path = join(app.getPath('userData'), 'webview')
+const ua_path = join(app.getPath('userData'), 'useragent')
+const lang_path = join(app.getPath('userData'), 'language')
 // ウィンドウを作成するモジュール
 // メインウィンドウはGCされないようにグローバル宣言
-let mainWindow
+let mainWindow: electron.BrowserWindow | null = null
 let opening = true
 
 // アプリが多重起動しないようにする
 const gotTheLock = app.requestSingleInstanceLock()
 
+interface IWindow {
+	width: number
+	height: number
+	x: number | null
+	y: number | null
+	max: boolean
+}
+
 if (!gotTheLock) {
 	app.quit()
 } else {
 	app.on('second-instance', (event, commandLine, workingDirector) => {
+		if (!mainWindow) return
 		opening = false
 		const m = commandLine[2].match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=(.+)/)
 		if (m) {
-			mainWindow.send('customUrl', [m[1], m[2]])
+			mainWindow.webContents.send('customUrl', [m[1], m[2]])
 		}
 	})
 }
 
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function () {
-	electron.session.defaultSession.clearCache(() => { })
+	electron.session.defaultSession.clearCache()
 	app.quit()
 })
 app.on('open-url', function (event, url) {
+	if (!mainWindow) return
 	event.preventDefault()
 	const m = url.match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=(.+)/)
 	if (m) {
-		mainWindow.send('customUrl', [m[1], m[2]])
+		mainWindow.webContents.send('customUrl', [m[1], m[2]])
 	}
 })
-function isFile(file) {
+function isFile(file: fs.PathLike) {
 	try {
 		fs.statSync(file)
 		return true
-	} catch (err) {
+	} catch (err: any) {
 		if (err.code === 'ENOENT') return false
 	}
 }
+let max_window_size: any
+try {
+	max_window_size = JSON.parse(fs.readFileSync(max_info_path, 'utf8'))
+} catch (e) {
+	max_window_size = {
+		width: 'string',
+		height: 'string',
+		x: 'string',
+		y: 'string',
+	} // デフォルトバリュー
+}
 function createWindow() {
-	var lang_path = join(app.getPath('userData'), 'language')
 	console.log(lang_path)
+	let lang: string
 	if (isFile(lang_path)) {
-		var lang = fs.readFileSync(lang_path, 'utf8')
+		lang = fs.readFileSync(lang_path, 'utf8')
 	} else {
-		var langs = app.getLocale()
+		const langs = app.getLocale()
 		console.log(langs)
 		if (~langs.indexOf('ja')) {
 			lang = 'ja'
@@ -79,21 +107,21 @@ function createWindow() {
 			fs.writeFileSync(lang_path, lang)
 		})
 	}
+	const packaged = process.argv.indexOf('--dev') === -1
 	if (!packaged) console.log('your lang:' + app.getLocale())
 	if (!packaged) console.log('launch:' + lang)
 	//Opening
-	const package = fs.readFileSync(__dirname + '/package.json')
-	if (lang == 'ja') {
-		const maxims = JSON.parse(fs.readFileSync(__dirname + '/maxim.ja.json'))
-		var show = maxims[Math.floor(Math.random() * maxims.length)]
-	} else if (lang == 'ja-KS') {
+	const packageJson = fs.readFileSync(__dirname + '/package.json').toString()
+	let show = 'TheDesk 2018'
+	if (lang === 'ja') {
+		const maxims = JSON.parse(fs.readFileSync(__dirname + '/maxim.ja.json').toString())
+		show = maxims[Math.floor(Math.random() * maxims.length)]
+	} else if (lang === 'ja-KS') {
 		//ja-KSも作れたらいいね
-		const maxims = JSON.parse(fs.readFileSync(__dirname + '/maxim.ja.json'))
-		var show = maxims[Math.floor(Math.random() * maxims.length)]
-	} else {
-		var show = 'TheDesk 2018'
+		const maxims = JSON.parse(fs.readFileSync(__dirname + '/maxim.ja.json').toString())
+		show = maxims[Math.floor(Math.random() * maxims.length)]
 	}
-	const data = JSON.parse(package)
+	const data = JSON.parse(packageJson)
 	const version = data.version
 	const codename = data.codename
 	const openingWindow = new BrowserWindow({
@@ -105,11 +133,7 @@ function createWindow() {
 		show: opening
 	})
 	openingWindow.loadURL(`${__dirname}/opening.html?ver=${version}&codename=${codename}&maxim=${encodeURI(show)}`)
-
-	if (process.argv.indexOf('--dev') === -1) {
-		var packaged = true
-	} else {
-		var packaged = false
+	if (!packaged) {
 		console.log(
 			'||\\\\\\ \n' +
 			'||||  \\\\\\\\ \n' +
@@ -128,11 +152,6 @@ function createWindow() {
 		console.log('If it does not show the window, you might forget `npm run construct`.')
 	}
 
-	var info_path = join(app.getPath('userData'), 'window-size.json')
-	var max_info_path = join(app.getPath('userData'), 'max-window-size.json')
-	var ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
-	var wv_path = join(app.getPath('userData'), 'webview')
-	var ua_path = join(app.getPath('userData'), 'useragent')
 	try {
 		fs.readFileSync(ha_path, 'utf8')
 		app.disableHardwareAcceleration()
@@ -141,31 +160,24 @@ function createWindow() {
 		if (!packaged) console.log('enabled: Hardware Acceleration')
 	}
 	let webviewEnabled = false
-	if (fs.existsSync(wv_path, 'utf8')) webviewEnabled = true
-	var window_size
-	try {
-		window_size = JSON.parse(fs.readFileSync(info_path, 'utf8'))
-	} catch (e) {
-		window_size = {
-			width: 1000,
-			height: 750,
-		} // デフォルトバリュー
+	if (fs.existsSync(wv_path)) webviewEnabled = true
+	let window_size: IWindow = {
+		width: 1000,
+		height: 750,
+		x: null,
+		y: null,
+		max: false
 	}
-	var max_window_size
-	try {
-		max_window_size = JSON.parse(fs.readFileSync(max_info_path, 'utf8'))
-	} catch (e) {
-		max_window_size = {
-			width: 'string',
-			height: 'string',
-			x: 'string',
-			y: 'string',
-		} // デフォルトバリュー
+	if (fs.existsSync(info_path)) {
+		const info = fs.readFileSync(info_path, 'utf8')
+		if (JSON.parse(info)) {
+			window_size = JSON.parse(info)
+		}
 	}
+
 	// メイン画面の表示。ウィンドウの幅、高さを指定できる
-	var platform = process.platform
-	var bit = process.arch
-	var arg = {
+	const platform = process.platform
+	const arg: Electron.BrowserWindowConstructorOptions = {
 		webPreferences: {
 			webviewTag: webviewEnabled,
 			nodeIntegration: false,
@@ -176,20 +188,21 @@ function createWindow() {
 		},
 		width: window_size.width,
 		height: window_size.height,
-		x: window_size.x,
-		y: window_size.y,
+		x: window_size.x || undefined,
+		y: window_size.y || undefined,
 		show: false,
 	}
-	if (platform == 'linux') {
+	if (platform === 'linux') {
 		arg.resizable = true
 		arg.icon = __dirname + '/desk.png'
-	} else if (platform == 'win32') {
+	} else if (platform === 'win32') {
 		arg.simpleFullscreen = true
-	} else if (platform == 'darwin') {
+	} else if (platform === 'darwin') {
 		arg.simpleFullscreen = true
 	}
 	mainWindow = new BrowserWindow(arg)
 	mainWindow.once('page-title-updated', () => {
+		if (!mainWindow) return
 		openingWindow.close()
 		mainWindow.show()
 		console.log('Accessibility: ' + app.accessibilitySupportEnabled)
@@ -198,31 +211,27 @@ function createWindow() {
 		}
 	})
 	mainWindow.webContents.on('page-title-updated', () => {
+		if (!mainWindow) return
 		const url = mainWindow.webContents.getURL()
 		if (url.match(/https:\/\/crowdin.com\/profile/)) {
 			app.relaunch()
 			app.exit()
 		}
 	})
-	if (!packaged) mainWindow.toggleDevTools()
-	electron.session.defaultSession.clearCache(() => { })
+	if (!packaged) mainWindow.webContents.toggleDevTools()
+	electron.session.defaultSession.clearCache()
+	let plus = ''
 	if (process.argv) {
 		if (process.argv[1]) {
-			var m = process.argv[1].match(/([a-zA-Z0-9]+)\/\?[a-zA-Z-0-9]+=(.+)/)
+			const m = process.argv[1].match(/([a-zA-Z0-9]+)\/\?[a-zA-Z-0-9]+=(.+)/)
 			if (m) {
-				var mode = m[1]
-				var code = m[2]
-				var plus = '?mode=' + mode + '&code=' + code
-			} else {
-				var plus = ''
+				const mode = m[1]
+				const code = m[2]
+				plus = '?mode=' + mode + '&code=' + code
 			}
-		} else {
-			var plus = ''
 		}
-	} else {
-		var plus = ''
 	}
-	var ua
+	let ua: string
 	try {
 		ua = fs.readFileSync(ua_path, 'utf8')
 	} catch (e) {
@@ -230,7 +239,7 @@ function createWindow() {
 		// Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) thedesk/18.11.3 Chrome/76.0.3809.146 Electron/6.0.12 Safari/537.36
 		const crypto = require('crypto')
 		const N = 100
-		var ua = 'Mastodon client: ' + crypto.randomBytes(N).toString('base64').substring(0, N)
+		ua = 'Mastodon client: ' + crypto.randomBytes(N).toString('base64').substring(0, N)
 	}
 	mainWindow.loadURL(base + lang + '/index.html' + plus, { userAgent: ua })
 	if (!window_size.x && !window_size.y) {
@@ -241,14 +250,17 @@ function createWindow() {
 		ipcMain.removeAllListeners()
 		mainWindow = null
 	})
-	closeArg = false
+	let closeArg = false
+	// @ts-ignore
 	mainWindow.on('close', function (e, arg) {
+	if (!mainWindow) return
 		writePos(mainWindow)
 		if (!closeArg) {
 			e.preventDefault()
 		}
-		const promise = new Promise(function (resolve) {
-			mainWindow.send('asReadEnd', '')
+		const promise = new Promise<void>(function (resolve) {
+			if (!mainWindow) return
+			mainWindow.webContents.send('asReadEnd', '')
 			let wait = 3000
 			const url = mainWindow.webContents.getURL()
 			if (!url.match(/index.html/)) wait = 0
@@ -257,22 +269,24 @@ function createWindow() {
 			}, wait)
 		})
 		promise.then(function (response) {
+			if (!mainWindow) return
 			closeArg = true
 			mainWindow.close()
 		})
 	})
 	ipcMain.on('sendMarkersComplete', function (e, arg) {
+		if (!mainWindow) return
 		closeArg = true
 		mainWindow.close()
 	})
-	function writePos(mainWindow) {
+	function writePos(mainWindow: electron.BrowserWindow) {
 		if (
-			max_window_size.width == mainWindow.getBounds().width &&
-			max_window_size.height == mainWindow.getBounds().height &&
-			max_window_size.x == mainWindow.getBounds().x &&
-			max_window_size.y == mainWindow.getBounds().y
+			max_window_size.width === mainWindow.getBounds().width &&
+			max_window_size.height === mainWindow.getBounds().height &&
+			max_window_size.x === mainWindow.getBounds().x &&
+			max_window_size.y === mainWindow.getBounds().y
 		) {
-			var size = {
+			const size = {
 				width: mainWindow.getBounds().width,
 				height: mainWindow.getBounds().height,
 				x: mainWindow.getBounds().x,
@@ -280,7 +294,7 @@ function createWindow() {
 				max: true,
 			}
 		} else {
-			var size = {
+			const size = {
 				width: mainWindow.getBounds().width,
 				height: mainWindow.getBounds().height,
 				x: mainWindow.getBounds().x,
@@ -290,40 +304,40 @@ function createWindow() {
 		fs.writeFileSync(info_path, JSON.stringify(size))
 	}
 	mainWindow.on('maximize', function () {
+		if (!mainWindow) return
 		writePos(mainWindow)
 		fs.writeFileSync(max_info_path, JSON.stringify(mainWindow.getBounds()))
 	})
 	mainWindow.on('minimize', function () {
+		if (!mainWindow) return
 		writePos(mainWindow)
-		mainWindow.send('asRead', '')
+		mainWindow.webContents.send('asRead', '')
 	})
-
-	var platform = process.platform
-	var bit = process.arch
-	Menu.setApplicationMenu(Menu.buildFromTemplate(language.template(lang, mainWindow, packaged, dir, dirname)))
+	Menu.setApplicationMenu(Menu.buildFromTemplate(language(lang, mainWindow, packaged, dir, dirname)))
 	//CSS
-	css.css(mainWindow)
+	css()
 	//アップデータとダウンロード
-	dl.dl(mainWindow, lang_path, base, dirname)
+	dl(mainWindow, lang_path, base, dirname)
 	//画像選択と画像処理
-	img.img(mainWindow, dir)
+	img(mainWindow, dir)
 	//NowPlaying
-	np.TheDeskNowPlaying(mainWindow)
+	np()
 	//その他system
 	systemFunc.system(mainWindow, dir, lang, dirname)
 	setInterval(function () {
+		if (!mainWindow) return
 		mouseTrack(mainWindow)
 	}, 1000)
 }
-var x = 0
-var y = 0
-var unchanged = 0
-var locked = false
-function mouseTrack(mainWindow) {
+let x = 0
+let y = 0
+let unchanged = 0
+let locked = false
+function mouseTrack(mainWindow: electron.BrowserWindow) {
 	let mousePos = electron.screen.getCursorScreenPoint()
 	let xNow = mousePos.x
 	let yNow = mousePos.x
-	if (x != xNow || y != yNow) {
+	if (x !== xNow || y !== yNow) {
 		unchanged = 0
 		locked = false
 	} else {
@@ -331,7 +345,7 @@ function mouseTrack(mainWindow) {
 		if (unchanged > 60 && !locked) {
 			unchanged = 0
 			locked = true
-			mainWindow.send('asRead', '')
+			mainWindow.webContents.send('asRead', '')
 		}
 	}
 	x = xNow

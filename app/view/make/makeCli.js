@@ -7,7 +7,7 @@ const data = JSON.parse(package)
 const version = data.version
 const codename = data.codename
 let ver = `${version} (${codename})`
-if (process.argv.indexOf('--prompt') != -1) {
+if (process.argv.indexOf('--prompt') !== -1) {
 	let input = require('readline-sync').question('version string [empty: ' + ver + ' (default)]? ')
 	if (input) {
 		ver = input

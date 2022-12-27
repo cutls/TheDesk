@@ -11,7 +11,7 @@ function dirMenu() {
 
 function dirselCk() {
     var acct = $('#dir-acct-sel').val()
-    if (acct == 'noauth') {
+    if (acct === 'noauth') {
         $('#dirNoAuth').removeClass('hide')
     } else {
         $('#dirNoAuth').addClass('hide')
@@ -38,7 +38,7 @@ function directory(modeRaw, isMore) {
         local_only = 'false'
     }
     var acct_id = $('#dir-acct-sel').val()
-    if (acct_id == 'noauth') {
+    if (acct_id === 'noauth') {
         var domain = $('#dirNoAuth-url').val()
         var at = ''
     } else {

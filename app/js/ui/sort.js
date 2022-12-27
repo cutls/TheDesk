@@ -8,18 +8,18 @@ function sortLoad () {
 	Object.keys(obj).forEach(function (key) {
 		var acct = obj[key]
 		var flag = "false"
-		if (localStorage.getItem("card_" + key) == "true") {
+		if (localStorage.getItem("card_" + key) === "true") {
 			flag = "true"
 		}
 		var insert = ""
 
 		if (acct.background) {
-			if (acct.text == "def") {
+			if (acct.text === "def") {
 
 			} else {
-				if (acct.text == "black") {
+				if (acct.text === "black") {
 					var txhex = "000000"
-				} else if (acct.text == "white") {
+				} else if (acct.text === "white") {
 					var txhex = "ffffff"
 				}
 				insert = ' style="background-color:#' + acct.background + '; color: #' + txhex + '" '
@@ -43,23 +43,23 @@ function sortLoad () {
 
 //TLのタイトル
 function Scap(type, data) {
-	if (type == "home") {
+	if (type === "home") {
 		return "Home"
-	} else if (type == "local") {
+	} else if (type === "local") {
 		return "Local"
-	} else if (type == "pub") {
+	} else if (type === "pub") {
 		return "Public"
-	} else if (type == "tag") {
+	} else if (type === "tag") {
 		return "#" + data
-	} else if (type == "list") {
+	} else if (type === "list") {
 		return "List(id:" + data + ")"
-	} else if (type == "notf") {
+	} else if (type === "notf") {
 		return "Notification"
-	} else if (type == "mix") {
+	} else if (type === "mix") {
 		return "Integrated"
-	} else if (type == "webview") {
+	} else if (type === "webview") {
 		return "Twitter"
-	} else if (type == "tootsearch") {
+	} else if (type === "tootsearch") {
 		return "tootsearch(" + data + ")"
 	} else {
 		console.error("unknown timeline type: " + type)
@@ -95,7 +95,7 @@ function sort() {
 			text: data.text
 		}
 		newobj.push(add)
-		if (flags[i] == "true") {
+		if (flags[i] === "true") {
 			localStorage.setItem("card_" + i, "true")
 		} else {
 			localStorage.removeItem("card_" + i)

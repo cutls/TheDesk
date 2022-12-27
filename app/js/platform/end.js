@@ -140,67 +140,67 @@ function nano() {
 	postMessage(['nano', null], '*')
 }
 onmessage = function (e) {
-	if (e.data[0] == 'details') {
+	if (e.data[0] === 'details') {
 		details(e.data[1][0], e.data[1][1])
-	} else if (e.data[0] == 'udg') {
+	} else if (e.data[0] === 'udg') {
 		udg(e.data[1][0], e.data[1][1])
-	} else if (e.data[0] == 'media') {
+	} else if (e.data[0] === 'media') {
 		media(e.data[1][0], e.data[1][1], e.data[1][2], e.data[1][3])
-	} else if (e.data[0] == 'post') {
+	} else if (e.data[0] === 'post') {
 		post('pass')
-	} else if (e.data[0] == 'toastSaved') {
+	} else if (e.data[0] === 'toastSaved') {
 		var showTxt = `${lang.lang_img_DLDone}${e.data[1][0]
 			}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`
 		M.toast({ html: showTxt, displayLength: 5000 })
-	} else if (e.data[0] == 'parseColumn') {
+	} else if (e.data[0] === 'parseColumn') {
 		parseColumn(e.data[1])
-	} else if (e.data[0] == 'exportSettingsCore') {
+	} else if (e.data[0] === 'exportSettingsCore') {
 		var exp = exportSettingsCore()
 		postMessage(['exportSettingsCoreComplete', [e.data[1], exp]], '*')
-	} else if (e.data[0] == 'importSettingsCore') {
+	} else if (e.data[0] === 'importSettingsCore') {
 		importSettingsCore(e.data[1])
-	} else if (e.data[0] == 'fontList') {
+	} else if (e.data[0] === 'fontList') {
 		fontList(e.data[1])
-	} else if (e.data[0] == 'customSoundSave') {
+	} else if (e.data[0] === 'customSoundSave') {
 		customSoundSave(e.data[1][0], e.data[1][1])
-	} else if (e.data[0] == 'ctLoadCore') {
+	} else if (e.data[0] === 'ctLoadCore') {
 		ctLoadCore(e.data[1])
-	} else if (e.data[0] == 'ctLoad') {
+	} else if (e.data[0] === 'ctLoad') {
 		ctLoad()
-	} else if (e.data[0] == 'customConnect') {
+	} else if (e.data[0] === 'customConnect') {
 		customConnect(e.data[1])
-	} else if (e.data[0] == 'clearCustomImport') {
+	} else if (e.data[0] === 'clearCustomImport') {
 		clearCustomImport()
-	} else if (e.data[0] == 'npCore') {
+	} else if (e.data[0] === 'npCore') {
 		npCore(e.data[1])
-	} else if (e.data[0] == 'renderMem') {
+	} else if (e.data[0] === 'renderMem') {
 		renderMem(e.data[1][0], e.data[1][1], e.data[1][2], e.data[1][3], e.data[1][4])
-	} else if (e.data[0] == 'updateProg') {
+	} else if (e.data[0] === 'updateProg') {
 		updateProg(e.data[1])
-	} else if (e.data[0] == 'updateMess') {
+	} else if (e.data[0] === 'updateMess') {
 		updateMess(e.data[1])
-	} else if (e.data[0] == 'renderAbout') {
+	} else if (e.data[0] === 'renderAbout') {
 		renderAbout(e.data[1])
-	} else if (e.data[0] == 'asRead') {
+	} else if (e.data[0] === 'asRead') {
 		asRead()
-	} else if (e.data[0] == 'asReadEnd') {
+	} else if (e.data[0] === 'asReadEnd') {
 		asReadEnd()
-	} else if (e.data[0] == 'accessibility') {
+	} else if (e.data[0] === 'accessibility') {
 		console.log('accessibility mode')
 		$('body').addClass('accessibility')
 		$('.window-title').before('<div class="accessMark">Screen Reader Optimized</div>')
-	} else if (e.data[0] == 'logData') {
+	} else if (e.data[0] === 'logData') {
 		$('#logs').val(e.data[1])
 		var obj = document.getElementById('logs')
 		obj.scrollTop = obj.scrollHeight
-	} else if (e.data[0] == 'alert') {
+	} else if (e.data[0] === 'alert') {
 		Swal.fire({
 			type: 'info',
 			title: e.data[1]
 		})
-	} else if (e.data[0] == 'twitterLoginComplete') {
+	} else if (e.data[0] === 'twitterLoginComplete') {
 		location.reload()
-	} else if (e.data[0] == 'customUrl') {
+	} else if (e.data[0] === 'customUrl') {
 		const mode = e.data[1][0]
 		const codex = e.data[1][1]
 		if (mode === 'share') {
@@ -221,7 +221,7 @@ onmessage = function (e) {
 /* PWA */
 if (pwa) {
 	function postMessage(e) {
-		if (e[0] == 'openUrl') {
+		if (e[0] === 'openUrl') {
 			urls = e[1].match(/https?:\/\/(.+)/)
 			if (urls) {
 				Swal.fire({
@@ -266,13 +266,13 @@ $(document).on('contextmenu', function (e) {
 	if (lastSelection !== null) {
 		const currentSelection = window.getSelection().getRangeAt(0)
 		for (let key in currentSelection) {
-			if (currentSelection[key] != lastSelection[key]) {
+			if (currentSelection[key] !== lastSelection[key]) {
 				isSame = false
 				break
 			}
 		}
 
-		if (isSame && currentSelection != '') {
+		if (isSame && currentSelection !== '') {
 			$('#pageSrc').removeClass('hide')
 			$('#pageSrc').css('left', e.pageX)
 			$('#pageSrc').css('top', e.pageY)

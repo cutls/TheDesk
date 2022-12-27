@@ -19,19 +19,19 @@ async function mixtl(acct_id, tlid, type, delc, voice) {
 	additional(acct_id, tlid)
 	jQuery('time.timeago').timeago()
 	todc()
-	if(mastodonBaseWsStatus[domain] == 'cannotuse') {
+	if(mastodonBaseWsStatus[domain] === 'cannotuse') {
 		mixre(acct_id, tlid, 'mix', mute, voice, '')
-	} else if (mastodonBaseWsStatus[domain] == 'undetected' || mastodonBaseWsStatus[domain] == 'connecting') {
+	} else if (mastodonBaseWsStatus[domain] === 'undetected' || mastodonBaseWsStatus[domain] === 'connecting') {
 		const mbws = setInterval(function () {
-			if(mastodonBaseWsStatus[domain] == 'cannotuse') {
+			if(mastodonBaseWsStatus[domain] === 'cannotuse') {
 				mixre(acct_id, tlid, 'mix', mute, voice, '')
 				clearInterval(mbws)
-			} else if(mastodonBaseWsStatus[domain] == 'available') {
+			} else if(mastodonBaseWsStatus[domain] === 'available') {
 				mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'public:local'}))
 				clearInterval(mbws)
 			}
 		}, 1000)
-	} else if(mastodonBaseWsStatus[domain] == 'available') {
+	} else if(mastodonBaseWsStatus[domain] === 'available') {
 		mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'public:local'}))
 	}
 	
@@ -103,7 +103,7 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 		console.error('WebSocketLocal Error')
 		console.error(error)
 		$('#notice_icon_' + tlid).addClass('red-text')
-		if (mode == 'error') {
+		if (mode === 'error') {
 			todo('WebSocket Error ' + error)
 		} else {
 			var errorct = localStorage.getItem('wserror_' + tlid) * 1 + 1
@@ -116,7 +116,7 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 	wsLocal[wslid].onclose = function() {
 		console.warn('WebSocketLocal Closing:' + tlid)
 		$('#notice_icon_' + tlid).addClass('red-text')
-		if (mode == 'error') {
+		if (mode === 'error') {
 			todo('WebSocket Closed')
 		} else {
 			var errorct = localStorage.getItem('wserror_' + tlid) * 1 + 1
@@ -129,7 +129,7 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 	wsHome[wshid].onerror = function(error) {
 		console.error(['WebSocketHome Error', error])
 		$('#notice_icon_' + tlid).addClass('red-text')
-		if (mode == 'error') {
+		if (mode === 'error') {
 			todo('WebSocket Error ' + error)
 		} else {
 			var errorct = localStorage.getItem('wserror_' + tlid) * 1 + 1
@@ -142,7 +142,7 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 	wsHome[wshid].onclose = function() {
 		console.warn('WebSocketHome Closing:' + tlid)
 		$('#notice_icon_' + tlid).addClass('red-text')
-		if (mode == 'error') {
+		if (mode === 'error') {
 			todo('WebSocket Closed')
 		} else {
 			var errorct = localStorage.getItem('wserror_' + tlid) * 1 + 1
@@ -157,13 +157,13 @@ function integratedMessage(mess, acct_id, tlid, mute, voice) {
 	let data = JSON.parse(mess.data)
 	let type = data.event
 	let payload = data.payload
-	if (type == 'delete') {
+	if (type === 'delete') {
 		$('[unique-id=' + payload + ']').hide()
 		$('[unique-id=' + payload + ']').remove()
-	} else if (type == 'update') {
+	} else if (type === 'update') {
 		let obj = JSON.parse(payload)
 		
-		if (obj.id != lastId && obj.id != beforeLastId) {
+		if (obj.id !== lastId && obj.id !== beforeLastId) {
 			lastId = obj.id
 			beforeLastId = obj.id
 			let dom = parse([obj], '', acct_id, tlid, '', mute)

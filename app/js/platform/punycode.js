@@ -1,9 +1,9 @@
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
 	/** Detect free variables */
-	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports
-	var freeModule = typeof module == 'object' && module && !module.nodeType && module
-	var freeGlobal = typeof global == 'object' && global
+	var freeExports = typeof exports === 'object' && exports && !exports.nodeType && exports
+	var freeModule = typeof module === 'object' && module && !module.nodeType && module
+	var freeGlobal = typeof global === 'object' && global
 	if (
 		freeGlobal.global === freeGlobal ||
 		freeGlobal.window === freeGlobal ||
@@ -125,7 +125,7 @@
 			if (value >= 0xd800 && value <= 0xdbff && counter < length) {
 				// high surrogate, and there is a next character
 				extra = string.charCodeAt(counter++)
-				if ((extra & 0xfc00) == 0xdc00) {
+				if ((extra & 0xfc00) === 0xdc00) {
 					// low surrogate
 					output.push(((value & 0x3ff) << 10) + (extra & 0x3ff) + 0x10000)
 				} else {
@@ -198,7 +198,7 @@
 	function digitToBasic(digit, flag) {
 		//  0..25 map to ASCII a..z or A..Z
 		// 26..35 map to ASCII 0..9
-		return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5)
+		return digit + 22 + 75 * (digit < 26) - ((flag !== 0) << 5)
 	}
 
 	/**
@@ -295,7 +295,7 @@
 			}
 
 			out = output.length + 1
-			bias = adapt(i - oldi, out, oldi == 0)
+			bias = adapt(i - oldi, out, oldi === 0)
 
 			// `i` was supposed to wrap around from `out` to `0`,
 			// incrementing `n` each time, so we'll fix that now:
@@ -397,7 +397,7 @@
 					error('overflow')
 				}
 
-				if (currentValue == n) {
+				if (currentValue === n) {
 					// Represent delta as a generalized variable-length integer
 					for (q = delta, k = base /* no condition */; ; k += base) {
 						t = k <= bias ? tMin : k >= bias + tMax ? tMax : k - bias
@@ -411,7 +411,7 @@
 					}
 
 					output.push(stringFromCharCode(digitToBasic(q, 0)))
-					bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength)
+					bias = adapt(delta, handledCPCountPlusOne, handledCPCount === basicLength)
 					delta = 0
 					++handledCPCount
 				}
@@ -487,12 +487,12 @@
 	/** Expose `punycode` */
 	// Some AMD build optimizers, like r.js, check for specific condition patterns
 	// like the following:
-	if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
 		define('punycode', function() {
 			return punycode
 		})
 	} else if (freeExports && freeModule) {
-		if (module.exports == freeExports) {
+		if (module.exports === freeExports) {
 			// in Node.js, io.js, or RingoJS v0.8.0+
 			freeModule.exports = punycode
 		} else {

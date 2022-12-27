@@ -58,13 +58,13 @@ function remoteOnlyCk(tlid) {
 //各TL上方のBT[BTOnly/BTExc/Off]
 function ebtToggle(tlid) {
     var ebt = localStorage.getItem('ebt_' + tlid)
-    if (ebt == 'true') {
+    if (ebt === 'true') {
         localStorage.setItem('ebt_' + tlid, 'but')
         $('#sta-bt-' + tlid).text('BT Only')
         $('#sta-bt-' + tlid).css('color', '#ff9800')
         $('#timeline_' + tlid).addClass('except-bt-filter')
         $('#timeline_' + tlid).removeClass('bt-filter')
-    } else if (ebt == 'but') {
+    } else if (ebt === 'but') {
         localStorage.removeItem('ebt_' + tlid)
         $('#sta-bt-' + tlid).text('Off')
         $('#sta-bt-' + tlid).css('color', 'red')
@@ -94,12 +94,12 @@ function mediaCheck(tlid) {
 //各TL上方のBT[On/Off]をチェック
 function ebtCheck(tlid) {
     var ebt = localStorage.getItem('ebt_' + tlid)
-    if (ebt == 'true') {
+    if (ebt === 'true') {
         $('#sta-bt-' + tlid).text('BT Ex')
         $('#sta-bt-' + tlid).css('color', '#009688')
         $('#timeline_' + tlid).addClass('bt-filter')
         $('#timeline_' + tlid).removeClass('except-bt-filter')
-    } else if (ebt == 'but') {
+    } else if (ebt === 'but') {
         $('#sta-bt-' + tlid).text('BT Only')
         $('#sta-bt-' + tlid).css('color', '#ff9800')
         $('#timeline_' + tlid).addClass('except-bt-filter')
@@ -194,7 +194,7 @@ function filter() {
 							${lang.lang_del}
 						</a><br> `
                 })
-                if (filters == '') {
+                if (filters === '') {
                     filters = lang.lang_filter_nodata + '<br>'
                 }
                 $('#filtered-words').html(filters)
@@ -375,7 +375,7 @@ function filterDel(id, acct_id) {
 function getFilter(acct_id) {
     var domain = localStorage.getItem('domain_' + acct_id)
     var at = localStorage.getItem('acct_' + acct_id + '_at')
-    if (localStorage.getItem('mode_' + domain) != 'misskey') {
+    if (localStorage.getItem('mode_' + domain) !== 'misskey') {
         var start = 'https://' + domain + '/api/v1/filters'
         fetch(start, {
                 method: 'GET',
@@ -409,11 +409,11 @@ function getFilterType(json, type) {
     if (!json) {
         return []
     }
-    if (type == 'local') {
+    if (type === 'local') {
         type = 'public'
-    } else if (type == 'list') {
+    } else if (type === 'list') {
         type = 'home'
-    } else if (type == 'notf') {
+    } else if (type === 'notf') {
         type = 'notifi'
     }
     var mutedfilters = []
@@ -423,7 +423,7 @@ function getFilterType(json, type) {
         var arr = filterword.context
         if (arr.join(',').indexOf(type) !== -1) {
             mutedfilters.push(phrases)
-        } else if (type == 'mix') {
+        } else if (type === 'mix') {
             if (arr.indexOf('home') !== -1 || arr.indexOf('public') !== -1) {
                 mutedfilters.push(phrases)
             }
@@ -433,7 +433,7 @@ function getFilterType(json, type) {
 }
 
 function getFilterTypeByAcct(acct_id, type) {
-    if (localStorage.getItem('filter_' + acct_id) != 'undefined') {
+    if (localStorage.getItem('filter_' + acct_id) !== 'undefined') {
         var mute = getFilterType(JSON.parse(localStorage.getItem('filter_' + acct_id)), type)
     } else {
         var mute = []
@@ -510,28 +510,28 @@ function exclude(key) {
         excludetxt = '?exclude_types[]=mention'
     }
     if ($('#exc-fav-' + key + ':checked').val()) {
-        if (excludetxt || excludetxt != '') {
+        if (excludetxt || excludetxt !== '') {
             excludetxt = excludetxt + '&exclude_types[]=favourite'
         } else {
             excludetxt = '?exclude_types[]=favourite'
         }
     }
     if ($('#exc-bt-' + key + ':checked').val()) {
-        if (excludetxt || excludetxt != '') {
+        if (excludetxt || excludetxt !== '') {
             excludetxt = excludetxt + '&exclude_types[]=reblog'
         } else {
             excludetxt = '?exclude_types[]=reblog'
         }
     }
     if ($('#exc-follow-' + key + ':checked').val()) {
-        if (excludetxt || excludetxt != '') {
+        if (excludetxt || excludetxt !== '') {
             excludetxt = excludetxt + '&exclude_types[]=follow'
         } else {
             excludetxt = '?exclude_types[]=follow'
         }
     }
     if ($('#exc-poll-' + key + ':checked').val()) {
-        if (excludetxt || excludetxt != '') {
+        if (excludetxt || excludetxt !== '') {
             excludetxt = excludetxt + '&exclude_types[]=poll'
         } else {
             excludetxt = '?exclude_types[]=poll'
@@ -555,7 +555,7 @@ function excludeCk(key, target) {
 
 function checkNotfFilter(tlid) {
     var excludetxt = localStorage.getItem('exclude-' + tlid)
-    if (!excludetxt || excludetxt != '') {
+    if (!excludetxt || excludetxt !== '') {
         return true
     } else {
         return false
@@ -569,7 +569,7 @@ function resetNotfFilter(tlid) {
 
 function notfFilter(id, tlid, acct_id) {
     var excludetxt = localStorage.getItem('exclude-' + tlid)
-    if (excludetxt || excludetxt != '') {
+    if (excludetxt || excludetxt !== '') {
         excludetxt = excludetxt + '&account_id=' + id
     } else {
         excludetxt = '?account_id=' + id

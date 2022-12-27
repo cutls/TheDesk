@@ -95,13 +95,13 @@ async function execPlugin(id, source, args) {
     const coh = plugins[source]
     let exe = null
     for (let plugin of coh) {
-        if (plugin.id == id) {
+        if (plugin.id === id) {
             exe = plugin.content
             break
         }
     }
     const common = _.cloneDeep(asCommon)
-    if (source == 'buttonOnToot') {
+    if (source === 'buttonOnToot') {
         common.DATA = args
         const domain = localStorage.getItem(`domain_${args.acct_id}`)
         const at = localStorage.getItem(`acct_${args.acct_id}_at`)
@@ -130,7 +130,7 @@ async function execPlugin(id, source, args) {
             json.content = v
             if (getMeta(exe).data.dangerHtml) $(`[unique-id=${args.id}] .toot`).html(parse([json], null, null, null, null, null, null, true))
         })
-    } else if (source == 'buttonOnPostbox') {
+    } else if (source === 'buttonOnPostbox') {
         const postDt = post(null, false, true)
         common.POST = asUtil.jsToVal(postDt)
         common.ACCT_ID = asUtil.jsToVal(postDt.TheDeskAcctId)
@@ -153,7 +153,7 @@ async function execPlugin(id, source, args) {
         common['TheDesk:postExec'] = asValue.FN_NATIVE(() => {
             if (getMeta(exe).data.apiPost) post()
         })
-    } else if (source == 'tips') {
+    } else if (source === 'tips') {
         common['TheDesk:refreshTipsView'] = asValue.FN_NATIVE((z) => {
             const v = sanitizeHtml(z[0].value,
                 {
@@ -174,8 +174,8 @@ async function execPlugin(id, source, args) {
     })
     common['TheDesk:api'] = asValue.FN_NATIVE(async (z) => {
         try {
-            if (!getMeta(exe).data.apiGet && z[0].value == "GET") return asUtil.jsToVal(null)
-            if (!getMeta(exe).data.apiPost && (z[0].value == "POST" || z[0].value == "DELETE" || z[0].value == "PUT")) return asUtil.jsToVal(null)
+            if (!getMeta(exe).data.apiGet && z[0].value === "GET") return asUtil.jsToVal(null)
+            if (!getMeta(exe).data.apiPost && (z[0].value === "POST" || z[0].value === "DELETE" || z[0].value === "PUT")) return asUtil.jsToVal(null)
             const domain = localStorage.getItem(`domain_${z[3].value}`)
             const at = localStorage.getItem(`acct_${z[3].value}_at`)
             const start = `https://${domain}/api/${z[1].value}`
@@ -307,8 +307,8 @@ async function testExec(exe) {
     })
     asCommon['TheDesk:api'] = asValue.FN_NATIVE(async (z) => {
         try {
-            if (!getMeta(exe).data.apiGet && z[0].value == "GET") return asUtil.jsToVal(null)
-            if (!getMeta(exe).data.apiPost && (z[0].value == "POST" || z[0].value == "DELETE" || z[0].value == "PUT")) return asUtil.jsToVal(null)
+            if (!getMeta(exe).data.apiGet && z[0].value === "GET") return asUtil.jsToVal(null)
+            if (!getMeta(exe).data.apiPost && (z[0].value === "POST" || z[0].value === "DELETE" || z[0].value === "PUT")) return asUtil.jsToVal(null)
             const domain = localStorage.getItem(`domain_${z[3].value}`)
             const at = localStorage.getItem(`acct_${z[3].value}_at`)
             const start = `https://${domain}/api/${z[1].value}`

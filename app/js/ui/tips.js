@@ -23,7 +23,7 @@ function tips(mode, custom) {
 	postMessage(['sendSinmpleIpc', 'endmem'], '*')
 	clearInterval(clockint)
 	clearInterval(spotStart)
-	if (mode == 'ver') {
+	if (mode === 'ver') {
 		tipsToggle()
 		$('#tips-text').html(
 			'<img src="../../img/desk.png" width="20" onclick="todo(\'TheDesk is a nice client!: TheDesk ' +
@@ -37,27 +37,27 @@ function tips(mode, custom) {
 				'} [<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]'
 		)
 		localStorage.setItem('tips', 'ver')
-	} else if (mode == 'clock') {
+	} else if (mode === 'clock') {
 		tipsToggle()
 		localStorage.setItem('tips', 'clock')
 		clock()
-	} else if (mode == 'memory') {
+	} else if (mode === 'memory') {
 		tipsToggle()
 		localStorage.setItem('tips', 'memory')
 		startmem()
-	} else if (mode == 'trend') {
+	} else if (mode === 'trend') {
 		tipsToggle()
 		localStorage.setItem('tips', 'trend')
 		trendTagonTip()
-	} else if (mode == 'spotify') {
+	} else if (mode === 'spotify') {
 		tipsToggle()
 		localStorage.setItem('tips', 'spotify')
 		spotifytips()
-	} else if (mode == 'itunes') {
+	} else if (mode === 'itunes') {
 		tipsToggle()
 		localStorage.setItem('tips', 'itunes')
 		itunestips()
-	} else if (mode == 'custom') {
+	} else if (mode === 'custom') {
 		tipsToggle()
 		localStorage.setItem('tips', `custom:${custom}`)
 		execPlugin(custom, 'tips', null)

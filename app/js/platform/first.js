@@ -132,7 +132,7 @@ function rgbToHex(color) {
         for (var i = 0; i < rgb.length; ++i) {
             // rgb(1,1,1)のようなときHEXに変換すると1桁になる
             // 1桁のときは前に0を足す
-            if (rgb[i].length == 1) {
+            if (rgb[i].length === 1) {
                 rgb[i] = '0' + rgb[i]
             }
             hex += rgb[i]

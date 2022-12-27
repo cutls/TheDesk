@@ -12,7 +12,7 @@ function list() {
 	var acct_id = $('#list-acct-sel').val()
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var start = 'https://' + domain + '/api/users/lists/list'
 		fetch(start, {
 			method: 'POST',
@@ -103,7 +103,7 @@ function makeNewList() {
 	var text = $('#list-add').val()
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) != 'misskey') {
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		var start = 'https://' + domain + '/api/v1/lists'
 		var httpreq = new XMLHttpRequest()
 		httpreq.open('POST', start, true)
@@ -194,7 +194,7 @@ function listUser(id, acct_id) {
 function hisList(user, acct_id) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) != 'misskey') {
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		var start = 'https://' + domain + '/api/v1/lists'
 		fetch(start, {
 			method: 'GET',
@@ -319,7 +319,7 @@ function hisList(user, acct_id) {
 function listAdd(id, user, acct_id) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var start = 'https://' + domain + '/api/users/lists/push'
 		var i = {
 			i: at,
@@ -351,7 +351,7 @@ function listAdd(id, user, acct_id) {
 function listRemove(id, user, acct_id) {
 	var domain = localStorage.getItem('domain_' + acct_id)
 	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) == 'misskey') {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var start = 'https://' + domain + '/api/users/lists/push'
 		var method = 'POST'
 		var i = {

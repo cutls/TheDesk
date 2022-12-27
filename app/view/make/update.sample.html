@@ -164,59 +164,59 @@
 						console.error(error)
 					})
 					.then(function (json) {
-						if (sel == 'install') {
-							if (bit == 'x64') {
+						if (sel === 'install') {
+							if (bit === 'x64') {
 								var url = json['winx64']
-								if (localStorage.getItem('dl-win') == 'yes') {
+								if (localStorage.getItem('dl-win') === 'yes') {
 									var file = 'TheDesk-' + json.unique + '-setup.exe'
 								} else {
 									var file = 'TheDesk-setup.exe'
 								}
 								var filesize = json.winx64_size
-							} else if (bit == 'ia32') {
+							} else if (bit === 'ia32') {
 								var url = json['winia32']
-								if (localStorage.getItem('dl-win') == 'yes') {
+								if (localStorage.getItem('dl-win') === 'yes') {
 									var file = 'TheDesk-' + json.unique + '-setup-ia32.exe'
 								} else {
 									var file = 'TheDesk-setup-ia32.exe'
 								}
 								var filesize = json.winia32_size
 							}
-						} else if (sel == 'portable') {
-							if (bit == 'x64') {
+						} else if (sel === 'portable') {
+							if (bit === 'x64') {
 								var url = json['winx64p']
-								if (localStorage.getItem('dl-win') == 'yes') {
+								if (localStorage.getItem('dl-win') === 'yes') {
 									var file = 'TheDesk-' + json.unique + '.exe'
 								} else {
 									var file = 'TheDesk.exe'
 								}
 								var filesize = json.winx64p_size
-							} else if (bit == 'ia32') {
+							} else if (bit === 'ia32') {
 								var url = json['winia32p']
-								if (localStorage.getItem('dl-win') == 'yes') {
+								if (localStorage.getItem('dl-win') === 'yes') {
 									var file = 'TheDesk-' + json.unique + '-ia32.exe'
 								} else {
 									var file = 'TheDesk-ia32.exe'
 								}
 								var filesize = json.winia32p_size
 							}
-						} else if (sel == 'linux') {
+						} else if (sel === 'linux') {
 							var url = json['linuxx64']
-							if (localStorage.getItem('dl-win') == 'yes') {
+							if (localStorage.getItem('dl-win') === 'yes') {
 								var file = 'thedesk-' + json.unique_linux + '.zip'
 							} else {
 								var file = 'thedesk.zip'
 							}
 							var filesize = json.linuxx64_size
-						} else if (sel == 'linuxdeb') {
+						} else if (sel === 'linuxdeb') {
 							var url = json['linuxdeb']
 							var file = 'thedesk_' + json.unique_linux + '_amd64.deb'
 							var filesize = json.linuxdeb_size
-						} else if (sel == 'linuxsnap') {
+						} else if (sel === 'linuxsnap') {
 							var url = json['linuxsnap']
 							var file = 'thedesk_' + json.unique_linux + '_amd64.snap'
 							var filesize = json.linuxsnap_size
-						} else if (sel == 'mac') {
+						} else if (sel === 'mac') {
 							var url = json['mac']
 							var file = 'TheDesk-' + json.unique_mac + '.dmg'
 							var filesize = json.mac_size
@@ -239,11 +239,11 @@
 			function verck() {
 				var platform = localStorage.getItem('platform')
 				var bit = localStorage.getItem('bit')
-				if (platform == 'win32') {
+				if (platform === 'win32') {
 					$('.windows').removeClass('hide')
-				} else if (platform == 'linux') {
+				} else if (platform === 'linux') {
 					$('.linux').removeClass('hide')
-				} else if (platform == 'darwin') {
+				} else if (platform === 'darwin') {
 					$('.mac').removeClass('hide')
 				}
 				var start = 'https://thedesk.top/ver.json'
@@ -266,15 +266,15 @@
 					})
 					.then(function (json) {
 						console.log(json)
-						if (platform == 'win32') {
+						if (platform === 'win32') {
 							$('#ver').text(json.desk)
 							localStorage.setItem('next-ver', json.desk)
 							var url = 'https://github.com/cutls/TheDesk/releases/tag/v' + json.unique
-						} else if (platform == 'linux') {
+						} else if (platform === 'linux') {
 							$('#ver').text(json.desk_linux)
 							localStorage.setItem('next-ver', json.desk_linux)
 							var url = 'https://github.com/cutls/TheDesk/releases/tag/v' + json.unique_linux
-						} else if (platform == 'darwin') {
+						} else if (platform === 'darwin') {
 							$('#ver').text(json.desk_mac)
 							localStorage.setItem('next-ver', json.desk_mac)
 							var url = 'https://github.com/cutls/TheDesk/releases/tag/v' + json.unique_mac

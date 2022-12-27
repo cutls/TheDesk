@@ -4,9 +4,9 @@ function announParse(obj, acct_id, tlid) {
 	var gif = localStorage.getItem('gif')
 	//Ticker
 	var tickerck = localStorage.getItem('ticker_ok')
-	if (tickerck == 'yes') {
+	if (tickerck === 'yes') {
 		var ticker = true
-	} else if (!ticker || ticker == 'no') {
+	} else if (!ticker || ticker === 'no') {
 		var ticker = false
 	}
 	if (!datetype) {
@@ -22,7 +22,7 @@ function announParse(obj, acct_id, tlid) {
 			Object.keys(toot.emojis).forEach(function(key1) {
 				var emoji = toot.emojis[key1]
 				var shortcode = emoji.shortcode
-				if (gif == 'yes') {
+				if (gif === 'yes') {
 					var emoSource = emoji.url
 				} else {
 					var emoSource = emoji.static_url
@@ -46,7 +46,7 @@ function announParse(obj, acct_id, tlid) {
 				if (splitter.splitGraphemes(reaction.name).length > 1) {
 					//カスタム絵文字
 					var shortcode = reaction.shortcode
-					if (gif == 'yes') {
+					if (gif === 'yes') {
 						var emoSource = reaction.url
 					} else {
 						var emoSource = reaction.static_url
@@ -129,7 +129,7 @@ function announReactionNew(id, acct_id, tlid) {
 }
 function emojiReactionDef(target) {
     var emojiraw = newpack.filter(function(item, index) {
-		if (item.short_name == target) return true
+		if (item.short_name === target) return true
 	})
 	var hex = emojiraw[0].unified.split('-')
 	if (hex.length === 2) {

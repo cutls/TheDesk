@@ -77,6 +77,8 @@
     },
     "devDependencies": {
         "@electron/notarize": "^1.2.3",
+        "@types/textarea-caret": "^3.0.1",
+        "@types/uuid": "^9.0.0",
         "browserify": "^17.0.0",
         "chokidar": "^3.5.3",
         "dotenv": "^16.0.3",
@@ -85,7 +87,8 @@
         "electron-rebuild": "^3.2.9",
         "eslint": "^8.25.0",
         "npm-run-all": "^4.1.5",
-        "readline-sync": "1.4.10"
+        "readline-sync": "1.4.10",
+        "typescript": "^4.9.4"
     },
     "resolutions": {
         "@types/fs-extra": "^9.0.11",

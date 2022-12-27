@@ -8,7 +8,7 @@ function re(id, ats_cm, acct_id, mode, cwTxt) {
 	for (var i = 0; i < ats.length; i++) {
 		var at = ats[i]
 		var te = $('#textarea').val()
-		if (at != localStorage.getItem('user_' + acct_id)) {
+		if (at !== localStorage.getItem('user_' + acct_id)) {
 			$('#textarea').val('@' + at + ' ' + te)
 		}
 	}
@@ -25,7 +25,7 @@ function re(id, ats_cm, acct_id, mode, cwTxt) {
 	}
 	$('#acct-sel-prof').attr('src', profimg)
 	vis(mode)
-	if(localStorage.getItem('cw-continue') == 'yes') {
+	if(localStorage.getItem('cw-continue') === 'yes') {
 		cw(true)
 		$('#cw-text').val(cwTxt)
 	}
@@ -45,16 +45,16 @@ function qt(id, acct_id, at, url) {
 	if (!qt) {
 		var qt = 'simple'
 	}
-	if (qt == 'nothing') {
+	if (qt === 'nothing') {
 		return false
 	}
-	if (qt == 'simple') {
+	if (qt === 'simple') {
 		show()
 		$('#textarea').val('\n' + url)
-	} else if (qt == 'mention') {
+	} else if (qt === 'mention') {
 		show()
 		$('#textarea').val('\n' + url + ' From:@' + at)
-	} else if (qt == 'full') {
+	} else if (qt === 'full') {
 		show()
 		var html = $('[toot-id=' + id + '] .toot').html()
 		html = html.match(/^<p>(.+)<\/p>$/)[1]
@@ -63,7 +63,7 @@ function qt(id, acct_id, at, url) {
 		html = html.replace(/<\/p>/, '\n')
 		html = $.strip_tags(html)
 		$('#textarea').val('\n' + '@' + at + ' ' + html + '\n' + url)
-	} else if (qt == 'apiQuote') {
+	} else if (qt === 'apiQuote') {
 		clear()
 		localStorage.setItem('nohide', true)
 		show()

@@ -6,10 +6,10 @@ function utlShow(user, more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (user == "--now") {
+	if (user === "--now") {
 		var user = $("#his-data").attr("user-id")
 	}
-	if (localStorage.getItem("mode_" + domain) != "misskey") {
+	if (localStorage.getItem("mode_" + domain) !== "misskey") {
 		if (more) {
 			var sid = $("#his-tl .cvo")
 				.last()
@@ -59,7 +59,7 @@ function utlShow(user, more, acct_id) {
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) == "misskey") {
+			if (localStorage.getItem("mode_" + domain) === "misskey") {
 				var templete = misskeyParse(json, "", acct_id, "user")
 			} else {
 				var templete = parse(json, "", acct_id, "user")
@@ -70,7 +70,7 @@ function utlShow(user, more, acct_id) {
 			if (more) {
 				$("#his-tl-contents").append(templete)
 			} else {
-				if (localStorage.getItem("mode_" + domain) != "misskey") {
+				if (localStorage.getItem("mode_" + domain) !== "misskey") {
 					pinutl(templete, user, acct_id)
 				} else {
 					$("#his-tl-contents").html(templete)
@@ -106,7 +106,7 @@ function pinutl(before, user, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (user == "--now") {
+	if (user === "--now") {
 		var user = $("#his-data").attr("user-id")
 	}
 	var plus = "?pinned=1"
@@ -148,10 +148,10 @@ function flw(user, more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (user == "--now") {
+	if (user === "--now") {
 		var user = $("#his-data").attr("user-id")
 	}
-	if (localStorage.getItem("mode_" + domain) == "misskey") {
+	if (localStorage.getItem("mode_" + domain) === "misskey") {
 		var req = { i: at }
 		if (more) {
 			var sid = $("#his-follow-list .cusr")
@@ -192,12 +192,12 @@ function flw(user, more, acct_id) {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
-				if (localStorage.getItem("mode_" + domain) == "misskey") {
+				if (localStorage.getItem("mode_" + domain) === "misskey") {
 					var templete = misskeyUserparse(json, "", acct_id)
 				} else {
 					var templete = userparse(json, "", acct_id)
 				}
-				if (templete == "") {
+				if (templete === "") {
 					templete = lang.lang_details_nodata + "<br>"
 				}
 				var linkHeader = httpreq.getResponseHeader("link")
@@ -233,12 +233,12 @@ function flw(user, more, acct_id) {
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) == "misskey") {
+			if (localStorage.getItem("mode_" + domain) === "misskey") {
 				var templete = misskeyUserparse(json, "", acct_id)
 			} else {
 				var templete = userparse(json, "", acct_id)
 			}
-			if (templete == "") {
+			if (templete === "") {
 				templete = lang.lang_details_nodata + "<br>"
 			}
 			if (more) {
@@ -257,10 +257,10 @@ function fer(user, more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (user == "--now") {
+	if (user === "--now") {
 		var user = $("#his-data").attr("user-id")
 	}
-	if (localStorage.getItem("mode_" + domain) == "misskey") {
+	if (localStorage.getItem("mode_" + domain) === "misskey") {
 		var req = { i: at }
 		if (more) {
 			var sid = $("#his-follow-list .cusr")
@@ -301,12 +301,12 @@ function fer(user, more, acct_id) {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
-				if (localStorage.getItem("mode_" + domain) == "misskey") {
+				if (localStorage.getItem("mode_" + domain) === "misskey") {
 					var templete = misskeyUserparse(json, "", acct_id)
 				} else {
 					var templete = userparse(json, "", acct_id)
 				}
-				if (templete == "") {
+				if (templete === "") {
 					templete = lang.lang_details_nodata + "<br>"
 				}
 				var linkHeader = httpreq.getResponseHeader("link")
@@ -342,12 +342,12 @@ function fer(user, more, acct_id) {
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) == "misskey") {
+			if (localStorage.getItem("mode_" + domain) === "misskey") {
 				var templete = misskeyUserparse(json, "", acct_id)
 			} else {
 				var templete = userparse(json, "", acct_id)
 			}
-			if (templete == "") {
+			if (templete === "") {
 				templete = lang.lang_details_nodata + "<br>"
 			}
 			var linkHeader = httpreq.getResponseHeader("link")
@@ -375,7 +375,7 @@ function showFav(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (localStorage.getItem("mode_" + domain) != "misskey") {
+	if (localStorage.getItem("mode_" + domain) !== "misskey") {
 		if (more) {
 			var sid = $("#his-fav-list-contents").attr('max-id')
 			var plus = "?max_id=" + sid
@@ -452,7 +452,7 @@ function showFav(more, acct_id) {
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) != "misskey") {
+			if (localStorage.getItem("mode_" + domain) !== "misskey") {
 				var templete = parse(json, "", acct_id, "user")
 			} else {
 				var templete = misskeyParse(json, "", acct_id, "user")
@@ -476,7 +476,7 @@ function showMut(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (localStorage.getItem("mode_" + domain) == "misskey") {
+	if (localStorage.getItem("mode_" + domain) === "misskey") {
 		var req = { i: at }
 		if (more) {
 			var sid = $("#his-muting-list .cvo")
@@ -544,7 +544,7 @@ function showBlo(more, acct_id) {
 		var acct_id = $("#his-data").attr("use-acct")
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
-	if (localStorage.getItem("mode_" + domain) == "misskey") {
+	if (localStorage.getItem("mode_" + domain) === "misskey") {
 		$("#his-blocking-list-contents").html(lang.lang_hisdata_notonmisskey + "<br>")
 		return false
 	}
@@ -599,7 +599,7 @@ function showReq(more, acct_id) {
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
 	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (localStorage.getItem("mode_" + domain) == "misskey") {
+	if (localStorage.getItem("mode_" + domain) === "misskey") {
 		var req = { i: at }
 		if (more) {
 			var sid = $("#his-request-list .cvo")
@@ -648,7 +648,7 @@ function showReq(more, acct_id) {
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) != "misskey") {
+			if (localStorage.getItem("mode_" + domain) !== "misskey") {
 				var templete = userparse(json, "request", acct_id)
 			} else {
 				var templete = misskeyUserparse(json, true, acct_id)
@@ -672,7 +672,7 @@ function showDom(more, acct_id) {
 		var acct_id = $("#his-data").attr("use-acct")
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
-	if (localStorage.getItem("mode_" + domain) == "misskey") {
+	if (localStorage.getItem("mode_" + domain) === "misskey") {
 		$("#his-domain-list-contents").html(lang.lang_hisdata_notonmisskey + "<br>")
 		return false
 	}
@@ -730,7 +730,7 @@ function showFrl(more, acct_id) {
 		var acct_id = $("#his-data").attr("use-acct")
 	}
 	var domain = localStorage.getItem("domain_" + acct_id)
-	if (localStorage.getItem("mode_" + domain) == "misskey") {
+	if (localStorage.getItem("mode_" + domain) === "misskey") {
 		$("#his-follow-recom-contents").html(lang.lang_hisdata_notonmisskey + "<br>")
 		return false
 	}

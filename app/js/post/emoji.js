@@ -54,7 +54,7 @@ function emojiGet(parse, started) {
 	$('#emoji-list').text('Loading...')
 	var acct_id = $('#post-acct-sel').val()
 	var domain = localStorage.getItem('domain_' + acct_id)
-	if (localStorage.getItem('mode_' + domain) != 'misskey') {
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		var start = 'https://' + domain + '/api/v1/custom_emojis'
 		fetch(start, {
 			method: 'GET',
@@ -76,7 +76,7 @@ function emojiGet(parse, started) {
 				console.error(error)
 			})
 			.then(function(json) {
-				if (parse == 'true') {
+				if (parse === 'true') {
 					$('#emoji-list').text('Parsing...')
 					var md = {
 						categorized: {},
@@ -174,7 +174,7 @@ function emojiGet(parse, started) {
 					})
 				})
 				md['if_categorized'] = false
-				if (parse == 'true') {
+				if (parse === 'true') {
 					$('#emoji-list').text('Parsing...')
 					//絵文字をマストドン公式と同順にソート
 					md['uncategorized'].sort(function(a, b) {
@@ -198,14 +198,14 @@ function emojiGet(parse, started) {
 function emojiList(target, reaction) {
 	$('#now-emoji').text(lang.lang_emoji_custom)
 	var acct_id = $('#post-acct-sel').val()
-	if(reaction && $('#media').val() == 'misskey') {
+	if(reaction && $('#media').val() === 'misskey') {
 		var misskeyReact = true
 	} else {
 		var misskeyReact = false
 	}
 	if (
 		misskeyReact &&
-		localStorage.getItem('emojiReaction_' + acct_id) != 'true'
+		localStorage.getItem('emojiReaction_' + acct_id) !== 'true'
 	) {
 		console.error('Disabled')
 		clear()
@@ -213,10 +213,10 @@ function emojiList(target, reaction) {
 		return false
 	}
 	var start = localStorage.getItem('emojiseek')
-	if (target == 'next') {
+	if (target === 'next') {
 		var start = start * 1 + 127
 		localStorage.setItem('emojiseek', start)
-	} else if (target == 'before') {
+	} else if (target === 'before') {
 		var start = start - 127
 		localStorage.setItem('emojiseek', start)
 	} else {
@@ -266,7 +266,7 @@ function emojiList(target, reaction) {
 	} else {
 		$('#emoji-before').removeClass('disabled')
 	}
-	if (page != 1) {
+	if (page !== 1) {
 		$('#emoji-next').removeClass('disabled')
 	} else {
 		$('#emoji-next').addClass('disabled')
@@ -308,7 +308,7 @@ function emojiList(target, reaction) {
 
 //絵文字など様々なものをテキストボックスに挿入
 function emojiInsert(code, del) {
-	if (localStorage.getItem('emoji-zero-width') == 'yes') {
+	if (localStorage.getItem('emoji-zero-width') === 'yes') {
 		var blankBefore = '​'
 		var blankAfter = '​'
 	} else {
@@ -326,15 +326,15 @@ function emojiInsert(code, del) {
 	}
 	var before = sentence.substr(0, pos - delLen)
 	var last = before.substr(-1, 1)
-	if (last == ' ') blankBefore = ''
+	if (last === ' ') blankBefore = ''
 	var after = sentence.substr(pos, len)
 	var start = after.substr(0, 1)
-	if (start == ' ') blankAfter = ''
-	if (len == 0) {
+	if (start === ' ') blankAfter = ''
+	if (len === 0) {
 		var word = code
-	} else if (len == pos) {
+	} else if (len === pos) {
 		var word = blankBefore + code
-	} else if (pos == 0) {
+	} else if (pos === 0) {
 		var word = code + blankAfter
 	} else {
 		var word = blankBefore + code + blankAfter
