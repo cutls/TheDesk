@@ -470,16 +470,15 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.0.0.tgz#2ff674e9611b45b528896d820d3d7a812de2f0e4"
   integrity sha512-FyD2meJpDPjyNQejSjvnhpgI/azsQkA4lGbuu5BQZfjvJ9cbRZXzeWL2HceCekW4lixO9JPesIIQkSoLjeJHNQ==
 
-"@syuilo/aiscript@^0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@syuilo/aiscript/-/aiscript-0.11.1.tgz#52c14692113c58d1d62e6ae696352ba49abdf2eb"
-  integrity sha512-chwOIA3yLUKvOB0G611hjLArKTeOWNmTm3lHERSaDW1d+dS6do56naX6Lkwy2UpnwWC0qzeNSgg35elk6t2gZg==
+"@syuilo/aiscript@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@syuilo/aiscript/-/aiscript-0.12.0.tgz#31567b5ca0e17d0b69effc0517faa0a763d82e79"
+  integrity sha512-X+Uj2ZGL2IxErVx7/0iJrkdBkfJx4Ojy8FVPKGtpU7SdrUZmCS7iCtnGSLzUazBBGIM7EzDIib83YSxVyxPQlQ==
   dependencies:
     autobind-decorator "2.4.0"
-    chalk "4.0.0"
     seedrandom "3.0.5"
     stringz "2.1.0"
-    uuid "7.0.3"
+    uuid "8.3.2"
 
 "@szmarczak/http-timer@^4.0.5":
   version "4.0.5"
@@ -1349,14 +1348,6 @@ callsites@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
-
-chalk@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.0.0.tgz#6e98081ed2d17faab615eb52ac66ec1fe6209e72"
-  integrity sha512-N9oWFcegS0sFr9oh1oz2d7Npos6vNoWW9HvtCg5N1KRFpUhaAhvTv5Y58g880fZaEYSNm3qDz8SU1UrGvp+n7A==
-  dependencies:
-    ansi-styles "^4.1.0"
-    supports-color "^7.1.0"
 
 chalk@^2.4.1:
   version "2.4.2"
@@ -5074,10 +5065,10 @@ util@~0.12.0:
     safe-buffer "^5.1.2"
     which-typed-array "^1.1.2"
 
-uuid@7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.3.tgz#c5c9f2c8cf25dc0a372c4df1441c41f5bd0c680b"
-  integrity sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==
+uuid@8.3.2:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
+  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 uuid@^9.0.0:
   version "9.0.0"
