@@ -35,7 +35,7 @@ function announParse(obj, acct_id, tlid) {
 				content = content.replace(regExp, emoji_url)
 			})
 		}
-		content = twemoji.parse(content)
+		content = twemojiParse(content)
 		var reactions = ''
 		//既存のリアクション
 		if (toot.reactions) {
@@ -55,7 +55,7 @@ function announParse(obj, acct_id, tlid) {
 					<img draggable="false" src="${emoSource}" class="emoji-img" data-emoji="${shortcode}" 
                         alt=" :${shortcode}: " title="${shortcode}">`
 				} else {
-					emoji_url = twemoji.parse(reaction.name)
+					emoji_url = twemojiParse(reaction.name)
 				}
 				var addClass = ''
 				if (reaction.me) {

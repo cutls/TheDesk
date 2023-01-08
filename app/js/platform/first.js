@@ -1,22 +1,22 @@
-window.onload = function() {
+window.onload = function () {
     console.log('loaded')
     initPostbox()
     connection()
     initPlugin(plugins)
     if (localStorage.getItem('control-center-np')) $('#ccnp').removeClass('hide')
-	
+
 }
 
 const size = localStorage.getItem('size')
 if (size) $('html,body').css('font-size', `${size}px`)
-$.strip_tags = function(str, allowed) {
+$.strip_tags = function (str, allowed) {
     if (!str) {
         return ''
     }
     allowed = (((allowed || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('')
     var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi,
         commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi
-    return str.replace(commentsAndPhpTags, '').replace(tags, function($0, $1) {
+    return str.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
         return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''
     })
 }
@@ -144,27 +144,27 @@ function rgbToHex(color) {
     console.error(color + ':第1引数はRGB形式で入力')
 }
 /*マルチバイト用切り出し*/
-$.isSurrogatePear = function(upper, lower) {
+$.isSurrogatePear = function (upper, lower) {
     return 0xd800 <= upper && upper <= 0xdbff && 0xdc00 <= lower && lower <= 0xdfff
 }
-$.mb_strlen = function(str) {
+$.mb_strlen = function (str) {
     var splitter = new GraphemeSplitter()
     var arr = splitter.splitGraphemes(str)
     return arr.length
 }
-$.mb_substr = function(str, begin, end) {
-        //配列にする
-        var splitter = new GraphemeSplitter()
-        var arr = splitter.splitGraphemes(str)
-        var newarr = []
-        for (var i = 0; i < arr.length; i++) {
-            if (i >= begin && i <= end) {
-                newarr.push(arr[i])
-            }
+$.mb_substr = function (str, begin, end) {
+    //配列にする
+    var splitter = new GraphemeSplitter()
+    var arr = splitter.splitGraphemes(str)
+    var newarr = []
+    for (var i = 0; i < arr.length; i++) {
+        if (i >= begin && i <= end) {
+            newarr.push(arr[i])
         }
-        return newarr.join('')
     }
-    //ソートするやつ
+    return newarr.join('')
+}
+//ソートするやつ
 function object_array_sort(data, key, order, fn) {
     var num_a = -1
     var num_b = 1
@@ -172,7 +172,7 @@ function object_array_sort(data, key, order, fn) {
         num_a = 1
         num_b = -1
     }
-    data = data.sort(function(a, b) {
+    data = data.sort(function (a, b) {
         var x = a[key]
         var y = b[key]
         if (x > y) return num_a
@@ -298,10 +298,16 @@ function webviewFinder() {
 
 function initWebviewEvent() {
     if (document.querySelector('webview')) { webviewFinder() } else {
-        const timerWV = setInterval(function() {
+        const timerWV = setInterval(function () {
             document.querySelector('webview') ?
                 (webviewFinder(), clearInterval(timerWV)) :
                 console.log('まだロード中')
         }, 500)
     }
+}
+function twemojiParse(target) {
+    return twemoji.parse(
+        target,
+        { base: `../../${pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/` }
+    )
 }

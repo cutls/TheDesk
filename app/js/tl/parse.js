@@ -847,23 +847,23 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 			//デフォ絵文字
 			const contentElement = document.createElement('div')
 			contentElement.innerHTML = content
-			const emojified = twemoji.parse(contentElement)
+			const emojified = twemojiParse(contentElement)
 			content = emojified.innerHTML
 
 			if (dis_name) {
-				dis_name = twemoji.parse(dis_name)
+				dis_name = twemojiParse(dis_name)
 			}
 			if (spoil) {
-				spoil = twemoji.parse(spoil)
+				spoil = twemojiParse(spoil)
 			}
 			if (noticetext) {
-				noticetext = twemoji.parse(noticetext)
+				noticetext = twemojiParse(noticetext)
 			}
 			if (notice) {
-				notice = twemoji.parse(notice)
+				notice = twemojiParse(notice)
 			}
 			if (poll) {
-				poll = twemoji.parse(poll)
+				poll = twemojiParse(poll)
 			}
 			//日本語じゃない
 			if (toot.language != lang.language && toot.language) {
@@ -1266,7 +1266,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 					})
 				}
 				if (dis_name) {
-					dis_name = twemoji.parse(dis_name)
+					dis_name = twemojiParse(dis_name)
 				}
 				if (toot.avatar) {
 					if (gif == 'yes') {
@@ -1496,7 +1496,7 @@ function pollParse(poll, acct_id, emojis) {
 				var regExp = new RegExp(':' + shortcode + ':', 'g')
 				choiceText = choiceText.replace(regExp, emoji_url)
 			})
-			choiceText = twemoji.parse(choiceText)
+			choiceText = twemojiParse(choiceText)
 		}
 		pollHtml =
 			pollHtml +

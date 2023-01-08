@@ -356,12 +356,12 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			})
 		}
 		//デフォ絵文字
-		content = twemoji.parse(content)
+		content = twemojiParse(content)
 		if (dis_name) {
-			dis_name = twemoji.parse(dis_name)
+			dis_name = twemojiParse(dis_name)
 		}
 		if (spoil) {
-			spoil = twemoji.parse(spoil)
+			spoil = twemojiParse(spoil)
 		}
 		var mediack = toot.media_attachments[0]
 		//メディアがあれば

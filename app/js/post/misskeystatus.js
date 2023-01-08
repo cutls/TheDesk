@@ -265,7 +265,7 @@ function voterefresh(acct_id, id) {
 				Object.keys(choices).forEach(function(keyc) {
 					var choice = choices[keyc]
 					if (choice.isVoted) {
-						var myvote = twemoji.parse('✅')
+						var myvote = twemojiParse('✅')
 					} else {
 						var myvote = ''
 					}

@@ -1,3 +1,4 @@
+const ChildProcess = require('child_process')
 const fs = require('fs')
 
 function construct(ver, basefile, pwa, store) {
@@ -55,13 +56,13 @@ function construct(ver, basefile, pwa, store) {
             fs.readFileSync(basefile + 'view/make/language/' + lang + '/main.json', 'utf8')
         )
         if (lang == 'ja-KS') {
-            Object.keys(jaJson).forEach(function(key) {
+            Object.keys(jaJson).forEach(function (key) {
                 if (!mainJson[key]) {
                     mainJson[key] = jaJson[key]
                 }
             })
         } else if (lang != 'en') {
-            Object.keys(enJson).forEach(function(key) {
+            Object.keys(enJson).forEach(function (key) {
                 if (!mainJson[key]) {
                     mainJson[key] = enJson[key]
                 }
@@ -92,7 +93,7 @@ function construct(ver, basefile, pwa, store) {
                 )
             )
             if (lang == 'ja') {
-                Object.keys(target).forEach(function(key) {
+                Object.keys(target).forEach(function (key) {
                     refKey.push(key)
                     let str = target[key]
                     if (pages[i] == 'setting.vue.js') {

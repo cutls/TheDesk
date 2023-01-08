@@ -145,7 +145,7 @@ async function udg(user, acct_id, isSwal) {
     flw(json.id, '', acct_id)
     fer(json.id, '', acct_id)
     var dis_name = escapeHTML(json.display_name)
-    dis_name = twemoji.parse(dis_name)
+    dis_name = twemojiParse(dis_name)
 
     var note = json.note
     if (json.emojis) {
@@ -216,15 +216,15 @@ async function udg(user, acct_id, isSwal) {
                     '</td></tr>'
             }
             table = table + '</table>'
-            $('#his-des').html(twemoji.parse(note))
+            $('#his-des').html(twemojiParse(note))
         } else {
             $('#his-des').css('max-height', '400px')
         }
-        $('#his-table').html(twemoji.parse(table))
+        $('#his-table').html(twemojiParse(table))
     } else {
         $('#his-des').css('max-height', '400px')
     }
-    $('#his-des').html(twemoji.parse(note))
+    $('#his-des').html(twemojiParse(note))
     if (json.bot) {
         $('#his-bot').html(lang.lang_showontl_botacct)
         $('#his-bot').removeClass('hide')
@@ -350,7 +350,7 @@ function misskeyUdg(user, acct_id) {
             fer(json.id, '', acct_id)
             if (json.name) {
                 var dis_name = escapeHTML(json.name)
-                dis_name = twemoji.parse(dis_name)
+                dis_name = twemojiParse(dis_name)
             } else {
                 var dis_name = json.name
             }
@@ -364,9 +364,9 @@ function misskeyUdg(user, acct_id) {
             $('#his-follower').text(json.followersCount)
             $('#his-since').text(crat(json.createdAt))
             var note = escapeHTML(json.description)
-            $('#his-des').html(twemoji.parse(note))
+            $('#his-des').html(twemojiParse(note))
             if (json.isCat) {
-                $('#his-bot').html('Cat' + twemoji.parse('😺'))
+                $('#his-bot').html('Cat' + twemojiParse('😺'))
             }
             $('#his-data').css('background-size', 'cover')
             localStorage.setItem('history', user)
