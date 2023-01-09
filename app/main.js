@@ -306,7 +306,7 @@ function createWindow() {
 	//アップデータとダウンロード
 	dl.dl(mainWindow, lang_path, base, dirname)
 	//画像選択と画像処理
-	img.img(mainWindow, dir)
+	img.img(mainWindow, dir, lang)
 	//NowPlaying
 	np.TheDeskNowPlaying(mainWindow)
 	//その他system
