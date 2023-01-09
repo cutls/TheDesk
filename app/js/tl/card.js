@@ -233,10 +233,10 @@ function cardHtml(json, acct_id, id) {
 		if (json.html || json.provider_name == 'Twitter') {
 			if(isHad) {
 				var prved = `<img class="emoji" draggable="false" alt="✅" 
-					src="https://twemoji.maxcdn.com/v/12.1.3/72x72/2705.png">`
+					src="../../${pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/2705.png">`
 				var title = lang.lang_cards_trusted
 			}else{
-				var prved = '<img class="emoji" draggable="false" alt="⚠️" src="https://twemoji.maxcdn.com/v/12.1.4/72x72/26a0.png">'
+				var prved = `<img class="emoji" draggable="false" alt="⚠️" src="../../${pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/26a0.png">`
 				var title = lang.lang_cards_untrusted
 			}
 			analyze =`<a onclick="cardHtmlShow('${acct_id}','${id}')" class="add-show pointer" title="${title}">

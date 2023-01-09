@@ -852,7 +852,6 @@ function atSetup(type) {
 	localStorage.setItem('multi', json)
 	refresh(target)
 }
-
 //ユーザーデータ更新
 function refresh(target) {
 	var multi = localStorage.getItem('multi')

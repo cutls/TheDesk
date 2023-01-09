@@ -1453,7 +1453,7 @@ function pollParse(poll, acct_id, emojis) {
 			var me = minechoice[i]
 			if (me == keyc) {
 				var voteit =
-					'<span class="ownMark"><img class="emoji" draggable="false" src="https://twemoji.maxcdn.com/v/12.1.4/72x72/2705.png"></span>'
+					`<span class="ownMark"><img class="emoji" draggable="false" src="../../${pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/2705.png"></span>`
 				break
 			}
 		}
