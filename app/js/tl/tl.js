@@ -285,8 +285,8 @@ function stremaingSubscribe(type, acct_id, data, unsubscribe) {
         let name = data
         if (data.name) name = data.name
         arr.push(name)
-        if (data.any) arr = arr.concat(data.any.split(','))
-        if (data.all) arr = arr.concat(data.all.split(','))
+        if (data.any && data.any.length) arr = arr.concat(data.any.split(','))
+        if (data.all && data.all.length) arr = arr.concat(data.all.split(','))
         for (const tag of arr) {
             mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: 'hashtag', tag: tag }))
         }
@@ -940,7 +940,7 @@ function com(type, data, tlid) {
         return `tag/${name}?${buildQuery('all', all)}${buildQuery(
 			'any',
 			any
-		)}${buildQuery('none', none)}`.slice(0, -1)
+		)}${buildQuery('none', none)}`
     } else if (type == 'list') {
         return 'list/' + data + '?'
     } else if (type == 'dm') {
