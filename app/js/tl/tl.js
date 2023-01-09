@@ -82,14 +82,17 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
         //ブックマークなら飛ばす
         getBookmark(acct_id, tlid)
         $('#notice_' + tlid).text(
-            cap(type, data, acct_id) +
-            '(' +
-            localStorage.getItem('user_' + acct_id) +
-            '@' +
-            domain +
-            ')'
+            `${cap(type, data, acct_id)}(${localStorage.getItem('user_' + acct_id)}@${domain})`
         )
         $('#notice_icon_' + tlid).text('bookmark')
+        return
+    } else if (type == 'fav') {
+        //お気に入りなら飛ばす
+        getFav(acct_id, tlid)
+        $('#notice_' + tlid).text(
+            `${cap(type, data, acct_id)}(${localStorage.getItem('user_' + acct_id)}@${domain})`
+        )
+        $('#notice_icon_' + tlid).text('star')
         return
     } else if (type == 'utl') {
         //UTLなら飛ばす
@@ -533,6 +536,9 @@ function moreload(type, tlid) {
         } else if (type == 'bookmark') {
             getBookmark(acct_id, tlid, true)
             return
+        } else if (type == 'fav') {
+            getFav(acct_id, tlid, true)
+            return
         } else if (type == 'utl') {
             var data = obj[tlid].data
             getUtl(acct_id, tlid, data, true)
@@ -899,6 +905,8 @@ function cap(type, data, acct_id) {
         var response = 'tootsearch(' + escapeHTML(data) + ')'
     } else if (type == 'bookmark') {
         var response = 'Bookmarks'
+    } else if (type == 'fav') {
+        var response = 'Favourites'
     } else if (type == 'utl') {
         var response = 'User TL(' + escapeHTML(data.acct) + ')'
     }
@@ -947,6 +955,8 @@ function com(type, data, tlid) {
         return 'direct?'
     } else if (type == 'bookmark') {
         return 'bookmarks?'
+    } else if (type == 'fav') {
+        return 'favourites?'
     }
 }
 //Misskey
@@ -1020,6 +1030,8 @@ function icon(type) {
         var response = 'search'
     } else if (type == 'bookmark') {
         var response = 'bookmark'
+    } else if (type == 'fav') {
+        var response = 'star'
     }
     return response
 }
@@ -1084,6 +1096,9 @@ function columnReload(tlid, type) {
     } else if (type == 'bookmark') {
         $('#notice_icon_' + tlid).removeClass('red-text')
         getBookmark(acct_id, tlid, false)
+    } else if (type == 'fav') {
+        $('#notice_icon_' + tlid).removeClass('red-text')
+        getFav(acct_id, tlid, false)
     } else {
 
         var wss = localStorage.getItem('wss_' + tlid)
@@ -1385,6 +1400,59 @@ function getBookmark(acct_id, tlid, more) {
                 }
             }
             var templete = parse(json, 'bookmark', acct_id, tlid, -1, null)
+            templete =
+                templete +
+                '<div class="hide notif-marker" data-maxid="' +
+                max_id +
+                '"></div>'
+            if (more) {
+                $('#timeline_' + tlid).append(templete)
+            } else {
+                $('#timeline_' + tlid).html(templete)
+            }
+            $('#landing_' + tlid).hide()
+            jQuery('time.timeago').timeago()
+            moreloading = false
+            todc()
+        }
+    }
+}
+//お気に入り
+function getFav(acct_id, tlid, more) {
+    moreloading = true
+    console.log(acct_id, tlid, more)
+    if (more) {
+        var sid = $('#timeline_' + tlid + ' .notif-marker')
+            .last()
+            .attr('data-maxid')
+        var ad = '?max_id=' + sid
+    } else {
+        var ad = ''
+    }
+    var at = localStorage.getItem('acct_' + acct_id + '_at')
+    var domain = localStorage.getItem('domain_' + acct_id)
+    var start = 'https://' + domain + '/api/v1/favourites' + ad
+    var httpreq = new XMLHttpRequest()
+    httpreq.open('GET', start, true)
+    httpreq.setRequestHeader('Content-Type', 'application/json')
+    httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+    httpreq.responseType = 'json'
+    httpreq.send()
+    httpreq.onreadystatechange = function() {
+        if (httpreq.readyState === 4) {
+            var json = httpreq.response
+            if (this.status !== 200) {
+                setLog(start, this.status, this.response)
+            }
+            var max_ids = httpreq.getResponseHeader('link')
+            var max_id = 0
+            if (max_ids) {
+                max_ids = max_ids.match(/[?&]{1}max_id=([0-9]+)/)
+                if (max_ids) {
+                    max_id = max_ids[1]
+                }
+            }
+            var templete = parse(json, 'fav', acct_id, tlid, -1, null)
             templete =
                 templete +
                 '<div class="hide notif-marker" data-maxid="' +

@@ -192,7 +192,7 @@ function parseColumn(target, dontclose) {
 				var animecss = ''
 			}
 			unstreamingTL(acct.type, key, basekey, insert, icnsert, acct.left_fold, css, animecss, acct.data)
-		} else if (acct.type == 'bookmark') {
+		} else if (acct.type == 'bookmark' || acct.type == 'fav') {
 			if (!acct.left_fold) {
 				basekey = key
 			}
@@ -840,11 +840,13 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 	} else {
 		var dataHtml = data
 	}
+	let typeFunc = type
+	if (type === 'fav') typeFunc = 'favTl'
 	var html = `<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}">
 			<div class="notice-box z-depth-2" id="menu_${key}" style="${insert} ">
 				<div class="area-notice">
 					<i class="material-icons waves-effect" id="notice_icon_${key}" style="font-size:40px; padding-top:25%;" 
-						onclick="${type}('${key}','${dataHtml}');" title="${lang.lang_layout_gotop}"></i>
+						onclick="goTop(${key}); ${typeFunc}('${key}','${dataHtml}');" title="${lang.lang_layout_gotop}"></i>
 				</div>
 				<div class="area-notice_name">
 					<span id="notice_${key}" class="tl-title"></span>
@@ -883,8 +885,10 @@ function unstreamingTL(type, key, basekey, insert, icnsert, left_fold, css, anim
 	if (type == 'tootsearch') {
 		tootsearch(key, data)
 	} else if (type == 'bookmark') {
-		console.log(key, data)
 		bookmark(key, data)
+	} else if (type == 'fav') {
+		console.log(key, data)
+		favTl(key, data)
 	} else if (type == 'utl') {
 		utl(key, data.acct, data.data)
 	}
@@ -903,6 +907,15 @@ function bookmark(key, data) {
 		var voice = false
 	}
 	tl('bookmark', '', data, key, 'false', voice, '')
+}
+function favTl(key, data) {
+	console.log(key, data)
+	if (localStorage.getItem('voice_' + key)) {
+		var voice = true
+	} else {
+		var voice = false
+	}
+	tl('fav', '', data, key, 'false', voice, '')
 }
 function utl(key, acct_id, data) {
 	if (!data) {
