@@ -60,18 +60,17 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="pwa">
+                    <label>
+                        <input type="checkbox" class="filled-in" id="misskey" />
+                        <span>@@thisismisskey@@</span> </label><br />
+                    <div class="hide">
                         @@codesetupwarn@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="linux" />
-							<span>@@codesetup@@</span>
-						</label>
+                            <input type="checkbox" class="filled-in" id="linux" />
+                            <span>@@codesetup@@</span>
+                        </label>
                         <br />
                     </div>
-                    <label>
-						<input type="checkbox" class="filled-in" id="misskey" />
-						<span>@@thisismisskey@@</span> </label><br />
                 </div>
                 <div class="col s4 scr" aria-hidden="true">
                     <span style="font-family:Open Sans;">Supports</span>
@@ -89,7 +88,8 @@
             <div id="compt" style="display:none" class="scr">
                 <h5>ログイン前に必ずご確認ください</h5>
                 <span id="compt-instance"></span>はバージョンが<span id="compt-ver"></span>のため以下の機能がご利用いただけません。
-                <span id="compt-warn" style="display:none">また、このインスタンスはMastodonではなくそのAPI上の互換実装であり、TheDeskでは利用を想定していないため非保証となります。</span>
+                <span id="compt-warn"
+                    style="display:none">また、このインスタンスはMastodonではなくそのAPI上の互換実装であり、TheDeskでは利用を想定していないため非保証となります。</span>
                 <ul id="compt-list"></ul>
             </div>
         </div>
