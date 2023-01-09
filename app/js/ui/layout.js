@@ -263,7 +263,26 @@ function parseColumn(target, dontclose) {
 						<span>
 						${lang.lang_layout_poll}
 						</span>
-					</label> <br />
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="exc-status-${key}" ${excludeCk(key, 'status')} />
+						<span>
+						${lang.lang_layout_status}
+						</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="exc-update-${key}" ${excludeCk(key, 'update')} />
+						<span>
+						${lang.lang_layout_update}
+						</span>
+					</label>
+					<label>
+						<input type="checkbox" class="filled-in" id="exc-follow_request-${key}" ${excludeCk(key, 'follow_request')} />
+						<span>
+						${lang.lang_layout_follow_request}
+						</span>
+					</label>
+					 <br />
 					<button class="btn btn-flat waves-effect notf-exclude-btn waves-light" style="width:calc(50% - 11px); padding:0;" onclick="exclude('${key}')">Filter</button>`
 				if (checkNotfFilter(key)) {
 					excludeNotf =

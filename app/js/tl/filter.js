@@ -536,7 +536,28 @@ function exclude(key) {
         } else {
             excludetxt = '?exclude_types[]=poll'
         }
-    } else {}
+    }
+    if ($('#exc-status-' + key + ':checked').val()) {
+        if (excludetxt || excludetxt != '') {
+            excludetxt = excludetxt + '&exclude_types[]=status'
+        } else {
+            excludetxt = '?exclude_types[]=status'
+        }
+    }
+    if ($('#exc-update-' + key + ':checked').val()) {
+        if (excludetxt || excludetxt != '') {
+            excludetxt = excludetxt + '&exclude_types[]=update'
+        } else {
+            excludetxt = '?exclude_types[]=update'
+        }
+    }
+    if ($('#exc-follow_request-' + key + ':checked').val()) {
+        if (excludetxt || excludetxt != '') {
+            excludetxt = excludetxt + '&exclude_types[]=follow_request'
+        } else {
+            excludetxt = '?exclude_types[]=follow_request'
+        }
+    }
     localStorage.setItem('exclude-' + key, excludetxt)
     parseColumn(key)
 }
