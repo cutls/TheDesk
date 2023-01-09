@@ -1,6 +1,6 @@
 {
     "name": "thedesk",
-    "version": "23.0.4",
+    "version": "23.0.5",
     "codename": "Chieri",
     "description": "TheDesk is a Mastodon client for PC.",
     "repository": "https://github.com/cutls/TheDesk",
