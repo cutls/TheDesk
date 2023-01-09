@@ -50,6 +50,8 @@
     "lang_manager_logout": "නික්මෙන්න",
     "lang_manager_maxChars": "Max chars of toots",
     "lang_manager_refreshAt": "Login with this domain",
+    "lang_manager_codesetup_title": "Skip code-setup",
+    "lang_manager_codesetup": "If you failed log-in, please click Cancel.",
     "lang_bbmd_misskey": "TheDesk regards \"@\" as reply, but put other parameter. Unlisted on Mastodon means Home on Misskey.",
     "lang_emoji_get": "Get emojis",
     "lang_emoji_custom": "Custom emojis",

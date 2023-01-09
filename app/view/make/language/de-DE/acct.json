@@ -21,5 +21,6 @@
     "misskeylogin": "Lies die <a href=\"https://thedesk.top/how-to-misskey-login.html\">Doku (japanisch)</a> um dich bei Misskey einzuloggen.",
     "nodata": "Keine Daten",
     "accessTokenSetup": "Benutze Zugangs-Token zum Anmelden (Klicke nach Ausfüllen nicht den Code, sondern den Access-Token im Kästchen: Erweitert)",
-    "haveExported": "Haben Sie eine exportierte Datei von TheDesk, klicken Sie hier für die Einstellungen"
+    "haveExported": "Haben Sie eine exportierte Datei von TheDesk, klicken Sie hier für die Einstellungen",
+    "redo": "Retry(re-input address)"
 }
