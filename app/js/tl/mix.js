@@ -19,22 +19,22 @@ async function mixtl(acct_id, tlid, type, delc, voice) {
 	additional(acct_id, tlid)
 	jQuery('time.timeago').timeago()
 	todc()
-	if(mastodonBaseWsStatus[domain] == 'cannotuse') {
+	if (mastodonBaseWsStatus[domain] == 'cannotuse') {
 		mixre(acct_id, tlid, 'mix', mute, voice, '')
 	} else if (mastodonBaseWsStatus[domain] == 'undetected' || mastodonBaseWsStatus[domain] == 'connecting') {
 		const mbws = setInterval(function () {
-			if(mastodonBaseWsStatus[domain] == 'cannotuse') {
+			if (mastodonBaseWsStatus[domain] == 'cannotuse') {
 				mixre(acct_id, tlid, 'mix', mute, voice, '')
 				clearInterval(mbws)
-			} else if(mastodonBaseWsStatus[domain] == 'available') {
-				mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'public:local'}))
+			} else if (mastodonBaseWsStatus[domain] == 'available') {
+				mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 				clearInterval(mbws)
 			}
 		}, 1000)
-	} else if(mastodonBaseWsStatus[domain] == 'available') {
-		mastodonBaseWs[domain].send(JSON.stringify({type: 'subscribe', stream: 'public:local'}))
+	} else if (mastodonBaseWsStatus[domain] == 'available') {
+		mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 	}
-	
+
 	$(window).scrollTop(0)
 	lastId = integrated[0].id
 	beforeLastId = integrated[1].id
@@ -49,7 +49,7 @@ async function getTL(start, acct_id) {
 		}
 	})
 	if (!promise.ok) {
-		promise.text().then(function(text) {
+		promise.text().then(function (text) {
 			setLog(promise.url, promise.status, text)
 		})
 	}
@@ -71,7 +71,7 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 	var wslid = wsLocal.length
 	wsHome[wshid] = new WebSocket(startHome)
 	wsLocal[wslid] = new WebSocket(startLocal)
-	wsHome[wshid].onopen = function(mess) {
+	wsHome[wshid].onopen = function (mess) {
 		localStorage.setItem('wssH_' + tlid, wshid)
 		console.table({
 			tlid: tlid,
@@ -81,7 +81,7 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 		})
 		$('#notice_icon_' + tlid).removeClass('red-text')
 	}
-	wsLocal[wslid].onopen = function(mess) {
+	wsLocal[wslid].onopen = function (mess) {
 		localStorage.setItem('wssL_' + tlid, wslid)
 		console.table({
 			tlid: tlid,
@@ -91,15 +91,15 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 		})
 		$('#notice_icon_' + tlid).removeClass('red-text')
 	}
-	wsLocal[wslid].onmessage = function(mess) {
+	wsLocal[wslid].onmessage = function (mess) {
 		console.log('Receive Streaming API:(Integrated:Local)', mess)
 		integratedMessage(mess, acct_id, tlid, mute, voice)
 	}
-	wsHome[wshid].onmessage = function(mess) {
+	wsHome[wshid].onmessage = function (mess) {
 		console.log(['Receive Streaming API:(Integrated:Home)', mess])
 		integratedMessage(mess, acct_id, tlid, mute, voice)
 	}
-	wsLocal[wslid].onerror = function(error) {
+	wsLocal[wslid].onerror = function (error) {
 		console.error('WebSocketLocal Error')
 		console.error(error)
 		$('#notice_icon_' + tlid).addClass('red-text')
@@ -113,7 +113,7 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 			}
 		}
 	}
-	wsLocal[wslid].onclose = function() {
+	wsLocal[wslid].onclose = function () {
 		console.warn('WebSocketLocal Closing:' + tlid)
 		$('#notice_icon_' + tlid).addClass('red-text')
 		if (mode == 'error') {
@@ -126,7 +126,7 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 			}
 		}
 	}
-	wsHome[wshid].onerror = function(error) {
+	wsHome[wshid].onerror = function (error) {
 		console.error(['WebSocketHome Error', error])
 		$('#notice_icon_' + tlid).addClass('red-text')
 		if (mode == 'error') {
@@ -139,7 +139,7 @@ function mixre(acct_id, tlid, TLtype, mute, voice, mode) {
 			}
 		}
 	}
-	wsHome[wshid].onclose = function() {
+	wsHome[wshid].onclose = function () {
 		console.warn('WebSocketHome Closing:' + tlid)
 		$('#notice_icon_' + tlid).addClass('red-text')
 		if (mode == 'error') {
@@ -162,7 +162,7 @@ function integratedMessage(mess, acct_id, tlid, mute, voice) {
 		$('[unique-id=' + payload + ']').remove()
 	} else if (type == 'update') {
 		let obj = JSON.parse(payload)
-		
+
 		if (obj.id != lastId && obj.id != beforeLastId) {
 			lastId = obj.id
 			beforeLastId = obj.id
@@ -194,8 +194,8 @@ async function mixmore(tlid, type) {
 	todo('Integrated TL MoreLoading...(Local)')
 	const domain = localStorage.getItem('domain_' + acct_id)
 	const sid = $('#timeline_' + tlid + ' .cvo')
-	.last()
-	.attr('unique-id')
+		.last()
+		.attr('unique-id')
 	let startLocal = 'https://' + domain + '/api/v1/timelines/public?local=true&max_id=' + sid
 	let local = await getTL(startLocal, acct_id)
 	let startHome = 'https://' + domain + '/api/v1/timelines/home?max_id=' + sid

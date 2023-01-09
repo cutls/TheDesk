@@ -1688,11 +1688,13 @@ function insertTl(obj, tls, dry) {
 		const { id, voice, type, acct_id } = timeline
 		const mute = getFilterTypeByAcct(acct_id, type)
 		if ($(`#unread_${id} .material-icons`).hasClass('teal-text')) continue
+
 		if (!$(`#timeline_${id} [toot-id=${obj.id}]`).length) {
 			if (voice) {
 				say(obj.content)
 			}
-			const template = parse([obj], type, acct_id, id, '', mute, type)
+			const templateRaw = parse([obj], type, acct_id, id, '', mute, type)
+			const template = type === 'mix' ? templateRaw[0] : templateRaw
 			if (dry) return template
 			console.log($(`#timeline_box_${id}_box .tl-box`).scrollTop(), `timeline_box_${id}_box .tl-box`)
 			if (
@@ -1701,6 +1703,7 @@ function insertTl(obj, tls, dry) {
 				$(`#timeline_${id}`).prepend(template)
 			} else {
 				let pool = localStorage.getItem('pool_' + id)
+				if (pool.match(`unique-id="${obj.id}"`)) continue
 				if (pool) {
 					pool = template + pool
 				} else {
