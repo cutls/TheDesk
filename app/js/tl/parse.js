@@ -1004,9 +1004,6 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 					'unix'
 				)}"
 					${if_notf}
-					onmouseover="mov('${uniqueid}','${tlid}','mv', '${rand}', this)"
-					onclick="mov('${uniqueid}','${tlid}','cl', '${rand}', this)"
-					onmouseout="resetmv('mv')"
 				>
 				<div class="area-notice grid"><span class="gray sharesta">${notice}${home}</span></div>
 				<div class="area-icon grid">
@@ -1036,7 +1033,10 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 						<span class="cw_text">${spoil}</span>
 						${spoiler_show}
 					</span>
-					<div class="toot ${spoiler}">${content}</div>
+					<div class="toot ${spoiler}"
+					onmouseover="mov('${uniqueid}','${tlid}','mv', '${rand}', this)"
+					onclick="mov('${uniqueid}','${tlid}','cl', '${rand}', this)"
+					onmouseout="resetmv('mv')">${content}</div>
 					${poll}${viewer}
 				</div>
 				<div class="area-additional grid">
