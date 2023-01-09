@@ -1703,8 +1703,8 @@ function insertTl(obj, tls, dry) {
 				$(`#timeline_${id}`).prepend(template)
 			} else {
 				let pool = localStorage.getItem('pool_' + id)
-				if (pool.match(`unique-id="${obj.id}"`)) continue
 				if (pool) {
+					if (pool.match(`unique-id="${obj.id}"`)) continue
 					pool = template + pool
 				} else {
 					pool = template
