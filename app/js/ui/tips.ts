@@ -1,12 +1,13 @@
 //左下のメッセージ
-var todcTrigger = null
-function todo(mes) {
-	clearInterval(todcTrigger)
+
+export function todo(mes: string) {
+	let todcTrigger: NodeJS.Timeout | null = null
+	if(todcTrigger) clearInterval(todcTrigger)
 	$('#message').text(mes)
 	$('#message').fadeIn()
 	todcTrigger = setTimeout(todc, 4000)
 }
-function todc() {
+export function todc() {
 	$('#message').fadeOut()
 }
 //reverse

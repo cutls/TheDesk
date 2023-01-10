@@ -523,7 +523,7 @@ function draftToPost(json, acct_id, id) {
         html = html.replace(/<p>/, '\n')
         html = html.replace(/<\/p>/, '\n')
         html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, '$1')
-        html = $.strip_tags(html)
+        html = stripTags(html)
     }
     $('#textarea').val(html)
     if (json.spoiler_text) {

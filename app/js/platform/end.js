@@ -147,7 +147,7 @@ onmessage = function (e) {
 	} else if (e.data[0] === 'media') {
 		media(e.data[1][0], e.data[1][1], e.data[1][2], e.data[1][3])
 	} else if (e.data[0] === 'post') {
-		post('pass')
+		post()
 	} else if (e.data[0] === 'toastSaved') {
 		var showTxt = `${lang.lang_img_DLDone}${e.data[1][0]
 			}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`

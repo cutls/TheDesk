@@ -183,7 +183,7 @@ function tl(type, data, acct_id, tlid, delc, voice, mode) {
         .then(function(response) {
             if (!response.ok) {
                 response.text().then(function(text) {
-                    $('#landing_' + tlid).append(`<div>${response.status}</div><div>${$.strip_tags(text)}`)
+                    $('#landing_' + tlid).append(`<div>${response.status}</div><div>${stripTags(text)}`)
                     setLog(response.url, response.status, text)
                 })
             }

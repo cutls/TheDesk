@@ -489,7 +489,7 @@ function filterUpdateInternal(json, type) {
             Object.keys(home).forEach(function(key8) {
                 var word = home[key8]
                 var regExp = new RegExp(word.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'), 'g')
-                if ($.strip_tags(text).match(regExp)) {
+                if (stripTags(text).match(regExp)) {
                     $('[toot-id=' + id + ']').addClass('hide')
                 }
             })

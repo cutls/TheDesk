@@ -61,7 +61,7 @@ function qt(id, acct_id, at, url) {
 		html = html.replace(/<br\s?\/?>/, '\n')
 		html = html.replace(/<p>/, '\n')
 		html = html.replace(/<\/p>/, '\n')
-		html = $.strip_tags(html)
+		html = stripTags(html)
 		$('#textarea').val('\n' + '@' + at + ' ' + html + '\n' + url)
 	} else if (qt === 'apiQuote') {
 		clear()

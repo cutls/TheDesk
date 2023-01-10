@@ -348,7 +348,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 							')' +
 							what +
 							'\n\n' +
-							$.strip_tags(toot.status.content),
+							stripTags(toot.status.content),
 						icon: toot.account.avatar
 					}
 					var n = new Notification('TheDesk:' + domain, options)
@@ -522,7 +522,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 				var spoil = escapeHTML(toot.spoiler_text)
 				var spoiler = 'cw cw_hide'
 				var api_spoil = 'gray'
-				var spoiler_show = `<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">${lang.lang_parse_cwshow}<span class="voice">${lang.lang_parse_cwshow_acc}</span></a><br>`
+				var spoiler_show = `<a href="#" onclick="cwShow(this)" class="nex parsed cw_btn">${lang.lang_parse_cwshow}<span class="voice">${lang.lang_parse_cwshow_acc}</span></a><br>`
 			} else {
 				if (content) {
 					var ct1 = content.split('</p>').length + content.split('<br />').length - 2
@@ -538,18 +538,18 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 				}
 
 				if (
-					(sent < ct && $.mb_strlen($.strip_tags(content)) > 5) ||
-					($.mb_strlen($.strip_tags(content)) > ltr && $.mb_strlen($.strip_tags(content)) > 5)
+					(sent < ct && strlenMultibyte(stripTags(content)) > 5) ||
+					(strlenMultibyte(stripTags(content)) > ltr && strlenMultibyte(stripTags(content)) > 5)
 				) {
 					content = `<span class="gray">${lang.lang_parse_fulltext}</span><br>` + content
-					var spoil = `<span class="cw_long">${$.mb_substr(
-						$.strip_tags(content),
+					var spoil = `<span class="cw_long">${substrMultibyte(
+						stripTags(content),
 						0,
 						100
 					)}</span>
 						<span class="gray">${lang.lang_parse_autofold}</span>`
 					var spoiler = 'cw cw_hide'
-					var spoiler_show = `<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">
+					var spoiler_show = `<a href="#" onclick="cwShow(this)" class="nex parsed cw_btn">
 							${lang.lang_parse_more}
 						</a><br>`
 				} else {
@@ -558,7 +558,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 					var spoiler_show = ''
 				}
 			}
-			var urls = $.strip_tags(content)
+			var urls = stripTags(content)
 				.replace(/\n/g, ' ')
 				.match(
 					/https?:\/\/([^+_]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
@@ -797,7 +797,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 							var wordList = worde
 						}
 						var regExp = new RegExp(wordList.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'), 'g')
-						if ($.strip_tags(content).match(regExp)) {
+						if (stripTags(content).match(regExp)) {
 							boostback = 'hide by_filter'
 						}
 					}
@@ -1116,7 +1116,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 					</div>
 				</div>
 				<ul class="dropdown-content contextMenu" id="dropdown_${rand}">
-					<li class="${viashow} via-dropdown" onclick="client('${$.strip_tags(via)}')" title="${lang.lang_parse_clientop}">
+					<li class="${viashow} via-dropdown" onclick="client('${stripTags(via)}')" title="${lang.lang_parse_clientop}">
 						via ${escapeHTML(via)}</a>
 					</li>
 					<div>

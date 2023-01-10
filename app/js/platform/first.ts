@@ -1,27 +1,33 @@
-window.onload = function() {
+import { initPlugin } from './plugin'
+import $ from 'jquery'
+import { v4 as uuid } from 'uuid'
+import GraphemeSplitter from 'grapheme-splitter'
+
+window.onload = function () {
     console.log('loaded')
     initPostbox()
     connection()
-    initPlugin(plugins)
+    initPlugin()
     if (localStorage.getItem('control-center-np')) $('#ccnp').removeClass('hide')
-	
+
 }
 
 const size = localStorage.getItem('size')
 if (size) $('html,body').css('font-size', `${size}px`)
-$.strip_tags = function(str, allowed) {
+export const stripTags = function (str: string, allowed?: string) {
     if (!str) {
         return ''
     }
     allowed = (((allowed || '') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('')
-    var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi,
+    const tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>?/gi,
         commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi
-    return str.replace(commentsAndPhpTags, '').replace(tags, function($0, $1) {
+    return str.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
+        if (!allowed) return ''
         return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : ''
     })
 }
 
-function escapeHTML(str) {
+export function escapeHTML(str: string) {
     if (!str) {
         return ''
     }
@@ -33,7 +39,7 @@ function escapeHTML(str) {
         .replace(/'/g, '&#039;')
 }
 //PHPのnl2brと同様
-function nl2br(str) {
+export function nl2br(str: string) {
     if (!str) {
         return ''
     }
@@ -42,7 +48,7 @@ function nl2br(str) {
     return str
 }
 
-function br2nl(str) {
+export function br2nl(str: string) {
     if (!str) {
         return ''
     }
@@ -50,8 +56,8 @@ function br2nl(str) {
     return str
 }
 
-function formattime(date) {
-    var str = date.getFullYear() + '-'
+export function formatTime(date: Date) {
+    let str = date.getFullYear() + '-'
     if (date.getMonth() + 1 < 10) {
         str = str + '0' + (date.getMonth() + 1) + '-'
     } else {
@@ -76,8 +82,8 @@ function formattime(date) {
     return escapeHTML(str)
 }
 
-function formattimeutc(date) {
-    var str = date.getUTCFullYear() + '-'
+export function formatTimeUtc(date: Date) {
+    let str = date.getUTCFullYear() + '-'
     if (date.getUTCMonth() + 1 < 10) {
         str = str + '0' + (date.getUTCMonth() + 1) + '-'
     } else {
@@ -103,13 +109,13 @@ function formattimeutc(date) {
 }
 postMessage(['sendSinmpleIpc', 'custom-css-request'], '*')
 
-function makeCID() {
+export function makeCID() {
     return uuid()
 }
 
-function rgbToHex(color) {
+export function rgbToHex(color: string) {
     // HEXに変換したものを代入する変数
-    var hex = ''
+    let hex = ''
 
     // 第1引数がHEXのとき変換処理は必要ないのでそのままreturn
     // IE8の場合はjQueryのcss()関数でHEXを返すので除外
@@ -118,18 +124,18 @@ function rgbToHex(color) {
     }
 
     // 正規表現
-    var regex = color.match(/^rgb\(([0-9.]+),\s*([0-9.]+),\s*([0-9.]+)\)$/)
+    const regex = color.match(/^rgb\(([0-9.]+),\s*([0-9.]+),\s*([0-9.]+)\)$/)
 
     // 正規表現でマッチしたとき
     if (regex) {
-        var rgb = [
+        const rgb = [
             // RGBからHEXへ変換
             parseInt(regex[1]).toString(16),
             parseInt(regex[2]).toString(16),
             parseInt(regex[3]).toString(16)
         ]
 
-        for (var i = 0; i < rgb.length; ++i) {
+        for (let i = 0; i < rgb.length; ++i) {
             // rgb(1,1,1)のようなときHEXに変換すると1桁になる
             // 1桁のときは前に0を足す
             if (rgb[i].length === 1) {
@@ -144,65 +150,34 @@ function rgbToHex(color) {
     console.error(color + ':第1引数はRGB形式で入力')
 }
 /*マルチバイト用切り出し*/
-$.isSurrogatePear = function(upper, lower) {
-    return 0xd800 <= upper && upper <= 0xdbff && 0xdc00 <= lower && lower <= 0xdfff
-}
-$.mb_strlen = function(str) {
-    var splitter = new GraphemeSplitter()
-    var arr = splitter.splitGraphemes(str)
+export const strlenMultibyte = function (str: string) {
+    const splitter = new GraphemeSplitter()
+    const arr = splitter.splitGraphemes(str)
     return arr.length
 }
-$.mb_substr = function(str, begin, end) {
-        //配列にする
-        var splitter = new GraphemeSplitter()
-        var arr = splitter.splitGraphemes(str)
-        var newarr = []
-        for (var i = 0; i < arr.length; i++) {
-            if (i >= begin && i <= end) {
-                newarr.push(arr[i])
-            }
+export const substrMultibyte = function (str: string, begin: number, end: number) {
+    //配列にする
+    const splitter = new GraphemeSplitter()
+    const arr = splitter.splitGraphemes(str)
+    const newarr: string[] = []
+    for (let i = 0; i < arr.length; i++) {
+        if (i >= begin && i <= end) {
+            newarr.push(arr[i])
         }
-        return newarr.join('')
     }
-    //ソートするやつ
-function object_array_sort(data, key, order, fn) {
-    var num_a = -1
-    var num_b = 1
-    if (order === 'asc') {
-        num_a = 1
-        num_b = -1
-    }
-    data = data.sort(function(a, b) {
-        var x = a[key]
-        var y = b[key]
-        if (x > y) return num_a
-        if (x < y) return num_b
-        return 0
-    })
-    var arrObj = {}
-    for (var i = 0; i < data.length; i++) {
-        arrObj[data[i]['family']] = data[i]
-    }
-    data = []
-    for (var key in arrObj) {
-        data.push(arrObj[key])
-    }
-    fn(data)
+    return newarr.join('')
 }
-
-function setLog(txt1, txt2, txt3) {
+export function setLog(txt1: string, txt2: number | string, txt3: string) {
     //url,statuscode,responsetext
-    var text = new Date().toUTCString()
+    let text = new Date().toUTCString()
     text = text + ',' + txt1 + ',' + txt2 + ',' + escapeCsv(txt3)
     console.error(text)
     postMessage(['log', text], '*')
 }
 
-function escapeCsv(str) {
-    if (!str) {
-        return str
-    }
-    var result
+export function escapeCsv(str: string) {
+    if (!str) return str
+    let result: string
     result = str.toString().replace(/\"/g, '""')
     if (result.indexOf(',') >= 0) {
         result = '"' + result + '"'
@@ -210,26 +185,8 @@ function escapeCsv(str) {
     return result
 }
 
-function evalAttr(json, attr, lenCk) {
-    if (json[attr]) {
-        if (lenCk) {
-            if (json[attr][0]) {
-                return true
-            } else {
-                return false
-            }
-        } else {
-            return true
-        }
-    } else {
-        return false
-    }
-}
-
-function statusModel(now) {
-    if (!now) {
-        var now = new Date().toString()
-    }
+export function statusModel(nowRaw?: string) {
+    const now = nowRaw || new Date().toString()
     return {
         id: '',
         created_at: now,
@@ -285,7 +242,7 @@ function statusModel(now) {
 }
 
 function webviewFinder() {
-    const webview = document.querySelector('webview')
+    const webview: any = document.querySelector('webview')
     webview.addEventListener('did-navigate', (e) => {
         const url = webview.getURL()
         if (url.match('https://mobile.twitter.com/login')) {
@@ -296,9 +253,9 @@ function webviewFinder() {
     })
 }
 
-function initWebviewEvent() {
+export function initWebviewEvent() {
     if (document.querySelector('webview')) { webviewFinder() } else {
-        const timerWV = setInterval(function() {
+        const timerWV = setInterval(function () {
             document.querySelector('webview') ?
                 (webviewFinder(), clearInterval(timerWV)) :
                 console.log('まだロード中')

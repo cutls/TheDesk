@@ -290,7 +290,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			var spoil = escapeHTML(toot.spoiler_text)
 			var spoiler = "cw cw_hide_" + toot.id
 			var api_spoil = "gray"
-			var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id + '\')" class="nex parsed">' + lang.lang_parse_cwshow + "</a><br>"
+			var spoiler_show = '<a href="#" onclick="cwShow(\'' + toot.id + '\')" class="nex parsed">' + lang.lang_parse_cwshow + "</a><br>"
 		} else {
 			var ct1 = toot.content.split("</p>").length + toot.content.split("<br />").length - 2
 			var ct2 = toot.content.split("</p>").length + toot.content.split("<br>").length - 2
@@ -299,11 +299,11 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			} else {
 				var ct = ct2
 			}
-			if ((sent < ct && $.mb_strlen($.strip_tags(toot.content)) > 5) || ($.strip_tags(toot.content).length > ltr && $.mb_strlen($.strip_tags(toot.content)) > 5)) {
+			if ((sent < ct && strlenMultibyte(stripTags(toot.content)) > 5) || (stripTags(toot.content).length > ltr && strlenMultibyte(stripTags(toot.content)) > 5)) {
 				var content = '<span class="gray">' + lang.lang_parse_fulltext + "</span><br>" + toot.content
-				var spoil = '<span class="cw-long-' + toot.id + '">' + $.mb_substr($.strip_tags(toot.content), 0, 100) + '</span><span class="gray">' + lang.lang_parse_autofold + "</span>"
+				var spoil = '<span class="cw-long-' + toot.id + '">' + substrMultibyte(stripTags(toot.content), 0, 100) + '</span><span class="gray">' + lang.lang_parse_autofold + "</span>"
 				var spoiler = "cw cw_hide_" + toot.id
-				var spoiler_show = '<a href="#" onclick="cw_show(\'' + toot.id + '\')" class="nex parsed">' + lang.lang_parse_more + "</a><br>"
+				var spoiler_show = '<a href="#" onclick="cwShow(\'' + toot.id + '\')" class="nex parsed">' + lang.lang_parse_more + "</a><br>"
 			} else {
 				var content = toot.content
 				var spoil = escapeHTML(toot.spoiler_text)
@@ -311,7 +311,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				var spoiler_show = ""
 			}
 		}
-		var urls = $.strip_tags(content)
+		var urls = stripTags(content)
 			.replace(/\n/g, " ")
 			.match(/https?:\/\/([-a-zA-Z0-9@.]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/)
 		if (urls) {
@@ -424,7 +424,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 						var word = worde
 					}
 					var regExp = new RegExp(word, "g")
-					if ($.strip_tags(content).match(regExp)) {
+					if (stripTags(content).match(regExp)) {
 						boostback = "hide by_filter"
 					}
 				}

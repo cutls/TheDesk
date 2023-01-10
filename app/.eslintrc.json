@@ -1,14 +1,23 @@
 {
     "extends": "eslint:recommended",
-    "env": {"browser": true},
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "env": {
+        "browser": true
+    },
     "rules": {
         "no-console": "off",
-        "semi": ["error", "never"]
+        "semi": [
+            "error",
+            "never"
+        ],
+        "quotes": ["error", "single"]
     },
     "globals": {
-        "$": false,
+        "jQuery": false,
         "ver": true,
         "pwa": true,
-        "lang": true
+        "useLang": true,
+        "global": true
     }
 }

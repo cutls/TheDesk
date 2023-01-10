@@ -69,8 +69,8 @@ function construct(ver, basefile, pwa, store) {
         }
         mainJson.language = lang
         fs.writeFileSync(
-            basefile + 'view/' + lang + '/main.js',
-            JSON.stringify(mainJson).replace(/^{/, 'var lang = {')
+            basefile + 'view/' + lang + '/main.ts',
+            JSON.stringify(mainJson).replace(/^{/, 'export default {')
         )
     }
     for (let i = 0; i < samples.length; i++) {

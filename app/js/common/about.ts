@@ -1,5 +1,4 @@
-//@ts-check
 //このソフトについて
-function about() {
-	postMessage(["sendSinmpleIpc", "about"], "*")
+export function about() {
+	postMessage(['sendSinmpleIpc', 'about'], '*')
 }

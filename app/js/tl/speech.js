@@ -72,7 +72,7 @@ $repeat = setInterval(function() {
 	}
 }, 300)
 function voiceParse(msg) {
-	msg = $.strip_tags(msg)
+	msg = stripTags(msg)
 	msg = msg.replace(/#/g, '')
 	msg = msg.replace(/'/g, '')
 	msg = msg.replace(/"/g, '')

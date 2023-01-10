@@ -1,6 +1,10 @@
 /*保護系*/
 //画像保護
-function nsfw(force) {
+import $ from 'jquery'
+declare var M
+import { formatTime } from '../platform/first'
+
+export function nsfw(force?: boolean) {
 	if (force || !$('#nsfw').hasClass('nsfw-avail')) {
 		$('#nsfw').addClass('yellow-text')
 		$('#nsfw').html('visibility')
@@ -13,7 +17,9 @@ function nsfw(force) {
 }
 
 //投稿公開範囲
-function vis(set) {
+export type IVis = 'public' | 'unlisted' | 'private' | 'direct' | 'limited' | 'local' | 'inherit'
+export const isIVis = (item: string): item is IVis => ['public', 'unlisted', 'private', 'direct', 'limited', 'local', 'inherit'].includes(item)
+export function vis(set: IVis) {
 	$('#vis').text(set)
 	$('#vis-icon').removeClass('red-text')
 	$('#vis-icon').removeClass('orange-text')
@@ -40,38 +46,35 @@ function vis(set) {
 		$('#vis-icon').text('visibility')
 		$('#vis-icon').addClass('light-blue-text')
 	}
-	var vis = localStorage.getItem('vis')
+	const vis = localStorage.getItem('vis')
 	if (vis === 'memory') {
-		var acct_id = $('#post-acct-sel').val()
+		const acct_id = $('#post-acct-sel').val()
 		localStorage.setItem('vis-memory-' + acct_id, set)
 	}
-	var ins = M.Dropdown.getInstance($('#dropdown1'))
-	if (ins) {
-		ins.close()
-	}
+	const ins = M.Dropdown.getInstance($('#dropdown1'))
+	if (ins) ins.close()
 }
-function loadVis() {
-	var vist = localStorage.getItem('vis')
+export function loadVis() {
+	const vist = localStorage.getItem('vis')
 	if (!vist) {
 		vis('public')
 	} else {
 		if (vist === 'memory') {
-			var acct_id = $('#post-acct-sel').val()
-			var memory = localStorage.getItem('vis-memory-' + acct_id)
-			if (!memory) {
-				memory = 'public'
-			}
+			const acct_id = $('#post-acct-sel').val()
+			let memory = localStorage.getItem('vis-memory-' + acct_id)
+			if (!memory) memory = 'public'
+			if (!isIVis(memory)) return
 			vis(memory)
 		} else if (vist === 'useapi') {
-			var acct_id = $('#post-acct-sel').val()
-			var multi = localStorage.getItem('multi')
-			var obj = JSON.parse(multi)
-			var memory = obj[acct_id]['vis']
-			if (!memory) {
-				memory = 'public'
-			}
+			const acct_id = parseInt($('#post-acct-sel').val()?.toString() || '0', 10)
+			const multi = localStorage.getItem('multi') || '{}'
+			const obj = JSON.parse(multi)
+			let memory = obj[acct_id]['vis']
+			memory = 'public'
+			if (!isIVis(memory)) return
 			vis(memory)
 		} else {
+			if (!isIVis(vist)) return
 			vis(vist)
 		}
 	}
@@ -79,12 +82,12 @@ function loadVis() {
 loadVis()
 
 //コンテントワーニング
-function cw(force) {
+export function cw(force?: boolean) {
 	if (force || !$('#cw').hasClass('cw-avail')) {
 		$('#cw-text').show()
 		$('#cw').addClass('yellow-text')
 		$('#cw').addClass('cw-avail')
-		var cwt = localStorage.getItem('cw-text')
+		const cwt = localStorage.getItem('cw-text')
 		if (cwt) {
 			$('#cw-text').val(cwt)
 		}
@@ -96,15 +99,15 @@ function cw(force) {
 	}
 }
 //TLでコンテントワーニングを表示トグル
-function cw_show(e) {
+function cwShow(e: any) {
 	$(e).parent().parent().find('.cw_hide').toggleClass('cw')
 	$(e).parent().find('.cw_long').toggleClass('hide')
 }
 $(function () {
 	$('#cw-text').on('change', function (event) {
-		var acct_id = $('#post-acct-sel').val()
-		var domain = localStorage.getItem('domain_' + acct_id)
-		var cwlen = $('#cw-text').val().length
+		const acct_id = $('#post-acct-sel').val()
+		const domain = localStorage.getItem('domain_' + acct_id)
+		const cwlen = $('#cw-text').val().length
 
 		if (idata[domain + '_letters']) {
 			$('#textarea').attr('data-length', idata[domain + '_letters'] - cwlen)
@@ -114,27 +117,27 @@ $(function () {
 	})
 })
 //スケジュール
-function schedule() {
+export function schedule() {
 	if ($('#sch-box').hasClass('sch-avail')) {
 		$('#sch-box').hide()
 		$('#sch-box').removeClass('sch-avail')
 	} else {
-		var date = new Date()
+		const date = new Date()
 
 		$('#sch-box').show()
-		$('#sch-date').val(formattime(date))
+		$('#sch-date').val(formatTime(date))
 		$('#sch-box').addClass('sch-avail')
 	}
 }
 
 //下書き機能
-function draftToggle(force) {
+export function draftToggle(force) {
 	if ($('#draft').hasClass('hide') || force) {
 		$('#draft').removeClass('hide')
 		$('#right-side').show()
 		$('#right-side').css('width', '300px')
 		$('#left-side').css('width', 'calc(100% - 300px)')
-		var width = localStorage.getItem('postbox-width')
+		const width = localStorage.getItem('postbox-width')
 		if (width) {
 			width = width.replace('px', '') * 1 + 300
 		} else {
@@ -153,7 +156,7 @@ function draftToggle(force) {
 		$('#suggest').html('')
 		$('#draft').html('')
 		$('#left-side').css('width', '100%')
-		var width = localStorage.getItem('postbox-width')
+		const width = localStorage.getItem('postbox-width')
 		if (width) {
 			width = width.replace('px', '') * 1
 		} else {
@@ -163,12 +166,12 @@ function draftToggle(force) {
 	}
 }
 function draftDraw() {
-	var draft = localStorage.getItem('draft')
-	var html = `<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="addToDraft();">${lang.lang_secure_draft}</button>`
+	const draft = localStorage.getItem('draft')
+	const html = `<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="addToDraft();">${lang.lang_secure_draft}</button>`
 	if (draft) {
-		var draftObj = JSON.parse(draft)
+		const draftObj = JSON.parse(draft)
 		for (let i = 0; i < draftObj.length; i++) {
-			var toot = draftObj[i]
+			const toot = draftObj[i]
 			html = html + `<div class="tootInDraft">
 				<i class="waves-effect gray material-icons" onclick="useThisDraft(${i})" title="${lang.lang_secure_userThis}">reply</i>
 				<i class="waves-effect gray material-icons" onclick="deleteThisDraft(${i})" title="${lang.lang_secure_deleteThis}">cancel</i>
@@ -178,10 +181,10 @@ function draftDraw() {
 	}
 	$('#draft').html(html)
 }
-function addToDraft() {
-	var json = post(null, null, true)
-	var draft = localStorage.getItem('draft')
-	var draftObj = []
+export function addToDraft() {
+	const json = post(null, null, true)
+	const draft = localStorage.getItem('draft')
+	const draftObj = []
 	if (draft) draftObj = JSON.parse(draft)
 	draftObj.push(json)
 	draft = JSON.stringify(draftObj)
@@ -189,14 +192,14 @@ function addToDraft() {
 	draftDraw()
 }
 function useThisDraft(i) {
-	var draft = localStorage.getItem('draft')
-	var draftObj = JSON.parse(draft)
+	const draft = localStorage.getItem('draft')
+	const draftObj = JSON.parse(draft)
 	draftToPost(draftObj[i], draftObj[i]['TheDeskAcctId'], 0)
 	draftToggle()
 }
 function deleteThisDraft(i) {
-	var draft = localStorage.getItem('draft')
-	var draftObj = JSON.parse(draft)
+	const draft = localStorage.getItem('draft')
+	const draftObj = JSON.parse(draft)
 	draftObj.splice(i, 1)
 	draft = JSON.stringify(draftObj)
 	localStorage.setItem('draft', draft)

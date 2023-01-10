@@ -8,7 +8,7 @@ function escapeHTMLtemp(str) {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;')
 }
-$.strip_tagstemp = function(str, allowed) {
+stripTagstemp = function(str, allowed) {
         if (!str) {
             return ""
         }
@@ -265,7 +265,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                 if (native === "yes") {
                     var os = localStorage.getItem("platform")
                     var options = {
-                        body: toot.user.name + "(" + toot.user.username + ")" + what + "\n\n" + $.strip_tagstemp(toot.note.text),
+                        body: toot.user.name + "(" + toot.user.username + ")" + what + "\n\n" + stripTagstemp(toot.note.text),
                         icon: toot.user.avatarUrl
                     }
                     var n = new Notification('TheDesk:' + domain, options)
@@ -362,18 +362,18 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             var spoil = escapeHTMLtemp(toot.cw)
             var spoiler = "cw cw_hide"
             var api_spoil = "gray"
-            var spoiler_show = '<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">' + lang.lang_parse_cwshow + '</a><br>'
+            var spoiler_show = '<a href="#" onclick="cwShow(this)" class="nex parsed cw_btn">' + lang.lang_parse_cwshow + '</a><br>'
         } else {
             var ct1 = nl2br(toot.text).split('<br />').length - 2
             var ct2 = nl2br(toot.text).split('<br>').length - 2
             if (ct1 > ct2) { var ct = ct1 } else { var ct = ct2 }
-            if ((sent < ct && $.mb_strlen($.strip_tagstemp(toot.text)) > 5) || ($.strip_tagstemp(toot.text).length > ltr && $.mb_strlen($.strip_tagstemp(toot.text)) > 5)) {
+            if ((sent < ct && strlenMultibyte(stripTagstemp(toot.text)) > 5) || (stripTagstemp(toot.text).length > ltr && strlenMultibyte(stripTagstemp(toot.text)) > 5)) {
                 var content = '<span class="gray">' + lang.lang_parse_fulltext + '</span><br>' + escapeHTMLtemp(toot.text)
-                var spoil = '<span class="cw_long">' + $.mb_substr($.strip_tagstemp(
+                var spoil = '<span class="cw_long">' + substrMultibyte(stripTagstemp(
                         toot.text), 0, 100) +
                     '</span><span class="gray">' + lang.lang_parse_autofold + '</span>'
                 var spoiler = "cw cw_hide"
-                var spoiler_show = '<a href="#" onclick="cw_show(this)" class="nex parsed cw_btn">' + lang.lang_parse_more + '</a><br>'
+                var spoiler_show = '<a href="#" onclick="cwShow(this)" class="nex parsed cw_btn">' + lang.lang_parse_more + '</a><br>'
             } else {
                 var content = escapeHTMLtemp(toot.text)
                 if (toot.cw) {
@@ -387,7 +387,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             }
         }
         var analyze = ''
-        var urls = $.strip_tagstemp(content).replace(/\n/g, " ").match(
+        var urls = stripTagstemp(content).replace(/\n/g, " ").match(
             /https?:\/\/([-a-zA-Z0-9@.]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
         )
         if (urls) {
@@ -587,7 +587,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
                         var wordList = worde
                     }
                     var regExp = new RegExp(wordList.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&"), "g")
-                    if ($.strip_tagstemp(content).match(regExp)) {
+                    if (stripTagstemp(content).match(regExp)) {
                         boostback = "hide by_filter"
                     }
                 }
@@ -845,7 +845,7 @@ function misskeyParse(obj, mix, acct_id, tlid, popup, mutefilter) {
             '<div class="' + if_mine + ' action ' + disp["red"] + ' ' + noauth + '"><a onclick="redraft(\'' + toot.id + '\',' +
             acct_id +
             ')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_parse_redraft + '"><i class="material-icons">redo</i></a></div>' + trans +
-            '<span class="cbadge viabadge waves-effect ' + viashow + ' ' + mine_via + '" onclick="client(\'' + $.strip_tagstemp(via) + '\')" title="via ' + $.strip_tagstemp(via) + '">via ' +
+            '<span class="cbadge viabadge waves-effect ' + viashow + ' ' + mine_via + '" onclick="client(\'' + stripTagstemp(via) + '\')" title="via ' + stripTagstemp(via) + '">via ' +
             via +
             '</span>' +
             '</div><div class="area-side ' + mouseover + '"><div class="action ' + if_mine + ' ' + noauth + '"><a onclick="toggleAction(\'' + toot.id + '\',\'' + tlid + '\',\'' + acct_id + '\')" class="waves-effect waves-dark btn-flat" style="padding:0"><i class="text-darken-3 material-icons act-icon">expand_more</i></a></div>' +

@@ -593,7 +593,7 @@ function staCopy(id) {
 	html = html.replace(/<\/p>/, '\n')
 	console.log('Copy it:\n' + html)
 	html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, '$1')
-	html = $.strip_tags(html)
+	html = stripTags(html)
 	if (execCopy(html)) {
 		M.toast({ html: lang.lang_details_txt, displayLength: 1500 })
 	}

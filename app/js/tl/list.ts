@@ -1,111 +1,72 @@
-function listMenu() {
+import $ from 'jquery'
+import lang from '../common/lang'
+import { escapeHTML, setLog } from '../platform/first'
+import { todo } from '../ui/tips'
+export function listMenu() {
 	$('#left-menu a').removeClass('active')
 	$('#listMenu').addClass('active')
 	$('.menu-content').addClass('hide')
 	$('#list-box').removeClass('hide')
-	$('ul.tabs').tabs('select_tab', 'src-sta')
 	$('#src-contents').html('')
 }
 
-function list() {
+export function list() {
 	$('#lists-user').html('')
-	var acct_id = $('#list-acct-sel').val()
-	var domain = localStorage.getItem('domain_' + acct_id)
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	if (localStorage.getItem('mode_' + domain) === 'misskey') {
-		var start = 'https://' + domain + '/api/users/lists/list'
-		fetch(start, {
-			method: 'POST',
-			body: JSON.stringify({
-				i: at
-			})
-		})
-			.then(function(response) {
-				if (!response.ok) {
-					response.text().then(function(text) {
-						setLog(response.url, response.status, text)
-					})
-				}
-				return response.json()
-			})
-			.catch(function(error) {
-				todo(error)
-				setLog(start, 'JSON', error)
-				console.error(error)
-			})
-			.then(function(json) {
-				if (json) {
-					var lists = ''
-					Object.keys(json).forEach(function(key) {
-						var list = json[key]
-						lists =
-							lists +
-							escapeHTML(list.title) +
-							`:<a onclick="listShow('${list.id}','${escapeHTML(
-								list.title
-							)}','${acct_id}')" class="pointer">
-								${lang.lang_list_show}
-							</a><br>`
-					})
-					$('#lists').html(lists)
-				} else {
-					$('#lists').html(lang.lang_list_nodata)
-				}
-			})
-	} else {
-		var start = 'https://' + domain + '/api/v1/lists'
-		fetch(start, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
+	const acct_id = $('#list-acct-sel').val()
+	const domain = localStorage.getItem('domain_' + acct_id)
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
+	const start = 'https://' + domain + '/api/v1/lists'
+	fetch(start, {
+		method: 'GET',
+		headers: {
+			'content-type': 'application/json',
+			Authorization: 'Bearer ' + at
+		}
+	})
+		.then(function (response) {
+			if (!response.ok) {
+				response.text().then(function (text) {
+					setLog(response.url, response.status, text)
+				})
 			}
+			return response.json()
 		})
-			.then(function(response) {
-				if (!response.ok) {
-					response.text().then(function(text) {
-						setLog(response.url, response.status, text)
-					})
-				}
-				return response.json()
-			})
-			.catch(function(error) {
-				todo(error)
-				setLog(start, 'JSON', error)
-				console.error(error)
-			})
-			.then(function(json) {
-				if (json) {
-					var lists = ''
-					Object.keys(json).forEach(function(key) {
-						var list = json[key]
-						lists =
-							lists +
-							escapeHTML(list.title) +
-							`:<a onclick="listShow('${list.id}','${escapeHTML(
-								list.title
-							)}','${acct_id}')" class="pointer">
+		.catch(function (error) {
+			todo(error)
+			setLog(start, 'JSON', error)
+			console.error(error)
+		})
+		.then(function (json) {
+			if (json) {
+				let lists = ''
+				Object.keys(json).forEach(function (key) {
+					const list = json[key]
+					lists =
+						lists +
+						escapeHTML(list.title) +
+						`:<a onclick="listShow('${list.id}','${escapeHTML(
+							list.title
+						)}','${acct_id}')" class="pointer">
 								${lang.lang_list_show}
 							</a>/
 							<a onclick="listUser('${list.id}','${acct_id}')" class="pointer">
 								${lang.lang_list_users}
 							</a><br>`
-					})
-					$('#lists').html(lists)
-				} else {
-					$('#lists').html(lang.lang_list_nodata)
-				}
-			})
-	}
+				})
+				$('#lists').html(lists)
+			} else {
+				$('#lists').html(lang.lang_list_nodata)
+			}
+		})
 }
-function makeNewList() {
-	var acct_id = $('#list-acct-sel').val()
-	var text = $('#list-add').val()
-	var domain = localStorage.getItem('domain_' + acct_id)
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
+export function makeNewList() {
+	const acct_id = $('#list-acct-sel').val()
+	const text = $('#list-add').val()
+	const domain = localStorage.getItem('domain_' + acct_id)
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
 	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
-		var start = 'https://' + domain + '/api/v1/lists'
-		var httpreq = new XMLHttpRequest()
+		const start = 'https://' + domain + '/api/v1/lists'
+		const httpreq = new XMLHttpRequest()
 		httpreq.open('POST', start, true)
 		httpreq.setRequestHeader('Content-Type', 'application/json')
 		httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
@@ -115,9 +76,9 @@ function makeNewList() {
 				title: text
 			})
 		)
-		httpreq.onreadystatechange = function() {
+		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
-				var json = httpreq.response
+				const json = httpreq.response
 				if (this.status !== 200) {
 					setLog(start, this.status, this.response)
 				}
@@ -126,8 +87,8 @@ function makeNewList() {
 			}
 		}
 	} else {
-		var start = 'https://' + domain + '/api/users/lists/create'
-		var httpreq = new XMLHttpRequest()
+		const start = 'https://' + domain + '/api/users/lists/create'
+		const httpreq = new XMLHttpRequest()
 		httpreq.open('POST', start, true)
 		httpreq.setRequestHeader('Content-Type', 'application/json')
 		httpreq.responseType = 'json'
@@ -137,9 +98,9 @@ function makeNewList() {
 				title: text
 			})
 		)
-		httpreq.onreadystatechange = function() {
+		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
-				var json = httpreq.response
+				const json = httpreq.response
 				if (this.status !== 200) {
 					setLog(start, this.status, this.response)
 				}
@@ -149,14 +110,14 @@ function makeNewList() {
 		}
 	}
 }
-function listShow(id, title, acct_id) {
+export function listShow(id, title, acct_id) {
 	localStorage.setItem('list_' + id + '_' + acct_id, title)
 	tl('list', id, acct_id, 'add')
 }
-function listUser(id, acct_id) {
-	var domain = localStorage.getItem('domain_' + acct_id)
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	var start = 'https://' + domain + '/api/v1/lists/' + id + '/accounts'
+export function listUser(id, acct_id) {
+	const domain = localStorage.getItem('domain_' + acct_id)
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
+	const start = 'https://' + domain + '/api/v1/lists/' + id + '/accounts'
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -164,23 +125,23 @@ function listUser(id, acct_id) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			todo(error)
 			setLog(start, 'JSON', error)
 			console.error(error)
 		})
-		.then(function(json) {
+		.then(function (json) {
 			if (json) {
-				var lists = ''
-				var templete = userparse(json, '', acct_id)
+				const lists = ''
+				const templete = userparse(json, '', acct_id)
 				if (!json[0]) {
 					templete = lang.lang_list_nouser
 				}
@@ -191,11 +152,11 @@ function listUser(id, acct_id) {
 			}
 		})
 }
-function hisList(user, acct_id) {
-	var domain = localStorage.getItem('domain_' + acct_id)
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
+export function hisList(user, acct_id) {
+	const domain = localStorage.getItem('domain_' + acct_id)
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
 	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
-		var start = 'https://' + domain + '/api/v1/lists'
+		const start = 'https://' + domain + '/api/v1/lists'
 		fetch(start, {
 			method: 'GET',
 			headers: {
@@ -203,24 +164,24 @@ function hisList(user, acct_id) {
 				Authorization: 'Bearer ' + at
 			}
 		})
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				if (json) {
-					var lists = lang.lang_list_add + '<br>'
-					Object.keys(json).forEach(function(key) {
-						var list = json[key]
+					const lists = lang.lang_list_add + '<br>'
+					Object.keys(json).forEach(function (key) {
+						const list = json[key]
 						lists =
 							lists +
 							`<a onclick="listAdd('${list.id}','${user}','${acct_id}')" class="pointer">
@@ -232,7 +193,7 @@ function hisList(user, acct_id) {
 					$('#his-lists-a').html(lang.lang_list_nodata)
 				}
 			})
-		var start = 'https://' + domain + '/api/v1/accounts/' + user + '/lists'
+		const start = 'https://' + domain + '/api/v1/accounts/' + user + '/lists'
 		fetch(start, {
 			method: 'GET',
 			headers: {
@@ -240,24 +201,24 @@ function hisList(user, acct_id) {
 				Authorization: 'Bearer ' + at
 			}
 		})
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				if (json) {
-					var lists = lang.lang_list_remove + '<br>'
-					Object.keys(json).forEach(function(key) {
-						var list = json[key]
+					const lists = lang.lang_list_remove + '<br>'
+					Object.keys(json).forEach(function (key) {
+						const list = json[key]
 						lists =
 							lists +
 							`<a onclick="listRemove('${list.id}','${user}','${acct_id}')" class="pointer">
@@ -270,31 +231,31 @@ function hisList(user, acct_id) {
 				}
 			})
 	} else {
-		var start = 'https://' + domain + '/api/users/lists/list'
+		const start = 'https://' + domain + '/api/users/lists/list'
 		fetch(start, {
 			method: 'POST',
 			body: JSON.stringify({
 				i: at
 			})
 		})
-			.then(function(response) {
+			.then(function (response) {
 				if (!response.ok) {
-					response.text().then(function(text) {
+					response.text().then(function (text) {
 						setLog(response.url, response.status, text)
 					})
 				}
 				return response.json()
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				todo(error)
 				setLog(start, 'JSON', error)
 				console.error(error)
 			})
-			.then(function(json) {
+			.then(function (json) {
 				if (json) {
-					var lists = ''
-					Object.keys(json).forEach(function(key) {
-						var list = json[key]
+					const lists = ''
+					Object.keys(json).forEach(function (key) {
+						const list = json[key]
 						lists =
 							lists +
 							list.title +
@@ -316,31 +277,31 @@ function hisList(user, acct_id) {
 		$('#his-lists-b').html('')
 	}
 }
-function listAdd(id, user, acct_id) {
-	var domain = localStorage.getItem('domain_' + acct_id)
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
+export function listAdd(id, user, acct_id) {
+	const domain = localStorage.getItem('domain_' + acct_id)
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
 	if (localStorage.getItem('mode_' + domain) === 'misskey') {
-		var start = 'https://' + domain + '/api/users/lists/push'
-		var i = {
+		const start = 'https://' + domain + '/api/users/lists/push'
+		const i = {
 			i: at,
 			listId: id,
 			userId: user
 		}
 	} else {
-		var start = 'https://' + domain + '/api/v1/lists/' + id + '/accounts'
-		var i = {
+		const start = 'https://' + domain + '/api/v1/lists/' + id + '/accounts'
+		const i = {
 			account_ids: [user]
 		}
 	}
-	var httpreq = new XMLHttpRequest()
+	const httpreq = new XMLHttpRequest()
 	httpreq.open('POST', start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify(i))
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
-			var json = httpreq.response
+			const json = httpreq.response
 			if (this.status !== 200) {
 				setLog(start, this.status, this.response)
 			}
@@ -348,33 +309,33 @@ function listAdd(id, user, acct_id) {
 		}
 	}
 }
-function listRemove(id, user, acct_id) {
-	var domain = localStorage.getItem('domain_' + acct_id)
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
+export function listRemove(id, user, acct_id) {
+	const domain = localStorage.getItem('domain_' + acct_id)
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
 	if (localStorage.getItem('mode_' + domain) === 'misskey') {
-		var start = 'https://' + domain + '/api/users/lists/push'
-		var method = 'POST'
-		var i = {
+		const start = 'https://' + domain + '/api/users/lists/push'
+		const method = 'POST'
+		const i = {
 			i: at,
 			listId: id,
 			userId: user
 		}
 	} else {
-		var start = 'https://' + domain + '/api/v1/lists/' + id + '/accounts'
-		var method = 'DELETE'
-		var i = {
+		const start = 'https://' + domain + '/api/v1/lists/' + id + '/accounts'
+		const method = 'DELETE'
+		const i = {
 			account_ids: [user]
 		}
 	}
-	var httpreq = new XMLHttpRequest()
+	const httpreq = new XMLHttpRequest()
 	httpreq.open(method, start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify(i))
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
-			var json = httpreq.response
+			const json = httpreq.response
 			if (this.status !== 200) {
 				setLog(start, this.status, this.response)
 			}
