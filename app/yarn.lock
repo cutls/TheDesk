@@ -4875,7 +4875,8 @@ tty-browserify@0.0.1:
 
 "twemoji-asset@https://github.com/twitter/twemoji":
   version "14.0.2"
-  resolved "https://github.com/twitter/twemoji#ad3d3d669bb3697946577247ebb15818f09c6c91"
+  uid d94f4cf793e6d5ca592aa00f58a88f6a4229ad43
+  resolved "https://github.com/twitter/twemoji#d94f4cf793e6d5ca592aa00f58a88f6a4229ad43"
   dependencies:
     fs-extra "^8.0.1"
     jsonfile "^5.0.0"
