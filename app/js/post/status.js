@@ -49,7 +49,7 @@ function fav(id, acct_id, remote) {
                     $('.fav_' + id).addClass('yellow-text')
                 }
             } else {
-                M.toast({ html: lang.lang_status_favWarn, displayLength: 1000 })
+                toast({ html: lang.lang_status_favWarn, displayLength: 1000 })
             }
         }
     }
@@ -259,7 +259,7 @@ async function acctResolveLegacy(domain, user, options) {
         if (idJson.accounts[0]) {
             return idJson.accounts[0]
         } else {
-            M.toast({ html: lang.lang_fatalerroroccured, displayLength: 2000 })
+            toast({ html: lang.lang_fatalerroroccured, displayLength: 2000 })
         }
     } catch {
         console.log('Error occured on searching and fetching with resolve')
@@ -636,7 +636,7 @@ function empUser() {
     if (!obj) {
         var obj = []
         obj.push(id)
-        M.toast({ html: id + lang.lang_status_emphas, displayLength: 4000 })
+        toast({ html: id + lang.lang_status_emphas, displayLength: 4000 })
     } else {
         var can
         Object.keys(obj).forEach(function (key) {
@@ -646,7 +646,7 @@ function empUser() {
             } else {
                 can = true
                 obj.splice(key, 1)
-                M.toast({ html: id + lang.lang_status_unemphas, displayLength: 4000 })
+                toast({ html: id + lang.lang_status_unemphas, displayLength: 4000 })
             }
         })
     }
@@ -690,7 +690,7 @@ function pinUser() {
 //URLコピー
 function tootUriCopy(url) {
     execCopy(url)
-    M.toast({ html: lang.lang_details_url, displayLength: 1500 })
+    toast({ html: lang.lang_details_url, displayLength: 1500 })
 }
 
 //他のアカウントで…
@@ -739,7 +739,7 @@ function staEx(mode) {
 
 function toggleAction(elm) {
     console.log(elm)
-    const instance = M.Dropdown.init(elm)
+    const instance = dropdownInit(elm)
     console.log(instance.isOpen)
     instance.open()
 }

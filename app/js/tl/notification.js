@@ -427,9 +427,8 @@ function notfCanceler(acct) {
 }
 
 function allNotfRead() {
-    var multi = localStorage.getItem('multi')
+    var obj = getMulti()
     if (multi) {
-        var obj = JSON.parse(multi)
         Object.keys(obj).forEach(function (key) {
             notfCanceler(key)
         })

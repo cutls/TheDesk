@@ -45,7 +45,7 @@ function mdCheck() {
 		$('#trendtag').html('')
 	}
 	if (localStorage.getItem('mode_' + domain) === 'misskey') {
-		M.toast({ html: lang.lang_bbmd_misskey, displayLength: 5000 })
+		toast({ html: lang.lang_bbmd_misskey, displayLength: 5000 })
 	}
 	if (idata[domain + '_letters']) {
 		$('#textarea').attr('data-length', idata[domain + '_letters'])
@@ -62,9 +62,8 @@ function mdCheck() {
 	} else {
 		$('#local-button').addClass('hide')
 	}
-	var multi = localStorage.getItem('multi')
+	var obj = getMulti()
 	if (multi) {
-		var obj = JSON.parse(multi)
 		if (
 			obj[acct_id].background &&
 			obj[acct_id].background !== 'def' &&

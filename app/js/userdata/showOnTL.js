@@ -116,7 +116,7 @@ async function udg(user, acct_id, isSwal) {
     }
     //moved設定時
     if (json.moved) {
-        M.toast({
+        toast({
             html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' + json.moved.id + "','" + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>',
             displayLength: 4000,
         })
@@ -527,7 +527,7 @@ function setMain() {
     var acct_id = $('#his-data').attr('use-acct')
     localStorage.setItem('main', acct_id)
     multiSelector(true)
-    M.toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
+    toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
 }
 //オールリセット
 function hisclose() {

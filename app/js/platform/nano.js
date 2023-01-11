@@ -222,7 +222,7 @@ function loadVis(acct_id) {
 			}
 			return memory
 		} else if (vist === 'server' || vist === 'useapi') {
-			var multi = localStorage.getItem('multi')
+			var multi = getMulti()
 			var obj = JSON.parse(multi)
 			var memory = obj[acct_id]['vis']
 			if (!memory) {

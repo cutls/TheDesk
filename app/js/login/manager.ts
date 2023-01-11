@@ -19,12 +19,7 @@ function load() {
 	$('#now-user').text(user)
 	var domain = localStorage.getItem('domain')
 	$('.now-domain').text(domain)
-	var multi = localStorage.getItem('multi')
-	if (!multi) {
-		var obj = []
-	} else {
-		var obj = JSON.parse(multi)
-	}
+	var obj = getMulti()
 	if (obj[0]) {
 		if (!obj[0].at) {
 			obj = []
@@ -118,12 +113,7 @@ function maxChars(domain, uid) {
 		})
 		return false
 	}
-	var multi = localStorage.getItem('multi')
-	if (!multi) {
-		var obj = []
-	} else {
-		var obj = JSON.parse(multi)
-	}
+	var obj = getMulti()
 	if (obj[0]) {
 		if (!obj[0].at) {
 			obj = []
@@ -197,8 +187,7 @@ async function data(domain, acct_id) {
 
 //アカウントデータ　消す
 function multiDel(target) {
-	var multi = localStorage.getItem('multi')
-	var obj = JSON.parse(multi)
+	var obj = getMulti()
 	//削除確認ダイアログ
 	Swal.fire({
 		title: lang.lang_manager_logout,
@@ -290,8 +279,7 @@ function multiDel(target) {
 	})
 }
 function multiDel2(target) {
-	var multi = localStorage.getItem('multi')
-	var obj = JSON.parse(multi)
+	var obj = getMulti()
 	Swal.fire({
 		title: lang.lang_manager_logout,
 		text: obj[target]['user'] + '@' + obj[target]['domain'] + lang.lang_manager_confirm,
@@ -374,8 +362,7 @@ function backToInit() {
 
 //URL指定してポップアップ
 async function login(url) {
-	var multi = localStorage.getItem('multi')
-	var obj = JSON.parse(multi)
+	var obj = getMulti()
 	if ($('#misskey:checked').val() === 'on') {
 		$('#misskey').prop('checked', true)
 		misskeyLogin(url)
@@ -626,7 +613,7 @@ function code(code) {
 		$('#code').val('')
 	}
 	if (!code || code === '') {
-		M.toast({ html: lang.lang_fatalerroroccured + 'Error: no code', displayLength: 5000 })
+		toast({ html: lang.lang_fatalerroroccured + 'Error: no code', displayLength: 5000 })
 		return false
 	}
 	var url = localStorage.getItem('domain_tmp')
@@ -663,8 +650,7 @@ function code(code) {
 					mode: 'misskey'
 				}
 				localStorage.setItem('mode_' + url, 'misskey')
-				var multi = localStorage.getItem('multi')
-				var obj = JSON.parse(multi)
+				var obj = getMulti()
 				var target = obj.length
 				obj.push(add)
 				localStorage.setItem('name_' + target, json['user']['name'])
@@ -706,7 +692,7 @@ function code(code) {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
 				if (this.status !== 200) {
-					M.toast({ html: lang.lang_fatalerroroccured + 'Error: cannot complete', displayLength: 5000 })
+					toast({ html: lang.lang_fatalerroroccured + 'Error: cannot complete', displayLength: 5000 })
 					setLog(start, this.status, json)
 				}
 				if (json['access_token']) {
@@ -746,7 +732,7 @@ function getdata(domain, json) {
 		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
-				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
+				toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
 				return
 			}
 			var avatar = json['avatar']
@@ -770,8 +756,7 @@ function getdata(domain, json) {
 				vis: priv,
 				mode: 'mastodon'
 			}
-			var multi = localStorage.getItem('multi')
-			var obj = JSON.parse(multi)
+			var obj = getMulti()
 			let addTarget = -1
 			let ct = 0
 			for (let acct of obj) {
@@ -806,7 +791,7 @@ function getdata(domain, json) {
 function atSetup(type) {
 	var url = localStorage.getItem('domain_tmp')
 	localStorage.removeItem('domain_tmp')
-	var multi = localStorage.getItem('multi')
+	var obj = getMulti()
 	var avatar = '../../img/missing.svg'
 	var priv = 'public'
 	if (type === 'misskey') {
@@ -838,10 +823,9 @@ function atSetup(type) {
 		}
 	}
 	if (!i || i === '') {
-		M.toast({ html: lang.lang_fatalerroroccured + 'Error: access token', displayLength: 5000 })
+		toast({ html: lang.lang_fatalerroroccured + 'Error: access token', displayLength: 5000 })
 		return false
 	}
-	var obj = JSON.parse(multi)
 	var target = obj.length
 	obj.push(add)
 	localStorage.setItem('name_' + target, add['name'])
@@ -855,8 +839,7 @@ function atSetup(type) {
 
 //ユーザーデータ更新
 function refresh(target) {
-	var multi = localStorage.getItem('multi')
-	var obj = JSON.parse(multi)
+	var obj = getMulti()
 	console.log(obj)
 	if (obj[target].mode === 'misskey') {
 		misskeyRefresh(obj, target, obj[target].domain)
@@ -891,7 +874,7 @@ function refresh(target) {
 		.then(function (json) {
 			if (json.error) {
 				console.error('Error:' + json.error)
-				M.toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
+				toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
 				return
 			}
 			var avatar = json['avatar']
@@ -961,8 +944,7 @@ function misskeyRefresh(obj, target, url) {
 				id: json['user']['id'],
 				vis: priv
 			}
-			var multi = localStorage.getItem('multi')
-			var obj = JSON.parse(multi)
+			var obj = getMulti()
 			var target = obj.length
 			obj.push(add)
 			localStorage.setItem('name_' + target, json['user']['name'])
@@ -978,14 +960,7 @@ function misskeyRefresh(obj, target, url) {
 }
 //アカウントを選択…を実装
 function multisel() {
-	var multi = localStorage.getItem('multi')
-	if (!multi) {
-		var obj = []
-		var json = JSON.stringify(obj)
-		localStorage.setItem('multi', json)
-	} else {
-		var obj = JSON.parse(multi)
-	}
+	var obj = getMulti()
 	var templete
 	var last = localStorage.getItem('main')
 	var sel
@@ -1022,7 +997,7 @@ function multisel() {
 function mainacct() {
 	var acct_id = $('#main-acct-sel').val()
 	localStorage.setItem('main', acct_id)
-	M.toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
+	toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
 }
 function colorpicker(key) {
 	temp = `<div onclick="coloradd('${key}','def','def')" class="pointer exc">${lang.lang_manager_none}</div>
@@ -1050,8 +1025,7 @@ function colorpicker(key) {
 	$('#colorsel_' + key).html(temp)
 }
 function coloradd(key, bg, txt) {
-	var col = localStorage.getItem('multi')
-	var o = JSON.parse(col)
+	var o = getMulti()
 	var obj = o[key]
 	obj.background = bg
 	obj.text = txt

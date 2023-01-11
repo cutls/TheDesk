@@ -577,10 +577,10 @@ function cbCopy(mode) {
 			`<iframe src="${url}/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400"></iframe>
 			<script src="https://${domain}/embed.js" async="async"></script>`
 		execCopy(emb)
-		M.toast({ html: lang.lang_details_embed, displayLength: 1500 })
+		toast({ html: lang.lang_details_embed, displayLength: 1500 })
 	} else {
 		if (execCopy(url)) {
-			M.toast({ html: lang.lang_details_url, displayLength: 1500 })
+			toast({ html: lang.lang_details_url, displayLength: 1500 })
 		}
 	}
 }
@@ -595,7 +595,7 @@ function staCopy(id) {
 	html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, '$1')
 	html = stripTags(html)
 	if (execCopy(html)) {
-		M.toast({ html: lang.lang_details_txt, displayLength: 1500 })
+		toast({ html: lang.lang_details_txt, displayLength: 1500 })
 	}
 }
 //翻訳

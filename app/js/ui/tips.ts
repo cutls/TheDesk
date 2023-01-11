@@ -1,5 +1,8 @@
 //左下のメッセージ
 
+import { escapeHTML } from "../platform/first"
+import $ from 'jquery'
+
 export function todo(mes: string) {
 	let todcTrigger: NodeJS.Timeout | null = null
 	if(todcTrigger) clearInterval(todcTrigger)

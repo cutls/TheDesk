@@ -2,6 +2,7 @@ import { initPlugin } from './plugin'
 import $ from 'jquery'
 import { v4 as uuid } from 'uuid'
 import GraphemeSplitter from 'grapheme-splitter'
+import { ck } from '../login/login'
 
 window.onload = function () {
     console.log('loaded')
@@ -9,7 +10,7 @@ window.onload = function () {
     connection()
     initPlugin()
     if (localStorage.getItem('control-center-np')) $('#ccnp').removeClass('hide')
-
+    ck()
 }
 
 const size = localStorage.getItem('size')

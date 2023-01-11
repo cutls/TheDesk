@@ -32,10 +32,8 @@ function parseColumn(target, dontclose) {
 	if (!dontclose && !target) {
 		tlCloser()
 	}
-
-	var multi = localStorage.getItem('multi')
+	var obj = getMulti()
 	if (multi) {
-		var obj = JSON.parse(multi)
 		var templete
 		Object.keys(obj).forEach(function (key) {
 			var acct = obj[key]

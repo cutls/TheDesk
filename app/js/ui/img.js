@@ -341,7 +341,7 @@ function stopVideo() {
 function copyImgUrl() {
 	var murl = $('#imagemodal').attr('data-original')
 	execCopy(murl)
-	M.toast({ html: lang.lang_img_copyDone, displayLength: 1500 })
+	toast({ html: lang.lang_img_copyDone, displayLength: 1500 })
 }
 async function copyImgBinary() {
 	var murl = $('#imagemodal').attr('data-original')
@@ -349,7 +349,7 @@ async function copyImgBinary() {
 	const reader = new FileReader()
 	reader.onloadend = function () {
 		postMessage(['copyBinary', reader.result], '*')
-		M.toast({ html: lang.lang_imgBin_copyDone, displayLength: 1500 })
+		toast({ html: lang.lang_imgBin_copyDone, displayLength: 1500 })
 	}
 	reader.readAsDataURL(blob)
 }

@@ -7,7 +7,8 @@ import { addToDraft, cw, draftToggle, isIVis, IVis, schedule } from './secure'
 import { todo } from '../ui/tips'
 import { Status, StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
 import { formatTimeUtc, setLog } from '../platform/first'
-declare var M
+import { formSelectInit, toast } from '../common/declareM'
+
 
 export function sec() {
 	const modeRaw: string | null = localStorage.getItem('sec')
@@ -25,7 +26,7 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	if (!navigator.onLine && !dry) {
 		draftToggle(true)
 		addToDraft()
-		M.toast({
+		toast({
 			html: lang.lang_post_offline,
 			displayLength: 3000
 		})
@@ -196,7 +197,7 @@ export function expPostMode() {
 	}
 }
 //クリア(Shift+C)
-function clear() {
+export function clear() {
 	$('#textarea').val('')
 	$('#ideKey').val('')
 	if (localStorage.getItem('stable')) {
@@ -249,7 +250,7 @@ function clear() {
 	}
 	$('#emoji').addClass('hide')
 	const elems = document.querySelectorAll('select');
-	M.FormSelect.init(elems);
+	formSelectInit(elems);
 	$('#default-emoji').show()
 	$('#unreact').show()
 	$('#addreact').addClass('hide')

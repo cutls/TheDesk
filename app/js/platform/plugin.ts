@@ -4,11 +4,11 @@ import _ from 'lodash'
 import sanitizeHtml from 'sanitize-html'
 import { VArr, VBool, VNum, VObj, VReturn, VStr } from '@syuilo/aiscript/built/interpreter/value'
 import { cw, isIVis, nsfw, vis } from '../post/secure'
-import { post } from '../post/post'
+import { clear, post } from '../post/post'
 import Swal from 'sweetalert2'
 import { IPlugin } from '../../interfaces/Storage'
 import $ from 'jquery'
-declare var M
+
 
 global.plugins = getPlugin()
 type SweetAlertIcon = 'success' | 'error' | 'warning' | 'info' | 'question'
@@ -119,7 +119,7 @@ export function initPlugin() {
     for (let target of init) {
         const as = new AiScript(global.asCommon)
         const meta = getMeta(target.content).data
-        M.toast({ html: `${escapeHTML(meta.name)}を実行しました`, displayLength: 1000 })
+        toast({ html: `${escapeHTML(meta.name)}を実行しました`, displayLength: 1000 })
         if (target) as.exec(asParse(target.content))
     }
 }

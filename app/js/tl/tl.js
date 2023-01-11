@@ -1051,7 +1051,7 @@ function reconnector(tlid, type, acct_id, data, mode) {
         var mute = getFilterTypeByAcct(acct_id, type)
         var domain = localStorage.getItem('domain_' + acct_id)
     }
-    M.toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
+    toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
 }
 
 function columnReload(tlid, type) {

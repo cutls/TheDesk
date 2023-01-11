@@ -1,8 +1,12 @@
 /*保護系*/
 //画像保護
 import $ from 'jquery'
-declare var M
-import { formatTime } from '../platform/first'
+import { StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
+import lang from '../common/lang'
+import { getMulti } from '../common/storage'
+
+import { escapeHTML, formatTime } from '../platform/first'
+import { post } from './post'
 
 export function nsfw(force?: boolean) {
 	if (force || !$('#nsfw').hasClass('nsfw-avail')) {
@@ -67,8 +71,7 @@ export function loadVis() {
 			vis(memory)
 		} else if (vist === 'useapi') {
 			const acct_id = parseInt($('#post-acct-sel').val()?.toString() || '0', 10)
-			const multi = localStorage.getItem('multi') || '{}'
-			const obj = JSON.parse(multi)
+			const obj = getMulti()
 			let memory = obj[acct_id]['vis']
 			memory = 'public'
 			if (!isIVis(memory)) return
@@ -99,7 +102,7 @@ export function cw(force?: boolean) {
 	}
 }
 //TLでコンテントワーニングを表示トグル
-function cwShow(e: any) {
+export function cwShow(e: any) {
 	$(e).parent().parent().find('.cw_hide').toggleClass('cw')
 	$(e).parent().find('.cw_long').toggleClass('hide')
 }
@@ -107,13 +110,8 @@ $(function () {
 	$('#cw-text').on('change', function (event) {
 		const acct_id = $('#post-acct-sel').val()
 		const domain = localStorage.getItem('domain_' + acct_id)
-		const cwlen = $('#cw-text').val().length
-
-		if (idata[domain + '_letters']) {
-			$('#textarea').attr('data-length', idata[domain + '_letters'] - cwlen)
-		} else {
-			$('#textarea').attr('data-length', 500 - cwlen)
-		}
+		const cwlen = $('#cw-text').val()?.toString().length || 0
+		$('#textarea').attr('data-length', (idata[domain + '_letters'] || 500) - cwlen)
 	})
 })
 //スケジュール
@@ -123,7 +121,6 @@ export function schedule() {
 		$('#sch-box').removeClass('sch-avail')
 	} else {
 		const date = new Date()
-
 		$('#sch-box').show()
 		$('#sch-date').val(formatTime(date))
 		$('#sch-box').addClass('sch-avail')
@@ -131,18 +128,13 @@ export function schedule() {
 }
 
 //下書き機能
-export function draftToggle(force) {
+export function draftToggle(force?: boolean) {
 	if ($('#draft').hasClass('hide') || force) {
 		$('#draft').removeClass('hide')
 		$('#right-side').show()
 		$('#right-side').css('width', '300px')
 		$('#left-side').css('width', 'calc(100% - 300px)')
-		const width = localStorage.getItem('postbox-width')
-		if (width) {
-			width = width.replace('px', '') * 1 + 300
-		} else {
-			width = 600
-		}
+		const width = parseInt((localStorage.getItem('postbox-width') || '300px').replace('px', ''), 10) + 300
 		$('#post-box').css('width', width + 'px')
 		$('#suggest').html('')
 		$('#draft').html('')
@@ -156,24 +148,19 @@ export function draftToggle(force) {
 		$('#suggest').html('')
 		$('#draft').html('')
 		$('#left-side').css('width', '100%')
-		const width = localStorage.getItem('postbox-width')
-		if (width) {
-			width = width.replace('px', '') * 1
-		} else {
-			width = 300
-		}
+		const width = parseInt((localStorage.getItem('postbox-width') || '300px').replace('px', ''), 10)
 		$('#post-box').css('width', width + 'px')
 	}
 }
 function draftDraw() {
 	const draft = localStorage.getItem('draft')
-	const html = `<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="addToDraft();">${lang.lang_secure_draft}</button>`
+	let html = `<button class="btn waves-effect green" style="width:100%; padding:0; margin-top:0;" onclick="addToDraft();">${lang.lang_secure_draft}</button>`
 	if (draft) {
 		const draftObj = JSON.parse(draft)
 		for (let i = 0; i < draftObj.length; i++) {
 			const toot = draftObj[i]
 			html = html + `<div class="tootInDraft">
-				<i class="waves-effect gray material-icons" onclick="useThisDraft(${i})" title="${lang.lang_secure_userThis}">reply</i>
+				<i class="waves-effect gray material-icons" onclick="useThisDraft(${i})" title="${lang.lang_secure_useThis}">reply</i>
 				<i class="waves-effect gray material-icons" onclick="deleteThisDraft(${i})" title="${lang.lang_secure_deleteThis}">cancel</i>
 				${escapeHTML(toot.status).replace(/\n/, '').substr(0, 10)}
 			</div>`
@@ -181,27 +168,28 @@ function draftDraw() {
 	}
 	$('#draft').html(html)
 }
-export function addToDraft() {
-	const json = post(null, null, true)
+export async function addToDraft() {
+	const json = await post(undefined, true)
+	if (!json) return
 	const draft = localStorage.getItem('draft')
-	const draftObj = []
+	let draftObj: StatusTheDeskExtend[] = []
 	if (draft) draftObj = JSON.parse(draft)
 	draftObj.push(json)
-	draft = JSON.stringify(draftObj)
-	localStorage.setItem('draft', draft)
+	const newDraftStr = JSON.stringify(draftObj)
+	localStorage.setItem('draft', newDraftStr)
 	draftDraw()
 }
-function useThisDraft(i) {
-	const draft = localStorage.getItem('draft')
+export function useThisDraft(i) {
+	const draft = localStorage.getItem('draft') || `{}`
 	const draftObj = JSON.parse(draft)
 	draftToPost(draftObj[i], draftObj[i]['TheDeskAcctId'], 0)
 	draftToggle()
 }
-function deleteThisDraft(i) {
-	const draft = localStorage.getItem('draft')
+export function deleteThisDraft(i) {
+	const draft = localStorage.getItem('draft') || `{}`
 	const draftObj = JSON.parse(draft)
 	draftObj.splice(i, 1)
-	draft = JSON.stringify(draftObj)
-	localStorage.setItem('draft', draft)
+	const newDraftStr = JSON.stringify(draftObj)
+	localStorage.setItem('draft', newDraftStr)
 	draftDraw()
 }

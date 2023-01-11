@@ -1,5 +1,5 @@
 //インスタンスリスト
-var idata = {
+const idata = {
 	"kirishima.cloud": "instance",
 	"kirishima.cloud_name": "アスタルテ",
 	"kirishima.cloud_letters": "6229",

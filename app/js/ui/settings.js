@@ -35,7 +35,7 @@ const envView = Vue.createApp({
             if (ls[0].id === 'size') {
 	            $('html,body').css('font-size', `${val}px`)
             }
-            M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
+            toast({ html: `Updated: ${header}`, displayLength: 3000 })
             return true
         },
     },
@@ -60,7 +60,7 @@ const tlView = Vue.createApp({
                     localStorage.setItem(ls[j].storage, val)
                 }
             }
-            M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
+            toast({ html: `Updated: ${header}`, displayLength: 3000 })
             return true
         },
     },
@@ -86,13 +86,13 @@ const postView = Vue.createApp({
                     ls = ls.data
                 }
                 for (var j = 0; j < ls.length; j++) {
-                    M.toast({ html: 'Complete', displayLength: 3000 })
+                    toast({ html: 'Complete', displayLength: 3000 })
                     var id = ls[j].id
                     var val = $('#' + id).val()
                     localStorage.setItem(ls[j].storage, val)
                 }
             }
-            M.toast({ html: `Updated: ${header}`, displayLength: 3000 })
+            toast({ html: `Updated: ${header}`, displayLength: 3000 })
             return true
         },
     },
@@ -102,14 +102,14 @@ function settings() {
     var fontd = $('#font').val()
     if (fontd) {
         if (fontd !== localStorage.getItem('font')) {
-            M.toast({ html: lang.lang_setting_font.replace('{{set}}', fontd), displayLength: 3000 })
+            toast({ html: lang.lang_setting_font.replace('{{set}}', fontd), displayLength: 3000 })
         }
         localStorage.setItem('font', fontd)
         themes()
     } else {
         if (localStorage.getItem('font')) {
             localStorage.removeItem('font')
-            M.toast({ html: lang.lang_setting_font.replace('{{set}}', '"default"'), displayLength: 3000 })
+            toast({ html: lang.lang_setting_font.replace('{{set}}', '"default"'), displayLength: 3000 })
             themes()
         }
     }
@@ -306,7 +306,7 @@ function notftest() {
 function oks(no) {
     var txt = $('#oks-' + no).val()
     localStorage.setItem('oks-' + no, txt)
-    M.toast({ html: lang.lang_setting_ksref, displayLength: 3000 })
+    toast({ html: lang.lang_setting_ksref, displayLength: 3000 })
 }
 
 function oksload() {
@@ -347,8 +347,7 @@ function exportSettings() {
 function exportSettingsCore() {
     var exp = {}
     //Accounts
-    var multi = localStorage.getItem('multi')
-    var acct = JSON.parse(multi)
+    var acct = getMulti()
     exp.accts = acct
     //Columns
     var multi = localStorage.getItem('column')
@@ -589,7 +588,7 @@ function customComp(preview) {
     var subcolorC = $('#color-picker2_value').val()
     var textC = $('#color-picker1_value').val()
     var accentC = $('#color-picker3_value').val()
-    var multi = localStorage.getItem('multi')
+    var obj = getMulti()
     let advanced = ['modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
     var advanceTheme = {}
     let i = 4
@@ -601,7 +600,7 @@ function customComp(preview) {
         i++
     }
 
-    var my = JSON.parse(multi)[0].name
+    var my = obj[0].name
     var id = $('#custom-edit-sel').val()
     const defaults = ['black', 'blue', 'brown', 'green', 'indigo', 'polar', 'snow', 'white']
     if (id === 'add_new' || defaults.includes(id)) {
@@ -945,7 +944,7 @@ function lastFmSet() {
     } else {
         localStorage.removeItem('lastFmUser')
     }
-    M.toast({ html: 'Complete: last.fm', displayLength: 3000 })
+    toast({ html: 'Complete: last.fm', displayLength: 3000 })
 }
 
 function stopVideo() {

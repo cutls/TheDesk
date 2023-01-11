@@ -151,7 +151,7 @@ onmessage = function (e) {
 	} else if (e.data[0] === 'toastSaved') {
 		var showTxt = `${lang.lang_img_DLDone}${e.data[1][0]
 			}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`
-		M.toast({ html: showTxt, displayLength: 5000 })
+		toast({ html: showTxt, displayLength: 5000 })
 	} else if (e.data[0] === 'parseColumn') {
 		parseColumn(e.data[1])
 	} else if (e.data[0] === 'exportSettingsCore') {
