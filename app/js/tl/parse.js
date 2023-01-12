@@ -1522,10 +1522,6 @@ function pollParse(poll, acct_id, emojis) {
 	return pollHtml
 }
 function customEmojiReplace(content, toot, gif) {
-	var contentDiv = document.createElement('div');
-	contentDiv.style.display = 'none';
-	contentDiv.innerHTML = content;
-	var replace = false;
 	Object.keys(toot.emojis).forEach(function (key5) {
 		var emoji = toot.emojis[key5]
 		var shortcode = emoji.shortcode
@@ -1534,37 +1530,22 @@ function customEmojiReplace(content, toot, gif) {
 		} else {
 			var emoSource = emoji.static_url
 		}
-		var nodes = document.evaluate('//text()', contentDiv, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-		if (nodes.snapshotLength == 0) return;
-
-		var shortcodeBracket = (':' + shortcode + ':');
-		var img = document.createElement('img');
-		img.setAttribute('draggable', 'false');
-		img.setAttribute('src', emoSource);
-		img.setAttribute('class', 'emoji-img');
-		img.setAttribute('data-emoji', shortcode);
-		img.setAttribute('alt', shortcodeBracket);
-		img.setAttribute('title', shortcodeBracket);
-		img.setAttribute('onclick', "this.classList.toggle('bigemoji');");
-
-		for (var i = 0; i < nodes.snapshotLength; i++) {
-			var node = nodes.snapshotItem(i);
-			var txt = node.textContent;
-			var spos = txt.indexOf(shortcodeBracket);
-			if (spos == -1) continue;
-
-			var txtBefore = document.createTextNode(txt.substr(0, spos));
-			var txtAfter = document.createTextNode(txt.substr(spos + shortcodeBracket.length));
-
-			node.parentNode.insertBefore(txtBefore, node);
-			node.parentNode.insertBefore(img, node);
-			node.parentNode.insertBefore(txtAfter, node);
-			node.textContent = '';
-			replace = true;
-		}
+		var emoji_url = `
+			<img draggable="false" src="${emoSource}" class="emoji-img" data-emoji="${shortcode}" 
+				alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle('bigemoji');" loading="lazy">
+		`
+		var regExp = new RegExp(':' + shortcode + ':', 'g')
+		content = content.replace(regExp, (str, offset, s) => {
+			var greater = s.indexOf('>', offset)
+			var lesser = s.indexOf('<', offset)
+			if (greater < lesser || (greater != -1 && lesser == -1)) {
+				return str
+			} else {
+				return emoji_url
+			}
+		})
 	})
-	if (replace) contentDiv.innerHTML = this.customEmojiReplace(contentDiv.innerHTML, toot, gif);
-	return contentDiv.innerHTML;
+	return content
 }
 //MastodonBaseStreaming
 var mastodonBaseWs = {}
