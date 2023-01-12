@@ -503,7 +503,7 @@ function ckdb(acct_id) {
 					if (json['max_toot_chars']) {
 						localStorage.setItem('letters_' + acct_id, json['max_toot_chars'])
 					}
-					if (json['urls']['streaming_api']) {
+					if (json['urls'] && json['urls']['streaming_api']) {
 						localStorage.setItem('streaming_' + acct_id, json['urls']['streaming_api'])
 					} else {
 						localStorage.removeItem('streaming_' + acct_id)
