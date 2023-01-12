@@ -1,3 +1,5 @@
+import { IVis } from "../js/post/secure"
+
 export interface MastodonApiError {
     error: string
 }
@@ -36,7 +38,7 @@ export interface Emoji {
 }
 export interface Credential extends Account {
     source: {
-        privacy: string
+        privacy: IVis
         sensitive: boolean
         language: string
         note: string

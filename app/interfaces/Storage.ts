@@ -16,3 +16,12 @@ export interface IPlugin {
     id: string
     content: string
 }
+export type IColumnType = string
+export interface IColumn {
+    domain: number
+    type: IColumnType
+    data?: any
+    background?: string
+    text?: string
+    left_fold?: boolean
+}

@@ -2,13 +2,15 @@
 //最初に読むやつ
 //アスタルテ判定初期化
 
+import { Credential } from "../../interfaces/MastodonApiReturns"
 import { IMulti } from "../../interfaces/Storage"
 import { formSelectInit, toast } from "../common/declareM"
+import api from "../common/fetch"
 import lang from "../common/lang"
 import { getMulti, setMulti } from "../common/storage"
 import { verck } from "../common/version"
 import { setLog } from "../platform/first"
-import { todo } from "../ui/tips"
+import { tips, todo } from "../ui/tips"
 
 localStorage.removeItem('kirishima')
 localStorage.removeItem('quoters')
@@ -25,8 +27,10 @@ export function ck() {
 		localStorage.setItem('showSupportMe', (date.getMonth() + 2).toString())
 		location.href = 'acct.html?mode=first&code=true'
 	} else {
-		for (const [key, acct] of Object.entries(multi)) {
-			if (acct.domain) refresh(key, true)
+		let key = 0
+		for (const acct of multi) {
+			if (acct.domain) refresh(key.toString(), true)
+			key++
 		}
 		if (!obj[0].domain) return false
 		$('#tl').show()
@@ -66,30 +70,19 @@ export async function refresh(targetStr: string, loadskip: boolean) {
 	}
 	const start = `https://${obj[target].domain}/api/v1/accounts/verify_credentials`
 	try {
-		const response = await fetch(start, {
-			method: 'GET',
+		const json = await api<Credential>(start, {
+			method: 'get',
 			headers: {
 				'content-type': 'application/json',
 				Authorization: 'Bearer ' + at
 			}
 		})
-		if (!response.ok) {
-			response.text().then(function (text) {
-				setLog(response.url, response.status, text)
-			})
-		}
-		const json = await response.json()
-		if (json.error) {
-			console.error('Error:' + json.error)
-			toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
-			return
-		}
 		let avatar = json['avatar']
 		//missingがmissingなやつ
 		if (avatar === '/avatars/original/missing.png' || !avatar) avatar = './img/missing.svg'
 		const ref: IMulti = {
 			at: obj[target].at,
-			name: json['display_name'],
+			name: json['display_name'] || '',
 			domain: obj[target].domain,
 			user: json['acct'],
 			prof: avatar,
@@ -98,11 +91,11 @@ export async function refresh(targetStr: string, loadskip: boolean) {
 		}
 		if (obj[target].background) ref.background = obj[target].background
 		if (obj[target].text) ref.text = obj[target].text
-		localStorage.setItem('name_' + target, json['display_name'])
+		localStorage.setItem('name_' + target, json['display_name'] || '')
 		localStorage.setItem('user_' + target, json['acct'])
 		localStorage.setItem('user-id_' + target, json['id'])
 		localStorage.setItem('prof_' + target, avatar)
-		localStorage.setItem('follow_' + target, json['following_count'])
+		localStorage.setItem('follow_' + target, json['following_count'].toString() || '0')
 		if (json['source']['sensitive']) {
 			localStorage.setItem('nsfw_' + target, 'true')
 		} else {
@@ -123,20 +116,18 @@ async function refreshPleromaAt(obj: IMulti) {
 	const start = 'https://' + obj.domain + '/oauth/token'
 	const rt = obj.rt?.split(' ')
 	if (!rt) return
-	let promise = await fetch(start, {
-		method: 'POST',
+	const json = await api(start, {
+		method: 'post',
 		headers: {
 			'content-type': 'application/json'
 		},
-		body: JSON.stringify({
+		body: {
 			grant_type: 'refresh_token',
 			refresh_token: rt[0],
 			client_id: rt[1],
 			client_secret: rt[2]
-		})
+		}
 	})
-
-	const json = await promise.json()
 	if (json.access_token) {
 		return json.access_token
 	} else {
@@ -218,18 +209,13 @@ export async function ckdb(acct_id: string) {
 		}
 	}
 	const start = 'https://' + domain + '/api/v1/instance'
-	const response = await fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json'
-		}
-	})
 	try {
-		const json = await response.json()
-		if (json.error) {
-			console.error(json.error)
-			return
-		}
+		const json = await api(start, {
+			method: 'get',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
 		if (json) {
 			if (json['max_toot_chars']) localStorage.setItem('letters_' + acct_id, json['max_toot_chars'])
 			if (json['urls']['streaming_api']) {
@@ -261,8 +247,9 @@ export function multiSelector(parseC?: boolean) {
 		$('#src-acct-sel').html('<option value="tootsearch">Tootsearch</option>')
 		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + `</option>${webview ? `<option value="webview">TweetDeck</option>` : ''}`)
 	} else {
-		for (const [key, acct] of Object.entries(obj)) {
-			if (key === last) {
+		let key = 0
+		for (const acct of obj) {
+			if (key.toString() === last) {
 				isSelected = true
 				const domain = acct.domain
 				localStorage.setItem('domain_' + key, domain)
@@ -299,6 +286,7 @@ export function multiSelector(parseC?: boolean) {
 			}
 			const template = `<option value="${key}" data-icon="${acct.prof}" class="left circle" ${isSelected ? 'selected' : ''}>${acct.user}@${acct.domain}</option>`
 			$('.acct-sel').append(template)
+			key++
 		}
 		$('#src-acct-sel').append('<option value="tootsearch">Tootsearch</option>')
 		$('#add-acct-sel').append(`<option value="noauth">${lang.lang_login_noauth}</option><option value="webview">TweetDeck</option>`)
@@ -313,19 +301,13 @@ export function multiSelector(parseC?: boolean) {
 export async function ticker() {
 	const start = 'https://s.0px.io/json'
 	try {
-		const response = await fetch(start, {
-			method: 'GET',
+		const json = await api(start, {
+			method: 'get',
 			headers: {
 				'content-type': 'application/json'
 			}
 		})
-		if (!response.ok) {
-			response.text().then(function (text) {
-				setLog(response.url, response.status, text)
-			})
-		}
-		const json = await response.json()
-		if (json) {
+		if (json.data) {
 			localStorage.removeItem('ticker')
 			localStorage.setItem('sticker', JSON.stringify(json))
 		}

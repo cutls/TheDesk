@@ -8,6 +8,8 @@ import { todo } from '../ui/tips'
 import { Status, StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
 import { formatTimeUtc, setLog } from '../platform/first'
 import { formSelectInit, toast } from '../common/declareM'
+import api from '../common/fetch'
+import { alertProcessUnfinished } from './img'
 
 
 export function sec() {
@@ -140,34 +142,16 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		return toot
 	}
 	const q = {
-		method: 'POST',
+		method: 'post' as const,
 		headers: {
 			'content-type': 'application/json',
 			Authorization: `Bearer ${at}`,
 			'Idempotency-Key': ideKey?.toString() || ''
 		},
-		body: JSON.stringify(toot)
+		body: toot
 	}
 	try {
-		const promise = await fetch(start, q)
-		const json = await promise.json()
-		if (!promise.ok) {
-			if (media && promise.status === 422) {
-				$('#ideKey').val('')
-				$('.toot-btn-group').prop('disabled', false)
-				alertProcessUnfinished()
-			} else {
-				setLog(start, promise.status, json)
-				const box = localStorage.getItem('box')
-				if (box === 'yes' || !box) {
-					$('#textarea').blur()
-					hide()
-				}
-				$('.toot-btn-group').prop('disabled', false)
-				todc()
-				clear()
-			}
-		}
+		await api(start, q)
 		$('#ideKey').val('')
 		const box = localStorage.getItem('box')
 		if (box === 'yes' || !box) {
@@ -179,6 +163,12 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		clear()
 	} catch (e: any) {
 		console.error(e)
+		if (media && e === 422) {
+			$('#ideKey').val('')
+			$('.toot-btn-group').prop('disabled', false)
+			alertProcessUnfinished()
+			return
+		}
 	}
 
 }

@@ -3,6 +3,7 @@ import lang from "./lang"
 import { todo } from "../ui/tips"
 import { toast } from "./declareM"
 import { getMulti } from "./storage"
+import api from "./fetch"
 
 //バージョンチェッカー
 export async function verck(ver: string) {
@@ -64,13 +65,7 @@ export async function verck(ver: string) {
 			r += c[Math.floor(Math.random() * cl)]
 		}
 		const start1 = 'https://thedesk.top/ver.json'
-		const response = await fetch(start1, { method: 'GET' })
-		if (!response.ok) {
-			response.text().then(function (text) {
-				setLog(response.url, response.status, text)
-			})
-		}
-		const mess = await response.json()
+		const mess = await api(start1, { method: 'get' })
 
 		console.table(mess)
 		if (mess) {
@@ -96,20 +91,14 @@ export async function verck(ver: string) {
 		if (!localStorage.getItem('last-notice-id')) localStorage.setItem('last-notice-id', `0`)
 		const start = `https://thedesk.top/notice/index.php?since_id=${localStorage.getItem('last-notice-id')}`
 		try {
-			const response = await fetch(start, {
-				method: 'GET'
+			const json = await api(start, {
+				method: 'get'
 			})
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			const json = await response.json()
-			if (mess.length < 1) return false
+			if (json.length < 1) return false
 			const last = parseInt(localStorage.getItem('last-notice-id') || '0', 10)
-			localStorage.setItem('last-notice-id', mess[0].ID)
-			for (let i = 0; i < mess.length; i++) {
-				const obj = mess[i]
+			localStorage.setItem('last-notice-id', json[0].ID)
+			for (let i = 0; i < json.length; i++) {
+				const obj = json[i]
 				if (obj.ID * 1 <= last) break
 				if (obj.type !== 'textv2') break
 				if (~obj.languages.indexOf(lang.language)) {
@@ -133,7 +122,6 @@ export async function verck(ver: string) {
 			}
 		} catch (error: any) {
 			todo(error)
-			setLog(start, 'JSON', error)
 			console.error(error)
 		}
 	}

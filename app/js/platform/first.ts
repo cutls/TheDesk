@@ -3,6 +3,7 @@ import $ from 'jquery'
 import { v4 as uuid } from 'uuid'
 import GraphemeSplitter from 'grapheme-splitter'
 import { ck } from '../login/login'
+import { loadAcctList, support } from '../login/manager'
 
 window.onload = function () {
     console.log('loaded')
@@ -10,7 +11,10 @@ window.onload = function () {
     connection()
     initPlugin()
     if (localStorage.getItem('control-center-np')) $('#ccnp').removeClass('hide')
-    ck()
+    const onManager = document.getElementById('acct-list')
+    if (!onManager) ck()
+    if (onManager) loadAcctList()
+    if (onManager) support()
 }
 
 const size = localStorage.getItem('size')

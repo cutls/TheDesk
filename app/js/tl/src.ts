@@ -3,6 +3,7 @@
 declare var jQuery
 import $ from 'jquery'
 import { Card, Search, Tag, Toot } from '../../interfaces/MastodonApiReturns'
+import api from '../common/fetch'
 import lang from '../common/lang'
 import { escapeHTML, setLog } from '../platform/first'
 
@@ -53,21 +54,13 @@ export async function src(mode?: any, offset?: any) {
 	if (m) q = m[1]
 	const start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + encodeURIComponent(q) + (!mode ? add : '')
 	console.log('Try to search at ' + start)
-	const response = await fetch(start, {
-		method: 'GET',
+	const json = await api<Search>(start, {
+		method: 'get',
 		headers: {
 			'content-type': 'application/json',
 			Authorization: 'Bearer ' + at
 		}
 	})
-	if (!response.ok) {
-		response.text().then(function (text) {
-			setLog(response.url, response.status, text)
-		})
-		src('v1')
-		return
-	}
-	const json: Search = await response.json()
 	console.log(['Search', json])
 	//ハッシュタグ
 	if (json.hashtags[0]) {
@@ -107,18 +100,18 @@ export async function src(mode?: any, offset?: any) {
 	jQuery('time.timeago').timeago()
 }
 function tsAdd(q: string) {
-	const add = {
-		domain: 0,
-		type: 'tootsearch',
-		data: q
-	}
-	const multi = localStorage.getItem('column')
-	const obj = JSON.parse(multi || '{}')
-	localStorage.setItem('card_' + obj.length, 'true')
-	obj.push(add)
-	const json = JSON.stringify(obj)
-	localStorage.setItem('column', json)
-	parseColumn('add')
+	// const add = {
+	// 	domain: 0,
+	// 	type: 'tootsearch',
+	// 	data: q
+	// }
+	// const multi = localStorage.getItem('column')
+	// const obj = JSON.parse(multi || '{}')
+	// localStorage.setItem('card_' + obj.length, 'true')
+	// obj.push(add)
+	// const json = JSON.stringify(obj)
+	// localStorage.setItem('column', json)
+	// parseColumn('add')
 }
 
 // Tootsearch is terminated
@@ -286,19 +279,13 @@ export async function trend() {
 	const at = localStorage.getItem('acct_' + acct_id + '_at')
 	try {
 		const tagTrendUrl = 'https://' + domain + '/api/v1/trends'
-		const tagTrendResponse = await fetch(tagTrendUrl, {
-			method: 'GET',
+		const tagTrends = await api<Tag[]>(tagTrendUrl, {
+			method: 'get',
 			headers: {
 				'content-type': 'application/json',
 				Authorization: 'Bearer ' + at
 			}
 		})
-		if (!tagTrendResponse.ok) {
-			tagTrendResponse.text().then(function (text) {
-				setLog(tagTrendResponse.url, tagTrendResponse.status, text)
-			})
-		}
-		const tagTrends: Tag[] = await tagTrendResponse.json()
 		let tags = ''
 		for (const tag of tagTrends) {
 			const his = tag.history
@@ -311,19 +298,13 @@ export async function trend() {
 
 	try {
 		const tootTrendUrl = 'https://' + domain + '/api/v1/trends/statuses'
-		const tootTrendResponse = await fetch(tootTrendUrl, {
-			method: 'GET',
+		const tootTrends = await api<Toot[]>(tootTrendUrl, {
+			method: 'get',
 			headers: {
 				'content-type': 'application/json',
 				Authorization: 'Bearer ' + at
 			}
 		})
-		if (!tootTrendResponse.ok) {
-			tootTrendResponse.text().then(function (text) {
-				setLog(tootTrendResponse.url, tootTrendResponse.status, text)
-			})
-		}
-		const tootTrends: Toot[] = await tootTrendResponse.json()
 		if (tootTrends.length) {
 			const templete = parse(tootTrends, '', acct_id)
 			$('#src-contents').append(`<div id="src-content-status">Trend Statuses<br />${templete}</div>`)
@@ -336,19 +317,13 @@ export async function trend() {
 
 	try {
 		const linkTrendUrl = 'https://' + domain + '/api/v1/trends/links'
-		const linkTrendResponse = await fetch(linkTrendUrl, {
-			method: 'GET',
+		const linkTrends = await api<Card[]>(linkTrendUrl, {
+			method: 'get',
 			headers: {
 				'content-type': 'application/json',
 				Authorization: 'Bearer ' + at
 			}
 		})
-		if (!linkTrendResponse.ok) {
-			linkTrendResponse.text().then(function (text) {
-				setLog(linkTrendResponse.url, linkTrendResponse.status, text)
-			})
-		}
-		const linkTrends: Card[] = await linkTrendResponse.json()
 		console.log(linkTrends)
 		let links = ''
 		for (const link of linkTrends) {

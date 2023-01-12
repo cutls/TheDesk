@@ -102,9 +102,10 @@ async function udg(user, acct_id, isSwal) {
     })
     if (isSwal) Swal.close()
     if (!response.ok) {
-        response.text().then(function (text) {
-            setLog(response.url, response.status, text)
-        })
+        const text = await response.text()
+        setLog(response.url, response.status, text)
+        toast('Error')
+        return
     }
     const json = await response.json()
     //一つ前のユーザーデータ

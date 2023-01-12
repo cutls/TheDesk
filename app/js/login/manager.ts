@@ -1,51 +1,47 @@
 //アカウントマネージャ
+
+import _ from "lodash"
+import Swal from "sweetalert2"
+import { IColumn } from "../../interfaces/Storage"
+import { toast } from "../common/declareM"
+import api from "../common/fetch"
+import lang from "../common/lang"
+import { getColumn, getMulti, setColumn, setMulti } from "../common/storage"
+import { escapeHTML, setLog } from "../platform/first"
+import { idata } from "./instance"
+
 //最初に読むやつ
-function load() {
+export function loadAcctList() {
 	$('#acct-list').html('')
-	if (location.search) {
-		var m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
-		var mode = m[1]
-		var codex = m[2]
-		if (mode === 'first' && codex === 'true') {
-			$('body').addClass('first')
-		} else {
-		}
+	const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
+	if (m) {
+		const mode = m[1]
+		const codex = m[2]
+		if (mode === 'first' && codex === 'true') $('body').addClass('first')
 	}
-	var prof = localStorage.getItem('prof')
+	const prof = localStorage.getItem('prof')
 	$('.my-prof').attr('src', prof)
-	var name = localStorage.getItem('name')
+	const name = localStorage.getItem('name') || ''
 	$('#now-name').text(name)
-	var user = localStorage.getItem('user')
+	const user = localStorage.getItem('user') || ''
 	$('#now-user').text(user)
-	var domain = localStorage.getItem('domain')
+	const domain = localStorage.getItem('domain') || ''
 	$('.now-domain').text(domain)
-	var obj = getMulti()
-	if (obj[0]) {
-		if (!obj[0].at) {
-			obj = []
-			localStorage.removeItem('multi')
-		}
-	}
+	const obj = getMulti()
+	if (!obj) setMulti([])
 
 	console.table(obj)
-	var domains = []
-	var templete
+	const domainsAll: string[] = []
 	$('#acct-list').html('')
-	Object.keys(obj).forEach(function (key) {
-		var acct = obj[key]
-		var list = key * 1 + 1
-		if (acct.background !== 'def' && acct.text !== 'def') {
-			var style = 'style="background-color:#' + acct.background + '; color:' + acct.text + ';"'
-		} else {
-			var style = ''
-		}
-		if (acct.name) {
-			var name = acct.name
-		} else {
-			var name = acct.user
-		}
-		domains.push(acct.domain)
-		templete = `
+	let key = 0
+	for (const acct of obj) {
+		key++
+		const list = key + 1
+		const isHasStyle = acct.background !== 'def' && acct.text !== 'def'
+		const style = isHasStyle ? `style="background-color:#${acct.background}; color:${acct.text};"` : ''
+		const name = acct.name || acct.user
+		domainsAll.push(acct.domain)
+		const template = `
 		<div id="acct_${key}" class="card" ${style}>
 			<div class="card-content ">
 				<span class="lts">${list}.</span><img src="${acct.prof}" width="40" height="40" />
@@ -65,19 +61,15 @@ function load() {
 			</div>
 		</div>
 		`
-		$('#acct-list').append(templete)
-		colorpicker(key)
-	})
-	domains = _.uniq(domains)
+		$('#acct-list').append(template)
+		colorPicker(key)
+	}
+	const domains = _.uniq(domainsAll)
 	$('#domain-list').html('')
-	Object.keys(domains).forEach(function (key2) {
-		var domain = domains[key2]
-		if (localStorage.getItem('letters_' + key2)) {
-			var maxChars = localStorage.getItem('letters_' + key2)
-		} else {
-			var maxChars = 500
-		}
-		var templete = `
+	let key2 = 0
+	for (const domain of domains) {
+		const maxChars = parseInt(localStorage.getItem('letters_' + key2) || '500', 10) || 500
+		const templete = `
 	<li class="collection-item transparent">
 		<div>
 			<p class="title">${domain}</p>
@@ -85,49 +77,38 @@ function load() {
 			<button class="btn-flat waves-effect" onclick="maxChars('${domain}', '${key2}')">
 				<i class="material-icons">send</i>
 			</button>
-			<button class="btn-flat waves-effect secondary-content" onclick="data('${domain}', '${key2}')">
+			<button class="btn-flat waves-effect secondary-content" onclick="getData('${domain}', '${key2}')">
 				<i class="material-icons left">info</i>${lang.lang_manager_info}
 			</button>
 		</div></li>
 		`
 		$('#domain-list').append(templete)
-	})
-	multisel()
-	var acctN = localStorage.getItem('acct')
-	if (!acctN) {
-		localStorage.setItem('acct', 0)
-		var acctN = 0
+		key2++
 	}
-	//全部チェックアリでいいと思うの
-	$('#linux').prop('checked', true)
+	multisel()
+	const acctN = localStorage.getItem('acct')
+	if (!acctN) localStorage.setItem('acct', '0')
 }
-//最初に読む
-load()
-support()
-function maxChars(domain, uid) {
-	var value = $('#maxChars' + uid).val()
-	if (value * 1 < 1 || !Number.isInteger(value * 1)) {
+export function maxChars(domain: string, uid: string) {
+	const value = parseInt($('#maxChars' + uid).val()?.toString() || '0', 10)
+	if (value < 1) {
 		Swal.fire({
-			type: 'error',
+			icon: 'error',
 			title: 'Error'
 		})
 		return false
 	}
-	var obj = getMulti()
-	if (obj[0]) {
-		if (!obj[0].at) {
-			obj = []
-			localStorage.removeItem('multi')
-		}
+	const obj = getMulti()
+	let key = 0
+	for (const acct of obj) {
+		if (acct.domain === domain) localStorage.setItem('letters_' + key, value.toString())
+		key++
 	}
-	Object.keys(obj).forEach(function (key) {
-		if (obj[key].domain === domain) localStorage.setItem('letters_' + key, value)
-	})
 	console.log('#maxChars' + uid, value)
-	load()
+	loadAcctList()
 }
 //instances.social/instances API
-async function data(domain, acct_id) {
+export async function getData(domain: string, acctId: string) {
 	$('#ins-upd').text('Loading...')
 	$('#ins-add').text('Loading...')
 	$('#ins-connect').text('Loading...')
@@ -138,33 +119,31 @@ async function data(domain, acct_id) {
 	$('#ins-ver').text('Loading...')
 	$('#ins-name').text('Loading...')
 	$('#ins-prof').attr('src', '../../img/loading.svg')
-	var start = 'https://instances.social/api/1.0/instances/show?name=' + domain
-	let promise = await fetch(start, {
-		method: 'GET',
+	const start1 = 'https://instances.social/api/1.0/instances/show?name=' + domain
+	const json1 = await api(start1, {
+		method: 'get',
 		headers: {
 			'content-type': 'application/json',
 			Authorization:
 				'Bearer tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M'
 		}
 	})
-	var json = await promise.json()
-	$('#ins-name').text(json.name)
-	$('#ins-upd').text(date(json.checked_at, 'full'))
-	$('#ins-add').text(date(json.added_at, 'full'))
-	$('#ins-connect').text(json.connections)
-	$('#ins-toot').text(json.statuses)
-	$('#ins-sys').text(date(json.updated_at, 'full'))
-	$('#ins-per').text(json.uptime * 100)
-	$('#ins-user').text(json.users)
-	$('#ins-ver').text(json.version)
-	var start = 'https://' + domain + '/api/v1/instance'
-	let promise2 = await fetch(start, {
-		method: 'GET',
+	$('#ins-name').text(json1.name)
+	$('#ins-upd').text(date(json1.checked_at, 'full'))
+	$('#ins-add').text(date(json1.added_at, 'full'))
+	$('#ins-connect').text(json1.connections)
+	$('#ins-toot').text(json1.statuses)
+	$('#ins-sys').text(date(json1.updated_at, 'full'))
+	$('#ins-per').text(json1.uptime * 100)
+	$('#ins-user').text(json1.users)
+	$('#ins-ver').text(json1.version)
+	const start = 'https://' + domain + '/api/v1/instance'
+	const json = await api(start, {
+		method: 'get',
 		headers: {
 			'content-type': 'application/json'
 		}
 	})
-	var json = await promise2.json()
 	$('#ins-title').text(json.title)
 	$('#ins-desc').html(json.description)
 	$('#ins-email').text(json.email)
@@ -180,259 +159,141 @@ async function data(domain, acct_id) {
 		'index.html?mode=user&code=' + json.contact_account.username + '@' + domain
 	)
 	if (json['max_toot_chars']) {
-		localStorage.setItem('letters_' + acct_id, json['max_toot_chars'])
-		load()
+		localStorage.setItem('letters_' + acctId, json['max_toot_chars'])
+		loadAcctList()
 	}
 }
 
 //アカウントデータ　消す
-function multiDel(target) {
-	var obj = getMulti()
+export async function multiDel(target: number) {
+	const obj = getMulti()
 	//削除確認ダイアログ
-	Swal.fire({
+	const result = await Swal.fire({
 		title: lang.lang_manager_logout,
 		text: obj[target]['user'] + '@' + obj[target]['domain'] + lang.lang_manager_confirm,
-		type: 'warning',
+		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
-	}).then(result => {
-		if (result.value) {
-			Object.keys(obj).forEach(function (key) {
-				var nk = key - 1
-				//公開範囲(差分のみ)
-				if (key >= target) {
-					var oldvis = localStorage.getItem('vis-memory-' + key)
-					if (oldvis) {
-						localStorage.setItem('vis-memory-' + nk, oldvis)
-					}
-				}
-				//独自ロケール
-				localStorage.removeItem('home_' + key)
-				localStorage.removeItem('local_' + key)
-				localStorage.removeItem('public_' + key)
-				localStorage.removeItem('notification_' + key)
-				//アクセストークンとドメイン、プロフ(差分)
-				if (key > target) {
-					var olddom = localStorage.getItem('domain_' + key)
-					localStorage.setItem('domain_' + nk, olddom)
-					var oldat = localStorage.getItem('acct_' + key + '_at')
-					var oldrt = localStorage.getItem('acct_' + key + '_rt')
-					localStorage.setItem('acct_' + nk + '_at', oldat)
-					localStorage.setItem('acct_' + nk + '_rt', oldrt)
-					localStorage.setItem('name_' + nk, localStorage.getItem('name_' + key))
-					localStorage.setItem('user_' + target, localStorage.getItem('user_' + key))
-					localStorage.setItem('user-id_' + target, localStorage.getItem('user-id_' + key))
-					localStorage.setItem('prof_' + target, localStorage.getItem('prof_' + key))
-				}
-			})
-			//とりあえず消す
-			obj.splice(target, 1)
-			var json = JSON.stringify(obj)
-			localStorage.setItem('multi', json)
-			load()
-			//カラムデータコンフリクト
-			var col = localStorage.getItem('column')
-			var oldcols = JSON.parse(col)
-			var newcols = []
-			Object.keys(oldcols).forEach(function (key) {
-				var nk = key - 1
-				var oldcol = oldcols[key]
-				if (target < oldcol.domain) {
-					var newdom = oldcol.domain - 1
-				} else {
-					var newdom = oldcol.domain
-				}
-				var type = oldcol.type
-				var data = null
-				if (oldcol.data) {
-					data = oldcol.data
-				}
-				var background = null
-				if (oldcol.background) {
-					background = oldcol.background
-				}
-				var text = null
-				if (oldcol.text) {
-					text = oldcol.text
-				}
-				var left_fold = false
-				if (oldcol.left_fold) {
-					left_fold = true
-				}
-				//消した垢のコラムじゃないときコピー
-				if (target !== oldcol.domain) {
-					var add = {
-						domain: newdom,
-						type: type,
-						data: data,
-						background: background,
-						text: text,
-						left_fold: left_fold
-					}
-					newcols.push(add)
-				}
-			})
-			var json = JSON.stringify(newcols)
-			localStorage.setItem('column', json)
-		}
 	})
-}
-function multiDel2(target) {
-	var obj = getMulti()
-	Swal.fire({
-		title: lang.lang_manager_logout,
-		text: obj[target]['user'] + '@' + obj[target]['domain'] + lang.lang_manager_confirm,
-		type: 'warning',
-		showCancelButton: true,
-		confirmButtonText: lang.lang_yesno,
-		cancelButtonText: lang.lang_no
-	}).then(result => {
-		if (result.value) {
-			obj.splice(target, 1)
-			var json = JSON.stringify(obj)
-			localStorage.setItem('multi', json)
-			Object.keys(obj).forEach(function (key) {
-				if (key >= target) {
-					var oldvis = localStorage.getItem('vis-memory-' + key)
-					if (oldvis) {
-						var nk = key - 1
-						localStorage.setItem('vis-memory-' + nk, oldvis)
-					}
-				}
-				localStorage.removeItem('home_' + key)
-				localStorage.removeItem('local_' + key)
-				localStorage.removeItem('public_' + key)
-				localStorage.removeItem('notification_' + key)
-				refresh(key)
-			})
-			var col = localStorage.getItem('column')
-			if (!col) {
-				var obj = [
-					{
-						domain: 0,
-						type: 'local'
-					}
-				]
-				localStorage.setItem('card_0', 'true')
-				var json = JSON.stringify(obj)
-				localStorage.setItem('column', json)
-			} else {
-				var cobj = JSON.parse(col)
+	if (result.value) {
+		for (let key = 0; key < obj.length; key++) {
+			const nk = key - 1
+			//公開範囲(差分のみ)
+			if (key >= target) {
+				const oldVis = localStorage.getItem(`vis-memory-${key}`)
+				if (oldVis) localStorage.setItem(`vis-memory-${nk}`, oldVis)
 			}
-			Object.keys(cobj).forEach(function (key) {
-				var column = cobj[key]
-				if (column.domain > target) {
-					var nk = key - 1
-					column.domain = nk
-					cobj[key] = column
-				} else if (column.domain === target) {
-					localStorage.removeItem('card_' + tlid)
-					cobj.splice(key, 1)
+			//独自ロケール
+			localStorage.removeItem('home_' + key)
+			localStorage.removeItem('local_' + key)
+			localStorage.removeItem('public_' + key)
+			localStorage.removeItem('notification_' + key)
+			//アクセストークンとドメイン、プロフ(差分)
+			if (key > target) {
+				const olddom = localStorage.getItem('domain_' + key) || ''
+				localStorage.setItem('domain_' + nk, olddom)
+				const oldat = localStorage.getItem('acct_' + key + '_at') || ''
+				const oldrt = localStorage.getItem('acct_' + key + '_rt') || ''
+				localStorage.setItem('acct_' + nk + '_at', oldat)
+				localStorage.setItem('acct_' + nk + '_rt', oldrt)
+				localStorage.setItem('name_' + nk, localStorage.getItem('name_' + key) || '')
+				localStorage.setItem('user_' + target, localStorage.getItem('user_' + key) || '')
+				localStorage.setItem('user-id_' + target, localStorage.getItem('user-id_' + key) || '')
+				localStorage.setItem('prof_' + target, localStorage.getItem('prof_' + key) || '')
+			}
+		}
+		//とりあえず消す
+		obj.splice(target, 1)
+		setMulti(obj)
+		loadAcctList()
+		//カラムデータコンフリクト
+		const oldCols = getColumn()
+		const newCols: IColumn[] = []
+		for (const oldCol of oldCols) {
+			const newdom = target < oldCol.domain ? oldCol.domain - 1 : oldCol.domain
+			const type = oldCol.type
+			const data = oldCol.data || null
+			const background = oldCol.background || undefined
+			const text = oldCol.text || undefined
+			const left_fold = !!oldCol.left_fold
+			//消した垢のコラムじゃないときコピー
+			if (target !== oldCol.domain) {
+				const add: IColumn = {
+					domain: newdom,
+					type: type,
+					data: data,
+					background: background,
+					text: text,
+					left_fold: left_fold
 				}
-			})
-			var json = JSON.stringify(column)
-			localStorage.setItem('column', json)
-			load()
+				newCols.push(add)
+			}
 		}
-	})
+		setColumn(newCols)
+	}
 }
-
 //サポートインスタンス
-function support() {
-	Object.keys(idata).forEach(function (key) {
-		var instance = idata[key]
-		if (instance === 'instance') {
-			templete =
-				'<a onclick="login(\'' +
-				key +
-				'\')" class="collection-item pointer transparent">' +
-				idata[key + '_name'] +
-				'(' +
-				key +
-				')</a>'
-			$('#support').append(templete)
-		}
-	})
+export function support() {
+	for (const [key, instance] of Object.entries(idata)) {
+		if (instance !== 'instance') continue
+		const template = `<a onclick="login('${key}')" class="collection-item pointer transparent">${idata[key + '_name']}(${key})</a>`
+		$('#support').append(template)
+	}
 }
-function backToInit() {
+export function backToInit() {
 	$('#auth').hide()
 	$('#add').show()
 }
 
 //URL指定してポップアップ
 async function login(url) {
-	var obj = getMulti()
-	if ($('#misskey:checked').val() === 'on') {
-		$('#misskey').prop('checked', true)
-		misskeyLogin(url)
-		return
-	}
 	$('#compt').hide()
 	const start = `https://${url}/api/v1/apps`
-	$('#loginBtn').attr('disabled', true)
+	$('#loginBtn').attr('disabled', 'true')
 	const nextSetup = await versionChecker(url)
-	$('#loginBtn').attr('disabled', false)
+	$('#loginBtn').removeAttr('disabled')
 	let red = 'thedesk://manager'
 	if (!nextSetup) {
 		red = 'urn:ietf:wg:oauth:2.0:oob'
-		if (~url.indexOf('pixelfed')) {
-			red = 'https://thedesk.top/hello.html'
-		}
+		if (~url.indexOf('pixelfed')) red = 'https://thedesk.top/hello.html'
 	}
 	localStorage.setItem('redirect', red)
-	var httpreq = new XMLHttpRequest()
-	httpreq.open('POST', start, true)
-	httpreq.setRequestHeader('Content-Type', 'application/json')
-	httpreq.responseType = 'json'
-	httpreq.send(
-		JSON.stringify({
-			scopes: 'read write follow',
-			client_name: 'TheDesk(PC)',
-			redirect_uris: red,
-			website: 'https://thedesk.top'
-		})
-	)
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			var json = httpreq.response
-			if (this.status !== 200) {
-				setLog(start, this.status, json)
+	try {
+		const json = await api(start, {
+			method: 'post',
+			headers: {
+				'content-type': 'application/json'
+			},
+			body: {
+				scopes: 'read write follow',
+				client_name: 'TheDesk(PC)',
+				redirect_uris: red,
+				website: 'https://thedesk.top'
 			}
-			localStorage.setItem('msky', 'false')
-			var auth =
-				'https://' +
-				url +
-				'/oauth/authorize?client_id=' +
-				json['client_id'] +
-				'&client_secret=' +
-				json['client_secret'] +
-				'&response_type=code&scope=read+write+follow&redirect_uri=' +
-				encodeURIComponent(red)
-			localStorage.setItem('domain_tmp', url)
-			localStorage.setItem('client_id', json['client_id'])
-			localStorage.setItem('client_secret', json['client_secret'])
-			$('#auth').show()
-			$('#add').hide()
-			postMessage(['openUrl', auth], '*')
-		}
+		})
+		const auth = `https://${url}/oauth/authorize?client_id=${json.client_id}&client_secret=${json.client_secret}&response_type=code&scope=read+write+follow&redirect_uri=${encodeURIComponent(red)}`
+		localStorage.setItem('domain_tmp', url)
+		localStorage.setItem('client_id', json['client_id'])
+		localStorage.setItem('client_secret', json['client_secret'])
+		$('#auth').show()
+		$('#add').hide()
+		postMessage(['openUrl', auth], '*')
+	} catch (e: any) {
+		setLog(start, e.toString(), 'null')
+		return toast(`Error: Unknown Fatal Error`)
 	}
+
 }
 async function versionChecker(url) {
 	const start = `https://${url}/api/v1/instance`
 	try {
-		const response = await fetch(start, {
-			method: 'GET',
+		const json = await api(start, {
+			method: 'get',
 			headers: {
 				'content-type': 'application/json'
 			}
 		})
-		if (!response.ok) {
-			response.text().then(function (text) {
-				setLog(response.url, response.status, text)
-			})
-		}
-		const json = await response.json()
 		const version = json.version
 		if (version) {
 			const reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u)
@@ -442,7 +303,7 @@ async function versionChecker(url) {
 				return false
 			} else {
 				$('#compt-warn').hide()
-				if (pwa) return false
+				if (global.pwa) return false
 				const codeSetupCheck = await Swal.fire({
 					title: lang.lang_manager_codesetup_title,
 					text: lang.lang_manager_codesetup,
@@ -462,7 +323,7 @@ async function versionCompat(title, version) {
 	$('#compt-instance').text(title)
 	$('#compt-ver').text(version)
 	$('#compt-list').html('')
-	var start = '../../source/version.json'
+	const start = '../../source/version.json'
 	const response = await fetch(start)
 	const json = await response.json()
 	const keys = Object.keys(json)
@@ -470,13 +331,11 @@ async function versionCompat(title, version) {
 	let onceAdd = false
 	for (const targetVersion of keys) {
 		const data = json[targetVersion]
-		const [tsem, ta, tb, tc] = targetVersion.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/)
+		const [tsem, ta, tb, tc] = targetVersion.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/) || []
 		let add = false
 		if (ta === a) {
 			if (tb === b) {
-				if (tc > c) {
-					add = true
-				}
+				if (tc > c) add = true
 			} else if (tb > b) {
 				add = true
 			}
@@ -485,119 +344,15 @@ async function versionCompat(title, version) {
 		}
 		if (!add) break
 		if (add) onceAdd = true
-		for (const note of data) {
-			$('#compt-list').append(`<li>${note}(${targetVersion})</li>`)
-		}
+		for (const note of data) $('#compt-list').append(`<li>${note}(${targetVersion})</li>`)
 		i++
 	}
-	if (lang.language === 'ja' && onceAdd) {
-		$('#compt').show()
-	}
-}
-//これが後のMisskeyである。
-function misskeyLogin(url) {
-	if (!url) {
-		var url = $('#misskey-url').val()
-	}
-	var start = 'https://' + url + '/api/app/create'
-	var httpreq = new XMLHttpRequest()
-	httpreq.open('POST', start, true)
-	httpreq.setRequestHeader('Content-Type', 'application/json')
-	httpreq.responseType = 'json'
-	localStorage.setItem('msky', 'true')
-	httpreq.send(
-		JSON.stringify({
-			name: 'TheDesk(PC)',
-			description: 'Mastodon and Misskey client for PC',
-			permission: [
-				'account-read',
-				'account-write',
-				'account/read',
-				'account/write',
-				'drive-read',
-				'drive-write',
-				'favorite-read',
-				'favorite-write',
-				'favorites-read',
-				'following-read',
-				'following-write',
-				'messaging-read',
-				'messaging-write',
-				'note-read',
-				'note-write',
-				'notification-read',
-				'notification-write',
-				'reaction-read',
-				'reaction-write',
-				'vote-read',
-				'vote-write',
-				'read:account',
-				'write:account',
-				'read:drive',
-				'write:drive',
-				'read:blocks',
-				'write:blocks',
-				'read:favorites',
-				'write:favorites',
-				'read:following',
-				'write:following',
-				'read:messaging',
-				'write:messaging',
-				'read:mutes',
-				'write:mutes',
-				'write:notes',
-				'read:notifications',
-				'write:notifications',
-				'read:reactions',
-				'write:reactions',
-				'write:votes'
-			]
-		})
-	)
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			var json = httpreq.response
-			if (this.status !== 200) {
-				setLog(start, this.status, json)
-			}
-			misskeyAuth(url, json.secret)
-		}
-	}
-}
-function misskeyAuth(url, mkc) {
-	var start = 'https://' + url + '/api/auth/session/generate'
-	var httpreq = new XMLHttpRequest()
-	httpreq.open('POST', start, true)
-	httpreq.setRequestHeader('Content-Type', 'application/json')
-	httpreq.responseType = 'json'
-
-	localStorage.setItem('mkc', mkc)
-	localStorage.setItem('msky', 'true')
-	httpreq.send(
-		JSON.stringify({
-			appSecret: mkc
-		})
-	)
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			var json = httpreq.response
-			if (this.status !== 200) {
-				setLog(start, this.status, json)
-			}
-			var token = json.token
-			$('#auth').show()
-			$('#code').val(token)
-			$('#add').hide()
-			$('#misskey').prop('checked', false)
-			localStorage.setItem('domain_tmp', url)
-			postMessage(['openUrl', json.url], '*')
-		}
-	}
+	if (lang.language === 'ja' && onceAdd) $('#compt').show()
 }
 
 //テキストボックスにURL入れた
 function instance() {
-	var url = $('#autocomplete-input').val()
+	const url = $('#autocomplete-input').val()?.toString() || ''
 	if (url.indexOf('@') !== -1 || url.indexOf('https') !== -1) {
 		alert('入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
 		return false
@@ -605,110 +360,45 @@ function instance() {
 	login(url)
 }
 //コード入れてAccessTokenゲット
-function code(code) {
-	var red = localStorage.getItem('redirect')
+async function code(code) {
+	let red = localStorage.getItem('redirect')
 	localStorage.removeItem('redirect')
 	if (!code) {
-		var code = $('#code').val()
+		const code = $('#code').val()
 		$('#code').val('')
 	}
 	if (!code || code === '') {
 		toast({ html: lang.lang_fatalerroroccured + 'Error: no code', displayLength: 5000 })
 		return false
 	}
-	var url = localStorage.getItem('domain_tmp')
+	const url = localStorage.getItem('domain_tmp')
 	localStorage.removeItem('domain_tmp')
-	if (localStorage.getItem('msky') === 'true') {
-		var start = 'https://' + url + '/api/auth/session/userkey'
-		var httpreq = new XMLHttpRequest()
-		httpreq.open('POST', start, true)
-		httpreq.setRequestHeader('Content-Type', 'application/json')
-		httpreq.responseType = 'json'
-		httpreq.send(
-			JSON.stringify({
-				token: code,
-				appSecret: localStorage.getItem('mkc')
-			})
-		)
-		httpreq.onreadystatechange = function () {
-			if (httpreq.readyState === 4) {
-				var json = httpreq.response
-				if (this.status !== 200) {
-					setLog(start, this.status, json)
-				}
-				var i = sha256(json.accessToken + localStorage.getItem('mkc'))
-				var avatar = json['user']['avatarUrl']
-				var priv = 'public'
-				var add = {
-					at: i,
-					name: json['user']['name'],
-					domain: url,
-					user: json['user']['username'],
-					prof: avatar,
-					id: json['user']['id'],
-					vis: priv,
-					mode: 'misskey'
-				}
-				localStorage.setItem('mode_' + url, 'misskey')
-				var obj = getMulti()
-				var target = obj.length
-				obj.push(add)
-				localStorage.setItem('name_' + target, json['user']['name'])
-				localStorage.setItem('user_' + target, json['user']['username'])
-				localStorage.setItem('user-id_' + target, json['user']['id'])
-				localStorage.setItem('prof_' + target, avatar)
-				var json = JSON.stringify(obj)
-				localStorage.setItem('multi', json)
-				if ($('body').hasClass('first')) {
-					location.href = 'index.html'
-				}
-				load()
-				return
-			}
-		}
-		return
-	} else {
-		if (!red) red = 'urn:ietf:wg:oauth:2.0:oob'
-		if (~url.indexOf('pixelfed')) {
-			red = 'https://thedesk.top/hello.html'
-		}
-		var start = 'https://' + url + '/oauth/token'
-		var id = localStorage.getItem('client_id')
-		var secret = localStorage.getItem('client_secret')
-		var httpreq = new XMLHttpRequest()
-		httpreq.open('POST', start, true)
-		httpreq.setRequestHeader('Content-Type', 'application/json')
-		httpreq.responseType = 'json'
-		httpreq.send(
-			JSON.stringify({
-				grant_type: 'authorization_code',
-				redirect_uri: red,
-				client_id: id,
-				client_secret: secret,
-				code: code
-			})
-		)
-		httpreq.onreadystatechange = function () {
-			if (httpreq.readyState === 4) {
-				var json = httpreq.response
-				if (this.status !== 200) {
-					toast({ html: lang.lang_fatalerroroccured + 'Error: cannot complete', displayLength: 5000 })
-					setLog(start, this.status, json)
-				}
-				if (json['access_token']) {
-					$('#auth').hide()
-					$('#add').show()
-					getdata(url, json)
-				}
-			}
-		}
+	if (!red) red = 'urn:ietf:wg:oauth:2.0:oob'
+	if (~url.indexOf('pixelfed')) {
+		red = 'https://thedesk.top/hello.html'
+	}
+	const start = 'https://' + url + '/oauth/token'
+	const id = localStorage.getItem('client_id')
+	const secret = localStorage.getItem('client_secret')
+	const body = {
+		grant_type: 'authorization_code',
+		redirect_uri: red,
+		client_id: id,
+		client_secret: secret,
+		code: code
+	}
+	const json = await api(start, { method: 'post', headers: { 'Content-Type': 'application/json' }, body })
+	if (json['access_token']) {
+		$('#auth').hide()
+		$('#add').show()
+		getdata(url, json)
 	}
 }
 //ユーザーデータ取得
 function getdata(domain, json) {
-	var at = json['access_token']
-	var rt = `${json['refresh_token']} ${localStorage.getItem('client_id')} ${localStorage.getItem('client_secret')}`
-	var start = 'https://' + domain + '/api/v1/accounts/verify_credentials'
+	const at = json['access_token']
+	const rt = `${json['refresh_token']} ${localStorage.getItem('client_id')} ${localStorage.getItem('client_secret')}`
+	const start = 'https://' + domain + '/api/v1/accounts/verify_credentials'
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -735,17 +425,17 @@ function getdata(domain, json) {
 				toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
 				return
 			}
-			var avatar = json['avatar']
+			const avatar = json['avatar']
 			//missingがmissingなやつ
 			if (avatar === '/avatars/original/missing.png') {
 				avatar = '../../img/missing.svg'
 			}
 			if (json['source']) {
-				var priv = json['source']['privacy']
+				const priv = json['source']['privacy']
 			} else {
-				var priv = 'public'
+				const priv = 'public'
 			}
-			var add = {
+			const add = {
 				at: at,
 				rt: rt ? rt : null,
 				name: json['display_name'],
@@ -756,7 +446,7 @@ function getdata(domain, json) {
 				vis: priv,
 				mode: 'mastodon'
 			}
-			var obj = getMulti()
+			const obj = getMulti()
 			let addTarget = -1
 			let ct = 0
 			for (let acct of obj) {
@@ -768,18 +458,18 @@ function getdata(domain, json) {
 				ct++
 			}
 			if (addTarget === -1) {
-				var target = obj.length
+				const target = obj.length
 				obj.push(add)
 			} else {
 				console.log('dupl acct_' + addTarget)
 				obj[addTarget] = add
-				var target = addTarget
+				const target = addTarget
 			}
 			localStorage.setItem('name_' + target, json['display_name'])
 			localStorage.setItem('user_' + target, json['acct'])
 			localStorage.setItem('user-id_' + target, json['id'])
 			localStorage.setItem('prof_' + target, avatar)
-			var json = JSON.stringify(obj)
+			const json = JSON.stringify(obj)
 			localStorage.setItem('multi', json)
 			if ($('body').hasClass('first')) {
 				location.href = 'index.html'
@@ -789,14 +479,14 @@ function getdata(domain, json) {
 }
 //アクセストークン直接入力
 function atSetup(type) {
-	var url = localStorage.getItem('domain_tmp')
+	const url = localStorage.getItem('domain_tmp')
 	localStorage.removeItem('domain_tmp')
-	var obj = getMulti()
-	var avatar = '../../img/missing.svg'
-	var priv = 'public'
+	const obj = getMulti()
+	const avatar = '../../img/missing.svg'
+	const priv = 'public'
 	if (type === 'misskey') {
-		var i = $('#misskey-key').val()
-		var add = {
+		const i = $('#misskey-key').val()
+		const add = {
 			at: i,
 			rt: null,
 			name: 'Pseudo Account',
@@ -809,8 +499,8 @@ function atSetup(type) {
 		}
 		localStorage.setItem('mode_' + url, 'misskey')
 	} else {
-		var i = $('#code').val()
-		var add = {
+		const i = $('#code').val()
+		const add = {
 			at: i,
 			rt: null,
 			name: 'Pseudo Account',
@@ -826,26 +516,22 @@ function atSetup(type) {
 		toast({ html: lang.lang_fatalerroroccured + 'Error: access token', displayLength: 5000 })
 		return false
 	}
-	var target = obj.length
+	const target = obj.length
 	obj.push(add)
 	localStorage.setItem('name_' + target, add['name'])
 	localStorage.setItem('user_' + target, add['username'])
 	localStorage.setItem('user-id_' + target, add['id'])
 	localStorage.setItem('prof_' + target, avatar)
-	var json = JSON.stringify(obj)
+	const json = JSON.stringify(obj)
 	localStorage.setItem('multi', json)
 	refresh(target)
 }
 
 //ユーザーデータ更新
 function refresh(target) {
-	var obj = getMulti()
+	const obj = getMulti()
 	console.log(obj)
-	if (obj[target].mode === 'misskey') {
-		misskeyRefresh(obj, target, obj[target].domain)
-		return
-	}
-	var start = 'https://' + obj[target].domain + '/api/v1/accounts/verify_credentials'
+	const start = 'https://' + obj[target].domain + '/api/v1/accounts/verify_credentials'
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -877,12 +563,12 @@ function refresh(target) {
 				toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
 				return
 			}
-			var avatar = json['avatar']
+			const avatar = json['avatar']
 			//missingがmissingなやつ
 			if (avatar === '/avatars/original/missing.png' || !avatar) {
 				avatar = './img/missing.svg'
 			}
-			var ref = {
+			const ref = {
 				at: obj[target].at,
 				rt: obj[target].rt ? obj[target].rt : null,
 				name: json['display_name'],
@@ -908,75 +594,31 @@ function refresh(target) {
 				localStorage.removeItem('nsfw_' + target)
 			}
 			obj[target] = ref
-			var json = JSON.stringify(obj)
+			const json = JSON.stringify(obj)
 			localStorage.setItem('multi', json)
 
 			load()
 		})
 }
-function misskeyRefresh(obj, target, url) {
-	var start = 'https://' + url + '/api/users/show'
-	var httpreq = new XMLHttpRequest()
-	httpreq.open('POST', start, true)
-	httpreq.setRequestHeader('Content-Type', 'application/json')
-	httpreq.responseType = 'json'
-	httpreq.send(
-		JSON.stringify({
-			username: obj[target].user,
-			i: obj[target].at
-		})
-	)
-	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
-			var json = httpreq.response
-			if (this.status !== 200) {
-				setLog(start, this.status, json)
-			}
-			var avatar = json['user']['avatarUrl']
-			var priv = 'public'
-			var add = {
-				at: json.accessToken,
-				rt: null,
-				name: json['user']['name'],
-				domain: url,
-				user: json['user']['username'],
-				prof: avatar,
-				id: json['user']['id'],
-				vis: priv
-			}
-			var obj = getMulti()
-			var target = obj.length
-			obj.push(add)
-			localStorage.setItem('name_' + target, json['user']['name'])
-			localStorage.setItem('user_' + target, json['user']['username'])
-			localStorage.setItem('user-id_' + target, json['user']['id'])
-			localStorage.setItem('prof_' + target, avatar)
-			var json = JSON.stringify(obj)
-			localStorage.setItem('multi', json)
-			load()
-			return
-		}
-	}
-}
 //アカウントを選択…を実装
 function multisel() {
-	var obj = getMulti()
-	var templete
-	var last = localStorage.getItem('main')
-	var sel
+	const obj = getMulti()
+	const templete
+	const last = localStorage.getItem('main')
+	const sel
 	if (obj.length < 1) {
 		$('#src-acct-sel').html('<option value="tootsearch">Tootsearch</option>')
 		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	} else {
 		Object.keys(obj).forEach(function (key) {
-			var acct = obj[key]
-			var list = key * 1 + 1
+			const acct = obj[key]
+			const list = key * 1 + 1
 			if (key === last) {
 				sel = 'selected'
 				mainb = '(' + lang.lang_manager_def + ')'
-				var domain = localStorage.getItem('domain_' + key)
-				var profimg = localStorage.getItem('prof_' + key)
-				var domain = localStorage.getItem('domain_' + key)
+				const domain = localStorage.getItem('domain_' + key)
+				const profimg = localStorage.getItem('prof_' + key)
+				const domain = localStorage.getItem('domain_' + key)
 				if (!profimg) {
 					profimg = '../../img/missing.svg'
 				}
@@ -995,11 +637,11 @@ function multisel() {
 	$('select').formSelect()
 }
 function mainacct() {
-	var acct_id = $('#main-acct-sel').val()
+	const acct_id = $('#main-acct-sel').val()
 	localStorage.setItem('main', acct_id)
 	toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
 }
-function colorpicker(key) {
+function colorPicker(key) {
 	temp = `<div onclick="coloradd('${key}','def','def')" class="pointer exc">${lang.lang_manager_none}</div>
 		<div onclick="coloradd('${key}','f44336','white')" class="red white-text pointer"></div>
 		<div onclick="coloradd('${key}','e91e63','white')" class="pink white-text pointer"></div>
@@ -1025,45 +667,45 @@ function colorpicker(key) {
 	$('#colorsel_' + key).html(temp)
 }
 function coloradd(key, bg, txt) {
-	var o = getMulti()
-	var obj = o[key]
+	const o = getMulti()
+	const obj = o[key]
 	obj.background = bg
 	obj.text = txt
 	o[key] = obj
-	var json = JSON.stringify(o)
+	const json = JSON.stringify(o)
 	localStorage.setItem('multi', json)
 	if (txt === 'def') {
 		$('#acct_' + key).attr('style', '')
 	} else {
 		$('#acct_' + key).css('background-color', '#' + bg)
 		if (txt === 'black') {
-			var bghex = '000000'
-			var ichex = '9e9e9e'
+			const bghex = '000000'
+			const ichex = '9e9e9e'
 		} else if (txt === 'white') {
-			var bghex = 'ffffff'
-			var ichex = 'eeeeee'
+			const bghex = 'ffffff'
+			const ichex = 'eeeeee'
 		}
 		$('#acct_' + key + ' .nex').css('color', '#' + ichex)
 		$('#acct_' + key).css('color', '#' + bghex)
 	}
 }
 //入力時にハッシュタグと@をサジェスト
-var timer = null
+const timer = null
 
-var input = document.getElementById('autocomplete-input')
-var prev_val = input.value
-var oldSuggest
-var suggest
+const input = document.getElementById('autocomplete-input')
+const prev_val = input.value
+const oldSuggest
+const suggest
 input.addEventListener(
 	'focus',
 	function () {
 		const instance = M.Autocomplete.getInstance(input)
 		window.clearInterval(timer)
 		timer = window.setInterval(function () {
-			var new_val = input.value
+			const new_val = input.value
 			if (prev_val !== new_val) {
 				if (new_val.length > 3) {
-					var start = 'https://www.fediversesearch.com/search/?keyword=' + new_val
+					const start = 'https://www.fediversesearch.com/search/?keyword=' + new_val
 					fetch(start, {
 						method: 'GET',
 						headers: {
@@ -1087,7 +729,7 @@ input.addEventListener(
 							if (!json.error) {
 								let data = {}
 								Object.keys(json.data).forEach(function (key) {
-									var url = json.data[key]
+									const url = json.data[key]
 									data[url.uri] = escapeHTML(url.title ? url.title : url.uri)
 								})
 								instance.updateData(data)

@@ -23,7 +23,7 @@ function bottomReverse() {
 		localStorage.setItem('reverse', 'true')
 	}
 }
-function tips(mode, custom) {
+export function tips(mode, custom?: any) {
 	postMessage(['sendSinmpleIpc', 'endmem'], '*')
 	clearInterval(clockint)
 	clearInterval(spotStart)

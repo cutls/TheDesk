@@ -1,3 +1,5 @@
+const { default: api } = require("../common/fetch")
+
 //トゥートの詳細
 async function details(id, acct_id, tlid, mode) {
 	if (mode === 'dm') {
@@ -40,13 +42,7 @@ async function details(id, acct_id, tlid, mode) {
 		}
 	}
 	try {
-		const response = await fetch(start, i)
-		if (!response.ok) {
-			response.text().then(function (text) {
-				setLog(response.url, response.status, text)
-			})
-		}
-		const json = await response.json()
+		const json = await api(start, i)
 		console.log(['Toot data:', json])
 		if (!$('#timeline_' + tlid + ' #pub_' + id).length) {
 			var mute = getFilterTypeByAcct(acct_id, 'thread')
@@ -108,7 +104,7 @@ async function details(id, acct_id, tlid, mode) {
 		if (json.edited_at) {
 			$('.edited-hide').show()
 			try {
-				const history = await (await fetch(`https://${domain}/api/v1/statuses/${id}/history`, i)).json()
+				const history = await api(`https://${domain}/api/v1/statuses/${id}/history`, i)
 				const temp = parse(history, 'noauth', acct_id)
 				console.log(temp)
 				$('#toot-edit').html(temp)
@@ -670,15 +666,13 @@ async function detExCore(url, acct_id) {
 	const domain = localStorage.getItem('domain_' + acct_id)
 	const start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + encodeURIComponent(url)
 	const at = localStorage.getItem('acct_' + acct_id + '_at')
-	let promise = await fetch(start, {
-		method: 'GET',
+	const json = await api(start, {
+		method: 'get',
 		headers: {
 			'content-type': 'application/json',
 			Authorization: 'Bearer ' + at
 		}
 	})
-
-	const json = await promise.json()
 	if (json) {
 		return json
 	} else {

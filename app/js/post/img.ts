@@ -1,3 +1,6 @@
+import { toast } from "../common/declareM"
+import api from "../common/fetch"
+
 //ドラッグ・アンド・ドロップからアップロードまで。uiのimg.jsとは異なります。
 var obj = $('body')
 var system
@@ -387,23 +390,27 @@ function stamp() {
 }
 //v2/media対応
 async function v2MediaUpload(domain, at, fd) {
-	var start = 'https://' + domain + '/api/v2/media'
-	let promise = await fetch(start, {
-		method: 'POST',
-		headers: {
-			Authorization:
-				'Bearer ' + at
-		},
-		body: fd
-	})
-	var json = await promise.json()
-	if(json.id) {
-		return json.id
-	} else {
-		return false
+	try {
+		const start = 'https://' + domain + '/api/v2/media'
+		const json = await api(start, {
+			method: 'post',
+			headers: {
+				Authorization:
+					'Bearer ' + at
+			},
+			body: fd
+		})
+		if(json.id) {
+			return json.id
+		} else {
+			throw json
+		}
+	} catch (e: any) {
+		console.error(`Fatal Error: ${e}`)
 	}
+	
 }
-function alertProcessUnfinished() {
+export function alertProcessUnfinished() {
 	Swal.fire({
 		title: lang.lang_post_unfinishedMedia,
 		type: 'error',
