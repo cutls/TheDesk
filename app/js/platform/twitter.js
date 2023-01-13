@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use strict'
 var _createClass = (function() {
 	function a(e, f) {

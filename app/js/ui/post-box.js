@@ -138,3 +138,80 @@ function initPostbox() {
 		selectedToot = 0
 	})
 }
+
+function mdCheck() {
+	var acct_id = $('#post-acct-sel').val()
+	var profimg = localStorage.getItem('prof_' + acct_id)
+	if (!profimg) {
+		profimg = '../../img/missing.svg'
+	}
+	$('#acct-sel-prof').attr('src', profimg)
+	if (localStorage.getItem('post_' + acct_id)) {
+		$('#toot-post-btn').text(
+			localStorage.getItem('post_' + acct_id) +
+				'(' +
+				localStorage.getItem('domain_' + acct_id) +
+				')'
+		)
+	} else {
+		$('#toot-post-btn').text(lang.lang_toot + '(' + localStorage.getItem('domain_' + acct_id) + ')')
+	}
+	if (!localStorage.getItem('bb_' + acct_id) && !localStorage.getItem('md_' + acct_id)) {
+		$('.markdown').addClass('hide')
+		$('.anti-markdown').addClass('hide')
+	} else {
+		$('.anti-markdown').removeClass('hide')
+	}
+	if ($('.markdown').hasClass('hide')) {
+		localStorage.setItem('md', 'hide')
+	} else {
+		localStorage.removeItem('md')
+	}
+	var domain = localStorage.getItem('domain_' + acct_id)
+	if (domain === 'itabashi.0j0.jp') {
+		$('#limited-button').removeClass('hide')
+	} else {
+		$('#limited-button').addClass('hide')
+	}
+	if (domain === 'imastodon.net') {
+		trendTag()
+	} else {
+		$('#trendtag').html('')
+	}
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
+		toast({ html: lang.lang_bbmd_misskey, displayLength: 5000 })
+	}
+	if (idata[domain + '_letters']) {
+		$('#textarea').attr('data-length', idata[domain + '_letters'])
+	} else {
+		var maxletters = localStorage.getItem('letters_' + acct_id)
+		if (maxletters > 0) {
+			$('#textarea').attr('data-length', maxletters)
+		} else {
+			$('#textarea').attr('data-length', 500)
+		}
+	}
+	if (idata[domain + '_glitch'] === 'true') {
+		$('#local-button').removeClass('hide')
+	} else {
+		$('#local-button').addClass('hide')
+	}
+	var obj = getMulti()
+	if (multi) {
+		if (
+			obj[acct_id].background &&
+			obj[acct_id].background !== 'def' &&
+			obj[acct_id].text &&
+			obj[acct_id].text !== 'def'
+		) {
+			$('#toot-post-btn').removeClass('indigo')
+			$('#toot-post-btn').css('background-color', '#' + obj[acct_id].background)
+			$('#toot-post-btn').css('color', obj[acct_id].text)
+		} else {
+			$('#toot-post-btn').css('background-color', '')
+			$('#toot-post-btn').css('color', '')
+			$('#toot-post-btn').addClass('indigo')
+		}
+	}
+	loadVis()
+}

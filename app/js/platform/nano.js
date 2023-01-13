@@ -1,23 +1,17 @@
 //TL取得
-var websocket
+let websocket
 function tl(data) {
-	var tlid = 0
-	if (websocket) {
-		websocket.close()
-	}
-	var acct_id = $('#post-acct-sel').val()
-	var type = $('#type-sel').val()
-	var domain = localStorage.getItem('domain_' + acct_id)
+	const tlid = 0
+	if (websocket) websocket.close()
+	const acct_id = $('#post-acct-sel').val()
+	const type = $('#type-sel').val()?.toString() || 'local'
+	const domain = localStorage.getItem('domain_' + acct_id)
 	//タグの場合はカラム追加して描画
-	if (!type) {
-		//デフォルト
-		var type = 'local'
-	}
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
 	$('#notice_nano').text(
 		cap(type, data) + ' TL(' + localStorage.getItem('user_' + acct_id) + '@' + domain + ')'
 	)
-	var start = 'https://' + domain + '/api/v1/timelines/' + com(type, data)
+	const start = 'https://' + domain + '/api/v1/timelines/' + com(type, data)
 	fetch(start, {
 		method: 'GET',
 		headers: {
@@ -25,52 +19,52 @@ function tl(data) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function(response) {
+		.then(function (response) {
 			if (!response.ok) {
-				response.text().then(function(text) {
+				response.text().then(function (text) {
 					setLog(response.url, response.status, text)
 				})
 			}
 			return response.json()
 		})
-		.catch(function(error) {
+		.catch(function (error) {
 			console.error(error)
 		})
-		.then(function(json) {
-			var templete = parse([json[0]], '', acct_id, tlid)
+		.then(function (json) {
+			const templete = parse([json[0]], '', acct_id, tlid)
 			$('#timeline_nano').html(templete)
 			jQuery('time.timeago').timeago()
 			$('#menu').addClass('hide')
 		})
 	//Streaming接続
-	var tlid = 0
+	let wssStart
 	if (type === 'home') {
-		var start = 'wss://' + domain + '/api/v1/streaming/?stream=user&access_token=' + at
+		wssStart = 'wss://' + domain + '/api/v1/streaming/?stream=user&access_token=' + at
 	} else if (type === 'pub') {
-		var start = 'wss://' + domain + '/api/v1/streaming/?stream=public&access_token=' + at
+		wssStart = 'wss://' + domain + '/api/v1/streaming/?stream=public&access_token=' + at
 	} else if (type === 'local') {
-		var start = 'wss://' + domain + '/api/v1/streaming/?stream=public:local&access_token=' + at
+		wssStart = 'wss://' + domain + '/api/v1/streaming/?stream=public:local&access_token=' + at
 	} else if (type === 'tag') {
-		var start =
+		wssStart =
 			'wss://' + domain + '/api/v1/streaming/?stream=hashtag&tag=' + data + '&access_token=' + at
 	}
 	websocket = new WebSocket(start)
-	websocket.onopen = function(mess) {
+	websocket.onopen = function (mess) {
 		$('#notice_icon_' + tlid).removeClass('red-text')
 	}
-	websocket.onmessage = function(mess) {
-		var typeA = JSON.parse(mess.data).event
+	websocket.onmessage = function (mess) {
+		const typeA = JSON.parse(mess.data).event
 		if (typeA === 'update') {
-			var obj = JSON.parse(JSON.parse(mess.data).payload)
-			var templete = parse([obj], '', acct_id, tlid)
+			const obj = JSON.parse(JSON.parse(mess.data).payload)
+			const templete = parse([obj], '', acct_id, tlid)
 			jQuery('time.timeago').timeago()
 			$('#timeline_nano').html(templete)
 		}
 	}
-	websocket.onerror = function(error) {
+	websocket.onerror = function (error) {
 		console.error('WebSocket Error ' + error)
 	}
-	websocket.onclose = function(mess) {
+	websocket.onclose = function (mess) {
 		console.error('Close Streaming API:' + type)
 	}
 }
@@ -122,16 +116,14 @@ function icon(type) {
 		return 'subject'
 	}
 }
-function todo() {}
-function todc() {}
-function hide() {}
-$(function($) {
+function todo() { }
+function todc() { }
+function hide() { }
+$(function ($) {
 	//キーボードショートカット
-	$(window).keydown(function(e) {
-		var hasFocus = $('input').is(':focus')
-		var hasFocus2 = $('textarea').is(':focus')
+	$(window).keydown(function (e) {
 		//Ctrl+Enter:投稿
-		if (event.ctrlKey) {
+		if (e.ctrlKey) {
 			if (e.keyCode === 13) {
 				post()
 				return false
@@ -148,36 +140,16 @@ function set() {
 	}
 }
 
-var multi = localStorage.getItem('multi')
-if (!multi) {
-	var obj = [
-		{
-			at: localStorage.getItem(localStorage.getItem('domain_' + acct_id) + '_at'),
-			name: localStorage.getItem('name_' + acct_id),
-			domain: localStorage.getItem('domain_' + acct_id),
-			user: localStorage.getItem('user_' + acct_id),
-			prof: localStorage.getItem('prof_' + acct_id)
-		}
-	]
-	var json = JSON.stringify(obj)
-	localStorage.setItem('multi', json)
-} else {
-	var obj = JSON.parse(multi)
+const obj = getMulti()
+const last = localStorage.getItem('last-use')
+let key = 0
+for (const acct of obj) {
+	const list = key * 1 + 1
+	const sel = key.toString() === last ? 'selected' : ''
+	const template = `<option value="${key}" ${sel}>${acct.user}@${acct.domain}</option>`
+	$('#post-acct-sel').append(template)
+	key++
 }
-var templete
-var last = localStorage.getItem('last-use')
-var sel
-Object.keys(obj).forEach(function(key) {
-	var acct = obj[key]
-	var list = key * 1 + 1
-	if (key === last) {
-		sel = 'selected'
-	} else {
-		sel = ''
-	}
-	templete = `<option value="${key}" ${sel}>${acct.user}@${acct.domain}</option>`
-	$('#post-acct-sel').append(templete)
-})
 function mov() {
 	return false
 }
@@ -185,23 +157,23 @@ function resetmv() {
 	return false
 }
 function post() {
-	var acct_id = $('#post-acct-sel').val()
-	var domain = localStorage.getItem('domain_' + acct_id)
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	var start = 'https://' + domain + '/api/v1/statuses'
-	var str = $('#textarea').val()
-	var toot = {
+	const acct_id = $('#post-acct-sel').val()
+	const domain = localStorage.getItem('domain_' + acct_id)
+	const at = localStorage.getItem('acct_' + acct_id + '_at')
+	const start = 'https://' + domain + '/api/v1/statuses'
+	const str = $('#textarea').val()
+	const toot = {
 		status: str
 	}
-	var vis = loadVis(acct_id)
+	const vis = loadVis(acct_id)
 	toot.visibility = vis
-	var httpreq = new XMLHttpRequest()
+	const httpreq = new XMLHttpRequest()
 	httpreq.open('POST', start, true)
 	httpreq.setRequestHeader('Content-Type', 'application/json')
 	httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 	httpreq.responseType = 'json'
 	httpreq.send(JSON.stringify(toot))
-	httpreq.onreadystatechange = function() {
+	httpreq.onreadystatechange = function () {
 		if (httpreq.readyState === 4) {
 			if (this.status !== 200) {
 				setLog(start, this.status, this.response)
@@ -211,31 +183,23 @@ function post() {
 	}
 }
 function loadVis(acct_id) {
-	var vist = localStorage.getItem('vis')
+	const vist = localStorage.getItem('vis')
 	if (!vist) {
 		return 'public'
 	} else {
 		if (vist === 'memory') {
-			var memory = localStorage.getItem('vis-memory-' + acct_id)
-			if (!memory) {
-				memory = 'public'
-			}
-			return memory
+			return localStorage.getItem('vis-memory-' + acct_id) || 'public'
 		} else if (vist === 'server' || vist === 'useapi') {
-			var multi = getMulti()
-			var obj = JSON.parse(multi)
-			var memory = obj[acct_id]['vis']
-			if (!memory) {
-				memory = 'public'
-			}
-			return memory
+			const multi = getMulti()
+			const obj = JSON.parse(multi)
+			return obj[acct_id]['vis'] || 'public'
 		} else {
 			return vist
 		}
 	}
 }
 function loader() {
-	var acct_id = $('#post-acct-sel').val()
+	const acct_id = $('#post-acct-sel').val()
 	console.log(loadVis(acct_id))
 	$('#vis-sel').val(loadVis(acct_id))
 }
@@ -243,17 +207,17 @@ loader()
 $('textarea').height(15) //init
 $('textarea').css('lineHeight', '1rem') //init
 
-$('textarea').on('input', function(evt) {
+$('textarea').on('input', function (evt) {
 	if (evt.target.scrollHeight > evt.target.offsetHeight) {
 		$(evt.target).height(evt.target.scrollHeight)
 	} else {
-		var lineHeight = Number(
+		const lineHeight = Number(
 			$(evt.target)
 				.css('lineHeight')
 				.split('px')[0]
 		)
 		while (true) {
-			$(evt.target).height($(evt.target).height() - lineHeight)
+			$(evt.target).height(($(evt.target).height() || 0) - lineHeight)
 			if (evt.target.scrollHeight > evt.target.offsetHeight) {
 				$(evt.target).height(evt.target.scrollHeight)
 				break

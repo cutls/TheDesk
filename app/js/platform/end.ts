@@ -1,74 +1,52 @@
+import $ from 'jquery'
+import Swal from 'sweetalert2'
+import { toast } from '../common/declareM'
+import lang from '../common/lang'
+import { code } from '../login/manager'
 //プラットフォーム別　最後に読むやつ
 //リンクを外部で開くか内部で出すか
 $(document).on('click', 'a', e => {
-	var $a = $(e.target)
-	var url = $a.attr('href')
-	var acct_id = $a.attr('data-acct')
-	if (!url) {
-		var url = $a.parent().attr('href')
-	}
-	var urls = []
+	const $a = $(e.target)
+	const url = $a.attr('href') || $a.parent().attr('href')
 	if (url) {
-		urls = url.match(/https?:\/\/(.+)/)
+		const urls = url.match(/https?:\/\/(.+)/)
 		//トゥートのURLぽかったら
-		toot = url.match(/https:\/\/([^+_]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/)
+		let toot = url.match(/https:\/\/([^+_]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/)
 		if (!toot) {
 			//Pleroma対策
 			toot = url.match(/https:\/\/([^+_]+)\/users\/([a-zA-Z0-9_]+)\/statuses\/([0-9]+)/)
 		}
 		//タグのURLぽかったら
-		var tags = []
-		tags = url.match(/https:\/\/([^+_]+)\/tags\/([_a-zA-Z0-9\&=+\%]+)/)
+		const tags = url.match(/https:\/\/([^+_]+)\/tags\/([_a-zA-Z0-9\&=+\%]+)/)
 		//メンションっぽかったら
-		var ats = []
-		ats = url.match(/https:\/\/([^+_]+)\/@([_a-zA-Z0-9\&=+\%]+)/)
+		const ats = url.match(/https:\/\/([^+_]+)\/@([_a-zA-Z0-9\&=+\%]+)/)
 		if (toot) {
 			if (toot[1]) {
-				var acct_id = $a.parent().attr('data-acct')
-				if (!acct_id) {
-					acct_id = 0
-				}
+				const acctId = $a.parent().attr('data-acct') || '0'
 				$a.parent().addClass('loadp')
-				
-				detEx(url, acct_id)
+				detEx(url, acctId)
 			}
 		} else if (tags) {
 			if (tags[2]) {
-				var acct_id = $a.parent().attr('data-acct')
-				if (!acct_id) {
-					acct_id = 0
-				}
+				const acctId = $a.parent().attr('data-acct') || '0'
 				tl('tag', decodeURI(tags[2]), acct_id, 'add')
 			}
 		} else if (ats) {
 			if (ats[2]) {
 				//Quesdon判定
 				if (!~ats[2].indexOf('@')) {
-					var acct_id = $a.parent().attr('data-acct')
-					if (!acct_id) {
-						acct_id = localStorage.getItem("main")
-					}
-					udgEx(url, acct_id)
+					const acctId = $a.parent().attr('data-acct') || localStorage.getItem("main")
+					udgEx(url, acctId)
 					return false
 				} else {
-					if (pwa) {
-						return true
-					} else {
-						postMessage(['openUrl', url], '*')
-					}
+					if (!global.pwa) postMessage(['openUrl', url], '*')
 				}
 			}
 		} else {
-			if (pwa) {
-				return true
-			}
+			if (global.pwa) return
 			//hrefがhttp/httpsならブラウザで
 			if (urls) {
 				if (urls[0]) {
-					if (~url.indexOf('thedeks.top')) {
-						//alert("If you recieve this alert, let the developer(Cutls@kirishima.cloud) know it with a screenshot.");
-						url = 'https://thedesk.top'
-					}
 					postMessage(['openUrl', url], '*')
 				} else {
 					location.href = url
@@ -90,7 +68,7 @@ function execCopy(string) {
 }
 function progshow(e) {
 	if (e.lengthComputable) {
-		var percent = e.loaded / e.total
+		const percent = e.loaded / e.total
 		console.log('Progress: ' + percent * 100)
 		$('#imgsel').hide()
 		if (percent < 1) {
@@ -99,42 +77,6 @@ function progshow(e) {
 			$('#imgup').text(lang.lang_progress)
 		}
 	}
-}
-function opendev() {
-	var webview = document.getElementById('webview')
-	webview.openDevTools()
-	/*webview.sendInputEvent({
-		type: "keyDown",
-		keyCode: '2'
-	  });
-	  */
-}
-var soundFile
-function playSound() {
-	window.AudioContext = window.AudioContext || window.webkitAudioContext
-	if (soundFile) {
-		soundFile.stop()
-	}
-	context = new AudioContext()
-	context.createBufferSource().start(0)
-	context.decodeAudioData(request.response, function (buf) {
-		//console.log("Playing:" , source)
-		source.buffer = buf
-		source.loop = false
-	})
-	source = context.createBufferSource()
-	volumeControl = context.createGain()
-	source.connect(volumeControl)
-	volumeControl.connect(context.destination)
-	var cvol = localStorage.getItem('customVol')
-	if (cvol) {
-		vol = cvol
-	} else {
-		vol = 0.8
-	}
-	volumeControl.gain.value = vol
-	source.start(0)
-	soundFile = source
 }
 function nano() {
 	postMessage(['nano', null], '*')
@@ -149,13 +91,13 @@ onmessage = function (e) {
 	} else if (e.data[0] === 'post') {
 		post()
 	} else if (e.data[0] === 'toastSaved') {
-		var showTxt = `${lang.lang_img_DLDone}${e.data[1][0]
+		const showTxt = `${lang.lang_img_DLDone}${e.data[1][0]
 			}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`
 		toast({ html: showTxt, displayLength: 5000 })
 	} else if (e.data[0] === 'parseColumn') {
 		parseColumn(e.data[1])
 	} else if (e.data[0] === 'exportSettingsCore') {
-		var exp = exportSettingsCore()
+		const exp = exportSettingsCore()
 		postMessage(['exportSettingsCoreComplete', [e.data[1], exp]], '*')
 	} else if (e.data[0] === 'importSettingsCore') {
 		importSettingsCore(e.data[1])
@@ -191,11 +133,11 @@ onmessage = function (e) {
 		$('.window-title').before('<div class="accessMark">Screen Reader Optimized</div>')
 	} else if (e.data[0] === 'logData') {
 		$('#logs').val(e.data[1])
-		var obj = document.getElementById('logs')
-		obj.scrollTop = obj.scrollHeight
+		const obj = document.getElementById('logs')
+		if(obj) obj.scrollTop = obj.scrollHeight
 	} else if (e.data[0] === 'alert') {
 		Swal.fire({
-			type: 'info',
+			icon: 'info',
 			title: e.data[1]
 		})
 	} else if (e.data[0] === 'twitterLoginComplete') {
@@ -212,25 +154,25 @@ onmessage = function (e) {
 		} else if (mode === 'manager' || mode === 'login') {
 			code(codex)
 		} else if (mode === 'spotify') {
-			var coder = codex.split(':')
+			const coder = codex.split(':')
 			localStorage.setItem('spotify', coder[0])
 			localStorage.setItem('spotify-refresh', coder[1])
 		}
 	}
 }
 /* PWA */
-if (pwa) {
-	function postMessage(e) {
+if (global.pwa) {
+	global.poseMessage = function (e) {
 		if (e[0] === 'openUrl') {
-			urls = e[1].match(/https?:\/\/(.+)/)
+			const urls = e[1].match(/https?:\/\/(.+)/)
 			if (urls) {
 				Swal.fire({
 					title: 'Open URL',
 					icon: 'info',
 					html:
-						`If you are OK, click: <a href="${urls[0]}" target="_blank" class="btn waves-effect">Here</a>`,
+						`Click to open this link: <a href="${urls[0]}" target="_blank" class="btn waves-effect">${urls[0]}</a>`,
 					showCloseButton: false,
-					showCancelButton: true,
+					showCancelButton: false,
 					focusConfirm: false,
 					confirmButtonText: 'Close'
 				})
@@ -239,8 +181,8 @@ if (pwa) {
 	}
 }
 
-$('html').addClass(localStorage.getItem('scroll') ? localStorage.getItem('scroll') : '')
-const connection = function (event) {
+$('html').addClass(localStorage.getItem('scroll') || '')
+export const connection = function () {
 	console.log(navigator.onLine, 'network state')
 	if (!navigator.onLine) {
 		$('#re-online').addClass('hide')
@@ -253,10 +195,11 @@ const connection = function (event) {
 window.onoffline = connection
 window.ononline = connection
 
-let lastSelection = null
+let lastSelection: Range | null = null
 let isSame = true
 $(document).on('keyup mouseup', function (e) {
-	lastSelection = (window.getSelection().toString() !== '') ? window.getSelection().getRangeAt(0) : null
+	const ls = (window.getSelection()?.toString() !== '') ? window.getSelection()?.getRangeAt(0) : null
+	lastSelection = typeof ls === 'undefined' ? null : ls
 	if (!isSame) $('#pageSrc').addClass('hide')
 })
 
@@ -264,7 +207,8 @@ $(document).on('keyup mouseup', function (e) {
 $(document).on('contextmenu', function (e) {
 	// テキスト選択中であれば何もしない
 	if (lastSelection !== null) {
-		const currentSelection = window.getSelection().getRangeAt(0)
+		const currentSelection = window.getSelection()?.getRangeAt(0)
+		if (!currentSelection) return
 		for (let key in currentSelection) {
 			if (currentSelection[key] !== lastSelection[key]) {
 				isSame = false
@@ -272,11 +216,11 @@ $(document).on('contextmenu', function (e) {
 			}
 		}
 
-		if (isSame && currentSelection !== '') {
+		if (isSame) {
 			$('#pageSrc').removeClass('hide')
 			$('#pageSrc').css('left', e.pageX)
 			$('#pageSrc').css('top', e.pageY)
-			$('.srcQ').text(currentSelection)
+			$('.srcQ').text(currentSelection.toString())
 		}
 	}
 })

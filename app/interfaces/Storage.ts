@@ -25,3 +25,15 @@ export interface IColumn {
     text?: string
     left_fold?: boolean
 }
+export interface IEmojiStorage {
+    categorized: {
+        [key: string]: IEmoji[]
+    }
+    uncategorized: IEmoji[]
+    ifCategorized: boolean
+}
+export interface IEmoji {
+    shortcode: string
+    url: string
+    listed: boolean
+}

@@ -1,13 +1,16 @@
 //アカウントマネージャ
 
 import _ from "lodash"
+import $ from 'jquery'
 import Swal from "sweetalert2"
-import { IColumn } from "../../interfaces/Storage"
-import { toast } from "../common/declareM"
+import { Credential } from "../../interfaces/MastodonApiReturns"
+import { IColumn, IMulti } from "../../interfaces/Storage"
+import { autoCompleteGetInstance, autoCompleteInit, formSelectInit, toast } from "../common/declareM"
 import api from "../common/fetch"
 import lang from "../common/lang"
 import { getColumn, getMulti, setColumn, setMulti } from "../common/storage"
 import { escapeHTML, setLog } from "../platform/first"
+import { IVis } from "../post/secure"
 import { idata } from "./instance"
 
 //最初に読むやつ
@@ -85,7 +88,7 @@ export function loadAcctList() {
 		$('#domain-list').append(templete)
 		key2++
 	}
-	multisel()
+	multiSel()
 	const acctN = localStorage.getItem('acct')
 	if (!acctN) localStorage.setItem('acct', '0')
 }
@@ -247,7 +250,7 @@ export function backToInit() {
 }
 
 //URL指定してポップアップ
-async function login(url) {
+async function login(url: string) {
 	$('#compt').hide()
 	const start = `https://${url}/api/v1/apps`
 	$('#loginBtn').attr('disabled', 'true')
@@ -285,7 +288,7 @@ async function login(url) {
 	}
 
 }
-async function versionChecker(url) {
+async function versionChecker(url: string) {
 	const start = `https://${url}/api/v1/instance`
 	try {
 		const json = await api(start, {
@@ -318,8 +321,10 @@ async function versionChecker(url) {
 		return false
 	}
 }
-async function versionCompat(title, version) {
-	const [sem, a, b, c] = version.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/)
+async function versionCompat(title: string, version: string) {
+	const mt = version.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/)
+	if (!mt) return
+	const [sem, a, b, c] = mt
 	$('#compt-instance').text(title)
 	$('#compt-ver').text(version)
 	$('#compt-list').html('')
@@ -351,7 +356,7 @@ async function versionCompat(title, version) {
 }
 
 //テキストボックスにURL入れた
-function instance() {
+export function instance() {
 	const url = $('#autocomplete-input').val()?.toString() || ''
 	if (url.indexOf('@') !== -1 || url.indexOf('https') !== -1) {
 		alert('入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
@@ -360,7 +365,7 @@ function instance() {
 	login(url)
 }
 //コード入れてAccessTokenゲット
-async function code(code) {
+export async function code(code: string) {
 	let red = localStorage.getItem('redirect')
 	localStorage.removeItem('redirect')
 	if (!code) {
@@ -371,7 +376,7 @@ async function code(code) {
 		toast({ html: lang.lang_fatalerroroccured + 'Error: no code', displayLength: 5000 })
 		return false
 	}
-	const url = localStorage.getItem('domain_tmp')
+	const url = localStorage.getItem('domain_tmp') || ''
 	localStorage.removeItem('domain_tmp')
 	if (!red) red = 'urn:ietf:wg:oauth:2.0:oob'
 	if (~url.indexOf('pixelfed')) {
@@ -391,130 +396,87 @@ async function code(code) {
 	if (json['access_token']) {
 		$('#auth').hide()
 		$('#add').show()
-		getdata(url, json)
+		getMyData(url, json)
 	}
 }
 //ユーザーデータ取得
-function getdata(domain, json) {
-	const at = json['access_token']
-	const rt = `${json['refresh_token']} ${localStorage.getItem('client_id')} ${localStorage.getItem('client_secret')}`
-	const start = 'https://' + domain + '/api/v1/accounts/verify_credentials'
-	fetch(start, {
-		method: 'GET',
+async function getMyData(domain: string, credential: any) {
+	const at = credential['access_token']
+	const rt = `${credential['refresh_token']} ${localStorage.getItem('client_id')} ${localStorage.getItem('client_secret')}`
+	const start = `https://${domain}/api/v1/accounts/verify_credentials`
+	const json = await api<Credential>(start, {
+		method: 'get',
 		headers: {
 			'content-type': 'application/json',
 			Authorization: 'Bearer ' + at
 		}
 	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function (error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function (json) {
-			if (json.error) {
-				console.error('Error:' + json.error)
-				toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
-				return
-			}
-			const avatar = json['avatar']
-			//missingがmissingなやつ
-			if (avatar === '/avatars/original/missing.png') {
-				avatar = '../../img/missing.svg'
-			}
-			if (json['source']) {
-				const priv = json['source']['privacy']
-			} else {
-				const priv = 'public'
-			}
-			const add = {
-				at: at,
-				rt: rt ? rt : null,
-				name: json['display_name'],
-				domain: domain,
-				user: json['acct'],
-				prof: avatar,
-				id: json['id'],
-				vis: priv,
-				mode: 'mastodon'
-			}
-			const obj = getMulti()
-			let addTarget = -1
-			let ct = 0
-			for (let acct of obj) {
-				if (acct.domain === domain && acct.user === json['acct']) {
-					console.log('detected dupl addct')
-					addTarget = ct
-					break
-				}
-				ct++
-			}
-			if (addTarget === -1) {
-				const target = obj.length
-				obj.push(add)
-			} else {
-				console.log('dupl acct_' + addTarget)
-				obj[addTarget] = add
-				const target = addTarget
-			}
-			localStorage.setItem('name_' + target, json['display_name'])
-			localStorage.setItem('user_' + target, json['acct'])
-			localStorage.setItem('user-id_' + target, json['id'])
-			localStorage.setItem('prof_' + target, avatar)
-			const json = JSON.stringify(obj)
-			localStorage.setItem('multi', json)
-			if ($('body').hasClass('first')) {
-				location.href = 'index.html'
-			}
-			load()
-		})
+
+	let avatar = json.avatar
+	//missingがmissingなやつ
+	if (avatar === '/avatars/original/missing.png') {
+		avatar = '../../img/missing.svg'
+	}
+	let priv: IVis = 'public'
+	if (json.source && json.source.privacy) {
+		priv = json.source.privacy
+	}
+	const add: IMulti = {
+		at: at,
+		rt: rt || undefined,
+		name: json.display_name || json.acct,
+		domain: domain,
+		user: json.acct,
+		prof: avatar,
+		id: json.id,
+		vis: priv
+	}
+	const obj = getMulti()
+	let addTarget = -1
+	let ct = 0
+	for (let acct of obj) {
+		if (acct.domain === domain && acct.user === json.acct) {
+			console.log('detected dupl addct')
+			addTarget = ct
+			break
+		}
+		ct++
+	}
+	let target = addTarget
+	if (addTarget === -1) {
+		target = obj.length
+		obj.push(add)
+	} else {
+		console.log('dupl acct_' + addTarget)
+		obj[addTarget] = add
+	}
+	localStorage.setItem('name_' + target, json.display_name || '')
+	localStorage.setItem('user_' + target, json.acct)
+	localStorage.setItem('user-id_' + target, json.id)
+	localStorage.setItem('prof_' + target, avatar)
+	setMulti(obj)
+	if ($('body').hasClass('first')) location.href = 'index.html'
+	loadAcctList()
 }
 //アクセストークン直接入力
-function atSetup(type) {
+export function atSetup() {
 	const url = localStorage.getItem('domain_tmp')
+	if (!url) return
 	localStorage.removeItem('domain_tmp')
 	const obj = getMulti()
 	const avatar = '../../img/missing.svg'
 	const priv = 'public'
-	if (type === 'misskey') {
-		const i = $('#misskey-key').val()
-		const add = {
-			at: i,
-			rt: null,
-			name: 'Pseudo Account',
-			domain: url,
-			user: 'user+pseudo',
-			prof: avatar,
-			id: 'id+pseudo',
-			vis: priv,
-			mode: 'misskey'
-		}
-		localStorage.setItem('mode_' + url, 'misskey')
-	} else {
-		const i = $('#code').val()
-		const add = {
-			at: i,
-			rt: null,
-			name: 'Pseudo Account',
-			domain: url,
-			user: 'user+pseudo',
-			prof: avatar,
-			id: 'id+pseudo',
-			vis: priv,
-			mode: ''
-		}
-	}
-	if (!i || i === '') {
-		toast({ html: lang.lang_fatalerroroccured + 'Error: access token', displayLength: 5000 })
-		return false
+	const i = $('#code').val()?.toString()
+	if (!i) return Swal.fire(`No access token`)
+	const add: IMulti = {
+		at: i,
+		rt: undefined,
+		name: 'Pseudo Account',
+		domain: url,
+		user: 'user+pseudo',
+		prof: avatar,
+		id: 'id+pseudo',
+		vis: priv
 	}
 	const target = obj.length
 	obj.push(add)
@@ -522,225 +484,162 @@ function atSetup(type) {
 	localStorage.setItem('user_' + target, add['username'])
 	localStorage.setItem('user-id_' + target, add['id'])
 	localStorage.setItem('prof_' + target, avatar)
-	const json = JSON.stringify(obj)
-	localStorage.setItem('multi', json)
+	setMulti(obj)
 	refresh(target)
 }
 
 //ユーザーデータ更新
-function refresh(target) {
+async function refresh(target: number) {
 	const obj = getMulti()
 	console.log(obj)
-	const start = 'https://' + obj[target].domain + '/api/v1/accounts/verify_credentials'
-	fetch(start, {
-		method: 'GET',
+	const start = `https://${obj[target].domain}/api/v1/accounts/verify_credentials`
+	const json = await api<Credential>(start, {
+		method: 'get',
 		headers: {
 			'content-type': 'application/json',
 			Authorization: 'Bearer ' + obj[target].at
 		}
 	})
-		.then(function (response) {
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			if (!response.ok) {
-				response.text().then(function (text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function (error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function (json) {
-			if (json.error) {
-				console.error('Error:' + json.error)
-				toast({ html: lang.lang_fatalerroroccured + 'Error:' + json.error, displayLength: 5000 })
-				return
-			}
-			const avatar = json['avatar']
-			//missingがmissingなやつ
-			if (avatar === '/avatars/original/missing.png' || !avatar) {
-				avatar = './img/missing.svg'
-			}
-			const ref = {
-				at: obj[target].at,
-				rt: obj[target].rt ? obj[target].rt : null,
-				name: json['display_name'],
-				domain: obj[target].domain,
-				user: json['acct'],
-				prof: avatar,
-				id: json['id'],
-				vis: json['source']['privacy']
-			}
-			if (obj[target].background) {
-				ref.background = obj[target].background
-			}
-			if (obj[target].text) {
-				ref.text = obj[target].text
-			}
-			localStorage.setItem('name_' + target, json['display_name'])
-			localStorage.setItem('user_' + target, json['acct'])
-			localStorage.setItem('user-id_' + target, json['id'])
-			localStorage.setItem('prof_' + target, avatar)
-			if (json['source']['sensitive']) {
-				localStorage.setItem('nsfw_' + target, 'true')
-			} else {
-				localStorage.removeItem('nsfw_' + target)
-			}
-			obj[target] = ref
-			const json = JSON.stringify(obj)
-			localStorage.setItem('multi', json)
 
-			load()
-		})
+	let avatar = json.avatar
+	//missingがmissingなやつ
+	if (avatar === '/avatars/original/missing.png' || !avatar) {
+		avatar = './img/missing.svg'
+	}
+	const ref: IMulti = {
+		at: obj[target].at,
+		rt: obj[target].rt || undefined,
+		name: json.display_name || json.acct,
+		domain: obj[target].domain,
+		user: json.acct,
+		prof: avatar,
+		id: json.id,
+		vis: json.source.privacy
+	}
+	if (obj[target].background) ref.background = obj[target].background
+	if (obj[target].text) ref.text = obj[target].text
+	localStorage.setItem('name_' + target, json.display_name || json.acct)
+	localStorage.setItem('user_' + target, json.acct)
+	localStorage.setItem('user-id_' + target, json.id)
+	localStorage.setItem('prof_' + target, avatar)
+	if (json['source']['sensitive']) {
+		localStorage.setItem('nsfw_' + target, 'true')
+	} else {
+		localStorage.removeItem('nsfw_' + target)
+	}
+	obj[target] = ref
+	setMulti(obj)
+	loadAcctList()
 }
 //アカウントを選択…を実装
-function multisel() {
+function multiSel() {
 	const obj = getMulti()
-	const templete
 	const last = localStorage.getItem('main')
-	const sel
+	let isSelected = false
 	if (obj.length < 1) {
 		$('#src-acct-sel').html('<option value="tootsearch">Tootsearch</option>')
 		$('#add-acct-sel').html('<option value="noauth">' + lang.lang_login_noauth + '</option>')
 	} else {
-		Object.keys(obj).forEach(function (key) {
-			const acct = obj[key]
-			const list = key * 1 + 1
-			if (key === last) {
-				sel = 'selected'
-				mainb = '(' + lang.lang_manager_def + ')'
-				const domain = localStorage.getItem('domain_' + key)
-				const profimg = localStorage.getItem('prof_' + key)
-				const domain = localStorage.getItem('domain_' + key)
-				if (!profimg) {
-					profimg = '../../img/missing.svg'
-				}
-			} else {
-				sel = ''
-				mainb = ''
+		let key = 0
+		for (const acct of obj) {
+			let mainb = ''
+			if (key.toString() === last) {
+				isSelected = true
+				mainb = `(${lang.lang_manager_def})`
+				const profimg = localStorage.getItem('prof_' + key) || '../../img/missing.svg'
 			}
-			template = `
-			<option value="${key}" data-icon="${acct.prof}" class="left circle" ${sel}>
+			const template = `
+			<option value="${key}" data-icon="${acct.prof}" class="left circle" ${isSelected ? 'selected' : ''}>
 				${acct.user}@${acct.domain}${mainb}
 			</option>
 			`
 			$('.acct-sel').append(template)
-		})
+			key++
+		}
 	}
-	$('select').formSelect()
+	formSelectInit($('select'))
 }
-function mainacct() {
-	const acct_id = $('#main-acct-sel').val()
-	localStorage.setItem('main', acct_id)
+export function mainAcct() {
+	const acctId = $('#main-acct-sel').val()?.toString() || '0'
+	localStorage.setItem('main', acctId)
 	toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
 }
-function colorPicker(key) {
-	temp = `<div onclick="coloradd('${key}','def','def')" class="pointer exc">${lang.lang_manager_none}</div>
-		<div onclick="coloradd('${key}','f44336','white')" class="red white-text pointer"></div>
-		<div onclick="coloradd('${key}','e91e63','white')" class="pink white-text pointer"></div>
-		<div onclick="coloradd('${key}','9c27b0','white')" class="purple white-text pointer"></div>
-		<div onclick="coloradd('${key}','673ab7','white')" class="deep-purple white-text pointer"></div>
-		<div onclick="coloradd('${key}','3f51b5','white')" class="indigo white-text pointer"></div>
-		<div onclick="coloradd('${key}','2196f3','white')" class="blue white-text pointer"></div>
-		<div onclick="coloradd('${key}','03a9f4','black')" class="light-blue black-text pointer"></div>
-		<div onclick="coloradd('${key}','00bcd4','black')" class="cyan black-text pointer"></div>
-		<div onclick="coloradd('${key}','009688','white')" class="teal white-text pointer"></div>
-		<div onclick="coloradd('${key}','4caf50','black')" class="green black-text pointer"></div>
-		<div onclick="coloradd('${key}','8bc34a','black')" class="light-green black-text pointer"></div>
-		<div onclick="coloradd('${key}','cddc39','black')" class="lime black-text pointer"></div>
-		<div onclick="coloradd('${key}','ffeb3b','black')" class="yellow black-text pointer"></div>
-		<div onclick="coloradd('${key}','ffc107','black')" class="amber black-text pointer"></div>
-		<div onclick="coloradd('${key}','ff9800','black')" class="orange black-text pointer"></div>
-		<div onclick="coloradd('${key}','ff5722','white')" class="deep-orange white-text pointer"></div>
-		<div onclick="coloradd('${key}','795548','white')" class="brown white-text pointer"></div>
-		<div onclick="coloradd('${key}','9e9e9e','white')" class="grey white-text pointer"></div>
-		<div onclick="coloradd('${key}','607d8b','white')" class="blue-grey white-text pointer"></div>
-		<div onclick="coloradd('${key}','000000','white')" class="black white-text pointer"></div>
-		<div onclick="coloradd('${key}','ffffff','black')" class="white black-text pointer"></div>`
+function colorPicker(key: number) {
+	const temp = `<div onclick="colorAdd('${key}','def','def')" class="pointer exc">${lang.lang_manager_none}</div>
+		<div onclick="colorAdd('${key}','f44336','white')" class="red white-text pointer"></div>
+		<div onclick="colorAdd('${key}','e91e63','white')" class="pink white-text pointer"></div>
+		<div onclick="colorAdd('${key}','9c27b0','white')" class="purple white-text pointer"></div>
+		<div onclick="colorAdd('${key}','673ab7','white')" class="deep-purple white-text pointer"></div>
+		<div onclick="colorAdd('${key}','3f51b5','white')" class="indigo white-text pointer"></div>
+		<div onclick="colorAdd('${key}','2196f3','white')" class="blue white-text pointer"></div>
+		<div onclick="colorAdd('${key}','03a9f4','black')" class="light-blue black-text pointer"></div>
+		<div onclick="colorAdd('${key}','00bcd4','black')" class="cyan black-text pointer"></div>
+		<div onclick="colorAdd('${key}','009688','white')" class="teal white-text pointer"></div>
+		<div onclick="colorAdd('${key}','4caf50','black')" class="green black-text pointer"></div>
+		<div onclick="colorAdd('${key}','8bc34a','black')" class="light-green black-text pointer"></div>
+		<div onclick="colorAdd('${key}','cddc39','black')" class="lime black-text pointer"></div>
+		<div onclick="colorAdd('${key}','ffeb3b','black')" class="yellow black-text pointer"></div>
+		<div onclick="colorAdd('${key}','ffc107','black')" class="amber black-text pointer"></div>
+		<div onclick="colorAdd('${key}','ff9800','black')" class="orange black-text pointer"></div>
+		<div onclick="colorAdd('${key}','ff5722','white')" class="deep-orange white-text pointer"></div>
+		<div onclick="colorAdd('${key}','795548','white')" class="brown white-text pointer"></div>
+		<div onclick="colorAdd('${key}','9e9e9e','white')" class="grey white-text pointer"></div>
+		<div onclick="colorAdd('${key}','607d8b','white')" class="blue-grey white-text pointer"></div>
+		<div onclick="colorAdd('${key}','000000','white')" class="black white-text pointer"></div>
+		<div onclick="colorAdd('${key}','ffffff','black')" class="white black-text pointer"></div>`
 	$('#colorsel_' + key).html(temp)
 }
-function coloradd(key, bg, txt) {
+export function colorAdd(key: string, bg: string, txt: 'black' | 'white' | 'def') {
 	const o = getMulti()
-	const obj = o[key]
+	const obj = o[parseInt(key, 10)]
 	obj.background = bg
 	obj.text = txt
 	o[key] = obj
-	const json = JSON.stringify(o)
-	localStorage.setItem('multi', json)
+	setMulti(o)
 	if (txt === 'def') {
 		$('#acct_' + key).attr('style', '')
 	} else {
 		$('#acct_' + key).css('background-color', '#' + bg)
-		if (txt === 'black') {
-			const bghex = '000000'
-			const ichex = '9e9e9e'
-		} else if (txt === 'white') {
-			const bghex = 'ffffff'
-			const ichex = 'eeeeee'
-		}
-		$('#acct_' + key + ' .nex').css('color', '#' + ichex)
-		$('#acct_' + key).css('color', '#' + bghex)
+		const isBlack = txt === 'black'
+		const bgHex = isBlack ? '000000' : 'ffffff'
+		const icHex = isBlack ? '9e9e9e' : 'eeeee'
+		$('#acct_' + key + ' .nex').css('color', '#' + bgHex)
+		$('#acct_' + key).css('color', '#' + icHex)
 	}
 }
-//入力時にハッシュタグと@をサジェスト
-const timer = null
+//入力時にインスタンスをサジェスト
+let timer: number = 0
 
-const input = document.getElementById('autocomplete-input')
-const prev_val = input.value
-const oldSuggest
-const suggest
+const input = <HTMLInputElement>document.getElementById('autocomplete-input')
+let prevVal = input?.value
+let oldSuggest
+let suggest
 input.addEventListener(
 	'focus',
 	function () {
-		const instance = M.Autocomplete.getInstance(input)
-		window.clearInterval(timer)
-		timer = window.setInterval(function () {
-			const new_val = input.value
-			if (prev_val !== new_val) {
-				if (new_val.length > 3) {
-					const start = 'https://www.fediversesearch.com/search/?keyword=' + new_val
-					fetch(start, {
-						method: 'GET',
+		const instance = autoCompleteGetInstance(input)
+		if (timer) window.clearInterval(timer)
+		timer = window.setInterval(async function () {
+			const newVal = input.value
+			if (prevVal !== newVal) {
+				if (newVal.length > 3) {
+					const start = `https://www.fediversesearch.com/search/?keyword=${newVal}`
+					const json = await api(start, {
+						method: 'get',
 						headers: {
 							'content-type': 'application/json',
 						}
 					})
-						.then(function (response) {
-							if (!response.ok) {
-								response.text().then(function (text) {
-									setLog(response.url, response.status, text)
-								})
-							}
-							return response.json()
-						})
-						.catch(function (error) {
-							todo(error)
-							setLog(start, 'JSON', error)
-							console.error(error)
-						})
-						.then(function (json) {
-							if (!json.error) {
-								let data = {}
-								Object.keys(json.data).forEach(function (key) {
-									const url = json.data[key]
-									data[url.uri] = escapeHTML(url.title ? url.title : url.uri)
-								})
-								instance.updateData(data)
-								instance.open()
-							} else {
-								console.error(json.error)
-							}
-						})
+					let data = {}
+					const jsonData = json.data
+					for (const url of jsonData) {
+						data[url.uri] = escapeHTML(url.title ? url.title : url.uri)
+					}
+					instance.updateData(data)
+					instance.open()
 				}
 				oldSuggest = suggest
-				prev_val = new_val
+				prevVal = newVal
 			}
 		}, 1000)
 	},
@@ -755,14 +654,12 @@ input.addEventListener(
 	false
 )
 //acctで未読マーカーは要らない
-function asReadEnd() {
+export function asReadEnd() {
 	postMessage(['asReadComp', ''], '*')
 }
 
 // Or with jQuery
 
-$(document).ready(function () {
-	$('input.autocomplete').autocomplete({
-		data: {},
-	});
-});
+export function autoCompleteInitTrigger() {
+	autoCompleteInit($('input.autocomplete'), { data: {} })
+}

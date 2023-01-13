@@ -273,11 +273,6 @@ export function multiSelector(parseC?: boolean) {
 					$('#toot-post-btn').css('background-color', '#' + acct.background)
 					$('#toot-post-btn').css('color', acct.text)
 				}
-				if (domain === 'kirishima.cloud') {
-					$('#faicon-btn').show()
-				} else {
-					$('#faicon-btn').hide()
-				}
 				if (domain === 'imastodon.net') {
 					trendTag()
 				} else {

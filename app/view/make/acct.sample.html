@@ -100,7 +100,7 @@
             <input type="text" id="misskey-key" placeholder="@@codepaste@@" required />
             <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br />
             <br />
-            <a onclick="atSetup('misskey')" class="pointer">@@accessTokenSetup@@</a>
+            <a onclick="atSetup()" class="pointer">@@accessTokenSetup@@</a>
         </div>
     </div>
     <div class="hide-first">
@@ -108,7 +108,7 @@
         <div class="input-field" style="width:300px">
             <span data-trans="your_acct">@@selacct@@</span>
             <br />
-            <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
+            <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainAcct()"></select>
             <label></label>
         </div>
         <ul id="domain-list" class="collection transparent"></ul>

@@ -59,7 +59,7 @@ export interface Toot {
     in_reply_to_account_id: string | null
     sensitive: boolean
     spoiler_text: string
-    visibility: 'public' | 'unlisted' | 'private' | 'direct' | string
+    visibility: IVis
     language?: string
     uri: string
     url: string
@@ -82,7 +82,8 @@ export interface Toot {
     poll?: Poll | null
     pinned?: boolean
     customPinned?: boolean
-    [x: string]: any
+    text?: string // on delete
+    //[x: string]: any
 }
 export interface Attachment {
     id: string

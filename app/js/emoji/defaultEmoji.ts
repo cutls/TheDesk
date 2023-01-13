@@ -78,20 +78,3 @@ export function defEmoji(target: string) {
 	$('#textarea').val(newt)
 	$('#textarea').focus()
 }
-export function faIcon() {
-	const json = emojiPack.faicons
-	let emojis = ''
-	for (const emoji of json) {
-		const eje = emoji.replace(/fa-/g, '')
-		emojis =
-			emojis +
-			'<a onclick="emojiInsert(\'[faicon]' +
-			eje +
-			'[/faicon]\')" class="pointer white-text" style="font-size:24px"><i class="fa ' +
-			emoji +
-			'"></i></a>'
-	}
-	$('#emoji-list').html(emojis)
-	$('#now-emoji').text('faicon')
-	$('.emoji-control').addClass('hide')
-}

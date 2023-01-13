@@ -731,31 +731,31 @@ function setToggleTag(tlid) {
 	}
 }
 function colorpicker(key) {
-	temp = `<div onclick="coloradd('${key}','def','def')" class="pointer">Default</div>
-		<div onclick="coloradd('${key}','f44336','white')" class="red white-text pointer">Red</div>
-		<div onclick="coloradd('${key}','e91e63','white')" class="pink white-text pointer">Pink</div>
-		<div onclick="coloradd('${key}','9c27b0','white')" class="purple white-text pointer">Purple</div>
-		<div onclick="coloradd('${key}','673ab7','white')" class="deep-purple white-text pointer">Deep-purple</div>
-		<div onclick="coloradd('${key}','3f51b5','white')" class="indigo white-text pointer">Indigo</div>
-		<div onclick="coloradd('${key}','2196f3','white')" class="blue white-text pointer">Blue</div>
-		<div onclick="coloradd('${key}','03a9f4','black')" class="light-blue black-text pointer">Light-blue</div>
-		<div onclick="coloradd('${key}','00bcd4','black')" class="cyan black-text pointer">Cyan</div>
-		<div onclick="coloradd('${key}','009688','white')" class="teal white-text pointer">Teal</div>
-		<div onclick="coloradd('${key}','4caf50','black')" class="green black-text pointer">Green</div>
-		<div onclick="coloradd('${key}','8bc34a','black')" class="light-green black-text pointer">Light-green</div>
-		<div onclick="coloradd('${key}','cddc39','black')" class="lime black-text pointer">Lime</div>
-		<div onclick="coloradd('${key}','ffeb3b','black')" class="yellow black-text pointer">Yellow</div>
-		<div onclick="coloradd('${key}','ffc107','black')" class="amber black-text pointer">Amber</div>
-		<div onclick="coloradd('${key}','ff9800','black')" class="orange black-text pointer">Orange</div>
-		<div onclick="coloradd('${key}','ff5722','white')" class="deep-orange white-text pointer">Deep-orange</div>
-		<div onclick="coloradd('${key}','795548','white')" class="brown white-text pointer">Brown</div>
-		<div onclick="coloradd('${key}','9e9e9e','white')" class="grey white-text pointer">Grey</div>
-		<div onclick="coloradd('${key}','607d8b','white')" class="blue-grey white-text pointer">Blue-grey</div>
-		<div onclick="coloradd('${key}','000000','white')" class="black white-text pointer">Black</div>
-		<div onclick="coloradd('${key}','ffffff','black')" class="white black-text pointer">White</div>`
+	temp = `<div onclick="colorAdd('${key}','def','def')" class="pointer">Default</div>
+		<div onclick="colorAdd('${key}','f44336','white')" class="red white-text pointer">Red</div>
+		<div onclick="colorAdd('${key}','e91e63','white')" class="pink white-text pointer">Pink</div>
+		<div onclick="colorAdd('${key}','9c27b0','white')" class="purple white-text pointer">Purple</div>
+		<div onclick="colorAdd('${key}','673ab7','white')" class="deep-purple white-text pointer">Deep-purple</div>
+		<div onclick="colorAdd('${key}','3f51b5','white')" class="indigo white-text pointer">Indigo</div>
+		<div onclick="colorAdd('${key}','2196f3','white')" class="blue white-text pointer">Blue</div>
+		<div onclick="colorAdd('${key}','03a9f4','black')" class="light-blue black-text pointer">Light-blue</div>
+		<div onclick="colorAdd('${key}','00bcd4','black')" class="cyan black-text pointer">Cyan</div>
+		<div onclick="colorAdd('${key}','009688','white')" class="teal white-text pointer">Teal</div>
+		<div onclick="colorAdd('${key}','4caf50','black')" class="green black-text pointer">Green</div>
+		<div onclick="colorAdd('${key}','8bc34a','black')" class="light-green black-text pointer">Light-green</div>
+		<div onclick="colorAdd('${key}','cddc39','black')" class="lime black-text pointer">Lime</div>
+		<div onclick="colorAdd('${key}','ffeb3b','black')" class="yellow black-text pointer">Yellow</div>
+		<div onclick="colorAdd('${key}','ffc107','black')" class="amber black-text pointer">Amber</div>
+		<div onclick="colorAdd('${key}','ff9800','black')" class="orange black-text pointer">Orange</div>
+		<div onclick="colorAdd('${key}','ff5722','white')" class="deep-orange white-text pointer">Deep-orange</div>
+		<div onclick="colorAdd('${key}','795548','white')" class="brown white-text pointer">Brown</div>
+		<div onclick="colorAdd('${key}','9e9e9e','white')" class="grey white-text pointer">Grey</div>
+		<div onclick="colorAdd('${key}','607d8b','white')" class="blue-grey white-text pointer">Blue-grey</div>
+		<div onclick="colorAdd('${key}','000000','white')" class="black white-text pointer">Black</div>
+		<div onclick="colorAdd('${key}','ffffff','black')" class="white black-text pointer">White</div>`
 	$('#picker_' + key).html(temp)
 }
-function coloradd(key, bg, txt) {
+function colorAdd(key, bg, txt) {
 	var col = localStorage.getItem('column')
 	var o = JSON.parse(col)
 	var obj = o[key]

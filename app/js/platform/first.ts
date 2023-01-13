@@ -3,7 +3,8 @@ import $ from 'jquery'
 import { v4 as uuid } from 'uuid'
 import GraphemeSplitter from 'grapheme-splitter'
 import { ck } from '../login/login'
-import { loadAcctList, support } from '../login/manager'
+import { autoCompleteInitTrigger, loadAcctList, support } from '../login/manager'
+import { connection } from './end'
 
 window.onload = function () {
     console.log('loaded')
@@ -15,6 +16,7 @@ window.onload = function () {
     if (!onManager) ck()
     if (onManager) loadAcctList()
     if (onManager) support()
+    autoCompleteInitTrigger()
 }
 
 const size = localStorage.getItem('size')

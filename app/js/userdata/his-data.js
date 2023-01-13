@@ -714,7 +714,7 @@ function showDom(more, acct_id) {
 			}
 			Object.keys(json).forEach(function (key) {
 				var domain = json[key]
-				templete = templete + domain + '<i class="material-icons gray pointer" onclick="domainblock(\'' + domain + "','DELETE')\">cancel</i>" + '<div class="divider"></div>'
+				templete = templete + domain + '<i class="material-icons gray pointer" onclick="domainBlock(\'' + domain + "','DELETE')\">cancel</i>" + '<div class="divider"></div>'
 			})
 			if (more) {
 				$("#his-domain-list-contents").append(templete)
