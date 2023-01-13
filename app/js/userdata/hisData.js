@@ -2,44 +2,44 @@
 //タイムライン
 function utlShow(user, more, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (user === "--now") {
-		var user = $("#his-data").attr("user-id")
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	if (user === '--now') {
+		var user = $('#his-data').attr('user-id')
 	}
-	if (localStorage.getItem("mode_" + domain) !== "misskey") {
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		if (more) {
-			var sid = $("#his-tl .cvo")
+			var sid = $('#his-tl .cvo')
 				.last()
-				.attr("toot-id")
-			var plus = "?max_id=" + sid
+				.attr('toot-id')
+			var plus = '?max_id=' + sid
 		} else {
-			var plus = ""
+			var plus = ''
 		}
-		var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses" + plus
+		var start = 'https://' + domain + '/api/v1/accounts/' + user + '/statuses' + plus
 		var i = {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"content-type": "application/json",
-				Authorization: "Bearer " + at
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
 			}
 		}
 	} else {
 		var req = { i: at }
 		if (more) {
-			var sid = $("#his-tl .cvo")
+			var sid = $('#his-tl .cvo')
 				.last()
-				.attr("toot-id")
+				.attr('toot-id')
 			req.maxId = sid
 		}
 		req.userId = user
-		var start = "https://" + domain + "/api/users/notes"
+		var start = 'https://' + domain + '/api/users/notes'
 		var i = {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"content-type": "application/json"
+				'content-type': 'application/json'
 			},
 			body: JSON.stringify(req)
 		}
@@ -55,39 +55,39 @@ function utlShow(user, more, acct_id) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) === "misskey") {
-				var templete = misskeyParse(json, "", acct_id, "user")
+			if (localStorage.getItem('mode_' + domain) === 'misskey') {
+				var templete = misskeyParse(json, '', acct_id, 'user')
 			} else {
-				var templete = parse(json, "", acct_id, "user")
+				var templete = parse(json, '', acct_id, 'user')
 			}
 			if (!json[0]) {
-				templete = lang.lang_details_nodata + "<br>"
+				templete = lang.lang_details_nodata + '<br>'
 			}
 			if (more) {
-				$("#his-tl-contents").append(templete)
+				$('#his-tl-contents').append(templete)
 			} else {
-				if (localStorage.getItem("mode_" + domain) !== "misskey") {
+				if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 					pinutl(templete, user, acct_id)
 				} else {
-					$("#his-tl-contents").html(templete)
+					$('#his-tl-contents').html(templete)
 				}
 			}
-			jQuery("time.timeago").timeago()
+			jQuery('time.timeago').timeago()
 		})
 }
 function utlAdd() {
-	var acct_id = $("#his-data").attr("use-acct")
-	var user = $("#his-data").attr("user-id")
+	var acct_id = $('#his-data').attr('use-acct')
+	var user = $('#his-data').attr('user-id')
 	var add = {
 		domain: acct_id,
 		type: 'utl',
 		data: {
 			id: user,
-			acct: $("#his-acct").attr('fullname')
+			acct: $('#his-acct').attr('fullname')
 		}
 	}
 	var multi = localStorage.getItem('column')
@@ -102,20 +102,20 @@ function utlAdd() {
 //ピン留めTL
 function pinutl(before, user, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (user === "--now") {
-		var user = $("#his-data").attr("user-id")
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	if (user === '--now') {
+		var user = $('#his-data').attr('user-id')
 	}
-	var plus = "?pinned=1"
-	var start = "https://" + domain + "/api/v1/accounts/" + user + "/statuses" + plus
+	var plus = '?pinned=1'
+	var start = 'https://' + domain + '/api/v1/accounts/' + user + '/statuses' + plus
 	fetch(start, {
-		method: "GET",
+		method: 'GET',
 		headers: {
-			"content-type": "application/json",
-			Authorization: "Bearer " + at
+			'content-type': 'application/json',
+			Authorization: 'Bearer ' + at
 		}
 	})
 		.then(function (response) {
@@ -128,63 +128,63 @@ function pinutl(before, user, acct_id) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
-			var templete = parse(json, "pinned", acct_id, "user")
+			var templete = parse(json, 'pinned', acct_id, 'user')
 			if (!json[0]) {
-				templete = ""
+				templete = ''
 			}
-			$("#his-tl-contents").html(templete + before)
-			jQuery("time.timeago").timeago()
+			$('#his-tl-contents').html(templete + before)
+			jQuery('time.timeago').timeago()
 		})
 }
 
 //フォローリスト
 function flw(user, more, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (user === "--now") {
-		var user = $("#his-data").attr("user-id")
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	if (user === '--now') {
+		var user = $('#his-data').attr('user-id')
 	}
-	if (localStorage.getItem("mode_" + domain) === "misskey") {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var req = { i: at }
 		if (more) {
-			var sid = $("#his-follow-list .cusr")
+			var sid = $('#his-follow-list .cusr')
 			.last()
-			.attr("user-id")
+			.attr('user-id')
 			req.maxId = sid
 		}
 		req.userId = user
-		var start = "https://" + domain + "/api/users/following"
+		var start = 'https://' + domain + '/api/users/following'
 		var i = {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"content-type": "application/json"
+				'content-type': 'application/json'
 			},
 			body: JSON.stringify(req)
 		}
 	} else {
 		if (more) {
-			var sid = $("#his-follow-list-contents").attr('max-id')
-			var plus = "?max_id=" + sid
+			var sid = $('#his-follow-list-contents').attr('max-id')
+			var plus = '?max_id=' + sid
 		} else {
-			var plus = ""
+			var plus = ''
 		}
-		var start = "https://" + domain + "/api/v1/accounts/" + user + "/following" + plus
+		var start = 'https://' + domain + '/api/v1/accounts/' + user + '/following' + plus
 		var i = {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"content-type": "application/json",
-				Authorization: "Bearer " + at
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
 			}
 		}
 		var httpreq = new XMLHttpRequest()
-		httpreq.open("GET", start, true)
+		httpreq.open('GET', start, true)
 		httpreq.setRequestHeader('Content-Type', 'application/json')
 		httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 		httpreq.responseType = 'json'
@@ -192,28 +192,28 @@ function flw(user, more, acct_id) {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
-				if (localStorage.getItem("mode_" + domain) === "misskey") {
-					var templete = misskeyUserparse(json, "", acct_id)
+				if (localStorage.getItem('mode_' + domain) === 'misskey') {
+					var templete = misskeyUserparse(json, '', acct_id)
 				} else {
-					var templete = userParse(json, "", acct_id)
+					var templete = userParse(json, '', acct_id)
 				}
-				if (templete === "") {
-					templete = lang.lang_details_nodata + "<br>"
+				if (templete === '') {
+					templete = lang.lang_details_nodata + '<br>'
 				}
-				var linkHeader = httpreq.getResponseHeader("link")
+				var linkHeader = httpreq.getResponseHeader('link')
 				let link
 				if (linkHeader) {
 					console.log(linkHeader)
 					try {link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1] }catch{}
 					console.log(link)
 				}
-				$("#his-follow-list-contents").attr('max-id', link)
+				$('#his-follow-list-contents').attr('max-id', link)
 				if (more) {
-					$("#his-follow-list-contents").append(templete)
+					$('#his-follow-list-contents').append(templete)
 				} else {
-					$("#his-follow-list-contents").html(templete)
+					$('#his-follow-list-contents').html(templete)
 				}
-				jQuery("time.timeago").timeago()
+				jQuery('time.timeago').timeago()
 			}
 		}
 		return false
@@ -229,71 +229,71 @@ function flw(user, more, acct_id) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) === "misskey") {
-				var templete = misskeyUserparse(json, "", acct_id)
+			if (localStorage.getItem('mode_' + domain) === 'misskey') {
+				var templete = misskeyUserparse(json, '', acct_id)
 			} else {
-				var templete = userParse(json, "", acct_id)
+				var templete = userParse(json, '', acct_id)
 			}
-			if (templete === "") {
-				templete = lang.lang_details_nodata + "<br>"
+			if (templete === '') {
+				templete = lang.lang_details_nodata + '<br>'
 			}
 			if (more) {
-				$("#his-follow-list-contents").append(templete)
+				$('#his-follow-list-contents').append(templete)
 			} else {
-				$("#his-follow-list-contents").html(templete)
+				$('#his-follow-list-contents').html(templete)
 			}
-			jQuery("time.timeago").timeago()
+			jQuery('time.timeago').timeago()
 		})
 }
 
 //フォロワーリスト
 function fer(user, more, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (user === "--now") {
-		var user = $("#his-data").attr("user-id")
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	if (user === '--now') {
+		var user = $('#his-data').attr('user-id')
 	}
-	if (localStorage.getItem("mode_" + domain) === "misskey") {
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var req = { i: at }
 		if (more) {
-			var sid = $("#his-follow-list .cusr")
+			var sid = $('#his-follow-list .cusr')
 			.last()
-			.attr("user-id")
+			.attr('user-id')
 			req.maxId = sid
 		}
 		req.userId = user
-		var start = "https://" + domain + "/api/users/followers"
+		var start = 'https://' + domain + '/api/users/followers'
 		var i = {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"content-type": "application/json"
+				'content-type': 'application/json'
 			},
 			body: JSON.stringify(req)
 		}
 	} else {
 		if (more) {
-			var sid = $("#his-followr-list-contents").attr('max-id')
-			var plus = "?max_id=" + sid
+			var sid = $('#his-followr-list-contents').attr('max-id')
+			var plus = '?max_id=' + sid
 		} else {
-			var plus = ""
+			var plus = ''
 		}
-		var start = "https://" + domain + "/api/v1/accounts/" + user + "/followers" + plus
+		var start = 'https://' + domain + '/api/v1/accounts/' + user + '/followers' + plus
 		var i = {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"content-type": "application/json",
-				Authorization: "Bearer " + at
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
 			}
 		}
 		var httpreq = new XMLHttpRequest()
-		httpreq.open("GET", start, true)
+		httpreq.open('GET', start, true)
 		httpreq.setRequestHeader('Content-Type', 'application/json')
 		httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 		httpreq.responseType = 'json'
@@ -301,28 +301,28 @@ function fer(user, more, acct_id) {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
-				if (localStorage.getItem("mode_" + domain) === "misskey") {
-					var templete = misskeyUserparse(json, "", acct_id)
+				if (localStorage.getItem('mode_' + domain) === 'misskey') {
+					var templete = misskeyUserparse(json, '', acct_id)
 				} else {
-					var templete = userParse(json, "", acct_id)
+					var templete = userParse(json, '', acct_id)
 				}
-				if (templete === "") {
-					templete = lang.lang_details_nodata + "<br>"
+				if (templete === '') {
+					templete = lang.lang_details_nodata + '<br>'
 				}
-				var linkHeader = httpreq.getResponseHeader("link")
+				var linkHeader = httpreq.getResponseHeader('link')
 				let link
 				if (linkHeader) {
 					console.log(linkHeader)
 					try {link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1] }catch{}
 					console.log(link)
 				}
-				$("#his-follower-list-contents").attr('max-id', link)
+				$('#his-follower-list-contents').attr('max-id', link)
 				if (more) {
-					$("#his-follower-list-contents").append(templete)
+					$('#his-follower-list-contents').append(templete)
 				} else {
-					$("#his-follower-list-contents").html(templete)
+					$('#his-follower-list-contents').html(templete)
 				}
-				jQuery("time.timeago").timeago()
+				jQuery('time.timeago').timeago()
 			}
 		}
 		return false
@@ -338,32 +338,32 @@ function fer(user, more, acct_id) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) === "misskey") {
-				var templete = misskeyUserparse(json, "", acct_id)
+			if (localStorage.getItem('mode_' + domain) === 'misskey') {
+				var templete = misskeyUserparse(json, '', acct_id)
 			} else {
-				var templete = userParse(json, "", acct_id)
+				var templete = userParse(json, '', acct_id)
 			}
-			if (templete === "") {
-				templete = lang.lang_details_nodata + "<br>"
+			if (templete === '') {
+				templete = lang.lang_details_nodata + '<br>'
 			}
-			var linkHeader = httpreq.getResponseHeader("link")
+			var linkHeader = httpreq.getResponseHeader('link')
 			let link
 			if (linkHeader) {
 				console.log(linkHeader)
 				try {link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1] }catch{}
 				console.log(link)
 			}
-			$("#his-follower-list-contents").attr('max-id', link)
+			$('#his-follower-list-contents').attr('max-id', link)
 			if (more) {
-				$("#his-follower-list-contents").append(templete)
+				$('#his-follower-list-contents').append(templete)
 			} else {
-				$("#his-follower-list-contents").html(templete)
+				$('#his-follower-list-contents').html(templete)
 			}
-			jQuery("time.timeago").timeago()
+			jQuery('time.timeago').timeago()
 		})
 	}
 
@@ -371,27 +371,27 @@ function fer(user, more, acct_id) {
 //お気に入り一覧
 function showFav(more, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (localStorage.getItem("mode_" + domain) !== "misskey") {
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	if (localStorage.getItem('mode_' + domain) !== 'misskey') {
 		if (more) {
-			var sid = $("#his-fav-list-contents").attr('max-id')
-			var plus = "?max_id=" + sid
+			var sid = $('#his-fav-list-contents').attr('max-id')
+			var plus = '?max_id=' + sid
 		} else {
-			var plus = ""
+			var plus = ''
 		}
-		var start = "https://" + domain + "/api/v1/favourites" + plus
+		var start = 'https://' + domain + '/api/v1/favourites' + plus
 		var i = {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"content-type": "application/json",
-				Authorization: "Bearer " + at
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
 			}
 		}
 		var httpreq = new XMLHttpRequest()
-		httpreq.open("GET", start, true)
+		httpreq.open('GET', start, true)
 		httpreq.setRequestHeader('Content-Type', 'application/json')
 		httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 		httpreq.responseType = 'json'
@@ -399,39 +399,39 @@ function showFav(more, acct_id) {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				var json = httpreq.response
-				var linkHeader = httpreq.getResponseHeader("link")
+				var linkHeader = httpreq.getResponseHeader('link')
 				let link
 				if (linkHeader) {
 					console.log(linkHeader)
 					try {link = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)[1] }catch{}
 					console.log(link)
 				}
-				var template = parse(json, "", acct_id, "user")
+				var template = parse(json, '', acct_id, 'user')
 				if (!json[0]) {
-					template = lang.lang_details_nodata + "<br>"
+					template = lang.lang_details_nodata + '<br>'
 				}
-				$("#his-fav-list-contents").attr('max-id', link)
+				$('#his-fav-list-contents').attr('max-id', link)
 				if (more) {
-					$("#his-fav-list-contents").append(template)
+					$('#his-fav-list-contents').append(template)
 				} else {
-					$("#his-fav-list-contents").html(template)
+					$('#his-fav-list-contents').html(template)
 				}
-				jQuery("time.timeago").timeago()
+				jQuery('time.timeago').timeago()
 			}
 		}
 	} else {
 		var req = { i: at }
 		if (more) {
-			var sid = $("#his-fav-list .cvo")
+			var sid = $('#his-fav-list .cvo')
 				.last()
-				.attr("toot-id")
+				.attr('toot-id')
 			req.maxId = sid
 		}
-		var start = "https://" + domain + "/api/i/favorites"
+		var start = 'https://' + domain + '/api/i/favorites'
 		var i = {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"content-type": "application/json"
+				'content-type': 'application/json'
 			},
 			body: JSON.stringify(req)
 		}
@@ -448,65 +448,65 @@ function showFav(more, acct_id) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) !== "misskey") {
-				var templete = parse(json, "", acct_id, "user")
+			if (localStorage.getItem('mode_' + domain) !== 'misskey') {
+				var templete = parse(json, '', acct_id, 'user')
 			} else {
-				var templete = misskeyParse(json, "", acct_id, "user")
+				var templete = misskeyParse(json, '', acct_id, 'user')
 			}
 			if (!json[0]) {
-				templete = lang.lang_details_nodata + "<br>"
+				templete = lang.lang_details_nodata + '<br>'
 			}
 			if (more) {
-				$("#his-fav-list-contents").append(templete)
+				$('#his-fav-list-contents').append(templete)
 			} else {
-				$("#his-fav-list-contents").html(templete)
+				$('#his-fav-list-contents').html(templete)
 			}
-			jQuery("time.timeago").timeago()
+			jQuery('time.timeago').timeago()
 		})
 }
 
 //ミュートリスト
 function showMut(more, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (localStorage.getItem("mode_" + domain) === "misskey") {
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var req = { i: at }
 		if (more) {
-			var sid = $("#his-muting-list .cvo")
+			var sid = $('#his-muting-list .cvo')
 				.last()
-				.attr("user-id")
+				.attr('user-id')
 			req.maxId = sid
 		}
-		var start = "https://" + domain + "/api/mute/list"
+		var start = 'https://' + domain + '/api/mute/list'
 		var i = {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"content-type": "application/json"
+				'content-type': 'application/json'
 			},
 			body: JSON.stringify(req)
 		}
 	} else {
 		if (more) {
-			var sid = $("#his-muting-list .cvo")
+			var sid = $('#his-muting-list .cvo')
 				.last()
-				.attr("user-id")
-			var plus = "?max_id=" + sid
+				.attr('user-id')
+			var plus = '?max_id=' + sid
 		} else {
-			var plus = ""
+			var plus = ''
 		}
-		var start = "https://" + domain + "/api/v1/mutes" + plus
+		var start = 'https://' + domain + '/api/v1/mutes' + plus
 		var i = {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"content-type": "application/json",
-				Authorization: "Bearer " + at
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
 			}
 		}
 	}
@@ -522,18 +522,18 @@ function showMut(more, acct_id) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
 			if (!json[0]) {
-				templete = lang.lang_details_nodata + "<br>"
+				templete = lang.lang_details_nodata + '<br>'
 			}
-			var templete = userParse(json, "", acct_id)
+			var templete = userParse(json, '', acct_id)
 			if (more) {
-				$("#his-muting-list-contents").append(templete)
+				$('#his-muting-list-contents').append(templete)
 			} else {
-				$("#his-muting-list-contents").html(templete)
+				$('#his-muting-list-contents').html(templete)
 			}
 		})
 }
@@ -541,28 +541,28 @@ function showMut(more, acct_id) {
 //ブロックリスト
 function showBlo(more, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	if (localStorage.getItem("mode_" + domain) === "misskey") {
-		$("#his-blocking-list-contents").html(lang.lang_hisdata_notonmisskey + "<br>")
+	var domain = localStorage.getItem('domain_' + acct_id)
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
+		$('#his-blocking-list-contents').html(lang.lang_hisdata_notonmisskey + '<br>')
 		return false
 	}
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	if (more) {
-		var sid = $("#his-blocking-list .cvo")
+		var sid = $('#his-blocking-list .cvo')
 			.last()
-			.attr("user-id")
-		var plus = "?max_id=" + sid
+			.attr('user-id')
+		var plus = '?max_id=' + sid
 	} else {
-		var plus = ""
+		var plus = ''
 	}
-	var start = "https://" + domain + "/api/v1/blocks" + plus
+	var start = 'https://' + domain + '/api/v1/blocks' + plus
 	fetch(start, {
-		method: "GET",
+		method: 'GET',
 		headers: {
-			"content-type": "application/json",
-			Authorization: "Bearer " + at
+			'content-type': 'application/json',
+			Authorization: 'Bearer ' + at
 		}
 	})
 		.then(function (response) {
@@ -575,61 +575,61 @@ function showBlo(more, acct_id) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
 			if (!json[0]) {
-				templete = lang.lang_details_nodata + "<br>"
+				templete = lang.lang_details_nodata + '<br>'
 			}
-			var templete = userParse(json, "", acct_id)
+			var templete = userParse(json, '', acct_id)
 			if (more) {
-				$("#his-blocking-list-contents").append(templete)
+				$('#his-blocking-list-contents').append(templete)
 			} else {
-				$("#his-blocking-list-contents").html(templete)
+				$('#his-blocking-list-contents').html(templete)
 			}
-			jQuery("time.timeago").timeago()
+			jQuery('time.timeago').timeago()
 		})
 }
 
 //フォロリクリスト
 function showReq(more, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	if (localStorage.getItem("mode_" + domain) === "misskey") {
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		var req = { i: at }
 		if (more) {
-			var sid = $("#his-request-list .cvo")
+			var sid = $('#his-request-list .cvo')
 				.last()
-				.attr("user-id")
+				.attr('user-id')
 			req.maxId = sid
 		}
-		var start = "https://" + domain + "/following/requests/list"
+		var start = 'https://' + domain + '/following/requests/list'
 		var i = {
-			method: "POST",
+			method: 'POST',
 			headers: {
-				"content-type": "application/json"
+				'content-type': 'application/json'
 			},
 			body: JSON.stringify(req)
 		}
 	} else {
 		if (more) {
-			var sid = $("#his-request-list .cvo")
+			var sid = $('#his-request-list .cvo')
 				.last()
-				.attr("user-id")
-			var plus = "?max_id=" + sid
+				.attr('user-id')
+			var plus = '?max_id=' + sid
 		} else {
-			var plus = ""
+			var plus = ''
 		}
-		var start = "https://" + domain + "/api/v1/follow_requests" + plus
+		var start = 'https://' + domain + '/api/v1/follow_requests' + plus
 		var i = {
-			method: "GET",
+			method: 'GET',
 			headers: {
-				"content-type": "application/json",
-				Authorization: "Bearer " + at
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
 			}
 		}
 	}
@@ -644,53 +644,53 @@ function showReq(more, acct_id) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
-			if (localStorage.getItem("mode_" + domain) !== "misskey") {
-				var templete = userParse(json, "request", acct_id)
+			if (localStorage.getItem('mode_' + domain) !== 'misskey') {
+				var templete = userParse(json, 'request', acct_id)
 			} else {
 				var templete = misskeyUserparse(json, true, acct_id)
 			}
 
 			if (!json[0]) {
-				templete = lang.lang_details_nodata + "<br>"
+				templete = lang.lang_details_nodata + '<br>'
 			}
 			if (more) {
-				$("#his-request-list-contents").append(templete)
+				$('#his-request-list-contents').append(templete)
 			} else {
-				$("#his-request-list-contents").html(templete)
+				$('#his-request-list-contents').html(templete)
 			}
-			jQuery("time.timeago").timeago()
+			jQuery('time.timeago').timeago()
 		})
 }
 
 //ドメインブロックリスト
 function showDom(more, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	if (localStorage.getItem("mode_" + domain) === "misskey") {
-		$("#his-domain-list-contents").html(lang.lang_hisdata_notonmisskey + "<br>")
+	var domain = localStorage.getItem('domain_' + acct_id)
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
+		$('#his-domain-list-contents').html(lang.lang_hisdata_notonmisskey + '<br>')
 		return false
 	}
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	if (more) {
-		var sid = $("#his-domain-list .cvo")
+		var sid = $('#his-domain-list .cvo')
 			.last()
-			.attr("user-id")
-		var plus = "?max_id=" + sid
+			.attr('user-id')
+		var plus = '?max_id=' + sid
 	} else {
-		var plus = ""
+		var plus = ''
 	}
-	var start = "https://" + domain + "/api/v1/domain_blocks" + plus
+	var start = 'https://' + domain + '/api/v1/domain_blocks' + plus
 	fetch(start, {
-		method: "GET",
+		method: 'GET',
 		headers: {
-			"content-type": "application/json",
-			Authorization: "Bearer " + at
+			'content-type': 'application/json',
+			Authorization: 'Bearer ' + at
 		}
 		//body: JSON.stringify({})
 	})
@@ -704,22 +704,22 @@ function showDom(more, acct_id) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
-			var templete = ""
+			var templete = ''
 			if (!json[0]) {
-				templete = lang.lang_details_nodata + "<br>"
+				templete = lang.lang_details_nodata + '<br>'
 			}
 			Object.keys(json).forEach(function (key) {
 				var domain = json[key]
-				templete = templete + domain + '<i class="material-icons gray pointer" onclick="domainBlock(\'' + domain + "','DELETE')\">cancel</i>" + '<div class="divider"></div>'
+				templete = templete + domain + '<i class="material-icons gray pointer" onclick="domainBlock(\'' + domain + '\',\'DELETE\')">cancel</i>' + '<div class="divider"></div>'
 			})
 			if (more) {
-				$("#his-domain-list-contents").append(templete)
+				$('#his-domain-list-contents').append(templete)
 			} else {
-				$("#his-domain-list-contents").html(templete)
+				$('#his-domain-list-contents').html(templete)
 			}
 		})
 }
@@ -727,28 +727,28 @@ function showDom(more, acct_id) {
 //フォローレコメンデーションリスト
 function showFrl(more, acct_id) {
 	if (!acct_id) {
-		var acct_id = $("#his-data").attr("use-acct")
+		var acct_id = $('#his-data').attr('use-acct')
 	}
-	var domain = localStorage.getItem("domain_" + acct_id)
-	if (localStorage.getItem("mode_" + domain) === "misskey") {
-		$("#his-follow-recom-contents").html(lang.lang_hisdata_notonmisskey + "<br>")
+	var domain = localStorage.getItem('domain_' + acct_id)
+	if (localStorage.getItem('mode_' + domain) === 'misskey') {
+		$('#his-follow-recom-contents').html(lang.lang_hisdata_notonmisskey + '<br>')
 		return false
 	}
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
 	if (more) {
-		var sid = $("#his-follow-recom-list .cvo")
+		var sid = $('#his-follow-recom-list .cvo')
 			.last()
-			.attr("user-id")
-		var plus = "?max_id=" + sid
+			.attr('user-id')
+		var plus = '?max_id=' + sid
 	} else {
-		var plus = ""
+		var plus = ''
 	}
-	var start = "https://" + domain + "/api/v1/suggestions" + plus
+	var start = 'https://' + domain + '/api/v1/suggestions' + plus
 	fetch(start, {
-		method: "GET",
+		method: 'GET',
 		headers: {
-			"content-type": "application/json",
-			Authorization: "Bearer " + at
+			'content-type': 'application/json',
+			Authorization: 'Bearer ' + at
 		}
 	})
 		.then(function (response) {
@@ -760,35 +760,35 @@ function showFrl(more, acct_id) {
 			return response.json()
 		})
 		.catch(function (error) {
-			$("#his-follow-recom-contents").html(lang.lang_details_nodata + "(" + lang.lang_hisdata_frcreq + ")<br>")
+			$('#his-follow-recom-contents').html(lang.lang_details_nodata + '(' + lang.lang_hisdata_frcreq + ')<br>')
 			console.error(error)
 		})
 		.then(function (json) {
 			if (!json[0]) {
-				console.warn("No suggestions(recommend) data")
-				templete = lang.lang_details_nodata + "(" + lang.lang_hisdata_frcwarn + ")<br>"
+				console.warn('No suggestions(recommend) data')
+				templete = lang.lang_details_nodata + '(' + lang.lang_hisdata_frcwarn + ')<br>'
 			} else {
-				var templete = userParse(json, "", acct_id)
+				var templete = userParse(json, '', acct_id)
 			}
 
 			if (more) {
-				$("#his-follow-recom-contents").append(templete)
+				$('#his-follow-recom-contents').append(templete)
 			} else {
-				$("#his-follow-recom-contents").html(templete)
+				$('#his-follow-recom-contents').html(templete)
 			}
-			jQuery("time.timeago").timeago()
+			jQuery('time.timeago').timeago()
 		})
 }
 //Keybase
 function udAdd(acct_id, id, start) {
-	var domain = localStorage.getItem("domain_" + acct_id)
-	var at = localStorage.getItem("acct_" + acct_id + "_at")
-	var proof = "https://" + domain + "/api/v1/accounts/" + id + "/identity_proofs"
+	var domain = localStorage.getItem('domain_' + acct_id)
+	var at = localStorage.getItem('acct_' + acct_id + '_at')
+	var proof = 'https://' + domain + '/api/v1/accounts/' + id + '/identity_proofs'
 	fetch(proof, {
-		method: "GET",
+		method: 'GET',
 		headers: {
-			"content-type": "application/json",
-			Authorization: "Bearer " + at
+			'content-type': 'application/json',
+			Authorization: 'Bearer ' + at
 		}
 		//body: JSON.stringify({})
 	})
@@ -802,20 +802,20 @@ function udAdd(acct_id, id, start) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
 			var fields = json
 			for (var i = 0; i < fields.length; i++) {
-				var html = '<a href="' + fields[i].proof_url + '" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace("{{set}}", escapeHTML(fields[i].provider)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].provider) + ":" + escapeHTML(fields[i].provider_username) + "</a>"
-				$("#his-proof-prof").append(html)
+				var html = '<a href="' + fields[i].proof_url + '" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="' + lang.lang_hisdata_key.replace('{{set}}', escapeHTML(fields[i].provider)) + '"><i class="fas fa-key" aria-hidden="true"></i>' + escapeHTML(fields[i].provider) + ':' + escapeHTML(fields[i].provider_username) + '</a>'
+				$('#his-proof-prof').append(html)
 			}
 		})
-	fetch("https://notestock.osa-p.net/api/v1/isstock.json?id=" + start.replace("@", "users/"), {
-		method: "GET",
+	fetch('https://notestock.osa-p.net/api/v1/isstock.json?id=' + start.replace('@', 'users/'), {
+		method: 'GET',
 		headers: {
-			Accept: "application/json"
+			Accept: 'application/json'
 		}
 	})
 		.then(function (response) {
@@ -828,13 +828,13 @@ function udAdd(acct_id, id, start) {
 		})
 		.catch(function (error) {
 			todo(error)
-			setLog(start, "JSON", error)
+			setLog(start, 'JSON', error)
 			console.error(error)
 		})
 		.then(function (json) {
 			if (json.user.public_view) {
 				var html = '<a href="' + json.user.url + '" target="_blank" class="cbadge purple waves-effect" style="max-width:200px;" title="Notestock">Notestock</a>'
-				$("#his-proof-prof").append(html)
+				$('#his-proof-prof').append(html)
 			}
 		})
 }

@@ -118,7 +118,7 @@ async function udg(user, acct_id, isSwal) {
     //moved設定時
     if (json.moved) {
         toast({
-            html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' + json.moved.id + "','" + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>',
+            html: lang.lang_showontl_movetxt + '<button class="btn-flat toast-action" onclick="udg(\'' + json.moved.id + '\',\'' + acct_id + '\')">' + lang.lang_showontl_movebtn + '</button>',
             displayLength: 4000,
         })
     }

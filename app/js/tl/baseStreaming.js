@@ -72,7 +72,7 @@ function mastodonBaseStreaming(acct_id) {
     }
     mastodonBaseWs[domain].onerror = function (error) {
         notfCommon(acct_id, 0, true) //fallback
-        console.error("Error closing " + domain)
+        console.error('Error closing ' + domain)
         console.error(error)
         if (mastodonBaseWsStatus[domain] === 'available') {
             /*toast({
@@ -95,7 +95,7 @@ function mastodonBaseStreaming(acct_id) {
     }
     mastodonBaseWs[domain].onclose = function () {
         notfCommon(acct_id, 0, true) //fallback
-        console.warn("Closing " + domain)
+        console.warn('Closing ' + domain)
         if (mastodonBaseWsStatus[domain] === 'available') {
             /*toast({
                 html:
@@ -201,7 +201,7 @@ function getTlMeta(type, data, num, status) {
                     })
                 }
             }
-            break;
+            break
         case 'public':
             for (const tl of obj) {
                 i++
@@ -218,7 +218,7 @@ function getTlMeta(type, data, num, status) {
                     })
                 }
             }
-            break;
+            break
         case 'public:media':
             for (const tl of obj) {
                 i++
@@ -234,7 +234,7 @@ function getTlMeta(type, data, num, status) {
                     })
                 }
             }
-            break;
+            break
         case 'list':
             for (const tl of obj) {
                 i++
@@ -250,7 +250,7 @@ function getTlMeta(type, data, num, status) {
                     })
                 }
             }
-            break;
+            break
         case 'direct':
             for (const tl of obj) {
                 i++
@@ -266,7 +266,7 @@ function getTlMeta(type, data, num, status) {
                     })
                 }
             }
-            break;
+            break
         case 'hashtag':
             for (const tl of obj) {
                 i++
@@ -310,9 +310,9 @@ function getTlMeta(type, data, num, status) {
                     })
                 }
             }
-            break;
+            break
         default:
-            console.error(`Cannot catch`);
+            console.error('Cannot catch')
     }
     return ret
 }

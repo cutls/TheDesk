@@ -119,7 +119,7 @@ function settings() {
 function load() {
     var currentLang = lang.language
     console.log(currentLang)
-    $(`#langsel-sel`).val(currentLang)
+    $('#langsel-sel').val(currentLang)
     $('#langsel-sel').formSelect()
     var max = envView.config.length
     for (var i = 0; i < max; i++) {
