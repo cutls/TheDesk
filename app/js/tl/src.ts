@@ -5,7 +5,10 @@ import $ from 'jquery'
 import { Card, Search, Tag, Toot } from '../../interfaces/MastodonApiReturns'
 import api from '../common/fetch'
 import lang from '../common/lang'
+import { execCopy } from '../platform/end'
 import { escapeHTML, setLog } from '../platform/first'
+import { brInsert } from '../post/emoji'
+import { cardHtml } from './card'
 
 
 export function searchMenu() {
@@ -86,7 +89,7 @@ export async function src(mode?: any, offset?: any) {
 	}
 	//アカウント
 	if (json.accounts[0]) {
-		const templete = userparse(json.accounts, '', acct_id)
+		const templete = userParse(json.accounts, '', acct_id)
 		if (!offset) {
 			$('#src-contents').append(
 				`<br>Accounts<div id="src-accts">
@@ -169,7 +172,7 @@ export function moreTs(tlid, q) {
 	// const sid = $('#timeline_' + tlid + ' .ts-marker')
 	// 	.last()
 	// 	.attr('data-maxid')
-	// moreloading = true
+	// moreLoading = true
 	// const start =
 	// 	'https://tootsearch.chotto.moe/api/v1/search?from=' + sid + '&sort=created_at%3Adesc&q=' + q
 	// $('#notice_' + tlid).text('tootsearch(' + q + ')')
@@ -327,7 +330,7 @@ export async function trend() {
 		console.log(linkTrends)
 		let links = ''
 		for (const link of linkTrends) {
-			links = links + `<a href="${link.url}" target="_blank">${link.url}</a><br />` + cardHtml(link, acct_id, '') + '<hr />'
+			links = links + `<a href="${link.url}" target="_blank">${link.url}</a><br />${cardHtml(link, acct_id, '')}<hr />`
 		}
 		$('#src-contents').append(`<div id="src-content-link">Trend Links<br />${links}</div>`)
 	} catch {

@@ -195,7 +195,7 @@ function flw(user, more, acct_id) {
 				if (localStorage.getItem("mode_" + domain) === "misskey") {
 					var templete = misskeyUserparse(json, "", acct_id)
 				} else {
-					var templete = userparse(json, "", acct_id)
+					var templete = userParse(json, "", acct_id)
 				}
 				if (templete === "") {
 					templete = lang.lang_details_nodata + "<br>"
@@ -236,7 +236,7 @@ function flw(user, more, acct_id) {
 			if (localStorage.getItem("mode_" + domain) === "misskey") {
 				var templete = misskeyUserparse(json, "", acct_id)
 			} else {
-				var templete = userparse(json, "", acct_id)
+				var templete = userParse(json, "", acct_id)
 			}
 			if (templete === "") {
 				templete = lang.lang_details_nodata + "<br>"
@@ -304,7 +304,7 @@ function fer(user, more, acct_id) {
 				if (localStorage.getItem("mode_" + domain) === "misskey") {
 					var templete = misskeyUserparse(json, "", acct_id)
 				} else {
-					var templete = userparse(json, "", acct_id)
+					var templete = userParse(json, "", acct_id)
 				}
 				if (templete === "") {
 					templete = lang.lang_details_nodata + "<br>"
@@ -345,7 +345,7 @@ function fer(user, more, acct_id) {
 			if (localStorage.getItem("mode_" + domain) === "misskey") {
 				var templete = misskeyUserparse(json, "", acct_id)
 			} else {
-				var templete = userparse(json, "", acct_id)
+				var templete = userParse(json, "", acct_id)
 			}
 			if (templete === "") {
 				templete = lang.lang_details_nodata + "<br>"
@@ -529,7 +529,7 @@ function showMut(more, acct_id) {
 			if (!json[0]) {
 				templete = lang.lang_details_nodata + "<br>"
 			}
-			var templete = userparse(json, "", acct_id)
+			var templete = userParse(json, "", acct_id)
 			if (more) {
 				$("#his-muting-list-contents").append(templete)
 			} else {
@@ -582,7 +582,7 @@ function showBlo(more, acct_id) {
 			if (!json[0]) {
 				templete = lang.lang_details_nodata + "<br>"
 			}
-			var templete = userparse(json, "", acct_id)
+			var templete = userParse(json, "", acct_id)
 			if (more) {
 				$("#his-blocking-list-contents").append(templete)
 			} else {
@@ -649,7 +649,7 @@ function showReq(more, acct_id) {
 		})
 		.then(function (json) {
 			if (localStorage.getItem("mode_" + domain) !== "misskey") {
-				var templete = userparse(json, "request", acct_id)
+				var templete = userParse(json, "request", acct_id)
 			} else {
 				var templete = misskeyUserparse(json, true, acct_id)
 			}
@@ -768,7 +768,7 @@ function showFrl(more, acct_id) {
 				console.warn("No suggestions(recommend) data")
 				templete = lang.lang_details_nodata + "(" + lang.lang_hisdata_frcwarn + ")<br>"
 			} else {
-				var templete = userparse(json, "", acct_id)
+				var templete = userParse(json, "", acct_id)
 			}
 
 			if (more) {

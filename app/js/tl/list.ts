@@ -141,7 +141,7 @@ export function listUser(id, acct_id) {
 		.then(function (json) {
 			if (json) {
 				const lists = ''
-				const templete = userparse(json, '', acct_id)
+				const templete = userParse(json, '', acct_id)
 				if (!json[0]) {
 					templete = lang.lang_list_nouser
 				}

@@ -228,7 +228,7 @@ async function faved(id: string, acctId: string) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-	const template = userparse(json, '', acctId)
+	const template = userParse(json, '', acctId)
 	if (template !== '') $('#toot-fav .no-data').hide()
 	$('#toot-fav').html(template)
 	jQuery('time.timeago').timeago()
@@ -246,7 +246,7 @@ async function rted(id: string, acctId: string) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-	const template = userparse(json, '', acctId)
+	const template = userParse(json, '', acctId)
 	if (template !== '') $('#toot-rt .no-data').hide()
 	$('#toot-rt').html(template)
 	jQuery('time.timeago').timeago()

@@ -1,10 +1,10 @@
 //スクロールで続きを読む
-function scrollevent() {
+function scrollEvent() {
 	$('.tl-box').scroll(function() {
 		scrollck()
 	})
 }
-scrollevent()
+scrollEvent()
 
 function scrollck() {
 	$('.tl-box').each(function(i, elem) {
@@ -39,7 +39,7 @@ function scrollck() {
 		var scr = $(this).scrollTop()
 		if (scr > scrt && scrt > 0) {
 			console.log('kicked more loading:' + tlid)
-			moreload('', tlid)
+			moreLoad(tlid)
 		}
 	})
 }

@@ -16,7 +16,7 @@ export interface IPlugin {
     id: string
     content: string
 }
-export type IColumnType = string
+export type IColumnType = 'home' | 'local' | 'local-media' | 'pub' | 'pub-media' | 'tag' | 'list' | 'notf' | 'noauth' | 'dm' | 'mix' | 'plus' | 'webview' | 'tootsearch' | 'bookmark' | 'utl' | 'fav'
 export interface IColumn {
     domain: number
     type: IColumnType

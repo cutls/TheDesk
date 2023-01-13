@@ -1,10 +1,9 @@
 //レイアウトの設定
 
-var websocketOld = []
-var websocket = []
-var wsHome = []
-var wsLocal = []
-var websocketNotf = []
+
+global.wsHome = []
+global.wsLocal = []
+global.websocketNotf = []
 
 //カラム追加ボックストグル
 function addColumnMenu() {
@@ -370,7 +369,7 @@ function parseColumn(target, dontclose) {
 					<div class="notice-box ${smallHeader ? 'small-header' : ''} z-depth-2" id="menu_${key}" style="${insert}">
 						<div class="area-notice">
 							<i class="material-icons waves-effect ${isMisRed} notice_icon_acct_${acct.domain} top-icon" id="notice_icon_${key}" ${notf_attr} 
-								 onclick="checkStr('${acct.type}','${data}','${acct.domain}', '${key}', '${delc}','${voice}',null)"
+								 onclick="checkStr('${acct.type}','${data}','${acct.domain}', '${key}','${voice}',null)"
 							 	 title="${lang.lang_layout_gotop}" aria-hidden="true">
 							</i>
 						</div>
@@ -472,18 +471,13 @@ function parseColumn(target, dontclose) {
 			} else {
 				var data = ''
 			}
-			if (localStorage.getItem('catch_' + key)) {
-				var delc = 'true'
-			} else {
-				var delc = 'false'
-			}
 
 			if (localStorage.getItem('voice_' + key)) {
 				var voice = true
 			} else {
 				var voice = false
 			}
-			tl(acct.type, data, acct.domain, key, delc, voice, '')
+			tl(acct.type, data, acct.domain, key, voice)
 			cardCheck(key)
 			ebtCheck(key)
 			mediaCheck(key)
@@ -552,10 +546,10 @@ function parseColumn(target, dontclose) {
 		},
 	})
 }
-function checkStr(type, data, acct_id, key, delc, voice) {
+function checkStr(type, data, acct_id, key, voice) {
 	if ($('#notice_icon_' + key).hasClass('red-text') && type !== 'notf' && type !== 'mix') {
 		goTop(key)
-		tlDiff(type, data, acct_id, key, delc, voice, '')
+		tlDiff(type, data, acct_id, key, voice, '')
 	} else {
 		goTop(key)
 	}
@@ -900,7 +894,7 @@ function bookmark(key, data) {
 	} else {
 		var voice = false
 	}
-	tl('bookmark', '', data, key, 'false', voice, '')
+	tl('bookmark', '', data, key, voice)
 }
 function utl(key, acct_id, data) {
 	if (!data) {
@@ -916,7 +910,7 @@ function utl(key, acct_id, data) {
 	} else {
 		var voice = false
 	}
-	tl('utl', data, acct_id, key, 'false', voice, '')
+	tl('utl', data, acct_id, key, voice)
 }
 function leftFoldSet(key) {
 	var multi = localStorage.getItem('column')

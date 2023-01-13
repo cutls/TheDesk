@@ -183,7 +183,7 @@ export interface Media {
 }
 export interface Notification {
     id: string
-    type: 'follow' | 'follow_request' | 'mention' | 'reblog' | 'favourite' | 'poll' | 'status'
+    type: 'follow' | 'follow_request' | 'mention' | 'reblog' | 'favourite' | 'poll' | 'status' | 'move' | 'update' | 'request' | 'admin.sign_up'
     created_at: string
     account: Account,
     status?: Toot
@@ -220,6 +220,12 @@ export interface List {
     id: string
     title: string
 }
+export interface Conversation {
+    id: string
+    unread: boolean
+    accounts: Account[]
+    last_status?: Toot
+}
 export interface Context {
     descendants: Toot[]
     ancestors: Toot[]
@@ -251,4 +257,30 @@ export interface Announce {
     tags: Tag[]
     emojis: Emoji[]
     reactions: Reaction[]
+}
+interface FilterKeyword {
+    id: string
+    keyword: string
+    whole_word: boolean
+}
+interface FilterStatus {
+    id: string
+    status_id: string
+}
+export interface FilterV2 {
+    id: string
+    title: string
+    context: ('home' | 'notifications' | 'public' | 'thread' | 'account')[]
+    expires_at?: string
+    filter_action: 'warn' | 'hide'
+    keywords: FilterKeyword[]
+    statuses: FilterStatus[]
+}
+export interface FilterV1 {
+    id: string
+    phrase: string
+    context: ('home' | 'notifications' | 'public' | 'thread' | 'account')[]
+    expires_at?: string
+    irreversible: boolean
+    whole_word: boolean
 }
