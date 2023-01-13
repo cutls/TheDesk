@@ -16,7 +16,7 @@ function scrollck() {
 				var pool = localStorage.getItem('pool_' + tlid)
 				if (pool) {
 					$('#timeline_' + tlid).prepend(pool)
-					jQuery('time.timeago').timeago()
+					timeUpdate()
 					localStorage.removeItem('pool_' + tlid)
 				}
 			} else {

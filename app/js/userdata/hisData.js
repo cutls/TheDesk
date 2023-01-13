@@ -76,7 +76,7 @@ function utlShow(user, more, acct_id) {
 					$('#his-tl-contents').html(templete)
 				}
 			}
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		})
 }
 function utlAdd() {
@@ -137,7 +137,7 @@ function pinutl(before, user, acct_id) {
 				templete = ''
 			}
 			$('#his-tl-contents').html(templete + before)
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		})
 }
 
@@ -213,7 +213,7 @@ function flw(user, more, acct_id) {
 				} else {
 					$('#his-follow-list-contents').html(templete)
 				}
-				jQuery('time.timeago').timeago()
+				timeUpdate()
 			}
 		}
 		return false
@@ -246,7 +246,7 @@ function flw(user, more, acct_id) {
 			} else {
 				$('#his-follow-list-contents').html(templete)
 			}
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		})
 }
 
@@ -322,7 +322,7 @@ function fer(user, more, acct_id) {
 				} else {
 					$('#his-follower-list-contents').html(templete)
 				}
-				jQuery('time.timeago').timeago()
+				timeUpdate()
 			}
 		}
 		return false
@@ -363,7 +363,7 @@ function fer(user, more, acct_id) {
 			} else {
 				$('#his-follower-list-contents').html(templete)
 			}
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		})
 	}
 
@@ -416,7 +416,7 @@ function showFav(more, acct_id) {
 				} else {
 					$('#his-fav-list-contents').html(template)
 				}
-				jQuery('time.timeago').timeago()
+				timeUpdate()
 			}
 		}
 	} else {
@@ -465,7 +465,7 @@ function showFav(more, acct_id) {
 			} else {
 				$('#his-fav-list-contents').html(templete)
 			}
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		})
 }
 
@@ -588,7 +588,7 @@ function showBlo(more, acct_id) {
 			} else {
 				$('#his-blocking-list-contents').html(templete)
 			}
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		})
 }
 
@@ -662,7 +662,7 @@ function showReq(more, acct_id) {
 			} else {
 				$('#his-request-list-contents').html(templete)
 			}
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		})
 }
 
@@ -776,7 +776,7 @@ function showFrl(more, acct_id) {
 			} else {
 				$('#his-follow-recom-contents').html(templete)
 			}
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		})
 }
 //Keybase

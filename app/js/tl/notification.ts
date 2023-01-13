@@ -5,11 +5,12 @@ import { Notification } from '../../interfaces/MastodonApiReturns'
 import api from '../common/fetch'
 import lang from '../common/lang'
 import { getColumn, getMulti } from '../common/storage'
+import timeUpdate from '../common/time'
 import { escapeHTML, setLog } from '../platform/first'
 import { todo } from '../ui/tips'
 import { getFilterTypeByAcct } from './filter'
 import { getMarker } from './tl'
-declare var jQuery
+
 export function notf(acctId: string, tlid: string, sys?: 'direct') {
     if (sys === 'direct') {
         notfColumn(acctId, tlid)
@@ -75,7 +76,7 @@ export async function notfColumn(acctId: string, tlid: string) {
                 template = template + `<div class="hide notif-marker" data-maxid="${maxId}"></div>`
                 $('#timeline_' + tlid).html(template)
                 // $('#landing_' + tlid).hide()
-                jQuery('time.timeago').timeago()
+                timeUpdate()
             }
             $('#notf-box').addClass('fetched')
             todc()
@@ -132,7 +133,7 @@ export async function notfCommon(acctId: string, tlid: string, isStreamOnly: boo
             }
             $('div[data-notf=' + acctId + ']').html(template)
             // $('#landing_' + tlid).hide()
-            jQuery('time.timeago').timeago()
+            timeUpdate()
         }
         $('#notf-box').addClass('fetched')
         todc()
@@ -179,7 +180,7 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
                     $('div[data-notf=' + acctId + ']').prepend(template)
                     $('div[data-const=notf_' + acctId + ']').prepend(template)
                 }
-                jQuery('time.timeago').timeago()
+                timeUpdate()
             }
         } else if (type === 'delete') {
             $(`[toot-id=${obj}]`).hide()
@@ -246,7 +247,7 @@ export function notfMore(tlid: string) {
                     template = template + `<div class="hide notif-marker" data-maxid="${maxId}"></div>`
                     $('#timeline_' + tlid).append(template)
                     // $('#landing_' + tlid).hide()
-                    jQuery('time.timeago').timeago()
+                    timeUpdate()
                 }
                 $('#notf-box').addClass('fetched')
                 todc()

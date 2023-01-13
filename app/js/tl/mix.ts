@@ -7,6 +7,7 @@ import api from '../common/fetch'
 import { getColumn } from '../common/storage'
 import { IColumnType } from '../../interfaces/Storage'
 import { reconnector } from './tl'
+import timeUpdate from '../common/time'
 declare const jQuery
 
 //Integrated TL
@@ -31,7 +32,7 @@ export async function mixTl(acctId, tlid, type: 'plus' | 'integrated', voice?: b
 	localStorage.setItem('lastobj_' + tlid, integrated[0].id)
 	$('#timeline_' + tlid).html(template)
 	additional(acctId, tlid)
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 	todc()
 	if (mastodonBaseWsStatus[domain] === 'cannotuse') {
 		mixre(acctId, tlid, 'mix', mute, voice)
@@ -187,7 +188,7 @@ function integratedMessage(mess: any, acctId: string, tlid: string, mute: string
 			}
 			scrollck()
 			additional(acctId, tlid)
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		}
 	}
 }
@@ -215,7 +216,7 @@ export async function mixMore(tlid: string, type: IColumnType) {
 	localStorage.setItem('lastobj_' + tlid, integrated[0].id)
 	$('#timeline_' + tlid).append(template)
 	additional(acctId, tlid)
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 	global.moreLoading = false
 	todc()
 }

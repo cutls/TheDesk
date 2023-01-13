@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import lang from '../common/lang'
+import timeUpdate from '../common/time'
 import { escapeHTML, setLog } from '../platform/first'
 import { todo } from '../ui/tips'
 export function listMenu() {
@@ -146,7 +147,7 @@ export function listUser(id, acct_id) {
 					templete = lang.lang_list_nouser
 				}
 				$('#lists-user').html(templete)
-				jQuery('time.timeago').timeago()
+				timeUpdate()
 			} else {
 				$('#lists-user').html(lang.lang_list_nouser)
 			}

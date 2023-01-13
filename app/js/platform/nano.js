@@ -33,7 +33,7 @@ function tl(data) {
 		.then(function (json) {
 			const templete = parse([json[0]], '', acct_id, tlid)
 			$('#timeline_nano').html(templete)
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 			$('#menu').addClass('hide')
 		})
 	//Streaming接続
@@ -57,7 +57,7 @@ function tl(data) {
 		if (typeA === 'update') {
 			const obj = JSON.parse(JSON.parse(mess.data).payload)
 			const templete = parse([obj], '', acct_id, tlid)
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 			$('#timeline_nano').html(templete)
 		}
 	}

@@ -1,10 +1,10 @@
 //検索
 //検索ボックストグル
-declare var jQuery
 import $ from 'jquery'
 import { Card, Search, Tag, Toot } from '../../interfaces/MastodonApiReturns'
 import api from '../common/fetch'
 import lang from '../common/lang'
+import timeUpdate from '../common/time'
 import { execCopy } from '../platform/end'
 import { escapeHTML, setLog } from '../platform/first'
 import { brInsert } from '../post/emoji'
@@ -100,7 +100,7 @@ export async function src(mode?: any, offset?: any) {
 			$('#src-accts').append(templete)
 		}
 	}
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 }
 function tsAdd(q: string) {
 	// const add = {
@@ -165,7 +165,7 @@ export function tootsearch(tlid: number, q: string) {
 	// 		}
 	// 		$('#timeline_' + tlid).html(templete)
 
-	// 		jQuery('time.timeago').timeago()
+	// 		timeUpdate()
 	// 	})
 }
 export function moreTs(tlid, q) {
@@ -216,7 +216,7 @@ export function moreTs(tlid, q) {
 	// 		}
 	// 		$('#timeline_' + tlid).append(templete)
 
-	// 		global.jQuery('time.timeago').timeago()
+	// 		global.timeUpdate()
 	// 	})
 }
 function graphDraw(tag: Tag, acct_id: number) {

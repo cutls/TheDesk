@@ -2,7 +2,7 @@
 
 import { Account } from "../../interfaces/MastodonApiReturns"
 import api from "../common/fetch"
-declare var jQuery
+import timeUpdate from "../common/time"
 
 //ディレクトリトグル
 export function dirMenu() {
@@ -65,7 +65,7 @@ export async function directory(modeRaw: IDirMode, isMore?: boolean) {
         }
         const html = userParse(obj, null, acctId, 'dir', null)
         $('#dir-contents').append(html)
-        jQuery('time.timeago').timeago()
+        timeUpdate()
     } else {
         $('#moreDir').addClass('disabled')
     }

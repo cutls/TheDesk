@@ -7,7 +7,8 @@ import { setLog, stripTags } from "../platform/first"
 import { todo } from "../ui/tips"
 import Swal from "sweetalert2"
 import { execCopy } from "../platform/end"
-declare var jQuery
+import timeUpdate from "../common/time"
+import { getFilterTypeByAcct } from "./filter"
 
 //トゥートの詳細
 export async function details(id: string, acctId: string, tlid=0, isDm?: boolean) {
@@ -44,7 +45,7 @@ export async function details(id: string, acctId: string, tlid=0, isDm?: boolean
 			const mute = getFilterTypeByAcct(acctId, 'thread')
 			const html = parse([json], '', acctId, '', '', mute)
 			$('#toot-this').html(html)
-			jQuery('time.timeago').timeago()
+			timeUpdate()
 		}
 		const url = json.url
 		const local = json.account.acct === json.account.username
@@ -130,7 +131,7 @@ async function getContext(id: string, acctId: string) {
 	$('#toot-reply .hide').html(lang.lang_details_filtered)
 	$('#toot-reply .by_filter').css('display', 'block')
 	$('#toot-reply .by_filter').removeClass('hide')
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 }
 
 //前のトゥート(Back TL)
@@ -147,7 +148,7 @@ async function beforeToot(id: string, acctId: string, domain: string) {
 	const template = parse(json, 'noauth', acctId)
 	if (template !== '') $('#toot-before .no-data').hide()
 	$('#toot-before').html(template)
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 }
 //前のユーザーのトゥート
 async function userToot(id: string, acctId: string, user: string) {
@@ -164,7 +165,7 @@ async function userToot(id: string, acctId: string, user: string) {
 	const template = parse(json, '', acctId)
 	if (template !== '') $('#user-before .no-data').hide()
 	$('#user-before').html(template)
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 }
 //後のLTL
 async function afterToot(id: string, acctId: string, domain: string) {
@@ -180,7 +181,7 @@ async function afterToot(id: string, acctId: string, domain: string) {
 	const template = parse(json, '', acctId)
 	if (template !== '') $('#ltl-after .no-data').hide()
 	$('#ltl-after').html(template)
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 }
 //後のUTL
 async function afterUserToot(id: string, acctId: string, user: string) {
@@ -197,7 +198,7 @@ async function afterUserToot(id: string, acctId: string, user: string) {
 	const template = parse(json, '', acctId)
 	if (template !== '') $('#user-after .no-data').hide()
 	$('#user-after').html(template)
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 }
 //後のFTL
 async function afterFTLToot(id: string, acctId: string, domain: string) {
@@ -213,7 +214,7 @@ async function afterFTLToot(id: string, acctId: string, domain: string) {
 	const template = parse(json, '', acctId)
 	if (template !== '') $('#ftl-after .no-data').hide()
 	$('#ftl-after').html(template)
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 }
 
 //ふぁぼ一覧
@@ -231,7 +232,7 @@ async function faved(id: string, acctId: string) {
 	const template = userParse(json, '', acctId)
 	if (template !== '') $('#toot-fav .no-data').hide()
 	$('#toot-fav').html(template)
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 }
 
 //ブースト一覧
@@ -249,7 +250,7 @@ async function rted(id: string, acctId: string) {
 	const template = userParse(json, '', acctId)
 	if (template !== '') $('#toot-rt .no-data').hide()
 	$('#toot-rt').html(template)
-	jQuery('time.timeago').timeago()
+	timeUpdate()
 }
 //URL等のコピー
 export function cbCopy(isEmb: boolean) {

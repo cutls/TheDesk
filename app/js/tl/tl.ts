@@ -13,7 +13,8 @@ import { toast } from "../common/declareM"
 import Swal from "sweetalert2"
 import { announParse } from "./announParse"
 import { notf, notfColumn, notfMore } from './notification'
-declare var jQuery
+import timeUpdate from "../common/time"
+
 //TL取得
 global.moreLoading = false
 global.websocketOld = []
@@ -127,7 +128,7 @@ export async function tl(type: IColumnType, data: any, acctId, tlid: string | 'a
         localStorage.setItem('lastobj_' + tlid, json[0].id)
         $('#timeline_' + tlid).html(template)
         additional(acctId, tlid)
-        jQuery('time.timeago').timeago()
+        timeUpdate()
         todc()
         reload(type, acctId, tlid, data, mute, voice || false)
         if (type === 'home') {
@@ -257,7 +258,7 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: any
                     }
                     scrollck()
                     additional(acctId, tlid)
-                    jQuery('time.timeago').timeago()
+                    timeUpdate()
                 } else {
                     todo('二重取得発生中')
                 }
@@ -352,7 +353,7 @@ export async function moreLoad(tlid: string) {
             const template = parse(json, '', acctId, tlid, '', mute, type)
             $('#timeline_' + tlid).append(template)
             additional(acctId.toString(), tlid)
-            jQuery('time.timeago').timeago()
+            timeUpdate()
             global.moreLoading = false
             todc()
         }
@@ -401,7 +402,7 @@ export async function tlDiff(type: IColumnType, data: any, acctId: string, tlid:
         const template = parse(json, '', acctId, tlid, '', mute, type)
         $('#timeline_' + tlid).prepend(template)
         additional(acctId, tlid)
-        jQuery('time.timeago').timeago()
+        timeUpdate()
         global.moreLoading = false
         todc()
     }
@@ -698,7 +699,7 @@ export async function showUnread(tlid: string, type: IColumnType, acctId: string
         $('#timeline_box_' + tlid + '_box .tl-box').scrollTop(to)
     }
     additional(acctId, tlid)
-    jQuery('time.timeago').timeago()
+    timeUpdate()
     todc()
 }
 global.ueloadlock = false
@@ -739,7 +740,7 @@ export async function ueload(tlidStr: string) {
         $('#timeline_box_' + tlid + '_box .tl-box').scrollTop(to)
     }
     additional(acctId.toString(), tlidStr)
-    jQuery('time.timeago').timeago()
+    timeUpdate()
     todc()
     global.ueloadlock = false
 }
@@ -851,7 +852,7 @@ function getBookmark(acctId: string, tlid: string, more?: boolean) {
                 $('#timeline_' + tlid).html(template)
             }
             $('#landing_' + tlid).hide()
-            jQuery('time.timeago').timeago()
+            timeUpdate()
             global.moreLoading = false
             todc()
         }
@@ -885,7 +886,7 @@ async function getUtl(acctId: string, tlid: string, data: any, more: boolean) {
         $('#timeline_' + tlid).html(template)
     }
     $('#landing_' + tlid).hide()
-    jQuery('time.timeago').timeago()
+    timeUpdate()
     global.moreLoading = false
     todc()
 }
@@ -917,7 +918,7 @@ export async function announ(acctId: string, tlid: string) {
     }
     const template = announParse(json, acctId, tlid)
     $('.announce_' + acctId).html(template)
-    jQuery('time.timeago').timeago()
+    timeUpdate()
     todc()
 }
 //buildQuery

@@ -65,7 +65,7 @@ function mastodonBaseStreaming(acct_id) {
                 $('div[data-notf=' + acct_id + ']').prepend(template)
                 $('div[data-const=notf_' + acct_id + ']').prepend(template)
             }
-            jQuery('time.timeago').timeago()
+            timeUpdate()
         } else {
             console.error('unknown type ' + typeA)
         }
@@ -143,7 +143,7 @@ function insertTl(obj, tls, dry) {
             }
             scrollck()
             additional(acct_id, id)
-            jQuery('time.timeago').timeago()
+            timeUpdate()
         }
     }
 }
