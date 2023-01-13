@@ -356,12 +356,12 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 			})
 		}
 		//デフォ絵文字
-		content = twemoji.parse(content)
+		content = twemojiParse(content)
 		if (dis_name) {
-			dis_name = twemoji.parse(dis_name)
+			dis_name = twemojiParse(dis_name)
 		}
 		if (spoil) {
-			spoil = twemoji.parse(spoil)
+			spoil = twemojiParse(spoil)
 		}
 		var mediack = toot.media_attachments[0]
 		//メディアがあれば
@@ -443,7 +443,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 		}
 		//日本語じゃない
 		if (toot.language !== "ja") {
-			var trans = '<div class="action pin"><a onclick="trans(\'' + toot.language + '\')" class="waves-effect waves-dark btn-flat" style="padding:0" title="' + lang.lang_parse_trans + '"><i class="material-icons">g_translate</i></a></div>'
+			var trans = `<div class="action pin"><a onclick="trans('${acct_id}', $(this))" class="waves-effect waves-dark btn-flat" style="padding:0" title="${lang.lang_parse_trans}"><i class="material-icons">g_translate</i></a></div>`
 		} else {
 			var trans = ""
 		}
@@ -469,7 +469,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				analyze = '<span class="gray">URL' + lang.lang_cards_check + ":<br>Title:" + escapeHTML(cards.title) + "<br>" + escapeHTML(cards.description) + "</span>"
 			}
 			if (cards.html) {
-				analyze = cards.html + '<i class="material-icons" onclick="pip(' + id + ')" title="' + lang.lang_cards_pip + '">picture_in_picture_alt</i>'
+				analyze = cards.html
 			}
 		}
 		//Ticker
@@ -492,7 +492,7 @@ function dmListParse(obj, mix, acct_id, tlid, popup, mutefilter) {
 				}
 			}
 		}
-		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' + boostback + " " + fav_app + " " + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="' + media_ids + ' " unixtime="' + date(obj[key].created_at, "unix") + '" ' + if_notf + ' onclick="dmStatus()">' + '<div class="area-notice"><span class="gray sharesta">' + notice + home + "</span></div>" + '<div class="area-icon"><a onclick="udg(\'' + toot.account.id + "'," + acct_id + ');" user="' + toot.account.acct + '" class="udg">' + '<img src="' + avatar + '" width="40" class="prof-img" user="' + toot.account.acct + '"></a>' + noticeavatar + "</div>" + '<div class="area-display_name"><div class="flex-name"><span class="user">' + dis_name + '</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"> @' + toot.account.acct + locked + "</span></div>" + '<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'' + toot.url + '\');" title="' + date(toot.created_at, "absolute") + "(" + lang.lang_parse_clickcopyurl + ')"><i class="far fa-clock-o"></i>' + date(toot.created_at, datetype) + "</span>" + "</div></div>" + '<div class="area-toot">' + tickerdom + '<span class="' + api_spoil + " cw_text_" + toot.id + '"><span class="cw_text">' + spoil + "</span>" + spoiler_show + '</span><span class="toot ' + spoiler + '">' + content + "</span>" + "" + viewer + "" + "<br><a onclick=\"details('" + toot.id + "'," + acct_id + ",'" + tlid + "','dm')\" class=\"pointer waves-effect\">" + lang.lang_parse_thread + "</a></div>" + '<div class="area-vis"></div>' + "</div></div>"
+		templete = templete + '<div id="pub_' + toot.id + '" class="cvo ' + boostback + " " + fav_app + " " + hasmedia + '" toot-id="' + id + '" unique-id="' + uniqueid + '" data-medias="' + media_ids + ' " unixtime="' + date(obj[key].created_at, "unix") + '" ' + if_notf + ' onclick="dmStatus()">' + '<div class="area-notice"><span class="gray sharesta">' + notice + home + "</span></div>" + '<div class="area-icon"><a onclick="udg(\'' + toot.account.id + "'," + acct_id + ');" user="' + toot.account.acct + '" class="udg">' + '<img src="' + avatar + '" width="40" class="prof-img" user="' + toot.account.acct + '"></a>' + noticeavatar + "</div>" + '<div class="area-display_name"><div class="flex-name"><span class="user">' + dis_name + '</span><span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"> @' + toot.account.acct + locked + "</span></div>" + '<div class="flex-time"><span class="cbadge cbadge-hover pointer waves-effect" onclick="tootUriCopy(\'' + toot.url + '\');" title="' + date(toot.created_at, "absolute") + "(" + lang.lang_parse_clickcopyurl + ')"><i class="far fa-clock-o"></i>' + date(toot.created_at, datetype) + "</span>" + "</div></div>" + '<div class="area-toot">' + tickerdom + '<span class="' + api_spoil + " cw_text_" + toot.id + '"><span class="cw_text">' + spoil + "</span>" + spoiler_show + '</span><span class="toot ' + spoiler + '">' + content + "</span>" + "" + viewer + "" + "<br><a onclick=\"details('" + toot.id + "'," + acct_id + ",'" + tlid + "',true)\" class=\"pointer waves-effect\">" + lang.lang_parse_thread + "</a></div>" + '<div class="area-vis"></div>' + "</div></div>"
 	})
 	return templete
 }

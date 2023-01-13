@@ -65,6 +65,8 @@ export interface Toot {
     url: string
     replies_count?: number
     reblogs_count: number
+    favourites_count: number
+    edited_at?: string
     muted: boolean
     bookmarked?: boolean
     content: string
@@ -226,4 +228,27 @@ export interface Search {
     accounts: Account[]
     statuses: Toot[]
     hashtags: Tag[]
+}
+export interface Reaction {
+    name: string
+    count: number
+    me?: boolean
+    url?: string
+    static_url?: string
+}
+export interface Announce {
+    id: string
+    content: string
+    starts_at?: string
+    ends_at?: string
+    published: boolean
+    all_day: boolean
+    published_at: string
+    updated_at: string
+    read?: boolean
+    mentions: Account[]
+    statuses: Toot[]
+    tags: Tag[]
+    emojis: Emoji[]
+    reactions: Reaction[]
 }

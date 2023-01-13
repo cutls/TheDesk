@@ -1,4 +1,4 @@
-type Elem = NodeListOf<Element> | HTMLElement | JQuery<HTMLElement>
+type Elem = NodeListOf<Element> | HTMLElement | JQuery<HTMLElement> | Element
 declare var M
 export const modalInit = (modalElem: Elem) => {
     return M.Modal.getInstance(modalElem)
@@ -14,6 +14,9 @@ export const dropdownInitGetInstance = (elem: Elem | HTMLInputElement) => {
 }
 export const collapsibleInit = (modalElem: Elem, options?: Object) => {
     return M.Collapsible.init(modalElem, options)
+}
+export const collapsibleInitGetInstance = (modalElem: Elem) => {
+    return M.Collapsible.getInstance(modalElem)
 }
 export const toast = (options?: Object) => {
     return M.toast(options)

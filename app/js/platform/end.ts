@@ -3,6 +3,7 @@ import Swal from 'sweetalert2'
 import { toast } from '../common/declareM'
 import lang from '../common/lang'
 import { code } from '../login/manager'
+import { details } from '../tl/datails'
 //プラットフォーム別　最後に読むやつ
 //リンクを外部で開くか内部で出すか
 $(document).on('click', 'a', e => {
@@ -62,7 +63,7 @@ $(document).on('click', 'a', e => {
 //よく使うライブラリ
 
 //コピー
-function execCopy(string) {
+export function execCopy(string) {
 	postMessage(['copy', string], '*')
 	return true
 }

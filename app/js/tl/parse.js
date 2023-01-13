@@ -847,27 +847,27 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 			//デフォ絵文字
 			const contentElement = document.createElement('div')
 			contentElement.innerHTML = content
-			const emojified = twemoji.parse(contentElement)
+			const emojified = twemojiParse(contentElement)
 			content = emojified.innerHTML
 
 			if (dis_name) {
-				dis_name = twemoji.parse(dis_name)
+				dis_name = twemojiParse(dis_name)
 			}
 			if (spoil) {
-				spoil = twemoji.parse(spoil)
+				spoil = twemojiParse(spoil)
 			}
 			if (noticetext) {
-				noticetext = twemoji.parse(noticetext)
+				noticetext = twemojiParse(noticetext)
 			}
 			if (notice) {
-				notice = twemoji.parse(notice)
+				notice = twemojiParse(notice)
 			}
 			if (poll) {
-				poll = twemoji.parse(poll)
+				poll = twemojiParse(poll)
 			}
 			//日本語じゃない
 			if (toot.language !== lang.language && toot.language) {
-				var trans = `<li onclick="trans('${toot.language}','${lang.language}', $(this))" 
+				var trans = `<li onclick="trans('${acct_id}', $(this))" 
 							 style="padding:0; padding-top: 5px;">
 								<i class="material-icons" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
 					</li>`
@@ -958,7 +958,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 						</div>
 						<div class="renote-details">
 							<a onclick="details('${toot.quote.id
-						}','${acct_id}','${tlid}','normal')" class="waves-effect waves-dark btn-flat details" style="padding:0">
+						}','${acct_id}','${tlid}')" class="waves-effect waves-dark btn-flat details" style="padding:0">
 								<i class="text-darken-3 material-icons">more_vert</i>
 							</a>
 						</div>
@@ -1004,8 +1004,8 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 					'unix'
 				)}"
 					${if_notf}
-					onmouseover="mov('${uniqueid}','${tlid}','mv', '${rand}', this)"
-					onclick="mov('${uniqueid}','${tlid}','cl', '${rand}', this)"
+					onmouseover="mov('${uniqueid}','${tlid}','mv', '${rand}', this, '${acct_id}')"
+					onclick="mov('${uniqueid}','${tlid}','cl', '${rand}', this, '${acct_id}')"
 					onmouseout="resetmv('mv')"
 				>
 				<div class="area-notice grid"><span class="gray sharesta">${notice}${home}</span></div>
@@ -1051,7 +1051,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 						</a>
 					</div>
 					<div class="action ${antidmHide}">
-						<a onclick="details('${toot.id}','${acct_id}','${tlid}','normal')" 
+						<a onclick="details('${toot.id}','${acct_id}','${tlid}')" 
 							class="waves-effect waves-dark details" style="padding:0">
 							${lang.lang_parse_thread}
 						</a>
@@ -1108,7 +1108,7 @@ function parse(obj, mix, acct_id, tlid, popup, mutefilter, type, onlyContent) {
 						</a>
 					</div>
 					<div class="action ${noauth}">
-						<a onclick="details('${toot.id}','${acct_id}','${tlid}','normal')"
+						<a onclick="details('${toot.id}','${acct_id}','${tlid}')"
 							class="waves-effect waves-dark btn-flat details ${dmHide}" style="padding:0"
 							title="${lang.lang_parse_detail}">
 						<i class="text-darken-3 material-icons" aria-hidden="true">menu_open</i></a>
@@ -1266,7 +1266,7 @@ function userparse(obj, auth, acct_id, tlid, popup) {
 					})
 				}
 				if (dis_name) {
-					dis_name = twemoji.parse(dis_name)
+					dis_name = twemojiParse(dis_name)
 				}
 				if (toot.avatar) {
 					if (gif === 'yes') {
@@ -1496,7 +1496,7 @@ function pollParse(poll, acct_id, emojis) {
 				var regExp = new RegExp(':' + shortcode + ':', 'g')
 				choiceText = choiceText.replace(regExp, emoji_url)
 			})
-			choiceText = twemoji.parse(choiceText)
+			choiceText = twemojiParse(choiceText)
 		}
 		pollHtml =
 			pollHtml +

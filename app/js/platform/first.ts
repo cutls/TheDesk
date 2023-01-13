@@ -5,6 +5,7 @@ import GraphemeSplitter from 'grapheme-splitter'
 import { ck } from '../login/login'
 import { autoCompleteInitTrigger, loadAcctList, support } from '../login/manager'
 import { connection } from './end'
+import twemoji from 'twemoji'
 
 window.onload = function () {
     console.log('loaded')
@@ -268,4 +269,10 @@ export function initWebviewEvent() {
                 console.log('まだロード中')
         }, 500)
     }
+}
+export function twemojiParse(target: string) {
+    return twemoji.parse(
+        target,
+        { base: `../../${global.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/` }
+    )
 }
