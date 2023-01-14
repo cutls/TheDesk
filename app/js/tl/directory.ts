@@ -3,6 +3,7 @@
 import { Account } from "../../interfaces/MastodonApiReturns"
 import api from "../common/fetch"
 import timeUpdate from "../common/time"
+import { userParse } from "./userParse"
 
 //ディレクトリトグル
 export function dirMenu() {
@@ -34,7 +35,7 @@ export async function directory(modeRaw: IDirMode, isMore?: boolean) {
     const mode = modeRaw === 'check' ? $('[name=dirsug]:checked').val()?.toString() : modeRaw
     const order = $('[name=sort]:checked').val()?.toString() || 'active'
     const local_only = $('#local_only:checked').val() ? 'true' : 'false'
-    const acctId = $('#dir-acct-sel').val()
+    const acctId = $('#dir-acct-sel').val()?.toString() || ''
     let at = ''
     let domain = $('#dirNoAuth-url').val()?.toString() || ''
     if (acctId !== 'noauth') {
@@ -63,7 +64,7 @@ export async function directory(modeRaw: IDirMode, isMore?: boolean) {
         } else {
             obj = json
         }
-        const html = userParse(obj, null, acctId, 'dir', null)
+        const html = userParse(obj, acctId)
         $('#dir-contents').append(html)
         timeUpdate()
     } else {

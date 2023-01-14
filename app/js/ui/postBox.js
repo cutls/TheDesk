@@ -173,11 +173,6 @@ function mdCheck() {
 	} else {
 		$('#limited-button').addClass('hide')
 	}
-	if (domain === 'imastodon.net') {
-		trendTag()
-	} else {
-		$('#trendtag').html('')
-	}
 	if (localStorage.getItem('mode_' + domain) === 'misskey') {
 		toast({ html: lang.lang_bbmd_misskey, displayLength: 5000 })
 	}

@@ -7,9 +7,9 @@ interface IOptions {
     headers?: { [key: string]: string }
     body?: any
 }
-export default async function api<T=any>(url: string, options?: IOptions) {
+export default async function api<T=any>(url: string, options?: IOptions, throughJsonStringify?: boolean) {
     try {
-        if (options?.body && typeof options?.body !== 'string') options.body = JSON.stringify(options.body)
+        if (options?.body && typeof options?.body === 'object' && !throughJsonStringify) options.body = JSON.stringify(options.body)
         const response = await fetch(url, options)
         if (!response.ok) {
             if (response.status === 422) throw 422

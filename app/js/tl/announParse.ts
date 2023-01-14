@@ -8,10 +8,13 @@ import { newpack } from "../emoji/emojiPack"
 import twemoji from "twemoji"
 import Swal from "sweetalert2"
 import { clear } from "../post/post"
+import { date, isDateType } from "./date"
+import { announ } from "./tl"
 
-export function announParse(obj: Announce[], acctId: string, tlid: string) {
+export function announParse(obj: Announce[], acctId: string) {
 	let template = ''
-	const datetype = localStorage.getItem('datetype') || 'absolute'
+	const dateType = localStorage.getItem('datetype') || 'absolute'
+	if (!isDateType(dateType)) return
 	const gif = localStorage.getItem('gif') || 'yes'
 	const isGif = gif === 'yes'
 	for (const toot of obj) {
@@ -38,14 +41,14 @@ export function announParse(obj: Announce[], acctId: string, tlid: string) {
 				const addClass = reaction.me ? 'reactioned' : ''
 				reactions =
 					reactions +
-					`<div class="announReaction ${addClass}" onclick="announReaction('${toot.id}', '${acctId}', '${tlid}', ${reaction.me},'${reaction.name}')">
+					`<div class="announReaction ${addClass}" onclick="announReaction('${toot.id}', '${acctId}', ${reaction.me},'${reaction.name}')">
                         ${emojiUrl} ${reaction.count}
                     </div>`
 			}
 		}
 		const ended =toot.ends_at ?  `<div class="announReaction" title="${date(toot.ends_at, 'absolute')}" style="width: auto; cursor: default;">
             <i class="fas fa-arrow-right"></i>
-            ${date(toot.ends_at, datetype)}
+            ${date(toot.ends_at, dateType)}
         </div>` : ''
 
 		template =
@@ -61,7 +64,7 @@ export function announParse(obj: Announce[], acctId: string, tlid: string) {
 	}
 	return template
 }
-export async function announReaction(id: string, acctId: string, tlid: string, del: boolean, name: string) {
+export async function announReaction(id: string, acctId: string, del: boolean, name: string) {
 	const at = localStorage.getItem('acct_' + acctId + '_at')
 	const domain = localStorage.getItem('domain_' + acctId)
 	const start = `https://${domain}/api/v1/announcements/${id}/reactions/${encodeURIComponent(name)}`
@@ -74,7 +77,7 @@ export async function announReaction(id: string, acctId: string, tlid: string, d
             'Authorization': 'Bearer ' + at
         }
 	})
-	announ(acctId, tlid)
+	announ(acctId)
 }
 export function announReactionNew(id: string, acctId: string) {
 	$('#reply').val(id)
@@ -101,7 +104,7 @@ export function emojiReactionDef(target: string) {
 	const acctId = $('#post-acct-sel').val()?.toString()
 	const id = $('#reply').val()?.toString()
 	if (!id || !acctId) return Swal.fire('Error')
-	announReaction(id, acctId, '0', false, emoji)
+	announReaction(id, acctId, false, emoji)
 	clear()
 	hide()
 }

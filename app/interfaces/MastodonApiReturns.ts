@@ -183,7 +183,7 @@ export interface Media {
 }
 export interface Notification {
     id: string
-    type: 'follow' | 'follow_request' | 'mention' | 'reblog' | 'favourite' | 'poll' | 'status' | 'move' | 'update' | 'request' | 'admin.sign_up'
+    type: 'follow' | 'follow_request' | 'mention' | 'reblog' | 'favourite' | 'poll' | 'status' | 'moved' | 'update' | 'admin.report' | 'admin.sign_up'
     created_at: string
     account: Account,
     status?: Toot

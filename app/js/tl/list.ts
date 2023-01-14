@@ -6,6 +6,7 @@ import timeUpdate from '../common/time'
 import { escapeHTML, setLog } from '../platform/first'
 import { todo } from '../ui/tips'
 import { tl } from './tl'
+import { userParse } from './userParse'
 export function listMenu() {
 	$('#left-menu a').removeClass('active')
 	$('#listMenu').addClass('active')
@@ -80,7 +81,7 @@ export async function listUser(id: string, acctId: string) {
 		}
 	})
 	if (json) {
-		let templete = userParse(json, '', acctId)
+		let templete = userParse(json, acctId)
 		if (!json[0]) templete = lang.lang_list_nouser
 		$('#lists-user').html(templete)
 		timeUpdate()

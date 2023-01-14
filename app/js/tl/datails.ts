@@ -9,6 +9,7 @@ import Swal from "sweetalert2"
 import { execCopy } from "../platform/end"
 import timeUpdate from "../common/time"
 import { getFilterTypeByAcct } from "./filter"
+import { userParse } from "./userParse"
 
 //トゥートの詳細
 export async function details(id: string, acctId: string, tlid=0, isDm?: boolean) {
@@ -229,7 +230,7 @@ async function faved(id: string, acctId: string) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-	const template = userParse(json, '', acctId)
+	const template = userParse(json, acctId)
 	if (template !== '') $('#toot-fav .no-data').hide()
 	$('#toot-fav').html(template)
 	timeUpdate()
@@ -247,7 +248,7 @@ async function rted(id: string, acctId: string) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-	const template = userParse(json, '', acctId)
+	const template = userParse(json, acctId)
 	if (template !== '') $('#toot-rt .no-data').hide()
 	$('#toot-rt').html(template)
 	timeUpdate()

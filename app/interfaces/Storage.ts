@@ -20,10 +20,21 @@ export type IColumnType = 'home' | 'local' | 'local-media' | 'pub' | 'pub-media'
 export interface IColumn {
     domain: number
     type: IColumnType
-    data?: any
+    data?: IColumnData
     background?: string
     text?: string
     left_fold?: boolean
+}
+export type IColumnData = IColumnTag | IColumnUTL | string
+export interface IColumnUTL {
+    id: string
+    acct: string
+}
+export interface IColumnTag {
+    name: string
+    any: string[]
+    all: string[]
+    none: string[]
 }
 export interface IEmojiStorage {
     categorized: {

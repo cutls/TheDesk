@@ -49,10 +49,6 @@ export function tips(mode, custom?: any) {
 		tipsToggle()
 		localStorage.setItem('tips', 'memory')
 		startmem()
-	} else if (mode === 'trend') {
-		tipsToggle()
-		localStorage.setItem('tips', 'trend')
-		trendTagonTip()
 	} else if (mode === 'spotify') {
 		tipsToggle()
 		localStorage.setItem('tips', 'spotify')
@@ -87,58 +83,6 @@ function renderMem(use, cpu, total, core, uptime) {
 	$('#tips-text').html(
 		`${escapeHTML(cpu)} x ${core}<br />RAM: ${Math.floor(use / 1024 / 1024 / 102.4) / 10}/${Math.floor(total / 1024 / 1024 / 102.4) / 10}GB(${Math.floor((use / total) * 100)}%) UP:${time}`
 	)
-}
-//トレンドタグ
-function trendTagonTip() {
-	$('.trendtag').remove()
-	var domain = 'imastodon.net'
-	var at = localStorage.getItem('acct_' + acct_id + '_at')
-	var start = 'https://' + domain + '/api/v1/trend_tags'
-	fetch(start, {
-		method: 'GET',
-		headers: {
-			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
-	})
-		.then(function(response) {
-			if (!response.ok) {
-				response.text().then(function(text) {
-					setLog(response.url, response.status, text)
-				})
-			}
-			return response.json()
-		})
-		.catch(function(error) {
-			todo(error)
-			setLog(start, 'JSON', error)
-			console.error(error)
-		})
-		.then(function(json) {
-			if (json) {
-				var tags = ''
-				json = json.score
-				Object.keys(json).forEach(function(tag) {
-					tags =
-						tags +
-						`<a onclick="tagShow('${tag}', this)" class="pointer">
-							#${escapeHTML(tag)}
-						</a>
-						<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">　
-							<a onclick="tagTL('tag','${tag}',false,'add')" class="pointer" title="#${tag}のタイムライン">TL</a>　
-							<a onclick="show();brInsert('#${tag}')" class="pointer" title="#${tag}でトゥート">Toot</a>
-						</span><br>`
-				})
-				$('#tips-text').html(
-					'<div class="trendtag">トレンドタグ<i class="material-icons pointer" onclick="trendTagonTip()" style="font-size:12px">refresh</i>:<br>' +
-						tags +
-						'</div>'
-				)
-				trendTagonTipInterval()
-			} else {
-				$('#tips-text').html('')
-			}
-		})
 }
 //Spotify
 spotint = null
@@ -255,9 +199,6 @@ function spotStart() {
 	}
 	$('.spotify-prog').attr('data-s', news)
 	$('.spotify-prog').css('width', per + '%')
-}
-function trendTagonTipInterval() {
-	setTimeout(trendTagonTip, 6000000)
 }
 //時計
 var clockint

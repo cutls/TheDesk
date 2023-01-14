@@ -274,11 +274,6 @@ export function multiSelector(parseC?: boolean) {
 					$('#toot-post-btn').css('background-color', '#' + acct.background)
 					$('#toot-post-btn').css('color', acct.text)
 				}
-				if (domain === 'imastodon.net') {
-					trendTag()
-				} else {
-					$('#trendtag').html('')
-				}
 			}
 			const template = `<option value="${key}" data-icon="${acct.prof}" class="left circle" ${isSelected ? 'selected' : ''}>${acct.user}@${acct.domain}</option>`
 			$('.acct-sel').append(template)

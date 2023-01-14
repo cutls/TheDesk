@@ -1,8 +1,10 @@
-import { toast } from "../common/declareM"
+import { formSelectInit, toast } from "../common/declareM"
 import api from "../common/fetch"
 import $ from 'jquery'
 import lang from "../common/lang"
 import { todo } from "../ui/tips"
+import { setLog } from "../platform/first"
+import Swal from "sweetalert2"
 
 //ドラッグ・アンド・ドロップからアップロードまで。uiのimg.jsとは異なります。
 const obj = $('body')
@@ -95,8 +97,8 @@ function handleFileUpload(files: Blob, no: number) {
 //ファイルアップロード
 export async function media(b64: string, type: string, no: number | 'new', stamped?: boolean) {
 	const acctId = $('#post-acct-sel').val()
-	const domain = localStorage.getItem(`domain_${acctId}`)
-	const at = localStorage.getItem(`acct_${acctId}_at`)
+	const domain = localStorage.getItem(`domain_${acctId}`) || ''
+	const at = localStorage.getItem(`acct_${acctId}_at`) || ''
 	const user = localStorage.getItem(`user_${acctId}`)
 	if ($('#stamp').hasClass('stamp-avail') && !stamped) {
 		postMessage(['stampImage', [b64, user + '@' + domain]], '*')
@@ -118,6 +120,7 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 	$('#post-acct-sel').prop('disabled', true)
 	todo('Image Upload...')
 	const media = toBlob(b64, type)
+	if (!media) return toast('Cannot convert to Blob: ' + lang.lang_postimg_failupload)
 	const fd = new FormData()
 	fd.append('file', media)
 	const httpreq = new XMLHttpRequest()
@@ -133,7 +136,7 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 			httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
 			httpreq.send(fd)
 		} else {
-			const mediav = $('#media').val()
+			let mediav = $('#media').val()?.toString() || ''
 			const regExp = new RegExp('tmp_' + r, 'g')
 			mediav = mediav.replace(regExp, id)
 			$('#media').val(mediav)
@@ -146,7 +149,7 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 				$('#nsfw').addClass('nsfw-avail')
 			}
 			$('.toot-btn-group').prop('disabled', false)
-			$('select').formSelect()
+			formSelectInit($('select'))
 			$('#mec').text(lang.lang_there)
 			toast({ html: '<span>' + lang.lang_postimg_sync + '</span><button class="btn-flat toast-action" onclick="syncDetail()">Click</button>', displayLength: 3000 })
 			$('#imgup').text('')
@@ -154,7 +157,7 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 			localStorage.removeItem('image')
 		}
 	} catch {
-		const start = 'https://' + domain + '/api/v1/media'
+		const start = `https://${domain}/api/v1/media`
 		httpreq.open('POST', start, true)
 		httpreq.upload.addEventListener('progress', progShow, false)
 		httpreq.responseType = 'json'
@@ -165,9 +168,8 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 		if (httpreq.readyState === 4) {
 			const json = httpreq.response
 			if (this.status !== 200) {
-				setLog(start, this.status, json)
+				setLog(`https://${domain}/api/v1/media`, this.status, json)
 				$('.toot-btn-group').prop('disabled', false)
-				$('select').formSelect()
 				$('#mec').text(lang.lang_there)
 				toast({ html: this.status + ':' + json, displayLength: 2000 })
 				$('#imgup').text('')
@@ -178,34 +180,29 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 				$('#imgup').text('')
 				$('.toot-btn-group').prop('disabled', false)
 				$('#post-acct-sel').prop('disabled', false)
-				$('select').formSelect()
 				$('#imgsel').show()
 				toast({ html: lang.lang_postimg_failupload, displayLength: 5000 })
+				formSelectInit($('select'))
 				return false
 			}
 			$('#imgup').text('')
 			$('.toot-btn-group').prop('disabled', false)
-			$('select').formSelect()
+			formSelectInit($('select'))
 			$('#imgsel').show()
-			const img = localStorage.getItem('img')
+			const img = localStorage.getItem('img') || 'no-act'
 			if (json.type.indexOf('image') !== -1) {
 				const html = `<img src="${json[previewer]}" class="preview-img pointer" data-media="${json['id']}" oncontextmenu="deleteImage('${json['id']}')" onclick="altImage('${acctId}','${json['id']}')" title="${lang.lang_postimg_delete}">`
 				$('#preview').append(html)
 			} else {
 				$('#preview').append(lang.lang_postimg_previewdis)
 			}
-			if (!img) {
-				const img = 'no-act'
-			}
 			if (img !== 'inline') {
-				const mediav = $('#media').val()
+				let mediav = $('#media').val()?.toString() || ''
 				const regExp = new RegExp('tmp_' + r, 'g')
 				mediav = mediav.replace(regExp, json['id'])
 				$('#media').val(mediav)
 			}
-			if (img === 'url' && json['text_url']) {
-				$('#textarea').val($('#textarea').val() + ' ' + json['text_url'])
-			}
+			if (img === 'url' && json['text_url']) $('#textarea').val($('#textarea').val() + ' ' + json['text_url'])
 		}
 	}
 }
@@ -214,29 +211,24 @@ function progShow(e: ProgressEvent<XMLHttpRequestEventTarget>) {
 }
 
 //Base64からBlobへ
-function toBlob(base64, type) {
+export function toBlob(base64: string, type: string) {
 	const bin = atob(base64.replace(/^.*,/, ''))
 	const buffer = new Uint8Array(bin.length)
-	for (const i = 0; i < bin.length; i++) {
-		buffer[i] = bin.charCodeAt(i)
-	}
+	for (let i = 0; i < bin.length; i++) buffer[i] = bin.charCodeAt(i)
 	// Blobを作成
 	try {
 		const blob = new Blob([new Uint8Array(buffer)], {
 			type: type
 		})
+		return blob
 	} catch (e) {
-		return false
+		return null
 	}
-
-	return blob
 }
 //画像を貼り付けたら…
-const element = document.querySelector('#textarea')
+const element = <HTMLInputElement>document.querySelector('#textarea')
 element.addEventListener('paste', function (e) {
-	if (!e.clipboardData || !e.clipboardData.items) {
-		return true
-	}
+	if (!e.clipboardData || !e.clipboardData.items) return true
 	// DataTransferItemList に画像が含まれいない場合は終了する
 	const imageItems = [...e.clipboardData.items].filter(i => i.type.startsWith('image'))
 	if (imageItems.length === 0) {
@@ -253,72 +245,52 @@ element.addEventListener('paste', function (e) {
 	const fr = new FileReader()
 	fr.onload = function (e) {
 		// onload内ではe.target.resultにbase64が入っているのであとは煮るなり焼くなり
-		const base64 = e.target.result
-		const mediav = $('#media').val()
-		if (mediav) {
-			const i = mediav.split(',').length
-		}
+		const base64 = e.target?.result
+		const mediav = $('#media').val()?.toString() || ''
+		if (!mediav || typeof base64 !== 'string') return
+		const i = mediav.split(',').length
 		// DataTransferItem の type に mime tipes があるのでそれを使う
 		media(base64, imageType, i)
 	}
-	fr.readAsDataURL(imageFile)
+	if (imageFile) fr.readAsDataURL(imageFile)
 
 	// 画像以外がペーストされたときのために、元に戻しておく
 })
-function deleteImage(key) {
-	Swal.fire({
+export async function deleteImage(key: string) {
+	const result = await Swal.fire({
 		title: lang.lang_postimg_delete,
-		type: 'warning',
+		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonText: lang.lang_yesno,
 		cancelButtonText: lang.lang_no
-	}).then(result => {
-		if (result.value) {
-			const media = $('#media').val()
-			const arr = media.split(',')
-			for (const i = 0; i < media.length; i++) {
-				if (arr[i] === key) {
-					arr.splice(i, 1)
-					break
-				}
-			}
-			$('#media').val(arr.join(','))
-			$('#preview [data-media=' + key + ']').remove()
-		}
 	})
+	if (result.value) {
+		const media = $('#media').val()?.toString() || ''
+		const arr = media.split(',')
+		for (let i = 0; i < media.length; i++) {
+			if (arr[i] === key) {
+				arr.splice(i, 1)
+				break
+			}
+		}
+		$('#media').val(arr.join(','))
+		$('#preview [data-media=' + key + ']').remove()
+	}
 }
-function altImage(acctId, id) {
+export async function altImage(acctId: string, id: string) {
 	const domain = localStorage.getItem('domain_' + acctId)
 	const at = localStorage.getItem('acct_' + acctId + '_at')
-	const start = 'https://' + domain + '/api/v1/media/' + id
-	if ($('[data-media=' + id + ']').hasClass('unknown')) {
-		fetch(start, {
-			method: 'GET',
+	const start = `https://${domain}/api/v1/media/${id}`
+	if ($(`[data-media="${id}]`).hasClass('unknown')) {
+		const json = await api(start, {
+			method: 'get',
 			headers: {
-				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
+				'content-type': 'application/json'
 			}
 		})
-			.then(function (response) {
-				if (!response.ok) {
-					response.text().then(function (text) {
-						setLog(response.url, response.status, text)
-					})
-				}
-				return response.json()
-			})
-			.catch(function (error) {
-				todo(error)
-				setLog(start, 'JSON', error)
-				console.error(error)
-			})
-			.then(function (json) {
-				console.log(json)
-				$('[data-media=' + id + ']').removeClass('unknown')
-				if (json.preview_url) {
-					$('[data-media=' + id + ']').attr('src', json.preview_url)
-				}
-			})
+		console.log(json)
+		$('[data-media=' + id + ']').removeClass('unknown')
+		if (json.preview_url) $('[data-media=' + id + ']').attr('src', json.preview_url)
 	} else {
 		Swal.fire({
 			title: lang.lang_postimg_desc,
@@ -356,7 +328,7 @@ function altImage(acctId, id) {
 					})
 					.then(function (json) {
 						console.log(json)
-						$('[data-media=' + id + ']').attr('title', data)
+						$(`[data-media=${id}]`).attr('title', data)
 					})
 			},
 			allowOutsideClick: () => !Swal.isLoading()
@@ -370,7 +342,7 @@ function altImage(acctId, id) {
 	}
 
 }
-function stamp() {
+export function stamp() {
 	if ($('#stamp').hasClass('stamp-avail')) {
 		$('#stamp').html('Off')
 		$('#stamp').removeClass('stamp-avail')
@@ -380,7 +352,7 @@ function stamp() {
 	}
 }
 //v2/media対応
-async function v2MediaUpload(domain, at, fd) {
+async function v2MediaUpload(domain: string, at: string, fd) {
 	try {
 		const start = 'https://' + domain + '/api/v2/media'
 		const json = await api(start, {
@@ -390,7 +362,7 @@ async function v2MediaUpload(domain, at, fd) {
 					'Bearer ' + at
 			},
 			body: fd
-		})
+		}, true)
 		if (json.id) {
 			return json.id
 		} else {
@@ -404,7 +376,7 @@ async function v2MediaUpload(domain, at, fd) {
 export function alertProcessUnfinished() {
 	Swal.fire({
 		title: lang.lang_post_unfinishedMedia,
-		type: 'error',
+		icon: 'error',
 		showCancelButton: true,
 		confirmButtonText: lang.lang_post_retry,
 		cancelButtonText: lang.lang_no
@@ -414,10 +386,10 @@ export function alertProcessUnfinished() {
 		}
 	})
 }
-function syncDetail() {
+export function syncDetail() {
 	Swal.fire({
 		title: lang.lang_post_syncDetail,
 		text: lang.lang_post_syncDetailText,
-		type: 'info'
+		icon: 'info'
 	})
 }

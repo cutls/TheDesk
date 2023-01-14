@@ -1,5 +1,8 @@
 //日付パーサー
-export function date(str: string, datetype: 'relative' | 'unix' | 'full' | 'absolute' | 'medium' | 'double' | 'unix') {
+type IDateType = 'relative' | 'unix' | 'full' | 'absolute' | 'medium' | 'double' | 'unix'
+const dateTypes = ['relative', 'unix', 'full', 'absolute', 'medium', 'double', 'unix']
+export const isDateType = (item: string): item is IDateType => dateTypes.includes(item)
+export function date(str: string, datetype: IDateType) {
 	if (datetype === 'relative') {
 		return `<time class="timeago" datetime="${str}"></time>`
 	} else {

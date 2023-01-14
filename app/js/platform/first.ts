@@ -6,7 +6,9 @@ import { ck } from '../login/login'
 import { autoCompleteInitTrigger, loadAcctList, support } from '../login/manager'
 import { connection } from './end'
 import twemoji from 'twemoji'
-
+import { tl } from '../tl/tl'
+// Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
+// 独自ロケールを削除
 window.onload = function () {
     console.log('loaded')
     initPostbox()
@@ -18,6 +20,18 @@ window.onload = function () {
     if (onManager) loadAcctList()
     if (onManager) support()
     autoCompleteInitTrigger()
+    //タグ表示
+    if (location.search) {
+        const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
+        if (m) {
+            const mode = m[1]
+            const codex = m[2]
+            if (mode === 'tag') {
+                const acctId = localStorage.getItem('main')
+                tl('tag', decodeURI(codex), acctId, 'add')
+            }
+        }
+    }
 }
 
 const size = localStorage.getItem('size')

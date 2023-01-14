@@ -9,6 +9,7 @@ import { execCopy } from '../platform/end'
 import { escapeHTML, setLog } from '../platform/first'
 import { brInsert } from '../post/emoji'
 import { cardHtml } from './card'
+import { userParse } from './userParse'
 
 
 export function searchMenu() {
@@ -89,7 +90,7 @@ export async function src(mode?: any, offset?: any) {
 	}
 	//アカウント
 	if (json.accounts[0]) {
-		const templete = userParse(json.accounts, '', acct_id)
+		const templete = userParse(json.accounts, acct_id)
 		if (!offset) {
 			$('#src-contents').append(
 				`<br>Accounts<div id="src-accts">
