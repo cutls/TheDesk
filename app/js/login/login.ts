@@ -138,7 +138,7 @@ async function refreshPleromaAt(obj: IMulti) {
 //MarkdownやBBCodeの対応、文字数制限をチェック
 //絶対ストリーミングを閉じさせないマン
 export async function ckdb(acct_id: string) {
-	const domain = localStorage.getItem('domain_' + acct_id)
+	const domain = localStorage.getItem(`domain_${acct_id}`)
 	localStorage.removeItem('home_' + acct_id)
 	localStorage.removeItem('bb_' + acct_id)
 	localStorage.removeItem('md_' + acct_id)

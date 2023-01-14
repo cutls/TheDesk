@@ -27,8 +27,9 @@ export function mediaToggle(tlid: string) {
     }
 }
 /* Remote only */
-export function remoteOnly(tlid: string, type: IColumnType) {
+export function remoteOnly(tlidStr: string, type: IColumnType) {
     const obj = getColumn()
+    const tlid = parseInt(tlidStr, 10)
     if (obj[tlid].data) {
         if (obj[tlid].data.remote) {
             obj[tlid].data.remote = false
@@ -51,10 +52,11 @@ export function remoteOnly(tlid: string, type: IColumnType) {
         $('#sta-remote-' + tlid).text('On')
         $('#sta-remote-' + tlid).css('color', 'red')
     }
-    columnReload(tlid, type)
+    columnReload(tlidStr, type)
 }
 
-export function remoteOnlyCk(tlid: string) {
+export function remoteOnlyCk(tlidStr: string) {
+    const tlid = parseInt(tlidStr, 10)
     const obj = getColumn()
     if (obj[tlid].data) {
         if (obj[tlid].data.remote) {

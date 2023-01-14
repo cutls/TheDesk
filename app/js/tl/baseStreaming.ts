@@ -2,9 +2,12 @@ import { Notification, Toot } from "../../interfaces/MastodonApiReturns"
 import { IColumnType } from "../../interfaces/Storage"
 import { getColumn } from "../common/storage"
 import timeUpdate from "../common/time"
+import { statusModel } from "../platform/first"
 import { additional } from "./card"
 import { convertColumnToFilter, filterUpdate, getFilterTypeByAcct } from "./filter"
 import { notfCommon } from "./notification"
+import { parse } from "./parse"
+import { say } from "./speech"
 import { isTagData } from "./tag"
 import { announ } from "./tl"
 import { userParse } from "./userParse"
@@ -73,12 +76,20 @@ function mastodonBaseStreaming(acctId) {
             localStorage.setItem('lastnotf_' + acctId, obj.id)
             const popup = parseInt(localStorage.getItem('popup') || '0', 10)
             const { type } = obj
+			const mute = getFilterTypeByAcct(acctId, 'notf')
+            const nEvent = { 
+                event: type, 
+                eventBy: obj.account,
+                id: obj.id,
+                createdAt: obj.created_at
+            }
             if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
-                template = parse([obj], 'notf', acctId, 'notf', popup)
+                const status = obj.status || statusModel()
+                template = parse([status], 'notf', acctId, 'notf', popup, mute, nEvent)
             } else if (type === 'follow_request' || type === 'follow' || type === 'moved' || type === 'admin.sign_up') {
                 template = userParse([obj.account], acctId, type, 'notf', -1)
             } else {
-                template = parse([obj.status], obj.type, acctId, 'notf', popup)
+                template = obj.status ? parse([obj.status], 'notf', acctId, 'notf', popup, mute, nEvent) : userParse([obj.account], acctId, type, 'notf', -1)
             }
             if (!$('div[data-notfIndv=' + acctId + '_' + obj.id + ']').length) {
                 $('div[data-notf=' + acctId + ']').prepend(template)
@@ -131,7 +142,7 @@ function insertTl(obj: Toot, tls: TLMeta[], dry?: boolean) {
         if ($(`#unread_${id} .material-icons`).hasClass('teal-text')) continue
         if (!$(`#timeline_${id} [toot-id=${obj.id}]`).length) {
             if (voice) say(obj.content)
-            const template = parse([obj], type, acctId, id, '', mute, type)
+            const template = parse<string>([obj], type, acctId.toString(), id.toString(), 0, mute)
             if (dry) return template
             console.log($(`#timeline_box_${id}_box .tl-box`).scrollTop(), `timeline_box_${id}_box .tl-box`)
             if (

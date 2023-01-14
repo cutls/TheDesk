@@ -633,6 +633,7 @@ function addselCk() {
 	}
 }
 //カラム削除
+// tlid はnumber? string?
 function removeColumn(tlid) {
 	Swal.fire({
 		title: lang.lang_layout_deleteColumn,

@@ -6,9 +6,10 @@ import api from '../common/fetch'
 import lang from '../common/lang'
 import { getColumn, getMulti } from '../common/storage'
 import timeUpdate from '../common/time'
-import { escapeHTML, setLog } from '../platform/first'
+import { escapeHTML, setLog, statusModel } from '../platform/first'
 import { todo } from '../ui/tips'
 import { getFilterTypeByAcct } from './filter'
+import { parse } from './parse'
 import { getMarker } from './tl'
 import { userParse } from './userParse'
 
@@ -67,12 +68,20 @@ export async function notfColumn(acctId: string, tlid: string) {
                     const mute = getFilterTypeByAcct(acctId, 'notf')
                     const popup = parseInt(localStorage.getItem('popup') || '0', 10)
                     const { type } = obj
+                    const nEvent = {
+                        event: type,
+                        eventBy: obj.account,
+                        id: obj.id,
+                        createdAt: obj.created_at
+                    }
                     if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
-                        template = parse([obj], 'notf', acctId, 'notf', popup, mute)
+                        const status = obj.status || statusModel()
+                        template = parse([status], 'notf', acctId, 'notf', popup, mute, nEvent)
                     } else if (type === 'follow_request' || type === 'follow' || type === 'moved' || type === 'admin.sign_up') {
                         template = userParse([obj.account], acctId, type, 'notf', -1)
                     } else {
-                        template = parse([obj.status], obj.type, acctId, 'notf', popup)
+                        const status = obj.status
+                        template = status ? parse([status], 'notf', acctId, 'notf', popup) : userParse([obj.account], acctId, type, 'notf', -1)
                     }
                     key++
                 }
@@ -125,12 +134,24 @@ export async function notfCommon(acctId: string, tlid: string, isStreamOnly: boo
                     }
                     const n = new Notification('TheDesk:' + domain, options)
                 }
-                const mute = getFilterTypeByAcct(acctId, 'notf')
                 //Pleromaにはmoveというtypeがあるらしい。何が互換APIじゃ
-                if (obj.type !== 'follow' && obj.type !== 'move' && obj.type !== 'request' && obj.type !== 'admin.sign_up') {
-                    template = template + parse([obj], 'notf', acctId, 'notf', -1, mute)
+                const type = obj.type
+                const mute = getFilterTypeByAcct(acctId, 'notf')
+                const popup = parseInt(localStorage.getItem('popup') || '0', 10)
+                const nEvent = {
+                    event: type,
+                    eventBy: obj.account,
+                    id: obj.id,
+                    createdAt: obj.created_at
+                }
+                if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
+                    const status = obj.status || statusModel()
+                    template = parse([status], 'notf', acctId, 'notf', popup, mute, nEvent)
+                } else if (type === 'follow_request' || type === 'follow' || type === 'moved' || type === 'admin.sign_up') {
+                    template = userParse([obj.account], acctId, type, 'notf', -1)
                 } else {
-                    template = template + userParse([obj.account], acctId, obj.type, 'notf', -1)
+                    const status = obj.status
+                    template = status ? parse([status], 'notf', acctId, 'notf', 0) : userParse([obj.account], acctId, type, 'notf', -1)
                 }
                 key++
             }
@@ -173,12 +194,22 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
             if (!$('#unread_' + tlid + ' .material-icons').hasClass('teal-text')) {
                 //markers show中はダメ
                 const { type } = obj
+                const mute = getFilterTypeByAcct(acctId, 'notf')
+                const popup = parseInt(localStorage.getItem('popup') || '0', 10)
+                const nEvent = {
+                    event: type,
+                    eventBy: obj.account,
+                    id: obj.id,
+                    createdAt: obj.created_at
+                }
                 if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
-                    template = parse([obj], 'notf', acctId, 'notf', popup)
+                    const status = obj.status || statusModel()
+                    template = parse([status], 'notf', acctId, 'notf', popup, mute, nEvent)
                 } else if (type === 'follow_request' || type === 'follow' || type === 'moved' || type === 'admin.sign_up') {
                     template = userParse([obj.account], acctId, type, 'notf', -1)
                 } else {
-                    template = parse([obj.status], obj.type, acctId, 'notf', popup)
+                    const status = obj.status
+                    template = status ? parse([status], 'notf', acctId, 'notf', popup, mute) : userParse([obj.account], acctId, type, 'notf', -1)
                 }
                 if (!$('div[data-notfIndv=' + acctId + '_' + obj.id + ']').length) {
                     $('div[data-notf=' + acctId + ']').prepend(template)
@@ -240,15 +271,23 @@ export function notfMore(tlid: string) {
                     let template = ''
                     localStorage.setItem('lastnotf_' + acctId, json[0].id)
                     for (const obj of json) {
-                        const mute = getFilterTypeByAcct(acctId.toString(), 'notf')
-                        const popup = parseInt(localStorage.getItem('popup') || '0', 10)
                         const { type } = obj
+                        const mute = getFilterTypeByAcct(acctId, 'notf')
+                        const popup = parseInt(localStorage.getItem('popup') || '0', 10)
+                        const nEvent = {
+                            event: type,
+                            eventBy: obj.account,
+                            id: obj.id,
+                            createdAt: obj.created_at
+                        }
                         if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
-                            template = parse([obj], 'notf', acctId, 'notf', popup, mute)
+                            const status = obj.status || statusModel()
+                            template = parse([status], 'notf', acctId, 'notf', popup, mute, nEvent)
                         } else if (type === 'follow_request' || type === 'follow' || type === 'moved' || type === 'admin.sign_up') {
                             template = userParse([obj.account], acctId, type, 'notf', -1)
                         } else {
-                            template = parse([obj.status], obj.type, acctId, 'notf', popup)
+                            const status = obj.status
+                            template = status ? parse([status], 'notf', acctId, 'notf', popup, mute) : userParse([obj.account], acctId, type, 'notf', -1)
                         }
                     }
                     global.moreLoading = false

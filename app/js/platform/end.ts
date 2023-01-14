@@ -229,3 +229,25 @@ $(document).on('contextmenu', function (e) {
 $('textarea, input').on('contextmenu', function (e) {
 	postMessage(['textareaContextMenu', { x: e.pageX, y: e.pageY }], '*')
 })
+let soundFile
+export function playSound(request: XMLHttpRequest) {
+	window.AudioContext = window.AudioContext
+	if (soundFile) {
+		soundFile.stop()
+	}
+	const context = new AudioContext()
+	context.createBufferSource().start(0)
+	context.decodeAudioData(request.response, function (buf) {
+		//console.log("Playing:" , source)
+		source.buffer = buf
+		source.loop = false
+	})
+	const source = context.createBufferSource()
+	const volumeControl = context.createGain()
+	source.connect(volumeControl)
+	volumeControl.connect(context.destination)
+	const vol = parseInt(localStorage.getItem('customVol') || '0.8', 10)
+	volumeControl.gain.value = vol
+	source.start(0)
+	soundFile = source
+}

@@ -9,6 +9,7 @@ import { execCopy } from '../platform/end'
 import { escapeHTML, setLog } from '../platform/first'
 import { brInsert } from '../post/emoji'
 import { cardHtml } from './card'
+import { parse } from './parse'
 import { userParse } from './userParse'
 
 
@@ -85,7 +86,7 @@ export async function src(mode?: any, offset?: any) {
 	}
 	//トゥート
 	if (json.statuses[0]) {
-		const templete = parse(json.statuses, '', acct_id)
+		const templete = parse(json.statuses, null, acct_id, '')
 		$('#src-contents').append('<br>Mentions<br>' + templete)
 	}
 	//アカウント
@@ -310,7 +311,7 @@ export async function trend() {
 			}
 		})
 		if (tootTrends.length) {
-			const templete = parse(tootTrends, '', acct_id)
+			const templete = parse(tootTrends, null, acct_id, '')
 			$('#src-contents').append(`<div id="src-content-status">Trend Statuses<br />${templete}</div>`)
 		} else {
 			$('#src-contents').append('<div id="src-content-status">Trend Statuses<br />none</div>')

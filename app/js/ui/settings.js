@@ -272,7 +272,8 @@ function wordmute() {
 }
 
 function wordmuteSave() {
-    var word = M.Chips.getInstance($('#wordmute')).chipsData
+    var wordMap = M.Chips.getInstance($('#wordmute')).chipsData
+    const word = wordMap.map((n) => n.tag )
     var json = JSON.stringify(word)
     localStorage.setItem('word_mute', json)
 }
@@ -289,7 +290,8 @@ function wordemp() {
 }
 
 function wordempSave() {
-    var word = M.Chips.getInstance($('#wordemp')).chipsData
+    var wordMap = M.Chips.getInstance($('#wordemp')).chipsData
+    const word = wordMap.map((n) => n.tag )
     var json = JSON.stringify(word)
     localStorage.setItem('word_emp', json)
 }

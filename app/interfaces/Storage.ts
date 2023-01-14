@@ -25,7 +25,7 @@ export interface IColumn {
     text?: string
     left_fold?: boolean
 }
-export type IColumnData = IColumnTag | IColumnUTL | string
+export type IColumnData = IColumnTag | IColumnUTL | IRemote | string
 export interface IColumnUTL {
     id: string
     acct: string
@@ -35,6 +35,9 @@ export interface IColumnTag {
     any: string[]
     all: string[]
     none: string[]
+}
+interface IRemote {
+    remote: boolean
 }
 export interface IEmojiStorage {
     categorized: {

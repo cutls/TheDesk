@@ -15,6 +15,8 @@ import { announParse } from "./announParse"
 import { notf, notfColumn, notfMore } from './notification'
 import timeUpdate from "../common/time"
 import { isTagData } from "./tag"
+import { parse } from "./parse"
+import { say } from "./speech"
 
 //TL取得
 global.moreLoading = false
@@ -23,6 +25,8 @@ global.websocketNew = []
 let errorCt = 0
 export const tlTypes = ['home', 'local', 'local-media', 'pub', 'pub-media', 'tag', 'list', 'notf', 'noauth', 'dm', 'mix', 'plus', 'webview', 'tootsearch', 'bookmark', 'utl', 'fav']
 export const isColumnType = (item: string): item is IColumnType => tlTypes.includes(item)
+export const isConv = (item: Toot | Conversation): item is Conversation => !!item['last_status']
+export const isConvArr = (item: Toot[] | Conversation[]): item is Conversation[] => !!item[0]['last_status']
 export async function tl(type: IColumnType, data: string, acctId, tlid: string | 'add', voice?: boolean) {
     scrollEvent()
     $(`#unread_${tlid} .material-icons`).removeClass('teal-text')
@@ -61,7 +65,7 @@ export async function tl(type: IColumnType, data: string, acctId, tlid: string |
             `Integrated TL(${localStorage.getItem('user_' + acctId) || '?'}@${domain})`
         )
         $('#notice_icon_' + tlid).text('merge_type')
-        mixTl(acctId, tlid, 'integrated', voice)
+        mixTl(acctId, tlid, 'mix', voice)
         return
     } else if (type === 'plus') {
         //Local+なら飛ばす
@@ -113,20 +117,22 @@ export async function tl(type: IColumnType, data: string, acctId, tlid: string |
         }
     }
     let start = `https://${domain}/api/v1/timelines/${url}`
-    if (type === 'dm') start = 'https://' + domain + '/api/v1/conversations'
+    if (type === 'dm') start = `https://${domain}/api/v1/conversations`
     const method = 'get' as const
     console.log(['Try to get timeline of ' + tlid, start])
-    const isConv = (item: Toot[] | Conversation[]): item is Conversation[] => !!item['last_status']
     try {
-        const json = await api<Toot[] | Conversation[]>(start, {
+        let json = await api<Toot[] | Conversation[]>(start, {
             method: 'get',
             headers: hdr
         })
+        if (isConvArr(json)) {
+            json = json.map((j) => j.last_status as Toot)
+        }
         if (!json) return true
         console.log(['Result of getting timeline of ' + tlid, json])
         $('#landing_' + tlid).hide()
         const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
-        const template = parse(json, type, acctId, tlid, '', mute, type)
+        const template = parse<string>(json, type, acctId, tlid, 0, mute)
         localStorage.setItem('lastobj_' + tlid, json[0].id)
         $('#timeline_' + tlid).html(template)
         additional(acctId, tlid)
@@ -247,7 +253,7 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
                 const obj: Toot = JSON.parse(JSON.parse(mess.data).payload)
                 if ($(`#timeline_${tlid} [toot-id=${obj.id}]`).length < 1) {
                     if (voice) say(obj.content)
-                    const template = parse([obj], type, acctId, tlid, '', mute, type)
+                    const template = parse<string>([obj], type, acctId, tlid, 0, mute)
                     if ($(`#timeline_box_${tlid}_box .tl-box`).scrollTop() === 0) {
                         $('#timeline_' + tlid).prepend(template)
                     } else {
@@ -303,16 +309,17 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
 //一定のスクロールで発火
 export async function moreLoad(tlid: string) {
     const obj = getColumn()
-    const acctId = obj[tlid].domain
-    const type = obj[tlid].type
-    let data = obj[tlid].data
+    const tlIdNum = parseInt(tlid, 10)
+    const acctId = obj[tlIdNum].domain
+    const type = obj[tlIdNum].type
+    let data = obj[tlIdNum].data
     if (type === 'tag') {
         const tag = localStorage.getItem('tag-range')
         if (tag === 'local') {
             data = data + '&local=true'
         }
     } else if (type === 'list') {
-        data = obj[tlid].data
+        data = obj[tlIdNum].data
     }
     const sid = $(`#timeline_${tlid} .cvo`)
         .last()
@@ -332,7 +339,7 @@ export async function moreLoad(tlid: string) {
             return
         } else if (type === 'utl') {
             const data = obj[tlid].data
-            getUtl(acctId, tlid, data, true)
+            getUtl(acctId.toString(), tlid, data, true)
             return
         }
         global.moreLoading = true
@@ -346,33 +353,39 @@ export async function moreLoad(tlid: string) {
         }
         if (type === 'noauth') delete hdr.Authorization
         let start = `https://${domain}/api/v1/timelines/${com(type, data, tlid)}max_id=${sid}`
-        if (type === 'dm') {
-            start = `https://${domain}/api/v1/conversations?max_id=${sid}`
-            const json = await api<Toot[] | Conversation[]>(start, {
-                method: 'get',
-                headers: hdr
-            })
-            const mute = getFilterTypeByAcct(acctId.toString(), type)
-            const template = parse(json, '', acctId, tlid, '', mute, type)
-            $('#timeline_' + tlid).append(template)
-            additional(acctId.toString(), tlid)
-            timeUpdate()
-            global.moreLoading = false
-            todc()
+        if (type === 'dm') start = `https://${domain}/api/v1/conversations?max_id=${sid}`
+        let json = await api<Toot[] | Conversation[]>(start, {
+            method: 'get',
+            headers: hdr
+        })
+        const mute = getFilterTypeByAcct(acctId.toString(), convertColumnToFilter(type))
+        if (isConvArr(json)) {
+            json = json.map((j) => j.last_status as Toot)
         }
+        const template = parse<string>(json, type, acctId.toString(), tlid, 0, mute)
+        $('#timeline_' + tlid).append(template)
+        additional(acctId.toString(), tlid)
+        timeUpdate()
+        global.moreLoading = false
+        todc()
     }
 }
 //TL差分取得
 export async function tlDiff(type: IColumnType, data: IColumnData, acctId: string, tlid: string, voice: boolean, mode?: 'error') {
     console.log('Get diff of TL' + tlid)
     const obj = getColumn()
-    acctId = acctId || obj[tlid].domain.toString()
+    const tlidNum = parseInt(tlid, 10)
+    acctId = acctId || obj[tlidNum].domain.toString()
     if (type === 'tag') {
-        data = obj[tlid].data
+        const d = obj[tlidNum].data
+        if (!d) return
+        data = d
         const tag = localStorage.getItem('tag-range')
         if (tag === 'local') data = data + '&local=true'
     } else if (type === 'list') {
-        data = obj[tlid].data
+        const d = obj[tlidNum].data
+        if (!d) return
+        data = d
     }
     const sid = $(`#timeline_${tlid} .cvo`)
         .first()
@@ -397,12 +410,15 @@ export async function tlDiff(type: IColumnType, data: IColumnData, acctId: strin
         if (type === 'noauth') delete hdr.Authorization
         let start = `https://${domain}/api/v1/timelines/${com(type, data, tlid)}since_id=${sid}`
         if (type === 'dm') start = `https://${domain}/api/v1/conversations?since_id=${sid}`
-        const json = await api<Toot[] | Conversation[]>(start, {
+        let json = await api<Toot[] | Conversation[]>(start, {
             method: 'get',
             headers: hdr
         })
         const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
-        const template = parse(json, '', acctId, tlid, '', mute, type)
+        if (isConvArr(json)) {
+            json = json.map((j) => j.last_status as Toot)
+        }
+        const template = parse<string>(json, type, acctId, tlid, 0, mute)
         $('#timeline_' + tlid).prepend(template)
         additional(acctId, tlid)
         timeUpdate()
@@ -516,7 +532,7 @@ export function cap(type: IColumnType, data?: any, acctId?: string) {
 }
 
 //TLのURL
-export function com(type: IColumnType, data: IColumnData, tlid: string) {
+export function com(type: IColumnType, data: IColumnData | undefined, tlid: string) {
     if (type === 'home') {
         return 'home?'
     } else if (type === 'local' || type === 'noauth') {
@@ -530,7 +546,7 @@ export function com(type: IColumnType, data: IColumnData, tlid: string) {
         const add = remoteOnlyCk(tlid) ? 'remote=true&' : ''
         return 'public?only_media=true&' + add
     } else if (type === 'tag') {
-        if (!isTagData(data)) return
+        if (!data || !isTagData(data)) return
         const name = data.name
         const all = data.all
         const any = data.any
@@ -609,7 +625,7 @@ export function columnReload(tlid: string, type: IColumnType) {
     const obj = getColumn()
     const acctId = obj[tlid].domain
     const domain = localStorage.getItem('domain_' + acctId) || ''
-    if ( global.mastodonBaseWsStatus[domain] === 'available') {
+    if (global.mastodonBaseWsStatus[domain] === 'available') {
         stremaingSubscribe(type, acctId, obj[tlid].data, true)
         parseColumn(tlid, true)
         return true
@@ -689,7 +705,7 @@ export async function showUnread(tlid: string, type: IColumnType, acctId: string
     })
     if (!json || !json.length) columnReload(tlid, type)
     const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
-    const template = parse(json, type, acctId, tlid, '', mute, type)
+    const template = parse<string>(json, type, acctId, tlid, 0, mute)
     const len = json.length - 1
     $('#timeline_' + tlid).html(template)
     if ($('#timeline_' + tlid + ' .cvo:eq(' + len + ')').length) {
@@ -730,7 +746,7 @@ export async function ueload(tlidStr: string) {
         columnReload(tlidStr, type)
     }
     const mute = getFilterTypeByAcct(acctId.toString(), convertColumnToFilter(type))
-    const template = parse(json, '', acctId, tlid, '', mute, type)
+    const template = parse<string>(json, type, acctId.toString(), tlid.toString(), 0, mute)
     const len = json.length - 1
     $('#timeline_' + tlid).prepend(template)
     if ($(`#timeline_${tlid} .cvo:eq(${len})`).length) {
@@ -842,7 +858,7 @@ function getBookmark(acctId: string, tlid: string, more?: boolean) {
                     maxId = parseInt(m[1], 10)
                 }
             }
-            let template = parse(json, 'bookmark', acctId, tlid, -1, null)
+            let template = parse(json, 'bookmark', acctId, tlid, -1, [])
             template = `${template}<div class="hide notif-marker" data-maxid="${maxId}"></div>`
             if (more) {
                 $('#timeline_' + tlid).append(template)
@@ -877,7 +893,7 @@ async function getUtl(acctId: string, tlid: string, data: IColumnData, more: boo
             Authorization: 'Bearer ' + at
         }
     })
-    let template = parse(json, 'bookmark', acctId, tlid, -1, null)
+    let template = parse<string>(json, 'bookmark', acctId, tlid, -1, [])
     template =
         template
     if (more) {

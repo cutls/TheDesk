@@ -10,6 +10,7 @@ import { execCopy } from "../platform/end"
 import timeUpdate from "../common/time"
 import { getFilterTypeByAcct } from "./filter"
 import { userParse } from "./userParse"
+import { parse } from "./parse"
 
 //トゥートの詳細
 export async function details(id: string, acctId: string, tlid=0, isDm?: boolean) {
@@ -44,7 +45,7 @@ export async function details(id: string, acctId: string, tlid=0, isDm?: boolean
 		console.log(['Toot data:', json])
 		if (!$('#timeline_' + tlid + ' #pub_' + id).length) {
 			const mute = getFilterTypeByAcct(acctId, 'thread')
-			const html = parse([json], '', acctId, '', '', mute)
+			const html = parse<string>([json], null, acctId, '', 0, mute)
 			$('#toot-this').html(html)
 			timeUpdate()
 		}
@@ -72,7 +73,7 @@ export async function details(id: string, acctId: string, tlid=0, isDm?: boolean
 			$('.edited-hide').show()
 			try {
 				const history = await api(`https://${domain}/api/v1/statuses/${id}/history`, i)
-				const temp = parse(history, 'noauth', acctId)
+				const temp = parse<string>(history, 'noauth', acctId, '')
 				console.log(temp)
 				$('#toot-edit').html(temp)
 			} catch (e) { console.error(e) }
@@ -109,7 +110,7 @@ async function getContext(id: string, acctId: string) {
 		}
 	})
 	const mute = getFilterTypeByAcct(acctId, 'thread')
-	const template = parse(json.descendants, '', acctId, '', '', mute)
+	const template = parse<string>(json.descendants, null, acctId, '', 0, mute)
 	if (template !== '') {
 		$('#toot-after .no-data').hide()
 		$('#toot-after-new').removeClass('hide')
@@ -121,7 +122,7 @@ async function getContext(id: string, acctId: string) {
 	$('#toot-after .hide').html(lang.lang_details_filtered)
 	$('#toot-after .by_filter').css('display', 'block')
 	$('#toot-after .by_filter').removeClass('hide')
-	const template2 = parse(json.ancestors, '', acctId, '', '', mute)
+	const template2 = parse<string>(json.ancestors, null, acctId, '', 0, mute)
 	if (template2 !== '') {
 		$('#toot-reply .no-data').hide()
 		$('#toot-reply-new').removeClass('hide')
@@ -146,7 +147,7 @@ async function beforeToot(id: string, acctId: string, domain: string) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-	const template = parse(json, 'noauth', acctId)
+	const template = parse<string>(json, 'noauth', acctId, '')
 	if (template !== '') $('#toot-before .no-data').hide()
 	$('#toot-before').html(template)
 	timeUpdate()
@@ -163,7 +164,7 @@ async function userToot(id: string, acctId: string, user: string) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-	const template = parse(json, '', acctId)
+	const template = parse<string>(json, null, acctId, '')
 	if (template !== '') $('#user-before .no-data').hide()
 	$('#user-before').html(template)
 	timeUpdate()
@@ -179,7 +180,7 @@ async function afterToot(id: string, acctId: string, domain: string) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-	const template = parse(json, '', acctId)
+	const template = parse<string>(json, null, acctId, '')
 	if (template !== '') $('#ltl-after .no-data').hide()
 	$('#ltl-after').html(template)
 	timeUpdate()
@@ -196,7 +197,7 @@ async function afterUserToot(id: string, acctId: string, user: string) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-	const template = parse(json, '', acctId)
+	const template = parse<string>(json, null, acctId, '')
 	if (template !== '') $('#user-after .no-data').hide()
 	$('#user-after').html(template)
 	timeUpdate()
@@ -212,7 +213,7 @@ async function afterFTLToot(id: string, acctId: string, domain: string) {
 			Authorization: 'Bearer ' + at
 		}
 	})
-	const template = parse(json, '', acctId)
+	const template = parse<string>(json, null, acctId, '')
 	if (template !== '') $('#ftl-after .no-data').hide()
 	$('#ftl-after').html(template)
 	timeUpdate()

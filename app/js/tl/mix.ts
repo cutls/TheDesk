@@ -8,16 +8,18 @@ import { getColumn } from '../common/storage'
 import { IColumnType } from '../../interfaces/Storage'
 import { reconnector } from './tl'
 import timeUpdate from '../common/time'
+import { parse } from './parse'
+import { say } from './speech'
 declare const jQuery
 
 //Integrated TL
 const mastodonBaseWsStatus = global.mastodonBaseWsStatus
 let lastId: string
 let beforeLastId: string
-export async function mixTl(acctId, tlid, type: 'plus' | 'integrated', voice?: boolean) {
+export async function mixTl(acctId, tlid, type: 'plus' | 'mix', voice?: boolean) {
 	localStorage.setItem('now', type)
 	todo('Integrated TL Loading...(Local)')
-	const domain = localStorage.getItem(`domain_${acctId}`)
+	const domain = localStorage.getItem(`domain_${acctId}`) || ''
 	const startLocal = `https://${domain}/api/v1/timelines/public?local=true`
 	const local = await getTL(startLocal, acctId)
 	const startHome = `https://${domain}/api/v1/timelines/home`
@@ -28,7 +30,7 @@ export async function mixTl(acctId, tlid, type: 'plus' | 'integrated', voice?: b
 	const integrated = _.slice(sorted, 0, 19)
 	$('#landing_' + tlid).hide()
 	const mute = getFilterTypeByAcct(acctId, 'mix')
-	const template = parse(integrated, type, acctId, tlid, '', mute, type)
+	const template = parse<string>(integrated, type, acctId, tlid, 0, mute)
 	localStorage.setItem('lastobj_' + tlid, integrated[0].id)
 	$('#timeline_' + tlid).html(template)
 	additional(acctId, tlid)
@@ -42,12 +44,12 @@ export async function mixTl(acctId, tlid, type: 'plus' | 'integrated', voice?: b
 				mixre(acctId, tlid, 'mix', mute, voice)
 				clearInterval(mbws)
 			} else if (mastodonBaseWsStatus[domain] === 'available') {
-				mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
+				global.mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 				clearInterval(mbws)
 			}
 		}, 1000)
 	} else if (mastodonBaseWsStatus[domain] === 'available') {
-		mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
+		global.mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 	}
 
 	$(window).scrollTop(0)
@@ -173,7 +175,7 @@ function integratedMessage(mess: any, acctId: string, tlid: string, mute: string
 		if (obj.id !== lastId && obj.id !== beforeLastId) {
 			lastId = obj.id
 			beforeLastId = obj.id
-			let dom = parse([obj], '', acctId, tlid, '', mute)
+			let dom = parse<string>([obj], null, acctId, tlid, 0, mute)
 			if (voice) say(obj.content)
 			if ($('timeline_box_' + tlid + '_box .tl-box').scrollTop() === 0) {
 				$('#timeline_' + tlid).prepend(dom)
@@ -195,7 +197,8 @@ function integratedMessage(mess: any, acctId: string, tlid: string, mute: string
 //ある程度のスクロールで発火
 export async function mixMore(tlid: string, type: IColumnType) {
 	const obj = getColumn()
-	const acctId = obj[tlid].domain.toString()
+	const tlidNum = parseInt(tlid, 10)
+	const acctId = obj[tlidNum].domain.toString()
 	global.moreLoading = true
 	todo('Integrated TL MoreLoading...(Local)')
 	const domain = localStorage.getItem('domain_' + acctId)
@@ -212,7 +215,7 @@ export async function mixMore(tlid: string, type: IColumnType) {
 	const integrated = _.slice(sorted, 0, 19)
 	$('#landing_' + tlid).hide()
 	const mute = getFilterTypeByAcct(acctId, 'mix')
-	const template = parse(integrated, type, acctId, tlid, '', mute, type)
+	const template = parse<string>(integrated, type, acctId, tlid, 0, mute)
 	localStorage.setItem('lastobj_' + tlid, integrated[0].id)
 	$('#timeline_' + tlid).append(template)
 	additional(acctId, tlid)

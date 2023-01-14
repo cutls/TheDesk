@@ -10,6 +10,7 @@ import { formatTimeUtc, setLog } from '../platform/first'
 import { formSelectInit, toast } from '../common/declareM'
 import api from '../common/fetch'
 import { alertProcessUnfinished } from './img'
+import { pollCalc } from '../tl/poll'
 
 
 export function sec() {

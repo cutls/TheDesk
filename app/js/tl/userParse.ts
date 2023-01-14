@@ -7,7 +7,7 @@ import { date } from "./date"
 
 const gif = (localStorage.getItem('gif') || 'yes') === 'yes'
 //オブジェクトパーサー(ユーザーデータ)
-type NotoficationEvent = 'follow_request' | 'follow' | 'moved' | 'admin.sign_up' | null
+type NotoficationEvent = 'follow_request' | 'follow' | 'moved' | 'admin.sign_up' | 'admin.report' | null
 export function userParse(obj: Account[], acctId: string, notfEvent?: NotoficationEvent, tlid?: string, popup?: number) {
 	popup = popup || 0
 	let templete = ''

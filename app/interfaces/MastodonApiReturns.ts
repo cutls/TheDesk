@@ -52,6 +52,9 @@ export interface Credential extends Account {
         [x: string]: any
     }
 }
+interface QuotedToot extends Toot {
+    quote_muted: boolean
+}
 export interface Toot {
     id: string
     created_at: string
@@ -85,6 +88,9 @@ export interface Toot {
     pinned?: boolean
     customPinned?: boolean
     text?: string // on delete
+    favourited: boolean
+    reblogged: boolean
+    quote?: QuotedToot
     //[x: string]: any
 }
 export interface Attachment {
@@ -146,12 +152,6 @@ export interface Poll {
     }[]
     emojis: Emoji[]
     [x: string]: any
-}
-export interface CustomEmoji {
-    shortcode: string
-    static_url: string
-    url: string
-    visible_in_picker?: boolean
 }
 export interface Media {
     id: string

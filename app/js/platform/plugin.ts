@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 import { IPlugin } from '../../interfaces/Storage'
 import $ from 'jquery'
 import { toast } from '../common/declareM'
+import { parse } from '../tl/parse'
 
 
 global.plugins = getPlugin()
@@ -173,7 +174,7 @@ export async function execPlugin(id: string, source: ISource, args?: any) {
                 }).replace(/href="javascript:/, 'href="').replace(/href='javascript:/, 'href="').replace(/href=javascript:/, 'href="')
             json.content = v
             if (!exe) return asUtil.jsToVal(null)
-            if (getMeta(exe).data.dangerHtml) $(`[unique-id=${args.id}] .toot`).html(parse([json], null, null, null, null, null, null, true))
+            if (getMeta(exe).data.dangerHtml) $(`[unique-id=${args.id}] .toot`).html(parse([json], null, '0', '0'))
         })
     } else if (source === 'buttonOnPostbox') {
         const postDt = await post(undefined, true)

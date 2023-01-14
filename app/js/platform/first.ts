@@ -7,8 +7,12 @@ import { autoCompleteInitTrigger, loadAcctList, support } from '../login/manager
 import { connection } from './end'
 import twemoji from 'twemoji'
 import { tl } from '../tl/tl'
+import { Account, Card, Emoji, Poll, Toot } from '../../interfaces/MastodonApiReturns'
+import { IVis } from '../post/secure'
 // Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
 // 独自ロケールを削除
+// wordmuteListにtagとかいう要素がある
+// ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除
 window.onload = function () {
     console.log('loaded')
     initPostbox()
@@ -216,7 +220,7 @@ export function statusModel(nowRaw?: string) {
         in_reply_to_account_id: null,
         sensitive: false,
         spoiler_text: '',
-        visibility: 'public',
+        visibility: 'public' as IVis,
         language: 'en',
         uri: '',
         url: '',
@@ -252,14 +256,15 @@ export function statusModel(nowRaw?: string) {
             following_count: 0,
             statuses_count: 0,
             last_status_at: now,
-            emojis: [],
-            fields: []
+            emojis: [] as Emoji[],
+            fields: [] as Account['fileds']
         },
-        media_attachments: [],
-        mentions: [],
-        tags: [],
-        card: null,
-        poll: null
+        media_attachments: [] as Toot['media_attachments'],
+        mentions: [] as Toot['mentions'],
+        tags: [] as Toot['tags'],
+        card: null as Card | null,
+        poll: undefined as Poll | undefined,
+        emojis: [] as Emoji[]
     }
 }
 
@@ -284,7 +289,7 @@ export function initWebviewEvent() {
         }, 500)
     }
 }
-export function twemojiParse(target: string) {
+export function twemojiParse<T extends string | HTMLElement>(target: T): T {
     return twemoji.parse(
         target,
         { base: `../../${global.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/` }
