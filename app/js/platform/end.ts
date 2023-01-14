@@ -3,7 +3,8 @@ import Swal from 'sweetalert2'
 import { toast } from '../common/declareM'
 import lang from '../common/lang'
 import { code } from '../login/manager'
-import { details } from '../tl/datails'
+import { details, detEx } from '../tl/datails'
+import { asRead, tl } from '../tl/tl'
 //プラットフォーム別　最後に読むやつ
 //リンクを外部で開くか内部で出すか
 $(document).on('click', 'a', e => {

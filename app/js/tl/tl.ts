@@ -6,7 +6,7 @@ import { IColumnType } from "../../interfaces/Storage"
 import api from "../common/fetch"
 import { Conversation, Toot } from "../../interfaces/MastodonApiReturns"
 import { escapeHTML, stripTags } from "../platform/first"
-import { filterUpdate, getFilterTypeByAcct, remoteOnlyCk } from "./filter"
+import { convertColumnToFilter, filterUpdate, getFilterTypeByAcct, remoteOnlyCk } from "./filter"
 import { additional } from "./card"
 import lang from "../common/lang"
 import { toast } from "../common/declareM"
@@ -123,7 +123,7 @@ export async function tl(type: IColumnType, data: any, acctId, tlid: string | 'a
         if (!json) return true
         console.log(['Result of getting timeline of ' + tlid, json])
         $('#landing_' + tlid).hide()
-        const mute = getFilterTypeByAcct(acctId, type)
+        const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
         const template = parse(json, type, acctId, tlid, '', mute, type)
         localStorage.setItem('lastobj_' + tlid, json[0].id)
         $('#timeline_' + tlid).html(template)
@@ -398,7 +398,7 @@ export async function tlDiff(type: IColumnType, data: any, acctId: string, tlid:
             method: 'get',
             headers: hdr
         })
-        const mute = getFilterTypeByAcct(acctId, type)
+        const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
         const template = parse(json, '', acctId, tlid, '', mute, type)
         $('#timeline_' + tlid).prepend(template)
         additional(acctId, tlid)
@@ -587,7 +587,7 @@ export function reconnector(tlid: string, type: IColumnType, acctId: string, dat
     console.log('%c Reconnector:' + mode + '(timeline' + tlid + ')', 'color:pink')
     if (type === 'mix' || type === 'plus') {
         const voice = !!localStorage.getItem('voice_' + tlid)
-        const mute = getFilterTypeByAcct(acctId, type)
+        const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
         const wssh = parseInt(localStorage.getItem('wssH_' + tlid) || '0', 10)
         global.wsHome[wssh].close()
         const wssl = parseInt(localStorage.getItem('wssL_' + tlid) || '0', 10)
@@ -599,7 +599,7 @@ export function reconnector(tlid: string, type: IColumnType, acctId: string, dat
         const wss = localStorage.getItem('wss_' + tlid) || '0'
         websocket[wss].close()
         const voice = !!localStorage.getItem('voice_' + tlid)
-        const mute = getFilterTypeByAcct(acctId, type)
+        const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
         const domain = localStorage.getItem('domain_' + acctId)
     }
     toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
@@ -618,7 +618,7 @@ export function columnReload(tlid: string, type: IColumnType) {
     }
     if (type === 'mix' || type === 'plus') {
         const voice = !!localStorage.getItem('voice_' + tlid)
-        const mute = getFilterTypeByAcct(acctId, type)
+        const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
         const wssh = parseInt(localStorage.getItem('wssH_' + tlid) || '0', 10)
         global.wsHome[wssh].close()
         const wssl = parseInt(localStorage.getItem('wssL_' + tlid) || '0', 10)
@@ -690,7 +690,7 @@ export async function showUnread(tlid: string, type: IColumnType, acctId: string
         }
     })
     if (!json || !json.length) columnReload(tlid, type)
-    const mute = getFilterTypeByAcct(acctId, type)
+    const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
     const template = parse(json, type, acctId, tlid, '', mute, type)
     const len = json.length - 1
     $('#timeline_' + tlid).html(template)
@@ -731,7 +731,7 @@ export async function ueload(tlidStr: string) {
     if (!json) {
         columnReload(tlidStr, type)
     }
-    const mute = getFilterTypeByAcct(acctId.toString(), type)
+    const mute = getFilterTypeByAcct(acctId.toString(), convertColumnToFilter(type))
     const template = parse(json, '', acctId, tlid, '', mute, type)
     const len = json.length - 1
     $('#timeline_' + tlid).prepend(template)
@@ -745,7 +745,7 @@ export async function ueload(tlidStr: string) {
     global.ueloadlock = false
 }
 
-export async function asRead(callback: boolean) {
+export async function asRead(callback?: boolean) {
     //Markers
     const markersRaw = localStorage.getItem('markers')
     const markers = markersRaw === 'yes'

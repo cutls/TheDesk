@@ -1,9 +1,9 @@
 type Elem = NodeListOf<Element> | HTMLElement | JQuery<HTMLElement> | Element
 declare var M
-export const modalInit = (modalElem: Elem) => {
+export const modalInitGetInstance = (modalElem: Elem) => {
     return M.Modal.getInstance(modalElem)
 }
-export const modalInitGetInstance = (modalElem: Elem, options?: Object) => {
+export const modalInit = (modalElem: Elem, options?: Object) => {
     return M.Modal.init(modalElem, options)
 }
 export const dropdownInit = (modalElem: Elem, options?: Object) => {

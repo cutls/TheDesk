@@ -11,6 +11,7 @@ import { getMulti, setMulti } from "../common/storage"
 import { verck } from "../common/version"
 import { setLog } from "../platform/first"
 import { tips, todo } from "../ui/tips"
+import { idata } from "./instance"
 
 localStorage.removeItem('kirishima')
 localStorage.removeItem('quoters')

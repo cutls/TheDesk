@@ -9,6 +9,7 @@ import { getColumn } from "../common/storage"
 import { escapeHTML, stripTags } from "../platform/first"
 import { date } from "./date"
 import { columnReload } from "./tl"
+type IFilterType = 'home' | 'local' | 'notf' | 'pub' | 'notifications' | 'public' | 'thread' | 'account' | 'mix' | 'none'
 
 //各TL上方のMedia[On/Off]
 export function mediaToggle(tlid: string) {
@@ -301,7 +302,7 @@ export async function getFilter(acctId: string) {
     localStorage.setItem('filter_' + acctId, JSON.stringify(json))
 }
 
-export function getFilterType(json: FilterV1[], typeR: IColumnType) {
+export function getFilterType(json: FilterV1[], typeR: IFilterType) {
     if (!json) return []
     let type: string = typeR
     if (type === 'local') {
@@ -309,7 +310,7 @@ export function getFilterType(json: FilterV1[], typeR: IColumnType) {
     } else if (type === 'list') {
         type = 'home'
     } else if (type === 'notf') {
-        type = 'notifi'
+        type = 'notifications'
     }
     const mutedFilters: string[] = []
     for (const filterWord of json) {
@@ -326,7 +327,17 @@ export function getFilterType(json: FilterV1[], typeR: IColumnType) {
     return mutedFilters
 }
 
-export function getFilterTypeByAcct(acctId: string, type: IColumnType) {
+export function convertColumnToFilter(column: IColumnType): IFilterType {
+    if (column === 'bookmark' || column === 'fav' || column === 'noauth' || column === 'tootsearch' || column === 'webview') return 'none'
+    if (column === 'dm') return 'thread'
+    if (column === 'home' || column === 'list') return 'home'
+    if (column === 'local' || column === 'local-media' || column === 'pub' || column === 'pub-media' || column === 'utl' || column === 'tag') return 'public'
+    if (column === 'mix' || column === 'plus') return 'mix'
+    if (column === 'notf') return 'notifications'
+    return 'none'
+}
+
+export function getFilterTypeByAcct(acctId: string, type: IFilterType) {
     if (localStorage.getItem('filter_' + acctId) !== 'undefined') {
         return getFilterType(JSON.parse(localStorage.getItem('filter_' + acctId) || '[]'), type)
     } else {
@@ -352,7 +363,7 @@ export async function filterUpdate(acctId: string) {
     filterUpdateInternal(json, 'pub', acctId)
 }
 
-export function filterUpdateInternal(json: FilterV1[], type: 'home' | 'local' | 'notf' | 'pub', acctId: string) {
+export function filterUpdateInternal(json: FilterV1[], type: IFilterType, acctId: string) {
     let home = getFilterType(json, type)
     const wordMuteRaw = localStorage.getItem('word_mute') || '[]'
     const wordMute = JSON.parse(wordMuteRaw)

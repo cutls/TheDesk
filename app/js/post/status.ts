@@ -5,7 +5,10 @@ import { Account, Search, Toot } from "../../interfaces/MastodonApiReturns"
 import { dropdownInitGetInstance, formSelectInit, toast } from "../common/declareM"
 import api from "../common/fetch"
 import lang from "../common/lang"
+import { execCopy } from "../platform/end"
+import { columnReload } from "../tl/tl"
 import { cw, IVis, vis } from "./secure"
+import { reEx } from "./useTxtBox"
 
 //お気に入り登録
 export async function fav(id: string, acctId: string, remote: boolean) {
@@ -116,7 +119,7 @@ export async function bkm(id: string, acctId: string) {
         $('.bkm_' + id).addClass('red-text')
         $(`[toot-id=${id}]`).addClass('bkmed')
     }
-    const tlidTar = $(`.bookmark-timeline[data-acct=${acctId}]`).attr('tlid')
+    const tlidTar = $(`.bookmark-timeline[data-acct=${acctId}]`).attr('tlid') || '0'
     columnReload(tlidTar, 'bookmark')
 }
 
@@ -321,7 +324,7 @@ export async function redraft(id: string, acctId: string) {
     if (result.value) {
         show()
         const json = await del(id, acctId)
-        draftToPost(json, acctId, null)
+        draftToPost(json, acctId)
     }
 }
 // edit
@@ -340,7 +343,7 @@ export async function editToot(id: string, acctId: string) {
     draftToPost(json, acctId, id)
 }
 
-export function draftToPost(json: Toot, acctId: string, id: string) {
+export function draftToPost(json: Toot, acctId: string, id?: string) {
     $('#post-acct-sel').prop('disabled', true)
     $('#post-acct-sel').val(acctId)
     formSelectInit($('select'))
@@ -489,7 +492,7 @@ export async function pinUser() {
     }
 }
 //URLコピー
-function tootUriCopy(url: string) {
+export function tootUriCopy(url: string) {
     execCopy(url)
     toast({ html: lang.lang_details_url, displayLength: 1500 })
 }

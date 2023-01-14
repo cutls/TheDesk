@@ -8,6 +8,7 @@ import { clear, post } from '../post/post'
 import Swal from 'sweetalert2'
 import { IPlugin } from '../../interfaces/Storage'
 import $ from 'jquery'
+import { toast } from '../common/declareM'
 
 
 global.plugins = getPlugin()

@@ -3,6 +3,12 @@ global.selectedToot = 0
 import $ from 'jquery'
 import { makeNewList } from '../tl/list'
 import { src, srcBox } from '../tl/src'
+import { post, sec, clear } from '../post/post'
+import { allNotfRead } from '../tl/notification'
+import { fav, rt } from '../post/status'
+import { toast } from './declareM'
+import { re } from '../post/useTxtBox'
+import { isIVis } from '../post/secure'
 
 $(function ($) {
 	//キーボードショートカット
@@ -217,12 +223,14 @@ $(function ($) {
 			if (e.keyCode === 70) {
 				const id = $('.global.selectedToot').attr('unique-id')
 				const acct_id = $('#timeline_' + global.selectedColumn).attr('data-acct')
+				if (!id || !acct_id) return toast('cannot action')
 				fav(id, acct_id, false)
 				return false
 			}
 			if (e.keyCode === 66) {
 				const id = $('.global.selectedToot').attr('unique-id')
 				const acct_id = $('#timeline_' + global.selectedColumn).attr('data-acct')
+				if (!id || !acct_id) return toast('cannot action')
 				rt(id, acct_id, false)
 				return false
 			}
@@ -230,8 +238,9 @@ $(function ($) {
 				const id = $('.global.selectedToot').attr('unique-id')
 				const acct_id = $('#timeline_' + global.selectedColumn).attr('data-acct')
 				const ats_cm = $('.global.selectedToot .rep-btn').attr('data-men')
-				const mode = $('.global.selectedToot .rep-btn').attr('data-visen')
-				const cwTxt = $('#cw-text').val()
+				const mode = $('.global.selectedToot .rep-btn').attr('data-visen') || ''
+				const cwTxt = $('#cw-text').val()?.toString() || ''
+				if (!id || !acct_id || !ats_cm || !isIVis(mode)) return toast('cannot action')
 				re(id, ats_cm, acct_id, mode, cwTxt)
 				return false
 			}

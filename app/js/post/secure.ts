@@ -2,11 +2,14 @@
 //画像保護
 import $ from 'jquery'
 import { StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
+import { dropdownInitGetInstance } from '../common/declareM'
 import lang from '../common/lang'
 import { getMulti } from '../common/storage'
+import { idata } from '../login/instance'
 
 import { escapeHTML, formatTime } from '../platform/first'
 import { post } from './post'
+import { draftToPost } from './status'
 
 export function nsfw(force?: boolean) {
 	if (force || !$('#nsfw').hasClass('nsfw-avail')) {
@@ -55,7 +58,7 @@ export function vis(set: IVis) {
 		const acct_id = $('#post-acct-sel').val()
 		localStorage.setItem('vis-memory-' + acct_id, set)
 	}
-	const ins = M.Dropdown.getInstance($('#dropdown1'))
+	const ins = dropdownInitGetInstance($('#dropdown1'))
 	if (ins) ins.close()
 }
 export function loadVis() {
@@ -182,7 +185,7 @@ export async function addToDraft() {
 export function useThisDraft(i) {
 	const draft = localStorage.getItem('draft') || `{}`
 	const draftObj = JSON.parse(draft)
-	draftToPost(draftObj[i], draftObj[i]['TheDeskAcctId'], 0)
+	draftToPost(draftObj[i], draftObj[i]['TheDeskAcctId'], '0')
 	draftToggle()
 }
 export function deleteThisDraft(i) {

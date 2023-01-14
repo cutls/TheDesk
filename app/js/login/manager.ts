@@ -12,6 +12,7 @@ import { getColumn, getMulti, setColumn, setMulti } from "../common/storage"
 import { escapeHTML, setLog } from "../platform/first"
 import { IVis } from "../post/secure"
 import { idata } from "./instance"
+import { date } from "../tl/date"
 
 //最初に読むやつ
 export function loadAcctList() {
