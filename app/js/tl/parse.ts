@@ -22,7 +22,7 @@ const nsfw = (localStorage.getItem('nsfw') || 'yes') === 'yes'
 const sent = parseInt(localStorage.getItem('sentence') || '500', 10)
 const ltr = parseInt(localStorage.getItem('letters') || '500', 10)
 const gif = (localStorage.getItem('gif') || 'yes') === 'yes'
-let imh = localStorage.getItem('img-height') || '200'
+const imhOrig = localStorage.getItem('img-height') || '200'
 const empCli = JSON.parse(localStorage.getItem('client_emp') || '[]')
 const muteCli = JSON.parse(localStorage.getItem('client_mute') || '[]')
 const useremp = JSON.parse(localStorage.getItem('user_emp') || '[]')
@@ -72,6 +72,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 	if (bkm === 'no' || !bkm) {
 		bkmClass = 'hide'
 	}
+	let imh = imhOrig
 	if (imh === 'full') {
 		imh = 'auto'
 	} else {

@@ -100,16 +100,11 @@ export function cardHtml(json: Card, acctId: string, id: string) {
 	if (json.provider_name === 'pixiv') {
 		let pxvImg = ''
 		if (json.image) {
-			pxvImg = `
-			<br><img src="${json.image}" style="max-width:100%" 
-					onclick="imgv('pixiv_${id}',0,'pixiv')" id="pixiv_${id}-image-0" 
-					data-url="${json.embed_url}" 
-				data-type="image">
-			`
+			pxvImg = `<br><img src="${json.image}" style="max-width:100%" data-type="image">`
 		}
 		analyze =
-			`<div class="pixiv-post"><b><a href="${json.author_url}" target="_blank">${escapeHTML(json.author_name || '')}</a></b><br>
-				${escapeHTML(json.title)}${pxvImg}
+			`<div class="pixiv-post"><b><a href="${json.author_url || json.url}" target="_blank">${escapeHTML(json.author_name || escapeHTML(json.title))}</a></b><br>
+				${json.author_name ? escapeHTML(json.title) : ''}${pxvImg}
 			</div>`
 	} else {
 		if (json.title) {
