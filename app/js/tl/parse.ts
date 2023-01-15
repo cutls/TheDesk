@@ -43,7 +43,7 @@ export interface INotf {
 	id: string
 }
 //オブジェクトパーサー(トゥート)
-export function parse<T = string | string[][]>(obj: Toot[], type: IColumnType | 'pinned' | null, acctId: string, tlid: string, popup?: number, wordmuteList?: string[], notif?: INotf) {
+export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'pinned' | null, acctId: string, tlid: string, popup?: number, wordmuteList?: string[], notif?: INotf) {
 	let templete = ''
 	const me = localStorage.getItem('user-id_' + acctId)
 	if (!isDateType(datetype)) return ''
@@ -514,9 +514,6 @@ export function parse<T = string | string[][]>(obj: Toot[], type: IColumnType | 
 				'unix'
 			)}"
 					${ifNotf}
-					onmouseover="mov('${uniqueid}','${tlid}','mv', '${rand}', this, '${acctId}')"
-					onclick="mov('${uniqueid}','${tlid}','cl', '${rand}', this, '${acctId}')"
-					onmouseout="resetmv('mv')"
 				>
 				<div class="area-notice grid"><span class="gray sharesta">${noticeText}</span></div>
 				<div class="area-icon grid">
@@ -546,7 +543,11 @@ export function parse<T = string | string[][]>(obj: Toot[], type: IColumnType | 
 						<span class="cw_text">${spoil}</span>
 						${spoilerShow}
 					</span>
-					<div class="toot ${spoiler}">${content}</div>
+					<div class="toot ${spoiler}"
+						onmouseover="mov('${uniqueid}','${tlid}','mv', '${rand}', this, '${acctId}')"
+						onclick="mov('${uniqueid}','${tlid}','cl', '${rand}', this, '${acctId}')"
+						onmouseout="resetmv('mv')"
+					>${content}</div>
 					${poll}${viewer}
 				</div>
 				<div class="area-additional grid">

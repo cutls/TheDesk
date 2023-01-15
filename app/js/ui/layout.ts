@@ -138,7 +138,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			const html = webviewParse('https://tweetdeck.twitter.com', key, insert, insertColor, css)
 			$('#timeline-container').append(html)
 			initWebviewEvent()
-		} else if (type === 'bookmark') {
+		} else if (type === 'bookmark' || type == 'fav') {
 			unstreamingTL(type, key, basekey, insert, insertColor, column.left_fold || false, css, animeCss, domain.toString())
 		} else if (column.type === 'utl') {
 			const data = column.data
@@ -699,11 +699,13 @@ function unstreamingTL(type: IColumnType, key: number, basekey: number, insert: 
 			</span><br>`
 	}
 	const dataHtml = type === 'utl' ? false : data
+	let typeFunc: string = type
+	if (type === 'fav') typeFunc = 'favTl'
 	const html = `<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}">
 			<div class="notice-box z-depth-2" id="menu_${key}" style="${insert} ">
 				<div class="area-notice">
 					<i class="material-icons waves-effect" id="notice_icon_${key}" style="font-size:40px; padding-top:25%;" 
-						onclick="${type}('${key}','${dataHtml}');" title="${lang.lang_layout_gotop}"></i>
+						onclick="goTop(${key}); ${typeFunc}('${key}','${dataHtml}');" title="${lang.lang_layout_gotop}"></i>
 				</div>
 				<div class="area-notice_name">
 					<span id="notice_${key}" class="tl-title"></span>
@@ -740,8 +742,9 @@ function unstreamingTL(type: IColumnType, key: number, basekey: number, insert: 
 		</div>`
 	$('#timeline_box_' + basekey + '_parentBox').append(html)
 	if (type === 'bookmark') {
-		console.log(key, data)
 		bookmark(key, acctId)
+	} else if (type == 'fav') {
+		favTl(key, acctId)
 	} else if (type === 'utl') {
 		const isUtlData = (item: IColumnData): item is IColumnUTL => typeof item !== 'string' && item['acct']
 		if (!data || !isUtlData(data)) return
@@ -756,6 +759,10 @@ function unstreamingTL(type: IColumnType, key: number, basekey: number, insert: 
 export function bookmark(key: number, acctId: string) {
 	const voice = localStorage.getItem(`voice_${key}`) === 'yes'
 	tl('bookmark', undefined, acctId, key.toString(), voice)
+}
+export function favTl(key: number, acctId: string) {
+	const voice = localStorage.getItem(`voice_${key}`) === 'yes'
+	tl('fav', undefined, acctId, key.toString(), voice)
 }
 export function utl(key: number, acctId: string, data: IColumnData) {
 	if (!data) {

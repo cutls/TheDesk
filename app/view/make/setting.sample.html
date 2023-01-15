@@ -317,11 +317,11 @@
                     <div class="area-display_name grid">
                         <div class="flex-name">
                             <span class="user">TheDesk<img class="emoji" draggable="false" alt="👀"
-                                    src="https://twemoji.maxcdn.com/v/13.0.2/72x72/1f440.png"></span>
-                            <span class="sml gray"
-                                style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;">
-                                @thedesk@a.thedesk.tld <i class="fas fa-lock red-text"></i>
-                            </span>
+                                    src="../../@@node_base@@/twemoji-asset/assets/72x72/1f440.png">
+                                <span class="sml gray"
+                                    style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;">
+                                    @thedesk@a.thedesk.tld <i class="fas fa-lock red-text"></i>
+                                </span>
                         </div>
                         <div class="flex-time">
                             <span class="cbadge cbadge-hover pointer waves-effect">
@@ -441,8 +441,7 @@
                         </template>
                         <template v-if="item.checkbox">
                             <template v-for="(check, j) in item.text.checkbox">
-                                <template
-                                    v-if="(!check.quote || (check.quote && quoters))">
+                                <template v-if="(!check.quote || (check.quote && quoters))">
                                     <label><input class="with-gap" v-on:click="complete(i,check.value)"
                                             v-model="item.setValue" type="radio" v-bind:id="item.id+check.value"
                                             v-bind:value="check.value" />

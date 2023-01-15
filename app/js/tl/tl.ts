@@ -86,6 +86,12 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
         $('#notice_' + tlid).text(`${cap(type, data, acctId)}(${localStorage.getItem('user_' + acctId) || '?'}@${domain})`)
         $('#notice_icon_' + tlid).text('bookmark')
         return
+    } else if (type === 'fav') {
+        //お気に入りなら飛ばす
+        getFav(acctId, tlid)
+        $('#notice_' + tlid).text(`${cap(type, data, acctId)}(${localStorage.getItem('user_' + acctId)}@${domain})`)
+        $('#notice_icon_' + tlid).text('star')
+        return
     } else if (type === 'utl' && data) {
         //UTLなら飛ばす
         getUtl(acctId, tlid, data, false)
@@ -338,6 +344,9 @@ export async function moreLoad(tlid: string) {
         } else if (type === 'bookmark') {
             getBookmark(acctId.toString(), tlid, true)
             return
+        } else if (type == 'fav') {
+            getFav(acctId.toString(), tlid, true)
+            return
         } else if (type === 'utl') {
             const data = obj[tlid].data
             getUtl(acctId.toString(), tlid, data, true)
@@ -526,6 +535,8 @@ export function cap(type: IColumnType, data?: any, acctId?: string) {
         response = 'tootsearch(' + escapeHTML(data) + ')'
     } else if (type === 'bookmark') {
         response = 'Bookmarks'
+    } else if (type == 'fav') {
+        response = 'Favourites'
     } else if (type === 'utl') {
         response = 'User TL(' + escapeHTML(data.acct) + ')'
     }
@@ -552,13 +563,15 @@ export function com(type: IColumnType, data: IColumnData | undefined, tlid: stri
         const all = data.all
         const any = data.any
         const none = data.none
-        return `tag/${name}?${buildQuery('all', all)}${buildQuery('any', any)}${buildQuery('none', none)}`.slice(0, -1)
+        return `tag/${name}?${buildQuery('all', all)}${buildQuery('any', any)}${buildQuery('none', none)}`
     } else if (type === 'list') {
         return `list/${data}?`
     } else if (type === 'dm') {
         return 'direct?'
     } else if (type === 'bookmark') {
         return 'bookmarks?'
+    } else if (type == 'fav') {
+        return 'favourites?'
     }
 }
 
@@ -642,6 +655,9 @@ export function columnReload(tlid: string, type: IColumnType) {
     } else if (type === 'bookmark') {
         $('#notice_icon_' + tlid).removeClass('red-text')
         getBookmark(acctId, tlid, false)
+    } else if (type == 'fav') {
+        $('#notice_icon_' + tlid).removeClass('red-text')
+        getFav(acctId, tlid, false)
     } else {
         const wss = parseInt(localStorage.getItem('wss_' + tlid) || '0', 10)
         global.websocket[wss].close()
@@ -858,6 +874,52 @@ function getBookmark(acctId: string, tlid: string, more?: boolean) {
                 }
             }
             let template = parse(json, 'bookmark', acctId, tlid, -1, [])
+            template = `${template}<div class="hide notif-marker" data-maxid="${maxId}"></div>`
+            if (more) {
+                $('#timeline_' + tlid).append(template)
+            } else {
+                $('#timeline_' + tlid).html(template)
+            }
+            $('#landing_' + tlid).hide()
+            timeUpdate()
+            global.moreLoading = false
+            todc()
+        }
+    }
+}
+
+//お気に入り
+function getFav(acctId: string, tlid: string, more?: boolean) {
+    global.moreLoading = true
+    console.log(acctId, tlid, more)
+    let ad = ''
+    if (more) {
+        const sid = $('#timeline_' + tlid + ' .notif-marker')
+            .last()
+            .attr('data-maxid')
+        ad = '?max_id=' + sid
+    }
+    const domain = localStorage.getItem(`domain_${acctId}`)
+    const at = localStorage.getItem(`acct_${acctId}_at`)
+    const start = `https://${domain}/api/v1/favourites${ad}`
+    const httpreq = new XMLHttpRequest()
+    httpreq.open('GET', start, true)
+    httpreq.setRequestHeader('Content-Type', 'application/json')
+    httpreq.setRequestHeader('Authorization', 'Bearer ' + at)
+    httpreq.responseType = 'json'
+    httpreq.send()
+    httpreq.onreadystatechange = function () {
+        if (httpreq.readyState === 4) {
+            const json: Toot[] = httpreq.response
+            const maxIds = httpreq.getResponseHeader('link')
+            let maxId = 0
+            if (maxIds) {
+                const m = maxIds.match(/[?&]{1}max_id=([0-9]+)/)
+                if (m) {
+                    maxId = parseInt(m[1], 10)
+                }
+            }
+            let template = parse(json, 'fav', acctId, tlid, -1, [])
             template = `${template}<div class="hide notif-marker" data-maxid="${maxId}"></div>`
             if (more) {
                 $('#timeline_' + tlid).append(template)

@@ -2,25 +2,27 @@
 import electron from 'electron'
 import * as fs from 'fs'
 import Jimp from 'jimp'
-export default function img(mainWindow: electron.BrowserWindow, dir: string) {
+export default function img(mainWindow: electron.BrowserWindow, lang: string) {
 	const electron = require('electron')
 	const dialog = electron.dialog
 	const fs = require('fs')
 	const ipc = electron.ipcMain
-	const BrowserWindow = electron.BrowserWindow
+	const ja = ['添付ファイルを選択', 'メディアファイル', '画像', '動画', '全てのファイル']
+	const en = ['Attachment', 'Media', 'Pictures', 'Videos', 'All files']
+	const dict = lang === 'ja' ? ja : en
 	ipc.on('file-select', (e, args) => {
 		let fileNames = dialog.showOpenDialogSync(mainWindow, {
 			properties: ['openFile', 'multiSelections'],
-			title: '添付ファイルを選択',
+			title: dict[0],
 			defaultPath: '.',
 			filters: [
 				{
-					name: 'メディアファイル',
+					name: dict[1],
 					extensions: ['jpg', 'png', 'gif', 'bmp', 'jpeg', 'mp4', 'webm'],
 				},
-				{ name: '画像', extensions: ['jpg', 'png', 'gif', 'bmp', 'jpeg'] },
-				{ name: '動画', extensions: ['mp4', 'webm'] },
-				{ name: '全てのファイル', extensions: ['*'] },
+				{ name: dict[2], extensions: ['jpg', 'png', 'gif', 'bmp', 'jpeg'] },
+				{ name: dict[3], extensions: ['mp4', 'webm'] },
+				{ name: dict[4], extensions: ['*'] },
 			],
 		})
 		if (!fileNames) {

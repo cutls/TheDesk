@@ -53,7 +53,7 @@ export function pollParse(poll: Poll, acctId: string, emojis: Emoji[]) {
 			const me = mineChoice[i]
 			if (me === keyc) {
 				voteIt =
-					'<span class="ownMark"><img class="emoji" draggable="false" src="https://twemoji.maxcdn.com/v/12.1.4/72x72/2705.png"></span>'
+					`<span class="ownMark"><img class="emoji" draggable="false" src="../../${global.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/2705.png"></span>`
 				break
 			}
 		}

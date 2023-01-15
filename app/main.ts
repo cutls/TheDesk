@@ -280,25 +280,25 @@ function createWindow() {
 		mainWindow.close()
 	})
 	function writePos(mainWindow: electron.BrowserWindow) {
+		let size = {
+			width: mainWindow.getBounds().width,
+			height: mainWindow.getBounds().height,
+			x: mainWindow.getBounds().x,
+			y: mainWindow.getBounds().y,
+			max: false
+		}
 		if (
 			max_window_size.width === mainWindow.getBounds().width &&
 			max_window_size.height === mainWindow.getBounds().height &&
 			max_window_size.x === mainWindow.getBounds().x &&
 			max_window_size.y === mainWindow.getBounds().y
 		) {
-			const size = {
+			size = {
 				width: mainWindow.getBounds().width,
 				height: mainWindow.getBounds().height,
 				x: mainWindow.getBounds().x,
 				y: mainWindow.getBounds().y,
 				max: true,
-			}
-		} else {
-			const size = {
-				width: mainWindow.getBounds().width,
-				height: mainWindow.getBounds().height,
-				x: mainWindow.getBounds().x,
-				y: mainWindow.getBounds().y,
 			}
 		}
 		fs.writeFileSync(info_path, JSON.stringify(size))
@@ -319,7 +319,7 @@ function createWindow() {
 	//アップデータとダウンロード
 	dl(mainWindow, lang_path, base, dirname)
 	//画像選択と画像処理
-	img(mainWindow, dir)
+	img(mainWindow, lang)
 	//NowPlaying
 	np()
 	//その他system

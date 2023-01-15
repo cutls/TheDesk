@@ -60,18 +60,17 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="pwa">
+                    <label>
+                        <input type="checkbox" class="filled-in" id="misskey" />
+                        <span>@@thisismisskey@@</span> </label><br />
+                    <div class="hide">
                         @@codesetupwarn@@<br />
                         <label>
-							<input type="checkbox" class="filled-in" id="linux" />
-							<span>@@codesetup@@</span>
-						</label>
+                            <input type="checkbox" class="filled-in" id="linux" />
+                            <span>@@codesetup@@</span>
+                        </label>
                         <br />
                     </div>
-                    <label>
-						<input type="checkbox" class="filled-in" id="misskey" />
-						<span>@@thisismisskey@@</span> </label><br />
                 </div>
                 <div class="col s4 scr" aria-hidden="true">
                     <span style="font-family:Open Sans;">Supports</span>
@@ -89,7 +88,8 @@
             <div id="compt" style="display:none" class="scr">
                 <h5>ログイン前に必ずご確認ください</h5>
                 <span id="compt-instance"></span>はバージョンが<span id="compt-ver"></span>のため以下の機能がご利用いただけません。
-                <span id="compt-warn" style="display:none">また、このインスタンスはMastodonではなくそのAPI上の互換実装であり、TheDeskでは利用を想定していないため非保証となります。</span>
+                <span id="compt-warn"
+                    style="display:none">また、このインスタンスはMastodonではなくそのAPI上の互換実装であり、TheDeskでは利用を想定していないため非保証となります。</span>
                 <ul id="compt-list"></ul>
             </div>
         </div>
@@ -100,7 +100,7 @@
             <input type="text" id="misskey-key" placeholder="@@codepaste@@" required />
             <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br />
             <br />
-            <a onclick="atSetup()" class="pointer">@@accessTokenSetup@@</a>
+            <a onclick="atSetup('misskey')" class="pointer">@@accessTokenSetup@@</a>
         </div>
     </div>
     <div class="hide-first">
@@ -108,7 +108,7 @@
         <div class="input-field" style="width:300px">
             <span data-trans="your_acct">@@selacct@@</span>
             <br />
-            <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainAcct()"></select>
+            <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
             <label></label>
         </div>
         <ul id="domain-list" class="collection transparent"></ul>

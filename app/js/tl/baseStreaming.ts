@@ -145,7 +145,8 @@ function insertTl(obj: Toot, tls: TLMeta[], dry?: boolean) {
         if ($(`#unread_${id} .material-icons`).hasClass('teal-text')) continue
         if (!$(`#timeline_${id} [toot-id=${obj.id}]`).length) {
             if (voice) say(obj.content)
-            const template = parse<string>([obj], type, acctId.toString(), id.toString(), 0, mute)
+            const templateRaw = parse([obj], type, acctId.toString(), id.toString(), 0, mute)
+            const template = typeof templateRaw === 'string' ? templateRaw : templateRaw[0]
             if (dry) return template
             console.log($(`#timeline_box_${id}_box .tl-box`).scrollTop(), `timeline_box_${id}_box .tl-box`)
             if (
@@ -153,8 +154,9 @@ function insertTl(obj: Toot, tls: TLMeta[], dry?: boolean) {
             ) {
                 $(`#timeline_${id}`).prepend(template)
             } else {
-                let pool = localStorage.getItem('pool_' + id)
+                let pool = localStorage.getItem('pool_' + id) || ''
                 if (pool) {
+                    if (pool.match(`unique-id="${obj.id}"`)) continue
                     pool = template + pool
                 } else {
                     pool = template
