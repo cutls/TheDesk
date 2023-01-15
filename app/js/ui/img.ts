@@ -148,8 +148,8 @@ function imageXhr(id: string, key: number, murl: string) {
 }
 function calcNiceAspect(width: number, height: number) {
 	if (width < 650) width = 650
-	let windowH = $(window).height() || 0
-	let windowW = $(window).width() || 0
+	const windowH = $(window).height() || 0
+	const windowW = $(window).width() || 0
 	$('#imagemodal').css('bottom', '0')
 	$('#imagemodal img').css('width', 'auto')
 	if (height < windowH) {

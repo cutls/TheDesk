@@ -33,7 +33,7 @@ input.addEventListener(
 			}
 			let q
 			if (prevVal  !== newVal ) {
-				let pos = input.selectionStart || 0
+				const pos = input.selectionStart || 0
 				let startI = pos - 1
 				let hasDomain = false
 				let hasDomainOnce = false

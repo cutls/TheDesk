@@ -249,7 +249,7 @@ export function clear() {
 	$('#right-side').hide()
 	$('#right-side').css('width', '300px')
 	$('#left-side').css('width', '100%')
-	let width = parseInt((localStorage.getItem('postbox-width') || '300px').replace('px', ''), 10)
+	const width = parseInt((localStorage.getItem('postbox-width') || '300px').replace('px', ''), 10)
 	$('#post-box').css('width', width)
 	$('#tootmodal').attr('data-edit', null)
 	mdCheck()

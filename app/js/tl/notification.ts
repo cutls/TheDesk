@@ -185,7 +185,7 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
     websocketNotf[acctId].onmessage = function (mess) {
         $('#landing_' + tlid).hide()
         //console.log(["Receive Streaming API(Notf):" + acctId + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
-        let popup = parseInt(localStorage.getItem('popup') || '0', 10)
+        const popup = parseInt(localStorage.getItem('popup') || '0', 10)
         const obj: Notification = JSON.parse(JSON.parse(mess.data).payload)
         const type = JSON.parse(mess.data).event
         if (type === 'notification') {

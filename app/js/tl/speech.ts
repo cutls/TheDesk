@@ -35,7 +35,7 @@ export function say(msgr: string) {
 		localStorage.setItem('voicebank', json)
 	}
 }
-let $repeat = setInterval(function() {
+const $repeat = setInterval(function() {
 	if (!speechSynthesis.speaking) {
 		const voice = localStorage.getItem('voicebank')
 		if (voice) {

@@ -30,7 +30,7 @@ export async function fav(id: string, acctId: string, remote: boolean) {
     if (json.reblog) json = json.reblog
     if (!remote) {
         //APIのふぁぼカウントがおかしい
-        let fav = json.favourites_count
+        const fav = json.favourites_count
         if ($('[unique-id=${id}] .fav_ct').text() === json.favourites_count) {
             if (flag === 'unfavourite') {
                 let fav = json.favourites_count - 1

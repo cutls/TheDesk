@@ -176,7 +176,7 @@ function integratedMessage(mess: any, acctId: string, tlid: string, mute: string
 		if (obj.id !== lastId && obj.id !== beforeLastId) {
 			lastId = obj.id
 			beforeLastId = obj.id
-			let dom = parse<string>([obj], null, acctId, tlid, 0, mute)
+			const dom = parse<string>([obj], null, acctId, tlid, 0, mute)
 			if (voice) say(obj.content)
 			if ($('timeline_box_' + tlid + '_box .tl-box').scrollTop() === 0) {
 				$('#timeline_' + tlid).prepend(dom)

@@ -96,7 +96,7 @@ export function flw(user: string, more: 'more' | '', acctId: string) {
 		if (httpreq.readyState === 4) {
 			const template = userParse(json, acctId) || lang.lang_details_nodata + '<br>'
 			const linkHeader = httpreq.getResponseHeader('link') || ''
-			let link: string = ''
+			let link = ''
 			if (linkHeader) {
 				const m = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)
 				link = m ? m[1] : ''
@@ -132,7 +132,7 @@ export function fer(user: string, more: 'more' | '', acctId: string) {
 		if (httpreq.readyState === 4) {
 			const template = userParse(json, acctId) || lang.lang_details_nodata + '<br>'
 			const linkHeader = httpreq.getResponseHeader('link') || ''
-			let link: string = ''
+			let link = ''
 			if (linkHeader) {
 				const m = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)
 				link = m ? m[1] : ''
@@ -168,7 +168,7 @@ export function showFav(more: 'more' | '', acctId: string) {
 		if (httpreq.readyState === 4) {
 			const template = parse<string>(json, null, acctId, 'user') || lang.lang_details_nodata + '<br>'
 			const linkHeader = httpreq.getResponseHeader('link') || ''
-			let link: string = ''
+			let link = ''
 			if (linkHeader) {
 				const m = linkHeader.match(/[?&]{1}max_id=([0-9]+)/)
 				link = m ? m[1] : ''

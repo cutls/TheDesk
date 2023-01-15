@@ -14,7 +14,7 @@ import { checkSpotify } from "./spotify"
 import { voiceSettingLoad } from "../tl/speech"
 import api from "../common/fetch"
 import $ from 'jquery'
-declare var editor
+declare let editor
 
 //設定(setting.html)で読む
 const envView: any = Vue.createApp({
@@ -26,7 +26,7 @@ const envView: any = Vue.createApp({
     methods: {
         complete: function (i, val) {
             let ls = this.config[i]
-            let header = ls.text.head
+            const header = ls.text.head
             if (!ls.data) {
                 ls = [ls]
             } else {
@@ -64,7 +64,7 @@ const tlView: any = Vue.createApp({
     methods: {
         complete: function (i, val) {
             let ls = this.config[i]
-            let header = ls.text.head
+            const header = ls.text.head
             if (val) {
                 localStorage.setItem(ls.storage, val)
             } else {
@@ -95,7 +95,7 @@ const postView: any = Vue.createApp({
     methods: {
         complete: function (i, val) {
             let ls = this.config[i]
-            let header = ls.text.head
+            const header = ls.text.head
             if (val) {
                 localStorage.setItem(ls.storage, val)
             } else {
@@ -486,12 +486,12 @@ export function insertFont(name: string) {
 }
 
 export function copyColor(from: string, to: string) {
-    let props = ['background', 'subcolor', 'text', 'accent', 'modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
+    const props = ['background', 'subcolor', 'text', 'accent', 'modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
     let i = 0
     let color
     for (const tag of props) {
         if (tag === from) {
-            let used = $(`#use-color_${i}`).prop('checked')
+            const used = $(`#use-color_${i}`).prop('checked')
             if (!used) {
                 Swal.fire({
                     icon: 'error',
@@ -526,11 +526,11 @@ export function customComp(preview: boolean) {
     const textC = $('#color-picker1_value').val()
     const accentC = $('#color-picker3_value').val()
     const obj = getMulti()
-    let advanced = ['modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
+    const advanced = ['modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
     const advanceTheme = {}
     let i = 4
     for (const tag of advanced) {
-        let used = $(`#use-color_${i}`).prop('checked')
+        const used = $(`#use-color_${i}`).prop('checked')
         if (used) {
             advanceTheme[tag] = $(`#color-picker${i}_value`).val()
         }
@@ -639,7 +639,7 @@ export function customConnect(raw: any) {
     $('#color-picker2_value').val(args.primary.subcolor)
     //Accent
     $('#color-picker3_value').val(args.primary.accent)
-    let advanced = ['modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
+    const advanced = ['modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
     let i = 4
     for (const tag of advanced) {
         if (args.advanced[tag]) {

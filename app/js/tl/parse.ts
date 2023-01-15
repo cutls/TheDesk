@@ -413,7 +413,7 @@ export function parse<T = string | string[][]>(obj: Toot[], type: IColumnType | 
 			if (tickerDataRaw) {
 				const tickerDataJson = JSON.parse(tickerDataRaw || '[]')
 				const tickerData = tickerDataJson.data
-				let thisDomains = toot.account.acct.split('@')
+				const thisDomains = toot.account.acct.split('@')
 				let thisDomain = ''
 				if (thisDomains.length > 1) thisDomain = thisDomains[1]
 				for (let i = 0; i < tickerData.length; i++) {
@@ -499,7 +499,7 @@ export function parse<T = string | string[][]>(obj: Toot[], type: IColumnType | 
 		//プラグイン機構
 		const pluginBOT = global.plugins.buttonOnToot
 		let pluginHtml = ''
-		for (let target of pluginBOT) {
+		for (const target of pluginBOT) {
 			const meta = getMeta(target.content).data
 			pluginHtml = pluginHtml + `<li><a onclick="execPlugin('${target.id}','buttonOnToot',{id: '${uniqueid}', acctId: '${acctId}'});">${escapeHTML(meta.name)}</a></li>`
 		}

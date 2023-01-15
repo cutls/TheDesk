@@ -13,7 +13,7 @@ import { exportSettingsCore, importSettingsCore, fontList, ctLoad, clearCustomIm
 import { npCore } from '../ui/spotify'
 import { renderMem } from '../ui/tips'
 import { udg, udgEx } from '../userdata/showOnTL'
-declare var updateMess, updateProg
+declare let updateMess, updateProg
 //プラットフォーム別　最後に読むやつ
 //リンクを外部で開くか内部で出すか
 $(document).on('click', 'a', e => {
@@ -218,7 +218,7 @@ $(document).on('contextmenu', function (e) {
 	if (lastSelection !== null) {
 		const currentSelection = window.getSelection()?.getRangeAt(0)
 		if (!currentSelection) return
-		for (let key in currentSelection) {
+		for (const key in currentSelection) {
 			if (currentSelection[key] !== lastSelection[key]) {
 				isSame = false
 				break

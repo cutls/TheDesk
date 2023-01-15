@@ -131,7 +131,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 		const animeCss = anime ? 'box-anime' : ''
 		if (!column.left_fold) basekey = key
 		let notfDomain = domain.toString()
-		let notfKey = key.toString()
+		const notfKey = key.toString()
 		if (type === 'webview') {
 			const fixWidth = localStorage.getItem('fixwidth')
 			css = ` min-width:${fixWidth}px;`

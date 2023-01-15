@@ -435,7 +435,7 @@ async function getMyData(domain: string, credential: any) {
 	const obj = getMulti()
 	let addTarget = -1
 	let ct = 0
-	for (let acct of obj) {
+	for (const acct of obj) {
 		if (acct.domain === domain && acct.user === json.acct) {
 			console.log('detected dupl addct')
 			addTarget = ct
@@ -609,7 +609,7 @@ export function colorAdd(key: string, bg: string, txt: 'black' | 'white' | 'def'
 	}
 }
 //入力時にインスタンスをサジェスト
-let timer: number = 0
+let timer = 0
 
 const input = <HTMLInputElement>document.getElementById('autocomplete-input')
 let prevVal = input?.value
@@ -631,7 +631,7 @@ input.addEventListener(
 							'content-type': 'application/json',
 						}
 					})
-					let data = {}
+					const data = {}
 					const jsonData = json.data
 					for (const url of jsonData) {
 						data[url.uri] = escapeHTML(url.title ? url.title : url.uri)

@@ -1,5 +1,5 @@
 type Elem = NodeListOf<Element> | HTMLElement | JQuery<HTMLElement> | Element
-declare var M
+declare let M
 export const modalInitGetInstance = (modalElem: Elem) => {
     return M.Modal.getInstance(modalElem)
 }

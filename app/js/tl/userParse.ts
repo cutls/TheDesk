@@ -12,7 +12,7 @@ type NotoficationEvent = 'follow_request' | 'follow' | 'moved' | 'admin.sign_up'
 export function userParse(obj: Account[], acctId: string, notfEvent?: NotoficationEvent, tlid?: string, popup?: number) {
 	popup = popup || 0
 	let templete = ''
-	for (let toot of obj) {
+	for (const toot of obj) {
 		if (toot) {
 			const notf = !toot.username
 			if (!toot.username) break

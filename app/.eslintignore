@@ -3,4 +3,6 @@ js/common/hammer.min.js
 js/common/sha256.js
 js/platform/punycode.js
 js/platform/tj-deck.js
-js/ace
+js/platform/nano.js
+js/platform/native.js
+js/platform/preload.js

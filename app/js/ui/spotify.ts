@@ -278,7 +278,7 @@ if (location.search) {
 }
 async function getUnknownAA(q: string) {
 	const start = 'https://itunes.apple.com/search?term=' + q + '&country=JP&entity=song'
-	let promise = await fetch(start, {
+	const promise = await fetch(start, {
 		method: 'GET',
 	})
 	const json = await promise.json()

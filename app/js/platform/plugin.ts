@@ -30,7 +30,7 @@ interface FechRequest {
 }
 function getPlugin() {
     const json = localStorage.getItem('plugins')
-    let ret: IPlugins = {
+    const ret: IPlugins = {
         buttonOnPostbox: [],
         buttonOnToot: [],
         buttonOnBottom: [],
@@ -40,7 +40,7 @@ function getPlugin() {
     }
     if (!json) return ret
     const plugins: IPlugin[] = JSON.parse(json)
-    for (let plugin of plugins) {
+    for (const plugin of plugins) {
         const meta = getMeta(plugin.content).data
         if (!meta) continue
         const type = meta.event
@@ -106,19 +106,19 @@ export function initPlugin() {
     })
 
     const { buttonOnPostbox, init, buttonOnBottom, tips } = global.plugins
-    for (let target of buttonOnPostbox) {
+    for (const target of buttonOnPostbox) {
         const meta = getMeta(target.content).data
         $('#dropdown2').append(`<li><a onclick="execPlugin('${target.id}','buttonOnPostbox', null);">${escapeHTML(meta.name)}</a></li>`)
     }
-    for (let target of buttonOnBottom) {
+    for (const target of buttonOnBottom) {
         const meta = getMeta(target.content).data
         $('#group .btnsgroup').append(`<a onclick="execPlugin('${target.id}','buttonOnBottom', null);" class="nex waves-effect pluginNex"><span title="${escapeHTML(meta.name)}">${escapeHTML(meta.name).substr(0, 1)}</span></a>`)
     }
-    for (let target of tips) {
+    for (const target of tips) {
         const meta = getMeta(target.content).data
         $('#tips-menu .btnsgroup').append(`<a onclick="tips('custom', '${target.id}')" class="nex waves-effect pluginNex"><span title="${escapeHTML(meta.name)}">${escapeHTML(meta.name).substr(0, 1)}</span></a>`)
     }
-    for (let target of init) {
+    for (const target of init) {
         const as = new AiScript(global.asCommon)
         const meta = getMeta(target.content).data
         toast({ html: `${escapeHTML(meta.name)}を実行しました`, displayLength: 1000 })
@@ -138,7 +138,7 @@ export async function execPlugin(id: string, source: ISource, args?: any) {
     const ps: IPlugins = global.plugins
     const coh = ps[source]
     let exe: null | string = null
-    for (let plugin of coh) {
+    for (const plugin of coh) {
         if (plugin.id === id) {
             exe = plugin.content
             break
@@ -158,7 +158,7 @@ export async function execPlugin(id: string, source: ISource, args?: any) {
                     `Bearer ${at}`
             }
         })
-        let json = await promise.json()
+        const json = await promise.json()
         common.TOOT = asUtil.jsToVal(json)
         common['TheDesk:changeText'] = asValue.FN_NATIVE((z) => {
             if (!isAssignableString(z[0])) return asUtil.jsToVal(null)

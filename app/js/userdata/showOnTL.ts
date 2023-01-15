@@ -357,7 +357,7 @@ function reset() {
 $('#my-data-nav .anc-link').on('click', function () {
     const target = $(this).attr('go')
     if (target) {
-        let title = $(this).html()
+        const title = $(this).html()
         if (target === '#his-tl') $('#util-add').removeClass('hide')
         if (target !== '#his-tl') $('#util-add').addClass('hide')
         $('#his-data-title').html(title)
