@@ -1,5 +1,5 @@
 import { execPlugin, getMeta, testExec } from "../platform/plugin"
-import Vue from 'vue'
+import * as Vue from 'vue'
 import { chipInit, chipInitGetInstance, formSelectInit, toast } from "../common/declareM"
 import lang from "../common/lang"
 import { themes } from "./theme"

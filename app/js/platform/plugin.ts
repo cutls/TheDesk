@@ -1,4 +1,5 @@
-import { AiScript, parse as asParse, values as asValue, utils as asUtil } from '@syuilo/aiscript'
+import { parse as asParse, values as asValue, utils as asUtil } from '@syuilo/aiscript'
+import { AiScript } from '@syuilo/aiscript/built/interpreter'
 import { escapeHTML } from './first'
 import _ from 'lodash'
 import sanitizeHtml from 'sanitize-html'

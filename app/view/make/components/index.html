@@ -27,10 +27,7 @@
 		<script>
 			var ver = '@@versionLetter@@'
 			var gitHash = '@@gitHash@@'
-			//betaを入れるとバージョンチェックしない
-			//var ver="beta";
-			var acct_id = 0
-			var tlid = 0
+			var useLang = '@@lang@@'
 		</script>
 		@@preTL@@ @@starterAndDragHandler@@ @@postBox@@ @@tootModal@@ @@userDataModal@@ @@mediaModal@@ @@releaseNote@@
 		<!--PiP-->
@@ -56,66 +53,7 @@
 		<!--Radio Happy(Yui) Taku Inoue-->
 		<audio src="" id="radio"></audio>
 		<!--JS-->
-		<script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
-		<script type="text/javascript" src="../../js/platform/first.js"></script>
-		<script type="text/javascript" src="../../js/platform/native.js"></script>
-		<script type="text/javascript" src="../../js/platform/plugin.js"></script>
 		<script type="text/javascript" src="../../@@node_base@@/@cutls/materialize-css/dist/js/materialize.js"></script>
-		<script type="text/javascript" src="../../@@node_base@@/grapheme-splitter/index.js"></script>
-		<script type="text/javascript" src="../../@@node_base@@/lodash/lodash.min.js"></script>
-		<script type="text/javascript" src="main.js"></script>
-		<script type="text/javascript" src="../../js/common/time.js"></script>
-		<script type="text/javascript" src="../../js/common/blurhash.js"></script>
-		<script type="text/javascript" src="../../js/common/version.js"></script>
-		<script type="text/javascript" src="../../js/common/keyshortcut.js"></script>
-		<script type="text/javascript" src="../../js/common/modal.js"></script>
-		<script type="text/javascript" src="../../@@node_base@@/jquery-ui-dist/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="../../@@node_base@@/sweetalert2/dist/sweetalert2.min.js"></script>
-		<script type="text/javascript" src="../../js/platform/punycode.js"></script>
-		<script type="text/javascript" src="../../js/ui/tips.js"></script>
-		<script type="text/javascript" src="../../@@node_base@@/twemoji/dist/twemoji.min.js"></script>
-		<script type="text/javascript" src="../../js/common/about.js"></script>
-		<script type="text/javascript" src="../../js/tl/misskeyparse.js"></script>
-		<script type="text/javascript" src="../../js/tl/dm.js"></script>
-		<script type="text/javascript" src="../../js/ui/scroll.js"></script>
-		<script type="text/javascript" src="../../js/tl/announParse.js"></script>
-		<script type="text/javascript" src="../../js/tl/tl.js"></script>
-		<script type="text/javascript" src="../../js/tl/card.js"></script>
-		<script type="text/javascript" src="../../js/tl/parse.js"></script>
-		<script type="text/javascript" src="../../js/tl/poll.js"></script>
-		<script type="text/javascript" src="../../js/tl/date.js"></script>
-		<script type="text/javascript" src="../../js/tl/notification.js"></script>
-		<script type="text/javascript" src="../../js/tl/datails.js"></script>
-		<script type="text/javascript" src="../../js/tl/mix.js"></script>
-		<script type="text/javascript" src="../../js/tl/src.js"></script>
-		<script type="text/javascript" src="../../js/tl/directory.js"></script>
-		<script type="text/javascript" src="../../js/tl/filter.js"></script>
-		<script type="text/javascript" src="../../js/tl/tag.js"></script>
-		<script type="text/javascript" src="../../js/tl/list.js"></script>
-		<script type="text/javascript" src="../../js/tl/speech.js"></script>
-		<script type="text/javascript" src="../../js/ui/post-box.js"></script>
-		<script type="text/javascript" src="../../js/ui/layout.js"></script>
-		<script type="text/javascript" src="../../js/post/emoji.js"></script>
-		<script type="text/javascript" src="../../js/login/instance.js"></script>
-		<script type="text/javascript" src="../../js/login/login.js"></script>
-		<script type="text/javascript" src="../../js/ui/img.js"></script>
-		<script type="text/javascript" src="../../js/ui/pip.js"></script>
-		<script type="text/javascript" src="../../js/ui/sort.js"></script>
-		<script type="text/javascript" src="../../js/ui/spotify.js"></script>
-		<script type="text/javascript" src="../../js/post/post.js"></script>
-		<script type="text/javascript" src="../../js/post/use-txtbox.js"></script>
-		<script type="text/javascript" src="../../js/post/secure.js"></script>
-		<script type="text/javascript" src="../../js/post/img.js"></script>
-		<script type="text/javascript" src="../../js/post/status.js"></script>
-		<script type="text/javascript" src="../../js/post/misskeystatus.js"></script>
-		<script type="text/javascript" src="../../js/post/suggest.js"></script>
-		<script type="text/javascript" src="../../js/post/bb-md.js"></script>
-		<script type="text/javascript" src="../../js/userdata/showOnTL.js"></script>
-		<script type="text/javascript" src="../../js/userdata/his-data.js"></script>
-		<script type="text/javascript" src="../../js/userdata/prof-edit.js"></script>
-		<script type="text/javascript" src="../../js/emoji/emojipack.js"></script>
-		<script type="text/javascript" src="../../js/emoji/defaultEmoji.js"></script>
-		<script type="text/javascript" src="../../js/platform/end.js"></script>
-		<script type="text/javascript" src="../../js/ui/menu.js"></script>
+		<script type="text/javascript" src="../../dist/index.js"></script>
 	</body>
 </html>
