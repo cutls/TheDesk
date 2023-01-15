@@ -13,7 +13,7 @@ import { toast } from '../common/declareM'
 import { parse } from '../tl/parse'
 
 
-global.plugins = getPlugin()
+globalThis.plugins = getPlugin()
 type SweetAlertIcon = 'success' | 'error' | 'warning' | 'info' | 'question'
 const isSwalIcon = (item: string): item is SweetAlertIcon => ['success', 'error', 'warning', 'info', 'question'].includes(item)
 interface IPlugins {
@@ -70,7 +70,7 @@ function getPlugin() {
     return ret
 }
 export function initPlugin() {
-    global.asCommon['TheDesk:dialog'] = asValue.FN_NATIVE((z) => {
+    globalThis.asCommon['TheDesk:dialog'] = asValue.FN_NATIVE((z) => {
         if (!isAssignableString(z[0])) return
         if (!isAssignableString(z[1])) return
         const z2 = isAssignableString(z[2]) ? z[2] : { value: 'info' }
@@ -82,7 +82,7 @@ export function initPlugin() {
             text: z[1] ? z[1].value : ''
         })
     })
-    global.asCommon['TheDesk:confirm'] = asValue.FN_NATIVE(async (z) => {
+    globalThis.asCommon['TheDesk:confirm'] = asValue.FN_NATIVE(async (z) => {
         if (!isAssignableString(z[0])) return asUtil.jsToVal(null)
         if (!isAssignableString(z[1])) return asUtil.jsToVal(null)
         const z2 = isAssignableString(z[2]) ? z[2] : { value: 'info' }
@@ -95,18 +95,18 @@ export function initPlugin() {
         })
         return asUtil.jsToVal(!!(alertSwal.value && alertSwal.value === true))
     })
-    global.asCommon['TheDesk:css'] = asValue.FN_NATIVE((z) => {
+    globalThis.asCommon['TheDesk:css'] = asValue.FN_NATIVE((z) => {
         if (!isAssignableString(z[0])) return
         if (!isAssignableString(z[1])) return
         if (!isAssignableString(z[2])) return
         $(escapeHTML(z[0].value)).css(escapeHTML(z[1].value), escapeHTML(z[2].value))
     })
-    global.asCommon['TheDesk:openLink'] = asValue.FN_NATIVE((z) => {
+    globalThis.asCommon['TheDesk:openLink'] = asValue.FN_NATIVE((z) => {
         if (!isAssignableString(z[0])) return
         postMessage(['openUrl', z[0].value], '*')
     })
 
-    const { buttonOnPostbox, init, buttonOnBottom, tips } = global.plugins
+    const { buttonOnPostbox, init, buttonOnBottom, tips } = globalThis.plugins
     for (const target of buttonOnPostbox) {
         const meta = getMeta(target.content).data
         $('#dropdown2').append(`<li><a onclick="execPlugin('${target.id}','buttonOnPostbox', null);">${escapeHTML(meta.name)}</a></li>`)
@@ -120,7 +120,7 @@ export function initPlugin() {
         $('#tips-menu .btnsgroup').append(`<a onclick="tips('custom', '${target.id}')" class="nex waves-effect pluginNex"><span title="${escapeHTML(meta.name)}">${escapeHTML(meta.name).substr(0, 1)}</span></a>`)
     }
     for (const target of init) {
-        const as = new AiScript(global.asCommon)
+        const as = new AiScript(globalThis.asCommon)
         const meta = getMeta(target.content).data
         toast({ html: `${escapeHTML(meta.name)}を実行しました`, displayLength: 1000 })
         if (target) as.exec(asParse(target.content))
@@ -136,7 +136,7 @@ export function getMeta(plugin: string) {
 }
 type ISource = 'buttonOnToot' | 'buttonOnPostbox' | 'tips' | 'none'
 export async function execPlugin(id: string, source: ISource, args?: any) {
-    const ps: IPlugins = global.plugins
+    const ps: IPlugins = globalThis.plugins
     const coh = ps[source]
     let exe: null | string = null
     for (const plugin of coh) {
@@ -145,7 +145,7 @@ export async function execPlugin(id: string, source: ISource, args?: any) {
             break
         }
     }
-    const common = _.cloneDeep(global.asCommon)
+    const common = _.cloneDeep(globalThis.asCommon)
     if (source === 'buttonOnToot') {
         common.DATA = args
         const domain = localStorage.getItem(`domain_${args.acctId}`)
@@ -285,9 +285,9 @@ export async function execPlugin(id: string, source: ISource, args?: any) {
     if (exe) as.exec(asParse(exe))
 }
 export async function testExec(exe: string) {
-    global.asCommon.TOOT = null
-    global.asCommon.ACCT_ID = 0
-    global.asCommon['TheDesk:dialog'] = asValue.FN_NATIVE((z) => {
+    globalThis.asCommon.TOOT = null
+    globalThis.asCommon.ACCT_ID = 0
+    globalThis.asCommon['TheDesk:dialog'] = asValue.FN_NATIVE((z) => {
         if (!isAssignableString(z[0])) return asUtil.jsToVal(null)
         const z2 = isAssignableString(z[2]) ? z[2] : { value: 'info' }
         if (!isSwalIcon(z2.value)) return asUtil.jsToVal(null)
@@ -297,7 +297,7 @@ export async function testExec(exe: string) {
             text: isAssignableString(z[1]) ? z[1].value : ''
         })
     })
-    global.asCommon['TheDesk:confirm'] = asValue.FN_NATIVE(async (z) => {
+    globalThis.asCommon['TheDesk:confirm'] = asValue.FN_NATIVE(async (z) => {
         if (!isAssignableString(z[0])) return asUtil.jsToVal(null)
         const z2 = isAssignableString(z[2]) ? z[2] : { value: 'info' }
         if (!isSwalIcon(z2.value)) return asUtil.jsToVal(null)
@@ -309,17 +309,17 @@ export async function testExec(exe: string) {
         })
         return asUtil.jsToVal(!!(alertSwal.value && alertSwal.value === true))
     })
-    global.asCommon['TheDesk:css'] = asValue.FN_NATIVE((z) => {
+    globalThis.asCommon['TheDesk:css'] = asValue.FN_NATIVE((z) => {
         if (!isAssignableString(z[0])) return asUtil.jsToVal(null)
         if (!isAssignableString(z[1])) return asUtil.jsToVal(null)
         if (!isAssignableString(z[2])) return asUtil.jsToVal(null)
         $(escapeHTML(z[0].value)).css(escapeHTML(z[1].value), escapeHTML(z[2].value))
     })
-    global.asCommon['TheDesk:openLink'] = asValue.FN_NATIVE((z) => {
+    globalThis.asCommon['TheDesk:openLink'] = asValue.FN_NATIVE((z) => {
         if (!isAssignableString(z[0])) return asUtil.jsToVal(null)
         postMessage(['openUrl', z[0].value], '*')
     })
-    global.asCommon['TheDesk:changeText'] = asValue.FN_NATIVE(() => {
+    globalThis.asCommon['TheDesk:changeText'] = asValue.FN_NATIVE(() => {
         Swal.fire({
             icon: 'info',
             title: 'changeText is cannot use on try exec.',
@@ -327,7 +327,7 @@ export async function testExec(exe: string) {
         })
         return asUtil.jsToVal(true)
     })
-    global.asCommon['TheDesk:refreshTipsView'] = asValue.FN_NATIVE(() => {
+    globalThis.asCommon['TheDesk:refreshTipsView'] = asValue.FN_NATIVE(() => {
         Swal.fire({
             icon: 'info',
             title: 'refreshTipsView is cannot use on try exec.',
@@ -335,7 +335,7 @@ export async function testExec(exe: string) {
         })
         return asUtil.jsToVal(true)
     })
-    global.asCommon['TheDesk:postText'] = asValue.FN_NATIVE(() => {
+    globalThis.asCommon['TheDesk:postText'] = asValue.FN_NATIVE(() => {
         Swal.fire({
             icon: 'info',
             title: 'postText is cannot use on try exec.',
@@ -343,7 +343,7 @@ export async function testExec(exe: string) {
         })
         return asUtil.jsToVal(true)
     })
-    global.asCommon['TheDesk:postCW'] = asValue.FN_NATIVE(() => {
+    globalThis.asCommon['TheDesk:postCW'] = asValue.FN_NATIVE(() => {
         Swal.fire({
             icon: 'info',
             title: 'postCW is cannot use on try exec.',
@@ -351,7 +351,7 @@ export async function testExec(exe: string) {
         })
         return asUtil.jsToVal(true)
     })
-    global.asCommon['TheDesk:postNSFW'] = asValue.FN_NATIVE(() => {
+    globalThis.asCommon['TheDesk:postNSFW'] = asValue.FN_NATIVE(() => {
         Swal.fire({
             icon: 'info',
             title: 'postNSFW is cannot use on try exec.',
@@ -359,7 +359,7 @@ export async function testExec(exe: string) {
         })
         return asUtil.jsToVal(true)
     })
-    global.asCommon['TheDesk:postVis'] = asValue.FN_NATIVE(() => {
+    globalThis.asCommon['TheDesk:postVis'] = asValue.FN_NATIVE(() => {
         Swal.fire({
             icon: 'info',
             title: 'postVis is cannot use on try exec.',
@@ -367,7 +367,7 @@ export async function testExec(exe: string) {
         })
         return asUtil.jsToVal(true)
     })
-    global.asCommon['TheDesk:postClearbox'] = asValue.FN_NATIVE(() => {
+    globalThis.asCommon['TheDesk:postClearbox'] = asValue.FN_NATIVE(() => {
         Swal.fire({
             icon: 'info',
             title: 'postClearbox is cannot use on try exec.',
@@ -375,7 +375,7 @@ export async function testExec(exe: string) {
         })
         return asUtil.jsToVal(true)
     })
-    global.asCommon['TheDesk:postExec'] = asValue.FN_NATIVE(() => {
+    globalThis.asCommon['TheDesk:postExec'] = asValue.FN_NATIVE(() => {
         Swal.fire({
             icon: 'info',
             title: 'postExec is cannot use on try exec. It only returns {}',
@@ -383,7 +383,7 @@ export async function testExec(exe: string) {
         })
         return asUtil.jsToVal(true)
     })
-    global.asCommon['TheDesk:api'] = asValue.FN_NATIVE(async (z) => {
+    globalThis.asCommon['TheDesk:api'] = asValue.FN_NATIVE(async (z) => {
         try {
             if (!isAssignableString(z[0])) return asUtil.jsToVal(null)
             if (!isAssignableString(z[1])) return asUtil.jsToVal(null)
@@ -411,7 +411,7 @@ export async function testExec(exe: string) {
         }
 
     })
-    global.asCommon['TheDesk:getRequest'] = asValue.FN_NATIVE(async (z) => {
+    globalThis.asCommon['TheDesk:getRequest'] = asValue.FN_NATIVE(async (z) => {
         Swal.fire({
             icon: 'info',
             title: 'getRequest is cannot use on try exec. It only returns {}',
@@ -420,7 +420,7 @@ export async function testExec(exe: string) {
         return asUtil.jsToVal({})
     })
     try {
-        const as = new AiScript(global.asCommon)
+        const as = new AiScript(globalThis.asCommon)
         if (exe) as.exec(asParse(exe))
     } catch (e: any) {
         console.log(e)

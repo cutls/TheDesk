@@ -50,11 +50,11 @@ $(document).on('click', 'a', e => {
 					udgEx(url, acctId)
 					return false
 				} else {
-					if (!global.pwa) postMessage(['openUrl', url], '*')
+					if (!globalThis.pwa) postMessage(['openUrl', url], '*')
 				}
 			}
 		} else {
-			if (global.pwa) return
+			if (globalThis.pwa) return
 			//hrefがhttp/httpsならブラウザで
 			if (urls) {
 				if (urls[0]) {
@@ -170,8 +170,8 @@ onmessage = function (e) {
 	}
 }
 /* PWA */
-if (global.pwa) {
-	global.poseMessage = function (e) {
+if (globalThis.pwa) {
+	globalThis.poseMessage = function (e) {
 		if (e[0] === 'openUrl') {
 			const urls = e[1].match(/https?:\/\/(.+)/)
 			if (urls) {

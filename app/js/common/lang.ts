@@ -36,4 +36,4 @@ const langs = {
     siLK,
     ps
 }
-export default langs[global.useLang] as typeof ja
+export default langs[globalThis.useLang] as typeof ja

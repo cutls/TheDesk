@@ -293,6 +293,6 @@ export function initWebviewEvent() {
 export function twemojiParse<T extends string | HTMLElement>(target: T): T {
     return twemoji.parse(
         target,
-        { base: `../../${global.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/` }
+        { base: `../../${globalThis.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/` }
     )
 }

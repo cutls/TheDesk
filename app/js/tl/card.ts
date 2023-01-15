@@ -121,9 +121,9 @@ export function cardHtml(json: Card, acctId: string, id: string) {
 			const title = isHad ? lang.lang_cards_trusted : lang.lang_cards_untrusted
 			if (isHad) {
 				prved = `<img class="emoji" draggable="false" alt="✅" 
-					src="../../${global.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/2705.png">`
+					src="../../${globalThis.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/2705.png">`
 			} else {
-				prved = `<img class="emoji" draggable="false" alt="⚠️" src="../../${global.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/26a0.png">`
+				prved = `<img class="emoji" draggable="false" alt="⚠️" src="../../${globalThis.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/26a0.png">`
 			}
 			analyze = `<a onclick="cardHtmlShow('${acctId}','${id}')" class="add-show pointer" title="${title}">
 							${lang.lang_parse_html}(${domain})${prved}

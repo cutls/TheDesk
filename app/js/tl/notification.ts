@@ -168,10 +168,10 @@ export async function notfCommon(acctId: string, tlid: string, isStreamOnly: boo
 }
 let errorCt = 0
 function notfWS(acctId: string, tlid: string, domain: string, at: string) {
-    if (global.mastodonBaseWsStatus[domain] === 'available') return false
+    if (globalThis.mastodonBaseWsStatus[domain] === 'available') return false
     const wss = localStorage.getItem('streaming_' + acctId) || 'wss://' + domain
     const start = `${wss}/api/v1/streaming/?stream=user&access_token=${at}`
-    const websocketNotf: WebSocket[] = global.websocketNotf
+    const websocketNotf: WebSocket[] = globalThis.websocketNotf
     websocketNotf[acctId] = new WebSocket(start)
     websocketNotf[acctId].onopen = function (mess) {
         console.table({
@@ -241,14 +241,14 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
 }
 //一定のスクロールで発火
 export function notfMore(tlid: string) {
-    console.log({ status: 'kicked', statusBool: global.moreLoading })
+    console.log({ status: 'kicked', statusBool: globalThis.moreLoading })
     const obj = getColumn()
     const acctId = obj[tlid].domain
     const sid = $(`#timeline_${tlid} .notif-marker`).last().attr('data-maxid')
     const domain = localStorage.getItem(`domain_${acctId}`)
     const at = localStorage.getItem(`acct_${acctId}_at`)
-    if (sid && !global.moreLoading) {
-        global.moreLoading = true
+    if (sid && !globalThis.moreLoading) {
+        globalThis.moreLoading = true
         const httpreq = new XMLHttpRequest()
         const misskey = false
         let exc = '?max_id=' + sid
@@ -290,7 +290,7 @@ export function notfMore(tlid: string) {
                             template = status ? parse([status], 'notf', acctId, 'notf', popup, mute) : userParse([obj.account], acctId, type, 'notf', -1)
                         }
                     }
-                    global.moreLoading = false
+                    globalThis.moreLoading = false
                     template = template + `<div class="hide notif-marker" data-maxid="${maxId}"></div>`
                     $('#timeline_' + tlid).append(template)
                     // $('#landing_' + tlid).hide()

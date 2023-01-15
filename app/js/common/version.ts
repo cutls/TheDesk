@@ -8,8 +8,8 @@ import $ from 'jquery'
 
 //バージョンチェッカー
 export async function verck(ver: string) {
-	if (global.store) return false
-	const pwa = global.pwa
+	if (globalThis.store) return false
+	const pwa = globalThis.pwa
 	console.log('%c Welcome😊 ' + ver, 'color: red;font-size:200%;')
 	$('body').addClass(localStorage.getItem('platform') || '')
 	const date = new Date()

@@ -38,7 +38,7 @@ export function ck() {
 		$('#tl').show()
 		ticker()
 		multiSelector(false)
-		verck(global.ver)
+		verck(globalThis.ver)
 		$('.stw').show()
 		const tipsName = localStorage.getItem('tips') || ''
 		const matchCID = /custom:([abcdef0-9]{8}-[abcdef0-9]{4}-4[abcdef0-9]{3}-[abcdef0-9]{4}-[abcdef0-9]{12})/

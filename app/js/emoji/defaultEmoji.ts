@@ -14,7 +14,7 @@ const defaultEmojiDict = {
 	symbol: emojiPack.symbol
 }
 function getEmojiName (target: string) {
-	if (global.useLang === 'ja') {
+	if (globalThis.useLang === 'ja') {
 		const defaultEmojiName = {
 			activity: '活動',
 			flag: '国旗',

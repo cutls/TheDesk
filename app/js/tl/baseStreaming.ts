@@ -16,8 +16,8 @@ import { userParse } from "./userParse"
 import $ from 'jquery'
 
 //MastodonBaseStreaming
-global.mastodonBaseWs = {}
-global.mastodonBaseWsStatus = {}
+globalThis.mastodonBaseWs = {}
+globalThis.mastodonBaseWsStatus = {}
 type IWSStatus = 'undetected' | 'connecting' | 'available' | 'cannotuse'
 interface TLMeta {
     id: number
@@ -29,8 +29,8 @@ export function mastodonBaseStreaming(acctId: string) {
     console.log('start to connect mastodonBaseStreaming of ' + acctId)
     notfCommon(acctId, '0', false)
     const domain = localStorage.getItem(`domain_${acctId}`) || ''
-    const mastodonBaseWsStatus: { [key: string]: IWSStatus } = global.mastodonBaseWsStatus
-    const mastodonBaseWs: { [key: string]: WebSocket | null } = global.mastodonBaseWs
+    const mastodonBaseWsStatus: { [key: string]: IWSStatus } = globalThis.mastodonBaseWsStatus
+    const mastodonBaseWs: { [key: string]: WebSocket | null } = globalThis.mastodonBaseWs
     if (mastodonBaseWsStatus[domain]) return
     mastodonBaseWsStatus[domain] = 'undetected'
     const at = localStorage.getItem(`acct_${acctId}_at`)

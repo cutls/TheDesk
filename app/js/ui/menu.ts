@@ -1,8 +1,5 @@
 import $ from 'jquery'
-require("jquery-ui/ui/widgets/draggable.js")
-require("jquery-ui/ui/widgets/resizable.js")
-import 'jquery-ui'
-
+declare var jQuery
 export function menu() {
   localStorage.setItem('menu-done', 'true')
   $('#fukidashi').addClass('hide')
@@ -48,7 +45,7 @@ export function menu() {
 
 }
 $(function () {
-  $('#menu').draggable({
+  jQuery('#menu').draggable({
     handle: '#menu-bar',
     stop: function () {
       let left = $('#menu').offset()?.left || 0
@@ -71,7 +68,7 @@ $(function () {
       localStorage.setItem('menu-top', top.toString())
     }
   })
-  $('#menu').resizable({
+  jQuery('#menu').resizable({
     minHeight: 150,
     minWidth: 200,
     stop: function (event, ui) {

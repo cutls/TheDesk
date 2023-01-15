@@ -39,8 +39,8 @@ export function tips(mode: ITips, custom?: any) {
 	if (mode === 'ver') {
 		tipsToggle()
 		$('#tips-text').html(
-			`<img src="../../img/desk.png" width="20" onclick="todo('TheDesk is a nice client!: TheDesk ${localStorage.getItem('ver')} git: ${global.gitHash}')">
-			${localStorage.getItem('ver')} {${global.gitHash.slice(0, 7)}}
+			`<img src="../../img/desk.png" width="20" onclick="todo('TheDesk is a nice client!: TheDesk ${localStorage.getItem('ver')} git: ${globalThis.gitHash}')">
+			${localStorage.getItem('ver')} {${globalThis.gitHash.slice(0, 7)}}
 			[<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]`
 		)
 		localStorage.setItem('tips', 'ver')

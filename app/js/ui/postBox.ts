@@ -8,6 +8,7 @@ import { loadVis } from "../post/secure"
 import { srcBox } from "../tl/src"
 import { tShowBox } from "../tl/tag"
 import $ from 'jquery'
+declare var jQuery
 
 //✕隠す
 export function hide() {
@@ -69,7 +70,7 @@ export function show() {
 }
 
 $(function () {
-	$('#post-box').draggable({
+	jQuery('#post-box').draggable({
 		handle: '#post-bar',
 		stop: function () {
 			let left = $('#post-box').offset()?.left || 0
@@ -92,7 +93,7 @@ $(function () {
 			localStorage.setItem('postbox-top', top.toString())
 		},
 	})
-	$('#post-box').resizable({
+	jQuery('#post-box').resizable({
 		minHeight: 150,
 		minWidth: 100,
 		stop: function (event, ui) {
@@ -126,8 +127,8 @@ export function initPostbox() {
 			hide()
 		}
 		$('.cvo').removeClass('selectedToot')
-		global.selectedColumn = 0
-		global.selectedToot = 0
+		globalThis.selectedColumn = 0
+		globalThis.selectedToot = 0
 	})
 
 	$('#timeline-container,#group').click(function (e) {
@@ -137,8 +138,8 @@ export function initPostbox() {
 			}
 		}
 		$('.cvo').removeClass('selectedToot')
-		global.selectedColumn = 0
-		global.selectedToot = 0
+		globalThis.selectedColumn = 0
+		globalThis.selectedToot = 0
 		localStorage.removeItem('nohide')
 		srcBox('close')
 		tShowBox('close')
@@ -150,8 +151,8 @@ export function initPostbox() {
 		}
 		//setTimeout(remove, 100);
 		$('.cvo').removeClass('selectedToot')
-		global.selectedColumn = 0
-		global.selectedToot = 0
+		globalThis.selectedColumn = 0
+		globalThis.selectedToot = 0
 	})
 }
 

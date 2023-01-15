@@ -21,9 +21,9 @@ import { goTop, scrollCk, scrollEvent } from "../ui/scroll"
 import { parseColumn } from "../ui/layout"
 
 //TL取得
-global.moreLoading = false
-global.websocketOld = []
-global.websocketNew = []
+globalThis.moreLoading = false
+globalThis.websocketOld = []
+globalThis.websocketNew = []
 let errorCt = 0
 export const tlTypes = ['home', 'local', 'local-media', 'pub', 'pub-media', 'tag', 'list', 'notf', 'noauth', 'dm', 'mix', 'plus', 'webview', 'tootsearch', 'bookmark', 'utl', 'fav']
 export const isColumnType = (item: string): item is IColumnType => tlTypes.includes(item)
@@ -161,7 +161,7 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 function reload(type: IColumnType, acctId: string, tlid: string, data: IColumnData | undefined, mute: string[], voice: boolean) {
     const domain = localStorage.getItem(`domain_${acctId}`) || ''
     localStorage.setItem('now', type)
-    const mastodonBaseWsStatus = global.mastodonBaseWsStatus
+    const mastodonBaseWsStatus = globalThis.mastodonBaseWsStatus
     if (mastodonBaseWsStatus[domain] === 'cannotuse') {
         oldStreaming(type, acctId, tlid, data, mute, voice)
     } else if (mastodonBaseWsStatus[domain] === 'undetected' || mastodonBaseWsStatus[domain] === 'connecting') {
@@ -188,7 +188,7 @@ function stremaingSubscribe(type: IColumnType, acctId: string, data?: IColumnDat
     const domain = localStorage.getItem(`domain_${acctId}`) || ''
     if (type === 'home') return false
     if (type === 'local' || type === 'mix') { stream = 'public:local' } else if (type === 'local-media') { stream = 'public:local:media' } else if (type === 'pub') { stream = 'public' } else if (type === 'pub-media') { stream = 'public:media' } else if (type === 'list') {
-        global.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: 'list', list: data }))
+        globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: 'list', list: data }))
         return true
     } else if (type === 'tag') {
         if (!data || !isTagData(data)) return Swal.fire('Error migration to v24')
@@ -198,11 +198,11 @@ function stremaingSubscribe(type: IColumnType, acctId: string, data?: IColumnDat
         if (data.any) arr = arr.concat(data.any)
         if (data.all) arr = arr.concat(data.all)
         for (const tag of arr) {
-            global.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: 'hashtag', tag: tag }))
+            globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: 'hashtag', tag: tag }))
         }
         return true
     }
-    global.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: stream }))
+    globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: stream }))
 }
 
 function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: IColumnData | undefined, mute: string[], voice: boolean, mode?: 'error') {
@@ -234,7 +234,7 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
     } else if (type === 'dm') {
         start = wss + '/api/v1/streaming/?stream=direct&access_token=' + at
     }
-    const websocket = global.websocketNew
+    const websocket = globalThis.websocketNew
     const wsid = websocket.length
     localStorage.setItem('wss_' + tlid, wsid)
     websocket[wsid] = new WebSocket(start)
@@ -331,7 +331,7 @@ export async function moreLoad(tlid: string) {
     const sid = $(`#timeline_${tlid} .cvo`)
         .last()
         .attr('unique-id')
-    if (sid && !global.moreLoading) {
+    if (sid && !globalThis.moreLoading) {
         if (type === 'mix') {
             mixMore(tlid, 'mix')
             return
@@ -352,7 +352,7 @@ export async function moreLoad(tlid: string) {
             getUtl(acctId.toString(), tlid, data, true)
             return
         }
-        global.moreLoading = true
+        globalThis.moreLoading = true
         localStorage.setItem('now', type)
         todo(cap(type) + ' TL MoreLoading')
         const domain = localStorage.getItem(`domain_${acctId}`) || acctId
@@ -376,7 +376,7 @@ export async function moreLoad(tlid: string) {
         $('#timeline_' + tlid).append(template)
         additional(acctId.toString(), tlid)
         timeUpdate()
-        global.moreLoading = false
+        globalThis.moreLoading = false
         todc()
     }
 }
@@ -400,7 +400,7 @@ export async function tlDiff(type: IColumnType, data: IColumnData | undefined, a
     const sid = $(`#timeline_${tlid} .cvo`)
         .first()
         .attr('unique-id')
-    if (sid && !global.moreLoading) {
+    if (sid && !globalThis.moreLoading) {
         if (type === 'mix') {
             return
         } else if (type === 'plus') {
@@ -408,7 +408,7 @@ export async function tlDiff(type: IColumnType, data: IColumnData | undefined, a
         } else if (type === 'notf') {
             return
         }
-        global.moreLoading = true
+        globalThis.moreLoading = true
         localStorage.setItem('now', type)
         todo(cap(type) + ' TL MoreLoading')
         const domain = localStorage.getItem(`domain_${acctId}`) || acctId
@@ -432,16 +432,16 @@ export async function tlDiff(type: IColumnType, data: IColumnData | undefined, a
         $('#timeline_' + tlid).prepend(template)
         additional(acctId, tlid)
         timeUpdate()
-        global.moreLoading = false
+        globalThis.moreLoading = false
         todc()
     }
 }
 //WebSocket切断
 export function tlCloser() {
-    const websocket = global.websocketNew
+    const websocket = globalThis.websocketNew
     for (const tlid of Object.keys(websocket)) {
-        if (global.websocketOld[tlid]) {
-            global.websocketOld[tlid].close()
+        if (globalThis.websocketOld[tlid]) {
+            globalThis.websocketOld[tlid].close()
             console.log('%c Close Streaming API: Old' + tlid, 'color:blue')
         }
         if (websocket[0]) {
@@ -450,19 +450,19 @@ export function tlCloser() {
             console.log('%c Close Streaming API:' + tlid, 'color:blue')
         }
     }
-    global.websocketNew = []
-    global.websocketOld = []
-    for (const wsHome of global.wsHome) {
+    globalThis.websocketNew = []
+    globalThis.websocketOld = []
+    for (const wsHome of globalThis.wsHome) {
         wsHome.close()
         console.log('%c Close Streaming API:Integrated Home', 'color:blue')
     }
-    global.wsHome = []
-    for (const wsLocal of global.wsLocal) {
+    globalThis.wsHome = []
+    for (const wsLocal of globalThis.wsLocal) {
         wsLocal.close()
         console.log('%c Close Streaming API:Integrated Local', 'color:blue')
     }
-    global.wsLocal = []
-    for (const wsNotf of global.websocketNotf) {
+    globalThis.wsLocal = []
+    for (const wsNotf of globalThis.websocketNotf) {
         wsNotf.close()
         console.log('%c Close Streaming API:Notf', 'color:blue')
     }
@@ -617,15 +617,15 @@ export function reconnector(tlid: string, type: IColumnType, acctId: string, dat
         const voice = !!localStorage.getItem('voice_' + tlid)
         const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
         const wssh = parseInt(localStorage.getItem('wssH_' + tlid) || '0', 10)
-        global.wsHome[wssh].close()
+        globalThis.wsHome[wssh].close()
         const wssl = parseInt(localStorage.getItem('wssL_' + tlid) || '0', 10)
-        global.wsLocal[wssl].close()
+        globalThis.wsLocal[wssl].close()
         mixre(acctId, tlid, type, mute, voice, mode)
     } else if (type === 'notf') {
         notfColumn(acctId, tlid)
     } else {
         const wss = localStorage.getItem('wss_' + tlid) || '0'
-        global.websocket[wss].close()
+        globalThis.websocket[wss].close()
     }
     toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
 }
@@ -636,7 +636,7 @@ export function columnReload(tlid: string, type: IColumnType) {
     const obj = getColumn()
     const acctId = obj[tlid].domain
     const domain = localStorage.getItem('domain_' + acctId) || ''
-    if (global.mastodonBaseWsStatus[domain] === 'available') {
+    if (globalThis.mastodonBaseWsStatus[domain] === 'available') {
         stremaingSubscribe(type, acctId, obj[tlid].data, true)
         parseColumn(tlid, true)
         return true
@@ -645,9 +645,9 @@ export function columnReload(tlid: string, type: IColumnType) {
         const voice = !!localStorage.getItem('voice_' + tlid)
         const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
         const wssh = parseInt(localStorage.getItem('wssH_' + tlid) || '0', 10)
-        global.wsHome[wssh].close()
+        globalThis.wsHome[wssh].close()
         const wssl = parseInt(localStorage.getItem('wssL_' + tlid) || '0', 10)
-        global.wsLocal[wssl].close()
+        globalThis.wsLocal[wssl].close()
         parseColumn(tlid)
     } else if (type === 'notf') {
         $('#notice_icon_' + tlid).removeClass('red-text')
@@ -660,7 +660,7 @@ export function columnReload(tlid: string, type: IColumnType) {
         getFav(acctId, tlid, false)
     } else {
         const wss = parseInt(localStorage.getItem('wss_' + tlid) || '0', 10)
-        global.websocket[wss].close()
+        globalThis.websocket[wss].close()
         parseColumn(tlid, false)
     }
 }
@@ -731,14 +731,14 @@ export async function showUnread(tlidNum: number, type: IColumnType, acctId: str
     timeUpdate()
     todc()
 }
-global.ueloadlock = false
+globalThis.ueloadlock = false
 
 export async function ueLoad(tlidStr: string) {
     const tlid = parseInt(tlidStr, 10)
-    if (global.ueloadlock) {
+    if (globalThis.ueloadlock) {
         return false
     }
-    global.ueloadlock = true
+    globalThis.ueloadlock = true
     const obj = getColumn()
     const acctId = obj[tlid].domain
     const type = obj[tlid].type
@@ -771,7 +771,7 @@ export async function ueLoad(tlidStr: string) {
     additional(acctId.toString(), tlidStr)
     timeUpdate()
     todc()
-    global.ueloadlock = false
+    globalThis.ueloadlock = false
 }
 
 export async function asRead(callback?: boolean) {
@@ -844,7 +844,7 @@ export function asReadEnd() {
 }
 //ブックマーク
 function getBookmark(acctId: string, tlid: string, more?: boolean) {
-    global.moreLoading = true
+    globalThis.moreLoading = true
     console.log(acctId, tlid, more)
     let ad = ''
     if (more) {
@@ -882,7 +882,7 @@ function getBookmark(acctId: string, tlid: string, more?: boolean) {
             }
             $('#landing_' + tlid).hide()
             timeUpdate()
-            global.moreLoading = false
+            globalThis.moreLoading = false
             todc()
         }
     }
@@ -890,7 +890,7 @@ function getBookmark(acctId: string, tlid: string, more?: boolean) {
 
 //お気に入り
 function getFav(acctId: string, tlid: string, more?: boolean) {
-    global.moreLoading = true
+    globalThis.moreLoading = true
     console.log(acctId, tlid, more)
     let ad = ''
     if (more) {
@@ -928,7 +928,7 @@ function getFav(acctId: string, tlid: string, more?: boolean) {
             }
             $('#landing_' + tlid).hide()
             timeUpdate()
-            global.moreLoading = false
+            globalThis.moreLoading = false
             todc()
         }
     }
@@ -936,7 +936,7 @@ function getFav(acctId: string, tlid: string, more?: boolean) {
 
 async function getUtl(acctId: string, tlid: string, data: IColumnData, more: boolean) {
 
-    global.moreLoading = true
+    globalThis.moreLoading = true
     let ad = ''
     if (more) {
         const sid = $('#timeline_' + tlid + ' .cvo').last().attr('unique-id')
@@ -964,7 +964,7 @@ async function getUtl(acctId: string, tlid: string, data: IColumnData, more: boo
     }
     $('#landing_' + tlid).hide()
     timeUpdate()
-    global.moreLoading = false
+    globalThis.moreLoading = false
     todc()
 }
 //Announcement

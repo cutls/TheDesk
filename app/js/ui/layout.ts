@@ -1,7 +1,5 @@
 //レイアウトの設定
 import $ from 'jquery'
-require("jquery-ui/ui/widgets/draggable.js")
-require("jquery-ui/ui/widgets/resizable.js")
 import 'jquery-ui'
 import Swal from 'sweetalert2'
 import { IColumnData, IColumnType, IColumnUTL } from '../../interfaces/Storage'
@@ -19,15 +17,16 @@ import { tlCloser, tlDiff, tl, isColumnType } from '../tl/tl'
 import { show } from './postBox'
 import { goTop } from './scroll'
 import { sortLoad } from './sort'
+declare var jQuery
 
 const isSetAsRead = localStorage.getItem('setasread') === 'yes'
 const anime = (localStorage.getItem('animation') || 'yes') === 'yes'
 const markers = localStorage.getItem('markers') === 'yes'
 const smallHeader = localStorage.getItem('smallHeader') === 'yes'
 
-global.wsHome = []
-global.wsLocal = []
-global.websocketNotf = []
+globalThis.wsHome = []
+globalThis.wsLocal = []
+globalThis.websocketNotf = []
 
 //カラム追加ボックストグル
 function addColumnMenu() {
@@ -83,7 +82,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 	} else {
 		if ($('#timeline-container').length) {
 			$('#timeline-container').html('')
-			$('.box, .boxIn').resizable('destroy')
+			jQuery('.box, .boxIn').resizable('destroy')
 		}
 	}
 	let basekey = 0
@@ -412,7 +411,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			}
 		}
 	}
-	$('.box, .boxIn').resizable({
+	jQuery('.box, .boxIn').resizable({
 		minHeight: 50,
 		minWidth: 50,
 		grid: 50,

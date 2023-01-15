@@ -58,7 +58,7 @@ const envView: any = Vue.createApp({
         },
     },
 }).mount('#envView')
-global.envView = envView
+globalThis.envView = envView
 const tlView: any = Vue.createApp({
     data() { return { config: tlConstruction } },
     methods: {
@@ -84,7 +84,7 @@ const tlView: any = Vue.createApp({
         },
     },
 }).mount('#tlView')
-global.tlView = tlView
+globalThis.tlView = tlView
 const postView: any = Vue.createApp({
     data() {
         return {
@@ -116,7 +116,7 @@ const postView: any = Vue.createApp({
         },
     },
 }).mount('#postView')
-global.postView
+globalThis.postView
 //設定ボタン押した。
 export function settings() {
     const fontd = $('#font').val()?.toString() || ''

@@ -18,6 +18,7 @@ export default function () {
 		e.sender.send('custom-css-create-complete', '')
 	})
 	ipc.on('custom-css-request', function (e, arg) {
+		if (!fs.existsSync(customcss)) return
 		const css = fs.readFileSync(customcss, 'utf8').toString() || ''
 		e.sender.send('custom-css-response', css)
 	})
@@ -46,6 +47,7 @@ export default function () {
 	ipc.on('theme-json-request', function (e, arg) {
 		let raw = ''
 		try {
+			if (!arg) return
 			const themecss = join(app.getAppPath(), '/source/themes', arg)
 			raw = fs.readFileSync(themecss, 'utf8')
 		} catch {

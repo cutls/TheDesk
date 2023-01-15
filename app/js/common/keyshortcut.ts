@@ -1,5 +1,5 @@
-global.selectedColumn = 0
-global.selectedToot = 0
+globalThis.selectedColumn = 0
+globalThis.selectedToot = 0
 import $ from 'jquery'
 import { makeNewList } from '../tl/list'
 import { src, srcBox } from '../tl/src'
@@ -181,20 +181,20 @@ $(function ($) {
 					imgCont('prev')
 					return false
 				}
-				if (global.selectedColumn > 0) {
-					global.selectedColumn--
+				if (globalThis.selectedColumn > 0) {
+					globalThis.selectedColumn--
 				}
-				tootSelector(global.selectedColumn, global.selectedToot)
+				tootSelector(globalThis.selectedColumn, globalThis.selectedToot)
 				return false
 			} else if (e.code === 'ArrowUp') {
 				//up
 				if ($('#imagemodal').hasClass('open')) {
 					return false
 				}
-				if (global.selectedToot > 0) {
-					global.selectedToot--
+				if (globalThis.selectedToot > 0) {
+					globalThis.selectedToot--
 				}
-				tootSelector(global.selectedColumn, global.selectedToot)
+				tootSelector(globalThis.selectedColumn, globalThis.selectedToot)
 				return false
 			} else if (e.code === 'ArrowRight') {
 				//right
@@ -202,49 +202,49 @@ $(function ($) {
 					imgCont('next')
 					return false
 				}
-				if (global.selectedColumn < $('.tl-box').length - 1) {
-					global.selectedColumn++
+				if (globalThis.selectedColumn < $('.tl-box').length - 1) {
+					globalThis.selectedColumn++
 				}
-				tootSelector(global.selectedColumn, global.selectedToot)
+				tootSelector(globalThis.selectedColumn, globalThis.selectedToot)
 				return false
 			} else if (e.code === 'ArrowDown') {
 				//down
 				if ($('#imagemodal').hasClass('open')) {
 					return false
 				}
-				global.selectedToot++
-				tootSelector(global.selectedColumn, global.selectedToot)
+				globalThis.selectedToot++
+				tootSelector(globalThis.selectedColumn, globalThis.selectedToot)
 				return false
 			}
 			//Ctrl+U:0,0選択
 			if (e.ctrlKey || e.metaKey) {
 				if (e.keyCode === 85) {
-					global.selectedToot = 0
-					global.selectedColumn = 0
+					globalThis.selectedToot = 0
+					globalThis.selectedColumn = 0
 					tootSelector(0, 0)
 					return false
 				}
 			}
 			//選択時
 			if (e.keyCode === 70) {
-				const id = $('.global.selectedToot').attr('unique-id')
-				const acct_id = $('#timeline_' + global.selectedColumn).attr('data-acct')
+				const id = $('.globalThis.selectedToot').attr('unique-id')
+				const acct_id = $('#timeline_' + globalThis.selectedColumn).attr('data-acct')
 				if (!id || !acct_id) return toast('cannot action')
 				fav(id, acct_id, false)
 				return false
 			}
 			if (e.keyCode === 66) {
-				const id = $('.global.selectedToot').attr('unique-id')
-				const acct_id = $('#timeline_' + global.selectedColumn).attr('data-acct')
+				const id = $('.globalThis.selectedToot').attr('unique-id')
+				const acct_id = $('#timeline_' + globalThis.selectedColumn).attr('data-acct')
 				if (!id || !acct_id) return toast('cannot action')
 				rt(id, acct_id, false)
 				return false
 			}
 			if (e.keyCode === 82) {
-				const id = $('.global.selectedToot').attr('unique-id')
-				const acct_id = $('#timeline_' + global.selectedColumn).attr('data-acct')
-				const ats_cm = $('.global.selectedToot .rep-btn').attr('data-men')
-				const mode = $('.global.selectedToot .rep-btn').attr('data-visen') || ''
+				const id = $('.globalThis.selectedToot').attr('unique-id')
+				const acct_id = $('#timeline_' + globalThis.selectedColumn).attr('data-acct')
+				const ats_cm = $('.globalThis.selectedToot .rep-btn').attr('data-men')
+				const mode = $('.globalThis.selectedToot .rep-btn').attr('data-visen') || ''
 				const cwTxt = $('#cw-text').val()?.toString() || ''
 				if (!id || !acct_id || !ats_cm || !isIVis(mode)) return toast('cannot action')
 				re(id, ats_cm, acct_id, mode, cwTxt)
@@ -276,20 +276,20 @@ $(function ($) {
 })
 //選択する
 function tootSelector(column, toot) {
-	$('.cvo').removeClass('global.selectedToot')
+	$('.cvo').removeClass('globalThis.selectedToot')
 	$('#timeline_' + column + ' .cvo')
 		.eq(toot)
-		.addClass('global.selectedToot')
+		.addClass('globalThis.selectedToot')
 	const scr = $('.tl-box[tlid=' + column + ']').scrollTop() || 0
-	const elem = $('.global.selectedToot').offset()?.top || 0
+	const elem = $('.globalThis.selectedToot').offset()?.top || 0
 	let top = elem - ($('.tl-box').height() || 0) + scr
 	if (top > 0) {
-		top = top + ($('.global.selectedToot').height() || 0)
+		top = top + ($('.globalThis.selectedToot').height() || 0)
 		if (top > scr) {
 			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: top })
 		}
 	} else if (elem < 0) {
-		const to = scr + elem - ($('.global.selectedToot').height() || 0)
+		const to = scr + elem - ($('.globalThis.selectedToot').height() || 0)
 		if (to < scr) {
 			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: to })
 		}

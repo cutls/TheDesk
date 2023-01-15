@@ -11,10 +11,9 @@ import timeUpdate from '../common/time'
 import { parse } from './parse'
 import { say } from './speech'
 import { scrollCk } from '../ui/scroll'
-declare const jQuery
 
 //Integrated TL
-const mastodonBaseWsStatus = global.mastodonBaseWsStatus
+const mastodonBaseWsStatus = globalThis.mastodonBaseWsStatus
 let lastId: string
 let beforeLastId: string
 export async function mixTl(acctId, tlid, type: 'plus' | 'mix', voice?: boolean) {
@@ -45,12 +44,12 @@ export async function mixTl(acctId, tlid, type: 'plus' | 'mix', voice?: boolean)
 				mixre(acctId, tlid, 'mix', mute, voice)
 				clearInterval(mbws)
 			} else if (mastodonBaseWsStatus[domain] === 'available') {
-				global.mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
+				globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 				clearInterval(mbws)
 			}
 		}, 1000)
 	} else if (mastodonBaseWsStatus[domain] === 'available') {
-		global.mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
+		globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 	}
 
 	$(window).scrollTop(0)
@@ -76,8 +75,8 @@ export function mixre(acctId: string, tlid: string, TLtype: IColumnType, mute: s
 	const wss = localStorage.getItem('streaming_' + acctId) || 'wss://' + domain
 	const startHome = `${wss}/api/v1/streaming/?stream=user&access_token=${at}`
 	const startLocal = `${wss}/api/v1/streaming/?stream=public:local&access_token=${at}`
-	const wsHome: WebSocket[] = global.wsHome
-	const wsLocal: WebSocket[] = global.wsHome
+	const wsHome: WebSocket[] = globalThis.wsHome
+	const wsLocal: WebSocket[] = globalThis.wsHome
 	const wsHId = wsHome.length
 	const wsLId = wsLocal.length
 	wsHome[wsHId] = new WebSocket(startHome)
@@ -200,7 +199,7 @@ export async function mixMore(tlid: string, type: IColumnType) {
 	const obj = getColumn()
 	const tlidNum = parseInt(tlid, 10)
 	const acctId = obj[tlidNum].domain.toString()
-	global.moreLoading = true
+	globalThis.moreLoading = true
 	todo('Integrated TL MoreLoading...(Local)')
 	const domain = localStorage.getItem('domain_' + acctId)
 	const sid = $('#timeline_' + tlid + ' .cvo')
@@ -221,6 +220,6 @@ export async function mixMore(tlid: string, type: IColumnType) {
 	$('#timeline_' + tlid).append(template)
 	additional(acctId, tlid)
 	timeUpdate()
-	global.moreLoading = false
+	globalThis.moreLoading = false
 	todc()
 }

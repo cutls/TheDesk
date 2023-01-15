@@ -15,7 +15,7 @@ let prevVal  = input.value
 let oldSuggest
 let suggest
 
-input.addEventListener(
+input && input.addEventListener(
 	'focus',
 	function () {
 		localStorage.removeItem('cursor')
@@ -162,7 +162,7 @@ input.addEventListener(
 	false
 )
 
-input.addEventListener(
+input && input.addEventListener(
 	'blur',
 	function () {
 		window.clearInterval(timer)

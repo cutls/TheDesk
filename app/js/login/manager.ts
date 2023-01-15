@@ -307,7 +307,7 @@ async function versionChecker(url: string) {
 				return false
 			} else {
 				$('#compt-warn').hide()
-				if (global.pwa) return false
+				if (globalThis.pwa) return false
 				const codeSetupCheck = await Swal.fire({
 					title: lang.lang_manager_codesetup_title,
 					text: lang.lang_manager_codesetup,
@@ -615,7 +615,7 @@ const input = <HTMLInputElement>document.getElementById('autocomplete-input')
 let prevVal = input?.value
 let oldSuggest
 let suggest
-input.addEventListener(
+input && input.addEventListener(
 	'focus',
 	function () {
 		const instance = autoCompleteGetInstance(input)
@@ -647,7 +647,7 @@ input.addEventListener(
 	false
 )
 
-input.addEventListener(
+input && input.addEventListener(
 	'blur',
 	function () {
 		window.clearInterval(timer)

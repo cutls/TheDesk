@@ -6,6 +6,7 @@ import { isTagData } from "../tl/tag"
 import { cap, icon } from "../tl/tl"
 import { parseColumn } from "./layout"
 import $ from 'jquery'
+declare var jQuery
 
 //ソートデータ読み込み
 export function sortLoad() {
@@ -54,7 +55,7 @@ export function sortLoad() {
 
 //jquery-ui依存
 function drag() {
-	$('#sort').sortable()
+	jQuery('#sort').sortable()
 	$('#sort').disableSelection()
 }
 

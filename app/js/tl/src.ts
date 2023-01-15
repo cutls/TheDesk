@@ -218,7 +218,7 @@ export function moreTs(tlid, q) {
 	// 		}
 	// 		$('#timeline_' + tlid).append(templete)
 
-	// 		global.timeUpdate()
+	// 		globalThis.timeUpdate()
 	// 	})
 }
 function graphDraw(tag: Tag, acct_id: number) {

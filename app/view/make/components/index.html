@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html lang="@@lang@@">
-	<head>
-		<script type="text/javascript" src="../../js/ui/theme.js"></script>
-		<link href="../../css/themes.css" type="text/css" rel="stylesheet" />
-		<meta content="width=device-width,initial-scale=1.0" name="viewport" />
-		<link href="../../@@node_base@@/@cutls/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet" />
-		<link href="../../@@node_base@@/jquery-ui-dist/jquery-ui.min.css" type="text/css" rel="stylesheet" />
-		<link href="../../css/tl.css" rel="stylesheet" type="text/css" />
-		<link href="../../css/userdata.css" rel="stylesheet" type="text/css" />
-		<link href="../../css/post.css" rel="stylesheet" type="text/css" />
-		<link href="../../css/master.css" type="text/css" rel="stylesheet" />
-		<link href="../../css/sort.css" rel="stylesheet" type="text/css" />
-		<link href="../../css/sweetalert2-material.css" type="text/css" rel="stylesheet" />
-		<link href="../../@@node_base@@/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet" />
-		<meta charset="utf-8" />
-		@@comment-start@@
-		<script type="text/javascript">
-			var _jipt = []
-			_jipt.push(['project', 'thedesk'])
-		</script>
-		<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
-		@@comment-end@@ @@pwa@@ @@store@@
-	</head>
 
-	<body class="@@pwaClass@@">
-		<script>
-			var ver = '@@versionLetter@@'
-			var gitHash = '@@gitHash@@'
-			var useLang = '@@lang@@'
-		</script>
-		@@preTL@@ @@starterAndDragHandler@@ @@postBox@@ @@tootModal@@ @@userDataModal@@ @@mediaModal@@ @@releaseNote@@
-		<!--PiP-->
-		<div id="pip" class="hide pip-bottom pip-left">
-			<i class="material-icons pip-horiz pointer" onclick="pipHoriz()">chevron_right</i>
-			<i class="material-icons pip-vert pointer" onclick="pipVert()">expand_less</i>
-			<i class="material-icons pointer" onclick="endPip()">close</i>
-			<div id="pip-content"></div>
-		</div>
-		@@menuHtml@@
-		<div id="main">
-			<!--TLのTL-->
-			<div id="timeline-container">
-				<div id="something-wrong">
-					<img src="../../img/thinking.svg" style="width: 150px; margin: 5px; display: none" draggable="false" />
-					<div class="stw" style="display: none">@@helloTheDesk@@</div>
-				</div>
+<head>
+	<link href="../../css/themes.css" type="text/css" rel="stylesheet" />
+	<meta content="width=device-width,initial-scale=1.0" name="viewport" />
+	<link href="../../@@node_base@@/@cutls/materialize-css/dist/css/materialize.css" type="text/css" rel="stylesheet" />
+	<link href="../../@@node_base@@/jquery-ui-dist/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+	<link href="../../css/tl.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/userdata.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/post.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/master.css" type="text/css" rel="stylesheet" />
+	<link href="../../css/sort.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/sweetalert2-material.css" type="text/css" rel="stylesheet" />
+	<link href="../../@@node_base@@/@fortawesome/fontawesome-free/css/all.min.css" type="text/css" rel="stylesheet" />
+	<meta charset="utf-8" />
+	@@comment-start@@
+	<script type="text/javascript">
+		var _jipt = []
+		_jipt.push(['project', 'thedesk'])
+	</script>
+	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
+	@@comment-end@@ @@pwa@@ @@store@@
+</head>
+
+<body class="@@pwaClass@@">
+	<script>
+		var ver = '@@versionLetter@@'
+		var gitHash = '@@gitHash@@'
+		var useLang = '@@lang@@'
+		var process = { env: { NODE_ENV: 'production' } }
+	</script>
+	@@preTL@@ @@starterAndDragHandler@@ @@postBox@@ @@tootModal@@ @@userDataModal@@ @@mediaModal@@ @@releaseNote@@
+	<!--PiP-->
+	<div id="pip" class="hide pip-bottom pip-left">
+		<i class="material-icons pip-horiz pointer" onclick="pipHoriz()">chevron_right</i>
+		<i class="material-icons pip-vert pointer" onclick="pipVert()">expand_less</i>
+		<i class="material-icons pointer" onclick="endPip()">close</i>
+		<div id="pip-content"></div>
+	</div>
+	@@menuHtml@@
+	<div id="main">
+		<!--TLのTL-->
+		<div id="timeline-container">
+			<div id="something-wrong">
+				<img src="../../img/thinking.svg" style="width: 150px; margin: 5px; display: none" draggable="false" />
+				<div class="stw" style="display: none">@@helloTheDesk@@</div>
 			</div>
 		</div>
-		@@bottomBarHtml@@ @@supportMe@@
-		<!--左下メッセージ-->
-		<div id="message"></div>
-		<!--Radio Happy(Yui) Taku Inoue-->
-		<audio src="" id="radio"></audio>
-		<!--JS-->
-		<script type="text/javascript" src="../../@@node_base@@/@cutls/materialize-css/dist/js/materialize.js"></script>
-		<script type="text/javascript" src="../../dist/index.js"></script>
-	</body>
+	</div>
+	@@bottomBarHtml@@ @@supportMe@@
+	<!--左下メッセージ-->
+	<div id="message"></div>
+	<!--Radio Happy(Yui) Taku Inoue-->
+	<audio src="" id="radio"></audio>
+	<!--JS-->
+	<script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../../@@node_base@@/jquery-ui-dist/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../../@@node_base@@/@cutls/materialize-css/dist/js/materialize.js"></script>
+	<script type="text/javascript" src="../../dist/index.js"></script>
+</body>
+
 </html>

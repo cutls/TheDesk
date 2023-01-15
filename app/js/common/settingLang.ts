@@ -36,7 +36,7 @@ const langs = {
     siLK,
     ps
 }
-const imps = langs[global.useLang]
+const imps = langs[globalThis.useLang]
 export default {
     yesno: imps.yesno,
     sound: imps.sound,

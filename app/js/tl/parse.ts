@@ -497,7 +497,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		//このトゥート内のアクションを完了させるために、適当にIDを振る
 		const rand = uuid()
 		//プラグイン機構
-		const pluginBOT = global.plugins.buttonOnToot
+		const pluginBOT = globalThis.plugins.buttonOnToot
 		let pluginHtml = ''
 		for (const target of pluginBOT) {
 			const meta = getMeta(target.content).data
