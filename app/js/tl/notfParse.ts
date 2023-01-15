@@ -67,22 +67,18 @@ export function notfParse(obj: INotf | undefined, acctId: string, tlid: string |
         if (localStorage.getItem('hasNotfC_' + acctId) !== 'true') {
             if (type === 'mention') {
                 const replyCt = parseInt(localStorage.getItem(`notf-reply_${acctId}`) || '0', 10)
-                $(`.notf-reply_${acctId}`).text(replyCt + 1)
-                $(`.notf-reply_${acctId}`).removeClass('hide')
                 $(`.boxIn[data-acct=${acctId}] .notice-box`).addClass('has-notf')
                 sound = localStorage.getItem('replySound') || 'default'
                 if (sound === 'default') file = '../../source/notif3.wav'
             } else if (type === 'reblog') {
                 const btCt = parseInt(localStorage.getItem(`notf-bt_${acctId}`) || '0', 10)
                 $(`.notf-bt_${acctId}`).text(btCt + 1)
-                $(`.notf-bt_${acctId}`).removeClass('hide')
                 $(`.boxIn[data-acct=${acctId}] .notice-box`).addClass('has-notf')
                 sound = localStorage.getItem('btSound') || 'default'
                 if (sound === 'default') file = '../../source/notif2.wav'
             } else if (type === 'favourite') {
                 const favCt = parseInt(localStorage.getItem(`notf-fav_${acctId}`) || '0', 10)
                 $(`.notf-fav_${acctId}`).text(favCt + 1)
-                $(`.notf-fav_${acctId}`).removeClass('hide')
                 $(`.boxIn[data-acct=${acctId}] .notice-box`).addClass('has-notf')
                 sound = localStorage.getItem('favSound') || 'default'
                 if (sound === 'default') file = '../../source/notif.wav'
@@ -118,11 +114,7 @@ export function notfParse(obj: INotf | undefined, acctId: string, tlid: string |
             }
             new Notification('TheDesk:' + domain, options)
         }
-        if (localStorage.getItem('hasNotfC_' + acctId) !== 'true') {
-            $('.notf-icon_' + acctId).addClass('red-text')
-        }
         localStorage.setItem('notice-mem', noticetext)
-        noticetext = ''
     }
     const ifNotf = `data-notfIndv="${acctId}_${id}" data-notf="${id}"`
     return {

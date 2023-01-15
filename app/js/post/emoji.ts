@@ -102,11 +102,11 @@ export async function emojiGet() {
 	localStorage.setItem('emojis_' + acctId, JSON.stringify(md))
 	localStorage.setItem(`emojis_raw_${acctId}`, JSON.stringify(json))
 	localStorage.setItem('emojiseek', '0')
-
+	emojiList('home')
 }
 
 //リストの描画
-export function emojiList(target: 'next' | 'before' | 'home', reaction: boolean) {
+export function emojiList(target: 'next' | 'before' | 'home', reaction?: boolean) {
 	$('#now-emoji').text(lang.lang_emoji_custom)
 	const acctId = $('#post-acct-sel').val()
 	let start = parseInt(localStorage.getItem('emojiseek') || '0', 10)

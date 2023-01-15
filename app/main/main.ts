@@ -172,7 +172,7 @@ function createWindow() {
 		max: false
 	}
 	if (fs.existsSync(info_path)) {
-		const info = fs.readFileSync(info_path, 'utf8')
+		const info = fs.readFileSync(info_path, 'utf8').toString() || '{}'
 		if (JSON.parse(info)) {
 			window_size = JSON.parse(info)
 		}
@@ -189,8 +189,8 @@ function createWindow() {
 			sandbox: false,
 			preload: join(homeDir, 'js', 'platform', 'preload.js'),
 		},
-		width: window_size.width,
-		height: window_size.height,
+		width: window_size.width || 1000,
+		height: window_size.height || 750,
 		x: window_size.x || undefined,
 		y: window_size.y || undefined,
 		show: false,

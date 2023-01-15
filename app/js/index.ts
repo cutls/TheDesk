@@ -12,7 +12,7 @@ import { execCopy, playSound } from "./platform/end"
 import { escapeHTML, nl2br, br2nl, formatTime, formatTimeUtc, makeCID, rgbToHex, setLog, escapeCsv, statusModel, initWebviewEvent, twemojiParse } from "./platform/first"
 import { initPlugin, getMeta, execPlugin, testExec } from "./platform/plugin"
 import { emojiToggle, emojiGet, emojiList, emojiInsert, brInsert } from "./post/emoji"
-import { closeDrop, fileSelect, media, toBlob, deleteImage, altImage, stamp, alertProcessUnfinished, syncDetail } from "./post/img"
+import { closeDrop, fileSelect, media, toBlob, deleteImage, altImage, stamp, alertProcessUnfinished } from "./post/img"
 import { sec, expPostMode, clear, post } from "./post/post"
 import { nsfw, vis, loadVis, cw, cwShow, schedule, draftToggle, addToDraft, useThisDraft, deleteThisDraft } from "./post/secure"
 import { fav, rt, boostWith, bkm, follow, acctResolve, acctResolveLegacy, block, muteDo, muteMenu, muteTime, del, redraft, editToot, draftToPost, pin, request, domainBlock, addDomainblock, empUser, pinUser, tootUriCopy, staEx, toggleAction } from "./post/status"
@@ -38,7 +38,7 @@ import { tagShow, tShowBox, doTShowBox, tagRemove, favTag, tagShowHorizon, tagTL
 import { tl, moreLoad, tlDiff, tlCloser, cap, com, icon, reconnector, columnReload, getMarker, showUnread, ueLoad, asRead, announ } from "./tl/tl"
 import { userParse, popupNotification } from "./tl/userParse"
 import { imgv, imgCont, zoom, rotate, detFromImg, dlImg, openFinder, stopVideo, copyImgUrl, copyImgBinary } from "./ui/img"
-import { parseColumn, checkStr, addColumn, removeColumn, setToggle, setToggleTag, colorPicker, bookmark, favTl, utl, leftFoldSet, leftFoldRemove, resetWidth } from "./ui/layout"
+import { parseColumn, checkStr, addColumn, removeColumn, setToggle, setToggleTag, colorPicker, bookmark, favTl, utl, leftFoldSet, leftFoldRemove, resetWidth, addColumnMenu, addselCk } from "./ui/layout"
 import { menu, help } from "./ui/menu"
 import { hide, mini, show, initPostbox, mdCheck } from "./ui/postBox"
 import { scrollEvent, scrollCk, goTop, goColumn } from "./ui/scroll"
@@ -119,7 +119,6 @@ globalThis.deleteImage = deleteImage
 globalThis.altImage = altImage
 globalThis.stamp = stamp
 globalThis.alertProcessUnfinished = alertProcessUnfinished
-globalThis.syncDetail = syncDetail
 globalThis.sec = sec
 globalThis.post = post
 globalThis.expPostMode = expPostMode
@@ -393,3 +392,5 @@ globalThis.profShow = profShow
 globalThis.profbrws = profbrws
 globalThis.setMain = setMain
 globalThis.hisclose = hisclose
+globalThis.addColumnMenu = addColumnMenu
+globalThis.addselCk = addselCk

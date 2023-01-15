@@ -86,6 +86,12 @@ export function mastodonBaseStreaming(acctId: string) {
                 id: obj.id,
                 createdAt: obj.created_at
             }
+            if (type === 'mention') $(`.notf-reply_${acctId}`).removeClass('hide')
+            if (type === 'favourite') $(`.notf-fav_${acctId}`).removeClass('hide')
+            if (type === 'reblog') $(`.notf-reblog_${acctId}`).removeClass('hide')
+            if (localStorage.getItem('hasNotfC_' + acctId) !== 'true') {
+                $('.notf-icon_' + acctId).addClass('red-text')
+            }
             if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
                 const status = obj.status || statusModel()
                 template = parse([status], 'notf', acctId, 'notf', popup, mute, nEvent)

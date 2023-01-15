@@ -29,7 +29,7 @@ globalThis.wsLocal = []
 globalThis.websocketNotf = []
 
 //カラム追加ボックストグル
-function addColumnMenu() {
+export function addColumnMenu() {
 	$('#left-menu a').removeClass('active')
 	$('#addColumnMenu').addClass('active')
 	$('.menu-content').addClass('hide')
@@ -250,7 +250,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 				unread = ''
 			}
 			let left_hold = ''
-			if (key !== 0 && !column.left_fold) {
+			if (!column.left_fold) {
 				basekey = key
 				if (!numTarget) {
 					const basehtml = `<div style="${css}" class="box ${animeCss}" id="timeline_box_${basekey}_parentBox"></div>`
@@ -260,6 +260,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftFold}">view_agenda</i>
 					<span>${lang.lang_layout_leftFold}</span></a>`
 			} else {
+				
 				left_hold = `<a onclick="leftFoldRemove(${key})" class="setting nex waves-effect">
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i>
 					<span>${lang.lang_layout_leftUnfold}</span></a>`
@@ -427,6 +428,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			if ($(this).hasClass('boxIn')) {
 				//縦幅。その縦幅を持つカラムのidは
 				console.log('tate')
+				if (!$(this).attr('tlid')) return
 				const key = parseInt($(this).attr('tlid') || '0')
 				const column = columns[key]
 				column.height = height
@@ -434,9 +436,11 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			} else {
 				//横幅。その縦幅を持つカラムのidは
 				console.log('yoko')
-				const key = parseInt($(this).attr('tlid') || '0')
+				if (!$(this).attr('tlid')) return
+				console.log($(this).find('.boxIn').html())
+				const key = parseInt($(this).find('.boxIn').attr('tlid') || '0')
 				const column = columns[key]
-				column.height = height
+				column.width = width
 				columns[key] = column
 			}
 			setColumn(columns)
@@ -506,7 +510,7 @@ export function addColumn() {
 	}
 	parseColumn('add')
 }
-function addselCk() {
+export function addselCk() {
 	const acct = $('#add-acct-sel').val()
 	const domain = localStorage.getItem('domain_' + acct)
 	if (acct === 'webview') {
@@ -791,6 +795,8 @@ export function leftFoldRemove(key: number) {
 export function resetWidth(key: number) {
 	const obj = getColumn()
 	obj[key].width = undefined
+	if(obj[key].height) $(`#timeline_box_${key}_parentBox .boxIn`).attr('style', '')
+	obj[key].height = undefined
 	setColumn(obj)
 	$(`#timeline_box_${key}_parentBox`).attr('style', '')
 }

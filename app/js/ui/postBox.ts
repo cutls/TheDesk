@@ -15,7 +15,7 @@ export function hide() {
 	$('#right-side').hide()
 	$('#right-side').css('width', '300px')
 	$('#left-side').css('width', '100%')
-	const width = parseInt(localStorage.getItem('postbox-width')?.replace('px', '') || '0', 10)
+	const width = parseInt(localStorage.getItem('postbox-width')?.replace('px', '') || '300', 10)
 	$('#post-box').css('width', width)
 	$('#post-box').fadeOut()
 	$('#post-box').removeClass('appear')
@@ -53,9 +53,11 @@ export function show() {
 	let top = parseInt(localStorage.getItem('postbox-top') || '0', 10)
 	if (top > bodyHeight - pbHeight) {
 		top = bodyHeight - pbHeight
-	} else if (top < 0) {
+	}
+	if (top < 0) {
 		top = 0
 	}
+	console.log(top)
 	$('#post-box').css('left', left + 'px')
 	$('#post-box').css('top', top + 'px')
 	const width = localStorage.getItem('postbox-width')

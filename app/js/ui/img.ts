@@ -26,8 +26,11 @@ export function imgv(id: string, key: number, acctId?: string) {
 	const remoteImg = localStorage.getItem('remote_img') === 'yes'
 	if (remoteImg) murl = ourl
 	if (type === 'image') {
-		const instance = modalInitGetInstance($('#imagemodal'))
-		instance.open()
+		const i = document.getElementById('imagemodal')
+		if (i) {
+			const instance = modalInitGetInstance(i)
+			instance.open()
+		}
 		imageXhr(id, key, murl)
 		const elem = <HTMLElement>document.getElementById('imagewrap')
 		dragScroll(elem) // ドラッグスクロール設定

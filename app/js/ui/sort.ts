@@ -56,7 +56,6 @@ export function sortLoad() {
 //jquery-ui依存
 function drag() {
 	jQuery('#sort').sortable()
-	$('#sort').disableSelection()
 }
 
 //ソート指定

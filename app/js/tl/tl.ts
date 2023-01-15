@@ -77,7 +77,7 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
     } else if (type === 'notf') {
         //通知なら飛ばす
         notf(acctId, tlid, 'direct')
-        $('#notice_' + tlid).text(`${cap(type, data, acctId)}(${localStorage.getItem('user_' + acctId) || '?'}@'${domain})`)
+        $('#notice_' + tlid).text(`${cap(type, data, acctId)}(${localStorage.getItem('user_' + acctId) || '?'}@${domain})`)
         $('#notice_icon_' + tlid).text('notifications')
         return
     } else if (type === 'bookmark') {
@@ -453,17 +453,17 @@ export function tlCloser() {
     globalThis.websocketNew = []
     globalThis.websocketOld = []
     for (const wsHome of globalThis.wsHome) {
-        wsHome.close()
+        if(wsHome) wsHome.close()
         console.log('%c Close Streaming API:Integrated Home', 'color:blue')
     }
     globalThis.wsHome = []
     for (const wsLocal of globalThis.wsLocal) {
-        wsLocal.close()
+        if (wsLocal) wsLocal.close()
         console.log('%c Close Streaming API:Integrated Local', 'color:blue')
     }
     globalThis.wsLocal = []
     for (const wsNotf of globalThis.websocketNotf) {
-        wsNotf.close()
+        if (wsNotf) wsNotf.close()
         console.log('%c Close Streaming API:Notf', 'color:blue')
     }
 }

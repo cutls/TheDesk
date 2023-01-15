@@ -2,8 +2,7 @@ import { stopVideo } from "../ui/img";
 import { collapsibleInit, dropdownInit, modalInit } from "./declareM";
 
 //モーダル・ドロップダウンの各種設定
-
-$(document).ready(function () {
+export function modalDropdownInit() {
   // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
   const modalElem = document.querySelectorAll('.modal')
   modalInit(modalElem, {
@@ -33,4 +32,4 @@ $(document).ready(function () {
   modalInit(vModalElem, {
     onCloseEnd: stopVideo
   })
-})
+}

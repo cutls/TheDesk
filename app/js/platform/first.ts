@@ -10,6 +10,9 @@ import { tl } from '../tl/tl'
 import { Account, Card, Emoji, Poll, Toot } from '../../interfaces/MastodonApiReturns'
 import { IVis } from '../post/secure'
 import { initPostbox } from '../ui/postBox'
+import { modalDropdownInit } from '../common/modal'
+import { initKeyboard } from '../common/keyshortcut'
+import { altImage } from '../post/img'
 // Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
 // 独自ロケールを削除
 // wordmuteListにtagとかいう要素がある
@@ -19,9 +22,11 @@ window.onload = function () {
     initPostbox()
     connection()
     initPlugin()
+    modalDropdownInit()
     if (localStorage.getItem('control-center-np')) $('#ccnp').removeClass('hide')
     const onManager = document.getElementById('acct-list')
     if (!onManager) ck()
+    if (!onManager) initKeyboard()
     if (onManager) loadAcctList()
     if (onManager) support()
     autoCompleteInitTrigger()
@@ -36,6 +41,14 @@ window.onload = function () {
                 tl('tag', decodeURI(codex), acctId, 'add')
             }
         }
+    }
+    if (!onManager) {
+        setInterval(() => {
+            console.log('altImage fire')
+            $('#preview .unknown').each(function (i, elem) {
+                altImage($(elem).attr('data-acct') || '', $(elem).attr('data-media') || '')
+            })
+        }, 2000)
     }
 }
 

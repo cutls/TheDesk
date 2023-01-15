@@ -246,6 +246,7 @@ export function multiSelector(parseC?: boolean) {
 	} else {
 		let key = 0
 		for (const acct of obj) {
+			isSelected = false
 			if (key.toString() === last) {
 				isSelected = true
 				const domain = acct.domain
@@ -271,7 +272,7 @@ export function multiSelector(parseC?: boolean) {
 					$('#toot-post-btn').css('color', acct.text)
 				}
 			}
-			const template = `<option value="${key}" data-icon="${acct.prof}" class="left circle" ${isSelected ? 'selected' : ''}>${acct.user}@${acct.domain}</option>`
+			const template = `<option value="${key}" data-icon="${acct.prof}" class="left circle" ${isSelected ? 'selected="true"' : ''}>${acct.user}@${acct.domain}</option>`
 			$('.acct-sel').append(template)
 			key++
 		}

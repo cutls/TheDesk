@@ -1,7 +1,7 @@
 //テーマ適用
 export function themes(theme?: string) {
+	theme = localStorage.getItem('customtheme-id') || ''
 	if (!theme) {
-		let theme = localStorage.getItem('customtheme-id')
 		if (!theme) {
 			localStorage.setItem('customtheme-id', 'black')
 			theme = 'black'

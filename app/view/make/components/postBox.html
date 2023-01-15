@@ -106,86 +106,85 @@
 		<input type="hidden" id="quote" />
 		<input type="hidden" id="media" />
 		<!--END hidden area-->
-	</div>
-	<div id="toot-btn-field">
-		<button class="btn waves-effect unmize toot-btn-group" onclick="post()" id="toot-post-btn">@@toot@@</button>
-		<button class="btn waves-effect darken-3 unmize hide toot-btn-group" onclick="sec()" id="toot-sec-btn">
-			<i class="material-icons" id="toot-sec-icon" title="@@sectoot@@">lock_open</i>
-		</button>
-	</div>
-</div>
-<div id="right-side">
-	<div id="draft" class="hide right-side-content"></div>
-	<!--絵文字ピッカー-->
-	<div id="emoji" class="hide right-side-content">
-		<span class="gray sml">@@emojiWarn@@
-			<a onclick="emojiGet(true)" class="pointer">@@refreshEmoji@@</a>
-			<br />
-		</span>
-		<div id="emoji-list" class=""></div>
-		<div class="emoji-control center">
-			<button class="btn waves-effect blue disabled" style="width: 30%; padding: 0" onclick="emojiList('before')"
-				id="emoji-before">
-				<i class="material-icons">navigate_before</i>
-			</button>
-			<span id="emoji-count"></span>/
-			<span id="emoji-sum"></span>
-			<button class="btn waves-effect blue disabled" style="width: 30%; padding: 0" onclick="emojiList('next')"
-				id="emoji-next">
-				<i class="material-icons">navigate_next</i>
+		<div id="toot-btn-field">
+			<button class="btn waves-effect unmize toot-btn-group" onclick="post()" id="toot-post-btn">@@toot@@</button>
+			<button class="btn waves-effect darken-3 unmize hide toot-btn-group" onclick="sec()" id="toot-sec-btn">
+				<i class="material-icons" id="toot-sec-icon" title="@@sectoot@@">lock_open</i>
 			</button>
 		</div>
-		<div id="default-emoji">
-			<span id="now-emoji"></span>@@showThisEmoji@@<br /><span class="gray sml">@@emojiInsertWarn@@</span>
-			<br />
-			<a onclick="customEmoji()" class="pointer waves-effect" title="@@customEmoji@@">
-				<i class="material-icons">add</i>
-			</a>
-			<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="@@peopleEmoji@@">
-				<i class="material-icons">people</i>
-			</a>
-			<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="@@natureEmoji@@">
-				<i class="material-icons">local_florist</i>
-			</a>
-			<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="@@foodEmoji@@">
-				<i class="material-icons">restaurant</i>
-			</a>
-			<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="@@activityEmoji@@">
-				<i class="material-icons">directions_run</i>
-			</a>
-			<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="@@placeEmoji@@">
-				<i class="material-icons">directions_car</i>
-			</a>
-			<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="@@thingsEmoji@@">
-				<i class="material-icons">attach_file</i>
-			</a>
-			<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="@@symbolEmoji@@">
-				<i class="material-icons">gesture</i>
-			</a>
-			<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="@@flagsEmoji@@">
-				<i class="material-icons">flag</i>
-			</a>
+	</div>
+	<div id="right-side">
+		<div id="draft" class="hide right-side-content"></div>
+		<!--絵文字ピッカー-->
+		<div id="emoji" class="hide right-side-content">
+			<span class="gray sml">@@emojiWarn@@
+				<a onclick="emojiGet(true)" class="pointer">@@refreshEmoji@@</a>
+				<br />
+			</span>
+			<div id="emoji-list" class=""></div>
+			<div class="emoji-control center">
+				<button class="btn waves-effect blue disabled" style="width: 30%; padding: 0"
+					onclick="emojiList('before')" id="emoji-before">
+					<i class="material-icons">navigate_before</i>
+				</button>
+				<span id="emoji-count"></span>/
+				<span id="emoji-sum"></span>
+				<button class="btn waves-effect blue disabled" style="width: 30%; padding: 0"
+					onclick="emojiList('next')" id="emoji-next">
+					<i class="material-icons">navigate_next</i>
+				</button>
+			</div>
+			<div id="default-emoji">
+				<span id="now-emoji"></span>@@showThisEmoji@@<br /><span class="gray sml">@@emojiInsertWarn@@</span>
+				<br />
+				<a onclick="customEmoji()" class="pointer waves-effect" title="@@customEmoji@@">
+					<i class="material-icons">add</i>
+				</a>
+				<a onclick="defaultEmoji('people')" class="pointer waves-effect" title="@@peopleEmoji@@">
+					<i class="material-icons">people</i>
+				</a>
+				<a onclick="defaultEmoji('nature')" class="pointer waves-effect" title="@@natureEmoji@@">
+					<i class="material-icons">local_florist</i>
+				</a>
+				<a onclick="defaultEmoji('food')" class="pointer waves-effect" title="@@foodEmoji@@">
+					<i class="material-icons">restaurant</i>
+				</a>
+				<a onclick="defaultEmoji('activity')" class="pointer waves-effect" title="@@activityEmoji@@">
+					<i class="material-icons">directions_run</i>
+				</a>
+				<a onclick="defaultEmoji('place')" class="pointer waves-effect" title="@@placeEmoji@@">
+					<i class="material-icons">directions_car</i>
+				</a>
+				<a onclick="defaultEmoji('object')" class="pointer waves-effect" title="@@thingsEmoji@@">
+					<i class="material-icons">attach_file</i>
+				</a>
+				<a onclick="defaultEmoji('symbol')" class="pointer waves-effect" title="@@symbolEmoji@@">
+					<i class="material-icons">gesture</i>
+				</a>
+				<a onclick="defaultEmoji('flag')" class="pointer waves-effect" title="@@flagsEmoji@@">
+					<i class="material-icons">flag</i>
+				</a>
+			</div>
+		</div>
+		<!--Poll UI-->
+		<div id="poll" class="hide right-side-content">
+			<div id="mastodon-poll" class="poll-provider">
+				<input type="text" class="mastodon-choice" placeholder="@@choice@@1" />
+				<input type="text" class="mastodon-choice" placeholder="@@choice@@2" />
+				<input type="text" class="mastodon-choice" placeholder="@@choice@@3" />
+				<input type="text" class="mastodon-choice" placeholder="@@choice@@4" />
+				<label>
+					<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
+					<span>@@pollmulti@@</span>
+				</label>
+				<label>
+					<input type="checkbox" class="filled-in" id="poll-until" value="1" />
+					<span>@@polluntil@@</span>
+				</label>
+				<input type="number" style="width: 50px" id="days_poll" placeholder="d" value="0" />@@days@@
+				<input type="number" style="width: 50px" id="hours_poll" placeholder="h" value="0" />@@hours@@
+				<input type="number" style="width: 50px" id="mins_poll" placeholder="m" value="6" />@@mins@@
+			</div>
 		</div>
 	</div>
-	<!--Poll UI-->
-	<div id="poll" class="hide right-side-content">
-		<div id="mastodon-poll" class="poll-provider">
-			<input type="text" class="mastodon-choice" placeholder="@@choice@@1" />
-			<input type="text" class="mastodon-choice" placeholder="@@choice@@2" />
-			<input type="text" class="mastodon-choice" placeholder="@@choice@@3" />
-			<input type="text" class="mastodon-choice" placeholder="@@choice@@4" />
-			<label>
-				<input type="checkbox" class="filled-in" id="poll-multiple" value="1" />
-				<span>@@pollmulti@@</span>
-			</label>
-			<label>
-				<input type="checkbox" class="filled-in" id="poll-until" value="1" />
-				<span>@@polluntil@@</span>
-			</label>
-			<input type="number" style="width: 50px" id="days_poll" placeholder="d" value="0" />@@days@@
-			<input type="number" style="width: 50px" id="hours_poll" placeholder="h" value="0" />@@hours@@
-			<input type="number" style="width: 50px" id="mins_poll" placeholder="m" value="6" />@@mins@@
-		</div>
-	</div>
-</div>
 </div>

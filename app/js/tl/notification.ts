@@ -76,12 +76,12 @@ export async function notfColumn(acctId: string, tlid: string) {
                     }
                     if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
                         const status = obj.status || statusModel()
-                        template = parse([status], 'notf', acctId, 'notf', popup, mute, nEvent)
+                        template = template + parse([status], 'notf', acctId, 'notf', popup, mute, nEvent)
                     } else if (type === 'follow_request' || type === 'follow' || type === 'moved' || type === 'admin.sign_up') {
-                        template = userParse([obj.account], acctId, type, 'notf', -1)
+                        template = template + userParse([obj.account], acctId, type, 'notf', -1)
                     } else {
                         const status = obj.status
-                        template = status ? parse([status], 'notf', acctId, 'notf', popup) : userParse([obj.account], acctId, type, 'notf', -1)
+                        template = status ? template + parse([status], 'notf', acctId, 'notf', popup) : template + userParse([obj.account], acctId, type, 'notf', -1)
                     }
                     key++
                 }
@@ -331,7 +331,7 @@ export function notfToggle(acct: string, tlid: string) {
     notfCanceler(acct)
 }
 
-function notfCanceler(acct) {
+function notfCanceler(acct: string) {
     $('.notf-reply_' + acct).text(0)
     localStorage.removeItem('notf-reply_' + acct)
     $('.notf-reply_' + acct).addClass('hide')

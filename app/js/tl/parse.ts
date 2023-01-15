@@ -310,7 +310,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				}
 			}
 			toMention.push(toot.account.acct)
-			mentions = `<div style="float:right">${mentions}>/div>`
+			mentions = `<div style="float:right">${mentions}</div>`
 		} else {
 			toMention.push(toot.account.acct)
 		}
@@ -336,9 +336,23 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		if (visEn === 'direct') useVisTxt = lang.lang_parse_direct
 		const isRtable = visEn === 'public' || visEn === 'unlisted'
 		const canRt = isRtable || me === toot.account.id ? '' : 'unvisible'
-		const vis = `<span onclick="staCopy('${id}')"><i class="text-darken-3 material-icons orange-text sml vis-data pointer" 
+		const iconList = {
+			public: 'public',
+			unlisted: 'lock_open',
+			private: 'lock',
+			direct: 'mail'
+		}
+		const colorList = {
+			public: 'public',
+			unlisted: 'blue',
+			private: 'orange',
+			direct: 'red'
+		}
+		const iconVis = iconList[visEn] || ''
+		const colorVis = colorList[visEn] || ''
+		const vis = `<span onclick="staCopy('${id}')"><i class="text-darken-3 material-icons ${colorVis}-text sml vis-data pointer" 
 						title="${useVisTxt}(${lang.lang_parse_clickcopy})" data-vis="${visEn}" aria-hidden="true">
-						lock
+						${iconVis}
 					</i><span class="voice">${useVisTxt} ${lang.lang_toot}(${lang.lang_parse_clickcopy})</span></span>`
 		const ifMine = toot.account.id === me ? '' : 'hide'
 		const faved = toot.favourited

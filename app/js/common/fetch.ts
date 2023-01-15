@@ -26,7 +26,8 @@ export default async function api<T=any>(url: string, options?: IOptions, throug
         const json = await response.json()
         return json as T
     } catch (e: any) {
-        toast({ html: `Error: ${e[0]}`, displayLength: 5000 })
+        const eStr = typeof e === 'string' ? e : e[0]
+        toast({ html: `Error: ${eStr}`, displayLength: 5000 })
         throw e
     }
 }
