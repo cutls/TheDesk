@@ -42,3 +42,4 @@ app/.env
 app/view/make/index.generated.html
 app/twemoji
 app/dist
+app/play.js

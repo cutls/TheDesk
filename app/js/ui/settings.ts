@@ -14,6 +14,9 @@ import { checkSpotify } from "./spotify"
 import { voiceSettingLoad } from "../tl/speech"
 import api from "../common/fetch"
 import $ from 'jquery'
+import settingLang from "../common/settingLang"
+const { envConstruction, tlConstruction, postConstruction, sound, yesno } = settingLang
+
 declare let editor
 
 //設定(setting.html)で読む
@@ -844,11 +847,11 @@ export async function checkUpd() {
     const ver = localStorage.getItem('ver')
     const start = 'https://thedesk.top/ver.json'
     const mess = await api(start, {
-		method: 'get',
-		headers: {
-			'content-type': 'application/json'
-		}
-	})
+        method: 'get',
+        headers: {
+            'content-type': 'application/json'
+        }
+    })
     if (mess) {
         const platform = localStorage.getItem('platform')
         const newest = platform === 'darwin' ? mess.desk_mac : mess.desk

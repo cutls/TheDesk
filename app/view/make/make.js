@@ -38,7 +38,7 @@ function construct(ver, basefile, pwa, store) {
         'update.sample.html',
         'setting.sample.js'
     ]
-    const pages = ['acct.html', 'index.html', 'setting.html', 'update.html', 'setting.vue.js']
+    const pages = ['acct.html', 'index.html', 'setting.html', 'update.html', 'setting.vue.ts']
     let langstr = ''
     let refKey = []
     const enJson = JSON.parse(fs.readFileSync(basefile + 'view/make/language/en/main.json', 'utf8'))
@@ -95,7 +95,7 @@ function construct(ver, basefile, pwa, store) {
                 Object.keys(target).forEach(function(key) {
                     refKey.push(key)
                     let str = target[key]
-                    if (pages[i] == 'setting.vue.js') {
+                    if (pages[i] == 'setting.vue.ts') {
                         str = str.replace(/'/g, "\\'")
                     }
                     var regExp = new RegExp('@@' + key + '@@', 'g')
@@ -113,7 +113,7 @@ function construct(ver, basefile, pwa, store) {
                             var str = englishRefer[tarKey]
                         }
                     }
-                    if (pages[i] == 'setting.vue.js') {
+                    if (pages[i] == 'setting.vue.ts') {
                         if (str) {
                             str = str.replace(/'/g, "\\'")
                         }

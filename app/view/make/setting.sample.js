@@ -1,4 +1,4 @@
-var yesno = [
+export const yesno = [
 	{
 		text: '@@yes@@',
 		value: 'yes'
@@ -8,7 +8,7 @@ var yesno = [
 		value: 'no'
 	}
 ]
-var sound = [
+export const sound = [
 	{
 		text: '@@none@@',
 		value: 'none'
@@ -34,7 +34,7 @@ var sound = [
 		value: 'c4'
 	}
 ]
-var envConstruction = [
+export const envConstruction = [
 	{
 		id: 'popup',
 		storage: 'popup',
@@ -198,7 +198,7 @@ var envConstruction = [
 		}
 	}
 ]
-var tlConstruction = [
+export const tlConstruction = [
 	{
 		id: 'time',
 		storage: 'datetype',
@@ -540,7 +540,7 @@ var tlConstruction = [
 		}
 	}
 ]
-var postConstruction = [
+export const postConstruction = [
 	{
 		id: 'cw-text',
 		storage: 'cw-text',
@@ -769,7 +769,6 @@ var postConstruction = [
 		id: 'zero',
 		storage: 'emoji-zero-width',
 		checkbox: true,
-		setValue: 'normal',
 		setValue: 'no',
 		text: {
 			head: '@@zeroWidthEmoji@@',
