@@ -76,7 +76,7 @@
                         <template v-if="item.text.desc">
                             <span v-html="item.text.desc"></span><br>
                         </template>
-                        <template v-if="item.id=='notf'"><a onclick="notftest()"
+                        <template v-if="item.id=='notf'"><a onclick="notfTest()"
                                 class="pointer">@@nntest@@</a><br></template>
                         <template v-if="item.checkbox">
                             <template v-for="(check, j) in item.text.checkbox">
@@ -665,7 +665,7 @@
         style="width:100%; max-width:40rem;"><img src="../../img/desk_full.svg" class="left" width="25"
             style="padding-top:5px;">Main author: Cutls@2m.cutls.com</a>
     <br> TheDesk @ <a href="https://github.com/cutls/TheDesk/commits/@@gitHash@@">@@gitHash@@</a> - <a
-        onclick="checkupd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';"
+        onclick="checkUpd(); return localStorage.removeItem('new-ver-skip'); location.href='index.html';"
         class="pointer pwa">@@checkup@@</a><br>
     <br> Kyash
     <br>
@@ -684,7 +684,7 @@
     タグタイムラインを開く:
     <a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
     <script type="text/javascript" src="../../@@node_base@@/lodash/lodash.min.js"></script>
-    <script type="text/javascript" src="../../@@node_base@@/ace/src-min/ace.js"></script>
+    <script type="text/javascript" src="../../@@node_base@@/@cutls/built-ace-with-aiscript/src/ace.js"></script>
     <script>
         var editor = ace.edit("plugin");
         editor.$blockScrolling = Infinity;

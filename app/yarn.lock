@@ -19,6 +19,11 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@cutls/built-ace-with-aisript@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@cutls/built-ace-with-aisript/-/built-ace-with-aisript-1.0.0.tgz#b9611aa779c15369ae21b7e20c2505b4dd0779cd"
+  integrity sha512-cgfRBcVQe4thLFRONmx7OPYki9I3WGRu9TmzHZBkSSe0rFrImCcj/+0ql+vyG84WHaE59H2HIgXDqooMgxENoA==
+
 "@cutls/materialize-css@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@cutls/materialize-css/-/materialize-css-1.0.0.tgz#3a23e5247aaa20ed5a229ebbc989c5eb38de8339"
@@ -825,10 +830,6 @@ abbrev@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
-
-"ace@https://github.com/ajaxorg/ace-builds.git":
-  version "1.14.0"
-  resolved "https://github.com/ajaxorg/ace-builds.git#62b5377d9d115313fc07dc74926b292cc7683497"
 
 acorn-jsx@^5.3.2:
   version "5.3.2"

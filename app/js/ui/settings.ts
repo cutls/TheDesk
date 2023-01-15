@@ -1,4 +1,4 @@
-import { execPlugin, getMeta } from "../platform/plugin"
+import { execPlugin, getMeta, testExec } from "../platform/plugin"
 import Vue from 'vue'
 import { chipInit, chipInitGetInstance, formSelectInit, toast } from "../common/declareM"
 import lang from "../common/lang"
@@ -9,6 +9,10 @@ import JSON5 from 'json5'
 import Swal from "sweetalert2"
 import { getColumn, getMulti, setColumn, setMulti } from "../common/storage"
 import { IConfig, ITheDeskConfig } from "../../interfaces/Config"
+import { IPlugin } from "../../interfaces/Storage"
+import { checkSpotify } from "./spotify"
+import { voiceSettingLoad } from "../tl/speech"
+import api from "../common/fetch"
 declare var editor
 
 //設定(setting.html)で読む
@@ -113,7 +117,7 @@ const postView: any = Vue.createApp({
 }).mount('#postView')
 global.postView
 //設定ボタン押した。
-function settings() {
+export function settings() {
     const fontd = $('#font').val()?.toString() || ''
     if (fontd) {
         if (fontd !== localStorage.getItem('font')) {
@@ -131,7 +135,7 @@ function settings() {
 }
 
 //読み込み時の設定ロード
-function load() {
+export function load() {
     const currentLang = lang.language
     console.log(currentLang)
     $('#langsel-sel').val(currentLang)
@@ -197,7 +201,7 @@ function load() {
     $('#lastFmUser').val(localStorage.getItem('lastFmUser') || '')
 }
 
-function customVol() {
+export function customVol() {
     const cvol = parseInt($('#soundvol').val()?.toString() || '1', 10)
     $('#soundVolVal').text(cvol)
     localStorage.setItem('customVol', (cvol / 100).toString())
@@ -219,7 +223,7 @@ function customVol() {
     request.send()
 }
 
-function climute() {
+export function climute() {
     //クライアントミュート
     const cli = localStorage.getItem('client_mute') || '[]'
     const obj = JSON.parse(cli)
@@ -245,7 +249,7 @@ function climute() {
     }
 }
 
-function cliMuteDel(key) {
+export function cliMuteDel(key: number) {
     const cli = localStorage.getItem('client_mute') || '[]'
     const obj = JSON.parse(cli)
     obj.splice(key, 1)
@@ -262,7 +266,7 @@ function wordmute() {
     })
 }
 
-function wordmuteSave() {
+export function wordmuteSave() {
     const wordMap = chipInitGetInstance($('#wordmute')).chipsData
     const word = wordMap.map((n) => n.tag)
     const json = JSON.stringify(word)
@@ -277,14 +281,14 @@ function wordemp() {
     })
 }
 
-function wordempSave() {
+export function wordempSave() {
     const wordMap = chipInitGetInstance($('#wordemp')).chipsData
     const word = wordMap.map((n) => n.tag)
     const json = JSON.stringify(word)
     localStorage.setItem('word_emp', json)
 }
 
-function notftest() {
+export function notfTest() {
     const options = {
         body: `${lang.lang_setting_notftest}(${lang.lang_setting_notftestprof})`,
         icon: localStorage.getItem('prof_0') || undefined,
@@ -292,7 +296,7 @@ function notftest() {
     new Notification('TheDesk' + lang.lang_setting_notftest, options)
 }
 
-function oks(no: number) {
+export function oks(no: number) {
     const txt = $('#oks-' + no).val()?.toString() || ''
     localStorage.setItem('oks-' + no, txt)
     toast({ html: lang.lang_setting_ksref, displayLength: 3000 })
@@ -310,13 +314,13 @@ function oksload() {
     }
 }
 
-function changeLang() {
+export function changeLang() {
     const lang = $('#langsel-sel').val()
     console.log(lang)
     if (lang) postMessage(['lang', lang], '*')
 }
 
-async function exportSettings() {
+export async function exportSettings() {
     const exp = exportSettingsCore()
     $('#imp-exp').val(JSON5.stringify(exp))
     const result = await Swal.fire({
@@ -332,7 +336,7 @@ async function exportSettings() {
     }
 }
 
-function exportSettingsCore() {
+export function exportSettingsCore() {
     const exp = {} as ITheDeskConfig
     //Accounts
     const acct = getMulti()
@@ -388,7 +392,7 @@ function exportSettingsCore() {
     return exp
 }
 
-async function importSettings() {
+export async function importSettings() {
     const result = await Swal.fire({
         title: 'Warning',
         text: lang.lang_setting_importwarn,
@@ -406,7 +410,7 @@ async function importSettings() {
     }
 }
 
-function importSettingsCore(obj: ITheDeskConfig) {
+export function importSettingsCore(obj: ITheDeskConfig) {
     if (obj) {
         localStorage.clear()
         setMulti(obj.accts)
@@ -418,7 +422,7 @@ function importSettingsCore(obj: ITheDeskConfig) {
             localStorage.setItem('prof_' + key, acct.prof)
             localStorage.setItem('domain_' + key, acct.domain)
             localStorage.setItem('acct_' + key + '_at', acct.at)
-            if(acct.rt) localStorage.setItem('acct_' + key + '_rt', acct.rt)
+            if (acct.rt) localStorage.setItem('acct_' + key + '_rt', acct.rt)
         }
         setColumn(obj.columns)
         if (obj.config) {
@@ -457,11 +461,11 @@ function importSettingsCore(obj: ITheDeskConfig) {
     }
 }
 
-function saveFolder() {
+export function saveFolder() {
     postMessage(['sendSinmpleIpc', 'savefolder'], '*')
 }
 
-function font() {
+export function font() {
     if ($('#fonts').hasClass('hide')) {
         postMessage(['sendSinmpleIpc', 'fonts'], '*')
         $('#fonts').removeClass('hide')
@@ -470,17 +474,17 @@ function font() {
     }
 }
 
-function fontList(arg) {
+export function fontList(arg: string[]) {
     $('#fonts').removeClass('hide')
     for (const font of arg) $('#fonts').append(`<div class="font pointer" style="font-family:${font}" onclick="insertFont('${font}')">${font}</div>`)
 }
 
-function insertFont(name) {
+export function insertFont(name: string) {
     $('#fonts').addClass('hide')
     $('#font').val(name)
 }
 
-function copyColor(from, to) {
+export function copyColor(from: string, to: string) {
     let props = ['background', 'subcolor', 'text', 'accent', 'modal', 'modalFooter', 'third', 'forth', 'bottom', 'emphasized', 'postbox', 'active', 'selected', 'selectedWithShared']
     let i = 0
     let color
@@ -510,7 +514,7 @@ function copyColor(from, to) {
     }
 }
 
-function customComp(preview) {
+export function customComp(preview: boolean) {
     const nameC = $('#custom_name').val()
     if (!nameC && !preview) {
         return false
@@ -568,7 +572,7 @@ function customComp(preview) {
     }
 }
 
-function deleteIt() {
+export function deleteIt() {
     const id = $('#custom-sel-sel').val()
     $('#custom_name').val('')
     $('#custom_desc').val('')
@@ -581,7 +585,7 @@ function deleteIt() {
     postMessage(['themeJsonDelete', id + '.thedesktheme'], '*')
 }
 
-function ctLoad() {
+export function ctLoad() {
     postMessage(['sendSinmpleIpc', 'theme-json-list'], '*')
 }
 
@@ -717,59 +721,82 @@ function pluginEdit() {
 function completePlugin(comp) {
     const pgns = localStorage.getItem('plugins')
     const args = JSON.parse(pgns ? pgns : '[]')
-    const id = $('#plugin').attr('data-id')
+    let id = $('#plugin').attr('data-id')
 
     const inputPlugin = editor.getValue()
-    const meta = getMeta(inputPlugin)
-    if (!meta.data) {
+    try {
+        const meta = getMeta(inputPlugin)
+        if (!meta.data) {
+            const metaAny: any = meta
+            Swal.fire({
+                icon: 'error',
+                title: 'Syntax Error',
+                text: `error on line ${metaAny.location.start.line}`,
+            })
+            return false
+        }
+
+        if (!meta.data.name || !meta.data.version || !meta.data.event || !meta.data.author) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Meta data error',
+                text: 'Syntax Error of META DATA',
+            })
+            return false
+        }
+        if (id === 'add_new') {
+            id = makeCID()
+            args.push({
+                id: id,
+                content: inputPlugin,
+            })
+        } else {
+            for (const plugin of args) {
+                const targetId = plugin.id
+                if (targetId === id) plugin.content = inputPlugin
+            }
+        }
+        const ss = args
+        localStorage.setItem('plugins', JSON.stringify(ss))
+        if (comp) return false
+        $('#plugin').attr('data-id', 'add_new')
+        editor.setValue('', -1)
+        pluginLoad()
+    } catch (e: any) {
         Swal.fire({
             icon: 'error',
             title: 'Syntax Error',
-            text: `error on line ${meta.location.start.line}`,
-            text: meta,
+            text: `error on line ${e.location.start.line}`,
         })
         return false
     }
-    if (!meta.data.name || !meta.data.version || !meta.data.event || !meta.data.author) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Meta data error',
-            title: 'Syntax Error of META DATA',
-        })
-        return false
-    }
-    if (id === 'add_new') {
-        id = makeCID()
-        args.push({
-            id: id,
-            content: inputPlugin,
-        })
-    } else {
-        Object.keys(args).forEach(function (key) {
-            const plugin = args[key]
-            const targetId = plugin.id
-            if (targetId === id) args[key].content = inputPlugin
-        })
-    }
-    const ss = args
-    localStorage.setItem('plugins', JSON.stringify(ss))
-    if (comp) return false
-    $('#plugin').attr('data-id', 'add_new')
-    editor.setValue('', -1)
-    pluginLoad()
+
 }
 function testExecTrg() {
     const inputPlugin = editor.getValue()
-    const meta = getMeta(inputPlugin)
-    if (meta.location) {
+    try {
+        const meta: any = getMeta(inputPlugin)
+        if (meta.location) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: `error on line ${meta.location.start.line}`,
+            })
+            return false
+        }
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: `Good syntax`,
+        })
+    } catch (e: any) {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: `error on line ${meta.location.start.line}`,
-            text: meta,
+            text: `error on line ${e.location.start.line}`,
         })
-        return false
     }
+
     testExec(inputPlugin)
 }
 async function deletePlugin() {
@@ -784,23 +811,24 @@ async function deletePlugin() {
     const args = JSON.parse(pgns ? pgns : '[]')
     const id = $('#plugin').attr('data-id')
     $('#plugin').attr('data-id', 'add_new')
-    const ss = []
-    Object.keys(args).forEach(function (key) {
-        const plugin = args[key]
+    const ss: IPlugin[] = []
+    for (const plugin of args) {
         const targetId = plugin.id
         if (targetId !== id) ss.push(plugin)
-    })
+    }
     localStorage.setItem('plugins', JSON.stringify(ss))
     pluginLoad()
 }
 function execEditPlugin() {
     completePlugin(true)
-    const id = $('#plugin').attr('data-id')
+    const id = $('#plugin').attr('data-id') || ''
     const inputPlugin = editor.getValue()
     const meta = getMeta(inputPlugin).data
     execPlugin(id, meta.event, { acctId: 0, id: null })
 }
 window.onload = function () {
+    const onSetting = !!document.getElementById('aenvView')
+    if (!onSetting) return
     //最初に読む
     load()
     climute()
@@ -811,73 +839,44 @@ window.onload = function () {
     oksload()
     ctLoad()
     pluginLoad()
-    $('body').addClass(localStorage.getItem('platform'))
+    $('body').addClass(localStorage.getItem('platform') || 'win')
 }
-//設定画面で未読マーカーは要らない
-function asReadEnd() {
-    postMessage(['asReadComp', ''], '*')
-}
-function checkupd() {
-    if (localStorage.getItem('winstore') === 'brewcask' || localStorage.getItem('winstore') === 'snapcraft' || localStorage.getItem('winstore') === 'winstore') {
-        const winstore = true
-    } else {
-        const winstore = false
-    }
+export async function checkUpd() {
+    const winstore = localStorage.getItem('winstore') === 'brewcask' || localStorage.getItem('winstore') === 'snapcraft' || localStorage.getItem('winstore') === 'winstore'
     const ver = localStorage.getItem('ver')
     const start = 'https://thedesk.top/ver.json'
-    fetch(start, {
-        method: 'GET',
-    })
-        .then(function (response) {
-            if (!response.ok) {
-                response.text().then(function (text) {
-                    setLog(response.url, response.status, text)
-                })
-            }
-            return response.json()
-        })
-        .catch(function (error) {
-            todo(error)
-            setLog(start, 'JSON', error)
-            console.error(error)
-        })
-        .then(function (mess) {
-            console.table(mess)
-            if (mess) {
-                const platform = localStorage.getItem('platform')
-                if (platform === 'darwin') {
-                    const newest = mess.desk_mac
-                } else {
-                    const newest = mess.desk
-                }
-                if (newest === ver) {
-                    Swal.fire({
-                        type: 'info',
-                        text: lang.lang_setting_noupd,
-                        html: ver,
-                    })
-                } else if (ver.indexOf('beta') !== -1 || winstore) {
-                    Swal.fire({
-                        type: 'info',
-                        text: lang.lang_setting_thisisbeta,
-                        html: ver,
-                    })
-                } else {
-                    localStorage.removeItem('new-ver-skip')
-                    location.href = 'index.html'
-                }
-            }
-        })
+    const mess = await api(start, {
+		method: 'get',
+		headers: {
+			'content-type': 'application/json'
+		}
+	})
+    if (mess) {
+        const platform = localStorage.getItem('platform')
+        const newest = platform === 'darwin' ? mess.desk_mac : mess.desk
+        if (newest === ver) {
+            Swal.fire({
+                icon: 'info',
+                text: lang.lang_setting_noupd,
+                html: ver || '',
+            })
+        } else if (ver && ver.indexOf('beta') !== -1 || winstore) {
+            Swal.fire({
+                icon: 'info',
+                text: lang.lang_setting_thisisbeta,
+                html: ver || '',
+            })
+        } else {
+            localStorage.removeItem('new-ver-skip')
+            location.href = 'index.html'
+        }
+    }
 }
-function lastFmSet() {
+export function lastFmSet() {
     if ($('#lastFmUser').val()) {
-        localStorage.setItem('lastFmUser', $('#lastFmUser').val())
+        localStorage.setItem('lastFmUser', $('#lastFmUser').val()?.toString() || '')
     } else {
         localStorage.removeItem('lastFmUser')
     }
     toast({ html: 'Complete: last.fm', displayLength: 3000 })
-}
-
-function stopVideo() {
-    return false
 }
