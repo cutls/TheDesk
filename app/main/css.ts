@@ -52,6 +52,7 @@ export default function () {
 			const themecss = join(app.getPath('userData'), arg)
 			raw = fs.readFileSync(themecss, 'utf8')
 		}
+		const json = JSON5.parse(raw)
 		e.sender.send('theme-json-response', [json, raw])
 	})
 	ipc.on('theme-css-request', function (e, args) {

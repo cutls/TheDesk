@@ -47,9 +47,6 @@ const envView: any = Vue.createApp({
             if (ls[0].id === 'ua_setting') {
                 useragent(val)
             }
-            if (ls[0].id === 'frame') {
-                frameSet(val)
-            }
             if (ls[0].id === 'size') {
                 $('html,body').css('font-size', `${val}px`)
             }

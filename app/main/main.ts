@@ -1,6 +1,4 @@
 const dirname = __dirname
-const dir = 'file://' + __dirname
-const base = dir + '/view/'
 // Electronのモジュール
 import electron from 'electron'
 // アプリケーションをコントロールするモジュール
@@ -8,14 +6,14 @@ const app = electron.app
 // Electronの初期化完了後に実行
 app.on('ready', createWindow)
 import * as fs from 'fs'
-import language from './main/language'
-import css from './main/css'
-import dl from './main/dl'
-import img from './main/img'
-import np from './main/np'
-import systemFunc from './main/system'
+import language from './language'
+import css from './css'
+import dl from './dl'
+import img from './img'
+import np from './np'
+import { system as systemFunc } from './system'
 const { Menu, MenuItem, BrowserWindow, ipcMain } = electron
-const join = require('path').join
+import  { join, dirname as getDirname } from 'path'
 
 const info_path = join(app.getPath('userData'), 'window-size.json')
 const max_info_path = join(app.getPath('userData'), 'max-window-size.json')
@@ -23,6 +21,10 @@ const ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
 const wv_path = join(app.getPath('userData'), 'webview')
 const ua_path = join(app.getPath('userData'), 'useragent')
 const lang_path = join(app.getPath('userData'), 'language')
+const parent = getDirname(__dirname)
+const homeDir = parent.replace('dist', '')
+const dir = 'file://' + homeDir
+const base = dir + '/view/'
 // ウィンドウを作成するモジュール
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow: electron.BrowserWindow | null = null
@@ -111,14 +113,15 @@ function createWindow() {
 	if (!packaged) console.log('your lang:' + app.getLocale())
 	if (!packaged) console.log('launch:' + lang)
 	//Opening
-	const packageJson = fs.readFileSync(__dirname + '/package.json').toString()
+	console.log(homeDir)
+	const packageJson = fs.readFileSync(homeDir + '/package.json').toString()
 	let show = 'TheDesk 2018'
 	if (lang === 'ja') {
-		const maxims = JSON.parse(fs.readFileSync(__dirname + '/maxim.ja.json').toString())
+		const maxims = JSON.parse(fs.readFileSync(homeDir + '/maxim.ja.json').toString())
 		show = maxims[Math.floor(Math.random() * maxims.length)]
 	} else if (lang === 'ja-KS') {
 		//ja-KSも作れたらいいね
-		const maxims = JSON.parse(fs.readFileSync(__dirname + '/maxim.ja.json').toString())
+		const maxims = JSON.parse(fs.readFileSync(homeDir + '/maxim.ja.json').toString())
 		show = maxims[Math.floor(Math.random() * maxims.length)]
 	}
 	const data = JSON.parse(packageJson)
@@ -132,7 +135,7 @@ function createWindow() {
 		resizable: false,
 		show: opening
 	})
-	openingWindow.loadURL(`${__dirname}/opening.html?ver=${version}&codename=${codename}&maxim=${encodeURI(show)}`)
+	openingWindow.loadURL(`${homeDir}/opening.html?ver=${version}&codename=${codename}&maxim=${encodeURI(show)}`)
 	if (!packaged) {
 		console.log(
 			'||\\\\\\ \n' +
@@ -184,7 +187,7 @@ function createWindow() {
 			contextIsolation: true,
 			spellcheck: false,
 			sandbox: false,
-			preload: join(__dirname, 'js', 'platform', 'preload.js'),
+			preload: join(homeDir, 'js', 'platform', 'preload.js'),
 		},
 		width: window_size.width,
 		height: window_size.height,
@@ -194,7 +197,7 @@ function createWindow() {
 	}
 	if (platform === 'linux') {
 		arg.resizable = true
-		arg.icon = __dirname + '/desk.png'
+		arg.icon = homeDir + '/desk.png'
 	} else if (platform === 'win32') {
 		arg.simpleFullscreen = true
 	} else if (platform === 'darwin') {
@@ -253,7 +256,7 @@ function createWindow() {
 	let closeArg = false
 	// @ts-ignore
 	mainWindow.on('close', function (e, arg) {
-	if (!mainWindow) return
+		if (!mainWindow) return
 		writePos(mainWindow)
 		if (!closeArg) {
 			e.preventDefault()
@@ -323,7 +326,7 @@ function createWindow() {
 	//NowPlaying
 	np()
 	//その他system
-	systemFunc.system(mainWindow, dir, lang, dirname)
+	systemFunc(mainWindow, dir, dirname)
 	setInterval(function () {
 		if (!mainWindow) return
 		mouseTrack(mainWindow)

@@ -1,62 +1,59 @@
+import { BrowserWindow } from "electron"
+
 const { shell } = require('electron')
 
-function system(mainWindow, dir, lang, dirname) {
+export function system(mainWindow: BrowserWindow, dir: string, dirname: string) {
 	const electron = require('electron')
 	const app = electron.app
 	const join = require('path').join
-	var Jimp = require('jimp')
 	const fs = require('fs')
-	var JSON5 = require('json5')
-	var ipc = electron.ipcMain
+	const JSON5 = require('json5')
+	const ipc = electron.ipcMain
 	const clipboard = electron.clipboard
 	const nativeImage = electron.nativeImage
-	var tmp_img = join(app.getPath('userData'), 'tmp.png')
-	var ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
-	var wv_path = join(app.getPath('userData'), 'webview')
-	var ua_path = join(app.getPath('userData'), 'useragent')
-	var lang_path = join(app.getPath('userData'), 'language')
-	var log_dir_path = join(app.getPath('userData'), 'logs')
-	var frame_path = join(app.getPath('userData'), 'frame')
+	const haPath = join(app.getPath('userData'), 'hardwareAcceleration')
+	const wvPath = join(app.getPath('userData'), 'webview')
+	const uaPath = join(app.getPath('userData'), 'useragent')
+	const langPath = join(app.getPath('userData'), 'language')
+	const longDirPath = join(app.getPath('userData'), 'logs')
 	//ログ
-	var today = new Date()
+	const today = new Date()
 	//今日のやつ
-	var todayStr = today.getFullYear() + '' + (today.getMonth() + 1) + '' + today.getDate() + '.log'
+	const todayStr = today.getFullYear() + '' + (today.getMonth() + 1) + '' + today.getDate() + '.log'
 	//昨日のやつ
 	today.setDate(today.getDate() - 1)
-	var yestStr = today.getFullYear() + '' + (today.getMonth() + 1) + '' + today.getDate() + '.log'
+	const yestStr = today.getFullYear() + '' + (today.getMonth() + 1) + '' + today.getDate() + '.log'
 	//一昨日のやつ
 	today.setDate(today.getDate() - 1)
-	var yest2Str = today.getFullYear() + '' + (today.getMonth() + 1) + '' + today.getDate() + '.log'
+	const yest2Str = today.getFullYear() + '' + (today.getMonth() + 1) + '' + today.getDate() + '.log'
 
 	const BrowserWindow = electron.BrowserWindow
 	const dialog = electron.dialog
 	const os = require('os')
-	const language = require('../main/language.js')
 	//プラットフォーム
 	ipc.on('getPlatform', function (e, arg) {
+		let gitHash = ''
 		try {
-			var gitHash = fs.readFileSync('git', 'utf8')
+			gitHash = fs.readFileSync('git', 'utf8')
 		} catch {
-			var gitHash = null
+			gitHash = ''
 		}
 		e.sender.send('platform', [process.platform, process.arch, process.version, process.versions.chrome, process.versions.electron, gitHash])
 	})
 	//言語
 	ipc.on('lang', function (e, arg) {
 		console.log('set:' + arg)
-		fs.writeFileSync(lang_path, arg)
+		fs.writeFileSync(langPath, arg)
 		e.sender.send('langres', arg)
 	})
 	//エクスポートのダイアログ
 	ipc.on('exportSettings', function (e, args) {
 		let savedFiles = dialog.showSaveDialogSync(mainWindow, {
 			title: 'Export',
-			properties: ['openFile', 'createDirectory'],
+			properties: ['createDirectory'],
 			defaultPath: 'export.thedeskconfig.json5',
 		})
-		if (!savedFiles) {
-			return false
-		}
+		if (!savedFiles) return false
 		e.sender.send('exportSettingsFile', savedFiles)
 	})
 	//インポートのダイアログ
@@ -67,9 +64,7 @@ function system(mainWindow, dir, lang, dirname) {
 			filters: [{ name: 'TheDesk Config', extensions: ['thedeskconfig', 'thedeskconfigv2', 'json5'] }],
 		})
 		console.log('imported from: ', fileNames)
-		if (!fileNames) {
-			return false
-		}
+		if (!fileNames) return false
 		e.sender.send('config', JSON5.parse(fs.readFileSync(fileNames[0], 'utf8')))
 	})
 	//保存フォルダのダイアログ
@@ -81,6 +76,7 @@ function system(mainWindow, dir, lang, dirname) {
 				properties: ['openDirectory'],
 			}
 		)
+		if (!fileNames) return false
 		e.sender.send('savefolder', fileNames[0])
 	})
 	//カスタムサウンドのダイアログ
@@ -96,24 +92,25 @@ function system(mainWindow, dir, lang, dirname) {
 				],
 			}
 		)
+		if (!fileNames) return false
 		e.sender.send('customSoundRender', [arg, fileNames[0]])
 	})
 
 	//ハードウェアアクセラレーションの無効化
 	ipc.on('ha', function (e, arg) {
 		if (arg === 'true') {
-			fs.writeFileSync(ha_path, arg)
+			fs.writeFileSync(haPath, arg)
 		} else {
-			fs.unlink(ha_path, function (err) { })
+			fs.unlink(haPath, function (err) { })
 		}
 		app.relaunch()
 		app.exit()
 	})
 	ipc.on('webview', function (e, arg) {
 		if (arg === 'true') {
-			fs.writeFileSync(wv_path, arg)
+			fs.writeFileSync(wvPath, arg)
 		} else {
-			fs.unlink(wv_path, function (err) { })
+			fs.unlink(wvPath, function (err) { })
 		}
 		app.relaunch()
 		app.exit()
@@ -121,23 +118,17 @@ function system(mainWindow, dir, lang, dirname) {
 	//ユーザーエージェント
 	ipc.on('ua', function (e, arg) {
 		if (arg === '') {
-			fs.unlink(ua_path, function (err) { })
+			fs.unlink(uaPath, function (err) { })
 		} else {
-			fs.writeFileSync(ua_path, arg)
+			fs.writeFileSync(uaPath, arg)
 		}
-		app.relaunch()
-		app.exit()
-	})
-	//フレームのありなし
-	ipc.on('frameSet', function (e, arg) {
-		fs.writeFileSync(frame_path, arg)
 		app.relaunch()
 		app.exit()
 	})
 	//スクリーンリーダー
 	ipc.on('acsCheck', function (e, arg) {
 		if (app.accessibilitySupportEnabled) {
-			mainWindow.send('accessibility', 'true')
+			mainWindow.webContents.send('accessibility', 'true')
 		}
 	})
 	ipc.on('quit', (e, args) => {
@@ -150,8 +141,8 @@ function system(mainWindow, dir, lang, dirname) {
 		shell.openExternal(arg)
 	})
 	function about() {
-		var ver = app.getVersion()
-		var window = new BrowserWindow({
+		const ver = app.getVersion()
+		const window = new BrowserWindow({
 			webPreferences: {
 				webviewTag: false,
 				nodeIntegration: false,
@@ -170,14 +161,14 @@ function system(mainWindow, dir, lang, dirname) {
 		return 'true'
 	}
 	ipc.on('nano', function (e, x, y) {
-		var nano_info_path = join(app.getPath('userData'), 'nano-window-position.json')
-		var window_pos
+		const nano_info_path = join(app.getPath('userData'), 'nano-window-position.json')
+		let windowsPos
 		try {
-			window_pos = JSON.parse(fs.readFileSync(nano_info_path, 'utf8'))
+			windowsPos = JSON.parse(fs.readFileSync(nano_info_path, 'utf8'))
 		} catch (e) {
-			window_pos = [0, 0] // デフォルトバリュー
+			windowsPos = [0, 0] // デフォルトバリュー
 		}
-		var nanowindow = new BrowserWindow({
+		const nanowindow = new BrowserWindow({
 			webPreferences: {
 				webviewTag: false,
 				nodeIntegration: false,
@@ -194,27 +185,26 @@ function system(mainWindow, dir, lang, dirname) {
 		nanowindow.loadURL(dir + '/nano.html')
 		nanowindow.setAlwaysOnTop(true)
 		//nanowindow.toggleDevTools()
-		nanowindow.setPosition(window_pos[0], window_pos[1])
+		nanowindow.setPosition(windowsPos[0], windowsPos[1])
 		nanowindow.on('close', function () {
 			fs.writeFileSync(nano_info_path, JSON.stringify(nanowindow.getPosition()))
 		})
 		return true
 	})
-	var cbTimer1
+	let cbTimer1
 	ipc.on('startmem', (e, arg) => {
-		event = e.sender
+		const event = e.sender
 		cbTimer1 = setInterval(mems, 1000)
+		function mems() {
+			const mem = os.totalmem() - os.freemem()
+			if (mainWindow && event) {
+				event.send('memory', [mem, os.cpus()[0].model, os.totalmem(), os.cpus().length, os.uptime()])
+			}
+		}
 	})
-	function mems() {
-		var mem = os.totalmem() - os.freemem()
-		if (mainWindow && event) {
-			event.send('memory', [mem, os.cpus()[0].model, os.totalmem(), os.cpus().length, os.uptime()])
-		}
-	}
+
 	ipc.on('endmem', (e, arg) => {
-		if (cbTimer1) {
-			clearInterval(cbTimer1)
-		}
+		if (cbTimer1) clearInterval(cbTimer1)
 	})
 
 	ipc.on('export', (e, args) => {
@@ -222,41 +212,9 @@ function system(mainWindow, dir, lang, dirname) {
 		e.sender.send('exportAllComplete', '')
 	})
 	//フォント
-	function object_array_sort(data, key, order, fn) {
-		//デフォは降順(DESC)
-		var num_a = -1
-		var num_b = 1
-
-		if (order === 'asc') {
-			//指定があれば昇順(ASC)
-			num_a = 1
-			num_b = -1
-		}
-
-		data = data.sort(function (a, b) {
-			var x = a[key]
-			var y = b[key]
-			if (x > y) return num_a
-			if (x < y) return num_b
-			return 0
-		})
-
-		//重複排除
-		var arrObj = {}
-		for (var i = 0; i < data.length; i++) {
-			arrObj[data[i]['family']] = data[i]
-		}
-
-		data = []
-		for (var key in arrObj) {
-			data.push(arrObj[key])
-		}
-
-		fn(data) // ソート後の配列を返す
-	}
 	ipc.on('fonts', (e, arg) => {
-		var SystemFonts = require('system-font-families').default
-		var fm = new SystemFonts()
+		const SystemFonts = require('system-font-families').default
+		const fm = new SystemFonts()
 		const fontList = fm.getFontsSync()
 		e.sender.send('font-list', fontList)
 	})
@@ -270,9 +228,9 @@ function system(mainWindow, dir, lang, dirname) {
 	})
 	//ログ
 	ipc.on('log', (e, arg) => {
-		var today = new Date()
-		var todayStr = today.getFullYear() + '' + (today.getMonth() + 1) + '' + today.getDate()
-		var log_path = join(log_dir_path, todayStr + '.log')
+		const today = new Date()
+		const todayStr = today.getFullYear() + '' + (today.getMonth() + 1) + '' + today.getDate()
+		const log_path = join(longDirPath, todayStr + '.log')
 		fs.appendFile(log_path, '\n' + arg, function (err) {
 			if (err) {
 				throw err
@@ -280,22 +238,16 @@ function system(mainWindow, dir, lang, dirname) {
 		})
 	})
 	ipc.on('getLogs', (e, arg) => {
-		var logs = ''
-		var todayLog = ''
-		var yestLog = ''
-		var yest2Log = ''
-		fs.readdir(log_dir_path, function (err, files) {
+		let logs = ''
+		let todayLog = ''
+		let yestLog = ''
+		let yest2Log = ''
+		fs.readdir(longDirPath, function (err, files) {
 			if (err) throw err
 			files.filter(function (file) {
-				if (file === todayStr) {
-					todayLog = fs.readFileSync(join(log_dir_path, file), 'utf8')
-				}
-				if (file === yestStr) {
-					yestLog = logs + fs.readFileSync(join(log_dir_path, file), 'utf8')
-				}
-				if (file === yest2Str) {
-					yest2Log = fs.readFileSync(join(log_dir_path, file), 'utf8')
-				}
+				if (file === todayStr) todayLog = fs.readFileSync(join(longDirPath, file), 'utf8')
+				if (file === yestStr) yestLog = logs + fs.readFileSync(join(longDirPath, file), 'utf8')
+				if (file === yest2Str) yest2Log = fs.readFileSync(join(longDirPath, file), 'utf8')
 				logs = todayLog + yestLog + yest2Log
 			})
 			logs = yest2Log + yestLog + todayLog
@@ -304,19 +256,19 @@ function system(mainWindow, dir, lang, dirname) {
 	})
 
 	//起動時ログディレクトリ存在確認と作成、古ログ削除
-	fs.access(log_dir_path, fs.constants.R_OK | fs.constants.W_OK, (error) => {
+	fs.access(longDirPath, fs.constants.R_OK | fs.constants.W_OK, (error) => {
 		if (error) {
 			if (error.code === 'ENOENT') {
-				fs.mkdirSync(log_dir_path)
+				fs.mkdirSync(longDirPath)
 			} else {
 				return
 			}
 		} else {
-			fs.readdir(log_dir_path, function (err, files) {
+			fs.readdir(longDirPath, function (err, files) {
 				if (err) throw err
 				files.filter(function (file) {
 					if (file !== todayStr && file !== yestStr && file !== yest2Str) {
-						fs.unlinkSync(join(log_dir_path, file))
+						fs.unlinkSync(join(longDirPath, file))
 					}
 				})
 			})
@@ -347,4 +299,3 @@ function system(mainWindow, dir, lang, dirname) {
 		})
 	})
 }
-exports.system = system
