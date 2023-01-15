@@ -141,7 +141,7 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 			const regExp = new RegExp('tmp_' + r, 'g')
 			mediav = mediav.replace(regExp, id)
 			$('#media').val(mediav)
-			const html = `<img src="../../img/picture.svg" class="preview-img pointer unknown" data-media="${id}" oncontextmenu="deleteImage('${id}')" onclick="altImage('${acctId}','${id}')" title="${lang.lang_postimg_delete}">`
+			const html = `<img src="../../img/picture.svg" class="preview-img pointer unknown" data-acct="${acctId}" data-media="${id}" oncontextmenu="deleteImage('${id}')" onclick="altImage('${acctId}','${id}')" title="${lang.lang_postimg_delete}">`
 			$('#preview').append(html)
 			todc()
 			if (localStorage.getItem('nsfw_' + acctId)) {
@@ -152,7 +152,6 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 			$('.toot-btn-group').prop('disabled', false)
 			formSelectInit($('select'))
 			$('#mec').text(lang.lang_there)
-			toast({ html: '<span>' + lang.lang_postimg_sync + '</span><button class="btn-flat toast-action" onclick="syncDetail()">Click</button>', displayLength: 3000 })
 			$('#imgup').text('')
 			$('#imgsel').show()
 			localStorage.removeItem('image')
@@ -282,11 +281,12 @@ export async function altImage(acctId: string, id: string) {
 	const domain = localStorage.getItem('domain_' + acctId)
 	const at = localStorage.getItem('acct_' + acctId + '_at')
 	const start = `https://${domain}/api/v1/media/${id}`
-	if ($(`[data-media="${id}]`).hasClass('unknown')) {
+	if ($(`[data-media=${id}]`).hasClass('unknown')) {
 		const json = await api(start, {
 			method: 'get',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				Authorization: 'Bearer ' + at
 			}
 		})
 		console.log(json)
@@ -385,12 +385,5 @@ export function alertProcessUnfinished() {
 		if (result.value) {
 			post()
 		}
-	})
-}
-export function syncDetail() {
-	Swal.fire({
-		title: lang.lang_post_syncDetail,
-		text: lang.lang_post_syncDetailText,
-		icon: 'info'
 	})
 }
