@@ -3,7 +3,7 @@ import { toast } from "./declareM"
 import lang from "./lang"
 
 interface IOptions {
-    method: 'post' | 'get' | 'put' | 'delete'
+    method: 'post' | 'get' | 'put' | 'delete' | 'patch'
     headers?: { [key: string]: string }
     body?: any
 }

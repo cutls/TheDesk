@@ -112,7 +112,7 @@
                 <div id="fonts" class="hide"></div>
                 <h5>@@savefolder@@</h5>
                 @@savefolderwarn@@<br>
-                <button class="btn waves-effect" style="width:7.7rem;" onclick="savefolder()">@@change@@</button>
+                <button class="btn waves-effect" style="width:7.7rem;" onclick="saveFolder()">@@change@@</button>
                 <br>
             </div>
         </li>
@@ -442,12 +442,11 @@
                         <template v-if="item.checkbox">
                             <template v-for="(check, j) in item.text.checkbox">
                                 <template
-                                    v-if="(!check.kirishima || (check.kirishima && kirishima) )&& (!check.quote || (check.quote && quoters))">
+                                    v-if="(!check.quote || (check.quote && quoters))">
                                     <label><input class="with-gap" v-on:click="complete(i,check.value)"
                                             v-model="item.setValue" type="radio" v-bind:id="item.id+check.value"
                                             v-bind:value="check.value" />
                                         <span>{{check.text}}</span></label>
-                                    <span v-if="check.kirishimaText">{{check.kirishimaText}}</span>
                                 </template>
                             </template>
                         </template>
@@ -644,15 +643,6 @@
     <li>Ctrl+Shift+P:@@keyshowprof@@</li>
     <li>←/→:@@keyrow@@</li>
     <li>@@keyzoom@@</li>
-    <div class="hide kirishima">
-        以下Markdownに対応したインスタンスのみ。
-        <br>
-        <li>Ctrl+B/I/S/U:太字/斜字/取り消し/下線</li>
-        @@whenSelected@@
-        <li>F:@@fav@@</li>
-        <li>B:@@bt@@</li>
-        <li>R:@@reply@@</li>
-    </div>
     <button class="btn waves-effect red" style="width:100%; max-width:40rem;"
         onclick="if(confirm('@@resetconfirm@@')){ localStorage.clear(); location.href='index.html'; }"><i
             class="material-icons left">delete</i>@@reset@@</button><br><br>
@@ -694,7 +684,7 @@
     タグタイムラインを開く:
     <a href="index.html?mode=tag&code=被災地支援のためのマストドン研究会">#被災地支援のためのマストドン研究会</a><br>
     <script type="text/javascript" src="../../@@node_base@@/lodash/lodash.min.js"></script>
-    <script src="../../js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../../@@node_base@@/ace/src-min/ace.js"></script>
     <script>
         var editor = ace.edit("plugin");
         editor.$blockScrolling = Infinity;

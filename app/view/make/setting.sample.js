@@ -761,12 +761,6 @@ var postConstruction = [
 				{
 					text: '@@direct@@',
 					value: 'direct'
-				},
-				{
-					text: '@@localonly@@',
-					value: 'local',
-					kirishima: true,
-					kirishimaText: '非対応インスタンスでは「未収載」になります。'
 				}
 			]
 		}

@@ -33,3 +33,9 @@ export const autoCompleteInit= (elem: Elem | HTMLInputElement, options?: Object)
 export const characterCounterInit= (elem: Elem | HTMLInputElement) => {
     return M.CharacterCounter.init(elem)
 }
+export const chipInit= (elem: Elem | HTMLInputElement, options?: Object) => {
+    return M.Chips.init(elem, options)
+}
+export const chipInitGetInstance= (elem: Elem | HTMLInputElement) => {
+    return M.Chips.getInstance(elem)
+}

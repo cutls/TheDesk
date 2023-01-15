@@ -13,9 +13,7 @@ import { setLog } from "../platform/first"
 import { tips, todo } from "../ui/tips"
 import { idata } from "./instance"
 
-localStorage.removeItem('kirishima')
 localStorage.removeItem('quoters')
-localStorage.removeItem('imas')
 localStorage.removeItem('image')
 localStorage.removeItem('stable')
 localStorage.setItem('mode_misskey.xyz', 'misskey')
@@ -149,12 +147,6 @@ export async function ckdb(acct_id: string) {
 	localStorage.removeItem('fav_' + acct_id)
 	localStorage.removeItem('bt_' + acct_id)
 	localStorage.removeItem('followlocale_' + acct_id)
-	if (domain === 'kirishima.cloud') {
-		localStorage.setItem('kirishima', 'true')
-	} else if (domain === 'imastodon.net') {
-		localStorage.setItem('imas', 'true')
-		$('.imasonly').show()
-	}
 	const bbcode = domain + '_bbcode'
 	const quoteMarker = domain + '_quote'
 	if (localStorage.getItem('instance')) {

@@ -200,7 +200,7 @@ export interface Relationship {
     muting_notifications: boolean,
     requested: boolean,
     domain_blocking: boolean,
-    endorse: boolean,
+    endorsed: boolean,
     note: string
 }
 export interface PushSubscription {

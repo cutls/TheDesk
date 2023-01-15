@@ -147,8 +147,8 @@ export async function execPlugin(id: string, source: ISource, args?: any) {
     const common = _.cloneDeep(global.asCommon)
     if (source === 'buttonOnToot') {
         common.DATA = args
-        const domain = localStorage.getItem(`domain_${args.acct_id}`)
-        const at = localStorage.getItem(`acct_${args.acct_id}_at`)
+        const domain = localStorage.getItem(`domain_${args.acctId}`)
+        const at = localStorage.getItem(`acct_${args.acctId}_at`)
         const start = `https://${domain}/api/v1/statuses/${args.id}`
         const promise = await fetch(start, {
             method: 'GET',
