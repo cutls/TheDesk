@@ -4,6 +4,7 @@ import { Emoji } from '../../interfaces/MastodonApiReturns'
 import { IEmojiStorage } from '../../interfaces/Storage'
 import api from '../common/fetch'
 import lang from '../common/lang'
+import { show } from '../ui/postBox'
 //絵文字ボタンのトグル
 export function emojiToggle(reaction: boolean) {
 	const acctId = $('#post-acct-sel').val()

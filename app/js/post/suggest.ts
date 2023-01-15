@@ -4,6 +4,7 @@ import { Search, Tag } from '../../interfaces/MastodonApiReturns'
 import api from "../common/fetch"
 import { escapeHTML } from '../platform/first'
 import gcc from 'textarea-caret'
+import { favTag } from '../tl/tag'
 
 // @ts-ignore
 let timer: any = 0

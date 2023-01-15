@@ -9,6 +9,8 @@ import { escapeHTML } from "../platform/first"
 import { parse } from "../tl/parse"
 import { userParse } from "../tl/userParse"
 import { parseColumn } from "../ui/layout"
+import { hisclose } from "./showOnTL"
+import $ from 'jquery'
 
 //タイムライン
 export async function utlShow(user: string, more: 'more' | '', acctId: string) {

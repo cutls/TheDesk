@@ -9,6 +9,12 @@ import { fav, rt } from '../post/status'
 import { toast } from './declareM'
 import { re } from '../post/useTxtBox'
 import { isIVis } from '../post/secure'
+import { hide, show } from '../ui/postBox'
+import { nowplaying } from '../ui/spotify'
+import { menu } from '../ui/menu'
+import { parseColumn } from '../ui/layout'
+import { profShow } from '../userdata/showOnTL'
+import { imgCont } from '../ui/img'
 
 $(function ($) {
 	//キーボードショートカット
@@ -78,7 +84,7 @@ $(function ($) {
 		if ((e.metaKey || e.ctrlKey) && e.shiftKey && wv) {
 			if (e.keyCode === 78) {
 				show()
-				nowplaying()
+				nowplaying('spotify')
 				return false
 			}
 		}

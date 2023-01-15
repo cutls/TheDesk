@@ -3,14 +3,15 @@
 import $ from 'jquery'
 import Swal from 'sweetalert2'
 import lang from '../common/lang'
-import { addToDraft, cw, draftToggle, isIVis, IVis, schedule } from './secure'
-import { todo } from '../ui/tips'
+import { addToDraft, cw, draftToggle, isIVis, IVis, loadVis, schedule } from './secure'
+import { todc, todo } from '../ui/tips'
 import { Status, StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
 import { formatTimeUtc, setLog } from '../platform/first'
 import { formSelectInit, toast } from '../common/declareM'
 import api from '../common/fetch'
 import { alertProcessUnfinished } from './img'
 import { pollCalc } from '../tl/poll'
+import { hide, mdCheck } from '../ui/postBox'
 
 
 export function sec() {

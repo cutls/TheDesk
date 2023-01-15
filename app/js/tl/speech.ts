@@ -2,6 +2,7 @@ import lang from "../common/lang"
 import $ from 'jquery'
 import { stripTags } from "../platform/first"
 import { toast } from "../common/declareM"
+import { parseColumn } from "../ui/layout"
 
 let $voise: SpeechSynthesisVoice
 const isBouyomi = !!localStorage.getItem('voice_bouyomi')

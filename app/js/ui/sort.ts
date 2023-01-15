@@ -5,6 +5,7 @@ import { getColumn } from "../common/storage"
 import { isTagData } from "../tl/tag"
 import { cap, icon } from "../tl/tl"
 import { parseColumn } from "./layout"
+import $ from 'jquery'
 
 //ソートデータ読み込み
 export function sortLoad() {

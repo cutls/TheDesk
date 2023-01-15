@@ -4,6 +4,7 @@ import { modalInitGetInstance } from "../common/declareM"
 import api from "../common/fetch"
 import { toBlob } from "../post/img"
 import { todc, todo } from "../ui/tips"
+import $ from 'jquery'
 
 //文字系
 export async function profEdit() {

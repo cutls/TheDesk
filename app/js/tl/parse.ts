@@ -14,6 +14,7 @@ import { v4 as uuid } from 'uuid'
 import { getMeta } from '../platform/plugin'
 import Swal from 'sweetalert2'
 import { toast } from '../common/declareM'
+import { parseColumn } from '../ui/layout'
 const qt = localStorage.getItem('quote')
 const bkm = localStorage.getItem('bookmark')
 const datetype = localStorage.getItem('datetype') || 'absolute'
@@ -692,6 +693,7 @@ async function client(name: string) {
 				for (const cliT of obj) {
 					newObj.push(cliT)
 				}
+				let key = 0
 				for (const cliT of obj) {
 					if (cliT !== name && !can) {
 						can = false
@@ -700,6 +702,7 @@ async function client(name: string) {
 						obj.splice(key, 1)
 						toast({ html: escapeHTML(name) + lang.lang_status_unemphas, displayLength: 2000 })
 					}
+					key++
 				}
 				if (!can) {
 					obj.push(name)

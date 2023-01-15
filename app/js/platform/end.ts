@@ -2,9 +2,18 @@ import $ from 'jquery'
 import Swal from 'sweetalert2'
 import { toast } from '../common/declareM'
 import lang from '../common/lang'
-import { code } from '../login/manager'
+import { asReadEnd, code } from '../login/manager'
+import { media } from '../post/img'
+import { post } from '../post/post'
 import { details, detEx } from '../tl/datails'
 import { asRead, tl } from '../tl/tl'
+import { parseColumn } from '../ui/layout'
+import { show } from '../ui/postBox'
+import { exportSettingsCore, importSettingsCore, fontList, ctLoad, clearCustomImport, ctLoadCore, customConnect, customSoundSave } from '../ui/settings'
+import { npCore } from '../ui/spotify'
+import { renderMem } from '../ui/tips'
+import { udg, udgEx } from '../userdata/showOnTL'
+declare var updateMess, updateProg
 //プラットフォーム別　最後に読むやつ
 //リンクを外部で開くか内部で出すか
 $(document).on('click', 'a', e => {
@@ -31,7 +40,7 @@ $(document).on('click', 'a', e => {
 		} else if (tags) {
 			if (tags[2]) {
 				const acctId = $a.parent().attr('data-acct') || '0'
-				tl('tag', decodeURI(tags[2]), acct_id, 'add')
+				tl('tag', decodeURI(tags[2]), acctId, 'add')
 			}
 		} else if (ats) {
 			if (ats[2]) {
@@ -123,9 +132,7 @@ onmessage = function (e) {
 		updateProg(e.data[1])
 	} else if (e.data[0] === 'updateMess') {
 		updateMess(e.data[1])
-	} else if (e.data[0] === 'renderAbout') {
-		renderAbout(e.data[1])
-	} else if (e.data[0] === 'asRead') {
+	}  else if (e.data[0] === 'asRead') {
 		asRead()
 	} else if (e.data[0] === 'asReadEnd') {
 		asReadEnd()

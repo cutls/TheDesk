@@ -10,8 +10,11 @@ import lang from "../common/lang"
 import { getMulti, setMulti } from "../common/storage"
 import { verck } from "../common/version"
 import { setLog } from "../platform/first"
-import { tips, todo } from "../ui/tips"
+import { parseColumn } from "../ui/layout"
+import { load } from "../ui/settings"
+import { isITips, tips, todo } from "../ui/tips"
 import { idata } from "./instance"
+import $ from 'jquery'
 
 localStorage.removeItem('quoters')
 localStorage.removeItem('image')
@@ -31,7 +34,7 @@ export function ck() {
 			if (acct.domain) refresh(key.toString(), true)
 			key++
 		}
-		if (!obj[0].domain) return false
+		if (!multi[0].domain) return false
 		$('#tl').show()
 		ticker()
 		multiSelector(false)
@@ -45,6 +48,7 @@ export function ck() {
 				const id = m[1]
 				tips('custom', id)
 			} else {
+				if (!isITips(tipsName)) return
 				tips(tipsName)
 			}
 		}
@@ -277,7 +281,7 @@ export function multiSelector(parseC?: boolean) {
 		$('#dir-acct-sel').append(`<option value="noauth">${lang.lang_login_noauth}</option>`)
 	}
 	formSelectInit($('select'))
-	if (!parseC) parseColumn(null, true)
+	if (!parseC) parseColumn(undefined, true)
 }
 
 //インスタンスティッカー

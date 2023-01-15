@@ -3,6 +3,8 @@ import { IColumnType } from "../../interfaces/Storage"
 import { getColumn } from "../common/storage"
 import timeUpdate from "../common/time"
 import { statusModel } from "../platform/first"
+import { parseColumn } from "../ui/layout"
+import { scrollCk } from "../ui/scroll"
 import { additional } from "./card"
 import { convertColumnToFilter, filterUpdate, getFilterTypeByAcct } from "./filter"
 import { notfCommon } from "./notification"
@@ -11,6 +13,7 @@ import { say } from "./speech"
 import { isTagData } from "./tag"
 import { announ } from "./tl"
 import { userParse } from "./userParse"
+import $ from 'jquery'
 
 //MastodonBaseStreaming
 global.mastodonBaseWs = {}
@@ -67,7 +70,7 @@ export function mastodonBaseStreaming(acctId: string) {
             const tl = JSON.parse(mess.data).stream
             const obj: Toot = JSON.parse(JSON.parse(mess.data).payload)
             const tls = getTlMeta(tl[0], tl, acctId, obj)
-            const template = insertTl(obj, tls, true)
+            const template = insertTl(obj, tls, true) || ''
             $(`[unique-id=${obj.id}]`).html(template)
             $(`[unique-id=${obj.id}] [unique-id=${obj.id}]`).unwrap()
         } else if (typeA === 'notification') {

@@ -19,9 +19,9 @@ export function notfParse(obj: INotf | undefined, acctId: string, tlid: string |
         noticeText: ''
     }
     const domain = localStorage.getItem(`domain_${acctId}`)
-    const account = notf.eventBy
-    const type = notf.event
-    const { createdAt, id } = notf
+    const account = obj.eventBy
+    const type = obj.event
+    const { createdAt, id } = obj
     let noticeavatar = gif ? account.avatar : account.avatar_static
     noticeavatar = `<a onclick="udg('${account.id}','${acctId}');" user="${account.acct}" class="udg">
                 <img draggable="false" src="${noticeavatar}" width="20" class="notf-icon prof-img" user="${account.acct}" alt="" loading="lazy">
@@ -61,7 +61,7 @@ export function notfParse(obj: INotf | undefined, acctId: string, tlid: string |
                 ${disName}(@${account.acct})
             </a>`
     const memory = localStorage.getItem('notice-mem')
-    if (popup >= 0 && obj.length < 5 && noticetext !== memory) {
+    if (popup >= 0 && noticetext !== memory) {
         let file = ''
         let sound = ''
         if (localStorage.getItem('hasNotfC_' + acctId) !== 'true') {

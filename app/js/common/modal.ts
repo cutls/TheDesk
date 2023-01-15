@@ -1,3 +1,4 @@
+import { stopVideo } from "../ui/img";
 import { collapsibleInit, dropdownInit, modalInit } from "./declareM";
 
 //モーダル・ドロップダウンの各種設定

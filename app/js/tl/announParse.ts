@@ -10,6 +10,9 @@ import Swal from "sweetalert2"
 import { clear } from "../post/post"
 import { date, isDateType } from "./date"
 import { announ } from "./tl"
+import $ from 'jquery'
+import { customEmojiReplace } from "./parse"
+import { hide, show } from "../ui/postBox"
 
 export function announParse(obj: Announce[], acctId: string) {
 	let template = ''
@@ -19,7 +22,7 @@ export function announParse(obj: Announce[], acctId: string) {
 	const isGif = gif === 'yes'
 	for (const toot of obj) {
 		let content = toot.content
-		if (toot.emojis) content = customEmojiReplace(content, toot, gif)
+		if (toot.emojis) content = customEmojiReplace(content, toot, isGif)
 		content = twemojiParse(content)
 		let reactions = ''
 		//既存のリアクション

@@ -7,8 +7,11 @@ import api from "../common/fetch"
 import lang from "../common/lang"
 import { execCopy } from "../platform/end"
 import { columnReload } from "../tl/tl"
+import { show, mdCheck } from "../ui/postBox"
+import { showReq, showDom } from "../userdata/hisData"
 import { cw, IVis, vis } from "./secure"
 import { reEx } from "./useTxtBox"
+import $ from 'jquery'
 
 //お気に入り登録
 export async function fav(id: string, acctId: string, remote: boolean) {
@@ -416,7 +419,7 @@ export async function request(id: string, flag: 'authorize' | 'reject', acctId: 
             'Authorization': 'Bearer ' + at
         }
     })
-    showReq()
+    showReq('', acctId)
 }
 
 //ドメインブロック
@@ -433,7 +436,7 @@ export async function domainBlock(add: string, isPositive: boolean, acctId?: str
         },
         body: { domain: add }
     })
-    showDom()
+    showDom('', acctId || '0')
 }
 
 export function addDomainblock() {

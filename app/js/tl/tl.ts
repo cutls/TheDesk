@@ -1,7 +1,7 @@
 import { getColumn, setColumn } from "../common/storage"
 import $ from 'jquery'
 import { mixMore, mixre, mixTl } from "./mix"
-import { todo } from "../ui/tips"
+import { todc, todo } from "../ui/tips"
 import { IColumnData, IColumnType, IColumnUTL } from "../../interfaces/Storage"
 import api from "../common/fetch"
 import { Conversation, Toot } from "../../interfaces/MastodonApiReturns"
@@ -17,6 +17,8 @@ import timeUpdate from "../common/time"
 import { isTagData } from "./tag"
 import { parse } from "./parse"
 import { say } from "./speech"
+import { goTop, scrollCk, scrollEvent } from "../ui/scroll"
+import { parseColumn } from "../ui/layout"
 
 //TL取得
 global.moreLoading = false
@@ -84,7 +86,7 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
         $('#notice_' + tlid).text(`${cap(type, data, acctId)}(${localStorage.getItem('user_' + acctId) || '?'}@${domain})`)
         $('#notice_icon_' + tlid).text('bookmark')
         return
-    } else if (type === 'utl') {
+    } else if (type === 'utl' && data) {
         //UTLなら飛ばす
         getUtl(acctId, tlid, data, false)
         $('#notice_' + tlid).text(`${cap(type, data, acctId)}(${localStorage.getItem('user_' + acctId) || '?'}@'${domain})`)
@@ -150,7 +152,7 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 }
 
 //Streaming接続
-function reload(type: IColumnType, acctId: string, tlid: string, data: IColumnData, mute: string[], voice: boolean) {
+function reload(type: IColumnType, acctId: string, tlid: string, data: IColumnData | undefined, mute: string[], voice: boolean) {
     const domain = localStorage.getItem(`domain_${acctId}`) || ''
     localStorage.setItem('now', type)
     const mastodonBaseWsStatus = global.mastodonBaseWsStatus
@@ -173,7 +175,7 @@ function reload(type: IColumnType, acctId: string, tlid: string, data: IColumnDa
     }
 }
 
-function stremaingSubscribe(type: IColumnType, acctId: string, data: IColumnData, unsubscribe?: boolean) {
+function stremaingSubscribe(type: IColumnType, acctId: string, data?: IColumnData, unsubscribe?: boolean) {
     let command = 'subscribe'
     if (unsubscribe) command = 'unsubscribe'
     let stream
@@ -183,7 +185,7 @@ function stremaingSubscribe(type: IColumnType, acctId: string, data: IColumnData
         global.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: 'list', list: data }))
         return true
     } else if (type === 'tag') {
-        if (!isTagData(data)) return Swal.fire('Error migration to v24')
+        if (!data || !isTagData(data)) return Swal.fire('Error migration to v24')
         let arr: any[] = []
         const name = data.name
         arr.push(name)
@@ -197,7 +199,7 @@ function stremaingSubscribe(type: IColumnType, acctId: string, data: IColumnData
     global.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: stream }))
 }
 
-function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: IColumnData, mute: string[], voice: boolean, mode?: 'error') {
+function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: IColumnData | undefined, mute: string[], voice: boolean, mode?: 'error') {
     const domain = localStorage.getItem(`domain_${acctId}`)
     const at = localStorage.getItem(`acct_${acctId}_at`)
     const strApi = localStorage.getItem('streaming_' + acctId) || ''
@@ -216,7 +218,7 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
     } else if (type === 'tag') {
         const tag = localStorage.getItem('tag-range')
         if (tag === 'local') data = data + '&local=true'
-        if (!isTagData(data)) return Swal.fire('Migtation Error to v24')
+        if (!data || !isTagData(data)) return Swal.fire('Migtation Error to v24')
         if (data.name) data = data.name
         start = `${wss}/api/v1/streaming/?stream=hashtag&tag=${data}&access_token=${at}`
     } else if (type === 'noauth') {
@@ -596,7 +598,7 @@ export function icon(type: IColumnType) {
     return 'help'
 }
 
-export function reconnector(tlid: string, type: IColumnType, acctId: string, data: IColumnData, mode?: 'error') {
+export function reconnector(tlid: string, type: IColumnType, acctId: string, data?: IColumnData, mode?: 'error') {
     console.log('%c Reconnector:' + mode + '(timeline' + tlid + ')', 'color:pink')
     if (type === 'mix' || type === 'plus') {
         const voice = !!localStorage.getItem('voice_' + tlid)
@@ -610,10 +612,7 @@ export function reconnector(tlid: string, type: IColumnType, acctId: string, dat
         notfColumn(acctId, tlid)
     } else {
         const wss = localStorage.getItem('wss_' + tlid) || '0'
-        websocket[wss].close()
-        const voice = !!localStorage.getItem('voice_' + tlid)
-        const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
-        const domain = localStorage.getItem('domain_' + acctId)
+        global.websocket[wss].close()
     }
     toast({ html: lang.lang_tl_reconnect, displayLength: 2000 })
 }
@@ -645,7 +644,7 @@ export function columnReload(tlid: string, type: IColumnType) {
         getBookmark(acctId, tlid, false)
     } else {
         const wss = parseInt(localStorage.getItem('wss_' + tlid) || '0', 10)
-        websocket[wss].close()
+        global.websocket[wss].close()
         parseColumn(tlid, false)
     }
 }
@@ -682,8 +681,9 @@ export async function getMarker(tlid: string, type: IColumnType, acctId: string)
     }
 }
 
-export async function showUnread(tlid: number, type: IColumnType, acctId: string) {
-    if ($(`#unread_${tlid} .material-icons`).hasClass('teal-text')) return goTop(tlid)
+export async function showUnread(tlidNum: number, type: IColumnType, acctId: string) {
+    if ($(`#unread_${tlidNum} .material-icons`).hasClass('teal-text')) return goTop(tlidNum)
+    const tlid = tlidNum.toString()
     $(`#unread_${tlid} .material-icons`).addClass('teal-text')
     const domain = localStorage.getItem(`domain_${acctId}`)
     const at = localStorage.getItem(`acct_${acctId}_at`)

@@ -1,16 +1,19 @@
 /*メディアフィルター機能*/
 
 import { FilterV1 } from "../../interfaces/MastodonApiReturns"
-import { IColumnType } from "../../interfaces/Storage"
+import { IColumnData, IColumnType, IRemote } from "../../interfaces/Storage"
 import { toast } from "../common/declareM"
 import api from "../common/fetch"
 import lang from "../common/lang"
 import { getColumn } from "../common/storage"
 import { escapeHTML, stripTags } from "../platform/first"
+import { parseColumn } from "../ui/layout"
 import { date } from "./date"
 import { columnReload } from "./tl"
+import $ from 'jquery'
 type IFilterType = 'home' | 'local' | 'notf' | 'pub' | 'notifications' | 'public' | 'thread' | 'account' | 'mix' | 'none'
 
+const isHasRemote = (item: IColumnData): item is IRemote => item['remote'] !== undefined
 //各TL上方のMedia[On/Off]
 export function mediaToggle(tlid: string) {
     const media = localStorage.getItem('media_' + tlid)
@@ -30,23 +33,23 @@ export function mediaToggle(tlid: string) {
 export function remoteOnly(tlidStr: string, type: IColumnType) {
     const obj = getColumn()
     const tlid = parseInt(tlidStr, 10)
-    if (obj[tlid].data) {
-        if (obj[tlid].data.remote) {
-            obj[tlid].data.remote = false
+    const objData = obj[tlid].data
+    if (objData && isHasRemote(objData)) {
+        if (objData.remote) {
+            objData.remote = false
             const json = JSON.stringify(obj)
             localStorage.setItem('column', json)
             $('#sta-remote-' + tlid).text('Off')
             $('#sta-remote-' + tlid).css('color', '#009688')
         } else {
-            obj[tlid].data.remote = true
+            objData.remote = true
             const json = JSON.stringify(obj)
             localStorage.setItem('column', json)
             $('#sta-remote-' + tlid).text('On')
             $('#sta-remote-' + tlid).css('color', 'red')
         }
     } else {
-        obj[tlid].data = {}
-        obj[tlid].data.remote = true
+        obj[tlid].data = { remote: true }
         const json = JSON.stringify(obj)
         localStorage.setItem('column', json)
         $('#sta-remote-' + tlid).text('On')
@@ -58,8 +61,9 @@ export function remoteOnly(tlidStr: string, type: IColumnType) {
 export function remoteOnlyCk(tlidStr: string) {
     const tlid = parseInt(tlidStr, 10)
     const obj = getColumn()
-    if (obj[tlid].data) {
-        if (obj[tlid].data.remote) {
+    const objData = obj[tlid].data
+    if (objData) {
+        if (isHasRemote(objData) && objData.remote) {
             $('#sta-remote-' + tlid).text('On')
             $('#sta-remote-' + tlid).css('color', 'red')
             return true

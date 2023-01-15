@@ -1,6 +1,7 @@
 import api from "../common/fetch"
 import lang from "../common/lang"
 import { pollParse } from "./pollParse"
+import $ from 'jquery'
 
 //アンケートのトグル
 export function pollToggle() {

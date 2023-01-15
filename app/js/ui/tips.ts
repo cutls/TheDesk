@@ -7,6 +7,8 @@ import { toast } from "../common/declareM"
 import api from "../common/fetch"
 import Swal from "sweetalert2"
 import lang from "../common/lang"
+const tipsList = ['ver', 'clock', 'memory', 'spotify', 'custom']
+export const isITips = (item: string): item is ITips => tipsList.includes(item)
 
 export function todo(mes: string) {
 	let todcTrigger: NodeJS.Timeout | null = null

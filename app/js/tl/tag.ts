@@ -6,6 +6,7 @@ import { toast } from "../common/declareM"
 import api from "../common/fetch"
 import { getColumn, setColumn } from "../common/storage"
 import { IColumnData, IColumnTag, IColumnType } from "../../interfaces/Storage"
+import $ from 'jquery'
 //よく使うタグ
 export const isTagData = (item: IColumnData): item is IColumnTag => typeof item !== 'string' && !item['acct']
 export function tagShow(tag: string, elm: HTMLElement) {
@@ -40,7 +41,7 @@ export function doTShowBox(type: 'tl' | 'toot' | 'pin' | 'f') {
 	$('#tagContextMenu').removeClass('keep')
 	const q = $('#tagContextMenu').attr('data-tag')
 	if (!q) return
-	const acctId = $('#tagContextMenu').attr('data-acct')
+	const acctId = $('#tagContextMenu').attr('data-acct') || '0'
 	if (type === 'tl') {
 		tl('tag', q, acctId, 'add')
 	} else if (type === 'toot') {
@@ -80,7 +81,7 @@ export function favTag() {
 	const obj = JSON.parse(tagArr)
 	let tags = ''
 	const nowPT = localStorage.getItem('stable')
-
+	let key = 0
 	for (const tagRaw of obj) {
 		let ptt = lang.lang_tags_unrealtime
 		let nowon = `(${lang.lang_tags_realtime})`
@@ -107,6 +108,7 @@ export function favTag() {
 				${lang.lang_del}
 			</a>
 			</span> `
+		key++
 	}
 	if (obj.length > 0) $('#taglist').append('My Tags: ' + tags)
 }
@@ -115,7 +117,7 @@ export function tagShowHorizon(tag: string) {
 }
 
 export function tagTL(a: IColumnType, b: string, d: string) {
-	const acctId = $('#post-acct-sel').val()
+	const acctId = $('#post-acct-sel').val()?.toString() || '0'
 	tl(a, b, acctId, d)
 }
 export function autoToot(tag: string) {
@@ -154,8 +156,9 @@ async function tagFeature(name: string, acctId: string) {
 export function addTag(id: string) {
 	const columns = getColumn()
 	const column = columns[parseInt(id, 10)]
-	if (!column.data || typeof column.data === 'string') return
-	const name = column.data.name
+	const data = column.data
+	if (!data || !isTagData(data)) return
+	const name = data.name
 	column.data = {
 		'name': name,
 		'all': $(`#all_tm-${id}`).val()?.toString().split(',') || [],

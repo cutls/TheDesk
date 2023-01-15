@@ -102,7 +102,7 @@ export function userParse(obj: Account[], acctId: string, notfEvent?: Notoficati
 export function popupNotification(toot: Account, popup: number, notftext: string, tlid: string, ftxt: string, acctId: string) {
 	return new Promise(() => {
 		const memory = localStorage.getItem('notice-mem')
-		if (popup >= 0 && obj.length < 5 && notftext !== memory) {
+		if (popup >= 0 && notftext !== memory) {
 			toast({ html: escapeHTML(toot.display_name || toot.acct) + ':' + ftxt, displayLength: popup * 1000 })
 			$('.notf-icon_' + tlid).addClass('red-text')
 			localStorage.setItem('notice-mem', notftext)

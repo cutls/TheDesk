@@ -1,6 +1,8 @@
 import lang from '../common/lang'
 import * as emojiPack from './emojiPack'
 import twemoji from 'twemoji'
+import $ from 'jquery'
+import { emojiList } from '../post/emoji'
 const defaultEmojiDict = {
 	activity: emojiPack.activity,
 	flag: emojiPack.flag,
@@ -61,7 +63,7 @@ export function defaultEmoji(target: keyof typeof defaultEmojiDict) {
 export function customEmoji() {
 	$('#emoji-suggest').val('')
 	$('.emoji-control').removeClass('hide')
-	emojiList('home')
+	emojiList('home', false)
 }
 export function defEmoji(target: string) {
 	const selin = parseInt($('#textarea').prop('selectionStart'), 10) || 0

@@ -7,6 +7,7 @@ import { idata } from "../login/instance"
 import { loadVis } from "../post/secure"
 import { srcBox } from "../tl/src"
 import { tShowBox } from "../tl/tag"
+import $ from 'jquery'
 
 //✕隠す
 export function hide() {

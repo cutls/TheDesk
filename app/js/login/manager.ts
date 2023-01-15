@@ -217,7 +217,7 @@ export async function multiDel(target: number) {
 		for (const oldCol of oldCols) {
 			const newdom = target < oldCol.domain ? oldCol.domain - 1 : oldCol.domain
 			const type = oldCol.type
-			const data = oldCol.data || null
+			const data = oldCol.data || undefined
 			const background = oldCol.background || undefined
 			const text = oldCol.text || undefined
 			const left_fold = !!oldCol.left_fold

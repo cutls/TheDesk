@@ -13,6 +13,7 @@ import { IPlugin } from "../../interfaces/Storage"
 import { checkSpotify } from "./spotify"
 import { voiceSettingLoad } from "../tl/speech"
 import api from "../common/fetch"
+import $ from 'jquery'
 declare var editor
 
 //設定(setting.html)で読む
@@ -589,7 +590,7 @@ export function ctLoad() {
     postMessage(['sendSinmpleIpc', 'theme-json-list'], '*')
 }
 
-function ctLoadCore(args) {
+export function ctLoadCore(args: any) {
     let template = ''
     let editTemplate = ''
     for (const theme of args) {
@@ -603,12 +604,12 @@ function ctLoadCore(args) {
     $('#custom-sel-sel').val(localStorage.getItem('customtheme-id') || '')
     formSelectInit($('select'))
 }
-function customSel() {
+export function customSel() {
     const id = $('#custom-sel-sel').val()?.toString() || ''
     localStorage.setItem('customtheme-id', id)
     themes(id)
 }
-function custom() {
+export function custom() {
     const id = $('#custom-edit-sel').val()
     if (id === 'add_new') {
         $('#custom_name').val('')
@@ -625,7 +626,7 @@ function custom() {
         postMessage(['themeJsonRequest', id + '.thedesktheme'], '*')
     }
 }
-function customConnect(raw) {
+export function customConnect(raw: any) {
     const args = raw[0]
     $('#custom_name').val(`${args.name} ${args.default ? 'Customed' : ''}`)
     $('#custom_desc').val(args.default ? 'TheDesk default theme with some changes by user' : args.desc)
@@ -652,7 +653,7 @@ function customConnect(raw) {
         $('#delTheme').addClass('disabled')
     }
 }
-function customImp() {
+export function customImp() {
     const json = $('#custom_import').val()?.toString() || '[]'
     if (JSON5.parse(json)) {
         postMessage(['themeJsonCreate', json], '*')
@@ -663,26 +664,26 @@ function customImp() {
         })
     }
 }
-function advanced() {
+export function advanced() {
     $('.advanced').toggleClass('hide')
     $('#pickers').toggleClass('advanceTheme')
 }
-function clearCustomImport() {
+export function clearCustomImport() {
     $('#custom_import').val('')
 }
-function hardwareAcceleration(had) {
+export function hardwareAcceleration(had: 'true' | 'false') {
     postMessage(['ha', had], '*')
 }
-function useragent(val) {
+export function useragent(val: string) {
     postMessage(['ua', val], '*')
 }
-function frameSet(val) {
+export function frameSet(val: 'true' | 'false') {
     postMessage(['frameSet', val], '*')
 }
-function customSound(key) {
+export function customSound(key: number) {
     postMessage(['customSound', key], '*')
 }
-function customSoundSave(key, file) {
+export function customSoundSave(key: number, file: string) {
     localStorage.setItem('custom' + key, file)
     $(`#c${key}-file`).text(file)
 }
@@ -701,7 +702,7 @@ function pluginLoad() {
     $('#plugin-edit-sel').html(template)
     formSelectInit($('select'))
 }
-function pluginEdit() {
+export function pluginEdit() {
     const id = $('#plugin-edit-sel').val()?.toString() || ''
     $('#plugin').attr('data-id', id)
     if (id === 'add_new') {
@@ -718,7 +719,7 @@ function pluginEdit() {
         })
     }
 }
-function completePlugin(comp) {
+export function completePlugin(comp?: boolean) {
     const pgns = localStorage.getItem('plugins')
     const args = JSON.parse(pgns ? pgns : '[]')
     let id = $('#plugin').attr('data-id')
@@ -772,7 +773,7 @@ function completePlugin(comp) {
     }
 
 }
-function testExecTrg() {
+export function testExecTrg() {
     const inputPlugin = editor.getValue()
     try {
         const meta: any = getMeta(inputPlugin)
@@ -799,7 +800,7 @@ function testExecTrg() {
 
     testExec(inputPlugin)
 }
-async function deletePlugin() {
+export async function deletePlugin() {
     const delIsIt = await Swal.fire({
         title: 'delete',
         icon: 'warning',

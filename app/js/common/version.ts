@@ -4,6 +4,7 @@ import { todo } from "../ui/tips"
 import { toast } from "./declareM"
 import { getMulti } from "./storage"
 import api from "./fetch"
+import $ from 'jquery'
 
 //バージョンチェッカー
 export async function verck(ver: string) {

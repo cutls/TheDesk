@@ -4,6 +4,7 @@ import { Account } from "../../interfaces/MastodonApiReturns"
 import api from "../common/fetch"
 import timeUpdate from "../common/time"
 import { userParse } from "./userParse"
+import $ from 'jquery'
 
 //ディレクトリトグル
 export function dirMenu() {

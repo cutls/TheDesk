@@ -16,7 +16,9 @@ import { checkNotfFilter, ebtCheck, excludeCk, getFilter, mediaCheck } from '../
 import { voiceCheck } from '../tl/speech'
 import { favTag, isTagData } from '../tl/tag'
 import { tlCloser, tlDiff, tl, isColumnType } from '../tl/tl'
+import { show } from './postBox'
 import { goTop } from './scroll'
+import { sortLoad } from './sort'
 
 const isSetAsRead = localStorage.getItem('setasread') === 'yes'
 const anime = (localStorage.getItem('animation') || 'yes') === 'yes'
@@ -85,7 +87,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 		}
 	}
 	let basekey = 0
-	for (let key = 0; key < obj.length; key++) {
+	for (let key = 0; key < columns.length; key++) {
 		//acctって言いながらタイムライン
 		const column = columns[key]
 		const { domain, type } = column
@@ -387,7 +389,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 		}
 	}
 	const box = localStorage.getItem('box')
-	if (box === 'absolute') setTimeout(show, 1000)
+	if (box === 'absolute') setTimeout(() => show(), 1000)
 	if (localStorage.getItem('reverse')) {
 		$('#bottom').removeClass('reverse')
 		$('.leftside').removeClass('reverse')

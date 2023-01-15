@@ -9,6 +9,7 @@ import twemoji from 'twemoji'
 import { tl } from '../tl/tl'
 import { Account, Card, Emoji, Poll, Toot } from '../../interfaces/MastodonApiReturns'
 import { IVis } from '../post/secure'
+import { initPostbox } from '../ui/postBox'
 // Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
 // 独自ロケールを削除
 // wordmuteListにtagとかいう要素がある
@@ -31,7 +32,7 @@ window.onload = function () {
             const mode = m[1]
             const codex = m[2]
             if (mode === 'tag') {
-                const acctId = localStorage.getItem('main')
+                const acctId = localStorage.getItem('main') || '0'
                 tl('tag', decodeURI(codex), acctId, 'add')
             }
         }

@@ -2,9 +2,10 @@ import { formSelectInit, toast } from "../common/declareM"
 import api from "../common/fetch"
 import $ from 'jquery'
 import lang from "../common/lang"
-import { todo } from "../ui/tips"
+import { todc, todo } from "../ui/tips"
 import { setLog } from "../platform/first"
 import Swal from "sweetalert2"
+import { post } from "./post"
 
 //ドラッグ・アンド・ドロップからアップロードまで。uiのimg.jsとは異なります。
 const obj = $('body')

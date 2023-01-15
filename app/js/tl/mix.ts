@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { todo } from '../ui/tips'
+import { todc, todo } from '../ui/tips'
 import { additional } from './card'
 import { getFilterTypeByAcct } from './filter'
 import _ from 'lodash'
@@ -10,6 +10,7 @@ import { reconnector } from './tl'
 import timeUpdate from '../common/time'
 import { parse } from './parse'
 import { say } from './speech'
+import { scrollCk } from '../ui/scroll'
 declare const jQuery
 
 //Integrated TL

@@ -1,9 +1,11 @@
 import { getColumn } from "../common/storage"
 import timeUpdate from "../common/time"
 import { columnReload, moreLoad, ueLoad } from "../tl/tl"
+import { sortLoad } from "./sort"
+import $ from 'jquery'
 
 //スクロールで続きを読む
-function scrollEvent() {
+export function scrollEvent() {
 	$('.tl-box').scroll(function() {
 		scrollCk()
 	})

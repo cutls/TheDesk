@@ -38,7 +38,7 @@ export interface IColumnTag {
     all: string[]
     none: string[]
 }
-interface IRemote {
+export interface IRemote {
     remote: boolean
 }
 export interface IEmojiStorage {
