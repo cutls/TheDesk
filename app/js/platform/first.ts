@@ -12,7 +12,7 @@ import { IVis } from '../post/secure'
 // Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
 // 独自ロケールを削除
 // wordmuteListにtagとかいう要素がある
-// ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除
+// ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除、Tootsearch削除、MD/BBCode削除
 window.onload = function () {
     console.log('loaded')
     initPostbox()

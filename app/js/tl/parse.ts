@@ -254,7 +254,7 @@ export function parse<T = string | string[][]>(obj: Toot[], type: IColumnType | 
 				if (media.pleroma && media.pleroma.mime_type.indexOf('video') !== -1) {
 					viewer =
 						viewer +
-						`<a onclick="imgv('${id}','${key2}','${acctId}')" id="${id}'-image-${key2}" 
+						`<a onclick="imgv('${id}',${key2},'${acctId}')" id="${id}'-image-${key2}" 
 								data-url="${url}" data-type="video" class="img-parsed">
 									<video src="${purl}" class="${sense} toot-img pointer" style="max-width:100%;" loop="true" alt="attached media">
 							</a></span>`
@@ -277,7 +277,7 @@ export function parse<T = string | string[][]>(obj: Toot[], type: IColumnType | 
 						}
 						viewer =
 							viewer +
-							`<a onclick="imgv('${id}','${key2}','${acctId}')" 
+							`<a onclick="imgv('${id}',${key2},'${acctId}')" 
 										id="${id}-image-${key2}" data-url="${url}" data-original="${remote_url}" data-type="${media.type}" 
 										class="img-parsed img-link" style="width:calc(${cwdt}% - 1px); height:${imh};">
 									<img draggable="false" src="${purl}" class="${sense} toot-img pointer" 

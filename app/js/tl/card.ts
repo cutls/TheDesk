@@ -175,7 +175,7 @@ export function cardToggle(tlid: string) {
 	}
 }
 //各TL上方のLink[On/Off]をチェック
-export function cardCheck(tlid: string) {
+export function cardCheck(tlid: number) {
 	const card = localStorage.getItem('card_' + tlid)
 	if (!card) {
 		$('#sta-card-' + tlid).text('On')

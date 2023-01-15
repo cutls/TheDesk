@@ -30,3 +30,6 @@ export const autoCompleteGetInstance = (elem: Elem | HTMLInputElement) => {
 export const autoCompleteInit= (elem: Elem | HTMLInputElement, options?: Object) => {
     return M.Autocomplete.init(elem, options)
 }
+export const characterCounterInit= (elem: Elem | HTMLInputElement) => {
+    return M.CharacterCounter.init(elem)
+}

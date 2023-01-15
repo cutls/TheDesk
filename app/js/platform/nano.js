@@ -1,4 +1,5 @@
 //TL取得
+/*
 let websocket
 function tl(data) {
 	const tlid = 0
@@ -225,3 +226,4 @@ $('textarea').on('input', function (evt) {
 		}
 	}
 })
+*/

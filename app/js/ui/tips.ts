@@ -2,10 +2,15 @@
 
 import { escapeHTML } from "../platform/first"
 import $ from 'jquery'
+import { execPlugin } from "../platform/plugin"
+import { toast } from "../common/declareM"
+import api from "../common/fetch"
+import Swal from "sweetalert2"
+import lang from "../common/lang"
 
 export function todo(mes: string) {
 	let todcTrigger: NodeJS.Timeout | null = null
-	if(todcTrigger) clearInterval(todcTrigger)
+	if (todcTrigger) clearInterval(todcTrigger)
 	$('#message').text(mes)
 	$('#message').fadeIn()
 	todcTrigger = setTimeout(todc, 4000)
@@ -14,7 +19,7 @@ export function todc() {
 	$('#message').fadeOut()
 }
 //reverse
-function bottomReverse() {
+export function bottomReverse() {
 	$('#bottom').toggleClass('reverse')
 	$('.leftside').toggleClass('reverse')
 	if ($('#bottom').hasClass('reverse')) {
@@ -23,22 +28,18 @@ function bottomReverse() {
 		localStorage.setItem('reverse', 'true')
 	}
 }
-export function tips(mode, custom?: any) {
+let spotint
+type ITips = 'ver' | 'clock' | 'memory' | 'spotify' | 'custom'
+export function tips(mode: ITips, custom?: any) {
 	postMessage(['sendSinmpleIpc', 'endmem'], '*')
 	clearInterval(clockint)
-	clearInterval(spotStart)
+	clearInterval(spotint)
 	if (mode === 'ver') {
 		tipsToggle()
 		$('#tips-text').html(
-			'<img src="../../img/desk.png" width="20" onclick="todo(\'TheDesk is a nice client!: TheDesk ' +
-				localStorage.getItem('ver') +
-				' git: ' +
-				gitHash +
-				'\')"> ' +
-				localStorage.getItem('ver') +
-				' {' +
-				gitHash.slice(0, 7) +
-				'} [<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]'
+			`<img src="../../img/desk.png" width="20" onclick="todo('TheDesk is a nice client!: TheDesk ${localStorage.getItem('ver')} git: ${global.gitHash}')">
+			${localStorage.getItem('ver')} {${global.gitHash.slice(0, 7)}}
+			[<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]`
 		)
 		localStorage.setItem('tips', 'ver')
 	} else if (mode === 'clock') {
@@ -48,15 +49,11 @@ export function tips(mode, custom?: any) {
 	} else if (mode === 'memory') {
 		tipsToggle()
 		localStorage.setItem('tips', 'memory')
-		startmem()
+		startMem()
 	} else if (mode === 'spotify') {
 		tipsToggle()
 		localStorage.setItem('tips', 'spotify')
-		spotifytips()
-	} else if (mode === 'itunes') {
-		tipsToggle()
-		localStorage.setItem('tips', 'itunes')
-		itunestips()
+		spotifyTips ()
 	} else if (mode === 'custom') {
 		tipsToggle()
 		localStorage.setItem('tips', `custom:${custom}`)
@@ -64,18 +61,15 @@ export function tips(mode, custom?: any) {
 	}
 }
 //メモリ
-function startmem() {
+function startMem() {
 	postMessage(['sendSinmpleIpc', 'startmem'], '*')
 }
-function renderMem(use, cpu, total, core, uptime) {
-	let day = Math.floor(uptime / 60 / 60 / 24)
-	let hour = Math.floor(uptime / 60 /60 % 24)
-	if(hour < 10) hour = '0' + hour
-	let min = Math.floor(uptime / 60 % 60)
-	if(min < 10) min = '0' + min
-	let sec = Math.floor(uptime % 60)
-	if(sec < 10) sec = '0' + sec
-	let time = `${day ? day + ' days ' : ''}${hour ? hour + ':' : ''}${min}:${sec}`
+export function renderMem(use: number, cpu: string, total: number, core: number, uptime: number) {
+	const day = Math.floor(uptime / 60 / 60 / 24)
+	const hour = Math.floor(uptime / 60 / 60 % 24).toString().padStart(2, '0')
+	const min = Math.floor(uptime / 60 % 60).toString().padStart(2, '0')
+	const sec = Math.floor(uptime % 60).toString().padStart(2, '0')
+	const time = `${day ? day + ' days ' : ''}${hour ? hour + ':' : ''}${min}:${sec}`
 	//Intel
 	cpu = cpu.replace('Intel(R)', '').replace('(TM)', '').replace(' CPU', '')
 	//AMD
@@ -86,70 +80,40 @@ function renderMem(use, cpu, total, core, uptime) {
 }
 //Spotify
 spotint = null
-function spotifytips() {
+export async function spotifyTips () {
 	if (spotint) clearInterval(spotint)
-	var start = 'https://spotify.thedesk.top/current-playing?code=' + localStorage.getItem('spotify-token')
-	var at = localStorage.getItem('spotify-token')
+	const at = localStorage.getItem('spotify-token')
+	if (!at) return toast({ html: 'Error Spotify Connection' })
+	const start = `https://spotify.thedesk.top/current-playing?code=${localStorage.getItem('spotify-token')}`
 	if (at) {
-		fetch(start, {
-			method: 'GET',
+		const jsonRaw = await api(start, {
+			method: 'get',
 			headers: {
 				'content-type': 'application/json'
 			}
 		})
-			.then(function(response) {
-				if (!response.ok) {
-					response.text().then(function(text) {
-						setLog(response.url, response.status, text)
-					})
-				}
-				return response.json()
-			})
-			.catch(function(error) {
-				todo(error)
-				setLog(start, 'JSON', error)
-				console.error(error)
-			})
-			.then(function(jsonRaw) {
-				var code = jsonRaw.token
-				localStorage.setItem('spotify-token', code)
-				var json = jsonRaw.data
-				var ms = json.progress_ms
-				if(!ms) {
-					tips('ver')
-					return false
-				}
-				var last = 1000 - (ms % 1000)
-				var item = json.item
-				var img = item.album.images[0].url
-				var artisttxt = ''
-				for (i = 0; i < item.artists.length; i++) {
-					if (i > 0) {
-						artisttxt = artisttxt + ',' + item.artists[i].name
-					} else {
-						artisttxt = item.artists[0].name
-					}
-				}
-				artisttxt = escapeHTML(artisttxt)
-				sleep(last)
-				var tms = item.duration_ms
-				var per = (ms / item.duration_ms) * 100
-				ms = ms / 1000
-				tms = tms / 1000
-				var s = Math.round(ms) % 60
-				if (s < 10) {
-					s = '0' + s
-				}
-				var m = (Math.round(ms) - (Math.round(ms) % 60)) / 60
-				var ts = Math.round(tms) % 60
-				if (ts < 10) {
-					ts = '0' + ts
-				}
-				var tm = (Math.round(tms) - (Math.round(tms) % 60)) / 60
-				var html = `
+		const code = jsonRaw.token
+		localStorage.setItem('spotify-token', code)
+		const json = jsonRaw.data
+		let ms = json.progress_ms
+		if (!ms) return tips('ver')
+		const last = 1000 - (ms % 1000)
+		const item = json.item
+		const img = item.album.images[0].url
+		const artisttxt = item.artists.map((a) => escapeHTML(a.name)).join(',')
+		await sleep(last)
+		let tms = item.duration_ms
+		const per = (ms / item.duration_ms) * 100
+		ms = ms / 1000
+		tms = tms / 1000
+		const s = (Math.round(ms) % 60).toString().padStart(2, '0')
+		const m = (Math.round(ms) - (Math.round(ms) % 60)) / 60
+		const ts = (Math.round(tms) % 60).toString().padStart(2, '0')
+		const tm = (Math.round(tms) - (Math.round(tms) % 60)) / 60
+		const html = `
 				<div id="spot-box">
 					<div id="spot-refresh">
-						<i class="material-icons pointer" onclick="spotifytips()" style="font-size:20px">refresh</i>
+						<i class="material-icons pointer" onclick="spotifyTips  ()" style="font-size:20px">refresh</i>
 						<i class="material-icons pointer" onclick="nowplaying('spotify');show()" style="font-size:20px">send</i>
 					</div>
 					<div id="spot-cover">
@@ -168,12 +132,11 @@ function spotifytips() {
 					</div>
 				</div>
 				</div>`
-				$('#tips-text').html(html)
-				spotint = setInterval(spotStart, 1000)
-			})
+		$('#tips-text').html(html)
+		spotint = setInterval(spotStart, 1000)
 	} else {
 		Swal.fire({
-			type: 'info',
+			icon: 'info',
 			text: lang.lang_spotify_acct
 		})
 		tips('ver')
@@ -181,18 +144,15 @@ function spotifytips() {
 	}
 }
 function spotStart() {
-	var total = $('.spotify-prog').attr('data-total')
-	var s = $('.spotify-prog').attr('data-s')
-	var news = s * 1 + 1
-	var per = (news * 100000) / total
-	var ns = news % 60
-	var nm = (news - ns) / 60
-	if (ns < 10) {
-		ns = '0' + ns
-	}
+	const total = parseInt($('.spotify-prog').attr('data-total') || '0', 10)
+	const s = parseInt($('.spotify-prog').attr('data-s') || '0', 10)
+	const news = s + 1
+	const per = (news * 100000) / total
+	const ns = (news % 60).toString().padStart(2, '0')
+	const nm = (news - news % 60) / 60
 	if (per >= 100) {
-		clearInterval(spotStart)
-		spotifytips()
+		clearInterval(spotint)
+		spotifyTips ()
 	} else {
 		$('#spot-m').text(nm)
 		$('#spot-s').text(ns)
@@ -201,47 +161,26 @@ function spotStart() {
 	$('.spotify-prog').css('width', per + '%')
 }
 //時計
-var clockint
-function clock() {
-	var now = new Date()
-	var last = 1000 - (now.getTime() % 1000)
-	sleep(last)
+let clockint
+async function clock() {
+	const now = new Date()
+	const last = 1000 - (now.getTime() % 1000)
+	await sleep(last)
 	clockint = setInterval(clockStart, 1000)
 }
 function clockStart() {
-	var nowTime = new Date() //  現在日時を得る
-	var nowHour = nowTime.getHours() // 時を抜き出す
-	if (nowHour < 10) {
-		nowHour = '0' + nowHour
-	}
-	var nowMin = nowTime.getMinutes() // 分を抜き出す
-	if (nowMin < 10) {
-		nowMin = '0' + nowMin
-	}
-	var nowSec = nowTime.getSeconds() // 秒を抜き出す
-	if (nowSec < 10) {
-		nowSec = '0' + nowSec
-	}
-	var msg =
-		nowTime.getFullYear() +
-		'/' +
-		(nowTime.getMonth() + 1) +
-		'/' +
-		nowTime.getDate() +
-		'<span style="font-size:20px; font-family:Open Sans">' +
-		nowHour +
-		':' +
-		nowMin +
-		':' +
-		nowSec +
-		'</span>'
+	const nowTime = new Date()
+	const nowHour = nowTime.getHours().toString().padStart(2, '0')
+	const nowMin = nowTime.getMinutes().toString().padStart(2, '0')
+	const nowSec = nowTime.getSeconds().toString().padStart(2, '0')
+	const msg =
+		`${nowTime.getFullYear()}/${(nowTime.getMonth() + 1)}/${nowTime.getDate()}
+		<span style="font-size:20px">${nowHour}:${nowMin}:${nowSec}</span>`
 	$('#tips-text').html(msg)
 }
-function sleep(waitMsec) {
-	var startMsec = new Date()
-	while (new Date() - startMsec < waitMsec);
-}
-function tipsToggle() {
+
+const sleep = (msec: number) => new Promise((resolve) => setTimeout(resolve, msec))
+export function tipsToggle() {
 	$('#tips').toggleClass('hide')
 	$('#tips-menu').toggleClass('hide')
 }

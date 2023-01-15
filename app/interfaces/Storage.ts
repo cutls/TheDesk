@@ -24,6 +24,8 @@ export interface IColumn {
     background?: string
     text?: string
     left_fold?: boolean
+    width?: number
+    height?: number
 }
 export type IColumnData = IColumnTag | IColumnUTL | IRemote | string
 export interface IColumnUTL {

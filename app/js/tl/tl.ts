@@ -27,27 +27,26 @@ export const tlTypes = ['home', 'local', 'local-media', 'pub', 'pub-media', 'tag
 export const isColumnType = (item: string): item is IColumnType => tlTypes.includes(item)
 export const isConv = (item: Toot | Conversation): item is Conversation => !!item['last_status']
 export const isConvArr = (item: Toot[] | Conversation[]): item is Conversation[] => !!item[0]['last_status']
-export async function tl(type: IColumnType, data: string, acctId, tlid: string | 'add', voice?: boolean) {
+export async function tl(type: IColumnType, data: IColumnData | undefined, acctId: string, tlid: string | 'add', voice?: boolean) {
     scrollEvent()
     $(`#unread_${tlid} .material-icons`).removeClass('teal-text')
     localStorage.removeItem('pool')
     const domain = localStorage.getItem('domain_' + acctId) || acctId
-    let addData: IColumnData = data
     //タグとかの場合はカラム追加して描画
     if (tlid === 'add') {
         console.log('add new column')
-        if (type === 'tag') {
-            addData = {
-                name: data,
+        if (type === 'tag' && data) {
+            data = {
+                name: data.toString(),
                 any: [],
                 all: [],
                 none: [],
             }
         }
         const add = {
-            domain: acctId,
+            domain: parseInt(acctId, 10),
             type: type,
-            data: addData,
+            data: data,
         }
         const obj = getColumn()
         localStorage.setItem(`card_${obj.length}`, 'true')
@@ -106,7 +105,7 @@ export async function tl(type: IColumnType, data: string, acctId, tlid: string |
         $('#notice_' + tlid).text(`${cap(type, data, acctId)}(${localStorage.getItem('user_' + acctId) || '?'}@${domain})`)
     } else {
         delete hdr.Authorization
-        $('#notice_' + tlid).text(`Glance TL(${domain})`)
+        $('#notice_' + tlid).text(`Glance TL(${data})`)
     }
     $('#notice_icon_' + tlid).text(icon(type))
     let url = com(type, data, tlid)
@@ -221,7 +220,7 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
         if (data.name) data = data.name
         start = `${wss}/api/v1/streaming/?stream=hashtag&tag=${data}&access_token=${at}`
     } else if (type === 'noauth') {
-        start = `wss://${acctId}/api/v1/streaming/?stream=public:local&access_token=${at}`
+        start = `wss://${data}/api/v1/streaming/?stream=public:local&access_token=${at}`
     } else if (type === 'list') {
         start = `${wss}/api/v1/streaming/?stream=list&list=${data}&accrss_token=${at}`
     } else if (type === 'dm') {
@@ -265,7 +264,7 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
                         }
                         localStorage.setItem('pool_' + tlid, pool)
                     }
-                    scrollck()
+                    scrollCk()
                     additional(acctId, tlid)
                     timeUpdate()
                 } else {
@@ -371,7 +370,7 @@ export async function moreLoad(tlid: string) {
     }
 }
 //TL差分取得
-export async function tlDiff(type: IColumnType, data: IColumnData, acctId: string, tlid: string, voice: boolean, mode?: 'error') {
+export async function tlDiff(type: IColumnType, data: IColumnData | undefined, acctId: string, tlid: string) {
     console.log('Get diff of TL' + tlid)
     const obj = getColumn()
     const tlidNum = parseInt(tlid, 10)
@@ -683,7 +682,7 @@ export async function getMarker(tlid: string, type: IColumnType, acctId: string)
     }
 }
 
-export async function showUnread(tlid: string, type: IColumnType, acctId: string) {
+export async function showUnread(tlid: number, type: IColumnType, acctId: string) {
     if ($(`#unread_${tlid} .material-icons`).hasClass('teal-text')) return goTop(tlid)
     $(`#unread_${tlid} .material-icons`).addClass('teal-text')
     const domain = localStorage.getItem(`domain_${acctId}`)
@@ -718,7 +717,7 @@ export async function showUnread(tlid: string, type: IColumnType, acctId: string
 }
 global.ueloadlock = false
 
-export async function ueload(tlidStr: string) {
+export async function ueLoad(tlidStr: string) {
     const tlid = parseInt(tlidStr, 10)
     if (global.ueloadlock) {
         return false

@@ -4,6 +4,7 @@ import lang from "../common/lang"
 import { toast } from "../common/declareM"
 import { escapeHTML, twemojiParse } from "../platform/first"
 import { date } from "./date"
+import { customEmojiReplace } from "./parse"
 
 const gif = (localStorage.getItem('gif') || 'yes') === 'yes'
 //オブジェクトパーサー(ユーザーデータ)

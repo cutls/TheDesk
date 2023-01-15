@@ -188,7 +188,7 @@ function integratedMessage(mess: any, acctId: string, tlid: string, mute: string
 				}
 				localStorage.setItem('pool_' + tlid, pool)
 			}
-			scrollck()
+			scrollCk()
 			additional(acctId, tlid)
 			timeUpdate()
 		}

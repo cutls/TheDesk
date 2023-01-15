@@ -289,3 +289,7 @@ function tootSelector(column, toot) {
 		}
 	}
 }
+function goColumn(kz: number) {
+	throw new Error('Function not implemented.')
+}
+

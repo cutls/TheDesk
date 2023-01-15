@@ -90,7 +90,7 @@ export function voiceToggle(tlid: string) {
 		parseColumn(tlid)
 	}
 }
-export function voiceCheck(tlid: string) {
+export function voiceCheck(tlid: number) {
 	const voiceck = localStorage.getItem('voice_' + tlid)
 	if (voiceck) {
 		$('#sta-voice-' + tlid).text('On')

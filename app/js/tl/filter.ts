@@ -91,7 +91,7 @@ export function ebtToggle(tlid: string) {
     }
 }
 //各TL上方のMedia[On/Off]をチェック
-export function mediaCheck(tlid: string) {
+export function mediaCheck(tlid: number) {
     const media = localStorage.getItem('media_' + tlid)
     if (media) {
         $('#sta-media-' + tlid).text('On')
@@ -104,7 +104,7 @@ export function mediaCheck(tlid: string) {
     }
 }
 //各TL上方のBT[On/Off]をチェック
-export function ebtCheck(tlid: string) {
+export function ebtCheck(tlid: number) {
     const ebt = localStorage.getItem('ebt_' + tlid)
     if (ebt === 'true') {
         $('#sta-bt-' + tlid).text('BT Ex')

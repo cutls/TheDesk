@@ -153,7 +153,7 @@ async function tagFeature(name: string, acctId: string) {
 //タグのフィルタ
 export function addTag(id: string) {
 	const columns = getColumn()
-	const column = columns[id]
+	const column = columns[parseInt(id, 10)]
 	if (!column.data || typeof column.data === 'string') return
 	const name = column.data.name
 	column.data = {

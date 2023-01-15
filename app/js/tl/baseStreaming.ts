@@ -22,7 +22,7 @@ interface TLMeta {
     type: IColumnType
     acctId: number
 }
-function mastodonBaseStreaming(acctId) {
+export function mastodonBaseStreaming(acctId: string) {
     console.log('start to connect mastodonBaseStreaming of ' + acctId)
     notfCommon(acctId, '0', false)
     const domain = localStorage.getItem(`domain_${acctId}`) || ''
@@ -158,7 +158,7 @@ function insertTl(obj: Toot, tls: TLMeta[], dry?: boolean) {
                 }
                 localStorage.setItem('pool_' + id, pool || '')
             }
-            scrollck()
+            scrollCk()
             additional(acctId.toString(), id.toString())
             timeUpdate()
         }
