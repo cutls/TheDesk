@@ -1,25 +1,25 @@
-import { formSelectInit, toast } from "../common/declareM"
-import api from "../common/fetch"
+import { formSelectInit, toast } from '../common/declareM'
+import api from '../common/fetch'
 import $ from 'jquery'
-import lang from "../common/lang"
-import { todc, todo } from "../ui/tips"
-import { setLog } from "../platform/first"
-import Swal from "sweetalert2"
-import { post } from "./post"
+import lang from '../common/lang'
+import { todc, todo } from '../ui/tips'
+import { setLog } from '../platform/first'
+import Swal from 'sweetalert2'
+import { post } from './post'
 
 //ドラッグ・アンド・ドロップからアップロードまで。uiのimg.jsとは異なります。
 const obj = $('body')
 let isLocked
 //ドラッグスタート
-obj.on('dragstart', function (e) {
+obj.on('dragstart', function () {
 	isLocked = true
 })
 //何もなくファイルが通過
-obj.on('dragend', function (e) {
+obj.on('dragend', function () {
 	isLocked = false
 })
 //ドラッグファイルが画面上に
-obj.on('dragenter', function (e) {
+obj.on('dragenter', function () {
 	if (!isLocked) $('#drag').css('display', 'flex')
 })
 $('body').on('dragover', function (e) {
@@ -36,7 +36,7 @@ $('body').on('drop', function (e) {
 	}
 })
 //何もなくファイルが通過
-$('#drag').on('dragleave', function (e) {
+$('#drag').on('dragleave', function () {
 	$('#drag').css('display', 'none')
 })
 
@@ -73,7 +73,6 @@ function handleFileUpload(files: Blob, no: number) {
 		if (!b64) return
 		if (resize > 0) {
 			const element = new Image()
-			let width
 			element.onload = function () {
 				const width = element.naturalWidth
 				const height = element.naturalHeight
@@ -92,7 +91,7 @@ function handleFileUpload(files: Blob, no: number) {
 		media(b64, files.type, no)
 	}
 	fr.readAsDataURL(files)
-	$('#mec').append(files['name'] + '/')
+	$('#mec').append(files.name + '/')
 }
 
 //ファイルアップロード
@@ -121,7 +120,7 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 	$('#post-acct-sel').prop('disabled', true)
 	todo('Image Upload...')
 	const media = toBlob(b64, type)
-	if (!media) return toast('Cannot convert to Blob: ' + lang.lang_postimg_failupload)
+	if (!media) return toast({ html: 'Cannot convert to Blob: ' + lang.lang_postimg_failupload })
 	const fd = new FormData()
 	fd.append('file', media)
 	const httpreq = new XMLHttpRequest()
@@ -191,7 +190,7 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 			$('#imgsel').show()
 			const img = localStorage.getItem('img') || 'no-act'
 			if (json.type.indexOf('image') !== -1) {
-				const html = `<img src="${json[previewer]}" class="preview-img pointer" data-media="${json['id']}" oncontextmenu="deleteImage('${json['id']}')" onclick="altImage('${acctId}','${json['id']}')" title="${lang.lang_postimg_delete}">`
+				const html = `<img src="${json[previewer]}" class="preview-img pointer" data-media="${json.id}" oncontextmenu="deleteImage('${json.id}')" onclick="altImage('${acctId}','${json.id}')" title="${lang.lang_postimg_delete}">`
 				$('#preview').append(html)
 			} else {
 				$('#preview').append(lang.lang_postimg_previewdis)
@@ -199,10 +198,10 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 			if (img !== 'inline') {
 				let mediav = $('#media').val()?.toString() || ''
 				const regExp = new RegExp('tmp_' + r, 'g')
-				mediav = mediav.replace(regExp, json['id'])
+				mediav = mediav.replace(regExp, json.id)
 				$('#media').val(mediav)
 			}
-			if (img === 'url' && json['text_url']) $('#textarea').val($('#textarea').val() + ' ' + json['text_url'])
+			if (img === 'url' && json.text_url) $('#textarea').val($('#textarea').val() + ' ' + json.text_url)
 		}
 	}
 }
@@ -218,7 +217,7 @@ export function toBlob(base64: string, type: string) {
 	// Blobを作成
 	try {
 		const blob = new Blob([new Uint8Array(buffer)], {
-			type: type
+			type: type,
 		})
 		return blob
 	} catch (e) {
@@ -226,43 +225,46 @@ export function toBlob(base64: string, type: string) {
 	}
 }
 //画像を貼り付けたら…
-const element = <HTMLInputElement>document.querySelector('#textarea')
-element.addEventListener('paste', function (e) {
-	if (!e.clipboardData || !e.clipboardData.items) return true
-	// DataTransferItemList に画像が含まれいない場合は終了する
-	const imageItems = [...e.clipboardData.items].filter(i => i.type.startsWith('image'))
-	if (imageItems.length === 0) {
-		console.warn('it is not image')
-		return true
-	}
+export function imgPasteInit() {
+	const element = <HTMLInputElement>document.getElementById('textarea')
+	element &&
+		element.addEventListener('paste', function (e) {
+			if (!e.clipboardData || !e.clipboardData.items) return true
+			// DataTransferItemList に画像が含まれいない場合は終了する
+			const imageItems = [...e.clipboardData.items].filter((i) => i.type.startsWith('image'))
+			if (imageItems.length === 0) {
+				console.warn('it is not image')
+				return true
+			}
 
-	// ファイルとして得る
-	// DataTransferItem の kind は file なので getAsString ではなく getAsFile を呼ぶ
-	const imageFile = imageItems[0].getAsFile()
-	const imageType = imageItems[0].type
+			// ファイルとして得る
+			// DataTransferItem の kind は file なので getAsString ではなく getAsFile を呼ぶ
+			const imageFile = imageItems[0].getAsFile()
+			const imageType = imageItems[0].type
 
-	// FileReaderで読み込む
-	const fr = new FileReader()
-	fr.onload = function (e) {
-		// onload内ではe.target.resultにbase64が入っているのであとは煮るなり焼くなり
-		const base64 = e.target?.result
-		const mediav = $('#media').val()?.toString() || ''
-		if (!mediav || typeof base64 !== 'string') return
-		const i = mediav.split(',').length
-		// DataTransferItem の type に mime tipes があるのでそれを使う
-		media(base64, imageType, i)
-	}
-	if (imageFile) fr.readAsDataURL(imageFile)
+			// FileReaderで読み込む
+			const fr = new FileReader()
+			fr.onload = function (e) {
+				// onload内ではe.target.resultにbase64が入っているのであとは煮るなり焼くなり
+				const base64 = e.target?.result
+				const mediav = $('#media').val()?.toString() || ''
+				if (typeof base64 !== 'string') return
+				const i = mediav.split(',').length
+				// DataTransferItem の type に mime tipes があるのでそれを使う
+				media(base64, imageType, i)
+			}
+			if (imageFile) fr.readAsDataURL(imageFile)
 
-	// 画像以外がペーストされたときのために、元に戻しておく
-})
+			// 画像以外がペーストされたときのために、元に戻しておく
+		})
+}
 export async function deleteImage(key: string) {
 	const result = await Swal.fire({
 		title: lang.lang_postimg_delete,
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonText: lang.lang_yesno,
-		cancelButtonText: lang.lang_no
+		cancelButtonText: lang.lang_no,
 	})
 	if (result.value) {
 		const media = $('#media').val()?.toString() || ''
@@ -286,8 +288,8 @@ export async function altImage(acctId: string, id: string) {
 			method: 'get',
 			headers: {
 				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
-			}
+				Authorization: 'Bearer ' + at,
+			},
 		})
 		console.log(json)
 		$('[data-media=' + id + ']').removeClass('unknown')
@@ -298,21 +300,21 @@ export async function altImage(acctId: string, id: string) {
 			text: lang.lang_postimg_leadContext,
 			input: 'text',
 			inputAttributes: {
-				autocapitalize: 'off'
+				autocapitalize: 'off',
 			},
 			showCancelButton: true,
 			confirmButtonText: 'Post',
 			showLoaderOnConfirm: true,
-			preConfirm: data => {
+			preConfirm: (data) => {
 				return fetch(start, {
 					method: 'PUT',
 					headers: {
 						'content-type': 'application/json',
-						Authorization: 'Bearer ' + at
+						Authorization: 'Bearer ' + at,
 					},
 					body: JSON.stringify({
-						description: data
-					})
+						description: data,
+					}),
 				})
 					.then(function (response) {
 						if (!response.ok) {
@@ -332,16 +334,15 @@ export async function altImage(acctId: string, id: string) {
 						$(`[data-media=${id}]`).attr('title', data)
 					})
 			},
-			allowOutsideClick: () => !Swal.isLoading()
-		}).then(result => {
+			allowOutsideClick: () => !Swal.isLoading(),
+		}).then((result) => {
 			if (result.value) {
 				Swal.fire({
-					title: 'Complete'
+					title: 'Complete',
 				})
 			}
 		})
 	}
-
 }
 export function stamp() {
 	if ($('#stamp').hasClass('stamp-avail')) {
@@ -356,14 +357,17 @@ export function stamp() {
 async function v2MediaUpload(domain: string, at: string, fd) {
 	try {
 		const start = 'https://' + domain + '/api/v2/media'
-		const json = await api(start, {
-			method: 'post',
-			headers: {
-				Authorization:
-					'Bearer ' + at
+		const json = await api(
+			start,
+			{
+				method: 'post',
+				headers: {
+					Authorization: 'Bearer ' + at,
+				},
+				body: fd,
 			},
-			body: fd
-		}, true)
+			true
+		)
 		if (json.id) {
 			return json.id
 		} else {
@@ -372,7 +376,6 @@ async function v2MediaUpload(domain: string, at: string, fd) {
 	} catch (e: any) {
 		console.error(`Fatal Error: ${e}`)
 	}
-
 }
 export function alertProcessUnfinished() {
 	Swal.fire({
@@ -380,8 +383,8 @@ export function alertProcessUnfinished() {
 		icon: 'error',
 		showCancelButton: true,
 		confirmButtonText: lang.lang_post_retry,
-		cancelButtonText: lang.lang_no
-	}).then(result => {
+		cancelButtonText: lang.lang_no,
+	}).then((result) => {
 		if (result.value) {
 			post()
 		}

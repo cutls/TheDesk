@@ -1,10 +1,10 @@
-import { Account } from "../../interfaces/MastodonApiReturns"
+import { Account } from '../../interfaces/MastodonApiReturns'
 import $ from 'jquery'
-import lang from "../common/lang"
-import { toast } from "../common/declareM"
-import { escapeHTML, twemojiParse } from "../platform/first"
-import { date } from "./date"
-import { customEmojiReplace } from "./parse"
+import lang from '../common/lang'
+import { toast } from '../common/declareM'
+import { escapeHTML, twemojiParse } from '../platform/first'
+import { date } from './date'
+import { customEmojiReplace } from './parse'
 
 const gif = (localStorage.getItem('gif') || 'yes') === 'yes'
 //オブジェクトパーサー(ユーザーデータ)
@@ -19,12 +19,15 @@ export function userParse(obj: Account[], acctId: string, notfEvent?: Notoficati
 			//Instance Actorって…
 			if (toot.username.indexOf('.') < 0) {
 				const locked = toot.locked ? ' <i class="fas fa-lock red-text"></i>' : ''
-				const authhtml = notfEvent === 'follow_request' ? `<i class="material-icons gray pointer" onclick="request('${toot.id}','authorize','${acctId}')" title="Accept" aria-hidden="true">
+				const authhtml =
+					notfEvent === 'follow_request'
+						? `<i class="material-icons gray pointer" onclick="request('${toot.id}','authorize','${acctId}')" title="Accept" aria-hidden="true">
 							person_add
 						</i>
 						<i class="material-icons gray pointer" onclick="request('${toot.id}','reject','${acctId}')" title="Reject" aria-hidden="true">
 							person_add_disabled
-						</i>` : ''
+						</i>`
+						: ''
 				let ftxt = `New event`
 				if (notfEvent === 'follow') {
 					ftxt = lang.lang_parse_followed
@@ -36,7 +39,7 @@ export function userParse(obj: Account[], acctId: string, notfEvent?: Notoficati
 					ftxt = lang.lang_parse_signup
 				}
 				let notftext = ''
-				if (popup  > 0 || popup === -1 || notf) {
+				if (popup > 0 || popup === -1 || notf) {
 					notftext = ftxt + '<br>'
 				}
 				popupNotification(toot, popup, notftext, tlid || '', ftxt, acctId)
@@ -52,7 +55,7 @@ export function userParse(obj: Account[], acctId: string, notfEvent?: Notoficati
 					udg = `<a onclick="udgEx('${toot.url}','main');" user="${toot.acct}" class="udg">`
 				}
 				const latest = date(toot.last_status_at || new Date().toDateString(), 'relative')
-				const latestHtml = toot.last_status_at ?  `<div class="cbadge" style="width:100px;">Last <span class="voice">toot</span>: ${latest}</div>` : ''
+				const latestHtml = toot.last_status_at ? `<div class="cbadge" style="width:100px;">Last <span class="voice">toot</span>: ${latest}</div>` : ''
 				templete =
 					templete +
 					`<div class="cusr" style="padding-top:5px;" user-id="${toot.id}">
@@ -111,7 +114,7 @@ export function popupNotification(toot: Account, popup: number, notftext: string
 			if (native === 'yes') {
 				const options = {
 					body: `${toot.display_name}(${toot.acct})${ftxt}`,
-					icon: toot.avatar
+					icon: toot.avatar,
 				}
 				const domain = localStorage.getItem('domain_' + acctId)
 				new Notification('TheDesk:' + domain, options)

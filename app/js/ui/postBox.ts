@@ -1,14 +1,14 @@
 /*ささやきボックス(Cr民並感)*/
 
-import { characterCounterInit } from "../common/declareM"
-import lang from "../common/lang"
-import { getMulti } from "../common/storage"
-import { idata } from "../login/instance"
-import { loadVis } from "../post/secure"
-import { srcBox } from "../tl/src"
-import { tShowBox } from "../tl/tag"
+import { characterCounterInit } from '../common/declareM'
+import lang from '../common/lang'
+import { getMulti } from '../common/storage'
+import { idata } from '../login/instance'
+import { loadVis } from '../post/secure'
+import { srcBox } from '../tl/src'
+import { tShowBox } from '../tl/tag'
 import $ from 'jquery'
-declare var jQuery
+declare let jQuery
 
 //✕隠す
 export function hide() {
@@ -107,7 +107,7 @@ $(function () {
 
 //コード受信
 if (location.search) {
-	const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
+	const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)&code=(.+)/)
 	if (m) {
 		const mode = m[1]
 		const codex = m[2]
@@ -122,7 +122,7 @@ if (location.search) {
 }
 
 export function initPostbox() {
-	$('#posttgl').click(function (e) {
+	$('#posttgl').click(function () {
 		if (!$('#post-box').hasClass('appear')) {
 			show()
 		} else {
@@ -133,7 +133,7 @@ export function initPostbox() {
 		globalThis.selectedToot = 0
 	})
 
-	$('#timeline-container,#group').click(function (e) {
+	$('#timeline-container,#group').click(function () {
 		if (localStorage.getItem('box') !== 'absolute') {
 			if ($('#post-box').hasClass('appear') && !localStorage.getItem('nohide')) {
 				hide()
@@ -146,11 +146,8 @@ export function initPostbox() {
 		srcBox('close')
 		tShowBox('close')
 	})
-	$('#textarea,#cw-text').focusout(function (e) {
+	$('#textarea,#cw-text').focusout(function () {
 		localStorage.setItem('nohide', 'true')
-		const countup = function () {
-			localStorage.removeItem('nohide')
-		}
 		//setTimeout(remove, 100);
 		$('.cvo').removeClass('selectedToot')
 		globalThis.selectedColumn = 0
@@ -185,12 +182,7 @@ export function mdCheck() {
 		$('#local-button').addClass('hide')
 	}
 	const obj = getMulti()
-	if (
-		obj[acctId].background &&
-		obj[acctId].background !== 'def' &&
-		obj[acctId].text &&
-		obj[acctId].text !== 'def'
-	) {
+	if (obj[acctId].background && obj[acctId].background !== 'def' && obj[acctId].text && obj[acctId].text !== 'def') {
 		$('#toot-post-btn').removeClass('indigo')
 		$('#toot-post-btn').css('background-color', '#' + obj[acctId].background)
 		$('#toot-post-btn').css('color', obj[acctId].text || '')

@@ -1,12 +1,12 @@
 //左下のメッセージ
 
-import { escapeHTML } from "../platform/first"
+import { escapeHTML } from '../platform/first'
 import $ from 'jquery'
-import { execPlugin } from "../platform/plugin"
-import { toast } from "../common/declareM"
-import api from "../common/fetch"
-import Swal from "sweetalert2"
-import lang from "../common/lang"
+import { execPlugin } from '../platform/plugin'
+import { toast } from '../common/declareM'
+import api from '../common/fetch'
+import Swal from 'sweetalert2'
+import lang from '../common/lang'
 const tipsList = ['ver', 'clock', 'memory', 'spotify', 'custom']
 export const isITips = (item: string): item is ITips => tipsList.includes(item)
 
@@ -55,7 +55,7 @@ export function tips(mode: ITips, custom?: any) {
 	} else if (mode === 'spotify') {
 		tipsToggle()
 		localStorage.setItem('tips', 'spotify')
-		spotifyTips ()
+		spotifyTips()
 	} else if (mode === 'custom') {
 		tipsToggle()
 		localStorage.setItem('tips', `custom:${custom}`)
@@ -68,9 +68,15 @@ function startMem() {
 }
 export function renderMem(use: number, cpu: string, total: number, core: number, uptime: number) {
 	const day = Math.floor(uptime / 60 / 60 / 24)
-	const hour = Math.floor(uptime / 60 / 60 % 24).toString().padStart(2, '0')
-	const min = Math.floor(uptime / 60 % 60).toString().padStart(2, '0')
-	const sec = Math.floor(uptime % 60).toString().padStart(2, '0')
+	const hour = Math.floor((uptime / 60 / 60) % 24)
+		.toString()
+		.padStart(2, '0')
+	const min = Math.floor((uptime / 60) % 60)
+		.toString()
+		.padStart(2, '0')
+	const sec = Math.floor(uptime % 60)
+		.toString()
+		.padStart(2, '0')
 	const time = `${day ? day + ' days ' : ''}${hour ? hour + ':' : ''}${min}:${sec}`
 	//Intel
 	cpu = cpu.replace('Intel(R)', '').replace('(TM)', '').replace(' CPU', '')
@@ -82,7 +88,7 @@ export function renderMem(use: number, cpu: string, total: number, core: number,
 }
 //Spotify
 spotint = null
-export async function spotifyTips () {
+export async function spotifyTips() {
 	if (spotint) clearInterval(spotint)
 	const at = localStorage.getItem('spotify-token')
 	if (!at) return toast({ html: 'Error Spotify Connection' })
@@ -91,8 +97,8 @@ export async function spotifyTips () {
 		const jsonRaw = await api(start, {
 			method: 'get',
 			headers: {
-				'content-type': 'application/json'
-			}
+				'content-type': 'application/json',
+			},
 		})
 		const code = jsonRaw.token
 		localStorage.setItem('spotify-token', code)
@@ -139,7 +145,7 @@ export async function spotifyTips () {
 	} else {
 		Swal.fire({
 			icon: 'info',
-			text: lang.lang_spotify_acct
+			text: lang.lang_spotify_acct,
 		})
 		tips('ver')
 		return false
@@ -151,10 +157,10 @@ function spotStart() {
 	const news = s + 1
 	const per = (news * 100000) / total
 	const ns = (news % 60).toString().padStart(2, '0')
-	const nm = (news - news % 60) / 60
+	const nm = (news - (news % 60)) / 60
 	if (per >= 100) {
 		clearInterval(spotint)
-		spotifyTips ()
+		spotifyTips()
 	} else {
 		$('#spot-m').text(nm)
 		$('#spot-s').text(ns)
@@ -175,8 +181,7 @@ function clockStart() {
 	const nowHour = nowTime.getHours().toString().padStart(2, '0')
 	const nowMin = nowTime.getMinutes().toString().padStart(2, '0')
 	const nowSec = nowTime.getSeconds().toString().padStart(2, '0')
-	const msg =
-		`${nowTime.getFullYear()}/${(nowTime.getMonth() + 1)}/${nowTime.getDate()}
+	const msg = `${nowTime.getFullYear()}/${nowTime.getMonth() + 1}/${nowTime.getDate()}
 		<span style="font-size:20px">${nowHour}:${nowMin}:${nowSec}</span>`
 	$('#tips-text').html(msg)
 }
@@ -186,4 +191,3 @@ export function tipsToggle() {
 	$('#tips').toggleClass('hide')
 	$('#tips-menu').toggleClass('hide')
 }
-

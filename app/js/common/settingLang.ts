@@ -17,30 +17,30 @@ import * as plPL from '../../view/pl-PL/setting.vue'
 import * as siLK from '../../view/si-LK/setting.vue'
 import * as ps from '../../view/ps/setting.vue'
 const langs = {
-    ja,
-    jaKS,
-    en,
-    bg,
-    cs,
-    de,
-    esAR,
-    itIT,
-    zhCN,
-    frFR,
-    zhTW,
-    noNO,
-    ptBR,
-    ruRU,
-    esES,
-    plPL,
-    siLK,
-    ps
+	ja,
+	jaKS,
+	en,
+	bg,
+	cs,
+	de,
+	esAR,
+	itIT,
+	zhCN,
+	frFR,
+	zhTW,
+	noNO,
+	ptBR,
+	ruRU,
+	esES,
+	plPL,
+	siLK,
+	ps,
 }
 const imps = langs[globalThis.useLang]
 export default {
-    yesno: imps.yesno,
-    sound: imps.sound,
-    envConstruction: imps.envConstruction,
-    tlConstruction: imps.tlConstruction,
-    postConstruction: imps.postConstruction
+	yesno: imps.yesno,
+	sound: imps.sound,
+	envConstruction: imps.envConstruction,
+	tlConstruction: imps.tlConstruction,
+	postConstruction: imps.postConstruction,
 }

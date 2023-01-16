@@ -1,19 +1,19 @@
-import { collapsibleInitGetInstance, modalInitGetInstance, toast } from "../common/declareM"
-import api from "../common/fetch"
-import lang from "../common/lang"
+import { collapsibleInitGetInstance, modalInitGetInstance, toast } from '../common/declareM'
+import api from '../common/fetch'
+import lang from '../common/lang'
 import $ from 'jquery'
-import { Account, Context, Toot } from "../../interfaces/MastodonApiReturns"
-import { setLog, stripTags } from "../platform/first"
-import { todo } from "../ui/tips"
-import Swal from "sweetalert2"
-import { execCopy } from "../platform/end"
-import timeUpdate from "../common/time"
-import { getFilterTypeByAcct } from "./filter"
-import { userParse } from "./userParse"
-import { parse } from "./parse"
+import { Account, Context, Toot } from '../../interfaces/MastodonApiReturns'
+import { setLog, stripTags } from '../platform/first'
+import { todo } from '../ui/tips'
+import Swal from 'sweetalert2'
+import { execCopy } from '../platform/end'
+import timeUpdate from '../common/time'
+import { getFilterTypeByAcct } from './filter'
+import { userParse } from './userParse'
+import { parse } from './parse'
 
 //トゥートの詳細
-export async function details(id: string, acctId: string, tlid=0, isDm?: boolean) {
+export async function details(id: string, acctId: string, tlid = 0, isDm?: boolean) {
 	if (isDm) {
 		$('.dm-hide').hide()
 	} else {
@@ -37,8 +37,8 @@ export async function details(id: string, acctId: string, tlid=0, isDm?: boolean
 		method: 'get' as const,
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	}
 	try {
 		const json = await api<Toot>(start, i)
@@ -76,7 +76,9 @@ export async function details(id: string, acctId: string, tlid=0, isDm?: boolean
 				const temp = parse<string>(history, 'noauth', acctId, '')
 				console.log(temp)
 				$('#toot-edit').html(temp)
-			} catch (e) { console.error(e) }
+			} catch (e) {
+				console.error(e)
+			}
 		} else {
 			$('#toot-edit').html('')
 			$('.edited-hide').hide()
@@ -106,8 +108,8 @@ async function getContext(id: string, acctId: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const mute = getFilterTypeByAcct(acctId, 'thread')
 	const template = parse<string>(json.descendants, null, acctId, '', 0, mute)
@@ -144,8 +146,8 @@ async function beforeToot(id: string, acctId: string, domain: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const template = parse<string>(json, 'noauth', acctId, '')
 	if (template !== '') $('#toot-before .no-data').hide()
@@ -161,8 +163,8 @@ async function userToot(id: string, acctId: string, user: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const template = parse<string>(json, null, acctId, '')
 	if (template !== '') $('#user-before .no-data').hide()
@@ -177,8 +179,8 @@ async function afterToot(id: string, acctId: string, domain: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const template = parse<string>(json, null, acctId, '')
 	if (template !== '') $('#ltl-after .no-data').hide()
@@ -194,8 +196,8 @@ async function afterUserToot(id: string, acctId: string, user: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const template = parse<string>(json, null, acctId, '')
 	if (template !== '') $('#user-after .no-data').hide()
@@ -210,8 +212,8 @@ async function afterFTLToot(id: string, acctId: string, domain: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const template = parse<string>(json, null, acctId, '')
 	if (template !== '') $('#ftl-after .no-data').hide()
@@ -228,8 +230,8 @@ async function faved(id: string, acctId: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const template = userParse(json, acctId)
 	if (template !== '') $('#toot-fav .no-data').hide()
@@ -246,8 +248,8 @@ async function rted(id: string, acctId: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const template = userParse(json, acctId)
 	if (template !== '') $('#toot-rt .no-data').hide()
@@ -261,8 +263,7 @@ export function cbCopy(isEmb: boolean) {
 	if (!urls) return
 	const domain = urls[1]
 	if (isEmb) {
-		const emb =
-			`<iframe src="${url}/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400"></iframe>
+		const emb = `<iframe src="${url}/embed" class="mastodon-embed" style="max-width: 100%; border: 0" width="400"></iframe>
 			<script src="https://${domain}/embed.js" async="async"></script>`
 		execCopy(emb)
 		toast({ html: lang.lang_details_embed, displayLength: 1500 })
@@ -294,8 +295,8 @@ export async function trans(acctId: string, elem: JQuery<HTMLElement>) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	elem.parents('.cvo').find('.toot').append(`<span class="gray translate">${json.content}</span>`)
 }
@@ -316,7 +317,8 @@ export async function detEx(url: string, acctId: string) {
 			Swal.showLoading(null)
 		},
 		willClose: () => {
-		}
+			return
+		},
 	})
 	const json = await detExCore(url, acctId)
 	Swal.close()
@@ -338,8 +340,8 @@ export async function detExCore(url: string, acctId: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	if (json) {
 		return json

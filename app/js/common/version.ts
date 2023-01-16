@@ -1,15 +1,15 @@
-import { escapeHTML, setLog } from "../platform/first"
-import lang from "./lang"
-import { todo } from "../ui/tips"
-import { toast } from "./declareM"
-import { getMulti } from "./storage"
-import api from "./fetch"
+import { escapeHTML } from '../platform/first'
+import lang from './lang'
+import { todo } from '../ui/tips'
+import { toast } from './declareM'
+import { getMulti } from './storage'
+import api from './fetch'
 import $ from 'jquery'
 
 //バージョンチェッカー
 export async function verck(ver: string) {
 	if (globalThis.store) return false
-	const pwa = globalThis.pwa
+	if (globalThis.pwa) return false
 	console.log('%c Welcome😊 ' + ver, 'color: red;font-size:200%;')
 	$('body').addClass(localStorage.getItem('platform') || '')
 	const date = new Date()
@@ -44,26 +44,24 @@ export async function verck(ver: string) {
 				$('#support-btm').removeClass('hide')
 				$('#support-btm').animate(
 					{
-						bottom: '0'
+						bottom: '0',
 					},
 					{
-						duration: 300
+						duration: 300,
 					}
 				)
 			}
 		}
 		const platform = localStorage.getItem('platform')
 		console.log('Your platform:' + platform)
-		const winstore = localStorage.getItem('winstore') === 'brewcask' ||
-			localStorage.getItem('winstore') === 'snapcraft' ||
-			localStorage.getItem('winstore') === 'winstore'
+		const winstore = localStorage.getItem('winstore') === 'brewcask' || localStorage.getItem('winstore') === 'snapcraft' || localStorage.getItem('winstore') === 'winstore'
 		const l = 5
 		// 生成する文字列に含める文字セット
 		const c = 'abcdefghijklmnopqrstuvwxyz0123456789'
 		const cl = c.length
 		let r = ''
 		for (let i = 0; i < l; i++) {
-			r += c[Math.floor(Math.random() * cl)]
+			r = r + c[Math.floor(Math.random() * cl)]
 		}
 		const start1 = 'https://thedesk.top/ver.json'
 		const mess = await api(start1, { method: 'get' })
@@ -93,7 +91,7 @@ export async function verck(ver: string) {
 		const start = `https://thedesk.top/notice/index.php?since_id=${localStorage.getItem('last-notice-id')}`
 		try {
 			const json = await api(start, {
-				method: 'get'
+				method: 'get',
 			})
 			if (json.length < 1) return false
 			const last = parseInt(localStorage.getItem('last-notice-id') || '0', 10)
@@ -116,7 +114,7 @@ export async function verck(ver: string) {
 					if (showVer) {
 						toast({
 							html: `${escapeHTML(obj.text)}${toot}<span class="sml grey-text">(スライドして消去)</span>`,
-							displayLength: 86400
+							displayLength: 86400,
 						})
 					}
 				}
@@ -153,7 +151,7 @@ export async function verck(ver: string) {
 				if (showVer) {
 					toast({
 						html: `${escapeHTML(obj.text)}${toot}<span class="sml grey-text">(スライドして消去)</span>`,
-						displayLength: 86400
+						displayLength: 86400,
 					})
 				}
 			}

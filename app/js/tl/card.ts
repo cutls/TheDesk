@@ -13,22 +13,22 @@ export function additional(acctId: string, tlid: string) {
 
 	$('#timeline-container .mention').addClass('parsed')
 
-	$('#timeline-container .hashtag, #timeline-container [rel=tag]').each(function (i, elem) {
-		const tags = $(this).attr('href')?.match(/https?:\/\/([-a-zA-Z0-9@.]+)\/tags?\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/)
+	$('#timeline-container .hashtag, #timeline-container [rel=tag]').each(function () {
+		const tags = $(this)
+			.attr('href')
+			?.match(/https?:\/\/([-a-zA-Z0-9@.]+)\/tags?\/([-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+)/)
 		const tagThis = tags ? tags[2] : $(this).attr('data-regTag')
 		if (tagThis) {
-			$(this).attr('href', "#")
+			$(this).attr('href', '#')
 			$(this).attr('onclick', "tagShow('" + tagThis + "', this)")
 		}
 	})
 
 	//トゥートサムネ
-	$(`#timeline_${tlid} .toot a:not(.parsed)`).each(function (i, elem) {
+	$(`#timeline_${tlid} .toot a:not(.parsed)`).each(function () {
 		const text = $(this).attr('href')
 		if (!text) return
-		const urls = text.match(
-			/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
-		)
+		const urls = text.match(/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+)/)
 
 		//トゥートのURLぽかったら
 		const toot = text.match(/https:\/\/([a-zA-Z0-9.-]+)\/@([a-zA-Z0-9_]+)\/([0-9]+)/)
@@ -44,7 +44,7 @@ export function additional(acctId: string, tlid: string) {
 		}
 	})
 
-	$(`#timeline_${tlid} .toot:not(:has(a:not(.add-show,.parsed)))`).each(function (i, elem) {
+	$(`#timeline_${tlid} .toot:not(:has(a:not(.add-show,.parsed)))`).each(function () {
 		$(this).parent().find('.add-show').hide()
 	})
 }
@@ -53,22 +53,21 @@ export async function additionalIndv(tlid: string, acctId: string, idStr: string
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const text = $(`[toot-id=${idStr}] .toot a`).attr('href') || ''
-	const urls = text.match(
-		/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/
-	)
+	const urls = text.match(/https?:\/\/([-a-zA-Z0-9@.]+)\/media\/([-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+)/)
 	if (urls) {
 		$(`[toot-id=${idStr}] .toot a`).remove()
 	} else {
-		const id = $('[toot-id=' + idStr + '] .toot a')
-			.parents('.cvo')
-			.attr('toot-id') || ''
+		const id =
+			$('[toot-id=' + idStr + '] .toot a')
+				.parents('.cvo')
+				.attr('toot-id') || ''
 		const start = `https://${domain}/api/v1/statuses/${id}`
 		const json = await api(start, {
 			method: 'get',
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + at
-			}
+				Authorization: 'Bearer ' + at,
+			},
 		})
 		const cards = json.card
 		const analyze = cardHtml(cards, acctId, id)
@@ -84,26 +83,14 @@ export function cardHtml(json: Card, acctId: string, id: string) {
 	const m = json.url.match(/^https?:\/{2,}(.*?)(?:\/|\?|#|$)/)
 	const domain = m ? m[1] : null
 	if (!domain) return ''
-	const trustedDomains = [
-		"pixiv.net",
-		"twitter.com",
-		"mobile.twitter.com",
-		"open.spotify.com",
-		"youtube.com",
-		"youtu.be",
-		"m.youtube.com",
-		"www.youtube.com",
-		"nicovideo.jp",
-		"twitcasting.tv"
-	]
-	const isHad = _.includes(trustedDomains, domain);
+	const trustedDomains = ['pixiv.net', 'twitter.com', 'mobile.twitter.com', 'open.spotify.com', 'youtube.com', 'youtu.be', 'm.youtube.com', 'www.youtube.com', 'nicovideo.jp', 'twitcasting.tv']
+	const isHad = _.includes(trustedDomains, domain)
 	if (json.provider_name === 'pixiv') {
 		let pxvImg = ''
 		if (json.image) {
 			pxvImg = `<br><img src="${json.image}" style="max-width:100%" data-type="image">`
 		}
-		analyze =
-			`<div class="pixiv-post"><b><a href="${json.author_url || json.url}" target="_blank">${escapeHTML(json.author_name || escapeHTML(json.title))}</a></b><br>
+		analyze = `<div class="pixiv-post"><b><a href="${json.author_url || json.url}" target="_blank">${escapeHTML(json.author_name || escapeHTML(json.title))}</a></b><br>
 				${json.author_name ? escapeHTML(json.title) : ''}${pxvImg}
 			</div>`
 	} else {
@@ -139,8 +126,8 @@ export async function cardHtmlShow(acctId: string, idStr: string) {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const json = jsonRaw.card
 	if (json.provider_name === 'Twitter') {
@@ -187,13 +174,11 @@ export function mov(id: string, tlid: string, type: string, rand: string, target
 	if (tlid === 'notf') {
 		const timeline = $(target).parents('.notf-indv-box').attr('id')
 		elm = document.querySelector(`#${timeline} #${dropdownTrigger}`)
-		console.log(`#${timeline} #${dropdownTrigger}`)
 	}
 	if (elm) {
 		const instance = dropdownInitGetInstance(elm)
 		if (instance && instance.isOpen) return false
 	}
-
 
 	let click = false
 	let tlide = `[tlid=${tlid}]`

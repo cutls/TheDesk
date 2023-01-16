@@ -4,7 +4,7 @@ import 'jquery-ui'
 import Swal from 'sweetalert2'
 import { IColumnData, IColumnType, IColumnUTL } from '../../interfaces/Storage'
 import lang from '../common/lang'
-import { getColumn, getMulti, initColumn, setColumn } from '../common/storage'
+import { getColumn, getMulti, initColumn, setColumn, setMulti } from '../common/storage'
 import { ckdb } from '../login/login'
 import { initWebviewEvent } from '../platform/first'
 import { isIVis, IVis } from '../post/secure'
@@ -17,7 +17,7 @@ import { tlCloser, tlDiff, tl, isColumnType } from '../tl/tl'
 import { show } from './postBox'
 import { goTop } from './scroll'
 import { sortLoad } from './sort'
-declare var jQuery
+declare let jQuery
 
 const isSetAsRead = localStorage.getItem('setasread') === 'yes'
 const anime = (localStorage.getItem('animation') || 'yes') === 'yes'
@@ -49,7 +49,6 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 	}
 	if (!dontClose && !targetStr) tlCloser()
 	const acctList = getMulti()
-	let templete
 	if (acctList) {
 		let key = 0
 		for (const acct of acctList) {
@@ -109,11 +108,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 				insertColor = ` style="color: #${ichex}" `
 			}
 		}
-		if (acctList[domain]) {
-			if (acctList[domain].background !== 'def') {
-				insert = `${insert} border-bottom:medium solid #${acctList[domain].background};`
-			}
-		}
+		if (acctList[domain]) insert = `${insert} border-bottom:medium solid #${acctList[domain].background};`
 		if (type === 'notf' && !isSetAsRead) {
 			localStorage.setItem('hasNotfC_' + domain, 'true')
 		} else {
@@ -130,14 +125,13 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 		const animeCss = anime ? 'box-anime' : ''
 		if (!column.left_fold) basekey = key
 		let notfDomain = domain.toString()
-		const notfKey = key.toString()
 		if (type === 'webview') {
 			const fixWidth = localStorage.getItem('fixwidth')
 			css = ` min-width:${fixWidth}px;`
 			const html = webviewParse('https://tweetdeck.twitter.com', key, insert, insertColor, css)
 			$('#timeline-container').append(html)
 			initWebviewEvent()
-		} else if (type === 'bookmark' || type == 'fav') {
+		} else if (type === 'bookmark' || type === 'fav') {
 			unstreamingTL(type, key, basekey, insert, insertColor, column.left_fold || false, css, animeCss, domain.toString())
 		} else if (column.type === 'utl') {
 			const data = column.data
@@ -154,8 +148,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			let excludeNotf = ''
 			let excludeHome = ''
 			if (column.type === 'notf') {
-				excludeNotf =
-					`<div style="border: 1px solid; padding: 5px; margin-top: 5px; margin-bottom: 5px;">${lang.lang_layout_excluded}:<br>
+				excludeNotf = `<div style="border: 1px solid; padding: 5px; margin-top: 5px; margin-bottom: 5px;">${lang.lang_layout_excluded}:<br>
 					<label>
 						<input type="checkbox" class="filled-in" id="exc-reply-${key}" ${excludeCk(key.toString(), 'mention')} />
 						<span>
@@ -260,7 +253,6 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftFold}">view_agenda</i>
 					<span>${lang.lang_layout_leftFold}</span></a>`
 			} else {
-				
 				left_hold = `<a onclick="leftFoldRemove(${key})" class="setting nex waves-effect">
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i>
 					<span>${lang.lang_layout_leftUnfold}</span></a>`
@@ -485,7 +477,7 @@ export function addColumn() {
 	let acct = $('#add-acct-sel').val()?.toString() || '0'
 	if (acct !== 'webview' && acct !== 'noauth') localStorage.setItem('last-use', acct)
 	let type = $('#type-sel').val()?.toString() || 'home'
-	let data: IColumnData
+	let data: IColumnData | undefined = undefined
 	if (acct === 'noauth') {
 		const domainVal = $('#noauth-url').val()?.toString()
 		if (!domainVal) return Swal.fire(`no domain value`)
@@ -500,6 +492,7 @@ export function addColumn() {
 	const add = {
 		domain: parseInt(acct, 10),
 		type: type,
+		data,
 	}
 	const obj = getColumn()
 	if (!obj) {
@@ -512,7 +505,6 @@ export function addColumn() {
 }
 export function addselCk() {
 	const acct = $('#add-acct-sel').val()
-	const domain = localStorage.getItem('domain_' + acct)
 	if (acct === 'webview') {
 		$('#auth').addClass('hide')
 		$('#noauth').addClass('hide')
@@ -555,18 +547,20 @@ export function setToggle(tlid: string) {
 	colorPicker(tlid)
 	if ($(`#util-box_${tlid}`).hasClass('column-hide')) {
 		$(`#util-box_${tlid}`).css('display', 'block')
-		$(`#util-box_${tlid}`).animate({ height: '200px' },
+		$(`#util-box_${tlid}`).animate(
+			{ height: '200px' },
 			{
 				duration: 300,
 				complete: function () {
 					$(`#util-box_${tlid}`).css('overflow-y', 'scroll')
 					$(`#util-box_${tlid}`).removeClass('column-hide')
-				}
+				},
 			}
 		)
 	} else {
 		$(`#util-box_${tlid}`).css('overflow-y', 'hidden')
-		$(`#util-box_${tlid}`).animate({ height: '0' },
+		$(`#util-box_${tlid}`).animate(
+			{ height: '0' },
 			{
 				duration: 300,
 				complete: function () {
@@ -582,18 +576,20 @@ export function setToggle(tlid: string) {
 export function setToggleTag(tlid: string) {
 	if ($('#tag-box_' + tlid).hasClass('column-hide')) {
 		$('#tag-box_' + tlid).css('display', 'block')
-		$('#tag-box_' + tlid).animate({ height: '200px' },
+		$('#tag-box_' + tlid).animate(
+			{ height: '200px' },
 			{
 				duration: 300,
 				complete: function () {
 					$('#tag-box_' + tlid).css('overflow-y', 'scroll')
 					$('#tag-box_' + tlid).removeClass('column-hide')
-				}
+				},
 			}
 		)
 	} else {
 		$('#tag-box_' + tlid).css('overflow-y', 'hidden')
-		$('#tag-box_' + tlid).animate({ height: '0' },
+		$('#tag-box_' + tlid).animate(
+			{ height: '0' },
 			{
 				duration: 300,
 				complete: function () {
@@ -635,8 +631,7 @@ export function colorAdd(key: number, bg: string, txt: 'black' | 'white' | 'def'
 	obj.background = bg
 	obj.text = txt
 	o[key] = obj
-	const json = JSON.stringify(o)
-	localStorage.setItem('column', json)
+	setColumn(o)
 	if (txt === 'def') {
 		$(`#menu_${key}`).css('background-color', '')
 		$(`#menu_${key}`).css('color', '')
@@ -648,6 +643,26 @@ export function colorAdd(key: number, bg: string, txt: 'black' | 'white' | 'def'
 		const ichex = isBlack ? '9e9e9e' : 'eeeeee'
 		$('#menu_' + key + ' .nex').css('color', `#${ichex}`)
 		$('#menu_' + key).css('color', `#${bghex}`)
+	}
+}
+export function colorAddMulti(key: number, bg: string, txt: 'black' | 'white' | 'def') {
+	const o = getMulti()
+	const obj = o[key]
+	obj.background = bg
+	obj.text = txt
+	o[key] = obj
+	setMulti(o)
+	if (txt === 'def') {
+		$(`#acct_${key}`).css('background-color', '')
+		$(`#acct_${key}`).css('color', '')
+		$(`#acct_${key} .nex`).css('color', '')
+	} else {
+		const isBlack = txt === 'black'
+		const bghex = isBlack ? '000000' : 'ffffff'
+		const ichex = isBlack ? '9e9e9e' : 'eeeeee'
+		$(`#acct_${key}`).css('background-color', `#${bg}`)
+		$('#acct_' + key + ' .nex').css('color', `#${ichex}`)
+		$('#acct_' + key).css('color', `#${bghex}`)
 	}
 }
 //禁断のTwitter
@@ -746,7 +761,7 @@ function unstreamingTL(type: IColumnType, key: number, basekey: number, insert: 
 	$('#timeline_box_' + basekey + '_parentBox').append(html)
 	if (type === 'bookmark') {
 		bookmark(key, acctId)
-	} else if (type == 'fav') {
+	} else if (type === 'fav') {
 		favTl(key, acctId)
 	} else if (type === 'utl') {
 		const isUtlData = (item: IColumnData): item is IColumnUTL => typeof item !== 'string' && item['acct']
@@ -795,7 +810,7 @@ export function leftFoldRemove(key: number) {
 export function resetWidth(key: number) {
 	const obj = getColumn()
 	obj[key].width = undefined
-	if(obj[key].height) $(`#timeline_box_${key}_parentBox .boxIn`).attr('style', '')
+	if (obj[key].height) $(`#timeline_box_${key}_parentBox .boxIn`).attr('style', '')
 	obj[key].height = undefined
 	setColumn(obj)
 	$(`#timeline_box_${key}_parentBox`).attr('style', '')

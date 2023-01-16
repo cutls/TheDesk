@@ -2,18 +2,18 @@
 //最初に読むやつ
 //アスタルテ判定初期化
 
-import { Credential } from "../../interfaces/MastodonApiReturns"
-import { IMulti } from "../../interfaces/Storage"
-import { formSelectInit, toast } from "../common/declareM"
-import api from "../common/fetch"
-import lang from "../common/lang"
-import { getMulti, setMulti } from "../common/storage"
-import { verck } from "../common/version"
-import { setLog } from "../platform/first"
-import { parseColumn } from "../ui/layout"
-import { load } from "../ui/settings"
-import { isITips, tips, todo } from "../ui/tips"
-import { idata } from "./instance"
+import { Credential } from '../../interfaces/MastodonApiReturns'
+import { IMulti } from '../../interfaces/Storage'
+import { formSelectInit } from '../common/declareM'
+import api from '../common/fetch'
+import lang from '../common/lang'
+import { getMulti, setMulti } from '../common/storage'
+import { verck } from '../common/version'
+import { setLog } from '../platform/first'
+import { parseColumn } from '../ui/layout'
+import { load } from '../ui/settings'
+import { isITips, tips, todo } from '../ui/tips'
+import { idata } from './instance'
 import $ from 'jquery'
 
 localStorage.removeItem('quoters')
@@ -77,29 +77,29 @@ export async function refresh(targetStr: string, loadskip: boolean) {
 			method: 'get',
 			headers: {
 				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
-			}
+				Authorization: 'Bearer ' + at,
+			},
 		})
-		let avatar = json['avatar']
+		let avatar = json.avatar
 		//missingがmissingなやつ
 		if (avatar === '/avatars/original/missing.png' || !avatar) avatar = './img/missing.svg'
 		const ref: IMulti = {
 			at: obj[target].at,
-			name: json['display_name'] || '',
+			name: json.display_name || '',
 			domain: obj[target].domain,
-			user: json['acct'],
+			user: json.acct,
 			prof: avatar,
-			id: json['id'],
-			vis: json['source']['privacy']
+			id: json.id,
+			vis: json.source.privacy,
 		}
 		if (obj[target].background) ref.background = obj[target].background
 		if (obj[target].text) ref.text = obj[target].text
-		localStorage.setItem('name_' + target, json['display_name'] || '')
-		localStorage.setItem('user_' + target, json['acct'])
-		localStorage.setItem('user-id_' + target, json['id'])
+		localStorage.setItem('name_' + target, json.display_name || '')
+		localStorage.setItem('user_' + target, json.acct)
+		localStorage.setItem('user-id_' + target, json.id)
 		localStorage.setItem('prof_' + target, avatar)
-		localStorage.setItem('follow_' + target, json['following_count'].toString() || '0')
-		if (json['source']['sensitive']) {
+		localStorage.setItem('follow_' + target, json.following_count.toString() || '0')
+		if (json.source.sensitive) {
 			localStorage.setItem('nsfw_' + target, 'true')
 		} else {
 			localStorage.removeItem('nsfw_' + target)
@@ -113,7 +113,6 @@ export async function refresh(targetStr: string, loadskip: boolean) {
 		setLog(start, 'JSON', error)
 		console.error(error)
 	}
-
 }
 async function refreshPleromaAt(obj: IMulti) {
 	const start = 'https://' + obj.domain + '/oauth/token'
@@ -122,14 +121,14 @@ async function refreshPleromaAt(obj: IMulti) {
 	const json = await api(start, {
 		method: 'post',
 		headers: {
-			'content-type': 'application/json'
+			'content-type': 'application/json',
 		},
 		body: {
 			grant_type: 'refresh_token',
 			refresh_token: rt[0],
 			client_id: rt[1],
-			client_secret: rt[2]
-		}
+			client_secret: rt[2],
+		},
 	})
 	if (json.access_token) {
 		return json.access_token
@@ -210,13 +209,13 @@ export async function ckdb(acct_id: string) {
 		const json = await api(start, {
 			method: 'get',
 			headers: {
-				'content-type': 'application/json'
-			}
+				'content-type': 'application/json',
+			},
 		})
 		if (json) {
-			if (json['max_toot_chars']) localStorage.setItem('letters_' + acct_id, json['max_toot_chars'])
-			if (json['urls'] && json['urls']['streaming_api']) {
-				localStorage.setItem('streaming_' + acct_id, json['urls']['streaming_api'])
+			if (json.max_toot_chars) localStorage.setItem('letters_' + acct_id, json.max_toot_chars)
+			if (json.urls && json.urls.streaming_api) {
+				localStorage.setItem('streaming_' + acct_id, json.urls.streaming_api)
 			} else {
 				localStorage.removeItem('streaming_' + acct_id)
 			}
@@ -224,7 +223,6 @@ export async function ckdb(acct_id: string) {
 	} catch (error: any) {
 		console.error(error)
 	}
-
 }
 
 //アカウントを選択…を実装
@@ -292,8 +290,8 @@ export async function ticker() {
 		const json = await api(start, {
 			method: 'get',
 			headers: {
-				'content-type': 'application/json'
-			}
+				'content-type': 'application/json',
+			},
 		})
 		if (json.data) {
 			localStorage.removeItem('ticker')

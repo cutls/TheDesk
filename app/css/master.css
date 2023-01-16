@@ -556,8 +556,8 @@ h2.swal2-title {
 	background-color: inherit !important;
 	box-shadow: none !important;
 }
-.swal2-actions {
-	background-color: var(--modalfooter);
+.swal2-popup {
+    color: var(--text) !important;
 }
 #src-contents svg {
 	margin-right: 0.4rem;

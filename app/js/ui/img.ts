@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { modalInit, modalInitGetInstance, toast } from '../common/declareM'
+import { modalInitGetInstance, toast } from '../common/declareM'
 import lang from '../common/lang'
 import { execCopy } from '../platform/end'
 import { details } from '../tl/datails'
@@ -100,7 +100,7 @@ function imageXhr(id: string, key: number, murl: string) {
 	)
 	xhr.addEventListener(
 		'error',
-		function (event) {
+		function () {
 			$('#imgmodal').attr('src', murl)
 			clearInterval(timer)
 			const proctime = '?'
@@ -118,7 +118,6 @@ function imageXhr(id: string, key: number, murl: string) {
 			r.onload = function () {
 				const b64 = r.result
 				const element = new Image()
-				let width
 				element.onload = function () {
 					const width = element.naturalWidth
 					const height = element.naturalHeight
@@ -126,12 +125,12 @@ function imageXhr(id: string, key: number, murl: string) {
 					$('#imagemodal').attr('data-naturalWidth', width)
 					$('#imagemodal').attr('data-naturalHeight', height)
 				}
-				if ($(`#${id}-image-${(key + 1)}`).length === 0) {
+				if ($(`#${id}-image-${key + 1}`).length === 0) {
 					$('#image-next').prop('disabled', true)
 				} else {
 					$('#image-next').prop('disabled', false)
 				}
-				if ($(`#${id}-image-${(key - 1)}`).length === 0) {
+				if ($(`#${id}-image-${key - 1}`).length === 0) {
 					$('#image-prev').prop('disabled', true)
 				} else {
 					$('#image-prev').prop('disabled', false)
@@ -193,17 +192,12 @@ function dragScroll(elem: HTMLElement) {
 	const target = elem
 	$(target)
 		.mousedown(function (event) {
-			$(this)
-				.data('down', true)
-				.data('x', event.clientX)
-				.data('y', event.clientY)
-				.data('scrollLeft', this.scrollLeft)
-				.data('scrollTop', this.scrollTop)
+			$(this).data('down', true).data('x', event.clientX).data('y', event.clientY).data('scrollLeft', this.scrollLeft).data('scrollTop', this.scrollTop)
 			return false
 		})
 		.css({
 			overflow: 'hidden', // スクロールバー非表示
-			cursor: 'move'
+			cursor: 'move',
 		})
 	// ウィンドウから外れてもイベント実行
 	$(document)
@@ -215,22 +209,17 @@ function dragScroll(elem: HTMLElement) {
 				return false // 文字列選択を抑止
 			}
 		})
-		.mouseup(function (event) {
+		.mouseup(function () {
 			$(target).data('down', false)
 		})
 	$(target)
 		.on('touchstart', function (event) {
-			$(this)
-				.data('down', true)
-				.data('x', getX(event))
-				.data('y', getY(event))
-				.data('scrollLeft', this.scrollLeft)
-				.data('scrollTop', this.scrollTop)
+			$(this).data('down', true).data('x', getX(event)).data('y', getY(event)).data('scrollLeft', this.scrollLeft).data('scrollTop', this.scrollTop)
 			return false
 		})
 		.css({
 			overflow: 'hidden', // スクロールバー非表示
-			cursor: 'move'
+			cursor: 'move',
 		}) //指が触れたか検知
 	$(target).on('touchmove', function (event) {
 		if ($(target).data('down') === true) {
@@ -240,7 +229,7 @@ function dragScroll(elem: HTMLElement) {
 			return false // 文字列選択を抑止
 		}
 	}) //指が動いたか検知
-	$(target).on('touchend', function (event) {
+	$(target).on('touchend', function () {
 		$(target).data('down', false)
 	})
 
@@ -256,14 +245,15 @@ function getY(event: JQuery.TouchStartEvent | JQuery.TouchMoveEvent) {
 }
 //マウスホイールで拡大
 const element = <any>document.getElementById('imagemodal')
-element.onmousewheel = function (e) {
-	const delta = e.wheelDelta
-	if (delta > 0) {
-		zoom(1.1)
-	} else {
-		zoom(0.9)
+if (element)
+	element.onmousewheel = function (e) {
+		const delta = e.wheelDelta
+		if (delta > 0) {
+			zoom(1.1)
+		} else {
+			zoom(0.9)
+		}
 	}
-}
 export function rotate(reset: boolean) {
 	if (reset) {
 		$('#imagewrap img').removeClass('rotate-90')
@@ -306,10 +296,7 @@ export function dlImg() {
 	let murl = $('#imagemodal').attr('data-image')
 	const remoteImg = localStorage.getItem('remote_img') === 'yes'
 	if (remoteImg) murl = ourl
-	const save = localStorage.getItem('savefolder')
-	if (!save || save === 'null') {
-		const save = ''
-	}
+	const save = localStorage.getItem('savefolder') || ''
 	postMessage(['generalDL', [murl, save, false]], '*')
 }
 export function openFinder(dir: string) {

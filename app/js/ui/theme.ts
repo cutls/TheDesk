@@ -11,7 +11,7 @@ export function themes(theme?: string) {
 	const el = document.getElementsByTagName('html')[0]
 	el.style.backgroundColor = 'var(--bg)'
 	const font = localStorage.getItem('font')
-	if(font) {
+	if (font) {
 		el.style.fontFamily = font
 	} else {
 		el.style.fontFamily = ''

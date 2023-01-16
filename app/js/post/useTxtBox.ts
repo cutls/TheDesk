@@ -1,10 +1,10 @@
-import lang from "../common/lang"
+import lang from '../common/lang'
 import $ from 'jquery'
-import { clear } from "./post"
-import { cw, isIVis, IVis, vis } from "./secure"
-import { formSelectInit, modalInitGetInstance } from "../common/declareM"
-import { stripTags } from "../platform/first"
-import { show, mdCheck } from "../ui/postBox"
+import { clear } from './post'
+import { cw, isIVis, IVis, vis } from './secure'
+import { formSelectInit, modalInitGetInstance } from '../common/declareM'
+import { stripTags } from '../platform/first'
+import { show, mdCheck } from '../ui/postBox'
 
 /*リプライ*/
 export function re(id: string, atsCm: string, acctId: string, mode: IVis, cwTxt: string) {

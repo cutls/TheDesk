@@ -1,61 +1,168 @@
-import { parse } from "./tl/parse"
-import { getData } from "./login/manager"
-import { filter } from "./tl/filter"
-import { about } from "./common/about"
-import { parseBlur } from "./common/blurhash"
-import { getMulti, setMulti, initColumn, getColumn, setColumn } from "./common/storage"
-import { verck, closeStart } from "./common/version"
-import { defaultEmoji, customEmoji, defEmoji } from "./emoji/defaultEmoji"
-import { ck, refresh, ckdb, multiSelector, ticker } from "./login/login"
-import { loadAcctList, maxChars, multiDel, backToInit, instance, code, atSetup, mainAcct, colorAdd, asReadEnd, autoCompleteInitTrigger, support } from "./login/manager"
-import { execCopy, playSound } from "./platform/end"
-import { escapeHTML, nl2br, br2nl, formatTime, formatTimeUtc, makeCID, rgbToHex, setLog, escapeCsv, statusModel, initWebviewEvent, twemojiParse } from "./platform/first"
-import { initPlugin, getMeta, execPlugin, testExec } from "./platform/plugin"
-import { emojiToggle, emojiGet, emojiList, emojiInsert, brInsert } from "./post/emoji"
-import { closeDrop, fileSelect, media, toBlob, deleteImage, altImage, stamp, alertProcessUnfinished } from "./post/img"
-import { sec, expPostMode, clear, post } from "./post/post"
-import { nsfw, vis, loadVis, cw, cwShow, schedule, draftToggle, addToDraft, useThisDraft, deleteThisDraft } from "./post/secure"
-import { fav, rt, boostWith, bkm, follow, acctResolve, acctResolveLegacy, block, muteDo, muteMenu, muteTime, del, redraft, editToot, draftToPost, pin, request, domainBlock, addDomainblock, empUser, pinUser, tootUriCopy, staEx, toggleAction } from "./post/status"
-import { tagInsert } from "./post/suggest"
-import { re, reEx, qt } from "./post/useTxtBox"
-import { announParse, announReaction, announReactionNew, emojiReactionDef } from "./tl/announParse"
-import { mastodonBaseStreaming } from "./tl/baseStreaming"
-import { additional, additionalIndv, cardHtml, cardHtmlShow, cardToggle, cardCheck, mov, resetmv } from "./tl/card"
-import { details, cbCopy, staCopy, trans, brws, detEx, detExCore } from "./tl/datails"
-import { date, crat } from "./tl/date"
-import { dirMenu, dirselCk, dirChange, directory } from "./tl/directory"
-import { mediaToggle, remoteOnly, remoteOnlyCk, ebtToggle, mediaCheck, ebtCheck, filterMenu, filterTime, makeNewFilter, filterEdit, filterDel, getFilter, getFilterType, convertColumnToFilter, getFilterTypeByAcct, filterUpdate, filterUpdateInternal, exclude, excludeCk, checkNotfFilter, resetNotfFilter, notfFilter } from "./tl/filter"
-import { listMenu, list, makeNewList, listShow, listUser, hisList, listAdd, listRemove } from "./tl/list"
-import { mixTl, mixre, mixMore } from "./tl/mix"
-import { notfParse } from "./tl/notfParse"
-import { notf, notfColumn, notfCommon, notfMore, notfToggle, allNotfRead } from "./tl/notification"
-import { customEmojiReplace } from "./tl/parse"
-import { pollToggle, pollCalc, voteSelMastodon, voteMastodon, showResult, voteMastodonrefresh } from "./tl/poll"
-import { pollParse } from "./tl/pollParse"
-import { say, voiceToggle, voiceCheck, voicePlay, voiceSettings, voiceSettingLoad } from "./tl/speech"
-import { searchMenu, src, tootsearch, moreTs, trend, srcBox, doSrc } from "./tl/src"
-import { tagShow, tShowBox, doTShowBox, tagRemove, favTag, tagShowHorizon, tagTL, autoToot, addTag } from "./tl/tag"
-import { tl, moreLoad, tlDiff, tlCloser, cap, com, icon, reconnector, columnReload, getMarker, showUnread, ueLoad, asRead, announ } from "./tl/tl"
-import { userParse, popupNotification } from "./tl/userParse"
-import { imgv, imgCont, zoom, rotate, detFromImg, dlImg, openFinder, stopVideo, copyImgUrl, copyImgBinary } from "./ui/img"
-import { parseColumn, checkStr, addColumn, removeColumn, setToggle, setToggleTag, colorPicker, bookmark, favTl, utl, leftFoldSet, leftFoldRemove, resetWidth, addColumnMenu, addselCk } from "./ui/layout"
-import { menu, help } from "./ui/menu"
-import { hide, mini, show, initPostbox, mdCheck } from "./ui/postBox"
-import { scrollEvent, scrollCk, goTop, goColumn } from "./ui/scroll"
-import { settings, load, customVol, climute, cliMuteDel, wordmuteSave, wordempSave, notfTest, oks, changeLang, exportSettings, exportSettingsCore, importSettings, importSettingsCore, saveFolder, font, fontList, insertFont, copyColor, customComp, deleteIt, ctLoad, ctLoadCore, customSel, custom, customConnect, customImp, advanced, clearCustomImport, hardwareAcceleration, useragent, frameSet, customSound, customSoundSave, pluginEdit, completePlugin, testExecTrg, deletePlugin, checkUpd, lastFmSet } from "./ui/settings"
-import { sortLoad, sort, sortMenu } from "./ui/sort"
-import { spotifyConnect, spotifyAuth, spotifyDisconnect, checkSpotify, spotifyFlagSave, aMusicFlagSave, cMusicFlagSave, nowplaying, npCore, spotifySave } from "./ui/spotify"
-import { themes } from "./ui/theme"
-import { todo, todc, bottomReverse, tips, renderMem, spotifyTips, tipsToggle } from "./ui/tips"
-import { utlShow, utlAdd, flw, fer, showFav, showMut, showBlo, showReq, showDom, showFrl, udAdd } from "./userdata/hisData"
-import { profEdit, imgChange } from "./userdata/profEdit"
-import { udgEx, udg, historyShow, profShow, profbrws, setMain, hisclose } from "./userdata/showOnTL"
+import { client, parse } from './tl/parse'
+import { getData } from './login/manager'
+import { filter } from './tl/filter'
+import { about } from './common/about'
+import { parseBlur } from './common/blurhash'
+import { getMulti, setMulti, initColumn, getColumn, setColumn } from './common/storage'
+import { verck, closeStart } from './common/version'
+import { defaultEmoji, customEmoji, defEmoji } from './emoji/defaultEmoji'
+import { ck, refresh, ckdb, multiSelector, ticker } from './login/login'
+import { loadAcctList, maxChars, multiDel, backToInit, instance, code, atSetup, mainAcct, asReadEnd, autoCompleteInitTrigger, support } from './login/manager'
+import { execCopy, playSound } from './platform/end'
+import { escapeHTML, nl2br, br2nl, formatTime, formatTimeUtc, makeCID, rgbToHex, setLog, escapeCsv, statusModel, initWebviewEvent, twemojiParse } from './platform/first'
+import { initPlugin, getMeta, execPlugin, testExec } from './platform/plugin'
+import { emojiToggle, emojiGet, emojiList, emojiInsert, brInsert } from './post/emoji'
+import { closeDrop, fileSelect, media, toBlob, deleteImage, altImage, stamp, alertProcessUnfinished } from './post/img'
+import { sec, expPostMode, clear, post } from './post/post'
+import { nsfw, vis, loadVis, cw, cwShow, schedule, draftToggle, addToDraft, useThisDraft, deleteThisDraft } from './post/secure'
+import {
+	fav,
+	rt,
+	boostWith,
+	bkm,
+	follow,
+	acctResolve,
+	acctResolveLegacy,
+	block,
+	muteDo,
+	muteMenu,
+	muteTime,
+	del,
+	redraft,
+	editToot,
+	draftToPost,
+	pin,
+	request,
+	domainBlock,
+	addDomainblock,
+	empUser,
+	pinUser,
+	tootUriCopy,
+	staEx,
+	toggleAction,
+} from './post/status'
+import { tagInsert } from './post/suggest'
+import { re, reEx, qt } from './post/useTxtBox'
+import { announParse, announReaction, announReactionNew, emojiReactionDef } from './tl/announParse'
+import { mastodonBaseStreaming } from './tl/baseStreaming'
+import { additional, additionalIndv, cardHtml, cardHtmlShow, cardToggle, cardCheck, mov, resetmv } from './tl/card'
+import { details, cbCopy, staCopy, trans, brws, detEx, detExCore } from './tl/datails'
+import { date, crat } from './tl/date'
+import { dirMenu, dirselCk, dirChange, directory } from './tl/directory'
+import {
+	mediaToggle,
+	remoteOnly,
+	remoteOnlyCk,
+	ebtToggle,
+	mediaCheck,
+	ebtCheck,
+	filterMenu,
+	filterTime,
+	makeNewFilter,
+	filterEdit,
+	filterDel,
+	getFilter,
+	getFilterType,
+	convertColumnToFilter,
+	getFilterTypeByAcct,
+	filterUpdate,
+	filterUpdateInternal,
+	exclude,
+	excludeCk,
+	checkNotfFilter,
+	resetNotfFilter,
+	notfFilter,
+} from './tl/filter'
+import { listMenu, list, makeNewList, listShow, listUser, hisList, listAdd, listRemove } from './tl/list'
+import { mixTl, mixre, mixMore } from './tl/mix'
+import { notfParse } from './tl/notfParse'
+import { notf, notfColumn, notfCommon, notfMore, notfToggle, allNotfRead } from './tl/notification'
+import { customEmojiReplace } from './tl/parse'
+import { pollToggle, pollCalc, voteSelMastodon, voteMastodon, showResult, voteMastodonrefresh } from './tl/poll'
+import { pollParse } from './tl/pollParse'
+import { say, voiceToggle, voiceCheck, voicePlay, voiceSettings, voiceSettingLoad } from './tl/speech'
+import { searchMenu, src, tootsearch, moreTs, trend, srcBox, doSrc } from './tl/src'
+import { tagShow, tShowBox, doTShowBox, tagRemove, favTag, tagShowHorizon, tagTL, autoToot, addTag } from './tl/tag'
+import { tl, moreLoad, tlDiff, tlCloser, cap, com, icon, reconnector, columnReload, getMarker, showUnread, ueLoad, asRead, announ } from './tl/tl'
+import { userParse, popupNotification } from './tl/userParse'
+import { imgv, imgCont, zoom, rotate, detFromImg, dlImg, openFinder, stopVideo, copyImgUrl, copyImgBinary } from './ui/img'
+import {
+	parseColumn,
+	checkStr,
+	addColumn,
+	removeColumn,
+	setToggle,
+	setToggleTag,
+	colorPicker,
+	bookmark,
+	favTl,
+	utl,
+	leftFoldSet,
+	leftFoldRemove,
+	resetWidth,
+	addColumnMenu,
+	addselCk,
+	colorAddMulti,
+	colorAdd,
+} from './ui/layout'
+import { menu, help } from './ui/menu'
+import { hide, mini, show, initPostbox, mdCheck } from './ui/postBox'
+import { scrollEvent, scrollCk, goTop, goColumn } from './ui/scroll'
+import {
+	settings,
+	load,
+	customVol,
+	climute,
+	cliMuteDel,
+	wordmuteSave,
+	wordempSave,
+	notfTest,
+	oks,
+	changeLang,
+	exportSettings,
+	exportSettingsCore,
+	importSettings,
+	importSettingsCore,
+	saveFolder,
+	font,
+	fontList,
+	insertFont,
+	copyColor,
+	customComp,
+	deleteIt,
+	ctLoad,
+	ctLoadCore,
+	customSel,
+	custom,
+	customConnect,
+	customImp,
+	advanced,
+	clearCustomImport,
+	hardwareAcceleration,
+	useragent,
+	frameSet,
+	customSound,
+	customSoundSave,
+	pluginEdit,
+	completePlugin,
+	testExecTrg,
+	deletePlugin,
+	checkUpd,
+	lastFmSet,
+} from './ui/settings'
+import { sortLoad, sort, sortMenu } from './ui/sort'
+import { spotifyConnect, spotifyAuth, spotifyDisconnect, checkSpotify, spotifyFlagSave, aMusicFlagSave, cMusicFlagSave, nowplaying, npCore, spotifySave } from './ui/spotify'
+import { themes } from './ui/theme'
+import { todo, todc, bottomReverse, tips, renderMem, spotifyTips, tipsToggle } from './ui/tips'
+import { utlShow, utlAdd, flw, fer, showFav, showMut, showBlo, showReq, showDom, showFrl, udAdd } from './userdata/hisData'
+import { profEdit, imgChange } from './userdata/profEdit'
+import { udgEx, udg, historyShow, profShow, profbrws, setMain, hisclose } from './userdata/showOnTL'
 
 import { values } from '@syuilo/aiscript'
 globalThis.asCommon = {
-    'TheDesk:console': values.FN_NATIVE((z) => {
-        if(z[0].type === 'str') console.log(z[0].value)
-    })
+	'TheDesk:console': values.FN_NATIVE((z) => {
+		if (z[0].type === 'str') console.log(z[0].value)
+	}),
 }
 
 globalThis.about = about
@@ -293,7 +400,7 @@ globalThis.removeColumn = removeColumn
 globalThis.setToggle = setToggle
 globalThis.setToggleTag = setToggleTag
 globalThis.colorPicker = colorPicker
-globalThis.colorAdd = colorAdd
+globalThis.colorAddMulti = colorAddMulti
 globalThis.bookmark = bookmark
 globalThis.favTl = favTl
 globalThis.utl = utl
@@ -370,7 +477,7 @@ globalThis.todc = todc
 globalThis.bottomReverse = bottomReverse
 globalThis.tips = tips
 globalThis.renderMem = renderMem
-globalThis.spotifyTips  = spotifyTips 
+globalThis.spotifyTips = spotifyTips
 globalThis.tipsToggle = tipsToggle
 globalThis.utlShow = utlShow
 globalThis.utlAdd = utlAdd
@@ -394,3 +501,4 @@ globalThis.setMain = setMain
 globalThis.hisclose = hisclose
 globalThis.addColumnMenu = addColumnMenu
 globalThis.addselCk = addselCk
+globalThis.client = client

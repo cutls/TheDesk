@@ -1,11 +1,9 @@
-import $ from 'jquery'
-import { Account, Conversation, Emoji, Notification, Toot } from '../../interfaces/MastodonApiReturns'
+import { Account, Emoji, Notification, Toot } from '../../interfaces/MastodonApiReturns'
 import { IColumnType } from '../../interfaces/Storage'
 import lang from '../common/lang'
 import { escapeHTML, stripTags, strlenMultibyte, substrMultibyte, twemojiParse } from '../platform/first'
 import { date, isDateType } from './date'
 import { notfParse } from './notfParse'
-import { isConv } from './tl'
 import punycode from 'punycode'
 import { pollParse } from './pollParse'
 import { parseBlur } from '../common/blurhash'
@@ -48,7 +46,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 	const me = localStorage.getItem('user-id_' + acctId)
 	if (!isDateType(datetype)) return ''
 	const actb = 're,rt,fav,qt,bkm'
-	const disp = {}
+	const disp: any = {}
 	if (actb) {
 		const acta = actb.split(',')
 		for (let k = 0; k < acta.length; k++) {
@@ -81,8 +79,6 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 	//ワードミュート
 	if (wordmuteListLocal) {
 		wordmuteList = wordmuteListLocal.concat(wordmuteList)
-	} else {
-		wordmuteList = wordmuteList
 	}
 	const ticker = tickerck === 'yes'
 	//Animation
@@ -106,7 +102,9 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 	for (const key in obj) {
 		const domain = localStorage.getItem('domain_' + acctId)
 		let toot = obj[key]
-		let { noticeAvatar, ifNotf, noticeText } = notfParse(notif, acctId, tlid, popup || 0, toot.content)
+		const notfParsed = notfParse(notif, acctId, tlid, popup || 0, toot.content)
+		let { noticeAvatar, noticeText } = notfParsed
+		const { ifNotf } = notfParsed
 		const uniqueid = toot.id
 		let boostback: IBoostBack = 'unshared'
 		let disName = escapeHTML(toot.account.display_name || toot.account.acct)
@@ -115,7 +113,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 			noticeAvatar = gif ? toot.account.avatar : toot.account.avatar_static
 			noticeAvatar = `<a onclick="udg('${toot.account.id}','${acctId}');" user="${toot.account.acct}" class="udg" aria-hidden="true">
 						<img draggable="false" src="${noticeAvatar}" width="20" class="notf-icon prof-img" 
-							user="${toot.account.acct}" onerror="this.src=\'../../img/loading.svg\'" loading="lazy">
+							user="${toot.account.acct}" onerror="this.src='../../img/loading.svg'" loading="lazy">
 					</a>`
 			const rticon = 'fa-retweet light-blue-text'
 			noticeText = `<i class="big-text fas ${rticon}"></i>${disName}(@${toot.account.acct})<br>`
@@ -148,10 +146,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		let via = ''
 		if (toot.application && viashowSet) {
 			viashow = ''
-			const isHasApp = (item: {} | {
-				name: string | null;
-				website: string | null;
-			}): item is { name: string } => !!item['name']
+			const isHasApp = (item: any): item is { name: string } => !!item.name
 			via = isHasApp(toot.application) ? escapeHTML(toot.application.name) : ''
 			if (empCli) {
 				//強調チェック
@@ -186,10 +181,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 			const ct1 = content.split('</p>').length + content.split('<br />').length - 2
 			const ct2 = content.split('</p>').length + content.split('<br>').length - 2
 			const ct = Math.max(ct1, ct2)
-			if (
-				(sent < ct && strlenMultibyte(stripTags(content)) > 5) ||
-				(strlenMultibyte(stripTags(content)) > ltr && strlenMultibyte(stripTags(content)) > 5)
-			) {
+			if ((sent < ct && strlenMultibyte(stripTags(content)) > 5) || (strlenMultibyte(stripTags(content)) > ltr && strlenMultibyte(stripTags(content)) > 5)) {
 				content = `<span class="gray">${lang.lang_parse_fulltext}</span><br>` + content
 				spoil = `<span class="cw_long">${substrMultibyte(stripTags(content), 0, 100)}</span>
 						<span class="gray">${lang.lang_parse_autofold}</span>`
@@ -205,16 +197,14 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		}
 		const urls = stripTags(content)
 			.replace(/\n/g, ' ')
-			.match(
-				/https?:\/\/([^+_]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?/
-			)
+			.match(/https?:\/\/([^+_]+)\/?(?!.*((media|tags)|mentions)).*([-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+)?/)
 		const utlSck = content.match(/(https?):\/\/([^<>]*?)\/([^"]*)/g)
 		content = content.replace(/href="([^"]+)"/g, `href="$1" data-acct="${acctId}"`)
 		if (utlSck) {
 			for (let urlIndv of utlSck) {
 				const urlCont = urlIndv.match(/(https?):\/\/([^a-zA-Z0-9.-]*?)\.(.+?)\/([^"]*)/)
 				if (urlCont) {
-					urlIndv = urlIndv.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&')
+					urlIndv = urlIndv.replace(/[.*+?^=!:${}()|[\]/\\]/g, '\\$&')
 					const encoded = encodeURI(urlCont[4])
 					const punycoded = 'xn--' + punycode.encode(urlCont[2])
 					const eUrl = urlCont[1] + '://' + punycoded + '.' + urlCont[3] + '/' + encoded
@@ -223,9 +213,11 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				}
 			}
 		}
-		let analyze = urls ? `<a onclick="additionalIndv('${tlid}','${acctId}','${id}')" class="add-show pointer" aria-hidden="true">
+		let analyze = urls
+			? `<a onclick="additionalIndv('${tlid}','${acctId}','${id}')" class="add-show pointer" aria-hidden="true">
 						${lang.lang_parse_url}
-					</a><br>` : ''
+					</a><br>`
+			: ''
 		let viewer = ''
 		let hasmedia = 'nomedia'
 		//Poll
@@ -234,7 +226,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		const mediack = mediaList[0]
 		//メディアがあれば
 		let media_ids = ''
-		let sense = 'sensitive'
+		let sense = ''
 		let nsfwmes = ''
 		if (mediack) {
 			hasmedia = 'hasmedia'
@@ -251,6 +243,8 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 					if (blur) {
 						purl = parseBlur(blur) || ''
 						sense = ''
+					} else {
+						sense = 'sensitive'
 					}
 				}
 				if (media.pleroma && media.pleroma.mime_type.indexOf('video') !== -1) {
@@ -267,10 +261,11 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 						const mty = m[1]
 						viewer =
 							viewer +
-							`<a href="${media.url ? media.url : media.remote_url}" title="${media.url ? media.url : media.remote_url}">[${lang.lang_parse_unknown}(${mty})]</a>${media.url ? `<a href="${media.remote_url}"><i class="material-icons sublink" title="${media.remote_url}">open_in_new</i></a>` : ''} `
+							`<a href="${media.url ? media.url : media.remote_url}" title="${media.url ? media.url : media.remote_url}">[${lang.lang_parse_unknown}(${mty})]</a>${
+								media.url ? `<a href="${media.remote_url}"><i class="material-icons sublink" title="${media.remote_url}">open_in_new</i></a>` : ''
+							} `
 					} else if (media.type === 'audio') {
-						viewer =
-							viewer + `<audio src="${url}" class="pointer" style="width:100%;" controls alt="attached media"></span>`
+						viewer = viewer + `<audio src="${url}" class="pointer" style="width:100%;" controls alt="attached media"></span>`
 					} else {
 						const desc = media.description || ''
 						if (media.preview_url === `https://${domain}/storage/no-preview.png`) {
@@ -283,7 +278,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 										id="${id}-image-${key2}" data-url="${url}" data-original="${remote_url}" data-type="${media.type}" 
 										class="img-parsed img-link" style="width:calc(${cwdt}% - 1px); height:${imh};">
 									<img draggable="false" src="${purl}" class="${sense} toot-img pointer" 
-										onerror="this.src=\'../../img/loading.svg\'" title="${escapeHTML(desc)}" alt="${escapeHTML(desc)}" loading="lazy">
+										onerror="this.src='../../img/loading.svg'" title="${escapeHTML(desc)}" alt="${escapeHTML(desc)}" loading="lazy">
 									${nsfwmes}
 								</a>`
 					}
@@ -303,9 +298,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				if (mention.acct !== mention.username || mention.id !== me) {
 					//そのトゥの人NG
 					if (toot.account.acct !== mention.acct) {
-						mentions =
-							mentions +
-							`<a onclick="udg('${mention.id}',' ${acctId}')" class="pointer" aria-hidden="true">@${mention.acct}</a> `
+						mentions = mentions + `<a onclick="udg('${mention.id}',' ${acctId}')" class="pointer" aria-hidden="true">@${mention.acct}</a> `
 						toMention.push(mention.acct)
 					}
 				}
@@ -341,13 +334,13 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 			public: 'public',
 			unlisted: 'lock_open',
 			private: 'lock',
-			direct: 'mail'
+			direct: 'mail',
 		}
 		const colorList = {
 			public: 'public',
 			unlisted: 'blue',
 			private: 'orange',
-			direct: 'red'
+			direct: 'red',
 		}
 		const iconVis = iconList[visEn] || ''
 		const colorVis = colorList[visEn] || ''
@@ -377,7 +370,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 			for (const worde of wordmuteList) {
 				if (worde) {
 					const wordList = worde
-					const regExp = new RegExp(wordList.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'), 'g')
+					const regExp = new RegExp(wordList.replace(/[.*+?^=!:${}()|[\]/\\]/g, '\\$&'), 'g')
 					if (stripTags(content).match(regExp)) {
 						boostback = 'hide by_filter'
 					}
@@ -388,7 +381,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		if (wordempList) {
 			for (const wordList of wordempList) {
 				if (wordList) {
-					const regExp = new RegExp(wordList.replace(/[.*+?^=!:${}()|[\]\/\\]/g, '\\$&'), 'g')
+					const regExp = new RegExp(wordList.replace(/[.*+?^=!:${}()|[\]/\\]/g, '\\$&'), 'g')
 					content = content.replace(regExp, '<span class="emp">' + wordList + '</span>')
 				}
 			}
@@ -404,7 +397,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		contentElement.innerHTML = content
 		const emojified = twemojiParse(contentElement)
 		content = emojified.innerHTML
-
+		if (disName) disName = customEmojiReplace(disName, toot.account, gif)
 		if (disName) disName = twemojiParse(disName)
 		if (spoil) spoil = twemojiParse(spoil)
 		if (noticeText) noticeText = twemojiParse(noticeText)
@@ -412,9 +405,8 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		//日本語じゃない
 		let trans = ''
 		if (toot.language !== lang.language && toot.language) {
-			trans = `<li onclick="trans('${acctId}', $(this))" 
-							 style="padding:0; padding-top: 5px;">
-								<i class="material-icons" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
+			trans = `<li onclick="trans('${acctId}', $(this))" style="padding:0; padding-top: 5px;" tabIndex="6">
+						<i class="material-icons" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
 					</li>`
 		}
 		//Cards
@@ -464,8 +456,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 						}
 						bgColorCSS = `linear-gradient(90deg, ${bgColorCSS} transparent)`
 						tickerdom = `<div aria-hidden="true" style="user-select:none;cursor:default;background:${bgColorCSS} !important; color:${fontColor};width:100%; height:0.9rem; font-size:0.8rem;" class="tickers">
-									<img draggable="false" src="${value.favicon
-							}" style="height:100%;" onerror="this.src=\'../../img/loading.svg\'" loading="lazy">
+									<img draggable="false" src="${value.favicon}" style="height:100%;" onerror="this.src='../../img/loading.svg'" loading="lazy">
 									<span style="position:relative; top:-0.2rem;">${escapeHTML(value.name)}</span>
 								</div>`
 						break
@@ -498,9 +489,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 						</div>
 					</div>`
 			} else {
-				poll =
-					poll +
-					`<span class="gray sml">${lang.lang_parse_hidden}</span>`
+				poll = poll + `<span class="gray sml">${lang.lang_parse_hidden}</span>`
 			}
 		}
 		//menuは何個？
@@ -514,9 +503,11 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		//プラグイン機構
 		const pluginBOT = globalThis.plugins.buttonOnToot
 		let pluginHtml = ''
+		let pi = 8
 		for (const target of pluginBOT) {
 			const meta = getMeta(target.content).data
-			pluginHtml = pluginHtml + `<li><a onclick="execPlugin('${target.id}','buttonOnToot',{id: '${uniqueid}', acctId: '${acctId}'});">${escapeHTML(meta.name)}</a></li>`
+			pluginHtml = pluginHtml + `<li tabIndex="${pi}"><a onclick="execPlugin('${target.id}','buttonOnToot',{id: '${uniqueid}', acctId: '${acctId}'});">${escapeHTML(meta.name)}</a></li>`
+			pi++
 		}
 
 		templete =
@@ -524,10 +515,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 			`<div
 					id="pub_${toot.id}"
 					class="cvo ${mouseover} ${boostback} ${favApp} ${rtApp} ${pinApp} ${bkmApp} ${hasmedia} ${animecss}"
-					toot-id="${id}" unique-id="${uniqueid}" data-medias="${media_ids}" unixtime="${date(
-				obj[key].created_at,
-				'unix'
-			)}"
+					toot-id="${id}" unique-id="${uniqueid}" data-medias="${media_ids}" unixtime="${date(obj[key].created_at, 'unix')}"
 					${ifNotf}
 				>
 				<div class="area-notice grid"><span class="gray sharesta">${noticeText}</span></div>
@@ -582,7 +570,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 							${lang.lang_parse_thread}
 						</a>
 					</div>
-					<div class="action ${disp['re']} ${noAuth}">
+					<div class="action ${disp.re} ${noAuth}">
 						<a onclick="re('${toot.id}','${toMention}','${acctId}','${visEn}','${escapeHTML(toot.spoiler_text)}')" 
 							class="waves-effect waves-dark btn-flat actct rep-btn"
 							data-men="${toMention}" data-visEn="${visEn}" style="padding:0" title="${lang.lang_parse_replyto}">
@@ -591,23 +579,22 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 								<span class="rep_ct">${replyct}</span>
 						</a>
 					</div>
-					<div class="action ${canRt} ${disp['rt']} ${noAuth}">
-						<a onclick="rt('${toot.id
-			}','${acctId}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
+					<div class="action ${canRt} ${disp.rt} ${noAuth}">
+						<a onclick="rt('${toot.id}','${acctId}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
 							style="padding:0" title="${lang.lang_parse_bt}">
 							<i class="fas fa-retweet ${ifRt} rt_${toot.id}"></i>
 							<span class="voice">${lang.lang_parse_bt} </span>
 							<span class="rt_ct">${toot.reblogs_count}</span>
 						</a>
 					</div>
-					<div class="action ${canRt} ${disp['qt']} ${noAuth} ${qtClass}">
+					<div class="action ${canRt} ${disp.qt} ${noAuth} ${qtClass}">
 						<a onclick="qt('${toot.id}','${acctId}','${toot.account.acct}','${toot.url}')" 
 							class="waves-effect waves-dark btn-flat actct" style="padding:0" title="${lang.lang_parse_quote}">
 							<i class="text-darken-3 fas fa-quote-right"></i>
 							<span class="voice">${lang.lang_parse_quote} </span>
 						</a>
 					</div>
-					<div class="action ${disp['bkm']} ${noAuth} ${bkmClass}">
+					<div class="action ${disp.bkm} ${noAuth} ${bkmClass}">
 						<a onclick="bkm('${toot.id}','${acctId}','${tlid}')"
 							class="waves-effect waves-dark btn-flat actct bkm-btn" style="padding:0"
 							title="${lang.lang_parse_bookmark}">
@@ -615,7 +602,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 							<span class="voice">${lang.lang_parse_bookmark} </span>
 					</a>
 					</div>
-					<div class="action ${disp['fav']} ${noAuth}">
+					<div class="action ${disp.fav} ${noAuth}">
 						<a onclick="fav('${uniqueid}','${acctId}','${tlid}')"
 							class="waves-effect waves-dark btn-flat actct fav-btn" style="padding:0"
 							title="${lang.lang_parse_fav}">
@@ -641,33 +628,27 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 						<span class="voice">${lang.lang_parse_detail}</span>
 					</div>
 				</div>
-				<ul class="dropdown-content contextMenu" id="dropdown_${rand}">
-					<li class="${viashow} via-dropdown" onclick="client('${stripTags(via)}')" title="${lang.lang_parse_clientop}">
+				<ul class="dropdown-content contextMenu" id="dropdown_${rand}" tabIndex="0">
+					<li class="${viashow} via-dropdown" onclick="client('${stripTags(via)}')" title="${lang.lang_parse_clientop}" tabIndex="0">
 						via ${escapeHTML(via)}</a>
 					</li>
-					<div>
-					<li onclick="bkm('${uniqueid}','${acctId}','${tlid}')"
-						class="bkm-btn bkmStr_${uniqueid}" style="padding:0; padding-top: 5px;">
+					<li onclick="bkm('${uniqueid}','${acctId}','${tlid}')" class="bkm-btn bkmStr_${uniqueid}" style="padding:0; padding-top: 5px;" tabIndex="1">
 						<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${ifBkm}"></i>${bkmStr}
 					</li>
-					<li class="${ifMine}" onclick="del('${uniqueid}','${acctId}')"
-							style="padding:0; padding-top: 5px;">
+					<li class="${ifMine}" onclick="del('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="2">
 							<i class="fas fa-trash"></i>${lang.lang_parse_del}
 					</li>
-					<li class="${ifMine}" onclick="pin('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;" class="pinStr_${uniqueid}">
+					<li class="${ifMine}" onclick="pin('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;" class="pinStr_${uniqueid}"tabIndex="3">
 							<i class="fas fa-map-pin pin_${uniqueid} ${ifPin}"></i>${pinStr}
 					</li>
-					<li class="${ifMine}"  onclick="redraft('${uniqueid}','${acctId}')"
-							style="padding:0; padding-top: 5px;">
+					<li class="${ifMine}"  onclick="redraft('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="4">
 							<i class="material-icons" aria-hidden="true">redo</i>${lang.lang_parse_redraft}
 					</li>
-					<li class="${ifMine}"  onclick="editToot('${uniqueid}','${acctId}')"
-							style="padding:0; padding-top: 5px;">
+					<li class="${ifMine}"  onclick="editToot('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="5">
 							<i class="material-icons" aria-hidden="true">create</i>${lang.lang_edit}(v3.5.0~)
 					</li>
 					${trans}
-					<li onclick="postMessage(['openUrl', '${toot.url}'], '*')"
-						 style="padding:0; padding-top: 5px;">
+					<li onclick="postMessage(['openUrl', '${toot.url}'], '*')" style="padding:0; padding-top: 5px;"tabIndex="7">
 						<i class="fas text-darken-3 fa-globe"></i>${lang.lang_parse_link}
 					</li>
 					${pluginHtml}
@@ -683,7 +664,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 }
 
 //クライアントダイアログ
-async function client(name: string) {
+export async function client(name: string) {
 	if (name !== 'Unknown') {
 		//聞く
 		const result = await Swal.fire({
@@ -694,7 +675,7 @@ async function client(name: string) {
 			confirmButtonText: lang.lang_parse_clientmute,
 			cancelButtonText: lang.lang_parse_clientemp,
 			showCloseButton: true,
-			focusConfirm: false
+			focusConfirm: false,
 		})
 		if (result.dismiss) {
 			//Emp
@@ -756,7 +737,7 @@ export function customEmojiReplace(content: string, toot: ICustomEmojiReplace, g
 		content = content.replace(regExp, (str, offset, s) => {
 			const greater = s.indexOf('>', offset)
 			const lesser = s.indexOf('<', offset)
-			if (greater < lesser || (greater != -1 && lesser == -1)) {
+			if (greater < lesser || (greater !== -1 && lesser === -1)) {
 				return str
 			} else {
 				return emoji_url

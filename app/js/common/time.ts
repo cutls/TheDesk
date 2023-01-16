@@ -6,10 +6,10 @@ dayjs.extend(relativeTime)
 dayjs.locale('ja')
 
 const timeUpdate = () => {
-  $('time.timeago').each(function (i, elem) {
-    const exp = $(elem).attr('datetime') || ''
-    const relative = dayjs(new Date(exp)).fromNow()
-    $(elem).text(relative)
-  })
+	$('time.timeago').each(function (i, elem) {
+		const exp = $(elem).attr('datetime') || ''
+		const relative = dayjs(new Date(exp)).fromNow()
+		$(elem).text(relative)
+	})
 }
 export default timeUpdate

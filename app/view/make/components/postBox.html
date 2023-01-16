@@ -60,43 +60,43 @@
 		</div>
 		<!-- 公開範囲 Dropdown Structure -->
 		<ul id="dropdown1" class="dropdown-content">
-			<li>
+			<li tabIndex="0">
 				<a onclick="vis('public')">@@publicJP@@(Public)</a>
 			</li>
-			<li>
+			<li tabIndex="1">
 				<a onclick="vis('unlisted')">@@unlistedJP@@(Unlisted)</a>
 			</li>
-			<li>
+			<li tabIndex="2">
 				<a onclick="vis('private')" id="private-button">@@privateJP@@(Private)</a>
 			</li>
-			<li id="limited-button" class="hide">
+			<li id="limited-button" class="hide" tabIndex="3">
 				<a onclick="vis('limited')">限定公開(Limited)</a>
 			</li>
-			<li id="local-button" class="hide">
+			<li id="local-button" class="hide" tabIndex="4">
 				<a onclick="vis('local')">@@localJP@@(Local)</a>
 			</li>
-			<li>
+			<li tabIndex="5">
 				<a onclick="vis('direct')" class="disabled direct">@@directJP@@(Direct)</a>
 			</li>
 		</ul>
 		<!-- その他 Dropdown Structure -->
 		<ul id="dropdown2" class="dropdown-content">
-			<li>
+			<li tabIndex="0">
 				<a onclick="nowplaying('spotify');">NowPlaying (Spotify)</a>
 			</li>
-			<li class="mac">
+			<li class="mac" tabIndex="1">
 				<a onclick="nowplaying('itunes');">NowPlaying (iTunes macOS)</a>
 			</li>
-			<li>
+			<li tabIndex="2">
 				<a onclick="nowplaying('lastFm');">NowPlaying (Last.fm)</a>
 			</li>
-			<li>
+			<li tabIndex="3">
 				<a onclick="schedule();">@@schedule@@</a>
 			</li>
-			<li>
+			<li tabIndex="4">
 				<a onclick="pollToggle();">@@poll@@</a>
 			</li>
-			<li>
+			<li tabIndex="5">
 				<a onclick="draftToggle();">@@draft@@</a>
 			</li>
 		</ul>

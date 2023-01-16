@@ -3,8 +3,7 @@ import { List } from '../../interfaces/MastodonApiReturns'
 import api from '../common/fetch'
 import lang from '../common/lang'
 import timeUpdate from '../common/time'
-import { escapeHTML, setLog } from '../platform/first'
-import { todo } from '../ui/tips'
+import { escapeHTML } from '../platform/first'
 import { tl } from './tl'
 import { userParse } from './userParse'
 export function listMenu() {
@@ -25,8 +24,8 @@ export async function list() {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	if (json) {
 		let lists = ''
@@ -51,18 +50,16 @@ export async function makeNewList() {
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const start = `https://${domain}/api/v1/lists`
-	const json = await api(start, {
+	await api(start, {
 		method: 'post',
 		headers: {
 			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-
+			Authorization: 'Bearer ' + at,
 		},
-		body: { title: text }
+		body: { title: text },
 	})
 	list()
 	$('#list-add').val('')
-
 }
 export function listShow(id: string, title: string, acctId: string) {
 	localStorage.setItem(`list_${id}_${acctId}`, title)
@@ -76,9 +73,8 @@ export async function listUser(id: string, acctId: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	if (json) {
 		let templete = userParse(json, acctId)
@@ -97,9 +93,8 @@ export async function hisList(user: string, acctId: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	if (json1) {
 		let lists = lang.lang_list_add + '<br>'
@@ -119,8 +114,7 @@ export async function hisList(user: string, acctId: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-
+			Authorization: 'Bearer ' + at,
 		},
 	})
 	if (json) {
@@ -138,21 +132,19 @@ export async function hisList(user: string, acctId: string) {
 	}
 }
 export async function listAdd(id: string, user: string, acctId: string) {
-
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const start = 'https://' + domain + '/api/v1/lists/' + id + '/accounts'
 	const i = {
-		account_ids: [user]
+		account_ids: [user],
 	}
-	const json = await api(start, {
+	await api(start, {
 		method: 'post',
 		headers: {
 			'content-type': 'application/json',
-            'Authorization': 'Bearer ' + at
-			
+			Authorization: 'Bearer ' + at,
 		},
-		body: i
+		body: i,
 	})
 
 	hisList(user, acctId)
@@ -161,16 +153,15 @@ export async function listRemove(id: string, user: string, acctId: string) {
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const start = `https://${domain}/api/v1/lists/${id}/accounts`
 	const at = localStorage.getItem(`acct_${acctId}_at`)
-	const json = await api(start, {
+	await api(start, {
 		method: 'delete',
 		headers: {
 			'content-type': 'application/json',
-            'Authorization': 'Bearer ' + at
-			
+			Authorization: 'Bearer ' + at,
 		},
 		body: {
-			account_ids: [user]
-		}
+			account_ids: [user],
+		},
 	})
 
 	hisList(user, acctId)

@@ -1,4 +1,4 @@
- import ja from '../../view/ja/main'
+import ja from '../../view/ja/main'
 import jaKS from '../../view/ja-KS/main'
 import en from '../../view/en/main'
 import bg from '../../view/bg/main'
@@ -17,23 +17,23 @@ import plPL from '../../view/pl-PL/main'
 import siLK from '../../view/si-LK/main'
 import ps from '../../view/ps/main'
 const langs = {
-    ja,
-    jaKS,
-    en,
-    bg,
-    cs,
-    de,
-    esAR,
-    itIT,
-    zhCN,
-    frFR,
-    zhTW,
-    noNO,
-    ptBR,
-    ruRU,
-    esES,
-    plPL,
-    siLK,
-    ps
+	ja,
+	jaKS,
+	en,
+	bg,
+	cs,
+	de,
+	esAR,
+	itIT,
+	zhCN,
+	frFR,
+	zhTW,
+	noNO,
+	ptBR,
+	ruRU,
+	esES,
+	plPL,
+	siLK,
+	ps,
 }
 export default langs[globalThis.useLang] as typeof ja

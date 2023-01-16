@@ -1,9 +1,9 @@
 //プロフ編集
 
-import { modalInitGetInstance } from "../common/declareM"
-import api from "../common/fetch"
-import { toBlob } from "../post/img"
-import { todc, todo } from "../ui/tips"
+import { modalInitGetInstance } from '../common/declareM'
+import api from '../common/fetch'
+import { toBlob } from '../post/img'
+import { todc, todo } from '../ui/tips'
 import $ from 'jquery'
 
 //文字系
@@ -15,16 +15,16 @@ export async function profEdit() {
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const start = `https://${domain}/api/v1/accounts/update_credentials`
-	const json = await api(start, {
+	await api(start, {
 		method: 'patch',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
+			Authorization: 'Bearer ' + at,
 		},
 		body: {
 			display_name: name,
 			note: des,
-		}
+		},
 	})
 	const instance = modalInitGetInstance($('#his-data'))
 	instance.close()
@@ -41,7 +41,7 @@ export function imgChange(imgfile: HTMLInputElement, target: string) {
 	}
 	const file = imgfile.files[0]
 	const fr = new FileReader()
-	fr.onload = async function (evt) {
+	fr.onload = async function () {
 		const b64 = this.result?.toString()
 		if (!b64) return
 		const blob = toBlob(b64, 'image/png')
@@ -50,13 +50,13 @@ export function imgChange(imgfile: HTMLInputElement, target: string) {
 		const domain = localStorage.getItem(`domain_${acctId}`)
 		const at = localStorage.getItem(`acct_${acctId}_at`)
 		const start = `https://${domain}/api/v1/accounts/update_credentials`
-		const json = await api(start, {
+		await api(start, {
 			method: 'patch',
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + at
+				Authorization: 'Bearer ' + at,
 			},
-			body: fd
+			body: fd,
 		})
 		const instance = modalInitGetInstance($('#his-data'))
 		instance.close()

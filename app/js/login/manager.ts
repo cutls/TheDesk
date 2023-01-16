@@ -1,23 +1,23 @@
 //アカウントマネージャ
 
-import _ from "lodash"
+import _ from 'lodash'
 import $ from 'jquery'
-import Swal from "sweetalert2"
-import { Credential } from "../../interfaces/MastodonApiReturns"
-import { IColumn, IMulti } from "../../interfaces/Storage"
-import { autoCompleteGetInstance, autoCompleteInit, formSelectInit, toast } from "../common/declareM"
-import api from "../common/fetch"
-import lang from "../common/lang"
-import { getColumn, getMulti, setColumn, setMulti } from "../common/storage"
-import { escapeHTML, setLog } from "../platform/first"
-import { IVis } from "../post/secure"
-import { idata } from "./instance"
-import { date } from "../tl/date"
+import Swal from 'sweetalert2'
+import { Credential } from '../../interfaces/MastodonApiReturns'
+import { IColumn, IMulti } from '../../interfaces/Storage'
+import { autoCompleteGetInstance, autoCompleteInit, formSelectInit, toast } from '../common/declareM'
+import api from '../common/fetch'
+import lang from '../common/lang'
+import { getColumn, getMulti, setColumn, setMulti } from '../common/storage'
+import { escapeHTML, setLog } from '../platform/first'
+import { IVis } from '../post/secure'
+import { idata } from './instance'
+import { date } from '../tl/date'
 
 //最初に読むやつ
 export function loadAcctList() {
 	$('#acct-list').html('')
-	const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
+	const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)&code=(.+)/)
 	if (m) {
 		const mode = m[1]
 		const codex = m[2]
@@ -39,7 +39,6 @@ export function loadAcctList() {
 	$('#acct-list').html('')
 	let key = 0
 	for (const acct of obj) {
-		key++
 		const list = key + 1
 		const isHasStyle = acct.background !== 'def' && acct.text !== 'def'
 		const style = isHasStyle ? `style="background-color:#${acct.background}; color:${acct.text};"` : ''
@@ -58,7 +57,7 @@ export function loadAcctList() {
 				<button class="btn-flat waves-effect disTar pointer  white-text" onclick="refresh('${key}')">
 					<i class="material-icons left">refresh</i>${lang.lang_manager_refresh}
 				</button>
-				<button class="btn-flat waves-effect disTar pointer red-text" onclick="multiDel('${key}')">
+				<button class="btn-flat waves-effect disTar pointer red-text" onclick="multiDel(${key})">
 					<i class="material-icons left">delete</i>${lang.lang_manager_delete}
 				</button><br />${lang.lang_manager_color}
 				<div id="colorsel_${key}" class="colorsel"></div>
@@ -67,6 +66,7 @@ export function loadAcctList() {
 		`
 		$('#acct-list').append(template)
 		colorPicker(key)
+		key++
 	}
 	const domains = _.uniq(domainsAll)
 	$('#domain-list').html('')
@@ -77,7 +77,7 @@ export function loadAcctList() {
 	<li class="collection-item transparent">
 		<div>
 			<p class="title">${domain}</p>
-			${lang.lang_manager_maxChars}　<input style="width: 100px" value="${maxChars}" id="maxChars${key2}">
+			${lang.lang_manager_maxChars}&nbsp;<input style="width: 100px" value="${maxChars}" id="maxChars${key2}">
 			<button class="btn-flat waves-effect" onclick="maxChars('${domain}', '${key2}')">
 				<i class="material-icons">send</i>
 			</button>
@@ -94,11 +94,16 @@ export function loadAcctList() {
 	if (!acctN) localStorage.setItem('acct', '0')
 }
 export function maxChars(domain: string, uid: string) {
-	const value = parseInt($('#maxChars' + uid).val()?.toString() || '0', 10)
+	const value = parseInt(
+		$('#maxChars' + uid)
+			.val()
+			?.toString() || '0',
+		10
+	)
 	if (value < 1) {
 		Swal.fire({
 			icon: 'error',
-			title: 'Error'
+			title: 'Error',
 		})
 		return false
 	}
@@ -128,9 +133,8 @@ export async function getData(domain: string, acctId: string) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization:
-				'Bearer tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M'
-		}
+			Authorization: 'Bearer tC8F6xWGWBUwGScyNevYlx62iO6fdQ4oIK0ad68Oo7ZKB8GQdGpjW9TKxBnIh8grAhvd5rw3iyP9JPamoDpeLQdz62EToPJUW99hDx8rfuJfGdjQuimZPTbIOx0woA5M',
+		},
 	})
 	$('#ins-name').text(json1.name)
 	$('#ins-upd').text(date(json1.checked_at, 'full'))
@@ -145,8 +149,8 @@ export async function getData(domain: string, acctId: string) {
 	const json = await api(start, {
 		method: 'get',
 		headers: {
-			'content-type': 'application/json'
-		}
+			'content-type': 'application/json',
+		},
 	})
 	$('#ins-title').text(json.title)
 	$('#ins-desc').html(json.description)
@@ -155,30 +159,25 @@ export async function getData(domain: string, acctId: string) {
 	$('#ins-user').text(json.stats.user_count)
 	$('#ins-ver').text(json.version)
 	$('#ins-prof').attr('src', json.thumbnail)
-	$('#ins-admin').text(
-		escapeHTML(json.contact_account.display_name) + '(' + json.contact_account.acct + ')'
-	)
-	$('#ins-admin').attr(
-		'href',
-		'index.html?mode=user&code=' + json.contact_account.username + '@' + domain
-	)
-	if (json['max_toot_chars']) {
-		localStorage.setItem('letters_' + acctId, json['max_toot_chars'])
+	$('#ins-admin').text(escapeHTML(json.contact_account.display_name) + '(' + json.contact_account.acct + ')')
+	$('#ins-admin').attr('href', 'index.html?mode=user&code=' + json.contact_account.username + '@' + domain)
+	if (json.max_toot_chars) {
+		localStorage.setItem('letters_' + acctId, json.max_toot_chars)
 		loadAcctList()
 	}
 }
 
-//アカウントデータ　消す
+//アカウントデータ 消す
 export async function multiDel(target: number) {
 	const obj = getMulti()
 	//削除確認ダイアログ
 	const result = await Swal.fire({
 		title: lang.lang_manager_logout,
-		text: obj[target]['user'] + '@' + obj[target]['domain'] + lang.lang_manager_confirm,
+		text: obj[target].user + '@' + obj[target].domain + lang.lang_manager_confirm,
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonText: lang.lang_yesno,
-		cancelButtonText: lang.lang_no
+		cancelButtonText: lang.lang_no,
 	})
 	if (result.value) {
 		for (let key = 0; key < obj.length; key++) {
@@ -229,7 +228,7 @@ export async function multiDel(target: number) {
 					data: data,
 					background: background,
 					text: text,
-					left_fold: left_fold
+					left_fold: left_fold,
 				}
 				newCols.push(add)
 			}
@@ -267,27 +266,26 @@ async function login(url: string) {
 		const json = await api(start, {
 			method: 'post',
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
 			},
 			body: {
 				scopes: 'read write follow',
 				client_name: 'TheDesk(PC)',
 				redirect_uris: red,
-				website: 'https://thedesk.top'
-			}
+				website: 'https://thedesk.top',
+			},
 		})
 		const auth = `https://${url}/oauth/authorize?client_id=${json.client_id}&client_secret=${json.client_secret}&response_type=code&scope=read+write+follow&redirect_uri=${encodeURIComponent(red)}`
 		localStorage.setItem('domain_tmp', url)
-		localStorage.setItem('client_id', json['client_id'])
-		localStorage.setItem('client_secret', json['client_secret'])
+		localStorage.setItem('client_id', json.client_id)
+		localStorage.setItem('client_secret', json.client_secret)
 		$('#auth').show()
 		$('#add').hide()
 		postMessage(['openUrl', auth], '*')
 	} catch (e: any) {
 		setLog(start, e.toString(), 'null')
-		return toast(`Error: Unknown Fatal Error`)
+		return toast({ html: `Error: Unknown Fatal Error` })
 	}
-
 }
 async function versionChecker(url: string) {
 	const start = `https://${url}/api/v1/instance`
@@ -295,8 +293,8 @@ async function versionChecker(url: string) {
 		const json = await api(start, {
 			method: 'get',
 			headers: {
-				'content-type': 'application/json'
-			}
+				'content-type': 'application/json',
+			},
 		})
 		const version = json.version
 		if (version) {
@@ -312,7 +310,7 @@ async function versionChecker(url: string) {
 					title: lang.lang_manager_codesetup_title,
 					text: lang.lang_manager_codesetup,
 					icon: 'info',
-					showCancelButton: true
+					showCancelButton: true,
 				})
 				if (!codeSetupCheck.isConfirmed) return false
 				return true
@@ -326,6 +324,7 @@ async function versionCompat(title: string, version: string) {
 	const mt = version.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/)
 	if (!mt) return
 	const [sem, a, b, c] = mt
+	if (!sem) true
 	$('#compt-instance').text(title)
 	$('#compt-ver').text(version)
 	$('#compt-list').html('')
@@ -333,11 +332,11 @@ async function versionCompat(title: string, version: string) {
 	const response = await fetch(start)
 	const json = await response.json()
 	const keys = Object.keys(json)
-	let i = 0
 	let onceAdd = false
 	for (const targetVersion of keys) {
 		const data = json[targetVersion]
 		const [tsem, ta, tb, tc] = targetVersion.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/) || []
+		if (!tsem) console.log('tsem')
 		let add = false
 		if (ta === a) {
 			if (tb === b) {
@@ -351,7 +350,6 @@ async function versionCompat(title: string, version: string) {
 		if (!add) break
 		if (add) onceAdd = true
 		for (const note of data) $('#compt-list').append(`<li>${note}(${targetVersion})</li>`)
-		i++
 	}
 	if (lang.language === 'ja' && onceAdd) $('#compt').show()
 }
@@ -359,8 +357,8 @@ async function versionCompat(title: string, version: string) {
 //テキストボックスにURL入れた
 export function instance() {
 	const url = $('#autocomplete-input').val()?.toString() || ''
-	if (url.indexOf('@') !== -1 || url.indexOf('https') !== -1) {
-		alert('入力形式が違います。(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
+	if (!url || url.indexOf('@') !== -1 || url.indexOf('https') !== -1) {
+		Swal.fire('入力形式が違います。', '(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
 		return false
 	}
 	login(url)
@@ -370,7 +368,7 @@ export async function code(code: string) {
 	let red = localStorage.getItem('redirect')
 	localStorage.removeItem('redirect')
 	if (!code) {
-		const code = $('#code').val()
+		code = $('#code').val()?.toString() || ''
 		$('#code').val('')
 	}
 	if (!code || code === '') {
@@ -391,10 +389,10 @@ export async function code(code: string) {
 		redirect_uri: red,
 		client_id: id,
 		client_secret: secret,
-		code: code
+		code: code,
 	}
 	const json = await api(start, { method: 'post', headers: { 'Content-Type': 'application/json' }, body })
-	if (json['access_token']) {
+	if (json.access_token) {
 		$('#auth').hide()
 		$('#add').show()
 		getMyData(url, json)
@@ -402,15 +400,15 @@ export async function code(code: string) {
 }
 //ユーザーデータ取得
 async function getMyData(domain: string, credential: any) {
-	const at = credential['access_token']
-	const rt = `${credential['refresh_token']} ${localStorage.getItem('client_id')} ${localStorage.getItem('client_secret')}`
+	const at = credential.access_token
+	const rt = `${credential.refresh_token} ${localStorage.getItem('client_id')} ${localStorage.getItem('client_secret')}`
 	const start = `https://${domain}/api/v1/accounts/verify_credentials`
 	const json = await api<Credential>(start, {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 
 	let avatar = json.avatar
@@ -430,7 +428,7 @@ async function getMyData(domain: string, credential: any) {
 		user: json.acct,
 		prof: avatar,
 		id: json.id,
-		vis: priv
+		vis: priv,
 	}
 	const obj = getMulti()
 	let addTarget = -1
@@ -477,13 +475,13 @@ export function atSetup() {
 		user: 'user+pseudo',
 		prof: avatar,
 		id: 'id+pseudo',
-		vis: priv
+		vis: priv,
 	}
 	const target = obj.length
 	obj.push(add)
-	localStorage.setItem('name_' + target, add['name'])
-	localStorage.setItem('user_' + target, add['username'])
-	localStorage.setItem('user-id_' + target, add['id'])
+	localStorage.setItem('name_' + target, add.name)
+	localStorage.setItem('user_' + target, add.user)
+	localStorage.setItem('user-id_' + target, add.id)
 	localStorage.setItem('prof_' + target, avatar)
 	setMulti(obj)
 	refresh(target)
@@ -498,8 +496,8 @@ async function refresh(target: number) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + obj[target].at
-		}
+			Authorization: 'Bearer ' + obj[target].at,
+		},
 	})
 
 	let avatar = json.avatar
@@ -515,7 +513,7 @@ async function refresh(target: number) {
 		user: json.acct,
 		prof: avatar,
 		id: json.id,
-		vis: json.source.privacy
+		vis: json.source.privacy,
 	}
 	if (obj[target].background) ref.background = obj[target].background
 	if (obj[target].text) ref.text = obj[target].text
@@ -523,7 +521,7 @@ async function refresh(target: number) {
 	localStorage.setItem('user_' + target, json.acct)
 	localStorage.setItem('user-id_' + target, json.id)
 	localStorage.setItem('prof_' + target, avatar)
-	if (json['source']['sensitive']) {
+	if (json.source.sensitive) {
 		localStorage.setItem('nsfw_' + target, 'true')
 	} else {
 		localStorage.removeItem('nsfw_' + target)
@@ -547,7 +545,6 @@ function multiSel() {
 			if (key.toString() === last) {
 				isSelected = true
 				mainb = `(${lang.lang_manager_def})`
-				const profimg = localStorage.getItem('prof_' + key) || '../../img/missing.svg'
 			}
 			const template = `
 			<option value="${key}" data-icon="${acct.prof}" class="left circle" ${isSelected ? 'selected' : ''}>
@@ -566,94 +563,79 @@ export function mainAcct() {
 	toast({ html: lang.lang_manager_mainAcct, displayLength: 3000 })
 }
 function colorPicker(key: number) {
-	const temp = `<div onclick="colorAdd('${key}','def','def')" class="pointer exc">${lang.lang_manager_none}</div>
-		<div onclick="colorAdd('${key}','f44336','white')" class="red white-text pointer"></div>
-		<div onclick="colorAdd('${key}','e91e63','white')" class="pink white-text pointer"></div>
-		<div onclick="colorAdd('${key}','9c27b0','white')" class="purple white-text pointer"></div>
-		<div onclick="colorAdd('${key}','673ab7','white')" class="deep-purple white-text pointer"></div>
-		<div onclick="colorAdd('${key}','3f51b5','white')" class="indigo white-text pointer"></div>
-		<div onclick="colorAdd('${key}','2196f3','white')" class="blue white-text pointer"></div>
-		<div onclick="colorAdd('${key}','03a9f4','black')" class="light-blue black-text pointer"></div>
-		<div onclick="colorAdd('${key}','00bcd4','black')" class="cyan black-text pointer"></div>
-		<div onclick="colorAdd('${key}','009688','white')" class="teal white-text pointer"></div>
-		<div onclick="colorAdd('${key}','4caf50','black')" class="green black-text pointer"></div>
-		<div onclick="colorAdd('${key}','8bc34a','black')" class="light-green black-text pointer"></div>
-		<div onclick="colorAdd('${key}','cddc39','black')" class="lime black-text pointer"></div>
-		<div onclick="colorAdd('${key}','ffeb3b','black')" class="yellow black-text pointer"></div>
-		<div onclick="colorAdd('${key}','ffc107','black')" class="amber black-text pointer"></div>
-		<div onclick="colorAdd('${key}','ff9800','black')" class="orange black-text pointer"></div>
-		<div onclick="colorAdd('${key}','ff5722','white')" class="deep-orange white-text pointer"></div>
-		<div onclick="colorAdd('${key}','795548','white')" class="brown white-text pointer"></div>
-		<div onclick="colorAdd('${key}','9e9e9e','white')" class="grey white-text pointer"></div>
-		<div onclick="colorAdd('${key}','607d8b','white')" class="blue-grey white-text pointer"></div>
-		<div onclick="colorAdd('${key}','000000','white')" class="black white-text pointer"></div>
-		<div onclick="colorAdd('${key}','ffffff','black')" class="white black-text pointer"></div>`
+	const temp = `<div onclick="colorAddMulti('${key}','def','def')" class="pointer exc">${lang.lang_manager_none}</div>
+		<div onclick="colorAddMulti('${key}','f44336','white')" class="red white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','e91e63','white')" class="pink white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','9c27b0','white')" class="purple white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','673ab7','white')" class="deep-purple white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','3f51b5','white')" class="indigo white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','2196f3','white')" class="blue white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','03a9f4','black')" class="light-blue black-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','00bcd4','black')" class="cyan black-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','009688','white')" class="teal white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','4caf50','black')" class="green black-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','8bc34a','black')" class="light-green black-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','cddc39','black')" class="lime black-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','ffeb3b','black')" class="yellow black-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','ffc107','black')" class="amber black-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','ff9800','black')" class="orange black-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','ff5722','white')" class="deep-orange white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','795548','white')" class="brown white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','9e9e9e','white')" class="grey white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','607d8b','white')" class="blue-grey white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','000000','white')" class="black white-text pointer"></div>
+		<div onclick="colorAddMulti('${key}','ffffff','black')" class="white black-text pointer"></div>`
 	$('#colorsel_' + key).html(temp)
-}
-export function colorAdd(key: string, bg: string, txt: 'black' | 'white' | 'def') {
-	const o = getMulti()
-	const obj = o[parseInt(key, 10)]
-	obj.background = bg
-	obj.text = txt
-	o[key] = obj
-	setMulti(o)
-	if (txt === 'def') {
-		$('#acct_' + key).attr('style', '')
-	} else {
-		$('#acct_' + key).css('background-color', '#' + bg)
-		const isBlack = txt === 'black'
-		const bgHex = isBlack ? '000000' : 'ffffff'
-		const icHex = isBlack ? '9e9e9e' : 'eeeee'
-		$('#acct_' + key + ' .nex').css('color', '#' + bgHex)
-		$('#acct_' + key).css('color', '#' + icHex)
-	}
 }
 //入力時にインスタンスをサジェスト
 let timer = 0
 
 const input = <HTMLInputElement>document.getElementById('autocomplete-input')
 let prevVal = input?.value
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let oldSuggest
 let suggest
-input && input.addEventListener(
-	'focus',
-	function () {
-		const instance = autoCompleteGetInstance(input)
-		if (timer) window.clearInterval(timer)
-		timer = window.setInterval(async function () {
-			const newVal = input.value
-			if (prevVal !== newVal) {
-				if (newVal.length > 3) {
-					const start = `https://www.fediversesearch.com/search/?keyword=${newVal}`
-					const json = await api(start, {
-						method: 'get',
-						headers: {
-							'content-type': 'application/json',
+input &&
+	input.addEventListener(
+		'focus',
+		function () {
+			const instance = autoCompleteGetInstance(input)
+			if (timer) window.clearInterval(timer)
+			timer = window.setInterval(async function () {
+				const newVal = input.value
+				if (prevVal !== newVal) {
+					if (newVal.length > 3) {
+						const start = `https://www.fediversesearch.com/search/?keyword=${newVal}`
+						const json = await api(start, {
+							method: 'get',
+							headers: {
+								'content-type': 'application/json',
+							},
+						})
+						const data = {}
+						const jsonData = json.data
+						for (const url of jsonData) {
+							data[url.uri] = escapeHTML(url.title ? url.title : url.uri)
 						}
-					})
-					const data = {}
-					const jsonData = json.data
-					for (const url of jsonData) {
-						data[url.uri] = escapeHTML(url.title ? url.title : url.uri)
+						instance.updateData(data)
+						instance.open()
 					}
-					instance.updateData(data)
-					instance.open()
+					oldSuggest = suggest
+					prevVal = newVal
 				}
-				oldSuggest = suggest
-				prevVal = newVal
-			}
-		}, 1000)
-	},
-	false
-)
+			}, 1000)
+		},
+		false
+	)
 
-input && input.addEventListener(
-	'blur',
-	function () {
-		window.clearInterval(timer)
-	},
-	false
-)
+input &&
+	input.addEventListener(
+		'blur',
+		function () {
+			window.clearInterval(timer)
+		},
+		false
+	)
 //acctで未読マーカーは要らない
 export function asReadEnd() {
 	postMessage(['asReadComp', ''], '*')

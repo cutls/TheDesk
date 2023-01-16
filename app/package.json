@@ -17,11 +17,12 @@
         "dev:watchbuilder": "rollup -c -w",
         "build:pack": "npm run build:main && node buildCli.js",
         "build:main": "tsc main/main.ts --outDir dist/main --esModuleInterop true",
+        "build:render": "rollup -c",
         "build:pwa": "node view/make/makeCli.js --pwa",
         "build:all:x64": "npm run build:main && node buildCli.js --withStore",
         "build:all": "npm run build:main && node buildCli.js --withStore --withX64 --withIa32 --withArm64",
-        "lint:fix": "eslint --fix './js/**/*.{js,ts}' && prettier --write './js/**/*.{js,ts}'",
-        "lint": "eslint './js/**/*.{js,ts}' && prettier --write './js/**/*.{js,ts}'"
+        "lint:fix": "eslint --fix './js/**/*.ts' && prettier --write './js/**/*.ts'",
+        "lint": "eslint './js/**/*.ts' && prettier --write './js/**/*.ts'"
     },
     "keywords": [
         "mastodon",

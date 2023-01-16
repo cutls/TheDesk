@@ -27,7 +27,6 @@ export function date(str: string, datetype: IDateType) {
 					} else {
 						ret = `${date.getHours()}:${min}:${sec}`
 					}
-
 				} else {
 					ret = `${month}/${date.getDate()} ${date.getHours()}:${min}:${sec}`
 				}

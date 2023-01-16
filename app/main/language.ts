@@ -1,13 +1,12 @@
 // Create the Application's main menu
 import electron from 'electron'
+import { join } from 'path'
 export default function (lang: string, mainWindow: electron.BrowserWindow, packaged: boolean, dir: string, dirname: string) {
     //フレーム
     if (lang !== 'ja' && lang !== 'en') {
         lang = 'en'
     }
-    const electron = require('electron')
     const { Menu, MenuItem, ipcMain, BrowserWindow, app } = electron
-    const join = require('path').join
     const dict = {
         'application': {
             'ja': 'アプリケーション',
@@ -70,21 +69,21 @@ export default function (lang: string, mainWindow: electron.BrowserWindow, packa
             'en': 'Close'
         }
     }
+    let ifDev = [
+        {
+            label: 'Toggle Developer Tools',
+            accelerator: 'Alt+Command+I',
+            click: function () { mainWindow.webContents.toggleDevTools() }
+        },
+        {
+            label: dict.reload[lang],
+            accelerator: 'CmdOrCtrl+R',
+            click: function () { mainWindow.reload() }
+        }
+    ]
+
     if (packaged) {
-        var ifDev = [
-            {
-                label: dict.reload[lang],
-                accelerator: 'CmdOrCtrl+R',
-                click: function () { mainWindow.reload() }
-            }
-        ]
-    } else {
-        var ifDev = [
-            {
-                label: 'Toggle Developer Tools',
-                accelerator: 'Alt+Command+I',
-                click: function () { mainWindow.webContents.toggleDevTools() }
-            },
+        ifDev = [
             {
                 label: dict.reload[lang],
                 accelerator: 'CmdOrCtrl+R',
@@ -97,8 +96,8 @@ export default function (lang: string, mainWindow: electron.BrowserWindow, packa
         submenu: [
             {
                 label: dict.about[lang], click: function () {
-                    var ver = app.getVersion()
-                    var window = new BrowserWindow({
+                    const ver = app.getVersion()
+                    const window = new BrowserWindow({
                         webPreferences: {
                             webviewTag: false,
                             nodeIntegration: false,

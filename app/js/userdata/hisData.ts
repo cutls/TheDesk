@@ -1,15 +1,15 @@
 //ユーザーデータ表示
 
-import { Account, Toot } from "../../interfaces/MastodonApiReturns"
-import api from "../common/fetch"
-import lang from "../common/lang"
-import { getColumn, setColumn } from "../common/storage"
-import timeUpdate from "../common/time"
-import { escapeHTML } from "../platform/first"
-import { parse } from "../tl/parse"
-import { userParse } from "../tl/userParse"
-import { parseColumn } from "../ui/layout"
-import { hisclose } from "./showOnTL"
+import { Account, Toot } from '../../interfaces/MastodonApiReturns'
+import api from '../common/fetch'
+import lang from '../common/lang'
+import { getColumn, setColumn } from '../common/storage'
+import timeUpdate from '../common/time'
+import { escapeHTML } from '../platform/first'
+import { parse } from '../tl/parse'
+import { userParse } from '../tl/userParse'
+import { parseColumn } from '../ui/layout'
+import { hisclose } from './showOnTL'
 import $ from 'jquery'
 
 //タイムライン
@@ -25,8 +25,8 @@ export async function utlShow(user: string, more: 'more' | '', acctId: string) {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	let template = parse<string>(json, null, acctId, 'user')
 	if (!json[0]) template = lang.lang_details_nodata + '<br>'
@@ -45,8 +45,8 @@ export function utlAdd() {
 		type: 'utl' as const,
 		data: {
 			id: user,
-			acct: $('#his-acct').attr('fullname') || ''
-		}
+			acct: $('#his-acct').attr('fullname') || '',
+		},
 	}
 	const obj = getColumn()
 	localStorage.setItem('card_' + obj.length, 'true')
@@ -67,8 +67,8 @@ async function pinutl(before: string, user: string, acctId: string) {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	let template = parse<string>(json, 'pinned', acctId, 'user')
 	if (!json[0]) template = ''
@@ -80,7 +80,7 @@ async function pinutl(before: string, user: string, acctId: string) {
 export function flw(user: string, more: 'more' | '', acctId: string) {
 	if (!acctId) acctId = $('#his-data').attr('use-acct')?.toString() || '0'
 	if (user === '--now') user = $('#his-data').attr('user-id')?.toString() || '0'
-	const sid = more ? $("#his-follow-list .cusr").last().attr("user-id") : ''
+	const sid = more ? $('#his-follow-list .cusr').last().attr('user-id') : ''
 	const plus = more ? '?max_id=' + sid : ''
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
@@ -116,7 +116,7 @@ export function flw(user: string, more: 'more' | '', acctId: string) {
 export function fer(user: string, more: 'more' | '', acctId: string) {
 	if (!acctId) acctId = $('#his-data').attr('use-acct')?.toString() || '0'
 	if (user === '--now') user = $('#his-data').attr('user-id')?.toString() || '0'
-	const sid = more ? $("#his-follower-list .cusr").last().attr("user-id") : ''
+	const sid = more ? $('#his-follower-list .cusr').last().attr('user-id') : ''
 	const plus = more ? '?max_id=' + sid : ''
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
@@ -196,8 +196,8 @@ export async function showMut(more: 'more' | '', acctId: string) {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	let template = userParse(json, acctId)
 	if (!json[0]) template = lang.lang_details_nodata + '<br>'
@@ -221,8 +221,8 @@ export async function showBlo(more: 'more' | '', acctId: string) {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	let template = userParse(json, acctId)
 	if (!json[0]) template = lang.lang_details_nodata + '<br>'
@@ -246,8 +246,8 @@ export async function showReq(more: 'more' | '', acctId: string) {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	let template = userParse(json, acctId, 'follow_request')
 	if (!json[0]) template = lang.lang_details_nodata + '<br>'
@@ -271,8 +271,8 @@ export async function showDom(more: 'more' | '', acctId: string) {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	let template = ''
 	if (!json[0]) template = lang.lang_details_nodata + '<br>'
@@ -297,8 +297,8 @@ export async function showFrl(more: 'more' | '', acctId: string) {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	let template = userParse(json, acctId)
 	if (!json[0]) template = `${lang.lang_details_nodata}(${lang.lang_hisdata_frcwarn})<br>`
@@ -319,24 +319,27 @@ export async function udAdd(acctId: string, id: string, start: string) {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	const fields = json
 	for (const field of fields) {
-		const html = `<a href="${field.proof_url}" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="${lang.lang_hisdata_key.replace("{{set}}", escapeHTML(field.provider))}"><i class="fas fa-key" aria-hidden="true"></i>${escapeHTML(field.provider)}:${escapeHTML(field.provider_username)}</a>`
-		$("#his-proof-prof").append(html)
+		const html = `<a href="${field.proof_url}" target="_blank" class="cbadge teal waves-effect" style="max-width:200px;" title="${lang.lang_hisdata_key.replace(
+			'{{set}}',
+			escapeHTML(field.provider)
+		)}"><i class="fas fa-key" aria-hidden="true"></i>${escapeHTML(field.provider)}:${escapeHTML(field.provider_username)}</a>`
+		$('#his-proof-prof').append(html)
 	}
 	const ns = `https://notestock.osa-p.net/api/v1/isstock.json?id=${start.replace('@', 'users/')}`
 	const nsJson = await api(ns, {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	if (nsJson.user.public_view) {
-		const html = `<a href="${json.user.url}" target="_blank" class="cbadge purple waves-effect" style="max-width:200px;" title="Notestock">Notestock</a>`
+		const html = `<a href="${nsJson.user.url}" target="_blank" class="cbadge purple waves-effect" style="max-width:200px;" title="Notestock">Notestock</a>`
 		$('#his-proof-prof').append(html)
 	}
 }

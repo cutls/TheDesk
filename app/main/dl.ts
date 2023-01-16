@@ -1,17 +1,16 @@
 import electron from 'electron'
 import * as fs from 'fs'
+import { download } from 'electron-dl'
+import { join } from 'path'
 export default function dl(mainWindow: electron.BrowserWindow, lang_path: string, base: string, dirname: string) {
 	const shell = electron.shell
-	const { download } = require('electron-dl')
 	const BrowserWindow = electron.BrowserWindow
 	const dialog = electron.dialog
 	let updatewin: electron.BrowserWindow | null = null
 	const ipc = electron.ipcMain
 	const app = electron.app
-	const join = require('path').join
-	ipc.on('update', function (e, x, y) {
+	ipc.on('update', function () {
 		const platform = process.platform
-		const bit = process.arch
 		if (platform !== 'win32' && platform !== 'linux' && platform !== 'darwin') {
 			updatewin = new BrowserWindow({
 				webPreferences: {
@@ -51,15 +50,15 @@ export default function dl(mainWindow: electron.BrowserWindow, lang_path: string
 				},
 				saveAs: false
 			}
+			if (!updatewin) return
 			download(updatewin, url, opts)
-				.then(dl => {
+				.then(() => {
 					e.sender.send('mess', 'ダウンロードが完了しました。')
 					app.quit()
 				})
 				.catch(console.error)
 		}
 		const platform = process.platform
-		const bit = process.arch
 		const options = {
 			title: 'Save',
 			defaultPath: app.getPath('home') + '/' + args[1]
@@ -93,7 +92,6 @@ export default function dl(mainWindow: electron.BrowserWindow, lang_path: string
 	ipc.on('general-dl', (event, args) => {
 		const name = ''
 		const platform = process.platform
-		const bit = process.arch
 		const filename = args[0].match(/https:\/\/.+\/(.+\..+)$/)
 		let dir = args[1]
 		if (args[1] === '') {
@@ -112,16 +110,17 @@ export default function dl(mainWindow: electron.BrowserWindow, lang_path: string
 			},
 			saveAs: false
 		}
-		download(BrowserWindow.getFocusedWindow(), args[0], opts)
-			.then(dl => {
+		const w = BrowserWindow.getFocusedWindow()
+		if (!w) return
+		download(w, args[0], opts)
+			.then(() => {
+				let name = dir
 				if (filename[1]) {
 					if (platform === 'win32') {
-						const name = dir + '\\' + filename[1]
+						name = dir + '\\' + filename[1]
 					} else if (platform === 'linux' || platform === 'darwin') {
-						const name = dir + '/' + filename[1]
+						name = dir + '/' + filename[1]
 					}
-				} else {
-					const name = dir
 				}
 				event.sender.send('general-dl-message', name)
 			})

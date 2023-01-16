@@ -39,6 +39,11 @@
     max-width: 30vw;
 }
 
+#his-leftside-info {
+    max-height: calc(100vh - 56px - 24rem);
+    overflow: hidden;
+}
+
 #his-float-timeline {
     max-width: 47.5rem;
     width: calc(100% - 28.4rem);

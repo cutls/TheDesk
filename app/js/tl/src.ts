@@ -6,12 +6,11 @@ import api from '../common/fetch'
 import lang from '../common/lang'
 import timeUpdate from '../common/time'
 import { execCopy } from '../platform/end'
-import { escapeHTML, setLog } from '../platform/first'
+import { escapeHTML } from '../platform/first'
 import { brInsert } from '../post/emoji'
 import { cardHtml } from './card'
 import { parse } from './parse'
 import { userParse } from './userParse'
-
 
 export function searchMenu() {
 	$('#src-contents').html('')
@@ -63,8 +62,8 @@ export async function src(mode?: any, offset?: any) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	console.log(['Search', json])
 	//ハッシュタグ
@@ -105,6 +104,7 @@ export async function src(mode?: any, offset?: any) {
 	timeUpdate()
 }
 function tsAdd(q: string) {
+	return q
 	// const add = {
 	// 	domain: 0,
 	// 	type: 'tootsearch',
@@ -171,6 +171,7 @@ export function tootsearch(tlid: number, q: string) {
 	// 	})
 }
 export function moreTs(tlid, q) {
+	return tlid && q
 	// const sid = $('#timeline_' + tlid + ' .ts-marker')
 	// 	.last()
 	// 	.attr('data-maxid')
@@ -217,7 +218,6 @@ export function moreTs(tlid, q) {
 	// 			templete = templete + `<div class="hide ts-marker" data-maxid="${max_id}"></div>`
 	// 		}
 	// 		$('#timeline_' + tlid).append(templete)
-
 	// 		globalThis.timeUpdate()
 	// 	})
 }
@@ -234,7 +234,7 @@ function graphDrawCore(his: Tag['history'], tag: Tag, acct_id: number) {
 		parseInt(his[3].uses, 10),
 		parseInt(his[4].uses, 10),
 		parseInt(his[5].uses, 10),
-		parseInt(his[6].uses, 10)
+		parseInt(his[6].uses, 10),
 	])
 	const six = 50 - (parseInt(his[6].usess, 10) / max) * 50
 	const five = 50 - (parseInt(his[5].usess, 10) / max) * 50
@@ -260,9 +260,7 @@ function graphDrawCore(his: Tag['history'], tag: Tag, acct_id: number) {
 					toot
 				</div>
 				<div class="tagCompTag">
-					<a onclick="tl('tag','${escapeHTML(
-		tag.name
-	)}','${acct_id}','add')" class="pointer" title="${escapeHTML(tag.name)}">
+					<a onclick="tl('tag','${escapeHTML(tag.name)}','${acct_id}','add')" class="pointer" title="${escapeHTML(tag.name)}">
 						#${escapeHTML(tag.name)}
 					</a>
 				</div>
@@ -288,8 +286,8 @@ export async function trend() {
 			method: 'get',
 			headers: {
 				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
-			}
+				Authorization: 'Bearer ' + at,
+			},
 		})
 		let tags = ''
 		for (const tag of tagTrends) {
@@ -297,8 +295,8 @@ export async function trend() {
 			tags = tags + graphDrawCore(his, tag, parseInt(acct_id, 10))
 		}
 		$('#src-contents').append(`<div id="src-content-tag">Trend Tags<br />${tags || 'none'}</div>`)
-	} catch {
-
+	} catch (e: any) {
+		console.error(e)
 	}
 
 	try {
@@ -307,8 +305,8 @@ export async function trend() {
 			method: 'get',
 			headers: {
 				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
-			}
+				Authorization: 'Bearer ' + at,
+			},
 		})
 		if (tootTrends.length) {
 			const templete = parse(tootTrends, null, acct_id, '')
@@ -316,8 +314,8 @@ export async function trend() {
 		} else {
 			$('#src-contents').append('<div id="src-content-status">Trend Statuses<br />none</div>')
 		}
-	} catch {
-
+	} catch (e: any) {
+		console.error(e)
 	}
 
 	try {
@@ -326,8 +324,8 @@ export async function trend() {
 			method: 'get',
 			headers: {
 				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at
-			}
+				Authorization: 'Bearer ' + at,
+			},
 		})
 		console.log(linkTrends)
 		let links = ''
@@ -335,8 +333,8 @@ export async function trend() {
 			links = links + `<a href="${link.url}" target="_blank">${link.url}</a><br />${cardHtml(link, acct_id, '')}<hr />`
 		}
 		$('#src-contents').append(`<div id="src-content-link">Trend Links<br />${links}</div>`)
-	} catch {
-
+	} catch (e: any) {
+		console.error(e)
 	}
 }
 export function srcBox(mode: 'open' | 'close' | 'toggle') {

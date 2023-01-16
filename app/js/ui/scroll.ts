@@ -1,19 +1,19 @@
-import { getColumn } from "../common/storage"
-import timeUpdate from "../common/time"
-import { columnReload, moreLoad, ueLoad } from "../tl/tl"
-import { sortLoad } from "./sort"
+import { getColumn } from '../common/storage'
+import timeUpdate from '../common/time'
+import { columnReload, moreLoad, ueLoad } from '../tl/tl'
+import { sortLoad } from './sort'
 import $ from 'jquery'
 
 //スクロールで続きを読む
 export function scrollEvent() {
-	$('.tl-box').scroll(function() {
+	$('.tl-box').scroll(function () {
 		scrollCk()
 	})
 }
 scrollEvent()
 
 export function scrollCk() {
-	$('.tl-box').each(function(i, elem) {
+	$('.tl-box').each(function () {
 		const tlid = $(this).attr('tlid') || '0'
 		const len = $(`#timeline_${tlid} .cvo`).length
 		//一番上ならためていた新しいトゥートを表示ないしtealなら未読管理モード
@@ -31,7 +31,9 @@ export function scrollCk() {
 			//自動リフレッシュ
 			if (len > 30) {
 				for (let i = 30; i < $('#timeline_' + tlid + ' .cvo').length; i++) {
-					$('#timeline_' + tlid + ' .cvo').eq(i).remove()
+					$('#timeline_' + tlid + ' .cvo')
+						.eq(i)
+						.remove()
 				}
 			}
 		}
@@ -62,7 +64,7 @@ export function goTop(id: number) {
 export function goColumn(key: number) {
 	if ($('[tlid=' + key + ']').length) {
 		$('#timeline-container').animate({
-			scrollLeft: ($('#timeline-container').scrollLeft() || 0) + ($(`[tlid=${key}]`).offset()?.left || 0)
+			scrollLeft: ($('#timeline-container').scrollLeft() || 0) + ($(`[tlid=${key}]`).offset()?.left || 0),
 		})
 	}
 	sortLoad()

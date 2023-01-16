@@ -5,14 +5,13 @@ import Swal from 'sweetalert2'
 import lang from '../common/lang'
 import { addToDraft, cw, draftToggle, isIVis, IVis, loadVis, schedule } from './secure'
 import { todc, todo } from '../ui/tips'
-import { Status, StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
-import { formatTimeUtc, setLog } from '../platform/first'
+import { StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
+import { formatTimeUtc } from '../platform/first'
 import { formSelectInit, toast } from '../common/declareM'
 import api from '../common/fetch'
 import { alertProcessUnfinished } from './img'
 import { pollCalc } from '../tl/poll'
 import { hide, mdCheck } from '../ui/postBox'
-
 
 export function sec() {
 	const modeRaw: string | null = localStorage.getItem('sec')
@@ -32,7 +31,7 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		addToDraft()
 		toast({
 			html: lang.lang_post_offline,
-			displayLength: 3000
+			displayLength: 3000,
 		})
 		return false
 	}
@@ -49,9 +48,7 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	}
 	const cw_sent = localStorage.getItem('cw_sentence') || 500
 	const cw_ltres = localStorage.getItem('cw_letters') || 7000
-	if (!$('#cw').hasClass('cw-avail') &&
-		(str.length > cw_sent || str.split('\n').length - 1 > cw_ltres)
-	) {
+	if (!$('#cw').hasClass('cw-avail') && (str.length > cw_sent || str.split('\n').length - 1 > cw_ltres)) {
 		const plus = str.replace(/\n/g, '').slice(0, 10) + '...'
 		const result = await Swal.fire({
 			title: lang.lang_post_cwtitle,
@@ -61,7 +58,7 @@ export async function post(postVis?: IVis, dry?: boolean) {
 			confirmButtonText: lang.lang_post_btn2,
 			denyButtonText: lang.lang_post_btn3,
 			showCloseButton: true,
-			focusConfirm: false
+			focusConfirm: false,
 		})
 		if (result.isConfirmed) {
 			$('#cw-text').show()
@@ -74,17 +71,13 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	todo('Posting')
 	const at = localStorage.getItem('acct_' + acct_id + '_at')
 	let start = 'https://' + domain + '/api/v1/statuses'
-	let method = 'POST'
 	const editTarget = $('#tootmodal').attr('data-edit')
-	if (editTarget) {
-		start = start + `/${editTarget}`
-		method = 'PUT'
-	}
+	if (editTarget) start = start + `/${editTarget}`
 	const reply = $('#reply').val()
 	const stable = localStorage.getItem('stable')
 	if (stable && !str.match(stable)) str = `${str} #${stable}`
 	const toot: StatusTheDeskExtend = {
-		status: str
+		status: str,
 	}
 	if (reply) toot.in_reply_to_id = reply.toString()
 	const media = $('#media').val()?.toString()
@@ -132,7 +125,7 @@ export async function post(postVis?: IVis, dry?: boolean) {
 			options: options,
 			expires_in: exin,
 			multiple: mul,
-			hide_totals: htt
+			hide_totals: htt,
 		}
 	}
 	console.table(toot)
@@ -140,7 +133,7 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		$('#ideKey').val('')
 		$('.toot-btn-group').prop('disabled', false)
 		todc()
-		toot['TheDeskAcctId'] = acct_id
+		toot.TheDeskAcctId = acct_id
 		return toot
 	}
 	const q = {
@@ -148,9 +141,9 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		headers: {
 			'content-type': 'application/json',
 			Authorization: `Bearer ${at}`,
-			'Idempotency-Key': ideKey?.toString() || ''
+			'Idempotency-Key': ideKey?.toString() || '',
 		},
-		body: toot
+		body: toot,
 	}
 	try {
 		await api(start, q)
@@ -172,19 +165,18 @@ export async function post(postVis?: IVis, dry?: boolean) {
 			return
 		}
 	}
-
 }
 export function expPostMode() {
 	const isExpire = $('#sch-box').toggleClass('expire')
 	if (isExpire) {
 		Swal.fire({
 			icon: 'info',
-			title: 'Expiring toot On'
+			title: 'Expiring toot On',
 		})
 	} else {
 		Swal.fire({
 			icon: 'info',
-			title: 'Expireing toot Off'
+			title: 'Expireing toot Off',
 		})
 	}
 }
@@ -241,8 +233,8 @@ export function clear() {
 		$('#post-acct-sel').val(localStorage.getItem('main') || '0')
 	}
 	$('#emoji').addClass('hide')
-	const elems = document.querySelectorAll('select');
-	formSelectInit(elems);
+	const elems = document.querySelectorAll('select')
+	formSelectInit(elems)
 	$('#default-emoji').show()
 	$('#unreact').show()
 	$('#addreact').addClass('hide')

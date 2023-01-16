@@ -75,7 +75,7 @@ export function loadVis() {
 		} else if (vist === 'useapi') {
 			const acct_id = parseInt($('#post-acct-sel').val()?.toString() || '0', 10)
 			const obj = getMulti()
-			let memory = obj[acct_id]['vis']
+			let memory = obj[acct_id].vis
 			memory = 'public'
 			if (!isIVis(memory)) return
 			vis(memory)
@@ -85,7 +85,6 @@ export function loadVis() {
 		}
 	}
 }
-loadVis()
 
 //コンテントワーニング
 export function cw(force?: boolean) {
@@ -110,7 +109,7 @@ export function cwShow(e: any) {
 	$(e).parent().find('.cw_long').toggleClass('hide')
 }
 $(function () {
-	$('#cw-text').on('change', function (event) {
+	$('#cw-text').on('change', function () {
 		const acct_id = $('#post-acct-sel').val()
 		const domain = localStorage.getItem('domain_' + acct_id)
 		const cwlen = $('#cw-text').val()?.toString().length || 0
@@ -162,7 +161,9 @@ function draftDraw() {
 		const draftObj = JSON.parse(draft)
 		for (let i = 0; i < draftObj.length; i++) {
 			const toot = draftObj[i]
-			html = html + `<div class="tootInDraft">
+			html =
+				html +
+				`<div class="tootInDraft">
 				<i class="waves-effect gray material-icons" onclick="useThisDraft(${i})" title="${lang.lang_secure_useThis}">reply</i>
 				<i class="waves-effect gray material-icons" onclick="deleteThisDraft(${i})" title="${lang.lang_secure_deleteThis}">cancel</i>
 				${escapeHTML(toot.status).replace(/\n/, '').substr(0, 10)}
@@ -185,7 +186,7 @@ export async function addToDraft() {
 export function useThisDraft(i) {
 	const draft = localStorage.getItem('draft') || `{}`
 	const draftObj = JSON.parse(draft)
-	draftToPost(draftObj[i], draftObj[i]['TheDeskAcctId'], '0')
+	draftToPost(draftObj[i], draftObj[i].TheDeskAcctId, '0')
 	draftToggle()
 }
 export function deleteThisDraft(i) {

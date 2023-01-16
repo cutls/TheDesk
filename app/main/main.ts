@@ -11,8 +11,9 @@ import css from './css'
 import dl from './dl'
 import img from './img'
 import np from './np'
+import crypto from 'crypto'
 import { system as systemFunc } from './system'
-const { Menu, MenuItem, BrowserWindow, ipcMain } = electron
+const { Menu, BrowserWindow, ipcMain } = electron
 import  { join, dirname as getDirname } from 'path'
 
 const info_path = join(app.getPath('userData'), 'window-size.json')
@@ -44,7 +45,7 @@ interface IWindow {
 if (!gotTheLock) {
 	app.quit()
 } else {
-	app.on('second-instance', (event, commandLine, workingDirector) => {
+	app.on('second-instance', (event, commandLine) => {
 		if (!mainWindow) return
 		opening = false
 		const m = commandLine[2].match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=(.+)/)
@@ -105,7 +106,7 @@ function createWindow() {
 		} else {
 			lang = 'en'
 		}
-		fs.mkdir(app.getPath('userData'), function (err) {
+		fs.mkdir(app.getPath('userData'), function () {
 			fs.writeFileSync(lang_path, lang)
 		})
 	}
@@ -240,7 +241,6 @@ function createWindow() {
 	} catch (e) {
 		//default UA Example:
 		// Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) thedesk/18.11.3 Chrome/76.0.3809.146 Electron/6.0.12 Safari/537.36
-		const crypto = require('crypto')
 		const N = 100
 		ua = 'Mastodon client: ' + crypto.randomBytes(N).toString('base64').substring(0, N)
 	}
@@ -255,7 +255,7 @@ function createWindow() {
 	})
 	let closeArg = false
 	// @ts-ignore
-	mainWindow.on('close', function (e, arg) {
+	mainWindow.on('close', function (e) {
 		if (!mainWindow) return
 		writePos(mainWindow)
 		if (!closeArg) {
@@ -271,13 +271,13 @@ function createWindow() {
 				resolve()
 			}, wait)
 		})
-		promise.then(function (response) {
+		promise.then(function () {
 			if (!mainWindow) return
 			closeArg = true
 			mainWindow.close()
 		})
 	})
-	ipcMain.on('sendMarkersComplete', function (e, arg) {
+	ipcMain.on('sendMarkersComplete', function () {
 		if (!mainWindow) return
 		closeArg = true
 		mainWindow.close()
@@ -337,9 +337,9 @@ let y = 0
 let unchanged = 0
 let locked = false
 function mouseTrack(mainWindow: electron.BrowserWindow) {
-	let mousePos = electron.screen.getCursorScreenPoint()
-	let xNow = mousePos.x
-	let yNow = mousePos.x
+	const mousePos = electron.screen.getCursorScreenPoint()
+	const xNow = mousePos.x
+	const yNow = mousePos.x
 	if (x !== xNow || y !== yNow) {
 		unchanged = 0
 		locked = false

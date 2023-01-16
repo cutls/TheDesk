@@ -1,13 +1,12 @@
-import { BrowserWindow } from "electron"
-
-const { shell } = require('electron')
+import electron, { BrowserWindow, shell } from "electron"
+import { join } from "path"
+import fs from 'fs'
+import JSON5 from 'json5'
+import os from 'os'
+import SystemFonts from 'system-font-families'
 
 export function system(mainWindow: BrowserWindow, dir: string, dirname: string) {
-	const electron = require('electron')
 	const app = electron.app
-	const join = require('path').join
-	const fs = require('fs')
-	const JSON5 = require('json5')
 	const ipc = electron.ipcMain
 	const clipboard = electron.clipboard
 	const nativeImage = electron.nativeImage
@@ -29,9 +28,8 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 
 	const BrowserWindow = electron.BrowserWindow
 	const dialog = electron.dialog
-	const os = require('os')
 	//プラットフォーム
-	ipc.on('getPlatform', function (e, arg) {
+	ipc.on('getPlatform', function (e) {
 		let gitHash = ''
 		try {
 			gitHash = fs.readFileSync('git', 'utf8')
@@ -47,8 +45,8 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		e.sender.send('langres', arg)
 	})
 	//エクスポートのダイアログ
-	ipc.on('exportSettings', function (e, args) {
-		let savedFiles = dialog.showSaveDialogSync(mainWindow, {
+	ipc.on('exportSettings', function (e) {
+		const savedFiles = dialog.showSaveDialogSync(mainWindow, {
 			title: 'Export',
 			properties: ['createDirectory'],
 			defaultPath: 'export.thedeskconfig.json5',
@@ -57,8 +55,8 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		e.sender.send('exportSettingsFile', savedFiles)
 	})
 	//インポートのダイアログ
-	ipc.on('importSettings', function (e, args) {
-		let fileNames = dialog.showOpenDialogSync(mainWindow, {
+	ipc.on('importSettings', function (e) {
+		const fileNames = dialog.showOpenDialogSync(mainWindow, {
 			title: 'Import',
 			properties: ['openFile'],
 			filters: [{ name: 'TheDesk Config', extensions: ['thedeskconfig', 'thedeskconfigv2', 'json5'] }],
@@ -68,8 +66,8 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		e.sender.send('config', JSON5.parse(fs.readFileSync(fileNames[0], 'utf8')))
 	})
 	//保存フォルダのダイアログ
-	ipc.on('savefolder', function (e, args) {
-		let fileNames = dialog.showOpenDialogSync(
+	ipc.on('savefolder', function (e) {
+		const fileNames = dialog.showOpenDialogSync(
 			mainWindow,
 			{
 				title: 'Save folder',
@@ -81,7 +79,7 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 	})
 	//カスタムサウンドのダイアログ
 	ipc.on('customSound', function (e, arg) {
-		let fileNames = dialog.showOpenDialogSync(
+		const fileNames = dialog.showOpenDialogSync(
 			mainWindow,
 			{
 				title: 'Custom sound',
@@ -101,7 +99,7 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		if (arg === 'true') {
 			fs.writeFileSync(haPath, arg)
 		} else {
-			fs.unlink(haPath, function (err) { })
+			fs.unlink(haPath, () => true)
 		}
 		app.relaunch()
 		app.exit()
@@ -110,7 +108,7 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		if (arg === 'true') {
 			fs.writeFileSync(wvPath, arg)
 		} else {
-			fs.unlink(wvPath, function (err) { })
+			fs.unlink(wvPath, () => true)
 		}
 		app.relaunch()
 		app.exit()
@@ -118,7 +116,7 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 	//ユーザーエージェント
 	ipc.on('ua', function (e, arg) {
 		if (arg === '') {
-			fs.unlink(uaPath, function (err) { })
+			fs.unlink(uaPath, () => true)
 		} else {
 			fs.writeFileSync(uaPath, arg)
 		}
@@ -126,15 +124,15 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		app.exit()
 	})
 	//スクリーンリーダー
-	ipc.on('acsCheck', function (e, arg) {
+	ipc.on('acsCheck', function () {
 		if (app.accessibilitySupportEnabled) {
 			mainWindow.webContents.send('accessibility', 'true')
 		}
 	})
-	ipc.on('quit', (e, args) => {
+	ipc.on('quit', () => {
 		app.quit()
 	})
-	ipc.on('about', (e, args) => {
+	ipc.on('about', () => {
 		about()
 	})
 	ipc.on('openUrl', function (event, arg) {
@@ -160,7 +158,7 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		window.loadURL(dir + '/about.html?ver=' + ver)
 		return 'true'
 	}
-	ipc.on('nano', function (e, x, y) {
+	ipc.on('nano', function () {
 		const nano_info_path = join(app.getPath('userData'), 'nano-window-position.json')
 		let windowsPos
 		try {
@@ -192,7 +190,7 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		return true
 	})
 	let cbTimer1
-	ipc.on('startmem', (e, arg) => {
+	ipc.on('startmem', (e) => {
 		const event = e.sender
 		cbTimer1 = setInterval(mems, 1000)
 		function mems() {
@@ -203,7 +201,7 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		}
 	})
 
-	ipc.on('endmem', (e, arg) => {
+	ipc.on('endmem', () => {
 		if (cbTimer1) clearInterval(cbTimer1)
 	})
 
@@ -212,8 +210,7 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		e.sender.send('exportAllComplete', '')
 	})
 	//フォント
-	ipc.on('fonts', (e, arg) => {
-		const SystemFonts = require('system-font-families').default
+	ipc.on('fonts', (e) => {
 		const fm = new SystemFonts()
 		const fontList = fm.getFontsSync()
 		e.sender.send('font-list', fontList)
@@ -237,7 +234,7 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 			}
 		})
 	})
-	ipc.on('getLogs', (e, arg) => {
+	ipc.on('getLogs', (e) => {
 		let logs = ''
 		let todayLog = ''
 		let yestLog = ''

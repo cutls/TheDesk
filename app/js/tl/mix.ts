@@ -62,8 +62,8 @@ async function getTL(start, acctId) {
 		method: 'get',
 		headers: {
 			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at
-		}
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	return promise
 }
@@ -87,7 +87,7 @@ export function mixre(acctId: string, tlid: string, TLtype: IColumnType, mute: s
 			tlid: tlid,
 			type: 'Connect Streaming API(Integrated:Home)',
 			domain: domain,
-			message: mess
+			message: mess,
 		})
 		$('#notice_icon_' + tlid).removeClass('red-text')
 	}
@@ -97,7 +97,7 @@ export function mixre(acctId: string, tlid: string, TLtype: IColumnType, mute: s
 			tlid: tlid,
 			type: 'Connect Streaming API(Integrated:Local)',
 			domain: domain,
-			message: mess
+			message: mess,
 		})
 		$('#notice_icon_' + tlid).removeClass('red-text')
 	}
@@ -143,7 +143,7 @@ export function mixre(acctId: string, tlid: string, TLtype: IColumnType, mute: s
 			todo('WebSocket Error ' + error)
 		} else {
 			const errorCt = parseInt(localStorage.getItem('wserror_' + tlid) || '0', 10) + 1
-			localStorage.setItem('wserror_' + tlid,`${errorCt}`)
+			localStorage.setItem('wserror_' + tlid, `${errorCt}`)
 			if (errorCt < 3) {
 				reconnector(tlid, TLtype, acctId, '', 'error')
 			}

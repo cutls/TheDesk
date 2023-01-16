@@ -22,10 +22,10 @@ export async function spotifyDisconnect() {
 	const json = await api(start, {
 		method: 'get',
 		headers: {
-			'content-type': 'application/json'
-		}
+			'content-type': 'application/json',
+		},
 	})
-	if (!json.success) alert('error')
+	if (!json.success) Swal.fire('error')
 	localStorage.removeItem('spotify-token')
 	checkSpotify()
 }
@@ -97,8 +97,8 @@ export async function nowplaying(mode: 'spotify' | 'itunes' | 'anynp' | 'lastFm'
 			const jsonRaw = await api(start, {
 				method: 'get',
 				headers: {
-					'content-type': 'application/json'
-				}
+					'content-type': 'application/json',
+				},
 			})
 			const code = jsonRaw.token
 			localStorage.setItem('spotify-token', code)
@@ -152,8 +152,8 @@ export async function nowplaying(mode: 'spotify' | 'itunes' | 'anynp' | 'lastFm'
 			const json = await api(start, {
 				method: 'get',
 				headers: {
-					'content-type': 'application/json'
-				}
+					'content-type': 'application/json',
+				},
 			})
 			console.table(json)
 			if (!json || !json.recenttracks) {
@@ -265,7 +265,7 @@ export function spotifySave() {
 	toast({ html: lang.lang_spotify_np, displayLength: 3000 })
 }
 if (location.search) {
-	const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)\&code=(.+)/)
+	const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)&code=(.+)/)
 	if (m) {
 		const mode = m[1]
 		const codex = m[2]

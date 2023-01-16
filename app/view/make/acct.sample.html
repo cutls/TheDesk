@@ -23,15 +23,12 @@
 </head>
 
 <body id="mainView" class="@@pwaClass@@">
-    <script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="../../js/platform/first.js"></script>
-    <script type="text/javascript" src="../../@@node_base@@/@cutls/materialize-css/dist/js/materialize.js"></script>
-    <script type="text/javascript" src="main.js"></script>
-    <script type="text/javascript" src="../../@@node_base@@/sweetalert2/dist/sweetalert2.min.js"></script>
     <script>
-        var misskeytoken = false
-    </script>
-    <script type="text/javascript" src="../../js/common/time.js"></script>
+		var ver = '@@versionLetter@@'
+		var gitHash = '@@gitHash@@'
+		var useLang = '@@lang@@'
+		var process = { env: { NODE_ENV: 'production' } }
+	</script>
     <div class="hide-first">
         <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:200px;">@@back@@</a><br />
         <h5>@@list@@</h5>
@@ -129,14 +126,11 @@
             <span id="ins-ver"></span>@<span id="ins-upd"></span><br />
         </div>
     </div>
-    <script type="text/javascript" src="../../js/ui/theme.js"></script>
-    <script type="text/javascript" src="../../js/ui/tips.js"></script>
-    <script type="text/javascript" src="../../js/platform/end.js"></script>
-    <script type="text/javascript" src="../../js/common/sha256.js"></script>
-    <script type="text/javascript" src="../../@@node_base@@/lodash/lodash.min.js"></script>
-    <script type="text/javascript" src="../../js/login/instance.js"></script>
-    <script type="text/javascript" src="../../js/login/manager.js"></script>
-    <script type="text/javascript" src="../../js/tl/date.js"></script>
+    <script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../../@@node_base@@/grapheme-splitter/index.js"></script>
+    <script type="text/javascript" src="../../@@node_base@@/jquery-ui-dist/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../@@node_base@@/@cutls/materialize-css/dist/js/materialize.js"></script>
+    <script type="text/javascript" src="../../dist/index.js"></script>
     <script>
         $('body').addClass(localStorage.getItem('platform'))
     </script>

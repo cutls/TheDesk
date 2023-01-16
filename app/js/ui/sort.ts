@@ -1,12 +1,11 @@
-import { IColumn, IColumnData, IColumnType } from "../../interfaces/Storage"
-import { toast } from "../common/declareM"
-import lang from "../common/lang"
-import { getColumn } from "../common/storage"
-import { isTagData } from "../tl/tag"
-import { cap, icon } from "../tl/tl"
-import { parseColumn } from "./layout"
+import { IColumn } from '../../interfaces/Storage'
+import { toast } from '../common/declareM'
+import lang from '../common/lang'
+import { getColumn } from '../common/storage'
+import { cap, icon } from '../tl/tl'
+import { parseColumn } from './layout'
 import $ from 'jquery'
-declare var jQuery
+declare let jQuery
 
 //ソートデータ読み込み
 export function sortLoad() {
@@ -62,7 +61,7 @@ function drag() {
 export function sort() {
 	const arr: number[] = []
 	const flags: boolean[] = []
-	$('.drag-content').each(function (i, elem) {
+	$('.drag-content').each(function () {
 		const id = parseInt($(this).attr('data-id') || '0', 10)
 		const flag = $(this).attr('data-flag') === 'true'
 		arr.push(id)
@@ -77,7 +76,7 @@ export function sort() {
 			type: data.type,
 			data: data.data,
 			background: data.background,
-			text: data.text
+			text: data.text,
 		}
 		newobj.push(add)
 		if (flags[i]) {

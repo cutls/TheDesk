@@ -8,7 +8,6 @@ import { show } from '../ui/postBox'
 //絵文字ボタンのトグル
 export function emojiToggle(reaction: boolean) {
 	const acctId = $('#post-acct-sel').val()
-	const selin = $('#textarea').prop('selectionStart') || 0
 	if ($('#emoji').hasClass('hide')) {
 		$('#emoji').removeClass('hide')
 		$('#right-side').show()
@@ -53,14 +52,14 @@ export async function emojiGet() {
 	const json = await api<Emoji[]>(start, {
 		method: 'get',
 		headers: {
-			'content-type': 'application/json'
-		}
+			'content-type': 'application/json',
+		},
 	})
 	$('#emoji-list').text('Parsing...')
 	const md: IEmojiStorage = {
 		categorized: {},
 		uncategorized: [],
-		ifCategorized: false
+		ifCategorized: false,
 	}
 	let ifCategorized = false
 	for (const emoji of json) {
@@ -73,14 +72,14 @@ export async function emojiGet() {
 			md.categorized[cat].push({
 				shortcode: emoji.shortcode,
 				url: emoji.url,
-				listed: listed
+				listed: listed,
 			})
 			ifCategorized = true
 		} else {
 			md.uncategorized.push({
 				shortcode: emoji.shortcode,
 				url: emoji.url,
-				listed: listed
+				listed: listed,
 			})
 		}
 	}
@@ -126,18 +125,17 @@ export function emojiList(target: 'next' | 'before' | 'home', reaction?: boolean
 		obj = [
 			{
 				divider: true,
-				cat: lang.lang_emoji_uncat
-			}
+				cat: lang.lang_emoji_uncat,
+			},
 		]
 		const cats = raw.uncategorized
 		obj = obj.concat(cats)
 		for (const [key, cats] of Object.entries(raw.categorized)) {
-			const cats = raw.categorized[key]
 			obj = obj.concat([
 				{
 					divider: true,
-					cat: key
-				}
+					cat: key,
+				},
 			])
 			obj = obj.concat(cats)
 		}
@@ -172,9 +170,7 @@ export function emojiList(target: 'next' | 'before' | 'home', reaction?: boolean
 				} else {
 					if (emoji.listed) {
 						const shortcode = emoji.shortcode
-						html =
-							html +
-							`<a onclick="emojiReaction('${shortcode}')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
+						html = html + `<a onclick="emojiReaction('${shortcode}')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
 					}
 				}
 			} else {
@@ -182,9 +178,7 @@ export function emojiList(target: 'next' | 'before' | 'home', reaction?: boolean
 					html = html + `<p style="margin-bottom:0">${emoji.cat}</p>`
 				} else {
 					if (emoji.listed) {
-						html =
-							html +
-							`<a onclick="emojiInsert(':${emoji.shortcode}:')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
+						html = html + `<a onclick="emojiInsert(':${emoji.shortcode}:')" class="pointer"><img src="${emoji.url}" width="20" title="${emoji.shortcode}"></a>`
 					}
 				}
 			}

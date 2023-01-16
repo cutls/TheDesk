@@ -1,17 +1,16 @@
-import lang from "../common/lang"
+import lang from '../common/lang'
 import $ from 'jquery'
-import { stripTags } from "../platform/first"
-import { toast } from "../common/declareM"
-import { parseColumn } from "../ui/layout"
+import { stripTags } from '../platform/first'
+import { toast } from '../common/declareM'
+import { parseColumn } from '../ui/layout'
 
-let $voise: SpeechSynthesisVoice
 const isBouyomi = !!localStorage.getItem('voice_bouyomi')
 const $voiseName = lang.lang_speech
 const $voices = speechSynthesis.getVoices()
-const $synthes = new SpeechSynthesisUtterance()
-$voise = $.grep($voices, function(n, i) {
+const $voise: SpeechSynthesisVoice = $.grep($voices, function (n) {
 	return n.name === $voiseName
 })[0]
+const $synthes = new SpeechSynthesisUtterance()
 $synthes.voice = $voise // 音声の設定
 localStorage.removeItem('voicebank')
 speechSynthesis.cancel()
@@ -35,7 +34,7 @@ export function say(msgr: string) {
 		localStorage.setItem('voicebank', json)
 	}
 }
-const $repeat = setInterval(function() {
+export const $repeat = setInterval(function () {
 	if (!speechSynthesis.speaking) {
 		const voice = localStorage.getItem('voicebank')
 		if (voice) {
@@ -49,7 +48,7 @@ const $repeat = setInterval(function() {
 					console.log(thisVoiceRate, thisVoicePitch, thisVoiceVol)
 					const command = 0x0001
 					const type = 0
-					const sends =`${command}${delim}${thisVoiceRate}${delim}${thisVoicePitch}${delim}${thisVoiceVol}${delim}${type}${delim}${obj[0]}`
+					const sends = `${command}${delim}${thisVoiceRate}${delim}${thisVoicePitch}${delim}${thisVoiceVol}${delim}${type}${delim}${obj[0]}`
 					bouyomiConnect(sends)
 				} else {
 					$synthes.text = obj[0]
@@ -118,8 +117,7 @@ export function voicePlay() {
             const pitch = 100; // ピッチ50-200。-1を指定すると本体設定
             const volume = 100; // ボリューム0-100。-1を指定すると本体設定*/
 			const type = 0 // 声質(0.本体設定/1.女性1/2.女性2/3.男性1/4.男性2/5.中性/6.ロボット/7.機械1/8.機械2)
-			const sends =
-				'' + command + delim + rate + delim + pitch + delim + vol + delim + type + delim + text
+			const sends = '' + command + delim + rate + delim + pitch + delim + vol + delim + type + delim + text
 			bouyomiConnect(sends)
 		} else {
 			$synthes.text = text
@@ -169,7 +167,7 @@ export function voiceSettingLoad() {
 }
 function bouyomiConnect(sends: string) {
 	const socket = new WebSocket('ws://localhost:50002/')
-	socket.onopen = function() {
+	socket.onopen = function () {
 		socket.send(sends)
 	}
 }

@@ -1,11 +1,11 @@
-import lang from "../common/lang"
-import { columnReload, tl } from "./tl"
-import { brInsert } from "../post/emoji"
-import { escapeHTML } from "../platform/first"
-import { toast } from "../common/declareM"
-import api from "../common/fetch"
-import { getColumn, setColumn } from "../common/storage"
-import { IColumnData, IColumnTag, IColumnType } from "../../interfaces/Storage"
+import lang from '../common/lang'
+import { columnReload, tl } from './tl'
+import { brInsert } from '../post/emoji'
+import { escapeHTML } from '../platform/first'
+import { toast } from '../common/declareM'
+import api from '../common/fetch'
+import { getColumn, setColumn } from '../common/storage'
+import { IColumnData, IColumnTag, IColumnType } from '../../interfaces/Storage'
 import $ from 'jquery'
 //よく使うタグ
 export const isTagData = (item: IColumnData): item is IColumnTag => typeof item !== 'string' && !item['acct']
@@ -94,8 +94,8 @@ export function favTag() {
 		tags =
 			tags +
 			`<a onclick="tagShowHorizon('${tag}')" class="pointer">#${tag}</a>
-			${nowon}<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">　
-			<a onclick=\"tagTL('tag','${tag}','add')" class="pointer" title="${lang.lang_parse_tagTL.replace('{{tag}}', '#' + tag)}">
+			${nowon}<span class="hide" data-tag="${tag}" data-regTag="${tag.toLowerCase()}">&nbsp;
+			<a onclick="tagTL('tag','${tag}','add')" class="pointer" title="${lang.lang_parse_tagTL.replace('{{tag}}', '#' + tag)}">
 				TL
 			</a>
 			<a onclick="brInsert('#${tag}')" class="pointer" title="${lang.lang_parse_tagtoot.replace('{{tag}}', '#' + tag)}">
@@ -130,7 +130,7 @@ export function autoToot(tag: string) {
 		localStorage.setItem('stable', tag)
 		toast({
 			html: lang.lang_tags_tagwarn.replace('{{tag}}', tag).replace('{{tag}}', tag),
-			displayLength: 3000
+			displayLength: 3000,
 		})
 		brInsert(` #${tag} `)
 	}
@@ -141,14 +141,13 @@ async function tagFeature(name: string, acctId: string) {
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const start = `https://${domain}/api/v1/featured_tags`
-	const json = await api(start, {
+	await api(start, {
 		method: 'post',
 		headers: {
 			'content-type': 'application/json',
-			'Authorization': 'Bearer ' + at
-
+			Authorization: 'Bearer ' + at,
 		},
-		body: { name }
+		body: { name },
 	})
 	toast({ html: 'Complete: ' + escapeHTML(name), displayLength: 3000 })
 }
@@ -160,13 +159,12 @@ export function addTag(id: string) {
 	if (!data || !isTagData(data)) return
 	const name = data.name
 	column.data = {
-		'name': name,
-		'all': $(`#all_tm-${id}`).val()?.toString().split(',') || [],
-		'any': $(`#any_tm-${id}`).val()?.toString().split(',') || [],
-		'none': $(`#none_tm-${id}`).val()?.toString().split(',') || [],
+		name: name,
+		all: $(`#all_tm-${id}`).val()?.toString().split(',') || [],
+		any: $(`#any_tm-${id}`).val()?.toString().split(',') || [],
+		none: $(`#none_tm-${id}`).val()?.toString().split(',') || [],
 	}
 	columns[id] = column
 	setColumn(columns)
 	columnReload(id, 'tag')
 }
-

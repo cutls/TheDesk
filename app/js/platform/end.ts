@@ -14,9 +14,9 @@ import { npCore } from '../ui/spotify'
 import { renderMem } from '../ui/tips'
 import { udg, udgEx } from '../userdata/showOnTL'
 declare let updateMess, updateProg
-//プラットフォーム別　最後に読むやつ
+//プラットフォーム別 最後に読むやつ
 //リンクを外部で開くか内部で出すか
-$(document).on('click', 'a', e => {
+$(document).on('click', 'a', (e) => {
 	const $a = $(e.target)
 	const url = $a.attr('href') || $a.parent().attr('href')
 	if (url) {
@@ -28,9 +28,9 @@ $(document).on('click', 'a', e => {
 			toot = url.match(/https:\/\/([^+_]+)\/users\/([a-zA-Z0-9_]+)\/statuses\/([0-9]+)/)
 		}
 		//タグのURLぽかったら
-		const tags = url.match(/https:\/\/([^+_]+)\/tags\/([_a-zA-Z0-9\&=+\%]+)/)
+		const tags = url.match(/https:\/\/([^+_]+)\/tags\/([_a-zA-Z0-9&=+%]+)/)
 		//メンションっぽかったら
-		const ats = url.match(/https:\/\/([^+_]+)\/@([_a-zA-Z0-9\&=+\%]+)/)
+		const ats = url.match(/https:\/\/([^+_]+)\/@([_a-zA-Z0-9&=+%]+)/)
 		if (toot) {
 			if (toot[1]) {
 				const acctId = $a.parent().attr('data-acct') || '0'
@@ -46,7 +46,7 @@ $(document).on('click', 'a', e => {
 			if (ats[2]) {
 				//Quesdon判定
 				if (!~ats[2].indexOf('@')) {
-					const acctId = $a.parent().attr('data-acct') || localStorage.getItem("main")
+					const acctId = $a.parent().attr('data-acct') || localStorage.getItem('main')
 					udgEx(url, acctId)
 					return false
 				} else {
@@ -77,19 +77,7 @@ export function execCopy(string) {
 	postMessage(['copy', string], '*')
 	return true
 }
-function progshow(e) {
-	if (e.lengthComputable) {
-		const percent = e.loaded / e.total
-		console.log('Progress: ' + percent * 100)
-		$('#imgsel').hide()
-		if (percent < 1) {
-			$('#imgup').text(Math.floor(percent * 100) + '%')
-		} else {
-			$('#imgup').text(lang.lang_progress)
-		}
-	}
-}
-function nano() {
+export function nano() {
 	postMessage(['nano', null], '*')
 }
 onmessage = function (e) {
@@ -102,8 +90,7 @@ onmessage = function (e) {
 	} else if (e.data[0] === 'post') {
 		post()
 	} else if (e.data[0] === 'toastSaved') {
-		const showTxt = `${lang.lang_img_DLDone}${e.data[1][0]
-			}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`
+		const showTxt = `${lang.lang_img_DLDone}${e.data[1][0]}<button class="btn-flat toast-action" onclick="openFinder('${e.data[1][1]}')">Show</button>`
 		toast({ html: showTxt, displayLength: 5000 })
 	} else if (e.data[0] === 'parseColumn') {
 		parseColumn(e.data[1])
@@ -132,7 +119,7 @@ onmessage = function (e) {
 		updateProg(e.data[1])
 	} else if (e.data[0] === 'updateMess') {
 		updateMess(e.data[1])
-	}  else if (e.data[0] === 'asRead') {
+	} else if (e.data[0] === 'asRead') {
 		asRead()
 	} else if (e.data[0] === 'asReadEnd') {
 		asReadEnd()
@@ -143,11 +130,11 @@ onmessage = function (e) {
 	} else if (e.data[0] === 'logData') {
 		$('#logs').val(e.data[1])
 		const obj = document.getElementById('logs')
-		if(obj) obj.scrollTop = obj.scrollHeight
+		if (obj) obj.scrollTop = obj.scrollHeight
 	} else if (e.data[0] === 'alert') {
 		Swal.fire({
 			icon: 'info',
-			title: e.data[1]
+			title: e.data[1],
 		})
 	} else if (e.data[0] === 'twitterLoginComplete') {
 		location.reload()
@@ -178,12 +165,11 @@ if (globalThis.pwa) {
 				Swal.fire({
 					title: 'Open URL',
 					icon: 'info',
-					html:
-						`Click to open this link: <a href="${urls[0]}" target="_blank" class="btn waves-effect">${urls[0]}</a>`,
+					html: `Click to open this link: <a href="${urls[0]}" target="_blank" class="btn waves-effect">${urls[0]}</a>`,
 					showCloseButton: false,
 					showCancelButton: false,
 					focusConfirm: false,
-					confirmButtonText: 'Close'
+					confirmButtonText: 'Close',
 				})
 			}
 		}
@@ -206,8 +192,8 @@ window.ononline = connection
 
 let lastSelection: Range | null = null
 let isSame = true
-$(document).on('keyup mouseup', function (e) {
-	const ls = (window.getSelection()?.toString() !== '') ? window.getSelection()?.getRangeAt(0) : null
+$(document).on('keyup mouseup', function () {
+	const ls = window.getSelection()?.toString() !== '' ? window.getSelection()?.getRangeAt(0) : null
 	lastSelection = typeof ls === 'undefined' ? null : ls
 	if (!isSame) $('#pageSrc').addClass('hide')
 })
@@ -238,7 +224,6 @@ $('textarea, input').on('contextmenu', function (e) {
 })
 let soundFile
 export function playSound(request: XMLHttpRequest) {
-	window.AudioContext = window.AudioContext
 	if (soundFile) {
 		soundFile.stop()
 	}

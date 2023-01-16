@@ -1,5 +1,4 @@
 //Poll Parser
-import $ from 'jquery'
 import { v4 as uuid } from 'uuid'
 import lang from '../common/lang'
 import { date, isDateType } from './date'
@@ -18,9 +17,11 @@ export function pollParse(poll: Poll, acctId: string, emojis: Emoji[]) {
 	if (anime === 'yes' || !anime) lpAnime = 'lpAnime'
 	const choices = poll.options
 	const mineChoice = poll.own_votes || []
-	const refresh = poll.expired ? `<a onclick="voteMastodonrefresh('${acctId}','${poll.id}','${rand}')" class="pointer">
+	const refresh = poll.expired
+		? `<a onclick="voteMastodonrefresh('${acctId}','${poll.id}','${rand}')" class="pointer">
 		${lang.lang_manager_refresh}
-	</a>` : ''
+	</a>`
+		: ''
 	let result_hide = ''
 	let myVote = ''
 	if (poll.voted && mineChoice.length) {
@@ -38,7 +39,7 @@ export function pollParse(poll: Poll, acctId: string, emojis: Emoji[]) {
 				myVote +
 				`<a onclick="showResult('${acctId}','${poll.id}','${rand}')" class="pointer">
 				${lang.lang_parse_unvoted}
-				</a>　`
+				</a>&nbsp;`
 		}
 		result_hide = 'hide'
 	}
@@ -52,16 +53,14 @@ export function pollParse(poll: Poll, acctId: string, emojis: Emoji[]) {
 		for (let i = 0; i < mineChoice.length; i++) {
 			const me = mineChoice[i]
 			if (me === keyc) {
-				voteIt =
-					`<span class="ownMark"><img class="emoji" draggable="false" src="../../${globalThis.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/2705.png"></span>`
+				voteIt = `<span class="ownMark"><img class="emoji" draggable="false" src="../../${globalThis.pwa ? 'dependencies' : 'node_modules'}/twemoji-asset/assets/72x72/2705.png"></span>`
 				break
 			}
 		}
 		let votesel = ''
 		let voteclass = ''
 		if (!poll.voted && !poll.expired) {
-			votesel =
-				`voteSelMastodon('${acctId}','${poll.id}',${poll.multiple}, this)`
+			votesel = `voteSelMastodon('${acctId}','${poll.id}',${poll.multiple}, this)`
 			voteclass = 'pointer'
 		}
 		const per = Math.ceil((choice.votes_count || 0 / poll.votes_count) * 100) || 0

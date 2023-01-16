@@ -1,18 +1,18 @@
-import { Announce } from "../../interfaces/MastodonApiReturns"
-import { twemojiParse } from "../platform/first"
+import { Announce } from '../../interfaces/MastodonApiReturns'
+import { twemojiParse } from '../platform/first'
 import GraphemeSplitter from 'grapheme-splitter'
-import api from "../common/fetch"
-import { formSelectInit } from "../common/declareM"
-import { emojiToggle } from "../post/emoji"
-import { newpack } from "../emoji/emojiPack"
-import twemoji from "twemoji"
-import Swal from "sweetalert2"
-import { clear } from "../post/post"
-import { date, isDateType } from "./date"
-import { announ } from "./tl"
+import api from '../common/fetch'
+import { formSelectInit } from '../common/declareM'
+import { emojiToggle } from '../post/emoji'
+import { newpack } from '../emoji/emojiPack'
+import twemoji from 'twemoji'
+import Swal from 'sweetalert2'
+import { clear } from '../post/post'
+import { date, isDateType } from './date'
+import { announ } from './tl'
 import $ from 'jquery'
-import { customEmojiReplace } from "./parse"
-import { hide, show } from "../ui/postBox"
+import { customEmojiReplace } from './parse'
+import { hide, show } from '../ui/postBox'
 
 export function announParse(obj: Announce[], acctId: string) {
 	let template = ''
@@ -49,10 +49,12 @@ export function announParse(obj: Announce[], acctId: string) {
                     </div>`
 			}
 		}
-		const ended =toot.ends_at ?  `<div class="announReaction" title="${date(toot.ends_at, 'absolute')}" style="width: auto; cursor: default;">
+		const ended = toot.ends_at
+			? `<div class="announReaction" title="${date(toot.ends_at, 'absolute')}" style="width: auto; cursor: default;">
             <i class="fas fa-arrow-right"></i>
             ${date(toot.ends_at, dateType)}
-        </div>` : ''
+        </div>`
+			: ''
 
 		template =
 			template +
@@ -71,14 +73,13 @@ export async function announReaction(id: string, acctId: string, del: boolean, n
 	const at = localStorage.getItem('acct_' + acctId + '_at')
 	const domain = localStorage.getItem('domain_' + acctId)
 	const start = `https://${domain}/api/v1/announcements/${id}/reactions/${encodeURIComponent(name)}`
-	const httpreq = new XMLHttpRequest()
 	const method = del ? 'delete' : 'put'
-	const json = await api(start, {
+	await api(start, {
 		method,
 		headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + at
-        }
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + at,
+		},
 	})
 	announ(acctId)
 }
@@ -95,7 +96,7 @@ export function announReactionNew(id: string, acctId: string) {
 	$('#left-side').hide()
 }
 export function emojiReactionDef(target: string) {
-	const emojiRaw = newpack.find(function (item, index) {
+	const emojiRaw = newpack.find(function (item) {
 		if (item.short_name === target) return true
 	})
 	if (!emojiRaw) return

@@ -1,6 +1,6 @@
-import api from "../common/fetch"
-import lang from "../common/lang"
-import { pollParse } from "./pollParse"
+import api from '../common/fetch'
+import lang from '../common/lang'
+import { pollParse } from './pollParse'
 import $ from 'jquery'
 
 //アンケートのトグル
@@ -60,22 +60,22 @@ export function voteSelMastodon(acctId: string, id: string, mul: boolean, elem: 
 }
 export async function voteMastodon(acctId: string, id: string, target: string) {
 	const choice: string[] = []
-	$(`#vote${target} div`).each(function(i, elem) {
+	$(`#vote${target} div`).each(function (i) {
 		if ($(this).hasClass('sel')) {
 			choice.push(i.toString())
 		}
 	})
 	const domain = localStorage.getItem(`domain_${acctId}`)
-    const at = localStorage.getItem(`acct_${acctId}_at`)
-    const start = `https://${domain}/api/v1/polls/${id}/votes`
-    const json = await api(start, {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + at
-        },
-		body: { choices: choice }
-    })
+	const at = localStorage.getItem(`acct_${acctId}_at`)
+	const start = `https://${domain}/api/v1/polls/${id}/votes`
+	await api(start, {
+		method: 'post',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + at,
+		},
+		body: { choices: choice },
+	})
 	voteMastodonrefresh(acctId, id, target)
 }
 export function showResult(acctId: string, id: string) {
@@ -83,15 +83,15 @@ export function showResult(acctId: string, id: string) {
 }
 export async function voteMastodonrefresh(acctId: string, id: string, target: string) {
 	const domain = localStorage.getItem(`domain_${acctId}`)
-    const at = localStorage.getItem(`acct_${acctId}_at`)
-    const start = `https://${domain}/api/v1/polls/${id}`
-    const json = await api(start, {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + at
-        }
-    })
+	const at = localStorage.getItem(`acct_${acctId}_at`)
+	const start = `https://${domain}/api/v1/polls/${id}`
+	const json = await api(start, {
+		method: 'get',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + at,
+		},
+	})
 	console.log(['Refresh vote', json])
 	if (!json) {
 		return false

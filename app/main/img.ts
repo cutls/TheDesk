@@ -3,15 +3,13 @@ import electron from 'electron'
 import * as fs from 'fs'
 import Jimp from 'jimp'
 export default function img(mainWindow: electron.BrowserWindow, lang: string) {
-	const electron = require('electron')
 	const dialog = electron.dialog
-	const fs = require('fs')
 	const ipc = electron.ipcMain
 	const ja = ['添付ファイルを選択', 'メディアファイル', '画像', '動画', '全てのファイル']
 	const en = ['Attachment', 'Media', 'Pictures', 'Videos', 'All files']
 	const dict = lang === 'ja' ? ja : en
-	ipc.on('file-select', (e, args) => {
-		let fileNames = dialog.showOpenDialogSync(mainWindow, {
+	ipc.on('file-select', (e) => {
+		const fileNames = dialog.showOpenDialogSync(mainWindow, {
 			properties: ['openFile', 'multiSelections'],
 			title: dict[0],
 			defaultPath: '.',
