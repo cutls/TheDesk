@@ -1,0 +1,13 @@
+@keyframes swal2-toast-show-smooth {
+    0% {
+        transform: scale(.5);
+        opacity: 0
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1
+    }
+}
+.swal2-show {
+    animation: swal2-toast-show-smooth .3s !important;
+}

@@ -421,7 +421,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 				//縦幅。その縦幅を持つカラムのidは
 				console.log('tate')
 				if (!$(this).attr('tlid')) return
-				const key = parseInt($(this).attr('tlid') || '0')
+				const key = parseInt($(this).attr('tlid') || '0', 10)
 				const column = columns[key]
 				column.height = height
 				columns[key] = column
@@ -430,7 +430,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 				console.log('yoko')
 				if (!$(this).attr('tlid')) return
 				console.log($(this).find('.boxIn').html())
-				const key = parseInt($(this).find('.boxIn').attr('tlid') || '0')
+				const key = parseInt($(this).find('.boxIn').attr('tlid') || '0', 10)
 				const column = columns[key]
 				column.width = width
 				columns[key] = column

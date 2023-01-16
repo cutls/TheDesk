@@ -11,7 +11,6 @@ import { getMulti, setMulti } from '../common/storage'
 import { verck } from '../common/version'
 import { setLog } from '../platform/first'
 import { parseColumn } from '../ui/layout'
-import { load } from '../ui/settings'
 import { isITips, tips, todo } from '../ui/tips'
 import { idata } from './instance'
 import $ from 'jquery'
@@ -31,7 +30,7 @@ export function ck() {
 	} else {
 		let key = 0
 		for (const acct of multi) {
-			if (acct.domain) refresh(key.toString(), true)
+			if (acct.domain) refresh(key.toString())
 			key++
 		}
 		if (!multi[0].domain) return false
@@ -57,7 +56,7 @@ export function ck() {
 }
 
 //ユーザーデータ更新
-export async function refresh(targetStr: string, loadskip: boolean) {
+export async function refresh(targetStr: string) {
 	const target = parseInt(targetStr, 10)
 	const obj = getMulti() || '[]'
 	let at = obj[target].at
@@ -107,7 +106,6 @@ export async function refresh(targetStr: string, loadskip: boolean) {
 		obj[target] = ref
 		const newJson = JSON.stringify(obj)
 		localStorage.setItem('multi', newJson)
-		if (!loadskip) load()
 	} catch (error: any) {
 		todo(error)
 		setLog(start, 'JSON', error)

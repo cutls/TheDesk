@@ -14,6 +14,9 @@ import { modalDropdownInit } from '../common/modal'
 import { initKeyboard } from '../common/keyshortcut'
 import { altImage, imgPasteInit } from '../post/img'
 import { suggestInit } from '../post/suggest'
+import { voiceSettingLoad } from '../tl/speech'
+import { configLoad, climute, ctLoad, oksload, pluginLoad, wordemp, wordmute } from '../ui/settings'
+import { checkSpotify } from '../ui/spotify'
 // Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
 // 独自ロケールを削除
 // wordmuteListにtagとかいう要素がある
@@ -55,6 +58,20 @@ window.onload = function () {
 			})
 		}, 2000)
 	}
+	const onSetting = !!document.getElementById('envView')
+	console.log(onSetting, 'envView')
+	if (!onSetting) return
+	//最初に読む
+	configLoad()
+	climute()
+	wordmute()
+	wordemp()
+	checkSpotify()
+	voiceSettingLoad()
+	oksload()
+	ctLoad()
+	pluginLoad()
+	$('body').addClass(localStorage.getItem('platform') || 'win')
 }
 
 const size = localStorage.getItem('size')
@@ -170,9 +187,9 @@ export function rgbToHex(color: string) {
 	if (regex) {
 		const rgb = [
 			// RGBからHEXへ変換
-			parseInt(regex[1]).toString(16),
-			parseInt(regex[2]).toString(16),
-			parseInt(regex[3]).toString(16),
+			parseInt(regex[1], 10).toString(16),
+			parseInt(regex[2], 10).toString(16),
+			parseInt(regex[3], 10).toString(16),
 		]
 
 		for (let i = 0; i < rgb.length; ++i) {

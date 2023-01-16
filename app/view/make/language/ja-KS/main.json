@@ -51,6 +51,8 @@
     "lang_manager_refreshAt": "このドメインでログイン",
     "lang_manager_codesetup_title": "コードスキップログイン",
     "lang_manager_codesetup": "ログインできひんのやったら、「キャンセル」を押してな",
+    "lang_manager_invalidInstance": "これはあかん",
+    "lang_manager_invalidInstanceDesc": "(Cutls@fedibird.comにログインしたかったら、入れなあかんは「fedibird.com」や。)",
     "lang_bbmd_misskey": "TheDeskのMisskeyは、@を返信として扱うけんど、全ての@はなおされて別パラメータになってまう。ついでに、「未収載」は「ホーム」扱いや。",
     "lang_emoji_get": "絵文字リスト引っ張ってくる",
     "lang_emoji_custom": "カスタム絵文字",

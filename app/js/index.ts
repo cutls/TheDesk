@@ -110,7 +110,7 @@ import { hide, mini, show, initPostbox, mdCheck } from './ui/postBox'
 import { scrollEvent, scrollCk, goTop, goColumn } from './ui/scroll'
 import {
 	settings,
-	load,
+	configLoad,
 	customVol,
 	climute,
 	cliMuteDel,
@@ -419,7 +419,7 @@ globalThis.scrollCk = scrollCk
 globalThis.goTop = goTop
 globalThis.goColumn = goColumn
 globalThis.settings = settings
-globalThis.load = load
+globalThis.configLoad = configLoad
 globalThis.customVol = customVol
 globalThis.climute = climute
 globalThis.cliMuteDel = cliMuteDel

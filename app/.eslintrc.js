@@ -21,6 +21,8 @@ module.exports = {
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/ban-ts-comment": "off",
-      "eqeqeq": ["error", "always"]
+      "eqeqeq": ["error", "always"],
+      "radix": "error",
+      "no-extra-boolean-cast": "off"
     }
   }

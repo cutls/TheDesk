@@ -1,5 +1,5 @@
 import { getMeta, testExec } from '../platform/plugin'
-import * as Vue from 'vue'
+import { createApp } from 'vue/dist/vue.esm-bundler'
 import { chipInit, chipInitGetInstance, formSelectInit, toast } from '../common/declareM'
 import lang from '../common/lang'
 import { themes } from './theme'
@@ -10,8 +10,6 @@ import Swal from 'sweetalert2'
 import { getColumn, getMulti, setColumn, setMulti } from '../common/storage'
 import { IConfig, ITheDeskConfig } from '../../interfaces/Config'
 import { IPlugin } from '../../interfaces/Storage'
-import { checkSpotify } from './spotify'
-import { voiceSettingLoad } from '../tl/speech'
 import api from '../common/fetch'
 import $ from 'jquery'
 import settingLang from '../common/settingLang'
@@ -20,7 +18,7 @@ const { envConstruction, tlConstruction, postConstruction } = settingLang
 declare let editor
 
 //設定(setting.html)で読む
-const envView: any = Vue.createApp({
+const envView: any = createApp({
 	data() {
 		return {
 			config: envConstruction,
@@ -28,8 +26,11 @@ const envView: any = Vue.createApp({
 	},
 	methods: {
 		complete: function (i, val) {
-			let ls = this.config[i]
+			let ls = envView.config[i]
 			const header = ls.text.head
+			const after = ls.text.after || ''
+			const hasCheckbox = ls.text.checkbox
+			let showVal = val
 			if (!ls.data) {
 				ls = [ls]
 			} else {
@@ -38,6 +39,7 @@ const envView: any = Vue.createApp({
 			console.log(ls)
 			for (let j = 0; j < ls.length; j++) {
 				const lsi = ls[j]
+				if (!val || j > 0) showVal = showVal ? `${showVal} - ${lsi.setValue}` : lsi.setValue
 				if (!val || j > 0) val = lsi.setValue
 				localStorage.setItem(lsi.storage, val)
 			}
@@ -53,19 +55,21 @@ const envView: any = Vue.createApp({
 			if (ls[0].id === 'size') {
 				$('html,body').css('font-size', `${val}px`)
 			}
-			toast({ html: `Updated: ${header}`, displayLength: 3000 })
+
+			const cbTxt = hasCheckbox ? hasCheckbox.find((i) => i.value === val).text : showVal
+			toast({ html: `Updated: "${header}" to "${cbTxt}${after}"`, displayLength: 3000 })
 			return true
 		},
 	},
 }).mount('#envView')
 globalThis.envView = envView
-const tlView: any = Vue.createApp({
+const tlView: any = createApp({
 	data() {
 		return { config: tlConstruction }
 	},
 	methods: {
 		complete: function (i, val) {
-			let ls = this.config[i]
+			let ls = tlView.config[i]
 			const header = ls.text.head
 			if (val) {
 				localStorage.setItem(ls.storage, val)
@@ -90,7 +94,7 @@ const tlView: any = Vue.createApp({
 	},
 }).mount('#tlView')
 globalThis.tlView = tlView
-const postView: any = Vue.createApp({
+const postView: any = createApp({
 	data() {
 		return {
 			config: postConstruction,
@@ -99,7 +103,7 @@ const postView: any = Vue.createApp({
 	},
 	methods: {
 		complete: function (i, val) {
-			let ls = this.config[i]
+			let ls = postView.config[i]
 			const header = ls.text.head
 			if (val) {
 				localStorage.setItem(ls.storage, val)
@@ -144,7 +148,7 @@ export function settings() {
 }
 
 //読み込み時の設定ロード
-export function load() {
+export function configLoad() {
 	const currentLang = lang.language
 	console.log(currentLang)
 	$('#langsel-sel').val(currentLang)
@@ -154,6 +158,7 @@ export function load() {
 		let ls = envView.config[i].storage
 		if (ls) {
 			if (localStorage.getItem(ls)) {
+				console.log(envView.config[i].setValue, localStorage.getItem(ls))
 				envView.config[i].setValue = localStorage.getItem(ls)
 			}
 		} else {
@@ -267,7 +272,7 @@ export function cliMuteDel(key: number) {
 	climute()
 }
 
-function wordmute() {
+export function wordmute() {
 	const word = localStorage.getItem('word_mute') || '[]'
 	const obj = JSON.parse(word)
 	chipInit($('#wordmute'), {
@@ -282,7 +287,7 @@ export function wordmuteSave() {
 	localStorage.setItem('word_mute', json)
 }
 
-function wordemp() {
+export function wordemp() {
 	const word = localStorage.getItem('word_emp') || '[]'
 	const obj = JSON.parse(word)
 	chipInit($('#wordemp'), {
@@ -314,7 +319,7 @@ export function oks(no: number) {
 	toast({ html: lang.lang_setting_ksref, displayLength: 3000 })
 }
 
-function oksload() {
+export function oksload() {
 	if (localStorage.getItem('oks-1')) {
 		$('#oks-1').val(localStorage.getItem('oks-1') || '')
 	}
@@ -698,7 +703,7 @@ export function customSoundSave(key: number, file: string) {
 	localStorage.setItem('custom' + key, file)
 	$(`#c${key}-file`).text(file)
 }
-function pluginLoad() {
+export function pluginLoad() {
 	$('#plugin-edit-sel').val('add_new')
 	$('.plugin_delete').addClass('disabled')
 	let template = ''
@@ -830,21 +835,7 @@ export async function deletePlugin() {
 	localStorage.setItem('plugins', JSON.stringify(ss))
 	pluginLoad()
 }
-window.onload = function () {
-	const onSetting = !!document.getElementById('aenvView')
-	if (!onSetting) return
-	//最初に読む
-	load()
-	climute()
-	wordmute()
-	wordemp()
-	checkSpotify()
-	voiceSettingLoad()
-	oksload()
-	ctLoad()
-	pluginLoad()
-	$('body').addClass(localStorage.getItem('platform') || 'win')
-}
+
 export async function checkUpd() {
 	const winstore = localStorage.getItem('winstore') === 'brewcask' || localStorage.getItem('winstore') === 'snapcraft' || localStorage.getItem('winstore') === 'winstore'
 	const ver = localStorage.getItem('ver')

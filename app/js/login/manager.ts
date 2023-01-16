@@ -54,7 +54,7 @@ export function loadAcctList() {
 				</a>
 			</div>
 			<div class="card-action">
-				<button class="btn-flat waves-effect disTar pointer  white-text" onclick="refresh('${key}')">
+				<button class="btn-flat waves-effect disTar pointer  white-text" onclick="refreshManager('${key}')">
 					<i class="material-icons left">refresh</i>${lang.lang_manager_refresh}
 				</button>
 				<button class="btn-flat waves-effect disTar pointer red-text" onclick="multiDel(${key})">
@@ -358,7 +358,7 @@ async function versionCompat(title: string, version: string) {
 export function instance() {
 	const url = $('#autocomplete-input').val()?.toString() || ''
 	if (!url || url.indexOf('@') !== -1 || url.indexOf('https') !== -1) {
-		Swal.fire('入力形式が違います。', '(Cutls@mstdn.jpにログインする場合、入力するのは"mstdn.jp"です。)')
+		Swal.fire(lang.lang_manager_invalidInstance, lang.lang_manager_invalidInstanceDesc)
 		return false
 	}
 	login(url)
@@ -484,11 +484,11 @@ export function atSetup() {
 	localStorage.setItem('user-id_' + target, add.id)
 	localStorage.setItem('prof_' + target, avatar)
 	setMulti(obj)
-	refresh(target)
+	refreshManager(target)
 }
 
 //ユーザーデータ更新
-async function refresh(target: number) {
+async function refreshManager(target: number) {
 	const obj = getMulti()
 	console.log(obj)
 	const start = `https://${obj[target].domain}/api/v1/accounts/verify_credentials`
