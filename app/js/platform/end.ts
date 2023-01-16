@@ -175,10 +175,7 @@ if (globalThis.pwa) {
 			}
 			*/
 			if (!urls) return
-			const element = document.createElement('a')
-			element.setAttribute('href', urls)
-			element.setAttribute('target', '_blank')
-			element.click()
+			window.open(urls, '_blank')
 		}
 	}
 }
