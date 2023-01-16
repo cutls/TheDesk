@@ -158,7 +158,7 @@ onmessage = function (e) {
 }
 /* PWA */
 if (globalThis.pwa) {
-	globalThis.poseMessage = function (e) {
+	globalThis.postMessage = function (e) {
 		if (e[0] === 'openUrl') {
 			const urls = e[1].match(/https?:\/\/(.+)/)
 			if (urls) {
