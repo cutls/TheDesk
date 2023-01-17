@@ -132,7 +132,7 @@
 iframe,
 .cvo video {
 	max-width: 100%;
-	max-height: 23rem;
+	max-height: 28rem;
 }
 @media screen and (max-width: 600px) {
 	.mobile #timeline-container {

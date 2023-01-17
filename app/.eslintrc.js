@@ -23,6 +23,7 @@ module.exports = {
       "@typescript-eslint/ban-ts-comment": "off",
       "eqeqeq": ["error", "always"],
       "radix": "error",
+      "semi": "always",
       "no-extra-boolean-cast": "off"
     }
   }

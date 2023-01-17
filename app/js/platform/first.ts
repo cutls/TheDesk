@@ -3,7 +3,7 @@ import $ from 'jquery'
 import { v4 as uuid } from 'uuid'
 import GraphemeSplitter from 'grapheme-splitter'
 import { ck } from '../login/login'
-import { autoCompleteInitTrigger, loadAcctList, support } from '../login/manager'
+import { autoCompleteInitTrigger, loadAcctList } from '../login/manager'
 import { connection } from './end'
 import twemoji from 'twemoji'
 import { tl } from '../tl/tl'
@@ -34,7 +34,6 @@ window.onload = function () {
 	if (onHome) ck()
 	if (onHome) initKeyboard()
 	if (onManager) loadAcctList()
-	if (onManager) support()
 	autoCompleteInitTrigger()
 	if (onHome) imgPasteInit()
 	if (onHome) loadVis()

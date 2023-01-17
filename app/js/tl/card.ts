@@ -2,7 +2,7 @@
 //全てのTL処理で呼び出し
 import $ from 'jquery'
 import _ from 'lodash'
-import { Card } from '../../interfaces/MastodonApiReturns'
+import { Card, Toot } from '../../interfaces/MastodonApiReturns'
 import { dropdownInitGetInstance } from '../common/declareM'
 import api from '../common/fetch'
 import lang from '../common/lang'
@@ -62,7 +62,7 @@ export async function additionalIndv(tlid: string, acctId: string, idStr: string
 				.parents('.cvo')
 				.attr('toot-id') || ''
 		const start = `https://${domain}/api/v1/statuses/${id}`
-		const json = await api(start, {
+		const json = await api<Toot>(start, {
 			method: 'get',
 			headers: {
 				'Content-Type': 'application/json',
@@ -70,9 +70,10 @@ export async function additionalIndv(tlid: string, acctId: string, idStr: string
 			},
 		})
 		const cards = json.card
+		if (!cards) return
 		const analyze = cardHtml(cards, acctId, id)
 		$(`[toot-id=${id}] .additional`).html(analyze)
-		if (json.title) {
+		if (cards.title) {
 			$(`[toot-id=${id}] a:not(.parsed)`).addClass('parsed')
 			$(`[toot-id=${id}]`).addClass('parsed')
 		}
@@ -130,16 +131,13 @@ export async function cardHtmlShow(acctId: string, idStr: string) {
 		},
 	})
 	const json = jsonRaw.card
+	if (!json) return
 	if (json.provider_name === 'Twitter') {
-		const statusId = false
-		console.log(statusId)
-		if (statusId) {
-			const url = json.url
-			analyze = `
+		const url = json.url
+		analyze = `
 			<blockquote class="twitter-tweet" data-dnt="true"><strong>${json.author_name}</strong><br>${json.description}<a href="${url}">${json.url}</a></blockquote>
 			<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 			`
-		}
 	}
 	$('[toot-id=' + id + '] .additional').html(analyze)
 }

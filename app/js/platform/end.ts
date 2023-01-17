@@ -161,8 +161,9 @@ if (globalThis.pwa) {
 	globalThis.postMessage = function (e) {
 		if (e[0] === 'openUrl') {
 			const urls = e[1].match(/https?:\/\/(.+)/)
-			/*
-			if (urls) {
+			if (!urls) return
+			const openedWindow = window.open(urls, '_blank')
+			if (!openedWindow && urls) {
 				Swal.fire({
 					title: 'Open URL',
 					icon: 'info',
@@ -173,9 +174,6 @@ if (globalThis.pwa) {
 					confirmButtonText: 'Close',
 				})
 			}
-			*/
-			if (!urls) return
-			window.open(urls, '_blank')
 		}
 	}
 }

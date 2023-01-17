@@ -7,7 +7,7 @@ import { getMulti, setMulti, initColumn, getColumn, setColumn } from './common/s
 import { verck, closeStart } from './common/version'
 import { defaultEmoji, customEmoji, defEmoji } from './emoji/defaultEmoji'
 import { ck, refresh, ckdb, multiSelector, ticker } from './login/login'
-import { loadAcctList, maxChars, multiDel, backToInit, instance, code, atSetup, mainAcct, asReadEnd, autoCompleteInitTrigger, support } from './login/manager'
+import { loadAcctList, maxChars, multiDel, backToInit, instance, code, atSetup, mainAcct, asReadEnd, autoCompleteInitTrigger } from './login/manager'
 import { execCopy, playSound } from './platform/end'
 import { escapeHTML, nl2br, br2nl, formatTime, formatTimeUtc, makeCID, rgbToHex, setLog, escapeCsv, statusModel, initWebviewEvent, twemojiParse } from './platform/first'
 import { initPlugin, getMeta, execPlugin, testExec } from './platform/plugin'
@@ -186,7 +186,6 @@ globalThis.loadAcctList = loadAcctList
 globalThis.maxChars = maxChars
 globalThis.getData = getData
 globalThis.multiDel = multiDel
-globalThis.support = support
 globalThis.backToInit = backToInit
 globalThis.instance = instance
 globalThis.code = code

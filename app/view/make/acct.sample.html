@@ -57,21 +57,6 @@
                             </button>
                         </div>
                     </div>
-                    <label>
-                        <input type="checkbox" class="filled-in" id="misskey" />
-                        <span>@@thisismisskey@@</span> </label><br />
-                    <div class="hide">
-                        @@codesetupwarn@@<br />
-                        <label>
-                            <input type="checkbox" class="filled-in" id="linux" />
-                            <span>@@codesetup@@</span>
-                        </label>
-                        <br />
-                    </div>
-                </div>
-                <div class="col s4 scr" aria-hidden="true">
-                    <span style="font-family:Open Sans;">Supports</span>
-                    <div id="support" class="collection transparent"></div>
                 </div>
             </div>
         </div>
@@ -90,22 +75,13 @@
                 <ul id="compt-list"></ul>
             </div>
         </div>
-        <div id="misskeylogin" style="display:none">
-            <h5>AppSecret</h5>
-            @@misskeylogin@@<br />
-            <input type="hidden" id="misskey-url" />
-            <input type="text" id="misskey-key" placeholder="@@codepaste@@" required />
-            <button class="btn waves-effect" onclick="misskeyLogin()">Auth</button><br />
-            <br />
-            <a onclick="atSetup('misskey')" class="pointer">@@accessTokenSetup@@</a>
-        </div>
     </div>
     <div class="hide-first">
         <h5>@@mainacct@@</h5>
         <div class="input-field" style="width:300px">
             <span data-trans="your_acct">@@selacct@@</span>
             <br />
-            <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainacct()"></select>
+            <select id="main-acct-sel" class="acct-sel" style="color:black" onchange="mainAcct()"></select>
             <label></label>
         </div>
         <ul id="domain-list" class="collection transparent"></ul>

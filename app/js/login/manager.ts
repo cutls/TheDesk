@@ -236,14 +236,6 @@ export async function multiDel(target: number) {
 		setColumn(newCols)
 	}
 }
-//サポートインスタンス
-export function support() {
-	for (const [key, instance] of Object.entries(idata)) {
-		if (instance !== 'instance') continue
-		const template = `<a onclick="login('${key}')" class="collection-item pointer transparent">${idata[key + '_name']}(${key})</a>`
-		$('#support').append(template)
-	}
-}
 export function backToInit() {
 	$('#auth').hide()
 	$('#add').show()
@@ -541,6 +533,7 @@ function multiSel() {
 	} else {
 		let key = 0
 		for (const acct of obj) {
+			isSelected = false
 			let mainb = ''
 			if (key.toString() === last) {
 				isSelected = true

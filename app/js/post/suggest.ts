@@ -78,12 +78,11 @@ export function suggestInit() {
 							if (suggest !== oldSuggest) {
 								console.log('Try to get suggest at ' + suggest)
 								const json = await api<Search>(suggest, {
-									method: 'post',
+									method: 'get',
 									headers: {
 										'Content-Type': 'application/json',
 										Authorization: 'Bearer ' + at,
 									},
-									body: q,
 								})
 								console.log(['Search', json])
 								//ハッシュタグ
