@@ -110,18 +110,18 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		let disName = escapeHTML(toot.account.display_name || toot.account.acct)
 
 		if (toot.reblog) {
+			disName = escapeHTML(toot.account.display_name || toot.account.acct)
+			//絵文字があれば
+			if (toot.account.emojis) disName = customEmojiReplace(disName, toot.account, gif)
 			noticeAvatar = gif ? toot.account.avatar : toot.account.avatar_static
 			noticeAvatar = `<a onclick="udg('${toot.account.id}','${acctId}');" user="${toot.account.acct}" class="udg" aria-hidden="true">
 						<img draggable="false" src="${noticeAvatar}" width="20" class="notf-icon prof-img" 
 							user="${toot.account.acct}" onerror="this.src='../../img/loading.svg'" loading="lazy">
 					</a>`
 			const rticon = 'fa-retweet light-blue-text'
-			noticeText = `<i class="big-text fas ${rticon}"></i>${disName}(@${toot.account.acct})<br>`
+			noticeText = `<span onclick="udg('${toot.account.id}','${acctId}');" class="pointer"><i class="big-text fas ${rticon}"></i>${disName}(@${toot.account.acct})</span><br>`
 			boostback = 'shared'
 			toot = toot.reblog
-			disName = escapeHTML(toot.account.display_name || toot.account.acct)
-			//絵文字があれば
-			if (toot.account.emojis) disName = customEmojiReplace(disName, toot.account, gif)
 		} else {
 			//ユーザー強調
 			if (useremp) {
@@ -132,6 +132,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				}
 			}
 		}
+		disName = escapeHTML(toot.account.display_name || toot.account.acct)
 		if (toot.content === '') {
 			content = '　'
 		} else {
@@ -560,7 +561,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				<div class="area-vis grid">${vis}</div>
 				<div class="area-actions grid">
 					<div class="action ${antiNoAuth}">
-						<a onclick="detEx('${toot.url}','main')" class="waves-effect waves-dark details" style="padding:0">
+						<a onclick="detEx('${toot.url}','main')" class="waves-effect waves-dark details" style="padding:0; white-space: nowrap;">
 							${lang.lang_parse_det}
 						</a>
 					</div>
