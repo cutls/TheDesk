@@ -6,6 +6,7 @@ import { todc, todo } from '../ui/tips'
 import { setLog } from '../platform/first'
 import Swal from 'sweetalert2'
 import { post } from './post'
+import { Media } from '../../interfaces/MastodonApiReturns'
 
 //ドラッグ・アンド・ドロップからアップロードまで。uiのimg.jsとは異なります。
 const obj = $('body')
@@ -42,7 +43,7 @@ $('#drag').on('dragleave', function () {
 
 //複数アップ
 function pimg(files: FileList) {
-	console.table(files)
+	console.log(files)
 	for (let i = 0; i < files.length; i++) {
 		const m = files[i].path.match(/\.(.+)$/)
 		if (!m) return handleFileUpload(files[i], i)
@@ -280,18 +281,18 @@ export async function deleteImage(key: string) {
 	}
 }
 export async function altImage(acctId: string, id: string) {
-	const domain = localStorage.getItem('domain_' + acctId)
-	const at = localStorage.getItem('acct_' + acctId + '_at')
+	const domain = localStorage.getItem(`domain_${acctId}`)
+	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const start = `https://${domain}/api/v1/media/${id}`
+	const json = await api<Media>(start, {
+		method: 'get',
+		headers: {
+			'content-type': 'application/json',
+			Authorization: 'Bearer ' + at,
+		},
+	})
+	console.log(json)
 	if ($(`[data-media=${id}]`).hasClass('unknown')) {
-		const json = await api(start, {
-			method: 'get',
-			headers: {
-				'content-type': 'application/json',
-				Authorization: 'Bearer ' + at,
-			},
-		})
-		console.log(json)
 		$('[data-media=' + id + ']').removeClass('unknown')
 		if (json.preview_url) $('[data-media=' + id + ']').attr('src', json.preview_url)
 	} else {
@@ -302,45 +303,25 @@ export async function altImage(acctId: string, id: string) {
 			inputAttributes: {
 				autocapitalize: 'off',
 			},
+			inputValue: json.description || '',
 			showCancelButton: true,
 			confirmButtonText: 'Post',
 			showLoaderOnConfirm: true,
-			preConfirm: (data) => {
-				return fetch(start, {
-					method: 'PUT',
+			preConfirm: async (data) => {
+				Swal.showLoading(null)
+				await api(start, {
+					method: 'put',
 					headers: {
 						'content-type': 'application/json',
 						Authorization: 'Bearer ' + at,
 					},
-					body: JSON.stringify({
+					body: {
 						description: data,
-					}),
+					}
 				})
-					.then(function (response) {
-						if (!response.ok) {
-							response.text().then(function (text) {
-								setLog(response.url, response.status, text)
-							})
-						}
-						return response.json()
-					})
-					.catch(function (error) {
-						todo(error)
-						setLog(start, 'JSON', error)
-						console.error(error)
-					})
-					.then(function (json) {
-						console.log(json)
-						$(`[data-media=${id}]`).attr('title', data)
-					})
+				$(`[data-media=${id}]`).attr('title', data)
 			},
 			allowOutsideClick: () => !Swal.isLoading(),
-		}).then((result) => {
-			if (result.value) {
-				Swal.fire({
-					title: 'Complete',
-				})
-			}
 		})
 	}
 }
