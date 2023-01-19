@@ -151,9 +151,9 @@ export async function notfCommon(acctId: string, tlid: string, isStreamOnly: boo
 					const status = obj.status
 					template = status ? parse([status], 'notf', acctId, 'notf', 0) : userParse([obj.account], acctId, type, 'notf', -1)
 				}
+				$('div[data-notf=' + acctId + ']').append(template)
 				key++
 			}
-			$('div[data-notf=' + acctId + ']').html(template)
 			// $('#landing_' + tlid).hide()
 			timeUpdate()
 		}

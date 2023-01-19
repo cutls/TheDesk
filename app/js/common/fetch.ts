@@ -1,3 +1,4 @@
+import { stripTags } from '../platform/first'
 import { toast } from './declareM'
 
 interface IOptions {
@@ -25,7 +26,7 @@ export default async function api<T = any>(url: string, options?: IOptions, thro
 		return json as T
 	} catch (e: any) {
 		const eStr = typeof e === 'string' ? e : e[0]
-		toast({ html: `Error: ${eStr}`, displayLength: 5000 })
+		toast({ html: `Error: ${stripTags(eStr)}`, displayLength: 5000 })
 		throw e
 	}
 }

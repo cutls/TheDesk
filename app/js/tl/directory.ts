@@ -33,6 +33,7 @@ export function dirChange(mode: IDirMode) {
 }
 
 export async function directory(modeRaw: IDirMode, isMore?: boolean) {
+	$('#dir-contents').html('')
 	const mode = modeRaw === 'check' ? $('[name=dirsug]:checked').val()?.toString() : modeRaw
 	const order = $('[name=sort]:checked').val()?.toString() || 'active'
 	const local_only = $('#local_only:checked').val() ? 'true' : 'false'
@@ -56,6 +57,7 @@ export async function directory(modeRaw: IDirMode, isMore?: boolean) {
 			Authorization: 'Bearer ' + at,
 		},
 	})
+	$('#dir-contents .progress').remove()
 	if (json) {
 		$('#moreDir').removeClass('disabled')
 		let obj: Account[] = []

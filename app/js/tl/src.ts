@@ -236,13 +236,13 @@ function graphDrawCore(his: Tag['history'], tag: Tag, acct_id: number) {
 		parseInt(his[5].uses, 10),
 		parseInt(his[6].uses, 10),
 	])
-	const six = 50 - (parseInt(his[6].usess, 10) / max) * 50
-	const five = 50 - (parseInt(his[5].usess, 10) / max) * 50
-	const four = 50 - (parseInt(his[4].usess, 10) / max) * 50
-	const three = 50 - (parseInt(his[3].usess, 10) / max) * 50
-	const two = 50 - (parseInt(his[2].usess, 10) / max) * 50
-	const one = 50 - (parseInt(his[1].usess, 10) / max) * 50
-	const zero = 50 - (parseInt(his[0].usess, 10) / max) * 50
+	const six = 50 - (parseInt(his[6].uses, 10) / max) * 50
+	const five = 50 - (parseInt(his[5].uses, 10) / max) * 50
+	const four = 50 - (parseInt(his[4].uses, 10) / max) * 50
+	const three = 50 - (parseInt(his[3].uses, 10) / max) * 50
+	const two = 50 - (parseInt(his[2].uses, 10) / max) * 50
+	const one = 50 - (parseInt(his[1].uses, 10) / max) * 50
+	const zero = 50 - (parseInt(his[0].uses, 10) / max) * 50
 	return `<div class="tagComp">
 				<div class="tagCompSvg">
 					<svg version="1.1" viewbox="0 0 60 50" width="60" height="50">

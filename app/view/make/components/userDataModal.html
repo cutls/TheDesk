@@ -43,8 +43,24 @@
 							<a href="#!" class="waves-effect waves-green btn red shrinker" onclick="block()"
 								id="his-block-btn"><i class="material-icons">block</i><span
 									id="his-block-btn-text">@@block@@</span></a>
-							<a class="dropdown-trigger btn waves-effect grey" href="#" data-target="actiondropdown"> <i
+							<a class="dropdown-trigger btn waves-effect grey" href="#" id="actiondropdownTrigger" data-target="actiondropdown"> <i
 									class="material-icons">more_vert</i>@@more@@</a>
+							<!-- Dropdown Structure  -->
+							<ul id="actiondropdown" class="dropdown-content">
+								<li onclick="empUser()" tabIndex="0">
+									<a title="@@empUser@@"><i class="material-icons">highlight</i>@@empUser@@</a>
+								</li>
+								<li onclick="pinUser()" class="only-his-data" tabIndex="1">
+									<a title="@@endorse@@"><i class="material-icons">thumb_up</i>@@endorse@@</a>
+								</li>
+								<li onclick="profbrws()" id="his-openin" tabIndex="2">
+									<a title="@@openinbrowser@@"><i
+											class="material-icons">open_in_browser</i>@@openinbrowser@@</a>
+								</li>
+								<li onclick="setMain()" class="only-my-data" id="his-main-acct" tabIndex="3">
+									<a title="@@mainacct@@"><i class="material-icons">grade</i>@@mainacct@@</a>
+								</li>
+							</ul>
 						</div>
 						<div id="muteDuration" class="hide">
 							<label>
@@ -70,22 +86,7 @@
 									id="his-mute-btn-text">@@mute@@</span>
 							</a>
 						</div>
-						<!-- Dropdown Structure -->
-						<ul id="actiondropdown" class="dropdown-content">
-							<li onclick="empUser()" tabIndex="0">
-								<a title="@@empUser@@"><i class="material-icons">highlight</i>@@empUser@@</a>
-							</li>
-							<li onclick="pinUser()" class="only-his-data" tabIndex="1">
-								<a title="@@endorse@@"><i class="material-icons">thumb_up</i>@@endorse@@</a>
-							</li>
-							<li onclick="profbrws()" id="his-openin" tabIndex="2">
-								<a title="@@openinbrowser@@"><i
-										class="material-icons">open_in_browser</i>@@openinbrowser@@</a>
-							</li>
-							<li onclick="setMain()" class="only-my-data" id="his-main-acct" tabIndex="3">
-								<a title="@@mainacct@@"><i class="material-icons">grade</i>@@mainacct@@</a>
-							</li>
-						</ul>
+
 					</div>
 				</div>
 				<div class="his-float" id="his-float-timeline">

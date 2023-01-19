@@ -20,9 +20,12 @@ import { checkSpotify } from '../ui/spotify'
 // Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
 // 独自ロケールを削除
 // wordmuteListにtagとかいう要素がある
-// ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除、Tootsearch削除、MD/BBCode削除
-// altImage interval
-window.onload = function () {
+// Glance TLのデータ構造変更, ポップアップ通知の削除
+
+// ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除、Tootsearch削除、MD/BBCode削除、altImage interval
+
+window.onload = init
+function init() {
 	console.log('loaded')
 	initPostbox()
 	connection()

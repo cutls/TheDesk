@@ -2,7 +2,7 @@
 import $ from 'jquery'
 import Swal from 'sweetalert2'
 import { Account, Relationship } from '../../interfaces/MastodonApiReturns'
-import { modalInitGetInstance, toast } from '../common/declareM'
+import { dropdownInit, dropdownInitGetInstance, modalInitGetInstance, toast } from '../common/declareM'
 import api from '../common/fetch'
 import lang from '../common/lang'
 import { multiSelector } from '../login/login'
@@ -186,6 +186,8 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 	} else {
 		$('#his-data').removeClass('locked')
 	}
+	const ddI = dropdownInitGetInstance($(`[data-target="actiondropdown"]`))
+	ddI.recalculateDimensions()
 	//外部データ取得(死かもしれないので)
 	udAdd(acctId, user, json.url)
 }

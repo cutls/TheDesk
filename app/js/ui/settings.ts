@@ -354,7 +354,7 @@ export async function exportSettings() {
 }
 
 export function exportSettingsCore() {
-	const exp = {} as ITheDeskConfig
+	const exp = { meta: {} } as ITheDeskConfig
 	//Accounts
 	const acct = getMulti()
 	exp.accts = acct
