@@ -36,19 +36,6 @@ export const sound = [
 ]
 export const envConstruction = [
 	{
-		id: 'popup',
-		storage: 'popup',
-		checkbox: false,
-		doubleText: false,
-		setValue: 0,
-		width: 50,
-		text: {
-			head: '@@popup@@',
-			desc: '@@popupwarn@@',
-			after: '@@s@@'
-		}
-	},
-	{
 		id: 'notf',
 		storage: 'nativenotf',
 		checkbox: true,
@@ -225,17 +212,6 @@ export const tlConstruction = [
 					value: 'medium'
 				}
 			]
-		}
-	},
-	{
-		id: 'ul',
-		storage: 'locale',
-		checkbox: true,
-		setValue: 'yes',
-		text: {
-			head: '@@locale@@',
-			desc: '@@localewarn@@',
-			checkbox: yesno
 		}
 	},
 	{
