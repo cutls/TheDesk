@@ -9,7 +9,7 @@ import { idata } from '../login/instance'
 
 import { escapeHTML, formatTime } from '../platform/first'
 import { post } from './post'
-import { draftToPost } from './status'
+import { draftToPost, localDraftToPost } from './status'
 
 export function nsfw(force?: boolean) {
 	if (force || !$('#nsfw').hasClass('nsfw-avail')) {
@@ -184,9 +184,9 @@ export async function addToDraft() {
 	draftDraw()
 }
 export function useThisDraft(i) {
-	const draft = localStorage.getItem('draft') || `{}`
-	const draftObj = JSON.parse(draft)
-	draftToPost(draftObj[i], draftObj[i].TheDeskAcctId, '0')
+	const draft = localStorage.getItem('draft') || `[]`
+	const draftObj: StatusTheDeskExtend[] = JSON.parse(draft)
+	localDraftToPost(draftObj[i], draftObj[i].TheDeskAcctId || '0')
 	draftToggle()
 }
 export function deleteThisDraft(i) {

@@ -70,7 +70,7 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	$('.toot-btn-group').prop('disabled', true)
 	todo('Posting')
 	const at = localStorage.getItem('acct_' + acct_id + '_at')
-	let start = 'https://' + domain + '/api/v1/statuses'
+	let start = `https://${domain}/api/v1/statuses`
 	const editTarget = $('#tootmodal').attr('data-edit')
 	if (editTarget) start = start + `/${editTarget}`
 	const reply = $('#reply').val()
@@ -136,8 +136,9 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		toot.TheDeskAcctId = acct_id
 		return toot
 	}
+	const method: 'put' | 'post' = editTarget ? 'put' : 'post'
 	const q = {
-		method: 'post' as const,
+		method: method,
 		headers: {
 			'content-type': 'application/json',
 			Authorization: `Bearer ${at}`,

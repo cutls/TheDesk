@@ -1,17 +1,17 @@
 //お気に入り登録やブースト等、フォローやブロック等
 
 import Swal from 'sweetalert2'
-import { Account, Search, Toot } from '../../interfaces/MastodonApiReturns'
+import { Account, Media, Search, Toot } from '../../interfaces/MastodonApiReturns'
 import { dropdownInit, dropdownInitGetInstance, formSelectInit, toast } from '../common/declareM'
 import api from '../common/fetch'
 import lang from '../common/lang'
 import { execCopy } from '../platform/end'
-import { columnReload } from '../tl/tl'
 import { show, mdCheck } from '../ui/postBox'
 import { showReq, showDom } from '../userdata/hisData'
 import { cw, IVis, vis } from './secure'
 import { reEx } from './useTxtBox'
 import $ from 'jquery'
+import { StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
 
 //お気に入り登録
 export async function fav(id: string, acctId: string, remote: boolean) {
@@ -122,8 +122,6 @@ export async function bkm(id: string, acctId: string) {
 		$('.bkm_' + id).addClass('red-text')
 		$(`[toot-id=${id}]`).addClass('bkmed')
 	}
-	const tlidTar = $(`.bookmark-timeline[data-acct=${acctId}]`).attr('tlid') || '0'
-	columnReload(tlidTar, 'bookmark')
 }
 
 //フォロー
@@ -369,6 +367,51 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 	localStorage.setItem('nohide', 'true')
 	show()
 	const html = json.text || json.content
+	console.log(html)
+	$('#textarea').val(html)
+	if (json.spoiler_text) {
+		cw(true)
+		$('#cw-text').val(json.spoiler_text)
+	}
+	if (json.sensitive) {
+		$('#nsfw').addClass('yellow-text')
+		$('#nsfw').html('visibility')
+		$('#nsfw').addClass('nsfw-avail')
+	}
+	if (json.in_reply_to_id) $('#reply').val(json.in_reply_to_id)
+}
+
+export async function localDraftToPost(json: StatusTheDeskExtend, acctId: string) {
+	const domain = localStorage.getItem(`domain_${acctId}`)
+	const at = localStorage.getItem(`acct_${acctId}_at`)
+	$('#post-acct-sel').prop('disabled', true)
+	$('#post-acct-sel').val(acctId)
+	formSelectInit($('select'))
+	mdCheck()
+	//メディアがあれば
+	const media_ids: string[] = []
+	if (json.media_ids) {
+		for (const media of json.media_ids) {
+			const start = `https://${domain}/api/v1/media/${media}`
+			const json = await api<Media>(start, {
+				method: 'get',
+				headers: {
+					'content-type': 'application/json',
+					Authorization: 'Bearer ' + at,
+				},
+			})
+			if (!json.id) continue
+			media_ids.push(json.id)
+			$('#preview').append(`<img src="${json.preview_url}" style="width:50px; max-height:100px;" data-acct="${acctId}" data-media="${json.id}" oncontextmenu="deleteImage('${json.id}')" onclick="altImage('${acctId}','${json.id}')" title="${lang.lang_postimg_delete}">`)
+		}
+	}
+	const visMode = json.visibility
+	if(visMode) vis(visMode)
+	$('#media').val(media_ids?.join(','))
+	localStorage.setItem('nohide', 'true')
+	show()
+	const html = json.status || ''
+	console.log(html)
 	$('#textarea').val(html)
 	if (json.spoiler_text) {
 		cw(true)
