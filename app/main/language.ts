@@ -1,6 +1,7 @@
 // Create the Application's main menu
 import electron from 'electron'
 import { join } from 'path'
+import { about } from './system'
 export default function (lang: string, mainWindow: electron.BrowserWindow, packaged: boolean, dir: string, dirname: string) {
     //フレーム
     if (lang !== 'ja' && lang !== 'en') {
@@ -96,20 +97,7 @@ export default function (lang: string, mainWindow: electron.BrowserWindow, packa
         submenu: [
             {
                 label: dict.about[lang], click: function () {
-                    const ver = app.getVersion()
-                    const window = new BrowserWindow({
-                        webPreferences: {
-                            webviewTag: false,
-                            nodeIntegration: false,
-                            contextIsolation: true,
-                            preload: join(dirname, 'js', 'platform', 'preload.js')
-                        },
-                        width: 300, height: 500,
-                        'transparent': false,    // ウィンドウの背景を透過
-                        'frame': false,     // 枠の無いウィンドウ
-                        'resizable': false
-                    })
-                    window.loadURL(dir + '/about.html?ver=' + ver)
+                    about(dir)
                 }
             },
             { type: 'separator' },

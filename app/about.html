@@ -82,6 +82,10 @@
             grid-area: data6;
         }
     </style>
+    <script>
+		var useLang = 'en'
+		var process = { env: { NODE_ENV: 'production' } }
+	</script>
 </head>
 
 <body class="center" style="overflow: hidden;">
@@ -106,10 +110,14 @@
     <div class="cp">
         Copyright &copy; TheDesk 2018<br /> Main developer(author): <a href="https://2m.cutls.com/@Cutls" target="_blank">Cutls P</a><br />
         <a href="https://github.com/cutls/TheDesk/graphs/contributors" style="text-align: center; user-select: none;"><img src="https://opencollective.com/TheDesk/contributors.svg?width=700&button=false" style="width: 100%"></a>
-        <br /><a href="https://thedesk.top" target="_blank">Web site</a>
+        <br /><a href="https://thedesk.top">Web site</a>
     </div>
     <button onclick="window.close()" class="btn waves-effect indigo" style="width: calc(100% - 10px);"><i class="material-icons left">close</i>Close</button>
-    <script type="text/javascript" src="./js/ui/theme.js"></script>
+	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="./node_modules/grapheme-splitter/index.js"></script>
+	<script type="text/javascript" src="./node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="./node_modules/@cutls/materialize-css/dist/js/materialize.js"></script>
+	<script type="text/javascript" src="./dist/index.min.js"></script>
     <script>
         var about = JSON.parse(localStorage.getItem('about'))
         $('#now').text(localStorage.getItem('ver'))
@@ -121,13 +129,7 @@
             var ver = m[1]
             $('#ver').text(ver)
         }
-        $('#hash').html('<a href="https://github.com/cutls/TheDesk/commits/' + about[3] + '" target="_blank">' + about[3].slice(0, 7) + '</a>')
-        $(document).on('click', 'a', (e) => {
-            e.preventDefault()
-            var url = $(e.target).attr('href')
-            postMessage(['openUrlMainProcess', url], '*')
-            return false
-        })
+        $('#hash').html('<a href="https://github.com/cutls/TheDesk/commits/' + about[3] + '">' + about[3].slice(0, 7) + '</a>')
     </script>
 </body>
 

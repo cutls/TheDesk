@@ -17,6 +17,7 @@ declare let updateMess, updateProg
 //プラットフォーム別 最後に読むやつ
 //リンクを外部で開くか内部で出すか
 $(document).on('click', 'a', (e) => {
+	if (location.href.match(/about.html/)) return
 	const $a = $(e.target)
 	const url = $a.attr('href') || $a.parent().attr('href')
 	if (url) {

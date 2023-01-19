@@ -1,4 +1,4 @@
-import electron, { BrowserWindow, shell } from "electron"
+import electron, { app, BrowserWindow, shell } from "electron"
 import { join } from "path"
 import fs from 'fs'
 import JSON5 from 'json5'
@@ -133,31 +133,11 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		app.quit()
 	})
 	ipc.on('about', () => {
-		about()
+		about(dir)
 	})
 	ipc.on('openUrl', function (event, arg) {
 		shell.openExternal(arg)
 	})
-	function about() {
-		const ver = app.getVersion()
-		const window = new BrowserWindow({
-			webPreferences: {
-				webviewTag: false,
-				nodeIntegration: false,
-				contextIsolation: true,
-				spellcheck: false,
-				sandbox: false,
-				preload: join(__dirname, 'js', 'platform', 'preload.js'),
-			},
-			width: 300,
-			height: 500,
-			transparent: false, // ウィンドウの背景を透過
-			frame: false, // 枠の無いウィンドウ
-			resizable: false,
-		})
-		window.loadURL(dir + '/about.html?ver=' + ver)
-		return 'true'
-	}
 	ipc.on('nano', function () {
 		const nano_info_path = join(app.getPath('userData'), 'nano-window-position.json')
 		let windowsPos
@@ -295,4 +275,27 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 			}
 		})
 	})
+}
+
+export function about(dir: string) {
+	const ver = app.getVersion()
+	const window = new BrowserWindow({
+		webPreferences: {
+			webviewTag: false,
+			nodeIntegration: false,
+			spellcheck: false,
+			sandbox: false,
+		},
+		width: 300,
+		height: 500,
+		transparent: false, // ウィンドウの背景を透過
+		frame: false, // 枠の無いウィンドウ
+		resizable: false,
+	})
+	window.loadURL(`${dir}/about.html?ver=${ver}`)
+	window.webContents.on('will-navigate', (e, url) => {
+		e.preventDefault()
+		shell.openExternal(url)
+	})
+	return 'true'
 }
