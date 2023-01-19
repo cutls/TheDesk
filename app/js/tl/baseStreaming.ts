@@ -129,21 +129,24 @@ export function mastodonBaseStreaming(acctId: string) {
 		console.warn('Closing ' + domain)
 		if (mastodonBaseWsStatus[domain] === 'available') {
 			/*toast({
-                html:
-                    `${lang.lang_parse_disconnected}<button class="btn-flat toast-action" onclick="location.reload()">${lang.lang_layout_reconnect}</button>`,
-                completeCallback: function () {
-                    parseColumn()
+				html:
+					`${lang.lang_parse_disconnected}<button class="btn-flat toast-action" onclick="location.reload()">${lang.lang_layout_reconnect}</button>`,
+				completeCallback: function () {
+					parseColumn()
 
-                },
-                displayLength: 3000
-            })*/
+				},
+				displayLength: 3000
+			})*/
+			mastodonBaseWsStatus[domain] = 'undetected'
 			parseColumn()
-		}
-		mastodonBaseWs[domain] = null
-		mastodonBaseWsStatus[domain] = 'cannotuse'
-		setTimeout(function () {
+		} else {
+			mastodonBaseWs[domain] = null
 			mastodonBaseWsStatus[domain] = 'cannotuse'
-		}, 3000)
+			setTimeout(function () {
+				mastodonBaseWsStatus[domain] = 'cannotuse'
+			}, 3000)
+
+		}
 		return false
 	}
 }

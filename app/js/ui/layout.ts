@@ -257,7 +257,6 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 						<i class="material-icons waves-effect nex" title="${lang.lang_layout_leftUnfold}">view_column</i>
 					<span>${lang.lang_layout_leftUnfold}</span></a>`
 			}
-			const isMisRed = 'red-text'
 			const addHeight = column.height ? ' min-height:' + column.height + 'px;max-height:' + column.height + 'px;' : ''
 			let mediaFil = `<a onclick="remoteOnly('${key}','${column.type}')" class="setting nex waves-effect">
 					<i class="material-icons nex" title="${lang.lang_layout_remoteOnly}">perm_media</i><br />
@@ -272,7 +271,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 				<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}" data-acct="${column.domain}" style="${addHeight}">
 					<div class="notice-box ${smallHeader ? 'small-header' : ''} z-depth-2" id="menu_${key}" style="${insert}">
 						<div class="area-notice">
-							<i class="material-icons waves-effect ${isMisRed} notice_icon_acct_${column.domain} top-icon" id="notice_icon_${key}" ${notfAttr} 
+							<i class="material-icons waves-effect notice_icon_acct_${column.domain} top-icon" id="notice_icon_${key}" ${notfAttr} 
 								 onclick="checkStr(${key})"
 							 	 title="${lang.lang_layout_gotop}" aria-hidden="true">
 							</i>

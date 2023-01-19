@@ -1,6 +1,6 @@
 const dirname = __dirname
 // Electronのモジュール
-import electron from 'electron'
+import electron, { powerMonitor, shell } from 'electron'
 // アプリケーションをコントロールするモジュール
 const app = electron.app
 // Electronの初期化完了後に実行
@@ -355,4 +355,7 @@ function mouseTrack(mainWindow: electron.BrowserWindow) {
 	y = yNow
 }
 
+powerMonitor.on('resume', function () {
+	mainWindow?.webContents.send('reload', '')
+})
 app.setAsDefaultProtocolClient('thedesk')

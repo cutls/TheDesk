@@ -23,7 +23,7 @@ import { parseColumn } from '../ui/layout'
 //TL取得
 globalThis.moreLoading = false
 globalThis.websocketOld = []
-globalThis.websocketNew = []
+globalThis.mastodonBaseWs = []
 let errorCt = 0
 export const tlTypes = ['home', 'local', 'local-media', 'pub', 'pub-media', 'tag', 'list', 'notf', 'noauth', 'dm', 'mix', 'plus', 'webview', 'tootsearch', 'bookmark', 'utl', 'fav']
 export const isColumnType = (item: string): item is IColumnType => tlTypes.includes(item)
@@ -33,7 +33,7 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 	scrollEvent()
 	$(`#unread_${tlid} .material-icons`).removeClass('teal-text')
 	localStorage.removeItem('pool')
-	const domain = localStorage.getItem('domain_' + acctId) || acctId
+	let domain = localStorage.getItem('domain_' + acctId) || acctId
 	//タグとかの場合はカラム追加して描画
 	if (tlid === 'add') {
 		console.log('add new column')
@@ -110,6 +110,7 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 	if (type !== 'noauth') {
 		$('#notice_' + tlid).text(`${cap(type, data, acctId)}(${localStorage.getItem('user_' + acctId) || '?'}@${domain})`)
 	} else {
+		domain = data?.toString() || domain
 		delete hdr.Authorization
 		$('#notice_' + tlid).text(`Glance TL(${data})`)
 	}
@@ -183,6 +184,7 @@ function stremaingSubscribe(type: IColumnType, acctId: string, data?: IColumnDat
 	if (unsubscribe) command = 'unsubscribe'
 	let stream
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
+	const targetStreaming = globalThis.mastodonBaseWs[domain]
 	if (type === 'home') return false
 	if (type === 'local' || type === 'mix') {
 		stream = 'public:local'
@@ -193,7 +195,7 @@ function stremaingSubscribe(type: IColumnType, acctId: string, data?: IColumnDat
 	} else if (type === 'pub-media') {
 		stream = 'public:media'
 	} else if (type === 'list') {
-		globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: 'list', list: data }))
+		targetStreaming.send(JSON.stringify({ type: command, stream: 'list', list: data }))
 		return true
 	} else if (type === 'tag') {
 		if (!data || !isTagData(data)) return Swal.fire('Error migration to v24')
@@ -203,11 +205,12 @@ function stremaingSubscribe(type: IColumnType, acctId: string, data?: IColumnDat
 		if (data.any) arr = arr.concat(data.any)
 		if (data.all) arr = arr.concat(data.all)
 		for (const tag of arr) {
-			globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: 'hashtag', tag: tag }))
+			targetStreaming.send(JSON.stringify({ type: command, stream: 'hashtag', tag: tag }))
 		}
 		return true
 	}
-	globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: command, stream: stream }))
+	if (targetStreaming.readyState > 2) return console.error('already closed this streaming')
+	targetStreaming.send(JSON.stringify({ type: command, stream: stream }))
 }
 
 function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: IColumnData | undefined, mute: string[], voice: boolean, mode?: 'error') {
@@ -439,7 +442,7 @@ export async function tlDiff(type: IColumnType, data: IColumnData | undefined, a
 }
 //WebSocket切断
 export function tlCloser() {
-	const websocket = globalThis.websocketNew
+	const websocket = globalThis.websocketNew || {}
 	for (const tlid of Object.keys(websocket)) {
 		if (globalThis.websocketOld[tlid]) {
 			globalThis.websocketOld[tlid].close()
@@ -453,6 +456,16 @@ export function tlCloser() {
 	}
 	globalThis.websocketNew = []
 	globalThis.websocketOld = []
+	const baseStreaming = globalThis.mastodonBaseWs || {}
+	for (const acctId of Object.keys(baseStreaming)) {
+		if (globalThis.mastodonBaseWs[acctId]) {
+			globalThis.mastodonBaseWs[acctId].close()
+			console.log('%c Close Streaming API: Base' + acctId, 'color:blue')
+		}
+	}
+	globalThis.mastodonBaseWs = {}
+	globalThis.mastodonBaseWsStatus = {}
+
 	for (const wsHome of globalThis.wsHome) {
 		if (wsHome) wsHome.close()
 		console.log('%c Close Streaming API:Integrated Home', 'color:blue')
