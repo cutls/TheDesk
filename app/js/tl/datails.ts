@@ -19,12 +19,6 @@ export async function details(id: string, acctId: string, tlid = 0, isDm?: boole
 	} else {
 		$('.dm-hide').show()
 	}
-	const context = localStorage.getItem('moreContext')
-	if (context !== 'yes') {
-		$('.contextTool').hide()
-	} else {
-		$('.contextTool').show()
-	}
 	$('.toot-reset').html(`<span class="no-data">${lang.lang_details_nodata}</span>`)
 	const html = $(`#timeline_${tlid} [toot-id=${id}]`).html()
 	$('#toot-this').html(html)
@@ -58,15 +52,12 @@ export async function details(id: string, acctId: string, tlid = 0, isDm?: boole
 		$('#tootmodal').attr('data-url', url)
 		$('#tootmodal').attr('data-id', json.id)
 		$('#tootmodal').attr('data-acct', acctId)
+		$('#tootmodal').attr('data-userId', uid)
 		const fullAcct = local ? `${scn}@${domain}` : scn
 		$('#tootmodal').attr('data-user', fullAcct)
 		getContext(id, acctId)
+		contextToolChange()
 		const dom = local ? domain : scn.replace(/.+@/g, '')
-		beforeToot(id, acctId, dom || '')
-		userToot(id, acctId, uid)
-		afterToot(id, acctId, dom || '')
-		afterUserToot(id, acctId, uid)
-		afterFTLToot(id, acctId, dom || '')
 		faved(id, acctId)
 		rted(id, acctId)
 		if (json.edited_at) {
@@ -90,7 +81,7 @@ export async function details(id: string, acctId: string, tlid = 0, isDm?: boole
 		}
 		if (!$('#activator').hasClass('active')) {
 			const colInstance = collapsibleInitGetInstance($('#det-col'))
-			colInstance.open(4)
+			colInstance.open(1)
 		}
 	} catch (error: any) {
 		todo(error)
@@ -138,10 +129,21 @@ async function getContext(id: string, acctId: string) {
 	timeUpdate()
 }
 
-//前のトゥート(Back TL)
-async function beforeToot(id: string, acctId: string, domain: string) {
+export async function contextToolChange() {
+	const id = $('#tootmodal').attr('data-id')
+	const acctId = $('#tootmodal').attr('data-acct')
+	const userId = $('#tootmodal').attr('data-userId')
+	const tootUrl = $('#tootmodal').attr('data-url')
+	if (!id || !acctId || !tootUrl) return
+	const m = tootUrl.match(/^https:\/\/([^/]+)/)
+	if (!m || !m[1]) return
 	const at = localStorage.getItem(`acct_${acctId}_at`)
-	const start = `https://${domain}/api/v1/timelines/public?local=true&max_id=${id}`
+	const type = $('[name=contextToolChangeType]:checked').val()?.toString() || 'utl'
+	const domain = type === 'utl' ? localStorage.getItem(`domain_${acctId}`) : m[1]
+	const url = type === 'utl' ? `accounts/${userId}/statuses?` : type === 'ltl' ? `timelines/public?local=true&` : `timelines/public?`
+	const time = $('[name=contextToolChangeTime]:checked').val()?.toString() || 'before'
+	const param = time === 'before' ? 'max_id' : 'min_id'
+	const start = `https://${domain}/api/v1/${url}${param}=${id}`
 	const json = await api<Toot[]>(start, {
 		method: 'get',
 		headers: {
@@ -150,74 +152,8 @@ async function beforeToot(id: string, acctId: string, domain: string) {
 		},
 	})
 	const template = parse<string>(json, 'noauth', acctId, '')
-	if (template !== '') $('#toot-before .no-data').hide()
-	$('#toot-before').html(template)
-	timeUpdate()
-}
-//前のユーザーのトゥート
-async function userToot(id: string, acctId: string, user: string) {
-	const domain = localStorage.getItem(`domain_${acctId}`)
-	const at = localStorage.getItem(`acct_${acctId}_at`)
-	const start = `https://${domain}/api/v1/accounts/${user}/statuses?max_id=${id}`
-	const json = await api<Toot[]>(start, {
-		method: 'get',
-		headers: {
-			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at,
-		},
-	})
-	const template = parse<string>(json, null, acctId, '')
-	if (template !== '') $('#user-before .no-data').hide()
-	$('#user-before').html(template)
-	timeUpdate()
-}
-//後のLTL
-async function afterToot(id: string, acctId: string, domain: string) {
-	const at = localStorage.getItem(`acct_${acctId}_at`)
-	const start = `https://${domain}/api/v1/timelines/public?local=true&min_id=${id}`
-	const json = await api<Toot[]>(start, {
-		method: 'get',
-		headers: {
-			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at,
-		},
-	})
-	const template = parse<string>(json, null, acctId, '')
-	if (template !== '') $('#ltl-after .no-data').hide()
-	$('#ltl-after').html(template)
-	timeUpdate()
-}
-//後のUTL
-async function afterUserToot(id: string, acctId: string, user: string) {
-	const domain = localStorage.getItem(`domain_${acctId}`)
-	const at = localStorage.getItem(`acct_${acctId}_at`)
-	const start = `https://${domain}/api/v1/accounts/${user}/statuses?min_id=${id}`
-	const json = await api<Toot[]>(start, {
-		method: 'get',
-		headers: {
-			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at,
-		},
-	})
-	const template = parse<string>(json, null, acctId, '')
-	if (template !== '') $('#user-after .no-data').hide()
-	$('#user-after').html(template)
-	timeUpdate()
-}
-//後のFTL
-async function afterFTLToot(id: string, acctId: string, domain: string) {
-	const at = localStorage.getItem(`acct_${acctId}_at`)
-	const start = `https://${domain}/api/v1/timelines/public?min_id=${id}`
-	const json = await api<Toot[]>(start, {
-		method: 'get',
-		headers: {
-			'content-type': 'application/json',
-			Authorization: 'Bearer ' + at,
-		},
-	})
-	const template = parse<string>(json, null, acctId, '')
-	if (template !== '') $('#ftl-after .no-data').hide()
-	$('#ftl-after').html(template)
+	if (template !== '') $('#contextToolTl .no-data').hide()
+	$('#contextToolTl').html(template)
 	timeUpdate()
 }
 

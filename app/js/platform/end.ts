@@ -188,6 +188,7 @@ export const connection = function () {
 	} else if (!$('#offline').hasClass('hide')) {
 		$('#offline').addClass('hide')
 		$('#re-online').removeClass('hide')
+		parseColumn()
 	}
 }
 window.onoffline = connection

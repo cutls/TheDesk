@@ -93,8 +93,8 @@
                     <input id="src" type="text" class="validate" style="width: calc(100% - 150px)" />
                     <label for="src" data-trans="src">@@search@@</label>
                     <button class="btn waves-effect indigo" style="width: 34%; padding: 0; padding-left: 1.15rem" onclick="src()" data-trans-i="src">
-                            <i class="material-icons left" style="margin: 0">search</i>@@search@@
-                        </button>
+                        <i class="material-icons left" style="margin: 0">search</i>@@search@@
+                    </button>
                     <br />
                     <br />
                 </div>
@@ -118,18 +118,18 @@
                 <div id="dirNoAuth" class="hide">
                     <input id="dirNoAuth-url" type="text" class="validate" style="width: calc(70% - 3rem)" placeholder="e.g:mastodon.social" />
                     <button class="btn waves-effect indigo" style="width: 9.23rem; padding: 0; padding-left: 1.15rem" onclick="directory('directory')">
-                            <i class="material-icons left" style="margin: 0">search</i>@@show@@
-                        </button>
+                        <i class="material-icons left" style="margin: 0">search</i>@@show@@
+                    </button>
                 </div>
                 <div id="directoryConfig">
-                    <label>
+                        <label>
                             <input class="with-gap" onchange="directory('directory')" name="sort" type="radio" value="active" checked />
                             <span>@@active@@</span>
                         </label>
-                    <label>
+                        <label>
                             <input class="with-gap" onchange="directory('directory')" name="sort" type="radio" value="new" />
-                            <span>@@newcomer@@</span> </label
-                        ><br />
+                            <span>@@newcomer@@</span>
+                        </label><br />
                         <label>
                             <input type="checkbox" class="filled-in" id="local_only" value="true" onchange="directory('directory')" />
                             <span>@@local_only@@</span>

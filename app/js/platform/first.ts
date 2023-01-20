@@ -20,7 +20,7 @@ import { checkSpotify } from '../ui/spotify'
 // Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
 // 独自ロケールを削除
 // wordmuteListにtagとかいう要素がある
-// Glance TLのデータ構造変更, ポップアップ通知の削除
+// Glance TLのデータ構造変更, ポップアップ通知の削除、コンテクストツールデフォルトオン
 
 // ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除、Tootsearch削除、MD/BBCode削除、altImage interval
 
@@ -305,10 +305,11 @@ function webviewFinder() {
 	const webview: any = document.querySelector('webview')
 	webview.addEventListener('did-navigate', () => {
 		const url = webview.getURL()
+		// 今はログインにiframe禁止措置がなされていないので
 		if (url.match('https://mobile.twitter.com/login')) {
-			postMessage(['twitterLogin', null], '*')
+			//postMessage(['twitterLogin', null], '*')
 		} else if (url.match('https://mobile.twitter.com/logout')) {
-			postMessage(['twitterLogin', true], '*')
+			//postMessage(['twitterLogin', true], '*')
 		}
 	})
 }

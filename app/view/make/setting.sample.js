@@ -450,17 +450,6 @@ export const tlConstruction = [
 		}
 	},
 	{
-		id: 'mcm',
-		storage: 'moreContext',
-		checkbox: true,
-		setValue: 'no',
-		text: {
-			head: '@@moreContextMode@@',
-			desc: '@@moreContextModeWarn@@',
-			checkbox: yesno
-		}
-	},
-	{
 		id: 'small-header',
 		storage: 'smallHeader',
 		checkbox: true,

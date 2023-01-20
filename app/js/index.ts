@@ -46,7 +46,7 @@ import { re, reEx, qt } from './post/useTxtBox'
 import { announParse, announReaction, announReactionNew, emojiReactionDef } from './tl/announParse'
 import { mastodonBaseStreaming } from './tl/baseStreaming'
 import { additional, additionalIndv, cardHtml, cardHtmlShow, cardToggle, cardCheck, mov, resetmv } from './tl/card'
-import { details, cbCopy, staCopy, trans, brws, detEx, detExCore } from './tl/datails'
+import { details, cbCopy, staCopy, trans, brws, detEx, detExCore, contextToolChange } from './tl/datails'
 import { date, crat } from './tl/date'
 import { dirMenu, dirselCk, dirChange, directory } from './tl/directory'
 import {
@@ -281,6 +281,7 @@ globalThis.cardCheck = cardCheck
 globalThis.mov = mov
 globalThis.resetmv = resetmv
 globalThis.details = details
+globalThis.contextToolChange = contextToolChange
 globalThis.cbCopy = cbCopy
 globalThis.staCopy = staCopy
 globalThis.trans = trans
