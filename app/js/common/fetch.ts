@@ -1,5 +1,5 @@
 import { stripTags } from '../platform/first'
-import { toast } from './declareM'
+import { todo } from '../ui/tips'
 
 interface IOptions {
 	method: 'post' | 'get' | 'put' | 'delete' | 'patch'
@@ -26,7 +26,7 @@ export default async function api<T = any>(url: string, options?: IOptions, thro
 		return json as T
 	} catch (e: any) {
 		const eStr = typeof e === 'string' ? e : e[0]
-		toast({ html: `Error: ${stripTags(eStr)}`, displayLength: 5000 })
+		todo(`Error: ${stripTags(eStr)}`)
 		throw e
 	}
 }

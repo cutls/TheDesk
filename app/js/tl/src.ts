@@ -45,9 +45,9 @@ export async function src(mode?: any, offset?: any) {
 
 	let q = $('#src').val()
 	const acct_id = $('#src-acct-sel').val()
+	$('#src-contents').html('')
 	if (acct_id === 'tootsearch' && typeof q === 'string') {
 		tsAdd(q)
-		$('#src-contents').html('')
 		return false
 	}
 	if (typeof acct_id !== 'string' || typeof q !== 'string') return
