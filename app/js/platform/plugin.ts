@@ -1,5 +1,5 @@
-import { parse as asParse, values as asValue, utils as asUtil } from '@syuilo/aiscript'
-import { AiScript } from '@syuilo/aiscript/built/interpreter'
+import { Parser as asParse, values as asValue, utils as asUtil } from '@syuilo/aiscript'
+import { Interpreter as AiScript } from '@syuilo/aiscript/built/interpreter'
 import { escapeHTML } from './first'
 import _ from 'lodash'
 import sanitizeHtml from 'sanitize-html'
@@ -125,12 +125,12 @@ export function initPlugin() {
 		const as = new AiScript(globalThis.asCommon)
 		const meta = getMeta(target.content).data
 		toast({ html: `${escapeHTML(meta.name)}を実行しました`, displayLength: 1000 })
-		if (target) as.exec(asParse(target.content))
+		if (target) as.exec(asParse.parse(target.content))
 	}
 }
 export function getMeta(plugin: string) {
 	try {
-		return { success: true, data: AiScript.collectMetadata(asParse(plugin))?.get(null) }
+		return { success: true, data: AiScript.collectMetadata(asParse.parse(plugin))?.get(null) }
 	} catch (e) {
 		console.error(e)
 		throw e
@@ -273,7 +273,7 @@ export async function execPlugin(id: string, source: ISource, args?: any) {
 			const start = `https://${z[0].value}`
 			const promise = await fetch(start)
 			let json: null | string = null
-			if (z[1].type !== 'null') {
+			if (z[1]?.type !== 'null') {
 				json = await promise.json()
 			} else {
 				json = await promise.text()
@@ -284,7 +284,7 @@ export async function execPlugin(id: string, source: ISource, args?: any) {
 		}
 	})
 	const as = new AiScript(common)
-	if (exe) as.exec(asParse(exe))
+	if (exe) as.exec(asParse.parse(exe))
 }
 export async function testExec(exe: string) {
 	globalThis.asCommon.TOOT = null
@@ -421,7 +421,7 @@ export async function testExec(exe: string) {
 	})
 	try {
 		const as = new AiScript(globalThis.asCommon)
-		if (exe) as.exec(asParse(exe))
+		if (exe) as.exec(asParse.parse(exe))
 	} catch (e: any) {
 		console.log(e)
 		Swal.fire({
@@ -431,13 +431,16 @@ export async function testExec(exe: string) {
 		})
 	}
 }
-function isAssignable(val: asValue.Value): val is VBool | VNum | VStr | VArr | VObj | VReturn {
+function isAssignable(val: asValue.Value | undefined): val is VBool | VNum | VStr | VArr | VObj | VReturn {
+	if (!val) return false
 	if (val.type === 'null' || val.type === 'fn') return false
 	return true
 }
-function isAssignableString(val: asValue.Value): val is VStr {
+function isAssignableString(val: asValue.Value | undefined): val is VStr {
+	if (!val) return false
 	return val.type === 'str'
 }
-function isAssignableStringObj(val: asValue.Value): val is VStr | VObj | VArr {
+function isAssignableStringObj(val: asValue.Value | undefined): val is VStr | VObj | VArr {
+	if (!val) return false
 	return val.type === 'str' || val.type === 'arr' || val.type === 'obj'
 }

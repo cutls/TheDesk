@@ -161,7 +161,8 @@ import { udgEx, udg, historyShow, profShow, profbrws, setMain, hisclose } from '
 import { values } from '@syuilo/aiscript'
 globalThis.asCommon = {
 	'TheDesk:console': values.FN_NATIVE((z) => {
-		if (z[0].type === 'str') console.log(z[0].value)
+		if(!z) return
+		if (z[0]?.type === 'str') console.log(z[0].value)
 	}),
 }
 
