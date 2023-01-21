@@ -218,11 +218,6 @@ async function relations(user: string, acctId: string) {
 		},
 	})
 	const json = jsons[0]
-	if (json.requested) {
-		//フォロリク中
-		$('#his-data').addClass('following')
-		$('#his-follow-btn-text').text(lang.lang_status_requesting)
-	}
 	if (json.following) {
 		//自分がフォローしている
 		$('#his-data').addClass('following')
@@ -230,6 +225,11 @@ async function relations(user: string, acctId: string) {
 		hisList(user, acctId)
 	} else {
 		$('#his-follow-btn-text').text(lang.lang_status_follow)
+	}
+	if (json.requested) {
+		//フォロリク中
+		$('#his-data').addClass('following')
+		$('#his-follow-btn-text').text(lang.lang_status_requesting)
 	}
 	if (json.followed_by) {
 		//フォローされてる

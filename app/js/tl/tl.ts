@@ -157,10 +157,12 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 
 //Streaming接続
 function reload(type: IColumnType, acctId: string, tlid: string, data: IColumnData | undefined, mute: string[], voice: boolean) {
-	const domain = localStorage.getItem(`domain_${acctId}`) || ''
+	const domain = type !== 'noauth' ? localStorage.getItem(`domain_${acctId}`) || '' : ''
 	localStorage.setItem('now', type)
 	const mastodonBaseWsStatus = globalThis.mastodonBaseWsStatus
-	if (mastodonBaseWsStatus[domain] === 'cannotuse') {
+	if (!domain) {
+		oldStreaming(type, acctId, tlid, data, mute, voice)
+	} else if (mastodonBaseWsStatus[domain] === 'cannotuse') {
 		oldStreaming(type, acctId, tlid, data, mute, voice)
 	} else if (mastodonBaseWsStatus[domain] === 'undetected' || mastodonBaseWsStatus[domain] === 'connecting') {
 		const mbws = setInterval(function () {
@@ -236,13 +238,13 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
 		if (data.name) data = data.name
 		start = `${wss}/api/v1/streaming/?stream=hashtag&tag=${data}&access_token=${at}`
 	} else if (type === 'noauth') {
-		start = `wss://${data}/api/v1/streaming/?stream=public:local&access_token=${at}`
+		start = `wss://${data}/api/v1/streaming/?stream=public:local`
 	} else if (type === 'list') {
 		start = `${wss}/api/v1/streaming/?stream=list&list=${data}&accrss_token=${at}`
 	} else if (type === 'dm') {
 		start = wss + '/api/v1/streaming/?stream=direct&access_token=' + at
 	}
-	const websocket = globalThis.websocketNew
+	const websocket = globalThis.websocketOld
 	const wsid = websocket.length
 	localStorage.setItem('wss_' + tlid, wsid)
 	websocket[wsid] = new WebSocket(start)
@@ -442,7 +444,7 @@ export async function tlDiff(type: IColumnType, data: IColumnData | undefined, a
 }
 //WebSocket切断
 export function tlCloser() {
-	const websocket = globalThis.websocketNew || {}
+	const websocket = globalThis.websocketOld || {}
 	for (const tlid of Object.keys(websocket)) {
 		if (globalThis.websocketOld[tlid]) {
 			globalThis.websocketOld[tlid].close()
@@ -454,7 +456,6 @@ export function tlCloser() {
 			console.log('%c Close Streaming API:' + tlid, 'color:blue')
 		}
 	}
-	globalThis.websocketNew = []
 	globalThis.websocketOld = []
 	const baseStreaming = globalThis.mastodonBaseWs || {}
 	for (const acctId of Object.keys(baseStreaming)) {

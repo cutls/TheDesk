@@ -8,7 +8,7 @@ import { verck, closeStart } from './common/version'
 import { defaultEmoji, customEmoji, defEmoji } from './emoji/defaultEmoji'
 import { ck, refresh, ckdb, multiSelector, ticker } from './login/login'
 import { loadAcctList, maxChars, multiDel, backToInit, instance, code, atSetup, mainAcct, asReadEnd, autoCompleteInitTrigger } from './login/manager'
-import { execCopy, playSound } from './platform/end'
+import { execCopy, nano, playSound } from './platform/end'
 import { escapeHTML, nl2br, br2nl, formatTime, formatTimeUtc, makeCID, rgbToHex, setLog, escapeCsv, statusModel, initWebviewEvent, twemojiParse } from './platform/first'
 import { initPlugin, getMeta, execPlugin, testExec } from './platform/plugin'
 import { emojiToggle, emojiGet, emojiList, emojiInsert, brInsert } from './post/emoji'
@@ -165,6 +165,7 @@ globalThis.asCommon = {
 	}),
 }
 
+globalThis.nano = nano
 globalThis.about = about
 globalThis.parseBlur = parseBlur
 globalThis.getMulti = getMulti
