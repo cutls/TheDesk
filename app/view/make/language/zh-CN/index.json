@@ -163,7 +163,7 @@
     "secs": "秒",
     "warnOnIntegratedTL": "Integrated TL/Plus TL will hide both Home-filtering words and Local-filtering words.",
     "helloTheDesk": "<h3>Welcome to TheDesk</h3><br><a href=\"acct.html\">Add an account</a> or click <i class=\"material-icons\">add</i> to add a column.",
-    "addColumn": "Add a column",
+    "addColumn": "添加一列",
     "sortColumns": "Sort",
     "acctMan": "Account Manager",
     "filter": "Filter",
