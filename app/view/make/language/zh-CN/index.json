@@ -191,7 +191,7 @@
     "demoBottomBtns": "欢迎引导",
     "lookAtBottom": "看看这个窗口的底部。这里有一些关于它的提示。",
     "acctManDesc": "添加更多帐户并注销。",
-    "settingDesc": "Many and many preferences here. You will couldn't check it all!",
-    "nanoDescPlus": "Mini window client(experimental)",
-    "menuDesc": "All daily TheDesk and Mastodon tuning like <b>add and sort columns</b>, <b>list and filter check</b>."
+    "settingDesc": "这里有很多首选项。你将无法选中所有选项！",
+    "nanoDescPlus": "迷你窗口客户端(试验性)",
+    "menuDesc": "TheDesk 和 Mastodon 的所有日常调整，例如<b>添加和排序列</b>、<b>列表和过滤器检查</b>。"
 }
