@@ -2,11 +2,11 @@
     "updatehere": "Get latest TheDesk",
     "download": "Start",
     "portable": "Portable ver.",
-    "installer": "Installer(Recommended)",
+    "installer": "安装程序(推荐)",
     "linux": "zip",
-    "linuxdeb": "deb(Recommended on buntu, Debian)",
+    "linuxdeb": "deb (Debian\\?buntu 推荐)",
     "linuxsnap": "snap",
-    "snap": "Get it on Snapcraft",
+    "snap": "在 Snapcraft 上获取",
     "sureupd": "You may lose a cool experience!",
     "skipupd": "Skip this update",
     "nexttl": "Until next TL loading",
@@ -15,5 +15,5 @@
     "problem2": "Please download on <a href=\"https://thedesk.top\">Oficial HP</a>.",
     "continue": "Continue updating",
     "dlnow": "Downloading...",
-    "checkWhatIsNew": "What is new?"
+    "checkWhatIsNew": "新功能"
 }
