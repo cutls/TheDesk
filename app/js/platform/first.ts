@@ -20,12 +20,16 @@ import { checkSpotify } from '../ui/spotify'
 // Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
 // 独自ロケールを削除
 // wordmuteListにtagとかいう要素がある
+// noauth TLのtype
 // Glance TLのデータ構造変更, ポップアップ通知の削除、コンテクストツールデフォルトオン
 
-// ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除、Tootsearch削除、MD/BBCode削除、altImage interval
+// ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除、Tootsearch削除、MD/BBCode削除、altImage interval, nano廃止
 
 window.onload = init
 function init() {
+	if (globalThis.pwa) localStorage.setItem('v24Accepted', 'true')
+	if (!globalThis.pwa && !localStorage.getItem('v24Accepted')) return $('#v24Note').removeClass('hide')
+	if (globalThis.useLang === 'ja' || globalThis.useLang === 'ja-KS') $('.onlyJa').removeClass('hide')
 	console.log('loaded')
 	initPostbox()
 	connection()

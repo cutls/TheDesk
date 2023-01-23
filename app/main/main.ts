@@ -115,7 +115,6 @@ function createWindow() {
 	if (!packaged) console.log('launch:' + lang)
 	//Opening
 	console.log(homeDir)
-	const packageJson = fs.readFileSync(homeDir + '/package.json').toString()
 	let show = 'TheDesk 2018'
 	if (lang === 'ja') {
 		const maxims = JSON.parse(fs.readFileSync(homeDir + '/maxim.ja.json').toString())
@@ -125,18 +124,6 @@ function createWindow() {
 		const maxims = JSON.parse(fs.readFileSync(homeDir + '/maxim.ja.json').toString())
 		show = maxims[Math.floor(Math.random() * maxims.length)]
 	}
-	const data = JSON.parse(packageJson)
-	const version = data.version
-	const codename = data.codename
-	const openingWindow = new BrowserWindow({
-		width: 300,
-		height: 400,
-		transparent: false,
-		frame: false,
-		resizable: false,
-		show: opening
-	})
-	openingWindow.loadURL(`${homeDir}/opening.html?ver=${version}&codename=${codename}&maxim=${encodeURI(show)}`)
 	if (!packaged) {
 		console.log(
 			'||\\\\\\ \n' +
@@ -207,7 +194,6 @@ function createWindow() {
 	mainWindow = new BrowserWindow(arg)
 	mainWindow.once('page-title-updated', () => {
 		if (!mainWindow) return
-		openingWindow.close()
 		mainWindow.show()
 		console.log('Accessibility: ' + app.accessibilitySupportEnabled)
 		if (window_size.max) {

@@ -159,6 +159,7 @@ import { profEdit, imgChange } from './userdata/profEdit'
 import { udgEx, udg, historyShow, profShow, profbrws, setMain, hisclose } from './userdata/showOnTL'
 
 import { values } from '@syuilo/aiscript'
+import { migrate } from './platform/migrate'
 globalThis.asCommon = {
 	'TheDesk:console': values.FN_NATIVE((z) => {
 		if(!z) return
@@ -504,3 +505,4 @@ globalThis.hisclose = hisclose
 globalThis.addColumnMenu = addColumnMenu
 globalThis.addselCk = addselCk
 globalThis.client = client
+globalThis.migrate = migrate
