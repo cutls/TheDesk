@@ -32,7 +32,7 @@
 				<a class="waves-effect gray" id="cw" onclick="cw()" title="@@cwDes@@">CW</a>
 				<span>
 					<span id="imgup"></span>
-					<span id="imgsel" class="pwa">
+					<span id="imgsel" class=" hideOnlyPwa">
 						<i class="waves-effect material-icons gray" onclick="fileSelect()" title="@@selfile@@">photo_library</i>
 					</span>
 				</span>
@@ -40,7 +40,7 @@
 					<span id="imgup"></span>
 					<div id="imgsel" class="pwa">
 						<i class="waves-effect material-icons gray" onclick="$('#fileSelect').click()" title="@@selfile@@">photo_library</i>
-						<input id="fileSelect" type="file" multiple accept=".jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.avif,.webm,.mp4,.m4v,.mov,.ogg,.oga,.mp3,.wav,.flac,.opus,.aac,.m4a,.3gp,.wma,image/jpeg,image/png,image/gif,image/heic,image/heif,image/webp,image/avif,video/webm,video/mp4,video/quicktime,video/ogg,audio/wave,audio/wav,audio/x-wav,audio/x-pn-wave,audio/vnd.wave,audio/ogg,audio/vorbis,audio/mpeg,audio/mp3,audio/webm,audio/flac,audio/aac,audio/m4a,audio/x-m4a,audio/mp4,audio/3gpp,video/x-ms-asf" style="display: none;">
+						<input onchange="pimg(this)" id="fileSelect" type="file" multiple accept=".jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.avif,.webm,.mp4,.m4v,.mov,.ogg,.oga,.mp3,.wav,.flac,.opus,.aac,.m4a,.3gp,.wma,image/jpeg,image/png,image/gif,image/heic,image/heif,image/webp,image/avif,video/webm,video/mp4,video/quicktime,video/ogg,audio/wave,audio/wav,audio/x-wav,audio/x-pn-wave,audio/vnd.wave,audio/ogg,audio/vorbis,audio/mpeg,audio/mp3,audio/webm,audio/flac,audio/aac,audio/m4a,audio/x-m4a,audio/mp4,audio/3gpp,video/x-ms-asf" style="display: none;">
 					</div>
 				</span>
 				<i class="waves-effect gray material-icons" onclick="emojiToggle()" id="emojibtn"

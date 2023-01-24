@@ -42,7 +42,7 @@ $('#drag').on('dragleave', function () {
 })
 
 //複数アップ
-function pimg(files: FileList) {
+export function pimg(files: FileList) {
 	for (let i = 0; i < files.length; i++) {
 		const m = files[i].path.match(/\.(.+)$/)
 		if (!m) return handleFileUpload(files[i], i)

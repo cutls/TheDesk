@@ -197,6 +197,8 @@
     "lang_parse_cwshow": "Show",
     "lang_parse_cwshow_acc": "This is a post with content warning. click to show the whole content",
     "lang_parse_fulltext": "Full size text:",
+    "lang_parse_br": " lines",
+    "lang_parse_letters": " letters",
     "lang_parse_autofold": "Auto folded",
     "lang_parse_more": "More",
     "lang_parse_url": "URL Analyzer",

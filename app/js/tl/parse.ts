@@ -185,15 +185,11 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 			if ((sent < ct && strlenMultibyte(stripTags(content)) > 5) || (strlenMultibyte(stripTags(content)) > ltr && strlenMultibyte(stripTags(content)) > 5)) {
 				content = `<span class="gray">${lang.lang_parse_fulltext}</span><br>` + content
 				spoil = `<span class="cw_long">${substrMultibyte(stripTags(content), 0, 100)}</span>
-						<span class="gray">${lang.lang_parse_autofold}</span>`
+						<span class="gray">${lang.lang_parse_autofold}(${ct}${lang.lang_parse_br}${strlenMultibyte(stripTags(content))}${lang.lang_parse_letters})</span>`
 				spoiler = 'cw cw_hide'
 				spoilerShow = `<a href="#" onclick="cwShow(this)" class="nex parsed cw_btn">
 							${lang.lang_parse_more}
 						</a><br>`
-			} else {
-				spoil = escapeHTML(toot.spoiler_text)
-				spoiler = ''
-				spoilerShow = ''
 			}
 		}
 		const urls = stripTags(content)
