@@ -7,6 +7,9 @@ const terser = require('rollup-plugin-terser').terser
 const plugins = process.env.ROLLUP_WATCH === 'true' ? [] : [terser({
     format: {
         comments: false
+    },
+    compress: {
+        drop_console: true
     }
 })]
 const config = {
