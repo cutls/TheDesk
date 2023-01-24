@@ -49,7 +49,6 @@ export async function directory(modeRaw: IDirMode, isMore?: boolean) {
 	$('#dir-contents').append(`<div class="progress transparent"><div class="indeterminate"></div></div>`)
 	let start = `https://${domain}/api/v1/directory?order=${order}&local=${local_only}&offset=${addOffset}`
 	if (mode === 'suggest') start = `https://${domain}/api/v2/suggestions`
-	console.log(start)
 	const json = await api(start, {
 		method: 'get',
 		headers: {

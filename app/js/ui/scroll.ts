@@ -42,7 +42,6 @@ export function scrollCk() {
 		const scrt = height - ($(window).height() || 0)
 		const scr = $(this).scrollTop() || 0
 		if (scr > scrt && scrt > 0) {
-			console.log('kicked more loading:' + tlid)
 			moreLoad(tlid)
 		}
 	})
@@ -53,7 +52,6 @@ export function goTop(id: number) {
 		$(`#unread_${id} .material-icons`).removeClass('teal-text')
 		const obj = getColumn()
 		const type = obj[id].type
-		console.log(id, type)
 		columnReload(id.toString(), type)
 	}
 	if (($(`#timeline_box_${id}_box .tl-box`).scrollTop() || 0) > 500) {

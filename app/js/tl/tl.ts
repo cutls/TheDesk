@@ -36,7 +36,6 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 	let domain = localStorage.getItem('domain_' + acctId) || acctId
 	//タグとかの場合はカラム追加して描画
 	if (tlid === 'add') {
-		console.log('add new column')
 		if (type === 'tag' && data) {
 			data = {
 				name: data.toString(),
@@ -124,7 +123,6 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 	}
 	let start = `https://${domain}/api/v1/timelines/${url}`
 	if (type === 'dm') start = `https://${domain}/api/v1/conversations`
-	console.log(['Try to get timeline of ' + tlid, start])
 	try {
 		let json = await api<Toot[] | Conversation[]>(start, {
 			method: 'get',
@@ -134,7 +132,6 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 			json = json.map((j) => j.last_status as Toot)
 		}
 		if (!json) return true
-		console.log(['Result of getting timeline of ' + tlid, json])
 		$('#landing_' + tlid).hide()
 		const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
 		const template = parse<string>(json, type, acctId, tlid, 0, mute)
@@ -249,17 +246,10 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
 	localStorage.setItem('wss_' + tlid, wsid)
 	websocket[wsid] = new WebSocket(start)
 	websocket[wsid].onopen = function (mess) {
-		console.table({
-			tlid: tlid,
-			type: 'Connect Streaming API' + type,
-			domain: domain,
-			message: [mess],
-		})
 		errorCt = 0
 		$('#notice_icon_' + tlid).removeClass('red-text')
 	}
 	websocket[wsid].onmessage = function (mess) {
-		console.log([tlid + ':Receive Streaming API:', JSON.parse(mess.data)])
 		const typeA = JSON.parse(mess.data).event
 		if (typeA === 'delete') {
 			$(`[unique-id=${JSON.parse(mess.data).payload}]`).hide()
@@ -305,7 +295,6 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
 			todo('WebSocket Error ' + error)
 		} else {
 			errorCt++
-			console.log(errorCt)
 			if (errorCt < 3) reconnector(tlid, type, acctId, data, 'error')
 		}
 		return false
@@ -317,7 +306,6 @@ function oldStreaming(type: IColumnType, acctId: string, tlid: string, data: ICo
 			todo('WebSocket Closed')
 		} else {
 			errorCt++
-			console.log(errorCt)
 			if (errorCt < 3) reconnector(tlid, type, acctId, data, 'error')
 		}
 		return false
@@ -390,7 +378,6 @@ export async function moreLoad(tlid: string) {
 }
 //TL差分取得
 export async function tlDiff(type: IColumnType, data: IColumnData | undefined, acctId: string, tlid: string) {
-	console.log('Get diff of TL' + tlid)
 	const obj = getColumn()
 	const tlidNum = parseInt(tlid, 10)
 	acctId = acctId || obj[tlidNum].domain.toString()
@@ -448,12 +435,9 @@ export function tlCloser() {
 	for (const tlid of Object.keys(websocket)) {
 		if (globalThis.websocketOld[tlid]) {
 			globalThis.websocketOld[tlid].close()
-			console.log('%c Close Streaming API: Old' + tlid, 'color:blue')
 		}
 		if (websocket[0]) {
-			console.log(websocket[0])
 			websocket[tlid].close()
-			console.log('%c Close Streaming API:' + tlid, 'color:blue')
 		}
 	}
 	globalThis.websocketOld = []
@@ -461,7 +445,6 @@ export function tlCloser() {
 	for (const acctId of Object.keys(baseStreaming)) {
 		if (globalThis.mastodonBaseWs[acctId]) {
 			globalThis.mastodonBaseWs[acctId].close()
-			console.log('%c Close Streaming API: Base' + acctId, 'color:blue')
 		}
 	}
 	globalThis.mastodonBaseWs = {}
@@ -469,17 +452,14 @@ export function tlCloser() {
 
 	for (const wsHome of globalThis.wsHome) {
 		if (wsHome) wsHome.close()
-		console.log('%c Close Streaming API:Integrated Home', 'color:blue')
 	}
 	globalThis.wsHome = []
 	for (const wsLocal of globalThis.wsLocal) {
 		if (wsLocal) wsLocal.close()
-		console.log('%c Close Streaming API:Integrated Local', 'color:blue')
 	}
 	globalThis.wsLocal = []
 	for (const wsNotf of globalThis.websocketNotf) {
 		if (wsNotf) wsNotf.close()
-		console.log('%c Close Streaming API:Notf', 'color:blue')
 	}
 }
 
@@ -627,7 +607,6 @@ export function icon(type: IColumnType) {
 }
 
 export function reconnector(tlid: string, type: IColumnType, acctId: string, data?: IColumnData, mode?: 'error') {
-	console.log('%c Reconnector:' + mode + '(timeline' + tlid + ')', 'color:pink')
 	if (type === 'mix' || type === 'plus') {
 		const voice = !!localStorage.getItem('voice_' + tlid)
 		const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
@@ -826,7 +805,6 @@ export async function asRead(callback?: boolean) {
 					},
 					body: poster,
 				})
-				console.log(json)
 				ct++
 				if (ct === obl && callback) postMessage(['asReadComp', ''], '*')
 			}
@@ -859,7 +837,6 @@ export function asReadEnd() {
 //ブックマーク
 function getBookmark(acctId: string, tlid: string, more?: boolean) {
 	globalThis.moreLoading = true
-	console.log(acctId, tlid, more)
 	let ad = ''
 	if (more) {
 		const sid = $('#timeline_' + tlid + ' .notif-marker')
@@ -905,7 +882,6 @@ function getBookmark(acctId: string, tlid: string, more?: boolean) {
 //お気に入り
 function getFav(acctId: string, tlid: string, more?: boolean) {
 	globalThis.moreLoading = true
-	console.log(acctId, tlid, more)
 	let ad = ''
 	if (more) {
 		const sid = $('#timeline_' + tlid + ' .notif-marker')

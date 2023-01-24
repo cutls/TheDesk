@@ -30,7 +30,6 @@ export async function udgEx(user, acctId) {
 	if (user === 'selector') user = $('#his-acct').attr('fullname')
 	if (acctId === 'selector') acctId = $('#user-acct-sel').val()
 	if (acctId === 'main') acctId = localStorage.getItem('main')
-	console.log('Get user data of ' + user)
 	const data = await acctResolve(acctId, user)
 	if (data && data.id) {
 		const { id } = data

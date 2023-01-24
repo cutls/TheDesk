@@ -56,7 +56,6 @@ export default function img(mainWindow: electron.BrowserWindow, lang: string) {
 		const text = args[1]
 		const b64 = args[0].replace(/^data:\w+\/\w+;base64,/, '')
 		const decodedFile = new Buffer(b64, 'base64')
-		console.log(text)
 		Jimp.read(decodedFile, function (err, image) {
 			if (err) throw err
 			Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then((font) => {
@@ -66,7 +65,6 @@ export default function img(mainWindow: electron.BrowserWindow, lang: string) {
 				const left = width - evWidth - 10
 				const top = height - 30
 				const color = Jimp.intToRGBA(image.getPixelColor(left, top))
-				console.log(left, top, color)
 				const ave = (color.r + color.g + color.b) / 3
 				if (ave > 128) {
 					image.print(font, left, top, args[1]).getBase64(Jimp.MIME_PNG, function (err, src) {

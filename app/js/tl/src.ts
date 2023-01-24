@@ -57,7 +57,6 @@ export async function src(mode?: any, offset?: any) {
 	const m = q.match(/^#(.+)$/)
 	if (m) q = m[1]
 	const start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + encodeURIComponent(q) + (!mode ? add : '')
-	console.log('Try to search at ' + start)
 	const json = await api<Search>(start, {
 		method: 'get',
 		headers: {
@@ -65,7 +64,6 @@ export async function src(mode?: any, offset?: any) {
 			Authorization: 'Bearer ' + at,
 		},
 	})
-	console.log(['Search', json])
 	//ハッシュタグ
 	if (json.hashtags[0]) {
 		let tags = ''
@@ -125,7 +123,6 @@ export function tootsearch(tlid: number, q: string) {
 		return false
 	}
 	// const start = 'https://tootsearch.chotto.moe/api/v1/search?from=0&sort=created_at%3Adesc&q=' + q
-	// console.log('Toot search at ' + start)
 	// $('#notice_' + tlid).text('tootsearch(' + q + ')')
 	// $('#notice_icon_' + tlid).text('search')
 	// fetch(start, {
@@ -271,7 +268,6 @@ function graphDrawCore(his: Tag['history'], tag: Tag, acct_id: number) {
 				</div>`
 }
 export async function trend() {
-	console.log('get trend')
 	$('#src-contents').html('')
 	const acct_id = $('#src-acct-sel').val()
 	if (acct_id === 'tootsearch') {
@@ -327,7 +323,6 @@ export async function trend() {
 				Authorization: 'Bearer ' + at,
 			},
 		})
-		console.log(linkTrends)
 		let links = ''
 		for (const link of linkTrends) {
 			links = links + `<a href="${link.url}" target="_blank">${link.url}</a><br />${cardHtml(link, acct_id, '')}<hr />`

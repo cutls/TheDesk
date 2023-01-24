@@ -43,7 +43,6 @@ $('#drag').on('dragleave', function () {
 
 //複数アップ
 function pimg(files: FileList) {
-	console.log(files)
 	for (let i = 0; i < files.length; i++) {
 		const m = files[i].path.match(/\.(.+)$/)
 		if (!m) return handleFileUpload(files[i], i)
@@ -234,7 +233,6 @@ export function imgPasteInit() {
 			// DataTransferItemList に画像が含まれいない場合は終了する
 			const imageItems = [...e.clipboardData.items].filter((i) => i.type.startsWith('image'))
 			if (imageItems.length === 0) {
-				console.warn('it is not image')
 				return true
 			}
 
@@ -291,7 +289,6 @@ export async function altImage(acctId: string, id: string) {
 			Authorization: 'Bearer ' + at,
 		},
 	})
-	console.log(json)
 	if ($(`[data-media=${id}]`).hasClass('unknown')) {
 		$('[data-media=' + id + ']').removeClass('unknown')
 		if (json.preview_url) $('[data-media=' + id + ']').attr('src', json.preview_url)

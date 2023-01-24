@@ -86,7 +86,6 @@ export function favTag() {
 		let ptt = lang.lang_tags_unrealtime
 		let nowon = `(${lang.lang_tags_realtime})`
 		if (nowPT !== tagRaw) {
-			console.log('stable tags:' + nowPT + '/' + tagRaw)
 			ptt = lang.lang_tags_realtime
 			nowon = ''
 		}

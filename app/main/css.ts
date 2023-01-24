@@ -35,7 +35,6 @@ export default function () {
 	ipc.on('theme-json-delete', function (e, arg) {
 		try {
 			const themecss = join(app.getPath('userData'), arg)
-			console.log(themecss)
 			fs.unlink(themecss, function (err) {
 				e.sender.send('theme-json-delete-complete', '')
 			})

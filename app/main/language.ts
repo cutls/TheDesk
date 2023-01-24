@@ -141,17 +141,17 @@ export default function (lang: string, mainWindow: electron.BrowserWindow, packa
     ctxMenu.append(new MenuItem({
         label: dict.cut[lang],
         role: 'cut',
-        click: () => { console.log('Cut clicked!') }
+        click: () => true
     }))
     ctxMenu.append(new MenuItem({
         label: dict.copy[lang],
         role: 'copy',
-        click: () => { console.log('Copy clicked!') }
+        click: () => true
     }))
     ctxMenu.append(new MenuItem({
         label: dict.paste[lang],
         role: 'paste',
-        click: () => { console.log('Paste clicked!') }
+        click: () => true
     }))
 
 

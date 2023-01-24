@@ -71,7 +71,6 @@ export function mastodonBaseStreaming(acctId: string) {
 			const tl = JSON.parse(mess.data).stream
 			const obj: Toot = JSON.parse(JSON.parse(mess.data).payload)
 			const tls = getTlMeta(tl[0], tl, acctId, obj)
-			console.log(obj, tls)
 			const template = insertTl(obj, tls, true)
 			if (!template) return Swal.fire('Error')
 			$(`[unique-id=${obj.id}]`).html(template)
@@ -126,7 +125,7 @@ export function mastodonBaseStreaming(acctId: string) {
 	}
 	ws.onclose = function () {
 		notfCommon(acctId, '0', true) //fallback
-		console.warn('Closing ' + domain)
+		console.warn('Closing base streaming of ' + domain)
 		if (mastodonBaseWsStatus[domain] === 'available') {
 			/*toast({
 				html:
@@ -242,7 +241,6 @@ function getTlMeta(type, data, num: string, status) {
 				i++
 				if (tl.domain !== acctId) continue
 				if (tl.type === 'pub') {
-					console.log(i, tl)
 					let voice = false
 					if (localStorage.getItem('voice_' + i)) voice = true
 					ret.push({

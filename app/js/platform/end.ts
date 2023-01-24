@@ -116,10 +116,9 @@ onmessage = function (e) {
 		npCore(e.data[1])
 	} else if (e.data[0] === 'renderMem') {
 		renderMem(e.data[1][0], e.data[1][1], e.data[1][2], e.data[1][3], e.data[1][4])
-	} else if (e.data[0] === 'updateProg') {
-		updateProg(e.data[1])
-	} else if (e.data[0] === 'updateMess') {
-		updateMess(e.data[1])
+	} else if (e.data[0] === 'isDev') {
+		globalThis.isDev = true
+		$('body').addClass('dev')
 	} else if (e.data[0] === 'asRead') {
 		asRead()
 	} else if (e.data[0] === 'asReadEnd') {
@@ -234,7 +233,6 @@ export function playSound(request: XMLHttpRequest) {
 	const context = new AudioContext()
 	context.createBufferSource().start(0)
 	context.decodeAudioData(request.response, function (buf) {
-		//console.log("Playing:" , source)
 		source.buffer = buf
 		source.loop = false
 	})

@@ -11,35 +11,37 @@ export default function dl(mainWindow: electron.BrowserWindow, lang_path: string
 	const app = electron.app
 	ipc.on('update', function () {
 		const platform = process.platform
-		if (platform !== 'win32' && platform !== 'linux' && platform !== 'darwin') {
-			updatewin = new BrowserWindow({
-				webPreferences: {
-					webviewTag: false,
-					nodeIntegration: false,
-					contextIsolation: true,
-					preload: join(dirname, 'js', 'platform', 'preload.js')
-				},
-				width: 600,
-				height: 400,
-				transparent: false, // ウィンドウの背景を透過
-				frame: false, // 枠の無いウィンドウ
-				resizable: false,
-				show: false
-			})
-			const lang = fs.readFileSync(lang_path, 'utf8')
-			//updatewin.toggleDevTools()
-			updatewin.loadURL(base + lang + '/update.html')
-			updatewin.webContents.once('dom-ready', () => {
-				if (updatewin) updatewin.show()
-			})
-			return 'true'
-		} else {
-			return false
-		}
+		if (platform !== 'win32' && platform !== 'linux' && platform !== 'darwin') return
+		updatewin = new BrowserWindow({
+			webPreferences: {
+				webviewTag: false,
+				nodeIntegration: false,
+				contextIsolation: true,
+				spellcheck: false,
+				sandbox: false,
+				preload: join(dirname, 'js', 'platform', 'preload.js')
+			},
+			width: 600,
+			height: 400,
+			transparent: false, // ウィンドウの背景を透過
+			frame: false, // 枠の無いウィンドウ
+			resizable: false,
+			show: false
+		})
+		const lang = fs.readFileSync(lang_path, 'utf8')
+		//updatewin.webContents.toggleDevTools()
+		updatewin.loadURL(base + lang + '/update.html')
+		updatewin.webContents.once('dom-ready', () => {
+			if (updatewin) updatewin.show()
+		})
+		updatewin.webContents.on('will-navigate', (e, url) => {
+			e.preventDefault()
+			shell.openExternal(url)
+		})
 	})
 	//アプデDL
 	ipc.on('download-btn', async (e, args) => {
-		function dl(url, file, dir, e) {
+		function dl(url, file, dir, e: Electron.IpcMainEvent) {
 			e.sender.send('mess', 'Start...')
 			const opts = {
 				directory: dir,
@@ -66,17 +68,12 @@ export default function dl(mainWindow: electron.BrowserWindow, lang_path: string
 		if (!updatewin) return
 		const file = await dialog.showSaveDialog(updatewin, options)
 		const savedFiles = file.filePath
-		console.log(savedFiles)
-		if (!savedFiles) {
-			return false
-		}
+		if (!savedFiles) return false
 		const m = platform === 'win32' ? savedFiles.match(/(.+)\\(.+)$/) : savedFiles.match(/(.+)\/(.+)$/)
 		if (!m) return
-		//console.log(m);
 		if (isExistFile(savedFiles)) {
 			fs.unlinkSync(savedFiles)
 		}
-		console.log(m)
 		dl(args[0], m[2], m[1], e)
 	})
 
@@ -127,7 +124,6 @@ export default function dl(mainWindow: electron.BrowserWindow, lang_path: string
 			.catch(console.error)
 	})
 	ipc.on('openFinder', (e, folder) => {
-		console.log(folder)
 		shell.showItemInFolder(folder)
 	})
 }

@@ -38,7 +38,6 @@ export function mini() {
 export function show() {
 	$('#post-box').addClass('appear')
 	$('#textarea').focus()
-	console.log('show' + localStorage.getItem('postbox-left'))
 	let left = parseInt(localStorage.getItem('postbox-left') || '0', 10)
 	const bodyWidth = $('body').width() || 0
 	const bodyHeight = $('body').height() || 0
@@ -57,7 +56,6 @@ export function show() {
 	if (top < 0) {
 		top = 0
 	}
-	console.log(top)
 	$('#post-box').css('left', left + 'px')
 	$('#post-box').css('top', top + 'px')
 	const width = localStorage.getItem('postbox-width')

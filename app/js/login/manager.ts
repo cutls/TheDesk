@@ -33,8 +33,6 @@ export function loadAcctList() {
 	$('.now-domain').text(domain)
 	const obj = getMulti()
 	if (!obj) setMulti([])
-
-	console.table(obj)
 	const domainsAll: string[] = []
 	$('#acct-list').html('')
 	let key = 0
@@ -113,7 +111,6 @@ export function maxChars(domain: string, uid: string) {
 		if (acct.domain === domain) localStorage.setItem('letters_' + key, value.toString())
 		key++
 	}
-	console.log('#maxChars' + uid, value)
 	loadAcctList()
 }
 //instances.social/instances API
@@ -328,7 +325,7 @@ async function versionCompat(title: string, version: string) {
 	for (const targetVersion of keys) {
 		const data = json[targetVersion]
 		const [tsem, ta, tb, tc] = targetVersion.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/) || []
-		if (!tsem) console.log('tsem')
+		if (!tsem && !ta) console.log(null)
 		let add = false
 		if (ta === a) {
 			if (tb === b) {
@@ -427,7 +424,6 @@ async function getMyData(domain: string, credential: any) {
 	let ct = 0
 	for (const acct of obj) {
 		if (acct.domain === domain && acct.user === json.acct) {
-			console.log('detected dupl addct')
 			addTarget = ct
 			break
 		}
@@ -438,7 +434,6 @@ async function getMyData(domain: string, credential: any) {
 		target = obj.length
 		obj.push(add)
 	} else {
-		console.log('dupl acct_' + addTarget)
 		obj[addTarget] = add
 	}
 	localStorage.setItem('name_' + target, json.display_name || '')
@@ -482,7 +477,6 @@ export function atSetup() {
 //ユーザーデータ更新
 async function refreshManager(target: number) {
 	const obj = getMulti()
-	console.log(obj)
 	const start = `https://${obj[target].domain}/api/v1/accounts/verify_credentials`
 	const json = await api<Credential>(start, {
 		method: 'get',

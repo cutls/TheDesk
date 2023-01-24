@@ -45,7 +45,6 @@ export const $repeat = setInterval(function () {
 					const thisVoiceRate = voiceRate * 10 + 70
 					const thisVoicePitch = voicePitch * 50 + 70
 					const thisVoiceVol = parseInt(voiceVol, 10) * 100
-					console.log(thisVoiceRate, thisVoicePitch, thisVoiceVol)
 					const command = 0x0001
 					const type = 0
 					const sends = `${command}${delim}${thisVoiceRate}${delim}${thisVoicePitch}${delim}${thisVoiceVol}${delim}${type}${delim}${obj[0]}`

@@ -36,7 +36,6 @@ const envView: any = createApp({
 			} else {
 				ls = ls.data
 			}
-			console.log(ls)
 			for (let j = 0; j < ls.length; j++) {
 				const lsi = ls[j]
 				if (!val || j > 0) showVal = showVal ? `${showVal} - ${lsi.setValue}` : lsi.setValue
@@ -150,7 +149,6 @@ export function settings() {
 //読み込み時の設定ロード
 export function configLoad() {
 	const currentLang = lang.language
-	console.log(currentLang)
 	$('#langsel-sel').val(currentLang)
 	formSelectInit($('#langsel-sel'))
 	const maxEnv = envView.config.length
@@ -158,7 +156,6 @@ export function configLoad() {
 		let ls = envView.config[i].storage
 		if (ls) {
 			if (localStorage.getItem(ls)) {
-				console.log(envView.config[i].setValue, localStorage.getItem(ls))
 				envView.config[i].setValue = localStorage.getItem(ls)
 			}
 		} else {
@@ -213,6 +210,7 @@ export function configLoad() {
 	}
 	//$("#log").val(localStorage.getItem("errors"))
 	$('#lastFmUser').val(localStorage.getItem('lastFmUser') || '')
+
 }
 
 export function customVol() {
@@ -275,8 +273,9 @@ export function cliMuteDel(key: number) {
 export function wordmute() {
 	const word = localStorage.getItem('word_mute') || '[]'
 	const obj = JSON.parse(word)
+	const newData = obj.map((o) => { return { tag: o } })
 	chipInit($('#wordmute'), {
-		data: obj,
+		data: newData,
 	})
 }
 
@@ -290,8 +289,9 @@ export function wordmuteSave() {
 export function wordemp() {
 	const word = localStorage.getItem('word_emp') || '[]'
 	const obj = JSON.parse(word)
+	const newData = obj.map((o) => { return { tag: o } })
 	chipInit($('#wordemp'), {
-		data: obj,
+		data: newData,
 	})
 }
 
@@ -333,7 +333,6 @@ export function oksload() {
 
 export function changeLang() {
 	const lang = $('#langsel-sel').val()
-	console.log(lang)
 	if (lang) postMessage(['lang', lang], '*')
 }
 

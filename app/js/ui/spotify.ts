@@ -37,7 +37,8 @@ export function checkSpotify() {
 		$('#spotify-enable').removeClass('disabled')
 		$('#spotify-disable').addClass('disabled')
 	}
-	const content = localStorage.getItem('np-temp') || '#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk'
+	const contentRaw = localStorage.getItem('np-temp')
+	const content = (contentRaw === 'null' || !contentRaw) ? '#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk' : contentRaw
 	$('#np-temp').val(content)
 	const flag = localStorage.getItem('artwork')
 	if (flag) {
@@ -103,7 +104,6 @@ export async function nowplaying(mode: 'spotify' | 'itunes' | 'anynp' | 'lastFm'
 			const code = jsonRaw.token
 			localStorage.setItem('spotify-token', code)
 			const json = jsonRaw.data
-			console.table(json)
 			if (json.length < 1) {
 				return false
 			}
@@ -113,7 +113,8 @@ export async function nowplaying(mode: 'spotify' | 'itunes' | 'anynp' | 'lastFm'
 			if (flag) {
 				postMessage(['bmpImage', [img, 0]], '*')
 			}
-			let content = localStorage.getItem('np-temp') || '#NowPlaying {song} / {album} / {artist}\n{url}'
+			const contentRaw = localStorage.getItem('np-temp')
+			let content = (contentRaw === 'null' || !contentRaw) ? '#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk' : contentRaw
 			const regExp1 = new RegExp('{song}', 'g')
 			content = content.replace(regExp1, item.name)
 			const regExp2 = new RegExp('{album}', 'g')
@@ -155,9 +156,8 @@ export async function nowplaying(mode: 'spotify' | 'itunes' | 'anynp' | 'lastFm'
 					'content-type': 'application/json',
 				},
 			})
-			console.table(json)
 			if (!json || !json.recenttracks) {
-				console.error('no data')
+				console.warn('no data')
 				return false
 			}
 			const item = json.recenttracks.track[0]
@@ -167,7 +167,8 @@ export async function nowplaying(mode: 'spotify' | 'itunes' | 'anynp' | 'lastFm'
 			if (flag && img !== 'https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png' && img) {
 				postMessage(['bmpImage', [img, 0]], '*')
 			}
-			let content = localStorage.getItem('np-temp') || '#NowPlaying {song} / {album} / {artist}\n{url}'
+			const contentRaw = localStorage.getItem('np-temp')
+			let content = (contentRaw === 'null' || !contentRaw) ? '#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk' : contentRaw
 			const regExp1 = new RegExp('{song}', 'g')
 			content = content.replace(regExp1, item.name)
 			const regExp2 = new RegExp('{album}', 'g')
@@ -198,7 +199,6 @@ export async function nowplaying(mode: 'spotify' | 'itunes' | 'anynp' | 'lastFm'
 	}
 }
 export async function npCore(arg: any) {
-	console.table(arg)
 	if (arg.anynp) {
 		const flag = localStorage.getItem('artwork')
 		const q = arg.title
@@ -209,7 +209,8 @@ export async function npCore(arg: any) {
 		$('#textarea').val(q)
 		return false
 	}
-	let content = localStorage.getItem('np-temp') || '#NowPlaying {song} / {album} / {artist}\n{url}'
+	const contentRaw = localStorage.getItem('np-temp')
+	let content = (contentRaw === 'null' || !contentRaw) ? '#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk' : contentRaw
 	const flag = localStorage.getItem('artwork')
 	const platform = localStorage.getItem('platform')
 	const aaw = { aaw: '', album: '' }

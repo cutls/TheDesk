@@ -14,7 +14,7 @@ import np from './np'
 import crypto from 'crypto'
 import { system as systemFunc } from './system'
 const { Menu, BrowserWindow, ipcMain } = electron
-import  { join, dirname as getDirname } from 'path'
+import { join, dirname as getDirname } from 'path'
 
 const info_path = join(app.getPath('userData'), 'window-size.json')
 const max_info_path = join(app.getPath('userData'), 'max-window-size.json')
@@ -88,13 +88,11 @@ try {
 	} // デフォルトバリュー
 }
 function createWindow() {
-	console.log(lang_path)
 	let lang: string
 	if (isFile(lang_path)) {
 		lang = fs.readFileSync(lang_path, 'utf8')
 	} else {
 		const langs = app.getLocale()
-		console.log(langs)
 		if (~langs.indexOf('ja')) {
 			lang = 'ja'
 		} else if (~langs.indexOf('de')) {
@@ -114,7 +112,6 @@ function createWindow() {
 	if (!packaged) console.log('your lang:' + app.getLocale())
 	if (!packaged) console.log('launch:' + lang)
 	//Opening
-	console.log(homeDir)
 	let show = 'TheDesk 2018'
 	if (lang === 'ja') {
 		const maxims = JSON.parse(fs.readFileSync(homeDir + '/maxim.ja.json').toString())
@@ -199,6 +196,11 @@ function createWindow() {
 		if (window_size.max) {
 			mainWindow.maximize()
 		}
+	})
+	mainWindow.webContents.on('dom-ready', () => {
+		if (!mainWindow) return
+		if (!packaged) console.log('Updater diabled: isDev')
+		if (!packaged) mainWindow.webContents.send('isDev', true)
 	})
 	mainWindow.webContents.on('page-title-updated', () => {
 		if (!mainWindow) return
@@ -302,17 +304,17 @@ function createWindow() {
 		writePos(mainWindow)
 		mainWindow.webContents.send('asRead', '')
 	})
-	Menu.setApplicationMenu(Menu.buildFromTemplate(language(lang, mainWindow, packaged, dir, dirname)))
+	Menu.setApplicationMenu(Menu.buildFromTemplate(language(lang, mainWindow, packaged, dir, homeDir)))
 	//CSS
 	css()
 	//アップデータとダウンロード
-	dl(mainWindow, lang_path, base, dirname)
+	dl(mainWindow, lang_path, base, homeDir)
 	//画像選択と画像処理
 	img(mainWindow, lang)
 	//NowPlaying
 	np()
 	//その他system
-	systemFunc(mainWindow, dir, dirname)
+	systemFunc(mainWindow, dir, homeDir)
 	setInterval(function () {
 		if (!mainWindow) return
 		mouseTrack(mainWindow)

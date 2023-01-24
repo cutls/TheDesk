@@ -61,7 +61,6 @@ export async function refresh(targetStr: string) {
 	const obj = getMulti() || '[]'
 	let at = obj[target].at
 	if (obj[target].rt) {
-		console.log('refresh access token')
 		const atk = await refreshPleromaAt(obj[target])
 		if (atk) {
 			at = atk

@@ -83,30 +83,16 @@ export function mixre(acctId: string, tlid: string, TLtype: IColumnType, mute: s
 	wsLocal[wsLId] = new WebSocket(startLocal)
 	wsHome[wsHId].onopen = function (mess) {
 		localStorage.setItem('wssH_' + tlid, `${wsHId}`)
-		console.table({
-			tlid: tlid,
-			type: 'Connect Streaming API(Integrated:Home)',
-			domain: domain,
-			message: mess,
-		})
 		$('#notice_icon_' + tlid).removeClass('red-text')
 	}
 	wsLocal[wsLId].onopen = function (mess) {
 		localStorage.setItem('wssL_' + tlid, `${wsLId}`)
-		console.table({
-			tlid: tlid,
-			type: 'Connect Streaming API(Integrated:Local)',
-			domain: domain,
-			message: mess,
-		})
 		$('#notice_icon_' + tlid).removeClass('red-text')
 	}
 	wsLocal[wsLId].onmessage = function (mess) {
-		console.log('Receive Streaming API:(Integrated:Local)', mess)
 		integratedMessage(mess, acctId, tlid, mute, voice || false)
 	}
 	wsHome[wsHId].onmessage = function (mess) {
-		console.log(['Receive Streaming API:(Integrated:Home)', mess])
 		integratedMessage(mess, acctId, tlid, mute, voice || false)
 	}
 	wsLocal[wsLId].onerror = function (error) {

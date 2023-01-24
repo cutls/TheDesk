@@ -43,7 +43,6 @@ $('.type').click(function () {
 })
 //最初、カラム変更時に発火
 export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
-	console.log('%c Parse column', 'color:red;font-size:125%')
 	if (localStorage.getItem('menu-done')) {
 		$('#fukidashi').addClass('hide')
 	}
@@ -67,7 +66,6 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			key++
 		}
 	}
-	console.table(acctList)
 	let columns = initColumn()
 	let numTarget = false
 	let tlidTar: null | number = null
@@ -418,7 +416,6 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			const height = ui.size.height
 			if ($(this).hasClass('boxIn')) {
 				//縦幅。その縦幅を持つカラムのidは
-				console.log('tate')
 				if (!$(this).attr('tlid')) return
 				const key = parseInt($(this).attr('tlid') || '0', 10)
 				const column = columns[key]
@@ -426,9 +423,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 				columns[key] = column
 			} else {
 				//横幅。その縦幅を持つカラムのidは
-				console.log('yoko')
 				if (!$(this).attr('tlid')) return
-				console.log($(this).find('.boxIn').html())
 				const key = parseInt($(this).find('.boxIn').attr('tlid') || '0', 10)
 				const column = columns[key]
 				column.width = width
@@ -790,7 +785,6 @@ export function utl(key: number, acctId: string, data: IColumnData) {
 		acctId = obj[key].domain.toString()
 	}
 
-	console.log(key, data)
 	const voice = localStorage.getItem(`voice_${key}`) === 'yes'
 	tl('utl', data, acctId, key.toString(), voice)
 }

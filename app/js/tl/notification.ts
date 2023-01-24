@@ -172,17 +172,10 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
 	const websocketNotf: WebSocket[] = globalThis.websocketNotf
 	websocketNotf[acctId] = new WebSocket(start)
 	websocketNotf[acctId].onopen = function (mess) {
-		console.table({
-			acctId: acctId,
-			type: 'Connect Streaming API(Notf)',
-			domain: domain,
-			message: [mess],
-		})
 		$(`i[data-notf=${acctId}]`).removeClass('red-text')
 	}
 	websocketNotf[acctId].onmessage = function (mess) {
 		$('#landing_' + tlid).hide()
-		//console.log(["Receive Streaming API(Notf):" + acctId + "(" + domain + ")", JSON.parse(JSON.parse(mess.data).payload)]);
 		const popup = parseInt(localStorage.getItem('popup') || '0', 10)
 		const obj: Notification = JSON.parse(JSON.parse(mess.data).payload)
 		const type = JSON.parse(mess.data).event
@@ -222,7 +215,6 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
 	websocketNotf[acctId].onerror = function (error) {
 		console.error('WebSocket Error ', error)
 		errorCt++
-		console.log(errorCt)
 		if (errorCt < 3) {
 			notfWS(acctId, tlid, domain, at)
 		}
@@ -230,7 +222,6 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
 	websocketNotf[acctId].onclose = function (error) {
 		console.error('WebSocket Close ', error)
 		errorCt++
-		console.log(errorCt)
 		if (errorCt < 3) {
 			notfWS(acctId, tlid, domain, at)
 		}
@@ -238,7 +229,6 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
 }
 //一定のスクロールで発火
 export function notfMore(tlid: string) {
-	console.log({ status: 'kicked', statusBool: globalThis.moreLoading })
 	const obj = getColumn()
 	const acctId = obj[tlid].domain
 	const sid = $(`#timeline_${tlid} .notif-marker`).last().attr('data-maxid')
@@ -260,7 +250,6 @@ export function notfMore(tlid: string) {
 		httpreq.onreadystatechange = function () {
 			if (httpreq.readyState === 4) {
 				const json: Notification[] = httpreq.response
-				console.log(['More notifications on ' + tlid, json])
 				const headerM = httpreq.getResponseHeader('link')?.match(/[?&]{1}max_id=([0-9]+)/)
 				const maxId = headerM && headerM[1]
 				if (json[0]) {

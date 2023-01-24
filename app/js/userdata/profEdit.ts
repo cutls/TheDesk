@@ -36,7 +36,6 @@ export function imgChange(imgfile: HTMLInputElement, target: string) {
 	const acctId = $('#his-data').attr('use-acct')
 	todo('アップロードしています')
 	if (!imgfile.files?.length) {
-		console.warn('No Image to upload')
 		return
 	}
 	const file = imgfile.files[0]

@@ -99,7 +99,6 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	}
 	if ($('#sch-box').hasClass('sch-avail')) {
 		const scheduled = formatTimeUtc(new Date(Date.parse($('#sch-date').val()?.toString() || '')))
-		console.log('This toot will be posted at:' + scheduled)
 		schedule()
 		toot.scheduled_at = scheduled
 		if ($('#sch-box').hasClass('expire')) {
@@ -128,7 +127,6 @@ export async function post(postVis?: IVis, dry?: boolean) {
 			hide_totals: htt,
 		}
 	}
-	console.table(toot)
 	if (dry) {
 		$('#ideKey').val('')
 		$('.toot-btn-group').prop('disabled', false)

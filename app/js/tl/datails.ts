@@ -36,7 +36,6 @@ export async function details(id: string, acctId: string, tlid = 0, isDm?: boole
 	}
 	try {
 		const json = await api<Toot>(start, i)
-		console.log(['Toot data:', json])
 		if (!$('#timeline_' + tlid + ' #pub_' + id).length) {
 			const mute = getFilterTypeByAcct(acctId, 'thread')
 			const html = parse<string>([json], null, acctId, '', 0, mute)
@@ -65,7 +64,6 @@ export async function details(id: string, acctId: string, tlid = 0, isDm?: boole
 			try {
 				const history = await api(`https://${domain}/api/v1/statuses/${id}/history`, i)
 				const temp = parse<string>(history, 'noauth', acctId, '')
-				console.log(temp)
 				$('#toot-edit').html(temp)
 			} catch (e) {
 				console.error(e)
@@ -214,7 +212,6 @@ export function staCopy(id: string) {
 	html = html.replace(/<br\s?\/?>/, '\n')
 	html = html.replace(/<p>/, '\n')
 	html = html.replace(/<\/p>/, '\n')
-	console.log('Copy it:\n' + html)
 	html = html.replace(/<img[\s\S]*alt="(.+?)"[\s\S]*?>/g, '$1')
 	html = stripTags(html)
 	if (execCopy(html)) toast({ html: lang.lang_details_txt, displayLength: 1500 })

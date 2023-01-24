@@ -31,7 +31,6 @@ onmessage = async function (e) {
 	} else if (e.data[0] === 'dialogCW') {
 		ipc.send('dialogCW', e.data[1])
 	} else if (e.data[0] === 'nativeNotf') {
-		console.log(e.data[1])
 		ipc.send('native-notf', e.data[1])
 	} else if (e.data[0] === 'dialogClient') {
 		ipc.send('dialogClient', e.data[1])
@@ -68,7 +67,6 @@ onmessage = async function (e) {
 	} else if (e.data[0] === 'aboutData') {
 		ipc.send('aboutData', '')
 	} else if (e.data[0] === 'itunes') {
-		console.log('NowPlaying')
 		ipc.send('itunes', e.data[1])
 	} else if (e.data[0] === 'themeCSSRequest') {
 		ipc.send('theme-css-request', e.data)
@@ -170,7 +168,6 @@ ipc.on('general-dl-prog', function (event, arg) {
 })
 ipc.on('general-dl-message', function (event, arg) {
 	var argC = arg.replace(/\\/g, '\\\\')
-	console.log('saved')
 	postMessage(['toastSaved', [arg, argC]], '*')
 })
 //setting.js
@@ -249,4 +246,7 @@ ipc.on('alert', function (event, arg) {
 })
 ipc.on('customUrl', function (event, args) {
 	postMessage(['customUrl', args], '*')
+})
+ipc.on('isDev', function (event, args) {
+	postMessage(['isDev', true], '*')
 })

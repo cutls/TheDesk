@@ -38,7 +38,6 @@ export function pollCalc() {
 	const days = parseInt($('#days_poll').val()?.toString() || '0', 10)
 	const hrs = parseInt($('#hours_poll').val()?.toString() || '0', 10)
 	const mins = parseInt($('#mins_poll').val()?.toString() || '0', 10)
-	console.log('Poll calc:' + days * 86400 + hrs * 3600 + mins * 60)
 	return days * 86400 + hrs * 3600 + mins * 60
 }
 //Vote
@@ -92,7 +91,6 @@ export async function voteMastodonrefresh(acctId: string, id: string, target: st
 			Authorization: 'Bearer ' + at,
 		},
 	})
-	console.log(['Refresh vote', json])
 	if (!json) {
 		return false
 	}

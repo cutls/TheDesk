@@ -423,7 +423,7 @@ export async function testExec(exe: string) {
 		const as = new AiScript(globalThis.asCommon)
 		if (exe) as.exec(asParse.parse(exe))
 	} catch (e: any) {
-		console.log(e)
+		console.error(e)
 		Swal.fire({
 			icon: 'error',
 			title: `error on line ${e.location.start.line}`,

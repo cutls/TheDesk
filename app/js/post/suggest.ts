@@ -76,7 +76,6 @@ export function suggestInit() {
 							const at = localStorage.getItem('acct_' + acct_id + '_at')
 							suggest = `https://${domain}/api/v2/search?q=${encodeURIComponent(q)}`
 							if (suggest !== oldSuggest) {
-								console.log('Try to get suggest at ' + suggest)
 								const json = await api<Search>(suggest, {
 									method: 'get',
 									headers: {
@@ -84,7 +83,6 @@ export function suggestInit() {
 										Authorization: 'Bearer ' + at,
 									},
 								})
-								console.log(['Search', json])
 								//ハッシュタグ
 								if (json.hashtags[0] && tag) {
 									if (tag[0]) {

@@ -30,7 +30,6 @@ function init() {
 	if (globalThis.pwa) localStorage.setItem('v24Accepted', 'true')
 	if (!globalThis.pwa && !localStorage.getItem('v24Accepted')) return $('#v24Note').removeClass('hide')
 	if (globalThis.useLang === 'ja' || globalThis.useLang === 'ja-KS') $('.onlyJa').removeClass('hide')
-	console.log('loaded')
 	initPostbox()
 	connection()
 	initPlugin()
@@ -65,7 +64,6 @@ function init() {
 		}, 2000)
 	}
 	const onSetting = !!document.getElementById('envView')
-	console.log(onSetting, 'envView')
 	if (!onSetting) return
 	//最初に読む
 	configLoad()

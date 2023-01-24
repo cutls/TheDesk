@@ -68,7 +68,6 @@ export async function rt(id: string, acctId: string, remote: boolean, vis?: IVis
 	if (json.reblog) {
 		json = json.reblog
 	}
-	console.log(['Success: boost', json])
 	$('[toot-id=' + id + '] .fav_ct').text(json.favourites_count)
 	let rt = json.reblogs_count
 	if (!json.reblog) {
@@ -144,7 +143,6 @@ export async function follow(acctId: string, resolve: boolean) {
 		const data = await acctResolve(acctId, fullacct)
 		if (!data) return toast({ html: `Error to resolve account ${fullacct}` })
 		id = data.id
-		console.log(id)
 	}
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
@@ -156,7 +154,6 @@ export async function follow(acctId: string, resolve: boolean) {
 			Authorization: 'Bearer ' + at,
 		},
 	})
-	console.log(['Success: folllow', json])
 	if ($('#his-data').hasClass('following')) {
 		$('#his-data').removeClass('following')
 		$('#his-follow-btn-text').text(lang.lang_status_follow)
@@ -170,7 +167,6 @@ export async function follow(acctId: string, resolve: boolean) {
 	}
 }
 export async function acctResolve(acctId: string, user: string) {
-	console.log('Get user data of ' + user)
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const options = {
@@ -193,7 +189,6 @@ export async function acctResolve(acctId: string, user: string) {
 	}
 }
 export async function acctResolveLegacy(domain: string, user: string, options: any) {
-	console.log(`Get user data of ${user} with legacy method`)
 	try {
 		const start = 'https://' + domain + '/api/v2/search?resolve=true&q=' + user
 		const idJson = await api<Search>(start, options)
@@ -203,7 +198,7 @@ export async function acctResolveLegacy(domain: string, user: string, options: a
 			toast({ html: lang.lang_fatalerroroccured, displayLength: 2000 })
 		}
 	} catch {
-		console.log('Error occured on searching and fetching with resolve')
+
 	}
 }
 //ブロック
@@ -367,7 +362,6 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 	localStorage.setItem('nohide', 'true')
 	show()
 	const html = json.text || json.content
-	console.log(html)
 	$('#textarea').val(html)
 	if (json.spoiler_text) {
 		cw(true)
@@ -411,7 +405,6 @@ export async function localDraftToPost(json: StatusTheDeskExtend, acctId: string
 	localStorage.setItem('nohide', 'true')
 	show()
 	const html = json.status || ''
-	console.log(html)
 	$('#textarea').val(html)
 	if (json.spoiler_text) {
 		cw(true)
@@ -437,7 +430,6 @@ export async function pin(id: string, acctId: string) {
 			Authorization: 'Bearer ' + at,
 		},
 	})
-	console.log(['Success: pinned', json])
 	if (flag === 'unpin') {
 		$(`[toot-id=${id}]`).removeClass('pined')
 		$('.pin_' + id).removeClass('blue-text')
