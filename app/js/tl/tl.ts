@@ -925,6 +925,7 @@ function getFav(acctId: string, tlid: string, more?: boolean) {
 }
 
 async function getUtl(acctId: string, tlid: string, data: IColumnData, more: boolean) {
+	console.log(acctId, tlid, data, more)
 	globalThis.moreLoading = true
 	let ad = ''
 	if (more) {

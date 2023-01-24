@@ -12,7 +12,7 @@ import { execCopy, nano, playSound } from './platform/end'
 import { escapeHTML, nl2br, br2nl, formatTime, formatTimeUtc, makeCID, rgbToHex, setLog, escapeCsv, statusModel, initWebviewEvent, twemojiParse } from './platform/first'
 import { initPlugin, getMeta, execPlugin, testExec } from './platform/plugin'
 import { emojiToggle, emojiGet, emojiList, emojiInsert, brInsert } from './post/emoji'
-import { closeDrop, fileSelect, media, toBlob, deleteImage, altImage, stamp, alertProcessUnfinished, pimg } from './post/img'
+import { closeDrop, fileSelect, media, toBlob, deleteImage, altImage, stamp, alertProcessUnfinished, pwaImgSelect } from './post/img'
 import { sec, expPostMode, clear, post } from './post/post'
 import { nsfw, vis, loadVis, cw, cwShow, schedule, draftToggle, addToDraft, useThisDraft, deleteThisDraft } from './post/secure'
 import {
@@ -506,4 +506,4 @@ globalThis.addColumnMenu = addColumnMenu
 globalThis.addselCk = addselCk
 globalThis.client = client
 globalThis.migrate = migrate
-globalThis.pimg = pimg
+globalThis.pwaImgSelect = pwaImgSelect

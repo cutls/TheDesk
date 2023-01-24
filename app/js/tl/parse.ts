@@ -600,7 +600,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 					</a>
 					</div>
 					<div class="action ${disp.fav} ${noAuth}">
-						<a onclick="fav('${uniqueid}','${acctId}','${tlid}')"
+						<a onclick="fav('${uniqueid}','${acctId}')"
 							class="waves-effect waves-dark btn-flat actct fav-btn" style="padding:0"
 							title="${lang.lang_parse_fav}">
 							<i class="fas text-darken-3 fa-star${ifFav} fav_${uniqueid}"></i>

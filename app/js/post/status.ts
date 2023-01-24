@@ -14,7 +14,7 @@ import $ from 'jquery'
 import { StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
 
 //お気に入り登録
-export async function fav(id: string, acctId: string, remote: boolean) {
+export async function fav(id: string, acctId: string) {
 	const flag = $(`.cvo[unique-id=${id}]`).hasClass('faved') ? 'unfavourite' : 'favourite'
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
@@ -28,26 +28,22 @@ export async function fav(id: string, acctId: string, remote: boolean) {
 	})
 
 	if (json.reblog) json = json.reblog
-	if (!remote) {
-		//APIのふぁぼカウントがおかしい
-		const fav = json.favourites_count
-		if ($('[unique-id=${id}] .fav_ct').text() === json.favourites_count) {
-			if (flag === 'unfavourite') {
-				let fav = json.favourites_count - 1
-				if (fav < 0) fav = 0
-			}
+	//APIのふぁぼカウントがおかしい
+	const fav = json.favourites_count
+	if ($('[unique-id=${id}] .fav_ct').text() === json.favourites_count) {
+		if (flag === 'unfavourite') {
+			let fav = json.favourites_count - 1
+			if (fav < 0) fav = 0
 		}
-		$(`[unique-id=${id}] .fav_ct`).text(fav)
-		$(`[unique-id=${id}] .rt_ct`).text(json.reblogs_count)
-		if ($(`[unique-id=${id}]`).hasClass('faved')) {
-			$(`[unique-id=${id}]`).removeClass('faved')
-			$(`.fav_${id}`).removeClass('yellow-text')
-		} else {
-			$(`[unique-id=${id}]`).addClass('faved')
-			$(`.fav_${id}`).addClass('yellow-text')
-		}
+	}
+	$(`[unique-id=${id}] .fav_ct`).text(fav)
+	$(`[unique-id=${id}] .rt_ct`).text(json.reblogs_count)
+	if ($(`[unique-id=${id}]`).hasClass('faved')) {
+		$(`[unique-id=${id}]`).removeClass('faved')
+		$(`.fav_${id}`).removeClass('yellow-text')
 	} else {
-		toast({ html: lang.lang_status_favWarn, displayLength: 1000 })
+		$(`[unique-id=${id}]`).addClass('faved')
+		$(`.fav_${id}`).addClass('yellow-text')
 	}
 }
 
@@ -400,7 +396,7 @@ export async function localDraftToPost(json: StatusTheDeskExtend, acctId: string
 		}
 	}
 	const visMode = json.visibility
-	if(visMode) vis(visMode)
+	if (visMode) vis(visMode)
 	$('#media').val(media_ids?.join(','))
 	localStorage.setItem('nohide', 'true')
 	show()
@@ -555,7 +551,7 @@ export async function staEx(mode: 'rt' | 'fav' | 'reply') {
 			if (mode === 'rt') {
 				rt(id, acctId, true)
 			} else if (mode === 'fav') {
-				fav(id, acctId, true)
+				fav(id, acctId)
 			} else if (mode === 'reply') {
 				reEx(id)
 			}

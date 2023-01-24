@@ -231,7 +231,7 @@ export function initKeyboard() {
 				const id = $('.globalThis.selectedToot').attr('unique-id')
 				const acct_id = $('#timeline_' + globalThis.selectedColumn).attr('data-acct')
 				if (!id || !acct_id) return toast({ html: 'cannot action' })
-				fav(id, acct_id, false)
+				fav(id, acct_id)
 				return false
 			}
 			if (e.keyCode === 66) {

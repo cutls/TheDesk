@@ -41,8 +41,8 @@ $('#drag').on('dragleave', function () {
 	$('#drag').css('display', 'none')
 })
 
-//複数アップ
-export function pimg(files: FileList) {
+//複数アップ 
+function pimg(files: FileList) {
 	for (let i = 0; i < files.length; i++) {
 		const m = files[i].path.match(/\.(.+)$/)
 		if (!m) return handleFileUpload(files[i], i)
@@ -256,6 +256,12 @@ export function imgPasteInit() {
 
 			// 画像以外がペーストされたときのために、元に戻しておく
 		})
+}
+// PWA
+export function pwaImgSelect() {
+	const elem = <HTMLInputElement>document.getElementById('fileSelect')
+	const files = elem.files
+	if(files) pimg(files)
 }
 export async function deleteImage(key: string) {
 	const result = await Swal.fire({

@@ -710,7 +710,7 @@ function unstreamingTL(type: IColumnType, key: number, basekey: number, insert: 
 			${lang.lang_layout_leftFold}
 			</span><br>`
 	}
-	const dataHtml = type === 'utl' ? false : data
+	const dataHtml = type === 'utl' ? false : (data || acctId)
 	let typeFunc: string = type
 	if (type === 'fav') typeFunc = 'favTl'
 	const html = `<div class="boxIn" id="timeline_box_${key}_box" tlid="${key}">
@@ -760,7 +760,7 @@ function unstreamingTL(type: IColumnType, key: number, basekey: number, insert: 
 	} else if (type === 'utl') {
 		const isUtlData = (item: IColumnData): item is IColumnUTL => typeof item !== 'string' && item['acct']
 		if (!data || !isUtlData(data)) return
-		utl(key, data.acct, data)
+		utl(key, acctId, data)
 	}
 	cardCheck(key)
 	ebtCheck(key)
