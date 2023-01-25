@@ -11,6 +11,7 @@ import { isIVis, IVis } from '../post/secure'
 import { mastodonBaseStreaming } from '../tl/baseStreaming'
 import { cardCheck } from '../tl/card'
 import { checkNotfFilter, ebtCheck, excludeCk, getFilter, mediaCheck } from '../tl/filter'
+import { notfCommon } from '../tl/notification'
 import { voiceCheck } from '../tl/speech'
 import { favTag, isTagData } from '../tl/tag'
 import { tlCloser, tlDiff, tl, isColumnType } from '../tl/tl'
@@ -491,8 +492,9 @@ export function addColumn() {
 		data,
 	}
 	const obj = getColumn()
-	if (!obj) {
+	if (!obj.length) {
 		setColumn([add])
+		notfCommon(acct, '0', false)
 	} else {
 		obj.push(add)
 		setColumn(obj)
