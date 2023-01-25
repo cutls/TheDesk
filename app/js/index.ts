@@ -4,7 +4,7 @@ import { filter } from './tl/filter'
 import { about } from './common/about'
 import { parseBlur } from './common/blurhash'
 import { getMulti, setMulti, initColumn, getColumn, setColumn } from './common/storage'
-import { verck, closeStart } from './common/version'
+import { verck, closeStart, closeSupport } from './common/version'
 import { defaultEmoji, customEmoji, defEmoji } from './emoji/defaultEmoji'
 import { ck, refresh, ckdb, multiSelector, ticker } from './login/login'
 import { loadAcctList, maxChars, multiDel, backToInit, instance, code, atSetup, mainAcct, asReadEnd, autoCompleteInitTrigger } from './login/manager'
@@ -507,3 +507,4 @@ globalThis.addselCk = addselCk
 globalThis.client = client
 globalThis.migrate = migrate
 globalThis.pwaImgSelect = pwaImgSelect
+globalThis.closeSupport = closeSupport

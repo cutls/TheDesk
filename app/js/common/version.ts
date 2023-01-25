@@ -168,3 +168,6 @@ setInterval(function () {
 export function closeStart() {
 	$('#start').css('display', 'none')
 }
+export function closeSupport() {
+	$('#support-btm').addClass('hide')
+}

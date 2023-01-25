@@ -114,7 +114,7 @@ export function mastodonBaseStreaming(acctId: string) {
 		notfCommon(acctId, '0', true) //fallback
 		console.error('Error closing ' + domain)
 		console.error(error)
-		if (mastodonBaseWsStatus[domain] === 'available') parseColumn()
+		if (mastodonBaseWsStatus[domain] === 'available') return parseColumn()
 		mastodonBaseWsStatus[domain] = 'cannotuse'
 		setTimeout(function () {
 			mastodonBaseWsStatus[domain] = 'cannotuse'

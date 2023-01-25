@@ -24,7 +24,6 @@ import { checkSpotify } from '../ui/spotify'
 // Glance TLのデータ構造変更, ポップアップ通知の削除、コンテクストツールデフォルトオン
 
 // ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除、Tootsearch削除、MD/BBCode削除、altImage interval, nano廃止
-
 window.onload = init
 function init() {
 	if (globalThis.pwa) localStorage.setItem('v24Accepted', 'true')
