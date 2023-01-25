@@ -15,6 +15,7 @@
         "dev:run": "npm run build:main && electron ./ --dev",
         "dev:watchview": "node view/make/makeCli.js --watch",
         "dev:watchbuilder": "rollup -c -w",
+        "build": "npm run build:prepare && node buildCli.js",
         "build:pack": "npm run build:prepare && node buildCli.js",
         "build:prepare": "node view/make/makeCli.js && npm run build:render && npm run build:main",
         "build:main": "tsc main/main.ts --outDir dist/main --esModuleInterop true",
