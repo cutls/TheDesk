@@ -63,19 +63,22 @@ export function notfParse(obj: INotf | undefined, acctId: string, tlid: string |
 	if (popup >= 0 && noticetext !== memory) {
 		let file = ''
 		let sound = ''
-		if (localStorage.getItem('hasNotfC_' + acctId) !== 'true') {
+		if (obj.fromStreaming) {
 			if (type === 'mention') {
+				const favCt = parseInt($(`.notf-reply_${acctId}`).first().text() || '0', 10)
+				$(`.notf-reply_${acctId}`).text(favCt + 1)
 				$(`.boxIn[data-acct=${acctId}] .notice-box`).addClass('has-notf')
 				sound = localStorage.getItem('replySound') || 'default'
 				if (sound === 'default') file = '../../source/notif3.wav'
 			} else if (type === 'reblog') {
-				const btCt = parseInt(localStorage.getItem(`notf-bt_${acctId}`) || '0', 10)
+				const btCt = parseInt($(`.notf-bt_${acctId}`).first().text() || '0', 10)
 				$(`.notf-bt_${acctId}`).text(btCt + 1)
 				$(`.boxIn[data-acct=${acctId}] .notice-box`).addClass('has-notf')
 				sound = localStorage.getItem('btSound') || 'default'
 				if (sound === 'default') file = '../../source/notif2.wav'
 			} else if (type === 'favourite') {
-				const favCt = parseInt(localStorage.getItem(`notf-fav_${acctId}`) || '0', 10)
+				const favCt = parseInt($(`.notf-fav_${acctId}`).first().text() || '0', 10)
+				console.log($(`.notf-fav_${acctId}`).text())
 				$(`.notf-fav_${acctId}`).text(favCt + 1)
 				$(`.boxIn[data-acct=${acctId}] .notice-box`).addClass('has-notf')
 				sound = localStorage.getItem('favSound') || 'default'
