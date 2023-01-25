@@ -72,7 +72,7 @@ export function mastodonBaseStreaming(acctId: string) {
 			const obj: Toot = JSON.parse(JSON.parse(mess.data).payload)
 			const tls = getTlMeta(tl[0], tl, acctId, obj)
 			const template = insertTl(obj, tls, true)
-			if (!template) return Swal.fire('Error')
+			if (!template) return
 			$(`[unique-id=${obj.id}]`).html(template)
 			$(`[unique-id=${obj.id}] [unique-id=${obj.id}]`).unwrap()
 		} else if (typeA === 'notification') {

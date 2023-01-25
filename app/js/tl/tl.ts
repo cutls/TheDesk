@@ -135,7 +135,6 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 		$('#landing_' + tlid).hide()
 		const mute = getFilterTypeByAcct(acctId, convertColumnToFilter(type))
 		const template = parse<string>(json, type, acctId, tlid, 0, mute)
-		localStorage.setItem('lastobj_' + tlid, json[0].id)
 		$('#timeline_' + tlid).html(template)
 		additional(acctId, tlid)
 		timeUpdate()

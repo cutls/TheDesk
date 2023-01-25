@@ -13,10 +13,10 @@ import { say } from './speech'
 import { scrollCk } from '../ui/scroll'
 
 //Integrated TL
-const mastodonBaseWsStatus = globalThis.mastodonBaseWsStatus
 let lastId: string
 let beforeLastId: string
 export async function mixTl(acctId, tlid, type: 'plus' | 'mix', voice?: boolean) {
+	const mastodonBaseWsStatus = globalThis.mastodonBaseWsStatus
 	localStorage.setItem('now', type)
 	todo('Integrated TL Loading...(Local)')
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
@@ -31,7 +31,6 @@ export async function mixTl(acctId, tlid, type: 'plus' | 'mix', voice?: boolean)
 	$('#landing_' + tlid).hide()
 	const mute = getFilterTypeByAcct(acctId, 'mix')
 	const template = parse<string>(integrated, type, acctId, tlid, 0, mute)
-	localStorage.setItem('lastobj_' + tlid, integrated[0].id)
 	$('#timeline_' + tlid).html(template)
 	additional(acctId, tlid)
 	timeUpdate()
@@ -202,7 +201,6 @@ export async function mixMore(tlid: string, type: IColumnType) {
 	$('#landing_' + tlid).hide()
 	const mute = getFilterTypeByAcct(acctId, 'mix')
 	const template = parse<string>(integrated, type, acctId, tlid, 0, mute)
-	localStorage.setItem('lastobj_' + tlid, integrated[0].id)
 	$('#timeline_' + tlid).append(template)
 	additional(acctId, tlid)
 	timeUpdate()
