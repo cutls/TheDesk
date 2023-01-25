@@ -402,7 +402,7 @@ export function exclude(key: string) {
 	if ($(`#exc-status-${key}:checked`).val()) excTypes.push('status')
 	if ($(`#exc-update-${key}:checked`).val()) excTypes.push('update')
 	if ($(`#exc-follow_request-${key}:checked`).val()) excTypes.push('follow_request')
-	const excludetxt = excTypes
+	const excludetxt = `?` + excTypes
 		.map(function (el) {
 			return `exclude_types[]=${el}`
 		})

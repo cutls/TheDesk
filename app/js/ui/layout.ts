@@ -75,6 +75,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 	} else if (targetStr) {
 		const target = parseInt(targetStr, 10)
 		columns = [columns[target]]
+		tlidTar = target
 		numTarget = true
 	} else {
 		if ($('#timeline-container').length) {
