@@ -2,8 +2,9 @@ import $ from 'jquery'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/ja'
+import 'dayjs/locale/en'
 dayjs.extend(relativeTime)
-dayjs.locale('ja')
+dayjs.locale(globalThis.useLang === 'ja' || globalThis.useLang === 'ja-KS' ? 'ja' : 'en')
 
 const timeUpdate = () => {
 	$('time.timeago').each(function (i, elem) {

@@ -107,7 +107,7 @@ export function emojiReactionDef(target: string) {
 	}
 	const acctId = $('#post-acct-sel').val()?.toString()
 	const id = $('#reply').val()?.toString()
-	if (!id || !acctId) return Swal.fire('Error')
+	if (!id || !acctId) return
 	announReaction(id, acctId, false, emoji)
 	clear()
 	hide()
