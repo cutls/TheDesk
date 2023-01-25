@@ -29,19 +29,15 @@ export async function fav(id: string, acctId: string) {
 
 	if (json.reblog) json = json.reblog
 	//APIのふぁぼカウントがおかしい
-	const fav = json.favourites_count
-	if ($('[unique-id=${id}] .fav_ct').text() === json.favourites_count) {
-		if (flag === 'unfavourite') {
-			let fav = json.favourites_count - 1
-			if (fav < 0) fav = 0
-		}
-	}
-	$(`[unique-id=${id}] .fav_ct`).text(fav)
 	$(`[unique-id=${id}] .rt_ct`).text(json.reblogs_count)
 	if ($(`[unique-id=${id}]`).hasClass('faved')) {
+		const fav = json.favourites_count - 1
+		$(`[unique-id=${id}] .fav_ct`).text(fav >= 0 ? fav : 0)
 		$(`[unique-id=${id}]`).removeClass('faved')
 		$(`.fav_${id}`).removeClass('yellow-text')
 	} else {
+		const fav = json.favourites_count
+		$(`[unique-id=${id}] .fav_ct`).text(fav)
 		$(`[unique-id=${id}]`).addClass('faved')
 		$(`.fav_${id}`).addClass('yellow-text')
 	}
@@ -61,9 +57,6 @@ export async function rt(id: string, acctId: string, remote: boolean, vis?: IVis
 		},
 		body: vis ? { visibility: vis } : undefined,
 	})
-	if (json.reblog) {
-		json = json.reblog
-	}
 	$('[toot-id=' + id + '] .fav_ct').text(json.favourites_count)
 	let rt = json.reblogs_count
 	if (!json.reblog) {
@@ -73,6 +66,8 @@ export async function rt(id: string, acctId: string, remote: boolean, vis?: IVis
 				rt = 0
 			}
 		}
+	} else {
+		rt = json.reblog.reblogs_count
 	}
 	$(`[toot-id=${id}] .rt_ct`).text(rt)
 
