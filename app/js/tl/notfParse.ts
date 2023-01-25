@@ -105,7 +105,7 @@ export function notfParse(obj: INotf | undefined, acctId: string, tlid: string |
 			request.onload = () => playSound(request)
 			request.send()
 		}
-		if (native) {
+		if (native && obj.fromStreaming) {
 			const options = {
 				body: `${account.display_name}(${account.acct})${what}\n\n${stripTags(targetContent || '')}`,
 				icon: account.avatar,

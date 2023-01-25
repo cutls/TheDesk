@@ -73,6 +73,7 @@ export async function notfColumn(acctId: string, tlid: string) {
 						eventBy: obj.account,
 						id: obj.id,
 						createdAt: obj.created_at,
+						fromStreaming: false
 					}
 					if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
 						const status = obj.status || statusModel()
@@ -141,6 +142,7 @@ export async function notfCommon(acctId: string, tlid: string, isStreamOnly: boo
 					eventBy: obj.account,
 					id: obj.id,
 					createdAt: obj.created_at,
+					fromStreaming: false
 				}
 				if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
 					const status = obj.status || statusModel()
@@ -191,6 +193,7 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
 					eventBy: obj.account,
 					id: obj.id,
 					createdAt: obj.created_at,
+					fromStreaming: true
 				}
 				if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
 					const status = obj.status || statusModel()
@@ -264,6 +267,7 @@ export function notfMore(tlid: string) {
 							eventBy: obj.account,
 							id: obj.id,
 							createdAt: obj.created_at,
+							fromStreaming: false
 						}
 						if (type === 'mention' || type === 'status' || type === 'reblog' || type === 'favourite' || type === 'poll' || type === 'update') {
 							const status = obj.status || statusModel()

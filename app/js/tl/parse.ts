@@ -39,6 +39,7 @@ export interface INotf {
 	eventBy: Account
 	createdAt: string
 	id: string
+	fromStreaming: boolean
 }
 //オブジェクトパーサー(トゥート)
 export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'pinned' | null, acctId: string, tlid: string, popup?: number, wordmuteList?: string[], notif?: INotf) {

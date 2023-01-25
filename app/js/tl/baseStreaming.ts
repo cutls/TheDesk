@@ -87,6 +87,7 @@ export function mastodonBaseStreaming(acctId: string) {
 				eventBy: obj.account,
 				id: obj.id,
 				createdAt: obj.created_at,
+				fromStreaming: true
 			}
 			if (type === 'mention') $(`.notf-reply_${acctId}`).removeClass('hide')
 			if (type === 'favourite') $(`.notf-fav_${acctId}`).removeClass('hide')
