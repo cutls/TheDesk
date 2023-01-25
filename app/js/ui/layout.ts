@@ -417,19 +417,20 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			const height = ui.size.height
 			if ($(this).hasClass('boxIn')) {
 				//縦幅。その縦幅を持つカラムのidは
-				if (!$(this).attr('tlid')) return
+				if (!$(this).attr('tlid')) return console.log('no tlid to tate')
 				const key = parseInt($(this).attr('tlid') || '0', 10)
 				const column = columns[key]
 				column.height = height
 				columns[key] = column
 			} else {
 				//横幅。その縦幅を持つカラムのidは
-				if (!$(this).attr('tlid')) return
+				if (!$(this).find('.boxIn').attr('tlid')) return console.log('no tlid to yoko')
 				const key = parseInt($(this).find('.boxIn').attr('tlid') || '0', 10)
 				const column = columns[key]
 				column.width = width
 				columns[key] = column
 			}
+			console.log(columns)
 			setColumn(columns)
 		},
 	})
