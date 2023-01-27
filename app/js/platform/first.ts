@@ -27,7 +27,7 @@ import { checkSpotify } from '../ui/spotify'
 window.onload = init
 function init() {
 	if (globalThis.pwa) localStorage.setItem('v24Accepted', 'true')
-	if (!globalThis.pwa && !localStorage.getItem('v24Accepted')) return $('#v24Note').removeClass('hide')
+	if (!globalThis.pwa && !localStorage.getItem('v24Accepted') && localStorage.getItem('ver')) return $('#v24Note').removeClass('hide')
 	if (globalThis.pwa) $('.hideOnlyPwa').removeClass('hide')
 	if (globalThis.useLang === 'ja' || globalThis.useLang === 'ja-KS') $('.onlyJa').removeClass('hide')
 	initPostbox()
