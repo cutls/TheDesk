@@ -131,6 +131,7 @@
   "autocwwarn": "Mostra la finestra di dialogo se rendi nascosto un testo troppo lungo.",
   "defaultcw": "Testo di avvertimento predefinito",
   "cws": "Sempre CW impostato",
+  "cwContinue": "Keep CW enabled",
   "defaultvis": "Visibilità di default",
   "public": "Pubblico",
   "unlisted": "Non Elencato",
