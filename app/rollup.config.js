@@ -14,7 +14,6 @@ const plugins = process.env.ROLLUP_WATCH === 'true' ? [] : [terser({
 })]
 const config = {
     input: 'js/index.ts',
-    preferBuiltins: false,
     output: [
         {
             file: './dist/index.js',
@@ -25,7 +24,6 @@ const config = {
     plugins: [
         nodeResolve({ jsnext: true, browser: true, preferBuiltins: false }), // npmモジュールを`node_modules`から読み込む
         commonjs({ transformMixedEsModules: true }), // CommonJSモジュールをES6に変換
-        babel(), // ES5に変換
         typescript(), // TS
         json(), // JSON
     ]
