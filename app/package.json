@@ -19,7 +19,7 @@
         "build:pack": "npm run build:prepare && node buildCli.js",
         "build:prepare": "node view/make/makeCli.js && npm run build:render && npm run build:main",
         "build:main": "tsc main/main.ts --outDir dist/main --esModuleInterop true",
-        "build:render": "rollup -c",
+        "build:render": "npx rollup -c",
         "build:pwa": "node view/make/makeCli.js --pwa && npm run build:render",
         "build:all:x64": "npm run build:prepare && node buildCli.js --withStore",
         "build:all": "npm run build:prepare && node buildCli.js --withStore --withX64 --withIa32 --withArm64",
