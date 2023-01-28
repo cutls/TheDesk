@@ -9,7 +9,7 @@ import $ from 'jquery'
 //バージョンチェッカー
 export async function verck(ver: string) {
 	if (globalThis.store) return false
-	if (globalThis.pwa) return false
+	if (globalThis.pwa) return localStorage.setItem('ver', `PWA`)
 	console.log('%c Welcome😊 ' + ver, 'color: red;font-size:200%;')
 	$('body').addClass(localStorage.getItem('platform') || '')
 	const date = new Date()
