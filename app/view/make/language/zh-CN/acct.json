@@ -2,7 +2,7 @@
     "list": "已登录帐户",
     "back": "返回",
     "add": "添加一个帐户",
-    "addAcct": "Fill the instance domain (like mastodon.social)",
+    "addAcct": "填写实例域名（如 mastodon.social）",
     "codesetupwarn": "Windows以外的运行环境，或需要登录Pleroma，请尝试勾选下面的复选框",
     "codesetup": "使用授权码登录",
     "mainacct": "主帐户",
@@ -20,7 +20,7 @@
     "thisismisskey": "使用Misskey登录",
     "misskeylogin": "阅读 <a href=\"https://thedesk.top/how-to-misskey-login.html\">文档(ja)</a> 了解如何使用Misskey登录.",
     "nodata": "暂无数据",
-    "accessTokenSetup": "Use access token to login(click after fill not code but access-token in box: Advanced)",
-    "haveExported": "Having the exported file of TheDesk, click here to jump setting page",
-    "redo": "Retry(re-input address)"
+    "accessTokenSetup": "使用访问令牌登录（填写访问令牌而不是代码：高级)",
+    "haveExported": "导出 TheDesk 文件后，点击此处跳转到设置页面",
+    "redo": "重试（重新输入地址）"
 }
