@@ -779,10 +779,11 @@ export function completePlugin(comp?: boolean) {
 		editor.setValue('', -1)
 		pluginLoad()
 	} catch (e: any) {
+		console.error(e)
 		Swal.fire({
 			icon: 'error',
 			title: 'Syntax Error',
-			text: `error on line ${e.location.start.line}`,
+			text: e.toString(),
 		})
 		return false
 	}
@@ -808,7 +809,7 @@ export function testExecTrg() {
 		Swal.fire({
 			icon: 'error',
 			title: 'Error',
-			text: `error on line ${e.location.start.line}`,
+			text: e.toString(),
 		})
 	}
 
