@@ -86,9 +86,9 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 	}
 	let basekey = 0
 	for (let key = 0; key < columns.length; key++) {
-		//acctって言いながらタイムライン
 		const column = columns[key]
-		const { domain, type } = column
+		const { type } = column
+		const domain = column.domain || 0
 		if (tlidTar || tlidTar === 0) {
 			key = tlidTar
 		}
@@ -371,7 +371,7 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			localStorage.removeItem('pool_' + key)
 			const data = column.data
 			const voice = localStorage.getItem('voice_' + key) === 'yes'
-			tl(column.type, data, column.domain.toString(), key.toString(), voice)
+			tl(column.type, data, domain.toString(), key.toString(), voice)
 			cardCheck(key)
 			ebtCheck(key)
 			mediaCheck(key)
@@ -781,6 +781,7 @@ export function favTl(key: number, acctId: string) {
 	tl('fav', undefined, acctId, key.toString(), voice)
 }
 export function utl(key: number, acctId: string, data: IColumnData) {
+	if (!key) key = 0
 	if (!data) {
 		const obj = getColumn()
 		const dataObj = obj[key].data
