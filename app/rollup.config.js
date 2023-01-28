@@ -14,6 +14,7 @@ const plugins = process.env.ROLLUP_WATCH === 'true' ? [] : [terser({
 })]
 const config = {
     input: 'js/index.ts',
+    context: 'globalThis',
     output: [
         {
             file: './dist/index.js',
