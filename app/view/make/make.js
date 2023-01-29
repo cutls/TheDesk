@@ -1,6 +1,7 @@
 const fs = require('fs')
 
 function construct(ver, basefile, pwa, store) {
+    if (pwa && fs.existsSync(`${basefile}dist/index.js.map`)) fs.unlinkSync(`${basefile}dist/index.js.map`)
     const execSync = require('child_process').execSync
     let gitHash = execSync('git rev-parse HEAD')
         .toString()

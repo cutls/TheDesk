@@ -1,13 +1,16 @@
 // Create the Application's main menu
 import electron from 'electron'
 import { join } from 'path'
+import fs from 'fs'
 import { about } from './system'
-export default function (lang: string, mainWindow: electron.BrowserWindow, packaged: boolean, dir: string, dirname: string) {
+const { Menu, MenuItem, ipcMain, BrowserWindow, app } = electron
+const debugPath = join(app.getPath('userData'), 'debug')
+
+export default function (lang: string, mainWindow: electron.BrowserWindow, packaged: boolean, dir: string, isDebug: boolean) {
     //フレーム
     if (lang !== 'ja' && lang !== 'en') {
         lang = 'en'
     }
-    const { Menu, MenuItem, ipcMain, BrowserWindow, app } = electron
     const dict = {
         'application': {
             'ja': 'アプリケーション',
@@ -101,6 +104,10 @@ export default function (lang: string, mainWindow: electron.BrowserWindow, packa
                 }
             },
             { type: 'separator' },
+            { label: 'Debug mode', click: function () {
+                fs.writeFileSync(debugPath, (!isDebug).toString())
+                mainWindow.webContents.toggleDevTools()
+            }, type: 'checkbox', checked: isDebug },
             { label: dict.quit[lang], accelerator: 'Command+Q', click: function () { app.quit() } }
 
         ]

@@ -22,6 +22,7 @@ const ha_path = join(app.getPath('userData'), 'hardwareAcceleration')
 const wv_path = join(app.getPath('userData'), 'webview')
 const ua_path = join(app.getPath('userData'), 'useragent')
 const lang_path = join(app.getPath('userData'), 'language')
+const debugPath = join(app.getPath('userData'), 'debug')
 const parent = getDirname(__dirname)
 const homeDir = parent.replace('dist', '')
 const dir = 'file://' + homeDir
@@ -210,7 +211,8 @@ function createWindow() {
 			app.exit()
 		}
 	})
-	if (!packaged) mainWindow.webContents.toggleDevTools()
+	const isDebug = fs.existsSync(debugPath) && fs.readFileSync(debugPath).toString() === 'true'
+	if (!packaged || isDebug) mainWindow.webContents.toggleDevTools()
 	electron.session.defaultSession.clearCache()
 	let plus = ''
 	if (process.argv) {
@@ -304,7 +306,7 @@ function createWindow() {
 		writePos(mainWindow)
 		mainWindow.webContents.send('asRead', '')
 	})
-	Menu.setApplicationMenu(Menu.buildFromTemplate(language(lang, mainWindow, packaged, dir, homeDir)))
+	Menu.setApplicationMenu(Menu.buildFromTemplate(language(lang, mainWindow, packaged, dir, isDebug)))
 	//CSS
 	css()
 	//アップデータとダウンロード

@@ -4,21 +4,22 @@ const babel = require('rollup-plugin-babel')
 const typescript = require('@rollup/plugin-typescript')
 const json = require('@rollup/plugin-json')
 const terser = require('rollup-plugin-terser').terser
-const plugins = process.env.ROLLUP_WATCH === 'true' ? [] : [terser({
-    format: {
-        comments: false
-    },
-    compress: {
-        drop_console: true
-    }
-})]
 const config = {
     input: 'js/index.ts',
     output: [
         {
             file: './dist/index.js',
             format: 'iife',
-            plugins
+            plugins: [terser({
+                format: {
+                    comments: false
+                },
+                compress: {
+                    drop_console: true
+
+                }
+            })],
+            sourcemap: true,
         }
     ],
     plugins: [
