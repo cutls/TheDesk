@@ -70,6 +70,8 @@ const tlView: any = createApp({
 		complete: function (i, val) {
 			let ls = tlView.config[i]
 			const header = ls.text.head
+			const hasCheckbox = ls.text.checkbox
+			let showVal = val
 			if (val) {
 				localStorage.setItem(ls.storage, val)
 			} else {
@@ -84,10 +86,13 @@ const tlView: any = createApp({
 						$('#' + id)
 							.val()
 							?.toString() || ''
+					showVal = showVal ? `${showVal}${ls[j].setValue}${ls[j].text.after}` : `${ls[j].setValue}${ls[j].text.after}`
 					localStorage.setItem(ls[j].storage, val)
 				}
 			}
-			toast({ html: `Updated: ${header}`, displayLength: 3000 })
+
+			const cbTxt = hasCheckbox ? hasCheckbox.find((i) => i.value === val).text : showVal
+			toast({ html: `Updated: "${header}" to "${cbTxt}"`, displayLength: 3000 })
 			return true
 		},
 	},
@@ -104,6 +109,8 @@ const postView: any = createApp({
 		complete: function (i, val) {
 			let ls = postView.config[i]
 			const header = ls.text.head
+			const hasCheckbox = ls.text.checkbox
+			let showVal = val
 			if (val) {
 				localStorage.setItem(ls.storage, val)
 			} else {
@@ -119,10 +126,12 @@ const postView: any = createApp({
 						$('#' + id)
 							.val()
 							?.toString() || ''
+					showVal = showVal ? `${showVal}${ls[j].setValue}${ls[j].text.after}` : `${ls[j].setValue}${ls[j].text.after}`
 					localStorage.setItem(ls[j].storage, val)
 				}
 			}
-			toast({ html: `Updated: ${header}`, displayLength: 3000 })
+			const cbTxt = hasCheckbox ? hasCheckbox.find((i) => i.value === val).text : showVal
+			toast({ html: `Updated: "${header}" to "${cbTxt}"`, displayLength: 3000 })
 			return true
 		},
 	},
