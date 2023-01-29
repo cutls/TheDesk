@@ -77,6 +77,9 @@ export function sort() {
 			data: data.data,
 			background: data.background,
 			text: data.text,
+			left_fold: data.left_fold,
+			width: data.width,
+			height: data.height
 		}
 		newobj.push(add)
 		if (flags[i]) {
