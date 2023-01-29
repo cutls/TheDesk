@@ -19,7 +19,7 @@ export async function fav(id: string, acctId: string) {
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const start = `https://${domain}/api/v1/statuses/${id}/${flag}`
-	let json = await api(start, {
+	let json = await api<Toot>(start, {
 		method: 'post',
 		headers: {
 			'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export async function fav(id: string, acctId: string) {
 		$(`[unique-id=${id}]`).removeClass('faved')
 		$(`.fav_${id}`).removeClass('yellow-text')
 	} else {
-		const fav = json.favourites_count
+		const fav = json.favourites_count || json.reblog?.favourites_count || 0
 		$(`[unique-id=${id}] .fav_ct`).text(fav)
 		$(`[unique-id=${id}]`).addClass('faved')
 		$(`.fav_${id}`).addClass('yellow-text')
@@ -49,7 +49,7 @@ export async function rt(id: string, acctId: string, remote: boolean, vis?: IVis
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const start = `https://${domain}/api/v1/statuses/${id}/${flag}`
-	let json = await api(start, {
+	let json = await api<Toot>(start, {
 		method: 'post',
 		headers: {
 			'Content-Type': 'application/json',
@@ -57,7 +57,8 @@ export async function rt(id: string, acctId: string, remote: boolean, vis?: IVis
 		},
 		body: vis ? { visibility: vis } : undefined,
 	})
-	$('[toot-id=' + id + '] .fav_ct').text(json.favourites_count)
+	const fav = json.favourites_count || json.reblog?.favourites_count || 0
+	$('[toot-id=' + id + '] .fav_ct').text(fav)
 	let rt = json.reblogs_count
 	if (!json.reblog) {
 		rt = rt - 1
