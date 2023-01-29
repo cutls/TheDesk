@@ -63,7 +63,7 @@ export function pollParse(poll: Poll, acctId: string, emojis: Emoji[]) {
 			votesel = `voteSelMastodon('${acctId}','${poll.id}',${poll.multiple}, this)`
 			voteclass = 'pointer'
 		}
-		const per = Math.ceil((choice.votes_count || 0 / poll.votes_count) * 100) || 0
+		const per = Math.ceil(((choice.votes_count || 0) / poll.votes_count) * 100) || 0
 		const addPoll = max === choice.votes_count ? 'maxVoter' : ''
 		let openData = ''
 		if (choice.votes_count !== null) {

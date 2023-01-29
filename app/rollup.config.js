@@ -15,7 +15,7 @@ const config = {
                     comments: false
                 },
                 compress: {
-                    drop_console: true
+                    drop_console: process.env.ROLLUP_WATCH !== 'true'
 
                 }
             })],
