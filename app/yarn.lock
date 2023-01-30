@@ -1449,10 +1449,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.0.0.tgz#2ff674e9611b45b528896d820d3d7a812de2f0e4"
   integrity sha512-FyD2meJpDPjyNQejSjvnhpgI/azsQkA4lGbuu5BQZfjvJ9cbRZXzeWL2HceCekW4lixO9JPesIIQkSoLjeJHNQ==
 
-"@syuilo/aiscript@^0.12.2":
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/@syuilo/aiscript/-/aiscript-0.12.2.tgz#13e0b776951eb4c8a28050c5e35909b1a8f81a2f"
-  integrity sha512-bXEYgFGW2uDFr2Vl5TmBtZqzgAtobT4k4ZSWwEbmwB3x5S7WrgJ7MNbpe3AszJ+I6BOQpB6uHHwr+KMNx9pWCQ==
+"@syuilo/aiscript@^0.12.3":
+  version "0.12.3"
+  resolved "https://registry.yarnpkg.com/@syuilo/aiscript/-/aiscript-0.12.3.tgz#de5ceaffcf10103e165dc3f45ecded34e9c526eb"
+  integrity sha512-kmBlRBHMwzR4yqiWIHmsvi92BR39Cr3olGHXh/+mw6n6qmI3C6lp0p3CPrcNWLLxs6SCTFNRBio7ROGctbyPfA==
   dependencies:
     autobind-decorator "2.4.0"
     seedrandom "3.0.5"
