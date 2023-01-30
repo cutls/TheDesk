@@ -113,7 +113,7 @@
         "npm-run-all": "^4.1.5",
         "prettier": "^2.8.3",
         "readline-sync": "1.4.10",
-        "rollup": "^3.10.0",
+        "rollup": "^3.12.0",
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-json": "^4.0.0",
