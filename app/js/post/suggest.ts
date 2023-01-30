@@ -57,10 +57,15 @@ export function suggestInit() {
 							for (const emoji of json) {
 								const { shortcode, url } = emoji
 								if (`:${shortcode}`.match(reg)) {
-									listHtml = listHtml + `${listHtml ? `<br>` : ``}<a onclick="emojiInsert(':${shortcode}:','${l}')" class="pointer"><img src="${url}" width="15">:${shortcode}:</a>`
+									listHtml = listHtml + `${listHtml ? `<br>` : ``}<a onclick="emojiInsert(':${shortcode}:','${l}')" class="pointer suggestedKey" tabindex=0><img src="${url}" width="15">:${shortcode}:</a>`
 								}
 							}
 							$('#suggest').html(listHtml)
+							document.querySelectorAll('.suggestedKey').forEach(function (button: any) {
+								button.addEventListener('keydown', function (evt) {
+									if (evt.key == 'Enter') button.click()
+								})
+							})
 							$('#suggest').show()
 						} else if (tag && tag[0]) {
 							q = tag[0]
@@ -91,7 +96,7 @@ export function suggestInit() {
 											const tag = json.hashtags[key4]
 											const his = tag.history
 											const uses = his[0].uses * 1 + his[1].uses * 1 + his[2].uses * 1 + his[3].uses * 1 + his[4].uses * 1 + his[5].uses * 1 + his[6].uses * 1
-											const tagHTML = `<br><a onclick="tagInsert('#${escapeHTML(tag.name)}','${q}')" class="pointer">#${escapeHTML(tag.name)}</a>&nbsp;${uses}toot(s)`
+											const tagHTML = `<br><a onclick="tagInsert('#${escapeHTML(tag.name)}','${q}')" class="pointer suggestedKey" tabindex="0">#${escapeHTML(tag.name)}</a>&nbsp;${uses}toot(s)`
 											const item = {
 												uses: uses,
 												html: tagHTML,
@@ -120,6 +125,11 @@ export function suggestInit() {
 										}
 										$('#suggest').html(ins)
 										$('#suggest').show()
+										document.querySelectorAll('.suggestedKey').forEach(function (button: any) {
+											button.addEventListener('keydown', function (evt) {
+												if (evt.key == 'Enter') button.click()
+											})
+										})
 									}
 								} else if (json.accounts[0] && acct && acct[0]) {
 									let accts = ''
@@ -127,12 +137,17 @@ export function suggestInit() {
 										if (acct.acct !== q) {
 											//Instance Actorって…
 											if (acct.username.indexOf('.') < 0) {
-												accts = accts + `<a onclick="tagInsert('@${acct.acct}','${q}')" class="pointer">@${acct.acct}</a><br>`
+												accts = accts + `<a onclick="tagInsert('@${acct.acct}','${q}')" class="pointer suggestedKey" tabindex=0>@${acct.acct}</a><br>`
 											}
 										}
 									}
 									$('#suggest').html(accts)
 									$('#suggest').show()
+									document.querySelectorAll('.suggestedKey').forEach(function (button: any) {
+										button.addEventListener('keydown', function (evt) {
+											if (evt.key == 'Enter') button.click()
+										})
+									})
 								}
 							}
 						}
