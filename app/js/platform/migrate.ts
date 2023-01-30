@@ -4,7 +4,7 @@ import { IColumn } from '../../interfaces/Storage'
 import { isTagData } from "../tl/tag"
 
 const sleep = (msec: number) => new Promise((resolve) => setTimeout(resolve, msec))
-export const migrate = async () => {
+export const migrate = async (skipWait?: boolean) => {
     Swal.fire({
         title: 'Warp to v24...',
         html: `migrating`,
@@ -17,9 +17,9 @@ export const migrate = async () => {
             return
         },
     })
-    await sleep(2000)
-    const timelines = getColumn()
-    const newTl: IColumn[] = []
+    if (!skipWait) await sleep(2000)
+    const timelines: (IColumn | any)[] = getColumn()
+    const newTl: (IColumn | any)[] = []
     for (const tl of timelines) {
         if (tl.type === 'tootsearch') continue
         if (tl.type === 'tag') {
@@ -44,19 +44,22 @@ export const migrate = async () => {
                 if (typeof tl.data.none === 'string') tl.data.any = (tl.data.none as string).split(',')
             }
         }
-        if (tl.type === 'noauth') {
+        if (tl.type === 'noauth' && typeof tl.domain !== 'number') {
             tl.data = tl.domain.toString()
+            tl.domain = 0
+        }
+        if (tl.type === 'webview' && typeof tl.domain !== 'number') {
             tl.domain = 0
         }
         if (typeof tl.domain === 'string') tl.domain = parseInt(tl.domain, 10)
         newTl.push(tl)
     }
-    const wm = JSON.parse(localStorage.getItem('word_mute') || '[]').map((i) => i.tag)
-    const we = JSON.parse(localStorage.getItem('word_emp') || '[]').map((i) => i.tag)
+    const wm = JSON.parse(localStorage.getItem('word_mute') || '[]').map((i) => i.tag || i)
+    const we = JSON.parse(localStorage.getItem('word_emp') || '[]').map((i) => i.tag || i)
     localStorage.setItem('word_mute', JSON.stringify(wm))
     localStorage.setItem('word_emp', JSON.stringify(we))
     localStorage.removeItem('popup')
-    localStorage.setItem('v24Accepted', 'true')
+    localStorage.setItem('v24Accepted', 'v2')
     setColumn(newTl)
     location.reload()
     Swal.close()
