@@ -233,7 +233,7 @@ export async function block(acctId: string) {
 export async function muteDo(acctId: string) {
 	if (!acctId) acctId = $('#his-data').attr('use-acct') || ''
 	const isBlock = $('#his-data').hasClass('muting')
-	const flag = isBlock ? 'unblock' : 'block'
+	const flag = isBlock ? 'unmute' : 'mute'
 	const txt = isBlock ? lang.lang_status_unmute : lang.lang_status_mute
 	const result = await Swal.fire({
 		title: txt,
