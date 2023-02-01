@@ -76,7 +76,7 @@
         "json5": "^2.2.3",
         "lodash": "^4.17.21",
         "punycode": "^2.2.0",
-        "sanitize-html": "^2.7.2",
+        "sanitize-html": "^2.9.0",
         "sumchecker": "^3.0.1",
         "sweetalert2": "^11.6.16",
         "system-font-families": "^0.6.0",
