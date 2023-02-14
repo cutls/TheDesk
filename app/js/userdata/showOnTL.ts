@@ -90,7 +90,7 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 	fer(json.id, '', acctId)
 	let disName = twemojiParse(escapeHTML(json.display_name || json.acct))
 	disName = customEmojiReplace(disName, json, gif)
-	let note = json.note
+	let note = json.note || ''
 	note = customEmojiReplace(note, json, gif)
 	$('#his-name').html(disName)
 	$('#his-acct').text(json.acct)
@@ -108,7 +108,7 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 	$('#his-follower').text(flerc)
 	$('#his-since').text(crat(json.created_at))
 	$('#his-openin').attr('data-href', json.url)
-	if (json.fields) {
+	if (json.fields && json.fileds?.length) {
 		let table = ''
 		if (json.fields.length > 0) {
 			$('#his-des').css('max-height', '115px')
@@ -145,6 +145,7 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 	$('#his-float-timeline').css('height', $('#his-data-show').height() + 'px')
 	localStorage.setItem('history', user)
 	//自分の時
+	console.log(json.acct + localStorage.getItem('user_' + acctId))
 	if (json.acct === localStorage.getItem('user_' + acctId)) {
 		showFav('', acctId)
 		showBlo('', acctId)
@@ -161,7 +162,7 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 				i++
 			}
 		}
-		let des = json.note
+		let des = json.note || ''
 		des = des.replace(/<br \/>/g, '\n')
 		des = stripTags(des)
 		$('#his-des-val').val(des)

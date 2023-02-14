@@ -264,7 +264,7 @@ async function login(url: string) {
 				website: 'https://thedesk.top',
 			},
 		})
-		const auth = `https://${url}/oauth/authorize?client_id=${json.client_id}&client_secret=${json.client_secret}&response_type=code&scope=read+write+follow&redirect_uri=${encodeURIComponent(red)}`
+		const auth = `https://${url}/oauth/authorize?client_id=${json.client_id}&client_secret=${json.client_secret}&response_type=code&scope=read+write+follow&redirect_uri=${encodeURIComponent(red)}&state=thedesk`
 		localStorage.setItem('domain_tmp', url)
 		localStorage.setItem('client_id', json.client_id)
 		localStorage.setItem('client_secret', json.client_secret)

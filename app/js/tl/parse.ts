@@ -109,7 +109,6 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		const uniqueid = toot.id
 		let boostback: IBoostBack = 'unshared'
 		let disName = escapeHTML(toot.account.display_name || toot.account.acct)
-
 		if (toot.reblog) {
 			disName = escapeHTML(toot.account.display_name || toot.account.acct)
 			//絵文字があれば

@@ -11,7 +11,7 @@ import { notfCommon } from './notification'
 import { parse } from './parse'
 import { say } from './speech'
 import { isTagData } from './tag'
-import { announ } from './tl'
+import { announ, tlCloser } from './tl'
 import { userParse } from './userParse'
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -62,6 +62,7 @@ export function mastodonBaseStreaming(acctId: string) {
 			const tl = JSON.parse(mess.data).stream
 			const obj: Toot = JSON.parse(JSON.parse(mess.data).payload)
 			const tls = getTlMeta(tl[0], tl, acctId, obj)
+			console.log(`on message for`, tls)
 			insertTl(obj, tls)
 		} else if (typeA === 'filters_changed') {
 			filterUpdate(acctId)
@@ -178,6 +179,8 @@ function insertTl(obj: Toot, tls: TLMeta[], dry?: boolean) {
 			const templateRaw = parse([obj], type, acctId.toString(), id.toString(), 0, mute)
 			const template = typeof templateRaw === 'string' ? templateRaw : templateRaw[0]
 			return template
+		} else {
+			console.error('Error of inserting TL', tls, obj.id)
 		}
 	}
 }

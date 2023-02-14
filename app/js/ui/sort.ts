@@ -93,7 +93,7 @@ export function sort() {
 	$('#sort').html('')
 	toast({ html: 'Sorted', displayLength: 3000 })
 	sortLoad()
-	parseColumn()
+	parseColumn(undefined, true)
 	sortMenu()
 }
 //ソートボタントグル
