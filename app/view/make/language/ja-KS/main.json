@@ -82,6 +82,8 @@
     "lang_status_unblock": "ブロック解除",
     "lang_status_mute": "ミュート",
     "lang_status_unmute": "ミュート解除",
+    "lang_status_muteThread": "会話ミュート",
+    "lang_status_unmuteThread": "会話ミュートを解除",
     "lang_status_redraftTitle": "いっぺん消してもっぺん編集",
     "lang_status_redraft": "いっぺん消してもっぺん編集する？そのトゥートの全てのデータが無くなってまうけど。この機能はベータ版やで。画像はv2.4.1以上やないと無理やで。",
     "lang_status_emphas": "を強調したで。リロードしてな。",

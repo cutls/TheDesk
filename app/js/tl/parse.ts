@@ -406,6 +406,13 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 						<i class="material-icons" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
 					</li>`
 		}
+		let threadMute = ''
+		if (toot.in_reply_to_account_id) {
+			threadMute = `<li onclick="muteThread('${toot.id}', '${acctId}')" style="padding:0; padding-top: 5px;" tabIndex="7" class="threadMute ${toot.muted && 'inMute'}">
+						<i class="material-icons">voice_over_off</i>
+						${toot.muted ? lang.lang_status_unmuteThread : lang.lang_status_muteThread}
+					</li>`
+		}
 		//Cards
 		if (!card && toot.card) {
 			const cards = toot.card
@@ -633,18 +640,19 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 						<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${ifBkm}"></i>${bkmStr}
 					</li>
 					<li class="${ifMine}" onclick="del('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="2">
-							<i class="fas fa-trash"></i>${lang.lang_parse_del}
+						<i class="fas fa-trash"></i>${lang.lang_parse_del}
 					</li>
 					<li class="${ifMine}" onclick="pin('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;" class="pinStr_${uniqueid}"tabIndex="3">
-							<i class="fas fa-map-pin pin_${uniqueid} ${ifPin}"></i>${pinStr}
+						<i class="fas fa-map-pin pin_${uniqueid} ${ifPin}"></i>${pinStr}
 					</li>
-					<li class="${ifMine}"  onclick="redraft('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="4">
-							<i class="material-icons" aria-hidden="true">redo</i>${lang.lang_parse_redraft}
+					<li class="${ifMine}" onclick="redraft('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="4">
+						<i class="material-icons" aria-hidden="true">redo</i>${lang.lang_parse_redraft}
 					</li>
 					<li class="${ifMine}"  onclick="editToot('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="5">
-							<i class="material-icons" aria-hidden="true">create</i>${lang.lang_edit}(v3.5.0~)
+						<i class="material-icons" aria-hidden="true">create</i>${lang.lang_edit}(v3.5.0~)
 					</li>
 					${trans}
+					${threadMute}
 					<li onclick="postMessage(['openUrl', '${toot.url}'], '*')" style="padding:0; padding-top: 5px;"tabIndex="7">
 						<i class="fas text-darken-3 fa-globe"></i>${lang.lang_parse_link}
 					</li>

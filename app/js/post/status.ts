@@ -158,6 +158,31 @@ export async function follow(acctId: string, resolve: boolean) {
 		}
 	}
 }
+// スレッドミュート
+
+export async function muteThread(id: string, acctId: string) {
+	const toMute = !$(`.cvo[unique-id=${id}] .threadMute`).hasClass('inMute')
+	const flag = toMute ? 'mute' : 'unmute'
+	const domain = localStorage.getItem(`domain_${acctId}`)
+	const at = localStorage.getItem(`acct_${acctId}_at`)
+	const start = `https://${domain}/api/v1/statuses/${id}/${flag}`
+	let json = await api<Toot>(start, {
+		method: 'post',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + at,
+		},
+	})
+	if (toMute) {
+		$(`.cvo[unique-id=${id}] .threadMute`).addClass('inMute')
+		$(`.cvo[unique-id=${id}] .threadMute`).html(`<i class="material-icons">voice_over_off</i>${lang.lang_status_unmuteThread}`)
+	} else {
+		$(`.cvo[unique-id=${id}] .threadMute`).removeClass('inMute')
+		$(`.cvo[unique-id=${id}] .threadMute`).html(`<i class="material-icons">voice_over_off</i>${lang.lang_status_muteThread}`)
+	}
+	
+}
+
 export async function acctResolve(acctId: string, user: string) {
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
 	const at = localStorage.getItem(`acct_${acctId}_at`)

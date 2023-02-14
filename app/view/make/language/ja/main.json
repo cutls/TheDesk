@@ -84,6 +84,8 @@
     "lang_status_unblock": "ブロック解除",
     "lang_status_mute": "ミュート",
     "lang_status_unmute": "ミュート解除",
+    "lang_status_muteThread": "会話ミュート",
+    "lang_status_unmuteThread": "会話ミュートを解除",
     "lang_status_redraftTitle": "削除して再編集",
     "lang_status_redraft": "削除して再編集しますか？そのトゥートの全てのデータがリセットされます。この機能はベータ版です。画像は~v2.4.1で破棄されます。",
     "lang_status_emphas": "を強調します。リロードしてください。",

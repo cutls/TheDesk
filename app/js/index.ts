@@ -40,6 +40,7 @@ import {
 	tootUriCopy,
 	staEx,
 	toggleAction,
+	muteThread,
 } from './post/status'
 import { tagInsert } from './post/suggest'
 import { re, reEx, qt } from './post/useTxtBox'
@@ -244,6 +245,7 @@ globalThis.useThisDraft = useThisDraft
 globalThis.deleteThisDraft = deleteThisDraft
 globalThis.fav = fav
 globalThis.rt = rt
+globalThis.muteThread = muteThread
 globalThis.boostWith = boostWith
 globalThis.bkm = bkm
 globalThis.follow = follow
