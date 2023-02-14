@@ -42,7 +42,7 @@ export function userParse(obj: Account[], acctId: string, notfEvent?: Notoficati
 				if (popup > 0 || popup === -1 || notf) {
 					notftext = ftxt + '<br>'
 				}
-				popupNotification(toot, popup, notftext, tlid || '', ftxt, acctId)
+				if(ftxt !== `New event`) popupNotification(toot, popup, notftext, tlid || '', ftxt, acctId)
 				let disName = toot.display_name ? escapeHTML(toot.display_name) : toot.username
 				if (toot.emojis) {
 					disName = customEmojiReplace(disName, toot, gif)
