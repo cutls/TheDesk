@@ -299,3 +299,14 @@ export function about(dir: string) {
 	})
 	return 'true'
 }
+app.on('web-contents-created', (e, w) => {
+	w.on('did-navigate', (e) => {
+		const url = w.getURL()
+		if (!url.match(/^https/)) return
+		if (url.match(/^https:\/\/tweetdeck\.twitter\.com/)) return
+		if (url.match(/^https:\/\/mobile\.twitter\.com/)) return
+		if (url.match(/^https:\/\/twitter\.com/)) return
+		shell.openExternal(url)
+		w.close()
+	})
+})

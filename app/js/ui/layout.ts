@@ -692,7 +692,7 @@ function webviewParse(url: string, key: number, insert: string, insertColor: str
 			</div>
 			<div class="tl-box" tlid="${key}" style="width:100%;height:100%;">
 				<div id="timeline_${key}" class="tl" tlid="${key}" data-type="webview" style="width:100%;height:100%;">
-					<webview src="${url}" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js"></webview>
+					<webview src="${url}" style="width:100%;height:100%;" id="webview" preload="./js/platform/twitter.js" allowpopups></webview>
 				</div>
 			</div>
 		</div>`
