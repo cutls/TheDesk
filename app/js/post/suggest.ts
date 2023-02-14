@@ -39,6 +39,11 @@ export function suggestInit() {
 						let hasDomain = false
 						let hasDomainOnce = false
 						for (startI = pos - 1; startI >= 0; startI--) {
+							if (newVal[startI].match(/\s/)) {
+								$('#suggest').html('')
+								$('#suggest').hide()
+								return
+							}
 							if (newVal[startI].match(/\./)) hasDomain = true
 							if (newVal[startI].match(/#|@|:/) && !hasDomain) break
 							if (newVal[startI].match(/@/) && hasDomainOnce) break
