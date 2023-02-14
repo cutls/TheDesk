@@ -29,7 +29,7 @@ const wordmuteListLocal = JSON.parse(localStorage.getItem('word_mute') || '[]')
 const tickerck = localStorage.getItem('ticker_ok') || 'no'
 const cw = (localStorage.getItem('cw') || 'yes') === 'yes'
 const viashowSet = (localStorage.getItem('viashow') || 'no') === 'yes'
-const anime = localStorage.getItem('animation') || 'yes'
+const anime = (localStorage.getItem('animation') || 'yes') === 'yes'
 const mouseoverVal = localStorage.getItem('mouseover')
 const replyCtView = localStorage.getItem('replyct') || 'hidden'
 const tickerDataRaw = localStorage.getItem('sticker')
