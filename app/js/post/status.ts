@@ -277,7 +277,7 @@ export async function muteDo(acctId: string) {
 }
 export function muteMenu() {
 	$('#muteDuration').toggleClass('hide')
-	!$('#muteDuration').hasClass('hide') ? $('#his-des').css('max-height', '112px') : $('#his-des').css('max-height', '196px')
+	!$('#muteDuration').hasClass('hide') ? $('#his-des').css('max-height', '0px') : $('#his-des').css('max-height', '196px')
 }
 export function muteTime(day: number, hour: number, min: number) {
 	$('#days_mute').val(day)
