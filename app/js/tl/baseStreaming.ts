@@ -15,7 +15,7 @@ import { announ, tlCloser } from './tl'
 import { userParse } from './userParse'
 import $ from 'jquery'
 import Swal from 'sweetalert2'
-
+ 
 //MastodonBaseStreaming
 globalThis.mastodonBaseWs = {}
 globalThis.mastodonBaseWsStatus = {}
