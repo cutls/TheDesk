@@ -228,24 +228,24 @@ export function initKeyboard() {
 			}
 			//選択時
 			if (e.keyCode === 70) {
-				const id = $('.globalThis.selectedToot').attr('unique-id')
+				const id = $('.selectedToot').attr('unique-id')
 				const acct_id = $('#timeline_' + globalThis.selectedColumn).attr('data-acct')
 				if (!id || !acct_id) return toast({ html: 'cannot action' })
 				fav(id, acct_id)
 				return false
 			}
 			if (e.keyCode === 66) {
-				const id = $('.globalThis.selectedToot').attr('unique-id')
+				const id = $('.selectedToot').attr('unique-id')
 				const acct_id = $('#timeline_' + globalThis.selectedColumn).attr('data-acct')
 				if (!id || !acct_id) return toast({ html: 'cannot action' })
 				rt(id, acct_id, false)
 				return false
 			}
 			if (e.keyCode === 82) {
-				const id = $('.globalThis.selectedToot').attr('unique-id')
+				const id = $('.selectedToot').attr('unique-id')
 				const acct_id = $('#timeline_' + globalThis.selectedColumn).attr('data-acct')
-				const ats_cm = $('.globalThis.selectedToot .rep-btn').attr('data-men')
-				const mode = $('.globalThis.selectedToot .rep-btn').attr('data-visen') || ''
+				const ats_cm = $('.selectedToot .rep-btn').attr('data-men')
+				const mode = $('.selectedToot .rep-btn').attr('data-visen') || ''
 				const cwTxt = $('#cw-text').val()?.toString() || ''
 				if (!id || !acct_id || !ats_cm || !isIVis(mode)) return toast({ html: 'cannot action' })
 				re(id, ats_cm, acct_id, mode, cwTxt)
@@ -277,20 +277,20 @@ export function initKeyboard() {
 }
 //選択する
 function tootSelector(column, toot) {
-	$('.cvo').removeClass('globalThis.selectedToot')
+	$('.cvo').removeClass('.selectedToot')
 	$('#timeline_' + column + ' .cvo')
 		.eq(toot)
-		.addClass('globalThis.selectedToot')
+		.addClass('.selectedToot')
 	const scr = $('.tl-box[tlid=' + column + ']').scrollTop() || 0
-	const elem = $('.globalThis.selectedToot').offset()?.top || 0
+	const elem = $('.selectedToot').offset()?.top || 0
 	let top = elem - ($('.tl-box').height() || 0) + scr
 	if (top > 0) {
-		top = top + ($('.globalThis.selectedToot').height() || 0)
+		top = top + ($('.selectedToot').height() || 0)
 		if (top > scr) {
 			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: top })
 		}
 	} else if (elem < 0) {
-		const to = scr + elem - ($('.globalThis.selectedToot').height() || 0)
+		const to = scr + elem - ($('.selectedToot').height() || 0)
 		if (to < scr) {
 			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: to })
 		}

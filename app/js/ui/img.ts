@@ -6,12 +6,13 @@ import { details } from '../tl/datails'
 /*イメージビューワー*/
 //postのimg.jsとは異なります。
 export function imgv(id: string, key: number, acctId?: string) {
+	let murl = $(`#${id}-image-${key}`).attr('data-url')
+	if (!murl) return
 	$('#imgprog').text(0)
 	$('#imgsec').text(0)
 	$('#imgmodal').hide()
 	rotate(true)
 	$('#imgmodal').attr('src', '../../img/loading.svg')
-	let murl = $(`#${id}-image-${key}`).attr('data-url') || ''
 	let ourl = $(`#${id}-image-${key}`).attr('data-original')
 	if (!ourl || ourl === 'null') ourl = murl
 	const type = $(`#${id}-image-${key}`).attr('data-type')
