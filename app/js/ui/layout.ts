@@ -797,13 +797,13 @@ export function leftFoldSet(key: number) {
 	const obj = getColumn()
 	obj[key].left_fold = true
 	setColumn(obj)
-	parseColumn()
+	parseColumn(undefined, true)
 }
 export function leftFoldRemove(key: number) {
 	const obj = getColumn()
 	obj[key].left_fold = false
 	setColumn(obj)
-	parseColumn()
+	parseColumn(undefined, true)
 }
 export function resetWidth(key: number) {
 	const obj = getColumn()
