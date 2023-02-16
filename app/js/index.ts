@@ -1,5 +1,5 @@
 import { client, parse } from './tl/parse'
-import { getData } from './login/manager'
+import { getData, refreshManager } from './login/manager'
 import { filter } from './tl/filter'
 import { about } from './common/about'
 import { parseBlur } from './common/blurhash'
@@ -192,6 +192,7 @@ globalThis.getData = getData
 globalThis.multiDel = multiDel
 globalThis.backToInit = backToInit
 globalThis.instance = instance
+globalThis.refreshManager = refreshManager
 globalThis.code = code
 globalThis.atSetup = atSetup
 globalThis.mainAcct = mainAcct

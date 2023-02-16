@@ -475,7 +475,7 @@ export function atSetup() {
 }
 
 //ユーザーデータ更新
-async function refreshManager(target: number) {
+export async function refreshManager(target: number) {
 	const obj = getMulti()
 	const start = `https://${obj[target].domain}/api/v1/accounts/verify_credentials`
 	const json = await api<Credential>(start, {
