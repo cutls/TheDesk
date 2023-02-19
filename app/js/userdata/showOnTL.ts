@@ -202,7 +202,10 @@ export function profShow() {
 	const acctId = $('#post-acct-sel').val()?.toString() || '0'
 	const user = localStorage.getItem('user-id_' + acctId) || ''
 	udg(user, acctId)
-	hide()
+	const box = localStorage.getItem('box')
+	if ( !box || box == 'yes'){
+		hide()
+	}
 }
 
 //FF関係取得
