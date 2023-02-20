@@ -37,7 +37,8 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	}
 	if ($('#toot-post-btn').prop('disabled')) return false
 	let str = $('#textarea').val() as string
-	if ( !str ) return false
+	let _media = $('#media').val()?.toString()
+	if ( !str && !_media ) return false
 	const acct_id = $('#post-acct-sel').val()?.toString()
 	localStorage.setItem('last-use', acct_id || `0`)
 	const domain = localStorage.getItem('domain_' + acct_id)
