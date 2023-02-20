@@ -159,9 +159,9 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		clear()
 	} catch (e: any) {
 		console.error(e)
+		$('#ideKey').val('')
+		$('.toot-btn-group').prop('disabled', false)
 		if (media && e === 422) {
-			$('#ideKey').val('')
-			$('.toot-btn-group').prop('disabled', false)
 			alertProcessUnfinished()
 			return
 		}
