@@ -43,3 +43,6 @@ app/view/make/index.generated.html
 app/twemoji
 app/dist
 app/play.js
+node_modules/
+package.json
+package-lock.json
