@@ -13,8 +13,8 @@
 [![FOSSA Status](https://bit.ly/2N4cLd1)](https://bit.ly/31zqMmZ)
 [![Version](https://flat.badgen.net/github/release/cutls/TheDesk)](https://github.com/cutls/TheDesk/releases)
 ![Contributors](https://flat.badgen.net/github/contributors/cutls/TheDesk)  
-Mastodon/Misskey client for PC(Windows/Linux/macOS)  
-オープンソースSNSマストドン/MisskeyのPC向けクライアント  
+Mastodon client for PC(Windows/Linux/macOS)  
+オープンソースSNSマストドンのPC向けクライアント  
 
 [![Download from TheDesk Official Website](https://thedesk.top/img/dlfrom-thedesk.svg?7)](https://thedesk.top)
 
