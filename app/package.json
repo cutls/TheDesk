@@ -78,7 +78,7 @@
         "punycode": "^2.2.0",
         "sanitize-html": "^2.7.2",
         "sumchecker": "^3.0.1",
-        "sweetalert2": "^11.6.16",
+        "sweetalert2": "^11.7.3",
         "system-font-families": "^0.6.0",
         "textarea-caret": "^3.1.0",
         "twemoji": "^14.0.2",
