@@ -161,6 +161,15 @@ function createWindow() {
 		const info = fs.readFileSync(info_path, 'utf8').toString() || '{}'
 		if (JSON.parse(info)) {
 			window_size = JSON.parse(info)
+			if(window_size.width < 256 && window_size.height < 256){
+				window_size = {
+					width: 1000,
+					height: 750,
+					x: null,
+					y: null,
+					max: false
+				}
+			}
 		}
 	}
 
