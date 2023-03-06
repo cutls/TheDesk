@@ -534,7 +534,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 					<div class="flex-name">
 						<span class="user">${disName}</span>
 						<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"
-							title="${toot.account.acct}"
+							title="@${toot.account.acct}"
 						>
 							@${toot.account.acct}${locked}
 						</span>
