@@ -54,7 +54,9 @@ export function mastodonBaseStreaming(acctId: string) {
 	ws.onmessage = function (mess) {
 		$(`div[data-acct=${acctId}] .landing`).hide()
 		const typeA = JSON.parse(mess.data).event
-		if (typeA === 'delete') {
+		if( !typeA ){
+			console.log('typeA is undefined : '+mess.data)
+		} else if (typeA === 'delete') {
 			$(`[unique-id=${JSON.parse(mess.data).payload}]`).hide()
 			$(`[unique-id=${JSON.parse(mess.data).payload}]`).remove()
 		} else if (typeA === 'update' || typeA === 'conversation') {
