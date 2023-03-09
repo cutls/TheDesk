@@ -1,7 +1,7 @@
 {
-    "updatehere": "Get latest TheDesk",
+    "updatehere": "Отримати найновіший TheDesk",
     "download": "Почати",
-    "portable": "Portable ver.",
+    "portable": "Портативна вер.",
     "installer": "Installer(Recommended)",
     "linux": "zip",
     "linuxdeb": "deb(Recommended on buntu, Debian)",
@@ -10,9 +10,9 @@
     "sureupd": "You may lose a cool experience!",
     "skipupd": "Пропустити це оновлення",
     "nexttl": "Hidden until next TL loading",
-    "nextver": "Hidden until next version",
-    "problem1": "Some problems?",
-    "problem2": "Please download on <a href='https://thedesk.top'>Oficial HP</a>.",
+    "nextver": "Приховано до наступної версії",
+    "problem1": "Якісь проблеми?",
+    "problem2": "Будь ласка, завантажте з <a href='https://thedesk.top'>Офіційна ДС</a>.",
     "continue": "Продовжити оновлення",
     "dlnow": "Завантаження...",
     "checkWhatIsNew": "Що нового?"
