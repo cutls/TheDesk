@@ -203,7 +203,7 @@ export function profShow() {
 	const user = localStorage.getItem('user-id_' + acctId) || ''
 	udg(user, acctId)
 	const box = localStorage.getItem('box')
-	if ( !box || box == 'yes'){
+	if ( !box || box === 'yes'){
 		hide()
 	}
 }
