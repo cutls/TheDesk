@@ -70,6 +70,10 @@ function tagPin(tag: string) {
 export function tagRemove(key: number) {
 	const tags = localStorage.getItem('tag') || '[]'
 	const obj = JSON.parse(tags)
+	const nowPT = localStorage.getItem('stable')
+	if ( nowPT === obj[key] ) {
+		localStorage.removeItem('stable')
+	}
 	obj.splice(key, 1)
 	const json = JSON.stringify(obj)
 	localStorage.setItem('tag', json)
