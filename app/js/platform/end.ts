@@ -45,13 +45,18 @@ $(document).on('click', 'a', (e) => {
 			}
 		} else if (ats) {
 			if (ats[2]) {
-				//Quesdon判定
-				if (!~ats[2].indexOf('@')) {
-					const acctId = $a.parent().attr('data-acct') || localStorage.getItem('main')
-					udgEx(url, acctId)
-					return false
+				//おうどん判定
+				if ( ats[1] === 'audon.space/u' ){
+					postMessage(['openUrl', url], '*')
 				} else {
-					if (!globalThis.pwa) postMessage(['openUrl', url], '*')
+					//Quesdon判定
+					if (!~ats[2].indexOf('@')) {
+						const acctId = $a.parent().attr('data-acct') || localStorage.getItem('main')
+						udgEx(url, acctId)
+						return false
+					} else {
+						if (!globalThis.pwa) postMessage(['openUrl', url], '*')
+					}
 				}
 			}
 		} else {
