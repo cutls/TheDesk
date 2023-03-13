@@ -99,7 +99,7 @@
         "@types/textarea-caret": "^3.0.1",
         "@types/uuid": "^9.0.0",
         "@typescript-eslint/eslint-plugin": "^5.48.1",
-        "@typescript-eslint/parser": "^5.48.1",
+        "@typescript-eslint/parser": "^5.55.0",
         "babel-loader": "^9.1.2",
         "babel-preset-es2015-rollup": "^3.0.0",
         "browserify": "^17.0.0",
