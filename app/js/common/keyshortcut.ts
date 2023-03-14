@@ -50,6 +50,24 @@ export function initKeyboard() {
 				}
 			}
 		}
+		//Ctrl+Alt+Enter:実況なし投稿
+		if (e.metaKey || (e.ctrlKey && wv)) {
+			if (e.altKey) {
+				if (e.keyCode === 13) {
+					post(undefined,undefined,true)
+					return false
+				}
+			}
+		}
+		//Ctrl+Alt+C:全消し（実況タグセットなし）
+		if (e.metaKey || (e.ctrlKey && wv)) {
+			if (e.altKey) {
+				if (e.keyCode === 67) {
+					clear(true)
+					return false
+				}
+			}
+		}
 		//Ctrl+Enter:投稿
 		if (e.metaKey || (e.ctrlKey && wv)) {
 			if (e.keyCode === 13) {

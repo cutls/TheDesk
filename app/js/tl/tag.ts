@@ -70,9 +70,15 @@ function tagPin(tag: string) {
 export function tagRemove(key: number) {
 	const tags = localStorage.getItem('tag') || '[]'
 	const obj = JSON.parse(tags)
-	const nowPT = localStorage.getItem('stable')
-	if ( nowPT === obj[key] ) {
-		localStorage.removeItem('stable')
+	let pt = localStorage.getItem('stable') || '[]'
+	let nowPT = JSON.parse(pt)
+	for ( const PTag of nowPT ){
+		if ( PTag === obj[key] ) {
+			nowPT.splice(nowPT.indexOf(obj[key]),1)
+			localStorage.setItem('stable',JSON.stringify(nowPT))
+			toast({ html: PTag + ' ' + lang.lang_tags_unrealtime, displayLength: 3000 })
+			break
+		}
 	}
 	obj.splice(key, 1)
 	const json = JSON.stringify(obj)
@@ -84,12 +90,12 @@ export function favTag() {
 	const tagArr = localStorage.getItem('tag') || '[]'
 	const obj = JSON.parse(tagArr)
 	let tags = ''
-	const nowPT = localStorage.getItem('stable')
+	const nowPT = JSON.parse(localStorage.getItem('stable')|| '[]')
 	let key = 0
 	for (const tagRaw of obj) {
 		let ptt = lang.lang_tags_unrealtime
 		let nowon = `(${lang.lang_tags_realtime})`
-		if (nowPT !== tagRaw) {
+		if (!nowPT.includes(tagRaw)) {
 			ptt = lang.lang_tags_realtime
 			nowon = ''
 		}
@@ -125,12 +131,14 @@ export function tagTL(a: IColumnType, b: string, d: string) {
 }
 export function autoToot(tag: string) {
 	tag = escapeHTML(tag)
-	const nowPT = localStorage.getItem('stable')
-	if (nowPT === tag) {
-		localStorage.removeItem('stable')
-		toast({ html: lang.lang_tags_unrealtime, displayLength: 3000 })
+	const nowPT = JSON.parse(localStorage.getItem('stable') || '[]')
+	if ( nowPT.includes(tag) ) {
+		nowPT.splice(nowPT.indexOf(tag),1)
+		localStorage.setItem('stable', JSON.stringify(nowPT))
+		toast({ html: tag + ' ' + lang.lang_tags_unrealtime, displayLength: 3000 })
 	} else {
-		localStorage.setItem('stable', tag)
+		nowPT.push(tag)
+		localStorage.setItem('stable', JSON.stringify(nowPT))
 		toast({
 			html: lang.lang_tags_tagwarn.replace('{{tag}}', tag).replace('{{tag}}', tag),
 			displayLength: 3000,
