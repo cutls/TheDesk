@@ -1,7 +1,7 @@
 {
     "name": "thedesk",
     "version": "24.0.12",
-    "codename": "Anastasia",
+    "codename": "Anastasia Test Client",
     "description": "TheDesk is a Mastodon client for PC.",
     "repository": "https://github.com/cutls/TheDesk",
     "main": "dist/main/main.js",
