@@ -295,6 +295,6 @@ export async function ticker() {
 			localStorage.setItem('sticker', JSON.stringify(json))
 		}
 	} catch (e: any) {
-		console.error(e)
+		console.log(e)
 	}
 }
