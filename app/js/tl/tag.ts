@@ -2,7 +2,7 @@ import lang from '../common/lang'
 import { columnReload, tl } from './tl'
 import { brInsert } from '../post/emoji'
 import { escapeHTML } from '../platform/first'
-import { toast } from '../common/declareM'
+import { characterCounterInit, toast } from '../common/declareM'
 import api from '../common/fetch'
 import { getColumn, setColumn } from '../common/storage'
 import { IColumnData, IColumnTag, IColumnType } from '../../interfaces/Storage'
@@ -72,8 +72,14 @@ export function tagRemove(key: number) {
 	const obj = JSON.parse(tags)
 	let pt = localStorage.getItem('stable') || '[]'
 	let nowPT = JSON.parse(pt)
+	let str = $('#textarea').val() as string
 	for ( const PTag of nowPT ){
 		if ( PTag === obj[key] ) {
+			do {
+				str = str.replace(`#${PTag}`,'')
+			} while( str.match(PTag) )
+			$('#textarea').val(str)
+			characterCounterInit($('#textarea'))
 			nowPT.splice(nowPT.indexOf(obj[key]),1)
 			localStorage.setItem('stable',JSON.stringify(nowPT))
 			toast({ html: PTag + ' ' + lang.lang_tags_unrealtime, displayLength: 3000 })
@@ -133,6 +139,12 @@ export function autoToot(tag: string) {
 	tag = escapeHTML(tag)
 	const nowPT = JSON.parse(localStorage.getItem('stable') || '[]')
 	if ( nowPT.includes(tag) ) {
+		let str = $('#textarea').val() as string
+		do {
+			str = str.replace(`#${tag}`,'')
+		} while( str.match(tag) )
+		$('#textarea').val(str)
+		characterCounterInit($('#textarea'))
 		nowPT.splice(nowPT.indexOf(tag),1)
 		localStorage.setItem('stable', JSON.stringify(nowPT))
 		toast({ html: tag + ' ' + lang.lang_tags_unrealtime, displayLength: 3000 })
