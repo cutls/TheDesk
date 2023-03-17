@@ -25,7 +25,7 @@ export function sec() {
 	}
 	post(mode)
 }
-export async function post(postVis?: IVis, dry?: boolean, tagRemove?: boolean ) {
+export async function post(postVis?: IVis, dry?: boolean, tagClear?: boolean ) {
 	if (!navigator.onLine && !dry) {
 		draftToggle(true)
 		addToDraft()
@@ -78,7 +78,7 @@ export async function post(postVis?: IVis, dry?: boolean, tagRemove?: boolean ) 
 	const reply = $('#reply').val()
 	const stable = JSON.parse(localStorage.getItem('stable') || '[]')
 	for ( const tag of stable){
-		if ( tagRemove ){
+		if ( tagClear ){
 			do {
 				str = str.replace(`#${tag}`,'')
 			} while( str.match(tag) )
