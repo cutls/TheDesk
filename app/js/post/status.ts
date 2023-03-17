@@ -345,7 +345,7 @@ export async function editToot(id: string, acctId: string) {
 	show()
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
-	const start = `https://${domain}/api/v1/statuses/${id}/source`
+	const start = `https://${domain}/api/v1/statuses/${id}`
 	const json = await api(start, {
 		method: 'get',
 		headers: {
@@ -369,7 +369,9 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 		for (let i = 0; i <= 4; i++) {
 			if (!json.media_attachments[i]) break
 			media_ids.push(json.media_attachments[i].id)
-			$('#preview').append(`<img src="${json.media_attachments[i].preview_url}" style="width:50px; max-height:100px;">`)
+			//動かないのでひとまずコメントアウト・・・したいけどうまくいかないので物理的に消す
+			//$('#preview').append(`<img src="${json.media_attachments[i].preview_url}" style="width:50px; max-height:100px;" data-acct="${acctId}" data-media="${json.media_attachments[i].id}" oncontextmenu="deleteImage('${json.media_attachments[i].id}')" onclick="altImage('${acctId}','${json.media_attachments[i].id}')" title="${lang.lang_postimg_delete}">`)
+			$('#preview').append(`<img src="${json.media_attachments[i].preview_url}" style="width:50px; max-height:100px;" data-acct="${acctId}" data-media="${json.media_attachments[i].id}" title="${json.media_attachments[i].description}">`)
 		}
 	}
 	const visMode = json.visibility
@@ -378,7 +380,7 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 	$('#media').val(medias)
 	localStorage.setItem('nohide', 'true')
 	show()
-	const html = json.text || json.content
+	const html = json.text || json.content.replace(/(<([^>]+)>)/gi, '')
 	$('#textarea').val(html)
 	if (json.spoiler_text) {
 		cw(true)
