@@ -642,14 +642,16 @@ h2.swal2-title {
 
 /*スクロールバー*/
 ::-webkit-scrollbar {
-	width: 5px;
+	width: 12px;
 	height: 12px;
 	background: rgba(0, 0, 0, 0.05);
 }
 .thickScrollBar ::-webkit-scrollbar {
+	width: 18px;
 	height: 18px;
 }
 .thinScrollBar ::-webkit-scrollbar {
+	width: 5px;
 	height: 5px;
 }
 ::-webkit-scrollbar-track {
