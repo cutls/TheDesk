@@ -257,9 +257,9 @@ export async function block(acctId: string) {
 //ミュート
 export async function muteDo(acctId: string) {
 	if (!acctId) acctId = $('#his-data').attr('use-acct') || ''
-	const isBlock = $('#his-data').hasClass('muting')
-	const flag = isBlock ? 'unmute' : 'mute'
-	const txt = isBlock ? lang.lang_status_unmute : lang.lang_status_mute
+	const isMute = $('#his-data').hasClass('muting')
+	const flag = isMute ? 'unmute' : 'mute'
+	const txt = isMute ? lang.lang_status_unmute : lang.lang_status_mute
 	const result = await Swal.fire({
 		title: txt,
 		text: '',
@@ -291,18 +291,32 @@ export async function muteDo(acctId: string) {
 			},
 			body: q,
 		})
-		if ($('#his-data').hasClass('blocking')) {
-			$('#his-data').removeClass('blocking')
-			$('#his-block-btn-text').text(lang.lang_status_block)
+		if ($('#his-data').hasClass('muting')) {
+			$('#his-data').removeClass('muting')
+			$('#his-mute-btn-text').text(lang.lang_status_mute)
+			$('#his-mute-btn').text(lang.lang_status_mute)
 		} else {
-			$('#his-data').addClass('blocking')
-			$('#his-block-btn-text').text(lang.lang_status_unblock)
+			$('#his-data').addClass('muting')
+			$('#his-mute-btn-text').text(lang.lang_status_unmute)
+			$('#his-mute-btn').text(lang.lang_status_unmute)
 		}
+		muteMenu()
 	}
 }
 export function muteMenu() {
 	$('#muteDuration').toggleClass('hide')
-	!$('#muteDuration').hasClass('hide') ? $('#his-des').css('max-height', '0px') : $('#his-des').css('max-height', '196px')
+	if (!$('#muteDuration').hasClass('hide')){
+		$('#his-des').css('max-height', '0px') 
+	} else {
+		$('#his-des').css('max-height', '196px')
+	}
+	if (!$('#his-data').hasClass('muting')) {
+		$('#his-mute-btn-text').text(lang.lang_status_mute)
+		$('#his-mute-btn').text(lang.lang_status_mute)
+	} else {
+		$('#his-mute-btn-text').text(lang.lang_status_unmute)
+		$('#his-mute-btn').text(lang.lang_status_unmute)
+	}
 }
 export function muteTime(day: number, hour: number, min: number) {
 	$('#days_mute').val(day)

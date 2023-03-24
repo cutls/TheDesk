@@ -244,8 +244,10 @@ async function relations(user: string, acctId: string) {
 	if (json.muting) {
 		$('#his-data').addClass('muting')
 		$('#his-mute-btn-text').text(lang.lang_status_unmute)
+		$('#his-mute-btn').text(lang.lang_status_unmute)
 	} else {
 		$('#his-mute-btn-text').text(lang.lang_status_mute)
+		$('#his-mute-btn').text(lang.lang_status_mute)
 	}
 	if (json.muting_notifications) {
 		$('#his-data').addClass('mutingNotf')
@@ -332,6 +334,7 @@ function reset() {
 	$('#his-block-btn-text').text(lang.lang_status_block)
 	$('#his-notf-btn').text(lang.lang_showontl_notf + lang.lang_status_mute)
 	$('#his-domain-btn').text(lang.lang_showontl_domain + lang.lang_status_block)
+	$('#muteDuration').addClass('hide')
 	$('#his-relation').text('')
 	$('.cont-series').html('')
 	$('#domainblock').val('')
