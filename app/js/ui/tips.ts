@@ -4,9 +4,10 @@ import { escapeHTML } from '../platform/first'
 import $ from 'jquery'
 import { execPlugin } from '../platform/plugin'
 import { toast } from '../common/declareM'
-import api from '../common/fetch'
+import api  from '../common/fetch'
 import Swal from 'sweetalert2'
 import lang from '../common/lang'
+import { getApiInstance, getApiLimit, getApiRemaining, getApiResetTime } from '../common/apiRemain'
 const tipsList = ['ver', 'clock', 'memory', 'spotify', 'custom']
 export const isITips = (item: string): item is ITips => tipsList.includes(item)
 
@@ -31,33 +32,38 @@ export function bottomReverse() {
 	}
 }
 let spotint
-type ITips = 'ver' | 'clock' | 'memory' | 'spotify' | 'custom'
+type ITips = 'ver' | 'clock' | 'memory' | 'spotify' | 'custom' | 'refresh'
 export function tips(mode: ITips, custom?: any) {
 	postMessage(['sendSinmpleIpc', 'endmem'], '*')
 	clearInterval(clockint)
 	clearInterval(spotint)
+	const isRefresh:boolean = mode === 'refresh'
+	if (isRefresh){
+		mode = localStorage.getItem('tips') as ITips
+	}
 	if (mode === 'ver') {
-		tipsToggle()
+		if (!isRefresh) tipsToggle()
 		$('#tips-text').html(
 			`<img src="../../img/desk.png" width="20" onclick="todo('TheDesk is a nice client!: TheDesk ${localStorage.getItem('ver')} git: ${globalThis.gitHash}')">
 			${localStorage.getItem('ver')} {${globalThis.gitHash.slice(0, 7)}}
-			[<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]`
+			[<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]
+			<div title="reset time = ${getApiResetTime()}">[API(${getApiInstance()}):${getApiRemaining().toString()}/${getApiLimit().toString()}]</div>`
 		)
 		localStorage.setItem('tips', 'ver')
 	} else if (mode === 'clock') {
-		tipsToggle()
+		if (!isRefresh) tipsToggle()
 		localStorage.setItem('tips', 'clock')
 		clock()
 	} else if (mode === 'memory') {
-		tipsToggle()
+		if (!isRefresh) tipsToggle()
 		localStorage.setItem('tips', 'memory')
 		startMem()
 	} else if (mode === 'spotify') {
-		tipsToggle()
+		if (!isRefresh) tipsToggle()
 		localStorage.setItem('tips', 'spotify')
 		spotifyTips()
 	} else if (mode === 'custom') {
-		tipsToggle()
+		if (!isRefresh) tipsToggle()
 		localStorage.setItem('tips', `custom:${custom}`)
 		execPlugin(custom, 'tips', null)
 	}

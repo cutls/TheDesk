@@ -1,11 +1,13 @@
 import { stripTags } from '../platform/first'
-import { todo } from '../ui/tips'
+import { tips, todo } from '../ui/tips'
+import { parseRemain } from './apiRemain'
 
 interface IOptions {
 	method: 'post' | 'get' | 'put' | 'delete' | 'patch'
 	headers?: { [key: string]: string }
 	body?: any
 }
+
 export default async function api<T = any>(url: string, options?: IOptions, throughJsonStringify?: boolean) {
 	try {
 		if (options?.body && typeof options?.body === 'object' && !throughJsonStringify) options.body = JSON.stringify(options.body)
@@ -21,6 +23,10 @@ export default async function api<T = any>(url: string, options?: IOptions, thro
 				console.error(e)
 			}
 			throw ret
+		}
+		parseRemain(url,response.headers)
+		if ( localStorage.getItem('tips') === 'ver'){
+			tips('refresh')
 		}
 		const json = await response.json()
 		return json as T
