@@ -7,7 +7,7 @@ import { toast } from '../common/declareM'
 import api  from '../common/fetch'
 import Swal from 'sweetalert2'
 import lang from '../common/lang'
-import { getApiInstance, getApiLimit, getApiRemaining, getApiResetTime } from '../common/apiRemain'
+import { getApiInstance, getApiLimit, getApiRemaining, getApiResetTime, toastApiRemain} from '../common/apiRemain'
 const tipsList = ['ver', 'clock', 'memory', 'spotify', 'custom']
 export const isITips = (item: string): item is ITips => tipsList.includes(item)
 
@@ -47,7 +47,7 @@ export function tips(mode: ITips, custom?: any) {
 			`<img src="../../img/desk.png" width="20" onclick="todo('TheDesk is a nice client!: TheDesk ${localStorage.getItem('ver')} git: ${globalThis.gitHash}')">
 			${localStorage.getItem('ver')} {${globalThis.gitHash.slice(0, 7)}}
 			[<i class="material-icons" style="font-size:1.2rem;top: 3px;position: relative;">supervisor_account</i><span id="persons">1+</span>]
-			<div title="reset time = ${getApiResetTime()}">[API(${getApiInstance()}):${getApiRemaining().toString()}/${getApiLimit().toString()}]</div>`
+			<div onclick="toastApiRemain()" title="reset time = ${getApiResetTime()}">[API(${getApiInstance()}):${getApiRemaining().toString()}/${getApiLimit().toString()}]</div>`
 		)
 		localStorage.setItem('tips', 'ver')
 	} else if (mode === 'clock') {

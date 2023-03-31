@@ -24,7 +24,7 @@ export default async function api<T = any>(url: string, options?: IOptions, thro
 			}
 			throw ret
 		}
-		parseRemain(url,response.headers)
+		parseRemain(url,response.headers, !options ? 'get' : options.method)
 		if ( localStorage.getItem('tips') === 'ver'){
 			tips('refresh')
 		}
