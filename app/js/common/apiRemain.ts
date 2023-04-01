@@ -90,8 +90,7 @@ export function parseRemain(url:string,headers:Headers,method:string){
             // delete,unreblog
             tmp_remain.delete = {...last}
             remain.set(tmp_instance,tmp_remain)
-        } else if (method === 'post' && tmp_url.pathname === '/api/v2/media') {
-            // api/v1/media はdeprecatedなので対応しない
+        } else if (method === 'post' && tmp_url.pathname.match('\/api\/v[12]\/media')) {
             tmp_remain.upload = {...last}
             remain.set(tmp_instance,tmp_remain)
         } else {
