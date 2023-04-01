@@ -84,13 +84,13 @@ export function parseRemain(url:string,headers:Headers,method:string){
 
         if (method === 'delete' || (method === 'post' && tmp_url.pathname.endsWith('/unreblog'))) {
             // delete,unreblog
-            tmp_remain.delete = {...last}
+            tmp_remain.delete = _.cloneDeep(last)
             remain.set(tmp_instance,tmp_remain)
         } else if (method === 'post' && tmp_url.pathname.match('\/api\/v[12]\/media')) {
-            tmp_remain.upload = {...last}
+            tmp_remain.upload = _.cloneDeep(last)
             remain.set(tmp_instance,tmp_remain)
         } else {
-            tmp_remain.others = {...last}
+            tmp_remain.others = _.cloneDeep(last)
             remain.set(tmp_instance,tmp_remain)
         }
 
