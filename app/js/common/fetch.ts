@@ -24,11 +24,11 @@ export default async function api<T = any>(url: string, options?: IOptions, thro
 			}
 			throw ret
 		}
+		const json = await response.json()
 		parseRemain(url,response.headers, !options ? 'get' : options.method)
 		if ( localStorage.getItem('tips') === 'ver'){
 			tips('refresh')
 		}
-		const json = await response.json()
 		return json as T
 	} catch (e: any) {
 		const eStr = typeof e === 'string' ? e : e[0]
