@@ -45,10 +45,6 @@ let last: RemainApiObject = {
     resetTime: new Date
 }
 
-let remainingDelete: number = -1
-let limitDelete: number = -1
-let resetTimeDelete: Date = new Date
-
 export function parseRemain(url:string,headers:Headers,method:string){
     try {
         let tmp_url = new URL(url)
