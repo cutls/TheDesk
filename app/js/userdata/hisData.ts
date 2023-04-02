@@ -93,7 +93,7 @@ export function flw(user: string, more: 'more' | '', acctId: string) {
 	httpreq.send()
 	httpreq.onreadystatechange = function () {
 		const json: Account[] = httpreq.response
-		if (httpreq.readyState === 4) {
+		if (httpreq.readyState === httpreq.DONE) {
 			const template = userParse(json, acctId) || lang.lang_details_nodata + '<br>'
 			const linkHeader = httpreq.getResponseHeader('link') || ''
 			let link = ''
@@ -129,7 +129,7 @@ export function fer(user: string, more: 'more' | '', acctId: string) {
 	httpreq.send()
 	httpreq.onreadystatechange = function () {
 		const json: Account[] = httpreq.response
-		if (httpreq.readyState === 4) {
+		if (httpreq.readyState === httpreq.DONE) {
 			const template = userParse(json, acctId) || lang.lang_details_nodata + '<br>'
 			const linkHeader = httpreq.getResponseHeader('link') || ''
 			let link = ''
@@ -165,7 +165,7 @@ export function showFav(more: 'more' | '', acctId: string) {
 	httpreq.send()
 	httpreq.onreadystatechange = function () {
 		const json: Toot[] = httpreq.response
-		if (httpreq.readyState === 4) {
+		if (httpreq.readyState === httpreq.DONE) {
 			const template = parse<string>(json, null, acctId, 'user') || lang.lang_details_nodata + '<br>'
 			const linkHeader = httpreq.getResponseHeader('link') || ''
 			let link = ''

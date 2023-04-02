@@ -853,7 +853,7 @@ function getBookmark(acctId: string, tlid: string, more?: boolean) {
 	httpreq.responseType = 'json'
 	httpreq.send()
 	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
+		if (httpreq.readyState === httpreq.DONE) {
 			const json: Toot[] = httpreq.response
 			const maxIds = httpreq.getResponseHeader('link')
 			let maxId = 0
@@ -898,7 +898,7 @@ function getFav(acctId: string, tlid: string, more?: boolean) {
 	httpreq.responseType = 'json'
 	httpreq.send()
 	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
+		if (httpreq.readyState === httpreq.DONE) {
 			const json: Toot[] = httpreq.response
 			const maxIds = httpreq.getResponseHeader('link')
 			let maxId = 0

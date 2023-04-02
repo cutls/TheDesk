@@ -164,7 +164,7 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 		httpreq.send(fd)
 	}
 	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
+		if (httpreq.readyState === httpreq.DONE) {
 			const json = httpreq.response
 			if (this.status !== 200) {
 				setLog(`https://${domain}/api/v1/media`, this.status, json)

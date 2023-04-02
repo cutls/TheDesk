@@ -113,7 +113,7 @@ function imageXhr(id: string, key: number, murl: string) {
 		false
 	)
 	xhr.onreadystatechange = function () {
-		if (this.readyState === 4 && this.status === 200) {
+		if (this.readyState === xhr.DONE && this.status === 200) {
 			const r = new FileReader()
 			r.readAsDataURL(this.response)
 			r.onload = function () {

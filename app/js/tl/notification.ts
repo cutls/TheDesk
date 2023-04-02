@@ -37,7 +37,7 @@ export async function notfColumn(acctId: string, tlid: string) {
 	httpreq.responseType = 'json'
 	httpreq.send()
 	httpreq.onreadystatechange = function () {
-		if (httpreq.readyState === 4) {
+		if (httpreq.readyState === httpreq.DONE) {
 			const json: Notification[] = httpreq.response
 			if (this.status !== 200) {
 				$('#landing_' + tlid).append(`<div>${this.status}</div><div>${escapeHTML(this.response)}`)
@@ -251,7 +251,7 @@ export function notfMore(tlid: string) {
 		httpreq.responseType = 'json'
 		httpreq.send()
 		httpreq.onreadystatechange = function () {
-			if (httpreq.readyState === 4) {
+			if (httpreq.readyState === httpreq.DONE) {
 				const json: Notification[] = httpreq.response
 				const headerM = httpreq.getResponseHeader('link')?.match(/[?&]{1}max_id=([0-9]+)/)
 				const maxId = headerM && headerM[1]
