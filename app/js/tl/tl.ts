@@ -1,7 +1,7 @@
 import { getColumn, setColumn } from '../common/storage'
 import $ from 'jquery'
 import { mixMore, mixre, mixTl } from './mix'
-import { todc, todo } from '../ui/tips'
+import { tips, todc, todo } from '../ui/tips'
 import { IColumnData, IColumnType, IColumnUTL } from '../../interfaces/Storage'
 import api from '../common/fetch'
 import { Conversation, Toot } from '../../interfaces/MastodonApiReturns'
@@ -19,6 +19,7 @@ import { parse } from './parse'
 import { say } from './speech'
 import { goTop, scrollCk, scrollEvent } from '../ui/scroll'
 import { parseColumn } from '../ui/layout'
+import { parseRemain, parseRemainXmlHttpRequest } from '../common/apiRemain'
 
 //TL取得
 globalThis.moreLoading = false
@@ -874,6 +875,10 @@ function getBookmark(acctId: string, tlid: string, more?: boolean) {
 			timeUpdate()
 			globalThis.moreLoading = false
 			todc()
+			parseRemainXmlHttpRequest(start,httpreq,'get')
+			if ( localStorage.getItem('tips') === 'ver'){
+				tips('refresh')
+			}
 		}
 	}
 }
@@ -919,6 +924,10 @@ function getFav(acctId: string, tlid: string, more?: boolean) {
 			timeUpdate()
 			globalThis.moreLoading = false
 			todc()
+			parseRemainXmlHttpRequest(start,httpreq,'get')
+			if ( localStorage.getItem('tips') === 'ver'){
+				tips('refresh')
+			}
 		}
 	}
 }

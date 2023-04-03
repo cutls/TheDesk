@@ -1,6 +1,7 @@
 //ユーザーデータ表示
 
 import { Account, Toot } from '../../interfaces/MastodonApiReturns'
+import { parseRemainXmlHttpRequest } from '../common/apiRemain'
 import api from '../common/fetch'
 import lang from '../common/lang'
 import { getColumn, setColumn } from '../common/storage'
@@ -9,6 +10,7 @@ import { escapeHTML } from '../platform/first'
 import { parse } from '../tl/parse'
 import { userParse } from '../tl/userParse'
 import { parseColumn } from '../ui/layout'
+import { tips } from '../ui/tips'
 import { hisclose } from './showOnTL'
 import $ from 'jquery'
 
@@ -108,6 +110,10 @@ export function flw(user: string, more: 'more' | '', acctId: string) {
 				$('#his-follow-list-contents').html(template)
 			}
 			timeUpdate()
+			parseRemainXmlHttpRequest(start,httpreq,'get')
+			if ( localStorage.getItem('tips') === 'ver'){
+				tips('refresh')
+			}
 		}
 	}
 }
@@ -144,6 +150,10 @@ export function fer(user: string, more: 'more' | '', acctId: string) {
 				$('#his-follower-list-contents').html(template)
 			}
 			timeUpdate()
+			parseRemainXmlHttpRequest(start,httpreq,'get')
+			if ( localStorage.getItem('tips') === 'ver'){
+				tips('refresh')
+			}
 		}
 	}
 }
@@ -180,6 +190,10 @@ export function showFav(more: 'more' | '', acctId: string) {
 				$('#his-fav-list-contents').html(template)
 			}
 			timeUpdate()
+			parseRemainXmlHttpRequest(start,httpreq,'get')
+			if ( localStorage.getItem('tips') === 'ver'){
+				tips('refresh')
+			}
 		}
 	}
 }

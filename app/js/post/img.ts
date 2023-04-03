@@ -2,11 +2,12 @@ import { formSelectInit, toast } from '../common/declareM'
 import api from '../common/fetch'
 import $ from 'jquery'
 import lang from '../common/lang'
-import { todc, todo } from '../ui/tips'
+import { tips, todc, todo } from '../ui/tips'
 import { setLog } from '../platform/first'
 import Swal from 'sweetalert2'
 import { post } from './post'
 import { Media } from '../../interfaces/MastodonApiReturns'
+import { parseRemainXmlHttpRequest } from '../common/apiRemain'
 
 //ドラッグ・アンド・ドロップからアップロードまで。uiのimg.jsとは異なります。
 const obj = $('body')
@@ -202,6 +203,10 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 				$('#media').val(mediav)
 			}
 			if (img === 'url' && json.text_url) $('#textarea').val($('#textarea').val() + ' ' + json.text_url)
+			parseRemainXmlHttpRequest(this.responseURL,this,'post')
+			if ( localStorage.getItem('tips') === 'ver'){
+				tips('refresh')
+			}
 		}
 	}
 }

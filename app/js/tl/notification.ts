@@ -7,11 +7,12 @@ import lang from '../common/lang'
 import { getColumn, getMulti } from '../common/storage'
 import timeUpdate from '../common/time'
 import { escapeHTML, setLog, statusModel } from '../platform/first'
-import { todc, todo } from '../ui/tips'
+import { tips, todc, todo } from '../ui/tips'
 import { getFilterTypeByAcct } from './filter'
 import { parse } from './parse'
 import { getMarker } from './tl'
 import { userParse } from './userParse'
+import { parseRemainXmlHttpRequest } from '../common/apiRemain'
 
 export function notf(acctId: string, tlid: string, sys?: 'direct') {
 	if (sys === 'direct') {
@@ -96,6 +97,10 @@ export async function notfColumn(acctId: string, tlid: string) {
 			//Markers
 			const markers = localStorage.getItem('markers') === 'yes'
 			if (markers) getMarker(tlid, 'notf', acctId)
+			parseRemainXmlHttpRequest(start,httpreq, 'get')
+			if ( localStorage.getItem('tips') === 'ver'){
+				tips('refresh')
+			}
 		}
 	}
 }
@@ -287,6 +292,10 @@ export function notfMore(tlid: string) {
 				}
 				$('#notf-box').addClass('fetched')
 				todc()
+				parseRemainXmlHttpRequest(start,httpreq,'get')
+				if ( localStorage.getItem('tips') === 'ver'){
+					tips('refresh')
+				}
 			}
 		}
 	}

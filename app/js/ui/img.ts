@@ -3,6 +3,8 @@ import { modalInitGetInstance, toast } from '../common/declareM'
 import lang from '../common/lang'
 import { execCopy } from '../platform/end'
 import { details } from '../tl/datails'
+import { parseRemainXmlHttpRequest } from '../common/apiRemain'
+import { tips } from './tips'
 /*イメージビューワー*/
 //postのimg.jsとは異なります。
 export function imgv(id: string, key: number, acctId?: string) {
@@ -143,6 +145,10 @@ function imageXhr(id: string, key: number, murl: string) {
 				const proctime = endTime.getTime() - startTime.getTime()
 				$('#imgsec').text(proctime)
 				$('#imgmodal').attr('src', src)
+			}
+			parseRemainXmlHttpRequest(murl,this,'get')
+			if ( localStorage.getItem('tips') === 'ver'){
+				tips('refresh')
 			}
 		}
 	}

@@ -45,7 +45,60 @@ let last: RemainApiObject = {
     resetTime: new Date
 }
 
-export function parseRemain(url:string,headers:Headers,method:string){
+export function parseRemainXmlHttpRequest(url:string,req:XMLHttpRequest,method:string)
+{
+    let keyvalue:Map<string,string> = new Map()
+
+    try {
+        if ( req.getResponseHeader('X-RateLimit-Remaining') ) {
+            keyvalue.set('X-RateLimit-Remaining',req.getResponseHeader('X-RateLimit-Remaining')!)
+        } else {
+            return
+        }
+        if ( req.getResponseHeader('X-RateLimit-Limit') ) {
+            keyvalue.set('X-RateLimit-Limit',req.getResponseHeader('X-RateLimit-Limit')!)
+        } else {
+            return
+        }
+        if ( req.getResponseHeader('X-RateLimit-Reset') ) {
+            keyvalue.set('X-RateLimit-Reset',req.getResponseHeader('X-RateLimit-Reset')!)
+        } else {
+            return
+        }
+        parse(url,keyvalue,method)
+    } catch (error) {
+        // エラーの場合は読み捨てる
+        console.log(error)
+    }
+}
+export function parseRemain(url:string,headers:Headers,method:string)
+{
+    let keyvalue:Map<string,string> = new Map()
+
+    try {
+        if ( headers.get('X-RateLimit-Remaining') ) {
+            keyvalue.set('X-RateLimit-Remaining',headers.get('X-RateLimit-Remaining')!)
+        } else {
+            return
+        }
+        if ( headers.get('X-RateLimit-Limit') ) {
+            keyvalue.set('X-RateLimit-Limit',headers.get('X-RateLimit-Limit')!)
+        } else {
+            return
+        }
+        if ( headers.get('X-RateLimit-Reset') ) {
+            keyvalue.set('X-RateLimit-Reset',headers.get('X-RateLimit-Reset')!)
+        } else {
+            return
+        }
+        parse(url,keyvalue,method)
+    } catch (error) {
+        // エラーの場合は読み捨てる
+        console.log(error)    
+    }
+}
+
+function parse(url:string,keyvalue:Map<string,string>,method:string){
     try {
         let tmp_url = new URL(url)
         let tmp_instance = tmp_url.host
@@ -53,22 +106,22 @@ export function parseRemain(url:string,headers:Headers,method:string){
         let tmp_limit = -1
         let tmp_resetTime = new Date
 
-        if (headers.get('X-RateLimit-Remaining')){
-            tmp_remaining = Number(headers.get('X-RateLimit-Remaining'))
+        if (keyvalue.get('X-RateLimit-Remaining')){
+            tmp_remaining = Number(keyvalue.get('X-RateLimit-Remaining'))
         } else {
             return
         }
-        if (headers.get('X-RateLimit-Limit')) {
-            tmp_limit = Number(headers.get('X-RateLimit-Limit')) 
+        if (keyvalue.get('X-RateLimit-Limit')) {
+            tmp_limit = Number(keyvalue.get('X-RateLimit-Limit')) 
         } else {
             return
         }
-        if (headers.get('X-RateLimit-Reset')) {
-            const tmp:string = headers.get('X-RateLimit-Reset')!
-            tmp_resetTime = new Date(tmp)
+        if (keyvalue.get('X-RateLimit-Reset')) {
+            tmp_resetTime = new Date(keyvalue.get('X-RateLimit-Reset')!)
         } else {
             return
         }
+
         //
         // 3つのヘッダがすべて取得できたら内部変数を書き換え
         last.instance = tmp_instance
@@ -84,13 +137,13 @@ export function parseRemain(url:string,headers:Headers,method:string){
 
         if (method === 'delete' || (method === 'post' && tmp_url.pathname.endsWith('/unreblog'))) {
             // delete,unreblog
-            tmp_remain.delete = _.cloneDeep(last)
+            tmp_remain.delete = structuredClone(last)
             remain.set(tmp_instance,tmp_remain)
         } else if (method === 'post' && tmp_url.pathname.match('\/api\/v[12]\/media')) {
-            tmp_remain.upload = _.cloneDeep(last)
+            tmp_remain.upload = structuredClone(last)
             remain.set(tmp_instance,tmp_remain)
         } else {
-            tmp_remain.others = _.cloneDeep(last)
+            tmp_remain.others = structuredClone(last)
             remain.set(tmp_instance,tmp_remain)
         }
 
