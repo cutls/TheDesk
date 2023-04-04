@@ -380,7 +380,7 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 	$('#media').val(medias)
 	localStorage.setItem('nohide', 'true')
 	show()
-	const html = json.text || json.content.replace(/(<([^>]+)>)/gi, '')
+	const html = json.text || json.content.replace(/<br \/>/gi,'\r\n').replace(/(<([^>]+)>)/gi, '')
 	$('#textarea').val(html)
 	if (json.spoiler_text) {
 		cw(true)
