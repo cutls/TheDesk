@@ -22,5 +22,5 @@
     "nodata": "Brak danych",
     "accessTokenSetup": "Użyj tokenu dostępu do logowania (po wypełnieniu kliknij \"token dostępu\" a nie \"kod\" w polu: Zaawansowane)",
     "haveExported": "Posiadając wyeksportowany plik TheDesk, kliknij tutaj, aby skoczyć do strony ustawień",
-    "redo": "Retry(re-input address)"
+    "redo": "Ponów próbę (ponów adres)"
 }
