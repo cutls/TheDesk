@@ -98,9 +98,7 @@ export async function notfColumn(acctId: string, tlid: string) {
 			const markers = localStorage.getItem('markers') === 'yes'
 			if (markers) getMarker(tlid, 'notf', acctId)
 			parseRemainXmlHttpRequest(start,httpreq, 'get')
-			if ( localStorage.getItem('tips') === 'ver'){
-				tips('refresh')
-			}
+			tips('refresh')
 		}
 	}
 }
@@ -293,9 +291,7 @@ export function notfMore(tlid: string) {
 				$('#notf-box').addClass('fetched')
 				todc()
 				parseRemainXmlHttpRequest(start,httpreq,'get')
-				if ( localStorage.getItem('tips') === 'ver'){
-					tips('refresh')
-				}
+				tips('refresh')
 			}
 		}
 	}

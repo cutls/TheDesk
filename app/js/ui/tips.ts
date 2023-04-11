@@ -31,12 +31,18 @@ export function bottomReverse() {
 		localStorage.setItem('reverse', 'true')
 	}
 }
-let spotint
+let spotint: NodeJS.Timer | null = null
 type ITips = 'ver' | 'clock' | 'memory' | 'spotify' | 'custom' | 'refresh'
 export function tips(mode: ITips, custom?: any) {
 	postMessage(['sendSinmpleIpc', 'endmem'], '*')
-	clearInterval(clockint)
-	clearInterval(spotint)
+	if ( clockint ) {
+		clearInterval(clockint)
+		clockint = null
+	}
+	if ( spotint ) {
+		clearInterval(spotint)
+		spotint = null
+	}
 	const isRefresh:boolean = mode === 'refresh'
 	if (isRefresh){
 		mode = localStorage.getItem('tips') as ITips
@@ -89,13 +95,16 @@ export function renderMem(use: number, cpu: string, total: number, core: number,
 	//AMD
 	cpu = cpu.replace('AMD ', '').replace(/\s[0-9]{1,3}-Core\sProcessor/, '')
 	$('#tips-text').html(
-		`${escapeHTML(cpu)} x ${core}<br />RAM: ${Math.floor(use / 1024 / 1024 / 102.4) / 10}/${Math.floor(total / 1024 / 1024 / 102.4) / 10}GB(${Math.floor((use / total) * 100)}%) UP:${time}`
+		`${escapeHTML(cpu)} x ${core} RAM: ${Math.floor(use / 1024 / 1024 / 102.4) / 10}/${Math.floor(total / 1024 / 1024 / 102.4) / 10}GB(${Math.floor((use / total) * 100)}%) UP:${time}
+		<div onclick="toastApiRemain()" title="reset time = ${getApiResetTime()}">[API(${getApiInstance()}):${getApiRemaining().toString()}/${getApiLimit().toString()}]</div>`
 	)
 }
 //Spotify
-spotint = null
 export async function spotifyTips() {
-	if (spotint) clearInterval(spotint)
+	if (spotint) {
+		clearInterval(spotint)
+		spotint = null
+	}
 	const at = localStorage.getItem('spotify-token')
 	if (!at) return toast({ html: 'Error Spotify Connection' })
 	const start = `https://spotify.thedesk.top/current-playing?code=${localStorage.getItem('spotify-token')}`
@@ -165,7 +174,10 @@ function spotStart() {
 	const ns = (news % 60).toString().padStart(2, '0')
 	const nm = (news - (news % 60)) / 60
 	if (per >= 100) {
-		clearInterval(spotint)
+		if (spotint) {
+			clearInterval(spotint)
+			spotint = null
+		}
 		spotifyTips()
 	} else {
 		$('#spot-m').text(nm)
@@ -175,12 +187,14 @@ function spotStart() {
 	$('.spotify-prog').css('width', per + '%')
 }
 //時計
-let clockint
+let clockint: NodeJS.Timer | null = null
 async function clock() {
 	const now = new Date()
 	const last = 1000 - (now.getTime() % 1000)
 	await sleep(last)
-	clockint = setInterval(clockStart, 1000)
+	if (!clockint) {
+		clockint = setInterval(clockStart, 1000)
+	}
 }
 function clockStart() {
 	const nowTime = new Date()
@@ -189,7 +203,8 @@ function clockStart() {
 	const nowSec = nowTime.getSeconds().toString().padStart(2, '0')
 	const msg = `${nowTime.getFullYear()}/${nowTime.getMonth() + 1}/${nowTime.getDate()}
 		<span style="font-size:20px">${nowHour}:${nowMin}:${nowSec}</span>`
-	$('#tips-text').html(msg)
+	$('#tips-text').html(`${msg}
+	<div onclick="toastApiRemain()" title="reset time = ${getApiResetTime()}">[API(${getApiInstance()}):${getApiRemaining().toString()}/${getApiLimit().toString()}]</div>`)
 }
 
 const sleep = (msec: number) => new Promise((resolve) => setTimeout(resolve, msec))

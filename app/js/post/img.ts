@@ -204,9 +204,7 @@ export async function media(b64: string, type: string, no: number | 'new', stamp
 			}
 			if (img === 'url' && json.text_url) $('#textarea').val($('#textarea').val() + ' ' + json.text_url)
 			parseRemainXmlHttpRequest(this.responseURL,this,'post')
-			if ( localStorage.getItem('tips') === 'ver'){
-				tips('refresh')
-			}
+			tips('refresh')
 		}
 	}
 }

@@ -111,9 +111,7 @@ export function flw(user: string, more: 'more' | '', acctId: string) {
 			}
 			timeUpdate()
 			parseRemainXmlHttpRequest(start,httpreq,'get')
-			if ( localStorage.getItem('tips') === 'ver'){
-				tips('refresh')
-			}
+			tips('refresh')
 		}
 	}
 }
@@ -151,9 +149,7 @@ export function fer(user: string, more: 'more' | '', acctId: string) {
 			}
 			timeUpdate()
 			parseRemainXmlHttpRequest(start,httpreq,'get')
-			if ( localStorage.getItem('tips') === 'ver'){
-				tips('refresh')
-			}
+			tips('refresh')
 		}
 	}
 }
@@ -191,9 +187,7 @@ export function showFav(more: 'more' | '', acctId: string) {
 			}
 			timeUpdate()
 			parseRemainXmlHttpRequest(start,httpreq,'get')
-			if ( localStorage.getItem('tips') === 'ver'){
-				tips('refresh')
-			}
+			tips('refresh')
 		}
 	}
 }

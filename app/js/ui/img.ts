@@ -147,9 +147,7 @@ function imageXhr(id: string, key: number, murl: string) {
 				$('#imgmodal').attr('src', src)
 			}
 			parseRemainXmlHttpRequest(murl,this,'get')
-			if ( localStorage.getItem('tips') === 'ver'){
-				tips('refresh')
-			}
+			tips('refresh')
 		}
 	}
 	xhr.responseType = 'blob'
