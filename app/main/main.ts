@@ -159,7 +159,7 @@ function createWindow() {
 	}
 	let windowSize: IWindow = initWindowSize
 	if (fs.existsSync(info_path)) {
-		const info = fs.readFileSync(info_path, 'utf8').toString() || '{}'
+		const info = fs.readFileSync(info_path, 'utf8').toString() || JSON.stringify(initWindowSize)
 		if (JSON.parse(info)) {
 			windowSize = JSON.parse(info)
 			if (windowSize.width < 256 || windowSize.height < 256) {
