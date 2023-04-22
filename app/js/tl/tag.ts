@@ -70,18 +70,16 @@ function tagPin(tag: string) {
 export function tagRemove(key: number) {
 	const tags = localStorage.getItem('tag') || '[]'
 	const obj = JSON.parse(tags)
-	let pt = localStorage.getItem('stable') || '[]'
-	let nowPT = JSON.parse(pt)
-	let str = $('#textarea').val() as string
-	for ( const PTag of nowPT ){
-		if ( PTag === obj[key] ) {
-			do {
-				str = str.replace(`#${PTag}`,'')
-			} while( str.match(PTag) )
+	const pt = localStorage.getItem('stable') || '[]'
+	const nowPT = JSON.parse(pt)
+	let str = $('#textarea').val()?.toString() || ''
+	for (const PTag of nowPT) {
+		if (PTag === obj[key]) {
+			str = str.replace(new RegExp(`(\\s#${PTag}\\s)`, 'g'), ' ').replace(new RegExp(`(^#${PTag}\\s|\\s#${PTag}$|^#${PTag}$)`, 'g'), '')
 			$('#textarea').val(str)
 			characterCounterInit($('#textarea'))
-			nowPT.splice(nowPT.indexOf(obj[key]),1)
-			localStorage.setItem('stable',JSON.stringify(nowPT))
+			nowPT.splice(nowPT.indexOf(obj[key]), 1)
+			localStorage.setItem('stable', JSON.stringify(nowPT))
 			toast({ html: PTag + ' ' + lang.lang_tags_unrealtime, displayLength: 3000 })
 			break
 		}
@@ -96,7 +94,7 @@ export function favTag() {
 	const tagArr = localStorage.getItem('tag') || '[]'
 	const obj = JSON.parse(tagArr)
 	let tags = ''
-	const nowPT = JSON.parse(localStorage.getItem('stable')|| '[]')
+	const nowPT = JSON.parse(localStorage.getItem('stable') || '[]')
 	let key = 0
 	for (const tagRaw of obj) {
 		let ptt = lang.lang_tags_unrealtime
@@ -138,14 +136,12 @@ export function tagTL(a: IColumnType, b: string, d: string) {
 export function autoToot(tag: string) {
 	tag = escapeHTML(tag)
 	const nowPT = JSON.parse(localStorage.getItem('stable') || '[]')
-	if ( nowPT.includes(tag) ) {
-		let str = $('#textarea').val() as string
-		do {
-			str = str.replace(`#${tag}`,'')
-		} while( str.match(tag) )
+	if (nowPT.includes(tag)) {
+		let str = $('#textarea').val()?.toString() || ''
+		str = str.replace(new RegExp(`(\\s#${tag}\\s)`, 'g'), ' ').replace(new RegExp(`(^#${tag}\\s|\\s#${tag}$|^#${tag}$)`, 'g'), '')
 		$('#textarea').val(str)
 		characterCounterInit($('#textarea'))
-		nowPT.splice(nowPT.indexOf(tag),1)
+		nowPT.splice(nowPT.indexOf(tag), 1)
 		localStorage.setItem('stable', JSON.stringify(nowPT))
 		toast({ html: tag + ' ' + lang.lang_tags_unrealtime, displayLength: 3000 })
 	} else {

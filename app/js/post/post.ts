@@ -75,11 +75,9 @@ export async function post(postVis?: IVis, dry?: boolean, tagClear?: boolean ) {
 	if (editTarget) start = start + `/${editTarget}`
 	const reply = $('#reply').val()
 	const stable = JSON.parse(localStorage.getItem('stable') || '[]')
-	for ( const tag of stable){
-		if ( tagClear ){
-			do {
-				str = str.replace(`#${tag}`,'')
-			} while( str.match(tag) )
+	for (const tag of stable){
+		if (tagClear){
+			str = str.replace(new RegExp(`(\\s#${tag}\\s)`, 'g'), ' ').replace(new RegExp(`(^#${tag}\\s|\\s#${tag}$|^#${tag}$)`, 'g'), '')
 		} else {
 			if (!str.match(tag)) str = `${str} #${tag}`
 		}
@@ -192,11 +190,8 @@ export function clear(clearTags?: boolean) {
 	$('#textarea').val('')
 	$('#ideKey').val('')
 	const stable = JSON.parse(localStorage.getItem('stable') || '[]')
-	if ( !clearTags && stable ) {
-		let tags = ''
-		for ( const tag of stable ){
-			tags = tags + '#' + tag + ' '
-		}
+	if (!clearTags && stable.length) {
+		const tags = `#${stable.join(' #')} `
 		$('#textarea').val(tags)
 	}
 	$('#textarea').attr('placeholder', lang.lang_toot)
