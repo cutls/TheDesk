@@ -67,6 +67,7 @@
     "lang_postimg_delete": "Cliquez pour ajouter une description, faites un clic droit pour supprimer ceci",
     "lang_postimg_desc": "Déscription",
     "lang_postimg_leadContext": "click droit sur la vignette pour supprimer ceci",
+    "lang_postimg_delConfirm": "Delete this image. Continue?",
     "lang_post_tagTL": "Ce pouet ne contient pas de tag par défaut. Ce pouet ne sera pas affiché sur la TL locale. Continuer ?",
     "lang_post_tagVis": "Ce pouet (pas un pouet 'public') n'est pas affiché sur la TL de ce tag.",
     "lang_post_cwtitle": "Alerte CW automatique",
