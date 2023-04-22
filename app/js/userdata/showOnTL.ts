@@ -42,11 +42,10 @@ export async function udgEx(user, acctId) {
 
 export async function udg(user: string | undefined, acctId: string, isSwal?: boolean) {
 	reset()
-	const tmp_acctId = acctId.trim()
-	if (!user) user = localStorage.getItem('user-id_' + tmp_acctId ) || ''
+	if (!user) user = localStorage.getItem('user-id_' + acctId) || ''
 	todo('User Data Loading...')
-	const domain = localStorage.getItem(`domain_${tmp_acctId}`)
-	const at = localStorage.getItem(`acct_${tmp_acctId}_at`)
+	const domain = localStorage.getItem(`domain_${acctId}`)
+	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const start = `https://${domain}/api/v1/accounts/${user}`
 	const json = await api<Account>(start, {
 		method: 'get',
@@ -66,7 +65,7 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 	//moved設定時
 	if (json.moved) {
 		toast({
-			html: `${lang.lang_showontl_movetxt}<button class="btn-flat toast-action" onclick="udg('${json.moved.id}','${tmp_acctId}')">${lang.lang_showontl_movebtn}</button>`,
+			html: `${lang.lang_showontl_movetxt}<button class="btn-flat toast-action" onclick="udg('${json.moved.id}','${acctId}')">${lang.lang_showontl_movebtn}</button>`,
 			displayLength: 4000,
 		})
 	}
@@ -82,13 +81,13 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 	const instance = modalInitGetInstance($('#his-data'))
 	instance.open()
 	$('#his-data').attr('user-id', user)
-	$('#his-data').attr('use-acct', tmp_acctId)
+	$('#his-data').attr('use-acct', acctId)
 	const isRemote = json.username !== json.acct
 	$('#his-data').attr('remote', isRemote ? 'true' : 'false')
 	const fullname = `${json.acct}${!isRemote ? `@${domain}` : ''}`
-	utlShow(json.id, '', tmp_acctId)
-	flw(json.id, '', tmp_acctId)
-	fer(json.id, '', tmp_acctId)
+	utlShow(json.id, '', acctId)
+	flw(json.id, '', acctId)
+	fer(json.id, '', acctId)
 	let disName = twemojiParse(escapeHTML(json.display_name || json.acct))
 	disName = customEmojiReplace(disName, json, gif)
 	let note = json.note || ''
@@ -141,19 +140,19 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 		$('#his-bot').html(lang.lang_showontl_botacct)
 		$('#his-bot').removeClass('hide')
 	}
-	$('#his-des').attr('data-acct', tmp_acctId)
+	$('#his-des').attr('data-acct', acctId)
 	$('#his-data').css('background-size', 'cover')
 	$('#his-float-timeline').css('height', $('#his-data-show').height() + 'px')
 	localStorage.setItem('history', user)
 	//自分の時
-	console.log(json.acct + localStorage.getItem('user_' + tmp_acctId))
-	if (json.acct === localStorage.getItem('user_' + tmp_acctId)) {
-		showFav('', tmp_acctId)
-		showBlo('', tmp_acctId)
-		showMut('', tmp_acctId)
-		showDom('', tmp_acctId)
-		showReq('', tmp_acctId)
-		showFrl('', tmp_acctId)
+	console.log(json.acct + localStorage.getItem('user_' + acctId))
+	if (json.acct === localStorage.getItem('user_' + acctId)) {
+		showFav('', acctId)
+		showBlo('', acctId)
+		showMut('', acctId)
+		showDom('', acctId)
+		showReq('', acctId)
+		showFrl('', acctId)
 		$('#his-name-val').val(json.display_name || json.acct)
 		if (json.fields.length > 0) {
 			let i = 0
@@ -175,9 +174,9 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 		$('#his-emp-btn').hide()
 		$('.only-my-data').show()
 		$('.only-his-data').hide()
-		if (localStorage.getItem('main') === tmp_acctId) $('#his-main-acct').hide()
+		if (localStorage.getItem('main') === acctId) $('#his-main-acct').hide()
 	} else {
-		relations(user, tmp_acctId)
+		relations(user, acctId)
 		$('.only-my-data').hide()
 		$('.only-his-data').show()
 	}
@@ -190,7 +189,7 @@ export async function udg(user: string | undefined, acctId: string, isSwal?: boo
 	const ddI = dropdownInitGetInstance($(`[data-target="actiondropdown"]`))
 	ddI.recalculateDimensions()
 	//外部データ取得(死かもしれないので)
-	udAdd(tmp_acctId, user, json.url)
+	udAdd(acctId, user, json.url)
 }
 //一つ前のユーザーデータ表示
 export function historyShow() {
@@ -203,7 +202,8 @@ export function profShow() {
 	const acctId = $('#post-acct-sel').val()?.toString() || '0'
 	const user = localStorage.getItem('user-id_' + acctId) || ''
 	udg(user, acctId)
-	hide()
+	const box = localStorage.getItem('box') || 'yes'
+	if (box === 'yes') hide()
 }
 
 //FF関係取得
