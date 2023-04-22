@@ -46,8 +46,8 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		ideKey = Math.floor(Date.now() / 1000) + '/TheDesk/' + user + '@' + domain
 		$('#ideKey').val(ideKey)
 	}
-	const cw_sent = localStorage.getItem('cw_sentence') || 500
-	const cw_ltres = localStorage.getItem('cw_letters') || 7000
+	const cw_sent = parseInt(localStorage.getItem('cw_sentence') || '500', 10) || 500
+	const cw_ltres = parseInt(localStorage.getItem('cw_letters') || '7000', 10) || 7000
 	if (!$('#cw').hasClass('cw-avail') && (str.length > cw_sent || str.split('\n').length - 1 > cw_ltres)) {
 		const plus = str.replace(/\n/g, '').slice(0, 10) + '...'
 		const result = await Swal.fire({
