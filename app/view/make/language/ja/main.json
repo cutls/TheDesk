@@ -68,6 +68,7 @@
     "lang_postimg_desc": "説明",
     "lang_postimg_sync": "処理は同期的に行われます。最初にご確認ください→",
     "lang_postimg_leadContext": "画像を削除するためには右クリック",
+    "lang_postimg_delConfirm": "画像を削除します。よろしいですか？",
     "lang_post_tagTL": "デフォルトタグが挿入されていません。このまま投稿するとローカルには表示されません。",
     "lang_post_tagVis": "公開範囲が「公開」以外だと、タグTLに表示されません。(一部インスタンスを除く)",
     "lang_post_cwtitle": "長文投稿の警告",

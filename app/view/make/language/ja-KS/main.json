@@ -68,6 +68,7 @@
     "lang_postimg_leadContext": "画像を削除するんやったら右クリック",
     "lang_post_tagTL": "デフォルトタグ無いしこのまま投稿するとローカルには表示されへんで。",
     "lang_post_tagVis": "公開範囲が「公開」以外やったら、タグTLには出えへんで。(一部インスタンスを除く)",
+    "lang_postimg_delConfirm": "画像をほかしてええか？",
     "lang_post_cwtitle": "長文投稿の警告",
     "lang_post_cwtxt": "指定文字数、行数を超えるトゥートをしようとしてんねんけどどうする？CW付ける？\n自動CWのタイトル:",
     "lang_post_btn1": "キャンセル(投稿せえへん)",

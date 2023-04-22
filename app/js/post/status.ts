@@ -342,17 +342,26 @@ export async function redraft(id: string, acctId: string) {
 }
 // edit
 export async function editToot(id: string, acctId: string) {
-	show()
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
-	const start = `https://${domain}/api/v1/statuses/${id}/source`
-	const json = await api(start, {
+	const sourceStart = `https://${domain}/api/v1/statuses/${id}/source`
+	const sourceJson = await api(sourceStart, {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: 'Bearer ' + at,
 		},
 	})
+	const { text } = sourceJson
+	const start = `https://${domain}/api/v1/statuses/${id}`
+	const json = await api<Toot>(start, {
+		method: 'get',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + at,
+		},
+	})
+	json.text = text
 	draftToPost(json, acctId, id)
 }
 
@@ -369,7 +378,7 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 		for (let i = 0; i <= 4; i++) {
 			if (!json.media_attachments[i]) break
 			media_ids.push(json.media_attachments[i].id)
-			$('#preview').append(`<img src="${json.media_attachments[i].preview_url}" style="width:50px; max-height:100px;">`)
+			$('#preview').append(`<img src="${json.media_attachments[i].preview_url}" style="width:50px; max-height:100px;" data-acct="${acctId}" data-media="${json.media_attachments[i].id}" oncontextmenu="deleteImage('${json.media_attachments[i].id}')" title="${lang.lang_postimg_delete}">`)
 		}
 	}
 	const visMode = json.visibility
@@ -378,7 +387,7 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 	$('#media').val(medias)
 	localStorage.setItem('nohide', 'true')
 	show()
-	const html = json.text || json.content
+	const html = json.text || json.content.replace(/<br \/>/gi,'\r\n').replace(/(<([^>]+)>)/gi, '')
 	$('#textarea').val(html)
 	if (json.spoiler_text) {
 		cw(true)
