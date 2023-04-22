@@ -67,6 +67,7 @@
     "lang_postimg_delete": "Kliknij, aby dodać opis, prawoklik myszą to usuwa",
     "lang_postimg_desc": "Opis",
     "lang_postimg_leadContext": "użyj prawokliku myszą aby to usunąć",
+    "lang_postimg_delConfirm": "Delete this image. Continue?",
     "lang_post_tagTL": "Ten wpis nie zawiera domyślnego tagu. Ten wpis nie będzie wyświetlany na lokalnej osi czasu. Kontynuować?",
     "lang_post_tagVis": "Ten wpis (nie 'publiczny') nie jest wyświetlany na osi czasu tego tagu.",
     "lang_post_cwtitle": "Automatyczne ostrzeżenie o treści",
