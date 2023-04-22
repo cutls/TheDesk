@@ -165,8 +165,10 @@ export function mdCheck() {
 	const domain = localStorage.getItem('domain_' + acctId)
 	if (domain === 'itabashi.0j0.jp') {
 		$('#limited-button').removeClass('hide')
+		$('#limited-button').attr('tabIndex',3)
 	} else {
 		$('#limited-button').addClass('hide')
+		$('#limited-button').removeAttr('tabIndex')
 	}
 	if (idata[domain + '_letters']) {
 		$('#textarea').attr('data-length', idata[domain + '_letters'])
@@ -176,8 +178,10 @@ export function mdCheck() {
 	}
 	if (idata[domain + '_glitch'] === 'true') {
 		$('#local-button').removeClass('hide')
+		$('#local-button').attr('tabIndex',4)
 	} else {
 		$('#local-button').addClass('hide')
+		$('#local-button').removeAttr('tabIndex')
 	}
 	const obj = getMulti()
 	if (obj[acctId].background && obj[acctId].background !== 'def' && obj[acctId].text && obj[acctId].text !== 'def') {
