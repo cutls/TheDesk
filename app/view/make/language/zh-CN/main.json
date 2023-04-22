@@ -67,6 +67,7 @@
     "lang_postimg_delete": "点击以添加描述，右键单击以删除它",
     "lang_postimg_desc": "描述",
     "lang_postimg_leadContext": "右键单击缩略图以删除它",
+    "lang_postimg_delConfirm": "Delete this image. Continue?",
     "lang_post_tagTL": "此嘟文不包含默认标签。此嘟文将不会在本地时间线上显示。是否继续？",
     "lang_post_tagVis": "此嘟文(不是“公共”嘟文) 没有显示在这个标签的时间线上。",
     "lang_post_cwtitle": "自动提醒CW",
