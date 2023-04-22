@@ -219,12 +219,13 @@ iframe,
 	object-fit: cover;
 	vertical-align: middle;
 	margin: -1px 0;
+	transition: 0.3s;
 }
-.bigemoji {
-	width: 7.7rem !important;
-	height: auto !important;
+.area-toot .emoji-img:hover {
+	transform: scale(3.5);
 	position: relative;
-	z-index: 9999;
+	cursor: zoom-out;
+	z-index: 2;
 }
 .tl-box {
 	position: relative;
@@ -705,6 +706,10 @@ p:not(:last-child) {
 .prof-img {
 	border-radius: 0.23rem;
 	width: 3rem;
+	transition: 0.3s;
+}
+.prof-img:hover{
+	transform: scale(1.2);
 }
 .prof-img-sml {
 	width: 1.5rem;
@@ -714,6 +719,10 @@ p:not(:last-child) {
 	top: -1.53rem;
 	width: 1.5rem;
 	left: 1.5rem;
+	transition: 0.3s;
+}
+.notf-icon:hover {
+	transform: scale(1.5);
 }
 .notf-indv-box {
 	width: 100%;

@@ -743,7 +743,7 @@ export function customEmojiReplace(content: string, toot: ICustomEmojiReplace, g
 		const emoSource = gif ? emoji.url : emoji.static_url
 		const emoji_url = `
 			<img draggable="false" src="${emoSource}" class="emoji-img" data-emoji="${shortcode}" 
-				alt=" :${shortcode}: " title="${shortcode}" onclick="this.classList.toggle('bigemoji');" loading="lazy">
+				alt=" :${shortcode}: " title="${shortcode}" loading="lazy">
 		`
 		const regExp = new RegExp(':' + shortcode + ':', 'g')
 		content = content.replace(regExp, (str, offset, s) => {
