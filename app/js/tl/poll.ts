@@ -20,7 +20,7 @@ export function pollToggle() {
 		$('#right-side').hide()
 		$('#left-side').css('width', '100%')
 		$('#right-side').css('width', '300px')
-		$('#post-box').css('width', width + 'px')
+		$('#post-box').css('width', widthStr + 'px')
 		$('#emoji').addClass('hide')
 		$('#draft').addClass('hide')
 		$('#poll').addClass('hide')
