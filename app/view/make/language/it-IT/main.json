@@ -67,6 +67,7 @@
     "lang_postimg_delete": "Fare clic per aggiungere la descrizione, fare clic col tasto destro per eliminare questo",
     "lang_postimg_desc": "Descrizione",
     "lang_postimg_leadContext": "fare clic con il pulsante destro del mouse per eliminare",
+    "lang_postimg_delConfirm": "Delete this image. Continue?",
     "lang_post_tagTL": "Questo toot non contiene un tag predefinito. Questo toot non sarà mostrato su Local TL. Continuare?",
     "lang_post_tagVis": "Questo toot(non 'public') non è mostrato sul TL di questo tag.",
     "lang_post_cwtitle": "Auto CW Alert",
