@@ -67,6 +67,7 @@
     "lang_postimg_delete": "Klicken, um Beschreibung hinzuzufügen, Rechtsklick zum Löschen",
     "lang_postimg_desc": "Beschreibung",
     "lang_postimg_leadContext": "Rechtsklick auf das Vorschaubild, um dies zu löschen",
+    "lang_postimg_delConfirm": "Delete this image. Continue?",
     "lang_post_tagTL": "Dieses Tröt enthält keinen Standard-Tag. Er wird in dem lokalen Verlauf nicht angezeigt. Fortfahren?",
     "lang_post_tagVis": "Dieser Tröt (nicht 'öffentlicher' Tröt) wird nicht in diesem Tag-Verlauf angezeigt.",
     "lang_post_cwtitle": "Auto CW Alert",
