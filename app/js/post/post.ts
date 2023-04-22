@@ -7,7 +7,7 @@ import { addToDraft, cw, draftToggle, isIVis, IVis, loadVis, schedule } from './
 import { todc, todo } from '../ui/tips'
 import { StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
 import { formatTimeUtc } from '../platform/first'
-import { formSelectInit, toast } from '../common/declareM'
+import { characterCounterInit, formSelectInit, toast } from '../common/declareM'
 import api from '../common/fetch'
 import { alertProcessUnfinished } from './img'
 import { pollCalc } from '../tl/poll'
@@ -244,5 +244,6 @@ export function clear() {
 	const width = parseInt((localStorage.getItem('postbox-width') || '300px').replace('px', ''), 10)
 	$('#post-box').css('width', width)
 	$('#tootmodal').attr('data-edit', null)
+	characterCounterInit($('#textarea'))
 	mdCheck()
 }
