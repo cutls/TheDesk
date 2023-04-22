@@ -311,7 +311,7 @@ export async function altImage(acctId: string, id: string) {
 			confirmButtonText: 'Post',
 			showLoaderOnConfirm: true,
 			preConfirm: async (data) => {
-				Swal.showLoading(null)
+				Swal.showLoading()
 				await api(start, {
 					method: 'put',
 					headers: {
