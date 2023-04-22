@@ -35,6 +35,7 @@ app/view/ru-RU
 app/view/zh-TW
 app/view/pt-BR
 app/view/si-LK
+app/view/uk-UA
 app/build.js
 app/view/make/make.js
 app/view/make/makeCli.ts

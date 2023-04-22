@@ -15,6 +15,7 @@ import * as ruRU from '../../view/ru-RU/setting.vue'
 import * as esES from '../../view/es-ES/setting.vue'
 import * as plPL from '../../view/pl-PL/setting.vue'
 import * as siLK from '../../view/si-LK/setting.vue'
+import * as ukUA from '../../view/uk-UA/setting.vue'
 import * as ps from '../../view/ps/setting.vue'
 const langs = {
 	ja,
@@ -34,6 +35,7 @@ const langs = {
 	'es-ES': esES,
 	'pl-PL': plPL,
 	'si-LK': siLK,
+	'uk-UA': ukUA,
 	ps,
 }
 const imps = langs[globalThis.useLang]

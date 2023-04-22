@@ -15,6 +15,7 @@ import ruRU from '../../view/ru-RU/main'
 import esES from '../../view/es-ES/main'
 import plPL from '../../view/pl-PL/main'
 import siLK from '../../view/si-LK/main'
+import ukUA from '../../view/uk-UA/main'
 import ps from '../../view/ps/main'
 const langs = {
 	ja,
@@ -34,6 +35,7 @@ const langs = {
 	'es-ES': esES,
 	'pl-PL': plPL,
 	'si-LK': siLK,
+	'uk-UA': ukUA,
 	ps,
 }
 export default langs[globalThis.useLang] as typeof ja
