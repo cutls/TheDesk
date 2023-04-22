@@ -37,8 +37,6 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	}
 	if ($('#toot-post-btn').prop('disabled')) return false
 	let str = $('#textarea').val() as string
-	let _media = $('#media').val()?.toString()
-	if ( !str && !_media ) return false
 	const acct_id = $('#post-acct-sel').val()?.toString()
 	localStorage.setItem('last-use', acct_id || `0`)
 	const domain = localStorage.getItem('domain_' + acct_id)
@@ -84,6 +82,7 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	if (reply) toot.in_reply_to_id = reply.toString()
 	const media = $('#media').val()?.toString()
 	if (media) toot.media_ids = media.split(',')
+	if (media && !str) return
 	const quote = $('#quote').val()?.toString()
 	if (quote) toot.quote_id = quote
 	if ($('#nsfw').hasClass('nsfw-avail')) toot.sensitive = true
