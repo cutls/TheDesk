@@ -25,7 +25,7 @@ export function sec() {
 	}
 	post(mode)
 }
-export async function post(postVis?: IVis, dry?: boolean) {
+export async function post(postVis?: IVis, dry?: boolean, tagClear?: boolean ) {
 	if (!navigator.onLine && !dry) {
 		draftToggle(true)
 		addToDraft()
@@ -74,8 +74,14 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	const editTarget = $('#tootmodal').attr('data-edit')
 	if (editTarget) start = start + `/${editTarget}`
 	const reply = $('#reply').val()
-	const stable = localStorage.getItem('stable')
-	if (stable && !str.match(stable)) str = `${str} #${stable}`
+	const stable = JSON.parse(localStorage.getItem('stable') || '[]')
+	for (const tag of stable){
+		if (tagClear){
+			str = str.replace(new RegExp(`(\\s#${tag}\\s)`, 'g'), ' ').replace(new RegExp(`(^#${tag}\\s|\\s#${tag}$|^#${tag}$)`, 'g'), '')
+		} else {
+			if (!str.match(tag)) str = `${str} #${tag}`
+		}
+	}
 	const toot: StatusTheDeskExtend = {
 		status: str,
 	}
@@ -180,12 +186,14 @@ export function expPostMode() {
 		})
 	}
 }
-//クリア(Shift+C)
-export function clear() {
+//クリア(Shift+C,Alt+Shift+C:Alt+Shift+Cの場合は実況タグをセットしない)
+export function clear(clearTags?: boolean) {
 	$('#textarea').val('')
 	$('#ideKey').val('')
-	if (localStorage.getItem('stable')) {
-		$('#textarea').val('#' + localStorage.getItem('stable') + ' ')
+	const stable = JSON.parse(localStorage.getItem('stable') || '[]')
+	if (!clearTags && stable.length) {
+		const tags = `#${stable.join(' #')} `
+		$('#textarea').val(tags)
 	}
 	$('#textarea').attr('placeholder', lang.lang_toot)
 	$('#reply').val('')
