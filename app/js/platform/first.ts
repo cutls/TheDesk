@@ -83,6 +83,9 @@ async function init() {
 
 const size = localStorage.getItem('size')
 if (size) $('html,body').css('font-size', `${size}px`)
+const clickActionValue = localStorage.getItem('mouseover')
+const clickAction = clickActionValue === 'yes' || clickActionValue === 'click'
+if (clickAction) $('body').addClass('mouseover')
 export const stripTags = function (str: string, allowed?: string) {
 	if (!str) {
 		return ''
