@@ -24,6 +24,9 @@ export const toast = (options?: object) => {
 export const formSelectInit = (modalElem: Elem, options?: object) => {
 	return M.FormSelect.init(modalElem, options)
 }
+export const formSelectGetInstance = (elem: Elem | HTMLInputElement) => {
+	return M.FormSelect.getInstance(elem)
+}
 export const autoCompleteGetInstance = (elem: Elem | HTMLInputElement) => {
 	return M.Autocomplete.getInstance(elem)
 }

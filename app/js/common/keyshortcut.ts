@@ -6,7 +6,7 @@ import { src, srcBox } from '../tl/src'
 import { post, sec, clear } from '../post/post'
 import { allNotfRead } from '../tl/notification'
 import { fav, rt } from '../post/status'
-import { toast } from './declareM'
+import { formSelectGetInstance, toast } from './declareM'
 import { re } from '../post/useTxtBox'
 import { isIVis } from '../post/secure'
 import { hide, show } from '../ui/postBox'
@@ -285,6 +285,13 @@ export function initKeyboard() {
 						return false
 					}
 				}
+			}
+			if (e.code === 'Tab') {
+				const elm = document.getElementById('post-acct-sel')
+				if (!elm) return console.log('no elm')
+				const instance = formSelectGetInstance(elm)
+				console.log(instance)
+				instance.dropdown.open()
 			}
 		}
 	})
