@@ -31,7 +31,7 @@ $(document).on('click', 'a', (e) => {
 		//タグのURLぽかったら
 		const tags = url.match(/https:\/\/([^+_]+)\/tags\/([_a-zA-Z0-9&=+%]+)/)
 		//メンションっぽかったら
-		const ats = url.match(/https:\/\/([^+_]+)\/@([_a-zA-Z0-9&=+%]$+)/)
+		const ats = url.match(/https:\/\/([^+_]+)\/@([_a-zA-Z0-9&=+%]+$)/)
 		if (toot) {
 			if (toot[1]) {
 				const acctId = $a.parent().attr('data-acct') || '0'
