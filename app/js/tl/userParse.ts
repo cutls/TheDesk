@@ -79,6 +79,7 @@ export function userParse(obj: Account[], acctId: string, notfEvent?: Notoficati
 							<span
 								class="sml gray"
 								style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;user-select:auto; cursor:text;"
+								title="@${toot.acct}"
 							>
 								@${toot.acct}${locked}</span>
 						</div>

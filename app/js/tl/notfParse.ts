@@ -56,7 +56,8 @@ export function notfParse(obj: INotf | undefined, acctId: string, tlid: string |
             </span>
             <span class="voice">${date(createdAt, 'absolute')}(${lang.lang_parse_notftime})</span>
             <i class="big-text fas ${icon}"></i>
-            <a onclick="udg('${account.id}','${acctId}')" class="pointer grey-text notf-udg-text">
+            <a onclick="udg('${account.id}','${acctId}')" class="pointer grey-text notf-udg-text"
+				title="@${account.acct}">
                 ${disName}(@${account.acct})
             </a>`
 	const memory = localStorage.getItem('notice-mem')
