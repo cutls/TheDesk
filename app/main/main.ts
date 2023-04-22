@@ -150,17 +150,21 @@ function createWindow() {
 	}
 	let webviewEnabled = false
 	if (fs.existsSync(wv_path)) webviewEnabled = true
-	let window_size: IWindow = {
+	const initWindowSize: IWindow = {
 		width: 1000,
 		height: 750,
 		x: null,
 		y: null,
 		max: false
 	}
+	let windowSize: IWindow = initWindowSize
 	if (fs.existsSync(info_path)) {
 		const info = fs.readFileSync(info_path, 'utf8').toString() || '{}'
 		if (JSON.parse(info)) {
-			window_size = JSON.parse(info)
+			windowSize = JSON.parse(info)
+			if(windowSize.width < 256 || windowSize.height < 256){
+				windowSize = initWindowSize
+			}
 		}
 	}
 
