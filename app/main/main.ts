@@ -49,7 +49,7 @@ if (!gotTheLock) {
 	app.on('second-instance', (event, commandLine) => {
 		if (!mainWindow) return
 		opening = false
-		const m = commandLine[2].match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=(.+)/)
+		const m = commandLine[2].match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=([^&]+)/)
 		if (m) {
 			mainWindow.webContents.send('customUrl', [m[1], m[2]])
 		}
@@ -64,7 +64,7 @@ app.on('window-all-closed', function () {
 app.on('open-url', function (event, url) {
 	if (!mainWindow) return
 	event.preventDefault()
-	const m = url.match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=(.+)/)
+	const m = url.match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=([^&]+)/)
 	if (m) {
 		mainWindow.webContents.send('customUrl', [m[1], m[2]])
 	}
