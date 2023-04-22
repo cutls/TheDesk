@@ -17,6 +17,7 @@
             cursor: move;
             padding: 5px;
             padding-top: 15px;
+            background-color: var(--bg);
         }
         
         a,
@@ -84,7 +85,6 @@
     </style>
     <script>
 		var useLang = 'en'
-		var process = { env: { NODE_ENV: 'production' } }
 	</script>
 </head>
 
@@ -117,7 +117,6 @@
 	<script type="text/javascript" src="./node_modules/grapheme-splitter/index.js"></script>
 	<script type="text/javascript" src="./node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="./node_modules/@cutls/materialize-css/dist/js/materialize.js"></script>
-	<script type="text/javascript" src="./dist/index.js"></script>
     <script>
         var about = JSON.parse(localStorage.getItem('about'))
         $('#now').text(localStorage.getItem('ver'))
