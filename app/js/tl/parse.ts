@@ -168,7 +168,10 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				}
 			}
 		}
-		if (type === 'pinned') boostback = 'emphasized'
+		if (type === 'pinned') {
+			locked = locked + ` <i class="fas fa-thumb-tack red-text"></i>`
+			boostback = 'emphasized'
+		}
 		let spoil = ''
 		let spoiler = ''
 		let apiSpoil = ''
@@ -592,7 +595,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 								<span class="rt_ct">${toot.reblogs_count}</span>
 							</a>
 						</div>
-						<div class="action ${canRt} ${disp.qt} ${noAuth} ${qtClass}">
+						<div class="action ${disp.qt} ${noAuth} ${qtClass}">
 							<a onclick="qt('${toot.id}','${acctId}','${toot.account.acct}','${toot.url}')" 
 								class="waves-effect waves-dark btn-flat actct" style="padding:0" title="${lang.lang_parse_quote}">
 								<i class="text-darken-3 fas fa-quote-right"></i>
