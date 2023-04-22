@@ -8,7 +8,7 @@
     "mainacct": "Hauptkonto",
     "selacct": "Konto auswählen",
     "codepastewarn": "Fügen Sie den Code ein und schließen Sie den Browser.",
-    "codepaste": "Code",
+    "codepaste": "Quellcode",
     "domain": "Domäne",
     "connect": "Föderierte Server",
     "toots": "Tröts",
@@ -22,5 +22,5 @@
     "nodata": "Keine Daten",
     "accessTokenSetup": "Benutze Zugangs-Token zum Anmelden (Klicke nach Ausfüllen nicht den Code, sondern den Access-Token im Kästchen: Erweitert)",
     "haveExported": "Haben Sie eine exportierte Datei von TheDesk, klicken Sie hier für die Einstellungen",
-    "redo": "Retry(re-input address)"
+    "redo": "Wiederholen (Adresse erneut eingeben)"
 }
