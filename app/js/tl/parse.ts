@@ -168,7 +168,10 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				}
 			}
 		}
-		if (type === 'pinned') boostback = 'emphasized'
+		if (type === 'pinned') {
+			locked = locked + ` <i class="fas fa-thumb-tack red-text"></i>`
+			boostback = 'emphasized'
+		}
 		let spoil = ''
 		let spoiler = ''
 		let apiSpoil = ''
