@@ -179,10 +179,10 @@ function createWindow() {
 			sandbox: false,
 			preload: join(homeDir, 'js', 'platform', 'preload.js'),
 		},
-		width: window_size.width || 1000,
-		height: window_size.height || 750,
-		x: window_size.x || undefined,
-		y: window_size.y || undefined,
+		width: windowSize.width || 1000,
+		height: windowSize.height || 750,
+		x: windowSize.x || undefined,
+		y: windowSize.y || undefined,
 		show: false,
 	}
 	if (platform === 'linux') {
@@ -198,7 +198,7 @@ function createWindow() {
 		if (!mainWindow) return
 		mainWindow.show()
 		console.log('Accessibility: ' + app.accessibilitySupportEnabled)
-		if (window_size.max) {
+		if (windowSize.max) {
 			mainWindow.maximize()
 		}
 	})
@@ -239,7 +239,7 @@ function createWindow() {
 		ua = 'Mastodon client: ' + crypto.randomBytes(N).toString('base64').substring(0, N)
 	}
 	mainWindow.loadURL(base + lang + '/index.html' + plus, { userAgent: ua })
-	if (!window_size.x && !window_size.y) {
+	if (!windowSize.x && !windowSize.y) {
 		mainWindow.center()
 	}
 	// ウィンドウが閉じられたらアプリも終了
