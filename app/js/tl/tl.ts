@@ -823,7 +823,7 @@ export function asReadEnd() {
 			showConfirmButton: false,
 			showCloseButton: true,
 			didOpen: () => {
-				Swal.showLoading(null)
+				Swal.showLoading()
 			},
 			willClose: () => {
 				return

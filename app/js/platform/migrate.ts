@@ -11,7 +11,7 @@ export const migrate = async (skipWait?: boolean) => {
         showConfirmButton: false,
         showCloseButton: false,
         didOpen: () => {
-            Swal.showLoading(null)
+            Swal.showLoading()
         },
         willClose: () => {
             return

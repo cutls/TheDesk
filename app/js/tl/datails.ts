@@ -247,7 +247,7 @@ export async function detEx(url: string, acctId: string) {
 		showConfirmButton: false,
 		showCloseButton: true,
 		didOpen: () => {
-			Swal.showLoading(null)
+			Swal.showLoading()
 		},
 		willClose: () => {
 			return
