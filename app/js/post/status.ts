@@ -180,7 +180,7 @@ export async function muteThread(id: string, acctId: string) {
 		$(`.cvo[unique-id=${id}] .threadMute`).removeClass('inMute')
 		$(`.cvo[unique-id=${id}] .threadMute`).html(`<i class="material-icons">voice_over_off</i>${lang.lang_status_muteThread}`)
 	}
-	
+
 }
 
 export async function acctResolve(acctId: string, user: string) {
@@ -581,8 +581,12 @@ export async function staEx(mode: 'rt' | 'fav' | 'reply') {
 	return
 }
 
-export function toggleAction(elm: NodeListOf<Element> | HTMLElement | JQuery<HTMLElement>) {
-	dropdownInit(elm)
-	const instance = dropdownInitGetInstance(elm)
+export function toggleAction(id: string) {
+	const trigger = document.getElementById(`trigger_${id}`)
+	const menu = document.getElementById(`dropdown_${id}`)
+	if (!trigger || !menu) return
+	if (menu.getAttribute('style')) return
+	dropdownInit(trigger)
+	const instance = dropdownInitGetInstance(trigger)
 	instance.open()
 }

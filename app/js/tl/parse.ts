@@ -618,7 +618,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				</div>
 				<div class="area-side">
 					<div class="action ${noAuth}">
-						<a onclick="toggleAction(this)" data-target="dropdown_${rand}"
+						<a onclick="toggleAction('${rand}')" data-target="dropdown_${rand}"
 							class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0" id="trigger_${rand}">
 							<i class="text-darken-3 material-icons act-icon" aria-hidden="true">expand_more</i>
 							<span class="voice">Other actions</span>
