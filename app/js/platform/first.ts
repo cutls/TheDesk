@@ -30,6 +30,7 @@ async function init() {
 	if (globalThis.pwa && localStorage.getItem('v24Accepted') === 'true') localStorage.removeItem('v24Accepted')
 	if (!globalThis.pwa && localStorage.getItem('v24Accepted') === 'true') await migrate(true)
 	if (globalThis.pwa) $('.hideOnlyPwa').removeClass('hide')
+	if (!localStorage.getItem('v24Accepted') && !localStorage.getItem('ver')) localStorage.setItem('v24Accepted', 'true')
 	if (!localStorage.getItem('v24Accepted') && localStorage.getItem('ver')) return $('#v24Note').removeClass('hide')
 	if (globalThis.useLang === 'ja' || globalThis.useLang === 'ja-KS') $('.onlyJa').removeClass('hide')
 	initPostbox()
