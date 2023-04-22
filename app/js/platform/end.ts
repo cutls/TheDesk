@@ -13,6 +13,7 @@ import { exportSettingsCore, importSettingsCore, fontList, ctLoad, clearCustomIm
 import { npCore } from '../ui/spotify'
 import { renderMem } from '../ui/tips'
 import { udg, udgEx } from '../userdata/showOnTL'
+import { tagShow } from '../tl/tag'
 declare let updateMess, updateProg
 //プラットフォーム別 最後に読むやつ
 //リンクを外部で開くか内部で出すか
@@ -41,7 +42,7 @@ $(document).on('click', 'a', (e) => {
 		} else if (tags) {
 			if (tags[2]) {
 				const acctId = $a.parent().attr('data-acct') || '0'
-				tl('tag', decodeURI(tags[2]), acctId, 'add')
+				tagShow(decodeURI(tags[2]), e.target)
 			}
 		} else if (ats) {
 			if (ats[2]) {

@@ -623,6 +623,7 @@ p:not(:last-child) {
 	background-color: var(--subcolor);
 	z-index: 2;
 	border-radius: 0.4rem;
+	transition: 0.3s;
 }
 #tagContextMenu a {
 	display: block;
@@ -631,7 +632,7 @@ p:not(:last-child) {
 	padding-right: 0.5rem;
 }
 #tagContextMenu a:hover {
-	background-color: var(--selected);
+	background-color: var(--active);
 }
 .firstTCM {
 	margin-top: 0.4rem;

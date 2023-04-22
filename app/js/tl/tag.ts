@@ -10,6 +10,7 @@ import $ from 'jquery'
 //よく使うタグ
 export const isTagData = (item: IColumnData): item is IColumnTag => typeof item !== 'string' && !item['acct']
 export function tagShow(tag: string, elm: HTMLElement) {
+	$('#tagContextMenu').addClass('keep')
 	tag = decodeURIComponent(tag)
 	const tagTL = lang.lang_parse_tagTL.replace('{{tag}}', '#' + tag)
 	const tagPin = lang.lang_parse_tagpin.replace('{{tag}}', '#' + tag)
@@ -24,16 +25,14 @@ export function tagShow(tag: string, elm: HTMLElement) {
 	$('#tagContextMenu').attr('data-tag', tag)
 	$('#tagContextMenu').attr('data-acct', acctId)
 	$('#tagContextMenu').removeClass('hide')
-	setTimeout(() => tShowBox('open'), 500)
+	setTimeout(() => $('#tagContextMenu').removeClass('keep'), 500)
 }
 export function tShowBox(mode: 'open' | 'close') {
 	if (mode === 'open') {
 		$('#tagContextMenu').removeClass('hide')
-	} else if (mode === 'close') {
+	} if (mode === 'close' && !$('#tagContextMenu').hasClass('keep')) {
 		if (!$('#tagContextMenu').hasClass('hide')) $('#tagContextMenu').addClass('hide')
 		$('#tagContextMenu').removeClass('keep')
-	} else {
-		$('#tagContextMenu').toggleClass('hide')
 	}
 }
 export function doTShowBox(type: 'tl' | 'toot' | 'pin' | 'f') {

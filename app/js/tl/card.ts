@@ -13,17 +13,6 @@ export function additional(acctId: string, tlid: string) {
 
 	$('#timeline-container .mention').addClass('parsed')
 
-	$('#timeline-container .hashtag, #timeline-container [rel=tag]').each(function () {
-		const tags = $(this)
-			.attr('href')
-			?.match(/https?:\/\/([-a-zA-Z0-9@.]+)\/tags?\/([-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+)/)
-		const tagThis = tags ? tags[2] : $(this).attr('data-regTag')
-		if (tagThis) {
-			$(this).attr('href', '#')
-			$(this).attr('onclick', "tagShow('" + tagThis + "', this)")
-		}
-	})
-
 	//トゥートサムネ
 	$(`#timeline_${tlid} .toot a:not(.parsed)`).each(function () {
 		const text = $(this).attr('href')
