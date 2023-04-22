@@ -169,9 +169,18 @@ export function cardCheck(tlid: number) {
 export function mov(id: string, tlid: string, type: string, rand: string, target: Element, acctId: string) {
 	const dropdownTrigger = `dropdown_${rand}`
 	let elm = document.querySelector(`#timeline_${tlid} #${dropdownTrigger}`)
+	let notfIndvColumn : string | undefined = undefined
 	if (tlid === 'notf') {
-		const timeline = $(target).parents('.notf-indv-box').attr('id')
-		elm = document.querySelector(`#${timeline} #${dropdownTrigger}`)
+		const timeline = $(target).parents('.notf-timeline').attr('tlid')
+		if (timeline) {
+			elm = document.querySelector(`#timeline_${timeline} #${dropdownTrigger}`)
+			tlid = timeline
+		} else {
+			const nTlId = $(target).parents('.notf-timeline').attr('id')
+			elm = document.querySelector(`#${nTlId} #${dropdownTrigger}`)
+			notfIndvColumn = nTlId
+		}
+		
 	}
 	if (elm) {
 		const instance = dropdownInitGetInstance(elm)
@@ -180,8 +189,8 @@ export function mov(id: string, tlid: string, type: string, rand: string, target
 
 	let click = false
 	let tlide = `[tlid=${tlid}]`
-	if (tlid === 'notf') {
-		tlide = `[data-notf=${acctId}]`
+	if (notfIndvColumn) {
+		tlide = `#${notfIndvColumn}`
 	} else if (tlid === 'user') {
 		tlide = '#his-data'
 	}

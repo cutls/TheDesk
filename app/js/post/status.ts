@@ -581,11 +581,26 @@ export async function staEx(mode: 'rt' | 'fav' | 'reply') {
 	return
 }
 
-export function toggleAction(id: string) {
-	const trigger = document.getElementById(`trigger_${id}`)
-	const menu = document.getElementById(`dropdown_${id}`)
+export function toggleAction(id: string, target: Element, tlid: string) {
+	const dropdownTrigger = `trigger_${id}`
+	const dropdownContent = `dropdown_${id}`
+	let elmTrigger = document.querySelector(`#timeline_${tlid} #${dropdownTrigger}`)
+	let elmContent = document.querySelector(`#timeline_${tlid} #${dropdownContent}`)
+	if (tlid === 'notf') {
+		const timeline = $(target).parents('.notf-timeline').attr('tlid')
+		if (timeline) {
+			elmTrigger = document.querySelector(`#timeline_${timeline} #${dropdownTrigger}`)
+			elmContent = document.querySelector(`#timeline_${timeline} #${dropdownContent}`)
+		} else {
+			const nTlId = $(target).parents('.notf-timeline').attr('id')
+			elmTrigger = document.querySelector(`#${nTlId} #${dropdownTrigger}`)
+			elmContent = document.querySelector(`#${nTlId} #${dropdownContent}`)
+		}
+	}
+	const trigger = elmTrigger
+	const menu = elmContent
 	if (!trigger || !menu) return
-	if (menu.getAttribute('style')) return
+	if (menu.getAttribute('style')) return console.log(menu)
 	dropdownInit(trigger)
 	const instance = dropdownInitGetInstance(trigger)
 	instance.open()
