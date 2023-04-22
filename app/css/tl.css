@@ -833,7 +833,7 @@ p:not(:last-child) {
 .leadPoll {
 	position: absolute;
 	background-color: var(--subcolor);
-	height: 1.5rem;
+	height: 100%;
 	border-radius: 0.23rem;
 }
 .lpAnime {
