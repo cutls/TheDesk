@@ -300,6 +300,8 @@ async function versionChecker(url: string) {
 					text: lang.lang_manager_codesetup,
 					icon: 'info',
 					showCancelButton: true,
+					confirmButtonText: lang.lang_manager_use,
+					cancelButtonText: lang.lang_manager_notUse,
 				})
 				if (!codeSetupCheck.isConfirmed) return false
 				return true

@@ -1,5 +1,6 @@
 import api from '../common/fetch'
 import lang from '../common/lang'
+import { twemojiParse } from '../platform/first'
 import { pollParse } from './pollParse'
 import $ from 'jquery'
 
@@ -19,7 +20,7 @@ export function pollToggle() {
 		$('#right-side').hide()
 		$('#left-side').css('width', '100%')
 		$('#right-side').css('width', '300px')
-		$('#post-box').css('width', width + 'px')
+		$('#post-box').css('width', widthStr + 'px')
 		$('#emoji').addClass('hide')
 		$('#draft').addClass('hide')
 		$('#poll').addClass('hide')
@@ -94,6 +95,7 @@ export async function voteMastodonrefresh(acctId: string, id: string, target: st
 	if (!json) {
 		return false
 	}
-	const poll = pollParse(json, acctId, json.emojis) || ''
+	const pollRaw = pollParse(json, acctId, json.emojis) || ''
+	const poll = twemojiParse(pollRaw)
 	$(`#vote${target}`).html(poll)
 }

@@ -4,7 +4,7 @@ import lang from '../common/lang'
 import { date, isDateType } from './date'
 import _ from 'lodash'
 import { Emoji, Poll } from '../../interfaces/MastodonApiReturns'
-import { escapeHTML, twemojiParse } from '../platform/first'
+import { escapeHTML } from '../platform/first'
 import { customEmojiReplace } from './parse'
 const datetype = localStorage.getItem('datetype') || 'absolute'
 const anime = localStorage.getItem('animation')
@@ -73,7 +73,6 @@ export function pollParse(poll: Poll, acctId: string, emojis: Emoji[]) {
 		}
 		let choiceText = escapeHTML(choice.title)
 		if (emojis) choiceText = customEmojiReplace(choiceText, { emojis }, gif)
-		choiceText = twemojiParse(choiceText)
 		pollHtml =
 			pollHtml +
 			`<div class="${voteclass} vote vote_${acctId}_${poll.id}_${keyc}" onclick="${votesel}">

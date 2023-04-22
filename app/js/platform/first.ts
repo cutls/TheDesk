@@ -30,6 +30,7 @@ async function init() {
 	if (globalThis.pwa && localStorage.getItem('v24Accepted') === 'true') localStorage.removeItem('v24Accepted')
 	if (!globalThis.pwa && localStorage.getItem('v24Accepted') === 'true') await migrate(true)
 	if (globalThis.pwa) $('.hideOnlyPwa').removeClass('hide')
+	if (!localStorage.getItem('v24Accepted') && !localStorage.getItem('ver')) localStorage.setItem('v24Accepted', 'true')
 	if (!localStorage.getItem('v24Accepted') && localStorage.getItem('ver')) return $('#v24Note').removeClass('hide')
 	if (globalThis.useLang === 'ja' || globalThis.useLang === 'ja-KS') $('.onlyJa').removeClass('hide')
 	initPostbox()
@@ -82,6 +83,9 @@ async function init() {
 
 const size = localStorage.getItem('size')
 if (size) $('html,body').css('font-size', `${size}px`)
+const clickActionValue = localStorage.getItem('mouseover')
+const clickAction = clickActionValue === 'yes' || clickActionValue === 'click'
+if (clickAction) $('body').addClass('mouseover')
 export const stripTags = function (str: string, allowed?: string) {
 	if (!str) {
 		return ''

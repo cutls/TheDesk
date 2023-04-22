@@ -7,7 +7,7 @@ import { addToDraft, cw, draftToggle, isIVis, IVis, loadVis, schedule } from './
 import { todc, todo } from '../ui/tips'
 import { StatusTheDeskExtend } from '../../interfaces/MastodonApiRequests'
 import { formatTimeUtc } from '../platform/first'
-import { formSelectInit, toast } from '../common/declareM'
+import { characterCounterInit, formSelectInit, toast } from '../common/declareM'
 import api from '../common/fetch'
 import { alertProcessUnfinished } from './img'
 import { pollCalc } from '../tl/poll'
@@ -25,7 +25,7 @@ export function sec() {
 	}
 	post(mode)
 }
-export async function post(postVis?: IVis, dry?: boolean) {
+export async function post(postVis?: IVis, dry?: boolean, tagClear?: boolean ) {
 	if (!navigator.onLine && !dry) {
 		draftToggle(true)
 		addToDraft()
@@ -46,8 +46,8 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		ideKey = Math.floor(Date.now() / 1000) + '/TheDesk/' + user + '@' + domain
 		$('#ideKey').val(ideKey)
 	}
-	const cw_sent = localStorage.getItem('cw_sentence') || 500
-	const cw_ltres = localStorage.getItem('cw_letters') || 7000
+	const cw_sent = parseInt(localStorage.getItem('cw_sentence') || '500', 10) || 500
+	const cw_ltres = parseInt(localStorage.getItem('cw_letters') || '7000', 10) || 7000
 	if (!$('#cw').hasClass('cw-avail') && (str.length > cw_sent || str.split('\n').length - 1 > cw_ltres)) {
 		const plus = str.replace(/\n/g, '').slice(0, 10) + '...'
 		const result = await Swal.fire({
@@ -74,14 +74,21 @@ export async function post(postVis?: IVis, dry?: boolean) {
 	const editTarget = $('#tootmodal').attr('data-edit')
 	if (editTarget) start = start + `/${editTarget}`
 	const reply = $('#reply').val()
-	const stable = localStorage.getItem('stable')
-	if (stable && !str.match(stable)) str = `${str} #${stable}`
+	const stable = JSON.parse(localStorage.getItem('stable') || '[]')
+	for (const tag of stable){
+		if (tagClear){
+			str = str.replace(new RegExp(`(\\s#${tag}\\s)`, 'g'), ' ').replace(new RegExp(`(^#${tag}\\s|\\s#${tag}$|^#${tag}$)`, 'g'), '')
+		} else {
+			if (!str.match(tag)) str = `${str} #${tag}`
+		}
+	}
 	const toot: StatusTheDeskExtend = {
 		status: str,
 	}
 	if (reply) toot.in_reply_to_id = reply.toString()
 	const media = $('#media').val()?.toString()
 	if (media) toot.media_ids = media.split(',')
+	if (media && !str) return
 	const quote = $('#quote').val()?.toString()
 	if (quote) toot.quote_id = quote
 	if ($('#nsfw').hasClass('nsfw-avail')) toot.sensitive = true
@@ -157,9 +164,9 @@ export async function post(postVis?: IVis, dry?: boolean) {
 		clear()
 	} catch (e: any) {
 		console.error(e)
+		$('#ideKey').val('')
+		$('.toot-btn-group').prop('disabled', false)
 		if (media && e === 422) {
-			$('#ideKey').val('')
-			$('.toot-btn-group').prop('disabled', false)
 			alertProcessUnfinished()
 			return
 		}
@@ -179,12 +186,14 @@ export function expPostMode() {
 		})
 	}
 }
-//クリア(Shift+C)
-export function clear() {
+//クリア(Shift+C,Alt+Shift+C:Alt+Shift+Cの場合は実況タグをセットしない)
+export function clear(clearTags?: boolean) {
 	$('#textarea').val('')
 	$('#ideKey').val('')
-	if (localStorage.getItem('stable')) {
-		$('#textarea').val('#' + localStorage.getItem('stable') + ' ')
+	const stable = JSON.parse(localStorage.getItem('stable') || '[]')
+	if (!clearTags && stable.length) {
+		const tags = `#${stable.join(' #')} `
+		$('#textarea').val(tags)
 	}
 	$('#textarea').attr('placeholder', lang.lang_toot)
 	$('#reply').val('')
@@ -243,5 +252,6 @@ export function clear() {
 	const width = parseInt((localStorage.getItem('postbox-width') || '300px').replace('px', ''), 10)
 	$('#post-box').css('width', width)
 	$('#tootmodal').attr('data-edit', null)
+	characterCounterInit($('#textarea'))
 	mdCheck()
 }

@@ -109,7 +109,7 @@ option {
 	margin-left: 0.4rem !important;
 }
 .unvisible {
-	opacity: 0;
+	visibility: hidden;
 }
 .bbcode-pulse-loadings,
 .bbcode-pulse-loading,

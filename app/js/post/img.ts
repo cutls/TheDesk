@@ -265,7 +265,7 @@ export function pwaImgSelect() {
 }
 export async function deleteImage(key: string) {
 	const result = await Swal.fire({
-		title: lang.lang_postimg_delete,
+		title: lang.lang_postimg_delConfirm,
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonText: lang.lang_yesno,

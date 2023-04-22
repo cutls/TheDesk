@@ -180,7 +180,7 @@ export async function muteThread(id: string, acctId: string) {
 		$(`.cvo[unique-id=${id}] .threadMute`).removeClass('inMute')
 		$(`.cvo[unique-id=${id}] .threadMute`).html(`<i class="material-icons">voice_over_off</i>${lang.lang_status_muteThread}`)
 	}
-	
+
 }
 
 export async function acctResolve(acctId: string, user: string) {
@@ -257,9 +257,9 @@ export async function block(acctId: string) {
 //ミュート
 export async function muteDo(acctId: string) {
 	if (!acctId) acctId = $('#his-data').attr('use-acct') || ''
-	const isBlock = $('#his-data').hasClass('muting')
-	const flag = isBlock ? 'unmute' : 'mute'
-	const txt = isBlock ? lang.lang_status_unmute : lang.lang_status_mute
+	const isMute = $('#his-data').hasClass('muting')
+	const flag = isMute ? 'unmute' : 'mute'
+	const txt = isMute ? lang.lang_status_unmute : lang.lang_status_mute
 	const result = await Swal.fire({
 		title: txt,
 		text: '',
@@ -291,18 +291,32 @@ export async function muteDo(acctId: string) {
 			},
 			body: q,
 		})
-		if ($('#his-data').hasClass('blocking')) {
-			$('#his-data').removeClass('blocking')
-			$('#his-block-btn-text').text(lang.lang_status_block)
+		if ($('#his-data').hasClass('muting')) {
+			$('#his-data').removeClass('muting')
+			$('#his-mute-btn-text').text(lang.lang_status_mute)
+			$('#his-mute-btn').text(lang.lang_status_mute)
 		} else {
-			$('#his-data').addClass('blocking')
-			$('#his-block-btn-text').text(lang.lang_status_unblock)
+			$('#his-data').addClass('muting')
+			$('#his-mute-btn-text').text(lang.lang_status_unmute)
+			$('#his-mute-btn').text(lang.lang_status_unmute)
 		}
+		muteMenu()
 	}
 }
 export function muteMenu() {
 	$('#muteDuration').toggleClass('hide')
-	!$('#muteDuration').hasClass('hide') ? $('#his-des').css('max-height', '0px') : $('#his-des').css('max-height', '196px')
+	if (!$('#muteDuration').hasClass('hide')){
+		$('#his-des').css('max-height', '0px') 
+	} else {
+		$('#his-des').css('max-height', '196px')
+	}
+	if (!$('#his-data').hasClass('muting')) {
+		$('#his-mute-btn-text').text(lang.lang_status_mute)
+		$('#his-mute-btn').text(lang.lang_status_mute)
+	} else {
+		$('#his-mute-btn-text').text(lang.lang_status_unmute)
+		$('#his-mute-btn').text(lang.lang_status_unmute)
+	}
 }
 export function muteTime(day: number, hour: number, min: number) {
 	$('#days_mute').val(day)
@@ -342,17 +356,26 @@ export async function redraft(id: string, acctId: string) {
 }
 // edit
 export async function editToot(id: string, acctId: string) {
-	show()
 	const domain = localStorage.getItem(`domain_${acctId}`)
 	const at = localStorage.getItem(`acct_${acctId}_at`)
-	const start = `https://${domain}/api/v1/statuses/${id}/source`
-	const json = await api(start, {
+	const sourceStart = `https://${domain}/api/v1/statuses/${id}/source`
+	const sourceJson = await api(sourceStart, {
 		method: 'get',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: 'Bearer ' + at,
 		},
 	})
+	const { text } = sourceJson
+	const start = `https://${domain}/api/v1/statuses/${id}`
+	const json = await api<Toot>(start, {
+		method: 'get',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: 'Bearer ' + at,
+		},
+	})
+	json.text = text
 	draftToPost(json, acctId, id)
 }
 
@@ -369,7 +392,7 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 		for (let i = 0; i <= 4; i++) {
 			if (!json.media_attachments[i]) break
 			media_ids.push(json.media_attachments[i].id)
-			$('#preview').append(`<img src="${json.media_attachments[i].preview_url}" style="width:50px; max-height:100px;">`)
+			$('#preview').append(`<img src="${json.media_attachments[i].preview_url}" style="width:50px; max-height:100px;" data-acct="${acctId}" data-media="${json.media_attachments[i].id}" oncontextmenu="deleteImage('${json.media_attachments[i].id}')" title="${lang.lang_postimg_delete}">`)
 		}
 	}
 	const visMode = json.visibility
@@ -378,7 +401,7 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 	$('#media').val(medias)
 	localStorage.setItem('nohide', 'true')
 	show()
-	const html = json.text || json.content
+	const html = json.text || json.content.replace(/<br \/>/gi,'\r\n').replace(/(<([^>]+)>)/gi, '')
 	$('#textarea').val(html)
 	if (json.spoiler_text) {
 		cw(true)
@@ -581,8 +604,27 @@ export async function staEx(mode: 'rt' | 'fav' | 'reply') {
 	return
 }
 
-export function toggleAction(elm: NodeListOf<Element> | HTMLElement | JQuery<HTMLElement>) {
-	dropdownInit(elm)
-	const instance = dropdownInitGetInstance(elm)
+export function toggleAction(id: string, target: Element, tlid: string) {
+	const dropdownTrigger = `trigger_${id}`
+	const dropdownContent = `dropdown_${id}`
+	let elmTrigger = document.querySelector(`#timeline_${tlid} #${dropdownTrigger}`)
+	let elmContent = document.querySelector(`#timeline_${tlid} #${dropdownContent}`)
+	if (tlid === 'notf') {
+		const timeline = $(target).parents('.notf-timeline').attr('tlid')
+		if (timeline) {
+			elmTrigger = document.querySelector(`#timeline_${timeline} #${dropdownTrigger}`)
+			elmContent = document.querySelector(`#timeline_${timeline} #${dropdownContent}`)
+		} else {
+			const nTlId = $(target).parents('.notf-timeline').attr('id')
+			elmTrigger = document.querySelector(`#${nTlId} #${dropdownTrigger}`)
+			elmContent = document.querySelector(`#${nTlId} #${dropdownContent}`)
+		}
+	}
+	const trigger = elmTrigger
+	const menu = elmContent
+	if (!trigger || !menu) return
+	if (menu.getAttribute('style')) return console.log(menu)
+	dropdownInit(trigger)
+	const instance = dropdownInitGetInstance(trigger)
 	instance.open()
 }

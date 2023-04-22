@@ -49,7 +49,7 @@ if (!gotTheLock) {
 	app.on('second-instance', (event, commandLine) => {
 		if (!mainWindow) return
 		opening = false
-		const m = commandLine[2].match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=(.+)/)
+		const m = commandLine[2].match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=([^&]+)/)
 		if (m) {
 			mainWindow.webContents.send('customUrl', [m[1], m[2]])
 		}
@@ -64,7 +64,7 @@ app.on('window-all-closed', function () {
 app.on('open-url', function (event, url) {
 	if (!mainWindow) return
 	event.preventDefault()
-	const m = url.match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=(.+)/)
+	const m = url.match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=([^&]+)/)
 	if (m) {
 		mainWindow.webContents.send('customUrl', [m[1], m[2]])
 	}
@@ -150,17 +150,21 @@ function createWindow() {
 	}
 	let webviewEnabled = false
 	if (fs.existsSync(wv_path)) webviewEnabled = true
-	let window_size: IWindow = {
+	const initWindowSize: IWindow = {
 		width: 1000,
 		height: 750,
 		x: null,
 		y: null,
 		max: false
 	}
+	let windowSize: IWindow = initWindowSize
 	if (fs.existsSync(info_path)) {
 		const info = fs.readFileSync(info_path, 'utf8').toString() || '{}'
 		if (JSON.parse(info)) {
-			window_size = JSON.parse(info)
+			windowSize = JSON.parse(info)
+			if(windowSize.width < 256 || windowSize.height < 256){
+				windowSize = initWindowSize
+			}
 		}
 	}
 
@@ -175,10 +179,10 @@ function createWindow() {
 			sandbox: false,
 			preload: join(homeDir, 'js', 'platform', 'preload.js'),
 		},
-		width: window_size.width || 1000,
-		height: window_size.height || 750,
-		x: window_size.x || undefined,
-		y: window_size.y || undefined,
+		width: windowSize.width || 1000,
+		height: windowSize.height || 750,
+		x: windowSize.x || undefined,
+		y: windowSize.y || undefined,
 		show: false,
 	}
 	if (platform === 'linux') {
@@ -194,7 +198,7 @@ function createWindow() {
 		if (!mainWindow) return
 		mainWindow.show()
 		console.log('Accessibility: ' + app.accessibilitySupportEnabled)
-		if (window_size.max) {
+		if (windowSize.max) {
 			mainWindow.maximize()
 		}
 	})
@@ -235,7 +239,7 @@ function createWindow() {
 		ua = 'Mastodon client: ' + crypto.randomBytes(N).toString('base64').substring(0, N)
 	}
 	mainWindow.loadURL(base + lang + '/index.html' + plus, { userAgent: ua })
-	if (!window_size.x && !window_size.y) {
+	if (!windowSize.x && !windowSize.y) {
 		mainWindow.center()
 	}
 	// ウィンドウが閉じられたらアプリも終了

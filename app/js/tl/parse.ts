@@ -168,7 +168,10 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				}
 			}
 		}
-		if (type === 'pinned') boostback = 'emphasized'
+		if (type === 'pinned') {
+			locked = locked + ` <i class="fas fa-thumb-tack red-text"></i>`
+			boostback = 'emphasized'
+		}
 		let spoil = ''
 		let spoiler = ''
 		let apiSpoil = ''
@@ -295,7 +298,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				if (mention.acct !== mention.username || mention.id !== me) {
 					//そのトゥの人NG
 					if (toot.account.acct !== mention.acct) {
-						mentions = mentions + `<a onclick="udg('${mention.id}',' ${acctId}')" class="pointer" aria-hidden="true">@${mention.acct}</a> `
+						mentions = mentions + `<a onclick="udg('${mention.id}','${acctId}')" class="pointer" aria-hidden="true">@${mention.acct}</a> `
 						toMention.push(mention.acct)
 					}
 				}
@@ -520,6 +523,8 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 					id="pub_${toot.id}"
 					class="cvo ${mouseover} ${boostback} ${favApp} ${rtApp} ${pinApp} ${bkmApp} ${hasmedia} ${animecss}"
 					toot-id="${id}" unique-id="${uniqueid}" data-medias="${media_ids}" unixtime="${date(obj[key].created_at, 'unix')}"
+					onmouseover="mov('${uniqueid}','${tlid}','mv', '${rand}', this, '${acctId}')"
+					onmouseout="resetmv('mv')"
 					${ifNotf}
 				>
 				<div class="area-notice grid"><span class="gray sharesta">${noticeText}</span></div>
@@ -533,7 +538,9 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				<div class="area-display_name grid">
 					<div class="flex-name">
 						<span class="user">${disName}</span>
-						<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;">
+						<span class="sml gray" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis; cursor:text;"
+							title="@${toot.account.acct}"
+						>
 							@${toot.account.acct}${locked}
 						</span>
 					</div>
@@ -551,9 +558,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 						${spoilerShow}
 					</span>
 					<div class="toot ${spoiler}"
-						onmouseover="mov('${uniqueid}','${tlid}','mv', '${rand}', this, '${acctId}')"
 						onclick="mov('${uniqueid}','${tlid}','cl', '${rand}', this, '${acctId}')"
-						onmouseout="resetmv('mv')"
 					>${content}</div>
 					${poll}${viewer}
 				</div>
@@ -561,75 +566,77 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 					<span class="additional">${analyze}</span>
 					${mentions}
 				</div>
-				<div class="area-vis grid">${vis}</div>
-				<div class="area-actions grid">
-					<div class="action ${antiNoAuth}">
-						<a onclick="detEx('${toot.url}','main')" class="waves-effect waves-dark details" style="padding:0; white-space: nowrap;">
-							${lang.lang_parse_det}
+				<div class="area-bottoms">
+					<div class="area-vis grid">${vis}</div>
+					<div class="area-actions grid">
+						<div class="action ${antiNoAuth}">
+							<a onclick="detEx('${toot.url}','main')" class="waves-effect waves-dark details" style="padding:0; white-space: nowrap;">
+								${lang.lang_parse_det}
+							</a>
+						</div>
+						<div class="action ${antiDmHide}">
+							<a onclick="details('${toot.id}','${acctId}','${tlid}')" 
+								class="waves-effect waves-dark details" style="padding:0">
+								${lang.lang_parse_thread}
+							</a>
+						</div>
+						<div class="action ${disp.re} ${noAuth}">
+							<a onclick="re('${toot.id}','${toMention}','${acctId}','${visEn}','${escapeHTML(toot.spoiler_text)}')" 
+								class="waves-effect waves-dark btn-flat actct rep-btn"
+								data-men="${toMention}" data-visEn="${visEn}" style="padding:0" title="${lang.lang_parse_replyto}">
+									<i class="fas fa-share"></i>
+									<span class="voice">${lang.lang_parse_replyto} </span>
+									<span class="rep_ct">${replyct}</span>
+							</a>
+						</div>
+						<div class="action ${canRt} ${disp.rt} ${noAuth}">
+							<a onclick="rt('${toot.id}','${acctId}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
+								style="padding:0" title="${lang.lang_parse_bt}">
+								<i class="fas fa-retweet ${ifRt} rt_${toot.id}"></i>
+								<span class="voice">${lang.lang_parse_bt} </span>
+								<span class="rt_ct">${toot.reblogs_count}</span>
+							</a>
+						</div>
+						<div class="action ${disp.qt} ${noAuth} ${qtClass}">
+							<a onclick="qt('${toot.id}','${acctId}','${toot.account.acct}','${toot.url}')" 
+								class="waves-effect waves-dark btn-flat actct" style="padding:0" title="${lang.lang_parse_quote}">
+								<i class="text-darken-3 fas fa-quote-right"></i>
+								<span class="voice">${lang.lang_parse_quote} </span>
+							</a>
+						</div>
+						<div class="action ${disp.bkm} ${noAuth} ${bkmClass}">
+							<a onclick="bkm('${toot.id}','${acctId}','${tlid}')"
+								class="waves-effect waves-dark btn-flat actct bkm-btn" style="padding:0"
+								title="${lang.lang_parse_bookmark}">
+								<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${ifBkm}"></i>
+								<span class="voice">${lang.lang_parse_bookmark} </span>
 						</a>
+						</div>
+						<div class="action ${disp.fav} ${noAuth}">
+							<a onclick="fav('${uniqueid}','${acctId}')"
+								class="waves-effect waves-dark btn-flat actct fav-btn" style="padding:0"
+								title="${lang.lang_parse_fav}">
+								<i class="fas text-darken-3 fa-star${ifFav} fav_${uniqueid}"></i>
+								<span class="fav_ct">${toot.favourites_count}</span>
+								<span class="voice">${lang.lang_parse_fav} </span>
+							</a>
+						</div>
 					</div>
-					<div class="action ${antiDmHide}">
-						<a onclick="details('${toot.id}','${acctId}','${tlid}')" 
-							class="waves-effect waves-dark details" style="padding:0">
-							${lang.lang_parse_thread}
-						</a>
-					</div>
-					<div class="action ${disp.re} ${noAuth}">
-						<a onclick="re('${toot.id}','${toMention}','${acctId}','${visEn}','${escapeHTML(toot.spoiler_text)}')" 
-							class="waves-effect waves-dark btn-flat actct rep-btn"
-							data-men="${toMention}" data-visEn="${visEn}" style="padding:0" title="${lang.lang_parse_replyto}">
-								<i class="fas fa-share"></i>
-								<span class="voice">${lang.lang_parse_replyto} </span>
-								<span class="rep_ct">${replyct}</span>
-						</a>
-					</div>
-					<div class="action ${canRt} ${disp.rt} ${noAuth}">
-						<a onclick="rt('${toot.id}','${acctId}','${tlid}')" class="waves-effect waves-dark btn-flat actct bt-btn"
-							style="padding:0" title="${lang.lang_parse_bt}">
-							<i class="fas fa-retweet ${ifRt} rt_${toot.id}"></i>
-							<span class="voice">${lang.lang_parse_bt} </span>
-							<span class="rt_ct">${toot.reblogs_count}</span>
-						</a>
-					</div>
-					<div class="action ${canRt} ${disp.qt} ${noAuth} ${qtClass}">
-						<a onclick="qt('${toot.id}','${acctId}','${toot.account.acct}','${toot.url}')" 
-							class="waves-effect waves-dark btn-flat actct" style="padding:0" title="${lang.lang_parse_quote}">
-							<i class="text-darken-3 fas fa-quote-right"></i>
-							<span class="voice">${lang.lang_parse_quote} </span>
-						</a>
-					</div>
-					<div class="action ${disp.bkm} ${noAuth} ${bkmClass}">
-						<a onclick="bkm('${toot.id}','${acctId}','${tlid}')"
-							class="waves-effect waves-dark btn-flat actct bkm-btn" style="padding:0"
-							title="${lang.lang_parse_bookmark}">
-							<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${ifBkm}"></i>
-							<span class="voice">${lang.lang_parse_bookmark} </span>
-					</a>
-					</div>
-					<div class="action ${disp.fav} ${noAuth}">
-						<a onclick="fav('${uniqueid}','${acctId}')"
-							class="waves-effect waves-dark btn-flat actct fav-btn" style="padding:0"
-							title="${lang.lang_parse_fav}">
-							<i class="fas text-darken-3 fa-star${ifFav} fav_${uniqueid}"></i>
-							<span class="fav_ct">${toot.favourites_count}</span>
-							<span class="voice">${lang.lang_parse_fav} </span>
-						</a>
-					</div>
-				</div>
-				<div class="area-side">
-					<div class="action ${noAuth}">
-						<a onclick="toggleAction(this)" data-target="dropdown_${rand}"
-							class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0" id="trigger_${rand}">
-							<i class="text-darken-3 material-icons act-icon" aria-hidden="true">expand_more</i>
-							<span class="voice">Other actions</span>
-						</a>
-					</div>
-					<div class="action ${noAuth}">
-						<a onclick="details('${toot.id}','${acctId}','${tlid}')"
-							class="waves-effect waves-dark btn-flat details ${dmHide}" style="padding:0"
-							title="${lang.lang_parse_detail}">
-						<i class="text-darken-3 material-icons" aria-hidden="true">menu_open</i></a>
-						<span class="voice">${lang.lang_parse_detail}</span>
+					<div class="area-side">
+						<div class="action ${noAuth}">
+							<a onclick="toggleAction('${rand}', this, '${tlid}')" data-target="dropdown_${rand}"
+								class="ctxMenu waves-effect waves-dark btn-flat" style="padding:0" id="trigger_${rand}">
+								<i class="text-darken-3 material-icons act-icon" aria-hidden="true">expand_more</i>
+								<span class="voice">Other actions</span>
+							</a>
+						</div>
+						<div class="action ${noAuth}">
+							<a onclick="details('${toot.id}','${acctId}','${tlid}')"
+								class="waves-effect waves-dark btn-flat details ${dmHide}" style="padding:0"
+								title="${lang.lang_parse_detail}">
+							<i class="text-darken-3 material-icons" aria-hidden="true">menu_open</i></a>
+							<span class="voice">${lang.lang_parse_detail}</span>
+						</div>
 					</div>
 				</div>
 				<ul class="dropdown-content contextMenu" id="dropdown_${rand}" tabIndex="0">

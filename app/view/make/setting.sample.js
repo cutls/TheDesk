@@ -305,7 +305,7 @@ export const tlConstruction = [
 		setValue: 'no',
 		text: {
 			head: '@@mouseover@@',
-			desc: '@@mouseoverwarn@@',
+			desc: '',
 			checkbox: [
 				{
 					text: '@@mv@@',
