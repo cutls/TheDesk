@@ -298,7 +298,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 				if (mention.acct !== mention.username || mention.id !== me) {
 					//そのトゥの人NG
 					if (toot.account.acct !== mention.acct) {
-						mentions = mentions + `<a onclick="udg('${mention.id}',' ${acctId}')" class="pointer" aria-hidden="true">@${mention.acct}</a> `
+						mentions = mentions + `<a onclick="udg('${mention.id}','${acctId}')" class="pointer" aria-hidden="true">@${mention.acct}</a> `
 						toMention.push(mention.acct)
 					}
 				}
