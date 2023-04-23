@@ -195,9 +195,14 @@
 #hisdropdown {
     background-color: var(--bg);
 }
+#hisdropdown li {
+	padding-top: 0;
+	height: 2.5rem;
+    line-height: 2.5rem;
+}
 #hisdropdown .material-icons {
-    font-size: 1.1rem;
-    margin-right: 0;
+    font-size: 1.5rem;
+    margin-right: 0rem;
 }
 
 

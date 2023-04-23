@@ -622,7 +622,7 @@ export function toggleAction(id: string, target: Element, tlid: string) {
 	} else if (tlid === 'user') {
 		elmTrigger = document.querySelector(`#his-data #${dropdownTrigger}`)
 		elmContent = document.querySelector(`#his-data #${dropdownContent}`)
-	} else if (!parseInt(tlid, 10)) {
+	} else if (isNaN(parseInt(tlid, 10))) {
 		elmTrigger = document.querySelector(`#${tlid} #${dropdownTrigger}`)
 		elmContent = document.querySelector(`#${tlid} #${dropdownContent}`)
 	}

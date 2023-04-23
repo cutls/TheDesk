@@ -799,6 +799,9 @@ p:not(:last-child) {
 .dropdown-content {
     background-color: var(--bottom);
 }
+.dropdown-content.darken {
+    background-color: var(--bg);
+}
 
 .dropdown-content li span, .dropdown-content li a {
     color: var(--text);
@@ -811,13 +814,18 @@ p:not(:last-child) {
     background-color: var(--active);
 }
 .dropdown-content li {
-	padding-top: 0.4rem;
 	color: var(--text);
 }
 .dropdown-content li > a, .dropdown-content li > span {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.dropdown-content li:hover .material-icons, .dropdown-content li:hover .fas {
+    filter: grayscale(0);
+}
+.dropdown-content .material-icons, .dropdown-content li .fas {
+    filter: grayscale(1);
 }
 .fa-2x > .emoji-img {
 	width: 2.3rem !important;
