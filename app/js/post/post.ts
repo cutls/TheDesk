@@ -12,6 +12,7 @@ import api from '../common/fetch'
 import { alertProcessUnfinished } from './img'
 import { pollCalc } from '../tl/poll'
 import { hide, mdCheck } from '../ui/postBox'
+import { idata } from '../login/instance'
 
 export function sec() {
 	const modeRaw: string | null = localStorage.getItem('sec')
@@ -96,7 +97,7 @@ export async function post(postVis?: IVis, dry?: boolean, tagClear?: boolean ) {
 	if (!isIVis(vis)) return
 	if (vis !== 'inherit' && vis !== 'local') {
 		toot.visibility = vis
-	} else if (vis === 'local') {
+	} else if (vis === 'local' && idata[domain + '_glitch']) {
 		toot.status = str + '👁️'
 	}
 	if ($('#cw').hasClass('cw-avail')) {

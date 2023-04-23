@@ -106,7 +106,7 @@ import {
 	colorAddMulti,
 	colorAdd,
 } from './ui/layout'
-import { menu, help } from './ui/menu'
+import { menu, help, keyShortcut } from './ui/menu'
 import { hide, mini, show, initPostbox, mdCheck } from './ui/postBox'
 import { scrollEvent, scrollCk, goTop, goColumn } from './ui/scroll'
 import {
@@ -415,6 +415,7 @@ globalThis.leftFoldRemove = leftFoldRemove
 globalThis.resetWidth = resetWidth
 globalThis.menu = menu
 globalThis.help = help
+globalThis.keyShortcut = keyShortcut
 globalThis.hide = hide
 globalThis.mini = mini
 globalThis.show = show

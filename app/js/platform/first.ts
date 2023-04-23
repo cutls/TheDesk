@@ -18,6 +18,8 @@ import { voiceSettingLoad } from '../tl/speech'
 import { configLoad, climute, ctLoad, oksload, pluginLoad, wordemp, wordmute } from '../ui/settings'
 import { checkSpotify } from '../ui/spotify'
 import { migrate } from './migrate'
+import { getMulti } from '../common/storage'
+import { idata } from '../login/instance'
 // Migrator: tagのnameだけから、any/none等対応の形にするのと、any, noneがstringになってるのをarrayにする
 // 独自ロケールを削除
 // wordmuteListにtagとかいう要素がある
@@ -66,19 +68,34 @@ async function init() {
 			})
 		}, 2000)
 	}
+
+	const isDarwin = localStorage.getItem('platform') === 'darwin'
+	if (isDarwin) {
+		$('.shift').text('⇧')
+		$('.ctrl').text('⌘')
+		$('.alt').text('⌥')
+		$('.esc').text('esc')
+		$('.enter').text('↩')
+		$('.tab').text('⇥')
+	}
+	const obj = getMulti()
+	const finder = obj.find((o) => idata[o.domain + '_glitch'])
+	if (finder) $('.onlyGlitch').removeClass('hide')
 	const onSetting = !!document.getElementById('envView')
-	if (!onSetting) return
-	//最初に読む
-	configLoad()
-	climute()
-	wordmute()
-	wordemp()
-	checkSpotify()
-	voiceSettingLoad()
-	oksload()
-	ctLoad()
-	pluginLoad()
-	$('body').addClass(localStorage.getItem('platform') || 'win')
+	if (onSetting) {
+		//最初に読む
+		configLoad()
+		climute()
+		wordmute()
+		wordemp()
+		checkSpotify()
+		voiceSettingLoad()
+		oksload()
+		ctLoad()
+		pluginLoad()
+		$('body').addClass(localStorage.getItem('platform') || 'win')
+	}
+
 }
 
 const size = localStorage.getItem('size')

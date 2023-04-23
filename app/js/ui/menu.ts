@@ -1,9 +1,9 @@
 import $ from 'jquery'
 declare let jQuery
-export function menu() {
+export function menu(forceOpen?: boolean) {
 	localStorage.setItem('menu-done', 'true')
 	$('#fukidashi').addClass('hide')
-	if (!$('#menu').hasClass('appear')) {
+	if (!$('#menu').hasClass('appear') || forceOpen) {
 		$('#menu').addClass('appear')
 		const bodyWidth = $('body').width() || 0
 		const bodyHeight = $('body').height() || 0
@@ -82,4 +82,10 @@ export function help() {
 	$('.menu-content').addClass('hide')
 	$('#help-box').removeClass('hide')
 	postMessage(['sendSinmpleIpc', 'getLogs'], '*')
+}
+export function keyShortcut() {
+	$('#left-menu a').removeClass('active')
+	$('#ksMenu').addClass('active')
+	$('.menu-content').addClass('hide')
+	$('#ks-box').removeClass('hide')
 }

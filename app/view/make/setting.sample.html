@@ -459,13 +459,13 @@
                     </template>
                 </div>
                 <h5>@@iks@@</h5>
-                @@okswarn@@<br> Ctrl+Shift+1:
+                @@okswarn@@<br> <span class="ctrl">Ctrl</span>+<span class="shift">Shift</span>+1:
                 <input type="text" style="width:11.5rem" id="oks-1">
                 <button onclick="oks(1)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
-                Ctrl+Shift+2:
+                <span class="ctrl">Ctrl</span>+<span class="shift">Shift</span>+2:
                 <input type="text" style="width:11.5rem" id="oks-2">
                 <button onclick="oks(2)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
-                Ctrl+Shift+3:
+                <span class="ctrl">Ctrl</span>+<span class="shift">Shift</span>+3:
                 <input type="text" style="width:11.5rem" id="oks-3">
                 <button onclick="oks(3)" class="btn waves-effect" style="width:7.7rem;">@@set@@</button><br><br>
 
@@ -616,25 +616,8 @@
     <br>
     <a href="index.html" class="btn waves-effect orange nex" style="width:100%; max-width:15rem;"><i
             class="material-icons left">undo</i>@@back@@</a>
-    <br>
-    <br>@@keyscs@@
-    <li>Ctrl+1-9:@@keyscr@@</li>
-    <li>N:@@keynew@@</li>
-    <li>X:@@keytoggle@@</li>
-    <li>Ctrl+Enter:@@keypost@@</li>
-    <li>Ctrl+Enter+Shift:@@keysecpost@@</li>
-    <li>Alt+Enter:@@secondary@@</li>
-    <li>Ctrl+E:@@keyunread@@</li>
-    <li>Ctrl+U:@@keyselecttop@@</li>
-    <li>Esc:@@keyesc@@</li>
-    <li>F5:@@keyf5@@</li>
-    <li>Ctrl+Shift+C:@@keyclear@@</li>
-    <li>Ctrl+Shift+S:@@setting@@</li>
-    <li>Ctrl+Shift+M:@@keyacctman@@</li>
-    <li>Ctrl+Shift+N:NowPlaying(Spotify)</li>
-    <li>Ctrl+Shift+P:@@keyshowprof@@</li>
-    <li>←/→:@@keyrow@@</li>
-    <li>@@keyzoom@@</li>
+    <br />
+    <p>@@keyScsMoved@@</p>
     <button class="btn waves-effect red" style="width:100%; max-width:40rem;"
         onclick="if(confirm('@@resetconfirm@@')){ localStorage.clear(); location.href='index.html'; }"><i
             class="material-icons left">delete</i>@@reset@@</button><br><br>

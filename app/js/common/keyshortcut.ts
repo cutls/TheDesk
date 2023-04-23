@@ -11,7 +11,7 @@ import { re } from '../post/useTxtBox'
 import { isIVis } from '../post/secure'
 import { hide, show } from '../ui/postBox'
 import { nowplaying } from '../ui/spotify'
-import { menu } from '../ui/menu'
+import { keyShortcut, menu } from '../ui/menu'
 import { parseColumn } from '../ui/layout'
 import { profShow } from '../userdata/showOnTL'
 import { imgCont } from '../ui/img'
@@ -116,12 +116,7 @@ export function initKeyboard() {
 			if (e.metaKey || e.ctrlKey) {
 				if (e.keyCode === 86) {
 					show()
-				}
-			}
-			//Ctrl+F:検索
-			if (e.metaKey || e.ctrlKey) {
-				if (e.keyCode === 70) {
-					srcBox('toggle')
+					document.getElementById('textarea')?.focus()
 				}
 			}
 			//X:開閉
@@ -157,28 +152,26 @@ export function initKeyboard() {
 					return false
 				}
 			}
-			//Ctrl+Space:読み込み
-			if (e.metaKey || e.ctrlKey) {
-				if (e.keyCode === 32) {
-					parseColumn()
-					return false
-				}
+			//?: キーボードショートカット一覧
+			if (e.key === '?') {
+				menu()
+				keyShortcut()
 			}
-			//Ctrl+Sift+S:設定
+			//Ctrl+Shift+S:設定
 			if ((e.metaKey || e.ctrlKey) && e.shiftKey) {
 				if (e.keyCode === 83) {
 					location.href = 'setting.html'
 					return false
 				}
 			}
-			//Ctrl+Sift+M:アカマネ
+			//Ctrl+Shift+M:アカマネ
 			if ((e.metaKey || e.ctrlKey) && e.shiftKey) {
 				if (e.keyCode === 77) {
 					location.href = 'acct.html'
 					return false
 				}
 			}
-			//Ctrl+Sift+P:プロフ
+			//Ctrl+Shift+P:プロフ
 			if ((e.metaKey || e.ctrlKey) && e.shiftKey) {
 				if (e.keyCode === 80) {
 					profShow()
@@ -235,15 +228,6 @@ export function initKeyboard() {
 				tootSelector(globalThis.selectedColumn, globalThis.selectedToot)
 				return false
 			}
-			//Ctrl+U:0,0選択
-			if (e.ctrlKey || e.metaKey) {
-				if (e.keyCode === 85) {
-					globalThis.selectedToot = 0
-					globalThis.selectedColumn = 0
-					tootSelector(0, 0)
-					return false
-				}
-			}
 			//選択時
 			if (e.keyCode === 70) {
 				const id = $('.selectedToot').attr('unique-id')
@@ -273,7 +257,7 @@ export function initKeyboard() {
 		//textareaフォーカス時
 		if (hasFocus2 && wv) {
 			if (e.metaKey || e.ctrlKey) {
-				//C+S+(No):ワンクリ
+				//Ctrl+Shift+(No):ワンクリ
 				if ((e.metaKey || e.ctrlKey) && e.shiftKey) {
 					if (e.keyCode >= 49 && e.keyCode <= 51) {
 						const no = e.keyCode - 48
@@ -286,7 +270,8 @@ export function initKeyboard() {
 					}
 				}
 			}
-			if (e.code === 'Tab') {
+			// Shift + Tab: アカウント選択
+			if (e.shiftKey && e.code === 'Tab') {
 				const elm = document.getElementById('post-acct-sel')
 				if (!elm) return console.log('no elm')
 				const instance = formSelectGetInstance(elm)
@@ -302,10 +287,10 @@ export function initKeyboard() {
 }
 //選択する
 function tootSelector(column, toot) {
-	$('.cvo').removeClass('.selectedToot')
+	$('.cvo').removeClass('selectedToot')
 	$('#timeline_' + column + ' .cvo')
 		.eq(toot)
-		.addClass('.selectedToot')
+		.addClass('selectedToot')
 	const scr = $('.tl-box[tlid=' + column + ']').scrollTop() || 0
 	const elem = $('.selectedToot').offset()?.top || 0
 	let top = elem - ($('.tl-box').height() || 0) + scr

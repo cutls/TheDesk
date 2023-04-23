@@ -2,18 +2,37 @@
 <div id="menu" class="z-depth-5" style="display: none">
     <div id="menu-bar" class="drag-bar"></div>
     <span class="cancel">
-            <i class="material-icons waves-effect" onclick="menu()" title="@@closeThisBox@@(X)">cancel</i>
-        </span>
+        <i class="material-icons waves-effect" onclick="menu()" title="@@closeThisBox@@(X)">cancel</i>
+    </span>
     <div id="menu-wrapper">
         <div id="left-menu">
-            <a class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu"> <i class="material-icons" aria-hidden="true">add</i><span>@@addColumn@@</span> </a>
-            <a class="waves-effect" onclick="sortMenu()" id="sortMenu"> <i class="material-icons" aria-hidden="true">sort</i><span>@@sortColumns@@</span> </a>
-            <a class="waves-effect" onclick="searchMenu()" id="searchMenu"> <i class="material-icons" aria-hidden="true">search</i><span>@@search@@</span> </a>
-            <a class="waves-effect" onclick="listMenu()" id="listMenu"> <i class="material-icons" aria-hidden="true">view_headline</i><span>@@list@@</span> </a>
-            <a class="waves-effect" onclick="dirMenu()" id="dirMenu"> <i class="material-icons" aria-hidden="true">recent_actors</i><span>@@discover@@</span> </a>
-            <a class="waves-effect" onclick="filterMenu()" id="filterMenu"> <i class="material-icons" aria-hidden="true">filter_list</i><span>@@filter@@</span> </a>
-            <a class="waves-effect" onclick="help()" id="helpMenu"> <i class="material-icons" aria-hidden="true">help_outline</i><span>@@helpAndLogs@@</span> </a>
-            <a class="waves-effect" onclick="location.href='index.html'"> <i class="material-icons" aria-hidden="true">refresh</i><span>@@f5@@</span> </a>
+            <a class="waves-effect active" onclick="addColumnMenu()" id="addColumnMenu">
+                <i class="material-icons" aria-hidden="true">add</i><span>@@addColumn@@</span>
+            </a>
+            <a class="waves-effect" onclick="sortMenu()" id="sortMenu">
+                <i class="material-icons" aria-hidden="true">sort</i><span>@@sortColumns@@</span>
+            </a>
+            <a class="waves-effect" onclick="searchMenu()" id="searchMenu">
+                <i class="material-icons" aria-hidden="true">search</i><span>@@search@@</span>
+            </a>
+            <a class="waves-effect" onclick="listMenu()" id="listMenu">
+                <i class="material-icons" aria-hidden="true">view_headline</i><span>@@list@@</span>
+            </a>
+            <a class="waves-effect" onclick="dirMenu()" id="dirMenu">
+                <i class="material-icons" aria-hidden="true">recent_actors</i><span>@@discover@@</span>
+            </a>
+            <a class="waves-effect" onclick="filterMenu()" id="filterMenu">
+                <i class="material-icons" aria-hidden="true">filter_list</i><span>@@filter@@</span>
+            </a>
+            <a class="waves-effect" onclick="help()" id="helpMenu">
+                <i class="material-icons" aria-hidden="true">help_outline</i><span>@@helpAndLogs@@</span>
+            </a>
+            <a class="waves-effect" onclick="keyShortcut()" id="ksMenu">
+                <i class="material-icons" aria-hidden="true">keyboard</i><span>@@keyboardShortcut@@</span>
+            </a>
+            <a class="waves-effect" onclick="location.href='index.html'">
+                <i class="material-icons" aria-hidden="true">refresh</i><span>@@f5@@</span>
+            </a>
         </div>
         <div id="right-menu">
             <!--カラム追加-->
@@ -76,11 +95,13 @@
                     </div>
                     <div id="noauth" class="hide">
                         @@showThisTL@@
-                        <input id="noauth-url" type="text" class="validate" style="width: calc(70% - 3rem)" placeholder="e.g:mstdn.jp" />
+                        <input id="noauth-url" type="text" class="validate" style="width: calc(70% - 3rem)"
+                            placeholder="e.g:mstdn.jp" />
                     </div>
                     <div id="webview-add" class="hide">@@webviewWarn@@</div>
                 </div>
-                <button class="btn waves-effect blue" style="width: calc(100% - 0.7rem)" onclick="addColumn()" data-trans-i="add"><i class="material-icons left">add</i>@@add@@</button>
+                <button class="btn waves-effect blue" style="width: calc(100% - 0.7rem)" onclick="addColumn()"
+                    data-trans-i="add"><i class="material-icons left">add</i>@@add@@</button>
                 <br />
                 <br />
             </div>
@@ -92,7 +113,8 @@
                 <div class="input-field">
                     <input id="src" type="text" class="validate" style="width: calc(100% - 150px)" />
                     <label for="src" data-trans="src">@@search@@</label>
-                    <button class="btn waves-effect indigo" style="width: 34%; padding: 0; padding-left: 1.15rem" onclick="src()" data-trans-i="src">
+                    <button class="btn waves-effect indigo" style="width: 34%; padding: 0; padding-left: 1.15rem"
+                        onclick="src()" data-trans-i="src">
                         <i class="material-icons left" style="margin: 0">search</i>@@search@@
                     </button>
                     <br />
@@ -105,45 +127,54 @@
             <!--ディレクトリ-->
             <div id="dir-box" class="hide menu-content">
                 <label>
-                        <input class="with-gap" onchange="dirChange('directory')" name="dirsug" type="radio" value="directory" checked />
-                        <span>@@directory@@</span>
-                    </label>
+                    <input class="with-gap" onchange="dirChange('directory')" name="dirsug" type="radio"
+                        value="directory" checked />
+                    <span>@@directory@@</span>
+                </label>
                 <label>
-                        <input class="with-gap" onchange="dirChange('suggest')" name="dirsug" type="radio" value="suggest" />
-                        <span>@@frc@@</span>
-                    </label>
+                    <input class="with-gap" onchange="dirChange('suggest')" name="dirsug" type="radio"
+                        value="suggest" />
+                    <span>@@frc@@</span>
+                </label>
                 <div class="input-field">
                     <select id="dir-acct-sel" class="acct-sel" onchange="dirselCk()"></select>
                 </div>
                 <div id="dirNoAuth" class="hide">
-                    <input id="dirNoAuth-url" type="text" class="validate" style="width: calc(70% - 3rem)" placeholder="e.g:mastodon.social" />
-                    <button class="btn waves-effect indigo" style="width: 9.23rem; padding: 0; padding-left: 1.15rem" onclick="directory('directory')">
+                    <input id="dirNoAuth-url" type="text" class="validate" style="width: calc(70% - 3rem)"
+                        placeholder="e.g:mastodon.social" />
+                    <button class="btn waves-effect indigo" style="width: 9.23rem; padding: 0; padding-left: 1.15rem"
+                        onclick="directory('directory')">
                         <i class="material-icons left" style="margin: 0">search</i>@@show@@
                     </button>
                 </div>
                 <div id="directoryConfig">
-                        <label>
-                            <input class="with-gap" onchange="directory('directory')" name="sort" type="radio" value="active" checked />
-                            <span>@@active@@</span>
-                        </label>
-                        <label>
-                            <input class="with-gap" onchange="directory('directory')" name="sort" type="radio" value="new" />
-                            <span>@@newcomer@@</span>
-                        </label><br />
-                        <label>
-                            <input type="checkbox" class="filled-in" id="local_only" value="true" onchange="directory('directory')" />
-                            <span>@@local_only@@</span>
-                        </label>
+                    <label>
+                        <input class="with-gap" onchange="directory('directory')" name="sort" type="radio"
+                            value="active" checked />
+                        <span>@@active@@</span>
+                    </label>
+                    <label>
+                        <input class="with-gap" onchange="directory('directory')" name="sort" type="radio"
+                            value="new" />
+                        <span>@@newcomer@@</span>
+                    </label><br />
+                    <label>
+                        <input type="checkbox" class="filled-in" id="local_only" value="true"
+                            onchange="directory('directory')" />
+                        <span>@@local_only@@</span>
+                    </label>
                 </div>
 
                 <div id="dir-contents"></div>
-                <button class="btn waves-effect teal disabled" style="width: 100%" id="moreDir" onclick="directory('check', 'more')">@@more@@</button>
+                <button class="btn waves-effect teal disabled" style="width: 100%" id="moreDir"
+                    onclick="directory('check', 'more')">@@more@@</button>
             </div>
             <!--並べ替え-->
             <div id="sort-box" class="hide menu-content">
                 <ul id="sort"></ul>
                 <div>
-                    <button onclick="sort()" class="btn waves-effect nex" style="width: 97.5%" data-trans-i="sort"><i class="material-icons left">sort</i>@@sortSet@@</button>
+                    <button onclick="sort()" class="btn waves-effect nex" style="width: 97.5%" data-trans-i="sort"><i
+                            class="material-icons left">sort</i>@@sortSet@@</button>
                 </div>
             </div>
             <!--リスト-->
@@ -153,7 +184,8 @@
                     <label>@@selectAcct@@</label>
                 </div>
                 <div style="float: left; padding-top: 8px; padding-bottom: 28px">
-                    <button class="btn waves-effect indigo" style="width: 80px" onclick="list()" data-trans-i="lists">@@listLocale@@</button>
+                    <button class="btn waves-effect indigo" style="width: 80px" onclick="list()"
+                        data-trans-i="lists">@@listLocale@@</button>
                 </div>
                 <br /><br />
                 <div id="lists"></div>
@@ -168,66 +200,102 @@
                     <label>@@selectAcct@@</label>
                 </div>
                 <div style="float: left; padding-top: 8px; padding-bottom: 28px">
-                    <button class="btn waves-effect indigo" style="width: 80px" onclick="filter()" data-trans-i="filters">@@listLocale@@</button>
+                    <button class="btn waves-effect indigo" style="width: 80px" onclick="filter()"
+                        data-trans-i="filters">@@listLocale@@</button>
                 </div>
                 <div id="filtered-words"></div>
                 <input type="hidden" id="filter-edit-id" />
-                <input type="text" style="width: 150px" id="filter-add-word" placeholder="@@filterWord@@" /><br /> @@degree@@
+                <input type="text" style="width: 150px" id="filter-add-word" placeholder="@@filterWord@@" /><br />
+                @@degree@@
                 <br />
                 <label>
-                        <input type="checkbox" class="filled-in" id="home_filter" value="home" />
-                        <span>@@home@@</span>
-                    </label>
+                    <input type="checkbox" class="filled-in" id="home_filter" value="home" />
+                    <span>@@home@@</span>
+                </label>
                 <label>
-                        <input type="checkbox" class="filled-in" id="local_filter" value="public" />
-                        <span>@@local@@</span>
-                    </label>
+                    <input type="checkbox" class="filled-in" id="local_filter" value="public" />
+                    <span>@@local@@</span>
+                </label>
                 <label>
-                        <input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
-                        <span>@@notf@@</span>
-                    </label>
+                    <input type="checkbox" class="filled-in" id="notf_filter" value="notifications" />
+                    <span>@@notf@@</span>
+                </label>
                 <label>
-                        <input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
-                        <span>@@conver@@</span>
-                    </label>
+                    <input type="checkbox" class="filled-in" id="conv_filter" value="thread" />
+                    <span>@@conver@@</span>
+                </label>
                 <label>
-                        <input type="checkbox" class="filled-in" id="prof_filter" value="profiles" />
-                        <span>@@prof@@</span> </label
-                    ><br />
-                    @@option@@
-                    <br />
-                    <label>
-                        <input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
-                        <span>@@matchWord@@</span>
-                    </label>
+                    <input type="checkbox" class="filled-in" id="prof_filter" value="profiles" />
+                    <span>@@prof@@</span> </label><br />
+                @@option@@
+                <br />
+                <label>
+                    <input type="checkbox" class="filled-in" id="wholeword_filter" value="1" />
+                    <span>@@matchWord@@</span>
+                </label>
                 <br />
                 <span class="sml">@@warnMatchWord@@</span><br />
                 <label>
-                        <input type="checkbox" class="filled-in" id="except_filter" value="1" />
-                        <span>@@except@@</span>
-                    </label>
+                    <input type="checkbox" class="filled-in" id="except_filter" value="1" />
+                    <span>@@except@@</span>
+                </label>
                 <br />
-                <span class="sml">@@exceptWorn@@</span><br /> @@avalableBefore@@ <span class="sml">@@warnAvBefore@@<b>@@warnAvBefore2@@</b></span
-                    ><br /><br />
-                    <input type="number" style="width: 50px" id="days_filter" placeholder="d" value="0" />@@days@@
-                    <input type="number" style="width: 50px" id="hours_filter" placeholder="h" value="0" />@@hours@@
-                    <input type="number" style="width: 50px" id="mins_filter" placeholder="m" value="0" />@@mins@@<br />
-                    Quick: <a onclick="filterTime(0,0,30)" class="pointer">30@@mins@@</a>/ <a onclick="filterTime(0,1,0)" class="pointer">1@@hours@@</a>/
-                    <a onclick="filterTime(0,6,0)" class="pointer">6@@hours@@</a>/ <a onclick="filterTime(0,12,0)" class="pointer">12@@hours@@</a>/
-                    <a onclick="filterTime(1,0,0)" class="pointer">1@@days@@</a>/ <a onclick="filterTime(7,0,0)" class="pointer">7@@days@@</a>/
-                    <a onclick="filterTime(0,0,0)" class="pointer">@@unlimited@@</a><br />
-                    <button class="btn waves-effect" style="width: 120px" onclick="makeNewFilter()" id="add-filter-btn">@@add@@</button><br />
-                    <span class="sml">@@warnOnIntegratedTL@@</span>
+                <span class="sml">@@exceptWorn@@</span><br /> @@avalableBefore@@ <span
+                    class="sml">@@warnAvBefore@@<b>@@warnAvBefore2@@</b></span><br /><br />
+                <input type="number" style="width: 50px" id="days_filter" placeholder="d" value="0" />@@days@@
+                <input type="number" style="width: 50px" id="hours_filter" placeholder="h" value="0" />@@hours@@
+                <input type="number" style="width: 50px" id="mins_filter" placeholder="m" value="0" />@@mins@@<br />
+                Quick: <a onclick="filterTime(0,0,30)" class="pointer">30@@mins@@</a>/ <a onclick="filterTime(0,1,0)"
+                    class="pointer">1@@hours@@</a>/
+                <a onclick="filterTime(0,6,0)" class="pointer">6@@hours@@</a>/ <a onclick="filterTime(0,12,0)"
+                    class="pointer">12@@hours@@</a>/
+                <a onclick="filterTime(1,0,0)" class="pointer">1@@days@@</a>/ <a onclick="filterTime(7,0,0)"
+                    class="pointer">7@@days@@</a>/
+                <a onclick="filterTime(0,0,0)" class="pointer">@@unlimited@@</a><br />
+                <button class="btn waves-effect" style="width: 120px" onclick="makeNewFilter()"
+                    id="add-filter-btn">@@add@@</button><br />
+                <span class="sml">@@warnOnIntegratedTL@@</span>
             </div>
             <!--ヘルプとログ-->
             <div id="help-box" class="hide menu-content">
-                <a href="https://docs.thedesk.top" class="btn waves-effect" style="width: 97.5%">@@help@@</a><br /> @@contactwithlog@@
+                <a href="https://docs.thedesk.top" class="btn waves-effect" style="width: 97.5%">@@help@@</a><br />
+                @@contactwithlog@@
                 <br />
                 <textarea id="logs" style="height: 250px"></textarea><br />
             </div>
+            <!--キーボードショートカット-->
+            <div id="ks-box" class="hide menu-content">
+                <h5>@@keyscs@@</h5>
+                <p class="darwin">@@keyCommandAlso@@</p>
+                <p class="win">@@keyCtrlAlso@@</p>
+                <li><span class="ctrl">Ctrl</span>+1-9: @@keyscr@@</li>
+                <li>N: @@keynew@@</li>
+                <li>X: @@keytoggle@@</li>
+                <li><span class="ctrl">Ctrl</span>+<span class="enter">Enter</span>: @@keypost@@</li>
+                <li class="onlyGlitch hide"><span class="ctrl">Ctrl</span>+<span class="enter">Enter</span>+
+                    <span class="shift">Shift</span>: @@keysecpost@@</li>
+                <li><span class="alt">Alt</span>+<span class="enter">Enter</span>: @@secondary@@</li>
+                <li><span class="ctrl">Ctrl</span>+<span class="alt">Alt</span>+
+                    <span class="enter">Enter</span>: @@keyNotStable@@</li>
+                <li><span class="ctrl">Ctrl</span>+E: @@keyunread@@</li>
+                <li><span class="ctrl">Ctrl</span>+K: @@keyMenu@@</li>
+                <li><span class="esc">Esc</span>: @@keyesc@@</li>
+                <li><span class="ctrl">Ctrl</span>+R: @@keyf5@@</li>
+                <li><span class="ctrl">Ctrl</span>+<span class="shift">Shift</span>+C: @@keyclear@@</li>
+                <li><span class="ctrl">Ctrl</span>+<span class="alt">Alt</span>+C: @@keyClearNotStable@@</li>
+                <li><span class="shift">Shift</span>+<span class="tab">Tab</span>: @@keyChangeAcct@@</li>
+                <li><span class="ctrl">Ctrl</span>+<span class="shift">Shift</span>+S: @@setting@@</li>
+                <li><span class="ctrl">Ctrl</span>+<span class="shift">Shift</span>+M: @@keyacctman@@</li>
+                <li><span class="ctrl">Ctrl</span>+<span class="shift">Shift</span>+N: NowPlaying(Spotify)</li>
+                <li><span class="ctrl">Ctrl</span>+<span class="shift">Shift</span>+P: @@keyshowprof@@</li>
+                <li>?: @@keyQuestion@@</li>
+            </div>
         </div>
     </div>
-    <a onclick="about()" class="nex waves-effect pwa"> <i class="material-icons menu-icon">info</i>@@about@@ </a>&nbsp;|&nbsp;
-    <a onclick="bottomReverse()" class="nex waves-effect"> <i class="material-icons menu-icon">swap_horiz</i>@@reverse@@ </a>&nbsp;|&nbsp;
-    <a href="https://github.com/cutls/TheDesk/releases" class="nex waves-effect"> <i class="material-icons menu-icon">new_releases</i>Release Note </a>
+    <a onclick="about()" class="nex waves-effect pwa"> <i class="material-icons menu-icon">info</i>@@about@@
+    </a>&nbsp;|&nbsp;
+    <a onclick="bottomReverse()" class="nex waves-effect"> <i class="material-icons menu-icon">swap_horiz</i>@@reverse@@
+    </a>&nbsp;|&nbsp;
+    <a href="https://github.com/cutls/TheDesk/releases" class="nex waves-effect"> <i
+            class="material-icons menu-icon">new_releases</i>Release Note </a>
 </div>
