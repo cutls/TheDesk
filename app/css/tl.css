@@ -795,8 +795,24 @@ p:not(:last-child) {
 	overflow: hidden;
 	position: relative;
 }
+
+.dropdown-content {
+    background-color: var(--bottom);
+}
+
+.dropdown-content li span, .dropdown-content li a {
+    color: var(--text);
+}
+
+.dropdown-content li:hover {
+    background-color: var(--active);
+}
+.select-dropdown.dropdown-content li:hover {
+    background-color: var(--active);
+}
 .dropdown-content li {
 	padding-top: 0.4rem;
+	color: var(--text);
 }
 .dropdown-content li > a, .dropdown-content li > span {
 	white-space: nowrap;

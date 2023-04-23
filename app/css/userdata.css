@@ -195,19 +195,11 @@
 #hisdropdown {
     background-color: var(--bg);
 }
-
 #hisdropdown .material-icons {
     font-size: 1.1rem;
     margin-right: 0;
 }
 
-#hisdropdown li a {
-    color: var(--text);
-}
-
-#hisdropdown li:hover {
-    background-color: var(--active);
-}
 
 #his-data-title-wrap {
     width: 100%;
