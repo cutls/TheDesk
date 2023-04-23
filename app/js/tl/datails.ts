@@ -225,11 +225,12 @@ export async function trans(acctId: string, elem: JQuery<HTMLElement>) {
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	const exec = `https://${domain}/api/v1/statuses/${id}/translate`
 	const json = await api(exec, {
-		method: 'get',
+		method: 'post',
 		headers: {
 			'content-type': 'application/json',
 			Authorization: 'Bearer ' + at,
 		},
+		body: {}
 	})
 	elem.parents('.cvo').find('.toot').append(`<span class="gray translate">${json.content}</span>`)
 }
