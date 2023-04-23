@@ -611,7 +611,7 @@ h2.swal2-title {
 	z-index: 501;
 }
 .pageSrcBtn:hover {
-	background-color: var(--selected);
+	background-color: var(--active);
 }
 .srcQ {
 	margin-top: 0.4rem;
