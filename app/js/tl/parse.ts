@@ -358,7 +358,7 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		const pinned = toot.pinned
 		const ifPin = pinned ? 'blue-text' : ''
 		const pinApp = pinned ? 'pinnedToot' : ''
-		const pinStr = pinned ? lang.lang_parse_pin : lang.lang_parse_unpin
+		const pinStr = pinned ? lang.lang_parse_unpin : lang.lang_parse_pin
 		const bkmed = toot.bookmarked
 		const ifBkm = bkmed ? 'red-text' : ''
 		const bkmApp = bkmed ? 'bkmed' : ''
@@ -406,14 +406,15 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 		let trans = ''
 		if (toot.language !== lang.language && toot.language) {
 			trans = `<li onclick="trans('${acctId}', $(this))" style="padding:0; padding-top: 5px;" tabIndex="6">
-						<i class="material-icons" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
+						<i class="material-icons light-blue-text" aria-hidden="true">g_translate</i>${lang.lang_parse_trans}
 					</li>`
 		}
 		let threadMute = ''
 		if (toot.in_reply_to_account_id) {
+			const ifMtd = toot.muted
 			threadMute = `<li onclick="muteThread('${toot.id}', '${acctId}')" style="padding:0; padding-top: 5px;" tabIndex="7" class="threadMute ${toot.muted && 'inMute'}">
-						<i class="material-icons">voice_over_off</i>
-						${toot.muted ? lang.lang_status_unmuteThread : lang.lang_status_muteThread}
+						<i class="material-icons cyan-text" style="${ifMtd ? `filter: grayscale(0)` : ''}">voice_over_off</i>
+						${ifMtd ? lang.lang_status_unmuteThread : lang.lang_status_muteThread}
 					</li>`
 		}
 		//Cards
@@ -644,24 +645,24 @@ export function parse<T = string | string[]>(obj: Toot[], type: IColumnType | 'p
 						via ${escapeHTML(via)}</a>
 					</li>
 					<li onclick="bkm('${uniqueid}','${acctId}','${tlid}')" class="bkm-btn bkmStr_${uniqueid}" style="padding:0; padding-top: 5px;" tabIndex="1">
-						<i class="fas text-darken-3 fa-bookmark bkm_${toot.id} ${ifBkm}"></i>${bkmStr}
+						<i class="fas fa-bookmark bkm_${toot.id} red-text" style="${ifBkm ? `filter: grayscale(0)` : ''}"></i>${bkmStr}
 					</li>
 					<li class="${ifMine}" onclick="del('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="2">
-						<i class="fas fa-trash"></i>${lang.lang_parse_del}
+						<i class="fas fa-trash deep-orange-text"></i>${lang.lang_parse_del}
 					</li>
 					<li class="${ifMine}" onclick="pin('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;" class="pinStr_${uniqueid}"tabIndex="3">
-						<i class="fas fa-map-pin pin_${uniqueid} ${ifPin}"></i>${pinStr}
+						<i class="fas fa-map-pin pin_${uniqueid} blue-text"style="${ifPin ? `filter: grayscale(0)` : ''}"></i>${pinStr}
 					</li>
 					<li class="${ifMine}" onclick="redraft('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="4">
-						<i class="material-icons" aria-hidden="true">redo</i>${lang.lang_parse_redraft}
+						<i class="material-icons teal-text" aria-hidden="true">redo</i>${lang.lang_parse_redraft}
 					</li>
 					<li class="${ifMine}"  onclick="editToot('${uniqueid}','${acctId}')" style="padding:0; padding-top: 5px;"tabIndex="5">
-						<i class="material-icons" aria-hidden="true">create</i>${lang.lang_edit}(v3.5.0~)
+						<i class="material-icons orange-text" aria-hidden="true">create</i>${lang.lang_edit}(v3.5.0~)
 					</li>
 					${trans}
 					${threadMute}
 					<li onclick="postMessage(['openUrl', '${toot.url}'], '*')" style="padding:0; padding-top: 5px;"tabIndex="7">
-						<i class="fas text-darken-3 fa-globe"></i>${lang.lang_parse_link}
+						<i class="fas text-lighten-3 fa-globe indigo-text"></i>${lang.lang_parse_link}
 					</li>
 					${pluginHtml}
 				</ul>
