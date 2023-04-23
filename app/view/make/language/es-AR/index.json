@@ -231,5 +231,6 @@
     "keyReply": "(In selected) Reply to it",
     "keyzoom": "Ruedadelratón:Acercar o alejar una imagen",
     "keyQuestion": "Show this sheet",
-    "secondary": "Botón de toot secundario"
+    "secondary": "Botón de toot secundario",
+    "keyboardShortcut": "Atajos del teclado"
 }
