@@ -48,7 +48,7 @@ Issuesに書いてある問題についてはなるべく対処しますので�
 
 ## 主なコントリビューター
 
-[![](https://opencollective.com/TheDesk/contributors.svg?width=400&button=false)](https://github.com/cutls/TheDesk/graphs/contributors)
+[![](./app/img/contributors.svg)](https://github.com/cutls/TheDesk/graphs/contributors)
 
 ## 支援
 

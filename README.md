@@ -44,7 +44,7 @@ Please write issues to improve TheDesk affinity with Pleroma.
 
 ## Contributors
 
-[![](https://opencollective.com/TheDesk/contributors.svg?width=400&button=false)](https://github.com/cutls/TheDesk/graphs/contributors)
+[![](./app/img/contributors.svg)](https://github.com/cutls/TheDesk/graphs/contributors)
 
 ## Support
 

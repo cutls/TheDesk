@@ -91,7 +91,7 @@
 <body class="center" style="overflow: hidden;">
     <script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="./node_modules/@cutls/materialize-css/dist/js/materialize.js"></script>
-    <img src="./img/desk.svg" style="max-width: 58%;" />
+    <img src="./img/desk.svg" style="width: 150px" />
     <h5>TheDesk</h5>
     <div class="container">
         <div class="area-name1">Display version</div>
@@ -109,14 +109,15 @@
     </div>
     <div class="cp">
         Copyright &copy; TheDesk 2018<br /> Main developer(author): <a href="https://2m.cutls.com/@Cutls" target="_blank">Cutls P</a><br />
-        <a href="https://github.com/cutls/TheDesk/graphs/contributors" style="text-align: center; user-select: none;"><img src="https://opencollective.com/TheDesk/contributors.svg?width=700&button=false" style="width: 100%"></a>
-        <br /><a href="https://thedesk.top">Web site</a>
+        <div id="contributors" style="max-height: 46px; overflow-y: hidden; margin-top: 5px; margin-bottom: 5px;"></div>
+        <a href="https://thedesk.top">Web site</a>
     </div>
     <button onclick="window.close()" class="btn waves-effect indigo" style="width: calc(100% - 10px);"><i class="material-icons left">close</i>Close</button>
 	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
 	<script type="text/javascript" src="./node_modules/grapheme-splitter/index.js"></script>
 	<script type="text/javascript" src="./node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="./node_modules/@cutls/materialize-css/dist/js/materialize.js"></script>
+    <script type="text/javascript" src="contributors.js"></script>
     <script>
         var about = JSON.parse(localStorage.getItem('about'))
         $('#now').text(localStorage.getItem('ver'))
@@ -129,6 +130,9 @@
             $('#ver').text(ver)
         }
         $('#hash').html('<a href="https://github.com/cutls/TheDesk/commits/' + about[3] + '">' + about[3].slice(0, 7) + '</a>')
+        for (const c of contributors) {
+            $('#contributors').append(`<a href="${c.url}" title="${c.name}"><img src="${c.avatar}" width="20" style="border-radius: 50%; margin-right: 3px;" /></a>`)
+        }
     </script>
 </body>
 
