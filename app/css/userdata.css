@@ -196,6 +196,11 @@
     background-color: var(--bg);
 }
 
+#hisdropdown .material-icons {
+    font-size: 1.1rem;
+    margin-right: 0;
+}
+
 #hisdropdown li a {
     color: var(--text);
 }
