@@ -36,11 +36,11 @@
 
 <body id="mainView" style="overflow-y:scroll" class="@@pwaClass@@">
     <script>
-		var ver = '@@versionLetter@@'
-		var gitHash = '@@gitHash@@'
-		var useLang = '@@lang@@'
-		var process = { env: { NODE_ENV: 'development' } }
-	</script>
+        var ver = '@@versionLetter@@'
+        var gitHash = '@@gitHash@@'
+        var useLang = '@@lang@@'
+        var process = { env: { NODE_ENV: 'development' } }
+    </script>
 
     <h4>@@setting@@</h4>
     <ul class="collapsible" data-collapsible="accordion">
@@ -98,11 +98,11 @@
                 </div>
                 <h5>@@font@@</h5>
                 @@fontwarn@@<br>
-                <button class="btn waves-effect orange darken-2" style="width:7.7rem;"
-                    onclick="font()">@@select@@</button>
+                <button class="btn waves-effect orange darken-2 dropdown-trigger" style="width:7.7rem;"
+                    onclick="font()" data-target="fonts" id="fonts-trigger">@@select@@</button>
                 <input type="text" style="width:11.5rem" id="font">
                 <button class="btn waves-effect" style="width:7.7rem;" onclick="settings()">@@set@@</button>
-                <div id="fonts" class="hide"></div>
+                <ul id="fonts" class="dropdown-content"></ul>
                 <h5>@@savefolder@@</h5>
                 @@savefolderwarn@@<br>
                 <button class="btn waves-effect" style="width:7.7rem;" onclick="saveFolder()">@@change@@</button>
@@ -679,8 +679,8 @@
 }`, -1)
     </script>
 
-<script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
-<script type="text/javascript" src="../../@@node_base@@/grapheme-splitter/index.js"></script>
-<script type="text/javascript" src="../../@@node_base@@/jquery-ui-dist/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../../@@node_base@@/@cutls/materialize-css/dist/js/materialize.js"></script>
-<script type="text/javascript" src="../../dist/index.js"></script>
+    <script type="text/javascript" src="../../@@node_base@@/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../../@@node_base@@/grapheme-splitter/index.js"></script>
+    <script type="text/javascript" src="../../@@node_base@@/jquery-ui-dist/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../../@@node_base@@/@cutls/materialize-css/dist/js/materialize.js"></script>
+    <script type="text/javascript" src="../../dist/index.js"></script>

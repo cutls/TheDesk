@@ -753,11 +753,5 @@ button {
 	top: -4px;
 }
 #fonts {
-	overflow-y: scroll;
-	width: 22rem;
-	height: 40rem;
-	position: absolute;
-	background-color: var(--bg);
-	z-index: 2;
-	padding: 5px;
+	width: 20rem !important;
 }

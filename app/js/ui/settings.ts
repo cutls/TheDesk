@@ -1,6 +1,6 @@
 import { getMeta, testExec } from '../platform/plugin'
 import { createApp } from 'vue/dist/vue.esm-bundler'
-import { chipInit, chipInitGetInstance, formSelectInit, toast } from '../common/declareM'
+import { chipInit, chipInitGetInstance, dropdownInit, dropdownInitGetInstance, formSelectInit, toast } from '../common/declareM'
 import lang from '../common/lang'
 import { themes } from './theme'
 import { playSound } from '../platform/end'
@@ -491,21 +491,23 @@ export function saveFolder() {
 }
 
 export function font() {
-	if ($('#fonts').hasClass('hide')) {
-		postMessage(['sendSinmpleIpc', 'fonts'], '*')
-		$('#fonts').removeClass('hide')
-	} else {
-		$('#fonts').addClass('hide')
-	}
+	postMessage(['sendSinmpleIpc', 'fonts'], '*')
 }
 
 export function fontList(arg: string[]) {
-	$('#fonts').removeClass('hide')
-	for (const font of arg) $('#fonts').append(`<div class="font pointer" style="font-family:${font}" onclick="insertFont('${font}')">${font}</div>`)
+	let i = 0
+	for (const font of arg) {
+		$('#fonts').append(`<li tabIndex="${i}"><a onclick="insertFont('${font}')" style="font-family:${font}">${font}</a></li>`)
+		i++
+	}
+	const elm = document.getElementById('fonts-trigger')
+	if (!elm) return
+	dropdownInit(elm)
+	const instance = dropdownInitGetInstance(elm)
+	instance.open()
 }
 
 export function insertFont(name: string) {
-	$('#fonts').addClass('hide')
 	$('#font').val(name)
 }
 
