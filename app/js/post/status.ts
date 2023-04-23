@@ -305,8 +305,8 @@ export async function muteDo(acctId: string) {
 }
 export function muteMenu() {
 	$('#muteDuration').toggleClass('hide')
-	if (!$('#muteDuration').hasClass('hide')){
-		$('#his-des').css('max-height', '0px') 
+	if (!$('#muteDuration').hasClass('hide')) {
+		$('#his-des').css('max-height', '0px')
 	} else {
 		$('#his-des').css('max-height', '196px')
 	}
@@ -401,7 +401,7 @@ export function draftToPost(json: Toot, acctId: string, id?: string) {
 	$('#media').val(medias)
 	localStorage.setItem('nohide', 'true')
 	show()
-	const html = json.text || json.content.replace(/<br \/>/gi,'\r\n').replace(/(<([^>]+)>)/gi, '')
+	const html = json.text || json.content.replace(/<br \/>/gi, '\r\n').replace(/(<([^>]+)>)/gi, '')
 	$('#textarea').val(html)
 	if (json.spoiler_text) {
 		cw(true)
@@ -619,6 +619,12 @@ export function toggleAction(id: string, target: Element, tlid: string) {
 			elmTrigger = document.querySelector(`#${nTlId} #${dropdownTrigger}`)
 			elmContent = document.querySelector(`#${nTlId} #${dropdownContent}`)
 		}
+	} else if (tlid === 'user') {
+		elmTrigger = document.querySelector(`#his-data #${dropdownTrigger}`)
+		elmContent = document.querySelector(`#his-data #${dropdownContent}`)
+	} else if (!parseInt(tlid, 10)) {
+		elmTrigger = document.querySelector(`#${tlid} #${dropdownTrigger}`)
+		elmContent = document.querySelector(`#${tlid} #${dropdownContent}`)
 	}
 	const trigger = elmTrigger
 	const menu = elmContent

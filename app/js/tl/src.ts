@@ -83,7 +83,7 @@ export async function src(mode?: any, offset?: any) {
 	}
 	//トゥート
 	if (json.statuses[0]) {
-		const templete = parse(json.statuses, null, acct_id, '')
+		const templete = parse(json.statuses, null, acct_id, 'search')
 		$('#src-contents').append('<br>Mentions<br>' + templete)
 	}
 	//アカウント
