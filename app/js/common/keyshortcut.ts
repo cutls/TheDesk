@@ -54,7 +54,7 @@ export function initKeyboard() {
 		if (e.metaKey || (e.ctrlKey && wv)) {
 			if (e.altKey) {
 				if (e.keyCode === 13) {
-					post(undefined,undefined,true)
+					post(undefined, undefined, true)
 					return false
 				}
 			}
@@ -187,12 +187,11 @@ export function initKeyboard() {
 				}
 			}
 			//矢印:選択
+			const inShowingSct = $('#menu').hasClass('appear') && !$('#ks-box').hasClass('hide')
 			if (e.code === 'ArrowLeft') {
 				//left
-				if ($('#imagemodal').hasClass('open')) {
-					imgCont('prev')
-					return false
-				}
+				if ($('#imagemodal').hasClass('open')) imgCont('prev')
+				if (skipArrowKey()) return
 				if (globalThis.selectedColumn > 0) {
 					globalThis.selectedColumn--
 				}
@@ -200,8 +199,11 @@ export function initKeyboard() {
 				return false
 			} else if (e.code === 'ArrowUp') {
 				//up
-				if ($('#imagemodal').hasClass('open')) {
-					return false
+				if (skipArrowKey()) return
+				if (inShowingSct) {
+					const scr = $('#right-menu').scrollTop() || 0
+					$('#right-menu').animate({ scrollTop: scr > 100 ? scr - 100 : 0 })
+					return
 				}
 				if (globalThis.selectedToot > 0) {
 					globalThis.selectedToot--
@@ -210,10 +212,8 @@ export function initKeyboard() {
 				return false
 			} else if (e.code === 'ArrowRight') {
 				//right
-				if ($('#imagemodal').hasClass('open')) {
-					imgCont('next')
-					return false
-				}
+				if ($('#imagemodal').hasClass('open')) imgCont('next')
+				if (skipArrowKey()) return
 				if (globalThis.selectedColumn < $('.tl-box').length - 1) {
 					globalThis.selectedColumn++
 				}
@@ -221,8 +221,12 @@ export function initKeyboard() {
 				return false
 			} else if (e.code === 'ArrowDown') {
 				//down
-				if ($('#imagemodal').hasClass('open')) {
-					return false
+				if (skipArrowKey()) return
+				if (inShowingSct) {
+					const scr = $('#right-menux').scrollTop() || 0
+					console.log(scr, scr + 100)
+					$('#right-menu').animate({ scrollTop: scr + 100 })
+					return
 				}
 				globalThis.selectedToot++
 				tootSelector(globalThis.selectedColumn, globalThis.selectedToot)
@@ -273,9 +277,8 @@ export function initKeyboard() {
 			// Shift + Tab: アカウント選択
 			if (e.shiftKey && e.code === 'Tab') {
 				const elm = document.getElementById('post-acct-sel')
-				if (!elm) return console.log('no elm')
+				if (!elm) return
 				const instance = formSelectGetInstance(elm)
-				console.log(instance)
 				instance.dropdown.open()
 			}
 		}
@@ -305,4 +308,13 @@ function tootSelector(column, toot) {
 			$('.tl-box[tlid=' + column + ']').animate({ scrollTop: to })
 		}
 	}
+}
+function skipArrowKey() {
+	if ($('#imagemodal').hasClass('open')) return true
+	const elm = document.getElementById('post-acct-sel')
+	if (!elm) return false
+	const instance = formSelectGetInstance(elm)
+	const isOpen = instance.dropdown.isOpen
+	if (isOpen) return true
+	return false
 }
