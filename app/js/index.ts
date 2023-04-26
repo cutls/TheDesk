@@ -1,5 +1,5 @@
 import { client, parse } from './tl/parse'
-import { getData, refreshManager } from './login/manager'
+import { getData, refreshManager, login } from './login/manager'
 import { filter } from './tl/filter'
 import { about } from './common/about'
 import { parseBlur } from './common/blurhash'
@@ -512,3 +512,4 @@ globalThis.client = client
 globalThis.migrate = migrate
 globalThis.pwaImgSelect = pwaImgSelect
 globalThis.closeSupport = closeSupport
+globalThis.login = login
