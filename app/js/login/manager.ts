@@ -239,7 +239,7 @@ export function backToInit() {
 }
 
 //URL指定してポップアップ
-async function login(url: string) {
+export async function login(url: string) {
 	$('#compt').hide()
 	const start = `https://${url}/api/v1/apps`
 	$('#loginBtn').attr('disabled', 'true')
