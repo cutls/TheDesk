@@ -231,5 +231,6 @@
     "keyReply": "(In selected) Reply to it",
     "keyzoom": "Mousewheel:Zoom immagine",
     "keyQuestion": "Show this sheet",
-    "secondary": "Pulsante Toot secondario"
+    "secondary": "Pulsante Toot secondario",
+    "keyboardShortcut": "Scorciatoie da tastiera"
 }

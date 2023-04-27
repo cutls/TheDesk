@@ -231,5 +231,6 @@
     "keyReply": "crwdns6253:0crwdne6253:0",
     "keyzoom": "crwdns6255:0crwdne6255:0",
     "keyQuestion": "crwdns6257:0crwdne6257:0",
-    "secondary": "crwdns6259:0crwdne6259:0"
+    "secondary": "crwdns6259:0crwdne6259:0",
+    "keyboardShortcut": "crwdns6263:0crwdne6263:0"
 }

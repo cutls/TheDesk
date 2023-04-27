@@ -231,5 +231,6 @@
     "keyReply": "(In selected) Reply to it",
     "keyzoom": "Kółko myszy: Przybliż obraz",
     "keyQuestion": "Show this sheet",
-    "secondary": "Aktualnie używane konto"
+    "secondary": "Aktualnie używane konto",
+    "keyboardShortcut": "Skróty klawiszowe"
 }
