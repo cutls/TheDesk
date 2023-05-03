@@ -1,6 +1,5 @@
 name: Bug report Japanese(日本語のバグ報告)
 description: 迅速なバグ撲滅のために
-title: ""
 labels: [\U0001F41Bbug]
 body:
   - type: textarea
