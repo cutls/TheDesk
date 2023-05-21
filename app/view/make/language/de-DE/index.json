@@ -231,5 +231,6 @@
     "keyReply": "(In selected) Reply to it",
     "keyzoom": "Mousewheel:Zoom a image",
     "keyQuestion": "Show this sheet",
-    "secondary": "Zweite Tröt-Tasten"
+    "secondary": "Zweite Tröt-Tasten",
+    "keyboardShortcut": "Tastenkombinationen"
 }

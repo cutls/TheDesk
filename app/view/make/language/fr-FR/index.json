@@ -231,5 +231,6 @@
     "keyReply": "(In selected) Reply to it",
     "keyzoom": "Molette de la souris : Zoomer sur l'image",
     "keyQuestion": "Show this sheet",
-    "secondary": "Bouton de pouet secondaire"
+    "secondary": "Bouton de pouet secondaire",
+    "keyboardShortcut": "Raccourcis clavier"
 }

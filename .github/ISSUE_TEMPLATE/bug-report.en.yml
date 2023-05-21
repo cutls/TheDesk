@@ -1,0 +1,46 @@
+name: Bug report English
+description: Create a report to help us improve
+labels: [\U0001F41Bbug]
+body:
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: To Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Click on '....'
+        2. See error...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Environment
+      description: |
+        examples:
+        - **OS**: macOS High Sierra, Windows 10 Pro 1903, Ubuntu 19.04
+        - **Version**: Usamin (18.0.0)
+        - **Your instance**: mastodon.social
+      value: |
+        - OS:
+        - Version:
+        - Your instance:
+      placeholder: ex. email@example.com
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+    validations:
+      required: false

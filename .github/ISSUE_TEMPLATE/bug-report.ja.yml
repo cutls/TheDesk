@@ -1,0 +1,44 @@
+name: Bug report Japanese(日本語のバグ報告)
+description: 迅速なバグ撲滅のために
+labels: [\U0001F41Bbug]
+body:
+  - type: textarea
+    attributes:
+      label: バグの簡単な説明
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 再現方法
+      description: どのようにしてバグが発生させたか。
+      placeholder: |
+        1. '....'をクリックすると
+        2. エラーが出ます
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 本来の挙動
+      description: 本来どのように動くのが望ましいか。
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 環境
+      description: |
+        例:
+        - **OS**: macOS High Sierra, Windows 10 Pro 1903, Ubuntu 19.04
+        - **Version**: Usamin (18.0.0)
+        - **Your instance**: mastodon.social
+      value: |
+        - OS:
+        - Version:
+        - Your instance:
+      placeholder: ex. email@example.com
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 追記
+    validations:
+      required: false
