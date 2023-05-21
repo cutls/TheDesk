@@ -89,7 +89,7 @@ export async function post(postVis?: IVis, dry?: boolean, tagClear?: boolean ) {
 	if (reply) toot.in_reply_to_id = reply.toString()
 	const media = $('#media').val()?.toString()
 	if (media) toot.media_ids = media.split(',')
-	if (media && !str) return
+	if (!media && !str) return
 	const quote = $('#quote').val()?.toString()
 	if (quote) toot.quote_id = quote
 	if ($('#nsfw').hasClass('nsfw-avail')) toot.sensitive = true
