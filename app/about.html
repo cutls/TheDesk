@@ -12,19 +12,36 @@
     <meta charset="utf-8" />
     <style>
         body {
-            font-family: 'Open Sans';
             -webkit-app-region: drag;
             cursor: move;
             padding: 5px;
             padding-top: 15px;
             background-color: var(--bg);
         }
-        
+
+        #head {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .cp {
+            margin-top: 15px;
+        }
+
+        .heart {
+            width: 1rem;
+            position: relative;
+            top: 2px;
+            left: 2px;
+        }
+
         a,
         button {
             -webkit-app-region: no-drag;
         }
-        
+
         .container {
             width: 100%;
             display: grid;
@@ -34,65 +51,67 @@
             text-align: left;
             margin: 5px;
         }
-        
+
         .area-name1 {
             grid-area: name1;
         }
-        
+
         .area-data1 {
             grid-area: data1;
         }
-        
+
         .area-name2 {
             grid-area: name2;
         }
-        
+
         .area-data2 {
             grid-area: data2;
         }
-        
+
         .area-name3 {
             grid-area: name3;
         }
-        
+
         .area-data3 {
             grid-area: data3;
         }
-        
+
         .area-name4 {
             grid-area: name4;
         }
-        
+
         .area-data4 {
             grid-area: data4;
         }
-        
+
         .area-name5 {
             grid-area: name5;
         }
-        
+
         .area-data5 {
             grid-area: data5;
         }
-        
+
         .area-name6 {
             grid-area: name6;
         }
-        
+
         .area-data6 {
             grid-area: data6;
         }
     </style>
     <script>
-		var useLang = 'en'
-	</script>
+        var useLang = 'en'
+    </script>
 </head>
 
 <body class="center" style="overflow: hidden;">
     <script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="./node_modules/@cutls/materialize-css/dist/js/materialize.js"></script>
-    <img src="./img/desk.svg" style="width: 150px" />
-    <h5>TheDesk</h5>
+    <div id="head">
+        <img src="./img/desk.svg" style="width: 100px" />
+        <h4>TheDesk</h4>
+    </div>
     <div class="container">
         <div class="area-name1">Display version</div>
         <div class="area-data1" id="now"></div>
@@ -108,15 +127,21 @@
         <div class="area-data6" id="node"></div>
     </div>
     <div class="cp">
-        Copyright &copy; TheDesk 2018<br /> Main developer(author): <a href="https://2m.cutls.com/@Cutls" target="_blank">Cutls P</a><br />
-        <div id="contributors" style="max-height: 46px; overflow-y: hidden; margin-top: 5px; margin-bottom: 5px;"></div>
-        <a href="https://thedesk.top">Web site</a>
+        Copyright &copy; TheDesk 2018 (<a href="https://thedesk.top">website</a>)<br />
+        <p style="height: 10px; margin: 0;"></p>
+        Made by <a href="https://2m.cutls.com/@Cutls" target="_blank">Cutls P</a> and contributors with love<img
+            draggable="false" class="heart" alt="❤️" title=":heart:"
+            src="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/72x72/2764.png"><br />
+        <p style="height: 10px; margin: 0;"></p>
+        Contributors<br />
+        <div id="contributors" style="max-height: 92px; overflow-y: hidden; margin-top: 5px; margin-bottom: 5px;"></div>
     </div>
-    <button onclick="window.close()" class="btn waves-effect indigo" style="width: calc(100% - 10px);"><i class="material-icons left">close</i>Close</button>
-	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
-	<script type="text/javascript" src="./node_modules/grapheme-splitter/index.js"></script>
-	<script type="text/javascript" src="./node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="./node_modules/@cutls/materialize-css/dist/js/materialize.js"></script>
+    <button onclick="window.close()" class="btn waves-effect indigo" style="width: calc(100% - 10px);"><i
+            class="material-icons left">close</i>Close</button>
+    <script type="text/javascript" src="./node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="./node_modules/grapheme-splitter/index.js"></script>
+    <script type="text/javascript" src="./node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./node_modules/@cutls/materialize-css/dist/js/materialize.js"></script>
     <script type="text/javascript" src="contributors.js"></script>
     <script>
         var about = JSON.parse(localStorage.getItem('about'))
@@ -129,9 +154,11 @@
             var ver = m[1]
             $('#ver').text(ver)
         }
-        $('#hash').html('<a href="https://github.com/cutls/TheDesk/commits/' + about[3] + '">' + about[3].slice(0, 7) + '</a>')
-        for (const c of contributors) {
-            $('#contributors').append(`<a href="${c.url}" title="${c.name}"><img src="${c.avatar}" width="20" style="border-radius: 50%; margin-right: 3px;" /></a>`)
+        const gitHash = localStorage.getItem('gitHash') || ''
+        $('#hash').html('<a href="https://github.com/cutls/TheDesk/commits/' + gitHash + '">' + gitHash.slice(0, 7) + '</a>')
+        const cut = contributors.slice(1)
+        for (const c of cut) {
+            $('#contributors').append(`<a href="${c.url}" title="${c.name}"><img src="${c.avatar}" width="35" style="border-radius: 50%; margin-right: 3px;" /></a>`)
         }
     </script>
 </body>
