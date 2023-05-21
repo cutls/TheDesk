@@ -116,10 +116,6 @@
 	grid-area: progress;
 	width: 100%;
 }
-.btnsgroup .grouptitle {
-	font-family: Open Sans;
-	font-size: 1.1rem;
-}
 @media screen and (max-width: 890px) {
 	.btnsgroup .grouptitle {
 		display: none;
@@ -670,9 +666,6 @@ p:not(:last-child) {
 .area-a3 {
 	text-align: center;
 	grid-area: a3;
-}
-.tl-title {
-	font-family: Open Sans;
 }
 #tools {
 	position: fixed;

@@ -27,6 +27,7 @@
 	<script>
 		var ver = '@@versionLetter@@'
 		var gitHash = '@@gitHash@@'
+		localStorage.setItem('gitHash', gitHash)
 		var useLang = '@@lang@@'
 		var process = { env: { NODE_ENV: 'production' } }
 	</script>
