@@ -100,6 +100,7 @@
         "@types/uuid": "^9.0.0",
         "@typescript-eslint/eslint-plugin": "^5.59.0",
         "@typescript-eslint/parser": "^5.59.0",
+        "axios": "^1.4.0",
         "babel-loader": "^9.1.2",
         "babel-preset-es2015-rollup": "^3.0.0",
         "browserify": "^17.0.0",
