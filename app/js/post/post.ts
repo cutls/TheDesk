@@ -68,7 +68,6 @@ export async function post(postVis?: IVis, dry?: boolean, tagClear?: boolean ) {
 			$('#cw-text').val(plus)
 		}
 	}
-	$('.toot-btn-group').prop('disabled', true)
 	todo('Posting')
 	const at = localStorage.getItem('acct_' + acct_id + '_at')
 	let start = `https://${domain}/api/v1/statuses`
@@ -153,6 +152,7 @@ export async function post(postVis?: IVis, dry?: boolean, tagClear?: boolean ) {
 		body: toot,
 	}
 	try {
+		$('.toot-btn-group').prop('disabled', true)
 		await api(start, q)
 		$('#ideKey').val('')
 		const box = localStorage.getItem('box')
