@@ -13,7 +13,7 @@
   "env": "Systemeinstellungen",
   "setlang": "Sprachen",
   "backup": "Import und Export von Einstellungen",
-  "backupWarn": "If you get an error when you choose the file, please paste the strings printed when you open the file and click import",
+  "backupWarn": "Wenn Sie einen Fehler bei der Auswahl der Datei erhalten, fügen Sie bitte die beim Öffnen der Datei gedruckten Zeichenketten ein und klicken Sie auf Importieren",
   "import": "Importieren",
   "export": "Exportieren",
   "hardwareAcceleration": "Hardwarebeschleunigung deaktivieren",
