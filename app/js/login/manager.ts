@@ -243,12 +243,12 @@ export async function login(url: string) {
 	$('#compt').hide()
 	const start = `https://${url}/api/v1/apps`
 	$('#loginBtn').attr('disabled', 'true')
-	const nextSetup = await versionChecker(url)
+	const { nextSetup, isPixelFed } = await versionChecker(url)
 	$('#loginBtn').removeAttr('disabled')
 	let red = 'thedesk://manager'
 	if (!nextSetup) {
 		red = 'urn:ietf:wg:oauth:2.0:oob'
-		if (~url.indexOf('pixelfed')) red = 'https://thedesk.top/hello.html'
+		if (~isPixelFed) red = 'https://thedesk.top/hello.html'
 	}
 	localStorage.setItem('redirect', red)
 	try {
@@ -277,6 +277,7 @@ export async function login(url: string) {
 	}
 }
 async function versionChecker(url: string) {
+	let isPixelFed = false
 	const start = `https://${url}/api/v1/instance`
 	try {
 		const json = await api(start, {
@@ -290,11 +291,12 @@ async function versionChecker(url: string) {
 			const reg = version.match(/^([0-9])\.[0-9]\.[0-9]/u)
 			if (reg) versionCompat(json.title, version)
 			if (version.match('compatible')) {
+				isPixelFed = version.match('Pixelfed')
 				$('#compt-warn').show()
-				return false
+				return { nextSetup: false, isPixelFed }
 			} else {
 				$('#compt-warn').hide()
-				if (globalThis.pwa) return false
+				if (globalThis.pwa) return { nextSetup: false, isPixelFed }
 				const codeSetupCheck = await Swal.fire({
 					title: lang.lang_manager_codesetup_title,
 					text: lang.lang_manager_codesetup,
@@ -303,13 +305,14 @@ async function versionChecker(url: string) {
 					confirmButtonText: lang.lang_manager_use,
 					cancelButtonText: lang.lang_manager_notUse,
 				})
-				if (!codeSetupCheck.isConfirmed) return false
-				return true
+				if (!codeSetupCheck.isConfirmed) return { nextSetup: false, isPixelFed }
+				return { nextSetup: true, isPixelFed }
 			}
 		}
 	} catch {
-		return false
+		return { nextSetup: false, isPixelFed }
 	}
+	return { nextSetup: false, isPixelFed }
 }
 async function versionCompat(title: string, version: string) {
 	const mt = version.match(/^([0-9]+)\.([0-9]+)\.([0-9]+)/)
