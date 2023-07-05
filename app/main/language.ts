@@ -5,6 +5,7 @@ import fs from 'fs'
 import { about } from './system'
 const { Menu, MenuItem, ipcMain, BrowserWindow, app } = electron
 const debugPath = join(app.getPath('userData'), 'debug')
+const isMac = process.platform === 'darwin'
 
 export default function (lang: string, mainWindow: electron.BrowserWindow, packaged: boolean, dir: string, isDebug: boolean) {
     //フレーム
@@ -67,6 +68,10 @@ export default function (lang: string, mainWindow: electron.BrowserWindow, packa
         'minimun': {
             'ja': '最小化',
             'en': 'Minimarize'
+        },
+        'hide': {
+            'ja': '隠す',
+            'en': 'Hide'
         },
         'close': {
             'ja': '閉じる',
@@ -134,6 +139,11 @@ export default function (lang: string, mainWindow: electron.BrowserWindow, packa
                 label: dict.minimun[lang],
                 accelerator: 'CmdOrCtrl+M',
                 role: 'minimize'
+            },
+            {
+                label: dict.hide[lang],
+                accelerator: 'Cmd+H',
+                role: 'hide'
             },
             {
                 label: dict.close[lang],

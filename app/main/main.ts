@@ -1,6 +1,6 @@
 const dirname = __dirname
 // Electronのモジュール
-import electron, { powerMonitor, shell } from 'electron'
+import electron, { powerMonitor } from 'electron'
 // アプリケーションをコントロールするモジュール
 const app = electron.app
 // Electronの初期化完了後に実行
@@ -30,7 +30,7 @@ const base = dir + '/view/'
 // ウィンドウを作成するモジュール
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow: electron.BrowserWindow | null = null
-let opening = true
+let willQuit = false
 
 // アプリが多重起動しないようにする
 const gotTheLock = app.requestSingleInstanceLock()
@@ -48,14 +48,12 @@ if (!gotTheLock) {
 } else {
 	app.on('second-instance', (event, commandLine) => {
 		if (!mainWindow) return
-		opening = false
 		const m = commandLine[2].match(/([a-zA-Z0-9]+)\/?\?[a-zA-Z-0-9]+=([^&]+)/)
 		if (m) {
 			mainWindow.webContents.send('customUrl', [m[1], m[2]])
 		}
 	})
 }
-
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function () {
 	electron.session.defaultSession.clearCache()
@@ -245,18 +243,18 @@ function createWindow() {
 		mainWindow.center()
 	}
 	// ウィンドウが閉じられたらアプリも終了
-	mainWindow.on('closed', function () {
+	app.on('quit', function () {
+		console.log('quit completely')
 		ipcMain.removeAllListeners()
 		mainWindow = null
 	})
 	let closeArg = false
-	// @ts-ignore
-	mainWindow.on('close', function (e) {
+
+	app.on('before-quit', function (e) {
+		willQuit = true
 		if (!mainWindow) return
 		writePos(mainWindow)
-		if (!closeArg) {
-			e.preventDefault()
-		}
+		if (!closeArg) e.preventDefault()
 		const promise = new Promise<void>(function (resolve) {
 			if (!mainWindow) return
 			mainWindow.webContents.send('asReadEnd', '')
@@ -270,7 +268,7 @@ function createWindow() {
 		promise.then(function () {
 			if (!mainWindow) return
 			closeArg = true
-			mainWindow.close()
+			if (mainWindow.isClosable()) mainWindow.close()
 		})
 	})
 	ipcMain.on('sendMarkersComplete', function () {
@@ -279,7 +277,7 @@ function createWindow() {
 		mainWindow.close()
 	})
 	function writePos(mainWindow: electron.BrowserWindow) {
-		const {width, height, x, y} = mainWindow.getBounds()
+		const { width, height, x, y } = mainWindow.getBounds()
 		const isMax = max_window_size.width === width &&
 			max_window_size.height === height &&
 			max_window_size.x === x &&
@@ -302,6 +300,15 @@ function createWindow() {
 		if (!mainWindow) return
 		writePos(mainWindow)
 		mainWindow.webContents.send('asRead', '')
+	})
+	mainWindow.on('close', function (e) {
+		if (platform !== 'darwin' || willQuit) return
+		mainWindow?.hide()
+		e.preventDefault()
+	})
+	app.on('activate', function () {
+		// is only darwin
+		mainWindow?.show()
 	})
 	Menu.setApplicationMenu(Menu.buildFromTemplate(language(lang, mainWindow, packaged, dir, isDebug)))
 	//CSS
