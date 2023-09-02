@@ -117,7 +117,7 @@
   "markerswarn": "Mastodon 3.0~. Condiviso su WebUI e client supportati da terze parti.",
   "remote_img": "Ottieni immagini dal server remoto",
   "remote_imgWarn": "Tutte le anteprime sono ottenute dal server cache loginato.",
-  "moreContextMode": "Context Tool",
+  "moreContextMode": "Strumento di Contesto",
   "moreContextModeWarn": "On detail of the toot modal, show toots before / after the toot on LTL, FTL, UTL",
   "smallHeader": "Minimize column headers",
   "replySound": "Suono(Rispondi)",
