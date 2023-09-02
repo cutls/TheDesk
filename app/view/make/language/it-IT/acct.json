@@ -11,7 +11,7 @@
     "codepaste": "Codice",
     "domain": "Dominio",
     "connect": "Server federati",
-    "toots": "Toots",
+    "toots": "Toot",
     "users": "Utenti",
     "users2": "utenti",
     "safety": "Connessione",
@@ -22,5 +22,5 @@
     "nodata": "Nessun dato",
     "accessTokenSetup": "Usa il token di accesso per effettuare il login (clicca dopo aver riempito non il codice ma il token di accesso nella scatola: Avanzato)",
     "haveExported": "Avendo il file esportato di TheDesk, clicca qui per saltare la pagina di impostazione",
-    "redo": "Retry(re-input address)"
+    "redo": "Riprova(reinserire indirizzo)"
 }
