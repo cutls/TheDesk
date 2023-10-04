@@ -32,9 +32,9 @@ Crowdin project is available! Visit: https://translate.thedesk.top
 
 ## Pleroma support
 
-Did you find a bug with Pleroma accounts?  
-Pleroma **does not** follow Mastodon API rules completely although Pleroma developers say so.  
-Please write issues to improve TheDesk affinity with Pleroma.
+Did you find a bug with any Pleroma accounts?  
+Pleroma **does not** follow Mastodon API rules completely (even though the Pleroma developers say so).  
+Please report issues to improve TheDesk's compatibility with Pleroma.
 
 ## License
 
