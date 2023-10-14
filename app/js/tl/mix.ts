@@ -20,7 +20,7 @@ export async function mixTl(acctId, tlid, type: 'plus' | 'mix', voice?: boolean)
 	localStorage.setItem('now', type)
 	todo('Integrated TL Loading...(Local)')
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
-	const userId = localStorage.getItem(`user-id_${acctId}`) || '
+	const userId = localStorage.getItem(`user-id_${acctId}`) || ''
 	const startLocal = `https://${domain}/api/v1/timelines/public?local=true`
 	const local = await getTL(startLocal, acctId)
 	const startHome = `https://${domain}/api/v1/timelines/home`
