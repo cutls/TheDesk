@@ -20,6 +20,7 @@ export async function mixTl(acctId, tlid, type: 'plus' | 'mix', voice?: boolean)
 	localStorage.setItem('now', type)
 	todo('Integrated TL Loading...(Local)')
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
+	const userId = localStorage.getItem(`user-id_${acctId}`) || '
 	const startLocal = `https://${domain}/api/v1/timelines/public?local=true`
 	const local = await getTL(startLocal, acctId)
 	const startHome = `https://${domain}/api/v1/timelines/home`
@@ -35,20 +36,20 @@ export async function mixTl(acctId, tlid, type: 'plus' | 'mix', voice?: boolean)
 	additional(acctId, tlid)
 	timeUpdate()
 	todc()
-	if (mastodonBaseWsStatus[domain] === 'cannotuse') {
+	if (mastodonBaseWsStatus[domain][userId] === 'cannotuse') {
 		mixre(acctId, tlid, 'mix', mute, voice)
-	} else if (mastodonBaseWsStatus[domain] === 'undetected' || mastodonBaseWsStatus[domain] === 'connecting') {
+	} else if (mastodonBaseWsStatus[domain][userId] === 'undetected' || mastodonBaseWsStatus[domain][userId] === 'connecting') {
 		const mbws = setInterval(function () {
-			if (mastodonBaseWsStatus[domain] === 'cannotuse') {
+			if (mastodonBaseWsStatus[domain][userId] === 'cannotuse') {
 				mixre(acctId, tlid, 'mix', mute, voice)
 				clearInterval(mbws)
-			} else if (mastodonBaseWsStatus[domain] === 'available') {
-				globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
+			} else if (mastodonBaseWsStatus[domain][userId] === 'available') {
+				globalThis.mastodonBaseWs[domain][userId].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 				clearInterval(mbws)
 			}
 		}, 1000)
-	} else if (mastodonBaseWsStatus[domain] === 'available') {
-		globalThis.mastodonBaseWs[domain].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
+	} else if (mastodonBaseWsStatus[domain][userId] === 'available') {
+		globalThis.mastodonBaseWs[domain][userId].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 	}
 
 	$(window).scrollTop(0)

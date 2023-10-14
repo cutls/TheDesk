@@ -30,23 +30,24 @@ export function mastodonBaseStreaming(acctId: string) {
 	console.log('start to connect mastodonBaseStreaming of ' + acctId)
 	notfCommon(acctId, '0', false)
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
-	const mastodonBaseWsStatus: { [key: string]: IWSStatus } = globalThis.mastodonBaseWsStatus
-	const mastodonBaseWs: { [key: string]: WebSocket | null } = globalThis.mastodonBaseWs
-	if (mastodonBaseWsStatus[domain]) return
-	mastodonBaseWsStatus[domain] = 'undetected'
+	const userId = localStorage.getItem(`user-id_${acctId}`) || ''
+	const mastodonBaseWsStatus: { [key: string]: { [key: string]: IWSStatus } } = globalThis.mastodonBaseWsStatus
+	const mastodonBaseWs: { [key: string]: { [key: string]: WebSocket | null } } = globalThis.mastodonBaseWs
+	if (mastodonBaseWsStatus[domain][userId]) return
+	mastodonBaseWsStatus[domain][userId] = 'undetected'
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	let wss = 'wss://' + domain
 	if (localStorage.getItem('streaming_' + acctId)) {
 		wss = localStorage.getItem('streaming_' + acctId)?.replace('https://', 'wss://') || wss
 	}
 	const start = `${wss}/api/v1/streaming/?access_token=${at}`
-	mastodonBaseWs[domain] = new WebSocket(start)
-	const ws = mastodonBaseWs[domain]
+	mastodonBaseWs[domain][userId] = new WebSocket(start)
+	const ws = mastodonBaseWs[domain][userId]
 	if (!ws) return
 	ws.onopen = function () {
-		mastodonBaseWsStatus[domain] = 'connecting'
+		mastodonBaseWsStatus[domain][userId] = 'connecting'
 		setTimeout(function () {
-			mastodonBaseWsStatus[domain] = 'available'
+			mastodonBaseWsStatus[domain][userId] = 'available'
 		}, 3000)
 		ws.send(JSON.stringify({ type: 'subscribe', stream: 'user' }))
 		$(`.notice_icon_acct_${acctId}`).removeClass('red-text')
@@ -117,18 +118,18 @@ export function mastodonBaseStreaming(acctId: string) {
 		notfCommon(acctId, '0', true) //fallback
 		console.error('Error closing ' + domain)
 		console.error(error)
-		if (mastodonBaseWsStatus[domain] === 'available') return parseColumn()
-		mastodonBaseWsStatus[domain] = 'cannotuse'
+		if (mastodonBaseWsStatus[domain][userId] === 'available') return parseColumn()
+		mastodonBaseWsStatus[domain][userId] = 'cannotuse'
 		setTimeout(function () {
-			mastodonBaseWsStatus[domain] = 'cannotuse'
+			mastodonBaseWsStatus[domain][userId] = 'cannotuse'
 		}, 3000)
-		mastodonBaseWs[domain] = null
+		mastodonBaseWs[domain][userId] = null
 		return false
 	}
 	ws.onclose = function () {
 		notfCommon(acctId, '0', true) //fallback
 		console.warn('Closing base streaming of ' + domain)
-		if (mastodonBaseWsStatus[domain] === 'available') {
+		if (mastodonBaseWsStatus[domain][userId] === 'available') {
 			/*toast({
 				html:
 					`${lang.lang_parse_disconnected}<button class="btn-flat toast-action" onclick="location.reload()">${lang.lang_layout_reconnect}</button>`,
@@ -138,13 +139,13 @@ export function mastodonBaseStreaming(acctId: string) {
 				},
 				displayLength: 3000
 			})*/
-			mastodonBaseWsStatus[domain] = 'undetected'
+			mastodonBaseWsStatus[domain][userId] = 'undetected'
 			parseColumn()
 		} else {
-			mastodonBaseWs[domain] = null
-			mastodonBaseWsStatus[domain] = 'cannotuse'
+			mastodonBaseWs[domain][userId] = null
+			mastodonBaseWsStatus[domain][userId] = 'cannotuse'
 			setTimeout(function () {
-				mastodonBaseWsStatus[domain] = 'cannotuse'
+				mastodonBaseWsStatus[domain][userId] = 'cannotuse'
 			}, 3000)
 
 		}
