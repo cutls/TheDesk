@@ -33,7 +33,11 @@ export function mastodonBaseStreaming(acctId: string) {
 	const userId = localStorage.getItem(`user-id_${acctId}`) || ''
 	const mastodonBaseWsStatus: { [key: string]: { [key: string]: IWSStatus } } = globalThis.mastodonBaseWsStatus
 	const mastodonBaseWs: { [key: string]: { [key: string]: WebSocket | null } } = globalThis.mastodonBaseWs
-	if (mastodonBaseWsStatus[domain][userId]) return
+
+	if (!mastodonBaseWs[domain]) mastodonBaseWs[domain] = {}
+	if (!mastodonBaseWsStatus[domain]) mastodonBaseWsStatus[domain] = {}
+
+	if (mastodonBaseWsStatus[domain]?.[userId]) return
 	mastodonBaseWsStatus[domain][userId] = 'undetected'
 	const at = localStorage.getItem(`acct_${acctId}_at`)
 	let wss = 'wss://' + domain
@@ -42,7 +46,7 @@ export function mastodonBaseStreaming(acctId: string) {
 	}
 	const start = `${wss}/api/v1/streaming/?access_token=${at}`
 	mastodonBaseWs[domain][userId] = new WebSocket(start)
-	const ws = mastodonBaseWs[domain][userId]
+	const ws = mastodonBaseWs[domain]?.[userId]
 	if (!ws) return
 	ws.onopen = function () {
 		mastodonBaseWsStatus[domain][userId] = 'connecting'
@@ -118,7 +122,7 @@ export function mastodonBaseStreaming(acctId: string) {
 		notfCommon(acctId, '0', true) //fallback
 		console.error('Error closing ' + domain)
 		console.error(error)
-		if (mastodonBaseWsStatus[domain][userId] === 'available') return parseColumn()
+		if (mastodonBaseWsStatus[domain]?.[userId] === 'available') return parseColumn()
 		mastodonBaseWsStatus[domain][userId] = 'cannotuse'
 		setTimeout(function () {
 			mastodonBaseWsStatus[domain][userId] = 'cannotuse'
@@ -129,7 +133,7 @@ export function mastodonBaseStreaming(acctId: string) {
 	ws.onclose = function () {
 		notfCommon(acctId, '0', true) //fallback
 		console.warn('Closing base streaming of ' + domain)
-		if (mastodonBaseWsStatus[domain][userId] === 'available') {
+		if (mastodonBaseWsStatus[domain]?.[userId] === 'available') {
 			/*toast({
 				html:
 					`${lang.lang_parse_disconnected}<button class="btn-flat toast-action" onclick="location.reload()">${lang.lang_layout_reconnect}</button>`,

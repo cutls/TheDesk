@@ -169,7 +169,7 @@ export async function notfCommon(acctId: string, tlid: string, isStreamOnly: boo
 }
 let errorCt = 0
 function notfWS(acctId: string, tlid: string, domain: string, userId: string, at: string) {
-	if (globalThis.mastodonBaseWsStatus[domain][userId] === 'available') return false
+	if (globalThis.mastodonBaseWsStatus[domain]?.[userId] === 'available') return false
 	const wss = localStorage.getItem('streaming_' + acctId) || 'wss://' + domain
 	const start = `${wss}/api/v1/streaming/?stream=user&access_token=${at}`
 	const websocketNotf: WebSocket[] = globalThis.websocketNotf

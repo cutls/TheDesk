@@ -159,20 +159,20 @@ function reload(type: IColumnType, acctId: string, tlid: string, data: IColumnDa
 	const mastodonBaseWsStatus = globalThis.mastodonBaseWsStatus
 	if (!domain) {
 		oldStreaming(type, acctId, tlid, data, mute, voice)
-	} else if (mastodonBaseWsStatus[domain][userId] === 'cannotuse') {
+	} else if (mastodonBaseWsStatus[domain]?.[userId] === 'cannotuse') {
 		oldStreaming(type, acctId, tlid, data, mute, voice)
-	} else if (mastodonBaseWsStatus[domain][userId] === 'undetected' || mastodonBaseWsStatus[domain][userId] === 'connecting') {
+	} else if (mastodonBaseWsStatus[domain]?.[userId] === 'undetected' || mastodonBaseWsStatus[domain][userId] === 'connecting') {
 		const mbws = setInterval(function () {
-			if (mastodonBaseWsStatus[domain][userId] === 'cannotuse') {
+			if (mastodonBaseWsStatus[domain]?.[userId] === 'cannotuse') {
 				oldStreaming(type, acctId, tlid, data, mute, voice)
 				clearInterval(mbws)
-			} else if (mastodonBaseWsStatus[domain][userId] === 'available') {
+			} else if (mastodonBaseWsStatus[domain]?.[userId] === 'available') {
 				$('#notice_icon_' + tlid).removeClass('red-text')
 				stremaingSubscribe(type, acctId, data)
 				clearInterval(mbws)
 			}
 		}, 1000)
-	} else if (mastodonBaseWsStatus[domain][userId] === 'available') {
+	} else if (mastodonBaseWsStatus[domain]?.[userId] === 'available') {
 		$('#notice_icon_' + tlid).removeClass('red-text')
 		stremaingSubscribe(type, acctId, data)
 	}
@@ -184,7 +184,7 @@ function stremaingSubscribe(type: IColumnType, acctId: string, data?: IColumnDat
 	let stream
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
 	const userId = localStorage.getItem(`user-id_${acctId}`) || ''
-	const targetStreaming = globalThis.mastodonBaseWs[domain][userId]
+	const targetStreaming = globalThis.mastodonBaseWs[domain]?.[userId]
 	if (type === 'home') return false
 	if (type === 'local' || type === 'mix') {
 		stream = 'public:local'
@@ -634,7 +634,7 @@ export function columnReload(tlid: string, type: IColumnType) {
 	const acctId = obj[tlid].domain
 	const domain = localStorage.getItem('domain_' + acctId) || ''
 	const userId = localStorage.getItem(`user-id_${acctId}`) || ''
-	if (globalThis.mastodonBaseWsStatus[domain][userId] === 'available') {
+	if (globalThis.mastodonBaseWsStatus[domain]?.[userId] === 'available') {
 		stremaingSubscribe(type, acctId, obj[tlid].data, true)
 		parseColumn(tlid, true)
 		return true

@@ -36,19 +36,19 @@ export async function mixTl(acctId, tlid, type: 'plus' | 'mix', voice?: boolean)
 	additional(acctId, tlid)
 	timeUpdate()
 	todc()
-	if (mastodonBaseWsStatus[domain][userId] === 'cannotuse') {
+	if (mastodonBaseWsStatus[domain]?.[userId] === 'cannotuse') {
 		mixre(acctId, tlid, 'mix', mute, voice)
-	} else if (mastodonBaseWsStatus[domain][userId] === 'undetected' || mastodonBaseWsStatus[domain][userId] === 'connecting') {
+	} else if (mastodonBaseWsStatus[domain]?.[userId] === 'undetected' || mastodonBaseWsStatus[domain][userId] === 'connecting') {
 		const mbws = setInterval(function () {
-			if (mastodonBaseWsStatus[domain][userId] === 'cannotuse') {
+			if (mastodonBaseWsStatus[domain]?.[userId] === 'cannotuse') {
 				mixre(acctId, tlid, 'mix', mute, voice)
 				clearInterval(mbws)
-			} else if (mastodonBaseWsStatus[domain][userId] === 'available') {
+			} else if (mastodonBaseWsStatus[domain]?.[userId] === 'available') {
 				globalThis.mastodonBaseWs[domain][userId].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 				clearInterval(mbws)
 			}
 		}, 1000)
-	} else if (mastodonBaseWsStatus[domain][userId] === 'available') {
+	} else if (mastodonBaseWsStatus[domain]?.[userId] === 'available') {
 		globalThis.mastodonBaseWs[domain][userId].send(JSON.stringify({ type: 'subscribe', stream: 'public:local' }))
 	}
 
