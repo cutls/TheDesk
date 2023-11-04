@@ -154,24 +154,25 @@ export async function tl(type: IColumnType, data: IColumnData | undefined, acctI
 //Streaming接続
 function reload(type: IColumnType, acctId: string, tlid: string, data: IColumnData | undefined, mute: string[], voice: boolean) {
 	const domain = type !== 'noauth' ? localStorage.getItem(`domain_${acctId}`) || '' : ''
+	const userId = type !== 'noauth' ? localStorage.getItem(`user-id_${acctId}`) || '' : ''
 	localStorage.setItem('now', type)
 	const mastodonBaseWsStatus = globalThis.mastodonBaseWsStatus
 	if (!domain) {
 		oldStreaming(type, acctId, tlid, data, mute, voice)
-	} else if (mastodonBaseWsStatus[domain] === 'cannotuse') {
+	} else if (mastodonBaseWsStatus[domain]?.[userId] === 'cannotuse') {
 		oldStreaming(type, acctId, tlid, data, mute, voice)
-	} else if (mastodonBaseWsStatus[domain] === 'undetected' || mastodonBaseWsStatus[domain] === 'connecting') {
+	} else if (mastodonBaseWsStatus[domain]?.[userId] === 'undetected' || mastodonBaseWsStatus[domain][userId] === 'connecting') {
 		const mbws = setInterval(function () {
-			if (mastodonBaseWsStatus[domain] === 'cannotuse') {
+			if (mastodonBaseWsStatus[domain]?.[userId] === 'cannotuse') {
 				oldStreaming(type, acctId, tlid, data, mute, voice)
 				clearInterval(mbws)
-			} else if (mastodonBaseWsStatus[domain] === 'available') {
+			} else if (mastodonBaseWsStatus[domain]?.[userId] === 'available') {
 				$('#notice_icon_' + tlid).removeClass('red-text')
 				stremaingSubscribe(type, acctId, data)
 				clearInterval(mbws)
 			}
 		}, 1000)
-	} else if (mastodonBaseWsStatus[domain] === 'available') {
+	} else if (mastodonBaseWsStatus[domain]?.[userId] === 'available') {
 		$('#notice_icon_' + tlid).removeClass('red-text')
 		stremaingSubscribe(type, acctId, data)
 	}
@@ -182,7 +183,8 @@ function stremaingSubscribe(type: IColumnType, acctId: string, data?: IColumnDat
 	if (unsubscribe) command = 'unsubscribe'
 	let stream
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
-	const targetStreaming = globalThis.mastodonBaseWs[domain]
+	const userId = localStorage.getItem(`user-id_${acctId}`) || ''
+	const targetStreaming = globalThis.mastodonBaseWs[domain]?.[userId]
 	if (type === 'home') return false
 	if (type === 'local' || type === 'mix') {
 		stream = 'public:local'
@@ -441,9 +443,11 @@ export function tlCloser() {
 	}
 	globalThis.websocketOld = []
 	const baseStreaming = globalThis.mastodonBaseWs || {}
-	for (const acctId of Object.keys(baseStreaming)) {
-		if (globalThis.mastodonBaseWs[acctId]) {
-			globalThis.mastodonBaseWs[acctId].close()
+	for (const domain of Object.keys(baseStreaming)) {
+		for (const userId of Object.keys(baseStreaming[domain])) {
+			if (globalThis.mastodonBaseWs[domain][userId]) {
+				globalThis.mastodonBaseWs[acctId][userId].close()
+			}
 		}
 	}
 	globalThis.mastodonBaseWs = {}
@@ -629,7 +633,8 @@ export function columnReload(tlid: string, type: IColumnType) {
 	const obj = getColumn()
 	const acctId = obj[tlid].domain
 	const domain = localStorage.getItem('domain_' + acctId) || ''
-	if (globalThis.mastodonBaseWsStatus[domain] === 'available') {
+	const userId = localStorage.getItem(`user-id_${acctId}`) || ''
+	if (globalThis.mastodonBaseWsStatus[domain]?.[userId] === 'available') {
 		stremaingSubscribe(type, acctId, obj[tlid].data, true)
 		parseColumn(tlid, true)
 		return true
