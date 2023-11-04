@@ -87,8 +87,8 @@
         "vue": "^3.3.4"
     },
     "devDependencies": {
-        "@babel/core": "^7.20.12",
-        "@babel/preset-env": "^7.22.9",
+        "@babel/core": "^7.22.9",
+        "@babel/preset-env": "^7.22.9",¥
         "@electron/notarize": "^1.2.3",
         "@rollup/plugin-json": "^6.0.0",
         "@rollup/plugin-typescript": "^11.0.0",
