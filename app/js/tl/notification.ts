@@ -104,10 +104,11 @@ export async function notfCommon(acctId: string, tlid: string, isStreamOnly: boo
 	todo('Notifications Loading...')
 	const native = localStorage.getItem('nativenotf') || 'yes'
 	const domain = localStorage.getItem(`domain_${acctId}`) || ''
+	const userId = localStorage.getItem(`user-id_${acctId}`) || ''
 	const at = localStorage.getItem(`acct_${acctId}_at`) || ''
 	const start = `https://${domain}/api/v1/notifications`
 	if (isStreamOnly) {
-		notfWS(acctId, tlid, domain, at)
+		notfWS(acctId, tlid, domain, userId, at)
 		return false
 	}
 	try {
@@ -161,14 +162,14 @@ export async function notfCommon(acctId: string, tlid: string, isStreamOnly: boo
 		}
 		$('#notf-box').addClass('fetched')
 		todc()
-		if (isStreamOnly && domain && at) notfWS(acctId, tlid, domain, at)
+		if (isStreamOnly && domain && at) notfWS(acctId, tlid, domain, userId, at)
 	} catch (e: any) {
 		$('div[data-notf=' + acctId + '] .landing').append(`<div>${escapeHTML(e)}`)
 	}
 }
 let errorCt = 0
-function notfWS(acctId: string, tlid: string, domain: string, at: string) {
-	if (globalThis.mastodonBaseWsStatus[domain] === 'available') return false
+function notfWS(acctId: string, tlid: string, domain: string, userId: string, at: string) {
+	if (globalThis.mastodonBaseWsStatus[domain]?.[userId] === 'available') return false
 	const wss = localStorage.getItem('streaming_' + acctId) || 'wss://' + domain
 	const start = `${wss}/api/v1/streaming/?stream=user&access_token=${at}`
 	const websocketNotf: WebSocket[] = globalThis.websocketNotf
@@ -219,14 +220,14 @@ function notfWS(acctId: string, tlid: string, domain: string, at: string) {
 		console.error('WebSocket Error ', error)
 		errorCt++
 		if (errorCt < 3) {
-			notfWS(acctId, tlid, domain, at)
+			notfWS(acctId, tlid, domain, userId, at)
 		}
 	}
 	websocketNotf[acctId].onclose = function (error) {
 		console.error('WebSocket Close ', error)
 		errorCt++
 		if (errorCt < 3) {
-			notfWS(acctId, tlid, domain, at)
+			notfWS(acctId, tlid, domain, userId, at)
 		}
 	}
 }
