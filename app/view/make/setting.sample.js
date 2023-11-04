@@ -204,6 +204,10 @@ export const tlConstruction = [
 					value: 'absolute'
 				},
 				{
+					text: '@@absolute12sel@@',
+					value: 'absolute12'
+				},
+				{
 					text: '@@doublesel@@',
 					value: 'double'
 				},

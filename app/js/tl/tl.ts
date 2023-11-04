@@ -446,7 +446,7 @@ export function tlCloser() {
 	for (const domain of Object.keys(baseStreaming)) {
 		for (const userId of Object.keys(baseStreaming[domain])) {
 			if (globalThis.mastodonBaseWs[domain][userId]) {
-				globalThis.mastodonBaseWs[acctId][userId].close()
+				globalThis.mastodonBaseWs[domain][userId].close()
 			}
 		}
 	}

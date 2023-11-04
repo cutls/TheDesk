@@ -79,6 +79,7 @@
   "mixtime": "混合表示は、当日のトゥートのみ相対、それ以外は絶対で表示 ",
   "relativesel": "相対時間",
   "absolutesel": "絶対時間",
+  "absolute12sel": "絶対時間(12時間制)",
   "doublesel": "両方表示",
   "mixsel": "混合表示",
   "locale": "独自ロケールを使用",

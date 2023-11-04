@@ -80,6 +80,7 @@
   "mixtime": "Mixed format: toots posted today are relative-format; others are absolute-format.",
   "relativesel": "Relative",
   "absolutesel": "Absolute",
+  "absolute12sel": "Absolute(AM/PM)",
   "doublesel": "Both relative and absolute",
   "mixsel": "Mixed",
   "locale": "Server's unique locale time",
