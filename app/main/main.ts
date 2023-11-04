@@ -300,6 +300,14 @@ function createWindow() {
 		if (!mainWindow) return
 		writePos(mainWindow)
 	})
+	mainWindow.on('resized', function () {
+		if (!mainWindow) return
+		writePos(mainWindow)
+	})
+	mainWindow.on('moved', function () {
+		if (!mainWindow) return
+		writePos(mainWindow)
+	})
 	mainWindow.on('minimize', function () {
 		if (!mainWindow) return
 		writePos(mainWindow)
