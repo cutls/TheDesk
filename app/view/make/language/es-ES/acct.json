@@ -22,5 +22,5 @@
     "nodata": "Sin datos",
     "accessTokenSetup": "Usar el token de acceso para iniciar sesión (haga clic después de completar no el código si no el token de acceso en el casilla: avanzado)",
     "haveExported": "Una vez exportado el archivo de TheDesk haz clic aquí para saltar la página de configuración",
-    "redo": "Retry(re-input address)"
+    "redo": "Retry (re-input address)"
 }
