@@ -34,13 +34,13 @@
     ],
     "bugs": {
         "url": "https://github.com/cutls/TheDesk/issues",
-        "email": "p@cutls.com"
+        "email": "p@cutls.dev"
     },
     "homepage": "https://thedesk.top",
     "author": {
         "name": "Cutls",
         "url": "https://cutls.dev",
-        "email": "p@cutls.com"
+        "email": "p@cutls.dev"
     },
     "contributor": [
         {
