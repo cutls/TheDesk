@@ -34,13 +34,13 @@
     ],
     "bugs": {
         "url": "https://github.com/cutls/TheDesk/issues",
-        "email": "p@cutls.com"
+        "email": "p@cutls.dev"
     },
     "homepage": "https://thedesk.top",
     "author": {
         "name": "Cutls",
         "url": "https://cutls.dev",
-        "email": "p@cutls.com"
+        "email": "p@cutls.dev"
     },
     "contributor": [
         {
@@ -63,14 +63,14 @@
     "dependencies": {
         "@cutls/built-ace-with-aisript": "^1.0.0",
         "@cutls/materialize-css": "1.0.0",
-        "@fortawesome/fontawesome-free": "^6.2.1",
+        "@fortawesome/fontawesome-free": "^6.4.0",
         "@syuilo/aiscript": "^0.13.1",
         "dayjs": "^1.11.7",
         "electron-dl": "^3.5.0",
         "grapheme-splitter": "^1.0.4",
         "itunes-nowplaying-mac": "https://github.com/cutls/itunes-nowplaying-mac/releases/download/v0.4.0/itunes-nowplaying-mac-0.4.0.tgz",
         "jimp": "^0.22.7",
-        "jquery": "^3.6.1",
+        "jquery": "^3.7.0",
         "jquery-ui": "^1.13.2",
         "jquery-ui-dist": "^1.13.2",
         "json5": "^2.2.3",
@@ -84,11 +84,11 @@
         "twemoji": "^14.0.2",
         "twemoji-asset": "https://github.com/twitter/twemoji",
         "uuid": "^9.0.0",
-        "vue": "^3.2.45"
+        "vue": "^3.3.4"
     },
     "devDependencies": {
-        "@babel/core": "^7.20.12",
-        "@babel/preset-env": "^7.20.2",
+        "@babel/core": "^7.22.9",
+        "@babel/preset-env": "^7.22.9",¥
         "@electron/notarize": "^1.2.3",
         "@rollup/plugin-json": "^6.0.0",
         "@rollup/plugin-typescript": "^11.0.0",
@@ -112,7 +112,7 @@
         "eslint": "^8.39.0",
         "eslint-config-prettier": "^8.6.0",
         "npm-run-all": "^4.1.5",
-        "prettier": "^2.8.3",
+        "prettier": "^3.0.0",
         "readline-sync": "1.4.10",
         "rollup": "^3.20.7",
         "rollup-plugin-babel": "^4.4.0",
@@ -120,7 +120,7 @@
         "rollup-plugin-json": "^4.0.0",
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-terser": "^7.0.2",
-        "typescript": "^4.9.4"
+        "typescript": "^5.1.6"
     },
     "resolutions": {
         "@types/fs-extra": "^9.0.11",

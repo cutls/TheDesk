@@ -204,6 +204,10 @@ export const tlConstruction = [
 					value: 'absolute'
 				},
 				{
+					text: '@@absolute12sel@@',
+					value: 'absolute12'
+				},
+				{
 					text: '@@doublesel@@',
 					value: 'double'
 				},
@@ -320,17 +324,6 @@ export const tlConstruction = [
 					value: 'no'
 				}
 			]
-		}
-	},
-	{
-		id: 'notfm',
-		storage: 'setasread',
-		checkbox: true,
-		setValue: 'yes',
-		text: {
-			head: '@@notfmarker@@',
-			desc: '',
-			checkbox: yesno
 		}
 	},
 	{

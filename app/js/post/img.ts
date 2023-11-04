@@ -44,14 +44,15 @@ $('#drag').on('dragleave', function () {
 //複数アップ 
 function pimg(files: FileList) {
 	for (let i = 0; i < files.length; i++) {
-		const m = files[i].path.match(/\.(.+)$/)
-		if (!m) return handleFileUpload(files[i], i)
+		const file = files[i]
+		const m = (file.path || file.name).match(/\.(.+)$/)
+		if (!m) return handleFileUpload(file, i)
 		const dot = m[1]
 		if (dot === 'bmp' || dot === 'BMP') {
-			postMessage(['bmpImage', [files[i].path, i]], '*')
+			postMessage(['bmpImage', [file.path, i]], '*')
 			todo(lang.lang_progress)
 		} else {
-			handleFileUpload(files[i], i)
+			handleFileUpload(file, i)
 		}
 	}
 }
