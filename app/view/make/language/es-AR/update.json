@@ -5,7 +5,7 @@
     "installer": "Compilación de instalación",
     "linux": "zip",
     "linuxdeb": "deb (Recomendado para Debian y Ubuntu)",
-    "linuxsnap": "instantánea",
+    "linuxsnap": "snap",
     "snap": "La compilación Snap puede encontrarse en Snapcraft",
     "sureupd": "¡Podrías perderte una experiencia copada!",
     "skipupd": "Saltar esta actualización",

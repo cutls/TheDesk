@@ -80,6 +80,7 @@
   "mixtime": "Format mieszany: posty z dzisiejszego dnia będą w formacie względnym, starsze zaś w formacie bezwzględnym.",
   "relativesel": "Względny",
   "absolutesel": "Bezwzględny",
+  "absolute12sel": "Absolute(AM/PM)",
   "doublesel": "Obydwa, względny i bezwzględny",
   "mixsel": "Mieszany",
   "locale": "Unikalne ustawienia regionalne serwera",

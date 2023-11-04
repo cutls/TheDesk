@@ -22,5 +22,5 @@
     "nodata": "Aucune donnée",
     "accessTokenSetup": "Utilisez un jeton d'accès pour vous connecter (cliquez après le remplissage, utilise le le jeton d'accès plutôt qu'un code dans la bote \"Avancé\")",
     "haveExported": "Après avoir exporté le fichier de TheDesk, cliquez ici pour aller à la page de configuration",
-    "redo": "Retry(re-input address)"
+    "redo": "Retry (re-input address)"
 }
