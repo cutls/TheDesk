@@ -327,17 +327,6 @@ export const tlConstruction = [
 		}
 	},
 	{
-		id: 'notfm',
-		storage: 'setasread',
-		checkbox: true,
-		setValue: 'yes',
-		text: {
-			head: '@@notfmarker@@',
-			desc: '',
-			checkbox: yesno
-		}
-	},
-	{
 		checkbox: false,
 		doubleText: true,
 		data: [

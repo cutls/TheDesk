@@ -103,7 +103,6 @@
   "mouseover": "Hide action buttons without mouseover",
   "mv": "Mouseover to show",
   "mvclick": "Click to show",
-  "notfmarker": "Show Notification marker, red colored bell and counter(if you choose to show a notification column)",
   "autofold": "Auto folding",
   "autofoldwarn": "TheDesk does not collapse lines of 5 characters or less. Also, when collapsing, newlines are not shown. TheDesk counts only newlines as the number of lines.",
   "lines": "lines",
