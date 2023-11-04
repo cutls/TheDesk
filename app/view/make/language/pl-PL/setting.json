@@ -102,7 +102,6 @@
   "mouseover": "Ukryj przyciski akcji bez najechania wskaźnikiem myszy",
   "mv": "Najedź kursorem aby zobaczyć",
   "mvclick": "Kliknij, aby pokazać",
-  "notfmarker": "Pokaż znacznik powiadomień, czerwony dzwonek i licznik (jeśli pokazujesz kolumnę powiadomienia)",
   "autofold": "Automatyczne składanie",
   "autofoldwarn": "Program TheDesk nie zwija elementów składających się z 5 lub mniej znaków. Ponadto, podczas zwijania nie są wyświetlane nowe linie. TheDesk liczy tylko nowe linie jako liczbę wierszy.",
   "lines": "linie",

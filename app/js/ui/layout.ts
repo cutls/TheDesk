@@ -20,7 +20,6 @@ import { goTop } from './scroll'
 import { sortLoad } from './sort'
 declare let jQuery
 
-const isSetAsRead = localStorage.getItem('setasread') === 'yes'
 const anime = (localStorage.getItem('animation') || 'yes') === 'yes'
 const markers = localStorage.getItem('markers') === 'yes'
 const smallHeader = localStorage.getItem('smallHeader') === 'yes'
@@ -109,11 +108,6 @@ export function parseColumn(targetStr?: string | 'add', dontClose?: boolean) {
 			}
 		}
 		if (acctList[domain]) insert = `${insert} border-bottom:medium solid #${acctList[domain].background};`
-		if (type === 'notf' && !isSetAsRead) {
-			localStorage.setItem('hasNotfC_' + domain, 'true')
-		} else {
-			localStorage.removeItem('hasNotfC_' + domain)
-		}
 		let css = ''
 		const width = localStorage.getItem('width')
 		if (width) css = ' min-width:' + width + 'px;'

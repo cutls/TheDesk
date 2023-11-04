@@ -1,7 +1,7 @@
 //日付パーサー
-export type IDateType = 'relative' | 'unix' | 'full' | 'absolute' | 'medium' | 'double' | 'unix'
-const dateTypes = ['relative', 'unix', 'full', 'absolute', 'medium', 'double', 'unix']
-export const isDateType = (item: string): item is IDateType => dateTypes.includes(item)
+const dateTypes = ['relative', 'unix', 'full', 'absolute', 'absolute12', 'medium', 'double', 'unix'] as const
+export type IDateType = typeof dateTypes[number]
+export const isDateType = (item: any): item is IDateType => dateTypes.includes(item)
 export function date(str: string, datetype: IDateType) {
 	if (datetype === 'relative') {
 		return `<time class="timeago" datetime="${str}"></time>`
@@ -15,9 +15,14 @@ export function date(str: string, datetype: IDateType) {
 		const month = date.getMonth() + 1
 		const min = date.getMinutes().toString().padStart(2, '0')
 		const sec = date.getSeconds().toString().padStart(2, '0')
+		const hourRaw = date.getHours()
+		const isPm = hourRaw >= 12
+		const inPmStr = isPm ? hourRaw - 12 : hourRaw
+		const is12 = datetype === 'absolute12'
+		const hour = is12 ? `${isPm ? 'PM' : 'AM'} ${inPmStr === 0 ? 12 : inPmStr}` : hourRaw
 		let ret: string
 		if (datetype === 'full') {
-			ret = `${date.getFullYear()}/${month}/${date.getDate()} ${date.getHours()}:${min}:${sec}`
+			ret = `${date.getFullYear()}/${month}/${date.getDate()} ${hour}:${min}:${sec}`
 		}
 		if (date.getFullYear() === now.getFullYear()) {
 			if (date.getMonth() === now.getMonth()) {
@@ -25,16 +30,16 @@ export function date(str: string, datetype: IDateType) {
 					if (datetype === 'medium') {
 						ret = `<time class="timeago" datetime="${str}"></time>`
 					} else {
-						ret = `${date.getHours()}:${min}:${sec}`
+						ret = `${hour}:${min}:${sec}`
 					}
 				} else {
-					ret = `${month}/${date.getDate()} ${date.getHours()}:${min}:${sec}`
+					ret = `${month}/${date.getDate()} ${hour}:${min}:${sec}`
 				}
 			} else {
-				ret = `${month}/${date.getDate()} ${date.getHours()}:${min}:${sec}`
+				ret = `${month}/${date.getDate()} ${hour}:${min}:${sec}`
 			}
 		} else {
-			ret = `${date.getFullYear()}/${month}/${date.getDate()} ${date.getHours()}:${min}:${sec}`
+			ret = `${date.getFullYear()}/${month}/${date.getDate()} ${hour}:${min}:${sec}`
 		}
 		if (datetype === 'double') {
 			return `<time class="timeago" datetime="${str}"></time>/${ret}`
