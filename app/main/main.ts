@@ -296,6 +296,10 @@ function createWindow() {
 		writePos(mainWindow)
 		fs.writeFileSync(max_info_path, JSON.stringify(mainWindow.getBounds()))
 	})
+	mainWindow.on('unmaximize', function () {
+		if (!mainWindow) return
+		writePos(mainWindow)
+	})
 	mainWindow.on('minimize', function () {
 		if (!mainWindow) return
 		writePos(mainWindow)
