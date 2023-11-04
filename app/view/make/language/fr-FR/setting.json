@@ -102,7 +102,6 @@
   "mouseover": "Masquer les boutons d'action sans survol de la souris",
   "mv": "Survoler pour afficher",
   "mvclick": "Cliquez pour afficher",
-  "notfmarker": "Afficher le marqueur de notification, la cloche rouge et le compteur (si vous affichez une colonne de notification.)",
   "autofold": "Défilement automatique",
   "autofoldwarn": "TheDesk ne réduit pas les toots de 5 caractères ou moins. Si réduit, les retours à la ligne ne sont pas affichés. TheDesk compte uniquement les retours à la ligne comme le nombre de lignes.",
   "lines": "lignes",
