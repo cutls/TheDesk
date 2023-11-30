@@ -850,7 +850,7 @@ export async function deletePlugin() {
 export async function checkUpd() {
 	const winstore = localStorage.getItem('winstore') === 'brewcask' || localStorage.getItem('winstore') === 'snapcraft' || localStorage.getItem('winstore') === 'winstore'
 	const ver = localStorage.getItem('ver')
-	const start = 'https://thedesk.top/ver.json'
+	const start = 'https://thedesk.top/ver.v2.json'
 	const mess = await api(start, {
 		method: 'get',
 		headers: {
@@ -858,8 +858,7 @@ export async function checkUpd() {
 		},
 	})
 	if (mess) {
-		const platform = localStorage.getItem('platform')
-		const newest = platform === 'darwin' ? mess.desk_mac : mess.desk
+		const newest = mess.version
 		if (newest === ver) {
 			Swal.fire({
 				icon: 'info',

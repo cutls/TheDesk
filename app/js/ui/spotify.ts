@@ -4,33 +4,44 @@ import { toast } from '../common/declareM'
 import api from '../common/fetch'
 import lang from '../common/lang'
 import { media } from '../post/img'
+const apiGateway = `https://ep9jquu2w4.execute-api.ap-northeast-1.amazonaws.com/thedesk/spotify`
 export function spotifyConnect() {
-	const auth = 'https://spotify.thedesk.top/connect'
+	const auth = `${apiGateway}?state=connect`
 	$('#spotify-code-show').removeClass('hide')
 	postMessage(['openUrl', auth], '*')
 }
-export function spotifyAuth() {
-	const code = $('#spotify-code').val()?.toString()
-	if (!code) return Swal.fire('Please input `code`')
-	localStorage.setItem('spotify-token', code)
-	$('#spotify-code-show').addClass('hide')
+export async function spotifyAuth(code: string) {
 	$('#spotify-enable').addClass('disabled')
-	$('#spotify-disable').removeClass('disabled')
+	const start = `${apiGateway}?state=auth&code=${code}`
+	try {
+		const json = await api(start, {
+			method: 'get',
+			headers: {
+				'content-type': 'application/json',
+			}
+		})
+		const { accessToken, refreshToken } = json
+		localStorage.removeItem('spotify-token')
+		localStorage.setItem('spotifyV2Token', accessToken)
+		localStorage.setItem('spotifyV2Refresh', refreshToken)
+		localStorage.setItem('spotifyV2Expires', `${(new Date().getTime() / 1000) + 3600}`)
+	} catch (e: any) {
+		Swal.fire({
+			icon: 'info',
+			text: `Error Spotify Auth`
+		})
+	} finally {
+		checkSpotify()
+	}
 }
 export async function spotifyDisconnect() {
-	const start = `https://spotify.thedesk.top/disconnect?code=${localStorage.getItem('spotify-token')}`
-	const json = await api(start, {
-		method: 'get',
-		headers: {
-			'content-type': 'application/json',
-		},
-	})
-	if (!json.success) Swal.fire('error')
-	localStorage.removeItem('spotify-token')
+	localStorage.removeItem('spotifyV2Token')
+	localStorage.removeItem('spotifyV2Refresh')
+	localStorage.removeItem('spotifyV2Expires')
 	checkSpotify()
 }
 export function checkSpotify() {
-	if (localStorage.getItem('spotify-token')) {
+	if (localStorage.getItem('spotifyV2Token')) {
 		$('#spotify-enable').addClass('disabled')
 		$('#spotify-disable').removeClass('disabled')
 	} else {
@@ -91,57 +102,39 @@ export function cMusicFlagSave() {
 }
 export async function nowplaying(mode: 'spotify' | 'itunes' | 'anynp' | 'lastFm') {
 	if (mode === 'spotify') {
-		const at = localStorage.getItem('spotify-token')
-		if (!at) return Swal.fire(`No token`)
-		const start = `https://spotify.thedesk.top/current-playing?code=${at}`
-		if (at) {
-			const jsonRaw = await api(start, {
-				method: 'get',
-				headers: {
-					'content-type': 'application/json',
-				},
-			})
-			const code = jsonRaw.token
-			localStorage.setItem('spotify-token', code)
-			const json = jsonRaw.data
-			if (json.length < 1) {
-				return false
-			}
-			const item = json.item
-			const img = item.album.images[0].url
-			const flag = localStorage.getItem('artwork')
-			if (flag) {
-				postMessage(['bmpImage', [img, 0]], '*')
-			}
-			const contentRaw = localStorage.getItem('np-temp')
-			let content = (contentRaw === 'null' || !contentRaw) ? '#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk' : contentRaw
-			const regExp1 = new RegExp('{song}', 'g')
-			content = content.replace(regExp1, item.name)
-			const regExp2 = new RegExp('{album}', 'g')
-			content = content.replace(regExp2, item.album.name)
-			const regExp3 = new RegExp('{artist}', 'g')
-			content = content.replace(regExp3, item.artists[0].name)
-			const regExp4 = new RegExp('{url}', 'g')
-			content = content.replace(regExp4, item.external_urls.spotify)
-			const regExp5 = new RegExp('{composer}', 'g')
-			content = content.replace(regExp5, '')
-			const regExp6 = new RegExp('{hz}', 'g')
-			content = content.replace(regExp6, '')
-			const regExp7 = new RegExp('{bitRate}', 'g')
-			content = content.replace(regExp7, '')
-			const regExp8 = new RegExp('{lyricist}', 'g')
-			content = content.replace(regExp8, '')
-			const regExp9 = new RegExp('{bpm}', 'g')
-			content = content.replace(regExp9, '')
-			const regExp0 = new RegExp('{genre}', 'g')
-			content = content.replace(regExp0, '')
-			$('#textarea').val(content)
-		} else {
-			Swal.fire({
-				icon: 'info',
-				text: lang.lang_spotify_acct,
-			})
+		const json = await getSpotifyData()
+		if (json.length < 1) {
+			return false
 		}
+		const item = json.item
+		const img = item.album.images[0].url
+		const flag = localStorage.getItem('artwork')
+		if (flag) {
+			postMessage(['bmpImage', [img, 0]], '*')
+		}
+		const contentRaw = localStorage.getItem('np-temp')
+		let content = (contentRaw === 'null' || !contentRaw) ? '#NowPlaying {song} / {album} / {artist}\n{url} #SpotifyWithTheDesk' : contentRaw
+		const regExp1 = new RegExp('{song}', 'g')
+		content = content.replace(regExp1, item.name)
+		const regExp2 = new RegExp('{album}', 'g')
+		content = content.replace(regExp2, item.album.name)
+		const regExp3 = new RegExp('{artist}', 'g')
+		content = content.replace(regExp3, item.artists[0].name)
+		const regExp4 = new RegExp('{url}', 'g')
+		content = content.replace(regExp4, item.external_urls.spotify)
+		const regExp5 = new RegExp('{composer}', 'g')
+		content = content.replace(regExp5, '')
+		const regExp6 = new RegExp('{hz}', 'g')
+		content = content.replace(regExp6, '')
+		const regExp7 = new RegExp('{bitRate}', 'g')
+		content = content.replace(regExp7, '')
+		const regExp8 = new RegExp('{lyricist}', 'g')
+		content = content.replace(regExp8, '')
+		const regExp9 = new RegExp('{bpm}', 'g')
+		content = content.replace(regExp9, '')
+		const regExp0 = new RegExp('{genre}', 'g')
+		content = content.replace(regExp0, '')
+		$('#textarea').val(content)
 	} else if (mode === 'itunes') {
 		postMessage(['itunes', ''], '*')
 	} else if (mode === 'anynp') {
@@ -265,20 +258,8 @@ export function spotifySave() {
 	localStorage.setItem('np-temp', temp)
 	toast({ html: lang.lang_spotify_np, displayLength: 3000 })
 }
-if (location.search) {
-	const m = location.search.match(/\?mode=([a-zA-Z-0-9]+)&code=(.+)/)
-	if (m) {
-		const mode = m[1]
-		const codex = m[2]
-		if (mode === 'spotify') {
-			const coder = codex.split(':')
-			localStorage.setItem('spotify', coder[0])
-			localStorage.setItem('spotify-refresh', coder[1])
-		}
-	}
-}
 async function getUnknownAA(q: string) {
-	const start = 'https://itunes.apple.com/search?term=' + q + '&country=JP&entity=song'
+	const start = `https://itunes.apple.com/search?term=${q}&country=JP&entity=song`
 	const promise = await fetch(start, {
 		method: 'GET',
 	})
@@ -288,4 +269,63 @@ async function getUnknownAA(q: string) {
 	}
 	const data = json.results[0].artworkUrl100
 	return { aaw: data.replace(/100x100/, '512x512'), album: json.results[0].collectionName }
+}
+export async function getSpotifyData() {
+	if (localStorage.getItem('spotify-token')) {
+		const result = await Swal.fire({
+			title: lang.lang_spotify_migrateV2,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: lang.lang_yesno,
+			cancelButtonText: lang.lang_no,
+		})
+		if (result.value) return spotifyConnect()
+	}
+	const expires = localStorage.getItem('spotifyV2Expires') || `${new Date().getTime()}`
+	if (new Date().getTime() / 1000 > parseInt(expires, 10)) await refreshSpotifyToken()
+	const at = localStorage.getItem('spotifyV2Token')
+	if (!at) return Swal.fire(`No token`)
+	const start = `https://api.spotify.com/v1/me/player/currently-playing`
+	if (at) {
+		try {
+			const jsonRaw = await fetch(start, {
+				method: 'get',
+				headers: {
+					'content-type': 'application/json',
+					Authorization: `Bearer ${at}`
+				},
+			})
+			if (jsonRaw.status === 204) return
+			const json = await jsonRaw.json()
+			return json
+		} catch (e: any) {
+			console.log(e)
+			Swal.fire({
+				icon: 'info',
+				text: `Error Spotify Auth`
+			})
+			return null
+		}
+	}
+}
+async function refreshSpotifyToken() {
+	const refreshToken = localStorage.getItem('spotifyV2Refresh')
+	const start = `${apiGateway}?state=refresh&refreshToken=${refreshToken}`
+	try {
+		const json = await api(start, {
+			method: 'get',
+			headers: {
+				'content-type': 'application/json',
+			}
+		})
+		const { accessToken, refreshToken } = json
+		localStorage.setItem('spotifyV2Token', accessToken)
+		localStorage.setItem('spotifyV2Refresh', refreshToken)
+		localStorage.setItem('spotifyV2Expires', `${(new Date().getTime() / 1000) + 3600}`)
+	} catch (e: any) {
+		Swal.fire({
+			icon: 'info',
+			text: `Error Spotify Auth`
+		})
+	}
 }

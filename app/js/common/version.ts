@@ -63,12 +63,12 @@ export async function verck(ver: string) {
 	for (let i = 0; i < l; i++) {
 		r = r + c[Math.floor(Math.random() * cl)]
 	}
-	const start1 = 'https://thedesk.top/ver.json'
+	const start1 = 'https://thedesk.top/ver.v2.json'
 	const mess = await api(start1, { method: 'get' })
 	if (!mess) return
-	const newest = platform === 'darwin' ? mess.desk_mac : mess.desk
+	const newest = mess.version
 	if (newest === ver) {
-		todo(lang.lang_version_usever.replace('{{ver}}', mess.desk))
+		todo(lang.lang_version_usever.replace('{{ver}}', newest))
 		//betaかWinstoreならアプデチェックしない
 	} else if (ver.indexOf('beta') === -1 && !winstore && !globalThis.isDev) {
 		localStorage.removeItem('instance')
@@ -84,44 +84,9 @@ export async function verck(ver: string) {
 		}
 	}
 	if (!localStorage.getItem('last-notice-id')) localStorage.setItem('last-notice-id', `0`)
-	const start = `https://thedesk.top/notice/index.php?since_id=${localStorage.getItem('last-notice-id')}`
-	try {
-		const json = await api(start, {
-			method: 'get',
-		})
-		if (json.length < 1) return false
-		const last = parseInt(localStorage.getItem('last-notice-id') || '0', 10)
-		localStorage.setItem('last-notice-id', json[0].ID)
-		for (let i = 0; i < json.length; i++) {
-			const obj = json[i]
-			if (obj.ID * 1 <= last) break
-			if (obj.type !== 'textv2') break
-			if (~obj.languages.indexOf(lang.language)) {
-				const toot = obj.toot ? `<button class="btn-flat toast-action" onclick="detEx('${obj.toot}', 'main')">Show</button>` : ''
-				let showVer = obj.ver ? obj.ver === ver : true
-				if (obj.domain !== '') {
-					const accts = getMulti() || '[]'
-					showVer = false
-					for (const acct of accts) {
-						if (showVer) break
-						showVer = acct.domain === obj.domain
-					}
-				}
-				if (showVer) {
-					toast({
-						html: `${escapeHTML(obj.text)}${toot}<span class="sml grey-text">(スライドして消去)</span>`,
-						displayLength: 86400,
-					})
-				}
-			}
-		}
-	} catch (error: any) {
-		todo(error)
-		console.error(error)
-	}
 }
 let infoStreaming = false
-function infowebsocket() {
+function infoWebSocket() {
 	const infoWs = new WebSocket('wss://thedesk.top/ws/')
 	infoWs.onopen = function (mess) {
 		infoStreaming = true
@@ -160,11 +125,13 @@ function infowebsocket() {
 		infoStreaming = false
 	}
 }
+/*
 setInterval(function () {
 	if (!infoStreaming) {
-		infowebsocket()
+		infoWebSocket()
 	}
 }, 10000)
+*/
 export function closeStart() {
 	$('#start').css('display', 'none')
 }

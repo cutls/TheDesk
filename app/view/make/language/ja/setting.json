@@ -184,7 +184,7 @@
   "spotifynote1": "",
   "spotifynote2": "ボタンから簡単にNowPlayingができます。",
   "link": "アカウントの連携",
-  "linkwarn": "APIの性質上、thedesk.topへアクセスします。",
+  "linkwarn": "APIの性質上、AWS API Gateway, Lambdaへアクセスします。",
   "connect": "接続",
   "disconnect": "切断",
   "lastFmWarn": "ユーザー名を入れてください。空白にすると解除されます。last.fmの「最近のリスニング情報を表示しない」にチェックを入れないでください。",

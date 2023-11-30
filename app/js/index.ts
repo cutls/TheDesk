@@ -152,7 +152,7 @@ import {
 	lastFmSet,
 } from './ui/settings'
 import { sortLoad, sort, sortMenu } from './ui/sort'
-import { spotifyConnect, spotifyAuth, spotifyDisconnect, checkSpotify, spotifyFlagSave, aMusicFlagSave, cMusicFlagSave, nowplaying, npCore, spotifySave } from './ui/spotify'
+import { spotifyConnect, spotifyAuth, spotifyDisconnect, checkSpotify, spotifyFlagSave, aMusicFlagSave, cMusicFlagSave, nowplaying, npCore, spotifySave, getSpotifyData } from './ui/spotify'
 import { themes } from './ui/theme'
 import { todo, todc, bottomReverse, tips, renderMem, spotifyTips, tipsToggle } from './ui/tips'
 import { utlShow, utlAdd, flw, fer, showFav, showMut, showBlo, showReq, showDom, showFrl, udAdd } from './userdata/hisData'
@@ -476,6 +476,7 @@ globalThis.spotifyFlagSave = spotifyFlagSave
 globalThis.aMusicFlagSave = aMusicFlagSave
 globalThis.cMusicFlagSave = cMusicFlagSave
 globalThis.nowplaying = nowplaying
+globalThis.getSpotifyData = getSpotifyData
 globalThis.npCore = npCore
 globalThis.spotifySave = spotifySave
 globalThis.themes = themes

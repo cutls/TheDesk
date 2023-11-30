@@ -2,6 +2,7 @@
 *.zip
 *.7z
 *.exe
+lp.sh
 TheDesk-*
 build/*
 app/.DS_Store

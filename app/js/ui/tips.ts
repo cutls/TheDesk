@@ -7,6 +7,7 @@ import { toast } from '../common/declareM'
 import api from '../common/fetch'
 import Swal from 'sweetalert2'
 import lang from '../common/lang'
+import { getSpotifyData } from './spotify'
 const tipsList = ['ver', 'clock', 'memory', 'spotify', 'custom']
 export const isITips = (item: string): item is ITips => tipsList.includes(item)
 
@@ -90,21 +91,9 @@ export function renderMem(use: number, cpu: string, total: number, core: number,
 spotint = null
 export async function spotifyTips() {
 	if (spotint) clearInterval(spotint)
-	const at = localStorage.getItem('spotify-token')
-	if (!at) return toast({ html: 'Error Spotify Connection' })
-	const start = `https://spotify.thedesk.top/current-playing?code=${localStorage.getItem('spotify-token')}`
-	if (at) {
-		const jsonRaw = await api(start, {
-			method: 'get',
-			headers: {
-				'content-type': 'application/json',
-			},
-		})
-		const code = jsonRaw.token
-		if (!code) return toast({ html: 'Error Spotify Connection' })
-		localStorage.setItem('spotify-token', code)
-		const json = jsonRaw.data
-		if (!json) return toast({ html: 'Error Spotify Connection' })
+	try {
+		const json = await getSpotifyData()
+		if (!json) throw null
 		let ms = json.progress_ms
 		if (!ms) return tips('ver')
 		const last = 1000 - (ms % 1000)
@@ -144,7 +133,8 @@ export async function spotifyTips() {
 				</div>`
 		$('#tips-text').html(html)
 		spotint = setInterval(spotStart, 1000)
-	} else {
+	} catch (e: any) {
+		if (!e) return
 		Swal.fire({
 			icon: 'info',
 			text: lang.lang_spotify_acct,

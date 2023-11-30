@@ -2,7 +2,7 @@
  
 <div align="center">
 
-<img src="https://thedesk.top/img/desk.png" width="150" align="center">
+<img src="app/img/desk.png" width="150" align="center">
 
 <h1 align="center">TheDesk</h1>
 
@@ -16,11 +16,11 @@
 Mastodon client for PC(Windows/Linux/macOS)  
 オープンソースSNSマストドンのPC向けクライアント  
 
-[![Download from TheDesk Official Website](https://thedesk.top/img/dlfrom-thedesk.svg?7)](https://thedesk.top)
+[![Download from TheDesk Official Website](app/img/getFromTheDesk.svg)](https://thedesk.top)
 
 </div>
 
-![Screenshots1](https://thedesk.top/img/scr1.png)  
+![Screenshots1](app/img/lp1.png)  
 
 ## 翻訳
   

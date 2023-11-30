@@ -10,7 +10,7 @@ import { asRead, tl } from '../tl/tl'
 import { parseColumn } from '../ui/layout'
 import { show } from '../ui/postBox'
 import { exportSettingsCore, importSettingsCore, fontList, ctLoad, clearCustomImport, ctLoadCore, customConnect, customSoundSave } from '../ui/settings'
-import { npCore } from '../ui/spotify'
+import { npCore, spotifyAuth } from '../ui/spotify'
 import { renderMem } from '../ui/tips'
 import { udg, udgEx } from '../userdata/showOnTL'
 import { tagShow } from '../tl/tag'
@@ -144,10 +144,8 @@ onmessage = function (e) {
 			$('.mini-btn').text('expand_less')
 		} else if (mode === 'manager' || mode === 'login') {
 			code(codex)
-		} else if (mode === 'spotify') {
-			const coder = codex.split(':')
-			localStorage.setItem('spotify', coder[0])
-			localStorage.setItem('spotify-refresh', coder[1])
+		} else if (mode === 'spotifyv2') {
+			spotifyAuth(codex)
 		}
 	}
 }

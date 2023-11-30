@@ -6,7 +6,7 @@ interface IOptions {
 	headers?: { [key: string]: string }
 	body?: any
 }
-export default async function api<T = any>(url: string, options?: IOptions, throughJsonStringify?: boolean) {
+export default async function api<T = any>(url: string, options?: IOptions, throughJsonStringify?: boolean, in204?: boolean) {
 	try {
 		if (options?.body && typeof options?.body === 'object' && !throughJsonStringify) options.body = JSON.stringify(options.body)
 		const response = await fetch(url, options)
