@@ -184,7 +184,7 @@
   "spotifynote1": "Click ",
   "spotifynote2": "icon to NowPlaying",
   "link": "Під’єднання облікового запису",
-  "linkwarn": "TheDesk save your data on thedesk.top server.",
+  "linkwarn": "TheDesk save your data on AWS API Gateway, Lambda.",
   "connect": "Під'єднатись",
   "disconnect": "Від'єднатись",
   "lastFmWarn": "User name...(empty to disconnect) You cannot hide your recent play log at last.fm privacy settings.",
