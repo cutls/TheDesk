@@ -84,7 +84,7 @@
         "twemoji": "^14.0.2",
         "twemoji-asset": "https://github.com/twitter/twemoji",
         "uuid": "^9.0.0",
-        "vue": "^3.3.4"
+        "vue": "^3.3.9"
     },
     "devDependencies": {
         "@babel/core": "^7.23.5",
