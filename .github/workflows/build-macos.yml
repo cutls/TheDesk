@@ -26,6 +26,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - run: sudo sntp -sS time.windows.com
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
       with:
