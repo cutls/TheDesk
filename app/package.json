@@ -107,7 +107,7 @@
         "chokidar": "^3.5.3",
         "dotenv": "^16.0.3",
         "electron": "^22.3.25",
-        "electron-builder": "^23.2.0",
+        "electron-builder": "^24.13.3",
         "electron-rebuild": "^3.2.9",
         "eslint": "^8.39.0",
         "eslint-config-prettier": "^8.6.0",
