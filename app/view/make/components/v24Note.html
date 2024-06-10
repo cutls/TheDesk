@@ -1,5 +1,5 @@
 <style>
-    #v24Note {
+    #v25Note {
         position: fixed;
         background-color: var(--bg);
         width: 80vw;
@@ -15,27 +15,20 @@
         overflow-y: scroll;
     }
 </style>
-<div id="v24Note" class="hide">
-    <h2>@@welcomeToV24@@</h2>
-    <p>@@v24ChangeDescNegative@@</p>
-    <a href="https://github.com/cutls/TheDesk/releases/tag/v23.1.0" target="_blank" class="pwa">v23.1.0</a>
-    <a href="https://v23.thedesk.top" target="_blank" class="hide hideOnlyPwa">23-archive</a>
+<div id="v25Note" class="hide">
+    <h2>@@checkToV25@@</h2>
+    <p>@@v25ChangeDescNegative@@</p>
+    <p style="margin-top: 1rem">@@v25ChangeDescPositive@@</p>
     <ul class="browser-default">
-        <li>@@v24Misskey@@</li>
-        <li>@@v24Locale@@</li>
-        <li>@@v24Tootsearch@@</li>
-        <li>@@v24Nano@@</li>
+        <li>@@v25SpeedyAndSafety@@</li>
     </ul>
-    <p>@@v24Downgrade@@</p>
-    <button class="btn waves-effect" onclick="migrate()">@@v24Migrate@@</button>
-    <p style="margin-top: 1rem">@@v24ChangeDescPositive@@</p>
-    <ul class="browser-default">
-        <li>@@v24SpeedyAndSafety@@</li>
-        <li>@@v24AltImage@@</li>
-        <li>@@v24NiceContextTool@@</li>
-    </ul>
-    <div class="hide onlyJa">
-        【お知らせ】iOSクライアント「TootDesk」が出ました。<br />
-        <img src="../../img/tootdesk.png" width="150" />
-    </div>
+    <a class="btn waves-effect" href="https://thedesk.top">@@v25Migrate@@</a>
+    <button class="btn waves-effect" onclick="hideV25Note()">@@v25Back@@</button>
 </div>
+
+<script>
+    function hideV25Note() {
+        document.getElementById('v25Note').classList.add('hide');
+        localStorage.setItem('v25Accepted', 'true');
+    }
+</script>

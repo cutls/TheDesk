@@ -185,6 +185,11 @@ export function system(mainWindow: BrowserWindow, dir: string, dirname: string) 
 		if (cbTimer1) clearInterval(cbTimer1)
 	})
 
+	ipc.on('exportMigrate', (e, args) => {
+		fs.writeFileSync(join(app.getPath('home'), '.thedeskmigrate.json'), JSON.stringify(args[0]))
+		shell.openExternal('https://thedesk.top')
+		app.quit()
+	})
 	ipc.on('export', (e, args) => {
 		fs.writeFileSync(args[0], JSON5.stringify(args[1]))
 		e.sender.send('exportAllComplete', '')

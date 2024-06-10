@@ -29,10 +29,9 @@ import { idata } from '../login/instance'
 // ニコフレ絵文字とアイマストドントレンド、独自ロケール、Misskeyサポートの削除、Tootsearch削除、MD/BBCode削除、altImage interval, nano廃止
 window.onload = init
 async function init() {
-	if (!globalThis.pwa && localStorage.getItem('v24Accepted') === 'true') await migrate(true)
 	if (globalThis.pwa) $('.hideOnlyPwa').removeClass('hide')
-	if (!localStorage.getItem('v24Accepted') && !localStorage.getItem('ver')) localStorage.setItem('v24Accepted', 'true')
-	if (!localStorage.getItem('v24Accepted') && localStorage.getItem('ver')) return $('#v24Note').removeClass('hide')
+	if (!localStorage.getItem('v25Accepted') && !localStorage.getItem('ver')) localStorage.setItem('v25Accepted', 'true')
+	if (!localStorage.getItem('v25Accepted') && localStorage.getItem('ver')) $('#v25Note').removeClass('hide')
 	if (globalThis.useLang === 'ja' || globalThis.useLang === 'ja-KS') $('.onlyJa').removeClass('hide')
 	initPostbox()
 	connection()

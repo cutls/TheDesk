@@ -46,6 +46,8 @@ onmessage = async function (e) {
 		ipc.send('exportSettings', e.data[1])
 	} else if (e.data[0] === 'exportSettingsCoreComplete') {
 		ipc.send('export', e.data[1])
+	} else if (e.data[0] === 'migrateSettingsCoreComplete') {
+		ipc.send('exportMigrate', e.data[1])
 	} else if (e.data[0] === 'importSettings') {
 		ipc.send('importSettings', e.data[1])
 	} else if (e.data[0] === 'customSound') {

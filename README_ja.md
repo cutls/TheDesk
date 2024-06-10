@@ -1,3 +1,7 @@
+# Go to Next TheDesk(v25): 
+
+https://github.com/cutls/thedesk-next
+
 [English](README.md) | **日本語**
  
 <div align="center">

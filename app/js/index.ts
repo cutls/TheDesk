@@ -150,6 +150,7 @@ import {
 	deletePlugin,
 	checkUpd,
 	lastFmSet,
+	migrateSettings,
 } from './ui/settings'
 import { sortLoad, sort, sortMenu } from './ui/sort'
 import { spotifyConnect, spotifyAuth, spotifyDisconnect, checkSpotify, spotifyFlagSave, aMusicFlagSave, cMusicFlagSave, nowplaying, npCore, spotifySave, getSpotifyData } from './ui/spotify'
@@ -511,6 +512,7 @@ globalThis.addColumnMenu = addColumnMenu
 globalThis.addselCk = addselCk
 globalThis.client = client
 globalThis.migrate = migrate
+globalThis.migrateSettings = migrateSettings
 globalThis.pwaImgSelect = pwaImgSelect
 globalThis.closeSupport = closeSupport
 globalThis.login = login

@@ -361,6 +361,11 @@ export async function exportSettings() {
 	}
 }
 
+export function migrateSettings() {
+	const exp = exportSettingsCore()
+	postMessage(['migrateSettingsCoreComplete', [exp]], '*')
+}
+
 export function exportSettingsCore() {
 	const exp = { meta: {} } as ITheDeskConfig
 	//Accounts
@@ -373,15 +378,15 @@ export function exportSettingsCore() {
 	const config = {} as IConfig
 	config.theme = localStorage.getItem('theme') || 'black'
 	//Other configs
-	for (const lsr of envView.config) {
+	for (const lsr of envConstruction) {
 		const ls = lsr.storage
 		config[ls] = localStorage.getItem(ls) || ''
 	}
-	for (const lsr of tlView.config) {
+	for (const lsr of tlConstruction) {
 		const ls = lsr.storage
 		config[ls] = localStorage.getItem(ls) || ''
 	}
-	for (const lsr of postView.config) {
+	for (const lsr of postConstruction) {
 		const ls = lsr.storage
 		config[ls] = localStorage.getItem(ls) || ''
 	}
