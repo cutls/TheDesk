@@ -71,7 +71,7 @@
         "itunes-nowplaying-mac": "https://github.com/cutls/itunes-nowplaying-mac/releases/download/v0.4.0/itunes-nowplaying-mac-0.4.0.tgz",
         "jimp": "^0.22.10",
         "jquery": "^3.7.0",
-        "jquery-ui": "^1.13.2",
+        "jquery-ui": "^1.13.3",
         "jquery-ui-dist": "^1.13.2",
         "json5": "^2.2.3",
         "lodash": "^4.17.21",
